@@ -1,0 +1,1647 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-05-03T09:43:44.647Z",
+  "summary": {
+    "fixture_count": 3,
+    "total_slots": 15,
+    "total_hits": 15
+  },
+  "results": [
+    {
+      "id": "mingcute-bottom-nav",
+      "task": "Replace the 4 bottom navigation icons/buttons. Show me the preview before implementation.",
+      "library": "mingcute",
+      "slot_count": 4,
+      "hit_count": 4,
+      "slot_results": [
+        {
+          "slot": "Home tab",
+          "expected_icon_ids": [
+            "mingcute:home_3_line"
+          ],
+          "recommended_icon_id": "mingcute:home_3_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "home tab",
+            "home tab replace the 4 bottom navigation icons buttons show me the preview before implementation"
+          ],
+          "recommended": {
+            "id": "home_3_line",
+            "library": "mingcute",
+            "name": "home 3",
+            "style": "outline",
+            "label": "Home",
+            "semantic_fit": "Strong fit for Home tab: visually reads as house outline with a centered rounded doorway inside a square body. Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.",
+            "why_selected": "Home matches Home tab and visually reads as house outline with a centered rounded doorway inside a square body.",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.772 2.688a2 2 0 0 1 2.317-.099l.139.1 8.384 6.52c.721.561.37 1.692-.499 1.785l-.116.006H20v8a2 2 0 0 1-1.85 1.995L18 21H6a2 2 0 0 1-1.994-1.85L4 19v-8h-.997C2.09 11 1.671 9.892 2.3 9.285l.088-.076zM12 4.267 5.625 9.225c.229.185.375.468.375.785V19h3v-5a3 3 0 1 1 6 0v5h3v-8.99c0-.317.146-.6.375-.785zM12 13a1 1 0 0 0-1 1v5h2v-5a1 1 0 0 0-1-1\"/></g></svg>",
+            "semantic": {
+              "label": "Home",
+              "source_name": "home_3",
+              "depicts": "House outline with a centered rounded doorway inside a square body",
+              "semantic_tags": [
+                "destination",
+                "doorway house",
+                "home",
+                "home entrance",
+                "house with door",
+                "main",
+                "root",
+                "start"
+              ],
+              "synonyms": [
+                "doorway house",
+                "home",
+                "home entrance",
+                "home page",
+                "house with door",
+                "main screen",
+                "root destination",
+                "start page"
+              ],
+              "use_when": "Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.",
+              "avoid_when": "Do not use for the doorway cutout or window variants when the body walls and door shape differ visibly."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "home_2_line",
+              "library": "mingcute",
+              "name": "home 2",
+              "style": "outline",
+              "label": "Home",
+              "semantic_fit": "Strong fit for Home tab: visually reads as house outline with roof overhangs above a square body and flat base. Use when the interface wants a home symbol with a classic roof eave shape over a square body.",
+              "why_selected": "Home matches Home tab and visually reads as house outline with roof overhangs above a square body and flat base.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.772 2.688a2 2 0 0 1 2.456 0l8.384 6.52c.753.587.337 1.792-.615 1.792H20v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8h-.997c-.953 0-1.367-1.206-.615-1.791zM5.625 9.225c.229.185.375.468.375.785V19h12v-8.99c0-.317.146-.6.375-.785L12 4.267z\"/></g></svg>",
+              "semantic": {
+                "label": "Home",
+                "source_name": "home_2",
+                "depicts": "House outline with roof overhangs above a square body and flat base",
+                "semantic_tags": [
+                  "destination",
+                  "home",
+                  "home outline",
+                  "house with eaves",
+                  "main",
+                  "roofed house",
+                  "root",
+                  "start"
+                ],
+                "synonyms": [
+                  "home",
+                  "home outline",
+                  "home page",
+                  "house with eaves",
+                  "main screen",
+                  "roofed house",
+                  "root destination",
+                  "start page"
+                ],
+                "use_when": "Use when the interface wants a home symbol with a classic roof eave shape over a square body.",
+                "avoid_when": "Do not use for the plain pentagon home when the visible roof overhangs are part of the distinction."
+              }
+            },
+            {
+              "id": "home_1_line",
+              "library": "mingcute",
+              "name": "home 1",
+              "style": "outline",
+              "label": "Home",
+              "semantic_fit": "Strong fit for Home tab: visually reads as pentagon house outline with a pointed roof and flat bottom wall. Use when the interface needs the plainest house silhouette without a doorway chimney or window detail.",
+              "why_selected": "Home matches Home tab and visually reads as pentagon house outline with a pointed roof and flat bottom wall.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.8 2.65a2 2 0 0 1 2.4 0l7 5.25a2 2 0 0 1 .8 1.6V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9.5a2 2 0 0 1 .8-1.6zm1.2 1.6L5 9.5V19h14V9.5z\"/></g></svg>",
+              "semantic": {
+                "label": "Home",
+                "source_name": "home_1",
+                "depicts": "Pentagon house outline with a pointed roof and flat bottom wall",
+                "semantic_tags": [
+                  "destination",
+                  "home",
+                  "home icon",
+                  "house outline",
+                  "main",
+                  "root",
+                  "simple home",
+                  "start"
+                ],
+                "synonyms": [
+                  "home",
+                  "home icon",
+                  "home page",
+                  "house outline",
+                  "main screen",
+                  "root destination",
+                  "simple home",
+                  "start page"
+                ],
+                "use_when": "Use when the interface needs the plainest house silhouette without a doorway chimney or window detail.",
+                "avoid_when": "Do not use when another home variant includes a visible doorway circular window or angled roof overhangs."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Create action",
+          "expected_icon_ids": [
+            "mingcute:add_line"
+          ],
+          "recommended_icon_id": "mingcute:add_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "create action",
+            "create action replace the 4 bottom navigation icons buttons show me the preview before implementation",
+            "add",
+            "plus",
+            "create new",
+            "compose"
+          ],
+          "recommended": {
+            "id": "add_line",
+            "library": "mingcute",
+            "name": "add",
+            "style": "outline",
+            "label": "Add",
+            "semantic_fit": "Strong fit for Create action: visually reads as plus sign made from one vertical and one horizontal stroke. Use for add concepts, search results, filters, labels, or UI actions where add, plus, create is the intended meaning.",
+            "why_selected": "Add matches Create action and visually reads as plus sign made from one vertical and one horizontal stroke.",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M11 20a1 1 0 1 0 2 0v-7h7a1 1 0 1 0 0-2h-7V4a1 1 0 1 0-2 0v7H4a1 1 0 1 0 0 2h7z\"/></g></svg>",
+            "semantic": {
+              "label": "Add",
+              "source_name": "add",
+              "depicts": "plus sign made from one vertical and one horizontal stroke",
+              "semantic_tags": [
+                "add",
+                "plus",
+                "create",
+                "increase"
+              ],
+              "synonyms": [
+                "plus",
+                "add item",
+                "create new"
+              ],
+              "use_when": "Use for add concepts, search results, filters, labels, or UI actions where add, plus, create is the intended meaning.",
+              "avoid_when": "Do not use for unrelated add wording when the UI needs a different object, action, brand, status, or navigation meaning."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "plus_line",
+              "library": "mingcute",
+              "name": "plus",
+              "style": "outline",
+              "label": "Plus",
+              "semantic_fit": "Strong fit for Create action: visually reads as centered plus sign with equal-length vertical and horizontal bars. Use when the interface refers directly to plus as an object, concept, or themed surface cue.",
+              "why_selected": "Plus matches Create action and visually reads as centered plus sign with equal-length vertical and horizontal bars.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4h4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h4zm4 0h-2v5a1 1 0 0 1-1 1H5v2h5a1 1 0 0 1 1 1v5h2v-5a1 1 0 0 1 1-1h5v-2h-5a1 1 0 0 1-1-1z\"/></g></svg>",
+              "semantic": {
+                "label": "Plus",
+                "source_name": "plus",
+                "depicts": "Centered plus sign with equal-length vertical and horizontal bars",
+                "semantic_tags": [
+                  "plus"
+                ],
+                "synonyms": [
+                  "plus"
+                ],
+                "use_when": "Use when the interface refers directly to plus as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "add_circle_line",
+              "library": "mingcute",
+              "name": "add circle",
+              "style": "outline",
+              "label": "Add Circle",
+              "semantic_fit": "Strong fit for Create action: visually reads as plus sign centered inside a circular outline. Use for add circle concepts, search results, filters, labels, or UI actions where add, plus, circle is the intended meaning.",
+              "why_selected": "Add Circle matches Create action and visually reads as plus sign centered inside a circular outline.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2m0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16m0 3a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H8a1 1 0 1 1 0-2h3V8a1 1 0 0 1 1-1\"/></g></svg>",
+              "semantic": {
+                "label": "Add Circle",
+                "source_name": "add_circle",
+                "depicts": "plus sign centered inside a circular outline",
+                "semantic_tags": [
+                  "add",
+                  "plus",
+                  "circle",
+                  "create"
+                ],
+                "synonyms": [
+                  "add circle",
+                  "new item",
+                  "plus in circle"
+                ],
+                "use_when": "Use for add circle concepts, search results, filters, labels, or UI actions where add, plus, circle is the intended meaning.",
+                "avoid_when": "Do not use for unrelated add circle wording when the UI needs a different object, action, brand, status, or navigation meaning."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Alerts tab",
+          "expected_icon_ids": [
+            "mingcute:notification_line"
+          ],
+          "recommended_icon_id": "mingcute:notification_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "alerts tab",
+            "alerts tab replace the 4 bottom navigation icons buttons show me the preview before implementation",
+            "notification",
+            "bell",
+            "alert",
+            "alarm"
+          ],
+          "recommended": {
+            "id": "notification_line",
+            "library": "mingcute",
+            "name": "notification",
+            "style": "outline",
+            "label": "Notifications",
+            "semantic_fit": "Strong fit for Alerts tab: visually reads as a bell-based notification symbol.. Use when the interface shows notification status, unread alerts, or muted notification state.",
+            "why_selected": "Notifications matches Alerts tab and visually reads as a bell-based notification symbol..",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2.001 2.001 0 0 1-.212-.894V9a5 5 0 0 0-5-5\"/></g></svg>",
+            "semantic": {
+              "label": "Notifications",
+              "source_name": "notification",
+              "depicts": "A bell-based notification symbol.",
+              "semantic_tags": [
+                "notification",
+                "alert",
+                "bell",
+                "inbox status",
+                "attention"
+              ],
+              "synonyms": [
+                "notifications",
+                "alerts",
+                "notification state",
+                "bell status"
+              ],
+              "use_when": "Use when the interface shows notification status, unread alerts, or muted notification state.",
+              "avoid_when": "Do not use for general warning states when the meaning is specifically notifications."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "notification_off_line",
+              "library": "mingcute",
+              "name": "notification off",
+              "style": "outline",
+              "label": "Notifications Off",
+              "semantic_fit": "Strong fit for Alerts tab: visually reads as bell outline with a diagonal slash crossing from upper left to lower right. Use when alerts or notifications are muted disabled or intentionally turned off in the current surface.",
+              "why_selected": "Notifications Off matches Alerts tab and visually reads as bell outline with a diagonal slash crossing from upper left to lower right.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M0 0h24v24H0z\"/><path fill=\"currentColor\" d=\"m5.025 8.429 1.977 1.977v2.122a3 3 0 0 1-.317 1.342L5.62 16h6.976l2.916 2.916A4.002 4.002 0 0 1 8.126 18H4.164a1.1 1.1 0 0 1-.984-1.592l1.716-3.433a1 1 0 0 0 .106-.447V9c0-.192.008-.383.023-.571M12.002 2a7 7 0 0 1 7 7v3.528a1 1 0 0 0 .105.447l1.717 3.433A1.1 1.1 0 0 1 19.84 18h-.426l1.071 1.071a1 1 0 0 1-1.414 1.414L3.515 4.93a1 1 0 1 1 1.414-1.414l1.393 1.393A6.99 6.99 0 0 1 12.002 2m1.73 16h-3.464a2 2 0 0 0 3.464 0m-1.73-14a4.997 4.997 0 0 0-4.24 2.348L17.414 16h.97l-1.065-2.13a3 3 0 0 1-.317-1.342V9a5 5 0 0 0-5-5\"/></g></svg>",
+              "semantic": {
+                "label": "Notifications Off",
+                "source_name": "notification_off",
+                "depicts": "Bell outline with a diagonal slash crossing from upper left to lower right",
+                "semantic_tags": [
+                  "alert",
+                  "attention",
+                  "bell",
+                  "disabled bell",
+                  "inbox status",
+                  "muted alerts",
+                  "notification",
+                  "notifications off"
+                ],
+                "synonyms": [
+                  "alerts",
+                  "bell status",
+                  "disabled bell",
+                  "muted alerts",
+                  "notification state",
+                  "notifications off"
+                ],
+                "use_when": "Use when alerts or notifications are muted disabled or intentionally turned off in the current surface.",
+                "avoid_when": "Do not use for silent audio or generic disable actions when the visible object is specifically a bell."
+              }
+            },
+            {
+              "id": "notification_newdot_line",
+              "library": "mingcute",
+              "name": "notification newdot",
+              "style": "outline",
+              "label": "New Notification",
+              "semantic_fit": "Strong fit for Alerts tab: visually reads as a bell-based notification symbol.. Use when the interface shows notification status, unread alerts, or muted notification state.",
+              "why_selected": "New Notification matches Alerts tab and visually reads as a bell-based notification symbol..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M5 9a7 7 0 0 1 7.582-6.976 1 1 0 1 1-.164 1.993A5 5 0 0 0 7 9v3.528a3 3 0 0 1-.317 1.342L5.618 16h12.764l-1.065-2.13A3.001 3.001 0 0 1 17 12.528V11A1 1 0 0 1 19 11v1.528a1 1 0 0 0 .105.447l1.717 3.433A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592l1.716-3.433A1 1 0 0 0 5 12.528zm5.268 9a2 2 0 0 0 3.464 0zM17.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M14 5.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0\"/></g></svg>",
+              "semantic": {
+                "label": "New Notification",
+                "source_name": "notification_newdot",
+                "depicts": "A bell-based notification symbol.",
+                "semantic_tags": [
+                  "notification",
+                  "alert",
+                  "bell",
+                  "inbox status",
+                  "attention"
+                ],
+                "synonyms": [
+                  "new notification",
+                  "alerts",
+                  "notification state",
+                  "bell status"
+                ],
+                "use_when": "Use when the interface shows notification status, unread alerts, or muted notification state.",
+                "avoid_when": "Do not use for general warning states when the meaning is specifically notifications."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Profile tab",
+          "expected_icon_ids": [
+            "mingcute:user_1_line"
+          ],
+          "recommended_icon_id": "mingcute:user_1_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "profile tab",
+            "profile tab replace the 4 bottom navigation icons buttons show me the preview before implementation",
+            "profile user account person avatar",
+            "user profile",
+            "account user",
+            "avatar person"
+          ],
+          "recommended": {
+            "id": "user_1_line",
+            "library": "mingcute",
+            "name": "user 1",
+            "style": "outline",
+            "label": "User",
+            "semantic_fit": "Strong fit for Profile tab: visually reads as round head above a curved shoulder line with short side arms. Use when the interface needs a simple generic person or account profile symbol without a border.",
+            "why_selected": "User matches Profile tab and visually reads as round head above a curved shoulder line with short side arms.",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M16 14a5 5 0 0 1 4.995 4.783L21 19v2a1 1 0 0 1-1.993.117L19 21v-2a3 3 0 0 0-2.824-2.995L16 16H8a3 3 0 0 0-2.995 2.824L5 19v2a1 1 0 0 1-1.993.117L3 21v-2a5 5 0 0 1 4.783-4.995L8 14zM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6\"/></g></svg>",
+            "semantic": {
+              "label": "User",
+              "source_name": "user_1",
+              "depicts": "Round head above a curved shoulder line with short side arms",
+              "semantic_tags": [
+                "account",
+                "account avatar",
+                "member",
+                "person",
+                "person outline",
+                "profile",
+                "user",
+                "user profile"
+              ],
+              "synonyms": [
+                "account",
+                "account avatar",
+                "member",
+                "person",
+                "person outline",
+                "profile",
+                "user",
+                "user profile"
+              ],
+              "use_when": "Use when the interface needs a simple generic person or account profile symbol without a border.",
+              "avoid_when": "Do not use when another user variant with a circular border flat bar or square head is required."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "user_4_line",
+              "library": "mingcute",
+              "name": "user 4",
+              "style": "outline",
+              "label": "User",
+              "semantic_fit": "Strong fit for Profile tab: visually reads as small person bust centered inside a circular profile border ring. Use when the interface needs a profile icon contained inside a circular badge or account frame.",
+              "why_selected": "User matches Profile tab and visually reads as small person bust centered inside a circular profile border ring.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 2c5.523 0 10 4.477 10 10a9.959 9.959 0 0 1-2.258 6.33l.02.022-.132.112A9.978 9.978 0 0 1 12 22c-2.95 0-5.6-1.277-7.43-3.307l-.2-.23-.132-.11.02-.024A9.958 9.958 0 0 1 2 12C2 6.477 6.477 2 12 2m0 15c-1.86 0-3.541.592-4.793 1.406A7.965 7.965 0 0 0 12 20a7.965 7.965 0 0 0 4.793-1.594A8.897 8.897 0 0 0 12 17m0-13a8 8 0 0 0-6.258 12.984C7.363 15.821 9.575 15 12 15s4.637.821 6.258 1.984A8 8 0 0 0 12 4m0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4\"/></g></svg>",
+              "semantic": {
+                "label": "User",
+                "source_name": "user_4",
+                "depicts": "Small person bust centered inside a circular profile border ring",
+                "semantic_tags": [
+                  "account",
+                  "account ring",
+                  "member",
+                  "person",
+                  "profile",
+                  "profile badge",
+                  "user",
+                  "user in circle"
+                ],
+                "synonyms": [
+                  "account",
+                  "account ring",
+                  "member",
+                  "person",
+                  "profile",
+                  "profile badge",
+                  "user",
+                  "user in circle"
+                ],
+                "use_when": "Use when the interface needs a profile icon contained inside a circular badge or account frame.",
+                "avoid_when": "Do not use for the unframed user silhouettes when the enclosing circular border would be visually misleading."
+              }
+            },
+            {
+              "id": "user_3_line",
+              "library": "mingcute",
+              "name": "user 3",
+              "style": "outline",
+              "label": "User",
+              "semantic_fit": "Strong fit for Profile tab: visually reads as round head above a pointed oval shoulder ring with an open center. Use when the interface wants a softer profile silhouette built from an oval shoulder ring under the head.",
+              "why_selected": "User matches Profile tab and visually reads as round head above a pointed oval shoulder ring with an open center.",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 13c2.396 0 4.575.694 6.178 1.672.8.488 1.484 1.064 1.978 1.69.486.615.844 1.351.844 2.138 0 .845-.411 1.511-1.003 1.986-.56.45-1.299.748-2.084.956-1.578.417-3.684.558-5.913.558s-4.335-.14-5.913-.558c-.785-.208-1.524-.506-2.084-.956C3.41 20.01 3 19.345 3 18.5c0-.787.358-1.523.844-2.139.494-.625 1.177-1.2 1.978-1.69C7.425 13.695 9.605 13 12 13m0 2c-2.023 0-3.843.59-5.136 1.379-.647.394-1.135.822-1.45 1.222-.324.41-.414.72-.414.899 0 .122.037.251.255.426.249.2.682.407 1.344.582C7.917 19.858 9.811 20 12 20c2.19 0 4.083-.143 5.4-.492.663-.175 1.096-.382 1.345-.582.218-.175.255-.304.255-.426 0-.18-.09-.489-.413-.899-.316-.4-.804-.828-1.451-1.222C15.843 15.589 14.023 15 12 15m0-13a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6\"/></g></svg>",
+              "semantic": {
+                "label": "User",
+                "source_name": "user_3",
+                "depicts": "Round head above a pointed oval shoulder ring with an open center",
+                "semantic_tags": [
+                  "account",
+                  "member",
+                  "person",
+                  "person ring",
+                  "profile",
+                  "profile symbol",
+                  "user",
+                  "user outline"
+                ],
+                "synonyms": [
+                  "account",
+                  "member",
+                  "person",
+                  "person ring",
+                  "profile",
+                  "profile symbol",
+                  "user",
+                  "user outline"
+                ],
+                "use_when": "Use when the interface wants a softer profile silhouette built from an oval shoulder ring under the head.",
+                "avoid_when": "Do not use when the product needs the flatter body bar bordered circle or square headed user shape."
+              }
+            }
+          ],
+          "matched": true
+        }
+      ]
+    },
+    {
+      "id": "lucide-ai-dashboard",
+      "task": "Choose icons for an AI/ML dashboard sidebar navigation",
+      "library": "lucide",
+      "slot_count": 6,
+      "hit_count": 6,
+      "slot_results": [
+        {
+          "slot": "Model",
+          "expected_icon_ids": [
+            "lucide:brain-circuit",
+            "lucide:brain-cog",
+            "lucide:brain"
+          ],
+          "recommended_icon_id": "lucide:brain-circuit",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "model",
+            "model choose icons for an ai ml dashboard sidebar navigation",
+            "brain circuit",
+            "brain cog",
+            "neural network"
+          ],
+          "recommended": {
+            "id": "brain-circuit",
+            "library": "lucide",
+            "name": "brain circuit",
+            "style": "outline",
+            "label": "AI Reasoning",
+            "semantic_fit": "Strong fit for Model: visually reads as half brain with circuit lines extending right. Strongest in AI, inference, reasoning, automation, or intelligence features.",
+            "why_selected": "AI Reasoning matches Model and visually reads as half brain with circuit lines extending right.",
+            "svg": "<svg class=\"lucide lucide-brain-circuit\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z\" /> <path d=\"M9 13a4.5 4.5 0 0 0 3-4\" /> <path d=\"M6.003 5.125A3 3 0 0 0 6.401 6.5\" /> <path d=\"M3.477 10.896a4 4 0 0 1 .585-.396\" /> <path d=\"M6 18a4 4 0 0 1-1.967-.516\" /> <path d=\"M12 13h4\" /> <path d=\"M12 18h6a2 2 0 0 1 2 2v1\" /> <path d=\"M12 8h8\" /> <path d=\"M16 8V5a2 2 0 0 1 2-2\" /> <circle cx=\"16\" cy=\"13\" r=\".5\" /> <circle cx=\"18\" cy=\"3\" r=\".5\" /> <circle cx=\"20\" cy=\"21\" r=\".5\" /> <circle cx=\"20\" cy=\"8\" r=\".5\" /> </svg>",
+            "semantic": {
+              "label": "AI Reasoning",
+              "source_name": "brain-circuit",
+              "depicts": "Half brain with circuit lines extending right",
+              "semantic_tags": [
+                "ai",
+                "brain plus circuitry",
+                "cognition",
+                "cognitive processing",
+                "intelligence",
+                "model",
+                "reasoning",
+                "smart automation"
+              ],
+              "synonyms": [
+                "ai reasoning",
+                "ai thinking",
+                "brain plus circuitry",
+                "cognitive processing",
+                "cognitive step",
+                "model reasoning",
+                "neural processing",
+                "smart automation"
+              ],
+              "use_when": "Strongest in AI, inference, reasoning, automation, or intelligence features.",
+              "avoid_when": "It can be read either as AI reasoning or more broadly as intelligent systems."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "brain-cog",
+              "library": "lucide",
+              "name": "brain cog",
+              "style": "outline",
+              "label": "Brain Cog",
+              "semantic_fit": "Strong fit for Model: visually reads as brain outline with a gear cog inside it. Use when the interface refers directly to brain cog as an object, concept, or themed surface cue.",
+              "why_selected": "Brain Cog matches Model and visually reads as brain outline with a gear cog inside it.",
+              "svg": "<svg class=\"lucide lucide-brain-cog\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m10.852 14.772-.383.923\" /> <path d=\"m10.852 9.228-.383-.923\" /> <path d=\"m13.148 14.772.382.924\" /> <path d=\"m13.531 8.305-.383.923\" /> <path d=\"m14.772 10.852.923-.383\" /> <path d=\"m14.772 13.148.923.383\" /> <path d=\"M17.598 6.5A3 3 0 1 0 12 5a3 3 0 0 0-5.63-1.446 3 3 0 0 0-.368 1.571 4 4 0 0 0-2.525 5.771\" /> <path d=\"M17.998 5.125a4 4 0 0 1 2.525 5.771\" /> <path d=\"M19.505 10.294a4 4 0 0 1-1.5 7.706\" /> <path d=\"M4.032 17.483A4 4 0 0 0 11.464 20c.18-.311.892-.311 1.072 0a4 4 0 0 0 7.432-2.516\" /> <path d=\"M4.5 10.291A4 4 0 0 0 6 18\" /> <path d=\"M6.002 5.125a3 3 0 0 0 .4 1.375\" /> <path d=\"m9.228 10.852-.923-.383\" /> <path d=\"m9.228 13.148-.923.383\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" /> </svg>",
+              "semantic": {
+                "label": "Brain Cog",
+                "source_name": "brain_cog",
+                "depicts": "Brain outline with a gear cog inside it",
+                "semantic_tags": [
+                  "brain",
+                  "cog"
+                ],
+                "synonyms": [
+                  "brain",
+                  "cog"
+                ],
+                "use_when": "Use when the interface refers directly to brain cog as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "brain",
+              "library": "lucide",
+              "name": "brain",
+              "style": "outline",
+              "label": "Brain",
+              "semantic_fit": "Strong fit for Model: visually reads as brain shape with left and right hemispheres. Use when the interface needs to suggest reasoning, thinking, or model cognition.",
+              "why_selected": "Brain matches Model and visually reads as brain shape with left and right hemispheres.",
+              "svg": "<svg class=\"lucide lucide-brain\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 18V5\" /> <path d=\"M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4\" /> <path d=\"M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5\" /> <path d=\"M17.997 5.125a4 4 0 0 1 2.526 5.77\" /> <path d=\"M18 18a4 4 0 0 0 2-7.464\" /> <path d=\"M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517\" /> <path d=\"M6 18a4 4 0 0 1-2-7.464\" /> <path d=\"M6.003 5.125a4 4 0 0 0-2.526 5.77\" /> </svg>",
+              "semantic": {
+                "label": "Brain",
+                "source_name": "brain",
+                "depicts": "Brain shape with left and right hemispheres",
+                "semantic_tags": [
+                  "thinking",
+                  "reasoning",
+                  "cognition",
+                  "ai",
+                  "model"
+                ],
+                "use_when": "Use when the interface needs to suggest reasoning, thinking, or model cognition.",
+                "avoid_when": "Do not use as a generic AI logo if the flow needs a more specific agent or state icon."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Prompt",
+          "expected_icon_ids": [
+            "lucide:message-square-text",
+            "lucide:text-cursor-input",
+            "lucide:terminal"
+          ],
+          "recommended_icon_id": "lucide:text-cursor-input",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "prompt",
+            "prompt choose icons for an ai ml dashboard sidebar navigation",
+            "message text",
+            "terminal",
+            "input text",
+            "text cursor",
+            "text input"
+          ],
+          "recommended": {
+            "id": "text-cursor-input",
+            "library": "lucide",
+            "name": "text cursor input",
+            "style": "outline",
+            "label": "Text Cursor Input",
+            "semantic_fit": "Strong fit for Prompt: visually reads as i-beam text cursor beside a horizontal text line. Use when the interface refers directly to text cursor input as an object, concept, or themed surface cue.",
+            "why_selected": "Text Cursor Input matches Prompt and visually reads as i-beam text cursor beside a horizontal text line.",
+            "svg": "<svg class=\"lucide lucide-text-cursor-input\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6\" /> <path d=\"M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7\" /> <path d=\"M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1\" /> <path d=\"M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1\" /> <path d=\"M9 6v12\" /> </svg>",
+            "semantic": {
+              "label": "Text Cursor Input",
+              "source_name": "text_cursor_input",
+              "depicts": "I-beam text cursor beside a horizontal text line",
+              "semantic_tags": [
+                "text",
+                "cursor",
+                "input"
+              ],
+              "synonyms": [
+                "text",
+                "cursor",
+                "input"
+              ],
+              "use_when": "Use when the interface refers directly to text cursor input as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "message-square-text",
+              "library": "lucide",
+              "name": "message square text",
+              "style": "outline",
+              "label": "Message",
+              "semantic_fit": "Strong fit for Prompt: visually reads as a square speech bubble with horizontal text lines inside. Use when the interface refers to communication, message handling, email, or sending content out.",
+              "why_selected": "Message matches Prompt and visually reads as a square speech bubble with horizontal text lines inside.",
+              "svg": "<svg class=\"lucide lucide-message-square-text\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z\" /> <path d=\"M7 11h10\" /> <path d=\"M7 15h6\" /> <path d=\"M7 7h8\" /> </svg>",
+              "semantic": {
+                "label": "Message",
+                "source_name": "message_square_text",
+                "depicts": "A square speech bubble with horizontal text lines inside",
+                "semantic_tags": [
+                  "message",
+                  "square",
+                  "text",
+                  "communication"
+                ],
+                "synonyms": [
+                  "message",
+                  "mail",
+                  "send",
+                  "message message",
+                  "square message",
+                  "text message"
+                ],
+                "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+                "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action."
+              }
+            },
+            {
+              "id": "terminal",
+              "library": "lucide",
+              "name": "terminal",
+              "style": "outline",
+              "label": "Terminal",
+              "semantic_fit": "Strong fit for Prompt: visually reads as greater-than symbol with horizontal dash below. Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+              "why_selected": "Terminal matches Prompt and visually reads as greater-than symbol with horizontal dash below.",
+              "svg": "<svg class=\"lucide lucide-terminal\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 19h8\" /> <path d=\"m4 17 6-6-6-6\" /> </svg>",
+              "semantic": {
+                "label": "Terminal",
+                "source_name": "terminal",
+                "depicts": "Greater-than symbol with horizontal dash below",
+                "semantic_tags": [
+                  "terminal",
+                  "command line",
+                  "shell",
+                  "developer tool",
+                  "console"
+                ],
+                "synonyms": [
+                  "shell",
+                  "console",
+                  "command line",
+                  "terminal session"
+                ],
+                "use_when": "Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+                "avoid_when": "Do not use for chat or generic code views when the meaning is specifically terminal access."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Dataset",
+          "expected_icon_ids": [
+            "lucide:database",
+            "lucide:table-2",
+            "lucide:table-cells-split",
+            "lucide:table-columns-split",
+            "lucide:table-rows-split"
+          ],
+          "recommended_icon_id": "lucide:table-columns-split",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "dataset",
+            "dataset choose icons for an ai ml dashboard sidebar navigation",
+            "data table",
+            "database",
+            "grid rows columns",
+            "table"
+          ],
+          "recommended": {
+            "id": "table-columns-split",
+            "library": "lucide",
+            "name": "table columns split",
+            "style": "outline",
+            "label": "Table Columns Split",
+            "semantic_fit": "Strong fit for Dataset: visually reads as table columns separated by a dashed vertical divider. Use when the interface refers directly to table columns split as an object, concept, or themed surface cue.",
+            "why_selected": "Table Columns Split matches Dataset and visually reads as table columns separated by a dashed vertical divider.",
+            "svg": "<svg class=\"lucide lucide-table-columns-split\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M14 14v2\" /> <path d=\"M14 20v2\" /> <path d=\"M14 2v2\" /> <path d=\"M14 8v2\" /> <path d=\"M2 15h8\" /> <path d=\"M2 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2\" /> <path d=\"M2 9h8\" /> <path d=\"M22 15h-4\" /> <path d=\"M22 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2\" /> <path d=\"M22 9h-4\" /> <path d=\"M5 3v18\" /> </svg>",
+            "semantic": {
+              "label": "Table Columns Split",
+              "source_name": "table_columns_split",
+              "depicts": "Table columns separated by a dashed vertical divider",
+              "semantic_tags": [
+                "table",
+                "columns",
+                "split"
+              ],
+              "synonyms": [
+                "table",
+                "columns",
+                "split"
+              ],
+              "use_when": "Use when the interface refers directly to table columns split as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "table-rows-split",
+              "library": "lucide",
+              "name": "table rows split",
+              "style": "outline",
+              "label": "Table Rows Split",
+              "semantic_fit": "Strong fit for Dataset: visually reads as table rows separated by dashed horizontal dividers. Use when the interface refers directly to table rows split as an object, concept, or themed surface cue.",
+              "why_selected": "Table Rows Split matches Dataset and visually reads as table rows separated by dashed horizontal dividers.",
+              "svg": "<svg class=\"lucide lucide-table-rows-split\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M14 10h2\" /> <path d=\"M15 22v-8\" /> <path d=\"M15 2v4\" /> <path d=\"M2 10h2\" /> <path d=\"M20 10h2\" /> <path d=\"M3 19h18\" /> <path d=\"M3 22v-6a2 2 135 0 1 2-2h14a2 2 45 0 1 2 2v6\" /> <path d=\"M3 2v2a2 2 45 0 0 2 2h14a2 2 135 0 0 2-2V2\" /> <path d=\"M8 10h2\" /> <path d=\"M9 22v-8\" /> <path d=\"M9 2v4\" /> </svg>",
+              "semantic": {
+                "label": "Table Rows Split",
+                "source_name": "table_rows_split",
+                "depicts": "Table rows separated by dashed horizontal dividers",
+                "semantic_tags": [
+                  "table",
+                  "rows",
+                  "split"
+                ],
+                "synonyms": [
+                  "table",
+                  "rows",
+                  "split"
+                ],
+                "use_when": "Use when the interface refers directly to table rows split as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "database",
+              "library": "lucide",
+              "name": "database",
+              "style": "outline",
+              "label": "Data Store",
+              "semantic_fit": "Strong fit for Dataset: visually reads as a cylindrical shape with two horizontal bands.. Use when the interface refers to structured data, stored records, or organized data collections.",
+              "why_selected": "Data Store matches Dataset and visually reads as a cylindrical shape with two horizontal bands..",
+              "svg": "<svg class=\"lucide lucide-database\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" /> <path d=\"M3 12A9 3 0 0 0 21 12\" /> </svg>",
+              "semantic": {
+                "label": "Data Store",
+                "source_name": "database",
+                "depicts": "A cylindrical shape with two horizontal bands.",
+                "semantic_tags": [
+                  "database",
+                  "data store",
+                  "records",
+                  "structured data",
+                  "storage"
+                ],
+                "synonyms": [
+                  "data store",
+                  "structured storage",
+                  "records database",
+                  "data source"
+                ],
+                "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+                "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Evaluation",
+          "expected_icon_ids": [
+            "lucide:chart-bar",
+            "lucide:bar-chart-3",
+            "lucide:bar-chart-big",
+            "lucide:gauge"
+          ],
+          "recommended_icon_id": "lucide:chart-bar",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "evaluation",
+            "evaluation choose icons for an ai ml dashboard sidebar navigation",
+            "metrics chart",
+            "bar chart",
+            "gauge",
+            "benchmark",
+            "checklist"
+          ],
+          "recommended": {
+            "id": "chart-bar",
+            "library": "lucide",
+            "name": "chart bar",
+            "style": "outline",
+            "label": "Chart Bar",
+            "semantic_fit": "Strong fit for Evaluation: visually reads as bar chart with three horizontal bars. Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+            "why_selected": "Chart Bar matches Evaluation and visually reads as bar chart with three horizontal bars.",
+            "svg": "<svg class=\"lucide lucide-chart-bar\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M7 16h8\" /> <path d=\"M7 11h12\" /> <path d=\"M7 6h3\" /> </svg>",
+            "semantic": {
+              "label": "Chart Bar",
+              "source_name": "chart_bar",
+              "depicts": "Bar chart with three horizontal bars",
+              "semantic_tags": [
+                "chart",
+                "bar"
+              ],
+              "synonyms": [
+                "chart",
+                "bar"
+              ],
+              "use_when": "Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "bar-chart-3",
+              "library": "lucide",
+              "name": "bar chart 3",
+              "style": "outline",
+              "label": "Bar Chart",
+              "semantic_fit": "Strong fit for Evaluation: visually reads as four vertical bars with an l-shaped axis frame. Use when the interface refers directly to bar chart as an object, concept, or themed surface cue.",
+              "why_selected": "Bar Chart matches Evaluation and visually reads as four vertical bars with an l-shaped axis frame.",
+              "svg": "<svg class=\"lucide lucide-bar-chart-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M18 17V9\" /> <path d=\"M13 17V5\" /> <path d=\"M8 17v-3\" /> </svg>",
+              "semantic": {
+                "label": "Bar Chart",
+                "source_name": "bar_chart_3",
+                "depicts": "Four vertical bars with an L-shaped axis frame",
+                "semantic_tags": [
+                  "bar",
+                  "chart",
+                  "3"
+                ],
+                "synonyms": [
+                  "bar",
+                  "chart",
+                  "3"
+                ],
+                "use_when": "Use when the interface refers directly to bar chart as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "bar-chart-4",
+              "library": "lucide",
+              "name": "bar chart 4",
+              "style": "outline",
+              "label": "Bar Chart",
+              "semantic_fit": "Strong fit for Evaluation: visually reads as four vertical bars of varying heights with an l-shaped axis frame. Use when the interface refers directly to bar chart as an object, concept, or themed surface cue.",
+              "why_selected": "Bar Chart matches Evaluation and visually reads as four vertical bars of varying heights with an l-shaped axis frame.",
+              "svg": "<svg class=\"lucide lucide-bar-chart-4\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M13 17V9\" /> <path d=\"M18 17V5\" /> <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M8 17v-3\" /> </svg>",
+              "semantic": {
+                "label": "Bar Chart",
+                "source_name": "bar_chart_4",
+                "depicts": "Four vertical bars of varying heights with an L-shaped axis frame",
+                "semantic_tags": [
+                  "bar",
+                  "chart",
+                  "4"
+                ],
+                "synonyms": [
+                  "bar",
+                  "chart",
+                  "4"
+                ],
+                "use_when": "Use when the interface refers directly to bar chart as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Deployment",
+          "expected_icon_ids": [
+            "lucide:cloud-upload",
+            "lucide:upload-cloud",
+            "lucide:upload",
+            "lucide:rocket"
+          ],
+          "recommended_icon_id": "lucide:upload-cloud",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "deployment",
+            "deployment choose icons for an ai ml dashboard sidebar navigation",
+            "cloud upload",
+            "upload",
+            "server",
+            "package",
+            "send",
+            "rocket launch",
+            "server upload"
+          ],
+          "recommended": {
+            "id": "upload-cloud",
+            "library": "lucide",
+            "name": "upload cloud",
+            "style": "outline",
+            "label": "Upload File",
+            "semantic_fit": "Strong fit for Deployment: visually reads as cloud with an upward-pointing upload arrow. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+            "why_selected": "Upload File matches Deployment and visually reads as cloud with an upward-pointing upload arrow.",
+            "svg": "<svg class=\"lucide lucide-upload-cloud\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 13v8\" /> <path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\" /> <path d=\"m8 17 4-4 4 4\" /> </svg>",
+            "semantic": {
+              "label": "Upload File",
+              "source_name": "upload_cloud",
+              "depicts": "Cloud with an upward-pointing upload arrow",
+              "semantic_tags": [
+                "upload",
+                "cloud",
+                "file"
+              ],
+              "synonyms": [
+                "upload file",
+                "cloud file"
+              ],
+              "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+              "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "cloud-upload",
+              "library": "lucide",
+              "name": "cloud upload",
+              "style": "outline",
+              "label": "Upload File",
+              "semantic_fit": "Strong fit for Deployment: visually reads as cloud with an upward-pointing arrow. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+              "why_selected": "Upload File matches Deployment and visually reads as cloud with an upward-pointing arrow.",
+              "svg": "<svg class=\"lucide lucide-cloud-upload\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 13v8\" /> <path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\" /> <path d=\"m8 17 4-4 4 4\" /> </svg>",
+              "semantic": {
+                "label": "Upload File",
+                "source_name": "cloud_upload",
+                "depicts": "Cloud with an upward-pointing arrow",
+                "semantic_tags": [
+                  "cloud",
+                  "upload",
+                  "file"
+                ],
+                "synonyms": [
+                  "upload file",
+                  "cloud file"
+                ],
+                "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+                "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders."
+              }
+            },
+            {
+              "id": "rocket",
+              "library": "lucide",
+              "name": "rocket",
+              "style": "outline",
+              "label": "Rocket",
+              "semantic_fit": "Strong fit for Deployment: visually reads as a rocket ship with fins and a pointed nose cone.. Use when the interface refers specifically to Rocket as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+              "why_selected": "Rocket matches Deployment and visually reads as a rocket ship with fins and a pointed nose cone..",
+              "svg": "<svg class=\"lucide lucide-rocket\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5\" /> <path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09\" /> <path d=\"M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z\" /> <path d=\"M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05\" /> </svg>",
+              "semantic": {
+                "label": "Rocket",
+                "source_name": "rocket",
+                "depicts": "A rocket ship with fins and a pointed nose cone.",
+                "semantic_tags": [
+                  "rocket",
+                  "brand",
+                  "logo",
+                  "brand platforms"
+                ],
+                "synonyms": [
+                  "Rocket"
+                ],
+                "use_when": "Use when the interface refers specifically to Rocket as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+                "avoid_when": "Do not use as a generic action, status, or non-Rocket product icon when the meaning is not specifically Rocket."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Monitoring",
+          "expected_icon_ids": [
+            "lucide:chart-line",
+            "lucide:line-chart",
+            "lucide:activity",
+            "lucide:gauge"
+          ],
+          "recommended_icon_id": "lucide:line-chart",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "monitoring",
+            "monitoring choose icons for an ai ml dashboard sidebar navigation",
+            "activity",
+            "chart line",
+            "pulse",
+            "dashboard",
+            "gauge",
+            "signal"
+          ],
+          "recommended": {
+            "id": "line-chart",
+            "library": "lucide",
+            "name": "line chart",
+            "style": "outline",
+            "label": "Line Chart",
+            "semantic_fit": "Strong fit for Monitoring: visually reads as rising line chart with data points. Use when the interface refers directly to line chart as an object, concept, or themed surface cue.",
+            "why_selected": "Line Chart matches Monitoring and visually reads as rising line chart with data points.",
+            "svg": "<svg class=\"lucide lucide-line-chart\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"m19 9-5 5-4-4-3 3\" /> </svg>",
+            "semantic": {
+              "label": "Line Chart",
+              "source_name": "line_chart",
+              "depicts": "Rising line chart with data points",
+              "semantic_tags": [
+                "line",
+                "chart"
+              ],
+              "synonyms": [
+                "line",
+                "chart"
+              ],
+              "use_when": "Use when the interface refers directly to line chart as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "chart-line",
+              "library": "lucide",
+              "name": "chart line",
+              "style": "outline",
+              "label": "Chart Line",
+              "semantic_fit": "Strong fit for Monitoring: visually reads as line graph trending upward with axis. Use when the interface refers directly to chart line as an object, concept, or themed surface cue.",
+              "why_selected": "Chart Line matches Monitoring and visually reads as line graph trending upward with axis.",
+              "svg": "<svg class=\"lucide lucide-chart-line\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"m19 9-5 5-4-4-3 3\" /> </svg>",
+              "semantic": {
+                "label": "Chart Line",
+                "source_name": "chart_line",
+                "depicts": "Line graph trending upward with axis",
+                "semantic_tags": [
+                  "chart",
+                  "line"
+                ],
+                "synonyms": [
+                  "chart",
+                  "line"
+                ],
+                "use_when": "Use when the interface refers directly to chart line as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "file-chart-line",
+              "library": "lucide",
+              "name": "file chart line",
+              "style": "outline",
+              "label": "File",
+              "semantic_fit": "Strong fit for Monitoring: visually reads as document file with a line chart and check mark. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+              "why_selected": "File matches Monitoring and visually reads as document file with a line chart and check mark.",
+              "svg": "<svg class=\"lucide lucide-file-chart-line\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"m16 13-3.5 3.5-2-2L8 17\" /> </svg>",
+              "semantic": {
+                "label": "File",
+                "source_name": "file_chart_line",
+                "depicts": "Document file with a line chart and check mark",
+                "semantic_tags": [
+                  "file",
+                  "chart",
+                  "line"
+                ],
+                "synonyms": [
+                  "file",
+                  "file file",
+                  "chart file",
+                  "line file"
+                ],
+                "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+                "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders."
+              }
+            }
+          ],
+          "matched": true
+        }
+      ]
+    },
+    {
+      "id": "lucide-admin-sidebar",
+      "task": "Choose icons for an admin sidebar navigation",
+      "library": "lucide",
+      "slot_count": 5,
+      "hit_count": 5,
+      "slot_results": [
+        {
+          "slot": "Users",
+          "expected_icon_ids": [
+            "lucide:users",
+            "lucide:users-2",
+            "lucide:user-round",
+            "lucide:user"
+          ],
+          "recommended_icon_id": "lucide:users",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "users",
+            "users choose icons for an admin sidebar navigation",
+            "user profile",
+            "account user",
+            "avatar person"
+          ],
+          "recommended": {
+            "id": "users",
+            "library": "lucide",
+            "name": "users",
+            "style": "outline",
+            "label": "Users",
+            "semantic_fit": "Strong fit for Users: visually reads as two user silhouettes side by side. Use when the interface refers directly to users as an object, concept, or themed surface cue.",
+            "why_selected": "Users matches Users and visually reads as two user silhouettes side by side.",
+            "svg": "<svg class=\"lucide lucide-users\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> </svg>",
+            "semantic": {
+              "label": "Users",
+              "source_name": "users",
+              "depicts": "Two user silhouettes side by side",
+              "semantic_tags": [
+                "users"
+              ],
+              "synonyms": [
+                "users"
+              ],
+              "use_when": "Use when the interface refers directly to users as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "users-2",
+              "library": "lucide",
+              "name": "users 2",
+              "style": "outline",
+              "label": "Users",
+              "semantic_fit": "Strong fit for Users: visually reads as two alternate user silhouettes side by side. Use when the interface refers directly to users as an object, concept, or themed surface cue.",
+              "why_selected": "Users matches Users and visually reads as two alternate user silhouettes side by side.",
+              "svg": "<svg class=\"lucide lucide-users-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M18 21a8 8 0 0 0-16 0\" /> <circle cx=\"10\" cy=\"8\" r=\"5\" /> <path d=\"M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3\" /> </svg>",
+              "semantic": {
+                "label": "Users",
+                "source_name": "users_2",
+                "depicts": "Two alternate user silhouettes side by side",
+                "semantic_tags": [
+                  "users",
+                  "2"
+                ],
+                "synonyms": [
+                  "users",
+                  "2"
+                ],
+                "use_when": "Use when the interface refers directly to users as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "users-round",
+              "library": "lucide",
+              "name": "users round",
+              "style": "outline",
+              "label": "Users Round",
+              "semantic_fit": "Strong fit for Users: visually reads as two rounded user silhouettes side by side. Use when the interface refers directly to users round as an object, concept, or themed surface cue.",
+              "why_selected": "Users Round matches Users and visually reads as two rounded user silhouettes side by side.",
+              "svg": "<svg class=\"lucide lucide-users-round\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M18 21a8 8 0 0 0-16 0\" /> <circle cx=\"10\" cy=\"8\" r=\"5\" /> <path d=\"M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3\" /> </svg>",
+              "semantic": {
+                "label": "Users Round",
+                "source_name": "users_round",
+                "depicts": "Two rounded user silhouettes side by side",
+                "semantic_tags": [
+                  "users",
+                  "round"
+                ],
+                "synonyms": [
+                  "users",
+                  "round"
+                ],
+                "use_when": "Use when the interface refers directly to users round as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Billing",
+          "expected_icon_ids": [
+            "lucide:credit-card",
+            "lucide:receipt",
+            "lucide:wallet"
+          ],
+          "recommended_icon_id": "lucide:credit-card",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "billing",
+            "billing choose icons for an admin sidebar navigation",
+            "credit card",
+            "receipt",
+            "invoice",
+            "payment",
+            "wallet"
+          ],
+          "recommended": {
+            "id": "credit-card",
+            "library": "lucide",
+            "name": "credit card",
+            "style": "outline",
+            "label": "Credit Card",
+            "semantic_fit": "Strong fit for Billing: visually reads as rectangular credit card with a magnetic stripe. Use when the interface refers directly to credit card as an object, concept, or themed surface cue.",
+            "why_selected": "Credit Card matches Billing and visually reads as rectangular credit card with a magnetic stripe.",
+            "svg": "<svg class=\"lucide lucide-credit-card\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\" /> <line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\" /> </svg>",
+            "semantic": {
+              "label": "Credit Card",
+              "source_name": "credit_card",
+              "depicts": "Rectangular credit card with a magnetic stripe",
+              "semantic_tags": [
+                "credit",
+                "card"
+              ],
+              "synonyms": [
+                "credit",
+                "card"
+              ],
+              "use_when": "Use when the interface refers directly to credit card as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "wallet-cards",
+              "library": "lucide",
+              "name": "wallet cards",
+              "style": "outline",
+              "label": "Wallet Cards",
+              "semantic_fit": "Strong fit for Billing: visually reads as wallet or card holder with stacked cards. Use when the interface refers directly to wallet cards as an object, concept, or themed surface cue.",
+              "why_selected": "Wallet Cards matches Billing and visually reads as wallet or card holder with stacked cards.",
+              "svg": "<svg class=\"lucide lucide-wallet-cards\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2\" /> <path d=\"M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21\" /> </svg>",
+              "semantic": {
+                "label": "Wallet Cards",
+                "source_name": "wallet_cards",
+                "depicts": "Wallet or card holder with stacked cards",
+                "semantic_tags": [
+                  "wallet",
+                  "cards"
+                ],
+                "synonyms": [
+                  "wallet",
+                  "cards"
+                ],
+                "use_when": "Use when the interface refers directly to wallet cards as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "receipt-indian-rupee",
+              "library": "lucide",
+              "name": "receipt indian rupee",
+              "style": "outline",
+              "label": "Receipt Indian Rupee",
+              "semantic_fit": "Strong fit for Billing: visually reads as receipt with an indian rupee symbol. Use when the interface refers directly to receipt indian rupee as an object, concept, or themed surface cue.",
+              "why_selected": "Receipt Indian Rupee matches Billing and visually reads as receipt with an indian rupee symbol.",
+              "svg": "<svg class=\"lucide lucide-receipt-indian-rupee\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z\" /> <path d=\"M8 11h8\" /> <path d=\"M8 7h8\" /> <path d=\"M9 7a4 4 0 0 1 0 8H8l3 2\" /> </svg>",
+              "semantic": {
+                "label": "Receipt Indian Rupee",
+                "source_name": "receipt_indian_rupee",
+                "depicts": "Receipt with an Indian rupee symbol",
+                "semantic_tags": [
+                  "receipt",
+                  "indian",
+                  "rupee"
+                ],
+                "synonyms": [
+                  "receipt",
+                  "indian",
+                  "rupee"
+                ],
+                "use_when": "Use when the interface refers directly to receipt indian rupee as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Database",
+          "expected_icon_ids": [
+            "lucide:database",
+            "lucide:database-backup",
+            "lucide:database-search"
+          ],
+          "recommended_icon_id": "lucide:database",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "database",
+            "database choose icons for an admin sidebar navigation",
+            "server database",
+            "data storage"
+          ],
+          "recommended": {
+            "id": "database",
+            "library": "lucide",
+            "name": "database",
+            "style": "outline",
+            "label": "Data Store",
+            "semantic_fit": "Strong fit for Database: visually reads as a cylindrical shape with two horizontal bands.. Use when the interface refers to structured data, stored records, or organized data collections.",
+            "why_selected": "Data Store matches Database and visually reads as a cylindrical shape with two horizontal bands..",
+            "svg": "<svg class=\"lucide lucide-database\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" /> <path d=\"M3 12A9 3 0 0 0 21 12\" /> </svg>",
+            "semantic": {
+              "label": "Data Store",
+              "source_name": "database",
+              "depicts": "A cylindrical shape with two horizontal bands.",
+              "semantic_tags": [
+                "database",
+                "data store",
+                "records",
+                "structured data",
+                "storage"
+              ],
+              "synonyms": [
+                "data store",
+                "structured storage",
+                "records database",
+                "data source"
+              ],
+              "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+              "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "database-zap",
+              "library": "lucide",
+              "name": "database zap",
+              "style": "outline",
+              "label": "Fast Data Operation",
+              "semantic_fit": "Strong fit for Database: visually reads as a cylinder with a lightning bolt overlapping it.. Strongest in storage systems, database actions, cache operations, or performance-focused technical surfaces.",
+              "why_selected": "Fast Data Operation matches Database and visually reads as a cylinder with a lightning bolt overlapping it..",
+              "svg": "<svg class=\"lucide lucide-database-zap\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 15 21.84\" /> <path d=\"M21 5V8\" /> <path d=\"M21 12L18 17H22L19 22\" /> <path d=\"M3 12A9 3 0 0 0 14.59 14.87\" /> </svg>",
+              "semantic": {
+                "label": "Fast Data Operation",
+                "source_name": "database-zap",
+                "depicts": "A cylinder with a lightning bolt overlapping it.",
+                "semantic_tags": [
+                  "accelerated database",
+                  "accelerated storage",
+                  "data burst",
+                  "database",
+                  "database speed",
+                  "fast data",
+                  "powered data",
+                  "speed"
+                ],
+                "synonyms": [
+                  "accelerated database",
+                  "accelerated storage",
+                  "data burst",
+                  "database speed",
+                  "fast data operation",
+                  "powered storage"
+                ],
+                "use_when": "Strongest in storage systems, database actions, cache operations, or performance-focused technical surfaces.",
+                "avoid_when": "Some users may read the bolt as power or warning, not specifically speed, unless the surrounding context is technical."
+              }
+            },
+            {
+              "id": "database-backup",
+              "library": "lucide",
+              "name": "database backup",
+              "style": "outline",
+              "label": "Data Store",
+              "semantic_fit": "Strong fit for Database: visually reads as a cylinder with a circular refresh arrow.. Use when the interface refers to structured data, stored records, or organized data collections.",
+              "why_selected": "Data Store matches Database and visually reads as a cylinder with a circular refresh arrow..",
+              "svg": "<svg class=\"lucide lucide-database-backup\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 12a9 3 0 0 0 5 2.69\" /> <path d=\"M21 9.3V5\" /> <path d=\"M3 5v14a9 3 0 0 0 6.47 2.88\" /> <path d=\"M12 12v4h4\" /> <path d=\"M13 20a5 5 0 0 0 9-3 4.5 4.5 0 0 0-4.5-4.5c-1.33 0-2.54.54-3.41 1.41L12 16\" /> </svg>",
+              "semantic": {
+                "label": "Data Store",
+                "source_name": "database_backup",
+                "depicts": "A cylinder with a circular refresh arrow.",
+                "semantic_tags": [
+                  "database",
+                  "data store",
+                  "records",
+                  "structured data",
+                  "storage"
+                ],
+                "synonyms": [
+                  "data store",
+                  "structured storage",
+                  "records database",
+                  "data source"
+                ],
+                "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+                "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Settings",
+          "expected_icon_ids": [
+            "lucide:settings",
+            "lucide:settings-2",
+            "lucide:cog"
+          ],
+          "recommended_icon_id": "lucide:settings",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "settings",
+            "settings choose icons for an admin sidebar navigation",
+            "cog",
+            "sliders"
+          ],
+          "recommended": {
+            "id": "settings",
+            "library": "lucide",
+            "name": "settings",
+            "style": "outline",
+            "label": "Settings",
+            "semantic_fit": "Strong fit for Settings: visually reads as a gear cog with multiple teeth around its perimeter.. Use when the user can open settings, change preferences, or manage configuration.",
+            "why_selected": "Settings matches Settings and visually reads as a gear cog with multiple teeth around its perimeter..",
+            "svg": "<svg class=\"lucide lucide-settings\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" /> </svg>",
+            "semantic": {
+              "label": "Settings",
+              "source_name": "settings",
+              "depicts": "A gear cog with multiple teeth around its perimeter.",
+              "semantic_tags": [
+                "settings",
+                "preferences",
+                "configuration",
+                "options",
+                "controls"
+              ],
+              "synonyms": [
+                "preferences",
+                "config",
+                "settings panel",
+                "options"
+              ],
+              "use_when": "Use when the user can open settings, change preferences, or manage configuration.",
+              "avoid_when": "Do not use for repair tools, automation workflows, or system architecture concepts where a gear would be too generic."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "settings-2",
+              "library": "lucide",
+              "name": "settings 2",
+              "style": "outline",
+              "label": "Settings",
+              "semantic_fit": "Strong fit for Settings: visually reads as a simpler gear cog with rounded teeth.. Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
+              "why_selected": "Settings matches Settings and visually reads as a simpler gear cog with rounded teeth..",
+              "svg": "<svg class=\"lucide lucide-settings-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M14 17H5\" /> <path d=\"M19 7h-9\" /> <circle cx=\"17\" cy=\"17\" r=\"3\" /> <circle cx=\"7\" cy=\"7\" r=\"3\" /> </svg>",
+              "semantic": {
+                "label": "Settings",
+                "source_name": "settings_2",
+                "depicts": "A simpler gear cog with rounded teeth.",
+                "semantic_tags": [
+                  "settings",
+                  "2"
+                ],
+                "synonyms": [
+                  "settings",
+                  "2"
+                ],
+                "use_when": "Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            },
+            {
+              "id": "cog",
+              "library": "lucide",
+              "name": "cog",
+              "style": "outline",
+              "label": "Cog",
+              "semantic_fit": "Strong fit for Settings: visually reads as gear cog with teeth around the perimeter. Use when the interface refers directly to cog as an object, concept, or themed surface cue.",
+              "why_selected": "Cog matches Settings and visually reads as gear cog with teeth around the perimeter.",
+              "svg": "<svg class=\"lucide lucide-cog\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M11 10.27 7 3.34\" /> <path d=\"m11 13.73-4 6.93\" /> <path d=\"M12 22v-2\" /> <path d=\"M12 2v2\" /> <path d=\"M14 12h8\" /> <path d=\"m17 20.66-1-1.73\" /> <path d=\"m17 3.34-1 1.73\" /> <path d=\"M2 12h2\" /> <path d=\"m20.66 17-1.73-1\" /> <path d=\"m20.66 7-1.73 1\" /> <path d=\"m3.34 17 1.73-1\" /> <path d=\"m3.34 7 1.73 1\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" /> <circle cx=\"12\" cy=\"12\" r=\"8\" /> </svg>",
+              "semantic": {
+                "label": "Cog",
+                "source_name": "cog",
+                "depicts": "Gear cog with teeth around the perimeter",
+                "semantic_tags": [
+                  "cog"
+                ],
+                "synonyms": [
+                  "cog"
+                ],
+                "use_when": "Use when the interface refers directly to cog as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Reports",
+          "expected_icon_ids": [
+            "lucide:file-bar-chart",
+            "lucide:file-bar-chart-2",
+            "lucide:file-chart-column",
+            "lucide:file-chart-line",
+            "lucide:bar-chart-3",
+            "lucide:chart-bar"
+          ],
+          "recommended_icon_id": "lucide:file-bar-chart-2",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "reports",
+            "reports choose icons for an admin sidebar navigation",
+            "bar chart",
+            "file chart",
+            "analytics chart",
+            "report document"
+          ],
+          "recommended": {
+            "id": "file-bar-chart-2",
+            "library": "lucide",
+            "name": "file bar chart 2",
+            "style": "outline",
+            "label": "File",
+            "semantic_fit": "Strong fit for Reports: visually reads as document file with a vertical bar chart symbol, alternate variant. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+            "why_selected": "File matches Reports and visually reads as document file with a vertical bar chart symbol, alternate variant.",
+            "svg": "<svg class=\"lucide lucide-file-bar-chart-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M8 18v-1\" /> <path d=\"M12 18v-6\" /> <path d=\"M16 18v-3\" /> </svg>",
+            "semantic": {
+              "label": "File",
+              "source_name": "file_bar_chart_2",
+              "depicts": "Document file with a vertical bar chart symbol, alternate variant",
+              "semantic_tags": [
+                "file",
+                "bar",
+                "chart",
+                "2"
+              ],
+              "synonyms": [
+                "file",
+                "file file",
+                "bar file",
+                "chart file",
+                "2 file"
+              ],
+              "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+              "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders."
+            }
+          },
+          "alternatives": [
+            {
+              "id": "file-bar-chart",
+              "library": "lucide",
+              "name": "file bar chart",
+              "style": "outline",
+              "label": "File",
+              "semantic_fit": "Strong fit for Reports: visually reads as document file with a vertical bar chart symbol. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+              "why_selected": "File matches Reports and visually reads as document file with a vertical bar chart symbol.",
+              "svg": "<svg class=\"lucide lucide-file-bar-chart\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M8 18v-2\" /> <path d=\"M12 18v-4\" /> <path d=\"M16 18v-6\" /> </svg>",
+              "semantic": {
+                "label": "File",
+                "source_name": "file_bar_chart",
+                "depicts": "Document file with a vertical bar chart symbol",
+                "semantic_tags": [
+                  "file",
+                  "bar",
+                  "chart"
+                ],
+                "synonyms": [
+                  "file",
+                  "file file",
+                  "bar file",
+                  "chart file"
+                ],
+                "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+                "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders."
+              }
+            },
+            {
+              "id": "chart-bar",
+              "library": "lucide",
+              "name": "chart bar",
+              "style": "outline",
+              "label": "Chart Bar",
+              "semantic_fit": "Strong fit for Reports: visually reads as bar chart with three horizontal bars. Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+              "why_selected": "Chart Bar matches Reports and visually reads as bar chart with three horizontal bars.",
+              "svg": "<svg class=\"lucide lucide-chart-bar\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M7 16h8\" /> <path d=\"M7 11h12\" /> <path d=\"M7 6h3\" /> </svg>",
+              "semantic": {
+                "label": "Chart Bar",
+                "source_name": "chart_bar",
+                "depicts": "Bar chart with three horizontal bars",
+                "semantic_tags": [
+                  "chart",
+                  "bar"
+                ],
+                "synonyms": [
+                  "chart",
+                  "bar"
+                ],
+                "use_when": "Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+              }
+            }
+          ],
+          "matched": true
+        }
+      ]
+    }
+  ]
+}

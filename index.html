@@ -338,6 +338,19 @@
                             </svg>
                         </button>
 
+                        <div class="grid-filter-bar" aria-label="Tag filters">
+                            <div class="grid-filter-bar__menu-wrap">
+                                <button class="grid-filter-bar__select" id="useCaseFilters" type="button"
+                                    aria-haspopup="listbox" aria-expanded="false" aria-label="Tags"
+                                    data-tip="Tags">
+                                    <span class="grid-filter-bar__select-text" id="useCaseFilterText">TAGS</span>
+                                    <span class="material-symbols-outlined grid-filter-bar__select-icon"
+                                        aria-hidden="true">expand_more</span>
+                                </button>
+                                <div class="grid-filter-bar__menu" id="useCaseFilterMenu" role="listbox"
+                                    aria-label="Tags" hidden></div>
+                            </div>
+                        </div>
                         <button class="grid-header__view-btn active" id="styleOutline" aria-label="Outline style"
                             data-tip="Outline">
                             <span class="material-symbols-outlined" style="font-size:20px">circle</span>
@@ -346,13 +359,6 @@
                             <span class="material-symbols-outlined"
                                 style="font-size:20px;font-variation-settings:'FILL' 1">circle</span>
                         </button>
-                    </div>
-                </div>
-
-                <div class="grid-filter-bar" aria-label="Purpose filters">
-                    <span class="grid-filter-bar__label">Purpose</span>
-                    <div class="grid-filter-bar__chips" id="useCaseFilters">
-                        <!-- Populated by JS -->
                     </div>
                 </div>
 

@@ -7,11 +7,16 @@ import {
   createEmptyPopularityRecord,
   getNextJobCategoryFilterForLibrarySelect,
   getPopularityRecord,
+  resolveGridEmptyCopy,
   getScopedJobCategoryFilter,
   resolveGridHeadingText,
-  shouldShowPurposeFilterBar,
+  shouldShowTagFilterBar,
   shouldSyncSearchOnBlur,
 } from '../lib/icon-grid-behavior.js';
+import {
+  JOB_CATEGORY_DEFINITIONS,
+  createIconTaxonomyMap,
+} from '../lib/icon-taxonomy-seed.js';
 
 function makeIcon(id, name, lib = 'heroicons') {
   return { id, name, lib };
@@ -86,33 +91,33 @@ assert.equal(
 );
 
 assert.equal(
-  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'all' }),
+  shouldShowTagFilterBar({ currentView: 'icons', activeLibrary: 'all' }),
   true,
-  'purpose chips should be visible in the All Icons browse scope'
+  'tag menu should be visible in the All Icons browse scope'
 );
 
 assert.equal(
-  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'material' }),
-  false,
-  'purpose chips should be hidden in specific free-library browse scopes until taxonomy coverage is mature'
+  shouldShowTagFilterBar({ currentView: 'icons', activeLibrary: 'material' }),
+  true,
+  'tag menu should be visible in specific library browse scopes'
 );
 
 assert.equal(
-  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'favorites' }),
+  shouldShowTagFilterBar({ currentView: 'icons', activeLibrary: 'favorites' }),
   false,
-  'purpose chips should be hidden in Favorites'
+  'tag menu should be hidden in Favorites'
 );
 
 assert.equal(
-  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'recent' }),
+  shouldShowTagFilterBar({ currentView: 'icons', activeLibrary: 'recent' }),
   false,
-  'purpose chips should be hidden in Recent'
+  'tag menu should be hidden in Recent'
 );
 
 assert.equal(
-  shouldShowPurposeFilterBar({ currentView: 'dashboard', activeLibrary: 'all' }),
+  shouldShowTagFilterBar({ currentView: 'dashboard', activeLibrary: 'all' }),
   false,
-  'purpose chips should be hidden on non-icon shell views'
+  'tag menu should be hidden on non-icon shell views'
 );
 
 assert.equal(
@@ -122,7 +127,7 @@ assert.equal(
     activeJobCategoryFilter: 'ai-agent-workflows',
   }),
   'ai-agent-workflows',
-  'All Icons should keep the selected purpose filter'
+  'All Icons should keep the selected tag filter'
 );
 
 assert.equal(
@@ -131,8 +136,8 @@ assert.equal(
     activeLibrary: 'material',
     activeJobCategoryFilter: 'navigation-wayfinding',
   }),
-  null,
-  'specific free-library browse views should not keep an effective hidden purpose filter'
+  'navigation-wayfinding',
+  'specific library browse views should keep an effective tag filter'
 );
 
 assert.equal(
@@ -142,7 +147,7 @@ assert.equal(
     activeJobCategoryFilter: 'ai-agent-workflows',
   }),
   null,
-  'Favorites should not keep an effective hidden purpose filter'
+  'Favorites should not keep an effective hidden tag filter'
 );
 
 assert.equal(
@@ -152,7 +157,7 @@ assert.equal(
     activeJobCategoryFilter: 'status-feedback',
   }),
   null,
-  'store and account routes should not inherit an effective purpose filter'
+  'store and account routes should not inherit an effective tag filter'
 );
 
 assert.equal(
@@ -160,8 +165,8 @@ assert.equal(
     nextLibraryId: 'all',
     activeJobCategoryFilter: 'ai-agent-workflows',
   }),
-  'all',
-  'clicking All Icons should reset the stored purpose filter to the default state'
+  'ai-agent-workflows',
+  'clicking All Icons should preserve the selected tag when it can still be shown'
 );
 
 assert.equal(
@@ -169,8 +174,8 @@ assert.equal(
     nextLibraryId: 'favorites',
     activeJobCategoryFilter: 'status-feedback',
   }),
-  'status-feedback',
-  'non-root library navigation should preserve the stored purpose filter until All Icons is selected'
+  'all',
+  'Favorites should reset the stored tag because the tag menu is hidden there'
 );
 
 assert.equal(
@@ -193,8 +198,44 @@ assert.equal(
     currentTitle: 'Premium Collections',
     libraryTitle: 'All Icons',
   }),
-  'AI Agent Workflows',
-  'All Icons should still promote the active purpose label when the icon grid owns the heading'
+  'All Icons',
+  'All Icons should keep the main heading stable when a tag is selected'
+);
+
+assert.equal(
+  resolveGridHeadingText({
+    currentView: 'icons',
+    activeLibrary: 'lucide',
+    activeJobCategoryLabel: 'Navigation & Wayfinding',
+    currentTitle: 'Lucide + Navigation & Wayfinding',
+    libraryTitle: 'Lucide',
+  }),
+  'Lucide',
+  'library views should keep the library heading stable when a tag is selected'
+);
+
+assert.deepEqual(
+  resolveGridEmptyCopy({
+    searchQuery: 'stupid',
+    hostedSearchPending: true,
+  }),
+  {
+    title: 'Searching icons...',
+    text: 'Checking the semantic search index for "stupid".',
+  },
+  'pending hosted search should show a loading state instead of a final no-results message'
+);
+
+assert.deepEqual(
+  resolveGridEmptyCopy({
+    searchQuery: 'stupid',
+    hostedSearchPending: false,
+  }),
+  {
+    title: 'No icons found',
+    text: 'No icons match "stupid". Try a different search term.',
+  },
+  'completed searches with no matches should still show the final no-results message'
 );
 
 const recentSearches = ['server', 'home'];
@@ -208,6 +249,42 @@ assert.deepEqual(
   getPopularityRecord(popularityMap, 'tabler:archive'),
   createEmptyPopularityRecord(),
   'icons without evidence should still receive a safe empty popularity record'
+);
+
+assert.ok(
+  JOB_CATEGORY_DEFINITIONS.length >= 12,
+  'tag taxonomy should cover a broad browse menu, not only three seed groups'
+);
+
+const taxonomyMap = createIconTaxonomyMap([
+  makeIcon('credit-card', 'credit card', 'lucide'),
+  makeIcon('file-bar-chart', 'file bar chart', 'lucide'),
+  makeIcon('lock', 'lock', 'lucide'),
+  makeIcon('github', 'GitHub', 'simpleicons'),
+]);
+
+assert.equal(
+  taxonomyMap.get('lucide:credit-card')?.jobCategory,
+  'commerce-finance',
+  'credit card icons should be inferred into Commerce & Finance'
+);
+
+assert.equal(
+  taxonomyMap.get('lucide:file-bar-chart')?.jobCategory,
+  'files-content',
+  'file chart icons should keep their file/content tag when the file object is prominent'
+);
+
+assert.equal(
+  taxonomyMap.get('lucide:lock')?.jobCategory,
+  'security-access',
+  'lock icons should be inferred into Security & Access'
+);
+
+assert.equal(
+  taxonomyMap.get('simpleicons:github')?.jobCategory,
+  'brands-social',
+  'Simple Icons should default to Brands & Social'
 );
 
 console.log('verify-icon-grid-behavior: ok');

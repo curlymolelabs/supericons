@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -96,9 +96,9 @@
       <p class="eyebrow">Checkpoint</p>
       <h1>Can the new recommendation flow help an agent choose icons faster?</h1>
       <p>This first report checks the exact bottom-navigation use case that was tested in an external MCP client. The goal is to see whether the new recommendation tool can return shortlist choices with previews and short reasons, without forcing the agent to manually break the task into many separate search prompts.</p>
-      <p><strong>Headline result:</strong> 4 of 4 slots matched the current expected MingCute pick.</p>
+      <p><strong>Headline result:</strong> 15 of 15 slots matched the current expected MingCute pick.</p>
     </section>
-    
+
       <section>
         <p class="eyebrow">Fixture</p>
         <h2>mingcute-bottom-nav</h2>
@@ -106,90 +106,332 @@
         <p><strong>Library:</strong> mingcute</p>
         <p><strong>Slot hit rate:</strong> 4 / 4</p>
         <div class="grid">
-          
+
         <article class="card">
           <p class="eyebrow">Home tab</p>
           <h3>Matched expected recommendation</h3>
           <p><strong>Expected:</strong> mingcute:home_3_line</p>
           <p><strong>Recommended:</strong> mingcute:home_3_line</p>
-          <p><strong>Queries used:</strong> home tab, home house main, home, house, main, home house</p>
-          
+          <p><strong>Queries used:</strong> home tab, home tab replace the 4 bottom navigation icons buttons show me the preview before implementation</p>
+
           <div class="preview">
             <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M10.772 2.688a2 2 0 0 1 2.317-.099l.139.1 8.384 6.52c.721.561.37 1.692-.499 1.785l-.116.006H20v8a2 2 0 0 1-1.85 1.995L18 21H6a2 2 0 0 1-1.994-1.85L4 19v-8h-.997C2.09 11 1.671 9.892 2.3 9.285l.088-.076zM12 4.267 5.625 9.225c.229.185.375.468.375.785V19h3v-5a3 3 0 1 1 6 0v5h3v-8.99c0-.317.146-.6.375-.785zM12 13a1 1 0 0 0-1 1v5h2v-5a1 1 0 0 0-1-1"/></g></svg></div>
             <div>
               <strong>mingcute:home_3_line</strong>
-              <p>Home matches Home tab and visually reads as a house-shaped home destination symbol..</p>
-              <p><strong>Fit:</strong> Strong fit for Home tab: Show the home destination, root view, or main landing area of the product.</p>
+              <p>Home matches Home tab and visually reads as house outline with a centered rounded doorway inside a square body.</p>
+              <p><strong>Fit:</strong> Strong fit for Home tab: visually reads as house outline with a centered rounded doorway inside a square body. Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.</p>
             </div>
           </div>
-        
+
           <h4>Alternatives</h4>
           <ul><li><strong>mingcute:home_2_line</strong> - Home</li><li><strong>mingcute:home_1_line</strong> - Home</li></ul>
         </article>
-      
+
         <article class="card">
           <p class="eyebrow">Create action</p>
           <h3>Matched expected recommendation</h3>
           <p><strong>Expected:</strong> mingcute:add_line</p>
           <p><strong>Recommended:</strong> mingcute:add_line</p>
-          <p><strong>Queries used:</strong> create action, create add plus new compose, create, add, plus, new</p>
-          
+          <p><strong>Queries used:</strong> create action, create action replace the 4 bottom navigation icons buttons show me the preview before implementation, add, plus, create new, compose</p>
+
           <div class="preview">
             <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M11 20a1 1 0 1 0 2 0v-7h7a1 1 0 1 0 0-2h-7V4a1 1 0 1 0-2 0v7H4a1 1 0 1 0 0 2h7z"/></g></svg></div>
             <div>
               <strong>mingcute:add_line</strong>
-              <p>Add matches Create action and visually reads as a symbol representing add..</p>
-              <p><strong>Fit:</strong> Strong fit for Create action: Show add as a direct object, concept, or themed surface cue.</p>
+              <p>Add matches Create action and visually reads as plus sign made from one vertical and one horizontal stroke.</p>
+              <p><strong>Fit:</strong> Strong fit for Create action: visually reads as plus sign made from one vertical and one horizontal stroke. Use for add concepts, search results, filters, labels, or UI actions where add, plus, create is the intended meaning.</p>
             </div>
           </div>
-        
+
           <h4>Alternatives</h4>
           <ul><li><strong>mingcute:plus_line</strong> - Plus</li><li><strong>mingcute:add_circle_line</strong> - Add Circle</li></ul>
         </article>
-      
+
         <article class="card">
           <p class="eyebrow">Alerts tab</p>
           <h3>Matched expected recommendation</h3>
           <p><strong>Expected:</strong> mingcute:notification_line</p>
           <p><strong>Recommended:</strong> mingcute:notification_line</p>
-          <p><strong>Queries used:</strong> alerts tab, alerts notification bell alarm, alerts, notification, bell, alarm</p>
-          
+          <p><strong>Queries used:</strong> alerts tab, alerts tab replace the 4 bottom navigation icons buttons show me the preview before implementation, notification, bell, alert, alarm</p>
+
           <div class="preview">
             <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2.001 2.001 0 0 1-.212-.894V9a5 5 0 0 0-5-5"/></g></svg></div>
             <div>
               <strong>mingcute:notification_line</strong>
               <p>Notifications matches Alerts tab and visually reads as a bell-based notification symbol..</p>
-              <p><strong>Fit:</strong> Strong fit for Alerts tab: Show notifications, alerts, or incoming event attention.</p>
+              <p><strong>Fit:</strong> Strong fit for Alerts tab: visually reads as a bell-based notification symbol.. Use when the interface shows notification status, unread alerts, or muted notification state.</p>
             </div>
           </div>
-        
+
           <h4>Alternatives</h4>
-          <ul><li><strong>mingcute:notification_newdot_line</strong> - New Notification</li><li><strong>mingcute:notification_off_line</strong> - Notifications Off</li></ul>
+          <ul><li><strong>mingcute:notification_off_line</strong> - Notifications Off</li><li><strong>mingcute:notification_newdot_line</strong> - New Notification</li></ul>
         </article>
-      
+
         <article class="card">
           <p class="eyebrow">Profile tab</p>
           <h3>Matched expected recommendation</h3>
           <p><strong>Expected:</strong> mingcute:user_1_line</p>
           <p><strong>Recommended:</strong> mingcute:user_1_line</p>
-          <p><strong>Queries used:</strong> profile tab, profile user account person, profile, user, account, person</p>
-          
+          <p><strong>Queries used:</strong> profile tab, profile tab replace the 4 bottom navigation icons buttons show me the preview before implementation, profile user account person avatar, user profile, account user, avatar person</p>
+
           <div class="preview">
             <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M16 14a5 5 0 0 1 4.995 4.783L21 19v2a1 1 0 0 1-1.993.117L19 21v-2a3 3 0 0 0-2.824-2.995L16 16H8a3 3 0 0 0-2.995 2.824L5 19v2a1 1 0 0 1-1.993.117L3 21v-2a5 5 0 0 1 4.783-4.995L8 14zM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></g></svg></div>
             <div>
               <strong>mingcute:user_1_line</strong>
-              <p>User matches Profile tab and visually reads as a user or profile silhouette..</p>
-              <p><strong>Fit:</strong> Strong fit for Profile tab: Show a user, profile, member, or account identity.</p>
+              <p>User matches Profile tab and visually reads as round head above a curved shoulder line with short side arms.</p>
+              <p><strong>Fit:</strong> Strong fit for Profile tab: visually reads as round head above a curved shoulder line with short side arms. Use when the interface needs a simple generic person or account profile symbol without a border.</p>
             </div>
           </div>
-        
+
           <h4>Alternatives</h4>
-          <ul><li><strong>mingcute:user_2_line</strong> - User</li><li><strong>mingcute:user_3_line</strong> - User</li></ul>
+          <ul><li><strong>mingcute:user_4_line</strong> - User</li><li><strong>mingcute:user_3_line</strong> - User</li></ul>
         </article>
-      
+
         </div>
       </section>
-    
+
+      <section>
+        <p class="eyebrow">Fixture</p>
+        <h2>lucide-ai-dashboard</h2>
+        <p><strong>Task:</strong> Choose icons for an AI/ML dashboard sidebar navigation</p>
+        <p><strong>Library:</strong> lucide</p>
+        <p><strong>Slot hit rate:</strong> 6 / 6</p>
+        <div class="grid">
+
+        <article class="card">
+          <p class="eyebrow">Model</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:brain-circuit, lucide:brain-cog, lucide:brain</p>
+          <p><strong>Recommended:</strong> lucide:brain-circuit</p>
+          <p><strong>Queries used:</strong> model, model choose icons for an ai ml dashboard sidebar navigation, brain circuit, brain cog, neural network</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-brain-circuit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /> <path d="M9 13a4.5 4.5 0 0 0 3-4" /> <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /> <path d="M3.477 10.896a4 4 0 0 1 .585-.396" /> <path d="M6 18a4 4 0 0 1-1.967-.516" /> <path d="M12 13h4" /> <path d="M12 18h6a2 2 0 0 1 2 2v1" /> <path d="M12 8h8" /> <path d="M16 8V5a2 2 0 0 1 2-2" /> <circle cx="16" cy="13" r=".5" /> <circle cx="18" cy="3" r=".5" /> <circle cx="20" cy="21" r=".5" /> <circle cx="20" cy="8" r=".5" /> </svg></div>
+            <div>
+              <strong>lucide:brain-circuit</strong>
+              <p>AI Reasoning matches Model and visually reads as half brain with circuit lines extending right.</p>
+              <p><strong>Fit:</strong> Strong fit for Model: visually reads as half brain with circuit lines extending right. Strongest in AI, inference, reasoning, automation, or intelligence features.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:brain-cog</strong> - Brain Cog</li><li><strong>lucide:brain</strong> - Brain</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Prompt</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:message-square-text, lucide:text-cursor-input, lucide:terminal</p>
+          <p><strong>Recommended:</strong> lucide:text-cursor-input</p>
+          <p><strong>Queries used:</strong> prompt, prompt choose icons for an ai ml dashboard sidebar navigation, message text, terminal, input text, text cursor, text input</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-text-cursor-input" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6" /> <path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7" /> <path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1" /> <path d="M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1" /> <path d="M9 6v12" /> </svg></div>
+            <div>
+              <strong>lucide:text-cursor-input</strong>
+              <p>Text Cursor Input matches Prompt and visually reads as i-beam text cursor beside a horizontal text line.</p>
+              <p><strong>Fit:</strong> Strong fit for Prompt: visually reads as i-beam text cursor beside a horizontal text line. Use when the interface refers directly to text cursor input as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:message-square-text</strong> - Message</li><li><strong>lucide:terminal</strong> - Terminal</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Dataset</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:database, lucide:table-2, lucide:table-cells-split, lucide:table-columns-split, lucide:table-rows-split</p>
+          <p><strong>Recommended:</strong> lucide:table-columns-split</p>
+          <p><strong>Queries used:</strong> dataset, dataset choose icons for an ai ml dashboard sidebar navigation, data table, database, grid rows columns, table</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-table-columns-split" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14 14v2" /> <path d="M14 20v2" /> <path d="M14 2v2" /> <path d="M14 8v2" /> <path d="M2 15h8" /> <path d="M2 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2" /> <path d="M2 9h8" /> <path d="M22 15h-4" /> <path d="M22 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2" /> <path d="M22 9h-4" /> <path d="M5 3v18" /> </svg></div>
+            <div>
+              <strong>lucide:table-columns-split</strong>
+              <p>Table Columns Split matches Dataset and visually reads as table columns separated by a dashed vertical divider.</p>
+              <p><strong>Fit:</strong> Strong fit for Dataset: visually reads as table columns separated by a dashed vertical divider. Use when the interface refers directly to table columns split as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:table-rows-split</strong> - Table Rows Split</li><li><strong>lucide:database</strong> - Data Store</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Evaluation</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:chart-bar, lucide:bar-chart-3, lucide:bar-chart-big, lucide:gauge</p>
+          <p><strong>Recommended:</strong> lucide:chart-bar</p>
+          <p><strong>Queries used:</strong> evaluation, evaluation choose icons for an ai ml dashboard sidebar navigation, metrics chart, bar chart, gauge, benchmark, checklist</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-chart-bar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M7 16h8" /> <path d="M7 11h12" /> <path d="M7 6h3" /> </svg></div>
+            <div>
+              <strong>lucide:chart-bar</strong>
+              <p>Chart Bar matches Evaluation and visually reads as bar chart with three horizontal bars.</p>
+              <p><strong>Fit:</strong> Strong fit for Evaluation: visually reads as bar chart with three horizontal bars. Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:bar-chart-3</strong> - Bar Chart</li><li><strong>lucide:bar-chart-4</strong> - Bar Chart</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Deployment</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:cloud-upload, lucide:upload-cloud, lucide:upload, lucide:rocket</p>
+          <p><strong>Recommended:</strong> lucide:upload-cloud</p>
+          <p><strong>Queries used:</strong> deployment, deployment choose icons for an ai ml dashboard sidebar navigation, cloud upload, upload, server, package, send, rocket launch, server upload</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-upload-cloud" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 13v8" /> <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /> <path d="m8 17 4-4 4 4" /> </svg></div>
+            <div>
+              <strong>lucide:upload-cloud</strong>
+              <p>Upload File matches Deployment and visually reads as cloud with an upward-pointing upload arrow.</p>
+              <p><strong>Fit:</strong> Strong fit for Deployment: visually reads as cloud with an upward-pointing upload arrow. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:cloud-upload</strong> - Upload File</li><li><strong>lucide:rocket</strong> - Rocket</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Monitoring</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:chart-line, lucide:line-chart, lucide:activity, lucide:gauge</p>
+          <p><strong>Recommended:</strong> lucide:line-chart</p>
+          <p><strong>Queries used:</strong> monitoring, monitoring choose icons for an ai ml dashboard sidebar navigation, activity, chart line, pulse, dashboard, gauge, signal</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-line-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="m19 9-5 5-4-4-3 3" /> </svg></div>
+            <div>
+              <strong>lucide:line-chart</strong>
+              <p>Line Chart matches Monitoring and visually reads as rising line chart with data points.</p>
+              <p><strong>Fit:</strong> Strong fit for Monitoring: visually reads as rising line chart with data points. Use when the interface refers directly to line chart as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:chart-line</strong> - Chart Line</li><li><strong>lucide:file-chart-line</strong> - File</li></ul>
+        </article>
+
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Fixture</p>
+        <h2>lucide-admin-sidebar</h2>
+        <p><strong>Task:</strong> Choose icons for an admin sidebar navigation</p>
+        <p><strong>Library:</strong> lucide</p>
+        <p><strong>Slot hit rate:</strong> 5 / 5</p>
+        <div class="grid">
+
+        <article class="card">
+          <p class="eyebrow">Users</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:users, lucide:users-2, lucide:user-round, lucide:user</p>
+          <p><strong>Recommended:</strong> lucide:users</p>
+          <p><strong>Queries used:</strong> users, users choose icons for an admin sidebar navigation, user profile, account user, avatar person</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /> </svg></div>
+            <div>
+              <strong>lucide:users</strong>
+              <p>Users matches Users and visually reads as two user silhouettes side by side.</p>
+              <p><strong>Fit:</strong> Strong fit for Users: visually reads as two user silhouettes side by side. Use when the interface refers directly to users as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:users-2</strong> - Users</li><li><strong>lucide:users-round</strong> - Users Round</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Billing</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:credit-card, lucide:receipt, lucide:wallet</p>
+          <p><strong>Recommended:</strong> lucide:credit-card</p>
+          <p><strong>Queries used:</strong> billing, billing choose icons for an admin sidebar navigation, credit card, receipt, invoice, payment, wallet</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="20" height="14" x="2" y="5" rx="2" /> <line x1="2" x2="22" y1="10" y2="10" /> </svg></div>
+            <div>
+              <strong>lucide:credit-card</strong>
+              <p>Credit Card matches Billing and visually reads as rectangular credit card with a magnetic stripe.</p>
+              <p><strong>Fit:</strong> Strong fit for Billing: visually reads as rectangular credit card with a magnetic stripe. Use when the interface refers directly to credit card as an object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:wallet-cards</strong> - Wallet Cards</li><li><strong>lucide:receipt-indian-rupee</strong> - Receipt Indian Rupee</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Database</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:database, lucide:database-backup, lucide:database-search</p>
+          <p><strong>Recommended:</strong> lucide:database</p>
+          <p><strong>Queries used:</strong> database, database choose icons for an admin sidebar navigation, server database, data storage</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-database" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /> </svg></div>
+            <div>
+              <strong>lucide:database</strong>
+              <p>Data Store matches Database and visually reads as a cylindrical shape with two horizontal bands..</p>
+              <p><strong>Fit:</strong> Strong fit for Database: visually reads as a cylindrical shape with two horizontal bands.. Use when the interface refers to structured data, stored records, or organized data collections.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:database-zap</strong> - Fast Data Operation</li><li><strong>lucide:database-backup</strong> - Data Store</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Settings</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:settings, lucide:settings-2, lucide:cog</p>
+          <p><strong>Recommended:</strong> lucide:settings</p>
+          <p><strong>Queries used:</strong> settings, settings choose icons for an admin sidebar navigation, cog, sliders</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /> <circle cx="12" cy="12" r="3" /> </svg></div>
+            <div>
+              <strong>lucide:settings</strong>
+              <p>Settings matches Settings and visually reads as a gear cog with multiple teeth around its perimeter..</p>
+              <p><strong>Fit:</strong> Strong fit for Settings: visually reads as a gear cog with multiple teeth around its perimeter.. Use when the user can open settings, change preferences, or manage configuration.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:settings-2</strong> - Settings</li><li><strong>lucide:cog</strong> - Cog</li></ul>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Reports</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> lucide:file-bar-chart, lucide:file-bar-chart-2, lucide:file-chart-column, lucide:file-chart-line, lucide:bar-chart-3, lucide:chart-bar</p>
+          <p><strong>Recommended:</strong> lucide:file-bar-chart-2</p>
+          <p><strong>Queries used:</strong> reports, reports choose icons for an admin sidebar navigation, bar chart, file chart, analytics chart, report document</p>
+
+          <div class="preview">
+            <div class="icon"><svg class="lucide lucide-file-bar-chart-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M8 18v-1" /> <path d="M12 18v-6" /> <path d="M16 18v-3" /> </svg></div>
+            <div>
+              <strong>lucide:file-bar-chart-2</strong>
+              <p>File matches Reports and visually reads as document file with a vertical bar chart symbol, alternate variant.</p>
+              <p><strong>Fit:</strong> Strong fit for Reports: visually reads as document file with a vertical bar chart symbol, alternate variant. Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.</p>
+            </div>
+          </div>
+
+          <h4>Alternatives</h4>
+          <ul><li><strong>lucide:file-bar-chart</strong> - File</li><li><strong>lucide:chart-bar</strong> - Chart Bar</li></ul>
+        </article>
+
+        </div>
+      </section>
+
   </main>
 </body>
 </html>

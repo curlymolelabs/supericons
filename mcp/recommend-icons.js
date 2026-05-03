@@ -3,6 +3,11 @@ import {
   getSemanticRecordForIcon,
   scoreSemanticAlignment,
 } from './semantic-registry.js';
+import {
+  buildIntentQueryVariants,
+  buildSearchIntentProfile,
+  getIntentCandidateAdjustment,
+} from '../lib/search-intent-core.js';
 
 const GENERIC_SLOT_WORDS = new Set([
   'action',
@@ -23,23 +28,6 @@ const GENERIC_SLOT_WORDS = new Set([
   'view',
 ]);
 
-const SLOT_INTENT_MAP = Object.freeze({
-  add: ['add', 'create', 'plus', 'new', 'compose'],
-  alerts: ['alerts', 'notification', 'bell', 'alarm'],
-  back: ['back', 'previous', 'return', 'left'],
-  create: ['create', 'add', 'plus', 'new', 'compose'],
-  delete: ['delete', 'remove', 'trash', 'discard'],
-  filter: ['filter', 'refine', 'results'],
-  home: ['home', 'house', 'main'],
-  menu: ['menu', 'drawer', 'navigation', 'sidebar'],
-  notification: ['notification', 'alerts', 'bell', 'alarm'],
-  profile: ['profile', 'user', 'account', 'person'],
-  refresh: ['refresh', 'reload', 'sync'],
-  search: ['search', 'find', 'lookup'],
-  settings: ['settings', 'preferences', 'config'],
-  user: ['user', 'profile', 'account', 'person'],
-});
-
 const VARIANT_PENALTIES = Object.freeze([
   { pattern: /circle/i, penalty: 5 },
   { pattern: /square/i, penalty: 4 },
@@ -48,6 +36,114 @@ const VARIANT_PENALTIES = Object.freeze([
   { pattern: /off/i, penalty: 6 },
   { pattern: /slash/i, penalty: 6 },
   { pattern: /warning/i, penalty: 4 },
+]);
+
+const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
+  {
+    slotPatterns: [/create/i, /\badd\b/i, /\bplus\b/i, /compose/i, /new item/i],
+    queryVariants: ['add', 'plus', 'create new', 'compose'],
+    iconPreferences: [
+      { pattern: /^(add|plus)(?:_|-|$)/i, bonus: 48 },
+      { pattern: /(?:_|-)(add|plus)(?:_|-|$)/i, bonus: 18 },
+      { pattern: /compose|edit|pencil/i, bonus: 8 },
+    ],
+  },
+  {
+    slotPatterns: [/alerts?/i, /notifications?/i, /bell/i],
+    queryVariants: ['notification', 'bell', 'alert', 'alarm'],
+    iconPreferences: [
+      { pattern: /notification|bell/i, bonus: 42 },
+      { pattern: /alarm|alert/i, bonus: 16 },
+    ],
+  },
+  {
+    slotPatterns: [/profile/i, /account/i, /\buser\b/i, /\busers\b/i, /avatar/i],
+    queryVariants: ['user profile', 'account user', 'avatar person'],
+    iconPreferences: [
+      { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|users|profile|avatar|circle-user|user-circle/i, bonus: 36 },
+      { pattern: /person|contact/i, bonus: 10 },
+    ],
+  },
+  {
+    slotPatterns: [/model/i, /\bai\b/i, /\bml\b/i, /machine learning/i],
+    queryVariants: ['brain circuit', 'brain cog', 'neural network', 'model'],
+    iconPreferences: [
+      { pattern: /brain-circuit|brain_circuit/i, bonus: 44 },
+      { pattern: /brain|circuit|nodes/i, bonus: 24 },
+    ],
+  },
+  {
+    slotPatterns: [/prompt/i],
+    queryVariants: ['message text', 'text input', 'terminal', 'text cursor'],
+    iconPreferences: [
+      { pattern: /message.*text|text.*input|text-cursor-input|terminal/i, bonus: 36 },
+      { pattern: /text|prompt|keyboard/i, bonus: 14 },
+    ],
+  },
+  {
+    slotPatterns: [/dataset/i, /\bdata\b/i, /table/i],
+    queryVariants: ['database', 'data table', 'grid rows columns', 'table'],
+    iconPreferences: [
+      { pattern: /^database$|^table-2$|^table_2$|table-cells|table-columns|table-rows/i, bonus: 36 },
+      { pattern: /database|table|grid/i, bonus: 18 },
+    ],
+  },
+  {
+    slotPatterns: [/evaluation/i, /benchmark/i, /score/i, /metrics?/i],
+    queryVariants: ['bar chart', 'metrics chart', 'gauge', 'checklist', 'benchmark'],
+    iconPreferences: [
+      { pattern: /bar-chart-3|chart-bar|bar-chart|gauge|clipboard-check|list-check/i, bonus: 38 },
+      { pattern: /chart|metrics|check/i, bonus: 16 },
+    ],
+  },
+  {
+    slotPatterns: [/deployment/i, /deploy/i, /release/i, /ship/i, /publish/i],
+    queryVariants: ['cloud upload', 'upload', 'rocket launch', 'server upload', 'send'],
+    iconPreferences: [
+      { pattern: /cloud-upload|upload-cloud|rocket|send/i, bonus: 40 },
+      { pattern: /upload|server|package/i, bonus: 18 },
+    ],
+  },
+  {
+    slotPatterns: [/monitoring/i, /monitor/i, /observability/i, /telemetry/i, /activity/i],
+    queryVariants: ['chart line', 'activity', 'pulse', 'gauge', 'signal'],
+    iconPreferences: [
+      { pattern: /chart-line|line-chart|activity|pulse|gauge/i, bonus: 42 },
+      { pattern: /chart|signal|radar/i, bonus: 16 },
+    ],
+  },
+  {
+    slotPatterns: [/billing/i, /payment/i, /invoice/i, /subscription/i],
+    queryVariants: ['credit card', 'receipt', 'invoice', 'payment', 'wallet'],
+    iconPreferences: [
+      { pattern: /credit-card|receipt|wallet|invoice/i, bonus: 44 },
+      { pattern: /card|banknote|currency|dollar/i, bonus: 18 },
+    ],
+  },
+  {
+    slotPatterns: [/reports?/i, /analytics/i, /insights?/i],
+    queryVariants: ['bar chart', 'file chart', 'analytics chart', 'report document'],
+    iconPreferences: [
+      { pattern: /file-.*chart|chart-bar|bar-chart-3|bar-chart|chart-line|line-chart/i, bonus: 40 },
+      { pattern: /chart|report|analytics/i, bonus: 16 },
+    ],
+  },
+  {
+    slotPatterns: [/settings?/i, /preferences?/i, /configure/i],
+    queryVariants: ['settings', 'cog', 'sliders'],
+    iconPreferences: [
+      { pattern: /^settings$|^cog$|settings-2|sliders/i, bonus: 34 },
+      { pattern: /settings|cog|adjustments/i, bonus: 16 },
+    ],
+  },
+  {
+    slotPatterns: [/database/i, /storage/i],
+    queryVariants: ['database', 'server database', 'data storage'],
+    iconPreferences: [
+      { pattern: /^database$|database-stack/i, bonus: 36 },
+      { pattern: /database|server/i, bonus: 16 },
+    ],
+  },
 ]);
 
 const SLOT_PREFERENCE_RULES = Object.freeze({
@@ -103,18 +199,22 @@ function buildSlotIntentTerms(task, slot) {
   const slotTokens = tokenizeText(slot);
   const usefulSlotTokens = slotTokens.filter((token) => !GENERIC_SLOT_WORDS.has(token));
 
-  const expanded = [];
-  for (const token of usefulSlotTokens) {
-    expanded.push(token);
-    if (SLOT_INTENT_MAP[token]) {
-      expanded.push(...SLOT_INTENT_MAP[token]);
-    }
-  }
+  const expanded = [...usefulSlotTokens];
 
   const usefulTaskTokens = taskTokens.filter((token) => !GENERIC_SLOT_WORDS.has(token));
-  for (const token of usefulTaskTokens) {
-    if (SLOT_INTENT_MAP[token]) {
-      expanded.push(...SLOT_INTENT_MAP[token]);
+  expanded.push(...usefulTaskTokens);
+
+  const variants = buildIntentQueryVariants(`${slot} ${task}`, {
+    baseQuery: slot,
+    maxVariants: 8,
+  });
+  for (const variant of variants) {
+    expanded.push(...tokenizeText(variant));
+  }
+
+  for (const rule of getMatchingSlotRules(slot, expanded)) {
+    for (const variant of rule.queryVariants || []) {
+      expanded.push(...tokenizeText(variant));
     }
   }
 
@@ -122,20 +222,15 @@ function buildSlotIntentTerms(task, slot) {
 }
 
 function buildSlotQueryVariants(task, slot) {
-  const normalizedSlot = normalizeText(slot);
-  const intentTerms = buildSlotIntentTerms(task, slot);
-  const variants = [];
-
-  if (normalizedSlot) variants.push(normalizedSlot);
-  if (intentTerms.length > 0) {
-    variants.push(intentTerms.join(' '));
-    variants.push(...intentTerms);
-    if (intentTerms.length > 1) {
-      variants.push(`${intentTerms[0]} ${intentTerms[1]}`);
-    }
+  const variants = buildIntentQueryVariants(`${slot} ${task}`, {
+    baseQuery: slot,
+    maxVariants: 8,
+  });
+  const intentTerms = tokenizeText(`${slot} ${task} ${variants.join(' ')}`);
+  for (const rule of getMatchingSlotRules(slot, intentTerms)) {
+    variants.push(...(rule.queryVariants || []));
   }
-
-  return dedupe(variants).slice(0, 6);
+  return dedupe(variants).slice(0, 12);
 }
 
 function scoreLexicalFit(icon, intentTerms, slotLabel) {
@@ -176,15 +271,15 @@ function getVariantPenalty(icon) {
   return penalty;
 }
 
-function getSlotPreferenceBonus(icon, slotLabel, intentTerms, library) {
-  const rules = SLOT_PREFERENCE_RULES[library];
-  if (!rules?.length) return 0;
+function getMatchingSlotRules(slotLabel, intentTerms) {
+  const slotText = normalizeText(slotLabel);
+  return COMMON_SLOT_PREFERENCE_RULES.filter((rule) => rule.slotPatterns.some((pattern) => pattern.test(slotText)));
+}
 
-  const slotText = `${slotLabel} ${intentTerms.join(' ')}`;
+function scoreSlotPreferenceRules(icon, rules = [], slotText = '') {
   let bonus = 0;
 
   for (const rule of rules) {
-    if (!rule.slotPatterns.some((pattern) => pattern.test(slotText))) continue;
     for (const preference of rule.iconPreferences) {
       if (preference.pattern.test(icon.id)) {
         bonus += preference.bonus;
@@ -193,6 +288,16 @@ function getSlotPreferenceBonus(icon, slotLabel, intentTerms, library) {
   }
 
   return bonus;
+}
+
+function getSlotPreferenceBonus(icon, slotLabel, intentTerms, library) {
+  const slotText = `${slotLabel} ${intentTerms.join(' ')}`;
+  const commonRules = getMatchingSlotRules(slotLabel, intentTerms);
+  const libraryRules = (SLOT_PREFERENCE_RULES[library] || [])
+    .filter((rule) => rule.slotPatterns.some((pattern) => pattern.test(slotText)));
+
+  return scoreSlotPreferenceRules(icon, commonRules, slotText) +
+    scoreSlotPreferenceRules(icon, libraryRules, slotText);
 }
 
 function summarizeSemanticFit(slotLabel, semanticRecord, intentTerms) {
@@ -259,7 +364,7 @@ export async function recommendIconsForTask({
         query: queryVariant,
         library,
         style,
-        limit: Math.max(limitPerSlot * 4, 10),
+        limit: Math.max(limitPerSlot * 10, 50),
       });
 
       for (const icon of results) {
@@ -279,6 +384,8 @@ export async function recommendIconsForTask({
         const semanticBonus = semanticRecord ? 6 : 0;
         const variantPenalty = getVariantPenalty(icon);
         const slotPreferenceBonus = getSlotPreferenceBonus(icon, slotLabel, intentTerms, library);
+        const intentProfile = buildSearchIntentProfile(`${slotLabel} ${task}`);
+        const intentAdjustment = getIntentCandidateAdjustment(icon, intentProfile);
 
         return {
           icon,
@@ -289,7 +396,9 @@ export async function recommendIconsForTask({
             semanticScore +
             lexicalScore +
             semanticBonus +
-            slotPreferenceBonus -
+            slotPreferenceBonus +
+            intentAdjustment.boost -
+            intentAdjustment.penalty -
             variantPenalty,
         };
       })

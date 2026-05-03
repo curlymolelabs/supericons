@@ -5,6 +5,11 @@ import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
 import type { CandidateRow, PrivateFeatureRow, PrivateManifestRow } from './types.ts';
+import {
+  buildIntentQueryVariants,
+  buildSearchIntentProfile,
+  getIntentCandidateAdjustment,
+} from '../../../../lib/search-intent-core.js';
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -104,17 +109,45 @@ export async function handleSearchRequest(
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
-    const { data: candidates, error: candidateError } = await adminClient.rpc('si_search_icon_candidates', {
-      p_query: queryNorm,
-      p_library: library,
-      p_limit: Math.max(limit * 3, 40),
-    });
+    const intentProfile = buildSearchIntentProfile(queryNorm);
+    const queryVariants = buildIntentQueryVariants(queryNorm, { maxVariants: 6 });
+    const candidateBatches = await Promise.all(
+      queryVariants.map((variant, index) =>
+        adminClient.rpc('si_search_icon_candidates', {
+          p_query: variant,
+          p_library: library,
+          p_limit: Math.max(limit * 3, 40),
+        }).then((result) => ({ ...result, variant, index }))
+      ),
+    );
 
-    if (candidateError) {
-      throw candidateError;
+    const candidatesById = new Map<string, CandidateRow>();
+    for (const batch of candidateBatches) {
+      if (batch.error) throw batch.error;
+      for (const rawRow of (batch.data || []) as CandidateRow[]) {
+        const adjustment = getIntentCandidateAdjustment(rawRow, intentProfile);
+        const row = {
+          ...rawRow,
+          query_variant: batch.variant,
+          query_variant_rank: batch.index,
+          intent_boost: adjustment.boost + Math.max(0, 6 - batch.index),
+          intent_penalty: adjustment.penalty,
+          lexical_rank: Number(rawRow.lexical_rank || 0),
+        };
+        const existing = candidatesById.get(row.icon_id);
+        const rowScore = (row.lexical_rank || 0) + (row.intent_boost || 0) - (row.intent_penalty || 0);
+        const existingScore = existing
+          ? (existing.lexical_rank || 0) + (existing.intent_boost || 0) - (existing.intent_penalty || 0)
+          : -Infinity;
+        if (!existing || rowScore > existingScore) {
+          candidatesById.set(row.icon_id, row);
+        }
+      }
     }
 
-    const iconIds = ((candidates || []) as CandidateRow[]).map((row) => row.icon_id);
+    const candidates = [...candidatesById.values()];
+
+    const iconIds = candidates.map((row) => row.icon_id);
 
     let manifests: PrivateManifestRow[] = [];
     let features: PrivateFeatureRow[] = [];
@@ -161,6 +194,10 @@ export async function handleSearchRequest(
       query: queryNorm,
       results,
       engine_version: ENGINE_VERSION,
+      query_expansion: {
+        variants: queryVariants,
+        expanded: queryVariants.length > 1,
+      },
       railway_promotion_triggers: RAILWAY_PROMOTION_TRIGGERS,
     });
   } catch (error) {

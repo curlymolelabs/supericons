@@ -26,6 +26,7 @@ import {
 } from './material-export.js';
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
 import { searchIconsHosted } from './lib/search-engine-client.js';
+import { buildIntentQueryVariants } from './lib/search-intent-core.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
   fetchPopularityMap,
@@ -41,8 +42,9 @@ import {
   getNextJobCategoryFilterForLibrarySelect,
   getPopularityRecord,
   getScopedJobCategoryFilter,
+  resolveGridEmptyCopy,
   resolveGridHeadingText,
-  shouldShowPurposeFilterBar,
+  shouldShowTagFilterBar,
   shouldSyncSearchOnBlur,
 } from './lib/icon-grid-behavior.js';
 import {
@@ -113,7 +115,9 @@ const state = {
   compareIcons: [],
   popularityMap: {},
   jobCategoryCounts: {},
+  jobCategoryScopeCount: 0,
   searchContextStartedAt: typeof performance !== 'undefined' ? performance.now() : 0,
+  hostedSearchPending: false,
 };
 
 const SEARCH_ATTEMPT_IDLE_MS = 2500;
@@ -123,7 +127,7 @@ let pendingBlurSearchCommitTimer = null;
 let pendingRecentSearchHideTimer = null;
 let hostedSearchRequestSeq = 0;
 
-const iconTaxonomyMap = createIconTaxonomyMap();
+let iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
 const iconSemanticAliasMap = createIconSemanticAliasMap();
 
@@ -647,6 +651,8 @@ const els = {
   gridActions: $('.grid-header__actions'),
   gridFilterBar: $('.grid-filter-bar'),
   gridClearCollectionBtn: $('#gridClearCollectionBtn'),
+  useCaseFilterText: $('#useCaseFilterText'),
+  useCaseFilterMenu: $('#useCaseFilterMenu'),
 
   toast: $('#toast'),
   libraryList: $('#libraryList'),
@@ -724,10 +730,10 @@ function getCurrentShellView() {
   return isStoreView() ? 'store-shell' : 'icons';
 }
 
-function syncPurposeFilterBar() {
+function syncTagFilterBar() {
   if (!els.gridFilterBar) return;
 
-  const isVisible = shouldShowPurposeFilterBar({
+  const isVisible = shouldShowTagFilterBar({
     currentView: getCurrentShellView(),
     activeLibrary: state.activeLibrary,
   });
@@ -754,6 +760,7 @@ async function loadIcons() {
     state.icons = data.icons;
     state.libraries = data.libraries;
     state.filteredIcons = state.icons;
+    iconTaxonomyMap = createIconTaxonomyMap(state.icons);
 
     if (synResp.ok) {
       state.synonyms = await synResp.json();
@@ -865,8 +872,22 @@ function getJobCategoryCount(jobCategoryId) {
   return state.jobCategoryCounts?.[jobCategoryId] || 0;
 }
 
-function rebuildJobCategoryCounts() {
-  const counts = Object.fromEntries(JOB_CATEGORY_DEFINITIONS.map((category) => [category.id, 0]));
+function closeTagFilterMenu() {
+  if (!els.useCaseFilters || !els.useCaseFilterMenu) return;
+  els.useCaseFilterMenu.hidden = true;
+  els.useCaseFilters.setAttribute('aria-expanded', 'false');
+  els.gridFilterBar?.classList.remove('is-open');
+}
+
+function toggleTagFilterMenu() {
+  if (!els.useCaseFilters || !els.useCaseFilterMenu || els.gridFilterBar?.hidden) return;
+  const nextOpen = els.useCaseFilterMenu.hidden;
+  els.useCaseFilterMenu.hidden = !nextOpen;
+  els.useCaseFilters.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+  els.gridFilterBar?.classList.toggle('is-open', nextOpen);
+}
+
+function getJobCategoryScopeIcons() {
   let scopedIcons = state.icons;
 
   if (state.activeLibrary === 'favorites') {
@@ -882,6 +903,13 @@ function rebuildJobCategoryCounts() {
     scopedIcons = state.icons.filter((icon) => icon.lib === state.activeLibrary);
   }
 
+  return scopedIcons;
+}
+
+function rebuildJobCategoryCounts() {
+  const counts = Object.fromEntries(JOB_CATEGORY_DEFINITIONS.map((category) => [category.id, 0]));
+  const scopedIcons = getJobCategoryScopeIcons();
+
   for (const icon of scopedIcons) {
     const jobCategory = getIconJobCategory(icon);
     if (jobCategory && counts[jobCategory] !== undefined) {
@@ -889,25 +917,41 @@ function rebuildJobCategoryCounts() {
     }
   }
   state.jobCategoryCounts = counts;
+  state.jobCategoryScopeCount = scopedIcons.length;
+}
+
+function ensureActiveJobCategoryExistsInScope() {
+  const activeFilter = state.activeJobCategoryFilter;
+  if (activeFilter === 'all') return;
+  if (!jobCategoryMap.has(activeFilter) || getJobCategoryCount(activeFilter) <= 0) {
+    state.activeJobCategoryFilter = 'all';
+  }
 }
 
 function renderUseCaseFilters() {
   if (!els.useCaseFilters) return;
   rebuildJobCategoryCounts();
-  syncPurposeFilterBar();
+  ensureActiveJobCategoryExistsInScope();
+  syncTagFilterBar();
 
   if (els.gridFilterBar?.hidden) return;
 
   const activeFilter = getActiveJobCategoryId() || 'all';
-  const chips = [
+  const activeMeta = getJobCategoryMeta(activeFilter);
+  const allLabel = `TAGS (${state.jobCategoryScopeCount.toLocaleString()})`;
+  const activeText = activeMeta
+    ? `${activeMeta.label} (${getJobCategoryCount(activeFilter).toLocaleString()})`
+    : allLabel;
+  const options = [
     `
       <button
         type="button"
-        class="grid-filter-chip${activeFilter === 'all' ? ' active' : ''}"
+        class="grid-filter-bar__option${activeFilter === 'all' ? ' is-selected' : ''}"
         data-job-category="all"
-        aria-pressed="${activeFilter === 'all'}"
+        role="option"
+        aria-selected="${activeFilter === 'all'}"
       >
-        All
+        ${allLabel}
       </button>
     `,
     ...JOB_CATEGORY_DEFINITIONS
@@ -917,18 +961,26 @@ function renderUseCaseFilters() {
         return `
           <button
             type="button"
-            class="grid-filter-chip${isActive ? ' active' : ''}"
+            class="grid-filter-bar__option${isActive ? ' is-selected' : ''}"
             data-job-category="${category.id}"
-            aria-pressed="${isActive}"
+            role="option"
+            aria-selected="${isActive}"
           >
-            <span>${category.label}</span>
-            <span class="grid-filter-chip__count">${getJobCategoryCount(category.id).toLocaleString()}</span>
+            ${category.label} (${getJobCategoryCount(category.id).toLocaleString()})
           </button>
         `;
       }),
   ];
 
-  els.useCaseFilters.innerHTML = chips.join('');
+  if (els.useCaseFilterText) {
+    els.useCaseFilterText.textContent = activeText;
+  }
+  if (els.useCaseFilterMenu) {
+    els.useCaseFilterMenu.innerHTML = options.join('');
+  }
+  els.useCaseFilters.classList.toggle('is-active', activeFilter !== 'all');
+  els.useCaseFilters.setAttribute('data-tip', 'Tags');
+  els.useCaseFilters.removeAttribute('title');
 }
 
 function renderLibraries() {
@@ -1038,29 +1090,20 @@ function renderGrid() {
     const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
     const isRecentView = state.activeLibrary === 'recent' && !state.searchQuery;
     const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
+    const emptyCopy = resolveGridEmptyCopy({
+      searchQuery: state.searchQuery,
+      hostedSearchPending: state.hostedSearchPending,
+      isFavoritesView,
+      isRecentView,
+      activeJobCategoryLabel: activeJobCategoryMeta?.label,
+      activeJobCategoryDescription: activeJobCategoryMeta?.description,
+      defaultText: `${PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel} including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.`,
+    });
     if (emptyTitle) {
-      emptyTitle.textContent = state.searchQuery
-        ? 'No icons found'
-        : isFavoritesView
-          ? 'No favorites yet'
-          : isRecentView
-            ? 'No recent icons yet'
-            : activeJobCategoryMeta
-              ? `No ${activeJobCategoryMeta.label.toLowerCase()} icons yet`
-            : 'Welcome to SuperIcons';
+      emptyTitle.textContent = emptyCopy.title;
     }
     if (emptyText) {
-      emptyText.textContent = state.searchQuery
-        ? activeJobCategoryMeta
-          ? `No icons in ${activeJobCategoryMeta.label} match "${state.searchQuery}". Try a different search term.`
-          : `No icons match "${state.searchQuery}". Try a different search term.`
-        : isFavoritesView
-          ? 'Select an icon and use Save in Customize to keep it here. Favorites stay on this device.'
-          : isRecentView
-            ? 'Icons you open appear here on this device. Clear them anytime from the header.'
-            : activeJobCategoryMeta
-              ? activeJobCategoryMeta.description
-          : `${PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel} including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.`;
+      emptyText.textContent = emptyCopy.text;
     }
   } else {
     els.iconGrid.style.display = '';
@@ -1215,6 +1258,35 @@ function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
   return bestScore;
 }
 
+function getIntentExpandedSearchScore(icon, normalizedQuery, queryWords, queryVariants) {
+  const variants = Array.isArray(queryVariants) && queryVariants.length > 0
+    ? queryVariants
+    : [normalizedQuery];
+  let bestAliasScore = 0;
+  let bestDirectScore = 0;
+
+  for (let index = 0; index < variants.length; index += 1) {
+    const variant = variants[index];
+    const variantWords = variant === normalizedQuery
+      ? queryWords
+      : tokenizeSemanticText(variant);
+    const weight = index === 0 ? 1 : 0.78;
+    bestAliasScore = Math.max(
+      bestAliasScore,
+      getCuratedAliasScore(icon, variant, variantWords) * weight,
+    );
+    bestDirectScore = Math.max(
+      bestDirectScore,
+      getDirectSearchScore(icon, variant, variantWords) * weight,
+    );
+  }
+
+  return {
+    aliasScore: bestAliasScore,
+    directScore: bestDirectScore,
+  };
+}
+
 /** Expand a single search word into a set of matching terms */
 function expandSingleTerm(word) {
   const syn = state.synonyms;
@@ -1315,7 +1387,12 @@ async function refreshHostedSearchResults({
       .map((row) => byKey.get(row.icon_id))
       .filter(Boolean);
 
-    if (hostedIcons.length === 0) return;
+    state.hostedSearchPending = false;
+
+    if (hostedIcons.length === 0) {
+      renderGrid();
+      return;
+    }
 
     const hostedKeys = new Set(hostedIcons.map((icon) => iconKey(icon)));
     const remainder = fallbackIcons.filter((icon) => !hostedKeys.has(iconKey(icon)));
@@ -1326,6 +1403,10 @@ async function refreshHostedSearchResults({
     updateCounts();
     renderGrid();
   } catch (error) {
+    if (requestId === hostedSearchRequestSeq) {
+      state.hostedSearchPending = false;
+      renderGrid();
+    }
     console.warn('[Hosted Search] Falling back to local ranking:', error?.message || error);
   }
 }
@@ -1387,7 +1468,9 @@ function applyFilters() {
   if (state.searchQuery) {
     const normalizedQuery = normalizeSemanticText(state.searchQuery);
     const queryWords = tokenizeSemanticText(state.searchQuery);
+    const queryVariants = buildIntentQueryVariants(normalizedQuery, { maxVariants: 8 });
     const termSets = expandSearchTerms(normalizedQuery); // array of term-sets, one per word
+    state.hostedSearchPending = normalizedQuery.length >= 2 && searchPool.length > 0;
 
     // Helper: check if icon matches a set of term-sets
     const iconMatchesTermSets = (icon, sets) => {
@@ -1406,8 +1489,7 @@ function applyFilters() {
     const tier1 = icons
       .map((icon) => ({
         icon,
-        aliasScore: getCuratedAliasScore(icon, normalizedQuery, queryWords),
-        directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
+        ...getIntentExpandedSearchScore(icon, normalizedQuery, queryWords, queryVariants),
       }))
       .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
       .sort((a, b) => compareSearchMatches(a, b, state.popularityMap, getIconJobRank))
@@ -1430,6 +1512,7 @@ function applyFilters() {
     });
   } else {
     state.tierDividerIndex = -1;
+    state.hostedSearchPending = false;
   }
 
   // Popularity sort: in default 'All Icons' view with no search, sort popular icons first
@@ -1449,11 +1532,13 @@ function updateCounts() {
   const styleSuffix = state.iconStyle === 'solid' ? ' (solid)' : '';
   const activeJobCategoryId = getActiveJobCategoryId();
   const activeJobCategoryMeta = getJobCategoryMeta(activeJobCategoryId);
+  const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
+  const libraryTitle = titleMap[state.activeLibrary] || (libraryMeta[state.activeLibrary]?.name || state.activeLibrary);
 
   $('#countAll').textContent = total.toLocaleString();
   syncHeaderSearchChrome();
   syncCollectionClearButton();
-  syncPurposeFilterBar();
+  syncTagFilterBar();
   updateGridHeading();
 
   if (isStoreView()) return;
@@ -1467,10 +1552,13 @@ function updateCounts() {
   if (noSolid) {
     els.gridMeta.textContent = `Showing outline (no solid variant available)`;
   } else if (activeJobCategoryMeta) {
-    const scopeLabel = state.activeLibrary === 'all' ? activeJobCategoryMeta.label : els.gridTitle.textContent;
     els.gridMeta.textContent = state.searchQuery
-      ? `Showing ${showing.toLocaleString()} results in ${scopeLabel}${styleSuffix}`
-      : `Showing ${showing.toLocaleString()} curated icons in ${scopeLabel}${styleSuffix}`;
+      ? state.activeLibrary === 'all'
+        ? `Showing ${showing.toLocaleString()} results${styleSuffix}`
+        : `Showing ${showing.toLocaleString()} ${libraryTitle} results${styleSuffix}`
+      : state.activeLibrary === 'all'
+        ? `Showing ${showing.toLocaleString()} curated icons${styleSuffix}`
+        : `Showing ${showing.toLocaleString()} curated ${libraryTitle} icons${styleSuffix}`;
   } else if (showing === total && !state.searchQuery) {
     els.gridMeta.textContent = `Showing ${total.toLocaleString()} icons${styleSuffix}`;
   } else {
@@ -1594,7 +1682,6 @@ function updateGridHeading() {
   els.gridTitle.textContent = resolveGridHeadingText({
     currentView: getCurrentShellView(),
     activeLibrary: state.activeLibrary,
-    activeJobCategoryLabel: activeJobCategoryMeta?.label,
     currentTitle: els.gridTitle.textContent,
     libraryTitle,
   });
@@ -3339,12 +3426,30 @@ els.sidebar.addEventListener('click', (e) => {
 });
 
 if (els.useCaseFilters) {
-  els.useCaseFilters.addEventListener('click', (e) => {
-    const chip = e.target.closest('[data-job-category]');
-    if (!chip) return;
-    setActiveJobCategoryFilter(chip.dataset.jobCategory);
+  els.useCaseFilters.addEventListener('click', () => {
+    toggleTagFilterMenu();
   });
 }
+
+if (els.useCaseFilterMenu) {
+  els.useCaseFilterMenu.addEventListener('click', (e) => {
+    const option = e.target.closest('[data-job-category]');
+    if (!option) return;
+    closeTagFilterMenu();
+    setActiveJobCategoryFilter(option.dataset.jobCategory);
+  });
+}
+
+document.addEventListener('click', (e) => {
+  if (!els.gridFilterBar || els.gridFilterBar.contains(e.target)) return;
+  closeTagFilterMenu();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeTagFilterMenu();
+  }
+});
 
 // Icon grid click (delegated)
 els.iconGrid.addEventListener('click', (e) => {
@@ -3684,7 +3789,7 @@ window.__supericons = {
   ANIM_CSS,
   setHeaderSearchMode,
   syncHeaderSearchChrome,
-  syncPurposeFilterBar,
+  syncTagFilterBar,
   syncSidebarToggleButton,
   shell: storeShell,
 };

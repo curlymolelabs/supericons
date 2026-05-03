@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "odor",
+      "category": "physical_sense",
+      "meaning": "Physical smell, scent, odor, or unpleasant bad smell.",
+      "related_terms": ["smell", "scent", "odor", "stink", "bad smell", "dirty air"],
+      "icon_concepts": ["nose", "air", "cloud", "wind", "trash", "alert"],
+      "avoid_concepts": ["check", "badge-check", "sparkles"],
+      "notes": "Use for natural-language smell searches without adding smell words to icon records."
+    }
+  ],
+  "aliases": [
+    {
+      "term": "smell",
+      "node": "odor",
+      "extra_related_terms": ["scent", "air", "odor", "stink"],
+      "extra_icon_concepts": ["nose", "wind", "cloud"],
+      "extra_avoid_concepts": ["check", "badge-check"]
+    },
+    {
+      "term": "smelly",
+      "node": "odor",
+      "extra_related_terms": ["bad smell", "odor", "stink", "dirty"],
+      "extra_icon_concepts": ["trash", "alert", "nose", "cloud"],
+      "extra_avoid_concepts": ["sparkles", "check"]
+    }
+  ]
+}

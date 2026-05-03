@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "query": "beautiful",
+      "expected_variants": ["beautiful", "design theme", "palette", "swatch", "sparkles"],
+      "expected_any_top_concepts": ["palette", "swatch", "sparkles", "star", "heart"]
+    },
+    {
+      "query": "pretty",
+      "expected_variants": ["pretty", "design theme", "palette", "sparkles", "heart"],
+      "expected_any_top_concepts": ["palette", "sparkles", "heart", "star"]
+    },
+    {
+      "query": "user profile",
+      "expected_variants": ["user profile", "profile user account person avatar"],
+      "expected_any_top_concepts": ["user", "user-circle", "circle-user", "avatar"],
+      "disallowed_early_terms": ["user-x", "user-minus", "user-lock", "user-check"]
+    },
+    {
+      "query": "dataset",
+      "expected_variants": ["dataset", "data table", "database", "grid rows columns"],
+      "expected_any_top_concepts": ["table", "database", "grid"]
+    },
+    {
+      "query": "evaluation",
+      "expected_variants": ["evaluation", "metrics chart", "bar chart", "gauge", "benchmark"],
+      "expected_any_top_concepts": ["chart", "bar-chart", "gauge", "checklist"]
+    },
+    {
+      "query": "deployment",
+      "expected_variants": ["deployment", "cloud upload", "upload", "server", "package"],
+      "expected_any_top_concepts": ["cloud-upload", "upload", "server", "package"]
+    },
+    {
+      "query": "monitoring",
+      "expected_variants": ["monitoring", "activity", "chart line", "pulse", "dashboard"],
+      "expected_any_top_concepts": ["activity", "chart-line", "line-chart", "gauge"]
+    },
+    {
+      "query": "prompt",
+      "expected_variants": ["prompt", "message text", "terminal", "input text"],
+      "expected_any_top_concepts": ["message", "terminal", "text", "input"]
+    }
+  ]
+}

@@ -24,6 +24,66 @@
           "expected_icon_id": "mingcute:user_1_line"
         }
       ]
+    },
+    {
+      "id": "lucide-ai-dashboard",
+      "task": "Choose icons for an AI/ML dashboard sidebar navigation",
+      "library": "lucide",
+      "limit_per_slot": 3,
+      "slots": [
+        {
+          "slot": "Model",
+          "expected_icon_ids": ["lucide:brain-circuit", "lucide:brain-cog", "lucide:brain"]
+        },
+        {
+          "slot": "Prompt",
+          "expected_icon_ids": ["lucide:message-square-text", "lucide:text-cursor-input", "lucide:terminal"]
+        },
+        {
+          "slot": "Dataset",
+          "expected_icon_ids": ["lucide:database", "lucide:table-2", "lucide:table-cells-split", "lucide:table-columns-split", "lucide:table-rows-split"]
+        },
+        {
+          "slot": "Evaluation",
+          "expected_icon_ids": ["lucide:chart-bar", "lucide:bar-chart-3", "lucide:bar-chart-big", "lucide:gauge"]
+        },
+        {
+          "slot": "Deployment",
+          "expected_icon_ids": ["lucide:cloud-upload", "lucide:upload-cloud", "lucide:upload", "lucide:rocket"]
+        },
+        {
+          "slot": "Monitoring",
+          "expected_icon_ids": ["lucide:chart-line", "lucide:line-chart", "lucide:activity", "lucide:gauge"]
+        }
+      ]
+    },
+    {
+      "id": "lucide-admin-sidebar",
+      "task": "Choose icons for an admin sidebar navigation",
+      "library": "lucide",
+      "limit_per_slot": 3,
+      "slots": [
+        {
+          "slot": "Users",
+          "expected_icon_ids": ["lucide:users", "lucide:users-2", "lucide:user-round", "lucide:user"]
+        },
+        {
+          "slot": "Billing",
+          "expected_icon_ids": ["lucide:credit-card", "lucide:receipt", "lucide:wallet"]
+        },
+        {
+          "slot": "Database",
+          "expected_icon_ids": ["lucide:database", "lucide:database-backup", "lucide:database-search"]
+        },
+        {
+          "slot": "Settings",
+          "expected_icon_ids": ["lucide:settings", "lucide:settings-2", "lucide:cog"]
+        },
+        {
+          "slot": "Reports",
+          "expected_icon_ids": ["lucide:file-bar-chart", "lucide:file-bar-chart-2", "lucide:file-chart-column", "lucide:file-chart-line", "lucide:bar-chart-3", "lucide:chart-bar"]
+        }
+      ]
     }
   ]
 }

@@ -35,6 +35,10 @@ import {
   renderMotionLabAnimatedSvgHosted,
   renderMotionLabCssHosted,
 } from './motion-lab-client.js';
+import {
+  buildSearchIntentProfile,
+  getIntentCandidateAdjustment,
+} from '../lib/search-intent-core.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -445,6 +449,26 @@ function mergeOrderedSearchResults(primaryResults, secondaryResults, requestedSt
   return orderedKeys.map((key) => selected.get(key));
 }
 
+function rerankIconsForIntent(query, icons) {
+  const intentProfile = buildSearchIntentProfile(query);
+  if (!intentProfile.expanded) return icons;
+
+  return icons
+    .map((icon, index) => {
+      const adjustment = getIntentCandidateAdjustment(icon, intentProfile);
+      return {
+        icon,
+        index,
+        score: adjustment.boost - adjustment.penalty,
+      };
+    })
+    .sort((left, right) => {
+      if (right.score !== left.score) return right.score - left.score;
+      return left.index - right.index;
+    })
+    .map((entry) => entry.icon);
+}
+
 function choosePreferredIconCandidate(candidates, requestedStyle) {
   if (!Array.isArray(candidates) || candidates.length === 0) return null;
   return [...candidates].sort((left, right) => compareVariantPreference(left, right, requestedStyle))[0] || null;
@@ -585,7 +609,8 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
     : mergeOrderedSearchResults(hostedResults, localResults, requestedStyle);
 
   const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, { limit });
-  return mergeOrderedSearchResults(merged, [], requestedStyle).slice(0, Math.max(1, limit));
+  const intentRanked = rerankIconsForIntent(query, merged);
+  return mergeOrderedSearchResults(intentRanked, [], requestedStyle).slice(0, Math.max(1, limit));
 }
 
 // ============================================================

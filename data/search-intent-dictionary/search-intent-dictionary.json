@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "categories": [
+    "aesthetic",
+    "emotion",
+    "judgment",
+    "risk_state",
+    "product_work",
+    "tone"
+  ],
+  "entries": [
+    {
+      "term": "beautiful",
+      "category": "aesthetic",
+      "variants": ["design theme", "palette", "swatch", "sparkles", "star", "heart", "flower"],
+      "prefer": ["palette", "swatch", "sparkles", "star", "heart", "flower"],
+      "avoid": [],
+      "notes": "Aesthetic positive search; prefer visual customization and delight icons."
+    },
+    {
+      "term": "pretty",
+      "category": "aesthetic",
+      "variants": ["design theme", "palette", "sparkles", "star", "heart", "flower"],
+      "prefer": ["palette", "sparkles", "star", "heart", "flower"],
+      "avoid": [],
+      "notes": "Casual aesthetic positive search."
+    },
+    {
+      "term": "elegant",
+      "category": "aesthetic",
+      "variants": ["design theme", "sparkles", "diamond", "star", "palette"],
+      "prefer": ["sparkles", "diamond", "star", "palette"],
+      "avoid": ["bug", "x-circle", "triangle-alert"],
+      "notes": "Refined aesthetic tone."
+    },
+    {
+      "term": "modern",
+      "category": "aesthetic",
+      "variants": ["sparkles", "layout", "grid", "palette", "zap"],
+      "prefer": ["sparkles", "layout", "grid", "palette", "zap"],
+      "avoid": ["archive", "history"],
+      "notes": "Contemporary product or design feel."
+    },
+    {
+      "term": "stylish",
+      "category": "aesthetic",
+      "variants": ["palette", "swatch", "sparkles", "star", "wand"],
+      "prefer": ["palette", "swatch", "sparkles", "star", "wand"],
+      "avoid": ["bug", "warning"],
+      "notes": "Style, polish, or appearance intent."
+    },
+    {
+      "term": "minimal",
+      "category": "aesthetic",
+      "variants": ["minus", "circle", "square", "layout", "align"],
+      "prefer": ["minus", "circle", "square", "layout", "align"],
+      "avoid": ["sparkles", "party", "badge"],
+      "notes": "Simple visual treatment or reduced interface intent."
+    },
+    {
+      "term": "clean",
+      "category": "aesthetic",
+      "variants": ["sparkles", "brush", "eraser", "check", "layout"],
+      "prefer": ["sparkles", "brush", "eraser", "check", "layout"],
+      "avoid": ["bug", "x-circle", "trash"],
+      "notes": "Clean UI or cleanup intent."
+    },
+    {
+      "term": "premium",
+      "category": "aesthetic",
+      "variants": ["crown", "diamond", "star", "badge", "sparkles"],
+      "prefer": ["crown", "diamond", "star", "badge", "sparkles"],
+      "avoid": ["free", "gift"],
+      "notes": "Premium, paid, or high-value feature intent."
+    },
+    {
+      "term": "happy",
+      "category": "emotion",
+      "variants": ["smile", "face smile", "heart", "sparkles", "thumbs up"],
+      "prefer": ["smile", "face-smile", "heart", "sparkles", "thumbs-up"],
+      "avoid": ["frown", "angry", "x-circle"],
+      "notes": "Positive mood or satisfaction."
+    },
+    {
+      "term": "sad",
+      "category": "emotion",
+      "variants": ["frown", "face frown", "cloud rain", "heart crack"],
+      "prefer": ["frown", "face-frown", "cloud-rain", "heart-crack"],
+      "avoid": ["smile", "check"],
+      "notes": "Negative mood, disappointment, or empty-state tone."
+    },
+    {
+      "term": "angry",
+      "category": "emotion",
+      "variants": ["angry", "flame", "alert", "x circle"],
+      "prefer": ["angry", "flame", "alert", "x-circle"],
+      "avoid": ["smile", "heart"],
+      "notes": "Frustration or strong negative emotion."
+    },
+    {
+      "term": "funny",
+      "category": "emotion",
+      "variants": ["smile", "laugh", "party", "sparkles", "game"],
+      "prefer": ["smile", "laugh", "party", "sparkles", "game"],
+      "avoid": ["briefcase", "shield"],
+      "notes": "Humor or lighthearted tone."
+    },
+    {
+      "term": "playful",
+      "category": "emotion",
+      "variants": ["sparkles", "smile", "game", "star", "heart"],
+      "prefer": ["sparkles", "smile", "game", "star", "heart"],
+      "avoid": ["briefcase", "shield"],
+      "notes": "Friendly, fun, informal visual tone."
+    },
+    {
+      "term": "calm",
+      "category": "emotion",
+      "variants": ["moon", "leaf", "heart", "circle", "waves"],
+      "prefer": ["moon", "leaf", "heart", "circle", "waves"],
+      "avoid": ["alert", "zap", "flame"],
+      "notes": "Calm, quiet, or soothing state."
+    },
+    {
+      "term": "chill",
+      "category": "emotion",
+      "variants": ["snowflake", "thermometer", "moon", "smile", "coffee", "waves", "leaf"],
+      "prefer": ["snowflake", "thermometer", "moon", "smile", "coffee", "waves", "leaf"],
+      "avoid": ["alert", "zap", "flame", "angry"],
+      "notes": "Casual relaxed mood, cool temperature, or low-pressure tone."
+    },
+    {
+      "term": "excited",
+      "category": "emotion",
+      "variants": ["sparkles", "party", "zap", "rocket", "star"],
+      "prefer": ["sparkles", "party", "zap", "rocket", "star"],
+      "avoid": ["moon", "frown"],
+      "notes": "Excitement or launch-like energy."
+    },
+    {
+      "term": "smart",
+      "category": "judgment",
+      "variants": ["ai", "brain", "brain circuit", "sparkles", "lightbulb"],
+      "prefer": ["brain-circuit", "brain", "sparkles", "lightbulb"],
+      "avoid": ["bug", "x-circle", "triangle-alert"],
+      "notes": "Positive intelligence or clever automation intent."
+    },
+    {
+      "term": "stupid",
+      "category": "judgment",
+      "variants": ["mistake", "error", "confused", "warning", "bug", "brain off"],
+      "prefer": ["bug", "triangle-alert", "circle-alert", "x-circle", "brain", "face-frown"],
+      "avoid": ["brain-circuit", "check", "badge-check"],
+      "notes": "Treat as negative or confused-state intent, not as a person-targeting insult."
+    },
+    {
+      "term": "bad",
+      "category": "judgment",
+      "variants": ["x", "x circle", "thumbs down", "alert", "warning"],
+      "prefer": ["x", "x-circle", "thumbs-down", "alert", "warning"],
+      "avoid": ["check", "badge-check", "thumbs-up"],
+      "notes": "Generic negative judgment."
+    },
+    {
+      "term": "good",
+      "category": "judgment",
+      "variants": ["check", "thumbs up", "badge check", "heart", "star"],
+      "prefer": ["check", "thumbs-up", "badge-check", "heart", "star"],
+      "avoid": ["x-circle", "alert", "bug"],
+      "notes": "Generic positive judgment."
+    },
+    {
+      "term": "wrong",
+      "category": "judgment",
+      "variants": ["x", "x circle", "alert", "warning", "ban"],
+      "prefer": ["x", "x-circle", "alert", "warning", "ban"],
+      "avoid": ["check", "badge-check"],
+      "notes": "Incorrect, invalid, or rejected state."
+    },
+    {
+      "term": "correct",
+      "category": "judgment",
+      "variants": ["check", "check circle", "badge check", "verified"],
+      "prefer": ["check", "check-circle", "badge-check", "verified"],
+      "avoid": ["x-circle", "alert"],
+      "notes": "Correct, valid, or verified state."
+    },
+    {
+      "term": "useful",
+      "category": "judgment",
+      "variants": ["tool", "wrench", "check", "lightbulb", "thumbs up"],
+      "prefer": ["tool", "wrench", "check", "lightbulb", "thumbs-up"],
+      "avoid": ["trash", "x-circle"],
+      "notes": "Utility, usefulness, or practical help."
+    },
+    {
+      "term": "useless",
+      "category": "judgment",
+      "variants": ["trash", "ban", "x circle", "minus circle"],
+      "prefer": ["trash", "ban", "x-circle", "minus-circle"],
+      "avoid": ["check", "thumbs-up"],
+      "notes": "Discard, rejection, or not useful."
+    },
+    {
+      "term": "dangerous",
+      "category": "risk_state",
+      "variants": ["warning", "alert", "skull", "shield alert", "zap"],
+      "prefer": ["warning", "alert", "skull", "shield-alert", "zap"],
+      "avoid": ["check", "shield-check"],
+      "notes": "Danger or risk warning."
+    },
+    {
+      "term": "safe",
+      "category": "risk_state",
+      "variants": ["shield check", "lock", "check circle", "badge check"],
+      "prefer": ["shield-check", "lock", "check-circle", "badge-check"],
+      "avoid": ["alert", "unlock", "bug"],
+      "notes": "Safety, trust, or protection."
+    },
+    {
+      "term": "broken",
+      "category": "risk_state",
+      "variants": ["error", "bug", "warning", "x circle", "wrench"],
+      "prefer": ["bug", "triangle-alert", "circle-alert", "x-circle", "wrench"],
+      "avoid": ["check", "badge-check"],
+      "notes": "Failure, bug, or repair intent."
+    },
+    {
+      "term": "suspicious",
+      "category": "risk_state",
+      "variants": ["alert", "shield alert", "eye", "scan", "bug"],
+      "prefer": ["alert", "shield-alert", "eye", "scan", "bug"],
+      "avoid": ["check", "shield-check"],
+      "notes": "Suspicion, possible threat, or review needed."
+    },
+    {
+      "term": "blocked",
+      "category": "risk_state",
+      "variants": ["ban", "lock", "x circle", "shield x"],
+      "prefer": ["ban", "lock", "x-circle", "shield-x"],
+      "avoid": ["unlock", "check"],
+      "notes": "Blocked, denied, or restricted state."
+    },
+    {
+      "term": "confused",
+      "category": "risk_state",
+      "variants": ["circle help", "question", "frown", "brain", "alert"],
+      "prefer": ["circle-help", "question", "frown", "brain", "alert"],
+      "avoid": ["check", "lightbulb"],
+      "notes": "Confusion, uncertainty, or needs help."
+    },
+    {
+      "term": "analyze",
+      "category": "product_work",
+      "variants": ["search", "chart", "scan", "activity", "microscope"],
+      "prefer": ["search", "chart", "scan", "activity", "microscope"],
+      "avoid": ["trash", "x-circle"],
+      "notes": "Analysis or inspection work."
+    },
+    {
+      "term": "review",
+      "category": "product_work",
+      "variants": ["clipboard check", "eye", "search", "file check"],
+      "prefer": ["clipboard-check", "eye", "search", "file-check"],
+      "avoid": ["trash", "x-circle"],
+      "notes": "Review, inspect, or approve flow."
+    },
+    {
+      "term": "optimize",
+      "category": "product_work",
+      "variants": ["zap", "gauge", "settings", "sliders", "rocket"],
+      "prefer": ["zap", "gauge", "settings", "sliders", "rocket"],
+      "avoid": ["bug", "x-circle"],
+      "notes": "Optimization or performance improvement."
+    },
+    {
+      "term": "monitor",
+      "category": "product_work",
+      "variants": ["activity", "chart line", "pulse", "dashboard", "gauge", "signal"],
+      "prefer": ["activity", "chart-line", "line-chart", "pulse", "gauge", "dashboard"],
+      "avoid": ["eye-closed", "eye-off"],
+      "avoid_unless": ["hide", "hidden", "visibility", "private", "privacy", "password"],
+      "notes": "Monitoring or live telemetry."
+    },
+    {
+      "term": "monitoring",
+      "category": "product_work",
+      "variants": ["activity", "chart line", "pulse", "dashboard", "gauge", "signal"],
+      "prefer": ["activity", "chart-line", "line-chart", "pulse", "gauge", "dashboard"],
+      "avoid": ["eye-closed", "eye-off"],
+      "avoid_unless": ["hide", "hidden", "visibility", "private", "privacy", "password"],
+      "notes": "Monitoring or live telemetry."
+    },
+    {
+      "term": "deploy",
+      "category": "product_work",
+      "variants": ["cloud upload", "upload", "server", "package", "send"],
+      "prefer": ["cloud-upload", "upload", "server", "package", "send"],
+      "avoid": [],
+      "notes": "Deployment or publishing to production."
+    },
+    {
+      "term": "deployment",
+      "category": "product_work",
+      "variants": ["cloud upload", "upload", "server", "package", "send"],
+      "prefer": ["cloud-upload", "upload", "server", "package", "send"],
+      "avoid": [],
+      "notes": "Deployment or publishing to production."
+    },
+    {
+      "term": "evaluate",
+      "category": "product_work",
+      "variants": ["metrics chart", "bar chart", "gauge", "benchmark", "checklist"],
+      "prefer": ["bar-chart", "chart", "gauge", "check"],
+      "avoid": [],
+      "notes": "Evaluation, scoring, or benchmark intent."
+    },
+    {
+      "term": "evaluation",
+      "category": "product_work",
+      "variants": ["metrics chart", "bar chart", "gauge", "benchmark", "checklist"],
+      "prefer": ["bar-chart", "chart", "gauge", "check"],
+      "avoid": [],
+      "notes": "Evaluation, scoring, or benchmark intent."
+    },
+    {
+      "term": "compare",
+      "category": "product_work",
+      "variants": ["columns", "split", "arrows left right", "scale"],
+      "prefer": ["columns", "split", "arrows-left-right", "scale"],
+      "avoid": ["single", "x-circle"],
+      "notes": "Comparison, side-by-side, or weighing options."
+    },
+    {
+      "term": "dataset",
+      "category": "product_work",
+      "variants": ["data table", "database", "grid rows columns"],
+      "prefer": ["table", "database", "grid"],
+      "avoid": [],
+      "notes": "Structured data or training dataset."
+    },
+    {
+      "term": "data",
+      "category": "product_work",
+      "variants": ["database", "data table", "grid rows columns"],
+      "prefer": ["database", "table", "grid"],
+      "avoid": [],
+      "notes": "Generic structured data intent."
+    },
+    {
+      "term": "prompt",
+      "category": "product_work",
+      "variants": ["message text", "terminal", "input text", "text cursor"],
+      "prefer": ["message-text", "message-square-text", "terminal", "input", "text"],
+      "avoid": ["eye"],
+      "avoid_unless": ["view", "preview", "visible", "visibility", "hide", "hidden"],
+      "notes": "Prompt, text input, or command entry."
+    },
+    {
+      "term": "theme",
+      "category": "product_work",
+      "variants": ["palette", "swatch", "sun", "moon", "sparkles"],
+      "prefer": ["palette", "swatch", "sun", "moon", "sparkles"],
+      "avoid": [],
+      "notes": "Theme or appearance selection."
+    },
+    {
+      "term": "profile",
+      "category": "product_work",
+      "variants": ["profile user account person avatar"],
+      "prefer": ["user", "user-2", "user-circle", "circle-user", "avatar"],
+      "avoid": ["user-x", "user-minus", "user-lock", "user-check", "user-cog"],
+      "avoid_unless": ["remove", "delete", "block", "ban", "disable", "verify", "verified", "check", "secure", "security", "settings"],
+      "notes": "Neutral profile or account identity."
+    },
+    {
+      "term": "user",
+      "category": "product_work",
+      "variants": ["profile user account person avatar"],
+      "prefer": ["user", "user-2", "user-circle", "circle-user", "avatar"],
+      "avoid": ["user-x", "user-minus", "user-lock", "user-check", "user-cog"],
+      "avoid_unless": ["remove", "delete", "block", "ban", "disable", "verify", "verified", "check", "secure", "security", "settings"],
+      "notes": "Neutral user identity unless the query says otherwise."
+    },
+    {
+      "term": "account",
+      "category": "product_work",
+      "variants": ["profile user account person avatar"],
+      "prefer": ["user", "user-2", "user-circle", "circle-user", "avatar"],
+      "avoid": ["user-x", "user-minus", "user-lock", "user-check"],
+      "avoid_unless": ["remove", "delete", "block", "ban", "disable", "verify", "verified", "check"],
+      "notes": "Account or profile identity."
+    },
+    {
+      "term": "metrics",
+      "category": "product_work",
+      "variants": ["bar chart", "chart line", "gauge", "analytics"],
+      "prefer": ["chart", "gauge", "analytics"],
+      "avoid": [],
+      "notes": "Measurement, reporting, or analytics."
+    },
+    {
+      "term": "professional",
+      "category": "tone",
+      "variants": ["briefcase", "building office", "shield check", "badge check"],
+      "prefer": ["briefcase", "building", "shield", "badge"],
+      "avoid": ["party", "smile", "game"],
+      "notes": "Business or enterprise tone."
+    },
+    {
+      "term": "friendly",
+      "category": "tone",
+      "variants": ["smile", "heart", "message", "handshake"],
+      "prefer": ["smile", "heart", "message", "handshake"],
+      "avoid": ["alert", "skull"],
+      "notes": "Approachable or friendly tone."
+    },
+    {
+      "term": "serious",
+      "category": "tone",
+      "variants": ["shield", "briefcase", "lock", "file text"],
+      "prefer": ["shield", "briefcase", "lock", "file-text"],
+      "avoid": ["party", "sparkles", "smile"],
+      "notes": "Formal or serious tone."
+    },
+    {
+      "term": "creative",
+      "category": "tone",
+      "variants": ["palette", "brush", "sparkles", "pen tool", "wand"],
+      "prefer": ["palette", "brush", "sparkles", "pen-tool", "wand"],
+      "avoid": ["briefcase", "lock"],
+      "notes": "Creative work or visual ideation."
+    },
+    {
+      "term": "simple",
+      "category": "tone",
+      "variants": ["circle", "square", "minus", "check", "layout"],
+      "prefer": ["circle", "square", "minus", "check", "layout"],
+      "avoid": ["sparkles", "badge", "complex"],
+      "notes": "Simple, clear, or basic visual language."
+    }
+  ]
+}

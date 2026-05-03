@@ -77,7 +77,7 @@ const docsPageGroups = [
   },
   {
     label: 'MCP Reference',
-    pages: ['docs-mcp-tools', 'docs-mcp-icons', 'docs-mcp-motion', 'docs-mcp-converter'],
+    pages: ['docs-mcp-search-guide', 'docs-mcp-tools', 'docs-mcp-icons', 'docs-mcp-motion', 'docs-mcp-converter'],
   },
   {
     label: 'Motion Lab',
@@ -128,6 +128,13 @@ const docsPages = {
               <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-mcp-universal')}" data-docs-view="docs-mcp-universal">Choose your client</a>
             </div>
             <p>Step-by-step setup for Claude Code, Codex CLI, Cursor, and other coding agents.</p>
+          </article>
+          <article class="docs-card">
+            <div class="docs-card__head">
+              <h3>Search with MCP</h3>
+              <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-mcp-search-guide')}" data-docs-view="docs-mcp-search-guide">See prompts</a>
+            </div>
+            <p>Prompt examples for finding icons by name, library, use case, or meaning.</p>
           </article>
           <article class="docs-card">
             <div class="docs-card__head">
@@ -274,10 +281,12 @@ const docsPages = {
         <h2 class="docs-section__title">Where to go next</h2>
         <div class="docs-link-list docs-link-list--inline">
           ${docsLink('docs-mcp-universal', 'Set up MCP')}
+          ${docsLink('docs-mcp-search-guide', 'Search with MCP')}
           ${appLink('pricing', 'Get Pro')}
           ${appLink('api-keys', 'API Keys')}
         </div>
         <p class="docs-section__copy">${docsLink('docs-mcp-universal', 'Set up MCP')} - Get the MCP server running in your coding agent</p>
+        <p class="docs-section__copy">${docsLink('docs-mcp-search-guide', 'Search with MCP')} - Learn the best prompts for finding icons through your agent</p>
         <p class="docs-section__copy">${appLink('pricing', 'Get Pro')} - See what a Pro account includes</p>
         <p class="docs-section__copy">${appLink('api-keys', 'API Keys')} - Understand how authentication works</p>
       </section>
@@ -627,6 +636,101 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       </section>
     `,
   },
+  'docs-mcp-search-guide': {
+    navLabel: 'Search Guide',
+    kicker: 'MCP Reference',
+    pageTitle: 'How to Search Icons with MCP',
+    summary: 'Prompt examples for asking your AI agent to find, compare, and fetch Supericons icons.',
+    bodyHtml: `
+      <section class="docs-section" id="mcp-search-intro">
+        <p class="docs-section__copy">Once Supericons MCP is connected, you can ask your AI agent for icons in normal language. You do not need to know the exact icon name first. Describe the object, action, feeling, screen, or job the icon needs to support.</p>
+        <p class="docs-section__copy">The safest workflow is simple: ask for options, choose one, then ask the agent to fetch the SVG or place it in your code.</p>
+      </section>
+      <section class="docs-section" id="mcp-search-tools">
+        <h2 class="docs-section__title">Which tool should the agent use?</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Need</th>
+                <th>Best tool</th>
+                <th>Example prompt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon.</td></tr>
+              <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring.</td></tr>
+              <tr><td>Fetch one known icon</td><td><code>get_icon</code></td><td>Get the SVG for <code>database</code> from Iconoir.</td></tr>
+              <tr><td>See available libraries</td><td><code>list_libraries</code></td><td>List the Supericons icon libraries.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="docs-section" id="mcp-search-prompts">
+        <h2 class="docs-section__title">Good prompts to try</h2>
+        <div class="docs-grid docs-grid--cards">
+          <article class="docs-card">
+            <h3>Search by object</h3>
+            <ul>
+              <li>Find me a database icon.</li>
+              <li>Find a calendar icon from Tabler.</li>
+              <li>Search for a shield icon for account security.</li>
+            </ul>
+          </article>
+          <article class="docs-card">
+            <h3>Search by action</h3>
+            <ul>
+              <li>Find icons for upload to cloud.</li>
+              <li>Search Lucide for user profile icons.</li>
+              <li>Find icons that mean block user or deny access.</li>
+            </ul>
+          </article>
+          <article class="docs-card">
+            <h3>Search by meaning</h3>
+            <ul>
+              <li>Find a friendly icon for something beautiful.</li>
+              <li>Find an icon that could represent a bad smell.</li>
+              <li>Find an icon for something broken or risky.</li>
+            </ul>
+          </article>
+          <article class="docs-card">
+            <h3>Search by UI slot</h3>
+            <ul>
+              <li>Recommend icons for a mobile bottom nav: home, create, alerts, and profile.</li>
+              <li>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring.</li>
+              <li>Recommend icons for an admin sidebar: users, billing, database, settings, and reports.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+      <section class="docs-section" id="mcp-search-output">
+        <h2 class="docs-section__title">Ask for the output you need</h2>
+        <p class="docs-section__copy">After the agent finds good matches, tell it what to return. You can ask for a shortlist, the icon IDs, the SVG, or code-ready markup.</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-mcp-search-output-prompts">Copy</button>
+          <pre><code id="docs-mcp-search-output-prompts">Show me the top 5 choices with icon id, library, and a short reason.
+
+Get the SVG for the best result.
+
+Use the best Lucide result and add it to this button.
+
+Give me three alternatives if the first one feels too generic.</code></pre>
+        </div>
+      </section>
+      <section class="docs-callout" id="mcp-search-private-note">
+        <h3>What stays private</h3>
+        <p>Supericons search can understand names, related words, and common icon meanings. The public docs describe how to use it, but they do not expose private service keys, private scoring details, or internal maintenance workflows.</p>
+      </section>
+      <section class="docs-section" id="mcp-search-next">
+        <h2 class="docs-section__title">Next references</h2>
+        <div class="docs-link-list docs-link-list--inline">
+          ${docsLink('docs-mcp-icons', 'Icon tools reference')}
+          ${docsLink('docs-mcp-tools', 'All MCP tools')}
+          ${docsLink('docs-mcp-universal', 'MCP setup')}
+        </div>
+      </section>
+    `,
+  },
   'docs-mcp-tools': {
     navLabel: 'Overview',
     kicker: 'MCP Reference',
@@ -671,6 +775,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       <section class="docs-section" id="mcp-overview-links">
         <h2 class="docs-section__title">Detailed references</h2>
         <div class="docs-link-list docs-link-list--inline">
+          ${docsLink('docs-mcp-search-guide', 'Search guide')}
           ${docsLink('docs-mcp-icons', 'Icon tools')}
           ${docsLink('docs-mcp-motion', 'Motion Lab tools')}
           ${docsLink('docs-mcp-converter', 'Converter tools')}

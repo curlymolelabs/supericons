@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "query": "stupid",
+      "expected_variants": ["mistake", "error", "confused", "warning", "bug"],
+      "expected_prefer": ["bug", "triangle-alert", "x-circle"],
+      "expected_avoid": ["brain-circuit", "check"]
+    },
+    {
+      "query": "smart",
+      "expected_variants": ["ai", "brain", "brain circuit", "sparkles", "lightbulb"],
+      "expected_prefer": ["brain-circuit", "brain", "lightbulb"],
+      "expected_avoid": ["bug", "x-circle"]
+    },
+    {
+      "query": "broken",
+      "expected_variants": ["error", "bug", "warning", "x circle", "wrench"],
+      "expected_prefer": ["bug", "triangle-alert", "wrench"],
+      "expected_avoid": ["check"]
+    },
+    {
+      "query": "professional",
+      "expected_variants": ["briefcase", "building office", "shield check", "badge check"],
+      "expected_prefer": ["briefcase", "building", "shield"],
+      "expected_avoid": ["party", "smile"]
+    },
+    {
+      "query": "beautiful",
+      "expected_variants": ["design theme", "palette", "swatch", "sparkles"],
+      "expected_prefer": ["palette", "swatch", "sparkles"],
+      "expected_avoid": []
+    },
+    {
+      "query": "chill",
+      "expected_variants": ["snowflake", "thermometer", "moon", "smile", "coffee"],
+      "expected_prefer": ["snowflake", "thermometer", "moon"],
+      "expected_avoid": ["alert", "flame"]
+    },
+    {
+      "query": "monitoring",
+      "expected_variants": ["activity", "chart line", "pulse", "dashboard"],
+      "expected_prefer": ["activity", "chart-line", "gauge"],
+      "expected_avoid": ["eye-off"]
+    },
+    {
+      "query": "smell",
+      "expected_variants": ["nose", "scent", "air", "odor", "stink"],
+      "expected_prefer": ["nose", "wind", "cloud", "alert"],
+      "expected_avoid": ["check", "badge-check"]
+    },
+    {
+      "query": "smelly",
+      "expected_variants": ["bad smell", "odor", "trash", "alert", "nose"],
+      "expected_prefer": ["trash", "alert", "nose", "cloud"],
+      "expected_avoid": ["sparkles", "check"]
+    }
+  ]
+}

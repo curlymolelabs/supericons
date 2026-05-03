@@ -7,6 +7,10 @@ export interface CandidateRow {
   lexical_rank: number;
   registry_rank?: number;
   avoid_rank?: number;
+  query_variant?: string;
+  query_variant_rank?: number;
+  intent_boost?: number;
+  intent_penalty?: number;
 }
 
 export interface PrivateManifestRow {

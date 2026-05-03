@@ -10,8 +10,12 @@ async function collectPreviewState(page) {
     const preview = document.querySelector('.panel__preview-icon');
     const svg = preview?.querySelector('svg');
     const panel = document.querySelector('.panel__preview');
+    const visibleCells = Array.from(document.querySelectorAll('.icon-grid .icon-cell')).filter(
+      (cell) => cell.getClientRects().length > 0
+    );
+    const unselectedCell = visibleCells.find((cell) => !cell.classList.contains('selected')) || null;
     const surfaceProbe = document.createElement('div');
-    surfaceProbe.style.backgroundColor = 'var(--si-surface-container)';
+    surfaceProbe.style.backgroundColor = 'var(--si-icon-grid-surface)';
     surfaceProbe.style.position = 'absolute';
     surfaceProbe.style.pointerEvents = 'none';
     surfaceProbe.style.opacity = '0';
@@ -25,6 +29,7 @@ async function collectPreviewState(page) {
       svgColor: svg ? getComputedStyle(svg).color : null,
       panelBackgroundColor: panel ? getComputedStyle(panel).backgroundColor : null,
       panelBackgroundImage: panel ? getComputedStyle(panel).backgroundImage : null,
+      unselectedCellBackgroundColor: unselectedCell ? getComputedStyle(unselectedCell).backgroundColor : null,
       sharedSurfaceColor,
       colorHex: document.querySelector('#colorHex')?.value || null,
     };
@@ -72,9 +77,20 @@ try {
   assert.equal(darkState.colorHex, targetHex, 'dark mode should keep the selected hex in the customize field');
   assert.equal(darkState.previewColor, targetRgb, 'dark mode wrapper should use the selected customize color');
   assert.equal(darkState.svgColor, targetRgb, 'dark mode preview svg should use the selected customize color');
+  assert.equal(
+    darkState.panelBackgroundColor,
+    darkState.sharedSurfaceColor,
+    'dark mode preview background should use the shared icon grid surface color'
+  );
+  assert.equal(
+    darkState.unselectedCellBackgroundColor,
+    darkState.sharedSurfaceColor,
+    'dark mode icon grid cells should use the shared icon grid surface color'
+  );
 
   await page.getByRole('button', { name: 'Light Mode' }).click();
   await page.waitForFunction(() => document.body.classList.contains('theme-light'));
+  await page.waitForTimeout(400);
 
   const lightState = await collectPreviewState(page);
   assert.equal(lightState.colorHex, targetHex, 'light mode should keep the selected hex in the customize field');
@@ -88,7 +104,12 @@ try {
   assert.equal(
     lightState.panelBackgroundColor,
     lightState.sharedSurfaceColor,
-    'light mode preview background should use the shared surface color from the main icon grid'
+    'light mode preview background should use the shared icon grid surface color'
+  );
+  assert.equal(
+    lightState.unselectedCellBackgroundColor,
+    lightState.sharedSurfaceColor,
+    'light mode icon grid cells should use the shared icon grid surface color'
   );
 
   console.log('verify-customize-preview: ok');

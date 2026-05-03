@@ -67,7 +67,7 @@ function renderHtml(report) {
         <article class="card">
           <p class="eyebrow">${slotResult.slot}</p>
           <h3>${slotResult.match_label}</h3>
-          <p><strong>Expected:</strong> ${slotResult.expected_icon_id}</p>
+          <p><strong>Expected:</strong> ${slotResult.expected_icon_ids.join(', ')}</p>
           <p><strong>Recommended:</strong> ${slotResult.recommended_icon_id || 'none'}</p>
           <p><strong>Queries used:</strong> ${slotResult.queries_used.join(', ')}</p>
           ${recommended}
@@ -225,11 +225,12 @@ for (const fixture of fixtures) {
     const recommendedIconId = slotResult.recommended
       ? `${slotResult.recommended.library}:${slotResult.recommended.id}`
       : null;
-    const matched = recommendedIconId === expected.expected_icon_id;
+    const expectedIconIds = expected.expected_icon_ids || [expected.expected_icon_id].filter(Boolean);
+    const matched = expectedIconIds.includes(recommendedIconId);
 
     return {
       slot: slotResult.slot,
-      expected_icon_id: expected.expected_icon_id,
+      expected_icon_ids: expectedIconIds,
       recommended_icon_id: recommendedIconId,
       match_label: matched ? 'Matched expected recommendation' : 'Different from expected recommendation',
       queries_used: slotResult.queries_used,
@@ -264,3 +265,8 @@ writeFileSync(reportJsonPath, JSON.stringify(report, null, 2));
 writeFileSync(reportHtmlPath, renderHtml(report));
 
 console.log(JSON.stringify(report.summary, null, 2));
+
+if (report.summary.total_hits !== report.summary.total_slots) {
+  console.error(`agent-first MCP UX benchmark missed ${report.summary.total_slots - report.summary.total_hits} slot(s). See ${reportJsonPath}`);
+  process.exitCode = 1;
+}
