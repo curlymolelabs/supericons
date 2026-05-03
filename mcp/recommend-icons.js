@@ -226,6 +226,8 @@ function buildSlotQueryVariants(task, slot) {
     baseQuery: slot,
     maxVariants: 8,
   });
+  const usefulSlotTokens = tokenizeText(slot).filter((token) => !GENERIC_SLOT_WORDS.has(token));
+  variants.push(...usefulSlotTokens);
   const intentTerms = tokenizeText(`${slot} ${task} ${variants.join(' ')}`);
   for (const rule of getMatchingSlotRules(slot, intentTerms)) {
     variants.push(...(rule.queryVariants || []));
