@@ -50,8 +50,8 @@ function getConfig(width, height) {
       rows: Math.max(8, Math.ceil(height / 58) + 2),
       baseOpacity: 0.06,
       highlightOpacity: 0.14,
-      blinkDuration: 5.5,
-      driftDuration: 48,
+      blinkDuration: 3.4,
+      driftDuration: 30,
       brightChance: 0.1,
     };
   }
@@ -65,8 +65,8 @@ function getConfig(width, height) {
       rows: Math.max(9, Math.ceil(height / 64) + 2),
       baseOpacity: 0.065,
       highlightOpacity: 0.15,
-      blinkDuration: 5.25,
-      driftDuration: 46,
+      blinkDuration: 3.25,
+      driftDuration: 29,
       brightChance: 0.1,
     };
   }
@@ -80,8 +80,8 @@ function getConfig(width, height) {
       rows: Math.max(10, Math.ceil(height / 67) + 2),
       baseOpacity: 0.07,
       highlightOpacity: 0.16,
-      blinkDuration: 5,
-      driftDuration: 45,
+      blinkDuration: 3.1,
+      driftDuration: 28,
       brightChance: 0.11,
     };
   }
@@ -94,8 +94,8 @@ function getConfig(width, height) {
     rows: Math.max(12, Math.ceil(height / 70) + 2),
     baseOpacity: 0.07,
     highlightOpacity: 0.16,
-    blinkDuration: 5,
-    driftDuration: 45,
+    blinkDuration: 3.1,
+    driftDuration: 28,
     brightChance: 0.12,
   };
 }
@@ -157,7 +157,7 @@ function buildRain({ staticMode = false } = {}) {
       } else {
         const blinkVariance = 0.64 + (Math.random() * 0.72);
         cellEl.style.animationDuration = `${config.blinkDuration * blinkVariance}s`;
-        cellEl.style.animationDelay = `${Math.random() * config.blinkDuration * 2}s`;
+        cellEl.style.animationDelay = `${-Math.random() * config.blinkDuration}s`;
       }
 
       columnEl.appendChild(cellEl);
