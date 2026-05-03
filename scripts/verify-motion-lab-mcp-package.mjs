@@ -10,23 +10,33 @@ const expectedFiles = [
   'auth.js',
   'converter.js',
   'generated/motion-lab-baseline.json',
+  'hosted-search-client.js',
   'index.js',
   'material-export.js',
   'motion-lab-client.js',
   'motion-lab.js',
   'package.json',
+  'public/product-facts.json',
+  'recommend-icons.js',
+  'runtime/converter-workflow.js',
+  'runtime/generated-search-intent-rules.js',
+  'runtime/icon-semantic-aliases.js',
+  'runtime/icon-taxonomy-seed.js',
+  'runtime/public-metadata-sanitizer.js',
+  'runtime/search-intent-core.js',
+  'semantic-registry.js',
+  'search.js',
+  'telemetry.js',
+  'variant-support.js',
+  'workflow-access.js',
+];
+
+const blockedFiles = [
   'public/icon-index.json',
   'public/icon-index-solid.json',
-  'public/product-facts.json',
   'public/registry-records.json',
   'public/registry-summary.json',
   'public/synonyms.json',
-  'recommend-icons.js',
-  'runtime/converter-workflow.js',
-  'runtime/public-metadata-sanitizer.js',
-  'semantic-registry.js',
-  'search.js',
-  'workflow-access.js',
 ];
 
 function fail(message) {
@@ -70,6 +80,7 @@ for (const path of packedPaths) {
 
 const missing = expectedPaths.filter((path) => !packedPaths.includes(path));
 const unexpected = packedPaths.filter((path) => !expectedPaths.includes(path));
+const blocked = packedPaths.filter((path) => blockedFiles.includes(path));
 
 if (missing.length) {
   fail(`missing expected files: ${missing.join(', ')}`);
@@ -79,4 +90,12 @@ if (unexpected.length) {
   fail(`found unexpected files: ${unexpected.join(', ')}`);
 }
 
-console.log(`Supericons MCP package verified: ${packedPaths.length} files.`);
+if (blocked.length) {
+  fail(`protected package includes bulk registry files: ${blocked.join(', ')}`);
+}
+
+if (Number(packInfo.unpackedSize || 0) > 2_500_000) {
+  fail(`protected package is too large: ${packInfo.unpackedSize} bytes unpacked`);
+}
+
+console.log(`Supericons MCP package verified: ${packedPaths.length} files, ${packInfo.unpackedSize} bytes unpacked.`);

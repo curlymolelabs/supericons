@@ -7,7 +7,7 @@ import {
   buildIntentQueryVariants,
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
-} from '../lib/search-intent-core.js';
+} from './runtime/search-intent-core.js';
 
 const GENERIC_SLOT_WORDS = new Set([
   'action',

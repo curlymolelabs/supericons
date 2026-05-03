@@ -4,6 +4,7 @@ export interface CandidateRow {
   source_library: string;
   style: string;
   icon_type: string;
+  svg?: string | null;
   lexical_rank: number;
   registry_rank?: number;
   avoid_rank?: number;

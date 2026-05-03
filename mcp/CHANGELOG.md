@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 - 2026-05-03
+
+### Changed
+
+- switched the free icon search tools to hosted semantic search by default
+- removed bulk registry and icon-index JSON files from the npm package
+- kept a local fallback path for internal development when `SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK=1`
+- packaged only the small runtime helpers needed for MCP startup and slot recommendations
+
 ## 0.3.1 - 2026-04-14
 
 ### Fixed

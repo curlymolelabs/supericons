@@ -32,6 +32,7 @@ export async function searchIconsHostedMcp({
   query,
   library = null,
   limit = 20,
+  style = 'any',
 }) {
   const apiKey = getConfiguredApiKey();
 
@@ -64,6 +65,7 @@ export async function searchIconsHostedMcp({
         query,
         library,
         limit,
+        style,
         source: 'mcp',
       }),
     });
@@ -90,6 +92,7 @@ export async function searchIconsHostedMcp({
       query,
       library,
       limit,
+      style,
       source: 'mcp',
     }),
   });

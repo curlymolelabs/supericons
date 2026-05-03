@@ -16,7 +16,6 @@ import { z } from 'zod';
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
-import { searchIcons } from './search.js';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import { validateApiKey } from './auth.js';
@@ -38,7 +37,7 @@ import {
 import {
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
-} from '../lib/search-intent-core.js';
+} from './runtime/search-intent-core.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -92,12 +91,20 @@ const materialExportState = {
 const semanticRegistryMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 
 function loadData() {
-  const raw = JSON.parse(readFileSync(join(dataDir, 'icon-index.json'), 'utf8'));
+  const iconIndexPath = join(dataDir, 'icon-index.json');
+  if (!existsSync(iconIndexPath)) {
+    return { freeIcons: [], outlineIcons: [], solidIcons: [], synonyms: {} };
+  }
+
+  const raw = JSON.parse(readFileSync(iconIndexPath, 'utf8'));
   const solidPath = join(dataDir, 'icon-index-solid.json');
   const solidRaw = existsSync(solidPath)
     ? JSON.parse(readFileSync(solidPath, 'utf8'))
     : { icons: [] };
-  const synonyms = JSON.parse(readFileSync(join(dataDir, 'synonyms.json'), 'utf8'));
+  const synonymsPath = join(dataDir, 'synonyms.json');
+  const synonyms = existsSync(synonymsPath)
+    ? JSON.parse(readFileSync(synonymsPath, 'utf8'))
+    : {};
 
   // icon-index.json has { icons: [...] } where each entry is { id, name, lib, type, style, svg? }
   // Include Material Symbols so MCP tools can resolve export-grade SVG snapshots on demand.
@@ -375,6 +382,10 @@ async function buildToolIconResult(icon, options = {}) {
     result.usage = `<div class="si-anim si-anim--${icon.id}"><!-- paste SVG here --></div>`;
   }
 
+  if (icon.semantic) {
+    result.semantic = icon.semantic;
+  }
+
   return attachSemanticPayload(result, semanticRegistryMap, icon);
 }
 
@@ -518,8 +529,33 @@ function buildStructuredToolErrorResponse(error, fallbackMessage) {
 
 function shouldAllowLocalSearchFallback() {
   const raw = String(process.env.SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK || '').trim().toLowerCase();
-  if (!raw) return true;
+  if (!raw) return false;
   return raw === '1' || raw === 'true' || raw === 'on';
+}
+
+function hasLocalSearchData() {
+  return freeIcons.length > 0;
+}
+
+function buildHostedIcon(row) {
+  if (!row?.icon_id) return null;
+  const [libraryFromId, ...idParts] = String(row.icon_id).split(':');
+  const library = row.library || row.source_library || libraryFromId;
+  const id = idParts.join(':') || row.id || row.name;
+  if (!library || !id) return null;
+  if (!row.svg && library !== 'material') return null;
+
+  return {
+    id,
+    name: row.name || id.replace(/[-_]/g, ' '),
+    lib: library,
+    type: row.icon_type || 'svg',
+    style: row.style || VARIANT_STYLES.OUTLINE,
+    svg: row.svg,
+    semantic: row.semantic || null,
+    premium: false,
+    hosted: true,
+  };
 }
 
 function buildSelectorInstructions(selectorMode, selectorToken) {
@@ -569,6 +605,33 @@ async function resolveAccessibleIcon(id, library, options = {}) {
     }
   }
 
+  try {
+    const hostedPayload = await searchIconsHostedMcp({
+      query: id.replace(/[-_]+/g, ' '),
+      library,
+      limit: 50,
+      style: requestedStyle,
+    });
+    const requestedIds = new Set(
+      buildVariantLookupCandidates({ library, id, style: requestedStyle }).map((candidate) => candidate.toLowerCase())
+    );
+    const hostedIcon = (hostedPayload.results || [])
+      .map(buildHostedIcon)
+      .filter(Boolean)
+      .find((icon) =>
+        icon.lib.toLowerCase() === library.toLowerCase()
+        && requestedIds.has(icon.id.toLowerCase())
+        && iconMatchesRequestedStyle(icon, requestedStyle)
+      );
+    if (hostedIcon) {
+      return buildToolIconResult(hostedIcon, { style: requestedStyle });
+    }
+  } catch (error) {
+    if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) {
+      throw error;
+    }
+  }
+
   return null;
 }
 
@@ -579,25 +642,24 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
     ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
     : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
-  const hostedSearchableIcons = searchableIcons.filter((icon) =>
-    icon.lib === 'material' || icon.style !== VARIANT_STYLES.SOLID
-  );
-
   let hostedResults = [];
-  if (requestedStyle !== VARIANT_STYLES.SOLID) {
-    try {
-      const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
-      const byKey = new Map(hostedSearchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
-      hostedResults = (hostedPayload.results || [])
-        .map((row) => byKey.get(row.icon_id))
-        .filter(Boolean);
-    } catch (error) {
-      if (!shouldAllowLocalSearchFallback()) {
-        throw error;
-      }
+  try {
+    const hostedPayload = await searchIconsHostedMcp({ query, library, limit, style: requestedStyle });
+    hostedResults = (hostedPayload.results || [])
+      .map(buildHostedIcon)
+      .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
+    if (hostedResults.length > 0) {
+      return hostedResults.slice(0, Math.max(1, limit));
+    }
+  } catch (error) {
+    if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) {
+      throw error;
     }
   }
 
+  if (!hasLocalSearchData()) return [];
+
+  const { searchIcons } = await import('./search.js');
   const localResults = searchIcons(query, searchableIcons, synonyms, {
     library,
     limit: Math.max(limit * 2, 20),
@@ -617,16 +679,16 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
 // Library Metadata
 // ============================================================
 const libraryMeta = {
-  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true },
-  lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true, hasFilled: false },
-  tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true, hasFilled: true },
-  phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false, hasFilled: true },
-  heroicons: { name: 'Heroicons', description: 'Beautiful hand-crafted SVG icons by Tailwind CSS', hasStroke: true, hasFilled: true },
-  bootstrap: { name: 'Bootstrap', description: 'Official open-source SVG icon library for Bootstrap', hasStroke: false, hasFilled: true },
-  iconoir: { name: 'Iconoir', description: 'High-quality open-source icon library', hasStroke: true, hasFilled: true },
-  ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true, hasFilled: true },
-  simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false, hasFilled: false },
-  mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false, hasFilled: true },
+  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true, count: 4205, outlineCount: 4205, solidCount: 4205 },
+  lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true, hasFilled: false, count: 1951, outlineCount: 1951, solidCount: 0 },
+  tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true, hasFilled: true, count: 5021, outlineCount: 5021, solidCount: 1053 },
+  phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false, hasFilled: true, count: 1512, outlineCount: 1512, solidCount: 1512 },
+  heroicons: { name: 'Heroicons', description: 'Beautiful hand-crafted SVG icons by Tailwind CSS', hasStroke: true, hasFilled: true, count: 324, outlineCount: 324, solidCount: 324 },
+  bootstrap: { name: 'Bootstrap', description: 'Official open-source SVG icon library for Bootstrap', hasStroke: false, hasFilled: true, count: 1373, outlineCount: 1373, solidCount: 705 },
+  iconoir: { name: 'Iconoir', description: 'High-quality open-source icon library', hasStroke: true, hasFilled: true, count: 1383, outlineCount: 1383, solidCount: 288 },
+  ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true, hasFilled: true, count: 421, outlineCount: 421, solidCount: 515 },
+  simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false, hasFilled: false, count: 3412, outlineCount: 3412, solidCount: 0 },
+  mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false, hasFilled: true, count: 1662, outlineCount: 1662, solidCount: 1662 },
 };
 
 // Add premium pack libraries
@@ -801,9 +863,11 @@ server.tool(
     const libs = Object.entries(libraryMeta).map(([id, meta]) => ({
       id,
       name: meta.name,
-      count: libCounts[id] || 0,
-      outlineCount: outlineLibCounts[id] || 0,
-      solidCount: id === 'material' ? (librarySupportsSolid(id) ? outlineLibCounts[id] || 0 : 0) : (solidLibCounts[id] || 0),
+      count: libCounts[id] || meta.count || 0,
+      outlineCount: outlineLibCounts[id] || meta.outlineCount || 0,
+      solidCount: id === 'material'
+        ? (librarySupportsSolid(id) ? outlineLibCounts[id] || meta.solidCount || meta.outlineCount || 0 : 0)
+        : (solidLibCounts[id] || meta.solidCount || 0),
       hasStroke: meta.hasStroke,
       hasFilled: meta.hasFilled || librarySupportsSolid(id),
       supportedStyles: meta.hasFilled || librarySupportsSolid(id) ? ['outline', 'solid'] : ['outline'],

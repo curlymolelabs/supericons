@@ -2,8 +2,8 @@
  * Local fallback search only.
  * Do not treat this file as the production ranking engine.
  */
-import { createIconSemanticAliasMap } from '../lib/icon-semantic-aliases.js';
-import { createIconTaxonomyMap } from '../lib/icon-taxonomy-seed.js';
+import { createIconSemanticAliasMap } from './runtime/icon-semantic-aliases.js';
+import { createIconTaxonomyMap } from './runtime/icon-taxonomy-seed.js';
 import {
   compareVariantPreference,
   getConceptKeyForIcon,

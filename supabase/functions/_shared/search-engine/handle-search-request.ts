@@ -45,6 +45,12 @@ function normalizeSource(value: unknown, fallback = 'web') {
   return normalized || fallback;
 }
 
+function normalizeStyle(value: unknown) {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (normalized === 'outline' || normalized === 'solid') return normalized;
+  return 'any';
+}
+
 function buildErrorResponse(error: unknown) {
   const normalized = error instanceof SearchEngineHttpError
     ? error
@@ -91,6 +97,7 @@ export async function handleSearchRequest(
     queryNorm = normalizeQuery(body?.query);
     library = normalizeLibrary(body?.library);
     source = normalizeSource(body?.source, defaultSource);
+    const style = normalizeStyle(body?.style);
     const limit = Math.max(1, Math.min(50, Number(body?.limit || 20)));
 
     identity = await enforceSearchRateLimit(req);
@@ -172,12 +179,42 @@ export async function handleSearchRequest(
     }
 
     const { manifestsById, featuresById } = buildPrivateRowMaps(manifests, features);
-    const results = rerankCandidates(
+    const rankedResults = rerankCandidates(
       queryNorm,
       (candidates || []) as CandidateRow[],
       manifestsById,
       featuresById,
-    ).slice(0, limit);
+    )
+      .filter((row) => style === 'any' || row.style === style)
+      .slice(0, limit);
+
+    const resultIconIds = rankedResults.map((row) => row.icon_id);
+    let publicRecordsById = new Map<string, Record<string, unknown>>();
+
+    if (resultIconIds.length > 0) {
+      const publicRegistryResult = await adminClient
+        .from('icon_registry_public_export')
+        .select('icon_id, label, source_name, depicts, semantic_tags, synonyms, use_when, avoid_when')
+        .in('icon_id', resultIconIds);
+
+      if (publicRegistryResult.error) throw publicRegistryResult.error;
+      publicRecordsById = new Map(
+        (publicRegistryResult.data || []).map((record: Record<string, unknown>) => [
+          String(record.icon_id),
+          record,
+        ]),
+      );
+    }
+
+    const results = rankedResults.map((row) => {
+      const publicRecord = publicRecordsById.get(row.icon_id);
+      if (!publicRecord) return row;
+      const { icon_id: _iconId, ...semantic } = publicRecord;
+      return {
+        ...row,
+        semantic,
+      };
+    });
 
     await adminClient.from('search_request_audit').insert({
       query_norm: queryNorm,
