@@ -1,4 +1,4 @@
-# Supericons Agent Plugin
+# Supericons
 
 Semantic SVG icon search for AI coding agents.
 
@@ -17,6 +17,39 @@ Use this config in any MCP-capable coding agent:
     }
   }
 }
+```
+
+## Codex Plugin Setup
+
+Supericons also includes a Codex plugin manifest.
+
+If you are testing from this public GitHub repo, add this marketplace file to Codex:
+
+```text
+.agents/plugins/marketplace.json
+```
+
+Then restart Codex and install `Supericons` from the plugin list.
+
+The Codex plugin uses:
+
+```text
+.codex-plugin/plugin.json
+.codex-mcp.json
+skills/supericons-icon-search/SKILL.md
+```
+
+## Codex Manual MCP Setup
+
+If you only want MCP without the plugin wrapper, use these fields in Codex:
+
+```text
+Name: supericons
+Transport: stdio
+Command to launch: npx
+Arguments:
+-y
+supericons-mcp
 ```
 
 ## IDE Setup Fields
