@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "<YOUR_SUPERICONS_API_KEY>"
+      }
+    }
+  }
+}
