@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Design Guidelines — Best Practices Framework</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --fg: #1a1a2e;
+      --muted: #6c757d;
+      --accent: #4361ee;
+      --accent-light: #eef1ff;
+      --border: #e2e8f0;
+      --card: #ffffff;
+      --code-bg: #f1f5f9;
+      --warn: #fef3c7;
+      --warn-border: #f59e0b;
+      --success: #d1fae5;
+      --success-border: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      border: 1px solid var(--border);
+    }
+
+    .toc h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .toc ul {
+      list-style: none;
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .toc ul { columns: 1; }
+    }
+
+    section {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--fg);
+    }
+
+    section h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 20px 0 8px;
+      color: var(--muted);
+    }
+
+    p { margin-bottom: 14px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--accent-light);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--accent);
+    }
+
+    tr:hover td { background: #fafbfc; }
+
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 18px;
+      margin: 16px 0;
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--fg);
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 13px;
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    code {
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    ul, ol {
+      margin: 12px 0 12px 20px;
+    }
+
+    li { margin-bottom: 6px; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-warn {
+      background: var(--warn);
+      color: #92400e;
+      border: 1px solid var(--warn-border);
+    }
+
+    .badge-success {
+      background: var(--success);
+      color: #065f46;
+      border: 1px solid var(--success-border);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    .resource-link {
+      display: block;
+      padding: 14px 18px;
+      background: var(--accent-light);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .resource-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 0;
+      margin: 16px 0;
+    }
+
+    .process-step {
+      display: contents;
+    }
+
+    .process-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .process-content h4 {
+      margin: 0 0 4px;
+      color: var(--fg);
+    }
+
+    .process-content p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Icon Design Guidelines</h1>
+      <p>A comprehensive research-backed framework for designing professional icons, compiled from Material Design, Apple's HIG, IBM Carbon, Font Awesome, and industry-leading design systems.</p>
+    </header>
+
+    <nav class="toc">
+      <h2>Table of Contents</h2>
+      <ul>
+        <li><a href="#process">1. Design Process Framework</a></li>
+        <li><a href="#grid">2. Grid & Canvas System</a></li>
+        <li><a href="#sizes">3. Size Standards by Context</a></li>
+        <li><a href="#style">4. Style Decisions</a></li>
+        <li><a href="#format">5. Format & Export Standards</a></li>
+        <li><a href="#optical">6. Optical Sizing & Alignment</a></li>
+        <li><a href="#theme">7. Theming & Color</a></li>
+        <li><a href="#a11y">8. Accessibility Guidelines</a></li>
+        <li><a href="#naming">9. Naming & Organization</a></li>
+        <li><a href="#platform">10. Platform-Specific Rules</a></li>
+        <li><a href="#styles">11. Design Styles for Icons & UI Elements</a></li>
+      </ul>
+    </nav>
+
+    <section id="process">
+      <h2>1. Design Process Framework</h2>
+      <p>A structured icon design workflow typically follows these stages:</p>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <h4>Define Purpose</h4>
+            <p>Identify the icon's function (navigation, action, status, illustration). Determine if it needs to work across platforms.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <h4>Research Metaphors</h4>
+            <p>Use universally understood symbols (magnifying glass = search). Avoid overly abstract concepts. Test recognizability.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <h4>Sketch & Concept</h4>
+            <p>Start with pen and paper. Explore 3–5 variations. Focus on silhouette readability at small sizes.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <h4>Grid & Construction</h4>
+            <p>Build on a pixel grid using keyshapes (circle, square, rectangle) for visual balance.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">5</div>
+          <div class="process-content">
+            <h4>Refine & Detail</h4>
+            <p>Convert to vector. Apply consistent stroke, corner radius, and optical corrections.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">6</div>
+          <div class="process-content">
+            <h4>Export & Document</h4>
+            <p>Output in multiple sizes/formats. Name systematically. Add to the design system library.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="grid">
+      <h2>2. Grid & Canvas System</h2>
+      <p>The grid is the foundation of consistency.</p>
+      <table>
+        <tr>
+          <th>System</th>
+          <th>Canvas Size</th>
+          <th>Live Area</th>
+          <th>Padding</th>
+        </tr>
+        <tr>
+          <td><strong>Material Design (Google)</strong></td>
+          <td>24×24dp</td>
+          <td>20×20dp</td>
+          <td>2dp</td>
+        </tr>
+        <tr>
+          <td><strong>Font Awesome 7</strong></td>
+          <td>20×20px</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>IBM Carbon</strong></td>
+          <td>32×32px</td>
+          <td>28×28px</td>
+          <td>2px</td>
+        </tr>
+        <tr>
+          <td><strong>Phosphor (Android)</strong></td>
+          <td>48×48px</td>
+          <td>42×42px</td>
+          <td>6px trim</td>
+        </tr>
+      </table>
+
+      <h3>Key Rules</h3>
+      <ul>
+        <li><strong>Snap to whole pixels</strong> — no decimals (e.g., <code>4.0px</code> not <code>4.2px</code>). Blurriness happens when you break this rule.</li>
+        <li><strong>Use an 8px base unit</strong> — ensures easy scaling across your design system.</li>
+        <li><strong>Keyshapes for balance</strong> — on a 24px canvas, common keyshapes are:
+          <ul>
+            <li>Square: 14×14px</li>
+            <li>Circle: 16px diameter</li>
+            <li>Vertical rectangle: 12×16px</li>
+            <li>Horizontal rectangle: 16×12px</li>
+          </ul>
+        </li>
+      </ul>
+
+      <blockquote>
+        "Icons that aren't contained on a canvas, or extend beyond a canvas's edge, run the risk of being cropped or misaligned."
+        <cite>— Jory Raphael, Icon Designer at Font Awesome</cite>
+      </blockquote>
+      <blockquote>
+        "The final quality is linked directly with how carefully you followed the pixel grid rules. When you're sloppy, the technology knows."
+        <cite>— Alexandra Basova, Product Designer</cite>
+      </blockquote>
+    </section>
+
+    <section id="sizes">
+      <h2>3. Size Standards by Context</h2>
+      <table>
+        <tr>
+          <th>Context</th>
+          <th>Web (px)</th>
+          <th>iOS (pt)</th>
+          <th>Android (dp)</th>
+        </tr>
+        <tr><td>Toolbar / Navigation</td><td>24–32</td><td>24–30</td><td>24–36</td></tr>
+        <tr><td>Action Buttons / FAB</td><td>24–32</td><td>24–30</td><td>24–36</td></tr>
+        <tr><td>Compact / Status</td><td>16</td><td>—</td><td>—</td></tr>
+        <tr><td>Standalone / Illustrative</td><td>48+</td><td>40+</td><td>48+</td></tr>
+      </table>
+
+      <h3>Touch Target Rule</h3>
+      <p>The icon itself may be 24px, but the <strong>interactive touch target must be</strong>:</p>
+      <ul>
+        <li><span class="badge badge-warn">Apple HIG</span> minimum <strong>44×44pt</strong></li>
+        <li><span class="badge badge-success">Material Design</span> minimum <strong>48×48dp</strong></li>
+      </ul>
+      <p>Always wrap the visual icon in a larger invisible hit area.</p>
+
+      <h3>Design in 3 Core Sizes</h3>
+      <ul>
+        <li><strong>16×16px</strong> — Status indicators, compact toolbars</li>
+        <li><strong>24×24px</strong> — Standard for most modern web and mobile apps</li>
+        <li><strong>32×32px</strong> — Desktop toolbars, prominent touch targets</li>
+      </ul>
+    </section>
+
+    <section id="style">
+      <h2>4. Style Decisions</h2>
+      <p>Pick <strong>one style</strong> per icon system and stick to it. Mixing styles creates visual chaos.</p>
+      <table>
+        <tr>
+          <th>Style</th>
+          <th>Character</th>
+          <th>Best For</th>
+        </tr>
+        <tr><td><strong>Outline / Stroke</strong></td><td>Clean, minimal, airy</td><td>Navigation, secondary actions, light UIs</td></tr>
+        <tr><td><strong>Filled / Solid</strong></td><td>Bold, prominent, high contrast</td><td>Primary actions, active states, emphasis</td></tr>
+        <tr><td><strong>Rounded</strong></td><td>Friendly, approachable</td><td>Consumer apps, casual brands</td></tr>
+        <tr><td><strong>Sharp / Angular</strong></td><td>Formal, technical, precise</td><td>Enterprise, developer tools</td></tr>
+        <tr><td><strong>Duotone / Gradient</strong></td><td>Modern, expressive</td><td>Illustrations, marketing, brand moments</td></tr>
+      </table>
+
+      <h3>Stroke Weight Standards</h3>
+      <table>
+        <tr><th>Style</th><th>Typical Stroke</th></tr>
+        <tr><td>Thin</td><td>1px</td></tr>
+        <tr><td>Light / Regular</td><td>1.5px</td></tr>
+        <tr><td>Standard</td><td>2px</td></tr>
+        <tr><td>Bold / Solid</td><td>Filled shapes with 2px structure + 1.5px detail</td></tr>
+      </table>
+
+      <h3>Corner Radius Guide</h3>
+      <table>
+        <tr><th>Icon Size</th><th>Border Radius</th></tr>
+        <tr><td>16×16px</td><td>1–2px</td></tr>
+        <tr><td>24×24px</td><td>2–4px</td></tr>
+        <tr><td>32×32px+</td><td>4–6px</td></tr>
+      </table>
+
+      <h3>Platform-Specific Corner Radius</h3>
+      <ul>
+        <li><strong>iOS (HIG):</strong> Often uses slightly larger radius for a more fluid design (e.g., 4px for 24×24).</li>
+        <li><strong>Android (Material):</strong> More angular and sharp, typically smaller radius (e.g., 2px for 24×24).</li>
+      </ul>
+
+      <h3>Stroke Caps & Joins</h3>
+      <table>
+        <tr><th>Property</th><th>Options</th><th>Effect</th></tr>
+        <tr><td>Stroke caps</td><td>Round, Butt, Projecting</td><td>Round = softer; Butt = cleaner, more formal</td></tr>
+        <tr><td>Stroke joins</td><td>Round, Miter, Bevel</td><td>Round = approachable; Miter = sharp; Bevel = modern</td></tr>
+      </table>
+      <p>Keep vector stroke files <strong>unexpanded</strong> so adjustments can be made later.</p>
+
+      <blockquote>
+        "If I were to call a design the way your interface speaks with your user, then... it would be fair to view a design system as a language."
+        <cite>— Tatsiana Tarkan, UX/UI Designer</cite>
+      </blockquote>
+    </section>
+
+    <section id="format">
+      <h2>5. Format & Export Standards</h2>
+      <table>
+        <tr><th>Format</th><th>Use Case</th><th>Why</th></tr>
+        <tr><td><strong>SVG</strong></td><td>Web, iOS, Android, design systems</td><td>Scalable, editable, small file size, crisp at any resolution</td></tr>
+        <tr><td><strong>PNG</strong></td><td>App store icons, favicons, legacy support</td><td>Required by Apple (sRGB, no transparency for app icons)</td></tr>
+        <tr><td><strong>PDF</strong></td><td>macOS/iOS native</td><td>Platform-native vector format</td></tr>
+        <tr><td><strong>Icon Font</strong></td><td>Web apps</td><td>Easy CSS styling, but less accessible than SVG</td></tr>
+      </table>
+
+      <h3>Export Best Practices</h3>
+      <ul>
+        <li>Design at the <strong>largest target size first</strong> (e.g., 32px or 48px), then scale down.</li>
+        <li>For raster: export at <strong>2× and 3×</strong> for Retina/HiDPI displays.</li>
+        <li>Keep strokes <strong>unexpanded</strong> in the source file so weights can be adjusted later.</li>
+        <li>Use <code>viewBox</code> in SVGs (not fixed <code>width</code>/<code>height</code>) for responsive scaling.</li>
+      </ul>
+
+      <h3>App Icon Specifications</h3>
+      <table>
+        <tr><th>Platform</th><th>Size</th><th>Format</th><th>Color Space</th><th>Notes</th></tr>
+        <tr><td><strong>Apple App Store</strong></td><td>1024×1024px @1x</td><td>PNG</td><td>sRGB</td><td>No transparency, no photos/screenshots</td></tr>
+        <tr><td><strong>iPhone</strong></td><td>180×180px @3x or 120×120px @2x</td><td>PNG</td><td>sRGB</td><td>Auto-resized from App Store asset</td></tr>
+        <tr><td><strong>iPad Pro</strong></td><td>167×167px @2x</td><td>PNG</td><td>sRGB</td><td>—</td></tr>
+        <tr><td><strong>Google Play</strong></td><td>512×512px</td><td>32-bit PNG</td><td>sRGB</td><td>Max 1024 KB, no pre-rounded corners</td></tr>
+        <tr><td><strong>Google Play keyline</strong></td><td>384×384px</td><td>—</td><td>—</td><td>Position graphic elements within this zone</td></tr>
+      </table>
+    </section>
+
+    <section id="optical">
+      <h2>6. Optical Sizing & Alignment</h2>
+      <p>Icons that are mathematically identical in dimensions can <strong>look</strong> different sizes.</p>
+      <table>
+        <tr><th>Shape Type</th><th>Optical Correction</th></tr>
+        <tr><td><strong>Circles</strong></td><td>Extend slightly beyond the grid (visually smaller than squares).</td></tr>
+        <tr><td><strong>Vertical lines</strong></td><td>Appear thinner — slightly increase stroke weight.</td></tr>
+        <tr><td><strong>Diagonal lines</strong></td><td>Appear thinner — compensate with slightly heavier stroke.</td></tr>
+        <tr><td><strong>Complex/detailed icons</strong></td><td>Reduce detail at 16px; simplify for small sizes.</td></tr>
+      </table>
+
+      <h3>The "Squint Hack"</h3>
+      <p>Blur your eyes or step back. If one icon pops more than another, adjust its weight or size until they feel equal in presence.</p>
+
+      <h3>Live Area Padding</h3>
+      <p>Add padding equal to your stroke weight around the icon content. On a 24px canvas with 2px strokes, the live area becomes 20×20px. This prevents cropping and ensures consistent spacing.</p>
+
+      <h3>SVG viewBox Awareness</h3>
+      <pre><code>&lt;!-- Too much whitespace; icon appears smaller --&gt;
+&lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
+  &lt;circle cx="12" cy="12" r="6"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Better: fills the viewBox for a bolder look --&gt;
+&lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
+  &lt;circle cx="12" cy="12" r="10"/&gt;
+&lt;/svg&gt;</code></pre>
+    </section>
+
+    <section id="theme">
+      <h2>7. Theming & Color</h2>
+      <table>
+        <tr><th>Rule</th><th>Guideline</th></tr>
+        <tr><td><strong>Default state</strong></td><td>Use a neutral color (e.g., <code>gray-600</code> or <code>#666</code>).</td></tr>
+        <tr><td><strong>Active/Selected</strong></td><td>Use your brand primary color.</td></tr>
+        <tr><td><strong>Disabled</strong></td><td>Reduce opacity to 38% or use <code>gray-400</code>.</td></tr>
+        <tr><td><strong>Dark mode</strong></td><td>Invert logic: dimmed neutral for default, bright for active.</td></tr>
+        <tr><td><strong>Never rely on color alone</strong></td><td>Pair with shape differences for accessibility (e.g., filled vs. outline for on/off states).</td></tr>
+      </table>
+      <p>Use <strong>design tokens</strong> (e.g., <code>--icon-color-default</code>, <code>--icon-color-active</code>) so icons stay consistent when themes change.</p>
+    </section>
+
+    <section id="a11y">
+      <h2>8. Accessibility Guidelines</h2>
+      <table>
+        <tr><th>Requirement</th><th>How To Implement</th></tr>
+        <tr><td><strong>Touch targets</strong></td><td>44×44pt (iOS) / 48×48dp (Android) minimum</td></tr>
+        <tr><td><strong>Color contrast</strong></td><td>Minimum 4.5:1 against background (WCAG AA)</td></tr>
+        <tr><td><strong>ARIA labels</strong></td><td>Use <code>aria-label</code> on interactive icons; <code>aria-hidden</code> on decorative ones</td></tr>
+        <tr><td><strong>Don't use color alone</strong></td><td>Combine color + shape change for state indicators</td></tr>
+        <tr><td><strong>Screen readers</strong></td><td>Provide text alternatives; never communicate meaning solely through iconography</td></tr>
+      </table>
+
+      <h3>React Example: Accessible Icon Button</h3>
+      <pre><code>interface IconButtonProps {
+  onClick: () => void;
+  children: React.ReactNode;
+  label: string;
+}
+
+const IconButton: React.FC&lt;IconButtonProps&gt; = ({ onClick, children, label }) => (
+  &lt;button
+    onClick={onClick}
+    style={{
+      width: 48,
+      height: 48,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+    }}
+    aria-label={label}
+  &gt;
+    {children}
+  &lt;/button&gt;
+);</code></pre>
+    </section>
+
+    <section id="naming">
+      <h2>9. Naming & Organization</h2>
+      <h3>Name by what the icon <em>shows</em>, not what it <em>means</em>.</h3>
+      <table>
+        <tr><th>Bad Name</th><th>Good Name</th></tr>
+        <tr><td><code>speed</code></td><td><code>stopwatch</code></td></tr>
+        <tr><td><code>idea</code></td><td><code>lightbulb</code></td></tr>
+        <tr><td><code>security</code></td><td><code>shield</code></td></tr>
+      </table>
+
+      <h3>Variant Naming (Slash Notation)</h3>
+      <ul>
+        <li><code>coffee/stroked</code></li>
+        <li><code>coffee/filled</code></li>
+        <li><code>shield/dollar</code></li>
+        <li><code>shield/euro</code></li>
+        <li><code>shield/plus</code></li>
+      </ul>
+
+      <h3>Folder / Page Structure</h3>
+      <pre><code>Size (24px / 32px / 48px)
+  └── Category (Navigation / Action / Status)
+        └── icon-name</code></pre>
+
+      <h3>Figma Component Description</h3>
+      <p>Use the component description box to add searchable tags and keywords (e.g., "idea, brainstorm, creative" for a <code>lightbulb</code> icon) without making file names unnecessarily long.</p>
+    </section>
+
+    <section id="platform">
+      <h2>10. Quick Reference: Platform-Specific Rules</h2>
+      <table>
+        <tr><th>Aspect</th><th>Apple HIG</th><th>Material Design</th></tr>
+        <tr><td><strong>Philosophy</strong></td><td>Clarity, deference, depth</td><td>Bold, tactile, motion</td></tr>
+        <tr><td><strong>Icon style</strong></td><td>Fluid, organic, rounded</td><td>Geometric, flat, structured</td></tr>
+        <tr><td><strong>Tab bar</strong></td><td>24pt</td><td>24dp</td></tr>
+        <tr><td><strong>Touch target</strong></td><td>44×44pt</td><td>48×48dp</td></tr>
+        <tr><td><strong>Corner radius</strong></td><td>Larger, more rounded</td><td>Smaller, sharper</td></tr>
+        <tr><td><strong>App icon</strong></td><td>1024×1024px PNG, sRGB</td><td>512×512px PNG, 32-bit, sRGB</td></tr>
+        <tr><td><strong>Typography</strong></td><td>San Francisco</td><td>Noto Sans / Roboto</td></tr>
+        <tr><td><strong>Color palette</strong></td><td>Lighter, soft shadows</td><td>Vibrant, bold spectrum</td></tr>
+      </table>
+    </section>
+
+    <section id="styles">
+      <h2>11. Design Styles for Icons & UI Elements</h2>
+      <p>Icons and UI elements (buttons, loaders, toggles, cards) can be expressed through a wide range of visual styles. Each style carries emotional tone, usability implications, and technical constraints.</p>
+
+      <h3>The Evolution of UI Styles</h3>
+      <table>
+        <tr><th>Era</th><th>Dominant Style</th><th>Why It Emerged</th></tr>
+        <tr><td><strong>1980s–2000s</strong></td><td>Skeuomorphism</td><td>Help users understand digital interfaces by mimicking physical objects</td></tr>
+        <tr><td><strong>2010–2013</strong></td><td>Flat Design</td><td>Reduce clutter, improve performance, embrace digital-native minimalism</td></tr>
+        <tr><td><strong>2014–2018</strong></td><td>Material Design / Flat 2.0</td><td>Reintroduce subtle depth and motion while keeping clean aesthetics</td></tr>
+        <tr><td><strong>2019–2021</strong></td><td>Neumorphism (Soft UI)</td><td>Blend flat design with tactile, sculptural depth</td></tr>
+        <tr><td><strong>2020–present</strong></td><td>Glassmorphism</td><td>Create hierarchy with translucent, frosted-glass layers</td></tr>
+        <tr><td><strong>2024–2026</strong></td><td>Hybrid / Morphism</td><td>Combine multiple styles selectively based on context and function</td></tr>
+      </table>
+
+      <blockquote>
+        "Design styles are only useful when they serve a purpose. Problems arise when teams treat a style as a fixed aesthetic to apply uniformly, rather than a set of principles to interpret and evolve."
+        <cite>— John Kim, Director of Design at Big Human</cite>
+      </blockquote>
+
+      <h3>Style Catalog</h3>
+
+      <h4>1. Flat Design</h4>
+      <p>The digital-native minimalism that strips away ornamentation.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>No shadows, no gradients, no textures. Solid color fills. Clean geometric shapes.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Simple silhouettes, single-color fills, 2px strokes. Maximum clarity at 16px.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Solid rectangular or pill shapes. No bevels. Color change on hover/active.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Spinning circles, dots, or progress bars in brand colors. Minimal animation.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Dashboards, admin panels, data-heavy UIs, cross-platform apps</td></tr>
+        <tr><td><strong>Accessibility</strong></td><td><span class="badge badge-success">Excellent</span> — high contrast, no visual noise</td></tr>
+      </table>
+
+      <h4>2. Skeuomorphism (Realistic Design)</h4>
+      <p>Mimics real-world materials, textures, and objects to create familiarity.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Photorealistic textures (leather, wood, metal, paper). 3D lighting, shadows, gradients.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Camera icons that look like actual cameras. Notebooks with lined paper and stitching.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Physical-looking buttons with bevels, gloss highlights, and depth. Push-down states.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Analog dials, hourglasses, mechanical gears. Real-world metaphors for progress.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Onboarding for non-tech users, music/production software, games, heritage brands</td></tr>
+        <tr><td><strong>Accessibility</strong></td><td><span class="badge badge-warn">Caution</span> — excessive detail reduces clarity at small sizes</td></tr>
+      </table>
+
+      <h4>3. Material Design (Flat 2.0)</h4>
+      <p>Google's system that bridges flat minimalism with subtle physical metaphors.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Bold colors, consistent elevation via drop shadows, paper-and-ink metaphor, meaningful motion.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Geometric, consistent 2dp stroke weight. Filled or outlined. Slight rounded corners (2px).</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Raised buttons with shadow elevation (resting, hover, pressed states). FABs with pronounced shadows.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Circular progress indicators with animated arcs. Linear progress bars with brand color fills.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Android apps, cross-platform web apps, enterprise tools</td></tr>
+        <tr><td><strong>Accessibility</strong></td><td><span class="badge badge-success">Strong</span> — defined states, clear hierarchy, motion provides feedback</td></tr>
+      </table>
+
+      <h4>4. Neumorphism (Soft UI)</h4>
+      <p>Creates elements that appear extruded from or pressed into the background.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Monochromatic palettes. Dual shadows (light above, dark below). Soft, rounded shapes.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Subtle embossed or debossed effect. Same color as background, defined entirely by shadow.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Appear raised from surface. On press, shadow inverts to look pressed-in.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Soft pulsing glows. Circular progress with subtle shadow animation.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Premium dashboards, wellness apps, smart home controls, dark mode UIs</td></tr>
+        <tr><td><strong>Caution</strong></td><td><span class="badge badge-warn">Low contrast</span> — always pair with strong text contrast</td></tr>
+      </table>
+
+      <h4>CSS Recipe for Neumorphic Buttons</h4>
+      <pre><code>.neumorphic-button {
+  background: #e0e5ec;
+  border-radius: 16px;
+  box-shadow: 
+    8px 8px 16px #a3b1c6,
+    -8px -8px 16px #ffffff;
+}
+
+.neumorphic-button:active {
+  box-shadow: 
+    inset 8px 8px 16px #a3b1c6,
+    inset -8px -8px 16px #ffffff;
+}</code></pre>
+
+      <h4>5. Glassmorphism</h4>
+      <p>Frosted-glass effect with transparency, blur, and subtle borders.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Background blur, transparency, thin light borders. Floating panels above vibrant content.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Often white or light-colored to contrast against blurred backgrounds. Simple line icons work best.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Semi-transparent with subtle border. Glow or brightness increase on hover.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Spinning arcs with glass-like transparency. Subtle shimmer effects.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>macOS/iOS apps, modals and overlays, card layouts, visionOS spatial UIs</td></tr>
+        <tr><td><strong>Accessibility</strong></td><td><span class="badge badge-warn">Risky</span> — transparency reduces contrast. Test text legibility</td></tr>
+      </table>
+
+      <h4>CSS Recipe for Glassmorphic Cards</h4>
+      <pre><code>.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}</code></pre>
+
+      <h4>6. Claymorphism</h4>
+      <p>Friendly, tactile 3D shapes with rounded forms and soft inner/outer shadows.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Inflated, rounded 3D shapes. Pastel colors. Inner shadows + outer shadows.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Chunky, rounded, almost toy-like. Thick strokes or solid fills with soft edges.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Large, bubbly, highly rounded. Pressed state compresses the "inflation."</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Bouncing shapes, morphing blobs, playful elastic animations.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Educational apps, children's products, casual games, friendly consumer brands</td></tr>
+        <tr><td><strong>Mood</strong></td><td>Playful, approachable, tactile, non-threatening</td></tr>
+      </table>
+
+      <h4>7. Duotone</h4>
+      <p>Two-color icons that create contrast and visual richness.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Two distinct colors per icon — typically a primary stroke and a secondary fill at reduced opacity.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Layered SVG paths: one color for the outline, another for the background shape.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Can use duotone icons inside standard flat or material buttons.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Animated duotone arcs where colors shift or alternate.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Marketing sites, dashboards needing visual interest, brand differentiation</td></tr>
+        <tr><td><strong>Libraries</strong></td><td>Font Awesome Duotone, Phosphor Duotone, Heroicons two-tone variants</td></tr>
+      </table>
+
+      <h4>8. Gradient / Color-Shift Icons</h4>
+      <p>Icons that use color gradients to add energy and modern appeal.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Linear or radial gradients applied to fills or strokes. Vibrant, brand-aligned colors.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Instagram-style gradient fills. Mesh gradients for organic, fluid color transitions.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Gradient backgrounds with solid white icons. Or gradient-stroke buttons with transparent fill.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Rotating gradient arcs. Rainbow progress bars. Shimmer effects.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Creative tools, social apps, entertainment, youth-oriented brands</td></tr>
+        <tr><td><strong>Caution</strong></td><td>Ensure gradients don't compromise readability. Avoid for critical functional icons</td></tr>
+      </table>
+
+      <h4>9. 3D / Isometric</h4>
+      <p>Dimensional icons with perspective, depth, and realistic lighting.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Perspective rendering, cast shadows, material surfaces (matte, glossy, metallic).</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Isometric illustrations of objects. Rotatable 3D icons. Realistic product mockups.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>3D-styled buttons with perspective tilt. Pressed states that "depress" into the surface.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Spinning 3D shapes, orbiting objects, morphing geometry.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Landing pages, hero sections, product showcases, AR/VR interfaces</td></tr>
+        <tr><td><strong>Performance</strong></td><td>Heavy file sizes. Use sparingly. Prefer CSS/SVG 3D transforms over raster images</td></tr>
+      </table>
+
+      <h4>10. Hand-Drawn / Organic</h4>
+      <p>Imperfect, human-made aesthetic that adds warmth and personality.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Irregular lines, sketchy strokes, ink textures, watercolor fills. Slight wobble or imperfection.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Doodle-style line icons. Brush-stroke fills. Rough edges instead of perfect curves.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Irregular pill shapes with textured backgrounds. Hand-lettered labels.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Drawing animations (SVG stroke-dashoffset). Sketching or painting progress indicators.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Creative portfolios, indie brands, wellness/lifestyle apps, children's products</td></tr>
+        <tr><td><strong>Mood</strong></td><td>Authentic, human, approachable, artistic</td></tr>
+      </table>
+
+      <h4>11. Brutalism</h4>
+      <p>Raw, unpolished, anti-aesthetic design that embraces chaos and contrast.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>High contrast colors, bold typography, raw borders, visible grid lines, clashing palettes.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Crude, pixelated, or intentionally unconventional. ASCII art influences. Sharp, unrounded corners.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Unstyled native buttons or harsh rectangles with thick black borders.</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Glitch effects, raw progress bars, flickering text.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Art projects, creative agencies, anti-establishment brands, experimental interfaces</td></tr>
+        <tr><td><strong>Mood</strong></td><td>Rebellious, raw, honest, provocative</td></tr>
+      </table>
+
+      <h4>12. Matte / Textured</h4>
+      <p>Subtle surface textures that add depth without 3D effects.</p>
+      <table>
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td><strong>Characteristics</strong></td><td>Noise grain, paper texture, fabric weave, subtle noise overlays. Monochrome or muted palettes.</td></tr>
+        <tr><td><strong>Icons</strong></td><td>Flat icons with a subtle noise/grain texture overlay. Soft edges, muted colors.</td></tr>
+        <tr><td><strong>Buttons</strong></td><td>Flat buttons with textured backgrounds (linen, paper, concrete).</td></tr>
+        <tr><td><strong>Loaders</strong></td><td>Textured spinners. Grain-animated progress bars.</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Editorial design, luxury brands, print-to-digital transitions, mood-driven interfaces</td></tr>
+        <tr><td><strong>Mood</strong></td><td>Premium, tactile, editorial, refined</td></tr>
+      </table>
+
+      <h3>Style Application Matrix</h3>
+      <table>
+        <tr><th>Style</th><th>Icons</th><th>Buttons</th><th>Loaders</th><th>Cards</th><th>Best Context</th></tr>
+        <tr><td><strong>Flat</strong></td><td>★★★</td><td>★★★</td><td>★★☆</td><td>★★☆</td><td>Dashboards, admin, data UIs</td></tr>
+        <tr><td><strong>Skeuomorphic</strong></td><td>★★☆</td><td>★★☆</td><td>★★☆</td><td>★☆☆</td><td>Games, music, onboarding</td></tr>
+        <tr><td><strong>Material</strong></td><td>★★★</td><td>★★★</td><td>★★★</td><td>★★★</td><td>Android, cross-platform web</td></tr>
+        <tr><td><strong>Neumorphic</strong></td><td>★★☆</td><td>★★★</td><td>★★☆</td><td>★★★</td><td>Premium dashboards, dark mode</td></tr>
+        <tr><td><strong>Glassmorphic</strong></td><td>★★☆</td><td>★★☆</td><td>★★☆</td><td>★★★</td><td>macOS/iOS, overlays, modals</td></tr>
+        <tr><td><strong>Claymorphic</strong></td><td>★★★</td><td>★★★</td><td>★★★</td><td>★★☆</td><td>Kids apps, casual games, friendly brands</td></tr>
+        <tr><td><strong>Duotone</strong></td><td>★★★</td><td>★★☆</td><td>★★☆</td><td>★★☆</td><td>Marketing, dashboards, brand differentiation</td></tr>
+        <tr><td><strong>Gradient</strong></td><td>★★★</td><td>★★☆</td><td>★★★</td><td>★★☆</td><td>Creative tools, entertainment, social</td></tr>
+        <tr><td><strong>3D / Isometric</strong></td><td>★★☆</td><td>★☆☆</td><td>★★☆</td><td>★★☆</td><td>Landing pages, AR/VR, hero sections</td></tr>
+        <tr><td><strong>Hand-Drawn</strong></td><td>★★★</td><td>★★☆</td><td>★★★</td><td>★★☆</td><td>Indie brands, creative, lifestyle</td></tr>
+        <tr><td><strong>Brutalist</strong></td><td>★★☆</td><td>★★☆</td><td>★★☆</td><td>★☆☆</td><td>Art, experimental, agency sites</td></tr>
+        <tr><td><strong>Matte / Textured</strong></td><td>★★★</td><td>★★☆</td><td>★★☆</td><td>★★★</td><td>Editorial, luxury, mood-driven</td></tr>
+      </table>
+
+      <h3>How to Choose a Style</h3>
+      <ol>
+        <li><strong>Know your audience</strong> — Older or less tech-savvy users may benefit from skeuomorphic cues. Design-aware users appreciate neumorphism or glassmorphism.</li>
+        <li><strong>Consider the context</strong> — Functional dashboards favor flat/material. Brand moments and landing pages can use 3D, gradient, or duotone.</li>
+        <li><strong>Test for accessibility</strong> — Neumorphism and glassmorphism are beautiful but risky. Always validate contrast ratios.</li>
+        <li><strong>Don't use one style everywhere</strong> — The best UIs in 2026 layer styles selectively. Flat layout + neumorphic controls + glassmorphic modals.</li>
+        <li><strong>Align with your brand</strong> — A fintech app shouldn't use claymorphism. A children's app shouldn't use brutalism.</li>
+        <li><strong>Performance matters</strong> — 3D and textured styles increase file sizes. SVG-based styles (flat, duotone, gradient) are lightweight.</li>
+      </ol>
+
+      <h3>Modern Hybrid Approaches (2025–2026)</h3>
+      <table>
+        <tr><th>Hybrid Pattern</th><th>Description</th></tr>
+        <tr><td><strong>Flat + Neumorphic controls</strong></td><td>Clean flat layout with raised neumorphic buttons and toggles for tactile emphasis</td></tr>
+        <tr><td><strong>Glassmorphic overlays on flat UIs</strong></td><td>Frosted-glass modals and cards floating above a minimal flat interface</td></tr>
+        <tr><td><strong>Skeuomorphic icons + flat UI</strong></td><td>Realistic app icons within an otherwise flat interface — the modern iOS approach</td></tr>
+        <tr><td><strong>Duotone icons in material buttons</strong></td><td>Material Design buttons with duotone icons for brand personality</td></tr>
+        <tr><td><strong>3D hero + flat dashboard</strong></td><td>Dimensional illustrations in landing pages, transitioning to functional flat UIs inside the app</td></tr>
+        <tr><td><strong>Matte textures + minimal layout</strong></td><td>Subtle grain texture on cards and backgrounds while keeping icons and typography clean</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Recommended Resources</h2>
+      <a class="resource-link" href="https://m3.material.io/styles/icons/overview" target="_blank">1. Google Material Design — Iconography</a>
+      <a class="resource-link" href="https://developer.apple.com/design/human-interface-guidelines/icons" target="_blank">2. Apple Human Interface Guidelines — Icons</a>
+      <a class="resource-link" href="https://docs.fontawesome.com/web/add-icons/upload-icons/icon-design" target="_blank">3. Font Awesome Icon Design Guidelines</a>
+      <a class="resource-link" href="https://carbondesignsystem.com/guidelines/icons/library/" target="_blank">4. IBM Carbon Design System — Icons</a>
+      <a class="resource-link" href="https://www.designsystems.com/iconography-guide/" target="_blank">5. A Complete Guide to Iconography</a>
+    </section>
+
+    <footer>
+      <p>Compiled: May 2026 &middot; Sources: Material Design 3, Apple HIG, IBM Carbon, Font Awesome, Phosphor, UX Planet, Dev.to</p>
+    </footer>
+  </div>
+</body>
+</html>

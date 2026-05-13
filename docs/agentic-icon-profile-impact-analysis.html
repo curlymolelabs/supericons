@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons v2 Agentic Icon Vision Impact Review</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #ffffff;
+      --ink: #1d2433;
+      --muted: #596273;
+      --line: #d8d2c4;
+      --accent: #126c67;
+      --accent-2: #815b18;
+      --soft: #e8f3f1;
+      --warn: #fff4db;
+      --danger: #fbe8e4;
+      --good: #e7f6e9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    header {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 56px 22px 42px;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: #99ddd5;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 840px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    header p {
+      max-width: 760px;
+      color: #d7dde8;
+      font-size: 1.1rem;
+      margin: 18px 0 0;
+    }
+
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    nav .wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 22px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      color: var(--ink);
+      background: var(--soft);
+    }
+
+    main {
+      padding: 34px 22px 70px;
+    }
+
+    section {
+      margin: 0 auto 36px;
+      max-width: 1040px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 1.55rem;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      color: var(--accent-2);
+      font-size: 1.14rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 16px 0;
+    }
+
+    .lead {
+      font-size: 1.12rem;
+      color: var(--muted);
+    }
+
+    .verdict {
+      border-left: 5px solid var(--accent);
+      background: var(--soft);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eee8dc;
+    }
+
+    ul,
+    ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 7px 0;
+    }
+
+    .good {
+      background: var(--good);
+    }
+
+    .warn {
+      background: var(--warn);
+    }
+
+    .danger {
+      background: var(--danger);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 22px 36px;
+      color: var(--muted);
+      background: #ffffff;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 40px 18px 30px;
+      }
+
+      main {
+        padding: 26px 16px 56px;
+      }
+
+      .panel,
+      .card {
+        padding: 16px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Supericons v2 vision review</div>
+      <h1>Can agentic icon profiles matter?</h1>
+      <p>A plain-language review of the AIPS vision from founder, investor, design platform, creative software, protocol, and design thinking viewpoints.</p>
+    </div>
+  </header>
+
+  <nav aria-label="Page sections">
+    <div class="wrap">
+      <a href="#verdict">Verdict</a>
+      <a href="#vision">Vision</a>
+      <a href="#viewpoints">Viewpoints</a>
+      <a href="#strengths">Strengths</a>
+      <a href="#weaknesses">Weaknesses</a>
+      <a href="#moves">Recommended Moves</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="verdict" class="panel verdict">
+      <h2>Short Verdict</h2>
+      <p class="lead">Yes, this vision could make a real impact. But it should start as a useful product workflow, not as a big public standard.</p>
+      <p>The strongest idea is simple: icons in AI-powered products need more than a picture. They need meaning, state, trust, usage rules, and accessibility information that both people and software can understand.</p>
+      <p>The main risk is trying to solve too much at once. AIPS should begin with agent state icons for design systems and AI product teams, then grow after the workflow proves itself.</p>
+    </section>
+
+    <section id="vision">
+      <h2>What The Vision Is Really Saying</h2>
+      <p>The reviewed AIPS document says that icons should move from static symbols to richer profile-based assets. A profile is a structured record that travels with the icon. Metadata means the information inside that record, such as the icon name, meaning, owner, and use rules. A schema means the agreed list of fields that record should contain.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Meaning</h3>
+          <p>The icon carries tags, intent, related icons, and emotional tone so software can choose it more wisely.</p>
+        </div>
+        <div class="card">
+          <h3>Design Rules</h3>
+          <p>The icon carries style rules like stroke, shape, color, motion, and design tokens. Design tokens are shared names for design values, such as a brand color or spacing size.</p>
+        </div>
+        <div class="card">
+          <h3>Agent State</h3>
+          <p>The icon can react when an AI agent is working, blocked, asking for approval, finished, or in an error state.</p>
+        </div>
+        <div class="card">
+          <h3>Trust</h3>
+          <p>The profile can include source, author, license, version, and file checks so teams know where an icon came from.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="viewpoints">
+      <h2>Viewpoints</h2>
+
+      <div class="panel">
+        <h3>Visionary Technopreneur</h3>
+        <p><strong>What they would like:</strong> AIPS points toward a new kind of visual infrastructure for AI products. It is bigger than an icon pack and could help define how agentic software shows state and trust.</p>
+        <p><strong>What they would challenge:</strong> The current vision is too wide. It mixes schema, runtime behavior, marketplace ideas, ownership, design theory, and future platform claims.</p>
+        <p><strong>Best move:</strong> Keep the big dream, but ship one sharp tool first.</p>
+      </div>
+
+      <div class="panel">
+        <h3>a16z / Y Combinator Style Investor</h3>
+        <p><strong>What they would like:</strong> The timing is good. AI-native products need new interface patterns, and design teams need better ways to manage meaning and state.</p>
+        <p><strong>What they would challenge:</strong> Who pays first? Designers, developers, agents, and end users all benefit in theory, but the first customer must be clear.</p>
+        <p><strong>Best move:</strong> Sell first to design system and AI product teams that need agent state icons now.</p>
+      </div>
+
+      <div class="panel">
+        <h3>AG-UI Protocol Builder</h3>
+        <p>AG-UI is a shared way for an AI agent and a user interface to send messages about what is happening.</p>
+        <p><strong>What they would like:</strong> AIPS could describe how icons respond to agent events. That is useful because agent interfaces need clear feedback while work is happening.</p>
+        <p><strong>What they would challenge:</strong> The event names and behavior rules must match real protocol versions. Loose compatibility claims will not be enough.</p>
+        <p><strong>Best move:</strong> Create a versioned event mapping. First map events into stable states such as idle, working, blocked, needs approval, error, and complete.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Figma Style Design Platform Founder</h3>
+        <p><strong>What they would like:</strong> AIPS keeps design intent attached to the asset after handoff. That helps designers, developers, and AI coding tools work from the same source.</p>
+        <p><strong>What they would challenge:</strong> Designers will not fill out a huge form for every icon.</p>
+        <p><strong>Best move:</strong> Build a plugin that suggests metadata and lets teams approve it quickly.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Adobe Style Creative Software Founder</h3>
+        <p><strong>What they would like:</strong> AIPS could help teams generate and adapt icons while staying on brand. It could also help with rights, variants, and review.</p>
+        <p><strong>What they would challenge:</strong> The ownership and NFT-style language may distract business buyers. NFT means a blockchain-linked digital ownership record. That may be useful later, but it should not lead the story now.</p>
+        <p><strong>Best move:</strong> Talk about trusted creative metadata, licensing, and brand control first.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Design Thinking Veterans</h3>
+        <p><strong>What they would like:</strong> AIPS asks the right human questions: what does the user need to know, how does the user trust the agent, and how can motion stay accessible?</p>
+        <p><strong>What they would challenge:</strong> Some claims need user testing. For example, the best way to show confidence or uncertainty may change by product and audience.</p>
+        <p><strong>Best move:</strong> Test icon recognition, trust, accessibility, and clutter with real users before turning design guesses into rules.</p>
+      </div>
+    </section>
+
+    <section id="strengths">
+      <h2>Big Strengths</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Strength</th>
+            <th>Why it matters</th>
+            <th>How to make it stronger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Timely problem</td>
+            <td>AI agents need visible state, trust, and control.</td>
+            <td>Start with icons for common agent states.</td>
+          </tr>
+          <tr>
+            <td>Clear concept</td>
+            <td>"Icon as profile" is easy to remember.</td>
+            <td>Show simple before-and-after examples.</td>
+          </tr>
+          <tr>
+            <td>Useful metadata</td>
+            <td>Meaning, state, and accessibility can help humans and software.</td>
+            <td>Keep a small required core and put advanced fields in optional sections.</td>
+          </tr>
+          <tr>
+            <td>Design genome</td>
+            <td>AI tools can create better icons when style rules are clear.</td>
+            <td>Connect it to design tokens and Figma variables, which are reusable design values inside Figma.</td>
+          </tr>
+          <tr>
+            <td>Asset trust</td>
+            <td>Teams need to know source, license, version, and file integrity.</td>
+            <td>Lead with practical provenance: author, license, version, and file hash. A file hash is a digital fingerprint that helps prove a file has not changed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="weaknesses">
+      <h2>Main Weaknesses</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Weakness</th>
+            <th>Why it hurts</th>
+            <th>Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Too much scope</td>
+            <td>A big schema can scare away early users.</td>
+            <td>Create AIPS Core with only the fields needed for the first use case.</td>
+          </tr>
+          <tr>
+            <td>Unclear first buyer</td>
+            <td>If everyone is the customer, nobody is the first customer.</td>
+            <td>Focus on design system and AI product teams.</td>
+          </tr>
+          <tr>
+            <td>Manual work</td>
+            <td>Designers will not fill out long records by hand.</td>
+            <td>Use assisted suggestions, presets, and validation.</td>
+          </tr>
+          <tr>
+            <td>Subjective emotional scores</td>
+            <td>Numbers can look more certain than they really are.</td>
+            <td>Use plain labels first and mark scores as tested or untested.</td>
+          </tr>
+          <tr>
+            <td>Hype risk</td>
+            <td>Terms like "NFT of interface elements" may distract from the useful product.</td>
+            <td>Use plain business language about trusted metadata and better workflows.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="moves">
+      <h2>Recommended Moves</h2>
+      <div class="panel good">
+        <h3>Build the smallest useful version</h3>
+        <p>Create AIPS Core with identity, meaning, accessibility, state, and asset fields. Put everything else into optional extensions.</p>
+      </div>
+
+      <div class="panel good">
+        <h3>Ship a working agent icon pack</h3>
+        <p>Make a focused pack for states like idle, working, tool call, needs approval, blocked, error, complete, and delegated.</p>
+      </div>
+
+      <div class="panel good">
+        <h3>Make it run in code</h3>
+        <p>Build a React renderer that reads an AIPS profile and shows the right icon state. React is a common web app framework.</p>
+      </div>
+
+      <div class="panel good">
+        <h3>Make it easy in design tools</h3>
+        <p>Build a Figma workflow that exports profiles with icons and helps teams fill missing information.</p>
+      </div>
+
+      <div class="panel good">
+        <h3>Test with real users</h3>
+        <p>Measure whether people can understand icon state, confidence, and urgency. Test with screen reader and reduced-motion users too.</p>
+      </div>
+    </section>
+
+    <section class="panel verdict">
+      <h2>Final Take</h2>
+      <p>AIPS has a serious idea at its core: AI-powered products need icons that carry meaning, state, trust, context, and accessibility across tools and screens.</p>
+      <p>Its best path is practical. Start with agent state icons, ship tools that make them useful, and gather proof. Once teams depend on the workflow, the larger standard has a reason to exist.</p>
+    </section>
+
+    <section id="sources">
+      <h2>Sources Reviewed</h2>
+      <ul>
+        <li><a href="agentic-icon-profile-specification.html">AIPS source specification in this repository</a></li>
+        <li><a href="https://docs.ag-ui.com/">AG-UI documentation</a></li>
+        <li><a href="https://docs.ag-ui.com/sdk/js/core/events">AG-UI event reference</a></li>
+        <li><a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server">Figma Dev Mode MCP Server guide</a></li>
+        <li><a href="https://openai.com/index/figma-partnership/">OpenAI and Figma partnership announcement</a></li>
+        <li><a href="https://www.designtokens.org/tr/drafts/format/">W3C Design Tokens Community Group format draft</a></li>
+        <li><a href="https://www.adobe.com/creativecloud/business/enterprise/firefly-services.html">Adobe Firefly Services overview</a></li>
+        <li><a href="https://www.ycombinator.com/rfs">Y Combinator Requests for Startups</a></li>
+      </ul>
+      <p class="note">This review separates checked source facts from strategy judgment. Business impact and adoption paths are recommendations, not proven outcomes.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Supericons v2 AIPS impact review.</div>
+  </footer>
+</body>
+</html>

@@ -12,6 +12,11 @@ const storeSource = readFileSync(storePath, 'utf8');
 const groupRegex = /<div class="ml__quad ml__quad--[^"]+"[^>]*data-quad="([^"]+)"[\s\S]*?<span class="ml__quad-label">([^<]+)<\/span>[\s\S]*?<div class="ml__quad-btns"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/g;
 const buttonRegex = /<button class="ml__preset-btn" data-preset="([^"]+)">[\s\S]*?<span class="material-symbols-outlined"[^>]*>([^<]+)<\/span>\s*([^<\n]+)\s*<\/button>/g;
 
+function parseGroupLabel(labelSource) {
+  const i18nFallback = labelSource.match(/\$\{motionLabLabel\('[^']+', '([^']+)'\)\}/);
+  return (i18nFallback?.[1] || labelSource).trim();
+}
+
 function parseBrowserGroups(source) {
   const groups = [];
   let groupMatch;
@@ -26,7 +31,7 @@ function parseBrowserGroups(source) {
         label: buttonMatch[3].trim(),
       });
     }
-    groups.push({ key, label: label.trim(), items });
+    groups.push({ key, label: parseGroupLabel(label), items });
   }
   return groups;
 }

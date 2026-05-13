@@ -30,6 +30,7 @@ async function callRpc(name, payload) {
 export async function logMcpSearchBatch({
   query,
   results,
+  locale = null,
 }) {
   if (!Array.isArray(results) || results.length === 0) return;
 
@@ -46,9 +47,9 @@ export async function logMcpSearchBatch({
       p_icon_id: `${result.library}:${result.id}`,
       p_batch_id: batchId,
       p_search_query: query || null,
-      p_result_position: index + 1,
-      p_ui_surface: 'mcp',
-      p_evidence_text: 'search_icons',
+        p_result_position: index + 1,
+        p_ui_surface: 'mcp',
+      p_evidence_text: locale ? `search_icons locale=${locale}` : 'search_icons',
       p_session_hash: sessionHash,
       p_created_at: new Date().toISOString(),
     })));
@@ -61,6 +62,7 @@ export async function logMcpSearchAttempt({
   query,
   resultCount,
   libraryFilter = null,
+  locale = null,
 }) {
   const normalizedQuery = String(query || '').trim().toLowerCase().replace(/\s+/g, ' ');
   const safeResultCount = Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null;
@@ -73,7 +75,7 @@ export async function logMcpSearchAttempt({
       p_result_count: safeResultCount,
       p_library_filter: libraryFilter || 'all',
       p_ui_surface: 'mcp',
-      p_evidence_text: 'search_icons',
+      p_evidence_text: locale ? `search_icons locale=${locale}` : 'search_icons',
       p_session_hash: getSessionHash(),
       p_created_at: new Date().toISOString(),
     });

@@ -1,0 +1,1297 @@
+{
+  "app": {
+    "name": "Supericons",
+    "language": "語言",
+    "searchPlaceholder": "搜尋 20,000+ 圖示...",
+    "searchAriaLabel": "搜尋圖示",
+    "docsSearchPlaceholder": "搜尋文件",
+    "docsSearchAriaLabel": "搜尋文件",
+    "allIcons": "全部圖示",
+    "favorites": "收藏",
+    "recent": "最近",
+    "showingIcons": "顯示 {total} 個圖示",
+    "showingSomeIcons": "顯示 {shown} / {total} 個圖示",
+    "showingResults": "顯示 {shown} 個結果",
+    "showingLibraryResults": "顯示 {shown} 個 {library} 結果",
+    "showingCuratedIcons": "顯示 {shown} 個精選圖示",
+    "showingCuratedLibraryIcons": "顯示 {shown} 個精選 {library} 圖示",
+    "showingOutlineOnly": "顯示線框圖示（沒有實心版本）",
+    "solidSuffix": "（實心）",
+    "menu": "選單",
+    "signIn": "登入",
+    "lightMode": "淺色模式",
+    "darkMode": "深色模式",
+    "openSearch": "開啟搜尋",
+    "closeSearch": "關閉搜尋",
+    "recentSearches": "最近搜尋"
+  },
+  "nav": {
+    "browse": "瀏覽",
+    "pricing": "價格",
+    "privacy": "隱私",
+    "terms": "條款",
+    "docs": "文件",
+    "contact": "聯絡",
+    "libraries": "圖示庫",
+    "premiumCollections": "進階集合",
+    "collections": "集合",
+    "tools": "工具",
+    "myCollection": "我的購買"
+  },
+  "actions": {
+    "clear": "清除",
+    "clearAll": "全部清除",
+    "clearSearch": "清除搜尋",
+    "close": "關閉",
+    "customize": "自訂",
+    "multiSelect": "多選",
+    "toggleMultiSelect": "切換多選",
+    "toggleCustomizePanel": "切換自訂面板",
+    "backToIcons": "返回圖示",
+    "playPreview": "播放預覽",
+    "stopPreview": "停止預覽",
+    "save": "儲存",
+    "saved": "已儲存",
+    "remove": "移除",
+    "cancel": "取消",
+    "clearItems": "清除項目",
+    "clearFavorites": "清除收藏",
+    "clearRecent": "清除最近",
+    "useThis": "使用這個",
+    "saveToFavorites": "將{name}儲存到收藏",
+    "removeFromFavorites": "從收藏移除{name}"
+  },
+  "panels": {
+    "compare": "比較（{count}）",
+    "selectIcon": "從網格中選擇一個圖示進行自訂",
+    "chooseIcon": "從集合網格中選擇一個圖示，載入預覽、播放和匯出控制項。",
+    "loadingCustomization": "正在載入圖示自訂...",
+    "compareLabel": "比較"
+  },
+  "filters": {
+    "tagFilters": "標籤篩選",
+    "tags": "標籤",
+    "tagsWithCount": "標籤（{count}）",
+    "categories": {
+      "ai-agent-workflows": "AI 與自動化",
+      "navigation-wayfinding": "導覽與尋路",
+      "actions-controls": "動作與控制",
+      "status-feedback": "狀態與回饋",
+      "people-accounts": "人員與帳戶",
+      "communication": "通訊",
+      "files-content": "檔案與內容",
+      "data-analytics": "資料與分析",
+      "commerce-finance": "商務與金融",
+      "security-access": "安全與存取",
+      "media-playback": "媒體與播放",
+      "devices-hardware": "裝置與硬體",
+      "code-development": "程式碼與開發",
+      "design-editing": "設計與編輯",
+      "maps-places-travel": "地圖、地點與旅行",
+      "time-calendar": "時間與行事曆",
+      "nature-weather-lifestyle": "自然、天氣與生活",
+      "brands-social": "品牌與社群"
+    }
+  },
+  "tools": {
+    "motionLab": "動效實驗室",
+    "converter": "轉換器"
+  },
+  "style": {
+    "outline": "描邊",
+    "solid": "實心",
+    "outlineStyle": "描邊樣式",
+    "solidStyle": "實心樣式"
+  },
+  "customize": {
+    "color": "顏色",
+    "strokeWidth": "線寬",
+    "strokeNoEffect": "此圖示庫使用填滿路徑。線寬不會生效。",
+    "variableFontAxes": "可變字型軸",
+    "weight": "粗細",
+    "fill": "填滿",
+    "grade": "等級",
+    "opticalSize": "光學尺寸",
+    "container": "容器",
+    "containerNone": "無",
+    "containerCircle": "圓形",
+    "containerSquircle": "圓角方形",
+    "containerPill": "膠囊",
+    "containerGlass": "玻璃",
+    "badgeDot": "徽章點",
+    "lightBackground": "淺色背景",
+    "animation": "動畫",
+    "animationNone": "無",
+    "animationSpin": "旋轉",
+    "animationPulse": "脈衝",
+    "animationBounce": "彈跳",
+    "animationShake": "抖動",
+    "openInMotionLab": "在 Motion Lab 開啟",
+    "export": "匯出",
+    "copySvg": "複製 SVG",
+    "copyBase64": "複製 Base64",
+    "downloadSvg": "下載 SVG",
+    "pngSize": "PNG 尺寸",
+    "customSizeTitle": "自訂尺寸 (8-1024)",
+    "downloadPng": "下載 PNG",
+    "downloadIco": "下載 ICO",
+    "materialSnapshotHint": "圖形匯出會在沒有精確滑桿值時使用最接近的 Material 快照。",
+    "copyAsComponent": "複製為元件",
+    "resetToDefaults": "重設為預設值"
+  },
+  "confirm": {
+    "clearFavoritesTitle": "清除此裝置上的所有收藏",
+    "clearRecentTitle": "清除此裝置上的最近圖示",
+    "clearFavoritesDescription": "這會移除此瀏覽器中儲存的所有收藏。不會影響你的帳戶或已購買的圖示包。",
+    "clearRecentDescription": "這會移除此瀏覽器中的最近圖示記錄。不會影響收藏、購買或帳戶存取。",
+    "clearItemsTitle": "清除此裝置上的已儲存項目",
+    "clearItemsDescription": "這只會影響目前瀏覽器中儲存的資料。",
+    "thisDevice": "此裝置",
+    "browserStorageOnly": "只會影響此瀏覽器的儲存空間。"
+  },
+  "toast": {
+    "favoritesCleared": "已清除此裝置上的收藏",
+    "recentCleared": "已清除此裝置上的最近圖示"
+  },
+  "docs": {
+    "documentation": "文件",
+    "navigation": "文件導覽",
+    "goHome": "前往文件首頁",
+    "pageNavigation": "頁面導覽",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "nextSection": "前往下一節",
+    "backToTop": "回到頂端",
+    "noMatchesTitle": "還沒有文件相符結果",
+    "noMatchesHint": "試試 api key、motion lab、converter 或 pricing。",
+    "groups": {
+      "overview": "概覽",
+      "mcp-setup": "MCP 設定",
+      "mcp-reference": "MCP 參考",
+      "motion-lab": "Motion Lab",
+      "converter": "Converter",
+      "access-and-api-keys": "存取和 API 金鑰",
+      "troubleshooting": "疑難排解"
+    },
+    "pages": {
+      "docs": {
+        "navLabel": "簡介",
+        "kicker": "概覽",
+        "pageTitle": "Supericons 文件",
+        "summary": "設定 MCP、學習 Motion Lab，並使用 Converter。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"docs-start-here\">\n        <h2 class=\"docs-section__title\">從這裡開始</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>快速入門</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-quickstart\" data-docs-view=\"docs-quickstart\">閱讀快速入門指南</a>\n            </div>\n            <p>設定MCP伺服器，並在 5 分鐘內執行您的第一個圖示查詢。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>設定MCP</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">選擇您的客戶端</a>\n            </div>\n            <p>針對Claude Code、Codex CLI、Cursor 及其他程式設計代理的逐步設定指南。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>使用MCP進行搜尋</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">查看提示</a>\n            </div>\n            <p>根據名稱、庫、使用情境或含義搜尋圖示的提示範例。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>探索Motion Lab</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">開啟指南</a>\n            </div>\n            <p>瀏覽預設樣式、預覽動畫，並匯出為CSS或動態SVG。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>使用Converter</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">開啟指南</a>\n            </div>\n            <p>PNG轉SVG、SVG轉PNG，以及如何為原始圖像選擇合適的設定。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">應用程式中的免費圖示瀏覽功能與自訂面板操作直觀易懂。本文件區塊主要涵蓋MCP整合、Motion Lab 及Converter這些功能的設定或參數選擇較為複雜。</p>\n        <p class=\"docs-section__copy\">Supericons亦收錄於 <a href=\"https://smithery.ai/servers/curly-mole-labs/supericons\" target=\"_blank\" rel=\"noopener noreferrer\">Smithery</a>.</p>\n      </section>\n    "
+      },
+      "docs-quickstart": {
+        "navLabel": "快速開始",
+        "kicker": "概覽",
+        "pageTitle": "快速開始",
+        "summary": "在 5 分鐘內讓 Supericons 在你的編碼代理中運作。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"quickstart-free\">\n        <h2 class=\"docs-section__title\">免費設定</h2>\n        <p class=\"docs-section__copy\">免費圖示無需帳戶或API金鑰即可使用。將MCP伺服器新增至您的客戶端，即可開始搜尋。</p>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>新增伺服器</h3>\n            <p>請在下方選擇您的客戶端，或開啟通用設定指南以查看基本設定值。</p>\n            <div class=\"docs-link-list docs-link-list--inline\">\n              <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">通用設定</a>\n              <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a>\n              <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a>\n              <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a>\n              <a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">其他</a>\n            </div>\n          </article>\n          <article class=\"docs-card\">\n            <h3>重新載入您的工作階段</h3>\n            <p>重新啟動您的編碼代理程式工作階段。在Claude Code和Codex 中，輸入<code>/mcp</code>以確認Supericons是否出現在清單中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>執行您的第一個查詢</h3>\n            <p>請您的代理程式尋找一個圖示。嘗試以下其中一個提示：</p>\n            <ul>\n              <li>「幫我找一個來自Lucide 的設定齒輪圖示。」</li>\n              <li>「在Tabler 中搜尋一個載入旋轉圖示。」</li>\n              <li>「從Phosphor 取得 ID 為 heart 的圖示。」</li>\n            </ul>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"quickstart-premium\">\n        <h2 class=\"docs-section__title\">高級設定</h2>\n        <p class=\"docs-section__copy\">若要透過Supericons 使用付費的MCP資源，請先設定您的帳戶存取權限。高級套件會使用您帳戶中已有的存取權限。Motion Lab和Converter屬於Pro功能。</p>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>一個Supericons帳戶。購買您需要的套件，或升級至Pro以使用Motion Lab和Converter。</li>\n          <li>從API儀表板中的「Supericons金鑰」區塊所生成的API金鑰。</li>\n          <li>您的<code>SUPERICONS_API_KEY</code>環境變數已新增至您的MCP客戶端設定中。</li>\n        </ol>\n        <p class=\"docs-section__copy\">接著請依照通用設定指南或您所使用客戶端的設定指南，將金鑰加入設定中：</p>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">使用API金鑰的通用設定</a>\n          <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">使用Claude Code金鑰的API</a>\n          <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">使用Codex金鑰的API</a>\n          <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">使用Cursor金鑰的API</a>\n          <a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">其他客戶端</a>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"quickstart-note\">\n        <h3>您的金鑰使用的是您帳戶已有的存取權限</h3>\n        <p>您的API金鑰本身不會建立新的存取權限。購買套裝可讓您獲得該套裝中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n    "
+      },
+      "docs-what-is-supericons": {
+        "navLabel": "什麼是 Supericons",
+        "kicker": "概覽",
+        "pageTitle": "什麼是 Supericons",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"what-is-intro\">\n        <p class=\"docs-section__copy\">Supericons透過單一可搜尋介面，提供來自 10 個圖庫的 20,000 多個開源SVG圖示。可依名稱、概念或風格搜尋。即時自訂顏色、大小、描邊與填充。一鍵匯出為SVG、PNG，或React、Vue、Svelte元件。</p>\n        <p class=\"docs-section__copy\">針對 AI 輔助開發Supericons提供專用的MCP伺服器。您的程式碼代理程式無需切換至瀏覽器即可搜尋並取得圖示。在瀏覽器中，您可開啟Motion Lab和Converter使用控制項並預覽結果，無需付費方案。若要匯出、下載或複製最終輸出，則需 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。透過MCP，Motion Lab和Converter工具亦包含在 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。購買圖示包可讓您獲得所購買的高級圖示，但不會解鎖Motion Lab或Converter。</p>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-free-pro\">\n        <h2 class=\"docs-section__title\">免費版 vs.Pro</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>功能</th>\n                <th>免費</th>\n                <th>Pro</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>來自 10 個圖庫的 20,000 多個免費SVG圖示</td><td>是</td><td>是</td></tr>\n              <tr><td>AI 語義搜尋</td><td>是</td><td>是</td></tr>\n              <tr><td>即時自訂（顏色、大小、筆畫、填充）</td><td>是</td><td>是</td></tr>\n              <tr><td>匯出為SVG、PNG、React、Vue、Svelte</td><td>是</td><td>是</td></tr>\n              <tr><td>MCP：搜尋與取得圖示</td><td>是</td><td>是</td></tr>\n              <tr><td>高級動態圖示集合</td><td>否</td><td>是</td></tr>\n              <tr><td>開啟Motion Lab並在瀏覽器中預覽動畫預設</td><td>是</td><td>是</td></tr>\n              <tr><td>匯出Motion Lab CSS或動畫SVG</td><td>否</td><td>是</td></tr>\n              <tr><td>開啟Converter並在瀏覽器中預覽轉換結果</td><td>是</td><td>是</td></tr>\n              <tr><td>下載轉換後的檔案（PNG或SVG）</td><td>否</td><td>是</td></tr>\n              <tr><td>透過Motion Lab存取MCP工具</td><td>否</td><td>是</td></tr>\n              <tr><td>透過Converter使用的MCP工具</td><td>否</td><td>是</td></tr>\n              <tr><td>30 天滾動式催收索賠（每個計費週期 1 次）</td><td>否</td><td>是</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-libraries\">\n        <h2 class=\"docs-section__title\">10 個免費圖示庫</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>圖庫</th>\n                <th>Style</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>Lucide</td><td>簡潔、一致、開源</td></tr>\n              <tr><td>Tabler</td><td>5,000 多個粗體單行圖示</td></tr>\n              <tr><td>Phosphor</td><td>靈活、多粗細</td></tr>\n              <tr><td>Heroicons</td><td>TailwindCSS配套圖示，含輪廓與實心樣式</td></tr>\n              <tr><td>Bootstrap Icons</td><td>官方Bootstrap配套圖示集</td></tr>\n              <tr><td>Iconoir</td><td>高品質簡潔輪廓圖</td></tr>\n              <tr><td>Ionicons</td><td>網頁與行動介面圖示</td></tr>\n              <tr><td>Material Symbols</td><td>Google 可變字型圖示（字重、填充、等級、視覺尺寸）</td></tr>\n              <tr><td>MingCute</td><td>廣泛的介面涵蓋範圍，現代風格</td></tr>\n              <tr><td>Simple Icons</td><td>3,400 多個品牌與公司標誌</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-next\">\n        <h2 class=\"docs-section__title\">下一步該去哪裡</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">設定MCP</a>\n          <a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">使用MCP搜尋</a>\n          <a href=\"/?view=pricing\" data-docs-view=\"pricing\">升級至Pro</a>\n          <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>\n        </div>\n        <p class=\"docs-section__copy\"><a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">設定MCP</a> - 在您的程式碼代理程式中啟動MCP伺服器</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">使用MCP搜尋</a> - 透過您的代理程式學習尋找圖示的最佳提示</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=pricing\" data-docs-view=\"pricing\">升級至Pro版</a> - 了解Pro帳戶包含哪些功能</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a> - 了解驗證機制</p>\n      </section>\n    "
+      },
+      "docs-mcp-universal": {
+        "navLabel": "通用設定",
+        "kicker": "MCP 設定",
+        "pageTitle": "通用 MCP 設定",
+        "summary": "用於支援 MCP 的程式代理和 IDE 的欄位值與設定區塊。",
+        "bodyHtml": "\n      <section class=\"docs-callout\" id=\"universal-video-placeholder\">\n        <h3>影片教學即將上線</h3>\n        <p>此處將放置一段簡短的 IDE 設定影片。影片應展示MCP設定畫面、需填寫的具體欄位、儲存伺服器設定、重新啟動代理程式，以及執行首次Supericons搜尋的過程。</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-setup-types\">\n        <h2 class=\"docs-section__title\">選擇您的設定方案</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>免費設定</h3>\n            <p>請使用下方的MCP伺服器欄位。環境變數欄位請留空。此設定適用於免費圖示搜尋。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"#universal-premium\">Pro設定</a></h3>\n            <p>請使用下方的相同MCP伺服器欄位。接著新增一個環境變數：<code>SUPERICONS_API_KEY</code>.</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-ide-form\">\n        <h2 class=\"docs-section__title\">步驟 1：新增MCP伺服器</h2>\n        <p class=\"docs-section__copy\">這些欄位在免費版與Pro設定中皆相同。請將每個值複製到您 IDE 中的對應欄位中。</p>\n        <div class=\"docs-field-list\" aria-label=\"MCP setup field values\">\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">名稱</span>\n              <code id=\"docs-universal-field-name\">supericons</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-name\">複製</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">傳輸</span>\n              <code id=\"docs-universal-field-transport\">stdio</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-transport\">複製</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">啟動指令</span>\n              <code id=\"docs-universal-field-command\">npx</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-command\">複製</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">參數 1</span>\n              <code id=\"docs-universal-field-arg-y\">-y</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-arg-y\">複製</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">參數 2</span>\n              <code id=\"docs-universal-field-arg-package\">supericons-mcp</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-arg-package\">複製</button>\n          </div>\n          <div class=\"docs-field-row docs-field-row--muted\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">免費設定的環境變數</span>\n              <span class=\"docs-field-row__value\">留空。Pro用戶請在第 2 步中加入API金鑰。</span>\n            </div>\n          </div>\n          <div class=\"docs-field-row docs-field-row--muted\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">工作目錄</span>\n              <span class=\"docs-field-row__value\">除非您的 IDE 需要，否則請留空。</span>\n            </div>\n          </div>\n        </div>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>若您的 IDE 具有獨立的參數列</h3>\n            <p>新增兩個參數。首先新增<code>-y</code>。接著加入<code>supericons-mcp</code>.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>若您的 IDE 僅有一個參數欄位</h3>\n            <p>將<code>-y supericons-mcp</code>至參數欄位中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>若您的 IDE 要求設定環境變數</h3>\n            <p>若為免費設定，請將其留空。若為Pro設定，請在<code>SUPERICONS_API_KEY</code>於步驟 2 中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>若您的 IDE 要求設定 HTTP</h3>\n            <p>請改選<code>stdio</code>。此設定會透過<code>npx</code>.</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-agent-prompt\">\n        <h2 class=\"docs-section__title\">請您的代理程式進行設定</h2>\n        <p class=\"docs-section__copy\">若您的程式開發代理程式可自行編輯MCP設定，請將此提示貼入代理程式中。若遇到卡住的情況，請手動使用上述欄位值。</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-agent-install-prompt\">複製</button>\n          <pre><code id=\"docs-universal-agent-install-prompt\">Connect the Supericons MCP server to this IDE.\n\nUse these MCP values:\nName: supericons\nTransport: stdio\nCommand: npx\nArguments: -y supericons-mcp\n\nAfter saving, restart or reconnect MCP if this IDE requires it. Then test it by asking Supericons MCP to search for a database icon.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-free\">\n        <h2 class=\"docs-section__title\">免費設定檔設定</h2>\n        <p class=\"docs-section__copy\">免費圖示無需帳戶或API金鑰即可使用。任何能啟動本地 stdioMCP伺服器的程式代理皆可使用Supericons。</p>\n        <p class=\"docs-section__copy\">當您的客戶端接受<code>mcpServers</code>, <code>command</code>，並<code>args</code>字段：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-free\">複製</button>\n          <pre><code id=\"docs-universal-free\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">某些 VS Code 風格的MCP客戶端會使用<code>servers</code>以及一個明確的<code>type</code>字段。若您的 IDE 預期此格式，請使用此結構：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-vscode-json\">複製</button>\n          <pre><code id=\"docs-universal-vscode-json\">{\n  \"servers\": {\n    \"supericons\": {\n      \"type\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">若您的客戶端使用TOML或其他封裝格式，請保留相同的<code>command</code>和<code>args</code>值，僅將外圍語法調整為符合您客戶端設定的格式。</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-test\">\n        <h2 class=\"docs-section__title\">測試是否成功</h2>\n        <p class=\"docs-section__copy\">儲存後，請重新啟動您的 IDE 或視需要重新連線MCP。接著向您的代理程式發出以下其中一個提示。</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-test-prompts\">複製</button>\n          <pre><code id=\"docs-universal-test-prompts\">Use Supericons MCP to search for a database icon.\n\nUse Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar. The slots are model, prompt, dataset, evaluation, deployment, and monitoring. Show the icon id, library, and short reason for each choice.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-premium\">\n        <h2 class=\"docs-section__title\">第 2 步（Pro 版）：新增您的API金鑰</h2>\n        <p class=\"docs-section__copy\">若您僅需免費圖示搜尋功能，請跳過此步驟。若您需要您擁有的 Premium 圖示、Motion Lab 或Converter，請新增此步驟。</p>\n        <h3>若您的 IDE 具備環境變數欄位</h3>\n        <p class=\"docs-section__copy\">點擊「新增環境變數」。在<code>SUPERICONS_API_KEY</code>於「金鑰」欄位中。在「值」欄位中輸入您的實際Supericons API金鑰。</p>\n        <div class=\"docs-field-list\" aria-label=\"Premium MCP setup field values\">\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">環境變數鍵</span>\n              <code id=\"docs-universal-premium-env-key\">SUPERICONS_API_KEY</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-premium-env-key\">複製</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">環境變數值</span>\n              <code id=\"docs-universal-premium-env-value\">your-key-here</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-premium-env-value\">複製</button>\n          </div>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>請將您的金鑰保密</h3>\n          <p>請在 IDE 的私人設定中使用您自己的金鑰。切勿將真實的API金鑰放置於命令、參數、工作目錄、共享專案檔案、公開文件、螢幕截圖或聊天訊息中。</p>\n        </div>\n        <h3>若您的客戶端使用設定檔</h3>\n        <p class=\"docs-section__copy\">當您的客戶端支援<code>env</code>字段時，請使用此 JSON 格式。與免費設定的唯一差異在於<code>env</code>部分。</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-premium\">複製</button>\n          <pre><code id=\"docs-universal-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>如何取得您的金鑰</h3>\n          <p>API前往 supericons.dev 下的 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>下生成您的API金鑰。請使用您Supericons帳戶中的API金鑰。您的金鑰將使用帳戶中已有的存取權限。購買的圖示包可解鎖該包中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-guides\">\n        <h2 class=\"docs-section__title\">選擇適合的指南</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a></h3>\n            <p>針對Claude Code 的 CLI 指令、設定檔作用域及疑難排解步驟。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a></h3>\n            <p>TOML及 IDE 擴充套件的 CLI 指令、Codex CLI配置結構，以及受信任專案的注意事項。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a></h3>\n            <p>Cursor 的全域與專案設定檔位置，以及應用程式內的驗證步驟。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">其他</a></h3>\n            <p>OpenCode、Cline、Copilot 代理程式及 Windsurf 的設定參考，以及當您的客戶端未列於清單時的備用方案。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">若您的客戶端未列於清單中，請使用<code>command</code>「免費設定」區段中的<code>args</code>，並根據您的客戶所期望的格式進行調整。</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-troubleshooting\">\n        <h2 class=\"docs-section__title\">常見設定修正</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>伺服器未顯示</h3>\n            <p>儲存設定、重新啟動 IDE，然後再次開啟MCP伺服器清單。許多 IDE 僅會在啟動時載入MCP伺服器。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>找不到</h3>\n            <p>安裝Node.js，然後開啟終端機並執行<code>npx --version</code>。此 IDE 必須能夠存取相同的<code>npx</code>指令。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>命令欄位顯示異常</h3>\n            <p>請僅在<code>npx</code>。請勿將完整的JSON區塊貼入命令欄中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>參數無法正常運作</h3>\n            <p>若分開輸入各行失敗，請嘗試使用單行參數：<code>-y supericons-mcp</code>。若單行指令失敗，請將其拆分為<code>-y</code>和<code>supericons-mcp</code>.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-claude-code": {
+        "navLabel": "Claude Code",
+        "kicker": "MCP 設定",
+        "pageTitle": "Claude Code 設定",
+        "summary": "在 Claude Code 中加入 Supericons MCP 伺服器。",
+        "verifiedNote": "已根據 2026 年 4 月 10 日的官方文件核對。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"claude-free\">\n        <h2 class=\"docs-section__title\">免費設定</h2>\n        <h3>選項 1：CLI 指令</h3>\n        <p class=\"docs-section__copy\">新增Supericons 的最快方式。執行此指令一次：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-cli\">複製</button>\n          <pre><code id=\"docs-claude-cli\"># macOS / Linux\nclaude mcp add supericons -- npx -y supericons-mcp\n\n# Windows\nclaude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>\n        </div>\n        <h3>選項 2：設定檔</h3>\n        <p class=\"docs-section__copy\">Claude Code將MCP伺服器儲存於JSON設定檔中。請選擇符合您工作流程的範圍：</p>\n        <ul>\n          <li><strong>使用者範圍</strong> （所有專案皆可用）：<code>~/.claude.json</code></li>\n          <li><strong>專案範圍</strong> （僅此專案內可用）：<code>.mcp.json</code>在您的專案根目錄中</li>\n        </ul>\n        <p class=\"docs-section__copy\">將此區塊加入<code>mcpServers</code>您選定的檔案中的物件中：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-config\">複製</button>\n          <pre><code id=\"docs-claude-config\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <h3>驗證是否正常運作</h3>\n        <p class=\"docs-section__copy\">新增伺服器後，請在運作中的Claude Code工作階段中輸入此指令：</p>\n        <div class=\"docs-code\">\n          <pre><code>/mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">Supericons應會出現在活躍伺服器清單中。若未出現，請重新啟動您的Claude Code工作階段。</p>\n      </section>\n      <section class=\"docs-section\" id=\"claude-premium\">\n        <h2 class=\"docs-section__title\">進階設定</h2>\n        <p class=\"docs-section__copy\">若要使用您擁有的付費圖示，或如Pro和Motion Lab Converter工具，請將您的API金鑰新增至伺服器設定中。請使用設定檔方法並搭配<code>env</code>欄位：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-premium\">複製</button>\n          <pre><code id=\"docs-claude-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>如何取得您的金鑰</h3>\n          <p>API前往 supericons.dev 網站，於 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>下生成您的API金鑰。請使用您Supericons帳戶中的API金鑰。您的金鑰將使用您帳戶中已有的存取權限。購買的圖示包將解鎖該包中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"claude-troubleshooting\">\n        <h2 class=\"docs-section__title\">疑難排解</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>新增後伺服器未顯示</h3>\n            <p>執行<code>/mcp</code>進行檢查。若未列出Supericons，請重新啟動您的Claude Code工作階段。確認您的設定檔位於您所選範圍的正確位置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>高級工具無法使用</h3>\n            <p>請確認以下三點：(1) 您的帳戶權限是否符合您欲使用的功能。購買的套件會解鎖該套件中的高級圖示。若要使用Motion Lab和Converter則需 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。(2) 您已從儀表板生成API金鑰。(3)<code>SUPERICONS_API_KEY</code>存在於Claude Code啟動時讀取的設定檔中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>我應該編輯哪個設定檔？</h3>\n            <p>使用者範圍：<code>~/.claude.json</code>。專案範圍：<code>.mcp.json</code>位於您的專案根目錄中。使用者範圍檔案適用於您所有的Claude Code工作階段。專案範圍檔案僅在您開啟該專案時生效。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-codex": {
+        "navLabel": "Codex",
+        "kicker": "MCP 設定",
+        "pageTitle": "Codex 設定",
+        "summary": "將 Supericons MCP 加入 Codex。",
+        "verifiedNote": "已根據 2026 年 4 月 10 日的 Codex 官方文件核對。",
+        "bodyHtml": "\n      <section class=\"docs-callout\" id=\"codex-scope\">\n        <h3>作用範圍</h3>\n        <p>Codex MCP和 IDE 擴充套件均支援Codex CLI。CLI 和 IDE 擴充套件共用同一個設定檔。Codex網頁應用程式和雲端任務執行器不支援本地MCP伺服器設定。</p>\n      </section>\n      <section class=\"docs-section\" id=\"codex-free\">\n        <h2 class=\"docs-section__title\">免費設定</h2>\n        <h3>選項 1：CLI 指令</h3>\n        <p class=\"docs-section__copy\">這是新增Supericons 的最快方式。執行此指令一次：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-cli\">複製</button>\n          <pre><code id=\"docs-codex-cli\">codex mcp add supericons -- npx -y supericons-mcp</code></pre>\n        </div>\n        <h3>選項 2：設定檔</h3>\n        <p class=\"docs-section__copy\">Codex會從MCP檔案讀取TOML伺服器設定。請選擇符合您工作流程的範圍：</p>\n        <ul>\n          <li><strong>使用者範圍</strong> (適用於所有專案)：<code>~/.codex/config.toml</code></li>\n          <li><strong>專案範圍</strong> （僅限受信任的專案）：<code>.codex/config.toml</code>位於您的專案根目錄</li>\n        </ul>\n        <p class=\"docs-section__copy\">將此區塊加入您選定的設定檔中：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-config\">複製</button>\n          <pre><code id=\"docs-codex-config\">[mcp_servers.supericons]\ncommand = \"npx\"\nargs = [\"-y\", \"supericons-mcp\"]</code></pre>\n        </div>\n        <h3>驗證是否正常運作</h3>\n        <p class=\"docs-section__copy\">在CodexTUI 中輸入：</p>\n        <div class=\"docs-code\">\n          <pre><code>/mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">Supericons應會出現在活躍的MCP伺服器清單中。</p>\n      </section>\n      <section class=\"docs-section\" id=\"codex-premium\">\n        <h2 class=\"docs-section__title\">進階設定</h2>\n        <p class=\"docs-section__copy\">若要使用您擁有的高級圖示，或如Pro和Motion Lab Converter工具，請將您的API金鑰新增至伺服器設定中：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-premium\">複製</button>\n          <pre><code id=\"docs-codex-premium\">[mcp_servers.supericons]\ncommand = \"npx\"\nargs = [\"-y\", \"supericons-mcp\"]\nenv = { SUPERICONS_API_KEY = \"your-key-here\" }</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>如何取得您的金鑰</h3>\n          <p>API前往 supericons.dev 網站，在 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>下生成您的API金鑰。請使用您Supericons帳戶中的API金鑰。您的金鑰將使用帳戶中已有的存取權限。購買的圖示包將解鎖該包中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"codex-troubleshooting\">\n        <h2 class=\"docs-section__title\">疑難排解</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>新增後伺服器未顯示</h3>\n            <p>類型<code>/mcp</code>在CodexTUI 中。Codex CLI與 IDE 擴充套件共用相同的設定檔，因此其中一方的變更將同時套用至兩者。編輯設定檔後，請重新啟動工作階段。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>高級工具無法使用</h3>\n            <p>確認<code>SUPERICONS_API_KEY</code>是否位於<code>env</code>區塊中<code>[mcp_servers.supericons]</code>區塊中。請確認您的帳戶存取權限符合預期需求。購買的套件會解鎖該套件中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。更新設定檔後請重新啟動。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>專案範圍無法運作</h3>\n            <p>Codex僅會從受信任的專案中讀取專案範圍的設定檔。請在專案目錄中執行<code>codex trust</code>於專案目錄中執行以建立信任，然後重新啟動Codex。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-cursor": {
+        "navLabel": "Cursor",
+        "kicker": "MCP 設定",
+        "pageTitle": "Cursor 設定",
+        "summary": "在 Cursor 中連接 Supericons MCP 工具。",
+        "verifiedNote": "已根據 2026 年 4 月 10 日的 Cursor 官方文件核對。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"cursor-free\">\n        <h2 class=\"docs-section__title\">免費設定</h2>\n        <p class=\"docs-section__copy\">Cursor使用JSON設定檔。沒有 CLI 新增指令。</p>\n        <p class=\"docs-section__copy\">將Supericons加入<code>~/.cursor/mcp.json</code>以便在所有專案中使用：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-cursor-config\">複製</button>\n          <pre><code id=\"docs-cursor-config\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">若僅限單一專案存取，請將相同區塊新增至<code>.cursor/mcp.json</code>您的專案根目錄中。</p>\n        <h3>驗證是否正常運作</h3>\n        <p class=\"docs-section__copy\">儲存設定並重新啟動Cursor。開啟「設定」，導航至MCP，並確認<code>supericons</code>該伺服器已出現在清單中。</p>\n      </section>\n      <section class=\"docs-section\" id=\"cursor-premium\">\n        <h2 class=\"docs-section__title\">進階設定</h2>\n        <p class=\"docs-section__copy\">API使用<code>env</code>欄位：</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-cursor-premium\">複製</button>\n          <pre><code id=\"docs-cursor-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>如何取得您的金鑰</h3>\n          <p>API至 supericons.dev 網站的 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>下生成您的API金鑰。請使用您Supericons帳戶中的API金鑰。您的金鑰將使用您帳戶中已有的存取權限。購買的圖示包可解鎖該包中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"cursor-troubleshooting\">\n        <h2 class=\"docs-section__title\">疑難排解</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>新增後未顯示伺服器</h3>\n            <p>Cursor需要有效的JSON設定檔。請檢查JSON 中的語法錯誤。儲存檔案並重新啟動Cursor。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>高級工具無法使用</h3>\n            <p>確認<code>SUPERICONS_API_KEY</code>是否已存在於<code>env</code>區塊中。確認您的帳戶存取權限符合您的使用需求。購買的套件會解鎖該套件中的高級圖示。Motion Lab和Converter需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>首次執行需耗時較久</h3>\n            <p>首次執行<code>npx -y supericons-mcp</code>會從 npm 下載套件。這是一次性的延遲。後續啟動會更快。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-others": {
+        "navLabel": "其他 MCP 用戶端",
+        "kicker": "MCP 設定",
+        "pageTitle": "其他 MCP 用戶端",
+        "summary": "在更多 MCP 用戶端中設定 Supericons。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"others-start\">\n        <h2 class=\"docs-section__title\">從通用設定開始</h2>\n        <p class=\"docs-section__copy\">Supericons作為本機 stdioMCP伺服器運行。請從 <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">通用設定</a> 指南設定基礎伺服器配置與高級API金鑰模式，再將相同數值套用至您的客戶端設定介面。</p>\n        <p class=\"docs-section__copy\">伺服器設定值保持不變。各客戶端之間的差異在於MCP設定的存放位置、客戶端儲存環境變數的方式，以及設定是透過設定檔還是設定介面進行。</p>\n      </section>\n      <section class=\"docs-section\" id=\"others-clients\">\n        <h2 class=\"docs-section__title\">已知客戶端</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">OpenCode</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">開啟官方指南</a>\n            </div>\n            <p>OpenCodeMCP官方文件，內容涵蓋伺服器設定與命令列介面操作流程。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">Cline</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">開啟官方指南</a>\n            </div>\n            <p>關於 Servers UI 和<code>cline_mcp_settings.json</code>設定介面。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Copilot 代理程式</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">開啟官方指南</a>\n            </div>\n            <p>關於儲存庫MCP設定及 Copilot 環境機密資訊的官方 GitHub 文件。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Windsurf</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">開啟官方指南</a>\n            </div>\n            <p>關於設定介面與<code>mcp_config.json</code>設定。</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"others-not-listed\">\n        <h3>若您的客戶端未列於清單中</h3>\n        <p>若您的客戶端支援本機 stdioMCP伺服器，請使用通用設定指南中的伺服器參數，並將設定路徑與語法調整為符合您客戶端的格式。</p>\n      </section>\n    "
+      },
+      "docs-mcp-search-guide": {
+        "navLabel": "搜尋指南",
+        "kicker": "MCP 參考",
+        "pageTitle": "MCP 搜尋指南",
+        "summary": "學習如何用 MCP 更快找到合適圖示。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"mcp-search-intro\">\n        <p class=\"docs-section__copy\">一旦Supericons MCP連線成功，您即可使用日常語言向 AI 代理程式請求圖示。您無需事先知道確切的圖示名稱。只需描述該圖示需支援的物件、動作、情緒、畫面或工作即可。</p>\n        <p class=\"docs-section__copy\">最安全的操作流程很簡單：先詢問選項、選擇其中一項，然後請代理程式取得SVG檔案或將其置入您的程式碼中。</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-tools\">\n        <h2 class=\"docs-section__title\">代理程式應使用哪種工具？</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>需求</th>\n                <th>最佳工具</th>\n                <th>範例提示語</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>根據單字或短語尋找圖示</td><td><code>search_icons</code></td><td>幫我找一個資料庫圖示。若要進行非英文搜尋，請包含<code>locale</code>，例如<code>zh-Hans</code>, <code>ja</code>，或<code>ko</code>.</td></tr>\n              <tr><td>為多個 UI 插槽選擇圖示</td><td><code>recommend_icons</code></td><td>為 AI 儀表板推薦圖示：模型、提示、資料集、評估、部署及監控。若您的參數欄位非英文，請包含<code>locale</code>.</td></tr>\n              <tr><td>取得一個已知圖示</td><td><code>get_icon</code></td><td>從SVG取得<code>database</code>。</td></tr>\n              <tr><td>查看可用圖庫</td><td><code>list_libraries</code></td><td>列出Supericons圖示庫。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-prompts\">\n        <h2 class=\"docs-section__title\">值得嘗試的優質提示詞</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>依物件搜尋</h3>\n            <ul>\n              <li>幫我找一個資料庫圖示。</li>\n              <li>從Tabler 尋找日曆圖示。</li>\n              <li>搜尋用於帳戶安全的盾牌圖示。</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>按動作搜尋</h3>\n            <ul>\n              <li>尋找上傳至雲端的圖示。</li>\n              <li>在Lucide中搜尋使用者個人檔案圖示。</li>\n              <li>尋找代表封鎖使用者或拒絕存取的圖示。</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>按含義搜尋</h3>\n            <ul>\n              <li>尋找能代表美好事物的友善圖示。</li>\n              <li>尋找能代表難聞氣味的圖示。</li>\n              <li>尋找代表某物損壞或有風險的圖示。</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>依 UI 位置搜尋</h3>\n            <ul>\n              <li>為行動裝置底部導航列推薦圖示：首頁、建立、通知和個人檔案。</li>\n              <li>為 AI 儀表板推薦圖示：模型、提示、資料集、評估、部署和監控。</li>\n              <li>為管理員側邊欄推薦圖示：使用者、帳單、資料庫、設定和報告。</li>\n            </ul>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-output\">\n        <h2 class=\"docs-section__title\">指定所需的輸出格式</h2>\n        <p class=\"docs-section__copy\">當代理程式找到合適的選項後，請告知它應回傳的內容。您可以要求提供候選清單、圖示 ID、SVG 檔案，或是可直接用於程式碼的標記。</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-mcp-search-output-prompts\">複製</button>\n          <pre><code id=\"docs-mcp-search-output-prompts\">Show me the top 5 choices with icon id, library, and a short reason.\n\nGet the SVG for the best result.\n\nUse the best Lucide result and add it to this button.\n\nGive me three alternatives if the first one feels too generic.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-locales\">\n        <h2 class=\"docs-section__title\">支援多語言搜尋</h2>\n        <p class=\"docs-section__copy\">進行多語言搜尋時，請將工具名稱和圖示 ID 保留為英文，但傳入<code>locale</code>。Supericons會在對圖標進行排序前，將核准的本地化術語轉換為穩定的英文概念。</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-mcp-search-locale-prompts\">複製</button>\n          <pre><code id=\"docs-mcp-search-locale-prompts\">search_icons({ query: \"设置\", locale: \"zh-Hans\" })\nsearch_icons({ query: \"搜尋\", locale: \"zh-Hant\" })\nsearch_icons({ query: \"検索\", locale: \"ja\" })\nsearch_icons({ query: \"설정\", locale: \"ko\" })\nsearch_icons({ query: \"seguridad\", locale: \"es\" })\nsearch_icons({ query: \"Sicherheit\", locale: \"de\" })\nsearch_icons({ query: \"الأمان\", locale: \"ar\" })</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">支援的地區設定值為<code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>，以及<code>th</code>.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"mcp-search-private-note\">\n        <h3>哪些資訊會保持私密</h3>\n        <p>Supericons搜尋功能可識別名稱、相關詞彙及常見圖示含義。公開文件說明了使用方法，但不會揭露私有服務金鑰、私有評分細節或內部維護工作流程。</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-next\">\n        <h2 class=\"docs-section__title\">相關參考</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-icons\" data-docs-view=\"docs-mcp-icons\">圖示工具參考</a>\n          <a href=\"/?view=docs-mcp-tools\" data-docs-view=\"docs-mcp-tools\">所有MCP工具</a>\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">MCP設定</a>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-tools": {
+        "navLabel": "全部工具",
+        "kicker": "MCP 參考",
+        "pageTitle": "MCP 工具參考",
+        "summary": "查看 Supericons MCP 工具以及每個工具的用途。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"mcp-overview-intro\">\n        <p class=\"docs-section__copy\">Supericons MCP伺服器提供 13 種工具，您的程式代理程式可直接呼叫。其中 3 種工具為免費版本，無需帳戶即可使用。高級圖示的存取權限取決於您的帳戶現有內容：您已購買的圖示包，以及 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>，或兩者皆有。Motion Lab和Converter工具需具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> 以及一個有效的<code>SUPERICONS_API_KEY</code>.</p>\n        <p class=\"docs-section__copy\">您的代理程式在首次連線至伺服器時，即可偵測到可用的工具。您亦可透過名稱明確呼叫工具。</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-overview-tools\">\n        <h2 class=\"docs-section__title\">所有工具</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>工具</th>\n                <th>功能</th>\n                <th>存取</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>search_icons</code></td><td>搜尋 10 個圖庫中超過 20,000 個免費圖示</td><td>免費</td></tr>\n              <tr><td><code>get_icon</code></td><td>透過 ID 和圖庫檢索特定圖示</td><td>免費</td></tr>\n              <tr><td><code>list_libraries</code></td><td>列出所有可用的圖示庫</td><td>免費</td></tr>\n              <tr><td><code>list_motion_presets</code></td><td>列出所有Motion Lab動畫預設</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>get_motion_recipe</code></td><td>以淺白語言獲取任何預設的說明</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>animate_icon</code></td><td>一次調用即可獲取Motion Lab CSS與動畫SVG</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>export_motion_css</code></td><td>僅取得圖示的Motion Lab CSS檔案</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>export_animated_svg</code></td><td>僅取得獨立的動畫SVG</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>inspect_converter_options</code></td><td>清單Converter設定與有效值</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>inspect_converter_input</code></td><td>檢查PNG檔案並建議安全的初始設定</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>convert_svg_to_png</code></td><td>將SVG渲染為任意解析度的PNG</td><td>Supericons Pro方案</td></tr>\n              <tr><td><code>convert_png_to_svg</code></td><td>將PNG圖像追蹤為SVG</td><td>Supericons Pro方案</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"mcp-overview-note\">\n        <h3>高級圖庫亦需具備存取權限</h3>\n        <p>來自<code>get_icon</code>以及<code>search_icons</code>需使用已擁有該套件的帳戶所提供的API金鑰，或使用具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-overview-links\">\n        <h2 class=\"docs-section__title\">詳細參考</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">搜尋指南</a>\n          <a href=\"/?view=docs-mcp-icons\" data-docs-view=\"docs-mcp-icons\">圖示工具</a>\n          <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab工具</a>\n          <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter工具</a>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-icons": {
+        "navLabel": "圖示工具",
+        "kicker": "MCP 參考",
+        "pageTitle": "MCP 圖示工具",
+        "summary": "透過 MCP 搜尋並取得圖示。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"icon-tools-intro\">\n        <p class=\"docs-section__copy\">這 3 種工具均為免費，且標準的 20,000 多個圖示庫無需API金鑰。若要使用這些工具中的高級動態圖示集合，則需使用 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> ，或已擁有該套件的帳戶。</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-search\">\n        <h2 class=\"docs-section__title\"><code>search_icons</code></h2>\n        <p class=\"docs-section__copy\">利用 AI 驅動的同義詞擴展功能，在 10 個圖庫中搜尋 20,000 多個免費圖示。系統將回傳符合條件的圖示並附帶SVG程式碼。若您使用已擁有這些套件的帳戶所提供的API金鑰，或使用具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>query</code></td><td>字串</td><td>是</td><td>-</td><td>自然語言搜尋詞。範例：「心」、「登入」、「下載箭頭」</td></tr>\n              <tr><td><code>library</code></td><td>字串</td><td>否</td><td>-</td><td>依庫館篩選。有效值：<code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>heroicons</code>, <code>bootstrap</code>, <code>iconoir</code>, <code>ionicons</code>, <code>material</code>, <code>simpleicons</code>, <code>mingcute</code>，或一個高級套件名稱</td></tr>\n              <tr><td><code>limit</code></td><td>整數</td><td>否</td><td>10</td><td>返回結果的最大數量。範圍：1 至 50</td></tr>\n              <tr><td><code>locale</code></td><td>字串</td><td>否</td><td>-</td><td>用於多語言搜尋詞彙。支援的值：<code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, <code>th</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">包含SVG程式碼、圖示 ID、函式庫名稱及元資料的匹配圖示。若未找到結果，則回傳一則表示無匹配項的訊息。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> 免費。</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-get\">\n        <h2 class=\"docs-section__title\"><code>get_icon</code></h2>\n        <p class=\"docs-section__copy\">根據 ID 和圖庫名稱檢索特定圖示。回傳完整的SVG程式碼及元資料。高級圖示需使用已擁有該圖示包的帳戶所發行的API金鑰，或使用具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>id</code></td><td>字串</td><td>是</td><td>圖示 ID。範例：「heart」、「arrow-right」、「settings」</td></tr>\n              <tr><td><code>library</code></td><td>字串</td><td>是</td><td>圖庫名稱。範例：\"lucide\"、\"tabler\"、\"phosphor\" 或付費套件名稱</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">完整的SVG程式碼以及圖示元資料（ID、名稱、圖庫、付費狀態）。對於付費動畫圖示，還會返回CSS動畫區塊及使用範例 HTML 片段。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> 標準圖示免費。高級動畫圖示需訂閱 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> ，或已擁有該套件的帳戶。</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-libraries\">\n        <h2 class=\"docs-section__title\"><code>list_libraries</code></h2>\n        <p class=\"docs-section__copy\">列出所有可用圖示庫，包含名稱、圖示數量及描述。付費圖示庫會特別標示。</p>\n        <h3>參數</h3>\n        <p class=\"docs-section__copy\">無。</p>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個庫物件陣列，每個物件包含：<code>id</code>, <code>name</code>, <code>count</code>, <code>description</code>, <code>premium</code>(布林值)，以及<code>accessible</code>(表示您的當前API金鑰是否可存取該庫)。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> 免費。</p>\n      </section>\n    "
+      },
+      "docs-mcp-motion": {
+        "navLabel": "Motion Lab 工具",
+        "kicker": "MCP 參考",
+        "pageTitle": "MCP Motion Lab 工具",
+        "summary": "透過 MCP 為圖示加入動畫。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-tools-intro\">\n        <p class=\"docs-section__copy\">這五項工具將Motion Lab的功能開放給您的程式代理程式使用。這五項工具均需 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> 加上一個有效的<code>SUPERICONS_API_KEY</code>.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-tools-note\">\n        <h3>不確定該使用哪個預設值？</h3>\n        <p>Call<code>list_motion_presets</code>首先查看Motion Lab預設值的 ID、標籤、群組、簡短說明及支援的觸發器，然後<code>get_motion_recipe</code>在確定使用前，先了解特定預設值的運作方式。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-list\">\n        <h2 class=\"docs-section__title\"><code>list_motion_presets</code></h2>\n        <p class=\"docs-section__copy\">列出目前透過Motion Lab Supericons 提供的完整MCP預設集。此清單與瀏覽器版Motion Lab體驗中可用的預設群組完全一致。</p>\n        <h3>參數</h3>\n        <p class=\"docs-section__copy\">無。</p>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">包含 80 個預設物件的陣列。每個物件包含<code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>，以及<code>supported_triggers</code>.</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-recipe\">\n        <h2 class=\"docs-section__title\"><code>get_motion_recipe</code></h2>\n        <p class=\"docs-section__copy\">返回關於預設值運作方式的人類可讀描述，包含觸發類型、時序、緩動效果及預期用途。請在呼叫<code>animate_icon</code>或匯出工具之前，請先參閱此說明以了解預期輸出。</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設值</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>preset</code></td><td>字串</td><td>是</td><td>-</td><td>預設值 ID。範例：「pulse」、「bounce」、「spin」、「trace」、「typing」</td></tr>\n              <tr><td><code>trigger</code></td><td>字串</td><td>否</td><td><code>loop</code></td><td>動畫的起始方式。有效值：<code>loop</code>, <code>hover</code>, <code>click</code></td></tr>\n              <tr><td><code>duration_ms</code></td><td>整數</td><td>否</td><td>500</td><td>動畫持續時間（以毫秒為單位）。範圍：100 至 4000</td></tr>\n              <tr><td><code>intensity_percent</code></td><td>整數</td><td>否</td><td>100</td><td>調整動畫效果的強度。範圍：25 至 200</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個包含<code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>，以及用途<code>notes</code>.</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-animate\">\n        <h2 class=\"docs-section__title\"><code>animate_icon</code></h2>\n        <p class=\"docs-section__copy\">透過單次呼叫即可為單一圖示同時產生Motion Lab CSS及獨立的動畫SVG檔案。當您希望同時取得這兩種輸出結果，且無需進行兩次獨立呼叫時，請使用此功能。</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>id</code></td><td>字串</td><td>是</td><td>-</td><td>圖示 ID。範例：「heart」、「scan-virus」、「fingerprint-scan」</td></tr>\n              <tr><td><code>library</code></td><td>字串</td><td>是</td><td>-</td><td>圖庫或高級套件名稱</td></tr>\n              <tr><td><code>preset</code></td><td>字串</td><td>是</td><td>-</td><td>動作預設值 ID</td></tr>\n              <tr><td><code>trigger</code></td><td>字串</td><td>否</td><td><code>loop</code></td><td><code>loop</code>, <code>hover</code>，或<code>click</code></td></tr>\n              <tr><td><code>duration_ms</code></td><td>整數</td><td>否</td><td>500</td><td>100 至 4000</td></tr>\n              <tr><td><code>intensity_percent</code></td><td>整數</td><td>否</td><td>100</td><td>25 至 200</td></tr>\n              <tr><td><code>color</code></td><td>字串</td><td>否</td><td>-</td><td>針對繼承自<code>currentColor</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">包含：<code>id</code>, <code>library</code>, <code>recipe</code>(預設樣式檔)，<code>css</code>(Motion Lab CSS)，<code>animated_svg</code>(內嵌動畫的獨立SVG)，以及<code>selector_mode</code>。佔位符CSS回應亦包含<code>selector_token</code>.</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-css\">\n        <h2 class=\"docs-section__title\"><code>export_motion_css</code></h2>\n        <p class=\"docs-section__copy\">僅為圖示產生Motion Lab CSS。當您在標記中內嵌SVG且希望將動畫作為獨立樣式表管理時，請使用此選項。</p>\n        <h3>參數</h3>\n        <p class=\"docs-section__copy\">與<code>animate_icon</code>.</p>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">具有以下內容的物件：<code>id</code>, <code>library</code>, <code>preset</code>(預設設定檔)，<code>css</code>（包含<code>@keyframes</code>及動畫規則），以及<code>selector_mode</code>。佔位符回應亦包含<code>selector_token</code>.</p>\n        <h3>CSS選擇器的目標</h3>\n        <p class=\"docs-section__copy\">託管Motion Lab CSS CSS路徑預設會使用代碼片段<code>{{ICON_SELECTOR}}</code>。在套用樣式表前，請將該標記替換為您的內嵌SVG選擇器。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-svg\">\n        <h2 class=\"docs-section__title\"><code>export_animated_svg</code></h2>\n        <p class=\"docs-section__copy\">產生一個自包含的SVG將動畫直接嵌入檔案中。無需外部CSS，即可將其放入任何 HTML 頁面。</p>\n        <h3>參數</h3>\n        <p class=\"docs-section__copy\">與<code>animate_icon</code>.</p>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個具有：<code>id</code>, <code>library</code>, <code>preset</code>(預設設定檔)，以及<code>animated_svg</code>(包含<code>&lt;style&gt;</code>嵌入其中的區塊）。</p>\n        <h3>何時使用此功能與<code>export_motion_css</code></h3>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>您希望...</th>\n                <th>使用</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>將SVG內嵌於您自己的CSS處理流程中</td><td><code>export_motion_css</code></td></tr>\n              <tr><td>在任何位置放置一個可攜式且自包含的動畫檔案</td><td><code>export_animated_svg</code></td></tr>\n              <tr><td>希望透過單次呼叫同時取得兩種輸出</td><td><code>animate_icon</code></td></tr>\n              <tr><td>在使用前了解預設值</td><td><code>get_motion_recipe</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\"><strong>存取：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n    "
+      },
+      "docs-mcp-converter": {
+        "navLabel": "轉換器工具",
+        "kicker": "MCP 參考",
+        "pageTitle": "MCP 轉換器工具",
+        "summary": "在 PNG 和 SVG 工作流程之間轉換圖示資源。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-tools-intro\">\n        <p class=\"docs-section__copy\">這四種工具可讓您的程式碼代理程式使用Converter功能。這四種工具均需 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。最安全的操作流程是：先檢視PNG檔案，接著查閱選項指引，最後採用合理的初始設定進行轉換。</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-inspect\">\n        <h2 class=\"docs-section__title\"><code>inspect_converter_options</code></h2>\n        <p class=\"docs-section__copy\">列出當前Converter MCP選項、設定指引、工作流程提示及建議的起始組合。當您需要有效值及其背後邏輯時，請參閱此處。</p>\n        <h3>參數</h3>\n        <p class=\"docs-section__copy\">無。</p>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個物件，用以描述所有可用的轉換器設定、有效值、預設值、限制、工作流程順序、設定指引以及預設組合。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-inspect-input\">\n        <h2 class=\"docs-section__title\"><code>inspect_converter_input</code></h2>\n        <p class=\"docs-section__copy\">在追蹤前檢查PNG檔案。回傳檔案標頭中的結構提示、可能的風險，以及建議的起始設定<code>convert_png_to_svg</code>。當代理程式需要一個合理的首次處理，而非憑空猜測時，請使用此選項<code>traceClass</code>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設值</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>imageBase64</code></td><td>字串</td><td>是</td><td>-</td><td>以 base64 文字或資料 URL 格式呈現的PNG</td></tr>\n              <tr><td><code>mimeType</code></td><td>字串</td><td>否</td><td><code>image/png</code></td><td>若未提供資料 URL，則可選用 MIME 類型覆寫。目前僅<code>image/png</code>目前僅支援。</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個包含輸入元數據、結構評估、可能的追蹤風險，以及下一次轉換器呼叫建議起始設定的物件。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-svg-png\">\n        <h2 class=\"docs-section__title\"><code>convert_svg_to_png</code></h2>\n        <p class=\"docs-section__copy\">將SVG字串渲染為任意輸出寬度的PNG檔案。</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>svg</code></td><td>字串</td><td>是</td><td>-</td><td>要渲染的原始SVG字串</td></tr>\n              <tr><td><code>targetWidth</code></td><td>整數</td><td>否</td><td>512</td><td>輸出寬度（單位：像素）。範圍：16 至 2048</td></tr>\n              <tr><td><code>background</code></td><td>字串</td><td>否</td><td><code>transparent</code></td><td>背景顏色。請使用<code>transparent</code>或十六進位數值（例如<code>#ffffff</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個包含<code>pngBase64</code>, <code>pngDataUrl</code>, <code>metrics</code>(已用時間、輸出大小、寬度和高度)，以及<code>request</code>（解析後的寬度與背景設定）。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-png-svg\">\n        <h2 class=\"docs-section__title\"><code>convert_png_to_svg</code></h2>\n        <p class=\"docs-section__copy\">將點陣式PNG圖像追蹤為SVG。輸出品質高度取決於原始圖像及您選擇的設定。簡單、單色調的圖像追蹤效果良好；複雜的照片及含有大量漸層的圖像則效果不佳。</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>類型</th>\n                <th>必填</th>\n                <th>預設</th>\n                <th>備註</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>imageBase64</code></td><td>字串</td><td>是</td><td>-</td><td>以 base64 文字或資料 URL 格式呈現的PNG</td></tr>\n              <tr><td><code>colorMode</code></td><td>字串</td><td>否</td><td><code>color</code></td><td><code>color</code>或<code>mono</code></td></tr>\n              <tr><td><code>qualityMode</code></td><td>字串</td><td>否</td><td><code>exact</code></td><td><code>exact</code>或<code>compact</code></td></tr>\n              <tr><td><code>traceClass</code></td><td>字串</td><td>否</td><td><code>general-color</code></td><td>參見<code>traceClass</code>下方參考</td></tr>\n              <tr><td><code>uiMode</code></td><td>字串</td><td>否</td><td><code>logo</code></td><td><code>logo</code>或<code>icon</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>回傳</h3>\n        <p class=\"docs-section__copy\">一個包含<code>svg</code>, <code>warnings</code>, <code>metrics</code>（經過時間、輸出大小、路徑數、形狀數及視框），以及<code>request</code>(用於追蹤的已解析轉換器設定)。</p>\n        <p class=\"docs-section__copy\"><strong>存取權限：</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-trace-class\">\n        <h2 class=\"docs-section__title\"><code>traceClass</code>參考</h2>\n        <p class=\"docs-section__copy\">「<code>traceClass</code>參數用於選擇針對您的原始影像類型所調校的追蹤設定檔。若選擇錯誤的類別，將會產生不精確或過大的輸出。</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>traceClass</code>值</th>\n                <th>最適用於</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>general-color</code></td><td>多數全彩影像。若不確定時，此為安全的預設選項。</td></tr>\n              <tr><td><code>flat-logo-color</code></td><td>具有純色填充且無漸層的標誌</td></tr>\n              <tr><td><code>tile-icon-color</code></td><td>小型重複拼貼圖示</td></tr>\n              <tr><td><code>tiny-line-icon</code></td><td>具有細微線條細節的極小圖示</td></tr>\n              <tr><td><code>single-color-mark</code></td><td>單色標誌、文字標誌或簡單圖形標誌</td></tr>\n              <tr><td><code>mono-mask</code></td><td>高對比度的黑白圖像</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-quality-mode\">\n        <h2 class=\"docs-section__title\"><code>qualityMode</code>參考</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>qualityMode</code>值</th>\n                <th>行為</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>exact</code></td><td>保留最大程度的路徑細節。輸出檔案較大。建議用於大多數情況。</td></tr>\n              <tr><td><code>compact</code></td><td>簡化路徑以減小檔案大小。部分細微細節將會遺失。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-ui-mode\">\n        <h2 class=\"docs-section__title\"><code>uiMode</code>參考</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>uiMode</code>值</th>\n                <th>行為</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>logo</code></td><td>針對包含自由形狀與曲線的標誌風格圖稿優化輸出</td></tr>\n              <tr><td><code>icon</code></td><td>針對圖示風格的圖稿進行輸出優化，著重幾何精準度與俐落邊緣</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-combos\">\n        <h2 class=\"docs-section__title\">建議組合</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>原始圖像</th>\n                <th>建議設定</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>帶有漸變的全彩標誌</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>簡約平面標誌</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>單色文字標誌</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>小型彩色圖示或徽章</td><td><code>tile-icon-color</code>, <code>exact</code>, <code>icon</code></td></tr>\n              <tr><td>小型 UI 圖示</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code></td></tr>\n              <tr><td>高對比度遮罩或剪影</td><td><code>mono-mask</code>, <code>exact</code>, <code>logo</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab": {
+        "navLabel": "Motion Lab",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab",
+        "summary": "預覽並匯出圖示動畫。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-lab-intro\">\n        <p class=\"docs-section__copy\">選擇預設樣式，設定觸發條件、時序與強度，接著匯出為可直接使用的CSS或獨立的動畫SVG 檔案。兩種格式皆無需 JavaScript 即可直接套用。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-access\">\n        <h2 class=\"docs-section__title\">使用Motion Lab的兩種方式</h2>\n        <ul>\n          <li><strong>在瀏覽器中</strong>：直接開啟Motion Lab，並透過任意圖示瀏覽預設值。即時預覽動畫。若要匯出CSS或SVG需具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</li>\n          <li><strong>透過MCP</strong>：您的代理程式會直接呼叫Motion Lab工具。所有Motion Lab工具均需 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> ，並需具備來自您的API帳戶的有效Supericons金鑰。請參閱 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP工具參考</a> 以了解確切參數。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-mcp-mental-model\">\n        <h2 class=\"docs-section__title\">Motion Lab透過MCP的運作方式</h2>\n        <p class=\"docs-section__copy\">Motion Lab透過MCP運作時，設計上分為兩個層級。本地進程負責預設值偵測與請求協調。高級預設配置檔、CSS渲染及動畫SVG渲染，則透過短效期會話憑證，由託管式的Supericons函式處理。本地套件保持輕量；高級渲染則由託管路徑負責。</p>\n        <p class=\"docs-section__copy\">若需了解實際的代理程式工作流程，請開啟 <a href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">MCP工作流程</a>。若需精確的工具參數，請參閱 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP工具</a> 作為API參考。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-output\">\n        <h2 class=\"docs-section__title\">Motion Lab的輸出內容</h2>\n        <p class=\"docs-section__copy\">Motion Lab產生兩種輸出類型：</p>\n        <p class=\"docs-section__copy\"><strong>Motion Lab CSS</strong>：包含<code>@keyframes</code>及動畫規則的樣式表。請將SVG直接嵌入標記中，並將CSS另行連結。在回傳的 CSS 中，將<code>{{ICON_SELECTOR}}</code>。</p>\n        <p class=\"docs-section__copy\"><strong>動畫SVG</strong>: 一個完整的SVG，其中動畫已嵌入<code>&lt;style&gt;</code>區塊中。無需外部樣式表。可將其用作<code>&lt;img&gt;</code>參考，或直接內嵌貼入。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-next\">\n        <h2 class=\"docs-section__title\">下一步</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>預設樣式</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-presets\" data-docs-view=\"docs-motion-lab-presets\">開啟參考指南</a>\n            </div>\n            <p>包含說明與分類的可用預設值完整清單。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>觸發類型</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-triggers\" data-docs-view=\"docs-motion-lab-triggers\">開啟指南</a>\n            </div>\n            <p>在匯出前，請先了解迴圈、懸停及點擊的行為。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>匯出</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">開啟指南</a>\n            </div>\n            <p>如何在您的專案中使用CSS和動畫SVG輸出。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>MCP工作流程</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">開啟指南</a>\n            </div>\n            <p>選擇預設值並安全匯出的實用人機協作流程。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>客戶端設定</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-client-setup\" data-docs-view=\"docs-motion-lab-client-setup\">開啟設定</a>\n            </div>\n            <p>若尚未連接客戶端，請由此開始。新增您的API金鑰，然後執行簡短的驗證程序，以確認託管的高階路徑已上線。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>使用案例</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-use-cases\" data-docs-view=\"docs-motion-lab-use-cases\">開啟範例</a>\n            </div>\n            <p>針對懸停狀態、安全流程、慶祝效果、環境動態及限制動作的具體指引。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-presets": {
+        "navLabel": "預設",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 預設",
+        "summary": "了解可用於圖示的動畫預設。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-presets-intro\">\n        <p class=\"docs-section__copy\">每行皆包含預設 ID，可用作<code>preset</code>參數。在執行匯出前，請利用「群組」欄位依據用途篩選候選項目。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-table\">\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>ID</th>\n                <th>標籤</th>\n                <th>類別</th>\n                <th>描述</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>bounce</code></td><td>彈跳</td><td>動態</td><td>讓圖示快速彈起。</td></tr><tr><td><code>float</code></td><td>懸浮</td><td>動態</td><td>讓圖示呈現微妙的懸浮漂移效果。</td></tr><tr><td><code>shake</code></td><td>搖動</td><td>動態</td><td>添加快速左右晃動的警示動作。</td></tr><tr><td><code>spin</code></td><td>旋轉</td><td>動態</td><td>讓整個圖示繞其中心旋轉。</td></tr><tr><td><code>pulse</code></td><td>脈動</td><td>動態</td><td>以柔和的方式放大與縮小，營造出溫和的強調效果。</td></tr><tr><td><code>pop</code></td><td>彈出</td><td>動態</td><td>彈跳上移，伴隨富有彈性的過衝。</td></tr><tr><td><code>heartbeat</code></td><td>心跳</td><td>動作</td><td>心跳Motion Lab預設。</td></tr><tr><td><code>rubberband</code></td><td>橡皮筋</td><td>動作</td><td>橡皮筋Motion Lab預設。</td></tr><tr><td><code>jelly</code></td><td>果凍</td><td>動態</td><td>果凍Motion Lab預設。</td></tr><tr><td><code>ring</code></td><td>環</td><td>環</td><td>環形Motion Lab預設。</td></tr><tr><td><code>wobble</code></td><td>搖晃</td><td>運動</td><td>WobbleMotion Lab預設。</td></tr><tr><td><code>magnetic</code></td><td>磁性</td><td>磁性</td><td>MagneticMotion Lab預設。</td></tr><tr><td><code>recoil</code></td><td>後座力</td><td>運動</td><td>後座力Motion Lab預設。</td></tr><tr><td><code>pendulum</code></td><td>Pendulum</td><td>運動</td><td>擺動Motion Lab預設。</td></tr><tr><td><code>whiplash</code></td><td>鞭打</td><td>運動</td><td>鞭打Motion Lab預設。</td></tr><tr><td><code>tremor</code></td><td>顫動</td><td>運動</td><td>顫動Motion Lab預設。</td></tr><tr><td><code>neonglow</code></td><td>霓虹光暈</td><td>動態</td><td>霓虹光暈Motion Lab預設。</td></tr><tr><td><code>breathe</code></td><td>呼吸</td><td>動態</td><td>呼吸Motion Lab預設。</td></tr><tr><td><code>metronome</code></td><td>節拍器</td><td>動作</td><td>節拍器Motion Lab預設。</td></tr><tr><td><code>orbit</code></td><td>Orbit</td><td>動作</td><td>軌道Motion Lab預設。</td></tr><tr><td><code>flicker</code></td><td>閃爍</td><td>運動</td><td>閃爍Motion Lab預設。</td></tr><tr><td><code>squish</code></td><td>擠壓</td><td>運動</td><td>SquishMotion Lab預設。</td></tr><tr><td><code>glide</code></td><td>滑行</td><td>動作</td><td>滑動Motion Lab預設。</td></tr><tr><td><code>radar</code></td><td>雷達</td><td>動作</td><td>雷達Motion Lab預設。</td></tr><tr><td><code>beacon</code></td><td>信標</td><td>動作</td><td>信標Motion Lab預設。</td></tr><tr><td><code>magneticIn</code></td><td>磁性輸入</td><td>入口</td><td>以磁吸效果將圖示向內拉入。</td></tr><tr><td><code>fadeIn</code></td><td>淡入</td><td>進場</td><td>淡入Motion Lab預設。</td></tr><tr><td><code>scaleUp</code></td><td>放大</td><td>入口</td><td>放大Motion Lab預設。</td></tr><tr><td><code>slideUp</code></td><td>向上滑動</td><td>入口</td><td>向上滑動Motion Lab預設。</td></tr><tr><td><code>springLand</code></td><td>彈簧樂園</td><td>入口</td><td>Spring LandMotion Lab預設。</td></tr><tr><td><code>slingshot</code></td><td>彈弓</td><td>入口</td><td>彈弓Motion Lab預設。</td></tr><tr><td><code>glitchOn</code></td><td>Glitch On</td><td>入口</td><td>Glitch OnMotion Lab預設。</td></tr><tr><td><code>unfold</code></td><td>展開</td><td>入口</td><td>UnfoldMotion Lab預設。</td></tr><tr><td><code>warpIn</code></td><td>Warp In</td><td>入口</td><td>Warp InMotion Lab預設。</td></tr><tr><td><code>slideRight</code></td><td>向右滑動</td><td>入口</td><td>向右滑動Motion Lab預設。</td></tr><tr><td><code>slideDown</code></td><td>向下滑動</td><td>入口</td><td>向下滑動Motion Lab預設。</td></tr><tr><td><code>flipIn</code></td><td>翻入</td><td>進入效果</td><td>翻入Motion Lab預設。</td></tr><tr><td><code>telegram</code></td><td>Telegram</td><td>進入效果</td><td>TelegramMotion Lab預設。</td></tr><tr><td><code>bloom</code></td><td>Bloom</td><td>入口</td><td>BloomMotion Lab預設。</td></tr><tr><td><code>shockwave</code></td><td>衝擊波</td><td>入口</td><td>ShockwaveMotion Lab預設。</td></tr><tr><td><code>fadeOut</code></td><td>淡出</td><td>淡出</td><td>淡出Motion Lab預設。</td></tr><tr><td><code>scaleDown</code></td><td>縮放</td><td>退出</td><td>縮放Motion Lab預設。</td></tr><tr><td><code>slideOut</code></td><td>滑出</td><td>退出</td><td>滑出Motion Lab預設。</td></tr><tr><td><code>vortex</code></td><td>漩渦</td><td>退出</td><td>漩渦Motion Lab預設。</td></tr><tr><td><code>glitchOff</code></td><td>故障關閉</td><td>出口</td><td>關閉故障Motion Lab預設。</td></tr><tr><td><code>dissolve</code></td><td>溶解</td><td>退出</td><td>解除「Motion Lab」預設。</td></tr><tr><td><code>popOut</code></td><td>彈出</td><td>退出</td><td>彈出Motion Lab預設。</td></tr><tr><td><code>slideLeft</code></td><td>向左滑動</td><td>退出</td><td>向左滑動Motion Lab預設。</td></tr><tr><td><code>sinkDown</code></td><td>下沉</td><td>退出</td><td>下沉Motion Lab預設。</td></tr><tr><td><code>flipOut</code></td><td>翻出</td><td>出口</td><td>翻出Motion Lab預設。</td></tr><tr><td><code>implode</code></td><td>內爆</td><td>Exits</td><td>ImplodeMotion Lab預設。</td></tr><tr><td><code>puffOut</code></td><td>膨脹</td><td>出口</td><td>膨脹Motion Lab預設。</td></tr><tr><td><code>launchOut</code></td><td>飛出</td><td>退出</td><td>「Launch Out」Motion Lab預設。</td></tr><tr><td><code>shrinkSpin</code></td><td>收縮旋轉</td><td>退出</td><td>「Shrink Spin」Motion Lab預設。</td></tr><tr><td><code>blinkOut</code></td><td>閃爍淡出</td><td>退出</td><td>閃爍消失Motion Lab預設。</td></tr><tr><td><code>sparkle</code></td><td>閃爍</td><td>特殊</td><td>添加一個在週期中段達到高峰的發光爆發。</td></tr><tr><td><code>swing</code></td><td>Swing</td><td>特殊</td><td>SwingMotion Lab預設。</td></tr><tr><td><code>jitter</code></td><td>抖動</td><td>特殊</td><td>抖動Motion Lab預設。</td></tr><tr><td><code>chase</code></td><td>追逐</td><td>特殊追逐</td><td>追逐Motion Lab預設。</td></tr><tr><td><code>stream</code></td><td>流</td><td>特殊</td><td>流式傳輸Motion Lab預設。</td></tr><tr><td><code>trace</code></td><td>追蹤</td><td>特殊</td><td>以方向性軌跡顯示圖示。</td></tr><tr><td><code>flow</code></td><td>流動</td><td>特殊</td><td>FlowMotion Lab預設。</td></tr><tr><td><code>converge</code></td><td>匯聚</td><td>特殊</td><td>匯聚Motion Lab預設。</td></tr><tr><td><code>cube</code></td><td>立方體</td><td>特殊</td><td>立方體Motion Lab預設。</td></tr><tr><td><code>typing</code></td><td>打字</td><td>特殊</td><td>以階梯式淡入效果呈現圖示。</td></tr><tr><td><code>reason</code></td><td>Reason</td><td>特殊</td><td>理由MotionMotion Lab預設。</td></tr><tr><td><code>sweep</code></td><td>掃描</td><td>特殊</td><td>以發光邊緣掃過圖示。</td></tr><tr><td><code>scatter</code></td><td>散射</td><td>特殊</td><td>「散射」Motion Lab預設。</td></tr><tr><td><code>crest</code></td><td>波峰</td><td>特殊</td><td>CrestMotion Lab預設。</td></tr><tr><td><code>tap</code></td><td>輕觸</td><td>特殊</td><td>伴隨著快速動作的光暈向前推進。</td></tr><tr><td><code>shuffle</code></td><td>洗牌</td><td>特殊</td><td>「ShuffleMotion Lab」預設。</td></tr><tr><td><code>infinity</code></td><td>Infinity</td><td>特殊</td><td>InfinityMotion Lab預設。</td></tr><tr><td><code>spatial</code></td><td>Spatial</td><td>特殊</td><td>空間Motion Lab預設。</td></tr><tr><td><code>pageFlip</code></td><td>翻頁</td><td>特殊</td><td>翻頁Motion Lab預設。</td></tr><tr><td><code>bookOpen</code></td><td>書本打開</td><td>特殊</td><td>書本打開Motion Lab預設。</td></tr><tr><td><code>domino</code></td><td>多米諾骨牌</td><td>特殊</td><td>DominoMotion Lab預設。</td></tr><tr><td><code>supernova</code></td><td>Supernova</td><td>特別版</td><td>超新星Motion Lab預設。</td></tr><tr><td><code>blackHole</code></td><td>Black Hole</td><td>特殊</td><td>黑洞Motion Lab預設。</td></tr><tr><td><code>fingerprint</code></td><td>指紋</td><td>特殊</td><td>指紋Motion Lab預設。</td></tr><tr><td><code>badgeTap</code></td><td>徽章點擊</td><td>特殊</td><td>徽章輕觸Motion Lab預設。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-ranges\">\n        <h2 class=\"docs-section__title\">參數範圍</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>參數</th>\n                <th>最小值</th>\n                <th>預設</th>\n                <th>最大值</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>持續時間</td><td>100 毫秒</td><td>500毫秒</td><td>4000毫秒</td></tr>\n              <tr><td>強度</td><td>25%</td><td>100%</td><td>200%</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-groups\">\n        <h2 class=\"docs-section__title\">預設組</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>群組</th>\n                <th>預設數量</th>\n                <th>何時使用</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>動態</td><td>25</td><td>日常動態預設，涵蓋焦點、節奏、脈動及環境動態。當需要讓圖示呈現生動感，卻又不想顯得像是完整的場景轉換時，請使用這些預設。</td></tr><tr><td>登場</td><td>15</td><td>適用於圖示以明確起始方式出現的登場預設。當內容進入畫面、開啟或新近可用時，請使用這些預設。</td></tr><tr><td>退出</td><td>15</td><td>適用於需要乾淨俐落退場的圖示預設。當圖示消失、完成、關閉或轉入下一狀態時，請使用這些預設。</td></tr><tr><td>特殊</td><td>25</td><td>特色預設，具備更鮮明的風格或視覺效果。請謹慎使用，適用於功能亮點、慶祝時刻或獨具品牌特色的互動。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-triggers": {
+        "navLabel": "觸發方式",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 觸發方式",
+        "summary": "選擇動畫如何開始。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-trigger-loop\">\n        <h2 class=\"docs-section__title\"><code>loop</code></h2>\n        <p class=\"docs-section__copy\">圖示一經渲染，動畫即會持續播放。無需使用者互動，動畫將無限循環播放。</p>\n        <p class=\"docs-section__copy\"><strong>適用情境：</strong> 載入狀態、環境裝飾、英雄區塊的品牌圖示、持續吸引目光的視覺元素。</p>\n        <p class=\"docs-section__copy\"><strong>不適用於：</strong> 在持續動態會分散使用者注意力的互動元素上。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-hover\">\n        <h2 class=\"docs-section__title\"><code>hover</code></h2>\n        <p class=\"docs-section__copy\">當使用者將游標懸停在圖示元素上時，動畫便會播放。當游標移開且動畫結束後，動畫會自然停止。內部機制採用CSS<code>:hover</code>觸發<code>mouseenter</code>和<code>mouseleave</code>事件觸發的 CSS。</p>\n        <p class=\"docs-section__copy\"><strong>適用情境：</strong> 互動按鈕、連結、選單項目及行動呼籲圖示，用以獎勵滑鼠指針的互動。</p>\n        <p class=\"docs-section__copy\"><strong>不適用於：</strong> 僅支援觸控的介面，因該情境下懸停效果無法獲得可靠的等效呈現。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-click\">\n        <h2 class=\"docs-section__title\"><code>click</code></h2>\n        <p class=\"docs-section__copy\">當圖示被按下（<code>:active</code>）或當<code>.active</code>類別時播放。啟動時會播放 3 次，隨後停止。</p>\n        <p class=\"docs-section__copy\"><strong>適用情境：</strong> 狀態切換、按讚/取消按讚動作、確認圖示、提交按鈕回饋，以及使用者明確觸發的狀態變更。</p>\n        <p class=\"docs-section__copy\"><strong>不適用情況：</strong> 具有持續懸停狀態的圖示（請改用<code>hover</code>trigger 代替）。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-summary\">\n        <h2 class=\"docs-section__title\">觸發行為摘要</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>觸發器</th>\n                <th>觸發時</th>\n                <th>重複</th>\n                <th>次數</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>loop</code></td><td>圖示渲染</td><td>持續</td><td>無限</td></tr>\n              <tr><td><code>hover</code></td><td>使用者懸停</td><td>直到移開滑鼠</td><td>懸停期間無限循環</td></tr>\n              <tr><td><code>click</code></td><td>使用者按下 (<code>:active</code>或<code>.active</code>類別)</td><td>點擊時</td><td>每次點擊 3 次</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-exports": {
+        "navLabel": "匯出",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 匯出",
+        "summary": "匯出 Motion Lab CSS 或動畫 SVG。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-exports-css\">\n        <h2 class=\"docs-section__title\">Motion Lab CSS</h2>\n        <h3>內容說明</h3>\n        <p class=\"docs-section__copy\">包含<code>@keyframes</code>定義與動畫規則的樣式表。請將其與 HTML 或 JSX 中的SVG元素一同使用。SVG檔案與動畫檔案是分開的。</p>\n        <h3>使用方法</h3>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>透過<code>search_icons</code>或<code>get_icon</code>. (免費)</li>\n          <li>呼叫<code>export_motion_css</code>並使用您選擇的預設值和觸發器來取得CSS。（需搭配 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>)</li>\n          <li>將SVG內嵌於您的標記中。</li>\n          <li>Replace<code>{{ICON_SELECTOR}}</code>，並將其替CSS為您內嵌SVG的選擇器，當<code>selector_mode</code>為<code>placeholder</code>.</li>\n          <li>連結更新後的CSS檔案，或將規則貼入現有的樣式表中。</li>\n        </ol>\n        <h3>CSS包含的內容</h3>\n        <p class=\"docs-section__copy\">CSS匯出內容包含：</p>\n        <ul>\n          <li>品牌註解：<code>/* Supericons Motion Lab */</code></li>\n          <li>一個預設標籤註解，包含您選擇的預設、觸發條件、持續時間和強度</li>\n          <li>一個<code>@keyframes</code>用於動畫的區塊</li>\n          <li>一個使用佔位符選擇器標記的動畫規則<code>{{ICON_SELECTOR}}</code></li>\n          <li><code>overflow: visible</code>, <code>transform-box: fill-box</code>，並<code>transform-origin: center</code>套用至SVG及其子元素，以確保變換效果正確運作</li>\n        </ul>\n        <h3>MCP回應中的選擇器欄位</h3>\n        <p class=\"docs-section__copy\">託管CSS回應現在明確說明了選擇器替換的運作方式：</p>\n        <ul>\n          <li><code>selector_mode: \"placeholder\"</code>：CSS內容包含<code>{{ICON_SELECTOR}}</code>。在套用樣式表前，請將其替換為您SVG選擇器。</li>\n          <li><code>selector_mode: \"literal\"</code>:CSS已包含您的選擇器。請直接使用。</li>\n          <li><code>selector_token</code>: 返回的CSS 中確切的佔位符字串。請用它來透過程式化方式定位並替換該標記。</li>\n          <li><code>selector_instructions</code>: 關於應使用何種選擇器格式的通俗說明。當代理程式處理替換步驟時，這點特別有用。</li>\n        </ul>\n        <div class=\"docs-code\">\n          <pre><code>.settings-button svg\n#login-icon svg\n.sidebar .nav-icon svg</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">兩者<code>export_motion_css</code>和<code>animate_icon</code>皆可返回包含這些選擇器欄位的CSS。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-exports-svg\">\n        <h2 class=\"docs-section__title\">動畫SVG</h2>\n        <h3>內容說明</h3>\n        <p class=\"docs-section__copy\">一個自包含的SVG檔案，其中動畫已嵌入<code>&lt;style&gt;</code>。無需外部CSS。</p>\n        <h3>使用方法</h3>\n        <p class=\"docs-section__copy\">將動畫SVG檔案直接拖放至任何 HTML 頁面：</p>\n        <div class=\"docs-code\">\n          <pre><code>&lt;img src=\"icon-animated.svg\" alt=\"animated icon\" width=\"24\" height=\"24\"&gt;</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">或將SVG直接內嵌於頁面中：</p>\n        <div class=\"docs-code\">\n          <pre><code>&lt;!-- paste the entire animated SVG string here --&gt;</code></pre>\n        </div>\n        <h3>相容性說明</h3>\n        <p class=\"docs-section__copy\">自包含的動畫 SVG 可在當前主流瀏覽器中運作。當用作<code>&lt;img&gt;</code>來源時CSS動畫會自動播放。若以內嵌方式貼入，懸停與點擊觸發器會如常響應指針事件。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-exports-decision\">\n        <h2 class=\"docs-section__title\">我應該使用哪種格式？</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>使用情境</th>\n                <th>建議格式</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>SVG嵌入於 HTML 或 JSX 中，並透過您的CSS處理流程進行樣式設定</td><td>Motion Lab CSS</td></tr>\n              <tr><td>您希望擁有一個無依賴項的可移植檔案</td><td>動畫SVG</td></tr>\n              <tr><td>您正在將其嵌入電子郵件或文件網站</td><td>動畫SVG</td></tr>\n              <tr><td>您需要在不修改SVG的情況下更新動畫</td><td>Motion Lab CSS</td></tr>\n              <tr><td>您希望同時擁有兩種格式</td><td>呼叫<code>animate_icon</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-mcp-workflow": {
+        "navLabel": "MCP 工作流程",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab MCP 工作流程",
+        "summary": "透過 MCP 從代理工作流程產生動畫資源。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-intro\">\n        <p class=\"docs-section__copy\">透過Motion Lab調用MCP，可在您的編碼代理程式內建立完整的圖示動畫工作流程：檢視預設值、比較預設配置檔、匯出內嵌CSS 的SVG、取得獨立的動畫SVG或透過單次呼叫同時產生兩者。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-mental-model\">\n        <h2 class=\"docs-section__title\">核心運作模式</h2>\n        <p class=\"docs-section__copy\">本地MCP層負責預設值的發現與請求協調。透過短效期會話令牌，利用託管的 Supericons 函式來處理高級預設配置檔、CSS渲染、動畫SVG渲染以及<code>animate_icon</code>輸出皆透過託管的Supericons函式，並使用短效期會話憑證進行解析。</p>\n        <p class=\"docs-section__copy\">此設計分隔是刻意為之。它使本地套件在發現階段保持輕量，同時將高級渲染邏輯移至託管路徑後方。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-order\">\n        <h2 class=\"docs-section__title\">建議的工具使用順序</h2>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>呼叫<code>list_motion_presets</code>以查看現有內容。</li>\n          <li>呼叫<code>get_motion_recipe</code>對一個或多個候選項目進行調用，然後再進行提交。</li>\n          <li>根據整合需求選擇輸出類型。</li>\n          <li>使用<code>export_motion_css</code>, <code>export_animated_svg</code>，或<code>animate_icon</code>.</li>\n        </ol>\n        <p class=\"docs-section__copy\">這可減少試錯，並使最終選擇更容易向團隊成員或未來的代理商解釋。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-tool-map\">\n        <h2 class=\"docs-section__title\">何時使用各工具</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>工具</th>\n                <th>當您想要...時使用</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>list_motion_presets</code></td><td>瀏覽預設值 ID、標籤、群組、描述及受支援的觸發器</td></tr>\n              <tr><td><code>get_motion_recipe</code></td><td>在匯出前了解預設值如何運作</td></tr>\n              <tr><td><code>export_motion_css</code></td><td>將SVG保持為內嵌格式，並透過CSS套用動態效果</td></tr>\n              <tr><td><code>export_animated_svg</code></td><td>獲取一個獨立的動畫資源</td></tr>\n              <tr><td><code>animate_icon</code></td><td>透過單次呼叫取得預設檔設定檔、CSS 及動畫SVG</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">如需確切的參數表與欄位名稱，請參閱 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">將Motion Lab MCPTools</a> 作為嚴格的參考頁面。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-human-vs-agent\">\n        <h2 class=\"docs-section__title\">人工與代理工作流程</h2>\n        <p class=\"docs-section__copy\"><strong>人類開發者</strong> 應從產品意圖著手：細微的懸停效果、安全感、慶祝感、環境動態，或完全靜止。接著使用<code>get_motion_recipe</code>來確認是否合適，再進行匯出。</p>\n        <p class=\"docs-section__copy\"><strong>AI 代理</strong> 應檢視預設值，根據 UI 情境篩選候選方案，比較預設配置檔，說明選定預設值的理由，最後才進行匯出。優秀的代理程式還應解釋為何避開了雜訊較多的預設值。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-mcp-workflow-no-motion\">\n        <h3>有時「零動態」才是最佳解</h3>\n        <p>涉及無障礙性的介面、沉穩的管理面板，以及信賴度關鍵的流程，通常完全無動態效果會更為理想。若必須使用動態效果，請選擇最為克制的選項，並能說明其為何不會分散使用者的注意力。</p>\n      </section>\n    "
+      },
+      "docs-motion-lab-client-setup": {
+        "navLabel": "用戶端設定",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 用戶端設定",
+        "summary": "為 Motion Lab 準備你的 MCP 用戶端。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-mcp-setup-prereqs\">\n        <h2 class=\"docs-section__title\">所需條件</h2>\n        <ul>\n          <li>已安裝Node.js18 或更新版本</li>\n          <li>來自API帳戶的Supericons金鑰，且該帳戶需具備 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a></li>\n          <li>一個MCP客戶端，例如Cursor或Claude Desktop</li>\n          <li>在該客戶端設定中新增MCP伺服器的權限</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-command\">\n        <h2 class=\"docs-section__title\">建議的伺服器指令</h2>\n        <p class=\"docs-section__copy\">使用已發佈的MCP套件。請將此設定為<code>command</code>MCP伺服器設定中的值：</p>\n        <div class=\"docs-code\">\n          <pre><code>npx -y supericons-mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">若您是在本地端開發環境中進行開發，請保留相同的環境設定區塊，但將指令替換為<code>node</code>，並將參數指向您自己的<code>mcp/index.js</code>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-cursor\">\n        <h2 class=\"docs-section__title\">Cursor設定範例</h2>\n        <p class=\"docs-section__copy\">將此MCP伺服器區塊新增至您的Cursor設定中，並替換API金鑰值：</p>\n        <div class=\"docs-code\">\n          <pre><code>{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"si_your_pro_key_here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-claude\">\n        <h2 class=\"docs-section__title\">Claude Desktop設定範例</h2>\n        <p class=\"docs-section__copy\">Claude Desktop使用與JSON 相同的Cursor配置格式。開啟您的Claude Desktop MCP設定檔 (<code>claude_desktop_config.json</code>)，新增相同的伺服器區塊，並替換API金鑰的值：</p>\n        <div class=\"docs-code\">\n          <pre><code>{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"si_your_pro_key_here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-verify\">\n        <h2 class=\"docs-section__title\">您的首次成功Motion Lab呼叫</h2>\n        <p class=\"docs-section__copy\"><strong>成功結果如下：</strong> <code>list_motion_presets</code>會傳回預設陣列，而<code>get_motion_recipe</code>則會返回預設設定檔。這確認了本地MCP伺服器和託管的高階版路徑均已上線。</p>\n        <p class=\"docs-section__copy\">重新啟動您的客戶端後，請確認以下工具已出現：</p>\n        <ul>\n          <li><code>list_motion_presets</code></li>\n          <li><code>get_motion_recipe</code></li>\n          <li><code>export_motion_css</code></li>\n          <li><code>export_animated_svg</code></li>\n          <li><code>animate_icon</code></li>\n        </ul>\n        <p class=\"docs-section__copy\">接著執行此序列：</p>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li><code>list_motion_presets</code></li>\n          <li><code>get_motion_recipe</code>搭配預設<code>sweep</code>，觸發<code>hover</code>、持續時間<code>240</code>、強度<code>100</code></li>\n          <li><code>export_motion_css</code>或<code>animate_icon</code></li>\n        </ol>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-mcp-setup-next\">\n        <h3>需要確切的工具欄位嗎？</h3>\n        <p>開啟 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCPTools</a> 以查看完整的參數和回彈形狀參考。</p>\n      </section>\n    "
+      },
+      "docs-motion-lab-use-cases": {
+        "navLabel": "使用情境",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 使用情境",
+        "summary": "了解何時使用動效，以及何時保持靜態。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-use-cases-intro\">\n        <p class=\"docs-section__copy\">請從 UI 情境出發，而非動畫名稱。最適合的Motion Lab預設方案，是能與產品中的情境、畫面氛圍，以及該使用者適用的動態預算相契合的那一個。</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-use-cases-table\">\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>情境</th>\n                <th>可能的預設</th>\n                <th>應避免的事項</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>專業儀表板懸停</td><td><code>sweep</code>, <code>glide</code></td><td>會分散資料注意力的俏皮或劇烈動態效果</td></tr>\n              <tr><td>安全性或驗證</td><td><code>fingerprint</code>, <code>radar</code></td><td>慶祝性或彈跳的動態效果，會削弱信任感</td></tr>\n              <tr><td>成功或慶祝</td><td><code>sparkle</code>, <code>bloom</code></td><td>若整體基調屬高端風格，此類效果會顯得幼稚</td></tr>\n              <tr><td>環境式空狀態</td><td><code>breathe</code>, <code>float</code></td><td>高能量的動態效果，長時間觀看會令人疲倦</td></tr>\n              <tr><td>無障礙設定面板</td><td>建議避免使用動態效果；若必須使用，請選擇最節制的選項</td><td>持續吸引注意力的動態效果</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-use-cases-output\">\n        <h2 class=\"docs-section__title\">選擇CSS還是動畫SVG</h2>\n        <p class=\"docs-section__copy\">選擇 <strong>Motion Lab CSS</strong> 當您的SVG已內嵌於 DOM 中，且您希望自行控制標記的放置位置時。選擇 <strong>動畫SVG</strong> ，當您希望獲得一個自包含的輸出，且整合步驟較少時。</p>\n        <p class=\"docs-section__copy\">若仍不確定該如何選擇，請使用 <a href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">MCP工作流程</a> ，接著再使用 <a href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">匯出</a> 作為整合指南。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-use-cases-restraint\">\n        <h3>克制是優秀動態設計的一部分</h3>\n        <p>Motion Lab最堅定的決策之一，是在動畫可能削弱清晰度、可信度或沉穩感時，建議完全不使用動畫。若仍需動畫，請選擇最細微的選項，並準備好解釋其存在的必要性。</p>\n      </section>\n    "
+      },
+      "docs-converter-guide": {
+        "navLabel": "轉換器指南",
+        "kicker": "Converter",
+        "pageTitle": "轉換器指南",
+        "summary": "選擇合適的轉換工作流。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-intro\">\n        <p class=\"docs-section__copy\">Converter具備兩項功能：它能將平面PNG圖像轉為可編輯與縮放的SVG檔案，並能將SVG圖稿匯出為任意尺寸的PNG圖像。在瀏覽器中，無需付費方案即可預覽這兩種轉換方向。若要下載轉換後的成果，則需使用 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-directions\">\n        <h2 class=\"docs-section__title\">選擇與您的原始檔案相符的方向</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>您擁有...</th>\n                <th>您希望...</th>\n                <th>開啟這份指南</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>PNG圖檔</td><td>可縮放的SVG檔案，可供您編輯、發佈或進一步精修</td><td><a href=\"/?view=docs-converter-png-to-svg\" data-docs-view=\"docs-converter-png-to-svg\">PNG轉SVG</a></td></tr>\n              <tr><td>SVG圖檔</td><td>特定尺寸或具有固定背景的點陣式PNG</td><td><a href=\"/?view=docs-converter-svg-to-png\" data-docs-view=\"docs-converter-svg-to-png\">SVG轉PNG</a></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-best-fit\">\n        <h2 class=\"docs-section__title\">本Converter最擅長處理</h2>\n        <ul>\n          <li><strong>PNG轉SVG</strong>：最適合用於標誌、平面插圖、標記、UI 圖示及其他色彩有限的簡潔圖稿。</li>\n          <li><strong>SVG轉PNG</strong>：當您已確認SVG檔案無誤，僅需為社群媒體、文件、電子郵件、應用程式商店或簡報製作精確的點陣圖輸出時，此選項最為合適。</li>\n          <li><strong>不適合用於描邊</strong>：照片、複雜漸層、紋理填充及雜訊較多的螢幕截圖，通常在追蹤後需要手動清理，或應維持為點陣圖格式。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-browser-vs-mcp\">\n        <h2 class=\"docs-section__title\">瀏覽器工作流程 vsMCP工作流程</h2>\n        <ul>\n          <li><strong>在瀏覽器中</strong>：預覽轉換效果並視覺判斷結果是否足夠理想的最快方式。</li>\n          <li><strong>透過MCP</strong>：當您的代理程式需要結構化輸出、可重複的設定，或將轉換納入更龐大的建置工作流程時，此為最佳選擇。從 <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP工具</a> 。</li>\n        </ul>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-expectations\">\n        <h3>先預覽，再決定輸出是否值得下載</h3>\n        <p>此轉換器最擅長協助您快速判斷品質。若預覽畫面已顯粗糙、鋸齒或雜訊過多，僅變更輸出格式並無法挽救原始圖像。</p>\n      </section>\n    "
+      },
+      "docs-converter-png-to-svg": {
+        "navLabel": "PNG 轉 SVG",
+        "kicker": "Converter",
+        "pageTitle": "PNG 轉 SVG",
+        "summary": "將 PNG 影像描摹為 SVG。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-png-svg-intro\">\n        <p class=\"docs-section__copy\">PNG轉SVG追蹤（即將像素自動轉換為可縮放的向量圖形）最適用於原始圖像本身已具備向量圖特徵的情況：銳利邊緣、單色填充、高對比度以及極簡的背景細節。適用於商標、單色標記、UI 圖示及平面插畫。請將照片和大量使用漸層的圖像視為例外，而非預設情況。</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-best-results\">\n        <h2 class=\"docs-section__title\">如何獲得最乾淨的追蹤效果</h2>\n        <ul>\n          <li>請從您擁有的最高品質PNG檔案開始。過小、模糊或過度壓縮的原始檔，在追蹤開始前便已失去邊緣清晰度。</li>\n          <li>優先選擇平面形狀，而非漸層、陰影和紋理。</li>\n          <li>選用前景與背景分隔清晰的圖稿。</li>\n          <li>若原始檔案在您的工作流程中某處已為SVG，請直接使用該檔案，而非追蹤PNG副本。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-settings\">\n        <h2 class=\"docs-section__title\">哪些設定最重要</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>設定</th>\n                <th>影響項目</th>\n                <th>良好的起始直覺</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>traceClass</code></td><td>根據您上傳的圖片類型選擇追蹤設定檔</td><td>根據來源進行匹配：商標、小型圖示、單色標記或一般彩色圖稿</td></tr>\n              <tr><td><code>qualityMode</code></td><td>在保真度、檔案大小與視覺複雜度之間取得平衡</td><td>從<code>exact</code>；僅當<code>compact</code>僅當SVG檔案過大時</td></tr>\n              <tr><td><code>uiMode</code></td><td>針對圖示般的幾何形狀或標誌般的輪廓調整輸出效果</td><td>使用<code>icon</code>用於 UI 字形，並<code>logo</code>標誌與文字標誌</td></tr>\n              <tr><td><code>colorMode</code></td><td>保留追蹤結果的色彩，或強制產生單色結果</td><td>僅在<code>mono</code>僅當圖形設計刻意採用單色時</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">如需完整的設定參考，請開啟 <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter設定參考</a>。若採用代理程式驅動的轉換，請將此設定與 <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP工具</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-workflow\">\n        <h2 class=\"docs-section__title\">建議工作流程</h2>\n        <ol>\n          <li>在瀏覽器中預覽PNG檔案，並判斷原始檔案是否具有可追蹤性。</li>\n          <li>選擇最接近的描邊設定檔，並從<code>exact</code>品質。</li>\n          <li>檢查SVG檔案是否有鋸齒邊緣、檔案過大或細節遺漏。</li>\n          <li>只有在這種情況下才切換至<code>compact</code>或切換至其他描圖類別。</li>\n        </ol>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-png-svg-restraint\">\n        <h3>當原始圖像明顯無法追蹤時，請勿強行向量化</h3>\n        <p>如果預覽圖已經看起來斑駁、破碎或缺少細部細節，更好的決定可能是保留原始的PNG格式，或尋找原始的SVG或設計檔案，而不是更努力地進行描圖。</p>\n      </section>\n    "
+      },
+      "docs-converter-svg-to-png": {
+        "navLabel": "SVG 轉 PNG",
+        "kicker": "Converter",
+        "pageTitle": "SVG 轉 PNG",
+        "summary": "把 SVG 圖示匯出為 PNG。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-svg-png-intro\">\n        <p class=\"docs-section__copy\">SVG轉為PNG是更簡單的方向：您已經擁有向量圖，而Converter會將其轉為特定寬度的清晰點陣輸出。請將此格式用於社群預覽、文件、簡報、電子郵件、應用程式列表，或任何需要固定圖像檔案而非可動態縮放的SVG 的場合。</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-controls\">\n        <h2 class=\"docs-section__title\">兩個關鍵控制項</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>控制項</th>\n                <th>功能說明</th>\n                <th>操作指引</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>targetWidth</code></td><td>設定PNG寬度（單位：像素）</td><td>請選擇能滿足實際使用需求的最小寬度。檔案較大並不一定代表效果更好。</td></tr>\n              <tr><td><code>background</code></td><td>設定SVG背後的透明或實色背景</td><td>當 PNG 需要放置在多個表面上時，請使用<code>transparent</code>當PNG需要置於多個表面上時。當目標環境已有已知背景時，請使用固定的十六進位顏色。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-uses\">\n        <h2 class=\"docs-section__title\">常見用途</h2>\n        <ul>\n          <li>為不支援上傳SVG工具準備標誌或圖示。</li>\n          <li>為簡報、文件或市集商品頁面生成平面PNG圖檔。</li>\n          <li>建立具有已知背景的精確點陣圖匯出檔，而非依賴瀏覽器渲染差異。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-quality\">\n        <h2 class=\"docs-section__title\">品質預期</h2>\n        <p class=\"docs-section__copy\">PNG檔案的品質取決於您提供的SVG檔案。若原始SVG存在裁切問題、填色缺失，或程式碼損壞或不完整PNG檔案將如實保留這些問題。Converter僅負責渲染檔案，而非重新設計。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-svg-png-tip\">\n        <h3>請有意識地設定輸出寬度</h3>\n        <p>請根據PNG實際使用的顯示區域來選擇寬度。過大的輸出檔案會增加檔案大小，並可能讓團隊誤以為已解決品質問題，實則僅是增加了像素數量。</p>\n      </section>\n    "
+      },
+      "docs-converter-settings": {
+        "navLabel": "轉換器設定",
+        "kicker": "Converter",
+        "pageTitle": "轉換器設定",
+        "summary": "了解 trace class、品質、色彩和輸出設定。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-settings-intro\">\n        <p class=\"docs-section__copy\">這些設定將決定PNG追蹤的行為表現。正確設定可保留清晰的邊緣，並將SVG維持在可控的尺寸範圍內。設定錯誤則可能產生雜訊路徑、模糊或圓角的形狀，或是技術上完整但視覺上不精確的輸出結果。</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-trace-class\">\n        <h2 class=\"docs-section__title\"><code>traceClass</code>：選擇最接近的來源輪廓</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>traceClass</code></th>\n                <th>最適合</th>\n                <th>應避免使用於</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>general-color</code></td><td>當您不確定該從何著手，且多數圖稿為全彩時</td><td>來源顯然是微型圖示或單色標記</td></tr>\n              <tr><td><code>flat-logo-color</code></td><td>採用純色填充且形狀間分色簡單的標誌</td><td>圖稿中含有大量漸層或照片級細節</td></tr>\n              <tr><td><code>tile-icon-color</code></td><td>小型重複圖塊或小型裝飾性彩色圖示</td><td>該圖稿屬於自由形式的標誌，而非緊湊的圖示</td></tr>\n              <tr><td><code>tiny-line-icon</code></td><td>極小的圖示，具備細緻筆觸與 UI 風格的幾何線條</td><td>圖像為帶有填充形狀的寬幅標誌或插圖</td></tr>\n              <tr><td><code>single-color-mark</code></td><td>單色標誌、文字標誌及簡約圖形標誌</td><td>原始檔案需進行多色分色</td></tr>\n              <tr><td><code>mono-mask</code></td><td>高對比度的黑白圖稿，旨在保持單色呈現</td><td>設計依賴於色彩間的關係</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-quality\">\n        <h2 class=\"docs-section__title\"><code>qualityMode</code>：保留細節或簡化輸出</h2>\n        <ul>\n          <li><strong><code>exact</code></strong>: 最佳預設選項。保留更多路徑細節，通常能產生最乾淨的初稿。</li>\n          <li><strong><code>compact</code></strong>: 簡化路徑並減輕檔案大小。當首次輸出雖精準但檔案過大時，請使用此選項。</li>\n        </ul>\n        <p class=\"docs-section__copy\">從<code>exact</code>。僅在<code>compact</code>，</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-ui-mode\">\n        <h2 class=\"docs-section__title\"><code>uiMode</code>: 針對圖示或商標調整輸出樣式</h2>\n        <ul>\n          <li><strong><code>logo</code></strong>: 更適合自由形式的標記、曲線及文字標誌。</li>\n          <li><strong><code>icon</code></strong>：更適合邊緣精確度至關重要的幾何 UI 圖示。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-color-mode\">\n        <h2 class=\"docs-section__title\"><code>colorMode</code>：保留色彩或強制產生單色結果</h2>\n        <ul>\n          <li><strong><code>color</code></strong>: 輸出時保留色彩分離，應作為多數標誌與插圖的預設選項。</li>\n          <li><strong><code>mono</code></strong>: 將結果簡化為單色。僅在圖稿為單色時，或將其簡化為單色正是您想要的特定結果時使用。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-starting-points\">\n        <h2 class=\"docs-section__title\">良好的起點</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>原始圖像</th>\n                <th>從以下開始</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>平面標誌</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>\n              <tr><td>單色文字標誌</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code>, <code>mono</code>（若品牌確實僅使用單一顏色）</td></tr>\n              <tr><td>小型 UI 圖示</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code>，通常<code>mono</code></td></tr>\n              <tr><td>多色插圖或藝術作品</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">若您正在使用MCP， <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP工具</a> 會提供相同的設定選項，並附帶操作指引與預檢功能。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-settings-callout\">\n        <h3>最佳的設定選擇應是與原始檔案相符的設定，而非聽起來最強烈的設定</h3>\n        <p>最令人失望的轉換器輸出，往往源於來源類型不匹配。追蹤器無法憑空創造出來源圖像本身未曾暗示的乾淨向量結構。</p>\n      </section>\n    "
+      },
+      "docs-access-api-keys": {
+        "navLabel": "API 金鑰",
+        "kicker": "存取和 API 金鑰",
+        "pageTitle": "存取和 API 金鑰",
+        "summary": "產生並管理 API 金鑰，用於需要帳戶權限的 MCP 和應用功能。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"access-api-keys-intro\">\n        <h2 class=\"docs-section__title\">金鑰如何連結您的帳戶</h2>\n        <p class=\"docs-section__copy\">當您在瀏覽器介面外連接API時，請使用Supericons帳戶中的Supericons金鑰。該金鑰用於識別發出請求的帳戶，因此應用程式或MCP客戶端才能載入該帳戶可存取的任何內容。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"access-api-keys-reassurance\">\n        <h3>請注意</h3>\n        <p>不存在獨立的Pro金鑰或套裝金鑰。您的API金鑰會使用您帳戶中已有的存取權限。</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-does\">\n        <h2 class=\"docs-section__title\">API金鑰的功能</h2>\n        <ul>\n          <li>讓您的應用程式或MCP客戶端登入您的Supericons帳戶。</li>\n          <li>讓Supericons確認該帳戶可使用的圖示與工具。</li>\n          <li>這是MCP及其他程式化工作流程的必要條件。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-does-not\">\n        <h2 class=\"docs-section__title\">API金鑰無法執行以下功能</h2>\n        <ul>\n          <li>它本身不會升級您的帳戶。</li>\n          <li>它不會將已購買的套件轉換為Motion Lab或Converter的存取權限。</li>\n          <li>它不會變更您的帳戶已購買或訂閱的內容。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-when\">\n        <h2 class=\"docs-section__title\">何時需要 API 金鑰</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>MCP與程式設計代理</h3>\n            <p>您需要<code>SUPERICONS_API_KEY</code>當您透過Supericons、Claude Code、Codex 或其他Cursor客戶端使用MCP時。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>程式化請求</h3>\n            <p>當您的應用程式或工作流程在一般瀏覽器使用者介面之外呼叫API時，您需要一個Supericons金鑰。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">若您僅在瀏覽網站並於瀏覽器中使用免費圖庫，則無需API金鑰。</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-account-bridge\">\n        <p class=\"docs-section__copy\">您的帳戶可存取的內容取決於您購買或訂閱的項目。請參閱 <a href=\"/?view=docs-access-premium\" data-docs-view=\"docs-access-premium\">Pro與 Collections</a> 以獲取詳細說明。</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-next\">\n        <h2 class=\"docs-section__title\">下一步</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>開啟API金鑰</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=api-keys\" data-docs-view=\"api-keys\">開啟頁面</a>\n            </div>\n            <p>透過MCP或您的應用程式，建立或管理您要使用的金鑰。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>閱讀快速入門</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-quickstart\" data-docs-view=\"docs-quickstart\">開啟指南</a>\n            </div>\n            <p>設定MCP並將<code>SUPERICONS_API_KEY</code>至正確的設定檔中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>查看定價</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=pricing\" data-docs-view=\"pricing\">查看方案</a>\n            </div>\n            <p>確認您是否需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> 。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-access-premium": {
+        "navLabel": "Pro 與集合",
+        "kicker": "存取和 API 金鑰",
+        "pageTitle": "高級集合存取",
+        "summary": "購買圖示包會解鎖對應圖示；Motion Lab 和 Converter 屬於 Supericons Pro 方案。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"access-premium-intro\">\n        <h2 class=\"docs-section__title\">兩種不同的取得途徑</h2>\n        <p class=\"docs-section__copy\">購買圖示包即可獲得該包中的高級圖示。Motion Lab和Converter是 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>中的獨立功能。您可以只擁有其中一項，而無需同時擁有另一項。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"access-premium-clarify\">\n        <h3>為何這可能會讓人感到困惑</h3>\n        <p>圖示存取權限與工具存取權限是分開的。若您購買了某個圖示包並已能使用其中的高級圖示，這正是預期中的情況。Motion Lab和Converter則是獨立的功能，在帳戶未升級至 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-packs\">\n        <h2 class=\"docs-section__title\">已購買的圖示包提供什麼</h2>\n        <ul>\n          <li>您所購買套裝或合集中的高級圖示。</li>\n          <li>當您使用同一帳戶的API金鑰時，可享有相同的圖示存取權限。</li>\n        </ul>\n        <p class=\"docs-section__copy\">套裝購買不包含Motion Lab或Converter。這些工具屬於 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-pro\">\n        <h2 class=\"docs-section__title\">Supericons Pro方案提供什麼</h2>\n        <ul>\n          <li>透過瀏覽器及Motion Lab 使用MCP。</li>\n          <li>透過瀏覽器及Converter 使用MCP。</li>\n          <li>適用於這些工作流程的瀏覽器匯出路徑與代理工具。</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-examples\">\n        <h2 class=\"docs-section__title\">快速範例</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr><th>情境</th><th>有效的方法</th></tr>\n            </thead>\n            <tbody>\n              <tr><td>我購買了高級套裝，但沒有Supericons Pro方案。</td><td>我可以使用該套裝中的高級圖示，但Motion Lab和Converter仍處於鎖定狀態。</td></tr>\n              <tr><td>我已擁有Supericons Pro方案。</td><td>我可以使用Motion Lab和Converter。如果我也購買了圖示包，那些圖示集合也能正常運作。</td></tr>\n              <tr><td>我使用的是我帳戶中的API金鑰。</td><td>該金鑰會使用該帳戶現有的所有內容：已購買的套裝、Supericons Pro方案，或兩者皆有。</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-next\">\n        <h2 class=\"docs-section__title\">下一步</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>查看定價</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=pricing\" data-docs-view=\"pricing\">查看方案</a>\n            </div>\n            <p>確認您是否需要 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a> 。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>開啟API金鑰</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=api-keys\" data-docs-view=\"api-keys\">開啟頁面</a>\n            </div>\n            <p>請使用與您的套件或訂閱所屬帳戶相同的API金鑰。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>前往Motion Lab</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">開啟指南</a>\n            </div>\n            <p>在決定是否需要此方案前，先了解Motion Lab的功能。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>前往Converter</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">開啟指南</a>\n            </div>\n            <p>透過瀏覽器及Converter 了解MCP的功能。</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-troubleshooting": {
+        "navLabel": "疑難排解",
+        "kicker": "支援",
+        "pageTitle": "疑難排解",
+        "summary": "修復 MCP 設定、API 金鑰、Motion Lab 和 Converter 的常見問題。",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"troubleshooting-setup\">\n        <h2 class=\"docs-section__title\">MCP設定</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>新增後伺服器未顯示</h3>\n            <p>在Claude Code或Codex 中，輸入<code>/mcp</code>以列出已啟用的伺服器。在Cursor 中，開啟側邊欄的MCP設定並確認<code>supericons</code>是否已顯示於此處。若未顯示，請重新啟動客戶端，然後確認您的設定檔是否位於客戶端與範圍的正確位置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>不確定該編輯哪個設定檔</h3>\n            <p>請參閱下表以確認正確的檔案路徑。若伺服器位於錯誤的檔案中，請將其移動至正確位置，儲存檔案，並重新啟動客戶端。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>首次執行時耗時較長</h3>\n            <p>首次執行<code>npx -y supericons-mcp</code>時，npm 會下載套件。後續啟動會更快。這種一次性延遲是正常的。</p>\n          </article>\n        </div>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr><th>客戶端</th><th>範圍</th><th>路徑</th></tr>\n            </thead>\n            <tbody>\n              <tr><td>Claude Code</td><td>使用者</td><td><code>~/.claude.json</code></td></tr>\n              <tr><td>Claude Code</td><td>專案</td><td><code>.mcp.json</code>(專案根目錄)</td></tr>\n              <tr><td>Codex</td><td>使用者</td><td><code>~/.codex/config.toml</code></td></tr>\n              <tr><td>Codex</td><td>專案</td><td><code>.codex/config.toml</code>(專案根目錄)</td></tr>\n              <tr><td>Cursor</td><td>全域</td><td><code>~/.cursor/mcp.json</code></td></tr>\n              <tr><td>Cursor</td><td>專案</td><td><code>.cursor/mcp.json</code>(專案根目錄)</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">有關客戶特定的設定詳細資訊，請參閱 <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a>, <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a>，或 <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-access\">\n        <h2 class=\"docs-section__title\">存取與API金鑰</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>無法使用存取功能</h3>\n            <p>請確認以下四項：</p>\n            <ol>\n              <li>您使用的是來自正確API帳戶的Supericons金鑰。</li>\n              <li><code>SUPERICONS_API_KEY</code>存在於伺服器<code>env</code>區塊中。</li>\n              <li>您已在編輯設定檔後重新啟動客戶端。</li>\n              <li>您的帳戶具備您嘗試使用的存取權限。</li>\n            </ol>\n          </article>\n          <article class=\"docs-card\">\n            <h3>API金鑰無效或已被撤銷</h3>\n            <p>請在 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API金鑰</a>下生成新金鑰，更新您的設定檔，並重新啟動客戶端。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>高級圖示已顯示，但工具仍處於鎖定狀態</h3>\n            <p>您的帳戶雖透過購買的套裝擁有圖示使用權限，但未訂閱 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>。Motion Lab和Converter是該方案中的獨立功能。請參閱 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">定價</a> 。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">如需完整權限說明，請參閱 <a href=\"/?view=docs-access-api-keys\" data-docs-view=\"docs-access-api-keys\">API金鑰</a> 了解金鑰如何識別您的帳戶，以及 <a href=\"/?view=docs-access-premium\" data-docs-view=\"docs-access-premium\">「Pro」與「Collections」</a> ，了解購買的套裝與方案之間的差異。</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-motion-lab\">\n        <h2 class=\"docs-section__title\">Motion Lab</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>Motion Lab工具回傳存取錯誤</h3>\n            <p>Motion Lab是 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro方案</a>請確認兩件事：您的API金鑰是否存在於伺服器<code>env</code>區塊中，且該金鑰所屬的Supericons帳戶已訂購該方案。進行任何設定變更後，請重新啟動客戶端。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>動畫SVG在<code>&lt;img&gt;</code>標籤中</h3>\n            <p>自包含的動畫 SVG 可在當前主流瀏覽器中正常運作，但部分舊版瀏覽器及 WebView 會阻擋外部載入的 SVG 動畫。若您的目標環境無法穩定播放該檔案的動畫，請改為將SVG直接嵌入頁面中。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>動畫播放的預設值不正確</h3>\n            <p>請確認<code>preset</code>參數是否與有效的預設值 ID 完全相符。預設值 ID 區分大小寫，且多詞預設值採用駱駝式命名法，例如<code>magneticIn</code>，而非<code>magnetic-in</code>或<code>MagneticIn</code>。呼叫<code>list_motion_presets</code>以查看有效的 ID。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">有關Motion Lab的更多詳細資訊，請參閱 <a href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">Motion Lab</a> 以及 <a href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">Motion Lab匯出</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-converter\">\n        <h2 class=\"docs-section__title\">Converter</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>PNG 轉 SVG 的輸出結果不夠精確或路徑過多</h3>\n            <p>原始圖像可能含有無法清晰描邊的漸層、陰影或攝影細節。請嘗試使用更具體的<code>traceClass</code>，或切換<code>qualityMode</code>至<code>compact</code>以簡化輸出效果。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>不確定該<code>traceClass</code>該使用哪個</h3>\n            <p>請撥打<code>inspect_converter_options</code>以獲取引導式建議，或參閱 <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter設定</a> 以查閱描邊類別參考。</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>SVG 轉 PNG 的輸出尺寸不正確</h3>\n            <p>The<code>targetWidth</code>參數設定輸出像素的寬度。高度會根據SVG比例縮放<code>viewBox</code>。若PNG檔案過小，請增加<code>targetWidth</code>。若大於所需，則予以縮減。檔案較大並不代表畫質必然較佳。</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">如需完整的轉換器指南，請參閱 <a href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">Converter</a> 以獲取工作流程協助，並參閱 <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter設定</a> 以查看參數詳情。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"troubleshooting-contact\">\n        <h3>您的問題尚未列出</h3>\n        <p>開啟 <a href=\"#\" data-open-contact=\"true\">聯絡表單</a> 或電郵 <a href=\"mailto:hello@supericons.dev\">hello@supericons.dev</a>.</p>\n      </section>\n    "
+      }
+    }
+  },
+  "contact": {
+    "title": "聯絡我們",
+    "description": "有問題、回饋或合作洽詢，歡迎告訴我們。",
+    "namePlaceholder": "你的姓名",
+    "emailPlaceholder": "你的電子郵件",
+    "messagePlaceholder": "你的訊息",
+    "sendMessage": "傳送訊息",
+    "sending": "正在傳送...",
+    "sent": "訊息已傳送。謝謝。",
+    "failed": "傳送失敗。請嘗試下方電子郵件連結。",
+    "emailDirectly": "或直接寄送電子郵件："
+  },
+  "account": {
+    "title": "帳戶",
+    "description": "不離開應用即可管理 Supericons 帳戶基本資料。",
+    "menu": {
+      "account": "帳戶",
+      "purchases": "我的購買",
+      "apiKeys": "API 金鑰",
+      "manageSubscription": "管理訂閱",
+      "signOut": "登出"
+    },
+    "profile": {
+      "title": "個人資料",
+      "description": "選擇在 Supericons 中顯示的名稱。",
+      "displayNamePlaceholder": "顯示名稱",
+      "saveDisplayName": "儲存顯示名稱",
+      "enterName": "請輸入要儲存的顯示名稱。",
+      "nameTooShort": "顯示名稱至少需要 2 個字元。",
+      "saved": "顯示名稱已儲存。",
+      "saveFailed": "無法儲存顯示名稱。"
+    },
+    "email": {
+      "title": "電子郵件",
+      "description": "你的登入電子郵件會顯示在這裡供參考。"
+    },
+    "password": {
+      "title": "密碼",
+      "addTitle": "新增密碼登入",
+      "description": "使用安全復原流程選擇新密碼。",
+      "addDescription": "你目前使用 Google 登入。如果也想用電子郵件登入，請設定密碼。",
+      "setPassword": "設定密碼",
+      "sendResetEmail": "傳送密碼重設電子郵件",
+      "noEmail": "此帳戶目前沒有可用的登入電子郵件。",
+      "addStatus": "設定可與 Google 登入一起使用的密碼。",
+      "resetSent": "密碼重設電子郵件已傳送至 {email}。",
+      "resetToast": "密碼重設電子郵件已傳送。",
+      "resetInSeconds": "{seconds}秒後可再次傳送重設郵件"
+    },
+    "toast": {
+      "updated": "帳戶已更新。"
+    }
+  },
+  "checkout": {
+    "openingPortal": "正在開啟訂閱管理頁面...",
+    "signInAgainPortal": "請重新登入以開啟訂閱管理頁面。",
+    "portalUnavailable": "訂閱管理頁面暫時無法使用。",
+    "portalFailed": "無法開啟訂閱管理頁面。"
+  },
+  "auth": {
+    "continueWithGoogle": "使用 Google 繼續",
+    "or": "或",
+    "emailPlaceholder": "電子郵件地址",
+    "passwordPlaceholder": "密碼",
+    "newPasswordPlaceholder": "新密碼",
+    "confirmPasswordPlaceholder": "確認新密碼",
+    "forgotPassword": "忘記密碼",
+    "backToSignIn": "返回登入",
+    "resendConfirmation": "重新傳送確認信",
+    "sendResetLink": "傳送重設連結",
+    "updatePassword": "更新密碼",
+    "getNewResetLink": "傳送重設連結",
+    "yourEmail": "電子郵件地址",
+    "resendInSeconds": "重新傳送確認信 {seconds}s",
+    "sendAgainInSeconds": "傳送重設連結 {seconds}s",
+    "copy": {
+      "default": {
+        "signin": {
+          "title": "登入 Supericons",
+          "desc": "存取動態圖示包、管理購買內容，並解鎖 Pro 功能。",
+          "note": "免費帳戶。使用免費圖示不需要信用卡。",
+          "submit": "登入",
+          "toggle": "還沒有帳戶。",
+          "toggleAction": "註冊"
+        },
+        "signup": {
+          "title": "建立 Supericons 帳戶",
+          "desc": "用一個帳戶儲存購買內容、同步下載，並解鎖 Pro 功能。",
+          "note": "免費帳戶。使用免費圖示不需要信用卡。",
+          "submit": "建立帳戶",
+          "toggle": "已有帳戶。",
+          "toggleAction": "登入"
+        }
+      },
+      "purchase": {
+        "signin": {
+          "title": "登入以繼續購買",
+          "desc": "將集合購買內容綁定到一個帳戶，讓下載和更新保持同步。",
+          "note": "我們會帶你回到這裡，方便你繼續剛才的操作。",
+          "submit": "登入並繼續",
+          "toggle": "需要先建立帳戶嗎？",
+          "toggleAction": "註冊"
+        },
+        "signup": {
+          "title": "建立帳戶以購買集合",
+          "desc": "你的購買內容、下載和未來更新都會連接到這個帳戶。",
+          "note": "我們會帶你回到這裡，方便你繼續剛才的操作。",
+          "submit": "建立帳戶",
+          "toggle": "已有帳戶。",
+          "toggleAction": "登入"
+        }
+      },
+      "subscribe": {
+        "signin": {
+          "title": "登入以升級到 Pro",
+          "desc": "繼續前往 Pro 結帳，取得 MCP 存取、工作流程工具和高級集合。",
+          "note": "我們會帶你回到這裡，方便你繼續結帳。",
+          "submit": "登入並繼續",
+          "toggle": "需要先建立帳戶嗎？",
+          "toggleAction": "註冊"
+        },
+        "signup": {
+          "title": "建立帳戶以升級到 Pro",
+          "desc": "先設定帳戶，準備好後再繼續 Pro 結帳。",
+          "note": "我們會帶你回到這裡，方便你繼續結帳。",
+          "submit": "建立帳戶",
+          "toggle": "已有帳戶。",
+          "toggleAction": "登入"
+        }
+      },
+      "pro": {
+        "signin": {
+          "title": "登入以解鎖 Pro 工具",
+          "desc": "用一個帳戶使用 Motion Lab 匯出、Converter 下載和高級 MCP 存取。",
+          "note": "先使用免費帳戶。需要 Pro 功能時再升級。",
+          "submit": "登入並繼續",
+          "toggle": "需要先建立帳戶嗎？",
+          "toggleAction": "註冊"
+        },
+        "signup": {
+          "title": "建立帳戶以解鎖 Pro 工具",
+          "desc": "儲存你的工作區，並將高級工具連接到一個帳戶。",
+          "note": "先使用免費帳戶。需要 Pro 功能時再升級。",
+          "submit": "建立帳戶",
+          "toggle": "已有帳戶。",
+          "toggleAction": "登入"
+        }
+      }
+    },
+    "forgot": {
+      "title": "忘記密碼",
+      "description": "輸入你的帳戶電子郵件，我們會傳送安全的重設連結。",
+      "note": "復原連結會帶你回到這裡，方便你選擇新密碼。",
+      "sentStatus": "如果 {email} 符合某個帳戶，你很快會收到重設連結。"
+    },
+    "reset": {
+      "title": "設定新密碼",
+      "addTitle": "新增密碼登入",
+      "description": "選擇新密碼來保護你的 Supericons 帳戶。",
+      "addDescription": "建立密碼後，你可以同時使用電子郵件和 Google 登入。",
+      "note": "請至少使用 8 個字元。建議使用強密碼。",
+      "addNote": "新增密碼登入後，Google 登入仍會繼續可用。",
+      "createForEmail": "為 {email} 建立密碼。",
+      "chooseForEmail": "為 {email} 選擇新密碼。",
+      "createForAccount": "為你的帳戶建立密碼。",
+      "chooseForAccount": "為你的帳戶選擇新密碼。"
+    },
+    "verify": {
+      "existing": {
+        "modalTitle": "使用現有帳戶",
+        "modalDesc": "這個電子郵件可能已屬於某個 Supericons 帳戶。請登入，而不是建立另一個帳戶。",
+        "modalNote": "如果你通常使用 Google 登入，請繼續使用 Google。否則請返回並用電子郵件登入。",
+        "stageTitle": "帳戶已存在",
+        "stageText": "{email} 可能已綁定到現有的 Supericons 帳戶。"
+      },
+      "unconfirmed": {
+        "modalTitle": "確認你的電子郵件",
+        "modalDesc": "登入前，請檢查收件匣並確認你的電子郵件地址。",
+        "modalNote": "如果找不到郵件，或連結不再有效，可以在下方傳送新的確認信。",
+        "stageTitle": "需要電子郵件確認",
+        "stageText": "向 {email} 傳送新的確認信。",
+        "resentStatus": "新的確認信已傳送至 {email}。"
+      },
+      "callback": {
+        "resetTitle": "此重設連結已失效",
+        "linkTitle": "此連結已失效",
+        "resetDesc": "密碼重設連結無效、不完整或已過期。",
+        "linkDesc": "登入或復原連結無效、不完整或已過期。",
+        "resetNote": "請要求新的重設電子郵件後再試。",
+        "linkNote": "請從 Supericons 重新開始，並在需要時要求新的電子郵件。",
+        "stageTitle": "連結已過期或無效",
+        "stageText": "此連結已無法使用。"
+      },
+      "pending": {
+        "modalTitle": "檢查你的電子郵件",
+        "modalDesc": "開啟確認信，以完成 Supericons 帳戶建立。",
+        "modalNote": "如果郵件沒有立即出現，你可以約一分鐘後再要求一封。",
+        "stageTitle": "檢查你的電子郵件",
+        "stageText": "請查找我們傳送到 {email} 的確認信。",
+        "sentStatus": "我們已向 {email} 傳送確認信。約一分鐘後可以再次要求。",
+        "resentStatus": "請檢查 {email} 中的新確認信。"
+      }
+    },
+    "errors": {
+      "invalidCredentials": "電子郵件和密碼不相符。如果你平常使用 Google 登入，請改用 Google 繼續。",
+      "tooManyAttempts": "登入嘗試次數過多。請稍等片刻後再試。",
+      "signInFailed": "無法登入。請檢查資訊後再試。",
+      "tooManySignupAttempts": "建立帳戶請求過多。請稍等片刻後再試。",
+      "passwordMin": "密碼必須至少包含 8 個字元。",
+      "signupFailed": "無法建立帳戶。請再試一次。",
+      "resetTooSoon": "請稍等片刻後再要求新的重設連結。",
+      "resetFailed": "無法傳送重設連結。請再試一次。",
+      "confirmationTooSoon": "請稍等片刻後再要求新的確認信。",
+      "resendFailed": "無法重新傳送確認信。請再試一次。",
+      "signOutFailed": "無法登出。請再試一次。",
+      "googleFailed": "Google 登入未完成。請再試一次。",
+      "passwordTooShort": "新密碼必須至少包含 8 個字元。",
+      "passwordsMismatch": "兩次輸入的密碼不一致。",
+      "updatePasswordFailed": "無法更新密碼。請再試一次。"
+    },
+    "toast": {
+      "passwordSignInAdded": "已新增密碼登入。",
+      "passwordUpdated": "密碼已更新。",
+      "emailConfirmed": "電子郵件已確認。你已登入。",
+      "signedInInAnotherTab": "已在另一個分頁登入。",
+      "passwordUpdatedInAnotherTab": "已在另一個分頁更新密碼。",
+      "signedIn": "已成功登入。",
+      "signedOut": "你已成功登出。"
+    },
+    "completion": {
+      "continueHere": "在此繼續",
+      "closeThisTab": "關閉此分頁",
+      "closeBlocked": "瀏覽器未能自動關閉此分頁。你可以手動關閉。",
+      "emailConfirmed": {
+        "modalTitle": "電子郵件已確認",
+        "modalDesc": "你的 Supericons 帳戶已準備就緒。",
+        "modalNote": "如果原本的 Supericons 分頁仍開啟，它已更新。",
+        "stageTitle": "電子郵件已確認",
+        "stageText": "你可以回到原本的 Supericons 分頁，也可以在此繼續或關閉此分頁。"
+      },
+      "signedIn": {
+        "modalTitle": "已登入",
+        "modalDesc": "你已登入 Supericons。",
+        "modalNote": "如果原本的 Supericons 分頁仍開啟，它已更新。",
+        "stageTitle": "已登入",
+        "stageText": "你可以回到原本的 Supericons 分頁，也可以在此繼續或關閉此分頁。"
+      },
+      "passwordUpdated": {
+        "modalTitle": "密碼已更新",
+        "modalDesc": "你的密碼已變更。",
+        "modalNote": "如果原本的 Supericons 分頁仍開啟，它已更新。",
+        "stageTitle": "密碼已更新",
+        "stageText": "你可以回到原本的 Supericons 分頁，也可以在此繼續或關閉此分頁。"
+      }
+    }
+  },
+  "legal": {
+    "terms": {
+      "pageTitle": "服務條款",
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最後更新：2026 年 4 月 8 日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 使用權利</h3><p>Supericons 提供免費與進階圖示資源，可用於網站、應用程式與數位產品。免費圖示保留原本的開源授權。</p><p>進階動畫集合由 Curly Mole Labs 擁有，你的使用權依購買的授權類型而定。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 輸出權利</h3><p>透過 Supericons MCP 伺服器取得的圖示可以用於 AI 產生的程式碼輸出。</p><p>底層 SVG 與 CSS 動畫原始檔仍屬於 Curly Mole Labs，不得擷取、逆向工程或批次匯出。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 再散布規則</h3><p>你不得再散布原始 SVG 或 CSS 動畫檔，不得將進階圖示作為開放捆綁資源，不得轉售存取權、轉授權，或建立競爭性圖示庫。</p><p>你可以在完成的網站、應用程式、客戶作品，以及不直接暴露原始檔的編譯輸出中使用圖示。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 授權層級</h3><p>單一專案授權適用於單獨購買與 Pro 月付領取的集合。</p><p>無限專案授權適用於有效 Pro 訂閱、Pro 年付包含集合與 Launch Edition 購買者。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 退款規則</h3><p>Pro 訂閱可隨時取消，當期費用不提供部分退款。</p><p>一次性數位購買在開通下載後通常不退款；若技術問題導致無法存取，請在 14 天內聯絡我們。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 聯絡方式</h3><p>條款、授權或退款問題請寄信至 hello@supericons.dev。</p></section></div>"
+    },
+    "privacy": {
+      "pageTitle": "隱私權政策",
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最後更新：2026 年 4 月 8 日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 概覽</h3><p>Supericons 由 Curly Mole Labs 營運。本政策說明我們收集哪些資訊以及如何使用。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. 收集的資料</h3><p>我們可能收集電子郵件、顯示名稱、登入提供者與帳戶識別碼等帳戶資訊。</p><p>我們保存購買、權益與訂閱記錄，以提供進階集合與 MCP 功能存取。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 產品分析</h3><p>我們收集不使用 Cookie（小型瀏覽器資料檔）的產品分析資料，用於提升可靠性與了解功能使用。</p><p>這些分析設計為避免個人追蹤。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 資料用途</h3><p>我們使用資料提供登入、帳戶復原、購買存取、訂閱、支援、防濫用與產品改進。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 付款</h3><p>付款與訂閱管理由 Stripe 處理。Supericons 不在伺服器保存完整卡片資料。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 認證與電子郵件</h3><p>認證可包含電子郵件與 Google 登入。交易郵件由安全郵件服務商代為發送。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. MCP 存取</h3><p>使用 MCP 時，我們會處理驗證存取、回傳圖示結果與執行進階權益所需的請求。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">8. 第三方服務</h3><p>我們使用第三方服務處理認證、計費、郵件發送與基礎產品分析。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">9. 資料保留</h3><p>我們會在營運服務、履行法律義務、解決爭議與支援客戶所需期間保留相關記錄。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">10. 你的選擇與聯絡</h3><p>你可以在應用程式中更新帳戶資訊。隱私請求請寄信至 hello@supericons.dev。</p></section></div>"
+    }
+  },
+  "loggedIn": {
+    "downloads": {
+      "noCollections": "還沒有集合",
+      "browseHint": "瀏覽高級集合開始使用。",
+      "browseCollections": "瀏覽集合",
+      "collection": "集合",
+      "purchased": "已購買",
+      "redeemed": "已領取",
+      "openCollection": "開啟集合"
+    },
+    "dashboard": {
+      "purchaseHistory": "購買記錄",
+      "noPurchases": "還沒有購買記錄。",
+      "collection": "集合",
+      "date": "日期",
+      "actions": "操作",
+      "view": "查看",
+      "unknown": "未知"
+    }
+  },
+  "apiKeys": {
+    "setup": {
+      "pro": "將你的程式代理連接到 Supericons MCP，以存取進階圖示集合或 Pro 工作流程工具。",
+      "guide": "查看設定指南，了解每個用戶端中應放置金鑰的位置。",
+      "free": "免費 MCP 不需要金鑰即可使用。",
+      "upgrade": "購買任一進階集合或訂閱 Pro，即可使用 API 金鑰進行 MCP 存取。"
+    },
+    "usageLoading": "正在載入...",
+    "limitNote": "依應用程式或裝置為每個金鑰命名，方便你分別輪換。",
+    "tabAria": "API 金鑰狀態",
+    "active": "有效",
+    "revoked": "已撤銷",
+    "all": "全部",
+    "loadingKeys": "正在載入金鑰...",
+    "labelPlaceholder": "金鑰標籤，例如 Cursor 或 Claude",
+    "generateKey": "產生金鑰",
+    "browseCollections": "瀏覽集合",
+    "seePricing": "查看價格",
+    "signIn": "登入",
+    "emptyCreate": "還沒有 API 金鑰。產生一個即可開始。",
+    "emptyAccount": "此帳戶還沒有 API 金鑰。",
+    "revokedCopy": "已撤銷的金鑰不再可用。如果不再需要記錄，可以刪除歷史列。",
+    "allCopy": "在一處查看所有金鑰記錄。有效金鑰可以撤銷，已撤銷歷史可以刪除。",
+    "activeCopy": "這些金鑰仍可驗證 MCP 用戶端和應用程式。",
+    "emptyRevoked": "還沒有已撤銷金鑰歷史。輪換金鑰後會顯示在這裡。",
+    "emptyActive": "目前沒有有效金鑰。產生一個以連接用戶端。",
+    "revokedHistory": "已撤銷歷史",
+    "allKeys": "全部金鑰",
+    "activeKeys": "有效金鑰",
+    "key": "金鑰",
+    "label": "標籤",
+    "created": "建立時間",
+    "lastUsed": "上次使用",
+    "status": "狀態",
+    "never": "從未",
+    "revoke": "撤銷",
+    "deleteRevokedLabel": "刪除已撤銷金鑰 {label}",
+    "signInAgainLoad": "請重新登入以載入 API 金鑰。",
+    "activeLimit": "最多 {limit} 個有效金鑰",
+    "sessionExpired": "你的工作階段已過期。請重新登入以管理金鑰。",
+    "usageCount": "正在使用 {active}/{limit} 個有效金鑰",
+    "noAccess": "你目前沒有 API 金鑰存取權。",
+    "limitReached": "你已達到 {limit} 個金鑰上限。請先撤銷一個再建立新的。",
+    "revokedHistoryNote": "已撤銷歷史在獨立分頁中，不計入有效金鑰上限。",
+    "failedLoad": "載入 API 金鑰失敗。",
+    "failedLoadNote": "我們現在無法載入你的 API 金鑰。",
+    "generating": "正在產生...",
+    "signInAgainGenerate": "請重新登入以產生 API 金鑰。",
+    "failedGenerate": "產生金鑰失敗",
+    "failedGenerateToast": "產生 API 金鑰失敗",
+    "modalTitle": "API 金鑰已產生",
+    "modalWarning": "請立即複製此金鑰。之後不會再次顯示。",
+    "copy": "複製",
+    "copied": "已複製",
+    "modalLabel": "標籤：{label}",
+    "modalPrefix": "前綴：{prefix}",
+    "done": "完成",
+    "copiedToast": "API 金鑰已複製到剪貼簿"
+  },
+  "purchaseFlow": {
+    "signInToPurchase": "登入以繼續購買",
+    "redirecting": "正在前往結帳頁面...",
+    "checkoutFailed": "無法啟動結帳",
+    "paymentError": "付款過程發生錯誤。請重試。",
+    "canceled": "付款尚未完成。請重試。",
+    "proAnnualTitle": "歡迎使用 Pro Annual",
+    "proAnnualDescription": "8 個啟動集合已加入你的資料庫。瀏覽圖示包，或開啟「我的集合」開始使用。",
+    "openMyCollection": "開啟我的集合",
+    "proMonthlyTitle": "歡迎使用 Pro Monthly",
+    "proMonthlyDescription": "你的第一個 Pro 集合已可領取。選擇一個圖示包加入你的永久資料庫。",
+    "redeemCollection": "領取一個集合",
+    "proAnnualToast": "Pro Annual 已啟用。你的集合已準備好。",
+    "proMonthlyToast": "Pro Monthly 已啟用。你可以領取一個集合。",
+    "purchaseSuccess": "購買成功。正在開啟你的集合..."
+  },
+  "claimFlow": {
+    "allOwned": "所有可領取集合都已在你的資料庫中。",
+    "alreadyOwned": "這個集合已在你的資料庫中。",
+    "subscriptionRequired": "需要有效的 Pro 訂閱才能領取集合。",
+    "failed": "集合領取失敗。請重試。",
+    "thisCollection": "這個集合",
+    "legacyCredit": "這將使用 1 個舊版額度。",
+    "proClaim": "這將使用你的有效 Pro 領取額度。",
+    "eyebrow": "領取集合",
+    "title": "將 {name} 加入我的集合。",
+    "description": "我們會確認你的存取權限，並把這個集合加入你的資料庫，之後你可以下載並透過 MCP 使用。",
+    "cancel": "取消",
+    "confirm": "加入我的集合",
+    "checking": "正在檢查存取權限...",
+    "unavailable": "此集合現在無法領取。",
+    "adding": "正在加入集合...",
+    "sessionExpired": "你的工作階段已過期。請重新登入。",
+    "added": "{name} 已加入我的集合。",
+    "addFailed": "無法加入集合。請重試。",
+    "nextAvailable": "下次可領取時間：{date}。"
+  },
+  "pricing": {
+    "headerTitle": "簡單透明的價格",
+    "headerSubtitle": "免費圖示人人可用。進階動畫包讓介面更精緻。",
+    "freeIconsAcrossLibraries": "20,000+ 圖示，涵蓋 10 個圖示庫",
+    "mcpServerFreeIcons": "MCP 伺服器，含 20,000+ 免費圖示",
+    "monthly": "月付",
+    "annual": "年付",
+    "save45": "省 45%",
+    "save28": "省 28%",
+    "mostPopular": "最受歡迎",
+    "faqTitle": "常見問題",
+    "plans": {
+      "free": {
+        "name": "免費",
+        "description": "{freeIconsAcrossLibraries}、AI 搜尋、SVG 匯出。無需帳戶。",
+        "cta": "免費開始使用",
+        "features": "Material、Lucide、Tabler、Phosphor 等|AI 語意搜尋|SVG、PNG、CSS 匯出|{mcpServerFreeIcons}|進階動畫包|透過 MCP 使用進階圖示"
+      },
+      "pro": {
+        "name": "Pro",
+        "cta": "升級 Pro",
+        "monthlyDescription": "Pro 工具、完整進階存取權，以及每月 1 個進階集合。",
+        "annualDescription": "立即擁有 8 個進階集合，並在年付有效期內取得未來新集合。",
+        "monthlyFeatures": "包含免費版全部內容|每月 1 個進階集合|有效期內存取全部集合|可隨時取消並保留已領取集合|Motion Lab 可匯出 CSS 動畫|Converter 支援不限量 SVG 和 PNG 轉換|完整 MCP 存取，包含免費和進階圖示|商業使用，不限專案|優先支援",
+        "annualFeatures": "包含免費版全部內容|立即擁有全部 8 個進階集合|永久保留 8 個包含集合|年付有效期內取得未來進階集合|Motion Lab 可匯出 CSS 動畫|Converter 支援不限量 SVG 和 PNG 轉換|完整 MCP 存取，包含免費和進階圖示|商業使用，不限專案|優先支援"
+      },
+      "singlePack": {
+        "name": "單一集合",
+        "period": "每個集合",
+        "description": "任選一個集合。50 個動畫圖示，永久擁有。",
+        "cta": "瀏覽集合",
+        "features": "包含免費版全部內容|每個集合 50 個動畫 SVG 圖示|每個圖示都有獨特懸停動畫|永久擁有|單一專案授權|購買集合的 MCP 存取|不含 Motion Lab 或 Converter 等 Pro 工具"
+      },
+      "launchBundle": {
+        "name": "Launch 套裝",
+        "period": "一次性",
+        "description": "全部 8 個集合。400 個動畫圖示。一次付款，無訂閱。",
+        "cta": "取得 Launch 套裝",
+        "features": "全部 8 個進階集合|400 個動畫 SVG 圖示|涵蓋 AI、電商、媒體、導覽、安全等場景|永久擁有，並取得這些集合的未來更新|商業使用，不限專案|全部 8 個集合的 MCP 存取|不含 Motion Lab 或 Converter 等 Pro 工具"
+      }
+    },
+    "faq": {
+      "questions": "8 個進階動畫包包含什麼|Pro 月付和年付的集合存取如何運作|MCP 伺服器的用途|取消 Pro 訂閱|取消 Pro 後的存取權|進階圖示的商業使用|Launch 套裝的可用性",
+      "answers": "每個集合包含 50 個動畫 SVG 圖示，並帶有獨特懸停動畫。8 個集合涵蓋 AI、狀態、電商、導覽、媒體、安全、社交和資料等常見產品場景。|Pro 月付每月可加入 1 個永久集合。Pro 年付會立即解鎖目前全部 8 個進階集合，並在年付有效期內包含未來進階新集合。|MCP 伺服器讓 AI 程式代理能以程式方式搜尋和取得圖示。免費使用者可存取免費圖示庫，付費使用者可存取帳戶綁定的進階集合。|你可以在帳戶儀表板取消訂閱。Pro 權益會保留到已付計費週期結束。|已領取或已購買的集合會留在你的庫中。訂閱期結束後，未擁有集合的即時存取、未來新集合和 Pro 工具會停止，除非續訂。|可以。進階圖示可依你的方案或購買所附授權用於商業用途。|Launch 套裝是一次性購買，採用發布期價格。它包含目前 8 個進階集合，以及這些集合的未來更新。"
+    }
+  },
+  "seo": {
+    "title": "Supericons | 更快找到合適的圖示",
+    "description": "依含義、使用情境，或圖示在介面中的位置搜尋 20,000+ 個精選圖示。為設計師、開發者與 AI 程式代理打造。",
+    "twitterDescription": "使用 Supericons 更快找到合適的圖示，內含 20,000+ 個精選圖示。"
+  },
+  "packs": {
+    "empty": {
+      "title": "集合即將推出",
+      "description": "動效圖示集合正在製作中。請稍後回來查看。"
+    },
+    "types": {
+      "bundle": "套裝",
+      "launchEdition": "發布版"
+    },
+    "status": {
+      "complete": "已完成"
+    },
+    "card": {
+      "preview": "預覽",
+      "viewCollection": "查看集合",
+      "buyPrice": "購買 {price}",
+      "animatedIconsCount": "{count} 個動效圖示",
+      "checkingRedeemAccess": "正在檢查兌換權限...",
+      "redeemNow": "立即兌換",
+      "redeemOn": "{date} 可兌換",
+      "allClaimableOwned": "所有可兌換集合已擁有",
+      "optionsLoading": "兌換選項正在載入。請稍後再試。",
+      "soon": "稍後"
+    },
+    "launch": {
+      "name": "發布版",
+      "savePercent": "節省 {percent}%",
+      "description": "全部 8 個集合，400 個動效圖示，不限專案使用。",
+      "complete": "已完成",
+      "ownedCount": "已擁有 {owned}/{total}",
+      "getBundle": "取得套裝",
+      "ownedDescription": "你已擁有全部 8 個發布集合。可在所有專案中無限制使用。"
+    },
+    "pro": {
+      "title": "升級到 Pro",
+      "monthlyPeriod": "/月",
+      "annualPeriod": "/年",
+      "subscribe": "訂閱",
+      "monthlyDescription": "MCP 存取、工作流程工具，以及每月 1 個高級集合。",
+      "annualDescription": "立即擁有全部 8 個高級集合，並在年付有效期間取得後續新增內容。",
+      "monthlyFeatures": "AI 代理可用的 MCP 存取|工作流程工具：Motion Lab、Converter（PNG <-> SVG）|每月 1 個高級集合|訂閱有效期間可存取全部集合|不限專案的商業授權",
+      "annualFeatures": "AI 代理可用的 MCP 存取|工作流程工具：Motion Lab、Converter（PNG <-> SVG）|立即擁有全部 8 個高級集合|年付有效期間取得後續新增內容|不限專案的商業授權"
+    },
+    "detail": {
+      "backToCollections": "返回集合",
+      "animatedIconsCount": "{count} 個動效圖示",
+      "svgWithAnimations": "含動畫的 SVG",
+      "animatedIconCollection": "動效圖示集合",
+      "purchased": "已購買",
+      "buy": "購買",
+      "previewAndCustomize": "預覽並自訂 {name}",
+      "viewUnlockOptions": "查看 {name} 的解鎖選項"
+    },
+    "locked": {
+      "unlockMessage": "解鎖此集合後即可自訂並匯出此圖示。",
+      "buyPrice": "購買 {price}",
+      "goPro": "升級到 Pro"
+    },
+    "products": {
+      "ai-agentic": {
+        "name": "代理式 AI",
+        "description": "AI 原生應用狀態與代理回饋動效"
+      },
+      "status-feedback": {
+        "name": "狀態與回饋",
+        "description": "應用狀態動效：載入、成功、錯誤、通知"
+      },
+      "ecommerce": {
+        "name": "電子商務",
+        "description": "購物車、付款與配送回饋動效"
+      },
+      "navigation-menus": {
+        "name": "導覽與選單",
+        "description": "介面框架動效：漢堡選單、分頁、側邊欄、搜尋"
+      },
+      "data-charts": {
+        "name": "資料與圖表",
+        "description": "儀表板載入狀態與圖表動效"
+      },
+      "social-communication": {
+        "name": "社交與溝通",
+        "description": "反應、訊息與分享動效"
+      },
+      "media-playback": {
+        "name": "媒體播放",
+        "description": "播放器控制與錄製狀態動效"
+      },
+      "security-auth": {
+        "name": "安全與驗證",
+        "description": "登入流程、權限與信任提示動效"
+      }
+    }
+  },
+  "landing": {
+    "homeAriaLabel": "Supericons 首頁",
+    "heroTitle": "更快找到合適的圖示。",
+    "heroSubtitle": "依含義、使用情境，或圖示在介面中的位置搜尋 20,000+ 個精選圖示。為設計師、開發者與 AI 程式代理打造。",
+    "startSearching": "立即搜尋圖示",
+    "stats": {
+      "icons": "圖示",
+      "libraries": "圖示庫",
+      "mcpTools": "MCP 工具",
+      "semantic": "語意",
+      "search": "搜尋"
+    },
+    "mcpTitle": "在 AI 程式代理中使用 Supericons",
+    "mcpSubtitle": "連接 MCP，讓代理尋找圖示並將 SVG 貼到你的程式碼中。",
+    "addToMcpConfig": "將此加入你的 MCP 設定：",
+    "copyConfig": "複製設定",
+    "copy": "複製",
+    "openMcpDocs": "開啟 MCP 設定指南"
+  },
+  "motionLab": {
+    "labels": {
+      "motion": "動效",
+      "entrances": "進入",
+      "exits": "退出",
+      "special": "特殊",
+      "sizePx": "尺寸 (px)",
+      "quickTips": "快速提示",
+      "properties": "屬性",
+      "playback": "播放",
+      "intensity": "強度",
+      "speed": "速度",
+      "fill": "填色",
+      "stroke": "描邊",
+      "scale": "縮放",
+      "size": "尺寸",
+      "rotate": "旋轉",
+      "opacity": "不透明度",
+      "fade": "淡化"
+    },
+    "actions": {
+      "upload": "上傳",
+      "paste": "貼上",
+      "library": "圖示庫",
+      "loop": "循環",
+      "hover": "懸停",
+      "click": "點擊",
+      "downloadSvg": "下載 SVG",
+      "copyCss": "複製 CSS",
+      "backToIcons": "返回圖示",
+      "seePricing": "查看價格"
+    },
+    "presets": {
+      "bounce": "彈跳",
+      "float": "漂浮",
+      "shake": "抖動",
+      "spin": "旋轉",
+      "pulse": "脈衝",
+      "pop": "彈出",
+      "heartbeat": "心跳",
+      "rubberband": "橡皮筋",
+      "jelly": "果凍",
+      "ring": "鈴響",
+      "wobble": "搖擺",
+      "magnetic": "磁吸",
+      "recoil": "回彈",
+      "pendulum": "擺錘",
+      "whiplash": "鞭甩",
+      "tremor": "震顫",
+      "neonglow": "霓虹光",
+      "breathe": "呼吸",
+      "metronome": "節拍器",
+      "orbit": "軌道",
+      "flicker": "閃爍",
+      "squish": "擠壓",
+      "glide": "滑行",
+      "radar": "雷達波",
+      "beacon": "信標",
+      "magneticIn": "磁吸進入",
+      "fadeIn": "淡入",
+      "scaleUp": "放大",
+      "slideUp": "上滑",
+      "springLand": "彈簧落地",
+      "slingshot": "彈弓",
+      "glitchOn": "故障出現",
+      "unfold": "展開",
+      "warpIn": "扭曲進入",
+      "slideRight": "右滑",
+      "slideDown": "下滑",
+      "flipIn": "翻入",
+      "telegram": "紙飛機飛入",
+      "bloom": "綻放",
+      "shockwave": "衝擊波",
+      "fadeOut": "淡出",
+      "scaleDown": "縮小",
+      "slideOut": "滑出",
+      "vortex": "漩渦",
+      "glitchOff": "故障消失",
+      "dissolve": "溶解",
+      "popOut": "彈出離場",
+      "slideLeft": "左滑",
+      "sinkDown": "下沉",
+      "flipOut": "翻出",
+      "implode": "內爆",
+      "puffOut": "煙霧消散",
+      "launchOut": "發射離場",
+      "shrinkSpin": "縮小旋轉",
+      "blinkOut": "閃退",
+      "sparkle": "閃光",
+      "swing": "擺動",
+      "jitter": "顫動",
+      "chase": "追蹤",
+      "stream": "流動",
+      "trace": "描邊",
+      "flow": "流向",
+      "converge": "匯聚",
+      "cube": "立方體",
+      "typing": "打字",
+      "reason": "推理",
+      "sweep": "掃過",
+      "scatter": "散開",
+      "crest": "波峰",
+      "tap": "輕點",
+      "shuffle": "洗牌",
+      "infinity": "無限",
+      "spatial": "空間",
+      "pageFlip": "翻頁",
+      "bookOpen": "開書",
+      "domino": "多米諾",
+      "supernova": "超新星",
+      "blackHole": "黑洞",
+      "fingerprint": "指紋",
+      "badgeTap": "徽章輕點"
+    },
+    "empty": {
+      "dropSvg": "拖入 SVG、貼上程式碼，或從圖示庫選擇",
+      "selectElement": "選擇一個元素來編輯"
+    },
+    "tooltips": {
+      "exportTrigger": "設定匯出程式碼中的動畫啟動方式。循環：持續播放。懸停：滑鼠移上時播放。點擊：點按時播放。",
+      "resetAnimation": "重設動畫",
+      "playPreview": "點擊或懸停動畫按鈕即可預覽。",
+      "clearAll": "全部清除",
+      "reset": "重設",
+      "default": "預設",
+      "customColor": "自訂顏色"
+    },
+    "quickTips": [
+      {
+        "title": "立即預覽",
+        "body": "點擊或懸停動畫按鈕即可預覽。"
+      },
+      {
+        "title": "調整圖示",
+        "body": "使用右側的填色、描邊、大小、旋轉和淡化控制。"
+      },
+      {
+        "title": "選擇播放方式",
+        "body": "循環、懸停和點擊會控制匯出後的播放方式。"
+      },
+      {
+        "title": "準備好再匯出",
+        "body": "動畫效果合適後，下載 SVG 或複製 CSS。"
+      },
+      {
+        "title": "隨時重設",
+        "body": "使用重設圖示把控制項恢復為預設值。"
+      },
+      {
+        "title": "測試顏色",
+        "body": "並非每個圖示都同時支援填色和描邊，所以可以多試幾種組合。"
+      }
+    ],
+    "aria": {
+      "showTip": "顯示提示 {number}"
+    },
+    "export": {
+      "title": "匯出動畫",
+      "selfContainedSvg": "自包含 SVG",
+      "copyCss": "複製 CSS",
+      "downloadCss": "下載 .css",
+      "copySvg": "複製 SVG",
+      "downloadSvg": "下載 .svg",
+      "noAnimationsComment": "/* 尚未定義動畫 */",
+      "loadSvgComment": "<!-- 請先載入 SVG -->"
+    },
+    "upsell": {
+      "eyebrow": "Pro 功能",
+      "title": "使用 Pro 匯出動畫",
+      "body": "你可以免費預覽所有預設；訂閱後即可複製 CSS 或下載最終動畫 SVG。",
+      "dismiss": "稍後再說"
+    },
+    "mobile": {
+      "aria": "Motion Lab 行動版提示",
+      "eyebrow": "桌面優先工具",
+      "title": "Motion Lab 針對桌面端最佳化",
+      "copy": "你可以在這裡預覽工作區，然後在更大的螢幕上使用完整編輯器製作和匯出動畫。",
+      "hint": "行動版為唯讀預覽，方便了解介面而不必操作複雜控制項。"
+    },
+    "toasts": {
+      "clipboardEmpty": "剪貼簿是空的。請先複製一段 SVG。",
+      "noSvgClipboard": "剪貼簿中沒有 SVG。內容必須以 <svg> 開頭。",
+      "clipboardDenied": "剪貼簿存取被拒。請複製 SVG 程式碼後再試一次。",
+      "animationReset": "動畫已重設",
+      "loadSvgFirst": "請先載入 SVG",
+      "svgDownloaded": "SVG 已下載",
+      "selectElementFirst": "請先選取一個元素",
+      "presetApplied": "已套用「{name}」預設",
+      "cssCopied": "CSS 已複製！",
+      "svgCopied": "SVG 已複製！"
+    }
+  },
+  "converter": {
+    "modes": {
+      "svgToPng": "SVG → PNG",
+      "pngToSvg": "PNG → SVG"
+    },
+    "labels": {
+      "input": "輸入",
+      "output": "輸出",
+      "size": "尺寸",
+      "fill": "填色",
+      "stroke": "描邊",
+      "background": "背景",
+      "padding": "內距",
+      "quality": "品質",
+      "mode": "模式",
+      "preset": "預設",
+      "outputSize": "輸出尺寸",
+      "compare": "比較",
+      "helpers": "輔助選項",
+      "pastedSvg": "貼上的 SVG"
+    },
+    "actions": {
+      "browse": "瀏覽",
+      "pasteSvgCode": "貼上 SVG 程式碼",
+      "downloadPng": "下載 PNG",
+      "downloadSvg": "下載 SVG",
+      "copy": "複製",
+      "copySvg": "複製 SVG",
+      "reset": "重設",
+      "backToIcons": "返回圖示",
+      "seePricing": "查看價格"
+    },
+    "empty": {
+      "dropSvg": "拖入 SVG，或點擊瀏覽",
+      "dropRaster": "拖入 PNG/JPG，或點擊瀏覽",
+      "previewAppears": "預覽會顯示在這裡"
+    },
+    "aria": {
+      "clearInput": "清除轉換器輸入",
+      "inputPreview": "輸入",
+      "originalPreview": "原始預覽",
+      "outputPreview": "輸出預覽",
+      "originalSplitPreview": "原始分割預覽",
+      "outputSplitPreview": "輸出分割預覽"
+    },
+    "tooltips": {
+      "default": "預設",
+      "customColor": "自訂顏色",
+      "size": "輸出寬度（像素）。高度會自動調整以維持比例。",
+      "fill": "重新著色可見的填色形狀。有些上傳的 SVG 可能只有描邊。",
+      "stroke": "重新著色可見的描邊路徑。有些上傳的 SVG 可能只有填色。",
+      "background": "選擇匯出 PNG 的背景色。透明背景最適合用於應用程式和網站圖示。",
+      "padding": "在圖示與圖片邊緣之間加入內距。適合應用程式圖示和社群頭像。",
+      "quality": "放大輸出解析度。64px 的 2x 會產生 128px 圖片。Retina/HiDPI 顯示器建議使用 2x 或 3x。",
+      "resetDefaults": "重設為預設值",
+      "mode": "圖示模式保留細小符號和鏤空；標誌模式針對扁平品牌圖與點陣標誌最佳化。",
+      "preset": "自動會選擇最佳描摹路徑。緊湊偏向較小 SVG。精確在重視保真度時保留更多細節。",
+      "outputSize": "自動會使用實用的匯出尺寸。原始保留裁切後 PNG 尺寸。自訂可設定 px 寬度並自動推算高度。這會改變匯出尺寸，不是預覽大小，也通常不會減少 SVG KB，除非路徑被簡化。",
+      "previewBackground": "只變更預覽表面，方便你在不同背景上檢查描摹後的 SVG。",
+      "compare": "在描摹結果和原始來源之間切換，以判斷保真度。",
+      "helpers": "自動裁切會移除來源圖片周圍的空白邊，通常能讓標誌和圖示結果更乾淨。"
+    },
+    "options": {
+      "transparent": "透明",
+      "white": "白色",
+      "black": "黑色",
+      "custom": "自訂",
+      "icon": "圖示",
+      "logo": "標誌",
+      "auto": "自動",
+      "compact": "精簡",
+      "exact": "精確",
+      "balanced": "平衡",
+      "original": "原始",
+      "autoCrop": "自動裁切",
+      "compare": {
+        "trace": "預設",
+        "split": "分割"
+      },
+      "noise": {
+        "low": "低",
+        "medium": "中",
+        "high": "高"
+      }
+    },
+    "status": {
+      "tracingPreview": "正在描摹預覽…",
+      "renderingPreview": "正在渲染預覽…",
+      "tracingPresetPreview": "正在描摹 {preset} 預覽…",
+      "proofServiceHelp": "在第二個終端機中啟動 npm run converter:proof-service，同時保持 npm run dev 執行。",
+      "proofServiceOffline": "本機 PNG 轉 SVG 服務離線。",
+      "proofServiceMeta": "可靠的彩色描摹需要本機向量服務。",
+      "svgDecodeFailure": "無法將此 SVG 柵格化。",
+      "browserExportFailure": "瀏覽器圖片匯出可能會因不支援的嵌入資源而失敗。",
+      "commonSvgFailureCauses": "常見原因：外部網頁字體、遠端圖片或不支援的嵌入資源。",
+      "browserPipelineFailure": "瀏覽器圖片流程無法柵格化此 SVG。常見原因包括外部網頁字體、遠端圖片或不支援的嵌入資源。"
+    },
+    "advice": {
+      "externalFontsText": "已移除外部網頁字體匯入，以便此 SVG 可以渲染。除非先把文字轉為路徑，否則 PNG 可能會使用備用字體。",
+      "externalFonts": "已移除外部網頁字體匯入，讓此 SVG 能在瀏覽器匯出流程中穩定渲染。",
+      "exactLarge": "「精確」會保留更多細節，也可能產生更大的 SVG。如果想要更小的檔案，請切換到「緊湊」。",
+      "svgLarge": "這個 SVG 偏大。如果想要更小的檔案，請切換到「緊湊」。"
+    },
+    "toasts": {
+      "pngCopied": "PNG 已複製到剪貼簿！",
+      "svgCopied": "SVG 程式碼已複製！",
+      "copyFailed": "複製失敗，請改用下載",
+      "invalidSvg": "無效的 SVG",
+      "svgRenderFailed": "SVG 渲染失敗"
+    },
+    "upsell": {
+      "eyebrow": "Pro 功能",
+      "title": "匯出 {context} 需要 Pro",
+      "body": "你仍可免費預覽並調整設定。訂閱後即可下載檔案或複製轉換後的輸出。",
+      "dismiss": "稍後再說"
+    },
+    "mobile": {
+      "aria": "轉換器行動版提示",
+      "eyebrow": "桌面優先工具",
+      "title": "轉換器已針對桌面最佳化",
+      "copy": "你可以在這裡預覽轉換器；若要使用完整工作區轉換和匯出檔案，請在較大的螢幕上開啟 Supericons。",
+      "hint": "在較小螢幕上會維持唯讀，讓介面清楚而不擁擠。"
+    },
+    "lab": {
+      "experimentalRoute": "實驗路線",
+      "intro": "此實驗室與穩定版轉換器隔離。它會分開保存設定，方便我們測試想法而不改動目前的正式瀏覽器流程。",
+      "openStable": "開啟穩定版轉換器",
+      "strategy": "實驗室策略",
+      "strategyHelp": "策略只影響實驗室路線。穩定基線會符合目前轉換器。品牌色優先是針對彩色標誌的實驗路徑。",
+      "starterProfiles": "實驗室起始設定",
+      "starterHelp": "這些是僅供實驗室使用的輔助預設，不會改變穩定版轉換器，只用來加快並排測試。",
+      "liveSummary": "即時實驗室摘要",
+      "configured": "已設定",
+      "browserOnly": "僅瀏覽器",
+      "noTraceMetrics": "尚無描摹指標",
+      "pathMetrics": "{count} 條路徑 · {complexity}",
+      "notResolved": "尚未解析",
+      "summary": {
+        "mode": "模式",
+        "strategy": "策略",
+        "assetMode": "資產模式",
+        "preset": "預設",
+        "compare": "比較",
+        "proofService": "驗證服務",
+        "traceRoute": "描摹路線",
+        "traceClass": "描摹類別",
+        "serviceMode": "服務模式",
+        "serviceQuality": "服務品質",
+        "traceSummary": "描摹摘要",
+        "exportTarget": "匯出目標"
+      },
+      "strategies": {
+        "stable": {
+          "label": "穩定基線",
+          "note": "使用與目前正式轉換器相同的路線選擇邏輯。"
+        },
+        "brand-color-first": {
+          "label": "品牌色優先",
+          "note": "實驗性標誌策略，避免單色彩色標記過早進入單色路線。"
+        }
+      },
+      "starters": {
+        "safe-full-color": {
+          "label": "安全全彩",
+          "note": "適合作為多色標誌或插圖的保守起點。"
+        },
+        "flat-logo-pass": {
+          "label": "扁平標誌首輪",
+          "note": "針對扁平彩色標誌圖稿的更銳利首輪設定。"
+        },
+        "tiny-interface-icon": {
+          "label": "細小介面圖示",
+          "note": "為小型 UI 圖示來源保留細節的設定。"
+        },
+        "single-color-mark": {
+          "label": "單色標記",
+          "note": "適合簡單品牌標記和文字標誌的精簡設定。"
+        },
+        "small-colored-badge": {
+          "label": "小型彩色徽章",
+          "note": "適合小型彩色標記或徽章的緊湊圖示設定。"
+        },
+        "high-contrast-mask": {
+          "label": "高對比遮罩",
+          "note": "適合剪影或遮罩類輸入的強力起點。"
+        }
+      },
+      "title": "轉換器實驗室"
+    }
+  }
+}

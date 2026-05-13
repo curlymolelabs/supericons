@@ -5,21 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SuperIcons | Find Icons by Meaning</title>
+    <title>Supericons | Find Icons by Meaning</title>
     <meta name="description"
         content="20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.">
     <link rel="canonical" href="https://supericons.dev/">
+    <link rel="alternate" hreflang="x-default" href="https://supericons.dev/">
+    <link rel="alternate" hreflang="en" href="https://supericons.dev/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://supericons.dev/?locale=zh-Hans">
+    <link rel="alternate" hreflang="zh-Hant" href="https://supericons.dev/?locale=zh-Hant">
+    <link rel="alternate" hreflang="ja" href="https://supericons.dev/?locale=ja">
+    <link rel="alternate" hreflang="ko" href="https://supericons.dev/?locale=ko">
+    <link rel="alternate" hreflang="es" href="https://supericons.dev/?locale=es">
+    <link rel="alternate" hreflang="de" href="https://supericons.dev/?locale=de">
+    <link rel="alternate" hreflang="pt" href="https://supericons.dev/?locale=pt">
+    <link rel="alternate" hreflang="ar" href="https://supericons.dev/?locale=ar">
+    <link rel="alternate" hreflang="hi" href="https://supericons.dev/?locale=hi">
+    <link rel="alternate" hreflang="vi" href="https://supericons.dev/?locale=vi">
+    <link rel="alternate" hreflang="th" href="https://supericons.dev/?locale=th">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="SuperIcons | Find Icons by Meaning">
+    <meta property="og:title" content="Supericons | Find Icons by Meaning">
     <meta property="og:description"
         content="20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.">
-    <meta property="og:site_name" content="SuperIcons">
+    <meta property="og:site_name" content="Supericons">
     <meta property="og:image" content="https://supericons.dev/og-image.png">
     <meta property="og:url" content="https://supericons.dev/">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SuperIcons | Find Icons by Meaning">
+    <meta name="twitter:title" content="Supericons | Find Icons by Meaning">
     <meta name="twitter:description" content="20,000+ curated icons for builders and AI coding agents.">
     <meta name="twitter:image" content="https://supericons.dev/og-image.png">
 
@@ -31,7 +44,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "SuperIcons",
+      "name": "Supericons",
       "url": "https://supericons.dev/",
       "description": "20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.",
       "applicationCategory": "DesignApplication",
@@ -75,7 +88,7 @@
             <div class="icon-rain" id="iconRain" aria-hidden="true"></div>
             <div class="landing-hero__inner">
                 <div class="landing-hero__content">
-                    <a class="landing-hero__brand" href="/" aria-label="Supericons home">
+                    <a class="landing-hero__brand" href="/" aria-label="Supericons home" data-i18n-aria-label="landing.homeAriaLabel">
                         <svg class="landing-hero__brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="100 120 280 280"
                             fill="currentColor" width="34" height="34" aria-hidden="true">
                             <path
@@ -84,31 +97,31 @@
                         </svg>
                         <span class="landing-hero__brand-name">Supericons</span>
                     </a>
-                    <h1 class="landing-hero__h1">Find icons<br>by meaning.</h1>
-                    <p class="landing-hero__subtitle">20,000+ curated icons for builders and AI coding agents.
+                    <h1 class="landing-hero__h1" data-i18n="landing.heroTitle">Find icons by meaning.</h1>
+                    <p class="landing-hero__subtitle" data-i18n="landing.heroSubtitle">20,000+ curated icons for builders and AI coding agents.
                         Search by words, use case, or UI slot.</p>
                     <div class="landing-hero__cta">
                         <button class="landing-hero__btn" id="heroSearchBtn">
                             <span class="material-symbols-outlined" style="font-size:18px">search</span>
-                            Start searching
+                            <span data-i18n="landing.startSearching">Start searching</span>
                         </button>
                     </div>
                     <div class="landing-hero__stats">
                         <div class="landing-stat">
                             <span class="landing-stat__num">20,000+</span>
-                            <span class="landing-stat__label">Icons</span>
+                            <span class="landing-stat__label" data-i18n="landing.stats.icons">Icons</span>
                         </div>
                         <div class="landing-stat">
                             <span class="landing-stat__num">10</span>
-                            <span class="landing-stat__label">Libraries</span>
+                            <span class="landing-stat__label" data-i18n="landing.stats.libraries">Libraries</span>
                         </div>
                         <div class="landing-stat">
                             <span class="landing-stat__num">13</span>
-                            <span class="landing-stat__label">MCP Tools</span>
+                            <span class="landing-stat__label" data-i18n="landing.stats.mcpTools">MCP Tools</span>
                         </div>
                         <div class="landing-stat">
-                            <span class="landing-stat__num">Semantic</span>
-                            <span class="landing-stat__label">Search</span>
+                            <span class="landing-stat__num" data-i18n="landing.stats.semantic">Semantic</span>
+                            <span class="landing-stat__label" data-i18n="landing.stats.search">Search</span>
                         </div>
                     </div>
                 </div>
@@ -120,12 +133,12 @@
             <div class="landing-mcp__inner">
                 <div class="landing-mcp__header">
                     <span class="material-symbols-outlined landing-mcp__icon">smart_toy</span>
-                    <h2 class="landing-mcp__title">Works with MCP-capable coding agents</h2>
-                    <button class="landing-mcp__close" id="mcpCloseBtn" title="Close">
+                    <h2 class="landing-mcp__title" data-i18n="landing.mcpTitle">Works with MCP-capable coding agents</h2>
+                    <button class="landing-mcp__close" id="mcpCloseBtn" title="Close" aria-label="Close" data-i18n-aria-label="actions.close">
                         <span class="material-symbols-outlined" style="font-size:18px">close</span>
                     </button>
                 </div>
-                <p class="landing-mcp__subtitle">Let agents search Supericons and paste SVGs into your code.</p>
+                <p class="landing-mcp__subtitle" data-i18n="landing.mcpSubtitle">Let agents search Supericons and paste SVGs into your code.</p>
                 <div class="landing-mcp__editors">
                     <span class="editor-badge">Claude Code</span>
                     <span class="editor-badge">Codex</span>
@@ -136,7 +149,7 @@
                     <span class="editor-badge">Windsurf</span>
                 </div>
                 <div class="landing-mcp__install">
-                    <div class="landing-mcp__install-label">Add to your MCP config:</div>
+                    <div class="landing-mcp__install-label" data-i18n="landing.addToMcpConfig">Add to your MCP config:</div>
                     <div class="landing-mcp__code-block" id="mcpConfigBlock">
                         <pre class="landing-mcp__pre"><code>{
   "mcpServers": {
@@ -146,12 +159,12 @@
     }
   }
 }</code></pre>
-                        <button class="landing-mcp__copy-btn" id="mcpCopyBtn" title="Copy config">
+                        <button class="landing-mcp__copy-btn" id="mcpCopyBtn" title="Copy config" aria-label="Copy config" data-i18n-aria-label="landing.copyConfig">
                             <span class="material-symbols-outlined" style="font-size:16px">content_copy</span>
-                            Copy
+                            <span data-i18n="landing.copy">Copy</span>
                         </button>
                     </div>
-                    <a href="/?view=docs" class="landing-mcp__docs-link" id="landingMcpDocsLink">Open setup guides and MCP docs</a>
+                    <a href="/?view=docs" class="landing-mcp__docs-link" id="landingMcpDocsLink" data-i18n="landing.openMcpDocs">Open setup guides and MCP docs</a>
                 </div>
             </div>
         </section>
@@ -161,7 +174,8 @@
 
         <!-- Header -->
         <header class="header" id="header">
-            <button class="header__btn sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" data-tip="Menu">
+            <button class="header__btn sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" data-tip="Menu"
+                data-i18n-aria-label="app.menu" data-i18n-data-tip="app.menu">
                 <span class="material-symbols-outlined">menu</span>
             </button>
             <a class="header__logo" href="/">
@@ -177,28 +191,48 @@
             <div class="header__search">
                 <span class="material-symbols-outlined header__search-icon">search</span>
                 <input type="text" class="header__search-input" id="searchInput" placeholder="Search 20,000+ icons..."
-                    autocomplete="off" spellcheck="false">
+                    autocomplete="off" spellcheck="false" data-i18n-placeholder="app.searchPlaceholder"
+                    data-i18n-aria-label="app.searchAriaLabel">
                 <span class="header__search-shortcut" id="searchShortcut">/</span>
                 <button class="header__search-clear" id="searchClear" aria-label="Clear search" style="display:none;">
                     <span class="material-symbols-outlined" style="font-size:16px">close</span>
                 </button>
                 <div class="search-history" id="searchHistory" hidden>
                     <div class="search-history__header">
-                        <span class="search-history__title">Recent searches</span>
-                        <button type="button" class="search-history__clear" id="searchHistoryClear">Clear</button>
+                        <span class="search-history__title" data-i18n="app.recentSearches">Recent searches</span>
+                        <button type="button" class="search-history__clear" id="searchHistoryClear" data-i18n="actions.clear">Clear</button>
                     </div>
                     <div class="search-history__list" id="searchHistoryList"></div>
                 </div>
             </div>
 
+            <button class="header__btn header__search-toggle" id="searchToggle" aria-label="Open search"
+                aria-expanded="false" data-tip="Search" data-i18n-aria-label="app.openSearch"
+                data-i18n-data-tip="app.searchAriaLabel">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+
 
 
             <div class="header__actions">
+                <div class="header__locale" id="localeSelectWrap">
+                    <span class="sr-only" data-i18n="app.language">Language</span>
+                    <button class="header__locale-select" id="localeSelect" type="button" aria-label="Language"
+                        aria-haspopup="listbox" aria-expanded="false" data-i18n-aria-label="app.language">
+                        <span class="material-symbols-outlined header__locale-icon" aria-hidden="true">language</span>
+                        <span class="header__locale-label" id="localeSelectLabel">English</span>
+                        <span class="material-symbols-outlined header__locale-chevron" aria-hidden="true">expand_more</span>
+                    </button>
+                    <div class="header__locale-menu" id="localeMenu" role="listbox" aria-label="Language"
+                        data-i18n-aria-label="app.language" hidden></div>
+                </div>
                 <button class="header__btn" id="multiSelectToggle" aria-label="Toggle multi-select"
-                    data-tip="Multi-select">
+                    data-tip="Multi-select" data-i18n-aria-label="actions.toggleMultiSelect"
+                    data-i18n-data-tip="actions.multiSelect">
                     <span class="material-symbols-outlined">select_all</span>
                 </button>
-                <button class="header__btn" id="panelToggle" aria-label="Toggle customize panel" data-tip="Customize">
+                <button class="header__btn" id="panelToggle" aria-label="Toggle customize panel" data-tip="Customize"
+                    data-i18n-aria-label="actions.toggleCustomizePanel" data-i18n-data-tip="actions.customize">
                     <span class="material-symbols-outlined">tune</span>
                 </button>
                 <button class="header__btn" id="themeToggle" aria-label="Light Mode" data-tip="Light Mode">
@@ -206,9 +240,9 @@
                 </button>
 
                 <!-- Auth: Sign In button (logged out) -->
-                <button class="auth-signin-btn" id="authSignInBtn" aria-label="Sign in">
+                <button class="auth-signin-btn" id="authSignInBtn" aria-label="Sign in" data-i18n-aria-label="app.signIn">
                     <span class="material-symbols-outlined auth-signin-btn__icon" aria-hidden="true">account_circle</span>
-                    <span class="auth-signin-btn__text">Sign in</span>
+                    <span class="auth-signin-btn__text" data-i18n="app.signIn">Sign in</span>
                 </button>
 
                 <!-- Auth: Avatar button (logged in) -->
@@ -227,23 +261,23 @@
                         <div class="auth-dropdown__divider"></div>
                         <button class="auth-dropdown__item" id="authAccountBtn">
                             <span class="material-symbols-outlined" style="font-size:16px">account_circle</span>
-                            Account
+                            <span data-i18n="account.menu.account">Account</span>
                         </button>
                         <button class="auth-dropdown__item" id="authMyPurchases">
                             <span class="material-symbols-outlined" style="font-size:16px">shopping_bag</span>
-                            My Purchases
+                            <span data-i18n="account.menu.purchases">My Purchases</span>
                         </button>
                         <button class="auth-dropdown__item" id="authApiKeysBtn">
                             <span class="material-symbols-outlined" style="font-size:16px">key</span>
-                            API Keys
+                            <span data-i18n="account.menu.apiKeys">API Keys</span>
                         </button>
                         <button class="auth-dropdown__item" id="authManageSubscription" style="display:none">
                             <span class="material-symbols-outlined" style="font-size:16px">credit_card</span>
-                            Manage Subscription
+                            <span data-i18n="account.menu.manageSubscription">Manage Subscription</span>
                         </button>
                         <button class="auth-dropdown__item" id="authSignOutBtn">
                             <span class="material-symbols-outlined" style="font-size:16px">logout</span>
-                            Sign out
+                            <span data-i18n="account.menu.signOut">Sign out</span>
                         </button>
                     </div>
                 </div>
@@ -255,27 +289,27 @@
 
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
-                <div class="sidebar__section-title">Browse</div>
+                <div class="sidebar__section-title" data-i18n="nav.browse">Browse</div>
                 <div class="sidebar__item active" data-library="all">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="all">apps</span>
-                    <span class="sidebar__item-name">All Icons</span>
+                    <span class="sidebar__item-name" data-i18n="app.allIcons">All Icons</span>
                     <span class="sidebar__item-count" id="countAll">0</span>
                 </div>
                 <div class="sidebar__item" data-library="favorites">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="favorites">favorite</span>
-                    <span class="sidebar__item-name">Favorites</span>
+                    <span class="sidebar__item-name" data-i18n="app.favorites">Favorites</span>
                     <span class="sidebar__item-count" id="countFavorites">0</span>
                 </div>
                 <div class="sidebar__item" data-library="recent">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="recent">schedule</span>
-                    <span class="sidebar__item-name">Recent</span>
+                    <span class="sidebar__item-name" data-i18n="app.recent">Recent</span>
                     <span class="sidebar__item-count" id="countRecent">0</span>
                 </div>
 
                 <div class="sidebar__divider"></div>
 
                 <div class="sidebar__section-title sidebar__section-title--collapsible" id="librariesToggle">
-                    Libraries
+                    <span data-i18n="nav.libraries">Libraries</span>
                     <span class="material-symbols-outlined sidebar__collapse-icon" id="librariesChevron">expand_more</span>
                 </div>
                 <div class="sidebar__collapsible" id="librariesList">
@@ -286,35 +320,35 @@
 
                 <div class="sidebar__divider"></div>
 
-                <div class="sidebar__section-title sidebar__section-title--pro">Premium Collections</div>
+                <div class="sidebar__section-title sidebar__section-title--pro" data-i18n="nav.premiumCollections">Premium Collections</div>
                 <div class="sidebar__item" data-library="animated-packs" id="sidebarAnimatedPacks">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="collections">collections_bookmark</span>
-                    <span class="sidebar__item-name">Collections</span>
+                    <span class="sidebar__item-name" data-i18n="nav.collections">Collections</span>
                     <span class="sidebar__item-count">8</span>
                 </div>
                 <div class="sidebar__item" data-library="my-downloads" id="sidebarMyDownloads" style="display:none">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="my-downloads">folder_special</span>
-                    <span class="sidebar__item-name">My Collection</span>
+                    <span class="sidebar__item-name" data-i18n="nav.myCollection">My Collection</span>
                     <span class="sidebar__item-count" id="countDownloads">0</span>
                 </div>
 
                 <div class="sidebar__divider"></div>
 
-                <div class="sidebar__section-title">Tools</div>
+                <div class="sidebar__section-title" data-i18n="nav.tools">Tools</div>
                 <div class="sidebar__item" id="sidebarMotionLab">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="motionlab">animation</span>
-                    <span class="sidebar__item-name">Motion Lab</span>
+                    <span class="sidebar__item-name" data-i18n="tools.motionLab">Motion Lab</span>
                 </div>
                 <div class="sidebar__item" id="sidebarConverter">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="converter">swap_horiz</span>
-                    <span class="sidebar__item-name">Converter</span>
+                    <span class="sidebar__item-name" data-i18n="tools.converter">Converter</span>
                 </div>
 
                 <div class="sidebar__divider"></div>
 
                 <div class="sidebar__item" id="sidebarPricing">
                     <span class="material-symbols-outlined sidebar__item-icon" data-sidebar-icon="pricing">payments</span>
-                    <span class="sidebar__item-name">Pricing</span>
+                    <span class="sidebar__item-name" data-i18n="nav.pricing">Pricing</span>
                 </div>
             </aside>
 
@@ -322,7 +356,7 @@
             <main class="grid-area" id="gridArea">
                 <div class="grid-header">
                     <div>
-                        <h1 class="grid-header__title" id="gridTitle">All Icons</h1>
+                        <h1 class="grid-header__title" id="gridTitle" data-i18n="app.allIcons">All Icons</h1>
                         <span class="grid-header__meta" id="gridMeta">Loading icon libraries...</span>
                     </div>
                     <div class="grid-header__actions">
@@ -337,24 +371,25 @@
                             </svg>
                         </button>
 
-                        <div class="grid-filter-bar" aria-label="Tag filters">
+                        <div class="grid-filter-bar" aria-label="Tag filters" data-i18n-aria-label="filters.tagFilters">
                             <div class="grid-filter-bar__menu-wrap">
                                 <button class="grid-filter-bar__select" id="useCaseFilters" type="button"
                                     aria-haspopup="listbox" aria-expanded="false" aria-label="Tags"
-                                    data-tip="Tags">
+                                    data-tip="Tags" data-i18n-aria-label="filters.tags" data-i18n-data-tip="filters.tags">
                                     <span class="grid-filter-bar__select-text" id="useCaseFilterText">TAGS</span>
                                     <span class="material-symbols-outlined grid-filter-bar__select-icon"
                                         aria-hidden="true">expand_more</span>
                                 </button>
                                 <div class="grid-filter-bar__menu" id="useCaseFilterMenu" role="listbox"
-                                    aria-label="Tags" hidden></div>
+                                    aria-label="Tags" data-i18n-aria-label="filters.tags" hidden></div>
                             </div>
                         </div>
                         <button class="grid-header__view-btn active" id="styleOutline" aria-label="Outline style"
-                            data-tip="Outline">
+                            data-tip="Outline" data-i18n-aria-label="style.outlineStyle" data-i18n-data-tip="style.outline">
                             <span class="material-symbols-outlined" style="font-size:20px">circle</span>
                         </button>
-                        <button class="grid-header__view-btn" id="styleSolid" aria-label="Solid style" data-tip="Solid">
+                        <button class="grid-header__view-btn" id="styleSolid" aria-label="Solid style" data-tip="Solid"
+                            data-i18n-aria-label="style.solidStyle" data-i18n-data-tip="style.solid">
                             <span class="material-symbols-outlined"
                                 style="font-size:20px;font-variation-settings:'FILL' 1">circle</span>
                         </button>
@@ -367,7 +402,7 @@
 
                 <div class="grid-empty" id="gridEmpty">
                     <span class="material-symbols-outlined grid-empty__icon">auto_awesome</span>
-                    <h2 class="grid-empty__title">Welcome to SuperIcons</h2>
+                    <h2 class="grid-empty__title">Welcome to Supericons</h2>
                     <p class="grid-empty__text">20,000+ icons across 10 libraries including Material Symbols, Lucide,
                         Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in
                         seconds.</p>
@@ -377,8 +412,8 @@
             <!-- Customize Panel -->
             <aside class="panel" id="panel">
                 <div class="panel__header">
-                    <span class="panel__title">Customize</span>
-                    <button class="panel__close" id="panelClose" aria-label="Close panel">
+                    <span class="panel__title" data-i18n="actions.customize">Customize</span>
+                    <button class="panel__close" id="panelClose" aria-label="Close panel" data-i18n-aria-label="actions.close">
                         <span class="material-symbols-outlined" style="font-size:18px">close</span>
                     </button>
                 </div>
@@ -390,7 +425,7 @@
 
                 <div class="panel__placeholder">
                     <span class="material-symbols-outlined panel__placeholder-icon">touch_app</span>
-                    <p class="panel__placeholder-text">Select an icon from the grid to customize it</p>
+                    <p class="panel__placeholder-text" data-i18n="panels.selectIcon">Select an icon from the grid to customize it</p>
                 </div>
             </aside>
         </div>
@@ -398,10 +433,10 @@
         <!-- Compare Drawer -->
         <div class="compare-drawer" id="compareDrawer">
             <div class="compare-drawer__header">
-                <span class="compare-drawer__title">Compare (<span id="compareCount">0</span>)</span>
+                <span class="compare-drawer__title"><span data-i18n="panels.compareLabel">Compare</span> (<span id="compareCount">0</span>)</span>
                 <div class="compare-drawer__actions">
-                    <button class="compare-drawer__clear" id="compareClearAll">Clear all</button>
-                    <button class="compare-drawer__close" id="compareDrawerClose">
+                    <button class="compare-drawer__clear" id="compareClearAll" data-i18n="actions.clearAll">Clear all</button>
+                    <button class="compare-drawer__close" id="compareDrawerClose" aria-label="Close" data-i18n-aria-label="actions.close">
                         <span class="material-symbols-outlined" style="font-size:18px">close</span>
                     </button>
                 </div>
@@ -418,11 +453,11 @@
             <div class="footer__right">
                 <a href="https://github.com/curlymolelabs" target="_blank" rel="noopener"
                     class="footer__link">GitHub</a>
-                <a href="#" class="footer__link" id="footerPricingLink">Pricing</a>
-                <a href="#" class="footer__link" id="footerPrivacyLink">Privacy</a>
-                <a href="#" class="footer__link" id="footerTermsLink">Terms</a>
-                <a href="/?view=docs" class="footer__link" id="footerDocsLink">Docs</a>
-                <a href="#" class="footer__link" id="footerContactLink" data-open-contact="true">Contact</a>
+                <a href="#" class="footer__link" id="footerPricingLink" data-i18n="nav.pricing">Pricing</a>
+                <a href="#" class="footer__link" id="footerPrivacyLink" data-i18n="nav.privacy">Privacy</a>
+                <a href="#" class="footer__link" id="footerTermsLink" data-i18n="nav.terms">Terms</a>
+                <a href="/?view=docs" class="footer__link" id="footerDocsLink" data-i18n="nav.docs">Docs</a>
+                <a href="#" class="footer__link" id="footerContactLink" data-open-contact="true" data-i18n="nav.contact">Contact</a>
             </div>
         </footer>
 
@@ -430,27 +465,27 @@
         <div class="contact-modal" id="contactModal">
             <div class="contact-modal__backdrop" id="contactBackdrop"></div>
             <div class="contact-modal__card">
-                <button class="contact-modal__close" id="contactClose">
+                <button class="contact-modal__close" id="contactClose" aria-label="Close" data-i18n-aria-label="actions.close">
                     <span class="material-symbols-outlined">close</span>
                 </button>
-                <h2 class="contact-modal__title">Get in touch</h2>
-                <p class="contact-modal__desc">Questions, feedback, or partnership inquiries? We'd love to hear from
+                <h2 class="contact-modal__title" data-i18n="contact.title">Get in touch</h2>
+                <p class="contact-modal__desc" data-i18n="contact.description">Questions, feedback, or partnership inquiries? We'd love to hear from
                     you.</p>
                 <form class="contact-form" id="contactForm">
-                    <input type="text" class="contact-form__input" id="contactName" placeholder="Your name" required
+                    <input type="text" class="contact-form__input" id="contactName" placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder" required
                         autocomplete="name">
-                    <input type="email" class="contact-form__input" id="contactEmail" placeholder="Your email" required
+                    <input type="email" class="contact-form__input" id="contactEmail" placeholder="Your email" data-i18n-placeholder="contact.emailPlaceholder" required
                         autocomplete="email">
                     <textarea class="contact-form__input contact-form__textarea" id="contactMessage"
-                        placeholder="Your message" required rows="3"></textarea>
+                        placeholder="Your message" data-i18n-placeholder="contact.messagePlaceholder" required rows="3"></textarea>
                     <button type="submit" class="contact-form__submit" id="contactSubmit">
                         <span class="material-symbols-outlined" style="font-size:16px">send</span>
-                        Send message
+                        <span data-i18n="contact.sendMessage">Send message</span>
                     </button>
                     <div class="contact-form__status" id="contactStatus"></div>
                 </form>
                 <div class="contact-modal__links">
-                    <span>or email directly:</span>
+                    <span data-i18n="contact.emailDirectly">or email directly:</span>
                     <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>
                 </div>
             </div>
@@ -460,7 +495,7 @@
         <div class="auth-modal" id="authModal">
             <div class="auth-modal__backdrop" id="authBackdrop"></div>
             <div class="auth-modal__card">
-                <button class="auth-modal__close" id="authClose">
+                <button class="auth-modal__close" id="authClose" aria-label="Close" data-i18n-aria-label="actions.close">
                     <span class="material-symbols-outlined" style="font-size:18px">close</span>
                 </button>
                 <h2 class="auth-modal__title" id="authModalTitle">Sign in to Supericons</h2>
@@ -470,18 +505,18 @@
                 <div class="auth-modal__stage" id="authFormStage">
                     <button class="auth-modal__google" id="authGoogleBtn">
                         <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.1 24.1 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                        Continue with Google
+                        <span data-i18n="auth.continueWithGoogle">Continue with Google</span>
                     </button>
 
                     <div class="auth-modal__divider">
-                        <span>or</span>
+                        <span data-i18n="auth.or">or</span>
                     </div>
 
                     <form class="auth-form" id="authForm">
-                        <input type="email" class="auth-form__input" id="authEmail" name="email" placeholder="Email address" required autocomplete="email username" />
-                        <input type="password" class="auth-form__input" id="authPassword" name="password" placeholder="Password" required autocomplete="current-password" minlength="6" />
+                        <input type="email" class="auth-form__input" id="authEmail" name="email" placeholder="Email address" data-i18n-placeholder="auth.emailPlaceholder" required autocomplete="email username" />
+                        <input type="password" class="auth-form__input" id="authPassword" name="password" placeholder="Password" data-i18n-placeholder="auth.passwordPlaceholder" required autocomplete="current-password" minlength="6" />
                         <div class="auth-form__meta" id="authForgotWrap">
-                            <button type="button" class="auth-form__link" id="authForgotBtn">Forgot password?</button>
+                            <button type="button" class="auth-form__link" id="authForgotBtn" data-i18n="auth.forgotPassword">Forgot password?</button>
                         </div>
                         <button type="submit" class="auth-form__submit" id="authSubmitBtn">
                             <span id="authSubmitText">Sign in</span>
@@ -502,25 +537,25 @@
                     <div class="auth-verify__actions">
                         <button type="button" class="auth-modal__google auth-verify__google" id="authVerifyGoogleBtn">
                             <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.1 24.1 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                            Continue with Google
+                            <span data-i18n="auth.continueWithGoogle">Continue with Google</span>
                         </button>
-                        <button type="button" class="auth-verify__btn" id="authVerifyResendBtn">Resend confirmation</button>
-                        <button type="button" class="auth-verify__btn" id="authVerifyBackBtn">Back to sign in</button>
+                        <button type="button" class="auth-verify__btn" id="authVerifyResendBtn" data-i18n="auth.resendConfirmation">Resend confirmation</button>
+                        <button type="button" class="auth-verify__btn" id="authVerifyBackBtn" data-i18n="auth.backToSignIn">Back to sign in</button>
                     </div>
                 </div>
 
                 <div class="auth-modal__stage auth-verify" id="authForgotStage" hidden>
                     <span class="material-symbols-outlined auth-verify__icon">lock_reset</span>
-                    <h3 class="auth-verify__title">Reset your password</h3>
-                    <p class="auth-verify__text">Enter your account email and we'll send you a secure reset link.</p>
+                    <h3 class="auth-verify__title" data-i18n="auth.forgot.title">Reset your password</h3>
+                    <p class="auth-verify__text" data-i18n="auth.forgot.description">Enter your account email and we'll send you a secure reset link.</p>
                     <form class="auth-form" id="authForgotForm">
-                        <input type="email" class="auth-form__input" id="authForgotEmail" name="email" placeholder="Email address" required autocomplete="email username" />
+                        <input type="email" class="auth-form__input" id="authForgotEmail" name="email" placeholder="Email address" data-i18n-placeholder="auth.emailPlaceholder" required autocomplete="email username" />
                         <button type="submit" class="auth-form__submit" id="authForgotSubmitBtn">
                             <span id="authForgotSubmitText">Send reset link</span>
                         </button>
                         <div class="auth-modal__status" id="authForgotStatus"></div>
                     </form>
-                    <button type="button" class="auth-verify__btn" id="authForgotBackBtn">Back to sign in</button>
+                    <button type="button" class="auth-verify__btn" id="authForgotBackBtn" data-i18n="auth.backToSignIn">Back to sign in</button>
                 </div>
 
                 <div class="auth-modal__stage auth-verify" id="authResetStage" hidden>
@@ -529,13 +564,24 @@
                     <p class="auth-verify__text" id="authResetText">Choose a new password for your account.</p>
                     <form class="auth-form" id="authResetForm">
                         <input type="email" class="auth-form__input auth-form__input--hidden" id="authResetEmail" name="email" autocomplete="username email" tabindex="-1" aria-hidden="true" />
-                        <input type="password" class="auth-form__input" id="authResetPassword" name="new-password" placeholder="New password" required autocomplete="new-password" minlength="8" />
-                        <input type="password" class="auth-form__input" id="authResetPasswordConfirm" name="confirm-password" placeholder="Confirm new password" required autocomplete="new-password" minlength="8" />
+                        <input type="password" class="auth-form__input" id="authResetPassword" name="new-password" placeholder="New password" data-i18n-placeholder="auth.newPasswordPlaceholder" required autocomplete="new-password" minlength="8" />
+                        <input type="password" class="auth-form__input" id="authResetPasswordConfirm" name="confirm-password" placeholder="Confirm new password" data-i18n-placeholder="auth.confirmPasswordPlaceholder" required autocomplete="new-password" minlength="8" />
                         <button type="submit" class="auth-form__submit" id="authResetSubmitBtn">
                             <span id="authResetSubmitText">Update password</span>
                         </button>
                         <div class="auth-modal__status" id="authResetStatus"></div>
                     </form>
+                </div>
+
+                <div class="auth-modal__stage auth-verify auth-completion" id="authCompletionStage" hidden>
+                    <span class="material-symbols-outlined auth-verify__icon" id="authCompletionIcon">task_alt</span>
+                    <h3 class="auth-verify__title" id="authCompletionTitle">Email confirmed</h3>
+                    <p class="auth-verify__text" id="authCompletionText">Your original Supericons tab has been updated. You can return to it or continue here.</p>
+                    <div class="auth-verify__actions">
+                        <button type="button" class="auth-completion__primary" id="authCompletionContinueBtn">Continue here</button>
+                        <button type="button" class="auth-verify__btn" id="authCompletionCloseTabBtn">Close this tab</button>
+                    </div>
+                    <div class="auth-modal__status auth-completion__status" id="authCompletionStatus"></div>
                 </div>
             </div>
         </div>
@@ -544,11 +590,11 @@
         <div class="auth-modal" id="accountModal">
             <div class="auth-modal__backdrop" id="accountBackdrop"></div>
             <div class="auth-modal__card account-modal__card">
-                <button class="auth-modal__close" id="accountClose">
+                <button class="auth-modal__close" id="accountClose" aria-label="Close" data-i18n-aria-label="actions.close">
                     <span class="material-symbols-outlined" style="font-size:18px">close</span>
                 </button>
-                <h2 class="auth-modal__title">Account</h2>
-                <p class="auth-modal__desc">Manage the basics for your Supericons account without leaving the app.</p>
+                <h2 class="auth-modal__title" data-i18n="account.title">Account</h2>
+                <p class="auth-modal__desc" data-i18n="account.description">Manage the basics for your Supericons account without leaving the app.</p>
 
                 <div class="account-modal__summary">
                     <div class="account-modal__avatar" id="accountAvatarInitial">?</div>
@@ -560,13 +606,13 @@
 
                 <section class="account-modal__section">
                     <div class="account-modal__section-head">
-                        <h3 class="account-modal__section-title">Profile</h3>
-                        <p class="account-modal__section-copy">Choose the display name shown inside Supericons.</p>
+                        <h3 class="account-modal__section-title" data-i18n="account.profile.title">Profile</h3>
+                        <p class="account-modal__section-copy" data-i18n="account.profile.description">Choose the display name shown inside Supericons.</p>
                     </div>
                     <form class="auth-form account-form" id="accountProfileForm">
-                        <input type="text" class="auth-form__input" id="accountDisplayName" name="display-name" placeholder="Display name" maxlength="48" autocomplete="nickname name" />
+                        <input type="text" class="auth-form__input" id="accountDisplayName" name="display-name" placeholder="Display name" data-i18n-placeholder="account.profile.displayNamePlaceholder" maxlength="48" autocomplete="nickname name" />
                         <button type="submit" class="auth-form__submit" id="accountSaveBtn">
-                            <span>Save display name</span>
+                            <span data-i18n="account.profile.saveDisplayName">Save display name</span>
                         </button>
                         <div class="auth-modal__status" id="accountProfileStatus"></div>
                     </form>
@@ -574,8 +620,8 @@
 
                 <section class="account-modal__section">
                     <div class="account-modal__section-head">
-                        <h3 class="account-modal__section-title">Email</h3>
-                        <p class="account-modal__section-copy">Your sign-in email is shown here for reference.</p>
+                        <h3 class="account-modal__section-title" data-i18n="account.email.title">Email</h3>
+                        <p class="account-modal__section-copy" data-i18n="account.email.description">Your sign-in email is shown here for reference.</p>
                     </div>
                     <input type="email" class="auth-form__input account-form__input--readonly" id="accountEmailDisplay" readonly />
                 </section>

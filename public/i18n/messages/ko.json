@@ -1,0 +1,1297 @@
+{
+  "app": {
+    "name": "Supericons",
+    "language": "언어",
+    "searchPlaceholder": "20,000개 이상의 아이콘 검색...",
+    "searchAriaLabel": "아이콘 검색",
+    "docsSearchPlaceholder": "문서 검색",
+    "docsSearchAriaLabel": "문서 검색",
+    "allIcons": "모든 아이콘",
+    "favorites": "즐겨찾기",
+    "recent": "최근",
+    "showingIcons": "아이콘 {total}개 표시",
+    "showingSomeIcons": "아이콘 {total}개 중 {shown}개 표시",
+    "showingResults": "결과 {shown}개 표시",
+    "showingLibraryResults": "{library} 결과 {shown}개 표시",
+    "showingCuratedIcons": "선별된 아이콘 {shown}개 표시",
+    "showingCuratedLibraryIcons": "선별된 {library} 아이콘 {shown}개 표시",
+    "showingOutlineOnly": "아웃라인 표시 중(솔리드 버전 없음)",
+    "solidSuffix": " (솔리드)",
+    "menu": "메뉴",
+    "signIn": "로그인",
+    "lightMode": "라이트 모드",
+    "darkMode": "다크 모드",
+    "openSearch": "검색 열기",
+    "closeSearch": "검색 닫기",
+    "recentSearches": "최근 검색"
+  },
+  "nav": {
+    "browse": "둘러보기",
+    "pricing": "가격",
+    "privacy": "개인정보",
+    "terms": "약관",
+    "docs": "문서",
+    "contact": "문의",
+    "libraries": "라이브러리",
+    "premiumCollections": "프리미엄 컬렉션",
+    "collections": "컬렉션",
+    "tools": "도구",
+    "myCollection": "내 구매"
+  },
+  "actions": {
+    "clear": "지우기",
+    "clearAll": "모두 지우기",
+    "clearSearch": "검색 지우기",
+    "close": "닫기",
+    "customize": "사용자 지정",
+    "multiSelect": "다중 선택",
+    "toggleMultiSelect": "다중 선택 전환",
+    "toggleCustomizePanel": "사용자 지정 패널 전환",
+    "backToIcons": "아이콘으로 돌아가기",
+    "playPreview": "미리보기 재생",
+    "stopPreview": "미리보기 중지",
+    "save": "저장",
+    "saved": "저장됨",
+    "remove": "제거",
+    "cancel": "취소",
+    "clearItems": "항목 지우기",
+    "clearFavorites": "즐겨찾기 지우기",
+    "clearRecent": "최근 항목 지우기",
+    "useThis": "이것 사용",
+    "saveToFavorites": "{name} 즐겨찾기에 저장",
+    "removeFromFavorites": "즐겨찾기에서 {name} 제거"
+  },
+  "panels": {
+    "compare": "비교({count})",
+    "selectIcon": "그리드에서 아이콘을 선택해 사용자 지정하세요",
+    "chooseIcon": "컬렉션 그리드에서 아이콘을 선택하면 미리보기, 재생, 내보내기 컨트롤이 열립니다.",
+    "loadingCustomization": "아이콘 사용자 지정을 불러오는 중...",
+    "compareLabel": "비교"
+  },
+  "filters": {
+    "tagFilters": "태그 필터",
+    "tags": "태그",
+    "tagsWithCount": "태그({count})",
+    "categories": {
+      "ai-agent-workflows": "AI 및 자동화",
+      "navigation-wayfinding": "탐색 및 길찾기",
+      "actions-controls": "동작 및 컨트롤",
+      "status-feedback": "상태 및 피드백",
+      "people-accounts": "사람 및 계정",
+      "communication": "커뮤니케이션",
+      "files-content": "파일 및 콘텐츠",
+      "data-analytics": "데이터 및 분석",
+      "commerce-finance": "상거래 및 금융",
+      "security-access": "보안 및 접근",
+      "media-playback": "미디어 및 재생",
+      "devices-hardware": "기기 및 하드웨어",
+      "code-development": "코드 및 개발",
+      "design-editing": "디자인 및 편집",
+      "maps-places-travel": "지도, 장소 및 여행",
+      "time-calendar": "시간 및 캘린더",
+      "nature-weather-lifestyle": "자연, 날씨 및 생활",
+      "brands-social": "브랜드 및 소셜"
+    }
+  },
+  "tools": {
+    "motionLab": "모션 랩",
+    "converter": "변환기"
+  },
+  "style": {
+    "outline": "윤곽선",
+    "solid": "채움",
+    "outlineStyle": "윤곽선 스타일",
+    "solidStyle": "채움 스타일"
+  },
+  "customize": {
+    "color": "색상",
+    "strokeWidth": "선 두께",
+    "strokeNoEffect": "이 라이브러리는 채워진 경로를 사용합니다. 선 두께는 적용되지 않습니다.",
+    "variableFontAxes": "가변 글꼴 축",
+    "weight": "굵기",
+    "fill": "채움",
+    "grade": "등급",
+    "opticalSize": "광학 크기",
+    "container": "컨테이너",
+    "containerNone": "없음",
+    "containerCircle": "원",
+    "containerSquircle": "스쿼클",
+    "containerPill": "알약형",
+    "containerGlass": "유리",
+    "badgeDot": "배지 점",
+    "lightBackground": "밝은 배경",
+    "animation": "애니메이션",
+    "animationNone": "없음",
+    "animationSpin": "회전",
+    "animationPulse": "펄스",
+    "animationBounce": "바운스",
+    "animationShake": "흔들기",
+    "openInMotionLab": "Motion Lab에서 열기",
+    "export": "내보내기",
+    "copySvg": "SVG 복사",
+    "copyBase64": "Base64 복사",
+    "downloadSvg": "SVG 다운로드",
+    "pngSize": "PNG 크기",
+    "customSizeTitle": "사용자 지정 크기 (8-1024)",
+    "downloadPng": "PNG 다운로드",
+    "downloadIco": "ICO 다운로드",
+    "materialSnapshotHint": "그래픽 내보내기는 정확한 슬라이더 값이 없을 때 가장 가까운 Material 스냅샷을 사용합니다.",
+    "copyAsComponent": "컴포넌트로 복사",
+    "resetToDefaults": "기본값으로 재설정"
+  },
+  "confirm": {
+    "clearFavoritesTitle": "이 기기의 모든 즐겨찾기 지우기",
+    "clearRecentTitle": "이 기기의 최근 아이콘 지우기",
+    "clearFavoritesDescription": "이 브라우저에 저장된 모든 즐겨찾기를 제거합니다. 계정이나 구매한 팩에는 영향을 주지 않습니다.",
+    "clearRecentDescription": "이 브라우저에 저장된 최근 아이콘 기록을 제거합니다. 즐겨찾기, 구매, 계정 접근에는 영향을 주지 않습니다.",
+    "clearItemsTitle": "이 기기의 저장된 항목 지우기",
+    "clearItemsDescription": "현재 브라우저에 저장된 데이터에만 영향을 줍니다.",
+    "thisDevice": "이 기기",
+    "browserStorageOnly": "이 브라우저 저장소만 영향을 받습니다."
+  },
+  "toast": {
+    "favoritesCleared": "이 기기의 즐겨찾기를 지웠습니다",
+    "recentCleared": "이 기기의 최근 아이콘을 지웠습니다"
+  },
+  "docs": {
+    "documentation": "문서",
+    "navigation": "문서 탐색",
+    "goHome": "문서 홈으로 이동",
+    "pageNavigation": "페이지 탐색",
+    "previous": "이전",
+    "next": "다음",
+    "nextSection": "다음 섹션으로 이동",
+    "backToTop": "맨 위로",
+    "noMatchesTitle": "일치하는 문서가 아직 없습니다",
+    "noMatchesHint": "api key, motion lab, converter 또는 pricing을 시도해 보세요.",
+    "groups": {
+      "overview": "개요",
+      "mcp-setup": "MCP 설정",
+      "mcp-reference": "MCP 참조",
+      "motion-lab": "Motion Lab",
+      "converter": "Converter",
+      "access-and-api-keys": "액세스 및 API 키",
+      "troubleshooting": "문제 해결"
+    },
+    "pages": {
+      "docs": {
+        "navLabel": "소개",
+        "kicker": "개요",
+        "pageTitle": "Supericons 문서",
+        "summary": "MCP를 설정하고 Motion Lab을 배우며 Converter를 사용합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"docs-start-here\">\n        <h2 class=\"docs-section__title\">여기서 시작하기</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>빠르게 시작하기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-quickstart\" data-docs-view=\"docs-quickstart\">빠른 시작 가이드 읽기</a>\n            </div>\n            <p>5분 이내에 MCP 서버를 설정하고 첫 번째 아이콘 쿼리를 실행해 보세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>MCP 설정</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">클라이언트 선택</a>\n            </div>\n            <p>Claude Code, Codex CLI, Cursor 및 기타 코딩 에이전트를 위한 단계별 설정.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>MCP로 검색하기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">프롬프트 보기</a>\n            </div>\n            <p>이름, 라이브러리, 사용 사례 또는 의미별로 아이콘을 찾는 프롬프트 예시.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>Motion Lab 알아보기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">가이드 열기</a>\n            </div>\n            <p>프리셋을 탐색하고, 애니메이션을 미리 보고, CSS 또는 SVG 내보내세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>Converter 사용하기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">가이드 열기</a>\n            </div>\n            <p>PNG SVG, SVG PNG 변환하고 소스 이미지에 적합한 설정을 선택하는 방법.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">무료 아이콘 탐색 및 사용자 지정 패널은 앱에서 바로 확인할 수 있습니다. 이 문서 섹션에서는 설정이나 매개 변수 선택이 명확하지 않은 MCP 통합, Motion Lab 및 Converter 대해 다룹니다.</p>\n        <p class=\"docs-section__copy\">Supericons 다음 사이트에도 등록되어 있습니다. <a href=\"https://smithery.ai/servers/curly-mole-labs/supericons\" target=\"_blank\" rel=\"noopener noreferrer\">Smithery</a>.</p>\n      </section>\n    "
+      },
+      "docs-quickstart": {
+        "navLabel": "빠른 시작",
+        "kicker": "개요",
+        "pageTitle": "빠른 시작",
+        "summary": "5분 안에 코딩 에이전트에서 Supericons를 실행합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"quickstart-free\">\n        <h2 class=\"docs-section__title\">무료 설정</h2>\n        <p class=\"docs-section__copy\">무료 아이콘은 계정이나 API 키 없이도 사용할 수 있습니다. 클라이언트에 MCP 서버를 추가하고 검색을 시작하세요.</p>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>서버 추가</h3>\n            <p>아래에서 클라이언트를 선택하거나, 기본 구성 값을 확인하려면 범용 설정 가이드를 열어보세요.</p>\n            <div class=\"docs-link-list docs-link-list--inline\">\n              <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">범용 설정</a>\n              <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a>\n              <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a>\n              <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a>\n              <a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">기타</a>\n            </div>\n          </article>\n          <article class=\"docs-card\">\n            <h3>세션 다시 로드</h3>\n            <p>코딩 에이전트 세션을 다시 시작하세요. Claude Code Code와 Codex에서<code>/mcp</code>를 입력하여 Supericons 목록에 표시되는지 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>첫 번째 쿼리 실행</h3>\n            <p>에이전트에게 아이콘을 찾아달라고 요청하세요. 다음 프롬프트 중 하나를 사용해 보세요:</p>\n            <ul>\n              <li>\" Lucide의 설정 톱니바퀴 아이콘을 찾아줘.\"</li>\n              <li>\" Tabler에서 로딩 스핀너를 검색해 주세요.\"</li>\n              <li>\" Phosphor에서 ID가 heart인 아이콘을 가져와.\"</li>\n            </ul>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"quickstart-premium\">\n        <h2 class=\"docs-section__title\">프리미엄 설정</h2>\n        <p class=\"docs-section__copy\">Supericons 통해 유료 MCP 액세스하려면 먼저 계정 권한을 설정하세요. 프리미엄 팩은 계정에 이미 설정된 권한을 사용합니다. Motion Lab Converter Pro 기능입니다.</p>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>Supericons 계정이 필요합니다. 필요한 팩을 구매하거나, Pro 및 Motion Lab 사용하려면 Converter 구매하세요.</li>\n          <li>API 대시보드의 Supericons Keys'에서 생성된 API 키.</li>\n          <li>MCP 클라이언트 구성에<code>SUPERICONS_API_KEY</code>환경 변수가 MCP 클라이언트 구성에 추가되었습니다.</li>\n        </ol>\n        <p class=\"docs-section__copy\">그런 다음 범용 설정 가이드 또는 사용 중인 클라이언트의 설정 가이드를 따라 키를 추가하세요:</p>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">API 키를 사용한 범용 설정</a>\n          <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code 키를 사용한API</a>\n          <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex 키를 사용한API</a>\n          <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor 키를 사용한API</a>\n          <a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">기타 클라이언트</a>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"quickstart-note\">\n        <h3>귀하의 키는 계정에 이미 부여된 액세스 권한을 사용합니다</h3>\n        <p>API 키 자체로는 새로운 액세스 권한이 생성되지 않습니다. 팩을 구매하면 해당 팩에 포함된 프리미엄 아이콘을 이용할 수 있습니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜이 필요합니다</a>.</p>\n      </section>\n    "
+      },
+      "docs-what-is-supericons": {
+        "navLabel": "Supericons란",
+        "kicker": "개요",
+        "pageTitle": "Supericons란",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"what-is-intro\">\n        <p class=\"docs-section__copy\">Supericons 하나의 검색 가능한 인터페이스에서 10개 라이브러리의 20,000개 이상의 오픈 소스 SVG 아이콘을 제공합니다. 이름, 개념 또는 스타일로 검색할 수 있습니다. 색상, 크기, 획, 채우기를 실시간으로 사용자 지정할 수 있습니다. 한 번의 클릭으로 SVG, PNG 또는 React, Vue, Svelte 컴포넌트로 내보낼 수 있습니다.</p>\n        <p class=\"docs-section__copy\">AI 지원 개발을 위해 Supericons 전용 MCP 서버를 제공합니다. 코딩 에이전트가 브라우저로 전환하지 않고도 아이콘을 검색하고 가져올 수 있습니다. 브라우저에서는 유료 플랜 없이도 Motion Lab 및 Converter 열고, 컨트롤을 사용하며, 결과를 미리 볼 수 있습니다. 최종 결과물을 내보내거나, 다운로드하거나, 복사하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>이 필요합니다. MCP 통해 Motion Lab 및 Converter 도구도 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>의 일부가 됩니다. 팩을 구매하면 구매한 프리미엄 아이콘을 사용할 수 있지만, Motion Lab 이나 Converter 활성화되지 않습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-free-pro\">\n        <h2 class=\"docs-section__title\">무료 vs. Pro</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>기능</th>\n                <th>무료</th>\n                <th>Pro</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>10개 라이브러리의 20,000개 이상의 무료 SVG 아이콘</td><td>예</td><td>예</td></tr>\n              <tr><td>AI 시맨틱 검색</td><td>예</td><td>예</td></tr>\n              <tr><td>실시간 사용자 지정 (색상, 크기, 선, 채우기)</td><td>예</td><td>예</td></tr>\n              <tr><td>SVG, PNG, React, Vue, Svelte로 내보내기</td><td>예</td><td>예</td></tr>\n              <tr><td>MCP: 아이콘 검색 및 가져오기</td><td>예</td><td>예</td></tr>\n              <tr><td>프리미엄 애니메이션 아이콘 컬렉션</td><td>아니요</td><td>예</td></tr>\n              <tr><td>브라우저에서 Open Motion Lab 열고 애니메이션 프리셋을 미리 보기</td><td>예</td><td>예</td></tr>\n              <tr><td>Motion Lab CSS 또는 애니메이션 SVG 내보내기</td><td>아니요</td><td>예</td></tr>\n              <tr><td>Converter 열고 브라우저에서 변환 결과 미리 보기</td><td>예</td><td>예</td></tr>\n              <tr><td>변환된 파일(PNG 또는 SVG) 다운로드</td><td>아니요</td><td>예</td></tr>\n              <tr><td>Motion Lab 통한MCP 도구</td><td>아니요</td><td>예</td></tr>\n              <tr><td>Converter 통한MCP 도구</td><td>아니요</td><td>예</td></tr>\n              <tr><td>30일 누적 청구 (청구 주기당 1회)</td><td>아니요</td><td>예</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-libraries\">\n        <h2 class=\"docs-section__title\">무료 아이콘 라이브러리 10선</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>라이브러리</th>\n                <th>스타일</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>Lucide</td><td>깔끔하고 일관성 있으며 오픈 소스</td></tr>\n              <tr><td>Tabler</td><td>5,000개 이상의 굵은 단행 아이콘</td></tr>\n              <tr><td>Phosphor</td><td>유연하고 다양한 굵기</td></tr>\n              <tr><td>Heroicons</td><td>Tailwind CSS 용, 아웃라인 및 솔리드</td></tr>\n              <tr><td>Bootstrap Icons</td><td>공식 Bootstrap 동반자</td></tr>\n              <tr><td>Iconoir</td><td>고품질의 깔끔한 아웃라인</td></tr>\n              <tr><td>Ionicons</td><td>웹 및 모바일 인터페이스 아이콘</td></tr>\n              <tr><td>Material Symbols</td><td>Google 가변 폰트 아이콘 (두께, 채움, 등급, 광학 크기)</td></tr>\n              <tr><td>MingCute</td><td>광범위한 인터페이스 지원, 모던</td></tr>\n              <tr><td>Simple Icons</td><td>3,400개 이상의 브랜드 및 기업 로고</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"what-is-next\">\n        <h2 class=\"docs-section__title\">다음 단계</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">MCP 설정</a>\n          <a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">MCP로 검색</a>\n          <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Pro 이용하기</a>\n          <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>\n        </div>\n        <p class=\"docs-section__copy\"><a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">MCP 설정</a> - 코딩 에이전트에서 MCP 서버 실행하기</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">MCP로 검색하기</a> - 에이전트를 통해 아이콘을 찾는 데 가장 효과적인 프롬프트를 알아보세요</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=pricing\" data-docs-view=\"pricing\">Pro 이용하기</a> - Pro 계정의 제공 내용을 확인하세요</p>\n        <p class=\"docs-section__copy\"><a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a> - 인증 방식 이해하기</p>\n      </section>\n    "
+      },
+      "docs-mcp-universal": {
+        "navLabel": "공통 설정",
+        "kicker": "MCP 설정",
+        "pageTitle": "공통 MCP 설정",
+        "summary": "MCP 지원 코딩 에이전트와 IDE에 필요한 필드 값과 설정 블록입니다.",
+        "bodyHtml": "\n      <section class=\"docs-callout\" id=\"universal-video-placeholder\">\n        <h3>동영상 가이드가 곧 제공됩니다</h3>\n        <p>이곳에 짧은 IDE 설정 동영상이 게시될 예정입니다. 이 동영상에서는 MCP 설정 화면, 입력해야 할 정확한 필드, 서버 저장, 에이전트 재시작, 그리고 첫 번째 Supericons 검색 실행 과정을 보여줄 것입니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-setup-types\">\n        <h2 class=\"docs-section__title\">설정 유형 선택</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>무료 설정</h3>\n            <p>아래의 MCP 서버 필드를 사용하세요. 환경 변수는 비워 두세요. 이 설정은 무료 아이콘 검색에 적용됩니다.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"#universal-premium\">Pro 설정</a></h3>\n            <p>아래의 동일한 MCP 서버 필드를 사용하십시오. 그런 다음 환경 변수 하나를 추가하십시오:<code>SUPERICONS_API_KEY</code>.</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-ide-form\">\n        <h2 class=\"docs-section__title\">1단계: MCP 서버 추가</h2>\n        <p class=\"docs-section__copy\">이 필드들은 무료 및Pro 설정 모두 동일합니다. 각 값을 IDE의 해당 필드에 복사하십시오.</p>\n        <div class=\"docs-field-list\" aria-label=\"MCP setup field values\">\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">이름</span>\n              <code id=\"docs-universal-field-name\">supericons</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-name\">복사</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">전송</span>\n              <code id=\"docs-universal-field-transport\">stdio</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-transport\">복사</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">실행할 명령</span>\n              <code id=\"docs-universal-field-command\">npx</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-command\">복사</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">인수 1</span>\n              <code id=\"docs-universal-field-arg-y\">-y</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-arg-y\">복사</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">인수 2</span>\n              <code id=\"docs-universal-field-arg-package\">supericons-mcp</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-field-arg-package\">복사</button>\n          </div>\n          <div class=\"docs-field-row docs-field-row--muted\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">무료 설정을 위한 환경 변수</span>\n              <span class=\"docs-field-row__value\">비워 두세요.Pro 사용자는 2단계에서 API 키를 추가하세요.</span>\n            </div>\n          </div>\n          <div class=\"docs-field-row docs-field-row--muted\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">작업 디렉터리</span>\n              <span class=\"docs-field-row__value\">사용 중인 IDE에서 요구하는 경우가 아니라면 비워 두십시오.</span>\n            </div>\n          </div>\n        </div>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>IDE에 별도의 인자 행이 있는 경우</h3>\n            <p>두 개의 인수를 추가하십시오. 먼저<code>-y</code>를 추가합니다. 그런 다음<code>supericons-mcp</code>.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>IDE에 인자 필드가 하나만 있는 경우</h3>\n            <p>다음 내용을<code>-y supericons-mcp</code>인수 필드에 붙여넣으세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>IDE에서 환경 변수를 요청하는 경우</h3>\n            <p>무료 설정의 경우, 해당 필드를 비워 둡니다.Pro 설정의 경우,<code>SUPERICONS_API_KEY</code>를 추가하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>IDE에서 HTTP를 요청하는 경우</h3>\n            <p>대신<code>stdio</code>을 선택하세요. 이 설정은 로컬 Supericons MCP 패키지를<code>npx</code>.</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-agent-prompt\">\n        <h2 class=\"docs-section__title\">에이전트에게 설정을 요청하세요</h2>\n        <p class=\"docs-section__copy\">코딩 에이전트가 자체 MCP 설정을 편집할 수 있다면, 이 프롬프트를 에이전트에 붙여넣으세요. 진행이 중단되면 위의 필드 값을 수동으로 입력하세요.</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-agent-install-prompt\">복사</button>\n          <pre><code id=\"docs-universal-agent-install-prompt\">Connect the Supericons MCP server to this IDE.\n\nUse these MCP values:\nName: supericons\nTransport: stdio\nCommand: npx\nArguments: -y supericons-mcp\n\nAfter saving, restart or reconnect MCP if this IDE requires it. Then test it by asking Supericons MCP to search for a database icon.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-free\">\n        <h2 class=\"docs-section__title\">무료 구성 파일 설정</h2>\n        <p class=\"docs-section__copy\">무료 아이콘은 계정이나 API 키 없이도 사용할 수 있습니다. 로컬 stdio MCP 서버를 실행할 수 있는 모든 코딩 에이전트는 Supericons 사용할 수 있습니다.</p>\n        <p class=\"docs-section__copy\">클라이언트가 다음을 수락할 때 이 JSON 구성 블록을 사용하십시오<code>mcpServers</code>, <code>command</code>, 그리고<code>args</code>필드를 지원하는 경우 이 JSON 구성 블록을 사용하십시오:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-free\">복사</button>\n          <pre><code id=\"docs-universal-free\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">일부 VS Code 스타일의 MCP 클라이언트는<code>servers</code>와 명시적인<code>type</code>필드를 사용합니다. IDE에서 해당 형식을 지원하는 경우 이 형식을 사용하십시오:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-vscode-json\">복사</button>\n          <pre><code id=\"docs-universal-vscode-json\">{\n  \"servers\": {\n    \"supericons\": {\n      \"type\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">클라이언트가 TOML 다른 래퍼 형식을 사용하는 경우, 동일한<code>command</code>및<code>args</code>값은 그대로 유지하고, 주변 구문만 클라이언트의 설정 형식에 맞게 조정하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-test\">\n        <h2 class=\"docs-section__title\">작동 여부 테스트</h2>\n        <p class=\"docs-section__copy\">저장 후, 필요한 경우 IDE를 다시 시작하거나 MCP 다시 연결하십시오. 그런 다음 에이전트에게 다음 프롬프트 중 하나를 입력해 보십시오.</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-test-prompts\">복사</button>\n          <pre><code id=\"docs-universal-test-prompts\">Use Supericons MCP to search for a database icon.\n\nUse Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar. The slots are model, prompt, dataset, evaluation, deployment, and monitoring. Show the icon id, library, and short reason for each choice.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-premium\">\n        <h2 class=\"docs-section__title\">Pro 버전 2단계: API 키 추가</h2>\n        <p class=\"docs-section__copy\">무료 아이콘 검색만 원하는 경우 이 단계를 건너뛰세요. 소유한 프리미엄 아이콘, Motion Lab 또는 Converter 사용하려면 이 단계를 추가하세요.</p>\n        <h3>IDE에 환경 변수 입력란이 있는 경우</h3>\n        <p class=\"docs-section__copy\">'환경 변수 추가'를 클릭하십시오.<code>SUPERICONS_API_KEY</code>키 필드에 를 입력하세요. 값 필드에는 실제 Supericons API 키를 입력하세요.</p>\n        <div class=\"docs-field-list\" aria-label=\"Premium MCP setup field values\">\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">환경 변수 키</span>\n              <code id=\"docs-universal-premium-env-key\">SUPERICONS_API_KEY</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-premium-env-key\">복사</button>\n          </div>\n          <div class=\"docs-field-row\">\n            <div class=\"docs-field-row__body\">\n              <span class=\"docs-field-row__label\">환경 변수 값</span>\n              <code id=\"docs-universal-premium-env-value\">your-key-here</code>\n            </div>\n            <button class=\"docs-copy docs-copy--small\" type=\"button\" data-copy-target=\"docs-universal-premium-env-value\">복사</button>\n          </div>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>키를 비공개로 유지하세요</h3>\n          <p>IDE의 비공개 설정에서 본인만의 키를 사용하세요. 명령어, 인수, 작업 디렉터리, 공유 프로젝트 파일, 공개 문서, 스크린샷 또는 채팅 메시지에 실제 API 키를 기재하지 마세요.</p>\n        </div>\n        <h3>클라이언트가 구성 파일을 사용하는 경우</h3>\n        <p class=\"docs-section__copy\">클라이언트가<code>env</code>필드를 지원하는 경우 이 JSON 형식을 사용하십시오. 무료 설정과의 유일한 차이점은<code>env</code>섹션뿐입니다.</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-universal-premium\">복사</button>\n          <pre><code id=\"docs-universal-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>키를 어디서 얻을 수 있나요</h3>\n          <p>supericons.dev의 다음 위치에서 API 키를 생성하세요. <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>에서 생성하십시오. API 계정의 Supericons 키를 사용하십시오. 이 키는 계정에 이미 부여된 액세스 권한을 사용합니다. 구매한 팩은 해당 팩에 포함된 프리미엄 아이콘을 사용할 수 있게 해줍니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"universal-guides\">\n        <h2 class=\"docs-section__title\">적합한 가이드 선택</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a></h3>\n            <p>Claude Code 특화된 CLI 명령어, 구성 파일 범위 및 문제 해결 단계를 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a></h3>\n            <p>TOML 및 IDE 확장 프로그램에 대한 CLI 명령, Codex CLI 구성 형식, 신뢰할 수 있는 프로젝트 관련 참고 사항.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a></h3>\n            <p>Cursor 전역 및 프로젝트 구성 파일 위치와 앱 내 검증 단계.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><a href=\"/?view=docs-mcp-others\" data-docs-view=\"docs-mcp-others\">기타</a></h3>\n            <p>OpenCode, Cline, Copilot 에이전트 및 Windsurf에 대한 설정 참조 정보와, 사용 중인 클라이언트가 목록에 없는 경우의 대체 방법.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">사용 중인 클라이언트가 목록에 없는 경우<code>command</code>'무료 설정' 섹션의<code>args</code>'무료 설정' 섹션의 내용을 참조하여 클라이언트가 요구하는 형식에 맞게 조정하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"universal-troubleshooting\">\n        <h2 class=\"docs-section__title\">일반적인 설정 수정 사항</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>서버가 표시되지 않음</h3>\n            <p>설정을 저장하고 IDE를 다시 시작한 다음, MCP 서버 목록을 다시 엽니다. 많은 IDE는 시작 시에만 MCP 서버를 로드합니다.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>를 찾을 수 없음</h3>\n            <p>Node.js 설치한 후 터미널을 열고 다음 명령을 실행하십시오<code>npx --version</code>를 실행하십시오. IDE는 동일한<code>npx</code>명령어에 접근할 수 있어야 합니다.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>명령어 필드가 잘못 표시됨</h3>\n            <p>명령어 필드에는<code>npx</code>입력하세요. 전체 JSON 블록을 명령 필드에 붙여넣지 마세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>인수가 작동하지 않습니다</h3>\n            <p>각 행별로 실행했을 때 오류가 발생하면, 인수를 한 줄에 모두 입력해 보세요:<code>-y supericons-mcp</code>. 한 줄이 실패하면, 이를<code>-y</code>와<code>supericons-mcp</code>.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-claude-code": {
+        "navLabel": "Claude Code",
+        "kicker": "MCP 설정",
+        "pageTitle": "Claude Code 설정",
+        "summary": "Supericons MCP를 Claude Code에 추가합니다.",
+        "verifiedNote": "2026년 4월 10일 기준 공식 문서를 확인했습니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"claude-free\">\n        <h2 class=\"docs-section__title\">무료 설정</h2>\n        <h3>옵션 1: CLI 명령어</h3>\n        <p class=\"docs-section__copy\">Supericons 추가하는 가장 빠른 방법입니다. 다음 명령을 한 번 실행하십시오:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-cli\">복사</button>\n          <pre><code id=\"docs-claude-cli\"># macOS / Linux\nclaude mcp add supericons -- npx -y supericons-mcp\n\n# Windows\nclaude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>\n        </div>\n        <h3>옵션 2: 구성 파일</h3>\n        <p class=\"docs-section__copy\">Claude Code MCP 서버를 JSON 구성 파일에 저장합니다. 작업 흐름에 맞는 범위를 선택하세요:</p>\n        <ul>\n          <li><strong>사용자 범위</strong> (모든 프로젝트에서 사용 가능):<code>~/.claude.json</code></li>\n          <li><strong>프로젝트 범위</strong> (이 프로젝트에만 체크인됨):<code>.mcp.json</code>프로젝트 루트 디렉터리에</li>\n        </ul>\n        <p class=\"docs-section__copy\">선택한 파일의<code>mcpServers</code>선택한 파일의 객체에 이 블록을 추가하세요:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-config\">복사</button>\n          <pre><code id=\"docs-claude-config\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <h3>작동 여부를 확인하세요</h3>\n        <p class=\"docs-section__copy\">서버를 추가한 후, 실행 중인 Claude Code 세션 내에서 다음 명령어를 입력하세요:</p>\n        <div class=\"docs-code\">\n          <pre><code>/mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">활성 서버 목록에Supericons 표시되어야 합니다. 표시되지 않으면 Claude Code 세션을 다시 시작하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"claude-premium\">\n        <h2 class=\"docs-section__title\">프리미엄 설정</h2>\n        <p class=\"docs-section__copy\">소유하고 있는 프리미엄 아이콘이나 Pro, Motion Lab 같은 Converter 도구를 사용하려면 서버 구성에 API 키를 추가하십시오.<code>env</code>필드를 사용하여 구성 파일 방식을 사용하십시오:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-claude-premium\">복사</button>\n          <pre><code id=\"docs-claude-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>키를 얻을 수 있는 곳</h3>\n          <p>supericons.dev에서 다음 경로에서 API 키를 생성하세요 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>에서 생성하세요. API 계정의 Supericons 키를 사용하세요. 이 키는 계정에 이미 부여된 액세스 권한을 사용합니다. 구매한 팩은 해당 팩 내의 프리미엄 아이콘을 해제합니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"claude-troubleshooting\">\n        <h2 class=\"docs-section__title\">문제 해결</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>추가 후 서버가 표시되지 않음</h3>\n            <p>실행<code>/mcp</code>를 실행하여 확인하세요. Supericons 목록에 없으면 Claude Code 세션을 다시 시작하세요. 구성 파일이 선택한 범위에 맞는 올바른 위치에 있는지 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프리미엄 도구를 사용할 수 없습니다</h3>\n            <p>다음 세 가지를 확인해 주십시오. (1) 계정 권한이 사용하려는 기능과 일치하는지 확인하십시오. 구매한 팩은 해당 팩에 포함된 프리미엄 아이콘을 사용할 수 있게 해줍니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>. (2) 대시보드에서 API 키를 생성했습니다. (3)<code>SUPERICONS_API_KEY</code>Claude Code 시작 시 읽는 구성에 이 항목이 포함되어 있습니다.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>어떤 구성 파일을 편집해야 하나요?</h3>\n            <p>사용자 범위:<code>~/.claude.json</code>. 프로젝트 범위:<code>.mcp.json</code>프로젝트 루트에 있습니다. 사용자 범위 파일은 모든 Claude Code 세션에 적용됩니다. 프로젝트 범위 파일은 해당 프로젝트를 열 때만 적용됩니다.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-codex": {
+        "navLabel": "Codex",
+        "kicker": "MCP 설정",
+        "pageTitle": "Codex 설정",
+        "summary": "Supericons MCP를 Codex에 추가합니다.",
+        "verifiedNote": "2026년 4월 10일 기준 Codex 공식 문서를 확인했습니다.",
+        "bodyHtml": "\n      <section class=\"docs-callout\" id=\"codex-scope\">\n        <h3>범위</h3>\n        <p>Codex MCP 지원은 Codex CLI 및 IDE 확장 프로그램에서 사용할 수 있습니다. CLI와 IDE 확장 프로그램은 동일한 구성 파일을 공유합니다. Codex 웹 앱과 클라우드 태스크 러너는 로컬 MCP 서버 구성을 지원하지 않습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"codex-free\">\n        <h2 class=\"docs-section__title\">무료 설정</h2>\n        <h3>옵션 1: CLI 명령어</h3>\n        <p class=\"docs-section__copy\">Supericons 추가하는 가장 빠른 방법입니다. 다음 명령을 한 번 실행하세요:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-cli\">복사</button>\n          <pre><code id=\"docs-codex-cli\">codex mcp add supericons -- npx -y supericons-mcp</code></pre>\n        </div>\n        <h3>옵션 2: 구성 파일</h3>\n        <p class=\"docs-section__copy\">Codex MCP 파일에서 TOML 서버 구성을 읽습니다. 작업 흐름에 맞는 범위를 선택하세요:</p>\n        <ul>\n          <li><strong>사용자 범위</strong> (모든 프로젝트에서 사용 가능):<code>~/.codex/config.toml</code></li>\n          <li><strong>프로젝트 범위</strong> (신뢰된 프로젝트에만 해당):<code>.codex/config.toml</code>프로젝트 루트 디렉터리</li>\n        </ul>\n        <p class=\"docs-section__copy\">선택한 구성 파일에 다음 블록을 추가하세요:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-config\">복사</button>\n          <pre><code id=\"docs-codex-config\">[mcp_servers.supericons]\ncommand = \"npx\"\nargs = [\"-y\", \"supericons-mcp\"]</code></pre>\n        </div>\n        <h3>작동 여부를 확인하세요</h3>\n        <p class=\"docs-section__copy\">Codex TUI에서 다음을 입력하십시오:</p>\n        <div class=\"docs-code\">\n          <pre><code>/mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">활성 Supericons 서버 목록에MCP 표시되어야 합니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"codex-premium\">\n        <h2 class=\"docs-section__title\">프리미엄 설정</h2>\n        <p class=\"docs-section__copy\">소유하고 있는 프리미엄 아이콘이나 Pro, Motion Lab 같은 Converter 도구를 사용하려면 서버 구성에 API 키를 추가하세요:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-codex-premium\">복사</button>\n          <pre><code id=\"docs-codex-premium\">[mcp_servers.supericons]\ncommand = \"npx\"\nargs = [\"-y\", \"supericons-mcp\"]\nenv = { SUPERICONS_API_KEY = \"your-key-here\" }</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>키를 어디서 얻을 수 있나요?</h3>\n          <p>supericons.dev의 다음 위치에서 API 키를 생성하세요 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>에서 생성하세요. API 계정의 Supericons 키를 사용하세요. 이 키는 계정에 이미 부여된 액세스 권한을 사용합니다. 구매한 팩은 해당 팩 내의 프리미엄 아이콘을 해제합니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"codex-troubleshooting\">\n        <h2 class=\"docs-section__title\">문제 해결</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>다음 내용을 추가한 후 서버가 표시되지 않는 경우</h3>\n            <p>유형<code>/mcp</code>Codex TUI에서 입력하세요. Codex CLI와 IDE 확장 프로그램은 동일한 설정을 공유하므로, 한 곳에서 변경하면 양쪽 모두에 적용됩니다. 설정 파일을 편집한 후 세션을 다시 시작하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프리미엄 도구를 사용할 수 없음</h3>\n            <p>확인<code>SUPERICONS_API_KEY</code>가<code>env</code>블록에 있는지 확인하십시오<code>[mcp_servers.supericons]</code>블록에 있는지 확인하십시오. 계정 액세스 권한이 사용하려는 내용과 일치하는지 확인하십시오. 구매한 팩은 해당 팩의 프리미엄 아이콘을 잠금 해제합니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>이 필요합니다. 구성 파일을 업데이트한 후 재시작하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프로젝트 범위가 작동하지 않음</h3>\n            <p>Codex 신뢰된 프로젝트의 프로젝트 범위 내 설정만 읽습니다. 프로젝트 디렉터리에서<code>codex trust</code>을 실행하여 프로젝트를 신뢰한 다음, Codex 다시 시작하세요.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-cursor": {
+        "navLabel": "Cursor",
+        "kicker": "MCP 설정",
+        "pageTitle": "Cursor 설정",
+        "summary": "Supericons MCP를 Cursor에 추가합니다.",
+        "verifiedNote": "2026년 4월 10일 기준 Cursor 공식 문서를 확인했습니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"cursor-free\">\n        <h2 class=\"docs-section__title\">무료 설정</h2>\n        <p class=\"docs-section__copy\">Cursor JSON 구성 파일을 사용합니다. CLI 추가 명령어는 없습니다.</p>\n        <p class=\"docs-section__copy\">Supericons 를<code>~/.cursor/mcp.json</code>모든 프로젝트에서 사용할 수 있도록:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-cursor-config\">복사</button>\n          <pre><code id=\"docs-cursor-config\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"]\n    }\n  }\n}</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">프로젝트 전용으로 사용하려면, 대신<code>.cursor/mcp.json</code>프로젝트 루트에 추가하세요.</p>\n        <h3>작동 여부 확인</h3>\n        <p class=\"docs-section__copy\">설정을 저장하고 Cursor 다시 시작하세요. 설정을 열고 MCP로 이동한 후<code>supericons</code>서버가 목록에 표시되는지 확인하세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"cursor-premium\">\n        <h2 class=\"docs-section__title\">프리미엄 설정</h2>\n        <p class=\"docs-section__copy\">'API 키' 필드를 사용하여 서버 설정에 API 키를 추가하십시오.<code>env</code>필드를 사용하여 서버 구성에 API 키를 추가하세요:</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-cursor-premium\">복사</button>\n          <pre><code id=\"docs-cursor-premium\">{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"your-key-here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n        <div class=\"docs-callout\">\n          <h3>키를 얻을 수 있는 곳</h3>\n          <p>supericons.dev의 다음 위치에서 API 키를 생성하세요 <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>에서 생성하세요. API 계정의 Supericons 키를 사용하세요. 이 키는 계정에 이미 부여된 액세스 권한을 사용합니다. 구매한 팩은 해당 팩에 포함된 프리미엄 아이콘을 해제합니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"cursor-troubleshooting\">\n        <h2 class=\"docs-section__title\">문제 해결</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>Cursor에 추가한 후 서버가 표시되지 않음</h3>\n            <p>Cursor 유효한 JSON 구성 파일이 필요합니다. JSON 구문 오류를 확인하십시오. 파일을 저장하고 Cursor 다시 시작하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프리미엄 도구를 사용할 수 없음</h3>\n            <p>다음 필드를 사용하여<code>SUPERICONS_API_KEY</code>가<code>env</code>블록에 있는지 확인하십시오. 계정 액세스 권한이 사용하려는 내용과 일치하는지 확인하십시오. 구매한 팩은 해당 팩의 프리미엄 아이콘을 잠금 해제합니다. Motion Lab 및 Converter 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>첫 실행 시 시간이 오래 걸립니다</h3>\n            <p>npm에서 패키지를 다운로드하는<code>npx -y supericons-mcp</code>npm에서 패키지를 다운로드합니다. 이는 한 번만 발생하는 지연 현상입니다. 이후 실행은 더 빠릅니다.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-others": {
+        "navLabel": "기타 MCP 클라이언트",
+        "kicker": "MCP 설정",
+        "pageTitle": "기타 MCP 클라이언트",
+        "summary": "MCP를 지원하는 다른 클라이언트에서 Supericons를 사용합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"others-start\">\n        <h2 class=\"docs-section__title\">범용 설정으로 시작하기</h2>\n        <p class=\"docs-section__copy\">Supericons 로컬 stdio MCP 서버로 실행됩니다. <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">범용 설정</a> 가이드를 참고하여 기본 서버 구성과 프리미엄 API 키 패턴을 설정한 후, 동일한 값을 클라이언트의 설정 화면에 적용하십시오.</p>\n        <p class=\"docs-section__copy\">서버 값은 동일하게 유지됩니다. 클라이언트별로 달라지는 부분은 MCP 설정이 저장되는 위치, 클라이언트가 환경 값을 저장하는 방식, 그리고 설정이 구성 파일에서 이루어지는지 설정 UI에서 이루어지는지 여부입니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"others-clients\">\n        <h2 class=\"docs-section__title\">알려진 클라이언트</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">OpenCode</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">공식 가이드 열기</a>\n            </div>\n            <p>서버 구성 및 CLI 절차에 대한 OpenCode MCP 공식 문서.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">Cline</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">공식 가이드 열기</a>\n            </div>\n            <p>서버 UI 및<code>cline_mcp_settings.json</code>설정 UI에 대한 공식 Cline 문서</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Copilot 에이전트</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">공식 가이드 열기</a>\n            </div>\n            <p>리포지토리 MCP 구성 및 Copilot 환경 시크릿에 대한 공식 GitHub 문서.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Windsurf</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">공식 가이드 열기</a>\n            </div>\n            <p>설정 UI 및<code>mcp_config.json</code>설정에 대한 Windsurf 공식 문서.</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"others-not-listed\">\n        <h3>사용 중인 클라이언트가 목록에 없는 경우</h3>\n        <p>클라이언트가 로컬 stdio MCP 서버를 지원하는 경우, 범용 설정 가이드의 서버 값을 사용하고 구성 위치 및 구문을 클라이언트 형식에 맞게 조정하십시오.</p>\n      </section>\n    "
+      },
+      "docs-mcp-search-guide": {
+        "navLabel": "검색 가이드",
+        "kicker": "MCP 참조",
+        "pageTitle": "MCP 검색 가이드",
+        "summary": "이름, 라이브러리, 사용 사례 또는 의미로 아이콘을 찾습니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"mcp-search-intro\">\n        <p class=\"docs-section__copy\">Supericons MCP 연결되면, AI 에이전트에게 일반적인 언어로 아이콘을 요청할 수 있습니다. 정확한 아이콘 이름을 미리 알 필요는 없습니다. 아이콘이 지원해야 할 대상, 동작, 느낌, 화면 또는 작업을 설명하기만 하면 됩니다.</p>\n        <p class=\"docs-section__copy\">가장 안전한 워크플로는 간단합니다. 옵션을 요청하고, 그중 하나를 선택한 다음, 에이전트에게 SVG 가져오거나 코드에 삽입해 달라고 요청하세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-tools\">\n        <h2 class=\"docs-section__title\">에이전트는 어떤 도구를 사용해야 할까요?</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>필요</th>\n                <th>최적의 도구</th>\n                <th>예시 프롬프트</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>단어 또는 구문을 사용하여 아이콘 찾기</td><td><code>search_icons</code></td><td>데이터베이스 아이콘을 찾아주세요. 영어가 아닌 언어로 검색할 때는<code>locale</code>, 예를 들어<code>zh-Hans</code>, <code>ja</code>, 또는<code>ko</code>.</td></tr>\n              <tr><td>여러 UI 슬롯에 사용할 아이콘 선택</td><td><code>recommend_icons</code></td><td>AI 대시보드용 아이콘을 추천해 주세요: 모델, 프롬프트, 데이터셋, 평가, 배포, 모니터링. 슬롯이 영어가 아닌 경우<code>locale</code>.</td></tr>\n              <tr><td>알려진 아이콘 하나 가져오기</td><td><code>get_icon</code></td><td>Iconoir에서<code>database</code>Iconoir에서 SVG 파일을 가져오세요.</td></tr>\n              <tr><td>사용 가능한 라이브러리 확인</td><td><code>list_libraries</code></td><td>Supericons 아이콘 라이브러리를 나열하세요.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-prompts\">\n        <h2 class=\"docs-section__title\">시도해 볼 만한 좋은 프롬프트</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>개체별로 검색</h3>\n            <ul>\n              <li>데이터베이스 아이콘을 찾아주세요.</li>\n              <li>Tabler에서 달력 아이콘을 찾아주세요.</li>\n              <li>계정 보안을 위한 방패 아이콘을 검색해 주세요.</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>동작으로 검색</h3>\n            <ul>\n              <li>클라우드 업로드용 아이콘을 찾아주세요.</li>\n              <li>Lucide 사용자 프로필 아이콘을 검색하세요.</li>\n              <li>사용자 차단 또는 액세스 거부를 의미하는 아이콘을 찾으세요.</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>의미별 검색</h3>\n            <ul>\n              <li>아름다운 것을 나타내는 친근한 아이콘을 찾으세요.</li>\n              <li>악취를 나타낼 수 있는 아이콘을 찾으세요.</li>\n              <li>고장 나거나 위험한 것을 나타내는 아이콘을 찾으세요.</li>\n            </ul>\n          </article>\n          <article class=\"docs-card\">\n            <h3>UI 위치별 검색</h3>\n            <ul>\n              <li>모바일 하단 네비게이션(홈, 작성, 알림, 프로필)에 사용할 아이콘을 추천해 주세요.</li>\n              <li>AI 대시보드에 사용할 아이콘을 추천해 주세요: 모델, 프롬프트, 데이터셋, 평가, 배포, 모니터링.</li>\n              <li>관리자 사이드바용 아이콘을 추천해 주세요: 사용자, 결제, 데이터베이스, 설정, 보고서.</li>\n            </ul>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-output\">\n        <h2 class=\"docs-section__title\">필요한 출력물을 요청하세요</h2>\n        <p class=\"docs-section__copy\">에이전트가 적합한 결과를 찾으면 반환할 내용을 지정하세요. 후보 목록, 아이콘 ID, SVG 또는 코딩 가능한 마크업을 요청할 수 있습니다.</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-mcp-search-output-prompts\">복사</button>\n          <pre><code id=\"docs-mcp-search-output-prompts\">Show me the top 5 choices with icon id, library, and a short reason.\n\nGet the SVG for the best result.\n\nUse the best Lucide result and add it to this button.\n\nGive me three alternatives if the first one feels too generic.</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-locales\">\n        <h2 class=\"docs-section__title\">지원되는 언어로 검색</h2>\n        <p class=\"docs-section__copy\">다국어 검색의 경우, 도구 이름과 아이콘 ID는 영어로 유지하되, 검색어와 함께 지원되는<code>locale</code>검색어와 함께 전달하십시오. Supericons 아이콘 순위를 매기기 전에 승인된 현지화 용어를 안정적인 영어 개념으로 변환합니다.</p>\n        <div class=\"docs-code docs-code--with-copy\">\n          <button class=\"docs-copy docs-copy--overlay\" type=\"button\" data-copy-target=\"docs-mcp-search-locale-prompts\">복사</button>\n          <pre><code id=\"docs-mcp-search-locale-prompts\">search_icons({ query: \"设置\", locale: \"zh-Hans\" })\nsearch_icons({ query: \"搜尋\", locale: \"zh-Hant\" })\nsearch_icons({ query: \"検索\", locale: \"ja\" })\nsearch_icons({ query: \"설정\", locale: \"ko\" })\nsearch_icons({ query: \"seguridad\", locale: \"es\" })\nsearch_icons({ query: \"Sicherheit\", locale: \"de\" })\nsearch_icons({ query: \"الأمان\", locale: \"ar\" })</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">지원되는 로케일 값은 다음과 같습니다<code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, 그리고<code>th</code>.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"mcp-search-private-note\">\n        <h3>비공개로 유지되는 사항</h3>\n        <p>Supericons 검색은 이름, 관련 단어 및 일반적인 아이콘의 의미를 이해할 수 있습니다. 공개 문서에는 사용 방법이 설명되어 있지만, 비공개 서비스 키, 비공개 점수 산정 세부 정보 또는 내부 유지 관리 워크플로는 공개되지 않습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-search-next\">\n        <h2 class=\"docs-section__title\">다음 참조</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-icons\" data-docs-view=\"docs-mcp-icons\">아이콘 도구 참조</a>\n          <a href=\"/?view=docs-mcp-tools\" data-docs-view=\"docs-mcp-tools\">모든 MCP 도구</a>\n          <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">MCP 설정</a>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-tools": {
+        "navLabel": "모든 도구",
+        "kicker": "MCP 참조",
+        "pageTitle": "MCP 도구",
+        "summary": "모든 공개 Supericons MCP 도구입니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"mcp-overview-intro\">\n        <p class=\"docs-section__copy\">Supericons MCP 서버는 코딩 에이전트가 직접 호출할 수 있는 13가지 도구를 제공합니다. 3가지 도구는 무료이며 계정 없이도 사용할 수 있습니다. 프리미엄 아이콘 이용 권한은 계정에 이미 보유한 항목(구매한 팩, <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>, 또는 둘 다에 따라 달라집니다. Motion Lab 및 Converter 도구를 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a> 유효한<code>SUPERICONS_API_KEY</code>.</p>\n        <p class=\"docs-section__copy\">에이전트는 서버에 처음 연결할 때 사용 가능한 도구를 확인할 수 있습니다. 또한 도구 이름을 명시하여 직접 호출할 수도 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-overview-tools\">\n        <h2 class=\"docs-section__title\">모든 도구</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>도구</th>\n                <th>기능</th>\n                <th>Access</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>search_icons</code></td><td>10개 라이브러리에 걸쳐 20,000개 이상의 무료 아이콘 검색</td><td>무료</td></tr>\n              <tr><td><code>get_icon</code></td><td>ID 및 라이브러리별로 특정 아이콘 검색</td><td>무료</td></tr>\n              <tr><td><code>list_libraries</code></td><td>사용 가능한 모든 아이콘 라이브러리 목록 보기</td><td>무료</td></tr>\n              <tr><td><code>list_motion_presets</code></td><td>모든 Motion Lab 애니메이션 프리셋 목록 보기</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>get_motion_recipe</code></td><td>모든 프리셋에 대한 쉬운 설명을 확인하세요</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>animate_icon</code></td><td>한 번의 호출로 Motion Lab CSS 및 애니메이션 SVG 받아보세요</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>export_motion_css</code></td><td>아이콘에 대한 Motion Lab CSS 받아보세요</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>export_animated_svg</code></td><td>독립형 애니메이션 SVG만 받으세요</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>inspect_converter_options</code></td><td>목록 Converter 설정 및 유효한 값</td><td>Supericons Pro 요금제</td></tr>\n              <tr><td><code>inspect_converter_input</code></td><td>PNG 파일 검사 및 안전한 초기 설정 권장</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>convert_svg_to_png</code></td><td>SVG 를 원하는 해상도로 PNG 로 렌더링</td><td>Supericons Pro 플랜</td></tr>\n              <tr><td><code>convert_png_to_svg</code></td><td>PNG 이미지를 SVG로 트레이싱</td><td>Supericons Pro 플랜</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"mcp-overview-note\">\n        <h3>프리미엄 컬렉션 이용 시에도 액세스 권한이 필요합니다</h3>\n        <p>의 프리미엄 애니메이션 아이콘 컬렉션<code>get_icon</code>및<code>search_icons</code>해당 팩을 이미 소유한 계정의 API 키, 또는 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"mcp-overview-links\">\n        <h2 class=\"docs-section__title\">자세한 참조</h2>\n        <div class=\"docs-link-list docs-link-list--inline\">\n          <a href=\"/?view=docs-mcp-search-guide\" data-docs-view=\"docs-mcp-search-guide\">검색 가이드</a>\n          <a href=\"/?view=docs-mcp-icons\" data-docs-view=\"docs-mcp-icons\">아이콘 도구</a>\n          <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab 도구</a>\n          <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter 도구</a>\n        </div>\n      </section>\n    "
+      },
+      "docs-mcp-icons": {
+        "navLabel": "아이콘 도구",
+        "kicker": "MCP 참조",
+        "pageTitle": "MCP 아이콘 도구",
+        "summary": "MCP에서 아이콘을 검색하고 가져옵니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"icon-tools-intro\">\n        <p class=\"docs-section__copy\">이 3가지 도구는 무료이며, 20,000개 이상의 표준 아이콘 라이브러리를 이용하기 위해 API 키가 필요하지 않습니다. 이 도구들의 프리미엄 애니메이션 아이콘 컬렉션을 이용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a> 또는 해당 팩을 이미 소유한 계정이 필요합니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-search\">\n        <h2 class=\"docs-section__title\"><code>search_icons</code></h2>\n        <p class=\"docs-section__copy\">AI 기반 동의어 확장 기능을 사용하여 10개 라이브러리에 걸쳐 20,000개 이상의 무료 아이콘을 검색하세요. 일치하는 아이콘을 SVG 코드와 함께 반환합니다. 프리미엄 팩은 해당 팩을 이미 소유한 계정의 API 키를 사용하거나 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>비고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>query</code></td><td>문자열</td><td>예</td><td>-</td><td>자연어 검색어. 예: \"심장\", \"로그인\", \"다운로드 화살표\"</td></tr>\n              <tr><td><code>library</code></td><td>문자열</td><td>아니요</td><td>-</td><td>라이브러리별로 필터링. 유효한 값:<code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>heroicons</code>, <code>bootstrap</code>, <code>iconoir</code>, <code>ionicons</code>, <code>material</code>, <code>simpleicons</code>, <code>mingcute</code>, 또는 프리미엄 팩 이름</td></tr>\n              <tr><td><code>limit</code></td><td>정수</td><td>아니요</td><td>10</td><td>반환되는 최대 결과 수. 범위: 1~50</td></tr>\n              <tr><td><code>locale</code></td><td>문자열</td><td>아니요</td><td>-</td><td>다국어 검색어에 사용합니다. 지원되는 값:<code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, <code>th</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">일치하는 아이콘의 SVG 코드, 아이콘 ID, 라이브러리 이름 및 메타데이터를 반환합니다. 결과가 없을 경우, 일치하는 항목이 없음을 알리는 메시지를 반환합니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> 무료.</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-get\">\n        <h2 class=\"docs-section__title\"><code>get_icon</code></h2>\n        <p class=\"docs-section__copy\">ID와 라이브러리를 통해 특정 아이콘을 검색합니다. 전체 SVG 코드와 메타데이터를 반환합니다. 프리미엄 아이콘을 사용하려면 해당 팩을 이미 소유한 계정의 API 키나 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>id</code></td><td>문자열</td><td>예</td><td>아이콘 ID. 예: \"heart\", \"arrow-right\", \"settings\"</td></tr>\n              <tr><td><code>library</code></td><td>문자열</td><td>예</td><td>라이브러리 이름. 예: \"lucide\", \"tabler\", \"phosphor\" 또는 프리미엄 팩 이름</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">전체 SVG 코드와 아이콘 메타데이터(ID, 이름, 라이브러리, 프리미엄 상태)를 반환합니다. 프리미엄 애니메이션 아이콘의 경우 CSS 애니메이션 블록과 사용법 HTML 스니펫도 함께 반환합니다.</p>\n        <p class=\"docs-section__copy\"><strong>이용:</strong> 일반 아이콘은 무료입니다. 프리미엄 애니메이션 아이콘을 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a> 또는 해당 팩을 이미 소유한 계정이 필요합니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"icon-tools-libraries\">\n        <h2 class=\"docs-section__title\"><code>list_libraries</code></h2>\n        <p class=\"docs-section__copy\">사용 가능한 모든 아이콘 라이브러리를 이름, 아이콘 수, 설명과 함께 나열합니다. 프리미엄 라이브러리는 표시되어 있습니다.</p>\n        <h3>매개변수</h3>\n        <p class=\"docs-section__copy\">없음.</p>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">라이브러리 객체 배열로, 각 객체는 다음을 포함합니다:<code>id</code>, <code>name</code>, <code>count</code>, <code>description</code>, <code>premium</code>(부울), 및<code>accessible</code>(현재 API 키가 해당 라이브러리에 액세스할 수 있는지 여부).</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> 무료.</p>\n      </section>\n    "
+      },
+      "docs-mcp-motion": {
+        "navLabel": "Motion 도구",
+        "kicker": "MCP 참조",
+        "pageTitle": "Motion Lab MCP 도구",
+        "summary": "MCP로 아이콘에 애니메이션을 적용합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-tools-intro\">\n        <p class=\"docs-section__copy\">이 다섯 가지 도구는 코딩 에이전트에 Motion Lab 기능을 제공합니다. 다섯 가지 모두 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a> 그리고 유효한<code>SUPERICONS_API_KEY</code>.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-tools-note\">\n        <h3>어떤 프리셋을 사용해야 할지 모르시겠나요?</h3>\n        <p>Call<code>list_motion_presets</code>먼저 Motion Lab 프리셋의 ID, 레이블, 그룹, 간단한 설명 및 지원되는 트리거를 확인한 다음,<code>get_motion_recipe</code>확정하기 전에 특정 프리셋이 어떤 기능을 하는지 파악할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-list\">\n        <h2 class=\"docs-section__title\"><code>list_motion_presets</code></h2>\n        <p class=\"docs-section__copy\">Motion Lab Supericons 통해 현재 제공되는 전체 MCP 프리셋 세트를 나열합니다. 이 목록은 브라우저 Motion Lab 환경에서 사용할 수 있는 프리셋 그룹과 동일합니다.</p>\n        <h3>매개 변수</h3>\n        <p class=\"docs-section__copy\">없음.</p>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">80개의 프리셋 오브젝트로 구성된 배열입니다. 각 오브젝트에는<code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>, 그리고<code>supported_triggers</code>.</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-recipe\">\n        <h2 class=\"docs-section__title\"><code>get_motion_recipe</code></h2>\n        <p class=\"docs-section__copy\">트리거 유형, 타이밍, 이징 및 의도된 용도를 포함하여 프리셋이 어떻게 동작하는지에 대한 사람이 읽기 쉬운 설명을 반환합니다.<code>animate_icon</code>또는 내보내기 도구를 호출하기 전에 어떤 출력이 나올지 파악하는 데 사용하십시오.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>비고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>preset</code></td><td>문자열</td><td>예</td><td>-</td><td>프리셋 ID. 예: \"pulse\", \"bounce\", \"spin\", \"trace\", \"typing\"</td></tr>\n              <tr><td><code>trigger</code></td><td>문자열</td><td>아니요</td><td><code>loop</code></td><td>애니메이션이 시작되는 방식. 유효한 값:<code>loop</code>, <code>hover</code>, <code>click</code></td></tr>\n              <tr><td><code>duration_ms</code></td><td>정수</td><td>아니요</td><td>500</td><td>애니메이션 지속 시간(밀리초 단위). 범위: 100~4000</td></tr>\n              <tr><td><code>intensity_percent</code></td><td>정수</td><td>아니요</td><td>100</td><td>애니메이션 효과의 강도를 조정합니다. 범위: 25~200</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환값</h3>\n        <p class=\"docs-section__copy\">다음이 포함된 프리셋 프로필<code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>, 및 사용법<code>notes</code>.</p>\n        <p class=\"docs-section__copy\"><strong>Access:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-animate\">\n        <h2 class=\"docs-section__title\"><code>animate_icon</code></h2>\n        <p class=\"docs-section__copy\">단일 호출로 하나의 아이콘에 대한 Motion Lab CSS 독립형 애니메이션 SVG 모두 생성합니다. 별도의 호출을 두 번 수행하지 않고 두 가지 출력물을 모두 얻고자 할 때 이 기능을 사용하십시오.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>id</code></td><td>문자열</td><td>예</td><td>-</td><td>아이콘 ID. 예: \"heart\", \"scan-virus\", \"fingerprint-scan\"</td></tr>\n              <tr><td><code>library</code></td><td>문자열</td><td>예</td><td>-</td><td>라이브러리 또는 프리미엄 팩 이름</td></tr>\n              <tr><td><code>preset</code></td><td>문자열</td><td>예</td><td>-</td><td>모션 프리셋 ID</td></tr>\n              <tr><td><code>trigger</code></td><td>문자열</td><td>아니요</td><td><code>loop</code></td><td><code>loop</code>, <code>hover</code>가 포함된 프리셋 프로필, 또는<code>click</code></td></tr>\n              <tr><td><code>duration_ms</code></td><td>정수</td><td>아니요</td><td>500</td><td>100~4000</td></tr>\n              <tr><td><code>intensity_percent</code></td><td>정수</td><td>아니요</td><td>100</td><td>25~200</td></tr>\n              <tr><td><code>color</code></td><td>문자열</td><td>아니요</td><td>-</td><td>상속되는 아이콘에 대한 선택적 CSS 색상 재정의<code>currentColor</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">다음이 포함된 객체:<code>id</code>, <code>library</code>, <code>recipe</code>(사전 설정 프로필),<code>css</code>(Motion Lab CSS),<code>animated_svg</code>(애니메이션이 내장된 독립형 SVG ), 그리고<code>selector_mode</code>. 플레이스홀더 CSS 응답에는 또한<code>selector_token</code>.</p>\n        <p class=\"docs-section__copy\"><strong>이용 방법:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-css\">\n        <h2 class=\"docs-section__title\"><code>export_motion_css</code></h2>\n        <p class=\"docs-section__copy\">아이콘에 대한 Motion Lab CSS 생성합니다. 마크업에 SVG 인라인으로 포함하고 애니메이션을 별도의 스타일시트로 관리하려는 경우 이 기능을 사용하십시오.</p>\n        <h3>매개변수</h3>\n        <p class=\"docs-section__copy\">다음과 동일합니다<code>animate_icon</code>.</p>\n        <h3>반환값</h3>\n        <p class=\"docs-section__copy\">다음과 같은 객체:<code>id</code>, <code>library</code>, <code>preset</code>(사전 설정 프로필),<code>css</code>( Motion Lab CSS 포함된<code>@keyframes</code>및 애니메이션 규칙), 그리고<code>selector_mode</code>. 플레이스홀더 응답에는 또한<code>selector_token</code>.</p>\n        <h3>CSS 선택기는 다음을 대상으로 합니다.</h3>\n        <p class=\"docs-section__copy\">호스팅된 Motion Lab CSS CSS 로는 기본적으로 토큰<code>{{ICON_SELECTOR}}</code>를 사용하여 기본적으로 이식 가능한 CSS를 반환합니다. 스타일시트를 적용하기 전에 해당 토큰을 SVG 선택자로 대체하십시오.</p>\n        <p class=\"docs-section__copy\"><strong>접근:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-tools-svg\">\n        <h2 class=\"docs-section__title\"><code>export_animated_svg</code></h2>\n        <p class=\"docs-section__copy\">애니메이션이 파일에 직접 내장된 독립형 애니메이션 SVG 생성합니다. 외부 CSS 없이도 어떤 HTML 페이지에나 삽입할 수 있습니다.</p>\n        <h3>매개변수</h3>\n        <p class=\"docs-section__copy\">다음과 동일합니다<code>animate_icon</code>.</p>\n        <h3>반환값</h3>\n        <p class=\"docs-section__copy\">다음과 같은 객체:<code>id</code>, <code>library</code>, <code>preset</code>(사전 설정 프로필) 및<code>animated_svg</code>(내부에<code>&lt;style&gt;</code>블록이 내장된)</p>\n        <h3>이 기능을 사용할 때와<code>export_motion_css</code></h3>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>다음과 같은 경우...</th>\n                <th>사용</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>사용</td><td><code>export_motion_css</code></td></tr>\n              <tr><td>이식 가능한 독립형 애니메이션 파일을 어디에나 배치</td><td><code>export_animated_svg</code></td></tr>\n              <tr><td>단일 호출로 두 가지 출력 모두 얻기</td><td><code>animate_icon</code></td></tr>\n              <tr><td>사용하기 전에 프리셋을 파악하고 싶으신가요</td><td><code>get_motion_recipe</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\"><strong>이용:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n    "
+      },
+      "docs-mcp-converter": {
+        "navLabel": "Converter 도구",
+        "kicker": "MCP 참조",
+        "pageTitle": "Converter MCP 도구",
+        "summary": "MCP를 통해 PNG와 SVG 자산을 변환합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-tools-intro\">\n        <p class=\"docs-section__copy\">이 네 가지 도구는 코딩 에이전트에 Converter 기능을 제공합니다. 네 가지 모두 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>가 필요합니다. 가장 안전한 작업 흐름은 먼저 PNG 파일을 검토하고, 다음으로 옵션 안내를 확인한 후, 타당한 초기 설정으로 변환하는 것입니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-inspect\">\n        <h2 class=\"docs-section__title\"><code>inspect_converter_options</code></h2>\n        <p class=\"docs-section__copy\">현재 Converter MCP 옵션, 설정 가이드, 워크플로 팁 및 권장 초기 조합을 나열합니다. 유효한 값과 그 근거가 필요할 때 이 내용을 참조하십시오.</p>\n        <h3>매개변수</h3>\n        <p class=\"docs-section__copy\">없음.</p>\n        <h3>반환값</h3>\n        <p class=\"docs-section__copy\">사용 가능한 모든 변환기 설정, 유효한 값, 기본값, 제한 사항, 워크플로 순서, 설정 안내 및 초기 조합을 설명하는 객체입니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-inspect-input\">\n        <h2 class=\"docs-section__title\"><code>inspect_converter_input</code></h2>\n        <p class=\"docs-section__copy\">추적하기 전에 PNG 를 검사합니다. 파일 헤더의 구조적 힌트, 예상되는 위험 요소 및<code>convert_png_to_svg</code>. 에이전트가 추측에 의존하는 대신 타당한 첫 번째 처리가 필요할 때 이 기능을 사용하십시오<code>traceClass</code>.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>imageBase64</code></td><td>문자열</td><td>예</td><td>-</td><td>base64 텍스트 또는 데이터 URL 형식의PNG</td></tr>\n              <tr><td><code>mimeType</code></td><td>문자열</td><td>아니요</td><td><code>image/png</code></td><td>데이터 URL이 없는 경우 선택적 MIME 유형 재정의. 현재<code>image/png</code>현재만 지원됩니다.</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">입력 메타데이터, 구조적 평가, 예상되는 추적 위험 및 다음 변환기 호출을 위한 권장 초기 설정을 포함하는 객체.</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-svg-png\">\n        <h2 class=\"docs-section__title\"><code>convert_svg_to_png</code></h2>\n        <p class=\"docs-section__copy\">SVG 문자열을 원하는 출력 너비로 PNG 렌더링합니다.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>svg</code></td><td>문자열</td><td>예</td><td>-</td><td>렌더링할 원시 SVG 문자열</td></tr>\n              <tr><td><code>targetWidth</code></td><td>정수</td><td>아니요</td><td>512</td><td>픽셀 단위의 출력 너비. 범위: 16~2048</td></tr>\n              <tr><td><code>background</code></td><td>문자열</td><td>아니요</td><td><code>transparent</code></td><td>배경색.<code>transparent</code>또는 다음과 같은 16진수 값을 사용하십시오<code>#ffffff</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환값</h3>\n        <p class=\"docs-section__copy\">다음 속성을 가진 객체<code>pngBase64</code>, <code>pngDataUrl</code>, <code>metrics</code>(경과 시간, 출력 크기, 너비, 높이)와<code>request</code>(해상도 너비 및 배경 설정)을 가진 객체입니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 권한:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-png-svg\">\n        <h2 class=\"docs-section__title\"><code>convert_png_to_svg</code></h2>\n        <p class=\"docs-section__copy\">래스터 PNG 이미지를 SVG 트레이싱합니다. 출력 품질은 원본 이미지와 선택한 설정에 크게 좌우됩니다. 단순하고 단색인 이미지는 잘 트레이싱되지만, 복잡한 사진이나 그라데이션이 많은 이미지는 그렇지 않습니다.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개변수</th>\n                <th>유형</th>\n                <th>필수</th>\n                <th>기본값</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>imageBase64</code></td><td>문자열</td><td>예</td><td>-</td><td>base64 텍스트 또는 데이터 URL 형식의PNG</td></tr>\n              <tr><td><code>colorMode</code></td><td>문자열</td><td>아니요</td><td><code>color</code></td><td><code>color</code>또는<code>mono</code></td></tr>\n              <tr><td><code>qualityMode</code></td><td>문자열</td><td>아니요</td><td><code>exact</code></td><td><code>exact</code>또는<code>compact</code></td></tr>\n              <tr><td><code>traceClass</code></td><td>문자열</td><td>아니요</td><td><code>general-color</code></td><td>아래<code>traceClass</code>아래 참조</td></tr>\n              <tr><td><code>uiMode</code></td><td>문자열</td><td>아니요</td><td><code>logo</code></td><td><code>logo</code>또는<code>icon</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <h3>반환</h3>\n        <p class=\"docs-section__copy\">다음 속성을 가진 객체<code>svg</code>, <code>warnings</code>, <code>metrics</code>(경과 시간, 출력 크기, 경로 수, 도형 수 및 뷰박스)를 포함하는 객체와<code>request</code>(추적에 사용된 해결된 변환기 설정).</p>\n        <p class=\"docs-section__copy\"><strong>사용 방법:</strong> <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-trace-class\">\n        <h2 class=\"docs-section__title\"><code>traceClass</code>참조</h2>\n        <p class=\"docs-section__copy\">'<code>traceClass</code>매개 변수는 소스 이미지 유형에 맞게 조정된 추적 프로필을 선택합니다. 잘못된 클래스를 선택하면 부정확하거나 불필요한 데이터가 포함된 결과가 생성됩니다.</p>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>traceClass</code>값</th>\n                <th>가장 적합한 대상</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>general-color</code></td><td>대부분의 풀컬러 이미지에 적합합니다. 확실하지 않을 때 안전하게 사용할 수 있는 기본값입니다.</td></tr>\n              <tr><td><code>flat-logo-color</code></td><td>단색으로 채워진 평면 로고이며 그라데이션이 없는 경우</td></tr>\n              <tr><td><code>tile-icon-color</code></td><td>작고 반복되는 타일 아이콘</td></tr>\n              <tr><td><code>tiny-line-icon</code></td><td>세밀한 선 디테일이 있는 아주 작은 아이콘</td></tr>\n              <tr><td><code>single-color-mark</code></td><td>단색 로고, 워드마크 또는 단순한 마크</td></tr>\n              <tr><td><code>mono-mask</code></td><td>명암 대비가 강한 흑백 이미지</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-quality-mode\">\n        <h2 class=\"docs-section__title\"><code>qualityMode</code>참조</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>qualityMode</code>값</th>\n                <th>동작</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>exact</code></td><td>경로 디테일을 최대한 보존합니다. 출력 파일 크기가 큽니다. 대부분의 사용 사례에 권장됩니다.</td></tr>\n              <tr><td><code>compact</code></td><td>파일 크기를 줄이기 위해 경로를 단순화합니다. 일부 미세한 디테일이 손실됩니다.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-ui-mode\">\n        <h2 class=\"docs-section__title\"><code>uiMode</code>참조</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>uiMode</code>값</th>\n                <th>동작</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>logo</code></td><td>자유 형상의 도형과 곡선이 포함된 로고 스타일 아트웍에 최적화된 출력</td></tr>\n              <tr><td><code>icon</code></td><td>아이콘 스타일 아트웍에 대해 기하학적 정밀도와 깔끔한 가장자리를 우선시하여 출력을 최적화합니다</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-tools-combos\">\n        <h2 class=\"docs-section__title\">권장 조합</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>소스 이미지</th>\n                <th>권장 설정</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>그라데이션이 포함된 풀컬러 로고</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>심플한 플랫 로고</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>단색 워드마크</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code></td></tr>\n              <tr><td>작은 색상 아이콘 또는 배지</td><td><code>tile-icon-color</code>, <code>exact</code>, <code>icon</code></td></tr>\n              <tr><td>작은 UI 아이콘</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code></td></tr>\n              <tr><td>고대비 마스크 또는 실루엣</td><td><code>mono-mask</code>, <code>exact</code>, <code>logo</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab": {
+        "navLabel": "Motion Lab",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab",
+        "summary": "아이콘 애니메이션을 미리 보고 내보냅니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-lab-intro\">\n        <p class=\"docs-section__copy\">사전 설정을 선택하고 트리거, 타이밍 및 강도를 설정한 다음, 제작에 바로 사용할 수 있는 CSS 또는 독립형 SVG 내보내세요. 두 형식 모두 JavaScript 없이 바로 사용할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-access\">\n        <h2 class=\"docs-section__title\">Motion Lab 사용하는 두 가지 방법</h2>\n        <ul>\n          <li><strong>브라우저에서</strong>: Motion Lab 직접 열고 아이콘을 선택하여 프리셋을 찾아보세요. 애니메이션을 실시간으로 미리 볼 수 있습니다. CSS 또는 SVG 내보내려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</li>\n          <li><strong>MCP 통해</strong>: 에이전트가 Motion Lab 도구를 직접 호출합니다. 모든 Motion Lab 도구를 사용하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a> 과 API 계정의 유효한 Supericons 키가 필요합니다. <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP 도구 참조</a> 를 참조하십시오.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-mcp-mental-model\">\n        <h2 class=\"docs-section__title\">Motion Lab 통한 MCP 작동 방식</h2>\n        <p class=\"docs-section__copy\">Motion Lab 통한MCP 설계상 두 계층으로 운영됩니다. 로컬 프로세스는 프리셋 검색 및 요청 조정을 처리합니다. 프리미엄 프리셋 프로필, CSS 렌더링, 애니메이션 SVG 렌더링은 단기 세션 토큰을 사용하여 호스팅된 Supericons 함수를 통해 처리됩니다. 로컬 패키지는 가벼운 상태를 유지하며, 프리미엄 렌더링은 호스팅된 경로에서 처리됩니다.</p>\n        <p class=\"docs-section__copy\">실용적인 에이전트 워크플로를 원하신다면 <a href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">MCP 워크플로우</a>를 참조하십시오. 정확한 도구 매개변수가 필요한 경우 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP 도구</a> 를 API 참조 자료로 활용하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-output\">\n        <h2 class=\"docs-section__title\">Motion Lab 의 출력 결과</h2>\n        <p class=\"docs-section__copy\">Motion Lab 두 가지 출력 유형을 생성합니다:</p>\n        <p class=\"docs-section__copy\"><strong>Motion Lab CSS</strong>:<code>@keyframes</code>및 애니메이션 규칙이 포함된 스타일시트. 마크업 내에서 SVG 인라인으로 유지하고 CSS 별도로 링크하십시오. 반환된 CSS에서<code>{{ICON_SELECTOR}}</code>반환된 CSS SVG 선택자로 대체하십시오.</p>\n        <p class=\"docs-section__copy\"><strong>애니메이션 SVG</strong>SVG 애니메이션이<code>&lt;style&gt;</code>블록 내에 애니메이션이 내장된 완전한 SVG입니다. 외부 스타일시트가 필요하지 않습니다.<code>&lt;img&gt;</code>참조하거나 인라인으로 붙여넣으세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-lab-next\">\n        <h2 class=\"docs-section__title\">다음 단계</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>사전 설정</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-presets\" data-docs-view=\"docs-motion-lab-presets\">참조 열기</a>\n            </div>\n            <p>설명과 카테고리가 포함된 사용 가능한 프리셋 전체 목록.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>트리거 유형</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-triggers\" data-docs-view=\"docs-motion-lab-triggers\">가이드 열기</a>\n            </div>\n            <p>내보내기 전에 루프, 호버 및 클릭 동작을 이해하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>내보내기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">가이드 열기</a>\n            </div>\n            <p>프로젝트에서 CSS 및 애니메이션 SVG 출력을 사용하는 방법.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>MCP 워크플로</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">가이드 열기</a>\n            </div>\n            <p>프리셋을 선택하고 안전하게 내보내기 위한 실용적인 인간-에이전트 흐름.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>클라이언트 설정</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-client-setup\" data-docs-view=\"docs-motion-lab-client-setup\">설정 열기</a>\n            </div>\n            <p>아직 클라이언트를 연결하지 않았다면 여기서 시작하세요. API 키를 추가한 다음, 간단한 검증 시퀀스를 실행하여 호스팅된 프리미엄 경로가 활성화되었는지 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>사용 사례</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab-use-cases\" data-docs-view=\"docs-motion-lab-use-cases\">예제 열기</a>\n            </div>\n            <p>호버 상태, 보안 흐름, 축하 효과, 주변 모션 및 제약에 대한 구체적인 지침.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-presets": {
+        "navLabel": "프리셋",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 프리셋",
+        "summary": "적절한 애니메이션 프리셋을 선택합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-presets-intro\">\n        <p class=\"docs-section__copy\">각 행에는 Motion Lab 도구 호출 시<code>preset</code>Motion Lab 도구 호출 시 매개변수로 사용할 사전 설정 ID가 포함되어 있습니다. 내보내기를 진행하기 전에 '그룹' 열을 사용하여 의도별로 후보를 좁혀보세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-table\">\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>ID</th>\n                <th>라벨</th>\n                <th>카테고리</th>\n                <th>설명</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>bounce</code></td><td>바운스</td><td>모션</td><td>아이콘을 빠르게 튀어 오르게 합니다.</td></tr><tr><td><code>float</code></td><td>부동</td><td>모션</td><td>아이콘이 미묘하게 공중에 떠 있는 듯한 느낌을 줍니다.</td></tr><tr><td><code>shake</code></td><td>흔들기</td><td>모션</td><td>좌우로 빠르게 흔들리는 알림 동작을 추가합니다.</td></tr><tr><td><code>spin</code></td><td>회전</td><td>모션</td><td>아이콘 전체를 중심을 기준으로 회전합니다.</td></tr><tr><td><code>pulse</code></td><td>펄스</td><td>모션</td><td>부드러운 강조 효과를 위해 크기를 서서히 확대 및 축소합니다.</td></tr><tr><td><code>pop</code></td><td>팝</td><td>모션</td><td>스냅 탄력 있는 오버슈트와 함께 튕겨 올라갑니다.</td></tr><tr><td><code>heartbeat</code></td><td>하트비트</td><td>모션</td><td>하트비트 Motion Lab 프리셋.</td></tr><tr><td><code>rubberband</code></td><td>고무줄</td><td>모션</td><td>고무줄 Motion Lab 프리셋.</td></tr><tr><td><code>jelly</code></td><td>젤리</td><td>모션</td><td>젤리 Motion Lab 프리셋.</td></tr><tr><td><code>ring</code></td><td>링</td><td>모션</td><td>링 Motion Lab 프리셋.</td></tr><tr><td><code>wobble</code></td><td>흔들림</td><td>모션</td><td>Wobble Motion Lab 프리셋.</td></tr><tr><td><code>magnetic</code></td><td>마그네틱</td><td>모션</td><td>Magnetic Motion Lab 프리셋.</td></tr><tr><td><code>recoil</code></td><td>반동</td><td>모션</td><td>반동 Motion Lab 프리셋.</td></tr><tr><td><code>pendulum</code></td><td>Pendulum</td><td>모션</td><td>진자 Motion Lab 프리셋.</td></tr><tr><td><code>whiplash</code></td><td>채찍</td><td>모션</td><td>채찍질 Motion Lab 프리셋.</td></tr><tr><td><code>tremor</code></td><td>진동</td><td>모션</td><td>Tremor Motion Lab 프리셋.</td></tr><tr><td><code>neonglow</code></td><td>네온 글로우</td><td>모션</td><td>네온 글로우 Motion Lab 프리셋.</td></tr><tr><td><code>breathe</code></td><td>호흡</td><td>모션</td><td>Breathe Motion Lab 프리셋.</td></tr><tr><td><code>metronome</code></td><td>메트로놈</td><td>모션</td><td>메트로놈 Motion Lab 프리셋.</td></tr><tr><td><code>orbit</code></td><td>오빗</td><td>모션</td><td>오빗 Motion Lab 프리셋.</td></tr><tr><td><code>flicker</code></td><td>Flicker</td><td>모션</td><td>깜빡임 Motion Lab 사전 설정.</td></tr><tr><td><code>squish</code></td><td>스퀴시</td><td>모션</td><td>스퀴시 Motion Lab 프리셋.</td></tr><tr><td><code>glide</code></td><td>글라이드</td><td>모션</td><td>글라이드 Motion Lab 프리셋.</td></tr><tr><td><code>radar</code></td><td>레이더</td><td>모션</td><td>레이더 Motion Lab 사전 설정.</td></tr><tr><td><code>beacon</code></td><td>비콘</td><td>모션</td><td>비콘 Motion Lab 프리셋.</td></tr><tr><td><code>magneticIn</code></td><td>자기 인</td><td>입구</td><td>자석처럼 툭 하고 아이콘을 안쪽으로 당깁니다.</td></tr><tr><td><code>fadeIn</code></td><td>페이드 인</td><td>입장</td><td>페이드 인 Motion Lab 프리셋.</td></tr><tr><td><code>scaleUp</code></td><td>확대</td><td>입장</td><td>확대 Motion Lab 사전 설정.</td></tr><tr><td><code>slideUp</code></td><td>위로 슬라이드</td><td>입구</td><td>위로 슬라이드 Motion Lab 프리셋.</td></tr><tr><td><code>springLand</code></td><td>스프링 랜드</td><td>입구</td><td>스프링 랜드 Motion Lab 프리셋.</td></tr><tr><td><code>slingshot</code></td><td>슬링샷</td><td>입구</td><td>슬링샷 Motion Lab 프리셋.</td></tr><tr><td><code>glitchOn</code></td><td>글리치 온</td><td>입구</td><td>글리치 온 Motion Lab 프리셋.</td></tr><tr><td><code>unfold</code></td><td>Unfold</td><td>Entrances</td><td>Unfold Motion Lab 프리셋.</td></tr><tr><td><code>warpIn</code></td><td>워프 인</td><td>Entrances</td><td>워프 인 Motion Lab 프리셋.</td></tr><tr><td><code>slideRight</code></td><td>오른쪽으로 슬라이드</td><td>입구</td><td>오른쪽으로 슬라이드 Motion Lab 프리셋.</td></tr><tr><td><code>slideDown</code></td><td>아래로 슬라이드</td><td>입구</td><td>아래로 슬라이드 Motion Lab 사전 설정.</td></tr><tr><td><code>flipIn</code></td><td>안으로 뒤집기</td><td>입장</td><td>플립 인 Motion Lab 프리셋.</td></tr><tr><td><code>telegram</code></td><td>텔레그램</td><td>입장</td><td>Telegram Motion Lab 프리셋.</td></tr><tr><td><code>bloom</code></td><td>블룸</td><td>입구</td><td>블룸 Motion Lab 프리셋.</td></tr><tr><td><code>shockwave</code></td><td>쇼크웨이브</td><td>입구</td><td>Shockwave Motion Lab 프리셋.</td></tr><tr><td><code>fadeOut</code></td><td>페이드 아웃</td><td>Exits</td><td>페이드 아웃 Motion Lab 프리셋.</td></tr><tr><td><code>scaleDown</code></td><td>축소</td><td>종료</td><td>축소 Motion Lab 프리셋.</td></tr><tr><td><code>slideOut</code></td><td>슬라이드 아웃</td><td>종료</td><td>슬라이드 아웃 Motion Lab 프리셋.</td></tr><tr><td><code>vortex</code></td><td>Vortex</td><td>Exits</td><td>Vortex Motion Lab 프리셋.</td></tr><tr><td><code>glitchOff</code></td><td>글리치 끄기</td><td>Exits</td><td>글리치 끄기 Motion Lab 프리셋.</td></tr><tr><td><code>dissolve</code></td><td>디졸브</td><td>종료</td><td>Dissolve Motion Lab 사전 설정.</td></tr><tr><td><code>popOut</code></td><td>팝아웃</td><td>종료</td><td>Motion Lab 프리셋을 팝아웃합니다.</td></tr><tr><td><code>slideLeft</code></td><td>왼쪽으로 슬라이드</td><td>종료</td><td>왼쪽으로 슬라이드 Motion Lab 사전 설정.</td></tr><tr><td><code>sinkDown</code></td><td>아래로 가라앉기</td><td>종료</td><td>Sink Down Motion Lab 사전 설정.</td></tr><tr><td><code>flipOut</code></td><td>뒤집기</td><td>Exits</td><td>플립 아웃 Motion Lab 프리셋.</td></tr><tr><td><code>implode</code></td><td>Implode</td><td>Exits</td><td>Implode Motion Lab 프리셋.</td></tr><tr><td><code>puffOut</code></td><td>펄프 아웃</td><td>Exits</td><td>Puff Out Motion Lab 프리셋.</td></tr><tr><td><code>launchOut</code></td><td>Launch Out</td><td>Exits</td><td>Launch Out Motion Lab 프리셋.</td></tr><tr><td><code>shrinkSpin</code></td><td>축소 회전</td><td>Exits</td><td>축소 회전 Motion Lab 프리셋.</td></tr><tr><td><code>blinkOut</code></td><td>깜빡이며 사라짐</td><td>Exits</td><td>Blink Out Motion Lab 프리셋.</td></tr><tr><td><code>sparkle</code></td><td>스파클</td><td>스페셜</td><td>사이클 중간에 최고조에 달하는 빛의 폭발을 더합니다.</td></tr><tr><td><code>swing</code></td><td>스윙</td><td>스페셜</td><td>스윙 Motion Lab 프리셋.</td></tr><tr><td><code>jitter</code></td><td>지터</td><td>스페셜</td><td>지터 Motion Lab 프리셋.</td></tr><tr><td><code>chase</code></td><td>체이스</td><td>스페셜</td><td>체이스 Motion Lab 프리셋.</td></tr><tr><td><code>stream</code></td><td>스트림</td><td>스페셜</td><td>스트림 Motion Lab 프리셋.</td></tr><tr><td><code>trace</code></td><td>트레이스</td><td>스페셜</td><td>방향성 트레이스로 아이콘을 드러냅니다.</td></tr><tr><td><code>flow</code></td><td>흐름</td><td>특수</td><td>Flow Motion Lab 프리셋.</td></tr><tr><td><code>converge</code></td><td>Converge</td><td>Special</td><td>Converge Motion Lab 사전 설정.</td></tr><tr><td><code>cube</code></td><td>큐브</td><td>스페셜</td><td>큐브 Motion Lab 프리셋.</td></tr><tr><td><code>typing</code></td><td>타이핑</td><td>Special</td><td>아이콘을 단계적으로 드러나는 타이밍으로 표시합니다.</td></tr><tr><td><code>reason</code></td><td>이유</td><td>Special</td><td>이유 Motion Lab 프리셋.</td></tr><tr><td><code>sweep</code></td><td>스윕</td><td>Special</td><td>가장자리가 빛나는 상태로 아이콘을 가로질러 스윕합니다.</td></tr><tr><td><code>scatter</code></td><td>Scatter</td><td>스페셜</td><td>Scatter Motion Lab 프리셋.</td></tr><tr><td><code>crest</code></td><td>Crest</td><td>스페셜</td><td>Crest Motion Lab 프리셋.</td></tr><tr><td><code>tap</code></td><td>탭</td><td>스페셜</td><td>빠른 동작의 빛과 함께 앞으로 나아갑니다.</td></tr><tr><td><code>shuffle</code></td><td>셔플</td><td>스페셜</td><td>셔플 Motion Lab 프리셋.</td></tr><tr><td><code>infinity</code></td><td>Infinity</td><td>스페셜</td><td>Infinity Motion Lab 프리셋.</td></tr><tr><td><code>spatial</code></td><td>Spatial</td><td>스페셜</td><td>Spatial Motion Lab 프리셋.</td></tr><tr><td><code>pageFlip</code></td><td>페이지 넘기기</td><td>특수</td><td>페이지 넘기기 Motion Lab 프리셋.</td></tr><tr><td><code>bookOpen</code></td><td>책 열기</td><td>특별</td><td>책 열기 Motion Lab 프리셋.</td></tr><tr><td><code>domino</code></td><td>도미노</td><td>특별</td><td>도미노 Motion Lab 프리셋.</td></tr><tr><td><code>supernova</code></td><td>슈퍼노바</td><td>스페셜</td><td>슈퍼노바 Motion Lab 프리셋.</td></tr><tr><td><code>blackHole</code></td><td>블랙홀</td><td>스페셜</td><td>블랙홀 Motion Lab 프리셋.</td></tr><tr><td><code>fingerprint</code></td><td>지문</td><td>스페셜</td><td>지문 Motion Lab 사전 설정.</td></tr><tr><td><code>badgeTap</code></td><td>배지 탭</td><td>스페셜</td><td>배지 탭 Motion Lab 프리셋.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-ranges\">\n        <h2 class=\"docs-section__title\">매개 변수 범위</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>매개 변수</th>\n                <th>최소</th>\n                <th>기본값</th>\n                <th>최대</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>소요 시간</td><td>100ms</td><td>500ms</td><td>4000ms</td></tr>\n              <tr><td>강도</td><td>25%</td><td>100%</td><td>200%</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-presets-groups\">\n        <h2 class=\"docs-section__title\">사전 설정 그룹</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>그룹</th>\n                <th>프리셋 수</th>\n                <th>사용 시점</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>모션</td><td>25</td><td>주목, 리듬, 박동, 주변 움직임을 위한 일상적인 모션 프리셋입니다. 전체적인 장면 전환처럼 보이지 않으면서도 아이콘에 생동감을 주고 싶을 때 사용하세요.</td></tr><tr><td>등장</td><td>15</td><td>명확한 시작 지점을 가지고 등장하는 아이콘을 위한 등장 프리셋입니다. 콘텐츠가 화면에 들어오거나, 열리거나, 새로 표시될 때 사용하세요.</td></tr><tr><td>종료</td><td>15</td><td>아이콘이 깔끔하게 사라져야 할 때 사용하는 퇴장 프리셋입니다. 아이콘이 사라지거나, 완료되거나, 닫히거나, 다음 상태로 넘어갈 때 사용하세요.</td></tr><tr><td>스페셜</td><td>25</td><td>독특한 개성이나 시각 효과를 갖춘 대표 애니메이션 프리셋입니다. 주요 기능 강조, 축하 순간, 또는 브랜드 특유의 상호작용에 적절히 사용하십시오.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-triggers": {
+        "navLabel": "트리거",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 트리거",
+        "summary": "애니메이션 시작 방식을 선택합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-trigger-loop\">\n        <h2 class=\"docs-section__title\"><code>loop</code></h2>\n        <p class=\"docs-section__copy\">아이콘이 렌더링되는 즉시 애니메이션이 연속적으로 재생됩니다. 사용자 상호작용 없이 무한히 반복됩니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 시점:</strong> 로딩 상태, 배경 장식, 헤로 섹션의 브랜딩 아이콘, 항상 표시되는 시각적 요소.</p>\n        <p class=\"docs-section__copy\"><strong>사용하지 말아야 할 경우:</strong> 지속적인 움직임이 사용자의 집중을 분산시킬 수 있는 인터랙티브 요소.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-hover\">\n        <h2 class=\"docs-section__title\"><code>hover</code></h2>\n        <p class=\"docs-section__copy\">사용자가 아이콘 요소 위에 마우스를 올리면 애니메이션이 재생됩니다. 포인터가 이동한 후 애니메이션이 완료되면 자연스럽게 멈춥니다. 내부적으로는 CSS<code>:hover</code>에 의해 트리거됩니다<code>mouseenter</code>및<code>mouseleave</code>이벤트에 의해 트리거되는 CSS를 사용합니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 시:</strong> 포인터 상호작용에 반응하는 인터랙티브 버튼, 링크, 메뉴 항목 및 행동 유도(CTA) 아이콘.</p>\n        <p class=\"docs-section__copy\"><strong>사용하지 말아야 할 경우:</strong> 마우스 오버에 상응하는 신뢰할 수 있는 동작이 없는 터치 전용 인터페이스.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-click\">\n        <h2 class=\"docs-section__title\"><code>click</code></h2>\n        <p class=\"docs-section__copy\">아이콘을 누를 때(<code>:active</code>) 또는<code>.active</code>클래스가 적용될 때 재생됩니다. 활성화 시 3회 재생된 후 중지됩니다.</p>\n        <p class=\"docs-section__copy\"><strong>사용 시점:</strong> 토글 상태, 좋아요/싫어요 동작, 확인 아이콘, 제출 버튼 피드백, 사용자가 명시적으로 유발하는 상태 변경 등.</p>\n        <p class=\"docs-section__copy\"><strong>사용하지 말아야 할 경우:</strong> 지속적인 호버 상태를 가진 아이콘(대신<code>hover</code>trigger를 대신 사용하십시오).</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-trigger-summary\">\n        <h2 class=\"docs-section__title\">트리거 동작 요약</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>트리거</th>\n                <th>다음 경우에 시작됨</th>\n                <th>반복</th>\n                <th>횟수</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>loop</code></td><td>아이콘 렌더링</td><td>지속적으로</td><td>무한</td></tr>\n              <tr><td><code>hover</code></td><td>사용자 마우스 오버</td><td>마우스를 떼기 전까지</td><td>마우스가 올려진 동안 무한히</td></tr>\n              <tr><td><code>click</code></td><td>사용자가 (<code>:active</code>또는<code>.active</code>클래스)</td><td>클릭 시</td><td>클릭당 3회</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-exports": {
+        "navLabel": "내보내기",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 내보내기",
+        "summary": "Motion Lab CSS 또는 애니메이션 SVG를 내보냅니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-exports-css\">\n        <h2 class=\"docs-section__title\">Motion Lab CSS</h2>\n        <h3>설명</h3>\n        <p class=\"docs-section__copy\">정의와 애니메이션 규칙이 포함된<code>@keyframes</code>정의와 애니메이션 규칙이 포함된 스타일시트입니다. HTML 또는 JSX에서 SVG 요소와 함께 적용하세요. SVG 애니메이션은 별도의 파일입니다.</p>\n        <h3>사용 방법</h3>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>Supericons 에서<code>search_icons</code>또는<code>get_icon</code>. (무료)</li>\n          <li>선택한 프리셋과 트리거를<code>export_motion_css</code>선택한 프리셋과 트리거를 사용하여 호출하면 CSS를 얻을 수 있습니다. ( <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜 필요</a>)</li>\n          <li>마크업 내에 SVG 를 인라인으로 유지하세요.</li>\n          <li>Replace<code>{{ICON_SELECTOR}}</code>를 인라인 SVG 의 선택자로 대체하세요.<code>selector_mode</code>인 경우<code>placeholder</code>.</li>\n          <li>업데이트된 CSS 파일을 링크하거나, 기존 스타일시트에 규칙을 붙여 넣으세요.</li>\n        </ol>\n        <h3>CSS 의 내용</h3>\n        <p class=\"docs-section__copy\">CSS 내보내기에는 다음이 포함됩니다:</p>\n        <ul>\n          <li>브랜드 코멘트:<code>/* Supericons Motion Lab */</code></li>\n          <li>선택한 프리셋, 트리거, 지속 시간 및 강도가 포함된 프리셋 레이블 주석</li>\n          <li>애니메이션을 위한<code>@keyframes</code>애니메이션용 블록</li>\n          <li>애니메이션 규칙<code>{{ICON_SELECTOR}}</code></li>\n          <li><code>overflow: visible</code>, <code>transform-box: fill-box</code>, 그리고<code>transform-origin: center</code>SVG 그 자식 요소에 적용하여 변환이 올바르게 동작하도록 보장</li>\n        </ul>\n        <h3>MCP 응답의 선택자 필드</h3>\n        <p class=\"docs-section__copy\">호스팅된 CSS 응답은 이제 선택자 대체 방식에 대해 명확하게 설명합니다:</p>\n        <ul>\n          <li><code>selector_mode: \"placeholder\"</code>: CSS 에는<code>{{ICON_SELECTOR}}</code>. 스타일시트를 적용하기 전에 이를 귀하의 SVG 선택자로 교체하십시오.</li>\n          <li><code>selector_mode: \"literal\"</code>: CSS 이미 선택자가 포함되어 있습니다. 이를 직접 사용하십시오.</li>\n          <li><code>selector_token</code>: CSS 정확한 자리 표시자 문자열입니다. 이를 사용하여 프로그래밍 방식으로 토큰을 찾아 교체하십시오.</li>\n          <li><code>selector_instructions</code>: 사용할 선택자 형식에 대한 쉬운 설명. 에이전트가 치환 단계를 처리할 때 특히 유용합니다.</li>\n        </ul>\n        <div class=\"docs-code\">\n          <pre><code>.settings-button svg\n#login-icon svg\n.sidebar .nav-icon svg</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">두 가지 모두<code>export_motion_css</code>와<code>animate_icon</code>모두 이러한 선택자 필드가 포함된 CSS 반환할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-exports-svg\">\n        <h2 class=\"docs-section__title\">애니메이션 SVG</h2>\n        <h3>정의</h3>\n        <p class=\"docs-section__copy\">애니메이션이<code>&lt;style&gt;</code>블록 내에 애니메이션이 내장된 독립형 SVG 파일. 외부 CSS 필요하지 않습니다.</p>\n        <h3>사용 방법</h3>\n        <p class=\"docs-section__copy\">애니메이션 SVG 파일을 HTML 페이지에 직접 드래그 앤 드롭하세요:</p>\n        <div class=\"docs-code\">\n          <pre><code>&lt;img src=\"icon-animated.svg\" alt=\"animated icon\" width=\"24\" height=\"24\"&gt;</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">또는 SVG 를 인라인으로 삽입하세요:</p>\n        <div class=\"docs-code\">\n          <pre><code>&lt;!-- paste the entire animated SVG string here --&gt;</code></pre>\n        </div>\n        <h3>호환성 참고 사항</h3>\n        <p class=\"docs-section__copy\">자립형 애니메이션 SVG는 현재 주요 브라우저에서 작동합니다.<code>&lt;img&gt;</code>소스로 사용될 경우 CSS 애니메이션이 자동으로 재생됩니다. 인라인으로 붙여넣을 경우, 호버 및 클릭 트리거가 포인터 이벤트에 정상적으로 반응합니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-exports-decision\">\n        <h2 class=\"docs-section__title\">어떤 형식을 사용해야 하나요?</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>상황</th>\n                <th>권장 형식</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>HTML 또는 JSX 내에SVG 포함되어 있으며, CSS 파이프라인을 통해 스타일이 적용되는 경우</td><td>Motion Lab CSS</td></tr>\n              <tr><td>종속성이 없는 하나의 이식 가능한 파일을 원합니다</td><td>애니메이션 SVG</td></tr>\n              <tr><td>이메일이나 문서 사이트에 삽입하려는 경우</td><td>애니메이션 SVG</td></tr>\n              <tr><td>SVG 변경하지 않고 애니메이션을 업데이트해야 하는 경우</td><td>Motion Lab CSS</td></tr>\n              <tr><td>두 형식을 동시에 사용하고자 하는 경우</td><td>호출<code>animate_icon</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n    "
+      },
+      "docs-motion-lab-mcp-workflow": {
+        "navLabel": "MCP 워크플로",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab MCP 워크플로",
+        "summary": "에이전트에서 Motion Lab을 사용합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-intro\">\n        <p class=\"docs-section__copy\">Motion Lab 통한MCP 코딩 에이전트 내에서 사용할 수 있는 완벽한 아이콘 애니메이션 워크플로입니다. 프리셋을 검사하고, 프리셋 프로필을 비교하고, CSS SVG 내보내고, 독립적인 애니메이션 SVG 얻거나, 한 번의 호출로 두 가지를 모두 생성할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-mental-model\">\n        <h2 class=\"docs-section__title\">핵심 작동 원리</h2>\n        <p class=\"docs-section__copy\">로컬 MCP 레이어가 프리셋 검색 및 요청 조정을 처리합니다. 프리미엄 프리셋 프로필, CSS 렌더링, 애니메이션 SVG 렌더링 및 번들<code>animate_icon</code>출력은 단기 세션 토큰을 사용하여 호스팅된 Supericons 함수를 통해 해결됩니다.</p>\n        <p class=\"docs-section__copy\">이러한 분리는 의도된 것입니다. 이를 통해 검색을 위한 로컬 패키지는 가볍게 유지하면서, 프리미엄 렌더링 로직은 호스팅된 경로로 이동시킵니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-order\">\n        <h2 class=\"docs-section__title\">권장 도구 실행 순서</h2>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li>호출<code>list_motion_presets</code>를 호출하여 존재하는 항목을 확인하세요.</li>\n          <li>호출<code>get_motion_recipe</code>을 호출하여 무엇이 있는지 확인하십시오.</li>\n          <li>통합 요구 사항에 따라 출력 유형을 선택합니다.</li>\n          <li>를 사용하여<code>export_motion_css</code>, <code>export_animated_svg</code>, 또는<code>animate_icon</code>.</li>\n        </ol>\n        <p class=\"docs-section__copy\">이렇게 하면 시행착오를 줄이고 최종 선택을 팀원이나 향후 담당자에게 더 쉽게 설명할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-tool-map\">\n        <h2 class=\"docs-section__title\">각 도구를 사용할 시기</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>도구</th>\n                <th>다음과 같은 경우에 사용하십시오.</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>list_motion_presets</code></td><td>사전 설정 ID, 레이블, 그룹, 설명 및 지원되는 트리거를 찾아볼 때</td></tr>\n              <tr><td><code>get_motion_recipe</code></td><td>내보내기 전에 프리셋의 동작 방식을 파악하고자 할 때</td></tr>\n              <tr><td><code>export_motion_css</code></td><td>SVG 인라인으로 유지하고 CSS 통해 모션을 적용할 때</td></tr>\n              <tr><td><code>export_animated_svg</code></td><td>독립적인 애니메이션 자산 하나를 얻으려면</td></tr>\n              <tr><td><code>animate_icon</code></td><td>단 한 번의 호출로 프리셋 프로필, CSS 및 애니메이션 SVG 를 얻으려면</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">정확한 매개변수 테이블 및 필드 이름을 확인하려면 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP Tools</a> 를 정확한 참조 페이지로 열어 두십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-workflow-human-vs-agent\">\n        <h2 class=\"docs-section__title\">인간 대 에이전트 워크플로</h2>\n        <p class=\"docs-section__copy\"><strong>인간 개발자는</strong> 제품 의도(미묘한 호버, 보안감, 축하, 주변 움직임, 또는 움직임 없음)부터 시작해야 합니다. 그런 다음<code>get_motion_recipe</code>를 사용하여 적합성을 확인한 후 내보내십시오.</p>\n        <p class=\"docs-section__copy\"><strong>AI 에이전트</strong> 는 프리셋을 검토하고, UI 컨텍스트에 따라 후보를 좁히고, 프리셋 프로필을 비교하며, 선택한 프리셋의 타당성을 입증한 후에야 내보내야 합니다. 훌륭한 에이전트는 왜 잡음이 많은 프리셋을 피했는지도 설명해야 합니다.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-mcp-workflow-no-motion\">\n        <h3>때로는 움직임이 없는 것이 정답입니다</h3>\n        <p>접근성이 중요한 화면, 차분한 관리자 패널, 신뢰가 핵심인 흐름에서는 대개 움직임을 전혀 주지 않는 것이 더 낫습니다. 움직임이 필요한 경우, 가능한 한 가장 절제된 옵션을 선택하고, 그것이 사용자의 집중을 방해하지 않는 이유를 설명할 수 있어야 합니다.</p>\n      </section>\n    "
+      },
+      "docs-motion-lab-client-setup": {
+        "navLabel": "클라이언트 설정",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 클라이언트 설정",
+        "summary": "Motion Lab용 MCP 클라이언트를 준비합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-mcp-setup-prereqs\">\n        <h2 class=\"docs-section__title\">필요한 사항</h2>\n        <ul>\n          <li>Node.js 18 이상 설치</li>\n          <li>API 계정의 Supericons 키 ( <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a></li>\n          <li>MCP 또는 Cursor과 같은 Claude Desktop 클라이언트</li>\n          <li>해당 클라이언트의 설정에서 MCP 서버를 추가할 수 있는 권한</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-command\">\n        <h2 class=\"docs-section__title\">권장 서버 명령어</h2>\n        <p class=\"docs-section__copy\">게시된 MCP 패키지를 사용하십시오. 이를<code>command</code>MCP 서버 구성에서 이 값을 설정하십시오:</p>\n        <div class=\"docs-code\">\n          <pre><code>npx -y supericons-mcp</code></pre>\n        </div>\n        <p class=\"docs-section__copy\">로컬 체크아웃 환경에서 개발하는 경우, 동일한 env 블록을 유지하되 명령어를<code>node</code>로 바꾸고, arg를<code>mcp/index.js</code>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-cursor\">\n        <h2 class=\"docs-section__title\">Cursor 설정 예시</h2>\n        <p class=\"docs-section__copy\">MCP 구성에 다음 Cursor 서버 블록을 추가하고 API 키 값을 교체하십시오:</p>\n        <div class=\"docs-code\">\n          <pre><code>{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"si_your_pro_key_here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-claude\">\n        <h2 class=\"docs-section__title\">Claude Desktop 설정 예시</h2>\n        <p class=\"docs-section__copy\">Claude Desktop JSON 동일한 Cursor 구성 형식을 사용합니다. Claude Desktop MCP 설정 파일(<code>claude_desktop_config.json</code>), 동일한 서버 블록을 추가하고 API 키 값을 다음과 같이 변경하십시오:</p>\n        <div class=\"docs-code\">\n          <pre><code>{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supericons-mcp\"],\n      \"env\": {\n        \"SUPERICONS_API_KEY\": \"si_your_pro_key_here\"\n      }\n    }\n  }\n}</code></pre>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-mcp-setup-verify\">\n        <h2 class=\"docs-section__title\">첫 번째 성공적인 Motion Lab 호출</h2>\n        <p class=\"docs-section__copy\"><strong>성공 시 결과:</strong> <code>list_motion_presets</code>는 사전 설정된 배열을 반환하고<code>get_motion_recipe</code>는 프리셋 프로필을 반환합니다. 이는 로컬 MCP 서버와 호스팅된 프리미엄 경로가 모두 활성화되었음을 확인시켜 줍니다.</p>\n        <p class=\"docs-section__copy\">클라이언트를 재시작한 후 다음 도구들이 표시되는지 확인하십시오:</p>\n        <ul>\n          <li><code>list_motion_presets</code></li>\n          <li><code>get_motion_recipe</code></li>\n          <li><code>export_motion_css</code></li>\n          <li><code>export_animated_svg</code></li>\n          <li><code>animate_icon</code></li>\n        </ul>\n        <p class=\"docs-section__copy\">그런 다음 다음 순서대로 실행하십시오:</p>\n        <ol class=\"docs-list docs-list--numbered\">\n          <li><code>list_motion_presets</code></li>\n          <li><code>get_motion_recipe</code>preset<code>sweep</code>를 사용하여<code>hover</code>, 지속 시간<code>240</code>, 강도<code>100</code></li>\n          <li><code>export_motion_css</code>또는<code>animate_icon</code></li>\n        </ol>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-mcp-setup-next\">\n        <h3>정확한 도구 필드가 필요하신가요?</h3>\n        <p>Motion Lab MCP Tools를 <a href=\"/?view=docs-mcp-motion\" data-docs-view=\"docs-mcp-motion\">Motion Lab MCP Tools</a> 을 열어 전체 매개변수 및 리턴 셰이프 참조 정보를 확인하십시오.</p>\n      </section>\n    "
+      },
+      "docs-motion-lab-use-cases": {
+        "navLabel": "사용 사례",
+        "kicker": "Motion Lab",
+        "pageTitle": "Motion Lab 사용 사례",
+        "summary": "언제 움직임을 쓰고 언제 정지 상태를 유지할지 판단합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"motion-use-cases-intro\">\n        <p class=\"docs-section__copy\">애니메이션 이름이 아니라 UI 컨텍스트부터 시작하세요. 가장 적합한 Motion Lab 프리셋은 제품 내의 해당 순간, 화면의 분위기, 그리고 해당 사용자에게 적합한 모션 예산과 잘 어우러지는 것입니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"motion-use-cases-table\">\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>컨텍스트</th>\n                <th>적합한 프리셋</th>\n                <th>피해야 할 사항</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>전문적인 대시보드 호버</td><td><code>sweep</code>, <code>glide</code></td><td>데이터에 집중을 방해하는 장난스럽거나 과장된 움직임</td></tr>\n              <tr><td>보안 또는 인증</td><td><code>fingerprint</code>, <code>radar</code></td><td>신뢰를 약화시키는 축하하거나 튕기는 듯한 모션</td></tr>\n              <tr><td>성공 또는 축하</td><td><code>sparkle</code>, <code>bloom</code></td><td>고급스러운 톤에서는 유치하게 느껴지는 효과</td></tr>\n              <tr><td>앰비언트 빈 상태</td><td><code>breathe</code>, <code>float</code></td><td>시간이 지날수록 지치게 만드는 고에너지 모션</td></tr>\n              <tr><td>접근성 관련 설정 패널</td><td>모션은 피하고, 불가피할 경우 가장 절제된 옵션을 선택</td><td>끊임없이 주의를 끄는 움직임</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"motion-use-cases-output\">\n        <h2 class=\"docs-section__title\">CSS 대 애니메이션 SVG 선택</h2>\n        <p class=\"docs-section__copy\">선택 <strong>Motion Lab CSS</strong> SVG 이미 DOM에 인라인으로 포함되어 있고 마크업 위치를 직접 제어하고 싶을 때. 선택 <strong>애니메이션 SVG</strong> 을 선택하세요.</p>\n        <p class=\"docs-section__copy\">선택이 여전히 불분명하다면 <a href=\"/?view=docs-motion-lab-mcp-workflow\" data-docs-view=\"docs-motion-lab-mcp-workflow\">MCP 워크플로우</a> 를 먼저 사용한 후, <a href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">내보내기</a> 을 통합 가이드로 활용하세요.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"motion-use-cases-restraint\">\n        <h3>절제는 훌륭한 모션 디자인의 일부입니다</h3>\n        <p>Motion Lab 가장 강력한 결정 중 하나는 명확성, 신뢰도 또는 차분함을 약화시킬 경우 애니메이션을 전혀 사용하지 말 것을 권장하는 것입니다. 그래도 모션이 필요하다면 가장 미묘한 옵션을 선택하고, 왜 그 모션이 필요한지 설명할 준비를 하세요.</p>\n      </section>\n    "
+      },
+      "docs-converter-guide": {
+        "navLabel": "Converter 가이드",
+        "kicker": "Converter",
+        "pageTitle": "Converter 가이드",
+        "summary": "적절한 변환 워크플로를 선택합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-intro\">\n        <p class=\"docs-section__copy\">Converter 두 가지 기능을 수행합니다. 평면 PNG 이미지를 편집 및 크기 조정이 가능한 SVG 파일로 변환하고, SVG 아트워크를 원하는 크기의 PNG 이미지로 내보냅니다. 브라우저에서는 유료 플랜 없이도 양방향 미리보기를 확인할 수 있습니다. 변환된 결과를 다운로드하려면 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-directions\">\n        <h2 class=\"docs-section__title\">소스 파일에 맞는 방향을 선택하세요</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>다음 중 원하는 것이...</th>\n                <th>원하는 결과는...</th>\n                <th>이 가이드 열기</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>PNG 아트웍</td><td>편집, 배포 또는 추가 수정이 가능한 확장 가능한 SVG</td><td><a href=\"/?view=docs-converter-png-to-svg\" data-docs-view=\"docs-converter-png-to-svg\">PNG SVG로</a></td></tr>\n              <tr><td>SVG 아트웍</td><td>특정 크기이거나 배경이 고정된 래스터 PNG</td><td><a href=\"/?view=docs-converter-svg-to-png\" data-docs-view=\"docs-converter-svg-to-png\">SVG PNG로</a></td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-best-fit\">\n        <h2 class=\"docs-section__title\">이 Converter 가장 잘하는 것</h2>\n        <ul>\n          <li><strong>PNG SVG로 변환</strong>: 로고, 플랫 일러스트레이션, 마크, UI 아이콘 및 색상이 제한된 깔끔한 아트워크에 가장 적합합니다.</li>\n          <li><strong>SVG PNG로</strong>: 이미 SVG 파일이 신뢰할 수 있는 상태이며, 소셜 미디어, 문서, 이메일, 앱 스토어 또는 프레젠테이션 자료용으로 정밀한 래스터화 출력이 필요한 경우에 가장 적합합니다.</li>\n          <li><strong>트레이싱에 적합하지 않은 경우</strong>: 사진, 복잡한 그라데이션, 질감이 있는 채우기, 노이즈가 많은 스크린샷은 일반적으로 트레이싱 후 수동으로 정리해야 하거나 래스터 형식으로 유지해야 합니다.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-browser-vs-mcp\">\n        <h2 class=\"docs-section__title\">브라우저 워크플로 대 MCP 워크플로</h2>\n        <ul>\n          <li><strong>브라우저에서</strong>: 변환 결과를 미리 보고 결과가 충분한지 시각적으로 판단할 수 있는 가장 빠른 방법입니다.</li>\n          <li><strong>MCP 통해</strong>: 에이전트에 구조화된 출력, 반복 가능한 설정, 또는 더 큰 빌드 워크플로의 일부로 변환이 필요한 경우에 가장 적합합니다. <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP 도구</a> 를 사용해 보세요.</li>\n        </ul>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-expectations\">\n        <h3>먼저 미리 보기를 확인한 후, 출력이 다운로드할 가치가 있는지 결정하세요</h3>\n        <p>이 변환기는 품질을 빠르게 판단하는 데 가장 유용합니다. 미리보기가 이미 거칠거나, 끊기거나, 노이즈로 어수선해 보인다면, 출력 형식만 변경한다고 해서 원본 아트를 구할 수는 없습니다.</p>\n      </section>\n    "
+      },
+      "docs-converter-png-to-svg": {
+        "navLabel": "PNG to SVG",
+        "kicker": "Converter",
+        "pageTitle": "PNG to SVG",
+        "summary": "PNG 이미지를 SVG로 추적합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-png-svg-intro\">\n        <p class=\"docs-section__copy\">PNG SVG 트레이싱하는 기능, 즉 픽셀을 확장 가능한 벡터 도형으로 자동 변환하는 기능은 원본 이미지가 이미 벡터 아트와 유사한 특성을 지닐 때 가장 효과적입니다. 즉, 선명한 가장자리, 단순한 채우기, 높은 대비, 최소한의 배경 디테일이 있어야 합니다. 로고, 단색 마크, UI 아이콘, 플랫 일러스트레이션에 사용하세요. 사진이나 그라데이션이 많은 아트워크는 기본값이 아닌 예외로 취급하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-best-results\">\n        <h2 class=\"docs-section__title\">가장 깔끔한 트레이싱 결과 얻기</h2>\n        <ul>\n          <li>가지고 있는 PNG 중 화질이 가장 좋은 것으로 시작하세요. 너무 작거나, 흐릿하거나, 압축된 원본은 트레이싱을 시작하기도 전에 가장자리의 선명도를 잃게 됩니다.</li>\n          <li>그라데이션, 그림자, 질감보다는 평면적인 도형을 우선적으로 선택하십시오.</li>\n          <li>전경과 배경이 명확하게 구분된 아트워크를 사용하세요.</li>\n          <li>원본이 작업 흐름의 어느 단계에서든 이미 SVG 존재하는 경우, PNG 사본을 트레이싱하는 대신 해당 SVG 파일을 사용하십시오.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-settings\">\n        <h2 class=\"docs-section__title\">가장 중요한 설정</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>설정</th>\n                <th>변경 사항</th>\n                <th>좋은 시작 지침</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>traceClass</code></td><td>업로드한 이미지 유형에 맞는 트레이싱 프로필을 선택합니다</td><td>소스 이미지에 맞춰 설정: 로고, 작은 아이콘, 단색 마크 또는 일반 컬러 아트워크</td></tr>\n              <tr><td><code>qualityMode</code></td><td>파일 크기와 시각적 복잡성을 고려하여 원본의 재현도를 조절합니다</td><td>시작<code>exact</code>; 다음으로 전환<code>compact</code>SVG 파일이 불필요하게 큰 경우에만</td></tr>\n              <tr><td><code>uiMode</code></td><td>아이콘과 같은 기하학적 구조나 로고와 같은 모양에 맞게 출력을 조정합니다</td><td>사용<code>icon</code>UI 글리프에는<code>logo</code>마크와 워드마크에는</td></tr>\n              <tr><td><code>colorMode</code></td><td>색상을 유지하거나 단색 결과로 강제 설정</td><td>다음과 같이 사용하십시오<code>mono</code>아트웍이 의도적으로 단색일 때만</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">전체 설정 참조를 보려면 <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter 설정 참조</a>를 참조하십시오. 에이전트 기반 변환의 경우, 이 설정을 <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP 도구</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-png-svg-workflow\">\n        <h2 class=\"docs-section__title\">권장 워크플로</h2>\n        <ol>\n          <li>브라우저에서 PNG 미리 보고 소스 코드가 추적 가능한지 여부를 판단하십시오.</li>\n          <li>가장 유사한 트레이싱 프로필을 선택하고<code>exact</code>품질로 시작하십시오.</li>\n          <li>SVG 거친 가장자리, 부풀려진 파일 크기 또는 누락된 세부 사항이 있는지 검토하십시오.</li>\n          <li>그 후에야<code>compact</code>또는 다른 트레이싱 클래스로 전환하십시오.</li>\n        </ol>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-png-svg-restraint\">\n        <h3>소스 이미지가 추적에 적합하지 않다고 판단되면 억지로 벡터화하지 마십시오.</h3>\n        <p>미리 보기가 이미 고르지 않거나, 깨져 보이거나, 미세한 디테일이 누락된 경우, 더 열심히 트레이싱하기보다는 원본을 PNG 유지하거나 원본 SVG 또는 디자인 파일을 찾는 것이 더 나은 결정일 수 있습니다.</p>\n      </section>\n    "
+      },
+      "docs-converter-svg-to-png": {
+        "navLabel": "SVG to PNG",
+        "kicker": "Converter",
+        "pageTitle": "SVG to PNG",
+        "summary": "SVG 파일을 PNG로 렌더링합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-svg-png-intro\">\n        <p class=\"docs-section__copy\">SVG PNG 더 간단한 방법입니다. 이미 벡터 아트가 있고, Converter 이를 특정 너비의 선명한 래스터 출력으로 변환해 주기 때문입니다. 소셜 미디어 미리 보기, 문서, 프레젠테이션, 이메일, 앱 목록 또는 라이브 스케일링이 가능한 SVG 대신 고정된 이미지 파일이 필요한 모든 곳에 이 방법을 사용하십시오.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-controls\">\n        <h2 class=\"docs-section__title\">중요한 두 가지 제어 기능</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>컨트롤</th>\n                <th>기능</th>\n                <th>참고</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>targetWidth</code></td><td>PNG 너비를 픽셀 단위로 설정합니다</td><td>실제 사용 사례를 충족할 수 있는 최소 너비를 선택하십시오. 파일 크기가 크다고 해서 무조건 좋은 것은 아닙니다.</td></tr>\n              <tr><td><code>background</code></td><td>SVG 뒤의 배경을 투명하거나 단색으로 설정합니다</td><td>PNG를 여러 표면에 배치해야 할 때는<code>transparent</code>PNG 여러 표면에 배치해야 할 때 사용하십시오. 대상 컨텍스트에 이미 알려진 배경이 있는 경우 고정된 16진수 색상을 사용하십시오.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-uses\">\n        <h2 class=\"docs-section__title\">일반적인 용도</h2>\n        <ul>\n          <li>SVG 업로드를 지원하지 않는 도구를 위한 로고나 아이콘 준비.</li>\n          <li>슬라이드 데크, 문서 또는 마켓플레이스 목록을 위한 평면 PNG 생성.</li>\n          <li>브라우저 렌더링의 차이에 의존하지 않고, 알려진 배경을 가진 정확한 래스터 파일을 내보내기.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-svg-png-quality\">\n        <h2 class=\"docs-section__title\">품질 기대치</h2>\n        <p class=\"docs-section__copy\">PNG 품질은 제공된 SVG 품질에 따라 결정됩니다. 원본 SVG 클리핑 문제, 채워지지 않은 영역, 깨지거나 불완전한 코드가 있다면, PNG 이러한 문제를 그대로 반영합니다. Converter 파일을 재설계하는 것이 아니라 렌더링할 뿐입니다.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-svg-png-tip\">\n        <h3>출력 너비를 의도한 대로 유지하십시오</h3>\n        <p>PNG 실제로 사용될 화면 크기에 맞춰 너비를 선택하십시오. 과도하게 큰 크기로 내보내면 파일 용량이 증가할 뿐만 아니라, 단순히 픽셀 수만 늘렸을 뿐인데도 품질 문제가 해결된 것으로 오해할 수 있습니다.</p>\n      </section>\n    "
+      },
+      "docs-converter-settings": {
+        "navLabel": "설정",
+        "kicker": "Converter",
+        "pageTitle": "Converter 설정",
+        "summary": "추적 클래스, 품질, 색상 및 출력 설정을 이해합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"converter-settings-intro\">\n        <p class=\"docs-section__copy\">이러한 설정은 PNG 트레이싱의 동작 방식을 결정합니다. 설정을 올바르게 하면 깔끔한 가장자리를 유지하고 SVG 크기를 관리 가능한 수준으로 유지할 수 있습니다. 설정을 잘못하면 노이즈가 많은 경로, 흐릿하거나 둥근 모양, 또는 기술적으로는 완성되었으나 시각적으로 부정확한 결과가 생성될 수 있습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-trace-class\">\n        <h2 class=\"docs-section__title\"><code>traceClass</code>: 가장 가까운 소스 프로필을 선택하십시오</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th><code>traceClass</code></th>\n                <th>가장 적합한 경우</th>\n                <th>다음과 같은 경우에는 피하십시오</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td><code>general-color</code></td><td>어디서부터 시작해야 할지 확신이 서지 않을 때, 풀컬러 아트워크가 대부분인 경우</td><td>소스가 명백히 작은 아이콘이나 단색 마크인 경우</td></tr>\n              <tr><td><code>flat-logo-color</code></td><td>단색으로 채워진 로고이며 도형 간 구분이 간단한 경우</td><td>아트웍에 그라데이션이나 사진적 디테일이 많이 포함된 경우</td></tr>\n              <tr><td><code>tile-icon-color</code></td><td>작은 반복 타일이나 작은 장식용 컬러 아이콘</td><td>아트웍이 콤팩트한 아이콘보다는 자유로운 형태의 로고인 경우</td></tr>\n              <tr><td><code>tiny-line-icon</code></td><td>가는 선과 UI 스타일의 기하학적 형태를 가진 아주 작은 아이콘</td><td>채워진 도형이 포함된 넓은 로고나 일러스트레이션</td></tr>\n              <tr><td><code>single-color-mark</code></td><td>단색 로고, 워드마크 및 심플한 마크</td><td>원본은 다색 분리가 필요합니다</td></tr>\n              <tr><td><code>mono-mask</code></td><td>단색으로 유지되도록 의도된 고대비 흑백 아트워크</td><td>디자인이 색상 관계에 의존하는 경우</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-quality\">\n        <h2 class=\"docs-section__title\"><code>qualityMode</code>: 세부 사항을 유지하거나 출력을 단순화</h2>\n        <ul>\n          <li><strong><code>exact</code></strong>: 최적의 기본 설정입니다. 경로 디테일을 더 많이 유지하며, 대개 가장 깔끔한 1차 결과물을 제공합니다.</li>\n          <li><strong><code>compact</code></strong>: 경로를 단순화하고 파일 크기를 줄입니다. 첫 번째 결과물이 정확하지만 필요 이상으로 무거운 경우에 사용하십시오.</li>\n        </ul>\n        <p class=\"docs-section__copy\">다음으로 시작하십시오<code>exact</code>. 다음으로<code>compact</code>상세 트레이스가 이미 원본을 충실하게 반영하는 것을 확인한 후에만</p>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-ui-mode\">\n        <h2 class=\"docs-section__title\"><code>uiMode</code>: 아이콘이나 로고에 맞게 출력 형식 조정</h2>\n        <ul>\n          <li><strong><code>logo</code></strong>: 자유형 마크, 곡선 및 워드마크에 더 적합합니다.</li>\n          <li><strong><code>icon</code></strong>: 가장자리의 정밀도가 중요한 기하학적 UI 아이콘에 더 적합합니다.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-color-mode\">\n        <h2 class=\"docs-section__title\"><code>colorMode</code>: 색상을 유지하거나 단색 결과로 강제</h2>\n        <ul>\n          <li><strong><code>color</code></strong>: 출력물에 색상 분리를 유지하며, 대부분의 로고 및 일러스트레이션에 대한 기본값으로 설정해야 합니다.</li>\n          <li><strong><code>mono</code></strong>: 결과물을 단색으로 변환합니다. 아트웍이 단색일 때, 또는 단색으로 변환하는 것이 원하는 구체적인 결과일 때만 사용하십시오.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"converter-settings-starting-points\">\n        <h2 class=\"docs-section__title\">좋은 시작점</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr>\n                <th>소스 이미지</th>\n                <th>다음으로 시작</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>Flat logo</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>\n              <tr><td>단색 워드마크</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code>, <code>mono</code>브랜드가 실제로 단색인 경우</td></tr>\n              <tr><td>작은 UI 아이콘</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code>인 경우, 일반적으로<code>mono</code></td></tr>\n              <tr><td>다색 일러스트레이션 또는 아트워크</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">MCP 사용하는 경우, <a href=\"/?view=docs-mcp-converter\" data-docs-view=\"docs-mcp-converter\">Converter MCP Tools</a> 에서는 동일한 설정과 함께 안내 및 프리플라이트 검사 기능을 제공합니다.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"converter-settings-callout\">\n        <h3>가장 좋은 설정은 가장 강렬해 보이는 설정이 아니라 원본에 맞는 설정입니다</h3>\n        <p>변환 결과에서 가장 실망스러운 부분은 원본 유형과 일치하지 않을 때 발생합니다. 트레이서는 원본 이미지가 이미 암시하고 있지 않은 명확한 벡터 구조를 스스로 만들어낼 수 없습니다.</p>\n      </section>\n    "
+      },
+      "docs-access-api-keys": {
+        "navLabel": "API 키",
+        "kicker": "액세스 및 API 키",
+        "pageTitle": "API 키",
+        "summary": "Supericons 계정의 API 키를 MCP와 다른 앱 연동에 사용합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"access-api-keys-intro\">\n        <h2 class=\"docs-section__title\">키가 계정을 연결하는 방식</h2>\n        <p class=\"docs-section__copy\">브라우저 UI 외부에서 API 연결할 때는 Supericons 계정의 Supericons 키를 사용하십시오. 이 키는 요청을 보내는 계정을 식별하므로, 앱이나 MCP 클라이언트는 해당 계정이 액세스할 수 있는 모든 리소스를 불러올 수 있습니다.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"access-api-keys-reassurance\">\n        <h3>기억해야 할 사항</h3>\n        <p>별도의 Pro 키나 팩 키는 없습니다. API 키는 계정에 이미 부여된 접근 권한을 사용합니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-does\">\n        <h2 class=\"docs-section__title\">API 키의 역할</h2>\n        <ul>\n          <li>앱이나 MCP 클라이언트를 Supericons 계정에 로그인시킵니다.</li>\n          <li>Supericons 해당 계정이 사용할 수 있는 아이콘과 도구를 확인하도록 합니다.</li>\n          <li>MCP 및 기타 프로그래매틱 워크플로우에 필수적입니다.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-does-not\">\n        <h2 class=\"docs-section__title\">API 키가 수행하지 않는 기능</h2>\n        <ul>\n          <li>API 키 자체로는 계정을 업그레이드할 수 없습니다.</li>\n          <li>구매한 팩을 Motion Lab 또는 Converter 액세스 권한으로 전환하지 않습니다.</li>\n          <li>계정에서 이미 구매했거나 구독한 내용을 변경하지 않습니다.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-when\">\n        <h2 class=\"docs-section__title\">API 키가 필요한 경우</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>MCP 및 코딩 에이전트</h3>\n            <p>다음과 같은 경우<code>SUPERICONS_API_KEY</code>Supericons, Claude Code, Codex 또는 다른 Cursor 클라이언트를 통해 MCP 사용할 때 필요합니다.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프로그래밍 방식의 요청</h3>\n            <p>앱이나 워크플로가 일반 브라우저 UI 외부에서 API 호출하는 경우 Supericons 키가 필요합니다.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">사이트를 탐색하고 브라우저에서 무료 라이브러리를 사용하는 경우 API 키가 필요하지 않습니다.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-account-bridge\">\n        <p class=\"docs-section__copy\">계정에서 액세스할 수 있는 내용은 구매하거나 구독한 항목에 따라 다릅니다. <a href=\"/?view=docs-access-premium\" data-docs-view=\"docs-access-premium\">Pro 및 Collections</a> 에서 자세한 내용을 확인하세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-api-keys-next\">\n        <h2 class=\"docs-section__title\">다음 단계</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>API 키 열기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=api-keys\" data-docs-view=\"api-keys\">페이지 열기</a>\n            </div>\n            <p>MCP 또는 앱에서 사용하려는 키를 생성하거나 관리하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>빠른 시작 가이드 읽기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-quickstart\" data-docs-view=\"docs-quickstart\">가이드 열기</a>\n            </div>\n            <p>MCP 설정하고<code>SUPERICONS_API_KEY</code>올바른 구성 파일에 추가하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>가격 보기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=pricing\" data-docs-view=\"pricing\">요금제 보기</a>\n            </div>\n            <p>필요한지 확인 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a> Motion Lab Converter지 확인하십시오.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-access-premium": {
+        "navLabel": "Pro 및 컬렉션",
+        "kicker": "액세스 및 API 키",
+        "pageTitle": "Pro 및 컬렉션",
+        "summary": "팩을 구매하면 해당 아이콘을 사용할 수 있습니다. Motion Lab과 Converter는 Supericons Pro 플랜에 포함됩니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"access-premium-intro\">\n        <h2 class=\"docs-section__title\">두 가지 다른 이용 방법</h2>\n        <p class=\"docs-section__copy\">팩을 구매하면 해당 팩에 포함된 프리미엄 아이콘을 이용할 수 있습니다. Motion Lab 과 Converter <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>. 한 가지만 선택하여 사용할 수 있습니다.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"access-premium-clarify\">\n        <h3>이 점이 혼란스러울 수 있는 이유</h3>\n        <p>아이콘 이용 권한과 도구 이용 권한은 별개입니다. 팩을 구매하여 해당 프리미엄 아이콘을 이미 사용할 수 있다면, 이는 당연한 일입니다. Motion Lab Converter 별도의 기능이며, 계정이 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-packs\">\n        <h2 class=\"docs-section__title\">구매한 팩으로 얻을 수 있는 것</h2>\n        <ul>\n          <li>구매한 팩이나 컬렉션에 포함된 프리미엄 아이콘.</li>\n          <li>동일한 계정의 API 키를 사용할 때 동일한 아이콘에 대한 접근 권한.</li>\n        </ul>\n        <p class=\"docs-section__copy\">팩 구매에는 Motion Lab Lab이나 Converter 포함되지 않습니다. 해당 도구는 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 플랜</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-pro\">\n        <h2 class=\"docs-section__title\">Supericons Pro 플랜에서 제공하는 혜택</h2>\n        <ul>\n          <li>브라우저 및 Motion Lab 통한MCP.</li>\n          <li>브라우저 및 Converter 통한MCP.</li>\n          <li>해당 워크플로우를 위한 브라우저 내보내기 경로 및 에이전트 도구.</li>\n        </ul>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-examples\">\n        <h2 class=\"docs-section__title\">간단한 예시</h2>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr><th>상황</th><th>작동하는 경우</th></tr>\n            </thead>\n            <tbody>\n              <tr><td>프리미엄 팩을 구매했지만 Supericons Pro 플랜은 가지고 있지 않습니다.</td><td>해당 팩의 프리미엄 아이콘은 사용할 수 있지만, Motion Lab Lab과 Converter 잠겨 있는 상태입니다.</td></tr>\n              <tr><td>Supericons Pro 플랜을 가지고 있습니다.</td><td>Motion Lab 과 Converter 사용할 수 있습니다. 팩도 구매한 경우, 해당 아이콘 컬렉션도 작동합니다.</td></tr>\n              <tr><td>계정의 API 키를 사용합니다.</td><td>이 키는 해당 계정에 이미 있는 것, 즉 구매한 팩, Supericons Pro 플랜 또는 둘 다를 사용합니다.</td></tr>\n            </tbody>\n          </table>\n        </div>\n      </section>\n      <section class=\"docs-section\" id=\"access-premium-next\">\n        <h2 class=\"docs-section__title\">다음 단계</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>가격 보기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=pricing\" data-docs-view=\"pricing\">요금제 보기</a>\n            </div>\n            <p>Supericons Pro 플랜이 필요한지 확인하세요 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제가</a> Motion Lab Converter지 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>API 키 열기</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=api-keys\" data-docs-view=\"api-keys\">페이지 열기</a>\n            </div>\n            <p>열기 API</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>Motion Lab으로 이동</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">가이드 열기</a>\n            </div>\n            <p>플랜이 필요한지 결정하기 전에 Motion Lab 기능을 확인해 보세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3>Converter로 이동</h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">가이드 열기</a>\n            </div>\n            <p>브라우저와 Converter 통해 MCP 기능을 확인해 보세요.</p>\n          </article>\n        </div>\n      </section>\n    "
+      },
+      "docs-troubleshooting": {
+        "navLabel": "문제 해결",
+        "kicker": "지원",
+        "pageTitle": "문제 해결",
+        "summary": "MCP 설정, API 키, Motion Lab 및 Converter의 일반적인 문제를 해결합니다.",
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"troubleshooting-setup\">\n        <h2 class=\"docs-section__title\">MCP 설정</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>추가 후 서버가 표시되지 않음</h3>\n            <p>Claude Code 또는 Codex에서<code>/mcp</code>를 입력하여 활성 서버를 나열하세요. Cursor 사이드바에서 MCP 설정을 열고<code>supericons</code>이 표시되는지 확인하세요. 표시되지 않으면 클라이언트를 다시 시작한 다음, 구성 파일이 클라이언트와 스코프에 맞는 올바른 위치에 있는지 확인하세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>어떤 설정 파일을 수정해야 할지 모르겠나요?</h3>\n            <p>아래 표에서 올바른 파일 경로를 확인하십시오. 서버가 잘못된 파일에 있는 경우, 파일을 이동하고 저장한 후 클라이언트를 재시작하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3><code>npx</code>첫 실행 시 시간이 오래 걸립니다</h3>\n            <p>처음 실행할 때<code>npx -y supericons-mcp</code>npm이 패키지를 다운로드합니다. 이후 실행은 더 빠릅니다. 이 일시적인 지연은 정상적인 현상입니다.</p>\n          </article>\n        </div>\n        <div class=\"docs-table-wrap\">\n          <table class=\"docs-table\">\n            <thead>\n              <tr><th>클라이언트</th><th>범위</th><th>경로</th></tr>\n            </thead>\n            <tbody>\n              <tr><td>Claude Code</td><td>사용자</td><td><code>~/.claude.json</code></td></tr>\n              <tr><td>Claude Code</td><td>프로젝트</td><td><code>.mcp.json</code>(프로젝트 루트)</td></tr>\n              <tr><td>Codex</td><td>사용자</td><td><code>~/.codex/config.toml</code></td></tr>\n              <tr><td>Codex</td><td>프로젝트</td><td><code>.codex/config.toml</code>(프로젝트 루트)</td></tr>\n              <tr><td>Cursor</td><td>전역</td><td><code>~/.cursor/mcp.json</code></td></tr>\n              <tr><td>Cursor</td><td>프로젝트</td><td><code>.cursor/mcp.json</code>(프로젝트 루트)</td></tr>\n            </tbody>\n          </table>\n        </div>\n        <p class=\"docs-section__copy\">클라이언트별 설정에 대한 자세한 내용은 다음을 참조하십시오. <a href=\"/?view=docs-claude-code\" data-docs-view=\"docs-claude-code\">Claude Code</a>, <a href=\"/?view=docs-codex\" data-docs-view=\"docs-codex\">Codex</a>를 참조하거나 <a href=\"/?view=docs-cursor\" data-docs-view=\"docs-cursor\">Cursor</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-access\">\n        <h2 class=\"docs-section__title\">Access 및 API 키</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>액세스 기능을 사용할 수 없습니다</h3>\n            <p>다음 네 가지를 모두 확인하십시오:</p>\n            <ol>\n              <li>올바른 API 계정의 Supericons 키를 사용하고 있는지 확인하십시오.</li>\n              <li><code>SUPERICONS_API_KEY</code>이 서버<code>env</code>블록에 존재합니다.</li>\n              <li>설정을 수정한 후 클라이언트를 재시작했는지 확인하십시오.</li>\n              <li>사용하려는 기능에 대한 권한이 계정에 부여되어 있는지 확인하십시오.</li>\n            </ol>\n          </article>\n          <article class=\"docs-card\">\n            <h3>API 키가 유효하지 않거나 취소되었습니다</h3>\n            <p>다음에서 새 키를 생성하십시오. <a href=\"/?view=api-keys\" data-docs-view=\"api-keys\">API 키</a>에서 새 키를 생성하고, 구성을 업데이트한 후 클라이언트를 다시 시작하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>프리미엄 아이콘은 표시되지만 도구는 여전히 잠겨 있습니다</h3>\n            <p>구매한 팩을 통해 아이콘에 대한 액세스 권한은 있지만, <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>가 없습니다. Motion Lab 과 Converter 플랜 내의 별도 기능입니다. <a href=\"/?view=pricing\" data-docs-view=\"pricing\">요금</a> 을 참조하세요.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">전체 액세스 권한 내역은 <a href=\"/?view=docs-access-api-keys\" data-docs-view=\"docs-access-api-keys\">API 키</a> 에서 키가 계정을 식별하는 방법을, <a href=\"/?view=docs-access-premium\" data-docs-view=\"docs-access-premium\">Pro 및 'Collections'</a> 에서 구매한 팩과 요금제의 차이점을 확인하세요.</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-motion-lab\">\n        <h2 class=\"docs-section__title\">Motion Lab</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>Motion Lab 도구가 액세스 오류를 반환합니다</h3>\n            <p>Motion Lab 은 <a href=\"/?view=pricing\" data-docs-view=\"pricing\">Supericons Pro 요금제</a>. 다음 두 가지를 확인하세요: API 키가 서버<code>env</code>블록에 포함되어 있는지, 그리고 해당 키가 속한 Supericons 계정에 요금제가 적용되어 있는지 확인하십시오. 설정을 변경한 후에는 클라이언트를 재시작하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>애니메이션 SVG 는<code>&lt;img&gt;</code>태그</h3>\n            <p>자체 포함형 애니메이션 SVG는 최신 주요 브라우저에서 작동하지만, 일부 구형 브라우저와 웹뷰는 외부에서 로드된 SVG의 애니메이션을 차단합니다. 대상 환경에서 파일이 안정적으로 애니메이션되지 않는 경우, 대신 SVG 인라인으로 삽입하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>잘못된 프리셋이 애니메이션되고 있습니다</h3>\n            <p>`<code>preset</code>매개변수가 유효한 프리셋 ID와 정확히 일치하는지 확인하십시오. 프리셋 ID는 대소문자를 구분하며, 여러 단어로 구성된 프리셋의 경우 camelCase를 사용합니다. 예를 들어<code>magneticIn</code>,<code>magnetic-in</code>또는<code>MagneticIn</code>와 같이 사용하지 않습니다.<code>list_motion_presets</code>를 호출하여 유효한 ID를 확인하십시오.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">Motion Lab 대한 자세한 내용은 다음을 참조하십시오. <a href=\"/?view=docs-motion-lab\" data-docs-view=\"docs-motion-lab\">Motion Lab</a> 및 <a href=\"/?view=docs-motion-lab-exports\" data-docs-view=\"docs-motion-lab-exports\">Motion Lab 내보내기</a>.</p>\n      </section>\n      <section class=\"docs-section\" id=\"troubleshooting-converter\">\n        <h2 class=\"docs-section__title\">Converter</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <h3>PNG-SVG 변환 결과물이 부정확하거나 경로가 너무 많습니다</h3>\n            <p>원본 이미지에는 그라데이션, 그림자 또는 사진의 세부 사항이 포함되어 있어 깔끔하게 추적되지 않을 수 있습니다. 더 구체적인<code>traceClass</code>를 사용해 보거나<code>qualityMode</code>로<code>compact</code>로 변경하여 결과를 단순화해 보세요.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>어떤<code>traceClass</code>사용해야 할지</h3>\n            <p>Call<code>inspect_converter_options</code>를 호출하여 안내를 받거나, <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter 설정</a> 에서 트레이스 클래스 참조를 확인하십시오.</p>\n          </article>\n          <article class=\"docs-card\">\n            <h3>SVG-to-PNG 출력 크기가 잘못되었습니다</h3>\n            <p>The<code>targetWidth</code>매개변수는 출력 픽셀 너비를 설정합니다. 높이는 SVG<code>viewBox</code>. PNG 파일이 너무 작으면<code>targetWidth</code>값을 늘리십시오. 필요 이상으로 크다면 줄이십시오. 파일 크기가 크다고 해서 자동으로 화질이 더 좋은 것은 아닙니다.</p>\n          </article>\n        </div>\n        <p class=\"docs-section__copy\">전체 변환기 사용 안내는 <a href=\"/?view=docs-converter-guide\" data-docs-view=\"docs-converter-guide\">Converter</a> 를 참조하고 <a href=\"/?view=docs-converter-settings\" data-docs-view=\"docs-converter-settings\">Converter 설정</a> 를 참조하십시오.</p>\n      </section>\n      <section class=\"docs-callout\" id=\"troubleshooting-contact\">\n        <h3>문제가 여전히 목록에 없습니까?</h3>\n        <p>다음 항목을 엽니다 <a href=\"#\" data-open-contact=\"true\">문의 양식</a> 또는 이메일 <a href=\"mailto:hello@supericons.dev\">hello@supericons.dev</a>.</p>\n      </section>\n    "
+      }
+    }
+  },
+  "contact": {
+    "title": "문의하기",
+    "description": "질문, 피드백, 제휴 문의를 보내 주세요.",
+    "namePlaceholder": "이름",
+    "emailPlaceholder": "이메일",
+    "messagePlaceholder": "메시지",
+    "sendMessage": "메시지 보내기",
+    "sending": "보내는 중...",
+    "sent": "메시지를 보냈습니다. 감사합니다.",
+    "failed": "보내지 못했습니다. 아래 이메일 링크를 사용해 주세요.",
+    "emailDirectly": "또는 직접 이메일 보내기:"
+  },
+  "account": {
+    "title": "계정",
+    "description": "앱을 떠나지 않고 Supericons 계정 기본 정보를 관리합니다.",
+    "menu": {
+      "account": "계정",
+      "purchases": "내 구매",
+      "apiKeys": "API 키",
+      "manageSubscription": "구독 관리",
+      "signOut": "로그아웃"
+    },
+    "profile": {
+      "title": "프로필",
+      "description": "Supericons 안에 표시할 이름을 선택하세요.",
+      "displayNamePlaceholder": "표시 이름",
+      "saveDisplayName": "표시 이름 저장",
+      "enterName": "저장할 표시 이름을 입력하세요.",
+      "nameTooShort": "표시 이름은 2자 이상이어야 합니다.",
+      "saved": "표시 이름이 저장되었습니다.",
+      "saveFailed": "표시 이름을 저장할 수 없습니다."
+    },
+    "email": {
+      "title": "이메일",
+      "description": "로그인 이메일을 참고용으로 표시합니다."
+    },
+    "password": {
+      "title": "비밀번호",
+      "addTitle": "비밀번호 로그인 추가",
+      "description": "안전한 복구 흐름으로 새 비밀번호를 선택합니다.",
+      "addDescription": "현재 Google로 로그인합니다. 이메일 로그인도 원하면 비밀번호를 설정하세요.",
+      "setPassword": "비밀번호 설정",
+      "sendResetEmail": "비밀번호 재설정 이메일 보내기",
+      "noEmail": "이 계정에 사용할 수 있는 로그인 이메일이 없습니다.",
+      "addStatus": "Google 로그인과 함께 사용할 수 있는 비밀번호를 설정하세요.",
+      "resetSent": "비밀번호 재설정 이메일을 {email}(으)로 보냈습니다.",
+      "resetToast": "비밀번호 재설정 이메일을 보냈습니다.",
+      "resetInSeconds": "{seconds}초 후 다시 보내기"
+    },
+    "toast": {
+      "updated": "계정이 업데이트되었습니다."
+    }
+  },
+  "checkout": {
+    "openingPortal": "구독 포털을 여는 중입니다...",
+    "signInAgainPortal": "구독 포털을 열려면 다시 로그인하세요.",
+    "portalUnavailable": "구독 포털을 사용할 수 없습니다.",
+    "portalFailed": "구독 포털을 열 수 없습니다."
+  },
+  "auth": {
+    "continueWithGoogle": "Google로 계속",
+    "or": "또는",
+    "emailPlaceholder": "이메일 주소",
+    "passwordPlaceholder": "비밀번호",
+    "newPasswordPlaceholder": "새 비밀번호",
+    "confirmPasswordPlaceholder": "새 비밀번호 확인",
+    "forgotPassword": "비밀번호 찾기",
+    "backToSignIn": "로그인으로 돌아가기",
+    "resendConfirmation": "확인 메일 다시 보내기",
+    "sendResetLink": "재설정 링크 보내기",
+    "updatePassword": "비밀번호 업데이트",
+    "getNewResetLink": "재설정 링크 보내기",
+    "yourEmail": "이메일 주소",
+    "resendInSeconds": "확인 메일 다시 보내기 {seconds}s",
+    "sendAgainInSeconds": "재설정 링크 보내기 {seconds}s",
+    "copy": {
+      "default": {
+        "signin": {
+          "title": "Supericons에 로그인",
+          "desc": "애니메이션 아이콘 팩, 구매 관리, Pro 기능에 접근하세요.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "로그인",
+          "toggle": "계정이 없나요.",
+          "toggleAction": "가입"
+        },
+        "signup": {
+          "title": "Supericons 계정 만들기",
+          "desc": "구매 내역과 다운로드를 동기화하고 한 계정에서 Pro 기능을 사용하세요.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "계정 만들기",
+          "toggle": "이미 계정이 있나요.",
+          "toggleAction": "로그인"
+        }
+      },
+      "purchase": {
+        "signin": {
+          "title": "Supericons에 로그인",
+          "desc": "컬렉션 구매를 한 계정에 연결해 다운로드와 업데이트를 동기화합니다.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "로그인",
+          "toggle": "계정이 없나요.",
+          "toggleAction": "가입"
+        },
+        "signup": {
+          "title": "Supericons 계정 만들기",
+          "desc": "구매 내역, 다운로드, 향후 업데이트가 이 계정에 연결됩니다.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "계정 만들기",
+          "toggle": "이미 계정이 있나요.",
+          "toggleAction": "로그인"
+        }
+      },
+      "subscribe": {
+        "signin": {
+          "title": "Supericons에 로그인",
+          "desc": "MCP 접근, 워크플로 도구, 프리미엄 컬렉션을 위해 Pro 결제로 이동합니다.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "로그인",
+          "toggle": "계정이 없나요.",
+          "toggleAction": "가입"
+        },
+        "signup": {
+          "title": "Supericons 계정 만들기",
+          "desc": "먼저 계정을 설정한 뒤 준비되면 Pro 결제로 이동하세요.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "계정 만들기",
+          "toggle": "이미 계정이 있나요.",
+          "toggleAction": "로그인"
+        }
+      },
+      "pro": {
+        "signin": {
+          "title": "Supericons에 로그인",
+          "desc": "Motion Lab 내보내기, Converter 다운로드, 프리미엄 MCP 접근을 한 계정에서 사용하세요.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "로그인",
+          "toggle": "계정이 없나요.",
+          "toggleAction": "가입"
+        },
+        "signup": {
+          "title": "Supericons 계정 만들기",
+          "desc": "작업 공간을 저장하고 프리미엄 도구를 한 계정에 연결하세요.",
+          "note": "무료 계정입니다. 무료 아이콘에는 카드가 필요하지 않습니다.",
+          "submit": "계정 만들기",
+          "toggle": "이미 계정이 있나요.",
+          "toggleAction": "로그인"
+        }
+      }
+    },
+    "forgot": {
+      "title": "비밀번호 찾기",
+      "description": "계정 이메일을 입력하면 안전한 재설정 링크를 보내드립니다.",
+      "note": "복구 링크를 통해 이곳으로 돌아와 새 비밀번호를 선택할 수 있습니다.",
+      "sentStatus": "{email}과 일치하는 계정이 있으면 곧 재설정 링크를 받게 됩니다."
+    },
+    "reset": {
+      "title": "새 비밀번호 설정",
+      "addTitle": "비밀번호 로그인 추가",
+      "description": "Supericons 계정을 보호할 새 비밀번호를 선택하세요.",
+      "addDescription": "Google뿐 아니라 이메일로도 로그인할 수 있도록 비밀번호를 만드세요.",
+      "note": "8자 이상을 사용하세요. 강력한 비밀번호를 권장합니다.",
+      "addNote": "비밀번호 접근을 추가해도 Google 로그인은 계속 작동합니다.",
+      "createForEmail": "{email}의 비밀번호를 만드세요.",
+      "chooseForEmail": "{email}의 새 비밀번호를 선택하세요.",
+      "createForAccount": "계정의 비밀번호를 만드세요.",
+      "chooseForAccount": "계정의 새 비밀번호를 선택하세요."
+    },
+    "verify": {
+      "existing": {
+        "modalTitle": "기존 계정 사용",
+        "modalDesc": "이 이메일은 이미 Supericons 계정에 속해 있을 수 있습니다. 새 계정을 만들지 말고 로그인하세요.",
+        "modalNote": "보통 Google로 로그인한다면 Google로 계속 진행하세요. 그렇지 않으면 돌아가서 이메일로 로그인하세요.",
+        "stageTitle": "계정이 이미 있습니다",
+        "stageText": "{email}은(는) 기존 Supericons 계정에 연결되어 있을 수 있습니다."
+      },
+      "unconfirmed": {
+        "modalTitle": "이메일 확인",
+        "modalDesc": "로그인하기 전에 받은 편지함에서 이메일 주소를 확인하세요.",
+        "modalNote": "이메일을 찾을 수 없거나 링크가 더 이상 작동하지 않으면 아래에서 새 확인 이메일을 보내세요.",
+        "stageTitle": "이메일 확인이 필요합니다",
+        "stageText": "{email}(으)로 새 확인 이메일을 보냅니다.",
+        "resentStatus": "새 확인 이메일을 {email}(으)로 보냈습니다."
+      },
+      "callback": {
+        "resetTitle": "이 재설정 링크는 더 이상 유효하지 않습니다",
+        "linkTitle": "이 링크는 더 이상 유효하지 않습니다",
+        "resetDesc": "비밀번호 재설정 링크가 유효하지 않거나 불완전하거나 만료되었습니다.",
+        "linkDesc": "로그인 또는 복구 링크가 유효하지 않거나 불완전하거나 만료되었습니다.",
+        "resetNote": "새 재설정 이메일을 요청한 뒤 다시 시도하세요.",
+        "linkNote": "Supericons에서 다시 시작하고 필요하면 새 이메일을 요청하세요.",
+        "stageTitle": "링크가 만료되었거나 유효하지 않습니다",
+        "stageText": "이 링크는 더 이상 사용할 수 없습니다."
+      },
+      "pending": {
+        "modalTitle": "이메일 확인",
+        "modalDesc": "확인 이메일을 열어 Supericons 계정 생성을 완료하세요.",
+        "modalNote": "바로 보이지 않으면 약 1분 후 다시 요청할 수 있습니다.",
+        "stageTitle": "이메일 확인",
+        "stageText": "{email}(으)로 보낸 확인 이메일을 찾아보세요.",
+        "sentStatus": "{email}(으)로 확인 이메일을 보냈습니다. 약 1분 후 다시 요청할 수 있습니다.",
+        "resentStatus": "{email}에서 새 확인 이메일을 확인하세요."
+      }
+    },
+    "errors": {
+      "invalidCredentials": "이메일과 비밀번호가 일치하지 않습니다. 평소 Google로 로그인한다면 Google로 계속 진행하세요.",
+      "tooManyAttempts": "로그인 시도가 너무 많습니다. 잠시 기다린 뒤 다시 시도하세요.",
+      "signInFailed": "로그인할 수 없습니다. 입력한 정보를 확인한 뒤 다시 시도하세요.",
+      "tooManySignupAttempts": "계정 생성 요청이 너무 많습니다. 잠시 기다린 뒤 다시 시도하세요.",
+      "passwordMin": "비밀번호는 8자 이상이어야 합니다.",
+      "signupFailed": "계정을 만들 수 없습니다. 다시 시도하세요.",
+      "resetTooSoon": "다른 재설정 링크를 요청하기 전에 잠시 기다려 주세요.",
+      "resetFailed": "재설정 링크를 보낼 수 없습니다. 다시 시도하세요.",
+      "confirmationTooSoon": "다른 확인 메일을 요청하기 전에 잠시 기다려 주세요.",
+      "resendFailed": "확인 메일을 다시 보낼 수 없습니다. 다시 시도하세요.",
+      "signOutFailed": "로그아웃할 수 없습니다. 다시 시도하세요.",
+      "googleFailed": "Google 로그인이 완료되지 않았습니다. 다시 시도하세요.",
+      "passwordTooShort": "새 비밀번호는 8자 이상이어야 합니다.",
+      "passwordsMismatch": "비밀번호가 일치하지 않습니다.",
+      "updatePasswordFailed": "비밀번호를 업데이트할 수 없습니다. 다시 시도하세요."
+    },
+    "toast": {
+      "passwordSignInAdded": "비밀번호 로그인이 추가되었습니다.",
+      "passwordUpdated": "비밀번호가 업데이트되었습니다.",
+      "emailConfirmed": "이메일이 확인되었습니다. 로그인되었습니다.",
+      "signedInInAnotherTab": "다른 탭에서 로그인되었습니다.",
+      "passwordUpdatedInAnotherTab": "다른 탭에서 비밀번호가 업데이트되었습니다.",
+      "signedIn": "로그인되었습니다.",
+      "signedOut": "로그아웃되었습니다."
+    },
+    "completion": {
+      "continueHere": "여기서 계속",
+      "closeThisTab": "이 탭 닫기",
+      "closeBlocked": "브라우저가 이 탭을 자동으로 닫지 못했습니다. 수동으로 닫아 주세요.",
+      "emailConfirmed": {
+        "modalTitle": "이메일 확인 완료",
+        "modalDesc": "Supericons 계정이 준비되었습니다.",
+        "modalNote": "원래 Supericons 탭이 열려 있다면 이미 업데이트되었습니다.",
+        "stageTitle": "이메일 확인 완료",
+        "stageText": "원래 Supericons 탭으로 돌아가거나, 여기서 계속하거나, 이 탭을 닫을 수 있습니다."
+      },
+      "signedIn": {
+        "modalTitle": "로그인 완료",
+        "modalDesc": "Supericons에 로그인되었습니다.",
+        "modalNote": "원래 Supericons 탭이 열려 있다면 이미 업데이트되었습니다.",
+        "stageTitle": "로그인 완료",
+        "stageText": "원래 Supericons 탭으로 돌아가거나, 여기서 계속하거나, 이 탭을 닫을 수 있습니다."
+      },
+      "passwordUpdated": {
+        "modalTitle": "비밀번호 업데이트 완료",
+        "modalDesc": "비밀번호가 변경되었습니다.",
+        "modalNote": "원래 Supericons 탭이 열려 있다면 이미 업데이트되었습니다.",
+        "stageTitle": "비밀번호 업데이트 완료",
+        "stageText": "원래 Supericons 탭으로 돌아가거나, 여기서 계속하거나, 이 탭을 닫을 수 있습니다."
+      }
+    }
+  },
+  "legal": {
+    "terms": {
+      "pageTitle": "서비스 약관",
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">마지막 업데이트: 2026년 4월 8일</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 사용 권리</h3><p>Supericons는 디지털 제품을 위한 무료 및 프리미엄 아이콘 자산을 제공합니다. 무료 아이콘은 원래의 오픈소스 라이선스를 유지합니다.</p><p>프리미엄 애니메이션 컬렉션은 Curly Mole Labs 자산이며 구매한 라이선스 등급에 따라 사용합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 출력물 권리</h3><p>MCP 서버에서 가져온 아이콘은 AI 생성 코드 출력에 사용할 수 있습니다.</p><p>기반 SVG 및 CSS 애니메이션 소스 파일은 Curly Mole Labs 자산으로 남으며 추출, 역공학, 대량 내보내기를 할 수 없습니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 재배포</h3><p>원본 SVG 또는 CSS 파일을 재배포하거나, 접근 권한을 재판매하거나, 하위 라이선스를 부여하거나, 경쟁 아이콘 라이브러리를 만들 수 없습니다.</p><p>소스 파일이 직접 노출되지 않는 완성된 웹사이트, 앱, 클라이언트 결과물에서는 아이콘을 사용할 수 있습니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 라이선스 등급</h3><p>단일 프로젝트 라이선스는 개별 구매와 Pro 월간 컬렉션 청구에 적용됩니다.</p><p>무제한 프로젝트 라이선스는 활성 Pro 구독, Pro 연간 포함 컬렉션, Launch Edition 구매에 적용됩니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 환불</h3><p>Pro 구독은 언제든 취소할 수 있습니다. 현재 결제 기간에 대한 부분 환불은 제공되지 않습니다.</p><p>일회성 디지털 구매는 다운로드 접근이 제공된 후 환불되지 않으며, 접근을 막는 기술 문제가 있으면 14일 이내 연락해 주세요.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 문의</h3><p>약관, 라이선스 또는 환불 문의는 hello@supericons.dev로 보내 주세요.</p></section></div>"
+    },
+    "privacy": {
+      "pageTitle": "개인정보 처리방침",
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">마지막 업데이트: 2026년 4월 8일</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 개요</h3><p>Supericons는 Curly Mole Labs가 운영합니다. 이 정책은 어떤 정보를 수집하고 어떻게 사용하는지 설명합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. 수집하는 데이터</h3><p>이메일 주소, 표시 이름, 인증 제공자, 계정 식별자 같은 계정 정보를 수집할 수 있습니다.</p><p>프리미엄 컬렉션과 MCP 기능 접근을 제공하는 데 필요한 구매, 권한, 구독 기록을 저장합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 제품 분석</h3><p>안정성을 개선하고 기능 사용을 이해하기 위해 쿠키 없는 제품 분석 데이터를 수집합니다.</p><p>이 분석은 개인 추적을 피하도록 설계되었습니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 데이터 사용 방법</h3><p>로그인, 계정 복구, 구매 접근, 구독, 지원, 사기 방지, 제품 개선을 위해 데이터를 사용합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 결제</h3><p>결제와 구독 관리는 Stripe가 처리합니다. Supericons는 서버에 전체 카드 정보를 저장하지 않습니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 인증 및 이메일</h3><p>인증에는 이메일 및 Google 로그인이 포함될 수 있습니다. 거래 이메일은 안전한 이메일 제공자가 당사를 대신해 발송합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. MCP 접근</h3><p>MCP 사용 시 접근 확인, 아이콘 결과 반환, 프리미엄 권한 적용에 필요한 요청을 처리합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">8. 제3자 서비스</h3><p>인증, 청구, 이메일 발송, 기본 제품 분석을 위해 제3자 제공자를 사용합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">9. 데이터 보관</h3><p>서비스 운영, 법적 의무 준수, 분쟁 해결, 고객 지원에 필요한 기간 동안 계정, 청구, 권한 기록을 보관합니다.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">10. 선택권 및 연락처</h3><p>앱에서 계정 정보를 업데이트할 수 있습니다. 개인정보 요청은 hello@supericons.dev로 이메일을 보내세요.</p></section></div>"
+    }
+  },
+  "loggedIn": {
+    "downloads": {
+      "noCollections": "아직 컬렉션이 없습니다",
+      "browseHint": "프리미엄 컬렉션을 둘러보고 시작하세요.",
+      "browseCollections": "컬렉션 보기",
+      "collection": "컬렉션",
+      "purchased": "구매됨",
+      "redeemed": "사용됨",
+      "openCollection": "컬렉션 열기"
+    },
+    "dashboard": {
+      "purchaseHistory": "구매 내역",
+      "noPurchases": "아직 구매 내역이 없습니다.",
+      "collection": "컬렉션",
+      "date": "날짜",
+      "actions": "작업",
+      "view": "보기",
+      "unknown": "알 수 없음"
+    }
+  },
+  "apiKeys": {
+    "setup": {
+      "pro": "코딩 에이전트를 Supericons MCP에 연결해 프리미엄 아이콘 컬렉션이나 Pro 워크플로 도구에 접근합니다.",
+      "guide": "각 클라이언트에서 키를 넣을 위치는 설정 가이드를 확인하세요.",
+      "free": "무료 MCP는 키 없이 사용할 수 있습니다.",
+      "upgrade": "프리미엄 컬렉션을 구매하거나 Pro를 구독하면 MCP 접근용 API 키를 사용할 수 있습니다."
+    },
+    "usageLoading": "불러오는 중...",
+    "limitNote": "앱이나 기기별로 키 라벨을 붙이면 독립적으로 교체할 수 있습니다.",
+    "tabAria": "API 키 상태",
+    "active": "활성",
+    "revoked": "취소됨",
+    "all": "전체",
+    "loadingKeys": "키를 불러오는 중...",
+    "labelPlaceholder": "키 라벨, 예: Cursor 또는 Claude",
+    "generateKey": "키 생성",
+    "browseCollections": "컬렉션 보기",
+    "seePricing": "가격 보기",
+    "signIn": "로그인",
+    "emptyCreate": "아직 API 키가 없습니다. 하나를 생성해 시작하세요.",
+    "emptyAccount": "이 계정에는 아직 API 키가 없습니다.",
+    "revokedCopy": "취소된 키는 더 이상 작동하지 않습니다. 기록이 필요 없으면 히스토리 행을 삭제할 수 있습니다.",
+    "allCopy": "모든 키 기록을 한곳에서 봅니다. 활성 키는 취소할 수 있고 취소된 기록은 삭제할 수 있습니다.",
+    "activeCopy": "이 키들은 아직 MCP 클라이언트와 앱을 인증할 수 있습니다.",
+    "emptyRevoked": "취소된 키 기록이 아직 없습니다. 키를 교체하면 여기에 표시됩니다.",
+    "emptyActive": "현재 활성 키가 없습니다. 클라이언트를 연결하려면 키를 생성하세요.",
+    "revokedHistory": "취소된 기록",
+    "allKeys": "모든 키",
+    "activeKeys": "활성 키",
+    "key": "키",
+    "label": "라벨",
+    "created": "생성일",
+    "lastUsed": "마지막 사용",
+    "status": "상태",
+    "never": "없음",
+    "revoke": "취소",
+    "deleteRevokedLabel": "취소된 키 {label} 삭제",
+    "signInAgainLoad": "API 키를 불러오려면 다시 로그인하세요.",
+    "activeLimit": "활성 키 최대 {limit}개",
+    "sessionExpired": "세션이 만료되었습니다. 키를 관리하려면 다시 로그인하세요.",
+    "usageCount": "활성 키 {limit}개 중 {active}개 사용 중",
+    "noAccess": "현재 API 키에 접근할 수 없습니다.",
+    "limitReached": "키 {limit}개 제한에 도달했습니다. 새 키를 만들기 전에 하나를 취소하세요.",
+    "revokedHistoryNote": "취소된 기록은 별도 탭에 있으며 활성 키 제한에 포함되지 않습니다.",
+    "failedLoad": "API 키를 불러오지 못했습니다.",
+    "failedLoadNote": "지금 API 키를 불러올 수 없습니다.",
+    "generating": "생성 중...",
+    "signInAgainGenerate": "API 키를 생성하려면 다시 로그인하세요.",
+    "failedGenerate": "키 생성 실패",
+    "failedGenerateToast": "API 키 생성 실패",
+    "modalTitle": "API 키 생성됨",
+    "modalWarning": "이 키를 지금 복사하세요. 다시 표시되지 않습니다.",
+    "copy": "복사",
+    "copied": "복사됨",
+    "modalLabel": "라벨: {label}",
+    "modalPrefix": "접두사: {prefix}",
+    "done": "완료",
+    "copiedToast": "API 키가 클립보드에 복사되었습니다"
+  },
+  "purchaseFlow": {
+    "signInToPurchase": "구매를 계속하려면 로그인하세요",
+    "redirecting": "결제 페이지로 이동 중...",
+    "checkoutFailed": "결제를 시작하지 못했습니다",
+    "paymentError": "결제 오류가 발생했습니다. 다시 시도하세요.",
+    "canceled": "결제가 완료되지 않았습니다. 다시 시도하세요.",
+    "proAnnualTitle": "Pro Annual에 오신 것을 환영합니다",
+    "proAnnualDescription": "8개 출시 컬렉션이 라이브러리에 추가되었습니다. 팩을 둘러보거나 내 컬렉션을 열어 사용을 시작하세요.",
+    "openMyCollection": "내 컬렉션 열기",
+    "proMonthlyTitle": "Pro Monthly에 오신 것을 환영합니다",
+    "proMonthlyDescription": "첫 Pro 컬렉션을 사용할 수 있습니다. 팩을 선택해 영구 라이브러리에 추가하세요.",
+    "redeemCollection": "컬렉션 사용하기",
+    "proAnnualToast": "Pro Annual이 활성화되었습니다. 컬렉션을 사용할 수 있습니다.",
+    "proMonthlyToast": "Pro Monthly가 활성화되었습니다. 컬렉션 1개를 사용할 수 있습니다.",
+    "purchaseSuccess": "구매가 완료되었습니다. 컬렉션을 여는 중..."
+  },
+  "claimFlow": {
+    "allOwned": "사용 가능한 모든 컬렉션이 이미 라이브러리에 있습니다.",
+    "alreadyOwned": "이 컬렉션은 이미 라이브러리에 있습니다.",
+    "subscriptionRequired": "컬렉션을 추가하려면 활성 Pro 구독이 필요합니다.",
+    "failed": "컬렉션을 추가하지 못했습니다. 다시 시도하세요.",
+    "thisCollection": "이 컬렉션",
+    "legacyCredit": "기존 크레딧 1개가 사용됩니다.",
+    "proClaim": "활성 Pro 사용권이 사용됩니다.",
+    "eyebrow": "컬렉션 추가",
+    "title": "{name}을 내 컬렉션에 추가합니다.",
+    "description": "접근 권한을 확인한 뒤 이 컬렉션을 라이브러리에 추가합니다. 이후 다운로드와 MCP에서 사용할 수 있습니다.",
+    "cancel": "취소",
+    "confirm": "내 컬렉션에 추가",
+    "checking": "접근 권한 확인 중...",
+    "unavailable": "지금은 이 컬렉션을 추가할 수 없습니다.",
+    "adding": "컬렉션 추가 중...",
+    "sessionExpired": "세션이 만료되었습니다. 다시 로그인하세요.",
+    "added": "{name}이 내 컬렉션에 추가되었습니다.",
+    "addFailed": "컬렉션을 추가하지 못했습니다. 다시 시도하세요.",
+    "nextAvailable": "다음 사용 가능일: {date}"
+  },
+  "pricing": {
+    "headerTitle": "단순하고 투명한 가격",
+    "headerSubtitle": "무료 아이콘은 누구나 사용할 수 있습니다. 프리미엄 애니메이션 팩으로 UI를 다듬으세요.",
+    "freeIconsAcrossLibraries": "10개 라이브러리의 20,000+ 아이콘",
+    "mcpServerFreeIcons": "20,000+ 무료 아이콘을 제공하는 MCP 서버",
+    "monthly": "월간",
+    "annual": "연간",
+    "save45": "45% 절약",
+    "save28": "28% 절약",
+    "mostPopular": "가장 인기",
+    "faqTitle": "자주 묻는 질문",
+    "plans": {
+      "free": {
+        "name": "무료",
+        "description": "{freeIconsAcrossLibraries}, AI 검색, SVG 내보내기. 계정은 필요하지 않습니다.",
+        "cta": "무료로 시작하기",
+        "features": "Material, Lucide, Tabler, Phosphor 등|AI 의미 검색|SVG, PNG, CSS 내보내기|{mcpServerFreeIcons}|프리미엄 애니메이션 팩|MCP를 통한 프리미엄 아이콘"
+      },
+      "pro": {
+        "name": "Pro",
+        "cta": "Pro로 업그레이드",
+        "monthlyDescription": "Pro 도구, 전체 프리미엄 접근, 매월 1개의 프리미엄 컬렉션.",
+        "annualDescription": "현재 8개 프리미엄 컬렉션을 바로 소유하고 연간 플랜이 활성인 동안 향후 드롭도 이용합니다.",
+        "monthlyFeatures": "무료 플랜 전체|매월 1개 프리미엄 컬렉션|활성 기간 동안 모든 컬렉션 접근|언제든 취소하고 받은 컬렉션 유지|Motion Lab에서 CSS 애니메이션 내보내기|Converter에서 SVG 및 PNG 무제한 변환|무료와 프리미엄 아이콘 전체 MCP 접근|무제한 프로젝트 상업적 사용|우선 지원",
+        "annualFeatures": "무료 플랜 전체|현재 8개 프리미엄 컬렉션 즉시 소유|포함된 8개 컬렉션 영구 보관|연간 플랜 활성 기간의 향후 프리미엄 드롭|Motion Lab에서 CSS 애니메이션 내보내기|Converter에서 SVG 및 PNG 무제한 변환|무료와 프리미엄 아이콘 전체 MCP 접근|무제한 프로젝트 상업적 사용|우선 지원"
+      },
+      "singlePack": {
+        "name": "단일 팩",
+        "period": "팩당",
+        "description": "원하는 컬렉션 하나를 선택하세요. 50개의 애니메이션 아이콘을 영구 보유합니다.",
+        "cta": "팩 보기",
+        "features": "무료 플랜 전체|팩당 50개 애니메이션 SVG 아이콘|아이콘마다 고유한 호버 애니메이션|영구 소유|단일 프로젝트 라이선스|구매한 팩의 MCP 접근|Motion Lab 또는 Converter 같은 Pro 도구 제외"
+      },
+      "launchBundle": {
+        "name": "Launch 번들",
+        "period": "일회성",
+        "description": "8개 팩 전체. 400개 애니메이션 아이콘. 구독 없는 일회성 결제.",
+        "cta": "Launch 번들 받기",
+        "features": "8개 프리미엄 팩 전체|400개 애니메이션 SVG 아이콘|AI, 커머스, 미디어, 내비게이션, 보안 등|영구 소유와 해당 팩의 향후 업데이트|무제한 프로젝트 상업적 사용|8개 팩 전체 MCP 접근|Motion Lab 또는 Converter 같은 Pro 도구 제외"
+      }
+    },
+    "faq": {
+      "questions": "8개 프리미엄 애니메이션 팩에 포함된 내용|Pro 월간과 Pro 연간 접근 방식의 차이|Supericons MCP 서버로 할 수 있는 일|Pro 구독을 취소하는 방법|Pro 취소 후에도 남는 접근 권한|프리미엄 아이콘을 상업적으로 사용하는 방법|Launch 번들에 포함된 내용",
+      "answers": "각 팩에는 고유한 호버 애니메이션이 있는 50개의 애니메이션 SVG 아이콘이 포함됩니다. 8개 팩은 AI, 상태, 커머스, 내비게이션, 미디어, 보안, 소셜, 데이터 같은 제품 영역을 다룹니다.|Pro 월간은 매월 1개 프리미엄 컬렉션을 영구 라이브러리에 추가합니다. Pro 연간은 현재 8개 프리미엄 컬렉션을 즉시 열고 연간 플랜 활성 기간 동안 향후 프리미엄 드롭을 포함합니다.|MCP 서버는 AI 코딩 에이전트가 프로그램 방식으로 아이콘을 검색하고 가져오게 합니다. 무료 사용자는 무료 라이브러리에, 유료 사용자는 계정에 연결된 프리미엄 컬렉션에 접근합니다.|계정 대시보드에서 취소할 수 있습니다. Pro 혜택은 결제된 기간이 끝날 때까지 유지됩니다.|받았거나 구매한 컬렉션은 라이브러리에 남습니다. 소유하지 않은 컬렉션의 실시간 접근, 향후 드롭, Pro 도구는 기간 종료 후 갱신하지 않으면 중단됩니다.|예. 프리미엄 아이콘은 플랜 또는 구매에 연결된 라이선스에 따라 상업적으로 사용할 수 있습니다.|Launch 번들은 출시 가격의 일회성 구매입니다. 현재 8개 프리미엄 팩과 같은 팩의 향후 업데이트를 포함합니다."
+    }
+  },
+  "seo": {
+    "title": "Supericons | 필요한 아이콘을 더 빠르게 찾기",
+    "description": "의미, 사용 사례, 또는 인터페이스에서 아이콘이 쓰이는 위치로 선별된 20,000개 이상의 아이콘을 검색하세요. 디자이너, 개발자, AI 코딩 에이전트를 위해 만들었습니다.",
+    "twitterDescription": "Supericons에서 선별된 20,000개 이상의 아이콘 중 필요한 아이콘을 더 빠르게 찾으세요."
+  },
+  "packs": {
+    "empty": {
+      "title": "컬렉션이 곧 공개됩니다",
+      "description": "애니메이션 아이콘 컬렉션을 준비 중입니다. 곧 다시 확인해 주세요."
+    },
+    "types": {
+      "bundle": "번들",
+      "launchEdition": "출시판"
+    },
+    "status": {
+      "complete": "완료"
+    },
+    "card": {
+      "preview": "미리보기",
+      "viewCollection": "컬렉션 보기",
+      "buyPrice": "{price} 구매",
+      "animatedIconsCount": "애니메이션 아이콘 {count}개",
+      "checkingRedeemAccess": "교환 권한을 확인하는 중...",
+      "redeemNow": "지금 교환",
+      "redeemOn": "{date}에 교환 가능",
+      "allClaimableOwned": "교환 가능한 컬렉션을 모두 보유 중입니다",
+      "optionsLoading": "교환 옵션을 불러오는 중입니다. 잠시 후 다시 시도하세요.",
+      "soon": "곧"
+    },
+    "launch": {
+      "name": "출시판",
+      "savePercent": "{percent}% 절약",
+      "description": "전체 8개 컬렉션, 애니메이션 아이콘 400개, 프로젝트 무제한.",
+      "complete": "완료",
+      "ownedCount": "{owned}/{total} 보유",
+      "getBundle": "번들 받기",
+      "ownedDescription": "출시 컬렉션 8개를 모두 보유 중입니다. 모든 프로젝트에서 제한 없이 사용하세요."
+    },
+    "pro": {
+      "title": "Pro로 업그레이드",
+      "monthlyPeriod": "/월",
+      "annualPeriod": "/년",
+      "subscribe": "구독",
+      "monthlyDescription": "MCP 접근, 워크플로 도구, 매월 프리미엄 컬렉션 1개.",
+      "annualDescription": "프리미엄 컬렉션 8개를 지금 모두 소유하고, 연간 플랜 활성 기간 동안 향후 드롭도 이용하세요.",
+      "monthlyFeatures": "AI 에이전트용 MCP 접근|워크플로 도구: Motion Lab, Converter(PNG <-> SVG)|매월 프리미엄 컬렉션 1개|활성 기간 동안 모든 컬렉션 접근|무제한 프로젝트 상업 라이선스",
+      "annualFeatures": "AI 에이전트용 MCP 접근|워크플로 도구: Motion Lab, Converter(PNG <-> SVG)|프리미엄 컬렉션 8개 즉시 소유|연간 플랜 활성 기간 동안 향후 드롭 이용|무제한 프로젝트 상업 라이선스"
+    },
+    "detail": {
+      "backToCollections": "컬렉션으로 돌아가기",
+      "animatedIconsCount": "애니메이션 아이콘 {count}개",
+      "svgWithAnimations": "애니메이션이 포함된 SVG",
+      "animatedIconCollection": "애니메이션 아이콘 컬렉션",
+      "purchased": "구매됨",
+      "buy": "구매",
+      "previewAndCustomize": "{name} 미리보기 및 사용자 지정",
+      "viewUnlockOptions": "{name} 잠금 해제 옵션 보기"
+    },
+    "locked": {
+      "unlockMessage": "이 컬렉션을 잠금 해제하면 이 아이콘을 사용자 지정하고 내보낼 수 있습니다.",
+      "buyPrice": "{price} 구매",
+      "goPro": "Pro로 업그레이드"
+    },
+    "products": {
+      "ai-agentic": {
+        "name": "에이전트 AI",
+        "description": "AI 네이티브 앱 상태와 에이전트 피드백 애니메이션"
+      },
+      "status-feedback": {
+        "name": "상태 및 피드백",
+        "description": "로딩, 성공, 오류, 알림 등 앱 상태 애니메이션"
+      },
+      "ecommerce": {
+        "name": "이커머스",
+        "description": "장바구니, 결제, 배송 피드백 애니메이션"
+      },
+      "navigation-menus": {
+        "name": "내비게이션 및 메뉴",
+        "description": "햄버거, 탭, 사이드바, 검색 등 UI 크롬 애니메이션"
+      },
+      "data-charts": {
+        "name": "데이터 및 차트",
+        "description": "대시보드 로딩 상태와 차트 애니메이션"
+      },
+      "social-communication": {
+        "name": "소셜 및 커뮤니케이션",
+        "description": "반응, 메시징, 공유 애니메이션"
+      },
+      "media-playback": {
+        "name": "미디어 재생",
+        "description": "플레이어 컨트롤과 녹화 상태 애니메이션"
+      },
+      "security-auth": {
+        "name": "보안 및 인증",
+        "description": "로그인 흐름, 권한, 신뢰 신호 애니메이션"
+      }
+    }
+  },
+  "landing": {
+    "homeAriaLabel": "Supericons 홈",
+    "heroTitle": "필요한 아이콘을 더 빠르게 찾으세요.",
+    "heroSubtitle": "의미, 사용 사례, 또는 인터페이스에서 아이콘이 쓰이는 위치로 선별된 20,000개 이상의 아이콘을 검색하세요. 디자이너, 개발자, AI 코딩 에이전트를 위해 만들었습니다.",
+    "startSearching": "지금 아이콘 검색",
+    "stats": {
+      "icons": "아이콘",
+      "libraries": "라이브러리",
+      "mcpTools": "MCP 도구",
+      "semantic": "의미 기반",
+      "search": "검색"
+    },
+    "mcpTitle": "AI 코딩 에이전트에서 Supericons 사용",
+    "mcpSubtitle": "MCP를 연결하면 에이전트가 아이콘을 찾고 SVG를 코드에 붙여넣을 수 있습니다.",
+    "addToMcpConfig": "MCP 설정에 이 항목 추가:",
+    "copyConfig": "설정 복사",
+    "copy": "복사",
+    "openMcpDocs": "MCP 설정 가이드 열기"
+  },
+  "motionLab": {
+    "labels": {
+      "motion": "모션",
+      "entrances": "등장",
+      "exits": "퇴장",
+      "special": "특수",
+      "sizePx": "크기 (px)",
+      "quickTips": "빠른 팁",
+      "properties": "속성",
+      "playback": "재생",
+      "intensity": "강도",
+      "speed": "속도",
+      "fill": "채우기",
+      "stroke": "선",
+      "scale": "크기 조절",
+      "size": "크기",
+      "rotate": "회전",
+      "opacity": "불투명도",
+      "fade": "페이드"
+    },
+    "actions": {
+      "upload": "업로드",
+      "paste": "붙여넣기",
+      "library": "라이브러리",
+      "loop": "반복",
+      "hover": "호버",
+      "click": "클릭",
+      "downloadSvg": "SVG 다운로드",
+      "copyCss": "CSS 복사",
+      "backToIcons": "아이콘으로 돌아가기",
+      "seePricing": "가격 보기"
+    },
+    "presets": {
+      "bounce": "튕김",
+      "float": "떠오름",
+      "shake": "흔들기",
+      "spin": "회전",
+      "pulse": "맥동",
+      "pop": "팝업",
+      "heartbeat": "심장박동",
+      "rubberband": "고무줄",
+      "jelly": "젤리",
+      "ring": "울림",
+      "wobble": "흔들림",
+      "magnetic": "자석",
+      "recoil": "반동",
+      "pendulum": "진자",
+      "whiplash": "휘몰림",
+      "tremor": "진동",
+      "neonglow": "네온 글로우",
+      "breathe": "숨쉬기",
+      "metronome": "메트로놈",
+      "orbit": "궤도",
+      "flicker": "깜빡임",
+      "squish": "찌그러짐",
+      "glide": "미끄러짐",
+      "radar": "레이더 파동",
+      "beacon": "비콘",
+      "magneticIn": "자석 진입",
+      "fadeIn": "페이드 인",
+      "scaleUp": "확대",
+      "slideUp": "위로 슬라이드",
+      "springLand": "스프링 착지",
+      "slingshot": "새총",
+      "glitchOn": "글리치 켜짐",
+      "unfold": "펼치기",
+      "warpIn": "워프 진입",
+      "slideRight": "오른쪽 슬라이드",
+      "slideDown": "아래 슬라이드",
+      "flipIn": "뒤집혀 등장",
+      "telegram": "텔레그램 비행",
+      "bloom": "블룸",
+      "shockwave": "충격파",
+      "fadeOut": "페이드 아웃",
+      "scaleDown": "축소",
+      "slideOut": "빠져나가기",
+      "vortex": "소용돌이",
+      "glitchOff": "글리치 꺼짐",
+      "dissolve": "사라짐",
+      "popOut": "튀어나감",
+      "slideLeft": "왼쪽 슬라이드",
+      "sinkDown": "가라앉기",
+      "flipOut": "뒤집혀 나감",
+      "implode": "안쪽 폭발",
+      "puffOut": "연기처럼 사라짐",
+      "launchOut": "발사되어 나감",
+      "shrinkSpin": "축소 회전",
+      "blinkOut": "깜빡이며 나감",
+      "sparkle": "반짝임",
+      "swing": "스윙",
+      "jitter": "잔떨림",
+      "chase": "추적",
+      "stream": "흐름",
+      "trace": "선 그리기",
+      "flow": "흐름 연결",
+      "converge": "수렴",
+      "cube": "큐브",
+      "typing": "타이핑",
+      "reason": "추론",
+      "sweep": "쓸기",
+      "scatter": "흩뿌리기",
+      "crest": "물결마루",
+      "tap": "탭",
+      "shuffle": "섞기",
+      "infinity": "무한",
+      "spatial": "공간",
+      "pageFlip": "페이지 넘김",
+      "bookOpen": "책 열기",
+      "domino": "도미노",
+      "supernova": "초신성",
+      "blackHole": "블랙홀",
+      "fingerprint": "지문",
+      "badgeTap": "배지 탭"
+    },
+    "empty": {
+      "dropSvg": "SVG를 놓거나 코드를 붙여넣거나 라이브러리에서 선택하세요",
+      "selectElement": "편집할 요소를 선택하세요"
+    },
+    "tooltips": {
+      "exportTrigger": "내보낸 코드에서 애니메이션이 시작되는 방식을 설정합니다. 반복: 계속 재생. 호버: 마우스를 올리면 재생. 클릭: 탭하면 재생.",
+      "resetAnimation": "애니메이션 재설정",
+      "playPreview": "애니메이션 버튼을 클릭하거나 올려서 미리 봅니다.",
+      "clearAll": "모두 지우기",
+      "reset": "재설정",
+      "default": "기본값",
+      "customColor": "사용자 지정 색상"
+    },
+    "quickTips": [
+      {
+        "title": "즉시 미리보기",
+        "body": "애니메이션 버튼을 클릭하거나 올려서 미리 봅니다."
+      },
+      {
+        "title": "아이콘 조정",
+        "body": "오른쪽에서 채우기, 선, 크기, 회전, 페이드를 조정하세요."
+      },
+      {
+        "title": "재생 방식 선택",
+        "body": "반복, 호버, 클릭은 내보낸 애니메이션의 재생 방식을 제어합니다."
+      },
+      {
+        "title": "준비되면 내보내기",
+        "body": "움직임이 마음에 들면 SVG를 다운로드하거나 CSS를 복사하세요."
+      },
+      {
+        "title": "언제든 재설정",
+        "body": "재설정 아이콘으로 컨트롤을 기본값으로 되돌릴 수 있습니다."
+      },
+      {
+        "title": "색상 테스트",
+        "body": "모든 아이콘이 채우기와 선을 모두 지원하지는 않으니 직접 적용해 보세요."
+      }
+    ],
+    "aria": {
+      "showTip": "{number}번 팁 표시"
+    },
+    "export": {
+      "title": "애니메이션 내보내기",
+      "selfContainedSvg": "독립 실행형 SVG",
+      "copyCss": "CSS 복사",
+      "downloadCss": ".css 다운로드",
+      "copySvg": "SVG 복사",
+      "downloadSvg": ".svg 다운로드",
+      "noAnimationsComment": "/* 아직 정의된 애니메이션이 없습니다 */",
+      "loadSvgComment": "<!-- 먼저 SVG를 불러오세요 -->"
+    },
+    "upsell": {
+      "eyebrow": "Pro 기능",
+      "title": "Pro로 애니메이션 내보내기",
+      "body": "모든 프리셋은 무료로 미리 볼 수 있습니다. CSS를 복사하거나 최종 애니메이션 SVG를 다운로드하려면 구독하세요.",
+      "dismiss": "나중에"
+    },
+    "mobile": {
+      "aria": "Motion Lab 모바일 안내",
+      "eyebrow": "데스크톱 우선 도구",
+      "title": "Motion Lab은 데스크톱에 최적화되어 있습니다",
+      "copy": "여기서 작업 공간을 미리 보고, 더 큰 화면에서 Supericons를 열어 전체 편집기로 애니메이션과 내보내기를 진행하세요.",
+      "hint": "모바일에서는 조작이 복잡해지지 않도록 읽기 전용으로 표시됩니다."
+    },
+    "toasts": {
+      "clipboardEmpty": "클립보드가 비어 있습니다. 먼저 SVG를 복사하세요.",
+      "noSvgClipboard": "클립보드에 SVG가 없습니다. 내용은 <svg>로 시작해야 합니다.",
+      "clipboardDenied": "클립보드 접근이 거부되었습니다. SVG 코드를 복사한 뒤 다시 시도하세요.",
+      "animationReset": "애니메이션이 재설정되었습니다",
+      "loadSvgFirst": "먼저 SVG를 불러오세요",
+      "svgDownloaded": "SVG가 다운로드되었습니다",
+      "selectElementFirst": "먼저 요소를 선택하세요",
+      "presetApplied": "\"{name}\" 프리셋을 적용했습니다",
+      "cssCopied": "CSS를 복사했습니다!",
+      "svgCopied": "SVG를 복사했습니다!"
+    }
+  },
+  "converter": {
+    "modes": {
+      "svgToPng": "SVG → PNG",
+      "pngToSvg": "PNG → SVG"
+    },
+    "labels": {
+      "input": "입력",
+      "output": "출력",
+      "size": "크기",
+      "fill": "채우기",
+      "stroke": "선",
+      "background": "배경",
+      "padding": "여백",
+      "quality": "품질",
+      "mode": "모드",
+      "preset": "프리셋",
+      "outputSize": "출력 크기",
+      "compare": "비교",
+      "helpers": "도움 옵션",
+      "pastedSvg": "붙여넣은 SVG"
+    },
+    "actions": {
+      "browse": "찾아보기",
+      "pasteSvgCode": "SVG 코드 붙여넣기",
+      "downloadPng": "PNG 다운로드",
+      "downloadSvg": "SVG 다운로드",
+      "copy": "복사",
+      "copySvg": "SVG 복사",
+      "reset": "초기화",
+      "backToIcons": "아이콘으로 돌아가기",
+      "seePricing": "가격 보기"
+    },
+    "empty": {
+      "dropSvg": "SVG를 놓거나 클릭해서 찾아보기",
+      "dropRaster": "PNG/JPG를 놓거나 클릭해서 찾아보기",
+      "previewAppears": "여기에 미리보기가 표시됩니다"
+    },
+    "aria": {
+      "clearInput": "변환기 입력 지우기",
+      "inputPreview": "입력",
+      "originalPreview": "원본 미리보기",
+      "outputPreview": "출력 미리보기",
+      "originalSplitPreview": "원본 분할 미리보기",
+      "outputSplitPreview": "출력 분할 미리보기"
+    },
+    "tooltips": {
+      "default": "기본값",
+      "customColor": "사용자 지정 색상",
+      "size": "출력 너비를 픽셀로 지정합니다. 높이는 비율을 유지하도록 자동 조정됩니다.",
+      "fill": "보이는 채우기 도형의 색상을 바꿉니다. 업로드한 SVG가 선만 있는 경우도 있습니다.",
+      "stroke": "보이는 선 경로의 색상을 바꿉니다. 업로드한 SVG가 채우기만 있는 경우도 있습니다.",
+      "background": "내보낼 PNG의 배경색을 선택합니다. 앱과 웹사이트 아이콘에는 투명이 가장 좋습니다.",
+      "padding": "아이콘과 이미지 가장자리 사이에 안쪽 여백을 추가합니다. 앱 아이콘과 소셜 아바타에 유용합니다.",
+      "quality": "출력 해상도를 배율로 높입니다. 64px에서 2x는 128px 이미지를 만듭니다. Retina/HiDPI 디스플레이에는 2x 또는 3x를 사용하세요.",
+      "resetDefaults": "기본값으로 재설정",
+      "mode": "아이콘은 작은 기호와 빈 공간을 보존합니다. 로고는 평면 브랜드 아트와 래스터 로고에 맞춰 조정됩니다.",
+      "preset": "자동은 최적의 추적 경로를 선택합니다. 컴팩트는 더 작은 SVG를 우선합니다. 정밀은 충실도가 중요할 때 세부를 더 남깁니다.",
+      "outputSize": "자동은 실용적인 내보내기 크기를 사용합니다. 원본은 잘린 PNG 크기를 유지합니다. 사용자 지정은 px 너비를 설정하고 높이를 자동 계산합니다. 이는 미리보기 크기가 아니라 내보내기 크기를 바꾸며, 경로가 단순화되지 않으면 보통 SVG KB를 줄이지 않습니다.",
+      "previewBackground": "추적된 SVG를 여러 배경에서 확인할 수 있도록 미리보기 표면만 바꿉니다.",
+      "compare": "추적 결과와 원본을 전환해 충실도를 판단합니다.",
+      "helpers": "자동 자르기는 원본 이미지 주변의 빈 가장자리를 잘라 로고와 아이콘 결과를 더 깔끔하게 만듭니다."
+    },
+    "options": {
+      "transparent": "투명",
+      "white": "흰색",
+      "black": "검정",
+      "custom": "사용자 지정",
+      "icon": "아이콘",
+      "logo": "로고",
+      "auto": "자동",
+      "compact": "컴팩트",
+      "exact": "정밀",
+      "balanced": "균형",
+      "original": "원본",
+      "autoCrop": "자동 자르기",
+      "compare": {
+        "trace": "기본값",
+        "split": "분할"
+      },
+      "noise": {
+        "low": "낮음",
+        "medium": "중간",
+        "high": "높음"
+      }
+    },
+    "status": {
+      "tracingPreview": "미리보기를 추적하는 중…",
+      "renderingPreview": "미리보기를 렌더링하는 중…",
+      "tracingPresetPreview": "{preset} 미리보기를 추적하는 중…",
+      "proofServiceHelp": "npm run dev를 실행한 상태에서 두 번째 터미널에 npm run converter:proof-service를 시작하세요.",
+      "proofServiceOffline": "로컬 PNG-to-SVG 서비스가 오프라인입니다.",
+      "proofServiceMeta": "안정적인 색상 추적에는 로컬 벡터 서비스가 필요합니다.",
+      "svgDecodeFailure": "이 SVG를 래스터화할 수 없습니다.",
+      "browserExportFailure": "지원되지 않는 임베디드 리소스가 있으면 브라우저 이미지 내보내기가 실패할 수 있습니다.",
+      "commonSvgFailureCauses": "일반적인 원인: 외부 웹폰트, 원격 이미지, 지원되지 않는 임베디드 리소스.",
+      "browserPipelineFailure": "브라우저 이미지 파이프라인에서 이 SVG를 래스터화할 수 없습니다. 일반적인 원인은 외부 웹폰트, 원격 이미지, 지원되지 않는 임베디드 리소스입니다."
+    },
+    "advice": {
+      "externalFontsText": "이 SVG가 렌더링되도록 외부 웹폰트 가져오기를 제거했습니다. 텍스트를 경로로 변환하지 않으면 PNG가 대체 글꼴을 사용할 수 있습니다.",
+      "externalFonts": "브라우저 내보내기 경로에서 안정적으로 렌더링되도록 외부 웹폰트 가져오기를 제거했습니다.",
+      "exactLarge": "정밀은 더 많은 세부를 유지하지만 SVG가 커질 수 있습니다. 더 작은 파일이 필요하면 컴팩트로 전환하세요.",
+      "svgLarge": "이 SVG는 다소 큽니다. 더 작은 파일이 필요하면 컴팩트로 전환하세요."
+    },
+    "toasts": {
+      "pngCopied": "PNG가 클립보드에 복사되었습니다!",
+      "svgCopied": "SVG 코드가 복사되었습니다!",
+      "copyFailed": "복사에 실패했습니다. 대신 다운로드해 보세요",
+      "invalidSvg": "잘못된 SVG",
+      "svgRenderFailed": "SVG 렌더링 실패"
+    },
+    "upsell": {
+      "eyebrow": "Pro 기능",
+      "title": "{context} 내보내기는 Pro가 필요합니다",
+      "body": "미리보기와 설정 조정은 무료로 계속할 수 있습니다. 파일 다운로드나 변환 출력 복사는 구독 후 사용할 수 있습니다.",
+      "dismiss": "나중에"
+    },
+    "mobile": {
+      "aria": "변환기 모바일 안내",
+      "eyebrow": "데스크톱 우선 도구",
+      "title": "변환기는 데스크톱에 최적화되어 있습니다",
+      "copy": "여기서 변환기를 미리 보고, 더 큰 화면에서 Supericons를 열어 전체 작업 공간으로 파일을 변환하고 내보내세요.",
+      "hint": "작은 화면에서는 인터페이스가 좁아지지 않도록 읽기 전용으로 유지됩니다."
+    },
+    "lab": {
+      "experimentalRoute": "실험 경로",
+      "intro": "이 랩은 안정 버전 변환기와 분리되어 있습니다. 설정은 별도로 저장되어 현재 프로덕션 브라우저 워크플로를 바꾸지 않고 아이디어를 테스트할 수 있습니다.",
+      "openStable": "안정 버전 변환기 열기",
+      "strategy": "랩 전략",
+      "strategyHelp": "전략은 랩 경로에만 영향을 줍니다. 안정 기준은 현재 변환기와 같습니다. 브랜드 색상 우선은 색상 마크를 위한 실험적 로고 경로입니다.",
+      "starterProfiles": "랩 시작 프로필",
+      "starterHelp": "이 항목들은 랩 전용 보조 프리셋입니다. 안정 버전 변환기는 바꾸지 않으며 나란히 테스트하는 속도를 높입니다.",
+      "liveSummary": "실시간 랩 요약",
+      "configured": "설정됨",
+      "browserOnly": "브라우저 전용",
+      "noTraceMetrics": "아직 추적 지표가 없습니다",
+      "pathMetrics": "경로 {count}개 · {complexity}",
+      "notResolved": "아직 해결되지 않음",
+      "summary": {
+        "mode": "모드",
+        "strategy": "전략",
+        "assetMode": "자산 모드",
+        "preset": "프리셋",
+        "compare": "비교",
+        "proofService": "검증 서비스",
+        "traceRoute": "추적 경로",
+        "traceClass": "추적 클래스",
+        "serviceMode": "서비스 모드",
+        "serviceQuality": "서비스 품질",
+        "traceSummary": "추적 요약",
+        "exportTarget": "내보내기 대상"
+      },
+      "strategies": {
+        "stable": {
+          "label": "안정 기준",
+          "note": "현재 프로덕션 변환기와 같은 경로 선택 로직을 사용합니다."
+        },
+        "brand-color-first": {
+          "label": "브랜드 색상 우선",
+          "note": "단일 색상 계열의 컬러 마크가 단색 경로로 너무 빨리 들어가지 않도록 하는 실험적 로고 전략입니다."
+        }
+      },
+      "starters": {
+        "safe-full-color": {
+          "label": "안전한 풀컬러",
+          "note": "여러 색상의 로고나 아트워크에 보수적으로 시작할 때 사용하세요."
+        },
+        "flat-logo-pass": {
+          "label": "플랫 로고 1차",
+          "note": "평면 컬러 로고 아트워크를 더 선명하게 처리하는 첫 단계입니다."
+        },
+        "tiny-interface-icon": {
+          "label": "작은 인터페이스 아이콘",
+          "note": "작은 UI 아이콘 소스의 세부를 보존하는 설정입니다."
+        },
+        "single-color-mark": {
+          "label": "단색 마크",
+          "note": "단순한 브랜드 마크와 워드마크에 맞춘 간결한 설정입니다."
+        },
+        "small-colored-badge": {
+          "label": "작은 컬러 배지",
+          "note": "작은 컬러 마크나 배지에 맞춘 컴팩트한 아이콘 설정입니다."
+        },
+        "high-contrast-mask": {
+          "label": "고대비 마스크",
+          "note": "실루엣이나 마스크처럼 보이는 입력에 적합한 강한 시작점입니다."
+        }
+      },
+      "title": "변환기 랩"
+    }
+  }
+}

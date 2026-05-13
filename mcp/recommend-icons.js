@@ -3,11 +3,26 @@ import {
   getSemanticRecordForIcon,
   scoreSemanticAlignment,
 } from './semantic-registry.js';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { expandCjkQuery } from './runtime/cjk-search-core.js';
 import {
   buildIntentQueryVariants,
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
 } from './runtime/search-intent-core.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
+const multilingualAliasesPath = join(__dirname, 'public', 'multilingual-search-aliases.json');
+const cjkSearchTerms = existsSync(cjkTermsPath)
+  ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || []
+  : [];
+const multilingualSearchAliases = existsSync(multilingualAliasesPath)
+  ? JSON.parse(readFileSync(multilingualAliasesPath, 'utf8')).aliases || []
+  : [];
+const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
 
 const GENERIC_SLOT_WORDS = new Set([
   'action',
@@ -194,7 +209,16 @@ function dedupe(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
-function buildSlotIntentTerms(task, slot) {
+function buildLocalizedVariants(value, locale) {
+  if (!locale) return [];
+  const expanded = expandCjkQuery(value, {
+    locale,
+    terms: multilingualExpansionTerms,
+  });
+  return expanded.matched.length > 0 ? expanded.variants.slice(1) : [];
+}
+
+function buildSlotIntentTerms(task, slot, locale = null) {
   const taskTokens = tokenizeText(task);
   const slotTokens = tokenizeText(slot);
   const usefulSlotTokens = slotTokens.filter((token) => !GENERIC_SLOT_WORDS.has(token));
@@ -203,6 +227,8 @@ function buildSlotIntentTerms(task, slot) {
 
   const usefulTaskTokens = taskTokens.filter((token) => !GENERIC_SLOT_WORDS.has(token));
   expanded.push(...usefulTaskTokens);
+  expanded.push(...buildLocalizedVariants(slot, locale).flatMap(tokenizeText));
+  expanded.push(...buildLocalizedVariants(task, locale).flatMap(tokenizeText));
 
   const variants = buildIntentQueryVariants(`${slot} ${task}`, {
     baseQuery: slot,
@@ -221,11 +247,16 @@ function buildSlotIntentTerms(task, slot) {
   return dedupe(expanded);
 }
 
-function buildSlotQueryVariants(task, slot) {
+function buildSlotQueryVariants(task, slot, locale = null) {
+  const localizedVariants = [
+    ...buildLocalizedVariants(slot, locale),
+    ...buildLocalizedVariants(`${slot} ${task}`, locale),
+  ];
   const variants = buildIntentQueryVariants(`${slot} ${task}`, {
     baseQuery: slot,
     maxVariants: 8,
   });
+  variants.unshift(...localizedVariants);
   const usefulSlotTokens = tokenizeText(slot).filter((token) => !GENERIC_SLOT_WORDS.has(token));
   variants.push(...usefulSlotTokens);
   const intentTerms = tokenizeText(`${slot} ${task} ${variants.join(' ')}`);
@@ -343,32 +374,51 @@ function buildCandidatePayload(slotLabel, iconResult, semanticRecord, intentTerm
   };
 }
 
+async function mapWithConcurrency(items, limit, mapper) {
+  const results = new Array(items.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await mapper(items[currentIndex], currentIndex);
+    }
+  }
+
+  const workerCount = Math.min(Math.max(1, limit), items.length);
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  return results;
+}
+
 export async function recommendIconsForTask({
   task,
   library,
   style = 'any',
+  locale = null,
   slots,
   limitPerSlot = 3,
   searchIconsForQuery,
   buildIconResult,
   semanticMap,
 }) {
-  const slotResults = [];
-
-  for (const slotLabel of slots) {
-    const intentTerms = buildSlotIntentTerms(task, slotLabel);
-    const queryVariants = buildSlotQueryVariants(task, slotLabel);
+  const slotResults = await mapWithConcurrency(slots, 6, async (slotLabel) => {
+    const intentTerms = buildSlotIntentTerms(task, slotLabel, locale);
+    const queryVariants = buildSlotQueryVariants(task, slotLabel, locale).slice(0, locale ? 4 : 2);
     const pooledIcons = [];
     const seen = new Set();
 
-    for (const queryVariant of queryVariants) {
-      const results = await searchIconsForQuery({
+    const resultGroups = await mapWithConcurrency(queryVariants, 4, async (queryVariant) =>
+      searchIconsForQuery({
         query: queryVariant,
         library,
         style,
-        limit: Math.max(limitPerSlot * 10, 50),
-      });
+        limit: Math.max(limitPerSlot * 5, 10),
+        locale,
+      })
+    );
 
+    for (const results of resultGroups) {
       for (const icon of results) {
         const key = `${icon.lib}:${icon.id}`;
         if (seen.has(key)) continue;
@@ -421,13 +471,13 @@ export async function recommendIconsForTask({
       preparedCandidates.push(buildCandidatePayload(slotLabel, iconResult, entry.semanticRecord, intentTerms));
     }
 
-    slotResults.push({
+    return {
       slot: slotLabel,
       queries_used: queryVariants,
       recommended: preparedCandidates[0] || null,
       alternatives: preparedCandidates.slice(1),
-    });
-  }
+    };
+  });
 
   return {
     task,

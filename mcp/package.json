@@ -1,8 +1,13 @@
 {
   "name": "supericons-mcp",
-  "version": "0.4.0",
-  "description": "MCP server for SuperIcons: search icons, animate them with Motion Lab, and access Pro workflow tools",
+  "version": "0.4.1",
+  "mcpName": "io.github.curlymolelabs/supericons",
+  "description": "MCP server for Supericons: multilingual icon search, Motion Lab animation, and Pro workflow tools",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curlymolelabs/supericons.git"
+  },
   "bin": {
     "supericons-mcp": "index.js"
   },
@@ -17,9 +22,14 @@
     "material-export.js",
     "motion-lab-client.js",
     "motion-lab.js",
+    "public/cjk-search-terms.json",
+    "public/multilingual-search-aliases.json",
     "public/product-facts.json",
     "recommend-icons.js",
+    "remote-server.js",
+    "server.json",
     "runtime/converter-workflow.js",
+    "runtime/cjk-search-core.js",
     "runtime/generated-search-intent-rules.js",
     "runtime/icon-semantic-aliases.js",
     "runtime/icon-taxonomy-seed.js",
@@ -33,6 +43,7 @@
   ],
   "scripts": {
     "start": "node index.js",
+    "start:remote": "node remote-server.js",
     "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {

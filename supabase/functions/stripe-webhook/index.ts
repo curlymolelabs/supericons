@@ -156,8 +156,7 @@ function buildBillingStatusEmail({
 
       <div style="margin-top:28px;color:#666;font-size:12px;line-height:1.6;">
         This email was sent to ${escapedEmail}.<br />
-        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.<br />
-        &copy; 2026 Curly Mole Labs
+        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.
       </div>
     </div>
   </div>
@@ -298,8 +297,7 @@ function buildPurchaseEmail({
 
       <div style="margin-top:28px;color:#666;font-size:12px;line-height:1.6;">
         This email was sent to ${escapedEmail}.<br />
-        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.<br />
-        &copy; 2026 Curly Mole Labs
+        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.
       </div>
     </div>
   </div>

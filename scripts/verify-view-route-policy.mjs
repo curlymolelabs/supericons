@@ -26,6 +26,16 @@ assert.equal(
 );
 
 assert.equal(
+  buildRouteUrl({ pathname: '/', view: 'pricing', search: '?locale=ja', hash: '' }),
+  '/?locale=ja&view=pricing',
+);
+
+assert.equal(
+  buildRouteUrl({ pathname: '/', view: 'icons', search: '?locale=ar&view=pricing', hash: '' }),
+  '/?locale=ar',
+);
+
+assert.equal(
   buildRouteUrl({ pathname: '/', view: 'docs-mcp-tools', hash: '#icon-tools-search' }),
   '/?view=docs-mcp-tools#icon-tools-search',
 );

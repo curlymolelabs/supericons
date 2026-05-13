@@ -33,6 +33,7 @@ export async function searchIconsHostedMcp({
   library = null,
   limit = 20,
   style = 'any',
+  locale = null,
 }) {
   const apiKey = getConfiguredApiKey();
 
@@ -66,6 +67,7 @@ export async function searchIconsHostedMcp({
         library,
         limit,
         style,
+        locale,
         source: 'mcp',
       }),
     });
@@ -93,6 +95,7 @@ export async function searchIconsHostedMcp({
       library,
       limit,
       style,
+      locale,
       source: 'mcp',
     }),
   });

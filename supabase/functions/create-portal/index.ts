@@ -11,6 +11,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const stripeLocales = new Set([
+  'auto',
+  'ar',
+  'de',
+  'en',
+  'es',
+  'fr',
+  'hi',
+  'ja',
+  'ko',
+  'pt',
+  'th',
+  'vi',
+  'zh',
+  'zh-TW',
+]);
+
+function normalizeStripeLocale(locale: unknown) {
+  if (typeof locale !== 'string') return undefined;
+  const value = locale.trim();
+  return stripeLocales.has(value) ? value : undefined;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -55,7 +78,7 @@ serve(async (req) => {
       });
     }
 
-    const { return_url } = await req.json();
+    const { return_url, locale } = await req.json();
 
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
       apiVersion: '2023-10-16',
@@ -98,6 +121,7 @@ serve(async (req) => {
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: return_url || `${Deno.env.get('SITE_URL') || 'https://supericons.dev'}`,
+      locale: normalizeStripeLocale(locale),
     });
 
     return new Response(JSON.stringify({ url: session.url }), {

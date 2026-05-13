@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Marketing Action Plan</title>
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --panel: #141416;
+    --panel-2: #1d1d20;
+    --text: #f5f2ed;
+    --muted: #b8b0a5;
+    --soft: #7d756d;
+    --line: #2a2725;
+    --orange: #ff5a1f;
+    --orange-soft: rgba(255, 90, 31, 0.14);
+    --green: #52d273;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: var(--orange); }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 22px 80px;
+  }
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 30px;
+    margin-bottom: 34px;
+  }
+  .eyebrow {
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(34px, 7vw, 72px);
+    line-height: 0.98;
+    margin: 0 0 18px;
+    letter-spacing: -0.04em;
+  }
+  .lead {
+    color: var(--muted);
+    font-size: 19px;
+    max-width: 760px;
+  }
+  section {
+    margin: 38px 0;
+    padding: 28px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+  h2 {
+    font-size: 26px;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    font-size: 18px;
+    margin: 24px 0 8px;
+  }
+  p { margin: 0 0 14px; color: var(--muted); }
+  strong { color: var(--text); }
+  .quote {
+    background: var(--orange-soft);
+    border-left: 3px solid var(--orange);
+    padding: 16px 18px;
+    color: var(--text);
+    font-size: 18px;
+    margin: 18px 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    padding: 18px;
+  }
+  .card-title {
+    color: var(--text);
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  ul {
+    margin: 10px 0 0;
+    padding-left: 22px;
+    color: var(--muted);
+  }
+  li { margin: 7px 0; }
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li {
+    position: relative;
+    padding-left: 30px;
+  }
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--soft);
+    background: #0f0f10;
+  }
+  code, pre {
+    font-family: "JetBrains Mono", Consolas, monospace;
+  }
+  pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: #09090a;
+    border: 1px solid var(--line);
+    padding: 16px;
+    color: #f4e6dc;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+  }
+  th {
+    color: var(--text);
+    background: #101012;
+  }
+  .tag {
+    display: inline-block;
+    border: 1px solid var(--line);
+    background: #101012;
+    color: var(--muted);
+    padding: 4px 8px;
+    margin: 3px;
+    font-size: 13px;
+  }
+  .next {
+    border-color: rgba(255, 90, 31, 0.45);
+    background: linear-gradient(180deg, rgba(255, 90, 31, 0.16), rgba(255, 90, 31, 0.05));
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Supericons launch plan</div>
+    <h1>Marketing action plan</h1>
+    <p class="lead">A step-by-step plan for launching Supericons in a crowded market. The aim is simple: show that Supericons helps humans and AI coding agents find better icons faster.</p>
+  </header>
+
+  <section>
+    <h2>The launch position</h2>
+    <p>Supericons should not compete only on icon count. Iconstack has a bigger public icon catalog and a simple hosted MCP/API story. shadcn.io has a huge all-in-one builder package.</p>
+    <div class="quote">Supericons should own better icon choice, semantic search, MCP workflows, Motion Lab, and converter tools.</div>
+    <p><strong>Main message:</strong> 20,000+ icons with semantic search, MCP access, Motion Lab, and converter tools for modern builders and AI coding agents.</p>
+  </section>
+
+  <section>
+    <h2>Competitor read</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Iconstack</div>
+        <p>Strong because it has 51,000+ icons, 21 libraries, fast browsing, a clear API page, and a hosted MCP setup with no auth.</p>
+        <p><strong>How we respond:</strong> sell richer decisions and richer workflows, not just more icons.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">shadcn.io</div>
+        <p>Strong because it turns open-source UI primitives into a large all-in-one package with AI setup guides, blocks, icons, colors, and MCP tools.</p>
+        <p><strong>How we respond:</strong> own the icon workflow layer inside modern UI systems, not the entire UI system yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Immediate launch checklist</h2>
+    <ul class="checklist">
+      <li>Upload the fresh <code>dist</code> folder to Netlify.</li>
+      <li>Confirm the live homepage loads.</li>
+      <li>Confirm search works.</li>
+      <li>Confirm the tag menu works.</li>
+      <li>Confirm icon copy and export work.</li>
+      <li>Confirm the converter works with the Railway endpoint.</li>
+      <li>Confirm docs and MCP instructions are visible.</li>
+      <li>Delete or rotate temporary secret keys after launch.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Smoke test list</h2>
+    <ul class="checklist">
+      <li>Search for <code>database</code>.</li>
+      <li>Search for <code>user profile</code>.</li>
+      <li>Search for <code>AI dashboard</code>.</li>
+      <li>Search for <code>chill</code>.</li>
+      <li>Search for <code>smell</code>.</li>
+      <li>Filter by library.</li>
+      <li>Filter by tag.</li>
+      <li>Copy an SVG.</li>
+      <li>Download an SVG.</li>
+      <li>Try PNG to SVG converter.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Make launch assets</h2>
+    <ul class="checklist">
+      <li>Homepage screenshot.</li>
+      <li>Search screenshot.</li>
+      <li>MCP setup screenshot.</li>
+      <li>MCP result screenshot.</li>
+      <li>Converter screenshot.</li>
+      <li>Motion Lab screenshot.</li>
+      <li>A 45-second demo video or GIF.</li>
+    </ul>
+    <p>The best demo is simple: ask an agent to recommend icons for an AI dashboard sidebar, show the result, then show the SVG copied or inserted.</p>
+  </section>
+
+  <section>
+    <h2>Directory submissions</h2>
+    <h3>MCP and agent directories</h3>
+    <p>
+      <span class="tag">Smithery live</span>
+      <span class="tag">MCP.so submitted</span>
+      <span class="tag">Glama pending</span>
+      <span class="tag">PulseMCP</span>
+      <span class="tag">Official MCP Registry</span>
+      <span class="tag">MCP.Directory</span>
+      <span class="tag">Community MCP lists</span>
+      <span class="tag">Cursor community lists</span>
+      <span class="tag">Agent tool hubs</span>
+    </p>
+    <h3>Awesome lists</h3>
+    <p>
+      <span class="tag">awesome-mcp</span>
+      <span class="tag">awesome-design-tools</span>
+      <span class="tag">awesome-developer-tools</span>
+      <span class="tag">awesome-react-components</span>
+      <span class="tag">awesome-svelte-resources</span>
+      <span class="tag">awesome-svg</span>
+      <span class="tag">awesome-icons</span>
+      <span class="tag">awesome-ai-tools</span>
+    </p>
+    <p><strong>Listing description:</strong> Supericons MCP lets AI coding agents search, recommend, and retrieve SVG icons from a semantic registry of 20,000+ icons. It also includes Motion Lab exports and converter workflows.</p>
+    <h3>Copy these fields into forms</h3>
+    <p><strong>Name:</strong> Supericons MCP</p>
+    <p><strong>Slug or server ID:</strong> supericons-mcp</p>
+    <p><strong>Homepage:</strong> https://supericons.dev</p>
+    <p><strong>NPM package:</strong> https://www.npmjs.com/package/supericons-mcp</p>
+    <p><strong>Hosted MCP endpoint:</strong> https://mcp.supericons.dev/mcp</p>
+    <p><strong>Hosted server card:</strong> https://mcp.supericons.dev/.well-known/mcp/server-card.json</p>
+    <p><strong>Short description:</strong> Supericons MCP lets AI coding agents search, recommend, and retrieve SVG icons from a semantic registry of 20,000+ icons.</p>
+    <p><strong>Categories:</strong> Developer Tools, Design Tools, Search, UI, SVG, AI Coding Agents.</p>
+    <p><strong>Tags:</strong> icons, svg, icon-search, mcp, model-context-protocol, ai-coding-agents, cursor, claude-code, codex, windsurf, cline, lucide, tabler, phosphor, bootstrap, semantic-search, ui-design.</p>
+    <p><strong>Security note:</strong> Free setup is read-only icon search and SVG retrieval through a local stdio MCP package. Premium/Pro tools use the user's own Supericons API key.</p>
+    <div class="quote">
+      <strong>Correct install config:</strong><br>
+      <code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code>
+    </div>
+    <h3>Where to submit first</h3>
+    <table>
+      <thead>
+        <tr><th>Place</th><th>Use this route</th><th>Recommendation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Official MCP Registry</td><td>Use the official publisher flow with the hosted endpoint, package metadata, and domain ownership.</td><td>Do this next. It does not require publishing the full private website source.</td></tr>
+        <tr><td>Smithery</td><td>Remote MCP listing using https://mcp.supericons.dev/mcp.</td><td>Live and tested. Current score is 84/100.</td></tr>
+        <tr><td>Glama</td><td>Use the Connector tab for hosted endpoints.</td><td>Submitted and pending review.</td></tr>
+        <tr><td>MCP.so</td><td>Choose MCP Server and paste the name, URL, and config above.</td><td>Submitted. Monitor approval status.</td></tr>
+        <tr><td>MCP.Directory</td><td>Submit the hosted endpoint and homepage.</td><td>Submit next after official registry, or in parallel if the form is open.</td></tr>
+        <tr><td>mcpservers.org</td><td>Use the submit route with homepage, hosted endpoint, and npm package.</td><td>Submit next.</td></tr>
+        <tr><td>cursor.store</td><td>Submit as a Cursor-compatible MCP with install snippet and permission note.</td><td>Submit now if GitHub sign-in works.</td></tr>
+        <tr><td>PulseMCP</td><td>Use the submit route if visible, or rely on official registry import.</td><td>Submit after the official registry entry.</td></tr>
+        <tr><td>Claude directory</td><td>Needs a reviewed remote connector, production docs, privacy policy, support, and examples.</td><td>Defer. Keep Claude Code/Desktop local setup docs live now.</td></tr>
+        <tr><td>Codex / OpenAI</td><td>No public third-party Codex MCP marketplace was confirmed.</td><td>Promote through npm, official MCP Registry, docs, and Codex examples.</td></tr>
+        <tr><td>Vercel</td><td>No general third-party Vercel MCP directory was confirmed.</td><td>Treat Vercel as future hosting, not a listing channel today.</td></tr>
+      </tbody>
+    </table>
+    <div class="quote">
+      <strong>GitHub guidance:</strong><br>
+      Do not publish the full private Supericons website repository just to satisfy a listing form. If a directory truly requires GitHub, create a small public repo with setup docs, examples, the npm link, and the hosted MCP URL only.
+    </div>
+  </section>
+
+  <section>
+    <h2>Community channels</h2>
+    <table>
+      <thead>
+        <tr><th>Channel</th><th>What to post</th><th>Goal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hacker News</td><td>Show HN with the MCP story.</td><td>Developer feedback and traffic.</td></tr>
+        <tr><td>X / Twitter</td><td>Short screen recording of the agent workflow.</td><td>Fast demo sharing.</td></tr>
+        <tr><td>Reddit</td><td>Helpful posts in r/webdev, r/reactjs, r/SaaS, r/indiehackers, r/selfhosted, r/LocalLLaMA, and r/ClaudeAI.</td><td>Discussion and early users.</td></tr>
+        <tr><td>Dev.to / Hashnode</td><td>Practical tutorial on icon search through MCP.</td><td>Search traffic and credibility.</td></tr>
+        <tr><td>Discord</td><td>Share demo in Cursor, Claude, Reactiflux, and Svelte communities where allowed.</td><td>Real user feedback.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Launch post drafts</h2>
+    <h3>Hacker News title</h3>
+    <pre>Show HN: Supericons - 20K+ icons with MCP search for AI coding agents</pre>
+    <h3>X / Twitter hook</h3>
+    <pre>I got tired of leaving my editor just to find SVG icons.
+
+So I built Supericons MCP.
+
+Now I can ask my coding agent to search, pick, and retrieve the right icon without opening a browser tab.</pre>
+    <h3>Reddit angle</h3>
+    <pre>I built a small tool because icon search kept interrupting my coding flow.
+
+The idea: search icons in the browser when you want to browse, but let your AI coding agent search icons through MCP when you are already inside the IDE.</pre>
+  </section>
+
+  <section>
+    <h2>GitHub free kit plan</h2>
+    <p>GitHub kits are important because they create trust, backlinks, long-term discovery, and proof that Supericons curates rather than just indexes.</p>
+    <h3>First three kits</h3>
+    <ul class="checklist">
+      <li>AI SaaS Dashboard and Copilot 50.</li>
+      <li>Dashboard Navigation 50.</li>
+      <li>Status, Feedback and States 50.</li>
+    </ul>
+    <h3>Every kit needs</h3>
+    <ul class="checklist">
+      <li><code>README.md</code></li>
+      <li><code>icons/</code></li>
+      <li><code>sprite.svg</code></li>
+      <li><code>preview.html</code></li>
+      <li><code>tokens.json</code></li>
+      <li><code>usage-map.md</code></li>
+      <li><code>ATTRIBUTION.md</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>30-day calendar</h2>
+    <table>
+      <thead>
+        <tr><th>Week</th><th>Focus</th><th>Checklist</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Week 1</td>
+          <td>Launch and listings</td>
+          <td>Deploy site, smoke test, publish X demo, post Show HN, submit to MCP directories, start first GitHub kit.</td>
+        </tr>
+        <tr>
+          <td>Week 2</td>
+          <td>GitHub kit and community proof</td>
+          <td>Publish first kit, post to one Reddit community, share MCP config snippet, submit to Awesome lists.</td>
+        </tr>
+        <tr>
+          <td>Week 3</td>
+          <td>Content and second kit</td>
+          <td>Publish second kit, publish tutorial, post one before/after UI example, improve docs from questions.</td>
+        </tr>
+        <tr>
+          <td>Week 4</td>
+          <td>Product Hunt prep</td>
+          <td>Prepare assets, collect testimonials, create final demo video, decide if Product Hunt is ready.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Product Hunt rule</h2>
+    <p>Do not rush Product Hunt. Launch there only after the site is stable, the MCP docs are clear, the converter works, one demo video exists, at least one GitHub kit is live, and the first community feedback has arrived.</p>
+  </section>
+
+  <section>
+    <h2>Metrics to track</h2>
+    <ul class="checklist">
+      <li>Website visits.</li>
+      <li>Search count.</li>
+      <li>No-result searches.</li>
+      <li>Icon copies and downloads.</li>
+      <li>Converter usage.</li>
+      <li>Motion Lab usage.</li>
+      <li>NPM downloads for <code>supericons-mcp</code>.</li>
+      <li>MCP directory listing status.</li>
+      <li>GitHub kit stars and clones.</li>
+      <li>Pricing clicks and signups.</li>
+    </ul>
+  </section>
+
+  <section class="next">
+    <h2>Recommended next action</h2>
+    <ol>
+      <li>Deploy the final Netlify build.</li>
+      <li>Run the live smoke test checklist.</li>
+      <li>Record the 45-second MCP demo.</li>
+      <li>Submit to MCP.so, Smithery, Glama, and PulseMCP.</li>
+      <li>Post the X demo.</li>
+      <li>Prepare the Hacker News Show HN post.</li>
+      <li>Start the first GitHub kit.</li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>

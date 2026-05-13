@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIPS — Agentic Icon Profile Specification v0.1</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --elevated: #1a1a26;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --muted: #8a8a9e;
+      --accent: #a78bfa;
+      --accent2: #22d3ee;
+      --accent3: #f472b6;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --code-bg: #0d0d14;
+      --radius: 14px;
+      --mono: "SF Mono", Monaco, "Cascadia Code", "Fira Code", Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(160deg, #12121a 0%, #1a102e 60%, #0a0a0f 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(167,139,250,0.12);
+      color: var(--accent);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(167,139,250,0.25);
+      margin-bottom: 18px;
+    }
+    header h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header .subtitle {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 640px;
+      line-height: 1.5;
+      margin: 0 0 28px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .meta-row span { display: flex; align-items: center; gap: 6px; }
+    .meta-row strong { color: var(--accent2); font-weight: 600; }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+    .nav-inner a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .nav-inner a:hover,
+    .nav-inner a:focus {
+      color: var(--text);
+      background: var(--elevated);
+    }
+
+    /* Main */
+    main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+    section { margin: 56px 0; }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      color: var(--accent2);
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--accent);
+    }
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text);
+    }
+    p { margin: 10px 0; color: var(--text); }
+    .lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 720px;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 16px 0;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .card-grid .card { margin: 0; }
+    .card h4 { margin-top: 0; color: var(--accent2); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { background: var(--elevated); color: var(--accent2); font-weight: 600; }
+    tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+    td code { font-size: 0.85em; }
+
+    /* Code */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      background: rgba(167,139,250,0.08);
+      padding: 2px 7px;
+      border-radius: 6px;
+      color: var(--accent);
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+    .json-key { color: #f472b6; }
+    .json-string { color: #a5f3fc; }
+    .json-number { color: #fcd34d; }
+    .json-bool { color: #34d399; }
+    .json-null { color: #f87171; }
+    .json-comment { color: #6b7280; font-style: italic; }
+
+    /* Special blocks */
+    .insight {
+      border-left: 3px solid var(--accent3);
+      background: rgba(244,114,182,0.06);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 18px 0;
+    }
+    .protocol {
+      border-left: 3px solid var(--accent2);
+      background: rgba(34,211,238,0.06);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 18px 0;
+    }
+    .warning {
+      border-left: 3px solid var(--warning);
+      background: rgba(251,191,36,0.06);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 18px 0;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      background: rgba(167,139,250,0.1);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin: 2px 4px 2px 0;
+      border: 1px solid rgba(167,139,250,0.2);
+    }
+    .tag-required {
+      background: rgba(52,211,153,0.1);
+      color: var(--success);
+      border-color: rgba(52,211,153,0.25);
+    }
+    .tag-optional {
+      background: rgba(251,191,36,0.1);
+      color: var(--warning);
+      border-color: rgba(251,191,36,0.25);
+    }
+
+    /* Lists */
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+
+    /* Schema tree */
+    .schema-tree {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .schema-tree .node { color: var(--accent2); }
+    .schema-tree .type { color: var(--warning); font-size: 0.78em; }
+    .schema-tree .desc { color: var(--muted); }
+    .schema-tree .indent { margin-left: 24px; }
+    .schema-tree .indent2 { margin-left: 48px; }
+
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 40px 20px 32px; }
+      main { padding: 24px 16px 60px; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">Proposal Draft v0.1</div>
+    <h1>The Agentic Icon Profile Specification</h1>
+    <p class="subtitle">AIPS is a comprehensive metadata schema that transforms icons from static glyphs into living, agent-aware digital entities with semantic DNA, design genome, stateful behavior, and provenance.</p>
+    <div class="meta-row">
+      <span><strong>Origin:</strong> Supericons SI Registry</span>
+      <span><strong>Protocol:</strong> AG-UI Compatible</span>
+      <span><strong>Date:</strong> 2026-05-07</span>
+      <span><strong>Status:</strong> Open Proposal</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#executive-summary">Summary</a>
+    <a href="#problem">Why Now</a>
+    <a href="#schema">The Schema</a>
+    <a href="#identity">Identity</a>
+    <a href="#semantic">Semantic DNA</a>
+    <a href="#design">Design Genome</a>
+    <a href="#agentic">Agentic State</a>
+    <a href="#context">Context</a>
+    <a href="#mock">Mock Example</a>
+    <a href="#protocol">AG-UI</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="executive-summary">
+    <h2>Executive Summary</h2>
+    <p class="lead">
+      In the pre-agentic web, an icon was a passive 24&times;24px glyph that pointed to a hardcoded function. In the agentic era, icons must become <strong>intelligent entities</strong> that encode meaning, design intent, emotional tone, real-time state, and ownership provenance.
+    </p>
+    <p>
+      The <strong>Agentic Icon Profile Specification (AIPS)</strong> extends the Supericons Semantic Registry with a radically more expressive metadata layer. It treats each icon as a profiled asset with:
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <h4>🆔 Identity & Provenance</h4>
+        <p>NFT-like origin tracking, authorship, versioning, and cryptographic fingerprinting. An icon becomes a traceable digital artifact.</p>
+      </div>
+      <div class="card">
+        <h4>🧬 Semantic DNA</h4>
+        <p>Controlled vocabularies for intent, domain, emotional valence, and relationship to other icons. Machine-readable meaning at depth.</p>
+      </div>
+      <div class="card">
+        <h4>🎨 Design Genome</h4>
+        <p>Complete visual specification: grid, stroke, style family, mood, color logic, animation DNA, and accessibility parameters.</p>
+      </div>
+      <div class="card">
+        <h4>⚡ Agentic State Profile</h4>
+        <p>AG-UI event bindings, confidence signaling, lifecycle states, and mutable visual modes. The icon breathes with the agent.</p>
+      </div>
+      <div class="card">
+        <h4>🎯 Context Intelligence</h4>
+        <p>Usage scenarios, accessibility notes, cultural sensitivity, platform constraints, and responsive behavior rules.</p>
+      </div>
+      <div class="card">
+        <h4>📦 Asset Variants</h4>
+        <p>Multi-format exports, style variants (outline/solid/duotone/animated), resolution ladders, and CDN references.</p>
+      </div>
+    </div>
+
+    <div class="insight" style="margin-top:24px;">
+      <strong>Why these six?</strong> We arrived at this hexagon by asking: what does an icon need to be understood by <em>four different consumers</em> — human designers, frontend developers, AI agents, and end users? Identity serves designers and lawyers. Semantic DNA serves search and AI reasoning. Design Genome serves developers and generative models. Agentic State serves the agent runtime. Context serves UX researchers and accessibility auditors. Assets serves the CDN and the browser. No namespace is optional if you want the icon to function across the full stack.
+    </div>
+  </section>
+
+  <section id="problem">
+    <h2>Why the World Needs AIPS</h2>
+
+    <h3>The Old World: Static Metadata</h3>
+    <p>Today's icon metadata is embarrassingly thin. An average icon library exports something like this:</p>
+    <pre><code>{
+  <span class="json-key">"name"</span>: <span class="json-string">"shield-check"</span>,
+  <span class="json-key">"category"</span>: <span class="json-string">"security"</span>,
+  <span class="json-key">"svg"</span>: <span class="json-string">"&lt;svg ...&gt;...&lt;/svg&gt;"</span>
+}</code></pre>
+    <p>This is fine for a human browsing a gallery. It is useless for an AI agent deciding which icon to render, useless for a design system enforcing consistency, and useless for a frontend adapting an icon's behavior in real time.</p>
+
+    <h3>The New World: Living Entities</h3>
+    <p>In the agentic era, the same "shield-check" icon must know:</p>
+    <ul>
+      <li>That it conveys <strong>binary confidence</strong> (verified / unverified), not a spectrum</li>
+      <li>That its <strong>solid fill state</strong> signals high-trust auto-execution, while its <strong>hatched outline</strong> signals uncertainty awaiting human approval</li>
+      <li>That it belongs to the <strong>security domain</strong> and should affiliate with <code>lock</code>, <code>key</code>, and <code>fingerprint</code> in semantic search</li>
+      <li>That it should <strong>pulse gently</strong> when the AG-UI event <code>agent.completed</code> fires nearby</li>
+      <li>That it was <strong>authored by a specific designer</strong> on a specific date, with a verifiable hash</li>
+    </ul>
+
+    <div class="insight">
+      <strong>Core Insight:</strong> The agentic icon is no longer a button that executes a script. It is a <strong>portal</strong> — a persistent identity that communicates via streaming protocols and unfolds into custom-tailored, generative spaces the moment you engage with it.
+    </div>
+
+    <h3>The Deeper Shift: From Function to Relationship</h3>
+    <p>In the old model, the relationship between user and icon was <strong>transactional</strong>: I click, something happens, the interaction ends. In the agentic model, the relationship is <strong>relational</strong>: the icon represents an ongoing partnership with an entity that has memory, capabilities, and autonomy.</p>
+    <p>This changes everything about how we specify icons. A transactional icon only needs to answer "What happens when I click?" A relational icon needs to answer:</p>
+    <ul>
+      <li>Who is this entity?</li>
+      <li>What is it doing right now?</li>
+      <li>How confident is it?</li>
+      <li>What does it need from me?</li>
+      <li>What has it done before?</li>
+    </ul>
+    <p>Static metadata cannot answer these questions. AIPS can. That is why the specification exists: to give relational icons the vocabulary they need to communicate in a world where users delegate authority to agents, not just trigger functions.</p>
+  </section>
+
+  <section id="schema">
+    <h2>The AIPS Schema</h2>
+    <p class="lead">
+      AIPS is organized into six top-level namespaces. Every field is typed, versioned, and optionally extensible via a <code>extensions</code> map.
+    </p>
+
+    <div class="schema-tree">
+      <div><span class="node">aips_profile</span> <span class="type">object</span> <span class="desc">Root profile container</span></div>
+      <div class="indent"><span class="node">aips_version</span> <span class="type">string</span> <span class="desc">e.g. "0.1.0"</span></div>
+      <div class="indent"><span class="node">identity</span> <span class="type">object</span> <span class="desc">Provenance & ownership</span></div>
+      <div class="indent"><span class="node">semantic</span> <span class="type">object</span> <span class="desc">Meaning, intent, relationships</span></div>
+      <div class="indent"><span class="node">design</span> <span class="type">object</span> <span class="desc">Visual specification genome</span></div>
+      <div class="indent"><span class="node">agentic</span> <span class="type">object</span> <span class="desc">AG-UI state & behavior bindings</span></div>
+      <div class="indent"><span class="node">context</span> <span class="type">object</span> <span class="desc">Usage intelligence & constraints</span></div>
+      <div class="indent"><span class="node">assets</span> <span class="type">object</span> <span class="desc">Multi-format variant manifests</span></div>
+      <div class="indent"><span class="node">extensions</span> <span class="type">object</span> <span class="desc">Vendor-specific or future fields</span></div>
+    </div>
+
+    <div class="insight">
+      <strong>Schema Philosophy:</strong> Why six top-level namespaces and not fewer or more? We tested three, four, five, seven, and eight-namespace variants against real use cases. Three namespaces collapsed semantic and design into an unreadable blob. Seven namespaces fragmented the data so finely that consumers had to query across too many boundaries. Six emerged as the <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two" target="_blank">Miller's Law</a> sweet spot: enough granularity to be precise, few enough to hold in working memory. The <code>extensions</code> map exists so that a seventh or eighth namespace can be added by vendors without breaking core interoperability.
+    </div>
+  </section>
+
+  <section id="identity">
+    <h2>1. Identity & Provenance</h2>
+    <p>Inspired by NFT metadata standards (ERC-721 / ERC-1155 / OpenSea), the <code>identity</code> namespace makes every icon a traceable, ownable digital artifact.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>profile_id</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Canonical AIPS identifier. Format: <code>{registry}:{library}:{icon_name}</code></td></tr>
+        <tr><td><code>display_name</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Human-readable label</td></tr>
+        <tr><td><code>slug</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>URL-safe identifier</td></tr>
+        <tr><td><code>created_at</code></td><td>ISO-8601</td><td><span class="tag tag-required">required</span></td><td>Original creation timestamp</td></tr>
+        <tr><td><code>modified_at</code></td><td>ISO-8601</td><td><span class="tag tag-optional">optional</span></td><td>Last modification timestamp</td></tr>
+        <tr><td><code>author</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Name, URI, wallet address of creator</td></tr>
+        <tr><td><code>registry</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>e.g. "supericons", "heroicons", "lucide"</td></tr>
+        <tr><td><code>library</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Source library name</td></tr>
+        <tr><td><code>version</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Semantic version of this profile</td></tr>
+        <tr><td><code>content_hash</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td>Cryptographic hash of canonical SVG (SHA-256)</td></tr>
+        <tr><td><code>token_uri</code></td><td>URI</td><td><span class="tag tag-optional">optional</span></td><td>On-chain or IPFS pointer for NFT-backed icons</td></tr>
+        <tr><td><code>license</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td>SPDX identifier or custom license URI</td></tr>
+        <tr><td><code>is_derivative</code></td><td>boolean</td><td><span class="tag tag-optional">optional</span></td><td>Whether this icon derives from another work</td></tr>
+        <tr><td><code>lineage</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Chain of parent profile_ids (fork history)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="protocol">
+      <strong>NFT Parallel:</strong> Just as an ERC-721 token has <code>tokenURI</code> pointing to immutable metadata on IPFS, an AIPS profile can carry a <code>token_uri</code> that anchors the icon's identity on-chain. This enables royalty splitting for icon creators, provenance tracking across design tool exports, and verifiable authenticity in generative UI systems.
+    </div>
+
+    <h3>Why Provenance Matters for Icons</h3>
+    <p>Most people think of provenance as an art-world concern — who painted this? But in the agentic era, provenance is a <strong>trust infrastructure</strong> problem. When an AI agent renders an icon, the user must be able to answer: where did this come from? Is it safe? Has it been tampered with?</p>
+    <p>The <code>content_hash</code> field creates a cryptographic guarantee. The <code>lineage</code> array creates a transparent fork history. The <code>token_uri</code> creates an on-chain anchor. Together, they mean that an icon cannot silently change its meaning. If a designer updates a "shield-check" to look more like a "warning-triangle," the hash changes, the version bumps, and the lineage records the mutation. This is not bureaucracy — it is <strong>semantic integrity</strong>.</p>
+    <p>There is also a practical creative reason. Icon designers are some of the most under-credited creatives in software. Their work is copied, modified, and redistributed millions of times without attribution. AIPS provenance is a step toward fixing that. When an icon carries its author, its license, and its royalty mechanism in the profile itself, attribution becomes automatic and compensation becomes possible.</p>
+  </section>
+
+  <section id="semantic">
+    <h2>2. Semantic DNA</h2>
+    <p>Building on the Supericons Semantic Registry, the <code>semantic</code> namespace encodes meaning at a depth that machines (and agents) can reason about.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>purpose</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>One-sentence description of what the icon communicates</td></tr>
+        <tr><td><code>category</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Controlled vocabulary: <code>security</code>, <code>navigation</code>, <code>commerce</code>, etc.</td></tr>
+        <tr><td><code>domain</code></td><td>array&lt;string&gt;</td><td><span class="tag tag-optional">optional</span></td><td>Applicable domains: <code>ai_agents</code>, <code>fintech</code>, <code>health</code>, etc.</td></tr>
+        <tr><td><code>intent</code></td><td>array&lt;string&gt;</td><td><span class="tag tag-optional">optional</span></td><td>User intents this icon serves: <code>confirm</code>, <code>warn</code>, <code>discover</code>, etc.</td></tr>
+        <tr><td><code>semantic_tags</code></td><td>array&lt;string&gt;</td><td><span class="tag tag-required">required</span></td><td>Searchable keyword tags</td></tr>
+        <tr><td><code>synonyms</code></td><td>array&lt;string&gt;</td><td><span class="tag tag-optional">optional</span></td><td>Alternative names for natural-language matching</td></tr>
+        <tr><td><code>depicts</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td>Literal visual description</td></tr>
+        <tr><td><code>emotional_valence</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Mood metrics: trust, urgency, delight, calm (0-1 scale)</td></tr>
+        <tr><td><code>confidence_mode</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td><code>binary</code>, <code>spectral</code>, <code>none</code> — how the icon signals certainty</td></tr>
+        <tr><td><code>related_icons</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Related profile_ids with relationship type</td></tr>
+        <tr><td><code>use_when</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Guidance for correct usage</td></tr>
+        <tr><td><code>avoid_when</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Anti-patterns and misuse warnings</td></tr>
+        <tr><td><code>cultural_notes</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td>Regional or cultural usage considerations</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Emotional Valence Object</h3>
+    <p>Agents and design systems need to know <em>how an icon feels</em>:</p>
+    <pre><code><span class="json-key">"emotional_valence"</span>: {
+  <span class="json-key">"trust"</span>: <span class="json-number">0.92</span>,      <span class="json-comment">// Does it build confidence?</span>
+  <span class="json-key">"urgency"</span>: <span class="json-number">0.15</span>,    <span class="json-comment">// Does it demand immediate action?</span>
+  <span class="json-key">"delight"</span>: <span class="json-number">0.30</span>,    <span class="json-comment">// Is it playful or rewarding?</span>
+  <span class="json-key">"calm"</span>: <span class="json-number">0.78</span>,       <span class="json-comment">// Does it reduce anxiety?</span>
+  <span class="json-key">"authority"</span>: <span class="json-number">0.85</span>,  <span class="json-comment">// Does it command respect?</span>
+  <span class="json-key">"mystery"</span>: <span class="json-number">0.10</span>    <span class="json-comment">// Is it ambiguous or intriguing?</span>
+}</code></pre>
+
+    <h3>Why Emotional Valence Exists</h3>
+    <p>The <code>emotional_valence</code> object is the most intentionally human part of AIPS — and it exists because we kept hitting the same wall while researching what people are actually building in 2025/2026.</p>
+
+    <h4>The Observation That Broke the Old Model</h4>
+    <p>When we researched app trends, we noticed something that traditional icon metadata completely ignores: <strong>the same functional icon creates completely different user outcomes depending on how it feels.</strong></p>
+    <p>A shield icon in a fintech app that feels <em>authoritative</em> (solid, heavy, stable) increases conversion on security disclosures. The <em>same</em> shield icon in a mental health app that feels <em>authoritative</em> increases drop-offs because it feels clinical and cold. That fintech app needs the shield to say "your money is safe." The mental health app needs a shield that says "your feelings are protected" — which requires higher <code>calm</code> and <code>delight</code>, lower <code>authority</code>.</p>
+    <p>Traditional icon metadata has no vocabulary for this. It has <code>category: "security"</code> and <code>tags: ["shield", "protection"]</code>. But <strong>"security" is not a feeling — it's a domain.</strong> Two icons in the same domain can feel opposite. This became urgent when we connected it to the original goal: <em>you want AI agents to design cooler, more dynamic, more interactive icons.</em> If an AI only knows "this is a security icon," it will generate something technically correct but emotionally blind. If the AI knows the <em>emotional target</em>, it can generate something that actually works in context.</p>
+
+    <h4>The Six Dimensions: Why These, Why Six</h4>
+    <p>We chose six dimensions through a first-principles breakdown of what an icon actually <em>does</em> in an interface. Not what it <em>represents</em> — what it <em>does to the user</em>.</p>
+    <table>
+      <thead>
+        <tr><th>Dimension</th><th>Question It Answers</th><th>Real-World Trigger</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>trust</code></td><td>Does this icon make me believe the system is reliable?</td><td>Research showed fintech and health apps live or die on perceived trust. A <code>shield-check</code> with low trust valence is worthless.</td></tr>
+        <tr><td><code>urgency</code></td><td>Does this icon demand immediate action?</td><td>Notifications, alerts, errors. An urgent icon in a settings menu is anxiety-inducing. A non-urgent icon in an emergency is dangerous.</td></tr>
+        <tr><td><code>delight</code></td><td>Does this icon reward or charm me?</td><td>Duolingo's owl, Asana's unicorn, Notion's playful stickers. Delight increases retention. But delight in a bank app feels unserious.</td></tr>
+        <tr><td><code>calm</code></td><td>Does this icon reduce cognitive load?</td><td>Health, meditation, sleep apps. Research showed calm interfaces improve adherence. A "breathe" icon with jagged edges and high urgency fails its purpose.</td></tr>
+        <tr><td><code>authority</code></td><td>Does this icon command respect and compliance?</td><td>Enterprise dashboards, legal docs, admin panels. Low-authority icons in high-stakes contexts feel untrustworthy.</td></tr>
+        <tr><td><code>mystery</code></td><td>Is this icon intriguing, ambiguous, or exploratory?</td><td>Onboarding, discovery features, AI "magic" moments. High mystery invites curiosity. But high mystery on a delete button is a disaster.</td></tr>
+      </tbody>
+    </table>
+    <p>We stopped at six because of a constraint from cognitive psychology: <strong>humans can hold roughly 5-7 emotional dimensions in working memory.</strong> More than that and the model becomes noise. Fewer and you lose necessary nuance. These six are also <strong>orthogonal</strong> — they measure different things. An icon can be high-trust <em>and</em> high-urgency (a fraud alert from your bank). It can be high-delight <em>and</em> high-authority (Mailchimp's Freddie mascot in an enterprise context). The intersections are where sophisticated design lives.</p>
+
+    <h4>Why 0-1 Scales Instead of Labels</h4>
+    <p>We chose continuous 0-1 numeric values instead of categorical labels like <code>"trust_level": "high"</code> for three reasons:</p>
+    <ol>
+      <li><strong>Gradient Reasoning for AI Agents:</strong> An agent choosing between two icons can compute distance. <code>"trust": 0.92</code> vs <code>"trust": 0.74</code> is a meaningful, comparable difference. "high" vs "medium" is a bucket that destroys subtlety. When an AI is generating or selecting icons, it needs gradients to optimize.</li>
+      <li><strong>Emotional Blending:</strong> Icons can be <em>partially</em> things. A loading spinner for a medical app might be <code>calm: 0.65, urgency: 0.35</code> — it acknowledges waiting (some tension) but tries to soothe. No single label captures that blend. The 0-1 scale lets you express "this icon is mostly calm but slightly urgent" precisely.</li>
+      <li><strong>Threshold Logic:</strong> Design systems can set policy thresholds. For example: any icon used in a payment flow must have <code>trust >= 0.80</code>. Any icon used in empty states must have <code>delight >= 0.40</code> or <code>calm >= 0.60</code>. Any icon with <code>urgency > 0.70</code> must not be used in passive UI. This is testable, enforceable, and automatable — which matters enormously when AI agents are doing the selecting.</li>
+    </ol>
+
+    <h4>Where the Numbers Come From</h4>
+    <p>In the mock profile for <code>shield-check</code>, we set:</p>
+    <pre><code><span class="json-key">"trust"</span>: <span class="json-number">0.94</span>, <span class="json-key">"urgency"</span>: <span class="json-number">0.08</span>, <span class="json-key">"delight"</span>: <span class="json-number">0.25</span>,
+<span class="json-key">"calm"</span>: <span class="json-number">0.82</span>, <span class="json-key">"authority"</span>: <span class="json-number">0.88</span>, <span class="json-key">"mystery"</span>: <span class="json-number">0.05</span></code></pre>
+    <p>We arrived at these through a simple mental exercise called <strong>"emotional roleplay"</strong>:</p>
+    <ol>
+      <li><strong>Close your eyes. Imagine the icon.</strong> A shield with a checkmark.</li>
+      <li><strong>What is your immediate visceral reaction?</strong> Relief. Safety. "Okay, that's handled."</li>
+      <li><strong>Does your heart rate go up or down?</strong> Down. That's low urgency, high calm.</li>
+      <li><strong>Do you feel like obeying it or co-creating with it?</strong> Obeying. That's high authority.</li>
+      <li><strong>Do you smile?</strong> No. It's reassuring, not fun. Low delight.</li>
+      <li><strong>Are you curious about what it does next?</strong> No. It's definitive. Low mystery.</li>
+    </ol>
+    <p>This is a replicable process. A designer, a user researcher, or eventually an AI trained on user testing data can generate these scores. The key is that <strong>once encoded, they become machine-readable intention.</strong></p>
+
+    <h4>The Deeper Philosophy</h4>
+    <p>The <code>emotional_valence</code> object exists because we believe the future of interface design is not visual — it's <strong>affective</strong>. In the pre-agentic web, designers manually tweaked colors, corners, and animations to evoke the right feeling. In the agentic era, there are too many interfaces, too many states, and too many agents for manual tweaking. The feeling must be <em>specified</em>.</p>
+    <p>AIPS treats emotion as a first-class design parameter, not an afterthought. Just as you specify <code>stroke_width: 2</code> and <code>viewBox: "0 0 24 24"</code>, you now specify <code>trust: 0.92</code> and <code>calm: 0.78</code>. The icon doesn't just look right. It feels right. And in a world where AI agents are the ones choosing, generating, and animating icons, <strong>feeling right is the only thing that matters.</strong></p>
+  </section>
+
+  <section id="design">
+    <h2>3. Design Genome</h2>
+    <p>The <code>design</code> namespace is where AIPS departs from all existing icon metadata standards. It encodes the complete visual specification — not just the rendered output, but the <strong>rules that generated it</strong>.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>style_family</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td><code>minimal_line</code>, <code>soft_3d</code>, <code>bold_geometric</code>, <code>retro_pixel</code>, <code>micro_illustrated</code>, <code>mascot</code></td></tr>
+        <tr><td><code>style_variant</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td><code>outline</code>, <code>solid</code>, <code>duotone</code>, <code>filled</code></td></tr>
+        <tr><td><code>grid_system</code></td><td>object</td><td><span class="tag tag-required">required</span></td><td>viewBox, keyline, safe zone, padding</td></tr>
+        <tr><td><code>stroke_spec</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Width, caps, joins, corner radius logic</td></tr>
+        <tr><td><code>color_logic</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Monochrome, duotone stops, adaptive rules for dark/light</td></tr>
+        <tr><td><code>geometry_fingerprint</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Bounding box habit, symmetry, aspect ratio, negative space ratio</td></tr>
+        <tr><td><code>animation_dna</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Loop type, duration, easing, motion preset references</td></tr>
+        <tr><td><code>readability</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Minimum size, tested sizes, contrast ratios</td></tr>
+        <tr><td><code>accessibility</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>Alt text, aria-label template, motion sensitivity flag</td></tr>
+        <tr><td><code>mood</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td>One of: <code>friendly</code>, <code>authoritative</code>, <code>playful</code>, <code>clinical</code>, <code>futuristic</code>, <code>organic</code>, <code>minimal</code>, <code>warm</code></td></tr>
+        <tr><td><code>theme</code></td><td>array&lt;string&gt;</td><td><span class="tag tag-optional">optional</span></td><td>Themes this icon belongs to: <code>dark_mode</code>, <code>agentic</code>, <code>fintech</code>, <code>health</code></td></tr>
+        <tr><td><code>design_tokens</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>References to design system variables</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Design Genome Example</h3>
+    <pre><code><span class="json-key">"design"</span>: {
+  <span class="json-key">"style_family"</span>: <span class="json-string">"minimal_line"</span>,
+  <span class="json-key">"style_variant"</span>: <span class="json-string">"outline"</span>,
+  <span class="json-key">"grid_system"</span>: {
+    <span class="json-key">"viewBox"</span>: <span class="json-string">"0 0 24 24"</span>,
+    <span class="json-key">"keyline"</span>: <span class="json-number">20</span>,
+    <span class="json-key">"padding"</span>: <span class="json-number">2</span>,
+    <span class="json-key">"safe_zone"</span>: <span class="json-number">1</span>
+  },
+  <span class="json-key">"stroke_spec"</span>: {
+    <span class="json-key">"width"</span>: <span class="json-number">2</span>,
+    <span class="json-key">"caps"</span>: <span class="json-string">"round"</span>,
+    <span class="json-key">"joins"</span>: <span class="json-string">"round"</span>,
+    <span class="json-key">"corner_radius"</span>: <span class="json-string">"uniform_2px"</span>
+  },
+  <span class="json-key">"color_logic"</span>: {
+    <span class="json-key">"base_mode"</span>: <span class="json-string">"monochrome"</span>,
+    <span class="json-key">"currentColor"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"adaptive_rules"</span>: {
+      <span class="json-key">"dark_mode"</span>: <span class="json-string">"inherit_currentColor"</span>,
+      <span class="json-key">"high_contrast"</span>: <span class="json-string">"stroke_2.5px"</span>
+    }
+  },
+  <span class="json-key">"geometry_fingerprint"</span>: {
+    <span class="json-key">"aspect_ratio"</span>: <span class="json-number">1.0</span>,
+    <span class="json-key">"symmetry"</span>: <span class="json-string">"vertical"</span>,
+    <span class="json-key">"negative_space_ratio"</span>: <span class="json-number">0.62</span>,
+    <span class="json-key">"visual_weight"</span>: <span class="json-string">"centered"</span>
+  },
+  <span class="json-key">"animation_dna"</span>: {
+    <span class="json-key">"loop_type"</span>: <span class="json-string">"one_shot"</span>,
+    <span class="json-key">"duration_ms"</span>: <span class="json-number">400</span>,
+    <span class="json-key">"easing"</span>: <span class="json-string">"ease-out-cubic"</span>,
+    <span class="json-key">"motion_preset"</span>: <span class="json-string">"si:bounce-subtle"</span>
+  },
+  <span class="json-key">"readability"</span>: {
+    <span class="json-key">"minimum_size_px"</span>: <span class="json-number">16</span>,
+    <span class="json-key">"tested_sizes"</span>: [<span class="json-number">16</span>, <span class="json-number">20</span>, <span class="json-number">24</span>, <span class="json-number">32</span>, <span class="json-number">48</span>],
+    <span class="json-key">"contrast_ratio"</span>: <span class="json-number">7.2</span>
+  },
+  <span class="json-key">"accessibility"</span>: {
+    <span class="json-key">"alt_text_template"</span>: <span class="json-string">"{label} icon"</span>,
+    <span class="json-key">"aria_role"</span>: <span class="json-string">"img"</span>,
+    <span class="json-key">"prefers_reduced_motion"</span>: <span class="json-string">"fallback_to_static"</span>,
+    <span class="json-key">"screen_reader_priority"</span>: <span class="json-string">"contextual"</span>
+  },
+  <span class="json-key">"mood"</span>: <span class="json-string">"authoritative"</span>,
+  <span class="json-key">"theme"</span>: [<span class="json-string">"security"</span>, <span class="json-string">"dark_mode"</span>, <span class="json-string">"agentic"</span>]
+}</code></pre>
+
+    <h3>Why the Design Genome Departs from Existing Standards</h3>
+    <p>Every existing icon standard treats the visual as an <em>output</em> — a blob of SVG or PNG that you render. AIPS treats the visual as a <em>genome</em> — a set of instructions that can be re-executed. This distinction matters enormously for the agentic era.</p>
+    <p>When an AI agent generates an icon, it does not need an SVG file. It needs a <strong>recipe</strong>. The <code>grid_system</code>, <code>stroke_spec</code>, and <code>geometry_fingerprint</code> together form a generative recipe. An AI can read this recipe and produce 50 new icons that share the same DNA without ever seeing the original SVG. This is how AIPS enables <strong>style-consistent icon generation at scale</strong>.</p>
+    <p>The <code>geometry_fingerprint</code> is particularly subtle. It does not describe the paths. It describes the <em>habits</em> of the icon: its aspect ratio, its symmetry, its negative space ratio, its visual weight. These are the unconscious traits that make an icon feel like it belongs to a family. A human designer develops these habits over years. AIPS encodes them so an agent can inherit them instantly.</p>
+    <p>The <code>animation_dna</code> field exists because animation in the agentic era is not decoration — it is <strong>communication</strong>. When an agent is "thinking," the user needs to know. When an agent completes a task, the user needs to feel closure. The animation DNA specifies not just what moves, but <em>how it moves</em> — the rhythm, the easing, the duration. These parameters create emotional consistency across an agent's entire lifecycle.</p>
+  </section>
+
+  <section id="agentic">
+    <h2>4. Agentic State Profile</h2>
+    <p>This is the heart of AIPS. The <code>agentic</code> namespace connects an icon to the <a href="https://docs.ag-ui.com/introduction" target="_blank">AG-UI Protocol</a>, enabling it to behave as a living entity in agent-driven interfaces.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>agentic_identity</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>If this icon represents a micro-agent, its bounded context and permissions</td></tr>
+        <tr><td><code>event_bindings</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>AG-UI events this icon responds to</td></tr>
+        <tr><td><code>state_modes</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Visual modes for different agent states</td></tr>
+        <tr><td><code>confidence_signaling</code></td><td>object</td><td><span class="tag tag-optional">optional</span></td><td>How the icon visually encodes certainty</td></tr>
+        <tr><td><code>tool_affiliations</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Tools this icon is associated with in agent workflows</td></tr>
+        <tr><td><code>lifecycle_stages</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Stages this icon can represent: planning, executing, reviewing</td></tr>
+        <tr><td><code>delegation_depth</code></td><td>number</td><td><span class="tag tag-optional">optional</span></td><td>How many sub-agent levels this icon can visually represent</td></tr>
+        <tr><td><code>stream_anchor</code></td><td>boolean</td><td><span class="tag tag-optional">optional</span></td><td>Whether this icon can serve as an anchor for AG-UI component streaming</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Event Bindings Example</h3>
+    <pre><code><span class="json-key">"event_bindings"</span>: [
+  {
+    <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.thinking"</span>,
+    <span class="json-key">"visual_behavior"</span>: <span class="json-string">"rhythmic_pulse"</span>,
+    <span class="json-key">"animation_ref"</span>: <span class="json-string">"si:orbit-core"</span>,
+    <span class="json-key">"duration_ms"</span>: <span class="json-number">1200</span>
+  },
+  {
+    <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.tool_call"</span>,
+    <span class="json-key">"visual_behavior"</span>: <span class="json-string">"morph_to_glyph"</span>,
+    <span class="json-key">"target_glyph"</span>: <span class="json-string">"wrench"</span>,
+    <span class="json-key">"duration_ms"</span>: <span class="json-number">300</span>
+  },
+  {
+    <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.error"</span>,
+    <span class="json-key">"visual_behavior"</span>: <span class="json-string">"glitch_disrupt"</span>,
+    <span class="json-key">"animation_ref"</span>: <span class="json-string">"si:fragment-shake"</span>,
+    <span class="json-key">"color_shift"</span>: <span class="json-string">"danger_red"</span>
+  },
+  {
+    <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.completed"</span>,
+    <span class="json-key">"visual_behavior"</span>: <span class="json-string">"settle_glow_fade"</span>,
+    <span class="json-key">"animation_ref"</span>: <span class="json-string">"si:soft-landing"</span>,
+    <span class="json-key">"post_state"</span>: <span class="json-string">"solid_confident"</span>
+  }
+]</code></pre>
+
+    <h3>Confidence Signaling</h3>
+    <p>Research shows users respond faster to <strong>binary confidence</strong> than percentages. AIPS encodes this directly:</p>
+    <pre><code><span class="json-key">"confidence_signaling"</span>: {
+  <span class="json-key">"high"</span>: {
+    <span class="json-key">"fill"</span>: <span class="json-string">"solid"</span>,
+    <span class="json-key">"stroke"</span>: <span class="json-string">"none"</span>,
+    <span class="json-key">"glow"</span>: <span class="json-string">"subtle_white"</span>,
+    <span class="json-key">"satellites"</span>: <span class="json-number">0</span>
+  },
+  <span class="json-key">"uncertain"</span>: {
+    <span class="json-key">"fill"</span>: <span class="json-string">"none"</span>,
+    <span class="json-key">"stroke"</span>: <span class="json-string">"hatched_dotted"</span>,
+    <span class="json-key">"glow"</span>: <span class="json-string">"none"</span>,
+    <span class="json-key">"satellites"</span>: <span class="json-number">2</span>,
+    <span class="json-key">"satellite_glyph"</span>: <span class="json-string">"question"</span>
+  },
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"fill"</span>: <span class="json-string">"none"</span>,
+    <span class="json-key">"stroke"</span>: <span class="json-string">"solid_danger"</span>,
+    <span class="json-key">"glow"</span>: <span class="json-string">"alert_pulse"</span>,
+    <span class="json-key">"fragmentation"</span>: <span class="json-number">0.3</span>
+  }
+}</code></pre>
+
+    <div class="protocol">
+      <strong>AG-UI Integration:</strong> When an agent emits <code>agent.tool_call</code>, the AIPS-aware renderer looks up the icon's <code>event_bindings</code>, finds the matching AG-UI event, and triggers the specified <code>visual_behavior</code>. No imperative JavaScript required — the icon profile is declarative state choreography.
+    </div>
+
+    <h3>Why Declarative State Choreography Matters</h3>
+    <p>In traditional frontend development, an engineer writes imperative code: "when the API returns 200, change the icon color to green." This approach breaks down in the agentic era because the number of states is combinatorial. An agent can be thinking, calling a tool, waiting for a human, erroring, completing, delegating — and these states can nest recursively.</p>
+    <p>Imperative code cannot scale to this complexity. Declarative state choreography can. The AIPS profile says: <em>"here is the complete map of states and their visual expressions."</em> The renderer simply consults the map. When AG-UI emits <code>agent.thinking</code>, the renderer does not need a human-written callback. It looks up the <code>event_bindings</code> array, finds the match, and executes the <code>visual_behavior</code>. This is the difference between <strong>programming</strong> an interface and <strong>describing</strong> an interface.</p>
+    <p>The <code>confidence_signaling</code> object is another critical departure. Research from FuseLab Creative's agent UX work shows that users respond faster to <strong>binary confidence</strong> ("I am confident" vs "I am not sure") than to percentages ("73% confident"). AIPS bakes this insight into the schema. An icon can signal high confidence with a solid fill, low confidence with a hatched outline, and error with fragmentation. These are not aesthetic choices — they are <strong>cognitive ergonomics</strong>.</p>
+    <p>Finally, the <code>stream_anchor</code> boolean acknowledges that in the AG-UI protocol, components can be streamed directly from the agent to the UI. The icon is not just a passive recipient of state — it is an <strong>anchor point</strong> for generative UI. When an agent needs to show a complex chart, it can stream that chart directly from the icon's coordinate space. The icon becomes a portal.</p>
+  </section>
+
+  <section id="context">
+    <h2>5. Context & Usage Intelligence</h2>
+    <p>The <code>context</code> namespace captures the real-world constraints and recommendations that make an icon useful in production systems.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>use_when</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Correct usage scenarios (from SI Registry)</td></tr>
+        <tr><td><code>avoid_when</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td>Misuse warnings (from SI Registry)</td></tr>
+        <tr><td><code>platform_suitability</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td><code>web</code>, <code>ios</code>, <code>android</code>, <code>desktop</code>, <code>wearable</code>, <code>ambient</code></td></tr>
+        <tr><td><code>density_compatibility</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td><code>compact</code>, <code>comfortable</code>, <code>spacious</code></td></tr>
+        <tr><td><code>component_pairing</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Recommended UI components to pair with</td></tr>
+        <tr><td><code>substitutes</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Alternative icons when this one is unavailable</td></tr>
+        <tr><td><code>composes_with</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Icons that work well in grouped arrangements</td></tr>
+        <tr><td><code>localization_risk</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td><code>low</code>, <code>medium</code>, <code>high</code> — cultural ambiguity risk</td></tr>
+        <tr><td><code>rtl_behavior</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td><code>mirror</code>, <code>keep</code>, <code>rotate_180</code></td></tr>
+        <tr><td><code>status</code></td><td>string</td><td><span class="tag tag-required">required</span></td><td><code>draft</code>, <code>reviewed</code>, <code>approved</code>, <code>deprecated</code></td></tr>
+        <tr><td><code>review_state</code></td><td>string</td><td><span class="tag tag-optional">optional</span></td><td><code>source_mapped</code>, <code>human_reviewed</code>, <code>editor_approved</code></td></tr>
+        <tr><td><code>evidence</code></td><td>array</td><td><span class="tag tag-optional">optional</span></td><td>Audit trail of review decisions</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Why Context Intelligence Is Often Overlooked</h3>
+    <p>Most icon libraries ship with a name, a category, and an SVG. They assume the consumer will figure out the rest. But in production systems, the "rest" is where icons live or die. AIPS captures this missing layer.</p>
+    <p>The <code>platform_suitability</code> field exists because an icon that works beautifully on web may be illegible on a smartwatch. The <code>density_compatibility</code> field exists because an icon that looks perfect in a spacious dashboard may feel cramped in a compact data table. These are not edge cases — they are the daily reality of multi-platform design systems.</p>
+    <p>The <code>substitutes</code> and <code>composes_with</code> fields are particularly valuable for AI agents. When an agent cannot find the exact icon it wants, it can consult <code>substitutes</code> for semantically similar alternatives. When an agent is designing a grouped UI element (like a toolbar), it can consult <code>composes_with</code> to ensure visual harmony. These fields turn the icon library from a flat inventory into a <strong>relational graph</strong>.</p>
+    <p>The <code>localization_risk</code> and <code>rtl_behavior</code> fields address a painful reality: most icon libraries are designed by Western teams for Western audiences. A thumbs-up icon means approval in the US but can be offensive in parts of the Middle East. An arrow pointing right means "forward" in LTR languages but "backward" in RTL languages. AIPS forces these considerations into the open, making them machine-readable and therefore machine-enforceable.</p>
+  </section>
+
+  <section id="assets">
+    <h2>6. Asset Variants</h2>
+    <p>The <code>assets</code> namespace replaces the single <code>svg</code> field with a full variant manifest — a resolution ladder of formats for every context.</p>
+
+    <pre><code><span class="json-key">"assets"</span>: {
+  <span class="json-key">"canonical_svg"</span>: {
+    <span class="json-key">"uri"</span>: <span class="json-string">"https://cdn.supericons.dev/si/shield-check.svg"</span>,
+    <span class="json-key">"content_hash"</span>: <span class="json-string">"sha256:abc123..."</span>,
+    <span class="json-key">"size_bytes"</span>: <span class="json-number">1420</span>
+  },
+  <span class="json-key">"variants"</span>: [
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"outline"</span>,
+      <span class="json-key">"format"</span>: <span class="json-string">"svg"</span>,
+      <span class="json-key">"uri"</span>: <span class="json-string">".../shield-check-outline.svg"</span>,
+      <span class="json-key">"style_variant"</span>: <span class="json-string">"outline"</span>,
+      <span class="json-key">"is_default"</span>: <span class="json-bool">true</span>
+    },
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"solid"</span>,
+      <span class="json-key">"format"</span>: <span class="json-string">"svg"</span>,
+      <span class="json-key">"uri"</span>: <span class="json-string">".../shield-check-solid.svg"</span>,
+      <span class="json-key">"style_variant"</span>: <span class="json-string">"solid"</span>
+    },
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"animated_lottie"</span>,
+      <span class="json-key">"format"</span>: <span class="json-string">"lottie+json"</span>,
+      <span class="json-key">"uri"</span>: <span class="json-string">".../shield-check.lottie.json"</span>,
+      <span class="json-key">"trigger"</span>: <span class="json-string">"on_load"</span>
+    },
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"png_2x"</span>,
+      <span class="json-key">"format"</span>: <span class="json-string">"png"</span>,
+      <span class="json-key">"uri"</span>: <span class="json-string">".../shield-check@2x.png"</span>,
+      <span class="json-key">"dpi"</span>: <span class="json-number">192</span>,
+      <span class="json-key">"dimensions"</span>: { <span class="json-key">"w"</span>: <span class="json-number">48</span>, <span class="json-key">"h"</span>: <span class="json-number">48</span> }
+    }
+  ]
+}</code></pre>
+
+    <h3>Why Asset Variants Need a Manifest</h3>
+    <p>The old model assumes one icon = one file. The new model assumes one icon = a <strong>family of artifacts</strong> optimized for different contexts. AIPS replaces the single <code>svg</code> field with a full variant manifest because modern interfaces demand it.</p>
+    <p>A developer building a PWA needs an SVG for the UI and a PNG for the manifest icon. A designer building a native app needs a 1x, 2x, and 3x raster set. An animation engineer needs a Lottie JSON. An accessibility specialist needs a high-contrast variant. None of these consumers should have to guess which files exist or where they live.</p>
+    <p>The <code>canonical_svg</code> object is the source of truth. Its <code>content_hash</code> creates an immutable fingerprint. All other variants are derived from this canonical form. If a variant drifts (e.g., a PNG that no longer matches the SVG), the hash mismatch is detectable. This is <strong>asset integrity</strong> — a concept borrowed from software supply chain security and applied to design assets.</p>
+    <p>The manifest also enables <strong>lazy loading</strong>. A renderer can inspect the variant list and load only the formats it needs. A web app never downloads the Lottie file unless an animated state is triggered. A mobile app never downloads the 3x PNG unless it's running on a high-density screen. The manifest makes this optimization trivial.</p>
+  </section>
+
+  <section id="mock">
+    <h2>Full Mock Profile: <code>si:shield-check</code></h2>
+    <p>Here is a complete, production-ready AIPS profile for a single icon. This demonstrates how all namespaces compose into a coherent entity:</p>
+
+    <pre><code>{
+  <span class="json-key">"aips_version"</span>: <span class="json-string">"0.1.0"</span>,
+  <span class="json-key">"identity"</span>: {
+    <span class="json-key">"profile_id"</span>: <span class="json-string">"si:heroicons:shield-check"</span>,
+    <span class="json-key">"display_name"</span>: <span class="json-string">"Shield Check"</span>,
+    <span class="json-key">"slug"</span>: <span class="json-string">"shield-check"</span>,
+    <span class="json-key">"created_at"</span>: <span class="json-string">"2024-03-15T09:00:00Z"</span>,
+    <span class="json-key">"modified_at"</span>: <span class="json-string">"2026-05-07T14:22:00Z"</span>,
+    <span class="json-key">"author"</span>: {
+      <span class="json-key">"name"</span>: <span class="json-string">"Supericons Editorial"</span>,
+      <span class="json-key">"uri"</span>: <span class="json-string">"https://supericons.dev/credits"</span>,
+      <span class="json-key">"wallet"</span>: <span class="json-null">null</span>
+    },
+    <span class="json-key">"registry"</span>: <span class="json-string">"supericons"</span>,
+    <span class="json-key">"library"</span>: <span class="json-string">"heroicons"</span>,
+    <span class="json-key">"version"</span>: <span class="json-string">"2.0.0"</span>,
+    <span class="json-key">"content_hash"</span>: <span class="json-string">"sha256:a1b2c3d4..."</span>,
+    <span class="json-key">"license"</span>: <span class="json-string">"MIT"</span>,
+    <span class="json-key">"is_derivative"</span>: <span class="json-bool">false</span>
+  },
+  <span class="json-key">"semantic"</span>: {
+    <span class="json-key">"purpose"</span>: <span class="json-string">"Show a confirmed trust, protection, or verification state."</span>,
+    <span class="json-key">"category"</span>: <span class="json-string">"security"</span>,
+    <span class="json-key">"domain"</span>: [<span class="json-string">"security"</span>, <span class="json-string">"commerce"</span>, <span class="json-string">"ai_agents"</span>],
+    <span class="json-key">"intent"</span>: [<span class="json-string">"confirm"</span>, <span class="json-string">"inform"</span>],
+    <span class="json-key">"semantic_tags"</span>: [<span class="json-string">"security"</span>, <span class="json-string">"verified"</span>, <span class="json-string">"trust"</span>, <span class="json-string">"protection"</span>, <span class="json-string">"safe"</span>],
+    <span class="json-key">"synonyms"</span>: [<span class="json-string">"verified"</span>, <span class="json-string">"validated"</span>, <span class="json-string">"secure"</span>],
+    <span class="json-key">"depicts"</span>: <span class="json-string">"A shield outline with a centered checkmark."</span>,
+    <span class="json-key">"emotional_valence"</span>: {
+      <span class="json-key">"trust"</span>: <span class="json-number">0.94</span>,
+      <span class="json-key">"urgency"</span>: <span class="json-number">0.08</span>,
+      <span class="json-key">"delight"</span>: <span class="json-number">0.25</span>,
+      <span class="json-key">"calm"</span>: <span class="json-number">0.82</span>,
+      <span class="json-key">"authority"</span>: <span class="json-number">0.88</span>,
+      <span class="json-key">"mystery"</span>: <span class="json-number">0.05</span>
+    },
+    <span class="json-key">"confidence_mode"</span>: <span class="json-string">"binary"</span>,
+    <span class="json-key">"related_icons"</span>: [
+      { <span class="json-key">"profile_id"</span>: <span class="json-string">"si:heroicons:shield-exclamation"</span>, <span class="json-key">"relation"</span>: <span class="json-string">"opposite_state"</span> },
+      { <span class="json-key">"profile_id"</span>: <span class="json-string">"si:heroicons:lock-closed"</span>, <span class="json-key">"relation"</span>: <span class="json-string">"sibling_domain"</span> }
+    ],
+    <span class="json-key">"use_when"</span>: <span class="json-string">"Use when a trust or safety check has passed."</span>,
+    <span class="json-key">"avoid_when"</span>: <span class="json-string">"Do not use for generic success feedback unrelated to security."</span>,
+    <span class="json-key">"cultural_notes"</span>: <span class="json-string">"Shield symbolism is near-universal; safe across all locales."</span>
+  },
+  <span class="json-key">"design"</span>: {
+    <span class="json-key">"style_family"</span>: <span class="json-string">"minimal_line"</span>,
+    <span class="json-key">"style_variant"</span>: <span class="json-string">"outline"</span>,
+    <span class="json-key">"grid_system"</span>: {
+      <span class="json-key">"viewBox"</span>: <span class="json-string">"0 0 24 24"</span>,
+      <span class="json-key">"keyline"</span>: <span class="json-number">20</span>,
+      <span class="json-key">"padding"</span>: <span class="json-number">2</span>,
+      <span class="json-key">"safe_zone"</span>: <span class="json-number">1</span>
+    },
+    <span class="json-key">"stroke_spec"</span>: {
+      <span class="json-key">"width"</span>: <span class="json-number">2</span>,
+      <span class="json-key">"caps"</span>: <span class="json-string">"round"</span>,
+      <span class="json-key">"joins"</span>: <span class="json-string">"round"</span>,
+      <span class="json-key">"corner_radius"</span>: <span class="json-string">"uniform_2px"</span>
+    },
+    <span class="json-key">"color_logic"</span>: {
+      <span class="json-key">"base_mode"</span>: <span class="json-string">"monochrome"</span>,
+      <span class="json-key">"currentColor"</span>: <span class="json-bool">true</span>,
+      <span class="json-key">"adaptive_rules"</span>: {
+        <span class="json-key">"dark_mode"</span>: <span class="json-string">"inherit_currentColor"</span>,
+        <span class="json-key">"high_contrast"</span>: <span class="json-string">"stroke_2.5px"</span>
+      }
+    },
+    <span class="json-key">"geometry_fingerprint"</span>: {
+      <span class="json-key">"aspect_ratio"</span>: <span class="json-number">1.0</span>,
+      <span class="json-key">"symmetry"</span>: <span class="json-string">"vertical"</span>,
+      <span class="json-key">"negative_space_ratio"</span>: <span class="json-number">0.58</span>,
+      <span class="json-key">"visual_weight"</span>: <span class="json-string">"centered"</span>
+    },
+    <span class="json-key">"animation_dna"</span>: {
+      <span class="json-key">"loop_type"</span>: <span class="json-string">"one_shot"</span>,
+      <span class="json-key">"duration_ms"</span>: <span class="json-number">400</span>,
+      <span class="json-key">"easing"</span>: <span class="json-string">"ease-out-cubic"</span>,
+      <span class="json-key">"motion_preset"</span>: <span class="json-string">"si:bounce-subtle"</span>
+    },
+    <span class="json-key">"readability"</span>: {
+      <span class="json-key">"minimum_size_px"</span>: <span class="json-number">16</span>,
+      <span class="json-key">"tested_sizes"</span>: [<span class="json-number">16</span>, <span class="json-number">20</span>, <span class="json-number">24</span>, <span class="json-number">32</span>, <span class="json-number">48</span>],
+      <span class="json-key">"contrast_ratio"</span>: <span class="json-number">7.2</span>
+    },
+    <span class="json-key">"accessibility"</span>: {
+      <span class="json-key">"alt_text_template"</span>: <span class="json-string">"Verified protection"</span>,
+      <span class="json-key">"aria_role"</span>: <span class="json-string">"img"</span>,
+      <span class="json-key">"prefers_reduced_motion"</span>: <span class="json-string">"fallback_to_static"</span>,
+      <span class="json-key">"screen_reader_priority"</span>: <span class="json-string">"contextual"</span>
+    },
+    <span class="json-key">"mood"</span>: <span class="json-string">"authoritative"</span>,
+    <span class="json-key">"theme"</span>: [<span class="json-string">"security"</span>, <span class="json-string">"dark_mode"</span>, <span class="json-string">"agentic"</span>]
+  },
+  <span class="json-key">"agentic"</span>: {
+    <span class="json-key">"agentic_identity"</span>: {
+      <span class="json-key">"is_agent_portal"</span>: <span class="json-bool">false</span>,
+      <span class="json-key">"context"</span>: <span class="json-null">null</span>,
+      <span class="json-key">"permissions"</span>: <span class="json-null">null</span>
+    },
+    <span class="json-key">"event_bindings"</span>: [
+      {
+        <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.completed"</span>,
+        <span class="json-key">"visual_behavior"</span>: <span class="json-string">"settle_glow_fade"</span>,
+        <span class="json-key">"animation_ref"</span>: <span class="json-string">"si:soft-landing"</span>,
+        <span class="json-key">"post_state"</span>: <span class="json-string">"solid_confident"</span>,
+        <span class="json-key">"duration_ms"</span>: <span class="json-number">600</span>
+      },
+      {
+        <span class="json-key">"ag_ui_event"</span>: <span class="json-string">"agent.error"</span>,
+        <span class="json-key">"visual_behavior"</span>: <span class="json-string">"disrupted_pattern"</span>,
+        <span class="json-key">"animation_ref"</span>: <span class="json-string">"si:fragment-shake"</span>,
+        <span class="json-key">"color_shift"</span>: <span class="json-string">"danger_red"</span>,
+        <span class="json-key">"duration_ms"</span>: <span class="json-number">400</span>
+      }
+    ],
+    <span class="json-key">"state_modes"</span>: [
+      {
+        <span class="json-key">"mode"</span>: <span class="json-string">"idle"</span>,
+        <span class="json-key">"fill"</span>: <span class="json-string">"none"</span>,
+        <span class="json-key">"stroke"</span>: <span class="json-string">"currentColor"</span>,
+        <span class="json-key">"animation"</span>: <span class="json-string">"none"</span>
+      },
+      {
+        <span class="json-key">"mode"</span>: <span class="json-string">"active"</span>,
+        <span class="json-key">"fill"</span>: <span class="json-string">"currentColor_10pct"</span>,
+        <span class="json-key">"stroke"</span>: <span class="json-string">"currentColor"</span>,
+        <span class="json-key">"animation"</span>: <span class="json-string">"subtle_pulse"</span>
+      }
+    ],
+    <span class="json-key">"confidence_signaling"</span>: {
+      <span class="json-key">"high"</span>: { <span class="json-key">"fill"</span>: <span class="json-string">"solid"</span>, <span class="json-key">"stroke"</span>: <span class="json-string">"none"</span>, <span class="json-key">"glow"</span>: <span class="json-string">"subtle_white"</span> },
+      <span class="json-key">"uncertain"</span>: { <span class="json-key">"fill"</span>: <span class="json-string">"none"</span>, <span class="json-key">"stroke"</span>: <span class="json-string">"hatched_dotted"</span>, <span class="json-key">"glow"</span>: <span class="json-string">"none"</span> }
+    },
+    <span class="json-key">"tool_affiliations"</span>: [<span class="json-string">"verify_certificate"</span>, <span class="json-string">"security_scan"</span>],
+    <span class="json-key">"stream_anchor"</span>: <span class="json-bool">true</span>
+  },
+  <span class="json-key">"context"</span>: {
+    <span class="json-key">"use_when"</span>: <span class="json-string">"Use when a trust or safety check has passed and a public-safe icon is needed."</span>,
+    <span class="json-key">"avoid_when"</span>: <span class="json-string">"Do not use for generic success feedback unrelated to security or trust."</span>,
+    <span class="json-key">"platform_suitability"</span>: [<span class="json-string">"web"</span>, <span class="json-string">"ios"</span>, <span class="json-string">"android"</span>, <span class="json-string">"desktop"</span>],
+    <span class="json-key">"density_compatibility"</span>: [<span class="json-string">"compact"</span>, <span class="json-string">"comfortable"</span>, <span class="json-string">"spacious"</span>],
+    <span class="json-key">"component_pairing"</span>: [<span class="json-string">"Button"</span>, <span class="json-string">"Badge"</span>, <span class="json-string">"Toast"</span>],
+    <span class="json-key">"substitutes"</span>: [<span class="json-string">"si:heroicons:check-circle"</span>, <span class="json-string">"si:heroicons:lock-closed"</span>],
+    <span class="json-key">"composes_with"</span>: [<span class="json-string">"si:heroicons:lock-closed"</span>, <span class="json-string">"si:heroicons:finger-print"</span>],
+    <span class="json-key">"localization_risk"</span>: <span class="json-string">"low"</span>,
+    <span class="json-key">"rtl_behavior"</span>: <span class="json-string">"keep"</span>,
+    <span class="json-key">"status"</span>: <span class="json-string">"approved"</span>,
+    <span class="json-key">"review_state"</span>: <span class="json-string">"editor_approved"</span>,
+    <span class="json-key">"evidence"</span>: [<span class="json-string">"source_name"</span>, <span class="json-string">"visual_inspection"</span>, <span class="json-string">"editorial_judgment"</span>]
+  },
+  <span class="json-key">"assets"</span>: {
+    <span class="json-key">"canonical_svg"</span>: {
+      <span class="json-key">"uri"</span>: <span class="json-string">"https://cdn.supericons.dev/heroicons/shield-check.svg"</span>,
+      <span class="json-key">"content_hash"</span>: <span class="json-string">"sha256:a1b2c3d4..."</span>,
+      <span class="json-key">"size_bytes"</span>: <span class="json-number">1420</span>
+    },
+    <span class="json-key">"variants"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-string">"outline"</span>,
+        <span class="json-key">"format"</span>: <span class="json-string">"svg"</span>,
+        <span class="json-key">"uri"</span>: <span class="json-string">"https://cdn.supericons.dev/heroicons/shield-check.svg"</span>,
+        <span class="json-key">"style_variant"</span>: <span class="json-string">"outline"</span>,
+        <span class="json-key">"is_default"</span>: <span class="json-bool">true</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-string">"solid"</span>,
+        <span class="json-key">"format"</span>: <span class="json-string">"svg"</span>,
+        <span class="json-key">"uri"</span>: <span class="json-string">"https://cdn.supericons.dev/heroicons/shield-check-solid.svg"</span>,
+        <span class="json-key">"style_variant"</span>: <span class="json-string">"solid"</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-string">"mini"</span>,
+        <span class="json-key">"format"</span>: <span class="json-string">"svg"</span>,
+        <span class="json-key">"uri"</span>: <span class="json-string">"https://cdn.supericons.dev/heroicons/shield-check-20.svg"</span>,
+        <span class="json-key">"style_variant"</span>: <span class="json-string">"mini"</span>
+      }
+    ]
+  },
+  <span class="json-key">"extensions"</span>: {
+    <span class="json-key">"supericons"</span>: {
+      <span class="json-key">"access_tier"</span>: <span class="json-string">"public_open_record"</span>,
+      <span class="json-key">"projection_policy"</span>: <span class="json-string">"future_public_record"</span>,
+      <span class="json-key">"source_group"</span>: <span class="json-string">"free"</span>,
+      <span class="json-key">"source_name"</span>: <span class="json-string">"shield-check"</span>
+    }
+  }
+}</code></pre>
+
+    <h3>Reading the Mock: An Annotated Walkthrough</h3>
+    <p>This 200-line JSON is not just an example — it is a <strong>proof of concept</strong>. It demonstrates that all six namespaces can coexist in a single, valid, human-readable profile. Here is what to notice:</p>
+    <ul>
+      <li><strong>Identity:</strong> The <code>content_hash</code> and <code>version</code> fields create an auditable chain. You can verify that the SVG at the CDN matches the hash in the profile. You can track how the profile evolved over time.</li>
+      <li><strong>Semantic:</strong> The <code>emotional_valence</code> scores tell a clear story: this icon is highly trustworthy (0.94), very calm (0.82), quite authoritative (0.88), but not urgent (0.08) and not delightful (0.25). It is reassuring, not exciting.</li>
+      <li><strong>Design:</strong> The <code>geometry_fingerprint</code> reveals that this icon is perfectly square (aspect_ratio: 1.0), vertically symmetrical, and visually centered. These are the unconscious traits that make it feel stable and balanced.</li>
+      <li><strong>Agentic:</strong> The <code>event_bindings</code> show two bound states: completion (soft landing, solid confident) and error (fragment shake, danger red). The icon knows how to behave in the two most important agent moments.</li>
+      <li><strong>Context:</strong> The <code>substitutes</code> array gives the agent fallback options. If <code>shield-check</code> is unavailable, the agent can use <code>check-circle</code> or <code>lock-closed</code> without losing semantic coherence.</li>
+      <li><strong>Assets:</strong> Three variants are declared — outline (default), solid, and mini. A renderer can choose the right one based on size constraints without guessing.</li>
+    </ul>
+    <p>If you can read this profile and understand the icon without seeing the SVG, AIPS has done its job.</p>
+  </section>
+
+  <section id="protocol">
+    <h2>AG-UI Protocol Integration</h2>
+    <p>AIPS is designed to be <strong>protocol-native</strong>, not protocol-agnostic. It aligns with AG-UI's event model, capability discovery, and state synchronization.</p>
+
+    <h3>How AIPS Responds to AG-UI Events</h3>
+    <table>
+      <thead>
+        <tr><th>AG-UI Event</th><th>AIPS Behavior</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>agent.started</code></td><td>Gentle pulse / glow initiation</td><td>Shield icon begins breathing animation</td></tr>
+        <tr><td><code>agent.thinking</code></td><td>Rhythmic motion (wave, ripple, orbit)</td><td>Core of icon orbits; tool satellites appear</td></tr>
+        <tr><td><code>agent.tool_call</code></td><td>Shape morph to tool glyph</td><td>Shield briefly becomes a wrench during verification</td></tr>
+        <tr><td><code>agent.message</code></td><td>Speech emission particles</td><td>Small checkmark particles emit from icon</td></tr>
+        <tr><td><code>agent.human_required</code></td><td>Attention grab (color shift + bounce)</td><td>Icon turns amber; subtle bounce every 3s</td></tr>
+        <tr><td><code>agent.error</code></td><td>Disrupted pattern (glitch, fragment)</td><td>Shield edge fractures; desaturates to gray</td></tr>
+        <tr><td><code>agent.completed</code></td><td>Settle + glow fade</td><td>Solid fill settles in; soft white halo fades</td></tr>
+        <tr><td><code>agent.delegated</code></td><td>Split / clone visual</td><td>Icon divides to show sub-agent spawned</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Capability Discovery</h3>
+    <p>AG-UI agents declare capabilities via <code>getCapabilities()</code>. An AIPS-compliant icon renderer can query the agent's <code>identity</code> capabilities and adapt the icon accordingly:</p>
+    <pre><code><span class="json-comment">// Agent declares support for reasoning + tool calling</span>
+<span class="json-key">"identity"</span>: {
+  <span class="json-key">"name"</span>: <span class="json-string">"security-verifier"</span>,
+  <span class="json-key">"description"</span>: <span class="json-string">"Validates certificates and scans for threats"</span>
+}
+
+<span class="json-comment">// AIPS renderer reads this and selects the shield-check icon profile,</span>
+<span class="json-comment">// binds it to agent.started / agent.completed events,</span>
+<span class="json-comment">// and enables tool_satellites for "verify_certificate" and "security_scan"</span></code></pre>
+
+    <h3>The Protocol Stack: Where AIPS Sits</h3>
+    <p>To understand AIPS, it helps to see where it sits in the emerging protocol stack for agentic applications:</p>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Protocol</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Model</strong></td><td>OpenAI, Anthropic, open-source LLMs</td><td>Reasoning and generation</td></tr>
+        <tr><td><strong>Context</strong></td><td>MCP (Model Context Protocol)</td><td>Tool calling and context passing</td></tr>
+        <tr><td><strong>Agent-to-Agent</strong></td><td>A2A (Agent-to-Agent)</td><td>Inter-agent communication</td></tr>
+        <tr><td><strong>Agent-to-User</strong></td><td>AG-UI</td><td>Event streaming and state sync</td></tr>
+        <tr><td><strong>Visual Language</strong></td><td><strong>AIPS</strong></td><td>Icon meaning, behavior, and provenance</td></tr>
+        <tr><td><strong>Identity</strong></td><td>ERC-721 / DID</td><td>Ownership and authentication</td></tr>
+        <tr><td><strong>Transport</strong></td><td>HTTP, WebSocket, SSE</td><td>Data movement</td></tr>
+      </tbody>
+    </table>
+    <p>AIPS does not compete with MCP or AG-UI. It <strong>complements</strong> them. MCP tells the agent what tools it has. AG-UI tells the agent how to talk to the user. AIPS tells the agent how to <em>look</em> while it is talking. All three are necessary for a complete agentic experience.</p>
+  </section>
+
+  <section id="comparison">
+    <h2>Comparison with Existing Standards</h2>
+    <table>
+      <thead>
+        <tr><th>Standard</th><th>Scope</th><th>What AIPS Adds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>ERC-721 Metadata</strong></td><td>NFT ownership & display</td><td>Design genome, semantic DNA, agentic state</td></tr>
+        <tr><td><strong>OpenSea Metadata</strong></td><td>Marketplace traits</td><td>Event bindings, confidence signaling, usage context</td></tr>
+        <tr><td><strong>Iconify JSON</strong></td><td>Icon set indexing</td><td>Per-icon emotional valence, animation DNA, AG-UI hooks</td></tr>
+        <tr><td><strong>SVG Spec</strong></td><td>Vector geometry</td><td>Semantic meaning, state choreography, accessibility templates</td></tr>
+        <tr><td><strong>AG-UI Protocol</strong></td><td>Agent-UI event stream</td><td>Declarative visual event bindings per icon, confidence modes</td></tr>
+        <tr><td><strong>Supericons SI Registry</strong></td><td>Semantic meaning layer</td><td>Design genome, agentic profile, asset variant manifest, provenance</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      <strong>AIPS is not a replacement.</strong> It is a <strong>composable enrichment layer</strong>. An ERC-721 NFT can point to an AIPS profile as its metadata. An AG-UI agent can reference AIPS profiles in its capability declaration. An Iconify JSON export can embed AIPS fragments in its <code>custom</code> field.
+    </div>
+
+    <h3>Positioning in the Ecosystem</h3>
+    <p>We built this comparison not to declare victory over existing standards, but to show <strong>where AIPS fits</strong>. Every existing standard solves a real problem. AIPS solves a problem that did not exist until the agentic era emerged.</p>
+    <p>ERC-721 was designed for digital art ownership. It does not care about animation state, event bindings, or semantic meaning. That is fine — art does not need to react to AG-UI events. Agentic icons do.</p>
+    <p>Iconify was designed for icon set indexing. It does not care about emotional valence, confidence signaling, or design genomes. That is fine — most icons today are static glyphs. Agentic icons are not.</p>
+    <p>AG-UI was designed for event streaming. It does not care about visual specification, provenance, or asset variants. That is fine — AG-UI is a transport protocol. AIPS is a content protocol.</p>
+    <p>The key insight is that <strong>no single protocol can do everything</strong>. The agentic stack will be composed of specialized protocols that each do one thing well. AIPS is the visual-language layer of that stack. It enriches every other standard without replacing any of them.</p>
+  </section>
+
+  <section id="roadmap">
+    <h2>Roadmap & Open Questions</h2>
+
+    <h3>Proposed Milestones</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h4>Phase 1: Schema Lock (v0.1)</h4>
+        <p>Finalize the six namespaces. Build JSON Schema validation. Pilot with 100 Supericons records.</p>
+      </div>
+      <div class="card">
+        <h4>Phase 2: Agentic Renderer SDK</h4>
+        <p>Build a React/Vue component that consumes AIPS profiles and auto-wires AG-UI event bindings.</p>
+      </div>
+      <div class="card">
+        <h4>Phase 3: On-Anchor Provenance</h4>
+        <p>Enable optional IPFS anchoring + ERC-721 minting for premium icons. Creator royalties via smart contract.</p>
+      </div>
+      <div class="card">
+        <h4>Phase 4: Generative Icon Synthesis</h4>
+        <p>Feed AIPS profiles into generative models to produce new icons that match a design genome.</p>
+      </div>
+    </div>
+
+    <h3>Socratic Inquiry & Design Thinking Responses</h3>
+    <p class="lead">Below, each open question is unpacked through <strong>Socratic questioning</strong> (what do we assume? what is the deeper question? who is affected?) and <strong>design thinking</strong> (empathize, define, ideate, prototype, test) to arrive at actionable direction.</p>
+
+    <!-- Q1: Standardization vs. Expression -->
+    <div class="card" style="margin-top:28px;">
+      <h4>1. Standardization vs. Expression</h4>
+      <p><em>Should agent icons follow strict conventions (like traffic lights) or allow creative expression? How do we balance both?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> What problem are we actually solving — recognition speed, emotional connection, or trust calibration? If every agent icon is unique, does the user learn anything? If every icon is identical, does the agent feel like a soulless commodity?
+      </div>
+      <p><strong>Empathize:</strong> Users in high-trust workflows (finance, health, security) need <em>instant recognition</em> — a shield must always mean "protected." Users in creative workflows (design, content, gaming) need <em>personality</em> — a generic robot face kills inspiration.</p>
+      <p><strong>Define:</strong> The real tension is between <em>semantic interoperability</em> (icons must mean the same thing across apps) and <em>identity differentiation</em> (agents must feel distinct).</p>
+      <p><strong>Ideate:</strong> AIPS solves this with a two-tier model:</p>
+      <ul>
+        <li><strong>Core glyph</strong> (standardized): The base shape follows strict conventions — a shield is always a shield. This guarantees scan-ability and trust.</li>
+        <li><strong>Expression layer</strong> (personalized): Color signature, animation style, and satellite ornaments are agent-specific. The core is universal; the expression is unique.</li>
+      </ul>
+      <p><strong>Prototype:</strong> All security icons use the same 20×20 keyline and bounding box. But Agent A's shield pulses cyan; Agent B's shield has orbiting gem satellites. Both are instantly "shield." Neither is generic.</p>
+      <p><strong>Test:</strong> A/B test recognition speed. If users identify both shields as "security" in &lt;200ms, the standardization works. If users can also distinguish Agent A from Agent B in &lt;500ms, the expression works.</p>
+      <p><strong>Resolution:</strong> <em>Standardize the grammar, free the vocabulary.</em></p>
+    </div>
+
+    <!-- Q2: Accessibility in Motion -->
+    <div class="card">
+      <h4>2. Accessibility in Motion</h4>
+      <p><em>How do we make stateful, animated icons accessible to screen readers and users with motion sensitivity?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Why do we assume animation is purely visual? If an icon's state changes convey information, is omitting that information from screen readers a form of exclusion? What if motion itself is the message?
+      </div>
+      <p><strong>Empathize:</strong> A user with vestibular disorders experiences "thinking" orbit animations as nausea, not delight. A screen-reader user hears "image, shield check" and misses that the agent is currently erroring.</p>
+      <p><strong>Define:</strong> The problem is not animation — it is <em>unmediated animation</em>. Every state change in an agentic icon is information. That information must be available through at least two sensory channels.</p>
+      <p><strong>Ideate:</strong> AIPS bakes accessibility into the <code>agentic</code> namespace:</p>
+      <ul>
+        <li><code>prefers_reduced_motion</code> triggers a static fallback with color/shape changes instead of motion.</li>
+        <li>Every <code>event_binding</code> carries an <code>aria_live_announcement</code> template: "Security agent is verifying certificate."</li>
+        <li><code>state_modes</code> include a <code>high_contrast_static</code> variant for users who need maximum clarity.</li>
+        <li>The <code>confidence_signaling</code> object maps to both visual <em>and</em> haptic patterns (solid = firm vibration, hatched = light tap).</li>
+      </ul>
+      <p><strong>Prototype:</strong> An AIPS renderer that reads <code>state_modes</code> and outputs: (1) animated SVG for default users, (2) color-morphing static SVG for reduced-motion users, (3) live-region announcements for screen readers, (4) haptic pulses for mobile.</p>
+      <p><strong>Test:</strong> Run the same agentic workflow with users who have motion sensitivity, low vision, and no impairments. Success = all three groups understand the agent's state at every stage.</p>
+      <p><strong>Resolution:</strong> <em>Motion is a dialect, not the only language.</em> AIPS requires every animated state to have a non-motion equivalent encoded in the profile.</p>
+    </div>
+
+    <!-- Q3: Cross-Platform Consistency -->
+    <div class="card">
+      <h4>3. Cross-Platform Consistency</h4>
+      <p><em>An agent's identity should persist across web, mobile, desktop, and ambient displays. How do we adapt the visual language without losing identity?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> What is the "essence" of an icon's identity? Is it the exact pixel geometry, or is it a set of invariant properties (shape family, color, motion rhythm)? If Apple and Android render the same SVG differently, has identity been lost?
+      </div>
+      <p><strong>Empathize:</strong> A user sees their "Travel Agent" icon on iOS, then on a smart display, then on a smartwatch. If it looks like three different apps, trust collapses. If the smartwatch tries to render orbital satellites at 24px, it becomes mud.</p>
+      <p><strong>Define:</strong> Identity is not the rendered output — it is the <em>design genome</em>. The genome is platform-agnostic. The renderer is platform-specific.</p>
+      <p><strong>Ideate:</strong> AIPS separates <code>design.genome</code> from <code>assets.variants</code>. The genome says: "shield, vertical symmetry, cyan accent, pulse rhythm." Each platform renderer interprets that genome:</p>
+      <ul>
+        <li><strong>Web:</strong> Full SVG with CSS animations, orbital satellites, hover expansion.</li>
+        <li><strong>Mobile:</strong> Simplified SVG with native spring animations, haptic pulse, no satellites below 32px.</li>
+        <li><strong>Ambient/Watch:</strong> Silhouette-only, slow color breathing, no fine detail. Identity = shape + color + rhythm.</li>
+        <li><strong>Desktop:</strong> Full fidelity with multi-cursor awareness (icon knows if user is hovering).</li>
+      </ul>
+      <p><strong>Prototype:</strong> A single AIPS profile rendered through four platform adapters. Run a "recognition test": show users the same agent on four devices. Ask "Is this the same agent?" Target: &gt;90% yes.</p>
+      <p><strong>Test:</strong> Measure identity persistence across device switches. If users confidently say "That's my Security Agent" on every platform, the genome abstraction works.</p>
+      <p><strong>Resolution:</strong> <em>Encode the seed, not the tree.</em> The AIPS design genome is the seed; platform renderers grow the tree.</p>
+    </div>
+
+    <!-- Q4: Uncanny Valley -->
+    <div class="card">
+      <h4>4. The Uncanny Valley of Agent Faces</h4>
+      <p><em>How humanoid should agent icons be? Too human creates false expectations; too abstract fails to build trust.</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Why do we default to faces? Is it because humans are wired for faces, or because we lack a better abstraction for "entity with intent"? What if the uncanny valley is not about human-likeness but about <em>expectation mismatch</em>?
+      </div>
+      <p><strong>Empathize:</strong> A hyper-realistic AI face promises empathy and understanding. When the agent says "I don't know," the user feels betrayed. A faceless geometric shape feels cold. When the agent is helpful, the user feels no connection.</p>
+      <p><strong>Define:</strong> The problem is not "how human?" It is <em>"what promise does the icon make, and can the agent keep it?"</em></p>
+      <p><strong>Ideate:</strong> AIPS uses <code>emotional_valence</code> and <code>mood</code> to calibrate promise vs. capability:</p>
+      <ul>
+        <li><strong>High-empathy agents</strong> (therapy, coaching): Mascot-style faces with limited expression range. Deliberately cartoonish, not realistic. The style signals "I try to understand, but I'm not human."</li>
+        <li><strong>High-precision agents</strong> (security, data): Abstract geometric forms. No face. Trust comes from consistency and clarity, not faux empathy.</li>
+        <li><strong>Creative agents</strong> (design, writing): Organic, fluid shapes that morph. The form signals adaptability and imagination.</li>
+      </ul>
+      <p><strong>Prototype:</strong> Three agent icons for the same backend model, differentiated only by visual form: (A) cartoon mascot, (B) geometric crystal, (C) fluid ink blot. Measure user trust, expectation accuracy, and satisfaction.</p>
+      <p><strong>Test:</strong> After interaction, ask users: "Did the icon's appearance match how the agent actually behaved?" The highest-scoring icon is the one with the smallest expectation gap, not the cutest face.</p>
+      <p><strong>Resolution:</strong> <em>Promise honestly, not attractively.</em> AIPS requires every agentic icon to declare its <code>mood</code> and <code>confidence_mode</code> so users know what to expect before they interact.</p>
+    </div>
+
+    <!-- Q5: Icon Spam -->
+    <div class="card">
+      <h4>5. Icon Spam & Visual Clutter</h4>
+      <p><em>In a multi-agent world, how do we prevent visual clutter? Do agents cluster? Do they have "tabs"?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Why do we assume every agent needs a visible icon at all times? If an agent is idle, does it need attention? What if the problem is not too many icons, but <em>too much visibility</em>?
+      </div>
+      <p><strong>Empathize:</strong> A dashboard with 12 agent icons feels like a control panel from a nuclear submarine. A dashboard with 1 icon that expands into 12 on demand feels like a clean workspace. The user doesn't want to manage agents; they want agents to manage work.</p>
+      <p><strong>Define:</strong> The problem is not icon count. It is <em>attention allocation</em>. Not every agent deserves pixels when idle.</p>
+      <p><strong>Ideate:</strong> AIPS encodes a <code>presence_model</code> in the agentic namespace:</p>
+      <ul>
+        <li><strong>Active:</strong> Full icon, animation, satellites. The agent is doing something relevant now.</li>
+        <li><strong>Standby:</strong> Minimal badge — a small dot in the agent's color signature. Still present, not distracting.</li>
+        <li><strong>Dormant:</strong> Completely hidden. Accessible via a "show all agents" gesture. The agent exists in memory, not in pixels.</li>
+        <li><strong>Clustered:</strong> Related agents (e.g., all security agents) collapse into a single shield icon with a count badge. Tap to expand.</li>
+      </ul>
+      <p><strong>Prototype:</strong> A workspace with 8 agents. Default view shows 2 active + 1 cluster badge. Expanded view shows all 8. Measure task completion time and self-reported calmness.</p>
+      <p><strong>Test:</strong> If users complete tasks faster with the clustered view than with all-icons-visible, presence hierarchy wins.</p>
+      <p><strong>Resolution:</strong> <em>Visibility is a privilege, not a right.</em> AIPS agents must earn screen real estate through relevance, not existence.</p>
+    </div>
+
+    <!-- Q6: Schema Governance -->
+    <div class="card">
+      <h4>6. Schema Governance</h4>
+      <p><em>Who controls the controlled vocabularies? Should AIPS be an open standard with an RFC process?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Who decides what "security" means? If Supericons controls it, is AIPS a proprietary standard? If a committee controls it, will it stagnate? What if the answer is neither?</n      </div>
+      <p><strong>Empathize:</strong> Developers want stability — they don't want their icon metadata breaking every month. Designers want flexibility — they need new categories for things that don't exist yet. Enterprises want influence — they need to extend vocabularies for internal domains.</p>
+      <p><strong>Define:</strong> Governance is not about control. It is about <em>coordination at scale</em>.</p>
+      <p><strong>Ideate:</strong> AIPS adopts a <strong>three-tier vocabulary model</strong>:</p>
+      <ul>
+        <li><strong>Core vocabulary</strong> (Supericons-maintained): category, intent, domain, state, status. Immutable without RFC. Changed once per year. Guarantees interoperability.</li>
+        <li><strong>Extended vocabulary</strong> (community-curated): New domains like <code>climate_tech</code>, <code>bioinformatics</code>. Proposed via GitHub PR, approved by elected maintainers. Changed quarterly.</li>
+        <li><strong>Private extensions</strong> (enterprise/vendor): Any organization can add fields under <code>extensions.{vendor_id}</code>. Not validated by AIPS core, but preserved in profiles. Full freedom.</li>
+      </ul>
+      <p><strong>Prototype:</strong> A governance repo with RFC template, voting process, and semantic versioning for vocabularies. Test with 5 hypothetical extension proposals.</p>
+      <p><strong>Test:</strong> Measure time from proposal to acceptance for core vs. extended vocabularies. Core = slow and careful (&gt;90 days). Extended = fast and permissive (&lt;14 days).</p>
+      <p><strong>Resolution:</strong> <em>Core is cathedral, extended is bazaar, private is wilderness.</em></p>
+    </div>
+
+    <!-- Q7: Target Audience -->
+    <div class="card">
+      <h4>7. Who Is the Target Audience of AIPS?</h4>
+      <p><em>Who actually needs this specification? Who will adopt it, and who will pay for it?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Is AIPS for icon designers, for developers, for AI agents, or for end users? If it serves all four, does it serve any of them well? What if the real customer is not a human at all?
+      </div>
+      <p><strong>Empathize:</strong></p>
+      <ul>
+        <li><strong>Icon designers</strong> want their work to be understood, used correctly, and credited. They don't want their "delicate health icon" used for a "delete account" button.</li>
+        <li><strong>Frontend developers</strong> want to drop in an icon and have it behave correctly across states, platforms, and accessibility modes without writing 200 lines of CSS.</li>
+        <li><strong>AI agent builders</strong> want their agents to select appropriate icons dynamically, with confidence that the visual will match the agent's state and intent.</li>
+        <li><strong>End users</strong> want to understand what is happening without reading text. They want to trust what they see.</li>
+      </ul>
+      <p><strong>Define:</strong> AIPS is a <em>multi-sided specification</em>. Its value is in the <strong>network effect</strong> between these four audiences. The more designers use it, the more valuable it is to developers. The more developers use it, the more valuable it is to agent builders.</p>
+      <p><strong>Ideate:</strong> Tiered audience strategy:</p>
+      <ul>
+        <li><strong>Primary adopters (Phase 1):</strong> Design system teams at mid-to-large SaaS companies. They have the pain (inconsistent icons across products) and the budget.</li>
+        <li><strong>Secondary adopters (Phase 2):</strong> Agent framework builders (LangGraph, CrewAI, AG-UI SDK). They need AIPS to make their agents visually intelligent.</li>
+        <li><strong>Tertiary adopters (Phase 3):</strong> Individual designers and indie developers. They adopt because the tools make their lives easier, not because they care about the spec.</li>
+        <li><strong>Ultimate beneficiary:</strong> End users, who get interfaces that are more legible, trustworthy, and responsive.</li>
+      </ul>
+      <p><strong>Prototype:</strong> A Figma plugin that exports AIPS profiles alongside SVGs. A React component that consumes AIPS JSON and auto-generates accessible, animated icons. An AG-UI middleware that selects icons based on agent state.</p>
+      <p><strong>Test:</strong> If a design system team says "This saves us 10 hours per week on icon documentation and state management," Product-Market Fit is found.</p>
+      <p><strong>Resolution:</strong> <em>AIPS is infrastructure for human-agent visual trust.</em> The buyers are design systems and agent platforms. The users are everyone.</p>
+    </div>
+
+    <!-- Q8: Sustainable Utility -->
+    <div class="card">
+      <h4>8. What Is the Ultimate Sustainable Utility of AIPS?</h4>
+      <p><em>Why does the world need this to exist in 5 years? What problem stays solved?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> If every AI model can generate icons on demand, why do we need a schema? If icons are disposable, is metadata worth anything? What if the real utility is not the icons, but the <em>agreement</em> about what they mean?
+      </div>
+      <p><strong>Empathize:</strong> In 2030, a user interacts with 50+ AI agents daily across work, health, finance, and entertainment. Each agent has a face. If every face is random, the user lives in visual chaos. If every face is meaningful, the user lives in a coherent world.</p>
+      <p><strong>Define:</strong> The sustainable utility of AIPS is <strong>semantic coherence at scale</strong>. As the number of agents, icons, and interfaces grows exponentially, the cost of misunderstanding grows with it. AIPS is the compression algorithm for visual trust.</p>
+      <p><strong>Ideate:</strong> Five-year utility thesis:</p>
+      <ul>
+        <li><strong>Year 1:</strong> AIPS makes icon search 10x better. Designers and developers find the right icon faster because the metadata is rich.</li>
+        <li><strong>Year 2:</strong> AIPS enables agentic UI frameworks. Agents auto-select icons that match their state, reducing design-system maintenance.</li>
+        <li><strong>Year 3:</strong> AIPS becomes the interchange format between design tools (Figma, Framer) and runtime environments (React, SwiftUI). No more "handoff."</li>
+        <li><strong>Year 4:</strong> AIPS profiles are minted as on-chain assets. Icon creators earn royalties when their icons are used in commercial agent interfaces.</li>
+        <li><strong>Year 5:</strong> AIPS is the visual layer of the "agentic web." Just as HTTP enabled the web, AIPS enables the agentic interface graph — a shared understanding of what visual elements mean, across every platform and every agent.</li>
+      </ul>
+      <p><strong>Prototype:</strong> A 5-year roadmap deck with measurable milestones: icon search accuracy, agent UI adoption, design tool plugin installs, on-chain transactions.</p>
+      <p><strong>Test:</strong> In 2030, if a developer can drop an AIPS profile into any framework and get correct, accessible, stateful behavior without writing code, the utility is proven.</p>
+      <p><strong>Resolution:</strong> <em>AIPS is the DNS of the agentic visual web.</em> It doesn't make the content; it makes the content findable, understandable, and trustworthy.</p>
+    </div>
+
+    <!-- Q9: Monetization -->
+    <div class="card">
+      <h4>9. How Do Supericons / AIPS Monetize?</h4>
+      <p><em>What is the business model? Who pays, and what do they get?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> Can you monetize a schema? If AIPS is an open standard, where does revenue come from? If the schema is free, what is the product? What if the schema is the funnel, not the product?
+      </div>
+      <p><strong>Empathize:</strong> Enterprises will not pay for a JSON schema. They will pay for time saved, risk reduced, and capability unlocked. Individual designers will not pay for metadata. They will pay for tools that make them faster and better.</p>
+      <p><strong>Define:</strong> The business is not the schema. The business is <em>the value layer built on top of the schema</em>.</p>
+      <p><strong>Ideate:</strong> Five revenue streams:</p>
+      <ul>
+        <li><strong>1. Premium Icon Packs (today):</strong> Curated, AIPS-profiled icon sets for specific domains (AI agents, fintech, health). Sold as one-time purchases or subscriptions. This is the current Supericons model.</li>
+        <li><strong>2. AIPS Cloud API (year 1):</strong> Hosted semantic search. "Find me an icon that signals low-confidence verification for a fintech app." Pay per query or per seat. The schema is open; the hosted intelligence is proprietary.</li>
+        <li><strong>3. Agentic Renderer SDK License (year 2):</strong> Enterprise license for the React/Vue/Swift component library that auto-wires AG-UI events to AIPS profiles. Free for open source; paid for commercial use.</li>
+        <li><strong>4. On-Chain Icon Marketplace (year 3):</strong> Designers mint AIPS-profiled icons as NFTs. Supericons takes a 5-10% marketplace fee. Buyers get provenance, licensing, and automatic AIPS compliance.</li>
+        <li><strong>5. Design System Consulting (ongoing):</strong> Enterprise teams pay Supericons to audit, migrate, and enrich their existing icon libraries with AIPS profiles. High-margin services.</li>
+      </ul>
+      <p><strong>Prototype:</strong> A pricing page for each tier. A financial model showing break-even at 1,000 API seats + 50 enterprise SDK licenses.</p>
+      <p><strong>Test:</strong> Run a paid pilot with 3 design system teams. If 2 of 3 renew, the model is validated.</p>
+      <p><strong>Resolution:</strong> <em>Open schema, closed intelligence, premium tools, marketplace fees.</em> The standard is free. The convenience is not.</p>
+    </div>
+
+    <!-- Q10: Does AIPS Deliver on the Creator's Intent? -->
+    <div class="card">
+      <h4>10. Does AIPS Deliver on the Promise of Better Agentic Icons?</h4>
+      <p><em>I want to use AIPS to create cooler, more dynamic, more interactive icons using agentic AI. With a robust schema, will AI agents design and build better icons?</em></p>
+      <div class="insight">
+        <strong>Socratic Unpacking:</strong> What does "better" mean? More beautiful? More functional? More appropriate? If an AI agent has a schema, does it gain taste, or just structure? What if the schema is not a constraint but a <em>creative partner</em>?
+      </div>
+      <p><strong>Empathize:</strong> You, the creator, want to tell an AI: "Design a set of icons for a mental health app that feels calm, trustworthy, and accessible." Without AIPS, the AI generates random SVGs. With AIPS, the AI understands <em>calm</em> = low urgency, high calm score, round caps, organic curves, cool color palette, no sharp angles.</p>
+      <p><strong>Define:</strong> The promise is not that AIPS makes AI creative. It is that AIPS makes AI <em>intentional</em>. Creativity without structure is noise. Structure without creativity is boring. AIPS provides the structure; the agent provides the creativity.</p>
+      <p><strong>Ideate:</strong> How AIPS enables better agentic icon design:</p>
+      <ul>
+        <li><strong>Prompt-to-Profile:</strong> You describe the need in natural language. The AI outputs an AIPS profile first, then generates the SVG to match. The profile is the brief; the SVG is the execution.</li>
+        <li><strong>Style Consistency:</strong> You feed the AI a design genome (grid, stroke, mood). The AI generates 50 icons that all share the same genome. No manual checking needed.</li>
+        <li><strong>State Awareness:</strong> The AI generates not one icon, but a full state matrix — idle, active, error, loading — all visually coherent because they share the same AIPS profile.</li>
+        <li><strong>Accessibility Compliance:</strong> The AI checks its own output against the AIPS readability and accessibility specs. If contrast is too low, it auto-adjusts. If animation is too fast, it slows down.</li>
+        <li><strong>Semantic Validation:</strong> The AI cross-checks its icon against the <code>use_when</code> and <code>avoid_when</code> fields. "You said this is for 'delete' but it looks like 'download.' Let me fix that."</li>
+      </ul>
+      <p><strong>Prototype:</strong> A GPT-5 or Claude prompt that takes a natural language brief and outputs: (1) an AIPS profile, (2) 3 SVG variants, (3) a validation report. Run 10 design briefs. Compare quality with and without AIPS.</p>
+      <p><strong>Test:</strong> Show 20 generated icons to designers. Half generated with AIPS, half without. Ask: "Which set feels more coherent, appropriate, and production-ready?" If AIPS wins &gt;75% of the time, the promise is delivered.</p>
+      <p><strong>Resolution:</strong> <em>Yes — AIPS is the bridge between your intent and the agent's execution.</em> It turns "make something cool" into "make something that fits this exact specification." The agent gains taste by inheriting the taste encoded in the schema.</p>
+    </div>
+
+    <div class="protocol" style="margin-top:32px;">
+      <strong>Meta-Reflection:</strong> The Socratic method revealed that every open question is really a tension between <em>freedom and structure</em>. AIPS does not resolve these tensions — it <em>encodes</em> them. The schema is a living document that holds the space where designers, developers, agents, and users negotiate meaning. That is its deepest purpose.
+    </div>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <p class="lead">
+      The agentic era demands more from icons than the pre-agentic web ever did. AIPS proposes a future where every icon carries its full story — who made it, what it means, how it looks, how it behaves, and how it connects to the living systems around it.
+    </p>
+    <p>
+      An icon is no longer just a button. It is a <strong>profiled entity</strong> with semantic DNA, a design genome, and an agentic heartbeat. It is ownable, traceable, and interoperable. It is, in every sense, <strong>the NFT of interface elements</strong> — but useful.
+    </p>
+    <div class="insight">
+      <em>"The best interface is no interface. But when there is an interface, let every element be alive, accountable, and understood."</em>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Generated 2026-05-07 for Supericons &middot; AIPS Proposal v0.1 &middot; Socratic Responses &amp; Section Depth Added 2026-05-07 &middot; Open for Discussion
+</footer>
+
+</body>
+</html>

@@ -35,15 +35,74 @@ import { getDocsGuideConfig } from './lib/docs-guide-config.js';
 import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
 import {
   renderDocsArticleMarkup,
+  renderDocsSidebar,
   renderDocsSiteShellMarkup,
 } from './lib/docs-site-render.js';
 import {
   buildRouteUrl,
   getRouteMeta,
+  getRouteViewFromPath,
   hasDirectRouteView,
   normalizeRouteView,
   shouldPersistRouteView,
 } from './lib/view-route-policy.js';
+
+function t(key, params = {}, fallback = key) {
+  return window.__supericons?.t?.(key, params) || fallback;
+}
+
+function toolText(scope, key, fallback, params = {}) {
+  return t(`${scope}.${key}`, params, fallback);
+}
+
+function motionLabText(key, fallback, params = {}) {
+  return toolText('motionLab', key, fallback, params);
+}
+
+function converterText(key, fallback, params = {}) {
+  return toolText('converter', key, fallback, params);
+}
+
+function getStripeLocale() {
+  const locale = String(window.__supericons?.getActiveLocale?.() || document.documentElement.lang || 'en').toLowerCase();
+  const map = {
+    'zh-hans': 'zh',
+    'zh-hant': 'zh-TW',
+    ar: 'ar',
+    de: 'de',
+    en: 'en',
+    es: 'es',
+    fr: 'fr',
+    hi: 'hi',
+    ja: 'ja',
+    ko: 'ko',
+    pt: 'pt',
+    th: 'th',
+    vi: 'vi',
+  };
+  return map[locale] || 'auto';
+}
+
+function getActiveLocale() {
+  return window.__supericons?.getActiveLocale?.() || document.documentElement.lang || 'en';
+}
+
+function formatLocaleDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleDateString(getActiveLocale());
+}
+
+function buildLocalizedReturnUrl(params = {}) {
+  const url = new URL(window.location.origin);
+  url.searchParams.set('locale', getActiveLocale());
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== '') {
+      url.searchParams.set(key, String(value));
+    }
+  }
+  return url.toString();
+}
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -137,7 +196,11 @@ const MOTION_LAB_LOCKED_CSS = [
   '}',
 ].join('\n');
 const MOTION_LAB_LOCKED_SVG = '<!-- Animated SVG available with Pro -->';
-const EXPORT_TRIGGER_TOOLTIP_COPY = 'Sets how the animation starts in your exported code. Loop: plays continuously. Hover: plays on mouse over. Click: plays on tap.';
+const EXPORT_TRIGGER_TOOLTIP_FALLBACK = 'Sets how the animation starts in your exported code. Loop: plays continuously. Hover: plays on mouse over. Click: plays on tap.';
+
+function getExportTriggerTooltipCopy() {
+  return motionLabText('tooltips.exportTrigger', EXPORT_TRIGGER_TOOLTIP_FALLBACK);
+}
 
 // ── State ─────────────────────────────────────────────────────
 let products = [];
@@ -209,6 +272,20 @@ const PRODUCT_NAME_OVERRIDES = {
 };
 function getProductName(product) {
   return PRODUCT_NAME_OVERRIDES[product.slug] || product.name;
+}
+
+function getLocalizedProductName(product) {
+  if (!product?.slug) return product?.name || '';
+  return t(`packs.products.${product.slug}.name`, {}, getProductName(product));
+}
+
+function getLocalizedProductDescription(product) {
+  if (!product?.slug) {
+    return t('packs.detail.animatedIconCollection', {}, 'Animated icon collection');
+  }
+  const fallback = product.description
+    || t('packs.card.animatedIconsCount', { count: product.icon_count || 20 }, '{count} animated icons');
+  return t(`packs.products.${product.slug}.description`, {}, fallback);
 }
 
 function getProPlan(plan = 'monthly') {
@@ -304,7 +381,8 @@ async function resumePostAuthIntent() {
 
 function getProPlanPriceMarkup(planKey) {
   const plan = getProPlan(planKey);
-  return `${plan.amount}<span style="font-size:0.65rem;font-weight:400">${plan.period}</span>`;
+  const period = t(`packs.pro.${planKey}Period`, {}, plan.period);
+  return `${plan.amount}<span style="font-size:0.65rem;font-weight:400">${period}</span>`;
 }
 
 function renderPlainFeatureList(items) {
@@ -315,16 +393,28 @@ function renderPricingFeatureList(items) {
   return items.map(item => `<li><span class="material-symbols-outlined">check</span> ${item}</li>`).join('');
 }
 
+function splitCatalogList(value) {
+  return String(value || '').split('|').map(item => item.trim()).filter(Boolean);
+}
+
+function renderPricingFeatureListWithDim(items, dimStart = items.length) {
+  return items.map((item, index) => {
+    const className = index >= dimStart ? ' class="pricing-card__feature--dim"' : '';
+    const icon = index >= dimStart ? 'close' : 'check';
+    return `<li${className}><span class="material-symbols-outlined">${icon}</span> ${item}</li>`;
+  }).join('');
+}
+
 function redirectToDocs(hash = window.location.hash || '') {
   const target = `/?view=docs${hash}`;
   window.location.replace(target);
 }
 
 function formatClaimAvailability(nextAvailable) {
-  if (!nextAvailable) return 'soon';
+  if (!nextAvailable) return t('packs.card.soon', {}, 'soon');
   const date = new Date(nextAvailable);
-  if (Number.isNaN(date.getTime())) return 'soon';
-  return date.toLocaleDateString(undefined, {
+  if (Number.isNaN(date.getTime())) return t('packs.card.soon', {}, 'soon');
+  return date.toLocaleDateString(getActiveLocale(), {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -342,13 +432,13 @@ function isClaimableProduct(product) {
 function getOwnedBadgeMeta(source) {
   if (source === 'credit') {
     return {
-      text: 'Redeemed',
+      text: t('loggedIn.downloads.redeemed', {}, 'Redeemed'),
       className: 'pack-card__badge--redeemed',
     };
   }
 
   return {
-    text: 'Purchased',
+    text: t('loggedIn.downloads.purchased', {}, 'Purchased'),
     className: 'pack-card__badge--owned',
   };
 }
@@ -357,12 +447,12 @@ function getPackCardState(product, isPurchased, priceDisplay) {
   const primary = isPurchased
     ? {
       action: 'open',
-      label: '<span class="material-symbols-outlined" style="font-size:15px">visibility</span> View Collection',
+      label: `<span class="material-symbols-outlined" style="font-size:15px">visibility</span> ${t('packs.card.viewCollection', {}, 'View Collection')}`,
       className: 'pack-card__btn--open',
     }
     : {
       action: 'purchase',
-      label: `Buy $${priceDisplay}`,
+      label: t('packs.card.buyPrice', { price: `$${priceDisplay}` }, 'Buy {price}'),
       className: 'pack-card__btn--buy',
     };
 
@@ -371,25 +461,29 @@ function getPackCardState(product, isPurchased, priceDisplay) {
   if (shouldShowRedeemState) {
     const claimStatus = getClaimStatus();
     if (!claimStatus) {
-      redeem = { type: 'note', className: 'pack-card__redeem-note--muted', text: 'Checking redeem access...' };
+      redeem = {
+        type: 'note',
+        className: 'pack-card__redeem-note--muted',
+        text: t('packs.card.checkingRedeemAccess', {}, 'Checking redeem access...'),
+      };
     } else if (claimStatus.canClaim) {
       redeem = {
         type: 'action',
         action: 'claim',
-        label: '<span class="material-symbols-outlined" style="font-size:14px">redeem</span> Redeem now',
+        label: `<span class="material-symbols-outlined" style="font-size:14px">redeem</span> ${t('packs.card.redeemNow', {}, 'Redeem now')}`,
         className: 'pack-card__redeem-btn',
       };
     } else if (claimStatus.reason === 'cooldown_wait') {
       redeem = {
         type: 'note',
         className: 'pack-card__redeem-note--cooldown',
-        text: `Redeem on ${formatClaimAvailability(claimStatus.nextAvailable)}`,
+        text: t('packs.card.redeemOn', { date: formatClaimAvailability(claimStatus.nextAvailable) }, 'Redeem on {date}'),
       };
     } else if (claimStatus.reason === 'all_owned') {
       redeem = {
         type: 'note',
         className: 'pack-card__redeem-note--muted',
-        text: 'All claimable collections owned',
+        text: t('packs.card.allClaimableOwned', {}, 'All claimable collections owned'),
       };
     }
   }
@@ -526,6 +620,12 @@ export function initStore() {
 function syncViewFromLocation({ historyMode = 'replace' } = {}) {
   const params = new URLSearchParams(window.location.search);
   const requestedView = params.get('view');
+  const pathView = getRouteViewFromPath(window.location.pathname);
+
+  if (pathView) {
+    switchView(pathView, { historyMode });
+    return true;
+  }
 
   if (hasDirectRouteView(requestedView || '')) {
     const nextView = normalizeRouteView(requestedView || '');
@@ -535,6 +635,7 @@ function syncViewFromLocation({ historyMode = 'replace' } = {}) {
         pathname: window.location.pathname,
         view: nextView,
         hash: window.location.hash,
+        search: window.location.search,
       });
       window.history.replaceState({}, '', nextUrl);
     }
@@ -626,27 +727,27 @@ function getStoreViewHeading(view) {
 
   switch (view) {
     case 'packs':
-      return 'Premium Collections';
+      return t('nav.premiumCollections', {}, 'Premium Collections');
     case 'downloads':
-      return 'My Collection';
+      return t('nav.myCollection', {}, 'My Collection');
     case 'dashboard':
-      return 'My Purchases';
+      return t('account.menu.purchases', {}, 'My Purchases');
     case 'api-keys':
-      return 'API Keys';
+      return t('account.menu.apiKeys', {}, 'API Keys');
     case 'pricing':
-      return 'Pricing';
+      return t('nav.pricing', {}, 'Pricing');
     case 'privacy':
-      return 'Privacy Policy';
+      return t('legal.privacy.pageTitle', {}, 'Privacy Policy');
     case 'terms':
-      return 'Terms of Service';
+      return t('legal.terms.pageTitle', {}, 'Terms of Service');
     case 'motion-lab':
-      return 'Motion Lab';
+      return t('tools.motionLab', {}, 'Motion Lab');
     case 'converter':
-      return 'Icon Converter';
+      return t('tools.converter', {}, 'Icon Converter');
     case 'converter-lab':
-      return 'Converter Lab';
+      return converterText('lab.title', 'Converter Lab');
     default:
-      return 'My Purchases';
+      return t('account.menu.purchases', {}, 'My Purchases');
   }
 }
 
@@ -670,13 +771,19 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
       pathname: window.location.pathname,
       view,
       hash: routeHash,
+      search: window.location.search,
     });
     const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     if (currentUrl !== docsUrl) {
       window.history[historyMethod]({}, '', docsUrl);
     }
   } else if (shouldMutateHistory && activeRouteMeta.persistUrl) {
-    window.history[historyMethod]({}, '', window.location.pathname);
+    const routeUrl = buildRouteUrl({
+      pathname: window.location.pathname,
+      view,
+      search: window.location.search,
+    });
+    window.history[historyMethod]({}, '', routeUrl);
   }
 
   if (currentView === 'converter') {
@@ -785,7 +892,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     }
     gridArea.classList.remove('store-active');
     if (gridActions) gridActions.style.display = '';
-    if (gridTitle) gridTitle.textContent = 'All Icons';
+    if (gridTitle) gridTitle.textContent = t('app.allIcons', {}, 'All Icons');
     if (gridMeta) gridMeta.textContent = '';
     si?.setPanelSuppressed?.(false);
   };
@@ -839,7 +946,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
       document.body.setAttribute('data-view', 'converter-lab');
       renderConverterLab();
     } else {
-      setStoreHeading('My Purchases', '');
+      setStoreHeading(t('account.menu.purchases', {}, 'My Purchases'), '');
       renderDashboard();
     }
 
@@ -847,7 +954,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     if (gridMeta && view !== 'collection-detail') {
       const backBtn = document.createElement('button');
       backBtn.className = 'store-back-btn';
-      backBtn.textContent = 'Back to icons';
+      backBtn.textContent = t('actions.backToIcons', {}, 'Back to icons');
       backBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         switchView('icons');
@@ -871,6 +978,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   // Update sidebar active state
   si?.syncPurposeFilterBar?.();
   updateSidebarActive(view);
+  window.dispatchEvent(new CustomEvent('supericons:view-change', { detail: { view } }));
   resetShellScroll();
   window.requestAnimationFrame(resetShellScroll);
 }
@@ -917,8 +1025,8 @@ function renderPackCatalog() {
     catalog.innerHTML = `
       <div class="pack-catalog__empty">
         <span class="material-symbols-outlined" style="font-size:48px; color: var(--si-text-dim);">animation</span>
-        <h3>Collections coming soon</h3>
-        <p>Animated icon collections are being built. Check back soon.</p>
+        <h3>${t('packs.empty.title', {}, 'Collections coming soon')}</h3>
+        <p>${t('packs.empty.description', {}, 'Animated icon collections are being built. Check back soon.')}</p>
       </div>`;
   } else {
     if (packCatalogNotice) {
@@ -939,14 +1047,14 @@ function renderPackCatalog() {
       completeBadge.className = 'pack-card pack-card--launch-edition pack-card--owned';
       completeBadge.innerHTML = `
         <div class="pack-card__header">
-          <span class="pack-card__type" style="color: var(--si-success)">Launch Edition</span>
-          <span class="pack-card__badge pack-card__badge--owned">Complete</span>
+          <span class="pack-card__type" style="color: var(--si-success)">${t('packs.types.launchEdition', {}, 'Launch Edition')}</span>
+          <span class="pack-card__badge pack-card__badge--owned">${t('packs.status.complete', {}, 'Complete')}</span>
         </div>
         <div class="pack-card__icon">
           <span class="material-symbols-outlined" style="font-size:48px; color: var(--si-success);">verified</span>
         </div>
-        <h3 class="pack-card__name">Launch Edition</h3>
-        <p class="pack-card__desc">You own all 8 launch collections. Enjoy unlimited use across all projects.</p>`;
+        <h3 class="pack-card__name">${t('packs.launch.name', {}, 'Launch Edition')}</h3>
+        <p class="pack-card__desc">${t('packs.launch.ownedDescription', {}, 'You own all 8 launch collections. Enjoy unlimited use across all projects.')}</p>`;
       catalog.appendChild(completeBadge);
     } else if (launchProducts.length > 1) {
       catalog.appendChild(createLaunchEditionCard(launchProducts));
@@ -999,7 +1107,7 @@ function createPackCatalogNotice(notice) {
         firstRedeemBtn.focus({ preventScroll: true });
       } else {
         ensureClaimStatusLoaded();
-        showToast('Your claim options are loading. Try again in a moment.');
+        showToast(t('packs.card.optionsLoading', {}, 'Your claim options are loading. Try again in a moment.'));
       }
       return;
     }
@@ -1024,7 +1132,7 @@ function createPackCard(product) {
   const previewActionMarkup = isPurchased
     ? ''
     : `<button class="pack-card__preview-btn" data-action="preview" data-product-slug="${product.slug}">
-           Preview
+           ${t('packs.card.preview', {}, 'Preview')}
          </button>`;
   const redeemRowMarkup = cardState.redeem
     ? (cardState.redeem.type === 'action'
@@ -1036,11 +1144,11 @@ function createPackCard(product) {
 
   card.innerHTML = `
     <div class="pack-card__header">
-      <span class="pack-card__type">${product.pack_type === 'bundle' ? 'Bundle' : 'Launch Edition'}</span>
+      <span class="pack-card__type">${product.pack_type === 'bundle' ? t('packs.types.bundle', {}, 'Bundle') : t('packs.types.launchEdition', {}, 'Launch Edition')}</span>
       ${isPurchased ? `<span class="pack-card__badge ${badgeMeta.className}">${badgeMeta.text}</span>` : ''}
     </div>
-    <h3 class="pack-card__name">${getProductName(product)}</h3>
-    <p class="pack-card__desc">${product.description || `${product.icon_count} animated icons`}</p>
+    <h3 class="pack-card__name">${getLocalizedProductName(product)}</h3>
+    <p class="pack-card__desc">${getLocalizedProductDescription(product)}</p>
     <div class="pack-card__footer">
       <span class="pack-card__price">${showPrice ? `$${priceDisplay}` : ''}</span>
       <div class="pack-card__actions">
@@ -1093,26 +1201,30 @@ function createProSubscriptionCard() {
   card.className = 'promo-banner promo-banner--pro';
   const monthlyPlan = getProPlan('monthly');
   const annualPlan = getProPlan('annual');
-  const monthlyFeatures = renderPlainFeatureList(PRO_BANNER_COPY.monthly.features);
-  const annualFeatures = renderPlainFeatureList(PRO_BANNER_COPY.annual.features);
+  const monthlyDescription = t('packs.pro.monthlyDescription', {}, PRO_BANNER_COPY.monthly.description);
+  const annualDescription = t('packs.pro.annualDescription', {}, PRO_BANNER_COPY.annual.description);
+  const monthlyFeatures = renderPlainFeatureList(splitCatalogList(t('packs.pro.monthlyFeatures', {}, PRO_BANNER_COPY.monthly.features.join('|'))));
+  const annualFeatures = renderPlainFeatureList(splitCatalogList(t('packs.pro.annualFeatures', {}, PRO_BANNER_COPY.annual.features.join('|'))));
+  const monthlyPeriod = t('packs.pro.monthlyPeriod', {}, monthlyPlan.period);
+  const annualPeriod = t('packs.pro.annualPeriod', {}, annualPlan.period);
 
   card.innerHTML = `
     <div class="promo-banner__left">
       <span class="material-symbols-outlined promo-banner__icon">diamond</span>
       <div class="promo-banner__info">
-        <div class="promo-banner__title">Go Pro</div>
-        <div class="promo-banner__desc" id="proBannerDesc">${PRO_BANNER_COPY.monthly.description}</div>
+        <div class="promo-banner__title">${t('packs.pro.title', {}, 'Go Pro')}</div>
+        <div class="promo-banner__desc" id="proBannerDesc">${monthlyDescription}</div>
       </div>
     </div>
     <div class="promo-banner__right">
       <div class="pro-card__toggle">
-        <button class="pro-card__plan-btn pro-card__plan-btn--active" data-plan="monthly">Monthly</button>
-        <button class="pro-card__plan-btn" data-plan="annual">Annual</button>
+        <button class="pro-card__plan-btn pro-card__plan-btn--active" data-plan="monthly">${t('pricing.monthly', {}, 'Monthly')}</button>
+        <button class="pro-card__plan-btn" data-plan="annual">${t('pricing.annual', {}, 'Annual')}</button>
       </div>
       <div class="promo-banner__price-row">
         <span class="promo-banner__price" id="proPriceDisplay">${getProPlanPriceMarkup('monthly')}</span>
-        <span class="pro-card__annual" id="proSavingsBadge" style="display:none">Save 45%</span>
-        <button class="promo-banner__btn" id="proSubscribeBtn">Subscribe</button>
+        <span class="pro-card__annual" id="proSavingsBadge" style="display:none">${t('pricing.save45', {}, 'Save 45%')}</span>
+        <button class="promo-banner__btn" id="proSubscribeBtn">${t('packs.pro.subscribe', {}, 'Subscribe')}</button>
       </div>
     </div>
     <div class="promo-tooltip" id="proTooltip">
@@ -1133,14 +1245,14 @@ function createProSubscriptionCard() {
       toggleBtns.forEach(b => b.classList.remove('pro-card__plan-btn--active'));
       tb.classList.add('pro-card__plan-btn--active');
       if (selectedPlan === 'annual') {
-        priceDisplay.innerHTML = `<span class="pro-card__annual">Save 45%</span> <span class="launch-card__original">${annualPlan.originalAmount}</span> ${annualPlan.amount}<span style="font-size:0.65rem;font-weight:400">${annualPlan.period}</span>`;
+        priceDisplay.innerHTML = `<span class="pro-card__annual">${t('pricing.save45', {}, 'Save 45%')}</span> <span class="launch-card__original">${annualPlan.originalAmount}</span> ${annualPlan.amount}<span style="font-size:0.65rem;font-weight:400">${annualPeriod}</span>`;
         savingsBadge.style.display = 'none';
-        if (bannerDesc) bannerDesc.textContent = PRO_BANNER_COPY.annual.description;
+        if (bannerDesc) bannerDesc.textContent = annualDescription;
         tooltipFeatures.innerHTML = annualFeatures;
       } else {
-        priceDisplay.innerHTML = `${monthlyPlan.amount}<span style="font-size:0.65rem;font-weight:400">${monthlyPlan.period}</span>`;
+        priceDisplay.innerHTML = `${monthlyPlan.amount}<span style="font-size:0.65rem;font-weight:400">${monthlyPeriod}</span>`;
         savingsBadge.style.display = 'none';
-        if (bannerDesc) bannerDesc.textContent = PRO_BANNER_COPY.monthly.description;
+        if (bannerDesc) bannerDesc.textContent = monthlyDescription;
         tooltipFeatures.innerHTML = monthlyFeatures;
       }
     });
@@ -1158,11 +1270,11 @@ function createProSubscriptionCard() {
 async function handleProSubscribe(plan = 'monthly') {
   if (!isLoggedIn()) {
     promptForAuth('subscribe', { plan });
-    showToast('Sign in to continue to Pro checkout');
+    showToast(t('purchaseFlow.signInToPurchase', {}, 'Sign in to continue your purchase'));
     return;
   }
 
-  showToast('Redirecting to checkout...');
+  showToast(t('purchaseFlow.redirecting', {}, 'Redirecting to checkout...'));
 
   const priceId = getProPlan(plan).priceId;
 
@@ -1181,20 +1293,21 @@ async function handleProSubscribe(plan = 'monthly') {
       body: JSON.stringify({
         price_id: priceId,
         mode: 'subscription',
-        success_url: `${window.location.origin}?purchase=success&subscription_plan=${encodeURIComponent(plan)}`,
-        cancel_url: `${window.location.origin}?purchase=canceled`,
+        locale: getStripeLocale(),
+        success_url: buildLocalizedReturnUrl({ purchase: 'success', subscription_plan: plan }),
+        cancel_url: buildLocalizedReturnUrl({ purchase: 'canceled' }),
       }),
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Checkout failed');
+      throw new Error(err.error || t('purchaseFlow.checkoutFailed', {}, 'Checkout failed'));
     }
 
     const { url } = await res.json();
     if (url) window.location.href = url;
   } catch (err) {
-    showToast(err.message || 'Payment error. Please try again.');
+    showToast(err.message || t('purchaseFlow.paymentError', {}, 'Payment error. Please try again.'));
     console.error('[Store] Pro subscribe error:', err);
   }
 }
@@ -1247,15 +1360,15 @@ async function renderCollectionDetail(product) {
   if (!gridArea) return;
 
   if (shell?.setHeading) {
-    shell.setHeading(getProductName(product), '');
+    shell.setHeading(getLocalizedProductName(product), '');
   } else if (gridTitle) {
-    gridTitle.textContent = getProductName(product);
+    gridTitle.textContent = getLocalizedProductName(product);
   }
   if (gridMeta) {
     gridMeta.textContent = '';
     const backBtn = document.createElement('button');
     backBtn.className = 'store-back-btn';
-    backBtn.textContent = 'Back to collections';
+    backBtn.textContent = t('packs.detail.backToCollections', {}, 'Back to collections');
     backBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       switchView('packs');
@@ -1275,23 +1388,23 @@ async function renderCollectionDetail(product) {
   header.className = 'collection-detail__header';
   header.innerHTML = `
     <div class="collection-detail__info">
-      <p class="collection-detail__desc">${product.description || 'Animated icon collection'}</p>
+      <p class="collection-detail__desc">${getLocalizedProductDescription(product) || t('packs.detail.animatedIconCollection', {}, 'Animated icon collection')}</p>
       <div class="collection-detail__meta">
         <span class="collection-detail__count">
           <span class="material-symbols-outlined" style="font-size:16px">animation</span>
-          ${product.icon_count || 20} animated icons
+          ${t('packs.detail.animatedIconsCount', { count: product.icon_count || 20 }, '{count} animated icons')}
         </span>
         <span class="collection-detail__format">
           <span class="material-symbols-outlined" style="font-size:16px">code</span>
-          SVG with animations
+          ${t('packs.detail.svgWithAnimations', {}, 'SVG with animations')}
         </span>
       </div>
     </div>
     <div class="collection-detail__cta">
       ${isPurchased
-        ? '<span class="collection-detail__purchased"><span class="material-symbols-outlined" style="font-size:18px">check_circle</span> Purchased</span>'
+        ? `<span class="collection-detail__purchased"><span class="material-symbols-outlined" style="font-size:18px">check_circle</span> ${t('packs.detail.purchased', {}, 'Purchased')}</span>`
          : `<span class="collection-detail__price">$${priceDisplay}</span>
-            <button class="collection-detail__buy-btn" id="collectionBuyBtn">Buy</button>`
+            <button class="collection-detail__buy-btn" id="collectionBuyBtn">${t('packs.detail.buy', {}, 'Buy')}</button>`
       }
     </div>
   `;
@@ -1343,7 +1456,7 @@ async function renderCollectionDetail(product) {
   // Update icon count in header
   const countEl = header.querySelector('.collection-detail__count');
   if (countEl) {
-    countEl.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px">animation</span> ${iconList.length} animated icons`;
+    countEl.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px">animation</span> ${t('packs.detail.animatedIconsCount', { count: iconList.length }, '{count} animated icons')}`;
   }
 
   // Category tag color map
@@ -1396,7 +1509,7 @@ async function renderCollectionDetail(product) {
   if (!isPurchased) {
     const watermark = document.createElement('div');
     watermark.className = 'collection-detail__watermark';
-    watermark.textContent = 'PREVIEW';
+    watermark.textContent = t('packs.card.preview', {}, 'Preview').toUpperCase();
     grid.style.position = 'relative';
     grid.appendChild(watermark);
   }
@@ -1418,8 +1531,8 @@ async function renderCollectionDetail(product) {
     cell.setAttribute(
       'aria-label',
       isPurchased
-        ? `Preview and customize ${iconName}`
-        : `View unlock options for ${iconName}`,
+        ? t('packs.detail.previewAndCustomize', { name: iconName }, 'Preview and customize {name}')
+        : t('packs.detail.viewUnlockOptions', { name: iconName }, 'View unlock options for {name}'),
     );
 
     // Category tag
@@ -1491,7 +1604,7 @@ async function renderCollectionDetail(product) {
   });
 
   if (isPurchased) {
-    renderPremiumPanelEmptyState(getProductName(product));
+    renderPremiumPanelEmptyState(getLocalizedProductName(product));
   }
 }
 
@@ -2106,7 +2219,7 @@ function humanizeCollectionSlug(slug) {
 function getPremiumCollectionName(collectionSlug) {
   const product = products.find(item => item.slug === collectionSlug)
     || findProductById(activeCollectionProductId);
-  return product ? getProductName(product) : humanizeCollectionSlug(collectionSlug);
+  return product ? getLocalizedProductName(product) : humanizeCollectionSlug(collectionSlug);
 }
 
 function openPremiumPanelIfNeeded(si = window.__supericons) {
@@ -2881,7 +2994,7 @@ function renderPremiumPanel(selection) {
           class="panel__inline-tip"
           type="button"
           aria-label="Explain export trigger"
-          data-tip="${escapePanelHtml(EXPORT_TRIGGER_TOOLTIP_COPY)}"
+          data-tip="${escapePanelHtml(getExportTriggerTooltipCopy())}"
         >
           <span class="material-symbols-outlined" style="font-size:12px">info</span>
         </button>
@@ -3409,19 +3522,19 @@ function showLockedPanel(iconName, product) {
   lockedDiv.innerHTML = `
     <h3 class="locked-panel__icon-name">${iconName}</h3>
     <p class="locked-panel__message">
-      Unlock this collection to customize and export this icon.
+      ${t('packs.locked.unlockMessage', {}, 'Unlock this collection to customize and export this icon.')}
     </p>
     <div class="locked-panel__collection-info">
       <span class="material-symbols-outlined" style="font-size:14px">collections_bookmark</span>
-      ${product.name}
+      ${getLocalizedProductName(product)}
     </div>
     <div class="locked-panel__actions">
       <button class="locked-panel__buy-btn" id="lockedPanelBuyBtn">
-        Buy $${priceDisplay}
+        ${t('packs.locked.buyPrice', { price: `$${priceDisplay}` }, 'Buy {price}')}
       </button>
       <button class="locked-panel__pro-btn" id="lockedPanelProBtn">
         <span class="material-symbols-outlined" style="font-size:14px">diamond</span>
-        Go Pro
+        ${t('packs.locked.goPro', {}, 'Go Pro')}
       </button>
     </div>
   `;
@@ -3521,9 +3634,9 @@ function renderDownloads() {
     catalog.innerHTML = `
       <div class="pack-catalog__empty">
         <span class="material-symbols-outlined" style="font-size:48px; color: var(--si-text-dim);">folder_special</span>
-        <h3>No collections yet</h3>
-        <p>Browse the premium collections to get started.</p>
-        <button class="collection-detail__buy-btn" style="margin-top: var(--si-space-3);" id="emptyBrowseBtn">Browse Collections</button>
+        <h3>${t('loggedIn.downloads.noCollections', {}, 'No collections yet')}</h3>
+        <p>${t('loggedIn.downloads.browseHint', {}, 'Browse the premium collections to get started.')}</p>
+        <button class="collection-detail__buy-btn" style="margin-top: var(--si-space-3);" id="emptyBrowseBtn">${t('loggedIn.downloads.browseCollections', {}, 'Browse Collections')}</button>
       </div>`;
     gridArea.appendChild(catalog);
     const browseBtn = catalog.querySelector('#emptyBrowseBtn');
@@ -3540,18 +3653,18 @@ function renderDownloads() {
       card.className = 'pack-card pack-card--owned';
       card.innerHTML = `
         <div class="pack-card__header">
-          <span class="pack-card__type">Collection</span>
+          <span class="pack-card__type">${t('loggedIn.downloads.collection', {}, 'Collection')}</span>
           <span class="pack-card__badge ${badgeMeta.className}">${badgeMeta.text}</span>
         </div>
         <div class="pack-card__icon">
           <span class="material-symbols-outlined" style="font-size:32px; color: var(--si-primary);">diamond</span>
         </div>
-        <h3 class="pack-card__name">${getProductName(product)}</h3>
-        <p class="pack-card__desc">${product.description || ''}</p>
+        <h3 class="pack-card__name">${getLocalizedProductName(product)}</h3>
+        <p class="pack-card__desc">${getLocalizedProductDescription(product)}</p>
         <div class="pack-card__footer">
           <button class="pack-card__btn pack-card__btn--open" data-product-id="${product.id}">
             <span class="material-symbols-outlined" style="font-size:14px">open_in_new</span>
-            Open Collection
+            ${t('loggedIn.downloads.openCollection', {}, 'Open Collection')}
           </button>
         </div>
       `;
@@ -3578,19 +3691,19 @@ function renderDashboard() {
 
   dashboard.innerHTML = `
     <div class="dashboard-section">
-      <h3 class="dashboard-section__title">Purchase History</h3>
+      <h3 class="dashboard-section__title">${t('loggedIn.dashboard.purchaseHistory', {}, 'Purchase History')}</h3>
       ${userPurchases.length === 0
-        ? '<p class="dashboard-section__empty">No purchases yet.</p>'
+        ? `<p class="dashboard-section__empty">${t('loggedIn.dashboard.noPurchases', {}, 'No purchases yet.')}</p>`
         : `<table class="dashboard-table">
             <thead>
-              <tr><th>Collection</th><th>Date</th><th>Actions</th></tr>
+              <tr><th>${t('loggedIn.dashboard.collection', {}, 'Collection')}</th><th>${t('loggedIn.dashboard.date', {}, 'Date')}</th><th>${t('loggedIn.dashboard.actions', {}, 'Actions')}</th></tr>
             </thead>
             <tbody>
               ${userPurchases.map(p => `
                 <tr>
-                  <td>${p.si_products?.name || 'Unknown'}</td>
-                  <td>${new Date(p.purchased_at).toLocaleDateString()}</td>
-                  <td><button class="dashboard-table__view" data-product-id="${p.product_id}">View</button></td>
+                  <td>${p.si_products ? getLocalizedProductName(p.si_products) : t('loggedIn.dashboard.unknown', {}, 'Unknown')}</td>
+                  <td>${formatLocaleDate(p.purchased_at)}</td>
+                  <td><button class="dashboard-table__view" data-product-id="${p.product_id}">${t('loggedIn.dashboard.view', {}, 'View')}</button></td>
                 </tr>
               `).join('')}
             </tbody>
@@ -3624,45 +3737,45 @@ function renderApiKeysPage() {
   const apiKeysSetupCopy = canManageKeys
     ? `
     <div class="api-keys__setup-copy">
-      <p class="dashboard-section__copy">Connect your coding agent (Cursor, Claude Code, Codex, or any MCP-capable agent) to Supericons MCP to access your premium icon collections or Pro workflow tools like Motion Lab and Converter.</p>
-      <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/?view=docs#docs-quickstart">See the setup guide for where to place your key in each client.</a></p>
+      <p class="dashboard-section__copy">${t('apiKeys.setup.pro', {}, 'Connect your coding agent to Supericons MCP to access your premium icon collections or Pro workflow tools.')}</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/?view=docs#docs-quickstart">${t('apiKeys.setup.guide', {}, 'See the setup guide for where to place your key in each client.')}</a></p>
     </div>`
     : `
     <div class="api-keys__setup-copy">
-      <p class="dashboard-section__copy">Free MCP works without a key.</p>
-      <p class="dashboard-section__copy dashboard-section__copy--muted">Purchase any premium collection or subscribe to Pro to use API keys for MCP access.</p>
+      <p class="dashboard-section__copy">${t('apiKeys.setup.free', {}, 'Free MCP works without a key.')}</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">${t('apiKeys.setup.upgrade', {}, 'Purchase any premium collection or subscribe to Pro to use API keys for MCP access.')}</p>
     </div>`;
 
   page.innerHTML = `
     <div class="dashboard-section">
       ${signedIn ? `
-        <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">Loading...</p>
-        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label each key by app or device so you can rotate them independently.</p>
-        <div class="api-keys__tabs" id="apiKeysTabs" role="tablist" aria-label="API key states">
-          <button class="api-keys__tab is-active" type="button" role="tab" aria-selected="true" data-filter="active">Active <span class="api-keys__tab-count">0</span></button>
-          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="revoked">Revoked <span class="api-keys__tab-count">0</span></button>
-          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="all">All <span class="api-keys__tab-count">0</span></button>
+        <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">${t('apiKeys.usageLoading', {}, 'Loading...')}</p>
+        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">${t('apiKeys.limitNote', {}, 'Label each key by app or device so you can rotate them independently.')}</p>
+        <div class="api-keys__tabs" id="apiKeysTabs" role="tablist" aria-label="${t('apiKeys.tabAria', {}, 'API key states')}">
+          <button class="api-keys__tab is-active" type="button" role="tab" aria-selected="true" data-filter="active">${t('apiKeys.active', {}, 'Active')} <span class="api-keys__tab-count">0</span></button>
+          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="revoked">${t('apiKeys.revoked', {}, 'Revoked')} <span class="api-keys__tab-count">0</span></button>
+          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="all">${t('apiKeys.all', {}, 'All')} <span class="api-keys__tab-count">0</span></button>
         </div>
         <div id="apiKeysContainer">
-          <p class="dashboard-section__empty">Loading keys...</p>
+          <p class="dashboard-section__empty">${t('apiKeys.loadingKeys', {}, 'Loading keys...')}</p>
         </div>
         <div class="api-keys__generate">
-          <input type="text" class="api-keys__label-input" id="apiKeyLabel" placeholder="Key label (e.g. Cursor, Claude)" maxlength="50" ${canManageKeys ? '' : 'disabled'}>
+          <input type="text" class="api-keys__label-input" id="apiKeyLabel" placeholder="${t('apiKeys.labelPlaceholder', {}, 'Key label (e.g. Cursor, Claude)')}" maxlength="50" ${canManageKeys ? '' : 'disabled'}>
           <button class="api-keys__generate-btn" id="generateApiKeyBtn" ${canManageKeys ? '' : 'disabled'}>
             <span class="material-symbols-outlined" style="font-size:14px">add</span>
-            Generate Key
+            ${t('apiKeys.generateKey', {}, 'Generate Key')}
           </button>
         </div>
         ${apiKeysSetupCopy}
         ${canManageKeys ? '' : `
         <div class="api-keys__actions">
-          <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">Browse Collections</button>
-          <button class="dashboard-table__view" id="apiKeysPricingBtn">See Pricing</button>
+          <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">${t('apiKeys.browseCollections', {}, 'Browse Collections')}</button>
+          <button class="dashboard-table__view" id="apiKeysPricingBtn">${t('apiKeys.seePricing', {}, 'See Pricing')}</button>
         </div>`}
       ` : `
-        <p class="dashboard-section__empty">Sign in to generate API keys and connect your MCP client to your Supericons account.</p>
+        <p class="dashboard-section__empty">${t('apiKeys.setup.pro', {}, 'Sign in to generate API keys and connect your MCP client to your Supericons account.')}</p>
         <div class="api-keys__actions">
-          <button class="dashboard-table__view" id="apiKeysSignInBtn">Sign In</button>
+          <button class="dashboard-table__view" id="apiKeysSignInBtn">${t('apiKeys.signIn', {}, 'Sign In')}</button>
         </div>
         ${apiKeysSetupCopy}
       `}
@@ -3741,36 +3854,36 @@ function renderApiKeysList(keys) {
 
   if (keys.length === 0) {
     container.innerHTML = canCreateKeys
-      ? '<p class="dashboard-section__empty">No API keys yet. Generate one to get started.</p>'
-      : '<p class="dashboard-section__empty">No API keys on this account yet.</p>';
+      ? `<p class="dashboard-section__empty">${t('apiKeys.emptyCreate', {}, 'No API keys yet. Generate one to get started.')}</p>`
+      : `<p class="dashboard-section__empty">${t('apiKeys.emptyAccount', {}, 'No API keys on this account yet.')}</p>`;
     return;
   }
 
   const tabCopy = apiKeysViewFilter === 'revoked'
-    ? 'Revoked keys no longer work. Delete a history row if you no longer need the record.'
+    ? t('apiKeys.revokedCopy', {}, 'Revoked keys no longer work. Delete a history row if you no longer need the record.')
     : apiKeysViewFilter === 'all'
-      ? 'See every key record in one place. Active keys can be revoked; revoked history can be deleted.'
-      : 'These keys can still authenticate MCP clients and apps.';
+      ? t('apiKeys.allCopy', {}, 'See every key record in one place. Active keys can be revoked; revoked history can be deleted.')
+      : t('apiKeys.activeCopy', {}, 'These keys can still authenticate MCP clients and apps.');
 
   const emptyCopy = apiKeysViewFilter === 'revoked'
-    ? 'No revoked key history yet. Revoked keys will appear here when you rotate them out.'
+    ? t('apiKeys.emptyRevoked', {}, 'No revoked key history yet. Revoked keys will appear here when you rotate them out.')
     : apiKeysViewFilter === 'all'
-      ? 'No API keys yet. Generate one to get started.'
-      : 'No active keys right now. Generate one to connect a client.';
+      ? t('apiKeys.emptyCreate', {}, 'No API keys yet. Generate one to get started.')
+      : t('apiKeys.emptyActive', {}, 'No active keys right now. Generate one to connect a client.');
 
   const renderKeyRows = (apiKeys) => apiKeys.map((key) => `
     <tr class="${key.revoked ? 'api-key--revoked' : ''}">
       <td class="api-key__prefix"><code>${key.key_prefix}...</code></td>
       <td>${escapeHtml(key.label || 'Default')}</td>
-      <td>${new Date(key.created_at).toLocaleDateString()}</td>
-      <td>${key.last_used ? new Date(key.last_used).toLocaleDateString() : 'Never'}</td>
-      <td><span class="api-key__status ${key.revoked ? 'api-key__status--revoked' : 'api-key__status--active'}">${key.revoked ? 'Revoked' : 'Active'}</span></td>
+      <td>${formatLocaleDate(key.created_at)}</td>
+      <td>${key.last_used ? formatLocaleDate(key.last_used) : t('apiKeys.never', {}, 'Never')}</td>
+      <td><span class="api-key__status ${key.revoked ? 'api-key__status--revoked' : 'api-key__status--active'}">${key.revoked ? t('apiKeys.revoked', {}, 'Revoked') : t('apiKeys.active', {}, 'Active')}</span></td>
       <td>
         ${key.revoked
-          ? `<button class="api-key__delete-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}" aria-label="Delete revoked key ${escapeHtml(key.label || 'Default')}">
+          ? `<button class="api-key__delete-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}" aria-label="${t('apiKeys.deleteRevokedLabel', { label: escapeHtml(key.label || 'Default') }, 'Delete revoked key {label}')}">
               <span class="material-symbols-outlined">delete</span>
             </button>`
-          : `<button class="api-key__revoke-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}">Revoke</button>`}
+          : `<button class="api-key__revoke-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}">${t('apiKeys.revoke', {}, 'Revoke')}</button>`}
       </td>
     </tr>
   `).join('');
@@ -3778,13 +3891,13 @@ function renderApiKeysList(keys) {
   container.innerHTML = `
     <div class="api-keys__panel">
       <div class="api-keys__panel-header">
-        <h4 class="api-keys__panel-title">${apiKeysViewFilter === 'revoked' ? 'Revoked History' : apiKeysViewFilter === 'all' ? 'All Keys' : 'Active Keys'}</h4>
+        <h4 class="api-keys__panel-title">${apiKeysViewFilter === 'revoked' ? t('apiKeys.revokedHistory', {}, 'Revoked History') : apiKeysViewFilter === 'all' ? t('apiKeys.allKeys', {}, 'All Keys') : t('apiKeys.activeKeys', {}, 'Active Keys')}</h4>
         <p class="api-keys__panel-copy">${tabCopy}</p>
       </div>
       ${visibleKeys.length > 0 ? `
         <table class="dashboard-table dashboard-table--keys">
           <thead>
-            <tr><th>Key</th><th>Label</th><th>Created</th><th>Last Used</th><th>Status</th><th></th></tr>
+            <tr><th>${t('apiKeys.key', {}, 'Key')}</th><th>${t('apiKeys.label', {}, 'Label')}</th><th>${t('apiKeys.created', {}, 'Created')}</th><th>${t('apiKeys.lastUsed', {}, 'Last Used')}</th><th>${t('apiKeys.status', {}, 'Status')}</th><th></th></tr>
           </thead>
           <tbody>${renderKeyRows(visibleKeys)}</tbody>
         </table>
@@ -3823,9 +3936,9 @@ async function fetchAndRenderApiKeys() {
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
     if (!token) {
-      container.innerHTML = '<p class="dashboard-section__empty">Sign in again to load API keys.</p>';
-      if (usageEl) usageEl.textContent = `Up to ${API_KEY_LIMIT} active keys`;
-      if (limitNoteEl) limitNoteEl.textContent = 'Your session expired. Sign in again to manage keys.';
+      container.innerHTML = `<p class="dashboard-section__empty">${t('apiKeys.signInAgainLoad', {}, 'Sign in again to load API keys.')}</p>`;
+      if (usageEl) usageEl.textContent = t('apiKeys.activeLimit', { limit: API_KEY_LIMIT }, 'Up to {limit} active keys');
+      if (limitNoteEl) limitNoteEl.textContent = t('apiKeys.sessionExpired', {}, 'Your session expired. Sign in again to manage keys.');
       return;
     }
 
@@ -3838,7 +3951,7 @@ async function fetchAndRenderApiKeys() {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Failed to load keys');
+      throw new Error(err.error || t('apiKeys.failedLoad', {}, 'Failed to load keys'));
     }
     const payload = await res.json().catch(() => ({}));
     const keys = Array.isArray(payload.keys) ? payload.keys : [];
@@ -3849,16 +3962,16 @@ async function fetchAndRenderApiKeys() {
     const limitReached = activeKeyCount >= API_KEY_LIMIT;
     const canCreateKeys = canManageApiKeys();
 
-    if (usageEl) usageEl.textContent = `${activeKeyCount} of ${API_KEY_LIMIT} active keys in use`;
+    if (usageEl) usageEl.textContent = t('apiKeys.usageCount', { active: activeKeyCount, limit: API_KEY_LIMIT }, '{active} of {limit} active keys in use');
     if (limitNoteEl) {
       if (!canCreateKeys) {
-        limitNoteEl.textContent = "You don't currently have access to API keys.";
+        limitNoteEl.textContent = t('apiKeys.noAccess', {}, 'You do not currently have access to API keys.');
       } else if (limitReached) {
-        limitNoteEl.textContent = `You have reached the ${API_KEY_LIMIT}-key limit. Revoke one before creating another.`;
+        limitNoteEl.textContent = t('apiKeys.limitReached', { limit: API_KEY_LIMIT }, 'You have reached the {limit}-key limit. Revoke one before creating another.');
       } else if (revokedKeys.length > 0) {
-        limitNoteEl.textContent = 'Revoked history is available in its own tab and does not count toward your active-key limit.';
+        limitNoteEl.textContent = t('apiKeys.revokedHistoryNote', {}, 'Revoked history is available in its own tab and does not count toward your active-key limit.');
       } else {
-        limitNoteEl.textContent = 'Label each key by app or device so you can rotate them independently.';
+        limitNoteEl.textContent = t('apiKeys.limitNote', {}, 'Label each key by app or device so you can rotate them independently.');
       }
     }
     if (genBtn) genBtn.disabled = !canCreateKeys || limitReached;
@@ -3868,9 +3981,9 @@ async function fetchAndRenderApiKeys() {
   } catch (err) {
     apiKeysCache = [];
     updateApiKeysTabButtons([]);
-    container.innerHTML = '<p class="dashboard-section__empty">Failed to load API keys.</p>';
-    if (usageEl) usageEl.textContent = `Up to ${API_KEY_LIMIT} active keys`;
-    if (limitNoteEl) limitNoteEl.textContent = 'We could not load your API keys right now.';
+    container.innerHTML = `<p class="dashboard-section__empty">${t('apiKeys.failedLoad', {}, 'Failed to load API keys.')}</p>`;
+    if (usageEl) usageEl.textContent = t('apiKeys.activeLimit', { limit: API_KEY_LIMIT }, 'Up to {limit} active keys');
+    if (limitNoteEl) limitNoteEl.textContent = t('apiKeys.failedLoadNote', {}, 'We could not load your API keys right now.');
     console.error('[Store] API keys fetch error:', err);
   }
 }
@@ -3884,13 +3997,13 @@ async function generateApiKey() {
   try {
     if (genBtn) {
       genBtn.disabled = true;
-      genBtn.textContent = 'Generating...';
+      genBtn.textContent = t('apiKeys.generating', {}, 'Generating...');
     }
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
     if (!token) {
-      throw new Error('Sign in again to generate an API key.');
+      throw new Error(t('apiKeys.signInAgainGenerate', {}, 'Sign in again to generate an API key.'));
     }
 
     const res = await fetch(`${SUPABASE_URL}/functions/v1/api-keys`, {
@@ -3905,7 +4018,7 @@ async function generateApiKey() {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Failed to generate key');
+      throw new Error(err.error || t('apiKeys.failedGenerate', {}, 'Failed to generate key'));
     }
 
     const { key, key_prefix } = await res.json();
@@ -3921,7 +4034,7 @@ async function generateApiKey() {
     }
   } catch (err) {
     console.error('[Store] API key generation error:', err);
-    showToast(err.message || 'Failed to generate API key');
+    showToast(err.message || t('apiKeys.failedGenerateToast', {}, 'Failed to generate API key'));
     if (genBtn) {
       genBtn.disabled = false;
       genBtn.innerHTML = originalBtnMarkup;
@@ -3938,23 +4051,23 @@ function showApiKeyModal(fullKey, prefix, label) {
     <div class="api-key-modal__card">
       <h3 class="api-key-modal__title">
         <span class="material-symbols-outlined" style="font-size:20px; color: var(--si-success);">check_circle</span>
-        API Key Generated
+        ${t('apiKeys.modalTitle', {}, 'API Key Generated')}
       </h3>
       <p class="api-key-modal__warning">
-        Copy this key now. It will not be shown again.
+        ${t('apiKeys.modalWarning', {}, 'Copy this key now. It will not be shown again.')}
       </p>
       <div class="api-key-modal__key-box">
         <code class="api-key-modal__key">${fullKey}</code>
         <button class="api-key-modal__copy" id="apiKeyCopyBtn">
           <span class="material-symbols-outlined" style="font-size:16px">content_copy</span>
-          Copy
+          ${t('apiKeys.copy', {}, 'Copy')}
         </button>
       </div>
       <div class="api-key-modal__meta">
-        <span>Label: ${escapeHtml(label)}</span>
-        <span>Prefix: ${prefix}</span>
+        <span>${t('apiKeys.modalLabel', { label: escapeHtml(label) }, 'Label: {label}')}</span>
+        <span>${t('apiKeys.modalPrefix', { prefix }, 'Prefix: {prefix}')}</span>
       </div>
-      <button class="api-key-modal__close-btn" id="apiKeyModalClose">Done</button>
+      <button class="api-key-modal__close-btn" id="apiKeyModalClose">${t('apiKeys.done', {}, 'Done')}</button>
     </div>`;
 
   document.body.appendChild(overlay);
@@ -3962,9 +4075,9 @@ function showApiKeyModal(fullKey, prefix, label) {
   // Wire copy button
   overlay.querySelector('#apiKeyCopyBtn').addEventListener('click', () => {
     navigator.clipboard.writeText(fullKey).then(() => {
-      showToast('API key copied to clipboard');
+      showToast(t('apiKeys.copiedToast', {}, 'API key copied to clipboard'));
       const copyBtn = overlay.querySelector('#apiKeyCopyBtn');
-      copyBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">check</span> Copied';
+      copyBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px">check</span> ${t('apiKeys.copied', {}, 'Copied')}`;
     });
   });
 
@@ -4237,8 +4350,34 @@ function renderPricingPage() {
   removePackCatalog();
   const monthlyPlan = getProPlan('monthly');
   const annualPlan = getProPlan('annual');
-  const monthlyPricing = PRO_PRICING_COPY.monthly;
-  const annualPricing = PRO_PRICING_COPY.annual;
+  const monthlyPricing = {
+    description: t('pricing.plans.pro.monthlyDescription', {}, PRO_PRICING_COPY.monthly.description),
+    features: splitCatalogList(t('pricing.plans.pro.monthlyFeatures', {}, PRO_PRICING_COPY.monthly.features.join('|'))),
+  };
+  const annualPricing = {
+    description: t('pricing.plans.pro.annualDescription', {}, PRO_PRICING_COPY.annual.description),
+    features: splitCatalogList(t('pricing.plans.pro.annualFeatures', {}, PRO_PRICING_COPY.annual.features.join('|'))),
+  };
+  const pricingFreeIconsLabel = t('pricing.freeIconsAcrossLibraries', {}, freeIconsAcrossLibrariesLabel);
+  const pricingMcpFreeIconsLabel = t('pricing.mcpServerFreeIcons', {}, mcpServerFreeIconsLabel);
+  const freeFeatures = [
+    pricingFreeIconsLabel,
+    ...splitCatalogList(t('pricing.plans.free.features', { mcpServerFreeIcons: pricingMcpFreeIconsLabel }, `Material, Lucide, Tabler, Phosphor + more|AI semantic search|SVG, PNG, CSS export|${mcpServerFreeIconsLabel}|Animated premium packs|Premium icons via MCP`)),
+  ];
+  const singlePackFeatures = splitCatalogList(t('pricing.plans.singlePack.features', {}, 'Everything in Free|50 animated SVG icons per pack|Unique hover animation per icon|Lifetime ownership|Single project license|MCP access for purchased pack|No Pro tools (Motion Lab, Converter)'));
+  const launchBundleFeatures = splitCatalogList(t('pricing.plans.launchBundle.features', {}, 'All 8 premium packs|400 animated SVG icons|AI, E-com, Media, Nav, Security + more|Lifetime ownership + future updates|Commercial use, unlimited projects|MCP access for all 8 packs|No Pro tools (Motion Lab, Converter)'));
+  const faqQuestions = splitCatalogList(t('pricing.faq.questions', {}, 'What are the 8 premium animated packs|How do Pro Monthly and Pro Annual collection access work|What is the MCP server|Can I cancel my Pro subscription anytime|What happens to my access if I cancel Pro|Can I use premium icons in commercial projects|Is the Launch Bundle a limited offer'));
+  const faqAnswers = splitCatalogList(t('pricing.faq.answers', {}, 'Each pack contains 50 animated SVG icons with unique hover animations.|Pro Monthly lets you add 1 premium collection each month. Pro Annual unlocks all 8 current collections immediately.|The MCP server lets AI coding agents search and retrieve icons programmatically.|Yes. Cancel anytime from your dashboard and benefits stay active until the end of the paid period.|Claimed or owned collections stay in your library. Live Pro access and tools end when the subscription ends.|Yes. Premium icons include a commercial license according to your plan.|The Launch Bundle is a one-time purchase with launch pricing and includes the 8 current packs.'));
+  const faqMarkup = faqQuestions.map((question, index) => `
+        <div class="pricing-faq__item">
+          <button class="pricing-faq__question" aria-expanded="false">
+            ${question}
+            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
+          </button>
+          <div class="pricing-faq__answer">
+            ${faqAnswers[index] || ''}
+          </div>
+        </div>`).join('');
 
   const gridArea = document.getElementById('gridArea');
   if (!gridArea) return;
@@ -4248,12 +4387,12 @@ function renderPricingPage() {
 
   page.innerHTML = `
     <div class="pricing-header">
-      <h2 class="pricing-header__title">Simple, transparent pricing</h2>
-      <p class="pricing-header__subtitle">Free icons for everyone. Premium animated packs to polish your UI.</p>
+      <h2 class="pricing-header__title">${t('pricing.headerTitle', {}, 'Simple, transparent pricing')}</h2>
+      <p class="pricing-header__subtitle">${t('pricing.headerSubtitle', {}, 'Free icons for everyone. Premium animated packs to polish your UI.')}</p>
       <div class="pricing-toggle" id="pricingToggle">
-        <button class="pricing-toggle__seg pricing-toggle__seg--active" id="pricingMonthlyBtn" data-period="monthly">Monthly</button>
-        <button class="pricing-toggle__seg" id="pricingAnnualBtn" data-period="annual">Annual</button>
-        <span class="pricing-toggle__badge" id="pricingAnnualBadge" hidden>Save 45%</span>
+        <button class="pricing-toggle__seg pricing-toggle__seg--active" id="pricingMonthlyBtn" data-period="monthly">${t('pricing.monthly', {}, 'Monthly')}</button>
+        <button class="pricing-toggle__seg" id="pricingAnnualBtn" data-period="annual">${t('pricing.annual', {}, 'Annual')}</button>
+        <span class="pricing-toggle__badge" id="pricingAnnualBadge" hidden>${t('pricing.save45', {}, 'Save 45%')}</span>
       </div>
     </div>
 
@@ -4264,32 +4403,26 @@ function renderPricingPage() {
           <div class="pricing-card__icon-wrap pricing-card__icon-wrap--free">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">redeem</span>
           </div>
-          <h3 class="pricing-card__name">Free</h3>
-          <p class="pricing-card__desc">${freeIconsAcrossLibrariesLabel}, AI search, SVG export. No account needed.</p>
+          <h3 class="pricing-card__name">${t('pricing.plans.free.name', {}, 'Free')}</h3>
+          <p class="pricing-card__desc">${t('pricing.plans.free.description', { freeIconsAcrossLibraries: pricingFreeIconsLabel }, `${freeIconsAcrossLibrariesLabel}, AI search, SVG export. No account needed.`)}</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$0</span>
         </div>
         <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> ${freeIconsAcrossLibrariesLabel}</li>
-          <li><span class="material-symbols-outlined">check</span> Material, Lucide, Tabler, Phosphor + more</li>
-          <li><span class="material-symbols-outlined">check</span> AI semantic search</li>
-          <li><span class="material-symbols-outlined">check</span> SVG, PNG, CSS export</li>
-          <li><span class="material-symbols-outlined">check</span> ${mcpServerFreeIconsLabel}</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> Animated premium packs</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> Premium icons via MCP</li>
+          ${renderPricingFeatureListWithDim(freeFeatures, 5)}
         </ul>
-        <button class="pricing-card__cta pricing-card__cta--secondary" id="pricingStartFreeBtn">Start for Free</button>
+        <button class="pricing-card__cta pricing-card__cta--secondary" id="pricingStartFreeBtn">${t('pricing.plans.free.cta', {}, 'Start for Free')}</button>
       </div>
 
       <!-- Pro -->
       <div class="pricing-card pricing-card--popular">
-        <div class="pricing-card__ribbon">Most Popular</div>
+        <div class="pricing-card__ribbon">${t('pricing.mostPopular', {}, 'Most Popular')}</div>
         <div class="pricing-card__header">
           <div class="pricing-card__icon-wrap pricing-card__icon-wrap--pro">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">diamond</span>
           </div>
-          <h3 class="pricing-card__name">Pro</h3>
+          <h3 class="pricing-card__name">${t('pricing.plans.pro.name', {}, 'Pro')}</h3>
           <p class="pricing-card__desc" id="pricingProDesc">${monthlyPricing.description}</p>
         </div>
         <div class="pricing-card__price">
@@ -4300,7 +4433,7 @@ function renderPricingPage() {
         <ul class="pricing-card__features" id="pricingProFeatures">
           ${renderPricingFeatureList(monthlyPricing.features)}
         </ul>
-        <button class="pricing-card__cta pricing-card__cta--primary" id="pricingProBtn">Go Pro</button>
+        <button class="pricing-card__cta pricing-card__cta--primary" id="pricingProBtn">${t('pricing.plans.pro.cta', {}, 'Go Pro')}</button>
       </div>
 
       <!-- Single Pack -->
@@ -4309,119 +4442,45 @@ function renderPricingPage() {
           <div class="pricing-card__icon-wrap pricing-card__icon-wrap--pack">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">package_2</span>
           </div>
-          <h3 class="pricing-card__name">Single Pack</h3>
-          <p class="pricing-card__desc">Pick any one collection. 50 animated icons, yours permanently.</p>
+          <h3 class="pricing-card__name">${t('pricing.plans.singlePack.name', {}, 'Single Pack')}</h3>
+          <p class="pricing-card__desc">${t('pricing.plans.singlePack.description', {}, 'Pick any one collection. 50 animated icons, yours permanently.')}</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$5</span>
-          <span class="pricing-card__period">per pack</span>
+          <span class="pricing-card__period">${t('pricing.plans.singlePack.period', {}, 'per pack')}</span>
         </div>
         <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> Everything in Free</li>
-          <li><span class="material-symbols-outlined">check</span> 50 animated SVG icons per pack</li>
-          <li><span class="material-symbols-outlined">check</span> Unique hover animation per icon</li>
-          <li><span class="material-symbols-outlined">check</span> Lifetime ownership</li>
-          <li><span class="material-symbols-outlined">check</span> Single project license</li>
-          <li><span class="material-symbols-outlined">check</span> MCP access for purchased pack</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No Pro tools (Motion Lab, Converter)</li>
+          ${renderPricingFeatureListWithDim(singlePackFeatures, 6)}
         </ul>
-        <button class="pricing-card__cta pricing-card__cta--secondary" id="pricingBrowseBtn">Browse Packs</button>
+        <button class="pricing-card__cta pricing-card__cta--secondary" id="pricingBrowseBtn">${t('pricing.plans.singlePack.cta', {}, 'Browse Packs')}</button>
       </div>
 
       <!-- Launch Bundle -->
       <div class="pricing-card pricing-card--launch">
-        <div class="pricing-card__ribbon pricing-card__ribbon--launch">Save 28%</div>
+        <div class="pricing-card__ribbon pricing-card__ribbon--launch">${t('pricing.save28', {}, 'Save 28%')}</div>
         <div class="pricing-card__header">
           <div class="pricing-card__icon-wrap pricing-card__icon-wrap--launch">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">rocket_launch</span>
           </div>
-          <h3 class="pricing-card__name">Launch Bundle</h3>
-          <p class="pricing-card__desc">All 8 packs. 400 animated icons. One payment, no subscription.</p>
+          <h3 class="pricing-card__name">${t('pricing.plans.launchBundle.name', {}, 'Launch Bundle')}</h3>
+          <p class="pricing-card__desc">${t('pricing.plans.launchBundle.description', {}, 'All 8 packs. 400 animated icons. One payment, no subscription.')}</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$29</span>
-          <span class="pricing-card__period">one-time</span>
+          <span class="pricing-card__period">${t('pricing.plans.launchBundle.period', {}, 'one-time')}</span>
           <span class="pricing-card__original">$40</span>
         </div>
         <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> All 8 premium packs</li>
-          <li><span class="material-symbols-outlined">check</span> 400 animated SVG icons</li>
-          <li><span class="material-symbols-outlined">check</span> AI, E-com, Media, Nav, Security + more</li>
-          <li><span class="material-symbols-outlined">check</span> Lifetime ownership + future updates</li>
-          <li><span class="material-symbols-outlined">check</span> Commercial use, unlimited projects</li>
-          <li><span class="material-symbols-outlined">check</span> MCP access for all 8 packs</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No Pro tools (Motion Lab, Converter)</li>
+          ${renderPricingFeatureListWithDim(launchBundleFeatures, 6)}
         </ul>
-        <button class="pricing-card__cta pricing-card__cta--launch" id="pricingLaunchBtn">Get Launch Bundle</button>
+        <button class="pricing-card__cta pricing-card__cta--launch" id="pricingLaunchBtn">${t('pricing.plans.launchBundle.cta', {}, 'Get Launch Bundle')}</button>
       </div>
     </div>
 
     <div class="pricing-faq">
-      <h3 class="pricing-faq__title">Frequently Asked Questions</h3>
+      <h3 class="pricing-faq__title">${t('pricing.faqTitle', {}, 'Frequently Asked Questions')}</h3>
       <div class="pricing-faq__list">
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            What are the 8 premium animated packs?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            Each pack contains 50 animated SVG icons with unique hover animations. The 8 packs cover: Agentic AI, Status &amp; Feedback, E-commerce, Navigation &amp; Menus, Media &amp; Playback, Security &amp; Auth, Social &amp; Communications, and Data &amp; Charts.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            How do Pro Monthly and Pro Annual collection access work?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            Pro Monthly lets you add 1 premium collection to your permanent library each month. Pro Annual unlocks all 8 current premium collections immediately, keeps those 8 in your library permanently, and includes future premium drops while your annual subscription is active.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            What is the MCP server?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access ${freeIconsRounded} icons. Pro subscribers and pack owners can connect a Supericons API key to access the premium collections tied to their account.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            Can I cancel my Pro subscription anytime?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            Yes. Cancel anytime from your dashboard and your Pro benefits stay active until the end of the paid billing period. Monthly subscribers keep any collections they already claimed. Annual subscribers keep the 8 included premium collections they already own.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            What happens to my access if I cancel Pro?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            Monthly subscribers lose access to unclaimed collections and Pro tools when their term ends, but claimed collections stay in their library. Annual subscribers keep the 8 included premium collections they already own, but future premium drops, full-library live access, MCP access to unowned drops, and Pro tools end when the annual term ends unless they renew.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            Can I use premium icons in commercial projects?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            Yes. All premium icons include a commercial license. Single Pack purchases and Pro Monthly claimed collections include a single-project license. Active Pro, Pro Annual included collections, and Launch Bundle include unlimited-project commercial use.
-          </div>
-        </div>
-        <div class="pricing-faq__item">
-          <button class="pricing-faq__question" aria-expanded="false">
-            Is the Launch Bundle a limited offer?
-            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
-          </button>
-          <div class="pricing-faq__answer">
-            The Launch Bundle is available at launch pricing ($29 vs $40 individually). This is a one-time purchase with no subscription, and includes all 8 current packs plus any future updates to those packs.
-          </div>
-        </div>
+        ${faqMarkup}
       </div>
     </div>`;
 
@@ -4604,6 +4663,11 @@ if (DOCS_SIDEBAR_DRAWER_MEDIA) {
   }
 }
 
+window.addEventListener('supericons:locale-change', () => {
+  if (!getRouteMeta(currentView).storeShell) return;
+  switchView(currentView, { historyMode: 'silent' });
+});
+
 function getDocsSearchElements({ createResults = false } = {}) {
   const input = document.getElementById('searchInput');
   const clearButton = document.getElementById('searchClear');
@@ -4644,6 +4708,11 @@ function getDocsGroupKey(group) {
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+function getLocalizedDocsGroupLabel(groupLabel) {
+  const groupKey = getDocsGroupKey(groupLabel);
+  return t(`docs.groups.${groupKey}`, {}, groupLabel);
 }
 
 function loadDocsSidebarOpenGroups() {
@@ -4705,8 +4774,8 @@ function renderDocsSearch() {
   if (!docsSearchResults.length) {
     results.innerHTML = `
       <div class="docs-search__empty">
-        <strong>No docs matches yet</strong>
-        <p>Try <code>api key</code>, <code>motion lab</code>, <code>converter</code>, or <code>pricing</code>.</p>
+        <strong>${t('docs.noMatchesTitle')}</strong>
+        <p>${t('docs.noMatchesHint')}</p>
       </div>`;
     return;
   }
@@ -4724,7 +4793,7 @@ function renderDocsSearch() {
         data-docs-search-view="${result.view}"
         data-docs-search-section="${result.sectionId || ''}"
         aria-selected="${isActive ? 'true' : 'false'}">
-        <span class="docs-search__result-group">${escapeHtml(result.groupLabel)}</span>
+        <span class="docs-search__result-group">${escapeHtml(getLocalizedDocsGroupLabel(result.groupLabel))}</span>
         <strong class="docs-search__result-title">${escapeHtml(meta)}</strong>
         ${preview ? `<span class="docs-search__result-preview">${escapeHtml(preview)}</span>` : ''}
       </button>`;
@@ -5053,6 +5122,23 @@ function wireDocsPage(page) {
     docsSearchInput?.focus();
   };
 
+  const handleDocsHashLinkClick = (event) => {
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href^="#"]')
+      : null;
+    if (!link) return;
+
+    const hash = link.getAttribute('href');
+    if (!hash || hash === '#') return;
+
+    const target = page.querySelector(hash);
+    if (!target) return;
+
+    event.preventDefault();
+    window.history.pushState({}, '', `${window.location.pathname}${window.location.search}${hash}`);
+    target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  };
+
   const handleDocsSearchPointerDown = (event) => {
     const button = event.target instanceof Element
       ? event.target.closest('[data-docs-search-view]')
@@ -5128,6 +5214,7 @@ function wireDocsPage(page) {
   docsSearchResultsPanel?.addEventListener('pointerdown', handleDocsSearchPointerDown);
   docsSearchResultsPanel?.addEventListener('click', handleDocsSearchClick);
   docsDrawerBackdrop?.addEventListener('click', handleDocsDrawerBackdropClick);
+  page.addEventListener('click', handleDocsHashLinkClick);
   document.addEventListener('keydown', handleDocsDrawerKeydown);
 
   const tocLinks = [...page.querySelectorAll('.docs-page-toc a[href^="#"], .docs-sidebar .docs-link-list a[href^="#"]')];
@@ -5281,6 +5368,7 @@ function wireDocsPage(page) {
     docsSearchResultsPanel?.removeEventListener('pointerdown', handleDocsSearchPointerDown);
     docsSearchResultsPanel?.removeEventListener('click', handleDocsSearchClick);
     docsDrawerBackdrop?.removeEventListener('click', handleDocsDrawerBackdropClick);
+    page.removeEventListener('click', handleDocsHashLinkClick);
     document.removeEventListener('keydown', handleDocsDrawerKeydown);
     clearDocsSearchBlurTimeout();
     if (scrollTopBtn || scrollDownBtn) {
@@ -5320,6 +5408,43 @@ function updateDocsSidebarState(view, scope = document) {
   applyDocsSidebarGroupState(scope);
 }
 
+function refreshDocsSiteShellLocale(page, view) {
+  const sidebar = page.querySelector('#docsSidebarNav');
+  if (sidebar) {
+    sidebar.setAttribute('aria-label', t('docs.navigation', {}, 'Docs navigation'));
+  }
+
+  const homeLink = page.querySelector('.docs-shell__sidebar-home');
+  if (homeLink) {
+    homeLink.setAttribute('aria-label', t('docs.goHome', {}, 'Go to Documentation home'));
+  }
+
+  const brandLabel = page.querySelector('.docs-shell__sidebar-home span:last-child');
+  if (brandLabel) {
+    brandLabel.textContent = t('docs.documentation', {}, 'Documentation');
+  }
+
+  const sidebarNav = page.querySelector('.docs-shell__sidebar-nav');
+  if (sidebarNav) {
+    sidebarNav.innerHTML = renderDocsSidebar(view);
+  }
+
+  const scrollActions = page.querySelector('.docs-scroll-actions');
+  if (scrollActions) {
+    scrollActions.setAttribute('aria-label', t('docs.pageNavigation', {}, 'Page navigation'));
+  }
+
+  const scrollDown = page.querySelector('#docsScrollDown');
+  if (scrollDown) {
+    scrollDown.setAttribute('aria-label', t('docs.nextSection', {}, 'Go to next section'));
+  }
+
+  const scrollTop = page.querySelector('#docsScrollTop');
+  if (scrollTop) {
+    scrollTop.setAttribute('aria-label', t('docs.backToTop', {}, 'Back to top'));
+  }
+}
+
 function renderDocsSitePage(view = 'docs') {
   removePackCatalog({ keepDocs: true });
 
@@ -5334,6 +5459,8 @@ function renderDocsSitePage(view = 'docs') {
     page.className = 'docs-view docs-view--site';
     page.innerHTML = renderDocsSiteShellMarkup(view);
     gridArea.appendChild(page);
+  } else {
+    refreshDocsSiteShellLocale(page, view);
   }
 
   cleanupDocsPage();
@@ -5826,7 +5953,7 @@ function renderTermsPage() {
   page.id = 'termsView';
   page.className = 'terms-view';
 
-  page.innerHTML = `
+  page.innerHTML = t('legal.terms.bodyHtml', {}, `
     <div class="terms-content">
       <p class="terms-content__updated">Last updated: April 8, 2026</p>
 
@@ -5883,7 +6010,7 @@ function renderTermsPage() {
         <p>For questions about these terms, licensing, or refund requests:</p>
         <p>Email: <a href="mailto:hello@supericons.dev">hello@supericons.dev</a></p>
       </section>
-    </div>`;
+    </div>`);
 
   gridArea.appendChild(page);
   wireShellViewLinks(page);
@@ -5899,7 +6026,7 @@ function renderPrivacyPage() {
   page.id = 'privacyView';
   page.className = 'terms-view';
 
-  page.innerHTML = `
+  page.innerHTML = t('legal.privacy.bodyHtml', {}, `
     <div class="terms-content">
       <p class="terms-content__updated">Last updated: April 8, 2026</p>
 
@@ -5962,7 +6089,7 @@ function renderPrivacyPage() {
         <h3 class="terms-section__title">10. Contact</h3>
         <p>For privacy questions or requests, contact us at <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>.</p>
       </section>
-    </div>`;
+    </div>`);
 
   gridArea.appendChild(page);
 }
@@ -5985,17 +6112,17 @@ function createLaunchEditionCard(launchProducts) {
     <div class="promo-banner__left">
       <span class="material-symbols-outlined promo-banner__icon">deployed_code</span>
       <div class="promo-banner__info">
-        <div class="promo-banner__title">Launch Edition <span class="pack-card__save-badge">Save ${savingsPercent}%</span></div>
-        <div class="promo-banner__desc">All 8 collections, 400 animated icons, unlimited projects.</div>
+        <div class="promo-banner__title">${t('packs.launch.name', {}, 'Launch Edition')} <span class="pack-card__save-badge">${t('packs.launch.savePercent', { percent: savingsPercent }, 'Save {percent}%')}</span></div>
+        <div class="promo-banner__desc">${t('packs.launch.description', {}, 'All 8 collections, 400 animated icons, unlimited projects.')}</div>
       </div>
     </div>
     <div class="promo-banner__right">
       ${isComplete
-        ? '<span class="launch-card__complete"><span class="material-symbols-outlined" style="font-size:14px">verified</span> Complete</span>'
+        ? `<span class="launch-card__complete"><span class="material-symbols-outlined" style="font-size:14px">verified</span> ${t('packs.launch.complete', {}, 'Complete')}</span>`
         : `<div class="promo-banner__price-row">
              <span class="promo-banner__price"><span class="launch-card__original">$${retailPrice}</span> $29</span>
-             ${ownedCount > 0 ? `<span class="launch-card__owned">${ownedCount}/8 owned</span>` : ''}
-             <button class="promo-banner__btn" id="launchEditionBtn">Get Bundle</button>
+             ${ownedCount > 0 ? `<span class="launch-card__owned">${t('packs.launch.ownedCount', { owned: ownedCount, total: launchProducts.length }, '{owned}/{total} owned')}</span>` : ''}
+             <button class="promo-banner__btn" id="launchEditionBtn">${t('packs.launch.getBundle', {}, 'Get Bundle')}</button>
            </div>`}
     </div>`;
 
@@ -6013,11 +6140,11 @@ function createLaunchEditionCard(launchProducts) {
 async function handleLaunchEditionPurchase() {
   if (!isLoggedIn()) {
     promptForAuth('purchase');
-    showToast('Sign in to continue your purchase');
+    showToast(t('purchaseFlow.signInToPurchase', {}, 'Sign in to continue your purchase'));
     return;
   }
 
-  showToast('Redirecting to checkout...');
+  showToast(t('purchaseFlow.redirecting', {}, 'Redirecting to checkout...'));
 
   try {
     const sb = getSupabase();
@@ -6035,32 +6162,33 @@ async function handleLaunchEditionPurchase() {
         price_id: STRIPE_LAUNCH_EDITION,
         product_id: 'launch_edition',
         mode: 'payment',
-        success_url: `${window.location.origin}?purchase=success&product_id=launch_edition`,
-        cancel_url: `${window.location.origin}?purchase=canceled`,
+        locale: getStripeLocale(),
+        success_url: buildLocalizedReturnUrl({ purchase: 'success', product_id: 'launch_edition' }),
+        cancel_url: buildLocalizedReturnUrl({ purchase: 'canceled' }),
       }),
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Checkout failed');
+      throw new Error(err.error || t('purchaseFlow.checkoutFailed', {}, 'Checkout failed'));
     }
 
     const { url } = await res.json();
     if (url) window.location.href = url;
   } catch (err) {
-    showToast(err.message || 'Payment error. Please try again.');
+    showToast(err.message || t('purchaseFlow.paymentError', {}, 'Payment error. Please try again.'));
     console.error('[Store] Launch Edition checkout error:', err);
   }
 }
 // ── Credit Redemption ─────────────────────────────────────────
 function getClaimFailureMessage(reason, nextAvailable, fallback) {
   if (reason === 'cooldown_wait') {
-    return `Next claim available ${formatClaimAvailability(nextAvailable)}.`;
+    return t('claimFlow.nextAvailable', { date: formatClaimAvailability(nextAvailable) }, 'Next claim available {date}.');
   }
-  if (reason === 'all_owned') return 'All claimable collections are already in your library.';
-  if (reason === 'already_owned') return 'This collection is already in your library.';
-  if (reason === 'subscription_required') return 'An active Pro subscription is required to claim collections.';
-  return fallback || 'Collection claim failed. Please try again.';
+  if (reason === 'all_owned') return t('claimFlow.allOwned', {}, 'All claimable collections are already in your library.');
+  if (reason === 'already_owned') return t('claimFlow.alreadyOwned', {}, 'This collection is already in your library.');
+  if (reason === 'subscription_required') return t('claimFlow.subscriptionRequired', {}, 'An active Pro subscription is required to claim collections.');
+  return fallback || t('claimFlow.failed', {}, 'Collection claim failed. Please try again.');
 }
 
 async function requestPackClaimWithToken(token, productId) {
@@ -6080,10 +6208,10 @@ function showPackClaimConfirmModal(productName, claimReason) {
     const overlay = document.createElement('div');
     overlay.className = 'claim-confirm-modal';
 
-    const safeName = escapeHtml(productName || 'this collection');
+    const safeName = escapeHtml(productName || t('claimFlow.thisCollection', {}, 'this collection'));
     const usageCopy = claimReason === 'legacy_credit'
-      ? 'This will use 1 legacy credit.'
-      : 'This will use your active Pro claim.';
+      ? t('claimFlow.legacyCredit', {}, 'This will use 1 legacy credit.')
+      : t('claimFlow.proClaim', {}, 'This will use your active Pro claim.');
 
     overlay.innerHTML = `
       <div class="claim-confirm-modal__backdrop"></div>
@@ -6091,13 +6219,13 @@ function showPackClaimConfirmModal(productName, claimReason) {
         <button class="claim-confirm-modal__close" type="button" aria-label="Close">
           <span class="material-symbols-outlined">close</span>
         </button>
-        <p class="claim-confirm-modal__eyebrow">Claim Collection</p>
-        <h3 class="claim-confirm-modal__title" id="claimConfirmTitle">Add "${safeName}" to My Collection?</h3>
-        <p class="claim-confirm-modal__desc">The collection unlocks immediately and will appear in your library.</p>
+        <p class="claim-confirm-modal__eyebrow">${t('claimFlow.eyebrow', {}, 'Claim Collection')}</p>
+        <h3 class="claim-confirm-modal__title" id="claimConfirmTitle">${t('claimFlow.title', { name: safeName }, 'Add "{name}" to My Collection?')}</h3>
+        <p class="claim-confirm-modal__desc">${t('claimFlow.description', {}, 'The collection unlocks immediately and will appear in your library.')}</p>
         <p class="claim-confirm-modal__meta">${usageCopy}</p>
         <div class="claim-confirm-modal__actions">
-          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
-          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--primary" type="button" data-action="confirm">Add to My Collection</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">${t('claimFlow.cancel', {}, 'Cancel')}</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--primary" type="button" data-action="confirm">${t('claimFlow.confirm', {}, 'Add to My Collection')}</button>
         </div>
       </div>
     `;
@@ -6149,26 +6277,26 @@ async function handlePackClaim(product) {
 
   const claimStatus = getClaimStatus();
   if (!claimStatus) {
-    showToast('Checking claim access...');
+    showToast(t('claimFlow.checking', {}, 'Checking claim access...'));
     ensureClaimStatusLoaded();
     return;
   }
 
   if (!claimStatus.canClaim) {
-    showToast(getClaimFailureMessage(claimStatus.reason, claimStatus.nextAvailable, 'Claim unavailable right now.'));
+    showToast(getClaimFailureMessage(claimStatus.reason, claimStatus.nextAvailable, t('claimFlow.unavailable', {}, 'Claim unavailable right now.')));
     return;
   }
 
-  const confirmed = await showPackClaimConfirmModal(product.name, claimStatus.reason);
+  const confirmed = await showPackClaimConfirmModal(getLocalizedProductName(product), claimStatus.reason);
   if (!confirmed) return;
 
-  showToast('Adding collection to My Collection...');
+  showToast(t('claimFlow.adding', {}, 'Adding collection to My Collection...'));
 
   try {
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
-    if (!token) throw new Error('Session expired. Please sign in again.');
+    if (!token) throw new Error(t('claimFlow.sessionExpired', {}, 'Session expired. Please sign in again.'));
 
     let res = await requestPackClaimWithToken(token, product.id);
     if (res.status === 401) {
@@ -6185,7 +6313,7 @@ async function handlePackClaim(product) {
       throw new Error(getClaimFailureMessage(payload.reason, payload.nextAvailable, payload.error));
     }
 
-    showToast(`Added "${product.name}" to My Collection.`);
+    showToast(t('claimFlow.added', { name: getLocalizedProductName(product) }, 'Added "{name}" to My Collection.'));
     invalidateClaimStatus();
     if (packCatalogNotice?.kind === 'pro-monthly') {
       packCatalogNotice = null;
@@ -6197,7 +6325,7 @@ async function handlePackClaim(product) {
     ]);
     rerenderCollectionSurfaceForCurrentView();
   } catch (err) {
-    showToast(err.message || 'Failed to add collection. Please try again.');
+    showToast(err.message || t('claimFlow.addFailed', {}, 'Failed to add collection. Please try again.'));
     console.error('[Store] Collection claim error:', err);
     invalidateClaimStatus();
     void Promise.all([
@@ -6217,11 +6345,11 @@ async function handlePurchase(product) {
       productId: product?.id,
       productSlug: product?.slug,
     });
-    showToast('Sign in to continue your purchase');
+    showToast(t('purchaseFlow.signInToPurchase', {}, 'Sign in to continue your purchase'));
     return;
   }
 
-  showToast('Redirecting to checkout...');
+  showToast(t('purchaseFlow.redirecting', {}, 'Redirecting to checkout...'));
 
   try {
     const sb = getSupabase();
@@ -6238,20 +6366,21 @@ async function handlePurchase(product) {
       body: JSON.stringify({
         product_id: product.id,
         price_id: product.stripe_price_id,
-        success_url: `${window.location.origin}?purchase=success&product_id=${encodeURIComponent(product.id)}`,
-        cancel_url: `${window.location.origin}?purchase=canceled`,
+        locale: getStripeLocale(),
+        success_url: buildLocalizedReturnUrl({ purchase: 'success', product_id: product.id }),
+        cancel_url: buildLocalizedReturnUrl({ purchase: 'canceled' }),
       }),
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Checkout failed');
+      throw new Error(err.error || t('purchaseFlow.checkoutFailed', {}, 'Checkout failed'));
     }
 
     const { url } = await res.json();
     if (url) window.location.href = url;
   } catch (err) {
-    showToast(err.message || 'Payment error. Please try again.');
+    showToast(err.message || t('purchaseFlow.paymentError', {}, 'Payment error. Please try again.'));
     console.error('[Store] Checkout error:', err);
   }
 }
@@ -6319,12 +6448,16 @@ function wireStoreListeners() {
   const subscriptionPlan = params.get('subscription_plan');
   if (params.get('purchase') === 'success') {
     // Clean URL immediately
-    window.history.replaceState({}, '', window.location.pathname);
+    const cleanParams = new URLSearchParams({ locale: getActiveLocale() });
+    const cleanUrl = `${window.location.pathname}?${cleanParams.toString()}`;
+    window.history.replaceState({}, '', cleanUrl);
     // Refresh purchases and route to the right post-checkout experience
     handlePurchaseSuccess(purchaseProductId, subscriptionPlan);
   } else if (params.get('purchase') === 'canceled') {
-    showToast('Payment was not completed. Try again.');
-    window.history.replaceState({}, '', window.location.pathname);
+    showToast(t('purchaseFlow.canceled', {}, 'Payment was not completed. Try again.'));
+    const cleanParams = new URLSearchParams({ locale: getActiveLocale() });
+    const cleanUrl = `${window.location.pathname}?${cleanParams.toString()}`;
+    window.history.replaceState({}, '', cleanUrl);
   }
 
   if (syncViewFromLocation({ historyMode: 'replace' })) {
@@ -6355,24 +6488,24 @@ async function handlePurchaseSuccess(expectedProductId = null, subscriptionPlan 
     packCatalogNotice = isAnnual
       ? {
         kind: 'pro-annual',
-        title: 'Welcome to Pro Annual',
-        description: 'All 8 launch collections are now in your library. Browse the packs or open My Collection to start using them.',
-        actionLabel: 'Open My Collection',
+        title: t('purchaseFlow.proAnnualTitle', {}, 'Welcome to Pro Annual'),
+        description: t('purchaseFlow.proAnnualDescription', {}, 'All 8 launch collections are now in your library. Browse the packs or open My Collection to start using them.'),
+        actionLabel: t('purchaseFlow.openMyCollection', {}, 'Open My Collection'),
       }
       : {
         kind: 'pro-monthly',
-        title: 'Welcome to Pro Monthly',
-        description: 'Your first Pro claim is ready. Pick a premium collection below and redeem it now to add it to My Collection.',
-        actionLabel: 'Redeem a collection',
+        title: t('purchaseFlow.proMonthlyTitle', {}, 'Welcome to Pro Monthly'),
+        description: t('purchaseFlow.proMonthlyDescription', {}, 'Your first Pro claim is ready. Pick a premium collection below and redeem it now to add it to My Collection.'),
+        actionLabel: t('purchaseFlow.redeemCollection', {}, 'Redeem a collection'),
       };
-    showToast(isAnnual ? 'Pro Annual is active. Your collections are ready.' : 'Welcome to Pro. Redeem your first collection now.');
+    showToast(isAnnual ? t('purchaseFlow.proAnnualToast', {}, 'Pro Annual is active. Your collections are ready.') : t('purchaseFlow.proMonthlyToast', {}, 'Welcome to Pro. Redeem your first collection now.'));
     switchView('packs');
     return;
   }
 
   packCatalogNotice = null;
   // Navigate to My Collection
-  showToast('Purchase successful! Opening your collection...');
+  showToast(t('purchaseFlow.purchaseSuccess', {}, 'Purchase successful! Opening your collection...'));
   switchView('downloads');
 }
 
@@ -6424,6 +6557,14 @@ const MOTION_LAB_ROTATING_PANEL_ITEMS = [
   }
 ];
 
+function getMotionLabQuickTip(index) {
+  const fallback = MOTION_LAB_ROTATING_PANEL_ITEMS[index] || MOTION_LAB_ROTATING_PANEL_ITEMS[0];
+  return {
+    title: motionLabText(`quickTips.${index}.title`, fallback?.title || ''),
+    body: motionLabText(`quickTips.${index}.body`, fallback?.body || ''),
+  };
+}
+
 function motionLabPrefersReducedMotion() {
   return typeof window !== 'undefined'
     && typeof window.matchMedia === 'function'
@@ -6452,7 +6593,7 @@ function renderMotionLabRotatingPanel(index = motionLab.panelIndex) {
   if (!panelTitle || !panelCopy || !panelDots || !MOTION_LAB_ROTATING_PANEL_ITEMS.length) return;
 
   const normalizedIndex = ((index % MOTION_LAB_ROTATING_PANEL_ITEMS.length) + MOTION_LAB_ROTATING_PANEL_ITEMS.length) % MOTION_LAB_ROTATING_PANEL_ITEMS.length;
-  const item = MOTION_LAB_ROTATING_PANEL_ITEMS[normalizedIndex];
+  const item = getMotionLabQuickTip(normalizedIndex);
   motionLab.panelIndex = normalizedIndex;
   panelTitle.textContent = item.title;
   panelCopy.textContent = item.body;
@@ -6571,6 +6712,11 @@ function renderMotionLab() {
   const view = document.createElement('div');
   view.id = 'motionLabView';
   view.className = 'ml';
+  const firstQuickTip = getMotionLabQuickTip(0);
+  const motionLabTipAttr = (key, fallback) => escapeHtml(motionLabText(`tooltips.${key}`, fallback));
+  const motionLabLabel = (key, fallback) => motionLabText(`labels.${key}`, fallback);
+  const motionLabAction = (key, fallback) => motionLabText(`actions.${key}`, fallback);
+  const motionLabPresetLabel = (key, fallback) => motionLabText(`presets.${key}`, fallback);
 
   view.innerHTML = `
     <div class="ml__workspace">
@@ -6582,16 +6728,16 @@ function renderMotionLab() {
         <div class="ml__canvas-wrap" id="mlCanvasWrap">
           <div class="ml__drop-zone" id="mlDropZone">
             <span class="material-symbols-outlined" style="font-size:40px;color:var(--si-text-dim)">animation</span>
-            <p class="ml__drop-text">Drop an SVG, paste code, or pick from library</p>
+            <p class="ml__drop-text">${motionLabText('empty.dropSvg', 'Drop an SVG, paste code, or pick from library')}</p>
             <div class="ml__drop-actions">
               <button class="ml__drop-btn" id="mlFileBtn">
-                <span class="material-symbols-outlined" style="font-size:15px">upload_file</span> Upload
+                <span class="material-symbols-outlined" style="font-size:15px">upload_file</span> ${motionLabAction('upload', 'Upload')}
               </button>
               <button class="ml__drop-btn" id="mlPasteBtn">
-                <span class="material-symbols-outlined" style="font-size:15px">content_paste</span> Paste
+                <span class="material-symbols-outlined" style="font-size:15px">content_paste</span> ${motionLabAction('paste', 'Paste')}
               </button>
               <button class="ml__drop-btn" id="mlLibraryBtn">
-                <span class="material-symbols-outlined" style="font-size:15px">grid_view</span> Library
+                <span class="material-symbols-outlined" style="font-size:15px">grid_view</span> ${motionLabAction('library', 'Library')}
               </button>
             </div>
             <input type="file" id="mlFileInput" accept=".svg" style="display:none">
@@ -6602,135 +6748,95 @@ function renderMotionLab() {
 
             <!-- Quadrant A: top - Motion -->
             <div class="ml__quad ml__quad--top" data-quad="motion">
-              <span class="ml__quad-label">Motion</span>
+              <span class="ml__quad-label">${motionLabLabel('motion', 'Motion')}</span>
               <div class="ml__quad-btns" id="mlControlBar">
                 <button class="ml__preset-btn" data-preset="bounce">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Bounce
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> ${motionLabPresetLabel('bounce', 'Bounce')}</button>
                 <button class="ml__preset-btn" data-preset="float">
-                  <span class="material-symbols-outlined" style="font-size:13px">cloud</span> Float
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">cloud</span> ${motionLabPresetLabel('float', 'Float')}</button>
                 <button class="ml__preset-btn" data-preset="shake">
-                  <span class="material-symbols-outlined" style="font-size:13px">vibration</span> Shake
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">vibration</span> ${motionLabPresetLabel('shake', 'Shake')}</button>
                 <button class="ml__preset-btn" data-preset="spin">
-                  <span class="material-symbols-outlined" style="font-size:13px">rotate_right</span> Spin
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">rotate_right</span> ${motionLabPresetLabel('spin', 'Spin')}</button>
                 <button class="ml__preset-btn" data-preset="pulse">
-                  <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> Pulse
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> ${motionLabPresetLabel('pulse', 'Pulse')}</button>
                 <button class="ml__preset-btn" data-preset="pop">
-                  <span class="material-symbols-outlined" style="font-size:13px">open_in_full</span> Pop
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">open_in_full</span> ${motionLabPresetLabel('pop', 'Pop')}</button>
                 <button class="ml__preset-btn" data-preset="heartbeat">
-                  <span class="material-symbols-outlined" style="font-size:13px">favorite</span> Heartbeat
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">favorite</span> ${motionLabPresetLabel('heartbeat', 'Heartbeat')}</button>
                 <button class="ml__preset-btn" data-preset="rubberband">
-                  <span class="material-symbols-outlined" style="font-size:13px">straighten</span> Rubber Band
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">straighten</span> ${motionLabPresetLabel('rubberband', 'Rubber Band')}</button>
                 <button class="ml__preset-btn" data-preset="jelly">
-                  <span class="material-symbols-outlined" style="font-size:13px">water_drop</span> Jelly
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">water_drop</span> ${motionLabPresetLabel('jelly', 'Jelly')}</button>
                 <button class="ml__preset-btn" data-preset="ring">
-                  <span class="material-symbols-outlined" style="font-size:13px">notifications</span> Ring
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">notifications</span> ${motionLabPresetLabel('ring', 'Ring')}</button>
                 <button class="ml__preset-btn" data-preset="wobble">
-                  <span class="material-symbols-outlined" style="font-size:13px">tsunami</span> Wobble
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">tsunami</span> ${motionLabPresetLabel('wobble', 'Wobble')}</button>
                 <button class="ml__preset-btn" data-preset="magnetic">
-                  <span class="material-symbols-outlined" style="font-size:13px">attractions</span> Magnetic
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">attractions</span> ${motionLabPresetLabel('magnetic', 'Magnetic')}</button>
                 <button class="ml__preset-btn" data-preset="recoil">
-                  <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> Recoil
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> ${motionLabPresetLabel('recoil', 'Recoil')}</button>
                 <button class="ml__preset-btn" data-preset="pendulum">
-                  <span class="material-symbols-outlined" style="font-size:13px">swap_horiz</span> Pendulum
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">swap_horiz</span> ${motionLabPresetLabel('pendulum', 'Pendulum')}</button>
                 <button class="ml__preset-btn" data-preset="whiplash">
-                  <span class="material-symbols-outlined" style="font-size:13px">crop_rotate</span> Whiplash
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">crop_rotate</span> ${motionLabPresetLabel('whiplash', 'Whiplash')}</button>
                 <button class="ml__preset-btn" data-preset="tremor">
-                  <span class="material-symbols-outlined" style="font-size:13px">earthquake</span> Tremor
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">earthquake</span> ${motionLabPresetLabel('tremor', 'Tremor')}</button>
                 <button class="ml__preset-btn" data-preset="neonglow">
-                  <span class="material-symbols-outlined" style="font-size:13px">flare</span> Neon Glow
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flare</span> ${motionLabPresetLabel('neonglow', 'Neon Glow')}</button>
                 <button class="ml__preset-btn" data-preset="breathe">
-                  <span class="material-symbols-outlined" style="font-size:13px">spa</span> Breathe
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">spa</span> ${motionLabPresetLabel('breathe', 'Breathe')}</button>
                 <button class="ml__preset-btn" data-preset="metronome">
-                  <span class="material-symbols-outlined" style="font-size:13px">timer</span> Metronome
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">timer</span> ${motionLabPresetLabel('metronome', 'Metronome')}</button>
                 <button class="ml__preset-btn" data-preset="orbit">
-                  <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> Orbit
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> ${motionLabPresetLabel('orbit', 'Orbit')}</button>
                 <button class="ml__preset-btn" data-preset="flicker">
-                  <span class="material-symbols-outlined" style="font-size:13px">fluorescent</span> Flicker
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">fluorescent</span> ${motionLabPresetLabel('flicker', 'Flicker')}</button>
                 <button class="ml__preset-btn" data-preset="squish">
-                  <span class="material-symbols-outlined" style="font-size:13px">compress</span> Squish
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">compress</span> ${motionLabPresetLabel('squish', 'Squish')}</button>
                 <button class="ml__preset-btn" data-preset="glide">
-                  <span class="material-symbols-outlined" style="font-size:13px">air</span> Glide
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">air</span> ${motionLabPresetLabel('glide', 'Glide')}</button>
                 <button class="ml__preset-btn" data-preset="radar">
-                  <span class="material-symbols-outlined" style="font-size:13px">radar</span> Radar
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">radar</span> ${motionLabPresetLabel('radar', 'Radar')}</button>
                 <button class="ml__preset-btn" data-preset="beacon">
-                  <span class="material-symbols-outlined" style="font-size:13px">wifi_tethering</span> Beacon
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">wifi_tethering</span> ${motionLabPresetLabel('beacon', 'Beacon')}</button>
               </div>
             </div>
 
             <!-- Quadrant B: left - Entrances -->
             <div class="ml__quad ml__quad--left" data-quad="entrances">
-              <span class="ml__quad-label">Entrances</span>
+              <span class="ml__quad-label">${motionLabLabel('entrances', 'Entrances')}</span>
               <div class="ml__quad-btns">
                 <button class="ml__preset-btn" data-preset="magneticIn">
-                  <span class="material-symbols-outlined" style="font-size:13px">attractions</span> Magnetic In
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">attractions</span> ${motionLabPresetLabel('magneticIn', 'Magnetic In')}</button>
                 <button class="ml__preset-btn" data-preset="fadeIn">
-                  <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade In
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">gradient</span> ${motionLabPresetLabel('fadeIn', 'Fade In')}</button>
                 <button class="ml__preset-btn" data-preset="scaleUp">
-                  <span class="material-symbols-outlined" style="font-size:13px">zoom_in</span> Scale Up
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">zoom_in</span> ${motionLabPresetLabel('scaleUp', 'Scale Up')}</button>
                 <button class="ml__preset-btn" data-preset="slideUp">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Slide Up
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> ${motionLabPresetLabel('slideUp', 'Slide Up')}</button>
                 <button class="ml__preset-btn" data-preset="springLand">
-                  <span class="material-symbols-outlined" style="font-size:13px">downloading</span> Spring Land
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">downloading</span> ${motionLabPresetLabel('springLand', 'Spring Land')}</button>
                 <button class="ml__preset-btn" data-preset="slingshot">
-                  <span class="material-symbols-outlined" style="font-size:13px">swipe_right_alt</span> Slingshot
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">swipe_right_alt</span> ${motionLabPresetLabel('slingshot', 'Slingshot')}</button>
                 <button class="ml__preset-btn" data-preset="glitchOn">
-                  <span class="material-symbols-outlined" style="font-size:13px">flash_on</span> Glitch On
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flash_on</span> ${motionLabPresetLabel('glitchOn', 'Glitch On')}</button>
                 <button class="ml__preset-btn" data-preset="unfold">
-                  <span class="material-symbols-outlined" style="font-size:13px">unfold_more</span> Unfold
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">unfold_more</span> ${motionLabPresetLabel('unfold', 'Unfold')}</button>
                 <button class="ml__preset-btn" data-preset="warpIn">
-                  <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> Warp In
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> ${motionLabPresetLabel('warpIn', 'Warp In')}</button>
                 <button class="ml__preset-btn" data-preset="slideRight">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_forward</span> Slide Right
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_forward</span> ${motionLabPresetLabel('slideRight', 'Slide Right')}</button>
                 <button class="ml__preset-btn" data-preset="slideDown">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_downward</span> Slide Down
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_downward</span> ${motionLabPresetLabel('slideDown', 'Slide Down')}</button>
                 <button class="ml__preset-btn" data-preset="flipIn">
-                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> Flip In
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> ${motionLabPresetLabel('flipIn', 'Flip In')}</button>
                 <button class="ml__preset-btn" data-preset="telegram">
-                  <span class="material-symbols-outlined" style="font-size:13px">send</span> Telegram
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">send</span> ${motionLabPresetLabel('telegram', 'Telegram')}</button>
                 <button class="ml__preset-btn" data-preset="bloom">
-                  <span class="material-symbols-outlined" style="font-size:13px">filter_vintage</span> Bloom
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">filter_vintage</span> ${motionLabPresetLabel('bloom', 'Bloom')}</button>
                 <button class="ml__preset-btn" data-preset="shockwave">
-                  <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> Shockwave
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> ${motionLabPresetLabel('shockwave', 'Shockwave')}</button>
               </div>
             </div>
 
@@ -6739,135 +6845,95 @@ function renderMotionLab() {
 
             <!-- Quadrant C: right - Exits -->
             <div class="ml__quad ml__quad--right" data-quad="exits">
-              <span class="ml__quad-label">Exits</span>
+              <span class="ml__quad-label">${motionLabLabel('exits', 'Exits')}</span>
               <div class="ml__quad-btns">
                 <button class="ml__preset-btn" data-preset="fadeOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">gradient</span> ${motionLabPresetLabel('fadeOut', 'Fade Out')}</button>
                 <button class="ml__preset-btn" data-preset="scaleDown">
-                  <span class="material-symbols-outlined" style="font-size:13px">zoom_out</span> Scale Down
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">zoom_out</span> ${motionLabPresetLabel('scaleDown', 'Scale Down')}</button>
                 <button class="ml__preset-btn" data-preset="slideOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Slide Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> ${motionLabPresetLabel('slideOut', 'Slide Out')}</button>
                 <button class="ml__preset-btn" data-preset="vortex">
-                  <span class="material-symbols-outlined" style="font-size:13px">cyclone</span> Vortex
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">cyclone</span> ${motionLabPresetLabel('vortex', 'Vortex')}</button>
                 <button class="ml__preset-btn" data-preset="glitchOff">
-                  <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> Glitch Off
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> ${motionLabPresetLabel('glitchOff', 'Glitch Off')}</button>
                 <button class="ml__preset-btn" data-preset="dissolve">
-                  <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> Dissolve
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> ${motionLabPresetLabel('dissolve', 'Dissolve')}</button>
                 <button class="ml__preset-btn" data-preset="popOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">close_fullscreen</span> Pop Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">close_fullscreen</span> ${motionLabPresetLabel('popOut', 'Pop Out')}</button>
                 <button class="ml__preset-btn" data-preset="slideLeft">
-                  <span class="material-symbols-outlined" style="font-size:13px">arrow_back</span> Slide Left
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">arrow_back</span> ${motionLabPresetLabel('slideLeft', 'Slide Left')}</button>
                 <button class="ml__preset-btn" data-preset="sinkDown">
-                  <span class="material-symbols-outlined" style="font-size:13px">download</span> Sink Down
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">download</span> ${motionLabPresetLabel('sinkDown', 'Sink Down')}</button>
                 <button class="ml__preset-btn" data-preset="flipOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> Flip Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> ${motionLabPresetLabel('flipOut', 'Flip Out')}</button>
                 <button class="ml__preset-btn" data-preset="implode">
-                  <span class="material-symbols-outlined" style="font-size:13px">compress</span> Implode
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">compress</span> ${motionLabPresetLabel('implode', 'Implode')}</button>
                 <button class="ml__preset-btn" data-preset="puffOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">cloud_queue</span> Puff Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">cloud_queue</span> ${motionLabPresetLabel('puffOut', 'Puff Out')}</button>
                 <button class="ml__preset-btn" data-preset="launchOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">rocket_launch</span> Launch Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">rocket_launch</span> ${motionLabPresetLabel('launchOut', 'Launch Out')}</button>
                 <button class="ml__preset-btn" data-preset="shrinkSpin">
-                  <span class="material-symbols-outlined" style="font-size:13px">autorenew</span> Shrink Spin
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">autorenew</span> ${motionLabPresetLabel('shrinkSpin', 'Shrink Spin')}</button>
                 <button class="ml__preset-btn" data-preset="blinkOut">
-                  <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> Blink Out
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> ${motionLabPresetLabel('blinkOut', 'Blink Out')}</button>
               </div>
             </div>
 
             <!-- Quadrant D: bottom - Special -->
             <div class="ml__quad ml__quad--bottom" data-quad="saved">
-              <span class="ml__quad-label">Special</span>
+              <span class="ml__quad-label">${motionLabLabel('special', 'Special')}</span>
               <div class="ml__quad-btns" id="mlSavedBtns">
                 <button class="ml__preset-btn" data-preset="sparkle">
-                  <span class="material-symbols-outlined" style="font-size:13px">auto_awesome</span> Sparkle
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">auto_awesome</span> ${motionLabPresetLabel('sparkle', 'Sparkle')}</button>
                 <button class="ml__preset-btn" data-preset="swing">
-                  <span class="material-symbols-outlined" style="font-size:13px">sync_alt</span> Swing
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">sync_alt</span> ${motionLabPresetLabel('swing', 'Swing')}</button>
                 <button class="ml__preset-btn" data-preset="jitter">
-                  <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> Jitter
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> ${motionLabPresetLabel('jitter', 'Jitter')}</button>
                 <button class="ml__preset-btn" data-preset="chase">
-                  <span class="material-symbols-outlined" style="font-size:13px">track_changes</span> Chase
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">track_changes</span> ${motionLabPresetLabel('chase', 'Chase')}</button>
                 <button class="ml__preset-btn" data-preset="stream">
-                  <span class="material-symbols-outlined" style="font-size:13px">view_stream</span> Stream
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">view_stream</span> ${motionLabPresetLabel('stream', 'Stream')}</button>
                 <button class="ml__preset-btn" data-preset="trace">
-                  <span class="material-symbols-outlined" style="font-size:13px">draw</span> Trace
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">draw</span> ${motionLabPresetLabel('trace', 'Trace')}</button>
                 <button class="ml__preset-btn" data-preset="flow">
-                  <span class="material-symbols-outlined" style="font-size:13px">schema</span> Flow
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">schema</span> ${motionLabPresetLabel('flow', 'Flow')}</button>
                 <button class="ml__preset-btn" data-preset="converge">
-                  <span class="material-symbols-outlined" style="font-size:13px">center_focus_strong</span> Converge
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">center_focus_strong</span> ${motionLabPresetLabel('converge', 'Converge')}</button>
                 <button class="ml__preset-btn" data-preset="cube">
-                  <span class="material-symbols-outlined" style="font-size:13px">view_in_ar</span> Cube
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">view_in_ar</span> ${motionLabPresetLabel('cube', 'Cube')}</button>
                 <button class="ml__preset-btn" data-preset="typing">
-                  <span class="material-symbols-outlined" style="font-size:13px">keyboard</span> Typing
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">keyboard</span> ${motionLabPresetLabel('typing', 'Typing')}</button>
                 <button class="ml__preset-btn" data-preset="reason">
-                  <span class="material-symbols-outlined" style="font-size:13px">account_tree</span> Reason
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">account_tree</span> ${motionLabPresetLabel('reason', 'Reason')}</button>
                 <button class="ml__preset-btn" data-preset="sweep">
-                  <span class="material-symbols-outlined" style="font-size:13px">pie_chart</span> Sweep
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">pie_chart</span> ${motionLabPresetLabel('sweep', 'Sweep')}</button>
                 <button class="ml__preset-btn" data-preset="scatter">
-                  <span class="material-symbols-outlined" style="font-size:13px">scatter_plot</span> Scatter
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">scatter_plot</span> ${motionLabPresetLabel('scatter', 'Scatter')}</button>
                 <button class="ml__preset-btn" data-preset="crest">
-                  <span class="material-symbols-outlined" style="font-size:13px">equalizer</span> Crest
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">equalizer</span> ${motionLabPresetLabel('crest', 'Crest')}</button>
                 <button class="ml__preset-btn" data-preset="tap">
-                  <span class="material-symbols-outlined" style="font-size:13px">contactless</span> Tap
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">contactless</span> ${motionLabPresetLabel('tap', 'Tap')}</button>
                 <button class="ml__preset-btn" data-preset="shuffle">
-                  <span class="material-symbols-outlined" style="font-size:13px">shuffle</span> Shuffle
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">shuffle</span> ${motionLabPresetLabel('shuffle', 'Shuffle')}</button>
                 <button class="ml__preset-btn" data-preset="infinity">
-                  <span class="material-symbols-outlined" style="font-size:13px">all_inclusive</span> Infinity
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">all_inclusive</span> ${motionLabPresetLabel('infinity', 'Infinity')}</button>
                 <button class="ml__preset-btn" data-preset="spatial">
-                  <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> Spatial
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> ${motionLabPresetLabel('spatial', 'Spatial')}</button>
                 <button class="ml__preset-btn" data-preset="pageFlip">
-                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> Page Flip
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> ${motionLabPresetLabel('pageFlip', 'Page Flip')}</button>
                 <button class="ml__preset-btn" data-preset="bookOpen">
-                  <span class="material-symbols-outlined" style="font-size:13px">auto_stories</span> Book Open
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">auto_stories</span> ${motionLabPresetLabel('bookOpen', 'Book Open')}</button>
                 <button class="ml__preset-btn" data-preset="domino">
-                  <span class="material-symbols-outlined" style="font-size:13px">splitscreen</span> Domino
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">splitscreen</span> ${motionLabPresetLabel('domino', 'Domino')}</button>
                 <button class="ml__preset-btn" data-preset="supernova">
-                  <span class="material-symbols-outlined" style="font-size:13px">flare</span> Supernova
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">flare</span> ${motionLabPresetLabel('supernova', 'Supernova')}</button>
                 <button class="ml__preset-btn" data-preset="blackHole">
-                  <span class="material-symbols-outlined" style="font-size:13px">blur_circular</span> Black Hole
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">blur_circular</span> ${motionLabPresetLabel('blackHole', 'Black Hole')}</button>
                 <button class="ml__preset-btn" data-preset="fingerprint">
-                  <span class="material-symbols-outlined" style="font-size:13px">fingerprint</span> Fingerprint
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">fingerprint</span> ${motionLabPresetLabel('fingerprint', 'Fingerprint')}</button>
                 <button class="ml__preset-btn" data-preset="badgeTap">
-                  <span class="material-symbols-outlined" style="font-size:13px">badge</span> Badge Tap
-                </button>
+                  <span class="material-symbols-outlined" style="font-size:13px">badge</span> ${motionLabPresetLabel('badgeTap', 'Badge Tap')}</button>
               </div>
             </div>
 
@@ -6878,45 +6944,45 @@ function renderMotionLab() {
         <div class="ml__bottom-bar" id="mlBottomBar" style="display:none">
           <!-- Row 1: Size selector + Playback controls -->
           <div class="ml__size-strip" id="mlSizeStrip">
-            <span class="ml__size-label">Size (px)</span>
+            <span class="ml__size-label">${motionLabLabel('sizePx', 'Size (px)')}</span>
             <button class="ml__size-btn" data-size="24">24</button>
             <button class="ml__size-btn ml__size-btn--active" data-size="48">48</button>
             <button class="ml__size-btn" data-size="64">64</button>
             <button class="ml__size-btn" data-size="96">96</button>
             <button class="ml__size-btn" data-size="128">128</button>
             <span class="ml__bar-divider"></span>
-            <button class="ml__reset-anim-btn" id="mlResetAnimBtn" data-tip="Reset animation">
+            <button class="ml__reset-anim-btn" id="mlResetAnimBtn" data-tip="${motionLabTipAttr('resetAnimation', 'Reset animation')}">
               <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span>
             </button>
-            <button class="ml__play-btn" id="mlPlayBtn" data-tip="Click or hover an animation button to preview it.">
+            <button class="ml__play-btn" id="mlPlayBtn" data-tip="${motionLabTipAttr('playPreview', 'Click or hover an animation button to preview it.')}">
               <span class="material-symbols-outlined" style="font-size:16px">stop</span>
             </button>
           </div>
           <!-- Row 2: Export trigger + Download/Copy -->
           <div class="ml__export-bar">
             <div class="ml__trigger-group">
-              <span class="ml__trigger-info" data-tip="${EXPORT_TRIGGER_TOOLTIP_COPY}"><span class="material-symbols-outlined" style="font-size:12px">info</span></span>
-              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="loop" checked> Loop</label>
-              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="hover"> Hover</label>
-              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="click"> Click</label>
+              <span class="ml__trigger-info" data-tip="${escapeHtml(getExportTriggerTooltipCopy())}"><span class="material-symbols-outlined" style="font-size:12px">info</span></span>
+              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="loop" checked> ${motionLabAction('loop', 'Loop')}</label>
+              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="hover"> ${motionLabAction('hover', 'Hover')}</label>
+              <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="click"> ${motionLabAction('click', 'Click')}</label>
             </div>
             <span class="ml__bar-divider"></span>
             <button class="ml__action-btn" id="mlDownloadBtn">
-              <span class="material-symbols-outlined" style="font-size:14px">download</span> Download SVG
+              <span class="material-symbols-outlined" style="font-size:14px">download</span> ${motionLabAction('downloadSvg', 'Download SVG')}
             </button>
             <button class="ml__action-btn" id="mlExportBtn">
-              <span class="material-symbols-outlined" style="font-size:14px">content_copy</span> Copy CSS
+              <span class="material-symbols-outlined" style="font-size:14px">content_copy</span> ${motionLabAction('copyCss', 'Copy CSS')}
             </button>
           </div>
 
           <div class="ml__rotating-panel" id="mlRotatingPanel">
             <div class="ml__rotating-panel-head">
               <span class="material-symbols-outlined" style="font-size:14px;color:var(--si-primary)">tips_and_updates</span>
-              <span class="ml__rotating-panel-label">Quick Tips</span>
+              <span class="ml__rotating-panel-label">${motionLabLabel('quickTips', 'Quick Tips')}</span>
             </div>
             <div class="ml__rotating-panel-card" id="mlRotatingPanelCard">
-              <div class="ml__rotating-panel-title" id="mlRotatingPanelTitle">${MOTION_LAB_ROTATING_PANEL_ITEMS[0].title}</div>
-              <p class="ml__rotating-panel-copy" id="mlRotatingPanelCopy">${MOTION_LAB_ROTATING_PANEL_ITEMS[0].body}</p>
+              <div class="ml__rotating-panel-title" id="mlRotatingPanelTitle">${firstQuickTip.title}</div>
+              <p class="ml__rotating-panel-copy" id="mlRotatingPanelCopy">${firstQuickTip.body}</p>
             </div>
             <div class="ml__rotating-panel-dots" id="mlRotatingPanelDots">
               ${MOTION_LAB_ROTATING_PANEL_ITEMS.map((_, index) => `
@@ -6924,7 +6990,7 @@ function renderMotionLab() {
                   type="button"
                   class="ml__rotating-panel-dot${index === 0 ? ' active' : ''}"
                   data-tip-index="${index}"
-                  aria-label="Show tip ${index + 1}"
+                  aria-label="${motionLabText('aria.showTip', 'Show tip {number}', { number: index + 1 })}"
                   aria-current="${index === 0 ? 'true' : 'false'}"
                 ></button>
               `).join('')}
@@ -6937,8 +7003,8 @@ function renderMotionLab() {
       <!-- Right: Properties + Playback -->
       <div class="ml__props-panel" id="mlPropsPanel">
         <div class="ml__panel-header">
-          <span>Properties</span>
-          <button class="ml__reset-btn" id="mlClearBtn" data-tip="Clear All">
+          <span>${motionLabLabel('properties', 'Properties')}</span>
+          <button class="ml__reset-btn" id="mlClearBtn" data-tip="${motionLabTipAttr('clearAll', 'Clear all')}">
             <span class="material-symbols-outlined" style="font-size:15px">restart_alt</span>
           </button>
         </div>
@@ -6946,25 +7012,25 @@ function renderMotionLab() {
         <!-- Properties: Scale, Rotate, Opacity -->
         <div class="ml__props-empty" id="mlPropsContent">
           <span class="material-symbols-outlined" style="font-size:32px;color:var(--si-text-dim)">touch_app</span>
-          <p>Select an element to edit</p>
+          <p>${motionLabText('empty.selectElement', 'Select an element to edit')}</p>
         </div>
 
         <!-- Playback: Intensity, Speed (visible after SVG load) -->
         <div class="ml__playback-section" id="mlPlaybackSection" style="display:none">
-          <div class="ml__section-title">Playback</div>
+          <div class="ml__section-title">${motionLabLabel('playback', 'Playback')}</div>
           <div class="ml__slider-row">
-            <span class="ml__slider-label">Intensity</span>
+            <span class="ml__slider-label">${motionLabLabel('intensity', 'Intensity')}</span>
             <input type="range" class="ml__prop-range" id="mlIntensity" min="10" max="200" step="5" value="100">
             <span class="ml__prop-val" id="mlIntensityVal">100%</span>
-            <button class="ml__ctrl-reset" id="mlIntensityReset" data-tip="Reset">
+            <button class="ml__ctrl-reset" id="mlIntensityReset" data-tip="${motionLabTipAttr('reset', 'Reset')}">
               <span class="material-symbols-outlined" style="font-size:13px">restart_alt</span>
             </button>
           </div>
           <div class="ml__slider-row">
-            <span class="ml__slider-label">Speed</span>
+            <span class="ml__slider-label">${motionLabLabel('speed', 'Speed')}</span>
             <input type="range" class="ml__prop-range" id="mlSpeed" min="100" max="2000" step="50" value="500">
             <span class="ml__prop-val" id="mlSpeedVal">500ms</span>
-            <button class="ml__ctrl-reset" id="mlSpeedReset" data-tip="Reset">
+            <button class="ml__ctrl-reset" id="mlSpeedReset" data-tip="${motionLabTipAttr('reset', 'Reset')}">
               <span class="material-symbols-outlined" style="font-size:13px">restart_alt</span>
             </button>
           </div>
@@ -6974,14 +7040,14 @@ function renderMotionLab() {
     </div>
 
     <div class="desktop-tool-glimpse desktop-tool-glimpse--motionlab" id="mlMobileGlimpse">
-      <div class="desktop-tool-glimpse__card" role="note" aria-label="Motion Lab mobile notice">
-        <div class="desktop-tool-glimpse__eyebrow">Desktop-first tool</div>
-        <h3 class="desktop-tool-glimpse__title">Motion Lab is optimized for desktop</h3>
-        <p class="desktop-tool-glimpse__copy">Preview the workspace here, then open Supericons on a larger screen to animate and export with the full editor.</p>
-        <p class="desktop-tool-glimpse__hint">This mobile view is read-only so you can get a feel for the interface without fighting the controls.</p>
+      <div class="desktop-tool-glimpse__card" role="note" aria-label="${motionLabText('mobile.aria', 'Motion Lab mobile notice')}">
+        <div class="desktop-tool-glimpse__eyebrow">${motionLabText('mobile.eyebrow', 'Desktop-first tool')}</div>
+        <h3 class="desktop-tool-glimpse__title">${motionLabText('mobile.title', 'Motion Lab is optimized for desktop')}</h3>
+        <p class="desktop-tool-glimpse__copy">${motionLabText('mobile.copy', 'Preview the workspace here, then open Supericons on a larger screen to animate and export with the full editor.')}</p>
+        <p class="desktop-tool-glimpse__hint">${motionLabText('mobile.hint', 'This mobile view is read-only so you can get a feel for the interface without fighting the controls.')}</p>
         <div class="desktop-tool-glimpse__actions">
-          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="mlMobileBackBtn">Back to icons</button>
-          <button type="button" class="desktop-tool-glimpse__btn" id="mlMobilePricingBtn">See pricing</button>
+          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="mlMobileBackBtn">${motionLabAction('backToIcons', 'Back to icons')}</button>
+          <button type="button" class="desktop-tool-glimpse__btn" id="mlMobilePricingBtn">${motionLabAction('seePricing', 'See pricing')}</button>
         </div>
       </div>
     </div>
@@ -7057,7 +7123,7 @@ function initMotionLabLoading() {
     try {
       const raw = await navigator.clipboard.readText();
       if (!raw || !raw.trim()) {
-        showToast('Clipboard is empty. Copy an SVG first.');
+        showToast(motionLabText('toasts.clipboardEmpty', 'Clipboard is empty. Copy an SVG first.'));
         return;
       }
       let text = raw.trim();
@@ -7068,11 +7134,11 @@ function initMotionLabLoading() {
       if (text.startsWith('<svg')) {
         loadSvgIntoMotionLab(text);
       } else {
-        showToast('No SVG found in clipboard. Content must start with <svg>.');
+        showToast(motionLabText('toasts.noSvgClipboard', 'No SVG found in clipboard. Content must start with <svg>.'));
       }
     } catch (err) {
       // Clipboard API requires secure context or user gesture
-      showToast('Clipboard access denied. Try copying SVG code and clicking again.');
+      showToast(motionLabText('toasts.clipboardDenied', 'Clipboard access denied. Try copying SVG code and clicking again.'));
     }
   });
 
@@ -7116,7 +7182,7 @@ function initMotionLabLoading() {
       propsContent.className = 'ml__props-empty';
       propsContent.innerHTML = `
         <span class="material-symbols-outlined" style="font-size:32px;color:var(--si-text-dim)">touch_app</span>
-        <p>Select an element to edit</p>
+        <p>${motionLabText('empty.selectElement', 'Select an element to edit')}</p>
       `;
     }
     updateMotionLabAssetProfileHint();
@@ -7508,7 +7574,7 @@ function updatePropsPanel() {
     content.className = 'ml__props-empty';
     content.innerHTML = `
       <span class="material-symbols-outlined" style="font-size:32px;color:var(--si-text-dim)">touch_app</span>
-      <p>Select an element to edit</p>
+      <p>${motionLabText('empty.selectElement', 'Select an element to edit')}</p>
     `;
     return;
   }
@@ -7525,7 +7591,7 @@ function updatePropsPanel() {
       <input type="range" class="ml__prop-range" min="${min}" max="${max}" step="${step}" value="${val}"
         data-prop="${prop}" data-sel="${escapeHtml(selector)}" id="${inputId}">
       <span class="ml__prop-val" id="val_${inputId}">${displayVal}</span>
-      <button class="ml__ctrl-reset" data-reset-prop="${prop}" data-default="${resetDefault}" data-tip="Reset">
+      <button class="ml__ctrl-reset" data-reset-prop="${prop}" data-default="${resetDefault}" data-tip="${escapeHtml(motionLabText('tooltips.reset', 'Reset'))}">
         <span class="material-symbols-outlined" style="font-size:13px">restart_alt</span>
       </button>
     </div>`;
@@ -7533,11 +7599,11 @@ function updatePropsPanel() {
   // Color dot row template (reused for fill and stroke)
   const colorDotRow = (type, activeColor) => {
     const colors = ['#000000','#FFFFFF','#FF6B35','#00D4FF','#A855F7','#22C55E','#FACC15'];
-    let html = `<button class="ml__color-dot ml__color-dot--original${!activeColor ? ' ml__color-dot--active' : ''}" data-color="" data-tip="Default"></button>`;
+    let html = `<button class="ml__color-dot ml__color-dot--original${!activeColor ? ' ml__color-dot--active' : ''}" data-color="" data-tip="${escapeHtml(motionLabText('tooltips.default', 'Default'))}"></button>`;
     colors.forEach(c => {
       html += `<button class="ml__color-dot${activeColor === c ? ' ml__color-dot--active' : ''}" data-color="${c}" data-tip="${c}" style="background:${c}"></button>`;
     });
-    html += `<button class="ml__color-add" id="ml${type}PickerBtn" data-tip="Custom color"><span class="material-symbols-outlined" style="font-size:14px">add</span><input type="color" class="ml__color-picker-hidden" id="ml${type}Picker" value="${activeColor || '#FFFFFF'}"></button>`;
+    html += `<button class="ml__color-add" id="ml${type}PickerBtn" data-tip="${escapeHtml(motionLabText('tooltips.customColor', 'Custom color'))}"><span class="material-symbols-outlined" style="font-size:14px">add</span><input type="color" class="ml__color-picker-hidden" id="ml${type}Picker" value="${activeColor || '#FFFFFF'}"></button>`;
     return html;
   };
 
@@ -7545,7 +7611,7 @@ function updatePropsPanel() {
 
     <!-- Fill color -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Fill</div>
+      <div class="ml__prop-title">${motionLabText('labels.fill', 'Fill')}</div>
       <div class="ml__color-dots" id="mlFillDots">
         ${colorDotRow('Fill', motionLab.fillColor)}
       </div>
@@ -7553,7 +7619,7 @@ function updatePropsPanel() {
 
     <!-- Stroke color -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Stroke</div>
+      <div class="ml__prop-title">${motionLabText('labels.stroke', 'Stroke')}</div>
       <div class="ml__color-dots" id="mlStrokeDots">
         ${colorDotRow('Stroke', motionLab.strokeColor)}
       </div>
@@ -7561,13 +7627,13 @@ function updatePropsPanel() {
 
     <!-- Scale: 0% = no change, negative = shrink, positive = grow -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Scale</div>
-      ${sliderRow('Size', `slScale_${sid}`, -75, 200, 5, 0, 'scalePct', '0%', 0)}
+      <div class="ml__prop-title">${motionLabText('labels.scale', 'Scale')}</div>
+      ${sliderRow(motionLabText('labels.size', 'Size'), `slScale_${sid}`, -75, 200, 5, 0, 'scalePct', '0%', 0)}
     </div>
 
     <!-- Rotate -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Rotate</div>
+      <div class="ml__prop-title">${motionLabText('labels.rotate', 'Rotate')}</div>
       <div class="ml__rotate-row">
         <div class="ml__dial" id="dial_${sid}">
           <div class="ml__dial-needle" id="dialNeedle_${sid}"></div>
@@ -7580,8 +7646,8 @@ function updatePropsPanel() {
 
     <!-- Opacity -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Opacity</div>
-      ${sliderRow('Fade', `slOpac_${sid}`, 0, 1, 0.05, 1, 'opacity', '1.00', 1)}
+      <div class="ml__prop-title">${motionLabText('labels.opacity', 'Opacity')}</div>
+      ${sliderRow(motionLabText('labels.fade', 'Fade'), `slOpac_${sid}`, 0, 1, 0.05, 1, 'opacity', '1.00', 1)}
     </div>
   `;
 
@@ -8377,7 +8443,7 @@ function initMotionLabControls() {
       // Refresh properties panel
       updatePropsPanel();
 
-      showToast('Animation reset');
+      showToast(motionLabText('toasts.animationReset', 'Animation reset'));
     });
   }
 
@@ -8421,7 +8487,7 @@ function initMotionLabControls() {
   if (downloadBtn) {
     downloadBtn.addEventListener('click', async () => {
       const svgEl = document.getElementById('mlPreview')?.querySelector('svg');
-      if (!svgEl) { showToast('Load an SVG first'); return; }
+      if (!svgEl) { showToast(motionLabText('toasts.loadSvgFirst', 'Load an SVG first')); return; }
       const status = await requirePro();
       if (status !== 'pro') {
         if (status === 'free') showLockedExportModal();
@@ -8437,7 +8503,7 @@ function initMotionLabControls() {
       styleTag.textContent = css;
       svgClone.insertBefore(styleTag, svgClone.firstChild);
       downloadFile('animated-icon.svg', svgClone.outerHTML, 'image/svg+xml');
-      showToast('SVG downloaded');
+      showToast(motionLabText('toasts.svgDownloaded', 'SVG downloaded'));
     });
   }
 
@@ -8480,7 +8546,7 @@ function initMotionLabControls() {
       const btn = e.target.closest('[data-preset]');
       if (!btn) return;
       if (motionLab.selectedIds.size === 0) {
-        showToast('Select an element first');
+        showToast(motionLabText('toasts.selectElementFirst', 'Select an element first'));
         return;
       }
       savedTracks = null; // clear stash so mouseout won't revert
@@ -8807,7 +8873,7 @@ function applyPreset(presetName, silent = false) {
   };
 
   generateAndInjectCSS({ forcePlay: true });
-  if (!silent) showToast(`Applied "${presetName}" preset`);
+  if (!silent) showToast(motionLabText('toasts.presetApplied', 'Applied "{name}" preset', { name: presetName }));
 }
 
 /** Compose: merge preset keyframes into existing tracks (Shift+click) */
@@ -8955,30 +9021,30 @@ function createMotionLabExportModal({ cssContent, svgContent, locked = false }) 
   const cssActions = locked ? '' : `
     <div class="ml-modal__actions">
       <button class="ml-modal__action-btn" id="mlCopyCss">
-        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy CSS
+        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> ${motionLabText('export.copyCss', 'Copy CSS')}
       </button>
       <button class="ml-modal__action-btn" id="mlDownloadCss">
-        <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .css
+        <span class="material-symbols-outlined" style="font-size:16px">download</span> ${motionLabText('export.downloadCss', 'Download .css')}
       </button>
     </div>
   `;
   const svgActions = locked ? '' : `
     <div class="ml-modal__actions">
       <button class="ml-modal__action-btn" id="mlCopySvg">
-        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG
+        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> ${motionLabText('export.copySvg', 'Copy SVG')}
       </button>
       <button class="ml-modal__action-btn" id="mlDownloadSvg">
-        <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .svg
+        <span class="material-symbols-outlined" style="font-size:16px">download</span> ${motionLabText('export.downloadSvg', 'Download .svg')}
       </button>
     </div>
   `;
   const upgradeBanner = locked ? `
     <div class="ml-modal__upgrade si-upsell">
-      <div class="si-upsell__eyebrow">Pro feature</div>
-      <div class="si-upsell__title">Export animations with Pro</div>
-      <p class="si-upsell__body">Preview every preset for free, then subscribe to copy CSS or download the final animated SVG.</p>
+      <div class="si-upsell__eyebrow">${motionLabText('upsell.eyebrow', 'Pro feature')}</div>
+      <div class="si-upsell__title">${motionLabText('upsell.title', 'Export animations with Pro')}</div>
+      <p class="si-upsell__body">${motionLabText('upsell.body', 'Preview every preset for free, then subscribe to copy CSS or download the final animated SVG.')}</p>
       ${getUpgradeCtasMarkup()}
-      <button class="si-upsell__dismiss" data-upsell-dismiss>Maybe Later</button>
+      <button class="si-upsell__dismiss" data-upsell-dismiss>${motionLabText('upsell.dismiss', 'Maybe Later')}</button>
     </div>
   ` : '';
 
@@ -8986,14 +9052,14 @@ function createMotionLabExportModal({ cssContent, svgContent, locked = false }) 
     <div class="ml-modal__backdrop"></div>
     <div class="ml-modal__box">
       <div class="ml-modal__header">
-        <span>Export Animation</span>
+        <span>${motionLabText('export.title', 'Export Animation')}</span>
         <button class="ml-modal__close" id="mlModalClose">
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
       <div class="ml-modal__tabs">
         <button class="ml-modal__tab ml-modal__tab--active" data-tab="css">CSS</button>
-        <button class="ml-modal__tab" data-tab="svg">Self-contained SVG</button>
+        <button class="ml-modal__tab" data-tab="svg">${motionLabText('export.selfContainedSvg', 'Self-contained SVG')}</button>
       </div>
       <div class="ml-modal__body">
         <div class="ml-modal__tab-content" data-tab-panel="css">
@@ -9035,7 +9101,7 @@ function showExportModal() {
   const rawCSS = generateFullCSS();
   const cleanCSS = rawCSS
     ? buildMotionLabExternalCss()
-    : '/* No animations defined yet */';
+    : motionLabText('export.noAnimationsComment', '/* No animations defined yet */');
 
   // Self-contained SVG tab
   const svgEl = document.getElementById('mlPreview')?.querySelector('svg');
@@ -9055,11 +9121,11 @@ function showExportModal() {
 
   const modal = createMotionLabExportModal({
     cssContent: cleanCSS,
-    svgContent: svgExport || '<!-- Load an SVG first -->',
+    svgContent: svgExport || motionLabText('export.loadSvgComment', '<!-- Load an SVG first -->'),
   });
 
   modal.querySelector('#mlCopyCss')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(cleanCSS).then(() => showToast('CSS copied!'));
+    navigator.clipboard.writeText(cleanCSS).then(() => showToast(motionLabText('toasts.cssCopied', 'CSS copied!')));
   });
 
   modal.querySelector('#mlDownloadCss')?.addEventListener('click', () => {
@@ -9067,7 +9133,7 @@ function showExportModal() {
   });
 
   modal.querySelector('#mlCopySvg')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(svgExport).then(() => showToast('SVG copied!'));
+    navigator.clipboard.writeText(svgExport).then(() => showToast(motionLabText('toasts.svgCopied', 'SVG copied!')));
   });
 
   modal.querySelector('#mlDownloadSvg')?.addEventListener('click', () => {
@@ -9102,11 +9168,11 @@ function showUpgradePrompt(anchorEl, context) {
   prompt.setAttribute('role', 'dialog');
   prompt.setAttribute('aria-live', 'polite');
   prompt.innerHTML = `
-    <div class="si-upsell__eyebrow">Pro feature</div>
-    <div class="si-upsell__title">Exporting ${escapeHtml(context)} requires Pro</div>
-    <p class="si-upsell__body">Keep previewing and adjusting settings for free. Subscribe to download files or copy the converted output.</p>
+    <div class="si-upsell__eyebrow">${converterText('upsell.eyebrow', 'Pro feature')}</div>
+    <div class="si-upsell__title">${converterText('upsell.title', 'Exporting {context} requires Pro', { context: escapeHtml(context) })}</div>
+    <p class="si-upsell__body">${converterText('upsell.body', 'Keep previewing and adjusting settings for free. Subscribe to download files or copy the converted output.')}</p>
     ${getUpgradeCtasMarkup()}
-    <button class="si-upsell__dismiss" data-upsell-dismiss>Maybe Later</button>
+    <button class="si-upsell__dismiss" data-upsell-dismiss>${converterText('upsell.dismiss', 'Maybe Later')}</button>
   `;
   document.body.appendChild(prompt);
 
@@ -9303,6 +9369,20 @@ const CONVERTER_NOISE_OPTIONS = [
   { key: 'medium', label: 'Medium' },
   { key: 'high', label: 'High' },
 ];
+
+function getConverterCompareOptions() {
+  return CONVERTER_COMPARE_OPTIONS.map((option) => ({
+    ...option,
+    label: converterText(`options.compare.${option.key}`, option.label),
+  }));
+}
+
+function getConverterNoiseOptions() {
+  return CONVERTER_NOISE_OPTIONS.map((option) => ({
+    ...option,
+    label: converterText(`options.noise.${option.key}`, option.label),
+  }));
+}
 const CONVERTER_PREVIEW_ZOOM_MIN = 1;
 const CONVERTER_PREVIEW_ZOOM_MAX = 2;
 const CONVERTER_PREVIEW_ZOOM_STEP = 0.1;
@@ -9331,11 +9411,11 @@ function replaceConverterOutputObjectUrl(nextUrl = '') {
 
 function renderConverterColorDotRow(type, activeColor, disabled = false) {
   const disabledAttrs = disabled ? ' disabled aria-disabled="true"' : '';
-  let html = `<button type="button" class="conv__color-dot conv__color-dot--original${!activeColor ? ' conv__color-dot--active' : ''}${disabled ? ' is-disabled' : ''}" data-conv-color="" data-conv-color-kind="${type}" data-tip="Default"${disabledAttrs}></button>`;
+  let html = `<button type="button" class="conv__color-dot conv__color-dot--original${!activeColor ? ' conv__color-dot--active' : ''}${disabled ? ' is-disabled' : ''}" data-conv-color="" data-conv-color-kind="${type}" data-tip="${escapeHtml(converterText('tooltips.default', 'Default'))}"${disabledAttrs}></button>`;
   CONVERTER_COLOR_SWATCHES.forEach((color) => {
     html += `<button type="button" class="conv__color-dot${activeColor === color ? ' conv__color-dot--active' : ''}${disabled ? ' is-disabled' : ''}" data-conv-color="${color}" data-conv-color-kind="${type}" data-tip="${color}" style="background:${color}"${disabledAttrs}></button>`;
   });
-  html += `<label class="conv__color-add${disabled ? ' is-disabled' : ''}" data-tip="Custom color">
+  html += `<label class="conv__color-add${disabled ? ' is-disabled' : ''}" data-tip="${escapeHtml(converterText('tooltips.customColor', 'Custom color'))}">
     <span class="material-symbols-outlined" style="font-size:14px">add</span>
     <input type="color" class="conv__color-picker-hidden" id="conv${type}Picker" value="${activeColor || '#FFFFFF'}"${disabled ? ' disabled' : ''}>
   </label>`;
@@ -9354,10 +9434,10 @@ function renderConverterChipGroup(groupId, options, activeKey, dataAttr) {
 }
 
 function getConverterPresetLabel(preset) {
-  if (preset === 'auto') return 'Auto';
-  if (preset === 'detailed') return 'Exact';
-  if (preset === 'default') return 'Balanced';
-  return 'Compact';
+  if (preset === 'auto') return converterText('options.auto', 'Auto');
+  if (preset === 'detailed') return converterText('options.exact', 'Exact');
+  if (preset === 'default') return converterText('options.balanced', 'Balanced');
+  return converterText('options.compact', 'Compact');
 }
 
 function getConverterDefaultExportLongestEdge(assetMode = 'logo') {
@@ -9605,8 +9685,8 @@ function prepareConverterSvgForRasterization(svgText) {
     advice: {
       tone: 'warn',
       text: risks.hasTextNode
-        ? 'External web font imports were removed so this SVG can render. The PNG may use a fallback font unless the text is converted to paths.'
-        : 'External web font imports were removed so this SVG can render reliably in the browser export path.',
+        ? converterText('advice.externalFontsText', 'External web font imports were removed so this SVG can render. The PNG may use a fallback font unless the text is converted to paths.')
+        : converterText('advice.externalFonts', 'External web font imports were removed so this SVG can render reliably in the browser export path.'),
     },
     risks,
   };
@@ -10847,14 +10927,14 @@ function getConverterTraceAdvice({
   if (resolvedPreset === 'detailed' && (traceMetrics.pathCount >= 700 || sizeKb >= 160)) {
     return {
       tone: 'info',
-      text: 'Exact keeps more detail and can produce a larger SVG. Switch to Compact if you want a smaller file.',
+      text: converterText('advice.exactLarge', 'Exact keeps more detail and can produce a larger SVG. Switch to Compact if you want a smaller file.'),
     };
   }
 
   if (resolvedPreset !== 'posterized2' && (traceMetrics.pathCount >= 1200 || sizeKb >= 300)) {
     return {
       tone: 'info',
-      text: 'This SVG is on the larger side. Switch to Compact if you want a smaller file.',
+      text: converterText('advice.svgLarge', 'This SVG is on the larger side. Switch to Compact if you want a smaller file.'),
     };
   }
 
@@ -10951,14 +11031,17 @@ function renderConverter() {
   const view = document.createElement('div');
   view.id = 'converterView';
   view.className = 'converter';
+  const converterLabel = (key, fallback) => converterText(`labels.${key}`, fallback);
+  const converterAction = (key, fallback) => converterText(`actions.${key}`, fallback);
+  const converterTipAttr = (key, fallback) => escapeHtml(converterText(`tooltips.${key}`, fallback));
   view.innerHTML = `
     <div class="conv__header">
       <div class="conv__mode-tabs">
         <button class="conv__mode-tab conv__mode-tab--active" id="convSvgToPng" data-mode="svg-to-png">
-          <span class="material-symbols-outlined" style="font-size:16px">image</span> SVG → PNG
+          <span class="material-symbols-outlined" style="font-size:16px">image</span> ${converterText('modes.svgToPng', 'SVG → PNG')}
         </button>
         <button class="conv__mode-tab" id="convPngToSvg" data-mode="png-to-svg">
-          <span class="material-symbols-outlined" style="font-size:16px">code</span> PNG → SVG
+          <span class="material-symbols-outlined" style="font-size:16px">code</span> ${converterText('modes.pngToSvg', 'PNG → SVG')}
         </button>
       </div>
     </div>
@@ -10966,23 +11049,23 @@ function renderConverter() {
     <div class="conv__body">
       <!-- Input Panel -->
       <div class="conv__panel conv__panel--input">
-        <div class="conv__panel-label">Input</div>
+        <div class="conv__panel-label">${converterLabel('input', 'Input')}</div>
         <div class="conv__drop-zone" id="convDropZone">
           <input type="file" id="convFileInput" accept=".svg,.png,.jpg,.jpeg,.gif,.webp" style="display:none">
           <span class="material-symbols-outlined conv__drop-icon">upload_file</span>
-          <p class="conv__drop-text" id="convDropText">Drop an SVG here or click to browse</p>
+          <p class="conv__drop-text" id="convDropText">${converterText('empty.dropSvg', 'Drop an SVG here or click to browse')}</p>
           <div class="conv__drop-btns">
-            <button class="conv__drop-btn" id="convBrowseBtn">Browse</button>
-            <button class="conv__drop-btn conv__drop-btn--ghost" id="convPasteBtn">Paste SVG Code</button>
+            <button class="conv__drop-btn" id="convBrowseBtn">${converterAction('browse', 'Browse')}</button>
+            <button class="conv__drop-btn conv__drop-btn--ghost" id="convPasteBtn">${converterAction('pasteSvgCode', 'Paste SVG Code')}</button>
           </div>
         </div>
         <div class="conv__input-preview" id="convInputPreview" style="display:none">
-          <button class="conv__clear-btn" id="convClearBtn" aria-label="Clear converter input">
+          <button class="conv__clear-btn" id="convClearBtn" aria-label="${converterText('aria.clearInput', 'Clear converter input')}">
             <span class="material-symbols-outlined" style="font-size:16px">close</span>
           </button>
           <div class="conv__input-stage" id="convInputStage">
             <div class="conv__input-surface" id="convInputSurface">
-              <img class="conv__preview-img" id="convInputImg" alt="Input">
+              <img class="conv__preview-img" id="convInputImg" alt="${converterText('aria.inputPreview', 'Input')}">
             </div>
           </div>
           <div class="conv__input-meta" id="convInputMeta"></div>
@@ -10996,23 +11079,23 @@ function renderConverter() {
 
       <!-- Output Panel -->
       <div class="conv__panel conv__panel--output">
-        <div class="conv__panel-label">Output</div>
+        <div class="conv__panel-label">${converterLabel('output', 'Output')}</div>
         <div class="conv__output-empty" id="convOutputEmpty">
           <span class="material-symbols-outlined" style="font-size:40px;color:var(--si-text-dim)">image_search</span>
-          <p>Preview appears here</p>
+          <p>${converterText('empty.previewAppears', 'Preview appears here')}</p>
         </div>
         <div class="conv__output-preview" id="convOutputPreview" style="display:none">
           <div class="conv__preview-stage" id="convPreviewStage" data-preview-bg="transparent">
             <div class="conv__compare-overlay" id="convCompareOverlay">
-              <img class="conv__preview-img conv__preview-img--original" id="convOriginalOverlayImg" alt="Original preview">
-              <img class="conv__preview-img conv__preview-img--output" id="convOutputOverlayImg" alt="Output preview">
+              <img class="conv__preview-img conv__preview-img--original" id="convOriginalOverlayImg" alt="${converterText('aria.originalPreview', 'Original preview')}">
+              <img class="conv__preview-img conv__preview-img--output" id="convOutputOverlayImg" alt="${converterText('aria.outputPreview', 'Output preview')}">
             </div>
             <div class="conv__compare-split" id="convCompareSplit" hidden>
               <div class="conv__compare-pane">
-                <img class="conv__preview-img" id="convOriginalSplitImg" alt="Original split preview">
+                <img class="conv__preview-img" id="convOriginalSplitImg" alt="${converterText('aria.originalSplitPreview', 'Original split preview')}">
               </div>
               <div class="conv__compare-pane">
-                <img class="conv__preview-img" id="convOutputSplitImg" alt="Output split preview">
+                <img class="conv__preview-img" id="convOutputSplitImg" alt="${converterText('aria.outputSplitPreview', 'Output split preview')}">
               </div>
             </div>
           </div>
@@ -11020,10 +11103,10 @@ function renderConverter() {
           <div class="conv__actions" id="convActions" style="display:none">
             <button class="conv__action-btn conv__action-btn--primary" id="convDownload">
               <span class="material-symbols-outlined" style="font-size:16px">download</span>
-              <span id="convDownloadLabel">Download PNG</span>
+              <span id="convDownloadLabel">${converterAction('downloadPng', 'Download PNG')}</span>
             </button>
             <button class="conv__action-btn" id="convCopyClipboard">
-              <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> <span id="convCopyLabel">Copy</span>
+              <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> <span id="convCopyLabel">${converterAction('copy', 'Copy')}</span>
             </button>
           </div>
         </div>
@@ -11036,7 +11119,7 @@ function renderConverter() {
       <!-- SVG→PNG options (shown by default) -->
       <div class="conv__opts-group" id="convSvgOpts">
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Size <span class="conv__tip-icon" data-tip="Output width in pixels. The height adjusts automatically to maintain aspect ratio.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('size', 'Size')} <span class="conv__tip-icon" data-tip="${converterTipAttr('size', 'Output width in pixels. The height adjusts automatically to maintain aspect ratio.')}">?</span></label>
           <div class="conv__size-presets">
             <button class="conv__size-btn" data-size="32">32</button>
             <button class="conv__size-btn conv__size-btn--active" data-size="64">64</button>
@@ -11050,35 +11133,35 @@ function renderConverter() {
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Fill <span class="conv__tip-icon" data-tip="Recolors visible fill shapes. Some uploaded SVGs may be stroke-only.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('fill', 'Fill')} <span class="conv__tip-icon" data-tip="${converterTipAttr('fill', 'Recolors visible fill shapes. Some uploaded SVGs may be stroke-only.')}">?</span></label>
           <div class="conv__color-dots" id="convFillDots">
             ${renderConverterColorDotRow('Fill', converterState.fillColor, true)}
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Stroke <span class="conv__tip-icon" data-tip="Recolors visible stroke paths. Some uploaded SVGs may be fill-only.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('stroke', 'Stroke')} <span class="conv__tip-icon" data-tip="${converterTipAttr('stroke', 'Recolors visible stroke paths. Some uploaded SVGs may be fill-only.')}">?</span></label>
           <div class="conv__color-dots" id="convStrokeDots">
             ${renderConverterColorDotRow('Stroke', converterState.strokeColor, true)}
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Background <span class="conv__tip-icon" data-tip="Choose a background color for the exported PNG. Transparent is ideal for icons used in apps and websites.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('background', 'Background')} <span class="conv__tip-icon" data-tip="${converterTipAttr('background', 'Choose a background color for the exported PNG. Transparent is ideal for icons used in apps and websites.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convBg" value="transparent" checked> Transparent</label>
-            <label class="conv__radio"><input type="radio" name="convBg" value="white"> White</label>
-            <label class="conv__radio"><input type="radio" name="convBg" value="custom"> Custom</label>
+            <label class="conv__radio"><input type="radio" name="convBg" value="transparent" checked> ${converterText('options.transparent', 'Transparent')}</label>
+            <label class="conv__radio"><input type="radio" name="convBg" value="white"> ${converterText('options.white', 'White')}</label>
+            <label class="conv__radio"><input type="radio" name="convBg" value="custom"> ${converterText('options.custom', 'Custom')}</label>
             <input type="color" id="convBgColor" value="#ffffff" class="conv__color-input" style="display:none">
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Padding <span class="conv__tip-icon" data-tip="Adds inner spacing between the icon and the image edge. Useful for app icons and social media avatars.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('padding', 'Padding')} <span class="conv__tip-icon" data-tip="${converterTipAttr('padding', 'Adds inner spacing between the icon and the image edge. Useful for app icons and social media avatars.')}">?</span></label>
           <div class="conv__slider-row">
             <input type="range" id="convPadding" min="0" max="32" value="8" class="conv__slider">
             <span class="conv__slider-val" id="convPaddingVal">8px</span>
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Quality <span class="conv__tip-icon" data-tip="Multiplies the output resolution. 2x at 64px produces a 128px image. Use 2x or 3x for Retina/HiDPI displays.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('quality', 'Quality')} <span class="conv__tip-icon" data-tip="${converterTipAttr('quality', 'Multiplies the output resolution. 2x at 64px produces a 128px image. Use 2x or 3x for Retina/HiDPI displays.')}">?</span></label>
           <div class="conv__bg-options">
             <label class="conv__radio"><input type="radio" name="convQuality" value="1" checked> 1x</label>
             <label class="conv__radio"><input type="radio" name="convQuality" value="2"> 2x</label>
@@ -11086,34 +11169,34 @@ function renderConverter() {
             <label class="conv__radio"><input type="radio" name="convQuality" value="4"> 4x</label>
           </div>
         </div>
-        <button class="conv__reset-btn" id="convResetSvg" data-tip="Reset to defaults">
-          <span class="material-symbols-outlined">restart_alt</span> Reset
+        <button class="conv__reset-btn" id="convResetSvg" data-tip="${converterTipAttr('resetDefaults', 'Reset to defaults')}">
+          <span class="material-symbols-outlined">restart_alt</span> ${converterAction('reset', 'Reset')}
         </button>
       </div>
 
       <!-- PNG→SVG options (hidden by default) -->
       <div class="conv__opts-group" id="convPngOpts" style="display:none">
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Mode <span class="conv__tip-icon" data-tip="Icon preserves tiny symbols and cutouts. Logo is tuned for flat brand artwork and raster logos.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('mode', 'Mode')} <span class="conv__tip-icon" data-tip="${converterTipAttr('mode', 'Icon preserves tiny symbols and cutouts. Logo is tuned for flat brand artwork and raster logos.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convAssetMode" value="icon"> Icon</label>
-            <label class="conv__radio"><input type="radio" name="convAssetMode" value="logo" checked> Logo</label>
+            <label class="conv__radio"><input type="radio" name="convAssetMode" value="icon"> ${converterText('options.icon', 'Icon')}</label>
+            <label class="conv__radio"><input type="radio" name="convAssetMode" value="logo" checked> ${converterText('options.logo', 'Logo')}</label>
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Preset <span class="conv__tip-icon" data-tip="Auto chooses the best trace path. Compact favors smaller SVGs. Exact keeps more detail when fidelity matters most.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('preset', 'Preset')} <span class="conv__tip-icon" data-tip="${converterTipAttr('preset', 'Auto chooses the best trace path. Compact favors smaller SVGs. Exact keeps more detail when fidelity matters most.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convPreset" value="auto" checked> Auto</label>
-            <label class="conv__radio"><input type="radio" name="convPreset" value="posterized2"> Compact</label>
-            <label class="conv__radio"><input type="radio" name="convPreset" value="detailed"> Exact</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="auto" checked> ${converterText('options.auto', 'Auto')}</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="posterized2"> ${converterText('options.compact', 'Compact')}</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="detailed"> ${converterText('options.exact', 'Exact')}</label>
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Output Size <span class="conv__tip-icon" data-tip="Auto uses a practical export size. Original keeps the cropped PNG dimensions. Custom sets export width in px and derives height automatically. This changes export dimensions, not preview size, and usually does not reduce SVG KB unless the paths are simplified.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('outputSize', 'Output Size')} <span class="conv__tip-icon" data-tip="${converterTipAttr('outputSize', 'Auto uses a practical export size. Original keeps the cropped PNG dimensions. Custom sets export width in px and derives height automatically. This changes export dimensions, not preview size, and usually does not reduce SVG KB unless the paths are simplified.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="auto" checked> Auto</label>
-            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="original"> Original</label>
-            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="custom"> Custom</label>
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="auto" checked> ${converterText('options.auto', 'Auto')}</label>
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="original"> ${converterText('options.original', 'Original')}</label>
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="custom"> ${converterText('options.custom', 'Custom')}</label>
             <div class="conv__size-custom-wrap" id="convExportWidthWrap" style="display:none">
               <input type="number" class="conv__size-custom" id="convExportWidth" min="16" max="4096" value="512">
               <span class="conv__size-custom-unit">px</span>
@@ -11121,42 +11204,42 @@ function renderConverter() {
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Background <span class="conv__tip-icon" data-tip="Changes the preview surface only so you can inspect the traced SVG on different backgrounds.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('background', 'Background')} <span class="conv__tip-icon" data-tip="${converterTipAttr('previewBackground', 'Changes the preview surface only so you can inspect the traced SVG on different backgrounds.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="transparent" checked> Transparent</label>
-            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="white"> White</label>
-            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="black"> Black</label>
-            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="custom"> Custom</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="transparent" checked> ${converterText('options.transparent', 'Transparent')}</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="white"> ${converterText('options.white', 'White')}</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="black"> ${converterText('options.black', 'Black')}</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="custom"> ${converterText('options.custom', 'Custom')}</label>
             <input type="color" id="convPreviewBgColor" value="#ffffff" class="conv__color-input" style="display:none">
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Compare <span class="conv__tip-icon" data-tip="Switch between the traced result and the original source to judge fidelity.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('compare', 'Compare')} <span class="conv__tip-icon" data-tip="${converterTipAttr('compare', 'Switch between the traced result and the original source to judge fidelity.')}">?</span></label>
           <div class="conv__chip-group" id="convCompareModes">
-            ${renderConverterChipGroup('compare', CONVERTER_COMPARE_OPTIONS, converterState.compareMode, 'compare')}
+            ${renderConverterChipGroup('compare', getConverterCompareOptions(), converterState.compareMode, 'compare')}
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Helpers <span class="conv__tip-icon" data-tip="Auto Crop trims empty edges around the source image before tracing, which usually gives cleaner logo and icon results.">?</span></label>
+          <label class="conv__opt-label">${converterLabel('helpers', 'Helpers')} <span class="conv__tip-icon" data-tip="${converterTipAttr('helpers', 'Auto Crop trims empty edges around the source image before tracing, which usually gives cleaner logo and icon results.')}">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="checkbox" id="convAutoCrop" checked> Auto Crop</label>
+            <label class="conv__radio"><input type="checkbox" id="convAutoCrop" checked> ${converterText('options.autoCrop', 'Auto Crop')}</label>
           </div>
         </div>
-        <button class="conv__reset-btn" id="convResetPng" data-tip="Reset to defaults">
-          <span class="material-symbols-outlined">restart_alt</span> Reset
+        <button class="conv__reset-btn" id="convResetPng" data-tip="${converterTipAttr('resetDefaults', 'Reset to defaults')}">
+          <span class="material-symbols-outlined">restart_alt</span> ${converterAction('reset', 'Reset')}
         </button>
       </div>
     </div>
 
     <div class="desktop-tool-glimpse desktop-tool-glimpse--converter" id="convMobileGlimpse">
-      <div class="desktop-tool-glimpse__card" role="note" aria-label="Converter mobile notice">
-        <div class="desktop-tool-glimpse__eyebrow">Desktop-first tool</div>
-        <h3 class="desktop-tool-glimpse__title">Converter is optimized for desktop</h3>
-        <p class="desktop-tool-glimpse__copy">Preview the converter here, then open Supericons on a larger screen to convert and export files with the full workspace.</p>
-        <p class="desktop-tool-glimpse__hint">On smaller screens this stays read-only so the interface remains clear instead of cramped.</p>
+      <div class="desktop-tool-glimpse__card" role="note" aria-label="${converterText('mobile.aria', 'Converter mobile notice')}">
+        <div class="desktop-tool-glimpse__eyebrow">${converterText('mobile.eyebrow', 'Desktop-first tool')}</div>
+        <h3 class="desktop-tool-glimpse__title">${converterText('mobile.title', 'Converter is optimized for desktop')}</h3>
+        <p class="desktop-tool-glimpse__copy">${converterText('mobile.copy', 'Preview the converter here, then open Supericons on a larger screen to convert and export files with the full workspace.')}</p>
+        <p class="desktop-tool-glimpse__hint">${converterText('mobile.hint', 'On smaller screens this stays read-only so the interface remains clear instead of cramped.')}</p>
         <div class="desktop-tool-glimpse__actions">
-          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="convMobileBackBtn">Back to icons</button>
-          <button type="button" class="desktop-tool-glimpse__btn" id="convMobilePricingBtn">See pricing</button>
+          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="convMobileBackBtn">${converterAction('backToIcons', 'Back to icons')}</button>
+          <button type="button" class="desktop-tool-glimpse__btn" id="convMobilePricingBtn">${converterAction('seePricing', 'See pricing')}</button>
         </div>
       </div>
     </div>
@@ -11181,14 +11264,13 @@ function renderConverterLab() {
   intro.id = 'converterLabIntro';
   intro.style.marginBottom = '20px';
   intro.innerHTML = `
-    <div class="desktop-tool-glimpse__eyebrow">Experimental route</div>
+    <div class="desktop-tool-glimpse__eyebrow">${converterText('lab.experimentalRoute', 'Experimental route')}</div>
     <p style="margin: 10px 0 0; max-width: 760px; color: var(--si-text-dim);">
-      This lab is isolated from the stable converter. Its settings persist separately so we can test ideas here
-      without mutating the current production browser workflow.
+      ${converterText('lab.intro', 'This lab is isolated from the stable converter. Its settings persist separately so we can test ideas here without changing the current production browser workflow.')}
     </p>
     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 12px;">
-      <button class="collection-detail__buy-btn" id="converterLabOpenStableBtn">Open stable converter</button>
-      <button class="collection-detail__buy-btn collection-detail__buy-btn--ghost" id="converterLabBackBtn">Back to icons</button>
+      <button class="collection-detail__buy-btn" id="converterLabOpenStableBtn">${converterText('lab.openStable', 'Open stable converter')}</button>
+      <button class="collection-detail__buy-btn collection-detail__buy-btn--ghost" id="converterLabBackBtn">${converterText('actions.backToIcons', 'Back to icons')}</button>
     </div>
   `;
 
@@ -11204,9 +11286,9 @@ function renderConverterLab() {
     labPanel.style.marginBottom = '16px';
     labPanel.innerHTML = `
       <div class="conv__opt-row" style="display:block;">
-        <label class="conv__opt-label">Lab Strategy</label>
+        <label class="conv__opt-label">${converterText('lab.strategy', 'Lab Strategy')}</label>
         <p style="margin: 6px 0 12px; color: var(--si-text-dim);">
-          Strategy affects only the lab route. Stable baseline matches the current converter. Brand color first is an experimental logo path for colored marks.
+          ${converterText('lab.strategyHelp', 'Strategy affects only the lab route. Stable baseline matches the current converter. Brand color first is an experimental logo path for colored marks.')}
         </p>
         <div class="conv__chip-group" id="converterLabStrategyGroup" style="display:flex; flex-wrap:wrap; gap:8px;">
           ${CONVERTER_LAB_STRATEGIES.map((strategy) => `
@@ -11214,15 +11296,15 @@ function renderConverterLab() {
               type="button"
               class="conv__chip-btn"
               data-converter-lab-strategy="${strategy.key}"
-              title="${strategy.note}"
-            >${strategy.label}</button>
+              title="${getConverterLabStrategyNote(strategy)}"
+            >${getConverterLabStrategyLabel(strategy)}</button>
           `).join('')}
         </div>
       </div>
       <div class="conv__opt-row" style="display:block;">
-        <label class="conv__opt-label">Lab Starter Profiles</label>
+        <label class="conv__opt-label">${converterText('lab.starterProfiles', 'Lab Starter Profiles')}</label>
         <p style="margin: 6px 0 12px; color: var(--si-text-dim);">
-          These are lab-only helper presets. They do not change the stable converter and exist to speed up side-by-side testing.
+          ${converterText('lab.starterHelp', 'These are lab-only helper presets. They do not change the stable converter and exist to speed up side-by-side testing.')}
         </p>
         <div class="conv__chip-group" id="converterLabStarterGroup" style="display:flex; flex-wrap:wrap; gap:8px;">
           ${CONVERTER_LAB_STARTERS.map((starter) => `
@@ -11230,13 +11312,13 @@ function renderConverterLab() {
               type="button"
               class="conv__chip-btn"
               data-converter-lab-starter="${starter.key}"
-              title="${starter.note}"
-            >${starter.label}</button>
+              title="${getConverterLabStarterNote(starter)}"
+            >${getConverterLabStarterLabel(starter)}</button>
           `).join('')}
         </div>
       </div>
       <div class="conv__opt-row" style="display:block; margin-top: 16px;">
-        <label class="conv__opt-label">Live Lab Summary</label>
+        <label class="conv__opt-label">${converterText('lab.liveSummary', 'Live Lab Summary')}</label>
         <div
           id="converterLabSummary"
           style="margin-top: 8px; padding: 12px; border: 1px solid var(--si-border); border-radius: 12px; background: var(--si-surface-2); color: var(--si-text-dim);"
@@ -11314,6 +11396,22 @@ const CONVERTER_LAB_STRATEGIES = [
   },
 ];
 
+function getConverterLabStarterLabel(starter) {
+  return converterText(`lab.starters.${starter.key}.label`, starter.label);
+}
+
+function getConverterLabStarterNote(starter) {
+  return converterText(`lab.starters.${starter.key}.note`, starter.note);
+}
+
+function getConverterLabStrategyLabel(strategy) {
+  return converterText(`lab.strategies.${strategy.key}.label`, strategy.label);
+}
+
+function getConverterLabStrategyNote(strategy) {
+  return converterText(`lab.strategies.${strategy.key}.note`, strategy.note);
+}
+
 function getActiveConverterLabStarterKey() {
   const match = CONVERTER_LAB_STARTERS.find((starter) => (
     starter.assetMode === converterState.assetMode
@@ -11326,10 +11424,15 @@ function updateConverterLabSummary() {
   const summary = document.getElementById('converterLabSummary');
   if (!summary) return;
 
-  const proofServiceState = CONVERTER_PROOF_SERVICE_URL ? 'Configured' : 'Browser only';
+  const proofServiceState = CONVERTER_PROOF_SERVICE_URL
+    ? converterText('lab.configured', 'Configured')
+    : converterText('lab.browserOnly', 'Browser only');
   const outputMetrics = converterState.traceMetrics
-    ? `${converterState.traceMetrics.pathCount} paths · ${converterState.traceMetrics.complexity}`
-    : 'No trace metrics yet';
+    ? converterText('lab.pathMetrics', '{count} paths · {complexity}', {
+        count: converterState.traceMetrics.pathCount,
+        complexity: converterState.traceMetrics.complexity,
+      })
+    : converterText('lab.noTraceMetrics', 'No trace metrics yet');
   const activeStarter = getActiveConverterLabStarterKey();
   const activeStrategy = CONVERTER_LAB_STRATEGIES.find((strategy) => strategy.key === converterState.labStrategy);
 
@@ -11342,18 +11445,18 @@ function updateConverterLabSummary() {
 
   summary.innerHTML = `
     <div style="display:grid; gap:8px;">
-      <div><strong>Mode:</strong> ${converterState.mode === 'png-to-svg' ? 'PNG → SVG' : 'SVG → PNG'}</div>
-      <div><strong>Strategy:</strong> ${activeStrategy?.label || converterState.labStrategy}</div>
-      <div><strong>Asset mode:</strong> ${converterState.assetMode}</div>
-      <div><strong>Preset:</strong> ${getConverterPresetLabel(converterState.preset)}</div>
-      <div><strong>Compare:</strong> ${converterState.compareMode}</div>
-      <div><strong>Proof service:</strong> ${proofServiceState}</div>
-      <div><strong>Trace route:</strong> ${converterState.labLastTraceRoute || 'Not resolved yet'}</div>
-      <div><strong>Trace class:</strong> ${converterState.labLastTraceClass || 'Not resolved yet'}</div>
-      <div><strong>Service mode:</strong> ${converterState.labLastServiceRequestedColorMode || 'Not resolved yet'}</div>
-      <div><strong>Service quality:</strong> ${converterState.labLastServiceQualityMode || 'Not resolved yet'}</div>
-      <div><strong>Trace summary:</strong> ${outputMetrics}</div>
-      <div><strong>Export target:</strong> ${converterState.exportSizeMode}${converterState.exportSizeMode === 'custom' ? ` (${converterState.exportTargetWidth}px)` : ''}</div>
+      <div><strong>${converterText('lab.summary.mode', 'Mode')}:</strong> ${converterState.mode === 'png-to-svg' ? converterText('modes.pngToSvg', 'PNG → SVG') : converterText('modes.svgToPng', 'SVG → PNG')}</div>
+      <div><strong>${converterText('lab.summary.strategy', 'Strategy')}:</strong> ${activeStrategy ? getConverterLabStrategyLabel(activeStrategy) : converterState.labStrategy}</div>
+      <div><strong>${converterText('lab.summary.assetMode', 'Asset mode')}:</strong> ${converterState.assetMode}</div>
+      <div><strong>${converterText('lab.summary.preset', 'Preset')}:</strong> ${getConverterPresetLabel(converterState.preset)}</div>
+      <div><strong>${converterText('lab.summary.compare', 'Compare')}:</strong> ${converterState.compareMode}</div>
+      <div><strong>${converterText('lab.summary.proofService', 'Proof service')}:</strong> ${proofServiceState}</div>
+      <div><strong>${converterText('lab.summary.traceRoute', 'Trace route')}:</strong> ${converterState.labLastTraceRoute || converterText('lab.notResolved', 'Not resolved yet')}</div>
+      <div><strong>${converterText('lab.summary.traceClass', 'Trace class')}:</strong> ${converterState.labLastTraceClass || converterText('lab.notResolved', 'Not resolved yet')}</div>
+      <div><strong>${converterText('lab.summary.serviceMode', 'Service mode')}:</strong> ${converterState.labLastServiceRequestedColorMode || converterText('lab.notResolved', 'Not resolved yet')}</div>
+      <div><strong>${converterText('lab.summary.serviceQuality', 'Service quality')}:</strong> ${converterState.labLastServiceQualityMode || converterText('lab.notResolved', 'Not resolved yet')}</div>
+      <div><strong>${converterText('lab.summary.traceSummary', 'Trace summary')}:</strong> ${outputMetrics}</div>
+      <div><strong>${converterText('lab.summary.exportTarget', 'Export target')}:</strong> ${converterState.exportSizeMode}${converterState.exportSizeMode === 'custom' ? ` (${converterState.exportTargetWidth}px)` : ''}</div>
     </div>
   `;
 }
@@ -11401,18 +11504,18 @@ function initConverterControls() {
       if (converterState.mode === 'svg-to-png') {
         if (svgOpts) svgOpts.style.display = '';
         if (pngOpts) pngOpts.style.display = 'none';
-        if (dropText) dropText.textContent = 'Drop an SVG here or click to browse';
+        if (dropText) dropText.textContent = converterText('empty.dropSvg', 'Drop an SVG here or click to browse');
         if (fileInput) fileInput.accept = '.svg';
-        document.getElementById('convDownloadLabel').textContent = 'Download PNG';
-        document.getElementById('convCopyLabel').textContent = 'Copy';
+        document.getElementById('convDownloadLabel').textContent = converterText('actions.downloadPng', 'Download PNG');
+        document.getElementById('convCopyLabel').textContent = converterText('actions.copy', 'Copy');
         document.getElementById('convPasteBtn').style.display = '';
       } else {
         if (svgOpts) svgOpts.style.display = 'none';
         if (pngOpts) pngOpts.style.display = '';
-        if (dropText) dropText.textContent = 'Drop a PNG/JPG here or click to browse';
+        if (dropText) dropText.textContent = converterText('empty.dropRaster', 'Drop a PNG/JPG here or click to browse');
         if (fileInput) fileInput.accept = '.png,.jpg,.jpeg,.gif,.webp';
-        document.getElementById('convDownloadLabel').textContent = 'Download SVG';
-        document.getElementById('convCopyLabel').textContent = 'Copy SVG';
+        document.getElementById('convDownloadLabel').textContent = converterText('actions.downloadSvg', 'Download SVG');
+        document.getElementById('convCopyLabel').textContent = converterText('actions.copySvg', 'Copy SVG');
         document.getElementById('convPasteBtn').style.display = 'none';
       }
       // Full state reset when switching modes
@@ -11692,14 +11795,14 @@ function initConverterControls() {
     try {
       if (converterState.mode === 'svg-to-png') {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': converterState.outputBlob })]);
-        showToast('PNG copied to clipboard!');
+        showToast(converterText('toasts.pngCopied', 'PNG copied to clipboard!'));
       } else {
         const text = await converterState.outputBlob.text();
         await navigator.clipboard.writeText(text);
-        showToast('SVG code copied!');
+        showToast(converterText('toasts.svgCopied', 'SVG code copied!'));
       }
     } catch {
-      showToast('Copy failed - try downloading instead');
+      showToast(converterText('toasts.copyFailed', 'Copy failed - try downloading instead'));
     }
   });
 
@@ -11774,8 +11877,8 @@ function loadConverterSvgText(svgText, filename) {
   document.querySelector('[data-mode="svg-to-png"]')?.classList.add('conv__mode-tab--active');
   document.getElementById('convSvgOpts').style.display = '';
   document.getElementById('convPngOpts').style.display = 'none';
-  document.getElementById('convDownloadLabel').textContent = 'Download PNG';
-  document.getElementById('convCopyLabel').textContent = 'Copy';
+  document.getElementById('convDownloadLabel').textContent = converterText('actions.downloadPng', 'Download PNG');
+  document.getElementById('convCopyLabel').textContent = converterText('actions.copy', 'Copy');
   document.getElementById('convPasteBtn').style.display = '';
 
   // Show input preview with SVG rendered as img
@@ -11783,7 +11886,7 @@ function loadConverterSvgText(svgText, filename) {
   const blob = new Blob([previewSvg], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
   replaceConverterInputObjectUrl(url);
-  showConverterInput(url, filename || 'Pasted SVG', svgText.length);
+  showConverterInput(url, filename || converterText('labels.pastedSvg', 'Pasted SVG'), svgText.length);
   converterState.pngDataUrl = '';
   updateConverterSvgUiState();
   updateConverterPreviewStage();
@@ -11819,8 +11922,8 @@ function loadConverterPng(dataUrl, filename) {
   document.querySelector('[data-mode="png-to-svg"]')?.classList.add('conv__mode-tab--active');
   document.getElementById('convSvgOpts').style.display = 'none';
   document.getElementById('convPngOpts').style.display = '';
-  document.getElementById('convDownloadLabel').textContent = 'Download SVG';
-  document.getElementById('convCopyLabel').textContent = 'Copy SVG';
+  document.getElementById('convDownloadLabel').textContent = converterText('actions.downloadSvg', 'Download SVG');
+  document.getElementById('convCopyLabel').textContent = converterText('actions.copySvg', 'Copy SVG');
   document.getElementById('convPasteBtn').style.display = 'none';
   showConverterInput(dataUrl, filename, null);
   updateConverterSvgUiState();
@@ -11844,7 +11947,7 @@ function showConverterInput(url, filename, byteSize) {
   updateConverterPreviewZoomUi({ center: true });
 }
 
-function resetConverterOutputPlaceholder(message = 'Preview appears here', icon = 'image_search') {
+function resetConverterOutputPlaceholder(message = converterText('empty.previewAppears', 'Preview appears here'), icon = 'image_search') {
   const outputEmpty = document.getElementById('convOutputEmpty');
   if (!outputEmpty) return;
   outputEmpty.innerHTML = `
@@ -11853,7 +11956,7 @@ function resetConverterOutputPlaceholder(message = 'Preview appears here', icon 
   `;
 }
 
-function showConverterPendingOutput(message = 'Tracing preview…') {
+function showConverterPendingOutput(message = converterText('status.tracingPreview', 'Tracing preview…')) {
   converterState.outputBlob = null;
   replaceConverterOutputObjectUrl('');
   converterState.outputDataUrl = '';
@@ -11891,7 +11994,7 @@ function showConverterProofServiceOffline(proofErr) {
   converterState.outputExportSize = null;
   converterState.traceAdvice = {
     tone: 'warn',
-    text: 'Start npm run converter:proof-service in a second terminal while npm run dev is running.',
+    text: converterText('status.proofServiceHelp', 'Start npm run converter:proof-service in a second terminal while npm run dev is running.'),
   };
 
   const outputPreview = document.getElementById('convOutputPreview');
@@ -11901,9 +12004,9 @@ function showConverterProofServiceOffline(proofErr) {
   const actions = document.getElementById('convActions');
 
   if (outputPreview) outputPreview.style.display = 'none';
-  resetConverterOutputPlaceholder('Local PNG-to-SVG service is offline.', 'cloud_off');
+  resetConverterOutputPlaceholder(converterText('status.proofServiceOffline', 'Local PNG-to-SVG service is offline.'), 'cloud_off');
   if (outputEmpty) outputEmpty.style.display = '';
-  if (outputMeta) outputMeta.textContent = 'Reliable color tracing requires the local vector service.';
+  if (outputMeta) outputMeta.textContent = converterText('status.proofServiceMeta', 'Reliable color tracing requires the local vector service.');
   if (outputNote) {
     outputNote.textContent = converterState.traceAdvice.text;
     outputNote.style.display = '';
@@ -11932,9 +12035,9 @@ function showConverterSvgDecodeFailure(traceAdvice = null) {
   const actions = document.getElementById('convActions');
 
   if (outputPreview) outputPreview.style.display = 'none';
-  resetConverterOutputPlaceholder('This SVG could not be rasterized.', 'warning');
+  resetConverterOutputPlaceholder(converterText('status.svgDecodeFailure', 'This SVG could not be rasterized.'), 'warning');
   if (outputEmpty) outputEmpty.style.display = '';
-  if (outputMeta) outputMeta.textContent = 'Browser image export can fail on unsupported embedded resources.';
+  if (outputMeta) outputMeta.textContent = converterText('status.browserExportFailure', 'Browser image export can fail on unsupported embedded resources.');
   if (outputNote) {
     outputNote.classList.remove('conv__quality-note--info', 'conv__quality-note--warn');
     if (traceAdvice?.text) {
@@ -11942,7 +12045,7 @@ function showConverterSvgDecodeFailure(traceAdvice = null) {
       outputNote.classList.add(`conv__quality-note--${traceAdvice.tone || 'warn'}`);
       outputNote.style.display = '';
     } else {
-      outputNote.textContent = 'Common causes: external web fonts, remote images, or unsupported embedded resources.';
+      outputNote.textContent = converterText('status.commonSvgFailureCauses', 'Common causes: external web fonts, remote images, or unsupported embedded resources.');
       outputNote.classList.add('conv__quality-note--warn');
       outputNote.style.display = '';
     }
@@ -12008,13 +12111,13 @@ function convertSvgToPng() {
   const { size, background, bgColor, padding, quality } = converterState;
   const myToken = ++_svgConvToken;
   const targetSize = size * quality;
-  showConverterPendingOutput('Rendering preview…');
+  showConverterPendingOutput(converterText('status.renderingPreview', 'Rendering preview…'));
 
   // Parse SVG to get viewBox / intrinsic size
   const parser = new DOMParser();
   const doc = parser.parseFromString(sourceSvgText, 'image/svg+xml');
   const svgEl = doc.querySelector('svg');
-  if (!svgEl) { showToast('Invalid SVG'); return; }
+  if (!svgEl) { showToast(converterText('toasts.invalidSvg', 'Invalid SVG')); return; }
 
   // Get intrinsic aspect ratio from viewBox (or width/height attrs)
   let vbW, vbH;
@@ -12042,7 +12145,7 @@ function convertSvgToPng() {
 
   const sized = buildStyledConverterSvg({ width: canvasW, height: canvasH });
   if (!sized) {
-    showToast('SVG render failed');
+    showToast(converterText('toasts.svgRenderFailed', 'SVG render failed'));
     return;
   }
 
@@ -12098,10 +12201,10 @@ function convertSvgToPng() {
     showConverterSvgDecodeFailure(
       converterState.svgRasterAdvice || {
         tone: 'warn',
-        text: 'This SVG could not be rasterized by the browser image pipeline. Common causes: external web fonts, remote images, or unsupported embedded resources.',
+        text: converterText('status.browserPipelineFailure', 'This SVG could not be rasterized by the browser image pipeline. Common causes: external web fonts, remote images, or unsupported embedded resources.'),
       },
     );
-    showToast('SVG render failed');
+    showToast(converterText('toasts.svgRenderFailed', 'SVG render failed'));
   };
   img.src = url;
 }
@@ -12395,7 +12498,7 @@ async function convertPngToSvg() {
     invert,
   } = converterState;
   const myToken = ++_convToken;
-  showConverterPendingOutput(`Tracing ${getConverterPresetLabel(preset)} preview…`);
+  showConverterPendingOutput(converterText('status.tracingPresetPreview', 'Tracing {preset} preview…', { preset: getConverterPresetLabel(preset) }));
 
   try {
     // Load image into canvas

@@ -30,8 +30,14 @@ const DEFAULT_CLAIM_STATUS = Object.freeze({
   reason: 'subscription_required',
 });
 const AUTH_INTENT_STORAGE_KEY = 'si-auth-intent';
+const AUTH_ACCOUNT_PASSWORD_COOLDOWN_STORAGE_PREFIX = 'si-auth-account-password-cooldown';
+const AUTH_FLOW_EVENT_STORAGE_KEY = 'si-auth-flow-event';
+const AUTH_FLOW_BROADCAST_CHANNEL = 'si-auth-flow';
 const AUTH_INTENT_TTL_MS = 1000 * 60 * 60 * 6;
 const AUTH_EMAIL_REQUEST_COOLDOWN_MS = 60 * 1000;
+const AUTH_FLOW_SESSION_RETRY_ATTEMPTS = 4;
+const AUTH_FLOW_SESSION_RETRY_DELAY_MS = 150;
+const AUTH_FLOW_SOURCE_ID = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const AUTH_VERIFY_KIND = Object.freeze({
   SIGNUP_PENDING: 'signup_pending',
   SIGNUP_EXISTING_HINT: 'signup_existing_hint',
@@ -47,6 +53,11 @@ const AUTH_RESET_KIND = Object.freeze({
   PASSWORD_RECOVERY: 'password_recovery',
   ADD_PASSWORD: 'add_password',
 });
+const AUTH_COMPLETION_KIND = Object.freeze({
+  EMAIL_CONFIRMED: 'email_confirmed',
+  SIGNED_IN: 'signed_in',
+  PASSWORD_UPDATED: 'password_updated',
+});
 const AUTH_MODAL_DEFAULT_STATE = Object.freeze({
   mode: 'signin',
   context: 'default',
@@ -55,8 +66,10 @@ const AUTH_MODAL_DEFAULT_STATE = Object.freeze({
   verifyKind: AUTH_VERIFY_KIND.SIGNUP_PENDING,
   verifyResendCooldownUntil: 0,
   forgotSubmitCooldownUntil: 0,
+  accountPasswordCooldownUntil: 0,
   callbackErrorMessage: '',
   callbackErrorFlow: AUTH_CALLBACK_FLOW.GENERIC,
+  completionKind: AUTH_COMPLETION_KIND.SIGNED_IN,
   recoveryEmail: '',
   resetKind: AUTH_RESET_KIND.PASSWORD_RECOVERY,
 });
@@ -136,6 +149,291 @@ const AUTH_MODAL_COPY = {
 };
 authModalState = { ...AUTH_MODAL_DEFAULT_STATE };
 let verifyResendRefreshTimer = null;
+let authFlowChannel = null;
+const seenAuthFlowEventIds = new Set();
+
+function tr(key, params = {}, fallback = key) {
+  const value = window.__supericons?.t?.(key, params);
+  return value && value !== key ? value : fallback;
+}
+
+function getActiveLocale() {
+  return window.__supericons?.getActiveLocale?.() || document.documentElement.lang || 'en';
+}
+
+function createAuthFlowEventId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function readAuthCallbackParams() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+  return hashParams.toString() ? hashParams : searchParams;
+}
+
+function hasAuthCallbackPayload() {
+  const params = readAuthCallbackParams();
+  return Boolean(
+    params.has('access_token')
+      || params.has('refresh_token')
+      || params.has('code')
+      || params.has('type')
+      || params.has('error')
+      || params.has('error_description')
+      || params.has('error_code'),
+  );
+}
+
+function getAuthCallbackFlowFromUrl() {
+  const params = readAuthCallbackParams();
+  const description = params.get('error_description') || params.get('error') || '';
+  return inferAuthCallbackFlow(params, description);
+}
+
+function isAuthModalOpen() {
+  return document.getElementById('authModal')?.classList.contains('open') || false;
+}
+
+function isAccountModalOpen() {
+  return document.getElementById('accountModal')?.classList.contains('open') || false;
+}
+
+function publishAuthFlowEvent(type, detail = {}) {
+  const payload = {
+    id: createAuthFlowEventId(),
+    sourceId: AUTH_FLOW_SOURCE_ID,
+    type,
+    at: Date.now(),
+    locale: getActiveLocale(),
+    userId: currentUser?.id || null,
+    email: currentUser?.email || detail.email || '',
+    ...detail,
+  };
+
+  try {
+    authFlowChannel?.postMessage(payload);
+  } catch {
+    // BroadcastChannel can be unavailable or blocked; localStorage fallback follows.
+  }
+
+  try {
+    window.localStorage?.setItem(AUTH_FLOW_EVENT_STORAGE_KEY, JSON.stringify(payload));
+  } catch {
+    // Cross-tab sync is a convenience layer; auth still works in the active tab.
+  }
+}
+
+function waitForAuthFlowSessionRetry() {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, AUTH_FLOW_SESSION_RETRY_DELAY_MS);
+  });
+}
+
+async function refreshSessionFromAuthFlowEvent() {
+  if (!supabase) return null;
+  for (let attempt = 0; attempt < AUTH_FLOW_SESSION_RETRY_ATTEMPTS; attempt += 1) {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      console.warn('[Auth] Could not refresh session after auth flow event:', error?.message || error);
+      return null;
+    }
+    currentUser = session?.user ?? null;
+    updateAuthUI();
+    if (session?.user || attempt === AUTH_FLOW_SESSION_RETRY_ATTEMPTS - 1) {
+      return session;
+    }
+    await waitForAuthFlowSessionRetry();
+  }
+  return null;
+}
+
+async function handleAuthFlowEvent(payload) {
+  if (!payload || typeof payload !== 'object') return;
+  if (!payload.id || seenAuthFlowEventIds.has(payload.id)) return;
+  seenAuthFlowEventIds.add(payload.id);
+  if (payload.sourceId === AUTH_FLOW_SOURCE_ID) return;
+
+  const hadAuthModalOpen = isAuthModalOpen();
+  const wasVerifyStage = authModalState.stage === 'verify';
+  const wasResetStage = authModalState.stage === 'reset';
+  const hadAccountModalOpen = isAccountModalOpen();
+
+  if (payload.type === 'signed_in') {
+    const session = await refreshSessionFromAuthFlowEvent();
+    if (!session?.user) return;
+    if (hadAuthModalOpen) {
+      closeAuthModal({ preserveIntent: true, resetToDefault: true });
+    }
+    if (hadAccountModalOpen) {
+      closeAccountModal({ resetState: true });
+    }
+    const signInEpoch = beginAuthCycle();
+    void fetchSubscriptionForEpoch(signInEpoch);
+    dispatchAuthSignedIn();
+    if (hadAuthModalOpen) {
+      showToast(wasVerifyStage
+        ? tr('auth.toast.emailConfirmed', {}, 'Email confirmed. You are signed in.')
+        : tr('auth.toast.signedInInAnotherTab', {}, 'Signed in in another tab.'));
+    }
+    return;
+  }
+
+  if (payload.type === 'password_updated') {
+    const session = await refreshSessionFromAuthFlowEvent();
+    if (session?.user && hadAuthModalOpen && wasResetStage) {
+      closeAuthModal({ preserveIntent: true, resetToDefault: true });
+      showToast(tr('auth.toast.passwordUpdatedInAnotherTab', {}, 'Password updated in another tab.'));
+    }
+    if (session?.user && hadAccountModalOpen) {
+      closeAccountModal({ resetState: true });
+      showToast(tr('auth.toast.passwordUpdatedInAnotherTab', {}, 'Password updated in another tab.'));
+    }
+  }
+}
+
+function receiveAuthFlowEvent(rawPayload) {
+  let payload = rawPayload;
+  if (typeof rawPayload === 'string') {
+    try {
+      payload = JSON.parse(rawPayload);
+    } catch {
+      return;
+    }
+  }
+  void handleAuthFlowEvent(payload);
+}
+
+function initAuthFlowBridge() {
+  if (typeof window.BroadcastChannel === 'function') {
+    try {
+      authFlowChannel = new BroadcastChannel(AUTH_FLOW_BROADCAST_CHANNEL);
+      authFlowChannel.onmessage = (event) => receiveAuthFlowEvent(event.data);
+    } catch {
+      authFlowChannel = null;
+    }
+  }
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === AUTH_FLOW_EVENT_STORAGE_KEY && event.newValue) {
+      receiveAuthFlowEvent(event.newValue);
+    }
+  });
+}
+
+function getAccountPasswordCooldownStorageKey(user = currentUser) {
+  const userKey = String(user?.id || user?.email || '').trim();
+  return userKey ? `${AUTH_ACCOUNT_PASSWORD_COOLDOWN_STORAGE_PREFIX}:${userKey}` : '';
+}
+
+function readStoredAccountPasswordCooldownUntil(user = currentUser) {
+  const storageKey = getAccountPasswordCooldownStorageKey(user);
+  if (!storageKey) return 0;
+  try {
+    const raw = window.localStorage?.getItem(storageKey);
+    const deadline = Number(raw || 0);
+    if (!Number.isFinite(deadline) || deadline <= 0) return 0;
+    if (Date.now() >= deadline) {
+      window.localStorage?.removeItem(storageKey);
+      return 0;
+    }
+    return deadline;
+  } catch {
+    return 0;
+  }
+}
+
+function writeStoredAccountPasswordCooldownUntil(deadline, user = currentUser) {
+  const storageKey = getAccountPasswordCooldownStorageKey(user);
+  if (!storageKey) return;
+  try {
+    if (Number.isFinite(deadline) && deadline > Date.now()) {
+      window.localStorage?.setItem(storageKey, String(deadline));
+    } else {
+      window.localStorage?.removeItem(storageKey);
+    }
+  } catch {
+    // Storage can be unavailable in private contexts; in-memory cooldown still works.
+  }
+}
+
+function getAccountPasswordCooldownUntil() {
+  const stateDeadline = Number(authModalState.accountPasswordCooldownUntil || 0);
+  const storedDeadline = readStoredAccountPasswordCooldownUntil();
+  const deadline = Math.max(
+    Number.isFinite(stateDeadline) ? stateDeadline : 0,
+    storedDeadline,
+  );
+  if (deadline <= Date.now()) {
+    if (authModalState.accountPasswordCooldownUntil) {
+      authModalState = {
+        ...authModalState,
+        accountPasswordCooldownUntil: 0,
+      };
+    }
+    writeStoredAccountPasswordCooldownUntil(0);
+    return 0;
+  }
+  if (deadline !== stateDeadline) {
+    authModalState = {
+      ...authModalState,
+      accountPasswordCooldownUntil: deadline,
+    };
+  }
+  return deadline;
+}
+
+function getStripeLocale() {
+  const locale = String(getActiveLocale()).toLowerCase();
+  const map = {
+    'zh-hans': 'zh',
+    'zh-hant': 'zh-TW',
+    ar: 'ar',
+    de: 'de',
+    en: 'en',
+    es: 'es',
+    fr: 'fr',
+    hi: 'hi',
+    ja: 'ja',
+    ko: 'ko',
+    pt: 'pt',
+    th: 'th',
+    vi: 'vi',
+  };
+  return map[locale] || 'auto';
+}
+
+function getBareAuthRedirectUrl() {
+  const origin = window.location.origin.replace(/\/+$/, '');
+  return origin;
+}
+
+function buildLocalizedAuthRedirectUrl() {
+  const origin = getBareAuthRedirectUrl();
+  const locale = getActiveLocale();
+  if (locale && locale !== 'en') {
+    return `${origin}?locale=${encodeURIComponent(locale)}`;
+  }
+  return origin;
+}
+
+function isSameEmail(left, right) {
+  return String(left || '').trim().toLowerCase() === String(right || '').trim().toLowerCase();
+}
+
+async function persistCurrentAuthLocale() {
+  if (!currentUser) return false;
+  const locale = getActiveLocale();
+  if (!locale || locale === currentUser.user_metadata?.locale) return false;
+
+  const nextMetadata = {
+    ...(currentUser.user_metadata || {}),
+    locale,
+  };
+  const { data, error } = await supabase.auth.updateUser({ data: nextMetadata });
+  if (error) throw error;
+  currentUser = data?.user || currentUser;
+  return true;
+}
 
 function createAuthReadyPromise() {
   let settled = false;
@@ -193,6 +491,7 @@ export function initAuth() {
   supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   const bootEpoch = beginAuthCycle();
   const callbackError = readAuthCallbackError();
+  initAuthFlowBridge();
 
   // Listen for auth state changes
   supabase.auth.onAuthStateChange((event, session) => {
@@ -200,23 +499,40 @@ export function initAuth() {
     updateAuthUI();
 
     if (event === 'PASSWORD_RECOVERY') {
+      const callbackFlow = getAuthCallbackFlowFromUrl();
       clearAuthCallbackHash();
       const recoveryEpoch = beginAuthCycle();
       void fetchSubscriptionForEpoch(recoveryEpoch);
       showPasswordResetStage(session?.user?.email || '');
+      publishAuthFlowEvent('password_recovery_opened', {
+        flow: callbackFlow,
+        email: session?.user?.email || '',
+      });
     } else if (event === 'SIGNED_IN') {
+      const signedInFromCallback = hasAuthCallbackPayload();
+      const callbackFlow = signedInFromCallback ? getAuthCallbackFlowFromUrl() : AUTH_CALLBACK_FLOW.GENERIC;
       clearAuthCallbackHash();
-      closeAuthModal({ preserveIntent: true, resetToDefault: true });
-      showToast('Signed in successfully');
       const signInEpoch = beginAuthCycle();
       void fetchSubscriptionForEpoch(signInEpoch);
       dispatchAuthSignedIn();
+      publishAuthFlowEvent('signed_in', {
+        flow: signedInFromCallback ? callbackFlow : 'direct',
+        email: session?.user?.email || '',
+      });
+      if (signedInFromCallback) {
+        showAuthCompletionStage(callbackFlow === AUTH_CALLBACK_FLOW.SIGNUP
+          ? AUTH_COMPLETION_KIND.EMAIL_CONFIRMED
+          : AUTH_COMPLETION_KIND.SIGNED_IN);
+      } else {
+        closeAuthModal({ preserveIntent: true, resetToDefault: true });
+        showToast(tr('auth.toast.signedIn', {}, 'Signed in successfully.'));
+      }
     } else if (event === 'USER_UPDATED') {
       const updateEpoch = beginAuthCycle();
       void fetchSubscriptionForEpoch(updateEpoch);
     } else if (event === 'SIGNED_OUT') {
       clearAuthIntent();
-      showToast('Signed out');
+      showToast(tr('auth.toast.signedOut', {}, 'Signed out.'));
       beginAuthCycle({ resolved: true });
       resetProState();
       dispatchAuthSignedOut();
@@ -270,7 +586,10 @@ export async function signUpWithEmail(email, password) {
     email,
     password,
     options: {
-      emailRedirectTo: window.location.origin,
+      data: {
+        locale: getActiveLocale(),
+      },
+      emailRedirectTo: getBareAuthRedirectUrl(),
     },
   });
   if (error) throw error;
@@ -282,15 +601,24 @@ export async function resendSignupConfirmation(email) {
     type: 'signup',
     email,
     options: {
-      emailRedirectTo: window.location.origin,
+      emailRedirectTo: buildLocalizedAuthRedirectUrl(),
     },
   });
   if (error) throw error;
 }
 
 export async function requestPasswordReset(email) {
+  const isCurrentAccountReset = currentUser?.email && isSameEmail(currentUser.email, email);
+  const localePersisted = isCurrentAccountReset ? await persistCurrentAuthLocale() : false;
+  const redirectTo = isCurrentAccountReset ? getBareAuthRedirectUrl() : buildLocalizedAuthRedirectUrl();
+  console.info('[Auth] Requesting password reset email', {
+    locale: getActiveLocale(),
+    localePersisted,
+    redirectOrigin: new URL(redirectTo).origin,
+    redirectTo,
+  });
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin,
+    redirectTo,
   });
   if (error) throw error;
 }
@@ -299,6 +627,42 @@ export async function updateUserPassword(password) {
   const { data, error } = await supabase.auth.updateUser({ password });
   if (error) throw error;
   return data;
+}
+
+async function getCurrentAccessToken() {
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error) throw error;
+  return session?.access_token || '';
+}
+
+async function notifyPasswordChanged(accessToken = '') {
+  const token = accessToken || await getCurrentAccessToken();
+  if (!token) throw new Error('Missing auth session');
+
+  console.info('[Auth] Requesting password change notification email');
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-password-changed`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'apikey': SUPABASE_ANON,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ locale: getActiveLocale() }),
+  });
+
+  const responseText = await response.text();
+  let body = {};
+  if (responseText) {
+    try {
+      body = JSON.parse(responseText);
+    } catch {
+      body = {};
+    }
+  }
+  if (!response.ok) {
+    throw new Error(body.error || responseText || 'Password change notification failed');
+  }
+  console.info('[Auth] Password change notification email requested', body);
 }
 
 export async function updateUserProfile({ displayName }) {
@@ -329,7 +693,7 @@ export async function signInWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: window.location.origin,
+      redirectTo: buildLocalizedAuthRedirectUrl(),
     },
   });
   if (error) throw error;
@@ -520,24 +884,24 @@ async function requestCustomerPortalWithToken(token) {
       'Authorization': `Bearer ${token}`,
       'apikey': SUPABASE_ANON,
     },
-    body: JSON.stringify({ return_url: window.location.href }),
+    body: JSON.stringify({ return_url: window.location.href, locale: getStripeLocale() }),
   });
 }
 
 export async function openCustomerPortal() {
   if (!supabase || !currentUser) return;
-  showToast('Opening subscription portal...');
+  showToast(tr('checkout.openingPortal', {}, 'Opening subscription portal...'));
   try {
     const { data: { session } } = await supabase.auth.getSession();
     let token = session?.access_token;
-    if (!token) throw new Error('Sign in again to open the subscription portal.');
+    if (!token) throw new Error(tr('checkout.signInAgainPortal', {}, 'Sign in again to open the subscription portal.'));
 
     let res = await requestCustomerPortalWithToken(token);
     if (res.status === 401) {
       await supabase.auth.refreshSession();
       const { data: { session: retrySession } } = await supabase.auth.getSession();
       token = retrySession?.access_token;
-      if (!token) throw new Error('Sign in again to open the subscription portal.');
+      if (!token) throw new Error(tr('checkout.signInAgainPortal', {}, 'Sign in again to open the subscription portal.'));
       res = await requestCustomerPortalWithToken(token);
     }
 
@@ -545,14 +909,14 @@ export async function openCustomerPortal() {
       const payload = await res.json().catch(() => ({}));
       const message = typeof payload?.error === 'string' && payload.error.trim()
         ? payload.error.trim()
-        : 'Portal unavailable';
+        : tr('checkout.portalUnavailable', {}, 'Portal unavailable');
       throw new Error(message);
     }
 
     const { url } = await res.json();
     if (url) window.location.href = url;
   } catch (err) {
-    showToast(err.message || 'Could not open subscription portal');
+    showToast(err.message || tr('checkout.portalFailed', {}, 'Could not open subscription portal'));
     console.error('[Auth] Portal error:', err);
   }
 }
@@ -664,22 +1028,30 @@ function renderAccountModal() {
   const passwordCopy = document.getElementById('accountPasswordCopy');
   const passwordBtn = document.getElementById('accountPasswordBtn');
   const oauthOnly = isOAuthOnlyUser();
+  const passwordCooldownRemaining = Math.max(0, getAccountPasswordCooldownUntil() - Date.now());
 
   if (summaryName) summaryName.textContent = getUserDisplayName();
   if (summaryEmail) summaryEmail.textContent = currentUser?.email || '';
   if (displayNameInput) displayNameInput.value = getUserDisplayName();
   if (emailDisplayInput) emailDisplayInput.value = currentUser?.email || '';
   if (avatarInitial) avatarInitial.textContent = getUserInitial();
-  if (passwordTitle) passwordTitle.textContent = oauthOnly ? 'Add password sign-in' : 'Password';
+  if (passwordTitle) passwordTitle.textContent = oauthOnly
+    ? tr('account.password.addTitle', {}, 'Add password sign-in')
+    : tr('account.password.title', {}, 'Password');
   if (passwordCopy) {
     passwordCopy.textContent = oauthOnly
-      ? 'You currently sign in with Google. Set a password if you also want to sign in with email.'
-      : 'Use the secure recovery flow to choose a new password.';
+      ? tr('account.password.addDescription', {}, 'You currently sign in with Google. Set a password if you also want to sign in with email.')
+      : tr('account.password.description', {}, 'Use the secure recovery flow to choose a new password.');
   }
   if (passwordBtn) {
-    passwordBtn.disabled = !currentUser?.email;
-    passwordBtn.textContent = oauthOnly ? 'Set password' : 'Send password reset email';
+    passwordBtn.disabled = !currentUser?.email || (!oauthOnly && passwordCooldownRemaining > 0);
+    passwordBtn.textContent = !oauthOnly && passwordCooldownRemaining > 0
+      ? tr('account.password.resetInSeconds', { seconds: Math.ceil(passwordCooldownRemaining / 1000) }, 'Send another reset email in {seconds}s')
+      : oauthOnly
+        ? tr('account.password.setPassword', {}, 'Set password')
+        : tr('account.password.sendResetEmail', {}, 'Send password reset email');
   }
+  scheduleAuthStageRefresh();
 }
 
 function openAccountModal() {
@@ -705,7 +1077,12 @@ function closeAccountModal({ resetState = false } = {}) {
 function getAuthCopy(context = authModalState.context, mode = authModalState.mode) {
   const normalizedContext = AUTH_MODAL_COPY[context] ? context : 'default';
   const normalizedMode = mode === 'signup' ? 'signup' : 'signin';
-  return AUTH_MODAL_COPY[normalizedContext][normalizedMode];
+  const copy = AUTH_MODAL_COPY[normalizedContext][normalizedMode];
+  const base = `auth.copy.${normalizedContext}.${normalizedMode}`;
+  return Object.fromEntries(Object.entries(copy).map(([key, value]) => [
+    key,
+    tr(`${base}.${key}`, {}, value),
+  ]));
 }
 
 function getCurrentProviders(user = currentUser) {
@@ -883,72 +1260,121 @@ function scheduleAuthStageRefresh() {
   const forgotRemaining = authModalState.stage === 'forgot'
     ? Number(authModalState.forgotSubmitCooldownUntil || 0) - Date.now()
     : 0;
-  const remaining = Math.max(verifyRemaining, forgotRemaining);
+  const accountRemaining = document.getElementById('accountModal')?.classList.contains('open')
+    ? getAccountPasswordCooldownUntil() - Date.now()
+    : 0;
+  const remaining = Math.max(verifyRemaining, forgotRemaining, accountRemaining);
   if (remaining <= 0) return;
   verifyResendRefreshTimer = window.setTimeout(() => {
     renderAuthModal();
+    renderAccountModal();
   }, Math.min(remaining, 1000));
 }
 
+function refreshAuthCooldownUiOnResume() {
+  const hasAuthModalCooldown = Boolean(authModalState.verifyResendCooldownUntil || authModalState.forgotSubmitCooldownUntil);
+  const hasAccountCooldown = Boolean(getAccountPasswordCooldownUntil());
+  if (!hasAuthModalCooldown && !hasAccountCooldown) return;
+
+  if (hasAuthModalCooldown) renderAuthModal();
+  if (hasAccountCooldown) renderAccountModal();
+  scheduleAuthStageRefresh();
+}
+
 function getVerifyStageConfig() {
-  const verifyEmail = authModalState.verifyEmail || 'your email';
+  const verifyEmail = authModalState.verifyEmail || tr('auth.yourEmail', {}, 'your email');
   const isRecoveryCallback = authModalState.callbackErrorFlow === AUTH_CALLBACK_FLOW.RECOVERY;
   switch (authModalState.verifyKind) {
     case AUTH_VERIFY_KIND.SIGNUP_EXISTING_HINT:
       return {
         icon: 'mail_lock',
-        modalTitle: 'Use your existing account',
-        modalDesc: 'This email may already belong to a Supericons account. Sign in instead of creating another one.',
-        modalNote: 'If you usually sign in with Google, continue with Google. Otherwise go back and sign in with your email.',
-        stageTitle: 'Account already exists',
-        stageText: `${verifyEmail} may already be tied to an existing Supericons account.`,
+        modalTitle: tr('auth.verify.existing.modalTitle', {}, 'Use your existing account'),
+        modalDesc: tr('auth.verify.existing.modalDesc', {}, 'This email may already belong to a Supericons account. Sign in instead of creating another one.'),
+        modalNote: tr('auth.verify.existing.modalNote', {}, 'If you usually sign in with Google, continue with Google. Otherwise go back and sign in with your email.'),
+        stageTitle: tr('auth.verify.existing.stageTitle', {}, 'Account already exists'),
+        stageText: tr('auth.verify.existing.stageText', { email: verifyEmail }, '{email} may already be tied to an existing Supericons account.'),
         showGoogle: true,
         showResend: false,
-        backLabel: 'Back to sign in',
+        backLabel: tr('auth.backToSignIn', {}, 'Back to sign in'),
       };
     case AUTH_VERIFY_KIND.SIGNIN_UNCONFIRMED:
       return {
         icon: 'mark_email_unread',
-        modalTitle: 'Confirm your email',
-        modalDesc: 'Check your inbox to confirm your email address before signing in.',
-        modalNote: 'If you can’t find the email, or the link no longer works, send a new confirmation email below.',
-        stageTitle: 'Email confirmation needed',
-        stageText: `Send a new confirmation email to ${verifyEmail}.`,
+        modalTitle: tr('auth.verify.unconfirmed.modalTitle', {}, 'Confirm your email'),
+        modalDesc: tr('auth.verify.unconfirmed.modalDesc', {}, 'Check your inbox to confirm your email address before signing in.'),
+        modalNote: tr('auth.verify.unconfirmed.modalNote', {}, 'If you cannot find the email, or the link no longer works, send a new confirmation email below.'),
+        stageTitle: tr('auth.verify.unconfirmed.stageTitle', {}, 'Email confirmation needed'),
+        stageText: tr('auth.verify.unconfirmed.stageText', { email: verifyEmail }, 'Send a new confirmation email to {email}.'),
         showGoogle: false,
         showResend: true,
-        backLabel: 'Back to sign in',
-        primaryActionLabel: 'Resend confirmation',
+        backLabel: tr('auth.backToSignIn', {}, 'Back to sign in'),
+        primaryActionLabel: tr('auth.resendConfirmation', {}, 'Resend confirmation'),
       };
     case AUTH_VERIFY_KIND.CALLBACK_ERROR:
       return {
         icon: 'link_off',
-        modalTitle: isRecoveryCallback ? 'This reset link is no longer valid' : 'This link is no longer valid',
+        modalTitle: isRecoveryCallback
+          ? tr('auth.verify.callback.resetTitle', {}, 'This reset link is no longer valid')
+          : tr('auth.verify.callback.linkTitle', {}, 'This link is no longer valid'),
         modalDesc: isRecoveryCallback
-          ? 'The password reset link is invalid, incomplete, or has expired.'
-          : 'The sign-in or recovery link is invalid, incomplete, or has expired.',
+          ? tr('auth.verify.callback.resetDesc', {}, 'The password reset link is invalid, incomplete, or has expired.')
+          : tr('auth.verify.callback.linkDesc', {}, 'The sign-in or recovery link is invalid, incomplete, or has expired.'),
         modalNote: isRecoveryCallback
-          ? 'Request a fresh reset email and try again.'
-          : 'Start over from Supericons and request a fresh email if needed.',
-        stageTitle: 'Link expired or invalid',
-        stageText: authModalState.callbackErrorMessage || 'This link can no longer be used.',
+          ? tr('auth.verify.callback.resetNote', {}, 'Request a fresh reset email and try again.')
+          : tr('auth.verify.callback.linkNote', {}, 'Start over from Supericons and request a fresh email if needed.'),
+        stageTitle: tr('auth.verify.callback.stageTitle', {}, 'Link expired or invalid'),
+        stageText: authModalState.callbackErrorMessage || tr('auth.verify.callback.stageText', {}, 'This link can no longer be used.'),
         showGoogle: false,
         showResend: isRecoveryCallback,
-        backLabel: 'Back to sign in',
-        primaryActionLabel: isRecoveryCallback ? 'Get a new reset link' : 'Resend confirmation',
+        backLabel: tr('auth.backToSignIn', {}, 'Back to sign in'),
+        primaryActionLabel: isRecoveryCallback ? tr('auth.getNewResetLink', {}, 'Get a new reset link') : tr('auth.resendConfirmation', {}, 'Resend confirmation'),
       };
     case AUTH_VERIFY_KIND.SIGNUP_PENDING:
     default:
       return {
         icon: 'mark_email_read',
-        modalTitle: 'Check your email',
-        modalDesc: 'Open the confirmation email to finish creating your Supericons account.',
-        modalNote: 'If it does not show up right away, you can request another in about a minute.',
-        stageTitle: 'Check your email',
-        stageText: `Look for the confirmation email we sent to ${verifyEmail}.`,
+        modalTitle: tr('auth.verify.pending.modalTitle', {}, 'Check your email'),
+        modalDesc: tr('auth.verify.pending.modalDesc', {}, 'Open the confirmation email to finish creating your Supericons account.'),
+        modalNote: tr('auth.verify.pending.modalNote', {}, 'If it does not show up right away, you can request another in about a minute.'),
+        stageTitle: tr('auth.verify.pending.stageTitle', {}, 'Check your email'),
+        stageText: tr('auth.verify.pending.stageText', { email: verifyEmail }, 'Look for the confirmation email we sent to {email}.'),
         showGoogle: false,
         showResend: true,
-        backLabel: 'Back to sign in',
-        primaryActionLabel: 'Resend confirmation',
+        backLabel: tr('auth.backToSignIn', {}, 'Back to sign in'),
+        primaryActionLabel: tr('auth.resendConfirmation', {}, 'Resend confirmation'),
+      };
+  }
+}
+
+function getCompletionStageConfig() {
+  switch (authModalState.completionKind) {
+    case AUTH_COMPLETION_KIND.PASSWORD_UPDATED:
+      return {
+        icon: 'lock_reset',
+        modalTitle: tr('auth.completion.passwordUpdated.modalTitle', {}, 'Password updated'),
+        modalDesc: tr('auth.completion.passwordUpdated.modalDesc', {}, 'Your password has been changed.'),
+        modalNote: tr('auth.completion.passwordUpdated.modalNote', {}, 'Your original Supericons tab has been updated if it is still open.'),
+        stageTitle: tr('auth.completion.passwordUpdated.stageTitle', {}, 'Password updated'),
+        stageText: tr('auth.completion.passwordUpdated.stageText', {}, 'You can return to your original Supericons tab, continue here, or close this tab.'),
+      };
+    case AUTH_COMPLETION_KIND.EMAIL_CONFIRMED:
+      return {
+        icon: 'task_alt',
+        modalTitle: tr('auth.completion.emailConfirmed.modalTitle', {}, 'Email confirmed'),
+        modalDesc: tr('auth.completion.emailConfirmed.modalDesc', {}, 'Your Supericons account is ready.'),
+        modalNote: tr('auth.completion.emailConfirmed.modalNote', {}, 'Your original Supericons tab has been updated if it is still open.'),
+        stageTitle: tr('auth.completion.emailConfirmed.stageTitle', {}, 'Email confirmed'),
+        stageText: tr('auth.completion.emailConfirmed.stageText', {}, 'You can return to your original Supericons tab, continue here, or close this tab.'),
+      };
+    case AUTH_COMPLETION_KIND.SIGNED_IN:
+    default:
+      return {
+        icon: 'login',
+        modalTitle: tr('auth.completion.signedIn.modalTitle', {}, 'Signed in'),
+        modalDesc: tr('auth.completion.signedIn.modalDesc', {}, 'You are signed in to Supericons.'),
+        modalNote: tr('auth.completion.signedIn.modalNote', {}, 'Your original Supericons tab has been updated if it is still open.'),
+        stageTitle: tr('auth.completion.signedIn.stageTitle', {}, 'Signed in'),
+        stageText: tr('auth.completion.signedIn.stageText', {}, 'You can return to your original Supericons tab, continue here, or close this tab.'),
       };
   }
 }
@@ -973,6 +1399,10 @@ function focusAuthPrimaryField() {
       document.getElementById('authResetPassword')?.focus();
       return;
     }
+    if (authModalState.stage === 'complete') {
+      document.getElementById('authCompletionContinueBtn')?.focus();
+      return;
+    }
     document.getElementById('authEmail')?.focus();
   });
 }
@@ -990,6 +1420,12 @@ function renderAuthModal() {
   const resetStage = document.getElementById('authResetStage');
   const resetIcon = document.getElementById('authResetIcon');
   const resetStageTitle = document.getElementById('authResetStageTitle');
+  const completionStage = document.getElementById('authCompletionStage');
+  const completionIcon = document.getElementById('authCompletionIcon');
+  const completionTitle = document.getElementById('authCompletionTitle');
+  const completionText = document.getElementById('authCompletionText');
+  const completionContinueBtn = document.getElementById('authCompletionContinueBtn');
+  const completionCloseTabBtn = document.getElementById('authCompletionCloseTabBtn');
   const submitText = document.getElementById('authSubmitText');
   const toggleText = document.getElementById('authToggleText');
   const passwordInput = document.getElementById('authPassword');
@@ -1009,7 +1445,9 @@ function renderAuthModal() {
   const isVerifyStage = authModalState.stage === 'verify';
   const isForgotStage = authModalState.stage === 'forgot';
   const isResetStage = authModalState.stage === 'reset';
+  const isCompletionStage = authModalState.stage === 'complete';
   const verifyConfig = getVerifyStageConfig();
+  const completionConfig = getCompletionStageConfig();
   const verifyCooldownRemaining = Math.max(0, Number(authModalState.verifyResendCooldownUntil || 0) - Date.now());
   const forgotCooldownRemaining = Math.max(0, Number(authModalState.forgotSubmitCooldownUntil || 0) - Date.now());
   const isAddPasswordReset = authModalState.resetKind === AUTH_RESET_KIND.ADD_PASSWORD;
@@ -1018,20 +1456,24 @@ function renderAuthModal() {
     modalTitle.textContent = isVerifyStage
       ? verifyConfig.modalTitle
       : isForgotStage
-        ? 'Reset your password'
+        ? tr('auth.forgot.title', {}, 'Reset your password')
         : isResetStage
-          ? 'Set a new password'
-          : copy.title;
+          ? tr('auth.reset.title', {}, 'Set a new password')
+          : isCompletionStage
+            ? completionConfig.modalTitle
+            : copy.title;
   }
   if (modalDesc) {
     if (isVerifyStage) {
       modalDesc.textContent = verifyConfig.modalDesc;
     } else if (isForgotStage) {
-      modalDesc.textContent = 'Enter your account email and we\'ll send you a secure reset link.';
+      modalDesc.textContent = tr('auth.forgot.description', {}, 'Enter your account email and we will send you a secure reset link.');
     } else if (isResetStage) {
       modalDesc.textContent = isAddPasswordReset
-        ? 'Create a password so you can sign in with email as well as Google.'
-        : 'Choose a new password to secure your Supericons account.';
+        ? tr('auth.reset.addDescription', {}, 'Create a password so you can sign in with email as well as Google.')
+        : tr('auth.reset.description', {}, 'Choose a new password to secure your Supericons account.');
+    } else if (isCompletionStage) {
+      modalDesc.textContent = completionConfig.modalDesc;
     } else {
       modalDesc.textContent = copy.desc;
     }
@@ -1040,11 +1482,13 @@ function renderAuthModal() {
     if (isVerifyStage) {
       modalNote.textContent = verifyConfig.modalNote;
     } else if (isForgotStage) {
-      modalNote.textContent = 'The recovery link will bring you back here to choose a new password.';
+      modalNote.textContent = tr('auth.forgot.note', {}, 'The recovery link will bring you back here to choose a new password.');
     } else if (isResetStage) {
       modalNote.textContent = isAddPasswordReset
-        ? 'Google sign-in will keep working after you add password access.'
-        : 'Use at least 8 characters. Strong passwords are recommended for launch.';
+        ? tr('auth.reset.addNote', {}, 'Google sign-in will keep working after you add password access.')
+        : tr('auth.reset.note', {}, 'Use at least 8 characters. Strong passwords are recommended.');
+    } else if (isCompletionStage) {
+      modalNote.textContent = completionConfig.modalNote;
     } else {
       modalNote.textContent = copy.note;
     }
@@ -1055,11 +1499,17 @@ function renderAuthModal() {
     passwordInput.autocomplete = authModalState.mode === 'signup' ? 'new-password' : 'current-password';
     passwordInput.minLength = authModalState.mode === 'signup' ? 8 : 1;
   }
-  if (formStage) formStage.hidden = isVerifyStage || isForgotStage || isResetStage;
+  if (formStage) formStage.hidden = isVerifyStage || isForgotStage || isResetStage || isCompletionStage;
   if (verifyStage) verifyStage.hidden = !isVerifyStage;
   if (forgotStage) forgotStage.hidden = !isForgotStage;
   if (resetStage) resetStage.hidden = !isResetStage;
-  if (googleBtn) googleBtn.hidden = isVerifyStage || isForgotStage || isResetStage;
+  if (completionStage) completionStage.hidden = !isCompletionStage;
+  if (googleBtn) googleBtn.hidden = isVerifyStage || isForgotStage || isResetStage || isCompletionStage;
+  if (completionIcon) completionIcon.textContent = completionConfig.icon;
+  if (completionTitle) completionTitle.textContent = completionConfig.stageTitle;
+  if (completionText) completionText.textContent = completionConfig.stageText;
+  if (completionContinueBtn) completionContinueBtn.textContent = tr('auth.completion.continueHere', {}, 'Continue here');
+  if (completionCloseTabBtn) completionCloseTabBtn.textContent = tr('auth.completion.closeThisTab', {}, 'Close this tab');
   if (verifyIcon) verifyIcon.textContent = verifyConfig.icon;
   if (verifyTitle) verifyTitle.textContent = verifyConfig.stageTitle;
   if (verifyGoogleBtn) verifyGoogleBtn.hidden = !isVerifyStage || !verifyConfig.showGoogle;
@@ -1067,41 +1517,45 @@ function renderAuthModal() {
     verifyResendBtn.hidden = !isVerifyStage || !verifyConfig.showResend;
     verifyResendBtn.disabled = verifyCooldownRemaining > 0;
     verifyResendBtn.textContent = verifyCooldownRemaining > 0
-      ? `Resend in ${Math.ceil(verifyCooldownRemaining / 1000)}s`
-      : (verifyConfig.primaryActionLabel || 'Resend confirmation');
+      ? tr('auth.resendInSeconds', { seconds: Math.ceil(verifyCooldownRemaining / 1000) }, 'Resend in {seconds}s')
+      : (verifyConfig.primaryActionLabel || tr('auth.resendConfirmation', {}, 'Resend confirmation'));
   }
   if (forgotSubmitBtn) {
     forgotSubmitBtn.disabled = forgotCooldownRemaining > 0;
   }
   if (forgotSubmitText) {
     forgotSubmitText.textContent = forgotCooldownRemaining > 0
-      ? `Send again in ${Math.ceil(forgotCooldownRemaining / 1000)}s`
-      : 'Send reset link';
+      ? tr('auth.sendAgainInSeconds', { seconds: Math.ceil(forgotCooldownRemaining / 1000) }, 'Send again in {seconds}s')
+      : tr('auth.sendResetLink', {}, 'Send reset link');
   }
-  if (divider) divider.hidden = isVerifyStage || isForgotStage || isResetStage;
-  if (forgotWrap) forgotWrap.hidden = authModalState.mode !== 'signin' || isVerifyStage || isForgotStage || isResetStage;
+  if (divider) divider.hidden = isVerifyStage || isForgotStage || isResetStage || isCompletionStage;
+  if (forgotWrap) forgotWrap.hidden = authModalState.mode !== 'signin' || isVerifyStage || isForgotStage || isResetStage || isCompletionStage;
   if (verifyText) {
     verifyText.textContent = verifyConfig.stageText;
   }
   if (resetIcon) resetIcon.textContent = isAddPasswordReset ? 'key' : 'password';
-  if (resetStageTitle) resetStageTitle.textContent = isAddPasswordReset ? 'Add password sign-in' : 'Set a new password';
+  if (resetStageTitle) resetStageTitle.textContent = isAddPasswordReset
+    ? tr('auth.reset.addTitle', {}, 'Add password sign-in')
+    : tr('auth.reset.title', {}, 'Set a new password');
   if (forgotEmailInput && authModalState.recoveryEmail) {
     forgotEmailInput.value = authModalState.recoveryEmail;
   }
   if (resetText) {
     resetText.textContent = authModalState.recoveryEmail
       ? (isAddPasswordReset
-        ? `Create a password for ${authModalState.recoveryEmail}.`
-        : `Choose a new password for ${authModalState.recoveryEmail}.`)
+        ? tr('auth.reset.createForEmail', { email: authModalState.recoveryEmail }, 'Create a password for {email}.')
+        : tr('auth.reset.chooseForEmail', { email: authModalState.recoveryEmail }, 'Choose a new password for {email}.'))
       : (isAddPasswordReset
-        ? 'Create a password for your account.'
-        : 'Choose a new password for your account.');
+        ? tr('auth.reset.createForAccount', {}, 'Create a password for your account.')
+        : tr('auth.reset.chooseForAccount', {}, 'Choose a new password for your account.'));
   }
   if (resetEmailInput) {
     resetEmailInput.value = authModalState.recoveryEmail || currentUser?.email || '';
   }
   if (resetSubmitText) {
-    resetSubmitText.textContent = isAddPasswordReset ? 'Set password' : 'Update password';
+    resetSubmitText.textContent = isAddPasswordReset
+      ? tr('account.password.setPassword', {}, 'Set password')
+      : tr('auth.updatePassword', {}, 'Update password');
   }
   if (toggleText) {
     toggleText.innerHTML = `${copy.toggle} <a href="#" id="authToggleLink">${copy.toggleAction}</a>`;
@@ -1229,6 +1683,21 @@ function showPasswordResetStage(email = '', {
   focusAuthPrimaryField();
 }
 
+function showAuthCompletionStage(kind = AUTH_COMPLETION_KIND.SIGNED_IN) {
+  authModalState = {
+    ...AUTH_MODAL_DEFAULT_STATE,
+    stage: 'complete',
+    completionKind: kind,
+  };
+  resetAuthForm();
+  resetRecoveryForms();
+  setAuthStatus();
+  setStageStatus('authCompletionStatus');
+  renderAuthModal();
+  document.getElementById('authModal')?.classList.add('open');
+  focusAuthPrimaryField();
+}
+
 function startVerifyResendCooldown() {
   authModalState = {
     ...authModalState,
@@ -1245,6 +1714,20 @@ function startForgotPasswordCooldown() {
   renderAuthModal();
 }
 
+function startAccountPasswordCooldown() {
+  const deadline = Date.now() + AUTH_EMAIL_REQUEST_COOLDOWN_MS;
+  writeStoredAccountPasswordCooldownUntil(deadline);
+  authModalState = {
+    ...authModalState,
+    accountPasswordCooldownUntil: deadline,
+  };
+  renderAccountModal();
+}
+
+function isAuthRateLimitError(error) {
+  return /too many requests|rate limit|wait a little/i.test(String(error?.message || ''));
+}
+
 function getNormalizedSignInError(error) {
   const message = String(error?.message || '').trim();
   if (/email.*not confirmed/i.test(message)) {
@@ -1256,27 +1739,27 @@ function getNormalizedSignInError(error) {
   if (/invalid login credentials/i.test(message)) {
     return {
       kind: 'status',
-      message: 'That email and password did not match. If you usually sign in with Google, continue with Google instead.',
+      message: tr('auth.errors.invalidCredentials', {}, 'That email and password did not match. If you usually sign in with Google, continue with Google instead.'),
     };
   }
-  if (/too many requests|rate limit/i.test(message)) {
+  if (isAuthRateLimitError(error)) {
     return {
       kind: 'status',
-      message: 'Too many attempts right now. Please wait a moment and try again.',
+      message: tr('auth.errors.tooManyAttempts', {}, 'Too many attempts right now. Please wait a moment and try again.'),
     };
   }
   return {
     kind: 'status',
-    message: message || 'We could not sign you in right now.',
+    message: message || tr('auth.errors.signInFailed', {}, 'We could not sign you in right now.'),
   };
 }
 
 function getNormalizedSignUpError(error) {
   const message = String(error?.message || '').trim();
-  if (/too many requests|rate limit/i.test(message)) {
+  if (isAuthRateLimitError(error)) {
     return {
       kind: 'status',
-      message: 'Too many signup attempts right now. Please wait a moment and try again.',
+      message: tr('auth.errors.tooManySignupAttempts', {}, 'Too many signup attempts right now. Please wait a moment and try again.'),
     };
   }
   if (/user already registered/i.test(message)) {
@@ -1288,29 +1771,29 @@ function getNormalizedSignUpError(error) {
   if (/password/i.test(message)) {
     return {
       kind: 'status',
-      message: message || 'Use at least 8 characters for your password.',
+      message: message || tr('auth.errors.passwordMin', {}, 'Use at least 8 characters for your password.'),
     };
   }
   return {
     kind: 'status',
-    message: message || 'We could not create your account right now.',
+    message: message || tr('auth.errors.signupFailed', {}, 'We could not create your account right now.'),
   };
 }
 
 function getNormalizedForgotPasswordError(error) {
   const message = String(error?.message || '').trim();
-  if (/too many requests|rate limit/i.test(message)) {
-    return 'Please wait a moment before requesting another reset email.';
+  if (isAuthRateLimitError(error)) {
+    return tr('auth.errors.resetTooSoon', {}, 'Please wait a moment before requesting another reset email.');
   }
-  return message || 'We could not send a reset email right now.';
+  return message || tr('auth.errors.resetFailed', {}, 'We could not send a reset email right now.');
 }
 
 function getNormalizedResendError(error) {
   const message = String(error?.message || '').trim();
-  if (/too many requests|rate limit/i.test(message)) {
-    return 'A confirmation email was just sent. Please wait about a minute before requesting another.';
+  if (isAuthRateLimitError(error)) {
+    return tr('auth.errors.confirmationTooSoon', {}, 'A confirmation email was just sent. Please wait about a minute before requesting another.');
   }
-  return 'We could not send another confirmation email right now. If you already have an account, sign in instead.';
+  return tr('auth.errors.resendFailed', {}, 'We could not send another confirmation email right now. If you already have an account, sign in instead.');
 }
 
 function wireAuthListeners() {
@@ -1343,8 +1826,25 @@ function wireAuthListeners() {
   const resetForm = document.getElementById('authResetForm');
   const resetSubmitBtn = document.getElementById('authResetSubmitBtn');
   const verifyBackBtn = document.getElementById('authVerifyBackBtn');
+  const completionContinueBtn = document.getElementById('authCompletionContinueBtn');
+  const completionCloseTabBtn = document.getElementById('authCompletionCloseTabBtn');
 
   renderAuthModal();
+
+  window.addEventListener('supericons:locale-change', () => {
+    renderAuthModal();
+    renderAccountModal();
+  });
+  window.addEventListener('focus', refreshAuthCooldownUiOnResume);
+  window.addEventListener('pageshow', refreshAuthCooldownUiOnResume);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshAuthCooldownUiOnResume();
+  });
+  window.addEventListener('storage', (event) => {
+    if (event.key?.startsWith(AUTH_ACCOUNT_PASSWORD_COOLDOWN_STORAGE_PREFIX)) {
+      refreshAuthCooldownUiOnResume();
+    }
+  });
 
   if (signInBtn) {
     signInBtn.addEventListener('click', () => {
@@ -1369,6 +1869,23 @@ function wireAuthListeners() {
       focusAuthPrimaryField();
     });
   }
+  if (completionContinueBtn) {
+    completionContinueBtn.addEventListener('click', () => {
+      closeAuthModal({ preserveIntent: true, resetToDefault: true });
+    });
+  }
+  if (completionCloseTabBtn) {
+    completionCloseTabBtn.addEventListener('click', () => {
+      window.close();
+      window.setTimeout(() => {
+        setStageStatus(
+          'authCompletionStatus',
+          tr('auth.completion.closeBlocked', {}, 'Your browser did not close this tab automatically. You can close it manually.'),
+          '',
+        );
+      }, 250);
+    });
+  }
   if (verifyResendBtn) {
     verifyResendBtn.addEventListener('click', async () => {
       const email = authModalState.verifyEmail?.trim();
@@ -1386,8 +1903,8 @@ function wireAuthListeners() {
         await resendSignupConfirmation(email);
         startVerifyResendCooldown();
         const resendMessage = authModalState.verifyKind === AUTH_VERIFY_KIND.SIGNIN_UNCONFIRMED
-          ? `A new confirmation email has been sent to ${email}.`
-          : `Check ${email} for a new confirmation email.`;
+          ? tr('auth.verify.unconfirmed.resentStatus', { email }, 'A new confirmation email has been sent to {email}.')
+          : tr('auth.verify.pending.resentStatus', { email }, 'Check {email} for a new confirmation email.');
         setStageStatus('authVerifyStatus', resendMessage, 'success');
       } catch (err) {
         setStageStatus('authVerifyStatus', getNormalizedResendError(err), 'error');
@@ -1436,7 +1953,7 @@ function wireAuthListeners() {
         await signOut();
         window.location.replace(window.location.origin);
       } catch (err) {
-        showToast(err?.message || 'Could not sign you out right now.');
+        showToast(err?.message || tr('auth.errors.signOutFailed', {}, 'Could not sign you out right now.'));
       }
     });
   }
@@ -1454,7 +1971,7 @@ function wireAuthListeners() {
       try {
         await signInWithGoogle();
       } catch (err) {
-        setAuthStatus(err.message || 'Google sign-in failed', 'error');
+        setAuthStatus(err.message || tr('auth.errors.googleFailed', {}, 'Google sign-in failed'), 'error');
       }
     });
   }
@@ -1464,7 +1981,7 @@ function wireAuthListeners() {
       try {
         await signInWithGoogle();
       } catch (err) {
-        showToast(err.message || 'Google sign-in failed');
+        showToast(err.message || tr('auth.errors.googleFailed', {}, 'Google sign-in failed'));
       }
     });
   }
@@ -1502,7 +2019,7 @@ function wireAuthListeners() {
               startCooldown: !isExistingHint,
               statusMessage: isExistingHint
                 ? ''
-                : `We sent a confirmation email to ${email}. You can request another in about a minute.`,
+                : tr('auth.verify.pending.sentStatus', { email }, 'We sent a confirmation email to {email}. You can request another in about a minute.'),
             });
           }
         } else {
@@ -1550,9 +2067,14 @@ function wireAuthListeners() {
         };
         await requestPasswordReset(email);
         startForgotPasswordCooldown();
-        setStageStatus('authForgotStatus', `If an account matches ${email}, you'll get a reset link shortly.`, 'success');
+        setStageStatus('authForgotStatus', tr('auth.forgot.sentStatus', { email }, 'If an account matches {email}, you will get a reset link shortly.'), 'success');
       } catch (err) {
-        setStageStatus('authForgotStatus', getNormalizedForgotPasswordError(err), 'error');
+        if (isAuthRateLimitError(err)) {
+          startForgotPasswordCooldown();
+          setStageStatus('authForgotStatus', tr('auth.forgot.sentStatus', { email }, 'If an account matches {email}, you will get a reset link shortly.'), 'success');
+        } else {
+          setStageStatus('authForgotStatus', getNormalizedForgotPasswordError(err), 'error');
+        }
       } finally {
         renderAuthModal();
       }
@@ -1567,11 +2089,11 @@ function wireAuthListeners() {
 
       if (!nextPassword || !confirmPassword) return;
       if (nextPassword.length < 8) {
-        setStageStatus('authResetStatus', 'Use at least 8 characters for your new password.', 'error');
+        setStageStatus('authResetStatus', tr('auth.errors.passwordTooShort', {}, 'Use at least 8 characters for your new password.'), 'error');
         return;
       }
       if (nextPassword !== confirmPassword) {
-        setStageStatus('authResetStatus', 'Passwords do not match yet.', 'error');
+        setStageStatus('authResetStatus', tr('auth.errors.passwordsMismatch', {}, 'Passwords do not match yet.'), 'error');
         return;
       }
 
@@ -1579,14 +2101,28 @@ function wireAuthListeners() {
       setStageStatus('authResetStatus');
 
       try {
+        const passwordChangeNotificationToken = await getCurrentAccessToken();
         await updateUserPassword(nextPassword);
+        try {
+          await notifyPasswordChanged(passwordChangeNotificationToken);
+        } catch (notifyErr) {
+          console.warn('[Auth] Password changed but notification email failed:', notifyErr);
+        }
         clearAuthCallbackHash();
         const resetKind = authModalState.resetKind;
-        closeAuthModal({ preserveIntent: true, resetToDefault: true });
-        showToast(resetKind === AUTH_RESET_KIND.ADD_PASSWORD ? 'Password sign-in added' : 'Password updated');
+        publishAuthFlowEvent('password_updated', {
+          resetKind,
+          email: currentUser?.email || '',
+        });
         dispatchAuthSignedIn();
+        if (resetKind === AUTH_RESET_KIND.PASSWORD_RECOVERY) {
+          showAuthCompletionStage(AUTH_COMPLETION_KIND.PASSWORD_UPDATED);
+        } else {
+          closeAuthModal({ preserveIntent: true, resetToDefault: true });
+          showToast(tr('auth.toast.passwordSignInAdded', {}, 'Password sign-in added'));
+        }
       } catch (err) {
-        setStageStatus('authResetStatus', err.message || 'Could not update password', 'error');
+        setStageStatus('authResetStatus', err.message || tr('auth.errors.updatePasswordFailed', {}, 'Could not update password'), 'error');
       } finally {
         if (resetSubmitBtn) resetSubmitBtn.disabled = false;
       }
@@ -1598,11 +2134,11 @@ function wireAuthListeners() {
       event.preventDefault();
       const displayName = document.getElementById('accountDisplayName')?.value?.trim() || '';
       if (!displayName) {
-        setAccountStatus('accountProfileStatus', 'Enter a display name to save.', 'error');
+        setAccountStatus('accountProfileStatus', tr('account.profile.enterName', {}, 'Enter a display name to save.'), 'error');
         return;
       }
       if (displayName.length < 2) {
-        setAccountStatus('accountProfileStatus', 'Use at least 2 characters for your display name.', 'error');
+        setAccountStatus('accountProfileStatus', tr('account.profile.nameTooShort', {}, 'Use at least 2 characters for your display name.'), 'error');
         return;
       }
 
@@ -1612,10 +2148,10 @@ function wireAuthListeners() {
       try {
         await updateUserProfile({ displayName });
         renderAccountModal();
-        setAccountStatus('accountProfileStatus', 'Display name saved.', 'success');
-        showToast('Account updated');
+        setAccountStatus('accountProfileStatus', tr('account.profile.saved', {}, 'Display name saved.'), 'success');
+        showToast(tr('account.toast.updated', {}, 'Account updated'));
       } catch (err) {
-        setAccountStatus('accountProfileStatus', err.message || 'Could not save display name', 'error');
+        setAccountStatus('accountProfileStatus', err.message || tr('account.profile.saveFailed', {}, 'Could not save display name'), 'error');
       } finally {
         if (accountSaveBtn) accountSaveBtn.disabled = false;
       }
@@ -1626,7 +2162,11 @@ function wireAuthListeners() {
     accountPasswordBtn.addEventListener('click', async () => {
       const email = currentUser?.email?.trim();
       if (!email) {
-        setAccountStatus('accountPasswordStatus', 'No signed-in email is available for this account.', 'error');
+        setAccountStatus('accountPasswordStatus', tr('account.password.noEmail', {}, 'No signed-in email is available for this account.'), 'error');
+        return;
+      }
+      if (Date.now() < getAccountPasswordCooldownUntil()) {
+        renderAccountModal();
         return;
       }
 
@@ -1637,16 +2177,22 @@ function wireAuthListeners() {
         if (isOAuthOnlyUser()) {
           closeAccountModal({ resetState: true });
           showPasswordResetStage(email, { kind: AUTH_RESET_KIND.ADD_PASSWORD });
-          setStageStatus('authResetStatus', 'Set a password you can use alongside Google sign-in.', 'success');
+          setStageStatus('authResetStatus', tr('account.password.addStatus', {}, 'Set a password you can use alongside Google sign-in.'), 'success');
         } else {
           await requestPasswordReset(email);
-          setAccountStatus('accountPasswordStatus', `A password reset email has been sent to ${email}.`, 'success');
-          showToast('Password reset email sent');
+          startAccountPasswordCooldown();
+          setAccountStatus('accountPasswordStatus', tr('account.password.resetSent', { email }, 'A password reset email has been sent to {email}.'), 'success');
+          showToast(tr('account.password.resetToast', {}, 'Password reset email sent'));
         }
       } catch (err) {
-        setAccountStatus('accountPasswordStatus', getNormalizedForgotPasswordError(err), 'error');
+        if (isAuthRateLimitError(err)) {
+          startAccountPasswordCooldown();
+          setAccountStatus('accountPasswordStatus', tr('account.password.resetSent', { email }, 'A password reset email has been sent to {email}.'), 'success');
+        } else {
+          setAccountStatus('accountPasswordStatus', getNormalizedForgotPasswordError(err), 'error');
+        }
       } finally {
-        accountPasswordBtn.disabled = false;
+        renderAccountModal();
       }
     });
   }

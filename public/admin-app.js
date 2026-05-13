@@ -1,6 +1,7 @@
 const ADMIN_API_BASE = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
 const INTELLIGENCE_WINDOWS = [
+  { key: '1d', shortLabel: '24h', longLabel: 'Last 24 hours' },
   { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days' },
   { key: '30d', shortLabel: '30d', longLabel: 'Last 30 days' },
   { key: '90d', shortLabel: '90d', longLabel: 'Last 90 days' },
@@ -370,7 +371,9 @@ function formatPercent(value) {
 }
 
 function getCurrentIntelligenceWindow() {
-  return INTELLIGENCE_WINDOWS.find((window) => window.key === state.intelligenceWindow) || INTELLIGENCE_WINDOWS[1];
+  return INTELLIGENCE_WINDOWS.find((window) => window.key === state.intelligenceWindow)
+    || INTELLIGENCE_WINDOWS.find((window) => window.key === '30d')
+    || INTELLIGENCE_WINDOWS[0];
 }
 
 function formatMetricWindowLabel(baseLabel) {

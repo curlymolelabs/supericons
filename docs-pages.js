@@ -152,6 +152,7 @@ const docsPages = {
           </article>
         </div>
         <p class="docs-section__copy">Free icon browsing and the customize panel are self-explanatory in the app. This docs section covers MCP integration, Motion Lab, and Converter, where setup or parameter choices are non-obvious.</p>
+        <p class="docs-section__copy">Supericons is also listed on <a href="https://smithery.ai/servers/curly-mole-labs/supericons" target="_blank" rel="noopener noreferrer">Smithery</a>.</p>
       </section>
     `,
   },
@@ -296,12 +297,116 @@ const docsPages = {
     navLabel: 'Universal setup',
     kicker: 'MCP Setup',
     pageTitle: 'Universal MCP Setup',
-    summary: 'The base server config for any MCP-capable coding agent. Adapt to your client&apos;s settings format.',
+    summary: 'The field values and config blocks for MCP-capable coding agents and IDEs.',
     bodyHtml: `
+      <section class="docs-callout" id="universal-video-placeholder">
+        <h3>Video guide coming here</h3>
+        <p>A short IDE setup video will go here. It should show the MCP settings screen, the exact fields to fill, saving the server, restarting the agent, and running the first Supericons search.</p>
+      </section>
+      <section class="docs-section" id="universal-setup-types">
+        <h2 class="docs-section__title">Choose your setup</h2>
+        <div class="docs-grid docs-grid--cards">
+          <article class="docs-card">
+            <h3>Free setup</h3>
+            <p>Use the MCP server fields below. Leave environment variables empty. This works for free icon search.</p>
+          </article>
+          <article class="docs-card">
+            <h3><a href="#universal-premium">Premium/Pro setup</a></h3>
+            <p>Use the same MCP server fields below. Then add one environment variable: <code>SUPERICONS_API_KEY</code>.</p>
+          </article>
+        </div>
+      </section>
+      <section class="docs-section" id="universal-ide-form">
+        <h2 class="docs-section__title">Step 1: Add the MCP server</h2>
+        <p class="docs-section__copy">These fields are the same for both free and Premium/Pro setup. Copy each value into the matching field in your IDE.</p>
+        <div class="docs-field-list" aria-label="MCP setup field values">
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Name</span>
+              <code id="docs-universal-field-name">supericons</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-name">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Transport</span>
+              <code id="docs-universal-field-transport">stdio</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-transport">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Command to launch</span>
+              <code id="docs-universal-field-command">npx</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-command">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Argument 1</span>
+              <code id="docs-universal-field-arg-y">-y</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-arg-y">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Argument 2</span>
+              <code id="docs-universal-field-arg-package">supericons-mcp</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-arg-package">Copy</button>
+          </div>
+          <div class="docs-field-row docs-field-row--muted">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Environment variables for free setup</span>
+              <span class="docs-field-row__value">Leave empty. Premium/Pro users add the API key in Step 2.</span>
+            </div>
+          </div>
+          <div class="docs-field-row docs-field-row--muted">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Working directory</span>
+              <span class="docs-field-row__value">Leave blank unless your IDE requires one.</span>
+            </div>
+          </div>
+        </div>
+        <div class="docs-grid docs-grid--cards">
+          <article class="docs-card">
+            <h3>If your IDE has separate argument rows</h3>
+            <p>Add two arguments. First add <code>-y</code>. Then add <code>supericons-mcp</code>.</p>
+          </article>
+          <article class="docs-card">
+            <h3>If your IDE has one argument field</h3>
+            <p>Paste <code>-y supericons-mcp</code> into the argument field.</p>
+          </article>
+          <article class="docs-card">
+            <h3>If your IDE asks for environment variables</h3>
+            <p>For free setup, leave them empty. For Premium/Pro setup, add <code>SUPERICONS_API_KEY</code> in Step 2.</p>
+          </article>
+          <article class="docs-card">
+            <h3>If your IDE asks for HTTP</h3>
+            <p>Choose <code>stdio</code> instead. This setup runs the local Supericons MCP package through <code>npx</code>.</p>
+          </article>
+        </div>
+      </section>
+      <section class="docs-section" id="universal-agent-prompt">
+        <h2 class="docs-section__title">Ask your agent to set it up</h2>
+        <p class="docs-section__copy">If your coding agent can edit its own MCP settings, paste this prompt into the agent. If it gets stuck, use the field values above manually.</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-agent-install-prompt">Copy</button>
+          <pre><code id="docs-universal-agent-install-prompt">Connect the Supericons MCP server to this IDE.
+
+Use these MCP values:
+Name: supericons
+Transport: stdio
+Command: npx
+Arguments: -y supericons-mcp
+
+After saving, restart or reconnect MCP if this IDE requires it. Then test it by asking Supericons MCP to search for a database icon.</code></pre>
+        </div>
+      </section>
       <section class="docs-section" id="universal-free">
-        <h2 class="docs-section__title">Free setup</h2>
+        <h2 class="docs-section__title">Free config-file setup</h2>
         <p class="docs-section__copy">Free icons work without an account or API key. Any coding agent that can launch a local stdio MCP server can use Supericons.</p>
-        <p class="docs-section__copy">Use this JSON config block when your client accepts <code>command</code>, <code>args</code>, and optional <code>env</code> fields:</p>
+        <p class="docs-section__copy">Use this JSON config block when your client accepts <code>mcpServers</code>, <code>command</code>, and <code>args</code> fields:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-free">Copy</button>
           <pre><code id="docs-universal-free">{
@@ -313,11 +418,58 @@ const docsPages = {
   }
 }</code></pre>
         </div>
+        <p class="docs-section__copy">Some VS Code-style MCP clients use <code>servers</code> and an explicit <code>type</code> field instead. Use this shape if your IDE expects that format:</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-vscode-json">Copy</button>
+          <pre><code id="docs-universal-vscode-json">{
+  "servers": {
+    "supericons": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+        </div>
         <p class="docs-section__copy">If your client uses TOML or another wrapper format, keep the same <code>command</code> and <code>args</code> values and adapt only the surrounding syntax to your client&apos;s settings format.</p>
       </section>
+      <section class="docs-section" id="universal-test">
+        <h2 class="docs-section__title">Test that it worked</h2>
+        <p class="docs-section__copy">After saving, restart your IDE or reconnect MCP if needed. Then ask your agent one of these prompts.</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-test-prompts">Copy</button>
+          <pre><code id="docs-universal-test-prompts">Use Supericons MCP to search for a database icon.
+
+Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar. The slots are model, prompt, dataset, evaluation, deployment, and monitoring. Show the icon id, library, and short reason for each choice.</code></pre>
+        </div>
+      </section>
       <section class="docs-section" id="universal-premium">
-        <h2 class="docs-section__title">Premium setup</h2>
-        <p class="docs-section__copy">To use premium icons you own, or Pro tools like Motion Lab and Converter, add your API key in the server&apos;s env or secrets field:</p>
+        <h2 class="docs-section__title">Step 2 for Premium/Pro: Add your API key</h2>
+        <p class="docs-section__copy">Skip this step if you only want free icon search. Add this step if you want premium icons you own, Motion Lab, or Converter.</p>
+        <h3>If your IDE has environment variable fields</h3>
+        <p class="docs-section__copy">Click Add environment variable. Put <code>SUPERICONS_API_KEY</code> in the key field. Put your real Supericons API key in the value field.</p>
+        <div class="docs-field-list" aria-label="Premium MCP setup field values">
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Environment variable key</span>
+              <code id="docs-universal-premium-env-key">SUPERICONS_API_KEY</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-premium-env-key">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Environment variable value</span>
+              <code id="docs-universal-premium-env-value">your-key-here</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-premium-env-value">Copy</button>
+          </div>
+        </div>
+        <div class="docs-callout">
+          <h3>Keep your key private</h3>
+          <p>Use your own key in your IDE&apos;s private settings. Do not put a real API key in the command, arguments, working directory, shared project files, public docs, screenshots, or chat messages.</p>
+        </div>
+        <h3>If your client uses a config file</h3>
+        <p class="docs-section__copy">Use this JSON shape when your client supports an <code>env</code> field. The only difference from free setup is the <code>env</code> section.</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-premium">Copy</button>
           <pre><code id="docs-universal-premium">{
@@ -358,6 +510,27 @@ const docsPages = {
           </article>
         </div>
         <p class="docs-section__copy">If your client is not listed, use the <code>command</code> and <code>args</code> from the Free setup section and adapt them to whatever format your client expects.</p>
+      </section>
+      <section class="docs-section" id="universal-troubleshooting">
+        <h2 class="docs-section__title">Common setup fixes</h2>
+        <div class="docs-grid docs-grid--cards">
+          <article class="docs-card">
+            <h3>The server does not appear</h3>
+            <p>Save the settings, restart the IDE, then open the MCP server list again. Many IDEs only load MCP servers at startup.</p>
+          </article>
+          <article class="docs-card">
+            <h3><code>npx</code> is not found</h3>
+            <p>Install Node.js, then open a terminal and run <code>npx --version</code>. The IDE must be able to access the same <code>npx</code> command.</p>
+          </article>
+          <article class="docs-card">
+            <h3>The command field looks wrong</h3>
+            <p>Put only <code>npx</code> in the command field. Do not paste the full JSON block into the command field.</p>
+          </article>
+          <article class="docs-card">
+            <h3>The arguments do not work</h3>
+            <p>If separate rows fail, try one argument line: <code>-y supericons-mcp</code>. If one line fails, split it into <code>-y</code> and <code>supericons-mcp</code>.</p>
+          </article>
+        </div>
       </section>
     `,
   },
@@ -658,8 +831,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon.</td></tr>
-              <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring.</td></tr>
+              <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon. For non-English search, include <code>locale</code>, such as <code>zh-Hans</code>, <code>ja</code>, or <code>ko</code>.</td></tr>
+              <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring. If your slots are not in English, include <code>locale</code>.</td></tr>
               <tr><td>Fetch one known icon</td><td><code>get_icon</code></td><td>Get the SVG for <code>database</code> from Iconoir.</td></tr>
               <tr><td>See available libraries</td><td><code>list_libraries</code></td><td>List the Supericons icon libraries.</td></tr>
             </tbody>
@@ -716,6 +889,21 @@ Use the best Lucide result and add it to this button.
 
 Give me three alternatives if the first one feels too generic.</code></pre>
         </div>
+      </section>
+      <section class="docs-section" id="mcp-search-locales">
+        <h2 class="docs-section__title">Search in supported languages</h2>
+        <p class="docs-section__copy">For multilingual search, keep tool names and icon IDs in English, but pass a supported <code>locale</code> with the search phrase. Supericons expands approved localized terms to stable English concepts before ranking icons.</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-mcp-search-locale-prompts">Copy</button>
+          <pre><code id="docs-mcp-search-locale-prompts">search_icons({ query: "设置", locale: "zh-Hans" })
+search_icons({ query: "搜尋", locale: "zh-Hant" })
+search_icons({ query: "検索", locale: "ja" })
+search_icons({ query: "설정", locale: "ko" })
+search_icons({ query: "seguridad", locale: "es" })
+search_icons({ query: "Sicherheit", locale: "de" })
+search_icons({ query: "الأمان", locale: "ar" })</code></pre>
+        </div>
+        <p class="docs-section__copy">Supported locale values are <code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, and <code>th</code>.</p>
       </section>
       <section class="docs-callout" id="mcp-search-private-note">
         <h3>What stays private</h3>
@@ -809,6 +997,7 @@ Give me three alternatives if the first one feels too generic.</code></pre>
               <tr><td><code>query</code></td><td>string</td><td>Yes</td><td>-</td><td>Natural language search term. Example: "heart", "login", "download arrow"</td></tr>
               <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Filter by library. Valid values: <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>heroicons</code>, <code>bootstrap</code>, <code>iconoir</code>, <code>ionicons</code>, <code>material</code>, <code>simpleicons</code>, <code>mingcute</code>, or a premium pack name</td></tr>
               <tr><td><code>limit</code></td><td>integer</td><td>No</td><td>10</td><td>Max results returned. Range: 1 to 50</td></tr>
+              <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use for multilingual search terms. Supported values: <code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, <code>th</code></td></tr>
             </tbody>
           </table>
         </div>

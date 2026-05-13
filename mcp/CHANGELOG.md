@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1 - 2026-05-05
+
+### Added
+
+- added official MCP Registry metadata through `mcpName` and `server.json`
+- documented both the hosted Streamable HTTP endpoint and the npm stdio package for registry discovery
+
 ## 0.4.0 - 2026-05-03
 
 ### Changed

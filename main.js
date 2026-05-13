@@ -27,6 +27,8 @@ import {
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
 import { searchIconsHosted } from './lib/search-engine-client.js';
 import { buildIntentQueryVariants } from './lib/search-intent-core.js';
+import { normalizeCjkSearchText } from './lib/cjk-search-core.js';
+import { buildWebSearchQueryPlan } from './lib/web-cjk-search-smoke.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
   fetchPopularityMap,
@@ -55,6 +57,20 @@ import {
 import { createIconSemanticAliasMap } from './lib/icon-semantic-aliases.js';
 import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
 import { createStoreShellContract } from './lib/store-shell-contract.js';
+import {
+  DEFAULT_LOCALE,
+  LOCALE_METADATA,
+  SUPPORTED_LOCALES,
+  detectPreferredLocale,
+  getLocaleDirection,
+  normalizeLocale,
+} from './lib/i18n/locales.js';
+import { createTranslator } from './lib/i18n/translate.js';
+import {
+  getPrettyRoutePath,
+  getRouteViewFromPath,
+  normalizeRouteView,
+} from './lib/view-route-policy.js';
 
 // ============================================================
 
@@ -85,8 +101,16 @@ const COLOR_PALETTES = {
 };
 
 const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
+const FLOATING_SEARCH_MEDIA = window.matchMedia('(max-width: 600px)');
 const RECENT_SEARCHES_STORAGE_KEY = 'si-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
+const LOCALE_STORAGE_KEY = 'supericons.locale';
+
+let activeLocale = DEFAULT_LOCALE;
+let i18nCatalogs = {};
+let t = (key, params = {}) => String(key).replace(/\{([a-zA-Z0-9_]+)\}/g, (match, name) => (
+  Object.hasOwn(params, name) ? String(params[name]) : match
+));
 
 const state = {
   sidebarOpen: false,
@@ -101,6 +125,7 @@ const state = {
   libraries: [],
   filteredIcons: [],
   synonyms: {},
+  cjkSearchTerms: [],
   iconStyle: 'outline',
   visibleRange: { start: 0, end: 200 },
   batchSize: 200,
@@ -155,6 +180,21 @@ function resetCustomization() {
   }
   renderGrid();
   showToast('Customization reset to defaults');
+}
+
+function syncThemeToggleButton() {
+  const themeToggleBtn = $('#themeToggle');
+  if (!themeToggleBtn) return;
+
+  const isLight = document.body.classList.contains('theme-light');
+  const actionLabel = isLight ? t('app.darkMode') : t('app.lightMode');
+  const icon = themeToggleBtn.querySelector('.material-symbols-outlined');
+  if (icon) {
+    icon.textContent = isLight ? 'dark_mode' : 'light_mode';
+  }
+  themeToggleBtn.setAttribute('aria-label', actionLabel);
+  themeToggleBtn.setAttribute('data-tip', actionLabel);
+  themeToggleBtn.removeAttribute('title');
 }
 
 function isMaterialFontIcon(icon) {
@@ -580,7 +620,9 @@ function escapeHtml(value) {
 }
 
 function getFavoriteActionLabel(iconName, isFav) {
-  return isFav ? `Remove ${iconName} from favorites` : `Save ${iconName} to favorites`;
+  return isFav
+    ? t('actions.removeFromFavorites', { name: iconName })
+    : t('actions.saveToFavorites', { name: iconName });
 }
 
 function renderPanelFavoriteButton(icon) {
@@ -596,7 +638,7 @@ function renderPanelFavoriteButton(icon) {
       title="${actionLabel}"
     >
       <span class="material-symbols-outlined panel__favorite-btn-icon" aria-hidden="true">${isFav ? 'favorite' : 'favorite_border'}</span>
-      <span class="panel__favorite-btn-label">${isFav ? 'Saved' : 'Save'}</span>
+      <span class="panel__favorite-btn-label">${isFav ? t('actions.saved') : t('actions.save')}</span>
     </button>
   `;
 }
@@ -611,7 +653,7 @@ function updatePanelFavoriteButton(button, icon, isFav) {
   const iconEl = button.querySelector('.panel__favorite-btn-icon');
   const labelEl = button.querySelector('.panel__favorite-btn-label');
   if (iconEl) iconEl.textContent = isFav ? 'favorite' : 'favorite_border';
-  if (labelEl) labelEl.textContent = isFav ? 'Saved' : 'Save';
+  if (labelEl) labelEl.textContent = isFav ? t('actions.saved') : t('actions.save');
 }
 
 function updateSidebarCounts() {
@@ -638,12 +680,17 @@ const els = {
   landingHero: $('#landingHero'),
   landingMcp: $('#landing-mcp'),
   compareDrawer: $('#compareDrawer'),
+  searchToggle: $('#searchToggle'),
   searchInput: $('#searchInput'),
   searchShortcut: $('#searchShortcut'),
   searchClear: $('#searchClear'),
   searchHistory: $('#searchHistory'),
   searchHistoryList: $('#searchHistoryList'),
   searchHistoryClear: $('#searchHistoryClear'),
+  localeSelect: $('#localeSelect'),
+  localeSelectWrap: $('#localeSelectWrap'),
+  localeSelectLabel: $('#localeSelectLabel'),
+  localeMenu: $('#localeMenu'),
   iconGrid: $('#iconGrid'),
   gridEmpty: $('#gridEmpty'),
   gridTitle: $('#gridTitle'),
@@ -662,8 +709,204 @@ const els = {
 
 };
 
+function getInitialLocale() {
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = params.get('locale');
+  if (fromUrl) return normalizeLocale(fromUrl);
+
+  try {
+    const stored = window.localStorage?.getItem(LOCALE_STORAGE_KEY);
+    if (stored) return normalizeLocale(stored);
+  } catch {
+    // Local storage is optional.
+  }
+
+  return detectPreferredLocale(navigator.languages?.length ? navigator.languages : navigator.language);
+}
+
+async function loadLocaleCatalog(locale) {
+  const response = await fetch(`/i18n/messages/${locale}.json`);
+  if (!response.ok) throw new Error(`Locale catalog not found: ${locale}`);
+  return response.json();
+}
+
+async function initI18n() {
+  activeLocale = getInitialLocale();
+  const localesToLoad = [...new Set([DEFAULT_LOCALE, activeLocale])];
+  const loaded = await Promise.all(localesToLoad.map(async (locale) => [locale, await loadLocaleCatalog(locale)]));
+  i18nCatalogs = Object.fromEntries(loaded);
+  t = createTranslator(i18nCatalogs, activeLocale);
+  applyDocumentLocale();
+  populateLocaleSelect();
+  applyStaticTranslations();
+  syncPageMetadata();
+  syncThemeToggleButton();
+}
+
+function applyDocumentLocale() {
+  document.documentElement.lang = activeLocale;
+  document.documentElement.dir = getLocaleDirection(activeLocale);
+}
+
+function setMetaContent(selector, content) {
+  const node = document.querySelector(selector);
+  if (node) node.setAttribute('content', content);
+}
+
+function buildLocalizedPageUrl(locale = activeLocale) {
+  const params = new URLSearchParams(window.location.search);
+  const queryView = params.get('view');
+  const pathView = getRouteViewFromPath(window.location.pathname);
+  const routeView = queryView || pathView;
+  const prettyPath = routeView ? getPrettyRoutePath(normalizeRouteView(routeView)) : null;
+  const url = new URL(prettyPath || '/', 'https://supericons.dev');
+  if (locale !== DEFAULT_LOCALE) url.searchParams.set('locale', locale);
+  return url.toString();
+}
+
+function syncPageMetadata() {
+  const title = t('seo.title', {}, 'Supericons | Find Icons by Meaning');
+  const description = t('seo.description', {}, '20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.');
+  const twitterDescription = t('seo.twitterDescription', {}, description);
+  const canonicalUrl = buildLocalizedPageUrl(activeLocale);
+
+  document.title = title;
+  setMetaContent('meta[name="description"]', description);
+  setMetaContent('meta[property="og:title"]', title);
+  setMetaContent('meta[property="og:description"]', description);
+  setMetaContent('meta[property="og:url"]', canonicalUrl);
+  setMetaContent('meta[name="twitter:title"]', title);
+  setMetaContent('meta[name="twitter:description"]', twitterDescription);
+  document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
+
+  const appJson = document.querySelector('script[type="application/ld+json"]');
+  if (appJson) {
+    try {
+      const data = JSON.parse(appJson.textContent || '{}');
+      data.url = canonicalUrl;
+      data.description = description;
+      appJson.textContent = JSON.stringify(data, null, 2);
+    } catch {
+      // Static JSON-LD should not block locale switching.
+    }
+  }
+}
+
+function applyStaticTranslations(scope = document) {
+  scope.querySelectorAll('[data-i18n]').forEach((node) => {
+    node.textContent = t(node.dataset.i18n);
+  });
+  scope.querySelectorAll('[data-i18n-placeholder]').forEach((node) => {
+    node.setAttribute('placeholder', t(node.dataset.i18nPlaceholder));
+  });
+  scope.querySelectorAll('[data-i18n-aria-label]').forEach((node) => {
+    node.setAttribute('aria-label', t(node.dataset.i18nAriaLabel));
+  });
+  scope.querySelectorAll('[data-i18n-data-tip]').forEach((node) => {
+    node.setAttribute('data-tip', t(node.dataset.i18nDataTip));
+  });
+}
+
+function populateLocaleSelect() {
+  if (!els.localeSelect) return;
+  const activeMeta = LOCALE_METADATA[activeLocale] || LOCALE_METADATA[DEFAULT_LOCALE];
+  els.localeSelect.lang = activeLocale;
+  els.localeSelect.dir = activeMeta.dir;
+  els.localeSelect.setAttribute('aria-expanded', 'false');
+  if (els.localeSelectLabel) {
+    els.localeSelectLabel.textContent = activeMeta.nativeLabel;
+    els.localeSelectLabel.lang = activeLocale;
+    els.localeSelectLabel.dir = 'ltr';
+  }
+  if (!els.localeMenu) return;
+  els.localeMenu.hidden = true;
+  els.localeMenu.lang = activeLocale;
+  els.localeMenu.dir = 'ltr';
+  els.localeMenu.innerHTML = SUPPORTED_LOCALES
+    .map((locale) => {
+      const meta = LOCALE_METADATA[locale];
+      const selected = locale === activeLocale;
+      return `<button class="header__locale-option${selected ? ' is-selected' : ''}" type="button" role="option" aria-selected="${selected ? 'true' : 'false'}" data-locale="${locale}" lang="${locale}" dir="ltr">${meta.nativeLabel}</button>`;
+    })
+    .join('');
+}
+
+function closeLocaleMenu() {
+  if (!els.localeSelect || !els.localeMenu) return;
+  els.localeMenu.hidden = true;
+  els.localeSelect.setAttribute('aria-expanded', 'false');
+  els.localeSelect.classList.remove('is-active');
+}
+
+function toggleLocaleMenu() {
+  if (!els.localeSelect || !els.localeMenu) return;
+  const nextOpen = els.localeMenu.hidden;
+  els.localeMenu.hidden = !nextOpen;
+  els.localeSelect.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+  els.localeSelect.classList.toggle('is-active', nextOpen);
+  if (nextOpen) {
+    els.localeMenu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+async function setActiveLocale(locale) {
+  const nextLocale = normalizeLocale(locale);
+  if (nextLocale === activeLocale) return;
+  activeLocale = nextLocale;
+  try {
+    window.localStorage?.setItem(LOCALE_STORAGE_KEY, activeLocale);
+  } catch {
+    // Local storage is optional.
+  }
+  if (!i18nCatalogs[activeLocale]) {
+    i18nCatalogs[activeLocale] = await loadLocaleCatalog(activeLocale);
+  }
+  t = createTranslator(i18nCatalogs, activeLocale);
+  applyDocumentLocale();
+  populateLocaleSelect();
+  applyStaticTranslations();
+  syncPageMetadata();
+  syncHeaderSearchChrome();
+  syncThemeToggleButton();
+  updateGridHeading();
+  updateCounts();
+  renderUseCaseFilters();
+  if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
+  window.dispatchEvent(new CustomEvent('supericons:locale-change', { detail: { locale: activeLocale } }));
+}
+
 function isDocsHeaderSearchMode() {
   return document.body.getAttribute('data-view') === 'docs';
+}
+
+function isFloatingHeaderSearchMode() {
+  return FLOATING_SEARCH_MEDIA.matches;
+}
+
+function isHeaderSearchOpen() {
+  return els.searchInput?.closest('.header__search')?.classList.contains('header__search--mobile-open') || false;
+}
+
+function setFloatingHeaderSearchOpen(open, { focus = false } = {}) {
+  const searchBox = els.searchInput?.closest('.header__search');
+  if (!searchBox || !els.searchToggle) return;
+
+  const shouldOpen = Boolean(open) && isFloatingHeaderSearchMode();
+  searchBox.classList.toggle('header__search--mobile-open', shouldOpen);
+  document.body.classList.toggle('header-search-open', shouldOpen);
+  els.searchToggle.setAttribute('aria-expanded', String(shouldOpen));
+  els.searchToggle.setAttribute('aria-label', shouldOpen ? t('app.closeSearch') : t('app.openSearch'));
+
+  if (shouldOpen && focus) {
+    requestAnimationFrame(() => els.searchInput?.focus());
+  }
+}
+
+function syncFloatingHeaderSearchForViewport() {
+  if (!isFloatingHeaderSearchMode()) {
+    setFloatingHeaderSearchOpen(false);
+  }
+  syncHeaderSearchChrome();
 }
 
 function syncHeaderSearchChrome({
@@ -673,8 +916,8 @@ function syncHeaderSearchChrome({
   if (!els.searchInput || !els.searchShortcut || !els.searchClear) return;
 
   const isDocsMode = mode === 'docs';
-  els.searchInput.placeholder = isDocsMode ? 'Search docs' : PRODUCT_FACT_LABELS.searchPlaceholderLabel;
-  els.searchInput.setAttribute('aria-label', isDocsMode ? 'Search docs' : 'Search icons');
+  els.searchInput.placeholder = isDocsMode ? t('app.docsSearchPlaceholder') : t('app.searchPlaceholder');
+  els.searchInput.setAttribute('aria-label', isDocsMode ? t('app.docsSearchAriaLabel') : t('app.searchAriaLabel'));
   if (isDocsMode) {
     els.searchInput.setAttribute('aria-controls', 'docsSearchResults');
     els.searchInput.setAttribute('aria-expanded', 'false');
@@ -685,7 +928,7 @@ function syncHeaderSearchChrome({
 
   const hasValue = value.length > 0;
   els.searchShortcut.style.display = hasValue ? 'none' : '';
-  els.searchClear.style.display = hasValue ? 'flex' : 'none';
+  els.searchClear.style.display = hasValue || (isFloatingHeaderSearchMode() && isHeaderSearchOpen()) ? 'flex' : 'none';
   renderRecentSearches();
 }
 
@@ -718,7 +961,7 @@ function syncCollectionClearButton() {
   }
 
   const isEmpty = isFavoritesView ? state.favorites.size === 0 : state.recent.length === 0;
-  const actionLabel = isFavoritesView ? 'Clear favorites' : 'Clear recent';
+  const actionLabel = isFavoritesView ? t('actions.clearFavorites') : t('actions.clearRecent');
   button.disabled = isEmpty;
   button.removeAttribute('aria-hidden');
   button.setAttribute('aria-label', actionLabel);
@@ -749,9 +992,11 @@ async function loadIcons() {
   els.gridMeta.textContent = 'Loading icon libraries...';
 
   try {
-    const [iconResp, synResp] = await Promise.all([
+    const [iconResp, synResp, cjkResp, multilingualAliasesResp] = await Promise.all([
       fetch('/icon-index.json'),
       fetch('/synonyms.json', { cache: 'no-store' }),
+      fetch('/cjk-search-terms.json', { cache: 'no-store' }),
+      fetch('/multilingual-search-aliases.json', { cache: 'no-store' }),
     ]);
 
     if (!iconResp.ok) throw new Error(`Icons: HTTP ${iconResp.status}`);
@@ -766,6 +1011,19 @@ async function loadIcons() {
       state.synonyms = await synResp.json();
       console.log(`Loaded ${Object.keys(state.synonyms).length} synonym groups`);
     }
+
+    if (cjkResp.ok) {
+      const cjkData = await cjkResp.json();
+      state.cjkSearchTerms = Array.isArray(cjkData.terms) ? cjkData.terms : [];
+    }
+
+    if (multilingualAliasesResp.ok) {
+      const aliasData = await multilingualAliasesResp.json();
+      const aliases = Array.isArray(aliasData.aliases) ? aliasData.aliases : [];
+      state.cjkSearchTerms = [...state.cjkSearchTerms, ...aliases];
+    }
+
+    console.log(`Loaded ${state.cjkSearchTerms.length} multilingual search terms`);
 
     rebuildJobCategoryCounts();
     renderUseCaseFilters();
@@ -860,6 +1118,11 @@ function getJobCategoryMeta(jobCategoryId) {
   return jobCategoryMap.get(jobCategoryId) || null;
 }
 
+function getJobCategoryLabel(category) {
+  if (!category?.id) return category?.label || '';
+  return t(`filters.categories.${category.id}`, {}, category.label);
+}
+
 function getActiveJobCategoryId() {
   return getScopedJobCategoryFilter({
     currentView: getCurrentShellView(),
@@ -938,9 +1201,11 @@ function renderUseCaseFilters() {
 
   const activeFilter = getActiveJobCategoryId() || 'all';
   const activeMeta = getJobCategoryMeta(activeFilter);
-  const allLabel = `TAGS (${state.jobCategoryScopeCount.toLocaleString()})`;
+  const allLabel = t('filters.tagsWithCount', {
+    count: state.jobCategoryScopeCount.toLocaleString(),
+  });
   const activeText = activeMeta
-    ? `${activeMeta.label} (${getJobCategoryCount(activeFilter).toLocaleString()})`
+    ? `${getJobCategoryLabel(activeMeta)} (${getJobCategoryCount(activeFilter).toLocaleString()})`
     : allLabel;
   const options = [
     `
@@ -966,7 +1231,7 @@ function renderUseCaseFilters() {
             role="option"
             aria-selected="${isActive}"
           >
-            ${category.label} (${getJobCategoryCount(category.id).toLocaleString()})
+            ${getJobCategoryLabel(category)} (${getJobCategoryCount(category.id).toLocaleString()})
           </button>
         `;
       }),
@@ -979,7 +1244,8 @@ function renderUseCaseFilters() {
     els.useCaseFilterMenu.innerHTML = options.join('');
   }
   els.useCaseFilters.classList.toggle('is-active', activeFilter !== 'all');
-  els.useCaseFilters.setAttribute('data-tip', 'Tags');
+  els.useCaseFilters.setAttribute('aria-label', t('filters.tags'));
+  els.useCaseFilters.setAttribute('data-tip', t('filters.tags'));
   els.useCaseFilters.removeAttribute('title');
 }
 
@@ -1158,13 +1424,7 @@ function editDistance(a, b) {
 }
 
 function normalizeSemanticText(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/[_:]+/g, ' ')
-    .replace(/[^a-z0-9\s-]/g, ' ')
-    .replace(/-/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return normalizeCjkSearchText(value);
 }
 
 function tokenizeSemanticText(value) {
@@ -1195,7 +1455,7 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
     return 320;
   }
 
-  if (normalizedQuery.length > 2 && (
+  if (normalizedQuery.length > 3 && (
     name.includes(normalizedQuery)
     || id.includes(normalizedQuery)
     || fullId.includes(normalizedQuery)
@@ -1270,7 +1530,7 @@ function getIntentExpandedSearchScore(icon, normalizedQuery, queryWords, queryVa
     const variantWords = variant === normalizedQuery
       ? queryWords
       : tokenizeSemanticText(variant);
-    const weight = index === 0 ? 1 : 0.78;
+    const weight = index === 0 ? 1 : Math.max(0.5, 0.9 - (index * 0.06));
     bestAliasScore = Math.max(
       bestAliasScore,
       getCuratedAliasScore(icon, variant, variantWords) * weight,
@@ -1351,6 +1611,10 @@ function expandSearchTerms(query) {
   return words.map(w => expandSingleTerm(w));
 }
 
+function getSearchQueryPlan(query) {
+  return buildWebSearchQueryPlan(query, state.cjkSearchTerms, buildIntentQueryVariants);
+}
+
 function getHostedSearchLibraryFilter() {
   if (
     state.activeLibrary === 'all'
@@ -1365,6 +1629,7 @@ function getHostedSearchLibraryFilter() {
 async function refreshHostedSearchResults({
   requestId,
   query,
+  locale = null,
   baseIcons,
   fallbackIcons,
 }) {
@@ -1377,6 +1642,7 @@ async function refreshHostedSearchResults({
       query,
       library: getHostedSearchLibraryFilter(),
       limit: Math.max(state.batchSize, 60),
+      locale,
       source: 'web',
     });
 
@@ -1466,10 +1732,12 @@ function applyFilters() {
 
   // Search filter: tiered results (direct matches first, then synonym matches)
   if (state.searchQuery) {
-    const normalizedQuery = normalizeSemanticText(state.searchQuery);
+    const searchPlan = getSearchQueryPlan(state.searchQuery);
+    const normalizedQuery = searchPlan.normalizedQuery;
     const queryWords = tokenizeSemanticText(state.searchQuery);
-    const queryVariants = buildIntentQueryVariants(normalizedQuery, { maxVariants: 8 });
-    const termSets = expandSearchTerms(normalizedQuery); // array of term-sets, one per word
+    const queryVariants = searchPlan.variants;
+    const synonymQueryVariants = searchPlan.locale ? queryVariants.slice(1) : [normalizedQuery];
+    const termSetGroups = synonymQueryVariants.map((variant) => expandSearchTerms(variant));
     state.hostedSearchPending = normalizedQuery.length >= 2 && searchPool.length > 0;
 
     // Helper: check if icon matches a set of term-sets
@@ -1484,6 +1752,7 @@ function applyFilters() {
         })
       );
     };
+    const iconMatchesAnyTermSetGroup = (icon, groups) => groups.some((sets) => iconMatchesTermSets(icon, sets));
 
     // Tier 1: direct query and curated-alias matches
     const tier1 = icons
@@ -1499,7 +1768,7 @@ function applyFilters() {
 
     // Tier 2: matched by synonym expansion but NOT by direct query
     const tier2 = icons.filter(icon =>
-      !tier1Keys.has(iconKey(icon)) && iconMatchesTermSets(icon, termSets)
+      !tier1Keys.has(iconKey(icon)) && iconMatchesAnyTermSetGroup(icon, termSetGroups)
     );
 
     state.tierDividerIndex = tier1.length;
@@ -1507,6 +1776,7 @@ function applyFilters() {
     void refreshHostedSearchResults({
       requestId: searchRequestId,
       query: state.searchQuery,
+      locale: searchPlan.locale,
       baseIcons: searchPool,
       fallbackIcons: icons,
     });
@@ -1529,10 +1799,10 @@ function applyFilters() {
 function updateCounts() {
   const total = state.icons.length;
   const showing = state.filteredIcons.length;
-  const styleSuffix = state.iconStyle === 'solid' ? ' (solid)' : '';
+  const styleSuffix = state.iconStyle === 'solid' ? t('app.solidSuffix') : '';
   const activeJobCategoryId = getActiveJobCategoryId();
   const activeJobCategoryMeta = getJobCategoryMeta(activeJobCategoryId);
-  const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
+  const titleMap = { all: t('app.allIcons'), favorites: t('app.favorites'), recent: t('app.recent') };
   const libraryTitle = titleMap[state.activeLibrary] || (libraryMeta[state.activeLibrary]?.name || state.activeLibrary);
 
   $('#countAll').textContent = total.toLocaleString();
@@ -1550,19 +1820,19 @@ function updateCounts() {
     && libraryMeta[activeLib] && !libraryMeta[activeLib].hasFilled;
 
   if (noSolid) {
-    els.gridMeta.textContent = `Showing outline (no solid variant available)`;
+    els.gridMeta.textContent = t('app.showingOutlineOnly');
   } else if (activeJobCategoryMeta) {
     els.gridMeta.textContent = state.searchQuery
       ? state.activeLibrary === 'all'
-        ? `Showing ${showing.toLocaleString()} results${styleSuffix}`
-        : `Showing ${showing.toLocaleString()} ${libraryTitle} results${styleSuffix}`
+        ? `${t('app.showingResults', { shown: showing.toLocaleString() })}${styleSuffix}`
+        : `${t('app.showingLibraryResults', { shown: showing.toLocaleString(), library: libraryTitle })}${styleSuffix}`
       : state.activeLibrary === 'all'
-        ? `Showing ${showing.toLocaleString()} curated icons${styleSuffix}`
-        : `Showing ${showing.toLocaleString()} curated ${libraryTitle} icons${styleSuffix}`;
+        ? `${t('app.showingCuratedIcons', { shown: showing.toLocaleString() })}${styleSuffix}`
+        : `${t('app.showingCuratedLibraryIcons', { shown: showing.toLocaleString(), library: libraryTitle })}${styleSuffix}`;
   } else if (showing === total && !state.searchQuery) {
-    els.gridMeta.textContent = `Showing ${total.toLocaleString()} icons${styleSuffix}`;
+    els.gridMeta.textContent = `${t('app.showingIcons', { total: total.toLocaleString() })}${styleSuffix}`;
   } else {
-    els.gridMeta.textContent = `Showing ${showing.toLocaleString()} of ${total.toLocaleString()} icons${styleSuffix}`;
+    els.gridMeta.textContent = `${t('app.showingSomeIcons', { shown: showing.toLocaleString(), total: total.toLocaleString() })}${styleSuffix}`;
   }
 
 }
@@ -1598,7 +1868,7 @@ function syncSidebarToggleButton() {
   const icon = button.querySelector('.material-symbols-outlined');
   const actionLabel = docsDrawerMode
     ? (docsDrawerOpen ? 'Close docs navigation' : 'Open docs navigation')
-    : 'Menu';
+    : t('app.menu');
 
   if (icon) {
     icon.textContent = docsDrawerMode && docsDrawerOpen ? 'close' : 'menu';
@@ -1676,7 +1946,7 @@ function togglePanel() {
 }
 
 function updateGridHeading() {
-  const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
+  const titleMap = { all: t('app.allIcons'), favorites: t('app.favorites'), recent: t('app.recent') };
   const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
   const libraryTitle = titleMap[state.activeLibrary] || (libraryMeta[state.activeLibrary]?.name || state.activeLibrary);
   els.gridTitle.textContent = resolveGridHeadingText({
@@ -1756,7 +2026,7 @@ function selectIcon(iconId, iconLib) {
     const panelBody = $('.panel__body');
     if (panelBody) {
       panelBody.className = 'panel__placeholder';
-      panelBody.innerHTML = '<span class="material-symbols-outlined panel__placeholder-icon">touch_app</span><p class="panel__placeholder-text">Select an icon from the grid to customize it</p>';
+      panelBody.innerHTML = `<span class="material-symbols-outlined panel__placeholder-icon">touch_app</span><p class="panel__placeholder-text">${t('panels.selectIcon')}</p>`;
     }
     return;
   }
@@ -1845,6 +2115,20 @@ function renderPanelForIcon(icon) {
 
   // Build customize sections
   const panelBody = $('.panel__placeholder') || document.createElement('div');
+  const containerLabels = {
+    none: t('customize.containerNone'),
+    circle: t('customize.containerCircle'),
+    squircle: t('customize.containerSquircle'),
+    pill: t('customize.containerPill'),
+    glass: t('customize.containerGlass'),
+  };
+  const animationLabels = {
+    none: t('customize.animationNone'),
+    spin: t('customize.animationSpin'),
+    pulse: t('customize.animationPulse'),
+    bounce: t('customize.animationBounce'),
+    shake: t('customize.animationShake'),
+  };
   panelBody.className = 'panel__body';
   panelBody.innerHTML = `
     <!-- Icon Info -->
@@ -1861,7 +2145,7 @@ function renderPanelForIcon(icon) {
 
     <!-- Color -->
     <div class="panel__section">
-      <div class="panel__section-title">Color</div>
+      <div class="panel__section-title">${t('customize.color')}</div>
       <div class="customize-color">
           <input type="color" id="colorPicker" value="${c.color}" class="customize-color__input">
           <input type="text" id="colorHex" value="${c.color}" class="customize-color__hex" maxlength="7" spellcheck="false">
@@ -1872,7 +2156,7 @@ function renderPanelForIcon(icon) {
         `).join('')}
       </div>
       ${state.recentColors.length > 0 ? `
-        <div class="recent-colors-label">Recent</div>
+        <div class="recent-colors-label">${t('app.recent')}</div>
         <div class="customize-swatches recent-colors-row">
           ${state.recentColors.map(rc => `<button class="customize-swatch" data-color="${rc}" style="background:${rc};" aria-label="Color ${rc}"></button>`).join('')}
         </div>
@@ -1887,10 +2171,10 @@ function renderPanelForIcon(icon) {
       const supportsStroke = libraryMeta[icon.lib]?.hasStroke !== false;
       const disabledAttr = supportsStroke ? '' : ' disabled';
       const disabledClass = supportsStroke ? '' : ' customize-slider--disabled';
-      const hint = supportsStroke ? '' : '<p class="customize-hint"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:-2px">info</span> This library uses filled paths. Stroke width has no effect.</p>';
+      const hint = supportsStroke ? '' : `<p class="customize-hint"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:-2px">info</span> ${t('customize.strokeNoEffect')}</p>`;
       return `
     <div class="panel__section">
-      <div class="panel__section-title">Stroke Width</div>
+      <div class="panel__section-title">${t('customize.strokeWidth')}</div>
       <div class="customize-slider${disabledClass}">
         <input type="range" id="strokeSlider" min="0.5" max="3" step="0.1" value="${c.strokeWidth}" class="customize-slider__range"${disabledAttr}>
         <span class="customize-slider__value" id="strokeValue">${c.strokeWidth}px</span>
@@ -1903,21 +2187,21 @@ function renderPanelForIcon(icon) {
     <!-- Material Symbols Variable Axes (font only) -->
     ${icon.type === 'font' ? `
     <div class="panel__section">
-      <div class="panel__section-title">Variable Font Axes</div>
+      <div class="panel__section-title">${t('customize.variableFontAxes')}</div>
       <div class="customize-axis">
-        <label class="customize-axis__label">Weight <span id="weightValue">${c.materialWeight}</span></label>
+        <label class="customize-axis__label">${t('customize.weight')} <span id="weightValue">${c.materialWeight}</span></label>
         <input type="range" id="axisWeight" min="100" max="700" step="100" value="${c.materialWeight}" class="customize-slider__range">
       </div>
       <div class="customize-axis">
-        <label class="customize-axis__label">Fill <span id="fillValue">${c.materialFill}</span></label>
+        <label class="customize-axis__label">${t('customize.fill')} <span id="fillValue">${c.materialFill}</span></label>
         <input type="range" id="axisFill" min="0" max="1" step="1" value="${c.materialFill}" class="customize-slider__range">
       </div>
       <div class="customize-axis">
-        <label class="customize-axis__label">Grade <span id="gradeValue">${c.materialGrade}</span></label>
+        <label class="customize-axis__label">${t('customize.grade')} <span id="gradeValue">${c.materialGrade}</span></label>
         <input type="range" id="axisGrade" min="-25" max="200" step="25" value="${c.materialGrade}" class="customize-slider__range">
       </div>
       <div class="customize-axis">
-        <label class="customize-axis__label">Optical Size <span id="opszValue">${c.materialOpticalSize}</span></label>
+        <label class="customize-axis__label">${t('customize.opticalSize')} <span id="opszValue">${c.materialOpticalSize}</span></label>
         <input type="range" id="axisOpsz" min="20" max="48" step="4" value="${c.materialOpticalSize}" class="customize-slider__range">
       </div>
     </div>
@@ -1925,50 +2209,50 @@ function renderPanelForIcon(icon) {
 
     <!-- Container Preview -->
     <div class="panel__section">
-      <div class="panel__section-title">Container</div>
+      <div class="panel__section-title">${t('customize.container')}</div>
       <div class="customize-container-shapes">
-        <button class="customize-container-btn ${state.customize.container === 'none' ? 'active' : ''}" data-shape="none" data-tip="None">
+        <button class="customize-container-btn ${state.customize.container === 'none' ? 'active' : ''}" data-shape="none" data-tip="${containerLabels.none}">
           <span class="material-symbols-outlined" style="font-size:16px">crop_free</span>
         </button>
-        <button class="customize-container-btn ${state.customize.container === 'circle' ? 'active' : ''}" data-shape="circle" data-tip="Circle">
+        <button class="customize-container-btn ${state.customize.container === 'circle' ? 'active' : ''}" data-shape="circle" data-tip="${containerLabels.circle}">
           <span class="material-symbols-outlined" style="font-size:16px">circle</span>
         </button>
-        <button class="customize-container-btn ${state.customize.container === 'squircle' ? 'active' : ''}" data-shape="squircle" data-tip="Squircle">
+        <button class="customize-container-btn ${state.customize.container === 'squircle' ? 'active' : ''}" data-shape="squircle" data-tip="${containerLabels.squircle}">
           <span class="material-symbols-outlined" style="font-size:16px">square</span>
         </button>
-        <button class="customize-container-btn ${state.customize.container === 'pill' ? 'active' : ''}" data-shape="pill" data-tip="Pill">
+        <button class="customize-container-btn ${state.customize.container === 'pill' ? 'active' : ''}" data-shape="pill" data-tip="${containerLabels.pill}">
           <span class="material-symbols-outlined" style="font-size:16px">rectangle</span>
         </button>
-        <button class="customize-container-btn ${state.customize.container === 'glass' ? 'active' : ''}" data-shape="glass" data-tip="Glass">
+        <button class="customize-container-btn ${state.customize.container === 'glass' ? 'active' : ''}" data-shape="glass" data-tip="${containerLabels.glass}">
           <span class="material-symbols-outlined" style="font-size:16px">blur_on</span>
         </button>
       </div>
       <div class="customize-row" style="margin-top: var(--si-space-2);">
         <label class="customize-toggle">
           <input type="checkbox" id="badgeToggle" ${state.customize.badge ? 'checked' : ''}>
-          <span class="customize-toggle__label">Badge dot</span>
+          <span class="customize-toggle__label">${t('customize.badgeDot')}</span>
         </label>
         <label class="customize-toggle">
           <input type="checkbox" id="lightBgToggle" ${state.customize.lightBg ? 'checked' : ''}>
-          <span class="customize-toggle__label">Light bg</span>
+          <span class="customize-toggle__label">${t('customize.lightBackground')}</span>
         </label>
       </div>
     </div>
 
     <!-- Animation -->
     <div class="panel__section">
-      <div class="panel__section-title">Animation</div>
+      <div class="panel__section-title">${t('customize.animation')}</div>
       <div class="customize-container-shapes">
         ${['none', 'spin', 'pulse', 'bounce', 'shake'].map(a => `
-          <button class="customize-container-btn ${state.customize.animation === a ? 'active' : ''}" data-animation="${a}" data-tip="${a}">
-            ${a === 'none' ? '<span class="material-symbols-outlined" style="font-size:16px">block</span>' : `<span style="font-size:0.5rem;text-transform:uppercase;letter-spacing:-0.02em">${a}</span>`}
+          <button class="customize-container-btn ${state.customize.animation === a ? 'active' : ''}" data-animation="${a}" data-tip="${animationLabels[a]}">
+            ${a === 'none' ? '<span class="material-symbols-outlined" style="font-size:16px">block</span>' : `<span style="font-size:0.5rem;text-transform:uppercase;letter-spacing:-0.02em">${animationLabels[a]}</span>`}
           </button>
         `).join('')}
       </div>
       ${(icon.type === 'svg' || isMaterialFontIcon(icon)) ? `
       <div style="margin-top:8px">
         <button class="customize-export__btn" id="openMotionLab">
-          <span class="material-symbols-outlined" style="font-size:16px">animation</span> Open in Motion Lab
+          <span class="material-symbols-outlined" style="font-size:16px">animation</span> ${t('customize.openInMotionLab')}
         </button>
       </div>
       ` : ''}
@@ -1976,49 +2260,49 @@ function renderPanelForIcon(icon) {
 
     <!-- Export -->
     <div class="panel__section">
-      <div class="panel__section-title">Export</div>
+      <div class="panel__section-title">${t('customize.export')}</div>
       <div class="customize-export">
         <button class="customize-export__btn" id="exportCopySvg">
-          <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG
+          <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> ${t('customize.copySvg')}
         </button>
         <button class="customize-export__btn" id="exportCopyBase64">
-          <span class="material-symbols-outlined" style="font-size:16px">data_object</span> Copy Base64
+          <span class="material-symbols-outlined" style="font-size:16px">data_object</span> ${t('customize.copyBase64')}
         </button>
         <button class="customize-export__btn" id="exportDownloadSvg">
-          <span class="material-symbols-outlined" style="font-size:16px">download</span> Download SVG
+          <span class="material-symbols-outlined" style="font-size:16px">download</span> ${t('customize.downloadSvg')}
         </button>
       </div>
 
       <!-- PNG / ICO sub-section -->
       <div class="panel__section-divider"></div>
-      <div class="panel__section-subtitle">PNG Size</div>
+      <div class="panel__section-subtitle">${t('customize.pngSize')}</div>
       <div class="png-size-picker">
         ${[16, 24, 32, 48, 64, 128, 256].map(s => `
           <button class="png-size-btn ${state.customize.pngSize === s ? 'active' : ''}" data-size="${s}">${s}</button>
         `).join('')}
         <input class="png-size-custom" id="pngSizeCustom" type="number" min="8" max="1024" placeholder="px"
-          title="Custom size (8-1024)">
+          title="${t('customize.customSizeTitle')}">
       </div>
       <div class="customize-export">
         <button class="customize-export__btn" id="exportDownloadPng">
           <span class="material-symbols-outlined" style="font-size:16px">image</span>
-          Download PNG <span class="png-size-badge" id="pngSizeBadge">${state.customize.pngSize}px</span>
+          ${t('customize.downloadPng')} <span class="png-size-badge" id="pngSizeBadge">${state.customize.pngSize}px</span>
         </button>
         <button class="customize-export__btn" id="exportDownloadIco">
-          <span class="material-symbols-outlined" style="font-size:16px">bookmark</span> Download ICO
+          <span class="material-symbols-outlined" style="font-size:16px">bookmark</span> ${t('customize.downloadIco')}
         </button>
       </div>
       ${isMaterialFontIcon(icon) ? `
       <p class="customize-hint">
         <span class="material-symbols-outlined" style="font-size:14px;vertical-align:-2px">info</span>
-        Graphical exports use the nearest supported Material snapshot when an exact slider value is unavailable.
+        ${t('customize.materialSnapshotHint')}
       </p>
       ` : ''}
     </div>
 
     <!-- Copy as Component -->
     <div class="panel__section">
-      <div class="panel__section-title">Copy as Component</div>
+      <div class="panel__section-title">${t('customize.copyAsComponent')}</div>
       <div class="customize-export">
         <button class="customize-export__btn" id="exportReact">
           <span class="material-symbols-outlined" style="font-size:16px">code</span> React
@@ -2038,7 +2322,7 @@ function renderPanelForIcon(icon) {
     <!-- Reset -->
     <div class="panel__section">
       <button class="customize-export__btn customize-export__btn--reset" id="resetBtn">
-        <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span> Reset to Defaults
+        <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span> ${t('customize.resetToDefaults')}
       </button>
     </div>
   `;
@@ -2074,7 +2358,7 @@ function resetPanelToPlaceholder() {
     panelBody.className = 'panel__placeholder';
     panelBody.innerHTML = `
       <span class="material-symbols-outlined panel__placeholder-icon">touch_app</span>
-      <p class="panel__placeholder-text">Select an icon from the grid to customize it</p>
+      <p class="panel__placeholder-text">${t('panels.selectIcon')}</p>
     `;
   }
   const panelControls = els.panel.querySelector('.panel__controls');
@@ -3204,6 +3488,18 @@ if (typeof MOBILE_PANEL_MEDIA.addEventListener === 'function') {
 els.sidebarToggle.addEventListener('click', toggleSidebar);
 syncSidebarToggleButton();
 els.panelToggle.addEventListener('click', togglePanel);
+els.localeSelect?.addEventListener('click', (event) => {
+  event.stopPropagation();
+  toggleLocaleMenu();
+});
+els.localeMenu?.addEventListener('click', (event) => {
+  const option = event.target.closest('[data-locale]');
+  if (!option) return;
+  event.stopPropagation();
+  closeLocaleMenu();
+  void setActiveLocale(option.dataset.locale);
+});
+window.addEventListener('supericons:view-change', syncPageMetadata);
 // Panel close button (use delegation on panel in case DOM is rebuilt)
 els.panel.addEventListener('click', (e) => {
   const closeBtn = e.target.closest('#panelClose, .panel__close');
@@ -3216,18 +3512,6 @@ els.panel.addEventListener('click', (e) => {
 // Theme toggle (dark/light)
 const themeToggleBtn = $('#themeToggle');
 if (themeToggleBtn) {
-  const syncThemeToggleButton = () => {
-    const isLight = document.body.classList.contains('theme-light');
-    const actionLabel = isLight ? 'Dark Mode' : 'Light Mode';
-    const icon = themeToggleBtn.querySelector('.material-symbols-outlined');
-    if (icon) {
-      icon.textContent = isLight ? 'dark_mode' : 'light_mode';
-    }
-    themeToggleBtn.setAttribute('aria-label', actionLabel);
-    themeToggleBtn.setAttribute('data-tip', actionLabel);
-    themeToggleBtn.removeAttribute('title');
-  };
-
   syncThemeToggleButton();
 
   themeToggleBtn.addEventListener('click', () => {
@@ -3311,11 +3595,11 @@ if (gridClearCollectionBtn) {
     if ((!isFavoritesView && !isRecentView) || gridClearCollectionBtn.disabled) return;
 
     const confirmed = await showCollectionClearConfirmModal({
-      title: isFavoritesView ? 'Clear all favorites from this device?' : 'Clear recent icons from this device?',
+      title: isFavoritesView ? t('confirm.clearFavoritesTitle') : t('confirm.clearRecentTitle'),
       description: isFavoritesView
-        ? 'This removes every saved favorite stored in this browser. It does not affect your account or purchased packs.'
-        : 'This removes your recent icon history stored in this browser. It does not affect favorites, purchases, or account access.',
-      confirmLabel: isFavoritesView ? 'Clear favorites' : 'Clear recent',
+        ? t('confirm.clearFavoritesDescription')
+        : t('confirm.clearRecentDescription'),
+      confirmLabel: isFavoritesView ? t('actions.clearFavorites') : t('actions.clearRecent'),
     });
 
     if (!confirmed) return;
@@ -3330,7 +3614,7 @@ if (gridClearCollectionBtn) {
     state.selectedIcon = null;
     applyFilters();
     resetPanelToPlaceholder();
-    showToast(isFavoritesView ? 'Favorites cleared on this device' : 'Recent icons cleared on this device');
+    showToast(isFavoritesView ? t('toast.favoritesCleared') : t('toast.recentCleared'));
   });
 }
 
@@ -3396,8 +3680,8 @@ function renderCompareDrawer() {
         <p class="compare-item__name">${icon.name}</p>
         <span class="compare-item__lib">${libLabel}</span>
         <div class="compare-item__actions">
-          <button class="compare-item__use" data-use-idx="${idx}">Use this</button>
-          <button class="compare-item__remove" data-remove-idx="${idx}">&times;</button>
+          <button class="compare-item__use" data-use-idx="${idx}">${t('actions.useThis')}</button>
+          <button class="compare-item__remove" data-remove-idx="${idx}" aria-label="${t('actions.remove')}">&times;</button>
         </div>
       </div>
     `;
@@ -3445,9 +3729,15 @@ document.addEventListener('click', (e) => {
   closeTagFilterMenu();
 });
 
+document.addEventListener('click', (e) => {
+  if (!els.localeSelectWrap || els.localeSelectWrap.contains(e.target)) return;
+  closeLocaleMenu();
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeTagFilterMenu();
+    closeLocaleMenu();
   }
 });
 
@@ -3479,6 +3769,20 @@ if (compareDrawerClose) compareDrawerClose.addEventListener('click', () => {
 
 // Search
 let searchDebounce = null;
+els.searchToggle?.addEventListener('click', () => {
+  const willOpen = !isHeaderSearchOpen();
+  setFloatingHeaderSearchOpen(willOpen, { focus: willOpen });
+});
+FLOATING_SEARCH_MEDIA.addEventListener('change', syncFloatingHeaderSearchForViewport);
+document.addEventListener('pointerdown', (e) => {
+  if (!isFloatingHeaderSearchMode() || !isHeaderSearchOpen()) return;
+  const searchBox = els.searchInput?.closest('.header__search');
+  const clickedInsideSearch = searchBox?.contains(e.target);
+  const clickedSearchToggle = els.searchToggle?.contains(e.target);
+  if (!clickedInsideSearch && !clickedSearchToggle) {
+    setFloatingHeaderSearchOpen(false);
+  }
+});
 els.searchInput.addEventListener('input', (e) => {
   if (isDocsHeaderSearchMode()) return;
   cancelScheduledRecentSearchHide();
@@ -3520,6 +3824,12 @@ els.searchInput.addEventListener('blur', () => {
   scheduleRecentSearchHide();
 });
 els.searchClear.addEventListener('click', () => {
+  if (isFloatingHeaderSearchMode() && isHeaderSearchOpen() && !els.searchInput.value.trim()) {
+    setFloatingHeaderSearchOpen(false);
+    els.searchToggle?.focus();
+    syncHeaderSearchChrome();
+    return;
+  }
   if (isDocsHeaderSearchMode()) return;
   clearPendingSearchAttempt();
   els.searchInput.value = '';
@@ -3550,9 +3860,9 @@ if (els.searchHistoryClear) {
 
 // Keyboard shortcuts
 function showCollectionClearConfirmModal({
-  title = 'Clear saved items from this device?',
-  description = 'This only affects data stored in the current browser.',
-  confirmLabel = 'Clear items',
+  title = t('confirm.clearItemsTitle'),
+  description = t('confirm.clearItemsDescription'),
+  confirmLabel = t('actions.clearItems'),
 } = {}) {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
@@ -3564,15 +3874,15 @@ function showCollectionClearConfirmModal({
     overlay.innerHTML = `
       <div class="claim-confirm-modal__backdrop"></div>
       <div class="claim-confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="collectionClearTitle">
-        <button class="claim-confirm-modal__close" type="button" aria-label="Close">
+        <button class="claim-confirm-modal__close" type="button" aria-label="${t('actions.close')}">
           <span class="material-symbols-outlined">close</span>
         </button>
-        <p class="claim-confirm-modal__eyebrow">This Device</p>
+        <p class="claim-confirm-modal__eyebrow">${t('confirm.thisDevice')}</p>
         <h3 class="claim-confirm-modal__title" id="collectionClearTitle">${safeTitle}</h3>
         <p class="claim-confirm-modal__desc">${safeDescription}</p>
-        <p class="claim-confirm-modal__meta">Only this browser storage is affected.</p>
+        <p class="claim-confirm-modal__meta">${t('confirm.browserStorageOnly')}</p>
         <div class="claim-confirm-modal__actions">
-          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">${t('actions.cancel')}</button>
           <button class="claim-confirm-modal__btn claim-confirm-modal__btn--danger" type="button" data-action="confirm">${safeConfirmLabel}</button>
         </div>
       </div>
@@ -3624,15 +3934,21 @@ document.addEventListener('keydown', (e) => {
   if (document.querySelector('.claim-confirm-modal')) return;
   if (e.key === '/' && document.activeElement !== els.searchInput) {
     e.preventDefault();
+    setFloatingHeaderSearchOpen(true);
     els.searchInput.focus();
   }
   if (e.key === 'Escape') {
     if (isDocsHeaderSearchMode()) return;
+    if (isHeaderSearchOpen() && document.activeElement !== els.searchInput) {
+      setFloatingHeaderSearchOpen(false);
+      return;
+    }
     if (document.activeElement === els.searchInput) {
       els.searchInput.value = '';
       els.searchInput.blur();
       state.searchQuery = '';
       applyFilters();
+      setFloatingHeaderSearchOpen(false);
     }
     // Exit multi-select
     if (state.multiSelect) {
@@ -3707,6 +4023,7 @@ const heroSearchBtn = $('#heroSearchBtn');
 if (heroSearchBtn) {
   heroSearchBtn.addEventListener('click', () => {
     dismissHero();
+    setFloatingHeaderSearchOpen(true);
     els.searchInput.focus();
   });
 }
@@ -3740,11 +4057,13 @@ els.searchInput.addEventListener('input', autoDismissOnce);
 // Init
 // ============================================================
 async function init() {
+  await initI18n();
   hydrateSidebarIcons();
   loadCollections();
   await loadIcons();
   setupInfiniteScroll();
   updateSidebarCounts();
+  window.dispatchEvent(new CustomEvent('supericons:locale-change', { detail: { locale: activeLocale } }));
   fetchPopularity(); // non-blocking, re-sorts grid when data arrives
 }
 
@@ -3771,6 +4090,7 @@ const storeShell = createStoreShellContract({
     resetPanelToPlaceholder,
     setHeaderSearchMode,
     setPanelSuppressed,
+    getDefaultIconTitle: () => t('app.allIcons'),
   },
 });
 
@@ -3789,6 +4109,9 @@ window.__supericons = {
   ANIM_CSS,
   setHeaderSearchMode,
   syncHeaderSearchChrome,
+  setActiveLocale,
+  getActiveLocale: () => activeLocale,
+  t: (...args) => t(...args),
   syncTagFilterBar,
   syncSidebarToggleButton,
   shell: storeShell,
@@ -3889,7 +4212,7 @@ if (contactForm) {
     if (!name || !email || !message) return;
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">hourglass_empty</span> Sending...';
+    submitBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px">hourglass_empty</span> <span>${t('contact.sending')}</span>`;
     status.textContent = '';
     status.className = 'contact-form__status';
 
@@ -3902,7 +4225,7 @@ if (contactForm) {
 
       if (!res.ok) throw new Error(`Server responded with ${res.status}`);
 
-      status.textContent = 'Message sent. Thank you!';
+      status.textContent = t('contact.sent');
       status.className = 'contact-form__status success';
       contactForm.reset();
       window.umami?.track('contact-submit');
@@ -3913,11 +4236,11 @@ if (contactForm) {
         status.className = 'contact-form__status';
       }, 2000);
     } catch (err) {
-      status.textContent = 'Failed to send. Please try the email link below.';
+      status.textContent = t('contact.failed');
       status.className = 'contact-form__status error';
     } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">send</span> Send message';
+      submitBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px">send</span> <span>${t('contact.sendMessage')}</span>`;
     }
   });
 }

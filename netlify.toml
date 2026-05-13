@@ -4,6 +4,19 @@
   command = "npm run build"
   publish = "dist"
 
+# Keep MCP setup pages as clean public URLs for search engines and sharing.
+[[redirects]]
+  from = "/mcp"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mcp/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Keep docs hub as a real static document before the SPA fallback.
 [[redirects]]
   from = "/docs"

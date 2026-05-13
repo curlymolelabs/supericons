@@ -81,5 +81,7 @@ copyFileSync(join(repoRoot, 'material-export.js'), join(repoRoot, 'mcp', 'materi
 copyFileSync(join(repoRoot, 'public', 'icon-index.json'), join(mcpPublicDir, 'icon-index.json'));
 copyFileSync(join(repoRoot, 'public', 'icon-index-solid.json'), join(mcpPublicDir, 'icon-index-solid.json'));
 copyFileSync(join(repoRoot, 'public', 'synonyms.json'), join(mcpPublicDir, 'synonyms.json'));
+copyFileSync(join(repoRoot, 'public', 'cjk-search-terms.json'), join(mcpPublicDir, 'cjk-search-terms.json'));
+copyFileSync(join(repoRoot, 'public', 'multilingual-search-aliases.json'), join(mcpPublicDir, 'multilingual-search-aliases.json'));
 
 console.log(`Motion Lab MCP artifacts built: ${baselinePresets.length} presets.`);

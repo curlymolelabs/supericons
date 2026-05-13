@@ -635,7 +635,7 @@ async function resolveAccessibleIcon(id, library, options = {}) {
   return null;
 }
 
-async function searchAccessibleIcons({ query, library, limit, style = VARIANT_STYLES.ANY }) {
+async function searchAccessibleIcons({ query, library, limit, style = VARIANT_STYLES.ANY, locale = null }) {
   const requestedStyle = normalizeRequestedStyle(style);
   const accessibleIcons = getAccessibleIcons();
   const searchableIcons = library
@@ -644,7 +644,7 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
 
   let hostedResults = [];
   try {
-    const hostedPayload = await searchIconsHostedMcp({ query, library, limit, style: requestedStyle });
+    const hostedPayload = await searchIconsHostedMcp({ query, library, limit, style: requestedStyle, locale });
     hostedResults = (hostedPayload.results || [])
       .map(buildHostedIcon)
       .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
@@ -664,6 +664,7 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
     library,
     limit: Math.max(limit * 2, 20),
     style: requestedStyle,
+    locale,
   });
 
   const baselineResults = requestedStyle === VARIANT_STYLES.SOLID
@@ -741,9 +742,10 @@ server.tool(
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
     library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, mingcute, or premium pack names'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
+    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
   },
-  async ({ query, library, style, limit }) => {
+  async ({ query, library, style, locale, limit }) => {
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
@@ -752,7 +754,7 @@ server.tool(
 
     let results;
     try {
-      results = await searchAccessibleIcons({ query, library, style, limit });
+      results = await searchAccessibleIcons({ query, library, style, locale, limit });
     } catch (error) {
       return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
     }
@@ -762,10 +764,19 @@ server.tool(
         query,
         resultCount: 0,
         libraryFilter: library || 'all',
+        locale: locale || null,
       });
-      return {
-        content: [{ type: 'text', text: `No icons found for "${query}"${library ? ` in ${library}` : ''}.` }],
-      };
+      return buildTextResponse({
+        error: 'No icons found',
+        code: 'no_icons_found',
+        query,
+        library: library || null,
+        locale: locale || null,
+        hint: locale
+          ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
+          : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.',
+        retryable: true,
+      });
     }
     const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, { style })))).filter(Boolean);
     if (formatted.length === 0) {
@@ -773,6 +784,7 @@ server.tool(
         query,
         resultCount: 0,
         libraryFilter: library || 'all',
+        locale: locale || null,
       });
       return buildTextResponse(`Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
     }
@@ -780,10 +792,12 @@ server.tool(
       query,
       resultCount: formatted.length,
       libraryFilter: library || 'all',
+      locale: locale || null,
     });
     void logMcpSearchBatch({
       query,
       results: formatted,
+      locale: locale || null,
     });
     return buildTextResponse({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' });
   }
@@ -797,10 +811,11 @@ server.tool(
     task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
     library: z.string().optional().describe('Optional library filter such as mingcute, lucide, tabler, material, or simpleicons.'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to prefer filled variants where they exist.'),
+    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
     limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
   },
-  async ({ task, library, style, slots, limit_per_slot }) => {
+  async ({ task, library, style, locale, slots, limit_per_slot }) => {
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -810,11 +825,12 @@ server.tool(
         task,
         library,
         style,
+        locale,
         slots,
         limitPerSlot: limit_per_slot,
         semanticMap: semanticRegistryMap,
-        searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit }) =>
-          searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit }),
+        searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }) =>
+          searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }),
         buildIconResult: buildToolIconResult,
       });
 

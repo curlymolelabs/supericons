@@ -2,6 +2,14 @@
  * Local fallback search only.
  * Do not treat this file as the production ranking engine.
  */
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import {
+  expandCjkQuery,
+  normalizeCjkSearchText,
+} from './runtime/cjk-search-core.js';
 import { createIconSemanticAliasMap } from './runtime/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from './runtime/icon-taxonomy-seed.js';
 import {
@@ -11,8 +19,25 @@ import {
   normalizeRequestedStyle,
 } from './variant-support.js';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const iconSemanticAliasMap = createIconSemanticAliasMap();
 const iconTaxonomyMap = createIconTaxonomyMap();
+const packagedCjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
+const repoCjkTermsPath = join(__dirname, '..', 'data', 'i18n', 'cjk-search-terms.json');
+const cjkTermsPath = existsSync(packagedCjkTermsPath) ? packagedCjkTermsPath : repoCjkTermsPath;
+const cjkSearchTerms = existsSync(cjkTermsPath)
+  ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || []
+  : [];
+const packagedMultilingualAliasesPath = join(__dirname, 'public', 'multilingual-search-aliases.json');
+const repoMultilingualAliasesPath = join(__dirname, '..', 'data', 'i18n', 'multilingual-search-aliases.json');
+const multilingualAliasesPath = existsSync(packagedMultilingualAliasesPath)
+  ? packagedMultilingualAliasesPath
+  : repoMultilingualAliasesPath;
+const multilingualSearchAliases = existsSync(multilingualAliasesPath)
+  ? JSON.parse(readFileSync(multilingualAliasesPath, 'utf8')).aliases || []
+  : [];
+const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
+const iconSearchMetadataCache = new WeakMap();
 
 /** Inline Levenshtein distance (capped early for performance) */
 function editDistance(a, b) {
@@ -33,13 +58,7 @@ function editDistance(a, b) {
 }
 
 function normalizeSemanticText(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/[_:]+/g, ' ')
-    .replace(/[^a-z0-9\s-]/g, ' ')
-    .replace(/-/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return normalizeCjkSearchText(value);
 }
 
 function tokenizeSemanticText(value) {
@@ -59,17 +78,48 @@ function getIconSemanticAliases(icon) {
   return iconSemanticAliasMap.get(iconKey(icon)) || null;
 }
 
-function getDirectSearchScore(icon, normalizedQuery, queryWords) {
-  if (!normalizedQuery) return 0;
+function getIconSearchMetadata(icon) {
+  const cached = iconSearchMetadataCache.get(icon);
+  if (cached) return cached;
 
   const name = normalizeSemanticText(icon.name);
   const id = normalizeSemanticText(icon.id);
   const fullId = normalizeSemanticText(iconKey(icon));
+  const lowerName = String(icon.name || '').toLowerCase();
+  const lowerId = String(icon.id || '').toLowerCase();
   const tokens = new Set([
     ...tokenizeSemanticText(icon.name),
     ...tokenizeSemanticText(icon.id),
     ...tokenizeSemanticText(iconKey(icon)),
   ]);
+  const segments = lowerId.split(/[-_]/).concat(lowerName.split(/[\s\-_]/));
+  const aliases = (getIconSemanticAliases(icon) || [])
+    .map((alias) => {
+      const normalized = normalizeSemanticText(alias);
+      return normalized
+        ? { normalized, tokens: new Set(tokenizeSemanticText(normalized)) }
+        : null;
+    })
+    .filter(Boolean);
+  const metadata = {
+    name,
+    id,
+    fullId,
+    lowerName,
+    lowerId,
+    tokens,
+    segments,
+    aliases,
+  };
+
+  iconSearchMetadataCache.set(icon, metadata);
+  return metadata;
+}
+
+function getDirectSearchScore(icon, normalizedQuery, queryWords) {
+  if (!normalizedQuery) return 0;
+
+  const { name, id, fullId, tokens } = getIconSearchMetadata(icon);
 
   if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
     return 320;
@@ -99,16 +149,14 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
 function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
   if (!normalizedQuery) return 0;
 
-  const aliases = getIconSemanticAliases(icon);
+  const { aliases } = getIconSearchMetadata(icon);
   if (!aliases?.length) return 0;
 
   let bestScore = 0;
 
   for (const alias of aliases) {
-    const normalizedAlias = normalizeSemanticText(alias);
+    const { normalized: normalizedAlias, tokens: aliasTokens } = alias;
     if (!normalizedAlias) continue;
-
-    const aliasTokens = new Set(tokenizeSemanticText(normalizedAlias));
 
     if (normalizedAlias === normalizedQuery) {
       bestScore = Math.max(bestScore, 420);
@@ -212,6 +260,40 @@ function expandSearchTerms(query, synonyms) {
  */
 export function searchIcons(query, icons, synonyms, options = {}) {
   const { library, limit = 20, style = 'any' } = options;
+  const cjkExpansion = expandCjkQuery(query, {
+    locale: options.locale,
+    terms: multilingualExpansionTerms,
+  });
+  const queryVariants = cjkExpansion.variants.length > 0 ? cjkExpansion.variants : [query];
+  const hasExpandedCjk = cjkExpansion.matched.length > 0 && queryVariants.length > 1;
+
+  if (hasExpandedCjk) {
+    const merged = [];
+    const seen = new Set();
+
+    for (const variant of queryVariants.slice(1)) {
+      const results = searchIconsForSingleQuery(variant, icons, synonyms, {
+        library,
+        limit: Math.max(limit * 2, 20),
+        style,
+      });
+
+      for (const icon of results) {
+        const key = iconKey(icon);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        merged.push(icon);
+      }
+    }
+
+    return merged.slice(0, Math.max(1, limit));
+  }
+
+  return searchIconsForSingleQuery(query, icons, synonyms, options);
+}
+
+function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
+  const { library, limit = 20, style = 'any' } = options;
   const normalizedStyle = normalizeRequestedStyle(style);
 
   // Library filter
@@ -226,14 +308,13 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   }
 
   const normalizedQuery = normalizeSemanticText(query);
+  if (!normalizedQuery) return [];
   const queryWords = tokenizeSemanticText(query);
   const termSets = expandSearchTerms(normalizedQuery, synonyms);
 
   // Helper: check if icon matches a set of term-sets
   const iconMatchesTermSets = (icon, sets) => {
-    const name = icon.name.toLowerCase();
-    const id = icon.id.toLowerCase();
-    const segments = id.split(/[-_]/).concat(name.split(/[\s\-_]/));
+    const { lowerName: name, lowerId: id, segments } = getIconSearchMetadata(icon);
     return sets.every(terms =>
       terms.some(term => {
         if (term.length <= 3) return segments.some(s => s === term);

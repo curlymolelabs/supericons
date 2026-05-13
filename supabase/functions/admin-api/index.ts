@@ -5,7 +5,7 @@ import Stripe from 'https://esm.sh/stripe@14?target=deno';
 type AuditOutcome = 'started' | 'succeeded' | 'failed';
 type JsonRecord = Record<string, unknown>;
 type SupabaseClient = any;
-type IntelligenceWindowKey = '7d' | '30d' | '90d' | '1y' | 'all';
+type IntelligenceWindowKey = '1d' | '7d' | '30d' | '90d' | '1y' | 'all';
 type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
 type IntelligenceWindow = {
   key: IntelligenceWindowKey;
@@ -50,6 +50,7 @@ const EVIDENCE_PAGE_SIZE = 1000;
 const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const INTELLIGENCE_WINDOWS: Record<IntelligenceWindowKey, IntelligenceWindow> = {
+  '1d': { key: '1d', shortLabel: '24h', longLabel: 'Last 24 hours', days: 1 },
   '7d': { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days', days: 7 },
   '30d': { key: '30d', shortLabel: '30d', longLabel: 'Last 30 days', days: 30 },
   '90d': { key: '90d', shortLabel: '90d', longLabel: 'Last 90 days', days: 90 },
@@ -342,8 +343,7 @@ function buildAccountDeletedEmail({
       </div>
       <div style="margin-top:28px;color:#666;font-size:12px;line-height:1.6;">
         This email was sent to ${escapedEmail}.<br />
-        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.<br />
-        &copy; 2026 Curly Mole Labs
+        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.
       </div>
     </div>
   </div>

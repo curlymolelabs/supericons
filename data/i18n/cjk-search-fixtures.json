@@ -1,0 +1,5648 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "locale": "zh-Hans",
+      "query": "搜索",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "设置",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "菜单",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "保存",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "下载",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "上传",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "邮件",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "数据库",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "代码",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "刷新",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "聊天",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "电话",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "音乐",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "明星",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "盾牌",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "云",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "地图",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "地球仪",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "筛选",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "网格",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "清单",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "变焦",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "调色板",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "仪表板",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "问题",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "机器人",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "火箭",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "书签",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "钱包",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "银行",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "商店",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "建筑物",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "加载中",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "在线",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "登录",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "注销",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "密码",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "管理员",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "应用接口",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "版本控制",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "发票",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "收据",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "播放列表",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "静音",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "会议",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "支持",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "层",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "组件",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "笔记本电脑",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "医生",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "餐厅",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "飞行",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "防火墙",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "虚拟专用网络",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "大语言模型",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "提示词",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "工作流程",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "搜尋",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "設定",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "選單",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "儲存",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "下載",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "上傳",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "郵件",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "資料庫",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "程式碼",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "重新整理",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "聊天",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "電話",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "音樂",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "明星",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "盾牌",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "雲",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "地圖",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "地球儀",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "篩選",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "網格",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "清單",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "變焦",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "調色盤",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "儀表板",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "問題",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "機器人",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "火箭",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "書籤",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "錢包",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "銀行",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "商店",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "建築物",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "載入中",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "網路",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "登入",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "註銷",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "密碼",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "管理員",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "應用介面",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "版本控制",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "發票",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "收據",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "播放清單",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "靜音",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "會議",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "支援",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "層",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "組件",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "筆記型電腦",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "醫生",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "餐廳",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "飛行",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "防火牆",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "虛擬私人網路",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "大型語言模型",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "提示詞",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "工作流程",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "検索",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "設定",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "メニュー",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "保存",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ダウンロード",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "アップロード",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "メール",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "データベース",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "コード",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "更新",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "チャット",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "電話",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "音楽",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "スター",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "盾",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "雲",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "地図",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "地球儀",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "フィルター",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "グリッド",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "リスト",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ズーム",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "パレット",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ダッシュボード",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "質問",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ロボット",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ロケット",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ブックマーク",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "財布",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "銀行",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "店",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "建物",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "読み込み中",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "オンライン",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ログイン",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ログアウト",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "パスワード",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "管理者",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "アプリ連携",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "バージョン管理",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "請求書",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "領収書",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "プレイリスト",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ミュート",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "会議",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "サポート",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "レイヤー",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "コンポーネント",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ラップトップ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "医者",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "レストラン",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "フライト",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ファイアウォール",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "仮想専用線",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "大規模言語モデル",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "プロンプト",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "ワークフロー",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "검색",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "설정",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "메뉴",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "저장",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "다운로드",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "업로드",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "메일",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "데이터베이스",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "코드",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "새로고침",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "채팅",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "전화",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "음악",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "별",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "방패",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "구름",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "지도",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "지구",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "필터",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "그리드",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "목록",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "줌",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "팔레트",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "대시보드",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "질문",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "로봇",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "로켓",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "북마크",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "지갑",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "은행",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "가게",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "건물",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "로드 중",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "온라인",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "로그인",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "로그아웃",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "비밀번호",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "관리자",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "응용 프로그램 인터페이스",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "버전 관리",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "송장",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "영수증",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "재생목록",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "음소거",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "회의",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "지원하다",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "레이어",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "구성요소",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "노트북",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "의사",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "레스토랑",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "비행",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "방화벽",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "가상 사설망",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "대규모 언어 모델",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "프롬프트",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "작업 흐름",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "buscar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "configuración",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "menú",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "guardar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "descargar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "subir",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "correo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "base de datos",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "código",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "actualizar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "charlar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "telefono",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "música",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "estrella",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "escudo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "nube",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "mapa",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "globo terráqueo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "filtrar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "cuadrícula",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "lista",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "ampliar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "paleta",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "tablero",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "pregunta",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "robot",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:model_training",
+        "lucide:brain-circuit"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "cohete",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "marcapáginas",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "billetera",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "banco",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "tienda",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "edificio",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "cargando",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "en línea",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "iniciar sesión",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "cerrar sesión",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "contraseña",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "administrador",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "api",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:webhook",
+        "material:alt_route"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "git",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:bug_report",
+        "material:call_merge"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "factura",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "recibo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "lista de reproducción",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "silenciar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "reunión",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "soporte",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "capa",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "componente",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "portátil",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "doctor",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:medical_information",
+        "material:medical_mask"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "restaurante",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "vuelo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "cortafuegos",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "vpn",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:vpn_key",
+        "tabler:brand-nord-vpn"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "modelo de lenguaje grande",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "indicación",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "flujo de trabajo",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "suche",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "einstellungen",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "menü",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "sparen",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "herunterladen",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "hochladen",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "e mail",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "datenbank",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "code",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:audio_description",
+        "material:barcode"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "aktualisieren",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "chatten",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "telefon",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "musik",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "stern",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "schild",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "wolke",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "landkarte",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "globus",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "filter",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:sort",
+        "iconoir:sort"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "gitter",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "liste",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "zoomen",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "palette",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:border_color",
+        "ionicons:color-fill-outline"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "armaturenbrett",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "frage",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "roboter",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "rakete",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "lesezeichen",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "brieftasche",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "bank",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:finance",
+        "material:finance_chip"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "laden",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "gebäude",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "ladevorgang",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "online",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:network",
+        "material:bluetooth_connected"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "anmelden",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "abmelden",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "passwort",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "administrator",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "api",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:webhook",
+        "material:alt_route"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "git",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:bug_report",
+        "material:call_merge"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "rechnung",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "quittung",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "wiedergabeliste",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "stumm",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "treffen",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "support",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:airplane_ticket",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "ebene",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "komponente",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "laptop",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:computer",
+        "material:computer_arrow_up"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "arzt",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "restaurant",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:android_cell_4_bar",
+        "material:android_cell_4_bar_alert"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "flug",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "firewall",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:app_blocking",
+        "material:block"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "vpn",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:vpn_key",
+        "tabler:brand-nord-vpn"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "großes sprachmodell",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "eingabeaufforderung",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "arbeitsablauf",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "pesquisa",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "configurações",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "menu",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:hamburger",
+        "phosphor:hamburger"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "salvar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "baixar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "enviar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "email",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "banco de dados",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "código",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "atualizar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "conversar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "telefone",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "música",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "estrela",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "escudo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "nuvem",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "mapa",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "globo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "filtrar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "grade",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "lista",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "ampliar",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "paleta",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "painel",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "pergunta",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "robô",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "foguete",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "marcador",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "carteira",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "banco",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "loja",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "construindo",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "carregando",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "online",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:network",
+        "material:bluetooth_connected"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "entrar",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "sair",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "senha",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "administrador",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "api",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:webhook",
+        "material:alt_route"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "git",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:bug_report",
+        "material:call_merge"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "fatura",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "recibo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "lista de reprodução",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "mudo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "reunião",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "suporte",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "camada",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "componente",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "computador portátil",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "médico",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "restaurante",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "voo",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "firewall",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:app_blocking",
+        "material:block"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "vpn",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:vpn_key",
+        "tabler:brand-nord-vpn"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "modelo de linguagem grande",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "prompt",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:arrows_input",
+        "material:contextual_token"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "fluxo de trabalho",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "بحث",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "إعدادات",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "قائمة أيقونة menu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "حفظ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تنزيل",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "رفع",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "بريد إلكتروني",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "قاعدة بيانات",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "رمز",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تحديث",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "محادثة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "هاتف",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "موسيقى",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "نجم",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "درع",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "سحاب",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "رسم خريطة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "الكرة الأرضية",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "فلتر",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "شبكة",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "قائمة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تكبير",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "لوحة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "لوحة القيادة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "سؤال",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "بالنيابة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "صاروخ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "إشارة مرجعية",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "محفظة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "بنك",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "محل",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مبنى",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تحميل",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "متصل",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تسجيل الدخول",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "تسجيل الخروج",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "كلمة المرور",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مسؤل",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "واجهة برمجة التطبيقات",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "جيت",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "فاتورة",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "إيصال",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "قائمة التشغيل",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "صامت",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مقابلة",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "دعم",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "طبقة",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مكوّن",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "كمبيوتر محمول",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "طبيب",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مطعم",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "رحلة جوية",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "جدار حماية",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "شبكة خاصة افتراضية",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "نموذج لغة كبير",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "مطالبة",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "سير العمل",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "खोज",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "सेटिंग्स",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "मेनू",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "सहेजें",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "डाउनलोड",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "अपलोड",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "ईमेल",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "डेटाबेस",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "कोड",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "रीफ़्रेश",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बात करना",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "फ़ोन",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "संगीत",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "तारा",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "कवच",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बादल",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "नक्शा",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "ग्लोब",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "फ़िल्टर",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "ग्रिड",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "सूची",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "ज़ूम",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "पैलेट",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "डैशबोर्ड",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "सवाल",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "रोबोट",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "राकेट",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बुकमार्क",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बटुआ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "किनारा",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "इकट्ठा करना",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "इमारत",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "लोड हो रहा है",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "ऑनलाइन",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "लॉग इन",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "लॉग आउट",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "पासवर्ड",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "व्यवस्थापक",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "एपीआई",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "गिट",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "चालान",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "रसीद",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "प्लेलिस्ट",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "आवाज़ बंद करना",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बैठक",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "सहायता",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "परत",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "घटक",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "लैपटॉप",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "चिकित्सक",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "रेस्टोरेंट",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "उड़ान",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "फ़ायरवॉल",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "वीपीएन",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "बड़ा भाषा मॉडल",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "प्रॉम्प्ट",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "कार्यप्रवाह",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tìm kiếm",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cài đặt",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "menu",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:hamburger",
+        "phosphor:hamburger"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "lưu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tải xuống",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tải lên",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "email",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cơ sở dữ liệu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "mã",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "làm mới",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "trò chuyện",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "điện thoại",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "âm nhạc",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "ngôi sao",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cái khiên",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "đám mây",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "bản đồ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "khối cầu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "lọc",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "lưới",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "danh sách",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "phóng",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "bảng màu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "bảng điều khiển",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "câu hỏi",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "người máy",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tên lửa",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "đánh dấu",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cái ví",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "ngân hàng",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cửa hàng",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "xây dựng",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "đang tải",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "trực tuyến",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "đăng nhập",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "đăng xuất",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "mật khẩu",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "quản trị viên",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "API",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "git",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:bug_report",
+        "material:call_merge"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "hóa đơn",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "biên lai",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "danh sách phát",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tắt tiếng",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "cuộc họp",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "hỗ trợ biểu tượng support",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "lớp",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "thành phần",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "máy tính xách tay",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "bác sĩ",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "nhà hàng",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "chuyến bay",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "tường lửa",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "vpn",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:vpn_key",
+        "tabler:brand-nord-vpn"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "mô hình ngôn ngữ lớn",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "lời nhắc",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "quy trình làm việc",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ค้นหา",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "lucide:shuffle"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "การตั้งค่า",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:settings",
+        "lucide:settings"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เมนู",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:menu",
+        "lucide:menu"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "บันทึก",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:save",
+        "lucide:save"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ดาวน์โหลด",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:download",
+        "lucide:download"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "อัปโหลด",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:upload",
+        "lucide:upload"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "อีเมล",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:mail",
+        "lucide:mail"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ฐานข้อมูล",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:database_search",
+        "heroicons:circle-stack"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "โค้ด",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:code",
+        "lucide:code"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "รีเฟรช",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:refresh",
+        "material:refresh"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "แชท",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:chat",
+        "phosphor:chat"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "โทรศัพท์",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:phone",
+        "lucide:phone"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เพลง",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:music",
+        "tabler:music"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ดาว",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:star",
+        "material:star"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "โล่",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:shield",
+        "lucide:shield"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "คลาวด์",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:cloud",
+        "lucide:cloud"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "แผนที่",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:map",
+        "lucide:map"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "โลก",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:globe",
+        "lucide:globe"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "กรอง",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:filter",
+        "material:filter"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ตาราง",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:grid",
+        "bootstrap:grid"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "รายการ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:list",
+        "lucide:list"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ซูม",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:zoom",
+        "simpleicons:zoom"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "จานสี",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:palette",
+        "lucide:palette"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "แดชบอร์ด",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:dashboard",
+        "tabler:dashboard"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "คําถาม",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:question",
+        "bootstrap:question"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "หุ่นยนต์",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:robot",
+        "tabler:robot-off"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "จรวด",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:rocket",
+        "lucide:rocket"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "บุ๊กมาร์ก",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:bookmark",
+        "material:bookmark"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "กระเป๋าสตางค์",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:wallet",
+        "lucide:wallet"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ธนาคาร",
+      "topN": 8,
+      "requiredIncluded": [
+        "phosphor:bank",
+        "bootstrap:bank"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เก็บ",
+      "topN": 8,
+      "requiredIncluded": [
+        "heroicons:circle-stack",
+        "material:store"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "อาคาร",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:building",
+        "tabler:building"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "กําลังโหลด",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:loading_line",
+        "material:downloading"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ออนไลน์",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:book_online",
+        "simpleicons:collaboraonline"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เข้าสู่ระบบ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:login",
+        "tabler:login"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ออกจากระบบ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:logout",
+        "tabler:logout"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "รหัสผ่าน",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:password",
+        "tabler:password"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ผู้ดูแลระบบ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:admin_meds",
+        "material:admin_panel_settings"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เอพีไอ",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:api",
+        "material:api"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "กิต",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:folder-git-2",
+        "lucide:git-branch"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ใบแจ้งหนี้",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:invoice",
+        "phosphor:invoice"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ใบเสร็จ",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:receipt",
+        "lucide:receipt"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เพลย์ลิสต์",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:playlist",
+        "phosphor:playlist"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ปิดเสียง",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:commute",
+        "bootstrap:mic-mute"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "การประชุม ไอคอน meeting",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:auto_meeting_room",
+        "simpleicons:gotomeeting"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "สนับสนุน",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:support",
+        "material:browser_not_supported"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เลเยอร์",
+      "topN": 8,
+      "requiredIncluded": [
+        "mingcute:layer_line",
+        "lucide:layers-3"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "คอมโพเนนต์",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:component",
+        "iconoir:component"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "แล็ปท็อป",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:laptop",
+        "lucide:laptop"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "หมอ",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:asciidoctor",
+        "material:child_care"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ร้านอาหาร",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:restaurant",
+        "ionicons:restaurant-outline"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เที่ยวบิน",
+      "topN": 8,
+      "requiredIncluded": [
+        "material:flight",
+        "phosphor:airplane-in-flight"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "ไฟร์วอลล์",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "วีพีเอ็น",
+      "topN": 8,
+      "requiredIncluded": [
+        "tabler:brand-nord-vpn",
+        "tabler:brand-openvpn"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "โมเดลภาษาขนาดใหญ่",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:brain",
+        "material:model_training"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "พรอมต์",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:eye",
+        "tabler:prompt"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "เวิร์กโฟลว์",
+      "topN": 8,
+      "requiredIncluded": [
+        "lucide:workflow",
+        "material:workflow"
+      ]
+    }
+  ]
+}

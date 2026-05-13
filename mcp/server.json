@@ -1,0 +1,27 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.curlymolelabs/supericons",
+  "title": "Supericons",
+  "description": "Multilingual semantic SVG icon search and recommendations for AI coding agents.",
+  "repository": {
+    "url": "https://github.com/curlymolelabs/supericons",
+    "source": "github"
+  },
+  "version": "0.4.1",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.supericons.dev/mcp"
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "supericons-mcp",
+      "version": "0.4.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

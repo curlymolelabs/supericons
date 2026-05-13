@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon & UI Trend Research — 2025/2026</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --fg: #e6e6e9;
+      --muted: #8b8b9a;
+      --accent: #6c5ce7;
+      --accent2: #00cec9;
+      --card: #18181c;
+      --border: #2a2a30;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.65;
+    }
+    header {
+      padding: 48px 24px 24px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    header h1 { margin: 0 0 8px; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.5px; }
+    header p { margin: 0; color: var(--muted); }
+    main { max-width: 920px; margin: 0 auto; padding: 0 24px 64px; }
+    section { margin: 40px 0; }
+    h2 { font-size: 1.35rem; margin: 32px 0 12px; color: var(--accent2); }
+    h3 { font-size: 1.1rem; margin: 24px 0 8px; color: var(--accent); }
+    ul { padding-left: 20px; }
+    li { margin: 6px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { background: var(--card); color: var(--accent2); font-weight: 600; }
+    tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .highlight {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+    .insight {
+      border-left: 4px solid var(--accent2);
+      background: rgba(0,206,201,0.06);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 16px 0;
+      font-style: italic;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(108,92,231,0.15);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin: 2px 4px 2px 0;
+    }
+    .priority {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .priority .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .priority .card strong { color: var(--accent2); }
+    footer {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    a { color: var(--accent2); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Icon & UI Trend Research — 2025/2026</h1>
+    <p>Research date: 2026-05-07 &nbsp;|&nbsp; Purpose: Identify high-demand app/website categories and the icon/button/loader styles builders actually need.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. What Apps & Sites Are People Building Today?</h2>
+
+      <h3>1.1 AI-Native / Agentic Apps (The #1 Trend)</h3>
+      <p>AI is no longer a feature — it is the core architecture. In 2026, <strong>agentic interfaces</strong> where AI performs tasks <em>inside</em> the app are the fastest-growing category.</p>
+      <ul>
+        <li><strong>AI copilots & assistants</strong> embedded in dashboards (CRM, project management, docs)</li>
+        <li><strong>Generative AI tools</strong> for content, images, code, video</li>
+        <li><strong>AI meeting assistants</strong> that transcribe, summarize, and extract action items</li>
+        <li><strong>Predictive personalization</strong> engines that adapt layouts and content in real time</li>
+        <li><strong>On-device AI / Edge AI</strong> for speed and privacy (Gemini Nano, Apple Intelligence)</li>
+      </ul>
+
+      <h3>1.2 SaaS & B2B Productivity Tools</h3>
+      <ul>
+        <li>Workflow automation, real-time collaboration, AI-powered CRM</li>
+        <li>"Super Apps" that bundle multiple services (payments, messaging, shopping)</li>
+        <li>Freelancer/client portals, micro-learning platforms, vertical AI tools</li>
+      </ul>
+
+      <h3>1.3 Fintech & Web3 (Still Strong)</h3>
+      <ul>
+        <li>Gamified budgeting, micro-investing, decentralized identity wallets</li>
+        <li>Sustainable finance trackers, fractional real estate ownership</li>
+        <li>Passwordless auth, biometric logins, zero-trust security interfaces</li>
+      </ul>
+
+      <h3>1.4 Health, Wellness & Pet Care</h3>
+      <ul>
+        <li>AI-powered mental health coaching, mood tracking, mindfulness</li>
+        <li>Pet care apps (feeding, vet booking, training) — a <strong>$550B market by 2032</strong></li>
+        <li>Wearables integration and health data dashboards</li>
+      </ul>
+
+      <h3>1.5 E-commerce, Grocery & On-Demand Delivery</h3>
+      <ul>
+        <li>Instant grocery delivery, "click and collect"</li>
+        <li>AR try-on for furniture, fashion, beauty</li>
+        <li>Hyperlocal service marketplaces</li>
+      </ul>
+
+      <h3>1.6 Social & Creator Economy</h3>
+      <ul>
+        <li>Hyperlocal social platforms (neighborhood-based)</li>
+        <li>Creator tools with AI design, multi-channel posting, monetization</li>
+        <li>Short-form video remains dominant</li>
+      </ul>
+
+      <h3>1.7 AR/VR / Spatial Computing</h3>
+      <ul>
+        <li>Immersive shopping, education simulations, remote work/training</li>
+        <li>Foldable and cross-device adaptive apps</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Icon Design Trends for 2026</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Style</th>
+            <th>Why It Is Hot</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Soft 3D / Plushcore</strong></td>
+            <td>Rounded, tactile, friendly gradients</td>
+            <td>Lifestyle, fintech, consumer apps</td>
+          </tr>
+          <tr>
+            <td><strong>Hyper-minimal line icons</strong></td>
+            <td>Ultra-thin strokes, precise geometry</td>
+            <td>SaaS dashboards, crypto, productivity</td>
+          </tr>
+          <tr>
+            <td><strong>Animated / Motion icons</strong></td>
+            <td>Subtle bounce, glow, or morph on hover</td>
+            <td>Any app wanting to feel alive and responsive</td>
+          </tr>
+          <tr>
+            <td><strong>Variable icons</strong></td>
+            <td>Adapt to light/dark mode, hover, context</td>
+            <td>Complex dashboards, design systems</td>
+          </tr>
+          <tr>
+            <td><strong>Mascot icons</strong></td>
+            <td>Character-driven, emotional connection</td>
+            <td>EdTech, consumer apps (think Duolingo owl)</td>
+          </tr>
+          <tr>
+            <td><strong>Retrofuturist / Pixel art</strong></td>
+            <td>80s/90s nostalgia, neon glow, chrome</td>
+            <td>Gaming, creative tools, music apps</td>
+          </tr>
+          <tr>
+            <td><strong>Bold geometric</strong></td>
+            <td>Thick strokes, high contrast, instant scan-ability</td>
+            <td>Brand-led products, accessibility-first</td>
+          </tr>
+          <tr>
+            <td><strong>Micro-illustrated</strong></td>
+            <td>Handcrafted storytelling in tiny form</td>
+            <td>Empty states, onboarding, error pages</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-material</strong></td>
+            <td>Glass, plastic, metallic finishes</td>
+            <td>Fintech, luxury, lifestyle</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2.1 Most-Wanted Icon Categories</h3>
+      <div class="highlight">
+        <span class="tag">AI / Agentic</span> sparkles, bots, brains, chips, neural nodes, magic wands<br>
+        <span class="tag">Security / Privacy</span> shields, fingerprints, locks, keyholes, verified badges<br>
+        <span class="tag">Crypto / Web3</span> wallets, coins, chains, blocks, decentralized symbols<br>
+        <span class="tag">Data / Analytics</span> charts, dashboards, trend lines, real-time indicators<br>
+        <span class="tag">Communication</span> chat bubbles, video calls, mentions, threads<br>
+        <span class="tag">On-Demand</span> trucks, maps, location pins, tracking paths<br>
+        <span class="tag">Health / Wellness</span> hearts, brainwaves, activity rings, meditation symbols<br>
+        <span class="tag">Accessibility</span> sliders, toggles, motion controls, eye/ear symbols
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Button & Loader Trends</h2>
+
+      <h3>3.1 Buttons</h3>
+      <ul>
+        <li><strong>3-state buttons</strong>: Default &rarr; Loading/Processing &rarr; Success/Error (never leave users in the dark)</li>
+        <li><strong>Ghost / transparent buttons</strong> with subtle borders</li>
+        <li><strong>Pill-shaped / soft-edge buttons</strong> (matches modern hardware bezels)</li>
+        <li><strong>Context-aware CTAs</strong> that change text based on user state</li>
+        <li><strong>Buttons with purposeful micro-delays</strong>: a brief "Processing..." state before confirmation builds <em>trust</em> (users find instant success suspicious)</li>
+      </ul>
+
+      <h3>3.2 Loaders & Progress Indicators</h3>
+      <ul>
+        <li><strong>Skeleton screens</strong> over spinners (reduce perceived load time by 10-20%)</li>
+        <li><strong>Logo/brand-mark preloaders</strong> — turn your brand asset into the spinner</li>
+        <li><strong>Character/mascot loaders</strong> — a walking character or playful animation holds attention</li>
+        <li><strong>Tech/AI-themed loaders</strong>: scanning motions, particle systems, fingerprint scans, shield checks</li>
+        <li><strong>Progress bars</strong> for measurable steps (uploads, checkouts, onboarding)</li>
+        <li><strong>Lottie-based animated loaders</strong> — lightweight, scalable, cross-platform</li>
+      </ul>
+
+      <div class="insight">
+        <strong>Key UX Insight:</strong> Perceived reliability beats actual speed. For critical actions (payments, password changes, form submissions), users trust a button that shows its work with a visible loading state more than one that confirms instantly.
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Bottom Line for Icon Businesses</h2>
+      <p>If you want to serve what builders are making <em>right now</em>, prioritize:</p>
+      <div class="priority">
+        <div class="card"><strong>1. AI-themed icon packs</strong><br>This is the biggest wave (agents, copilots, automation, reasoning)</div>
+        <div class="card"><strong>2. Security & identity icons</strong><br>Zero-trust, biometrics, passwordless, verification</div>
+        <div class="card"><strong>3. Fintech & crypto icons</strong><br>Wallets, DeFi, sustainable finance, micro-investing</div>
+        <div class="card"><strong>4. Animated / motion-ready icons</strong><br>Loaders, micro-interactions, state transitions</div>
+        <div class="card"><strong>5. Variable / adaptive icons</strong><br>Light mode, dark mode, different sizes</div>
+        <div class="card"><strong>6. Mascot / character-driven systems</strong><br>For brands wanting emotional connection</div>
+        <div class="card"><strong>7. Accessibility-focused icons</strong><br>Motion controls, screen readers, inclusive design</div>
+      </div>
+      <p style="margin-top:18px">The apps winning in 2026 are <strong>AI-native, privacy-first, emotionally resonant, and cross-device</strong> — your icons should tell that story at a glance.</p>
+    </section>
+
+    <section>
+      <h2>5. Sources</h2>
+      <ul>
+        <li>SolGuruz — Android App Development Trends 2025-2026</li>
+        <li>AppMakersLA — Mobile App Development Trends 2025 & 2026</li>
+        <li>Deorwine — Mobile App Development Trends 2026</li>
+        <li>IBM Think — Application Development Trends</li>
+        <li>Primotech — Mobile App Development in 2026</li>
+        <li>Sparkouttech — Web Development Trends in 2026</li>
+        <li>Knack — 50 Best Web App Ideas for 2026</li>
+        <li>iCoderz Solutions — Top Trending & Most Popular Apps in 2026</li>
+        <li>Envato Author Hub — Icon Design Trends 2026</li>
+        <li>SVGator — 75 Preloader Examples for a Seamless User Experience</li>
+        <li>Tubik Studio — UI Design Trends 2026</li>
+        <li>Hugeicons — Top UI UX Design Icon Sets in 2026</li>
+        <li>BuildFire — App Categories That Will Dominate 2025 and Beyond</li>
+        <li>DevTechnosys — Most Downloaded App Categories in 2025 & 2026</li>
+        <li>Jalasoft — Key AI Trends For 2025 & 2026</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Generated on 2026-05-07 for Supericons research & planning.
+  </footer>
+</body>
+</html>
