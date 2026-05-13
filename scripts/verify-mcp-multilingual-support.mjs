@@ -29,6 +29,15 @@ function assertIncludesAll(text, values, context) {
   }
 }
 
+function assertIncludesLocaleExample(bodyHtml, locale, context) {
+  const rawQuoteExample = `locale: "${locale}"`;
+  const escapedQuoteExample = `locale: &quot;${locale}&quot;`;
+  assert.ok(
+    bodyHtml.includes(rawQuoteExample) || bodyHtml.includes(escapedQuoteExample),
+    `${context} docs must include locale examples`
+  );
+}
+
 const [
   indexSource,
   remoteSource,
@@ -80,7 +89,7 @@ assert.ok(docsSource.includes('<code>locale</code>'), 'docs must mention the loc
 for (const [locale, catalog] of [['zh-Hans', zhHansCatalog], ['ja', jaCatalog], ['ar', arCatalog]]) {
   const bodyHtml = catalog.docs.pages['docs-mcp-search-guide'].bodyHtml || '';
   assert.ok(bodyHtml.includes('mcp-search-locales'), `${locale} docs must include localized MCP search examples`);
-  assert.ok(bodyHtml.includes(`locale: &quot;${locale}&quot;`) || bodyHtml.includes('locale: &quot;zh-Hans&quot;'), `${locale} docs must include locale examples`);
+  assertIncludesLocaleExample(bodyHtml, locale, locale);
 }
 assert.ok(packageJson.files.includes('public/multilingual-search-aliases.json'), 'MCP package must include multilingual aliases');
 assert.match(packageJson.description, /multilingual/i, 'MCP package description should mention multilingual search');
