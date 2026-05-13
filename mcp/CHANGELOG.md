@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.2 - 2026-05-14
+
+### Fixed
+
+- added hosted MCP fallback support for multilingual search when the public search gateway returns no localized result
+- expanded Arabic category aliases so shorter queries such as `الأمان` match the same concepts as the full category label
+
 ## 0.4.1 - 2026-05-05
 
 ### Added
