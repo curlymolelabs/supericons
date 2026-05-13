@@ -5,7 +5,7 @@
  * This exposes a Streamable HTTP MCP endpoint for hosted directories and agents.
  * The local stdio package in index.js remains the main IDE setup.
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -13,6 +13,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import express from 'express';
 import { z } from 'zod';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import {
   buildPublicSemanticPayload,
@@ -26,6 +27,11 @@ const dataDir = join(__dirname, 'public');
 const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
 const productFacts = JSON.parse(readFileSync(join(dataDir, 'product-facts.json'), 'utf8'));
 const registrySummary = JSON.parse(readFileSync(join(dataDir, 'registry-summary.json'), 'utf8'));
+const iconIndexPath = join(dataDir, 'icon-index.json');
+const synonymsPath = join(dataDir, 'synonyms.json');
+const iconIndex = existsSync(iconIndexPath) ? JSON.parse(readFileSync(iconIndexPath, 'utf8')) : { icons: [] };
+const synonyms = existsSync(synonymsPath) ? JSON.parse(readFileSync(synonymsPath, 'utf8')) : {};
+const publicIcons = Array.isArray(iconIndex?.icons) ? iconIndex.icons : [];
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 
 const LIBRARIES = [
@@ -130,6 +136,36 @@ function normalizeHostedIcon(row) {
   };
 }
 
+function normalizeLocalIcon(icon) {
+  if (!icon?.id || !icon?.lib || !icon?.svg) return null;
+
+  const semanticRecord = getSemanticRecordForIcon(semanticMap, icon.lib, icon.id);
+  return {
+    id: icon.id,
+    name: icon.name || icon.id.replace(/[-_]/g, ' '),
+    library: icon.lib,
+    lib: icon.lib,
+    type: icon.type || 'svg',
+    style: icon.style || 'outline',
+    svg: icon.svg,
+    semantic: buildPublicSemanticPayload(semanticRecord) || null,
+  };
+}
+
+function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, locale = null }) {
+  if (publicIcons.length === 0) return [];
+
+  return searchLocalIcons(query, publicIcons, synonyms, {
+    library: library || null,
+    style,
+    limit,
+    locale,
+  })
+    .map(normalizeLocalIcon)
+    .filter(Boolean)
+    .slice(0, Math.max(1, limit));
+}
+
 async function searchHostedIcons({ query, library, style = 'any', limit = 20, locale = null }) {
   const payload = await searchIconsHostedMcp({
     query,
@@ -139,10 +175,22 @@ async function searchHostedIcons({ query, library, style = 'any', limit = 20, lo
     locale,
   });
 
-  return (payload.results || [])
+  const hostedResults = (payload.results || [])
     .map(normalizeHostedIcon)
     .filter(Boolean)
     .slice(0, Math.max(1, limit));
+
+  if (hostedResults.length > 0 || !locale) {
+    return hostedResults;
+  }
+
+  return searchLocalFallbackIcons({
+    query,
+    library,
+    style,
+    limit,
+    locale,
+  });
 }
 
 function buildPublicIconResult(icon) {
