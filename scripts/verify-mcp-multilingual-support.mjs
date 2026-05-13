@@ -138,12 +138,15 @@ assert.ok(arSecurityShortcut.variants.includes('shield'), 'Arabic security short
 
 const hostedSearchClientUrl = pathToFileURL(path.join(rootDir, 'mcp', 'hosted-search-client.js')).href;
 const hostedCallScript = `
+  const calls = [];
   globalThis.fetch = async (url, init = {}) => {
-    console.log(JSON.stringify({ url: String(url), body: JSON.parse(init.body || '{}') }));
-    return { ok: true, json: async () => ({ results: [] }) };
+    const body = JSON.parse(init.body || '{}');
+    calls.push({ url: String(url), body });
+    return { ok: true, json: async () => ({ results: [{ id: 'lock', library: 'tabler', svg: '<svg></svg>' }] }) };
   };
   const mod = await import(${JSON.stringify(hostedSearchClientUrl)});
   await mod.searchIconsHostedMcp({ query: 'seguridad', locale: 'es', limit: 3 });
+  console.log(JSON.stringify(calls[0]));
 `;
 const hostedCallOutput = execFileSync(process.execPath, ['--input-type=module', '-e', hostedCallScript], {
   cwd: rootDir,
@@ -155,6 +158,35 @@ const hostedCallOutput = execFileSync(process.execPath, ['--input-type=module', 
 });
 const hostedCall = JSON.parse(hostedCallOutput.trim().split('\n').at(-1));
 assert.equal(hostedCall.body.locale, 'es', 'hosted search client must forward locale');
+
+const hostedFallbackScript = `
+  const calls = [];
+  globalThis.fetch = async (url, init = {}) => {
+    const body = JSON.parse(init.body || '{}');
+    calls.push(body);
+    if (body.query === 'settings') {
+      return {
+        ok: true,
+        json: async () => ({ results: [{ id: 'settings', name: 'settings', library: 'lucide', svg: '<svg></svg>' }] }),
+      };
+    }
+    return { ok: true, json: async () => ({ results: [] }) };
+  };
+  const mod = await import(${JSON.stringify(hostedSearchClientUrl)});
+  const payload = await mod.searchIconsHostedMcp({ query: '\u8bbe\u7f6e', locale: 'zh-Hans', limit: 3 });
+  console.log(JSON.stringify({ calls, payload }));
+`;
+const hostedFallbackOutput = execFileSync(process.execPath, ['--input-type=module', '-e', hostedFallbackScript], {
+  cwd: rootDir,
+  encoding: 'utf8',
+  env: {
+    ...process.env,
+    SUPERICONS_MCP_SEARCH_URL: 'https://example.test/mcp-search',
+  },
+});
+const hostedFallback = JSON.parse(hostedFallbackOutput.trim().split('\n').at(-1));
+assert.equal(hostedFallback.payload.results[0]?.id, 'settings', 'hosted search client must retry localized queries with expanded English concepts');
+assert.ok(hostedFallback.calls.some((call) => call.query === 'settings'), 'hosted search client must send expanded settings query');
 
 const recommendation = await recommendIconsForTask({
   task: '\u8bbe\u7f6e\u9875\u9762',

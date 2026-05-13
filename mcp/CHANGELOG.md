@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.3 - 2026-05-14
+
+### Fixed
+
+- fixed npm/stdio multilingual search fallback so localized queries such as `设置` retry with the approved English concept when the hosted gateway returns no localized result
+
 ## 0.4.2 - 2026-05-14
 
 ### Fixed
