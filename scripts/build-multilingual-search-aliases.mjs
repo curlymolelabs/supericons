@@ -47,6 +47,13 @@ function buildVariants(label) {
     .filter((part) => part && part !== clean);
 
   for (const part of split) variants.add(part);
+
+  const arabicConjunctionParts = clean
+    .split(/\s+و(?=[\p{Script=Arabic}])/u)
+    .map((part) => part.trim())
+    .filter((part) => part && part !== clean);
+  for (const part of arabicConjunctionParts) variants.add(part);
+
   return [...variants];
 }
 

@@ -129,6 +129,13 @@ const mcpResults = searchIcons(zhSecurity.term, publicIcons.icons, synonyms, {
 });
 assert.ok(mcpResults.length > 0, 'MCP local fallback should return icons for a localized category alias');
 
+const arSecurityShortcut = expandCjkQuery('\u0627\u0644\u0623\u0645\u0627\u0646', {
+  locale: 'ar',
+  terms: allExpansionTerms,
+});
+assert.ok(arSecurityShortcut.variants.includes('lock'), 'Arabic security shortcut should expand to lock');
+assert.ok(arSecurityShortcut.variants.includes('shield'), 'Arabic security shortcut should expand to shield');
+
 const hostedSearchClientUrl = pathToFileURL(path.join(rootDir, 'mcp', 'hosted-search-client.js')).href;
 const hostedCallScript = `
   globalThis.fetch = async (url, init = {}) => {
