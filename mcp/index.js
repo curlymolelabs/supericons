@@ -3,11 +3,11 @@
  * SuperIcons MCP Server
  * Provides free icon search plus premium Motion Lab and Converter workflows.
  * Transport: stdio (for local IDE integration)
- * Auth: SUPERICONS_API_KEY env var for premium icon access
+ * Auth: SUPERICONS_API_KEY env var for Pro workflow tools
  *
  * Premium access tiers:
- *   - Pro subscribers: all premium collections
- *   - Pack/Bundle buyers: purchased collections only
+ *   - Pro subscribers: Motion Lab and Converter workflow tools
+ *   - Pack/Bundle buyers: purchased collections in the Supericons web app
  *   - Anonymous: free icon access only
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -737,10 +737,10 @@ const server = new McpServer({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching icons with SVG code and SI semantic guidance when available. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.`,
+  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code and SI semantic guidance when available. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
-    library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, mingcute, or premium pack names'),
+    library: z.string().optional().describe('Filter by free library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, or mingcute'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
@@ -847,10 +847,10 @@ server.tool(
 // --- Tool: get_icon ---
 server.tool(
   'get_icon',
-  'Retrieve a specific icon by its ID and library. Returns the full SVG code, metadata, and SI semantic guidance when available. Premium icons require an API key linked to a Pro subscription or purchased packs.',
+  'Retrieve a specific free icon by its ID and library. Returns the full SVG code, metadata, and SI semantic guidance when available. Premium pack icon retrieval is not exposed through MCP yet.',
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
-    library: z.string().describe('Library name (e.g. "lucide", "tabler", "phosphor", or premium pack name)'),
+    library: z.string().describe('Free library name (e.g. "lucide", "tabler", "phosphor", "iconoir", or "mingcute")'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to request a filled variant when the library supports it.'),
   },
   async ({ id, library, style }) => {
@@ -873,7 +873,7 @@ server.tool(
 // --- Tool: list_libraries ---
 server.tool(
   'list_libraries',
-  'List all available icon libraries with their names, icon counts, and descriptions. Premium libraries are marked.',
+  'List the free icon libraries available through Supericons MCP with their names, icon counts, and descriptions.',
   {},
   async () => {
     const libs = Object.entries(libraryMeta).map(([id, meta]) => ({
@@ -944,7 +944,7 @@ server.tool(
   'Generate Motion Lab CSS for a Supericons icon. The returned CSS uses a portable {{ICON_SELECTOR}} token you replace with your inline SVG selector. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
-    library: z.string().describe('Library or premium pack name.'),
+    library: z.string().describe('Free icon library key, for example lucide, tabler, phosphor, iconoir, or mingcute.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
@@ -988,7 +988,7 @@ server.tool(
   'Generate a self-contained animated SVG using Motion Lab presets. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
-    library: z.string().describe('Library or premium pack name.'),
+    library: z.string().describe('Free icon library key, for example lucide, tabler, phosphor, iconoir, or mingcute.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
@@ -1033,7 +1033,7 @@ server.tool(
   'Generate both Motion Lab CSS and a self-contained animated SVG for one icon. The CSS output uses a portable {{ICON_SELECTOR}} token you replace with your inline SVG selector. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
-    library: z.string().describe('Library or premium pack name.'),
+    library: z.string().describe('Free icon library key, for example lucide, tabler, phosphor, iconoir, or mingcute.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),

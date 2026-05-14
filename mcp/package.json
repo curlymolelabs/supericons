@@ -1,6 +1,6 @@
 {
   "name": "supericons-mcp",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual icon search, Motion Lab animation, and Pro workflow tools",
   "type": "module",
@@ -50,6 +50,7 @@
     "@modelcontextprotocol/sdk": "^1.12.0",
     "@neplex/vectorizer": "^0.0.5",
     "@resvg/resvg-js": "^2.6.2",
+    "express": "^5.2.1",
     "zod": "^3.24.0"
   }
 }

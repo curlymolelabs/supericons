@@ -115,8 +115,11 @@
     "vite-plugin-wasm": "^3.6.0"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@neplex/vectorizer": "^0.0.5",
     "@resvg/resvg-js": "^2.6.2",
-    "vectortracer": "^0.1.2"
+    "express": "^5.2.1",
+    "vectortracer": "^0.1.2",
+    "zod": "^3.25.76"
   }
 }

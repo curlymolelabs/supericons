@@ -28,10 +28,15 @@ const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'ut
 const productFacts = JSON.parse(readFileSync(join(dataDir, 'product-facts.json'), 'utf8'));
 const registrySummary = JSON.parse(readFileSync(join(dataDir, 'registry-summary.json'), 'utf8'));
 const iconIndexPath = join(dataDir, 'icon-index.json');
+const solidIconIndexPath = join(dataDir, 'icon-index-solid.json');
 const synonymsPath = join(dataDir, 'synonyms.json');
 const iconIndex = existsSync(iconIndexPath) ? JSON.parse(readFileSync(iconIndexPath, 'utf8')) : { icons: [] };
+const solidIconIndex = existsSync(solidIconIndexPath) ? JSON.parse(readFileSync(solidIconIndexPath, 'utf8')) : { icons: [] };
 const synonyms = existsSync(synonymsPath) ? JSON.parse(readFileSync(synonymsPath, 'utf8')) : {};
-const publicIcons = Array.isArray(iconIndex?.icons) ? iconIndex.icons : [];
+const publicIcons = [
+  ...(Array.isArray(iconIndex?.icons) ? iconIndex.icons : []),
+  ...(Array.isArray(solidIconIndex?.icons) ? solidIconIndex.icons : []),
+];
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 
 const LIBRARIES = [
@@ -167,30 +172,46 @@ function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, l
 }
 
 async function searchHostedIcons({ query, library, style = 'any', limit = 20, locale = null }) {
-  const payload = await searchIconsHostedMcp({
-    query,
-    library: library || null,
-    style,
-    limit,
-    locale,
-  });
+  let payload;
+  try {
+    payload = await searchIconsHostedMcp({
+      query,
+      library: library || null,
+      style,
+      limit,
+      locale,
+    });
+  } catch (error) {
+    const fallbackResults = searchLocalFallbackIcons({
+      query,
+      library,
+      style,
+      limit,
+      locale,
+    });
+    if (fallbackResults.length > 0) return fallbackResults;
+    throw error;
+  }
 
   const hostedResults = (payload.results || [])
     .map(normalizeHostedIcon)
     .filter(Boolean)
     .slice(0, Math.max(1, limit));
 
-  if (hostedResults.length > 0 || !locale) {
+  if (hostedResults.length > 0) {
     return hostedResults;
   }
 
-  return searchLocalFallbackIcons({
+  const fallbackResults = searchLocalFallbackIcons({
     query,
     library,
     style,
     limit,
     locale,
   });
+  if (fallbackResults.length > 0) return fallbackResults;
+
+  return hostedResults;
 }
 
 function buildPublicIconResult(icon) {

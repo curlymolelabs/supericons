@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.5 - 2026-05-14
+
+### Fixed
+
+- fixed hosted MCP runtime dependency packaging for Railway deployments
+- fixed hosted MCP fallback search for localized Chinese queries and solid icon styles
+- improved settings-page recommendations across English and supported localized slot labels
+
 ## 0.4.4 - 2026-05-14
 
 ### Fixed

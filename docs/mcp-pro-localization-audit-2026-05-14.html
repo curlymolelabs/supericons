@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons MCP Pro and Localization Audit - 14 May 2026</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      color: #171717;
+      background: #fafafa;
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 28px 0 12px;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 30px;
+    }
+    h2 {
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+      font-size: 22px;
+    }
+    p, li {
+      font-size: 15px;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #f0f0f0;
+      font-family: Consolas, Menlo, monospace;
+      font-size: 0.92em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 24px;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: #f4f4f4;
+    }
+    .pass {
+      color: #087f23;
+      font-weight: 700;
+    }
+    .warning {
+      color: #9a5b00;
+      font-weight: 700;
+    }
+    .regression {
+      color: #b00020;
+      font-weight: 700;
+    }
+    .note {
+      padding: 12px 14px;
+      border-left: 4px solid #ff4d00;
+      background: #fff4ee;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Supericons MCP Pro and Localization Audit</h1>
+  <p><strong>Date:</strong> 14 May 2026</p>
+  <p><strong>Scope:</strong> Supericons MCP after the 0.4.4 multilingual and Pro workflow update.</p>
+  <p class="note">A temporary Pro API key was used only for live Pro checks. The key is not included in this report.</p>
+
+  <h2>Environment</h2>
+  <table>
+    <tr><th>Area</th><th>Value</th></tr>
+    <tr><td>Local branch</td><td><code>codex/reconcile-main-directory-20260429</code></td></tr>
+    <tr><td>Node.js</td><td><code>v24.12.0</code></td></tr>
+    <tr><td>npm</td><td><code>11.6.2</code></td></tr>
+    <tr><td>Local MCP package version</td><td><code>0.4.4</code></td></tr>
+    <tr><td>Published npm version checked</td><td><code>0.4.4</code></td></tr>
+    <tr><td>Hosted MCP health endpoint</td><td><code>https://mcp.supericons.dev/health</code> reported healthy and version <code>0.4.4</code></td></tr>
+  </table>
+
+  <h2>Test Scope</h2>
+  <ul>
+    <li>Local stdio MCP tools with no key.</li>
+    <li>Local stdio MCP tools with a Pro key held only in process memory.</li>
+    <li>Local hosted MCP server using <code>remote-server.js</code>.</li>
+    <li>Live hosted MCP server at <code>mcp.supericons.dev</code>.</li>
+    <li>Published npm package behavior for <code>supericons-mcp@latest</code>.</li>
+    <li>Search and recommendation behavior in English and these locales: <code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, and <code>th</code>.</li>
+    <li>Motion Lab and Converter Pro workflow tools.</li>
+    <li>No-key access checks for Pro-only tools.</li>
+    <li>Malformed, no-result, missing-locale, wrong-locale, library filter, and style filter paths.</li>
+  </ul>
+
+  <h2>Findings</h2>
+  <table>
+    <tr>
+      <th>Status</th>
+      <th>Area</th>
+      <th>What was tested</th>
+      <th>Observed result</th>
+      <th>Expected result</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <td class="pass">Pass</td>
+      <td>Local multilingual search</td>
+      <td><code>search_icons</code> for settings, privacy, and security terms across English, Chinese, Japanese, Korean, Spanish, and Arabic.</td>
+      <td>Returned relevant icons, including <code>settings</code>, <code>lock</code>, and related results.</td>
+      <td>Localized queries should find the same concepts as English queries.</td>
+      <td>No fix needed.</td>
+    </tr>
+    <tr>
+      <td class="pass">Pass</td>
+      <td>Local recommendations</td>
+      <td><code>recommend_icons</code> for settings-page slots across all supported locales.</td>
+      <td>Returned sensible icons for account, notifications, privacy/security, theme, and language. Examples: <code>user-star</code>, <code>bell</code>, <code>earth-lock</code>, <code>palette</code>, and <code>languages</code>.</td>
+      <td>Each slot should return a clear matching icon.</td>
+      <td>No fix needed in local source.</td>
+    </tr>
+    <tr>
+      <td class="pass">Pass</td>
+      <td>No-key behavior</td>
+      <td>Motion Lab and Converter tools without an API key.</td>
+      <td>Returned clear access-required errors with code <code>workflow_api_key_required</code>.</td>
+      <td>Free search should work without a key; Pro workflow tools should ask for a key.</td>
+      <td>No fix needed.</td>
+    </tr>
+    <tr>
+      <td class="pass">Pass</td>
+      <td>Pro workflow tools</td>
+      <td>Motion Lab preset list, recipe export, animated SVG export, combined animation output, Converter option inspection, SVG input inspection, and SVG-to-PNG conversion.</td>
+      <td>All checked Pro workflow paths returned usable output locally with the temporary Pro key.</td>
+      <td>Pro workflow tools should work when a valid Pro key is supplied.</td>
+      <td>No fix needed.</td>
+    </tr>
+    <tr>
+      <td class="pass">Pass</td>
+      <td>Premium pack policy wording</td>
+      <td>Tool descriptions and Pro-key search behavior.</td>
+      <td>MCP wording now states that Pro keys unlock workflow tools and that premium pack icon search is not exposed through MCP yet. Searching a premium pack library did not expose pack icons.</td>
+      <td>The MCP should not promise premium pack icon search unless that feature is actually exposed.</td>
+      <td>No further wording fix needed.</td>
+    </tr>
+    <tr>
+      <td class="regression">Regression</td>
+      <td>Live hosted MCP search fallback</td>
+      <td>Live hosted <code>search_icons</code> with Chinese settings text and no locale, plus Bootstrap solid-style search.</td>
+      <td>The live hosted server returned no results for these two cases.</td>
+      <td>The hosted server should fall back to its local public index when the search gateway returns no useful results.</td>
+      <td>Fixed in local source by improving <code>mcp/remote-server.js</code>. Railway still needs to be redeployed.</td>
+    </tr>
+    <tr>
+      <td class="regression">Regression</td>
+      <td>Live hosted MCP recommendations</td>
+      <td>Live hosted <code>recommend_icons</code> for settings-page slots in all supported locales.</td>
+      <td>The live hosted server returned weak matches for several slots, such as layout or alignment icons for privacy/theme/account slots.</td>
+      <td>The hosted server should match local behavior and return account, bell, shield/lock, palette/theme, and language icons.</td>
+      <td>Local source already has the corrected rules. Railway still needs to be redeployed.</td>
+    </tr>
+    <tr>
+      <td class="warning">Warning</td>
+      <td>Published npm package</td>
+      <td>Installed <code>supericons-mcp@latest</code> in a temporary folder and tested settings-page recommendations.</td>
+      <td>The published package is version <code>0.4.4</code>, but it still returned a weak privacy/security recommendation in this test.</td>
+      <td>The next published package should match the corrected local source.</td>
+      <td>Publish the next patch version after approval.</td>
+    </tr>
+  </table>
+
+  <h2>Fixes Applied</h2>
+  <ul>
+    <li>Updated <code>mcp/remote-server.js</code> so hosted MCP search can fall back to its local public index whenever the hosted search gateway errors or returns no useful results.</li>
+    <li>Updated <code>mcp/remote-server.js</code> so the local fallback index includes solid icons from <code>icon-index-solid.json</code>.</li>
+    <li>Verified existing local recommendation rules for settings-page slots across all supported locales.</li>
+  </ul>
+
+  <h2>Reproduction Steps</h2>
+  <table>
+    <tr><th>Case</th><th>Steps</th></tr>
+    <tr>
+      <td>Chinese settings search without locale</td>
+      <td>Call <code>search_icons</code> with query <code>设置</code> and limit <code>3</code>.</td>
+    </tr>
+    <tr>
+      <td>Bootstrap solid search</td>
+      <td>Call <code>search_icons</code> with query <code>archive</code>, library <code>bootstrap</code>, style <code>solid</code>, and limit <code>3</code>.</td>
+    </tr>
+    <tr>
+      <td>Settings-page recommendations</td>
+      <td>Call <code>recommend_icons</code> with five slots: account/profile, notifications, privacy/security, appearance/theme, and language. Repeat in each supported locale.</td>
+    </tr>
+    <tr>
+      <td>Pro workflow tools</td>
+      <td>Set <code>SUPERICONS_API_KEY</code> in the process environment using a temporary Pro key, then call Motion Lab and Converter tools. Do not save the key in files.</td>
+    </tr>
+    <tr>
+      <td>No-key Pro access</td>
+      <td>Call Motion Lab and Converter tools without <code>SUPERICONS_API_KEY</code>.</td>
+    </tr>
+  </table>
+
+  <h2>Verification Commands Run</h2>
+  <ul>
+    <li><code>npm run verify:mcp-multilingual-support</code> - passed.</li>
+    <li><code>npm run verify:mcp-variant-access</code> - passed.</li>
+    <li><code>npm run verify:motion-lab-mcp-package</code> - passed.</li>
+    <li><code>npm run verify:motion-lab-mcp-clean-install</code> - passed.</li>
+    <li><code>npm run verify:converter-mcp-clean-install</code> - passed.</li>
+    <li><code>npm pack --dry-run</code> from the MCP package folder - passed.</li>
+    <li><code>npm view supericons-mcp version</code> - returned <code>0.4.4</code>.</li>
+    <li><code>npm run build</code> - passed.</li>
+    <li>Temporary local hosted MCP smoke test against <code>remote-server.js</code> - passed after the fallback fix.</li>
+    <li>Live hosted MCP smoke test against <code>https://mcp.supericons.dev/mcp</code> - found live-channel gaps listed above.</li>
+    <li>Temporary Pro workflow smoke test - passed locally with the Pro key held only in process memory.</li>
+  </ul>
+
+  <h2>Residual Risks</h2>
+  <ul>
+    <li>The live hosted MCP server will keep showing the hosted regressions until the Railway service is redeployed with the updated source.</li>
+    <li>The published npm package will keep showing the older recommendation behavior until a new patch version is published.</li>
+    <li>The hosted MCP package does not expose premium pack icon search yet. Current wording is now honest about that product boundary.</li>
+    <li>The temporary Pro key used for this audit should be rotated after the release checks are complete.</li>
+  </ul>
+
+  <h2>Recommended Release Steps</h2>
+  <ol>
+    <li>Review the local changes.</li>
+    <li>Approve a patch release version bump for the MCP package.</li>
+    <li>Publish the MCP package after approval.</li>
+    <li>Redeploy the hosted MCP service on Railway from the updated source.</li>
+    <li>After Railway deploy, retest hosted <code>search_icons</code> for Chinese settings without locale, Bootstrap solid search, and <code>recommend_icons</code> for all supported locales.</li>
+    <li>Rotate the temporary Pro key used in this audit.</li>
+  </ol>
+</main>
+</body>
+</html>

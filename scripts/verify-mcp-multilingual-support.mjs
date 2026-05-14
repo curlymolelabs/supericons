@@ -94,6 +94,21 @@ for (const [locale, catalog] of [['zh-Hans', zhHansCatalog], ['ja', jaCatalog], 
 assert.ok(packageJson.files.includes('public/multilingual-search-aliases.json'), 'MCP package must include multilingual aliases');
 assert.match(packageJson.description, /multilingual/i, 'MCP package description should mention multilingual search');
 assert.match(serverJson.description, /Multilingual/i, 'MCP server registry description should mention multilingual search');
+assert.doesNotMatch(
+  indexSource,
+  /Premium collections are available when your API key/i,
+  'stdio MCP search description must not imply premium pack icon search is exposed'
+);
+assert.doesNotMatch(
+  indexSource,
+  /premium pack names/i,
+  'stdio MCP icon search library descriptions must not advertise premium pack names'
+);
+assert.doesNotMatch(
+  indexSource,
+  /Premium icons require/i,
+  'stdio MCP get_icon description must not imply premium pack icon retrieval is exposed'
+);
 
 assert.deepEqual(publicAliasData, aliasData, 'public alias artifact must match source');
 assert.deepEqual(packagedAliasData, aliasData, 'packaged MCP alias artifact must match source');
@@ -245,5 +260,125 @@ assert.deepEqual(
   ['user', 'notifications', 'lock', 'moon', 'globe'],
   'recommend_icons should recover natural localized slot labels and ignore failed query variants'
 );
+
+const settingsSlotFixtures = {
+  en: ['Account/Profile', 'Notifications', 'Privacy/Security', 'Appearance/Theme', 'Language'],
+  'zh-Hans': [
+    '\u8d26\u6237\u4e0e\u4e2a\u4eba\u8d44\u6599',
+    '\u901a\u77e5\u8bbe\u7f6e',
+    '\u9690\u79c1\u4e0e\u5b89\u5168',
+    '\u5916\u89c2\u4e0e\u4e3b\u9898',
+    '\u8bed\u8a00\u8bbe\u7f6e',
+  ],
+  'zh-Hant': [
+    '\u5e33\u6236\u8207\u500b\u4eba\u8cc7\u6599',
+    '\u901a\u77e5\u8a2d\u5b9a',
+    '\u96b1\u79c1\u8207\u5b89\u5168',
+    '\u5916\u89c0\u8207\u4e3b\u984c',
+    '\u8a9e\u8a00\u8a2d\u5b9a',
+  ],
+  ja: [
+    '\u30a2\u30ab\u30a6\u30f3\u30c8\u3068\u30d7\u30ed\u30d5\u30a3\u30fc\u30eb',
+    '\u901a\u77e5\u8a2d\u5b9a',
+    '\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u3068\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3',
+    '\u5916\u89b3\u3068\u30c6\u30fc\u30de',
+    '\u8a00\u8a9e\u8a2d\u5b9a',
+  ],
+  ko: [
+    '\uacc4\uc815 \ubc0f \ud504\ub85c\ud544',
+    '\uc54c\ub9bc \uc124\uc815',
+    '\uac1c\uc778\uc815\ubcf4 \ubc0f \ubcf4\uc548',
+    '\uc678\uad00 \ubc0f \ud14c\ub9c8',
+    '\uc5b8\uc5b4 \uc124\uc815',
+  ],
+  es: ['Cuenta y perfil', 'Notificaciones', 'Privacidad y seguridad', 'Apariencia y tema', 'Idioma'],
+  de: ['Konto und Profil', 'Benachrichtigungen', 'Datenschutz und Sicherheit', 'Erscheinungsbild und Design', 'Sprache'],
+  pt: ['Conta e perfil', 'Notificacoes', 'Privacidade e seguranca', 'Aparencia e tema', 'Idioma'],
+  ar: [
+    '\u0627\u0644\u062d\u0633\u0627\u0628 \u0648\u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062e\u0635\u064a',
+    '\u0627\u0644\u0625\u0634\u0639\u0627\u0631\u0627\u062a',
+    '\u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629 \u0648\u0627\u0644\u0623\u0645\u0627\u0646',
+    '\u0627\u0644\u0645\u0638\u0647\u0631 \u0648\u0627\u0644\u0633\u0645\u0629',
+    '\u0627\u0644\u0644\u063a\u0629',
+  ],
+  hi: [
+    '\u0916\u093e\u0924\u093e \u0914\u0930 \u092a\u094d\u0930\u094b\u092b\u093c\u093e\u0907\u0932',
+    '\u0938\u0942\u091a\u0928\u093e\u090f\u0901',
+    '\u0917\u094b\u092a\u0928\u0940\u092f\u0924\u093e \u0914\u0930 \u0938\u0941\u0930\u0915\u094d\u0937\u093e',
+    '\u0930\u0942\u092a \u0914\u0930 \u0925\u0940\u092e',
+    '\u092d\u093e\u0937\u093e',
+  ],
+  vi: [
+    'T\u00e0i kho\u1ea3n v\u00e0 h\u1ed3 s\u01a1',
+    'Th\u00f4ng b\u00e1o',
+    'Quy\u1ec1n ri\u00eang t\u01b0 v\u00e0 b\u1ea3o m\u1eadt',
+    'Giao di\u1ec7n v\u00e0 ch\u1ee7 \u0111\u1ec1',
+    'Ng\u00f4n ng\u1eef',
+  ],
+  th: [
+    '\u0e1a\u0e31\u0e0d\u0e0a\u0e35\u0e41\u0e25\u0e30\u0e42\u0e1b\u0e23\u0e44\u0e1f\u0e25\u0e4c',
+    '\u0e01\u0e32\u0e23\u0e41\u0e08\u0e49\u0e07\u0e40\u0e15\u0e37\u0e2d\u0e19',
+    '\u0e04\u0e27\u0e32\u0e21\u0e40\u0e1b\u0e47\u0e19\u0e2a\u0e48\u0e27\u0e19\u0e15\u0e31\u0e27\u0e41\u0e25\u0e30\u0e04\u0e27\u0e32\u0e21\u0e1b\u0e25\u0e2d\u0e14\u0e20\u0e31\u0e22',
+    '\u0e23\u0e39\u0e1b\u0e25\u0e31\u0e01\u0e29\u0e13\u0e4c\u0e41\u0e25\u0e30\u0e18\u0e35\u0e21',
+    '\u0e20\u0e32\u0e29\u0e32',
+  ],
+};
+
+const settingsQueryResultMap = new Map([
+  ['user profile', 'user'],
+  ['account user', 'user'],
+  ['avatar person', 'user'],
+  ['user', 'user'],
+  ['profile', 'user'],
+  ['account', 'user'],
+  ['notification', 'bell'],
+  ['notifications', 'bell'],
+  ['bell', 'bell'],
+  ['alert', 'bell'],
+  ['alarm', 'bell'],
+  ['privacy security', 'shield-lock'],
+  ['shield lock', 'shield-lock'],
+  ['lock', 'shield-lock'],
+  ['shield', 'shield-lock'],
+  ['privacy', 'shield-lock'],
+  ['security', 'shield-lock'],
+  ['appearance theme', 'palette'],
+  ['theme', 'palette'],
+  ['palette', 'palette'],
+  ['moon', 'palette'],
+  ['sun moon', 'palette'],
+  ['appearance', 'palette'],
+  ['globe', 'globe'],
+  ['languages', 'globe'],
+  ['translate', 'globe'],
+  ['language', 'globe'],
+]);
+
+for (const [locale, slots] of Object.entries(settingsSlotFixtures)) {
+  const recommendationPayload = await recommendIconsForTask({
+    task: 'choose icons for a settings page',
+    slots,
+    locale: locale === 'en' ? null : locale,
+    limitPerSlot: 1,
+    searchIconsForQuery: async ({ query }) => {
+      const id = settingsQueryResultMap.get(query);
+      return id ? [{ id, name: id, lib: 'lucide', style: 'outline', svg: '<svg></svg>' }] : [];
+    },
+    buildIconResult: async (icon) => ({
+      id: icon.id,
+      name: icon.name,
+      library: icon.lib,
+      style: icon.style,
+      svg: icon.svg,
+    }),
+    semanticMap: new Map(),
+  });
+
+  assert.deepEqual(
+    recommendationPayload.results.map((result) => result.recommended?.id),
+    ['user', 'bell', 'shield-lock', 'palette', 'globe'],
+    `recommend_icons should return semantically correct settings-page slots for ${locale}`
+  );
+}
 
 console.log('verify-mcp-multilingual-support: ok');
