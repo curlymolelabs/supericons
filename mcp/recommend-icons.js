@@ -6,7 +6,10 @@ import {
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { expandCjkQuery } from './runtime/cjk-search-core.js';
+import {
+  expandCjkQuery,
+  normalizeCjkSearchText,
+} from './runtime/cjk-search-core.js';
 import {
   buildIntentQueryVariants,
   buildSearchIntentProfile,
@@ -55,6 +58,31 @@ const VARIANT_PENALTIES = Object.freeze([
 
 const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
   {
+    slotPatterns: [
+      /language/i,
+      /locale/i,
+      /translate/i,
+      /translation/i,
+      /语言/u,
+      /語言/u,
+      /言語/u,
+      /언어/u,
+      /idioma/i,
+      /sprache/i,
+      /língua/i,
+      /langue/i,
+      /اللغة/u,
+      /भाषा/u,
+      /ngôn ngữ/i,
+      /ภาษา/u,
+    ],
+    queryVariants: ['globe', 'languages', 'translate', 'language'],
+    iconPreferences: [
+      { pattern: /^globe$|^languages?$|^translate$|(?:_|-)(globe|languages?|translate)(?:_|-|$)/i, bonus: 70 },
+      { pattern: /globe|language|translate/i, bonus: 28 },
+    ],
+  },
+  {
     slotPatterns: [/create/i, /\badd\b/i, /\bplus\b/i, /compose/i, /new item/i],
     queryVariants: ['add', 'plus', 'create new', 'compose'],
     iconPreferences: [
@@ -64,7 +92,7 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     ],
   },
   {
-    slotPatterns: [/alerts?/i, /notifications?/i, /bell/i],
+    slotPatterns: [/alerts?/i, /notifications?/i, /bell/i, /通知/u, /알림/u, /通知/u],
     queryVariants: ['notification', 'bell', 'alert', 'alarm'],
     iconPreferences: [
       { pattern: /notification|bell/i, bonus: 42 },
@@ -215,7 +243,45 @@ function buildLocalizedVariants(value, locale) {
     locale,
     terms: multilingualExpansionTerms,
   });
-  return expanded.matched.length > 0 ? expanded.variants.slice(1) : [];
+  const variants = expanded.matched.length > 0 ? expanded.variants.slice(1) : [];
+  const normalizedValue = normalizeCjkSearchText(value);
+  const containedMatches = [];
+
+  if (normalizedValue) {
+    for (const record of multilingualExpansionTerms) {
+      if (record.locale !== locale || record.gate !== 'auto_accept') continue;
+
+      const recordValues = [record.term, ...(record.variants || [])]
+        .map((term) => normalizeCjkSearchText(term))
+        .filter(Boolean);
+      const isContainedMatch = recordValues.some((term) => (
+        term.length >= 2
+        && (normalizedValue.includes(term) || term.includes(normalizedValue))
+      ));
+      if (!isContainedMatch) continue;
+
+      const firstIndex = Math.min(
+        ...recordValues
+          .map((term) => normalizedValue.indexOf(term))
+          .filter((index) => index >= 0)
+      );
+      containedMatches.push({
+        index: Number.isFinite(firstIndex) ? firstIndex : Number.MAX_SAFE_INTEGER,
+        concepts: record.maps_to || [],
+      });
+    }
+  }
+
+  containedMatches
+    .sort((left, right) => left.index - right.index)
+    .forEach((match) => {
+      for (const concept of match.concepts) {
+        const normalizedConcept = normalizeCjkSearchText(concept);
+        if (normalizedConcept) variants.push(normalizedConcept);
+      }
+    });
+
+  return dedupe(variants);
 }
 
 function buildSlotIntentTerms(task, slot, locale = null) {
@@ -260,9 +326,9 @@ function buildSlotQueryVariants(task, slot, locale = null) {
   const usefulSlotTokens = tokenizeText(slot).filter((token) => !GENERIC_SLOT_WORDS.has(token));
   variants.push(...usefulSlotTokens);
   const intentTerms = tokenizeText(`${slot} ${task} ${variants.join(' ')}`);
-  for (const rule of getMatchingSlotRules(slot, intentTerms)) {
-    variants.push(...(rule.queryVariants || []));
-  }
+  const ruleVariants = getMatchingSlotRules(slot, intentTerms)
+    .flatMap((rule) => rule.queryVariants || []);
+  variants.unshift(...ruleVariants);
   return dedupe(variants).slice(0, 12);
 }
 
@@ -304,9 +370,12 @@ function getVariantPenalty(icon) {
   return penalty;
 }
 
-function getMatchingSlotRules(slotLabel, intentTerms) {
+function getMatchingSlotRules(slotLabel, intentTerms = []) {
+  const rawSlotText = String(slotLabel || '');
   const slotText = normalizeText(slotLabel);
-  return COMMON_SLOT_PREFERENCE_RULES.filter((rule) => rule.slotPatterns.some((pattern) => pattern.test(slotText)));
+  return COMMON_SLOT_PREFERENCE_RULES.filter((rule) => rule.slotPatterns.some((pattern) => (
+    pattern.test(slotText) || pattern.test(rawSlotText)
+  )));
 }
 
 function scoreSlotPreferenceRules(icon, rules = [], slotText = '') {
@@ -404,19 +473,23 @@ export async function recommendIconsForTask({
 }) {
   const slotResults = await mapWithConcurrency(slots, 6, async (slotLabel) => {
     const intentTerms = buildSlotIntentTerms(task, slotLabel, locale);
-    const queryVariants = buildSlotQueryVariants(task, slotLabel, locale).slice(0, locale ? 4 : 2);
+    const queryVariants = buildSlotQueryVariants(task, slotLabel, locale).slice(0, locale ? 8 : 2);
     const pooledIcons = [];
     const seen = new Set();
 
-    const resultGroups = await mapWithConcurrency(queryVariants, 4, async (queryVariant) =>
-      searchIconsForQuery({
-        query: queryVariant,
-        library,
-        style,
-        limit: Math.max(limitPerSlot * 5, 10),
-        locale,
-      })
-    );
+    const resultGroups = await mapWithConcurrency(queryVariants, 2, async (queryVariant) => {
+      try {
+        return await searchIconsForQuery({
+          query: queryVariant,
+          library,
+          style,
+          limit: Math.max(limitPerSlot * 5, 10),
+          locale,
+        });
+      } catch {
+        return [];
+      }
+    });
 
     for (const results of resultGroups) {
       for (const icon of results) {

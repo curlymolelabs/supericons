@@ -22,7 +22,10 @@
       "alias_type": "category",
       "category": "ai-agent-workflows",
       "term": "AI 与自动化",
-      "variants": [],
+      "variants": [
+        "AI",
+        "自动化"
+      ],
       "maps_to": [
         "agent",
         "llm",
@@ -40,7 +43,10 @@
       "alias_type": "category",
       "category": "navigation-wayfinding",
       "term": "导航与寻路",
-      "variants": [],
+      "variants": [
+        "导航",
+        "寻路"
+      ],
       "maps_to": [
         "navigate",
         "map",
@@ -56,7 +62,10 @@
       "alias_type": "category",
       "category": "actions-controls",
       "term": "操作与控件",
-      "variants": [],
+      "variants": [
+        "操作",
+        "控件"
+      ],
       "maps_to": [
         "add",
         "edit",
@@ -77,7 +86,10 @@
       "alias_type": "category",
       "category": "status-feedback",
       "term": "状态与反馈",
-      "variants": [],
+      "variants": [
+        "状态",
+        "反馈"
+      ],
       "maps_to": [
         "success",
         "error",
@@ -98,7 +110,10 @@
       "alias_type": "category",
       "category": "people-accounts",
       "term": "人员与账户",
-      "variants": [],
+      "variants": [
+        "人员",
+        "账户"
+      ],
       "maps_to": [
         "user",
         "contact",
@@ -136,7 +151,10 @@
       "alias_type": "category",
       "category": "files-content",
       "term": "文件与内容",
-      "variants": [],
+      "variants": [
+        "文件",
+        "内容"
+      ],
       "maps_to": [
         "file",
         "folder",
@@ -156,7 +174,10 @@
       "alias_type": "category",
       "category": "data-analytics",
       "term": "数据与分析",
-      "variants": [],
+      "variants": [
+        "数据",
+        "分析"
+      ],
       "maps_to": [
         "database",
         "chart",
@@ -174,7 +195,10 @@
       "alias_type": "category",
       "category": "commerce-finance",
       "term": "商业与金融",
-      "variants": [],
+      "variants": [
+        "商业",
+        "金融"
+      ],
       "maps_to": [
         "cart",
         "money",
@@ -200,7 +224,10 @@
       "alias_type": "category",
       "category": "security-access",
       "term": "安全与访问",
-      "variants": [],
+      "variants": [
+        "安全",
+        "访问"
+      ],
       "maps_to": [
         "lock",
         "key",
@@ -223,7 +250,10 @@
       "alias_type": "category",
       "category": "media-playback",
       "term": "媒体与播放",
-      "variants": [],
+      "variants": [
+        "媒体",
+        "播放"
+      ],
       "maps_to": [
         "video",
         "music",
@@ -245,7 +275,10 @@
       "alias_type": "category",
       "category": "devices-hardware",
       "term": "设备与硬件",
-      "variants": [],
+      "variants": [
+        "设备",
+        "硬件"
+      ],
       "maps_to": [
         "cpu",
         "memory",
@@ -271,7 +304,10 @@
       "alias_type": "category",
       "category": "code-development",
       "term": "代码与开发",
-      "variants": [],
+      "variants": [
+        "代码",
+        "开发"
+      ],
       "maps_to": [
         "code",
         "terminal",
@@ -295,7 +331,10 @@
       "alias_type": "category",
       "category": "design-editing",
       "term": "设计与编辑",
-      "variants": [],
+      "variants": [
+        "设计",
+        "编辑"
+      ],
       "maps_to": [
         "palette",
         "brush",
@@ -322,7 +361,9 @@
       "term": "地图、地点与旅行",
       "variants": [
         "地图",
-        "地点与旅行"
+        "地点与旅行",
+        "地图、地点",
+        "旅行"
       ],
       "maps_to": [
         "map",
@@ -347,7 +388,10 @@
       "alias_type": "category",
       "category": "time-calendar",
       "term": "时间与日历",
-      "variants": [],
+      "variants": [
+        "时间",
+        "日历"
+      ],
       "maps_to": [
         "clock",
         "calendar",
@@ -362,7 +406,9 @@
       "term": "自然、天气与生活",
       "variants": [
         "自然",
-        "天气与生活"
+        "天气与生活",
+        "自然、天气",
+        "生活"
       ],
       "maps_to": [
         "sun",
@@ -382,7 +428,10 @@
       "alias_type": "category",
       "category": "brands-social",
       "term": "品牌与社交",
-      "variants": [],
+      "variants": [
+        "品牌",
+        "社交"
+      ],
       "maps_to": [
         "globe",
         "share",

@@ -54,6 +54,12 @@ function buildVariants(label) {
     .filter((part) => part && part !== clean);
   for (const part of arabicConjunctionParts) variants.add(part);
 
+  const cjkConjunctionParts = clean
+    .split(/[与和及]/u)
+    .map((part) => part.trim())
+    .filter((part) => part && part !== clean);
+  for (const part of cjkConjunctionParts) variants.add(part);
+
   return [...variants];
 }
 

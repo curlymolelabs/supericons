@@ -210,4 +210,40 @@ const recommendation = await recommendIconsForTask({
 });
 assert.equal(recommendation.results[0]?.recommended?.id, 'settings', 'recommend_icons should expand localized slot labels');
 
+const naturalLocalizedRecommendation = await recommendIconsForTask({
+  task: '\u4e3a\u8bbe\u7f6e\u9875\u9762\u9009\u62e9\u4e00\u5957\u7b80\u6d01\u7edf\u4e00\u7684\u7ebf\u6027\u98ce\u683c\u56fe\u6807',
+  slots: [
+    '\u8d26\u6237\u4e0e\u4e2a\u4eba\u8d44\u6599',
+    '\u901a\u77e5\u8bbe\u7f6e',
+    '\u9690\u79c1\u4e0e\u5b89\u5168',
+    '\u5916\u89c2\u4e0e\u4e3b\u9898',
+    '\u8bed\u8a00\u8bbe\u7f6e',
+  ],
+  locale: 'zh-Hans',
+  limitPerSlot: 1,
+  searchIconsForQuery: async ({ query }) => {
+    if (query === 'user') return [{ id: 'user', name: 'user', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'notification') return [{ id: 'notifications', name: 'notifications', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'notifications') return [{ id: 'notifications', name: 'notifications', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'lock') return [{ id: 'lock', name: 'lock', lib: 'tabler', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'moon') return [{ id: 'moon', name: 'moon', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'globe') return [{ id: 'globe', name: 'globe', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    if (query === 'settings') return [{ id: 'settings', name: 'settings', lib: 'lucide', style: 'outline', svg: '<svg></svg>' }];
+    throw new Error('simulated hosted search failure');
+  },
+  buildIconResult: async (icon) => ({
+    id: icon.id,
+    name: icon.name,
+    library: icon.lib,
+    style: icon.style,
+    svg: icon.svg,
+  }),
+  semanticMap: new Map(),
+});
+assert.deepEqual(
+  naturalLocalizedRecommendation.results.map((result) => result.recommended?.id),
+  ['user', 'notifications', 'lock', 'moon', 'globe'],
+  'recommend_icons should recover natural localized slot labels and ignore failed query variants'
+);
+
 console.log('verify-mcp-multilingual-support: ok');

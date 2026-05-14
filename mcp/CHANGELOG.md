@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.4.4 - 2026-05-14
+
+### Fixed
+
+- improved `recommend_icons` for natural localized slot labels, including Chinese compound labels such as account/profile, notifications/settings, privacy/security, appearance/theme, and language/settings
+- made slot recommendations ignore individual hosted search failures instead of failing the whole recommendation response
+
 ## 0.4.3 - 2026-05-14
 
 ### Fixed
 
-- fixed npm/stdio multilingual search fallback so localized queries such as `设置` retry with the approved English concept when the hosted gateway returns no localized result
+- fixed npm/stdio multilingual search fallback so localized Chinese settings queries retry with the approved English concept when the hosted gateway returns no localized result
 
 ## 0.4.2 - 2026-05-14
 
