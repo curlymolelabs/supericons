@@ -114,7 +114,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "float",
     "label": "Float",
     "group": "Motion",
-    "description": "Gives the icon a subtle hovering drift.",
+    "description": "Drifts the icon upward and back with a light hovering feel.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -158,7 +158,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "pop",
     "label": "Pop",
     "group": "Motion",
-    "description": "Snaps up with a springy overshoot.",
+    "description": "Snaps the icon forward with a springy overshoot.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -169,7 +169,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "heartbeat",
     "label": "Heartbeat",
     "group": "Motion",
-    "description": "Heartbeat Motion Lab preset.",
+    "description": "Beats in a double pulse with a heart-like rhythm.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -180,7 +180,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "rubberband",
     "label": "Rubber Band",
     "group": "Motion",
-    "description": "Rubber Band Motion Lab preset.",
+    "description": "Stretches and snaps back with elastic tension.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -191,7 +191,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "jelly",
     "label": "Jelly",
     "group": "Motion",
-    "description": "Jelly Motion Lab preset.",
+    "description": "Wobbles with a soft gelatin settle.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -202,7 +202,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "ring",
     "label": "Ring",
     "group": "Motion",
-    "description": "Ring Motion Lab preset.",
+    "description": "Swings the icon like a ringing bell.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -213,7 +213,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "wobble",
     "label": "Wobble",
     "group": "Motion",
-    "description": "Wobble Motion Lab preset.",
+    "description": "Rocks the icon side to side with a loose settle.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -224,7 +224,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "magnetic",
     "label": "Magnetic",
     "group": "Motion",
-    "description": "Magnetic Motion Lab preset.",
+    "description": "Pulls and releases with a magnet-like attraction.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -235,7 +235,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "recoil",
     "label": "Recoil",
     "group": "Motion",
-    "description": "Recoil Motion Lab preset.",
+    "description": "Strikes forward and snaps back with a charged hit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -246,7 +246,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "pendulum",
     "label": "Pendulum",
     "group": "Motion",
-    "description": "Pendulum Motion Lab preset.",
+    "description": "Swings the icon through a measured pendulum arc.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -257,7 +257,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "whiplash",
     "label": "Whiplash",
     "group": "Motion",
-    "description": "Whiplash Motion Lab preset.",
+    "description": "Whips across the axis with a fast overshoot and return.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -268,7 +268,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "tremor",
     "label": "Tremor",
     "group": "Motion",
-    "description": "Tremor Motion Lab preset.",
+    "description": "Vibrates with a tight, unstable micro-shake.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -279,7 +279,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "neonglow",
     "label": "Neon Glow",
     "group": "Motion",
-    "description": "Neon Glow Motion Lab preset.",
+    "description": "Brightens the icon with a vivid electric glow pulse.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -290,7 +290,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "breathe",
     "label": "Breathe",
     "group": "Motion",
-    "description": "Breathe Motion Lab preset.",
+    "description": "Expands and settles in a slow breathing rhythm.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -301,7 +301,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "metronome",
     "label": "Metronome",
     "group": "Motion",
-    "description": "Metronome Motion Lab preset.",
+    "description": "Ticks through a steady rhythmic swing.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -312,7 +312,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "orbit",
     "label": "Orbit",
     "group": "Motion",
-    "description": "Orbit Motion Lab preset.",
+    "description": "Circles with an orbital path around the icon center.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -323,7 +323,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "flicker",
     "label": "Flicker",
     "group": "Motion",
-    "description": "Flicker Motion Lab preset.",
+    "description": "Breaks the icon into a brief unstable flicker.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -334,7 +334,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "squish",
     "label": "Squish",
     "group": "Motion",
-    "description": "Squish Motion Lab preset.",
+    "description": "Compresses and rebounds with a soft squash-and-stretch feel.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -345,7 +345,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "glide",
     "label": "Glide",
     "group": "Motion",
-    "description": "Glide Motion Lab preset.",
+    "description": "Moves smoothly across its path with almost no visible impact.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -356,7 +356,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "radar",
     "label": "Radar",
     "group": "Motion",
-    "description": "Radar Motion Lab preset.",
+    "description": "Sweeps like a scanning radar pass.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -367,7 +367,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "beacon",
     "label": "Beacon",
     "group": "Motion",
-    "description": "Beacon Motion Lab preset.",
+    "description": "Pulses outward like a beacon signal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -389,7 +389,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "fadeIn",
     "label": "Fade In",
     "group": "Entrances",
-    "description": "Fade In Motion Lab preset.",
+    "description": "Brings the icon in with a clean opacity fade.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -400,7 +400,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "scaleUp",
     "label": "Scale Up",
     "group": "Entrances",
-    "description": "Scale Up Motion Lab preset.",
+    "description": "Grows upward into place with a clear reveal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -411,7 +411,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slideUp",
     "label": "Slide Up",
     "group": "Entrances",
-    "description": "Slide Up Motion Lab preset.",
+    "description": "Slides the icon upward into view.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -422,7 +422,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "springLand",
     "label": "Spring Land",
     "group": "Entrances",
-    "description": "Spring Land Motion Lab preset.",
+    "description": "Drops into place with a springy landing.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -433,7 +433,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slingshot",
     "label": "Slingshot",
     "group": "Entrances",
-    "description": "Slingshot Motion Lab preset.",
+    "description": "Launches into view with a pulled-back release.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -444,7 +444,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "glitchOn",
     "label": "Glitch On",
     "group": "Entrances",
-    "description": "Glitch On Motion Lab preset.",
+    "description": "Enters with a digital glitch and snap into place.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -455,7 +455,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "unfold",
     "label": "Unfold",
     "group": "Entrances",
-    "description": "Unfold Motion Lab preset.",
+    "description": "Unfolds into place with a controlled reveal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -466,7 +466,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "warpIn",
     "label": "Warp In",
     "group": "Entrances",
-    "description": "Warp In Motion Lab preset.",
+    "description": "Arrives through a warped, accelerated reveal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -477,7 +477,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slideRight",
     "label": "Slide Right",
     "group": "Entrances",
-    "description": "Slide Right Motion Lab preset.",
+    "description": "Slides into view from the left toward the right.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -488,7 +488,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slideDown",
     "label": "Slide Down",
     "group": "Entrances",
-    "description": "Slide Down Motion Lab preset.",
+    "description": "Slides the icon downward into its resting position.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -499,7 +499,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "flipIn",
     "label": "Flip In",
     "group": "Entrances",
-    "description": "Flip In Motion Lab preset.",
+    "description": "Flips the icon into place with a fast hinge-like reveal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -510,7 +510,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "telegram",
     "label": "Telegram",
     "group": "Entrances",
-    "description": "Telegram Motion Lab preset.",
+    "description": "Shoots into place with a send-like directional burst.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -521,7 +521,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "bloom",
     "label": "Bloom",
     "group": "Entrances",
-    "description": "Bloom Motion Lab preset.",
+    "description": "Opens into view with a soft blooming expansion.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -532,7 +532,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "shockwave",
     "label": "Shockwave",
     "group": "Entrances",
-    "description": "Shockwave Motion Lab preset.",
+    "description": "Enters with a strong outward shockwave.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -543,7 +543,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "fadeOut",
     "label": "Fade Out",
     "group": "Exits",
-    "description": "Fade Out Motion Lab preset.",
+    "description": "Removes the icon with a clean opacity fade.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -554,7 +554,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "scaleDown",
     "label": "Scale Down",
     "group": "Exits",
-    "description": "Scale Down Motion Lab preset.",
+    "description": "Shrinks away while staying centered.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -565,7 +565,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slideOut",
     "label": "Slide Out",
     "group": "Exits",
-    "description": "Slide Out Motion Lab preset.",
+    "description": "Slides out of view with a decisive directional exit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -576,7 +576,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "vortex",
     "label": "Vortex",
     "group": "Exits",
-    "description": "Vortex Motion Lab preset.",
+    "description": "Spirals away in a tight vortex exit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -587,7 +587,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "glitchOff",
     "label": "Glitch Off",
     "group": "Exits",
-    "description": "Glitch Off Motion Lab preset.",
+    "description": "Breaks apart digitally as the icon exits.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -598,7 +598,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "dissolve",
     "label": "Dissolve",
     "group": "Exits",
-    "description": "Dissolve Motion Lab preset.",
+    "description": "Softly dissolves until the icon fully disappears.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -609,7 +609,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "popOut",
     "label": "Pop Out",
     "group": "Exits",
-    "description": "Pop Out Motion Lab preset.",
+    "description": "Pops away with a quick spring-loaded exit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -620,7 +620,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "slideLeft",
     "label": "Slide Left",
     "group": "Exits",
-    "description": "Slide Left Motion Lab preset.",
+    "description": "Slides the icon out toward the left edge.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -631,7 +631,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "sinkDown",
     "label": "Sink Down",
     "group": "Exits",
-    "description": "Sink Down Motion Lab preset.",
+    "description": "Drops the icon downward as it exits.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -642,7 +642,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "flipOut",
     "label": "Flip Out",
     "group": "Exits",
-    "description": "Flip Out Motion Lab preset.",
+    "description": "Flips away on a fast hinge-like exit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -653,7 +653,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "implode",
     "label": "Implode",
     "group": "Exits",
-    "description": "Implode Motion Lab preset.",
+    "description": "Collapses inward until the icon disappears.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -664,7 +664,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "puffOut",
     "label": "Puff Out",
     "group": "Exits",
-    "description": "Puff Out Motion Lab preset.",
+    "description": "Expands outward and vanishes in a soft puff.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -675,7 +675,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "launchOut",
     "label": "Launch Out",
     "group": "Exits",
-    "description": "Launch Out Motion Lab preset.",
+    "description": "Launches away from its origin with a fast directional exit.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -686,7 +686,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "shrinkSpin",
     "label": "Shrink Spin",
     "group": "Exits",
-    "description": "Shrink Spin Motion Lab preset.",
+    "description": "Shrinks while spinning out of view.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -697,7 +697,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "blinkOut",
     "label": "Blink Out",
     "group": "Exits",
-    "description": "Blink Out Motion Lab preset.",
+    "description": "Flickers and vanishes in a blinking removal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -708,7 +708,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "sparkle",
     "label": "Sparkle",
     "group": "Special",
-    "description": "Adds a glow burst that peaks mid-cycle.",
+    "description": "Adds a brief sparkle burst around the icon.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -719,7 +719,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "swing",
     "label": "Swing",
     "group": "Special",
-    "description": "Swing Motion Lab preset.",
+    "description": "Swings through a relaxed side arc.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -730,7 +730,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "jitter",
     "label": "Jitter",
     "group": "Special",
-    "description": "Jitter Motion Lab preset.",
+    "description": "Breaks into a quick, nervous jitter.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -741,7 +741,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "chase",
     "label": "Chase",
     "group": "Special",
-    "description": "Chase Motion Lab preset.",
+    "description": "Creates a chasing motion that feels fast and directional.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -752,7 +752,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "stream",
     "label": "Stream",
     "group": "Special",
-    "description": "Stream Motion Lab preset.",
+    "description": "Flows through the icon in a steady streamed reveal.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -774,7 +774,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "flow",
     "label": "Flow",
     "group": "Special",
-    "description": "Flow Motion Lab preset.",
+    "description": "Moves through the icon in a smooth directional flow.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -785,7 +785,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "converge",
     "label": "Converge",
     "group": "Special",
-    "description": "Converge Motion Lab preset.",
+    "description": "Pulls motion inward until the icon resolves into place.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -796,7 +796,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "cube",
     "label": "Cube",
     "group": "Special",
-    "description": "Cube Motion Lab preset.",
+    "description": "Tilts through a cubic, box-like spatial motion.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -818,7 +818,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "reason",
     "label": "Reason",
     "group": "Special",
-    "description": "Reason Motion Lab preset.",
+    "description": "Builds the icon in measured analytical steps.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -840,7 +840,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "scatter",
     "label": "Scatter",
     "group": "Special",
-    "description": "Scatter Motion Lab preset.",
+    "description": "Breaks motion outward into a scattered spread.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -851,7 +851,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "crest",
     "label": "Crest",
     "group": "Special",
-    "description": "Crest Motion Lab preset.",
+    "description": "Rises and settles in a wave-like crest.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -873,7 +873,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "shuffle",
     "label": "Shuffle",
     "group": "Special",
-    "description": "Shuffle Motion Lab preset.",
+    "description": "Reorders itself with a quick shuffle-like move.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -884,7 +884,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "infinity",
     "label": "Infinity",
     "group": "Special",
-    "description": "Infinity Motion Lab preset.",
+    "description": "Loops through a smooth infinity-like path.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -895,7 +895,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "spatial",
     "label": "Spatial",
     "group": "Special",
-    "description": "Spatial Motion Lab preset.",
+    "description": "Moves through a layered spatial drift.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -906,7 +906,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "pageFlip",
     "label": "Page Flip",
     "group": "Special",
-    "description": "Page Flip Motion Lab preset.",
+    "description": "Turns like a page flipping over.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -917,7 +917,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "bookOpen",
     "label": "Book Open",
     "group": "Special",
-    "description": "Book Open Motion Lab preset.",
+    "description": "Opens outward like a book spread.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -928,7 +928,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "domino",
     "label": "Domino",
     "group": "Special",
-    "description": "Domino Motion Lab preset.",
+    "description": "Falls through like a domino chain reaction.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -939,7 +939,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "supernova",
     "label": "Supernova",
     "group": "Special",
-    "description": "Supernova Motion Lab preset.",
+    "description": "Bursts outward with a high-energy star-like flare.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -950,7 +950,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "blackHole",
     "label": "Black Hole",
     "group": "Special",
-    "description": "Black Hole Motion Lab preset.",
+    "description": "Pulls inward with a dense collapsing gravity effect.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -961,7 +961,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "fingerprint",
     "label": "Fingerprint",
     "group": "Special",
-    "description": "Fingerprint Motion Lab preset.",
+    "description": "Reveals through a layered fingerprint-like scan.",
     "supported_triggers": [
       "loop",
       "hover",
@@ -972,7 +972,7 @@ export const MOTION_LAB_BASELINE_PRESETS = Object.freeze([
     "preset": "badgeTap",
     "label": "Badge Tap",
     "group": "Special",
-    "description": "Badge Tap Motion Lab preset.",
+    "description": "Taps forward like a badge confirmation hit.",
     "supported_triggers": [
       "loop",
       "hover",

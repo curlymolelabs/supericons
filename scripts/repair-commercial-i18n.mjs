@@ -56,7 +56,7 @@ const english = {
     headerTitle: 'Simple, transparent pricing',
     headerSubtitle: 'Free icons for everyone. Premium animated packs to polish your UI.',
     freeIconsAcrossLibraries: '20,000+ icons across 10 libraries',
-    mcpServerFreeIcons: 'MCP server with 20,000+ free icons',
+    mcpServerFreeIcons: 'MCP server with 20,000+ curated SVG icons',
     monthly: 'Monthly',
     annual: 'Annual',
     save45: 'Save 45%',

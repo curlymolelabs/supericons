@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supericons MCP Output Quality Audit</title>
+    <style>
+      body { margin: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #151515; background: #fafafa; }
+      main { max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }
+      h1, h2 { line-height: 1.2; }
+      h1 { font-size: 32px; margin: 0 0 8px; }
+      h2 { font-size: 22px; margin-top: 32px; }
+      p { margin: 10px 0; }
+      table { width: 100%; border-collapse: collapse; margin: 16px 0; background: white; }
+      th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+      th { background: #f0f0f0; }
+      code { background: #eee; padding: 2px 5px; border-radius: 4px; }
+      .note { background: #fff7e8; border-left: 4px solid #ff5a1f; padding: 12px 14px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Supericons MCP Output Quality Audit</h1>
+      <p>Updated on 14 May 2026.</p>
+
+      <h2>Scope</h2>
+      <p>This audit covered human-facing MCP output for icon search, icon recommendations, Motion Lab, Converter, no-result hints, selector instructions, and Pro access messages.</p>
+      <p>The supported non-English locales are <code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, and <code>th</code>.</p>
+
+      <h2>Findings</h2>
+      <table>
+        <thead>
+          <tr><th>Area</th><th>Finding</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Motion Lab preset output</td>
+            <td>Some English preset descriptions were generic. Non-English agents had to infer natural explanations from English-only metadata.</td>
+            <td>Fixed by using the richer English Motion Lab metadata and adding locale-specific overlay fields.</td>
+          </tr>
+          <tr>
+            <td>Motion Lab localized output</td>
+            <td>Preset names and UI labels were localized in the app, but MCP recipe outputs did not include localized descriptions, tone, or usage context.</td>
+            <td>Fixed by adding a generated MCP locale data file and returning a <code>localized</code> block while preserving all original fields.</td>
+          </tr>
+          <tr>
+            <td>Converter help text</td>
+            <td>Converter MCP option guidance was useful but English-only.</td>
+            <td>Fixed by adding localized Converter guidance and trace-class explanations to <code>inspect_converter_options</code>.</td>
+          </tr>
+          <tr>
+            <td>No-result and access hints</td>
+            <td>Search and Pro access hints were English-only.</td>
+            <td>Improved by adding localized hint fields where a locale is provided.</td>
+          </tr>
+          <tr>
+            <td>Protocol safety</td>
+            <td>Tool names, schema fields, IDs, library names, and file-format labels must not be translated.</td>
+            <td>Preserved. Localized copy is additive and does not replace functional fields.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Changes Made</h2>
+      <ul>
+        <li>Added <code>data/i18n/mcp-output-locales.json</code> and <code>mcp/generated/mcp-output-locales.json</code>.</li>
+        <li>Added <code>mcp/mcp-output-localization.js</code> to attach localized output safely.</li>
+        <li>Added optional <code>locale</code> input to Motion Lab and Converter MCP tools.</li>
+        <li>Kept original English fields in place and added localized fields beside them.</li>
+        <li>Updated the Motion Lab MCP artifact generator to use stronger English descriptions.</li>
+        <li>Updated multilingual MCP verification to check all supported locales, placeholders, 80 presets, and Converter trace classes.</li>
+      </ul>
+
+      <h2>Translation Notes</h2>
+      <p>DeepL was used for the first six locale sets: Simplified Chinese, Traditional Chinese, Japanese, Korean, Spanish, and German.</p>
+      <p>DeepL then reported a character quota limit. For Portuguese, Arabic, Hindi, Vietnamese, and Thai, this pass used the existing Supericons locale catalogs and repaired weak generic preset text into clear localized descriptions.</p>
+      <p class="note">The remaining locales are now complete enough for MCP output use, but a future review can replace the repaired generic preset descriptions with richer per-preset translations when more translation quota is available.</p>
+
+      <h2>Verification</h2>
+      <table>
+        <thead>
+          <tr><th>Check</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>npm run verify:mcp-multilingual-support</code></td><td>Passed.</td></tr>
+          <tr><td><code>npm run verify:motion-lab-agent-metadata</code></td><td>Passed.</td></tr>
+          <tr><td><code>npm run verify:motion-lab-mcp-package</code></td><td>Passed.</td></tr>
+          <tr><td><code>npm run verify:converter-mcp-clean-install</code></td><td>Passed.</td></tr>
+          <tr><td><code>npm --prefix mcp audit --omit=dev</code></td><td>Passed with no reported vulnerabilities.</td></tr>
+          <tr><td><code>npm pack --dry-run</code> from the MCP folder</td><td>Passed. The package includes 30 files, including the new locale data and helper.</td></tr>
+          <tr><td><code>node --check mcp/index.js</code></td><td>Passed.</td></tr>
+          <tr><td><code>node --check mcp/mcp-output-localization.js</code></td><td>Passed.</td></tr>
+          <tr><td><code>npm run build</code></td><td>Passed.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Residual Risk</h2>
+      <p>The MCP still does not localize all 20,000+ icon names, by design. Stable icon IDs and library names remain unchanged.</p>
+      <p>Portuguese, Arabic, Hindi, Vietnamese, and Thai Motion Lab descriptions are clear but less rich than the DeepL-backed locale sets. This is not a protocol risk, but it is a copy-quality improvement opportunity.</p>
+
+      <h2>Recommended Release Steps</h2>
+      <ol>
+        <li>Run the full build and package checks.</li>
+        <li>Run a small MCP client smoke test with <code>locale</code> on Motion Lab and Converter tools.</li>
+        <li>After approval, publish the next MCP package and redeploy the hosted MCP service.</li>
+      </ol>
+    </main>
+  </body>
+</html>

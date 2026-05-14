@@ -9,6 +9,14 @@ import { buildWebSearchQueryPlan } from '../lib/web-cjk-search-smoke.js';
 import { buildIntentQueryVariants } from '../lib/search-intent-core.js';
 import { searchIcons } from '../mcp/search.js';
 import { recommendIconsForTask } from '../mcp/recommend-icons.js';
+import { getConverterMcpOptions } from '../mcp/converter.js';
+import {
+  SUPPORTED_MCP_OUTPUT_LOCALES,
+  localizeConverterOptions,
+  localizeMotionPresetSummary,
+  localizeMotionRecipe,
+  localizeSelectorInstructions,
+} from '../mcp/mcp-output-localization.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
@@ -52,6 +60,7 @@ const [
   cjkData,
   publicIcons,
   synonyms,
+  mcpOutputLocales,
   zhHansCatalog,
   jaCatalog,
   arCatalog,
@@ -69,6 +78,7 @@ const [
   readJson('data/i18n/cjk-search-terms.json'),
   readJson('public/icon-index.json'),
   readJson('public/synonyms.json'),
+  readJson('data/i18n/mcp-output-locales.json'),
   readJson('data/i18n/messages/zh-Hans.json'),
   readJson('data/i18n/messages/ja.json'),
   readJson('data/i18n/messages/ar.json'),
@@ -92,6 +102,8 @@ for (const [locale, catalog] of [['zh-Hans', zhHansCatalog], ['ja', jaCatalog], 
   assertIncludesLocaleExample(bodyHtml, locale, locale);
 }
 assert.ok(packageJson.files.includes('public/multilingual-search-aliases.json'), 'MCP package must include multilingual aliases');
+assert.ok(packageJson.files.includes('generated/mcp-output-locales.json'), 'MCP package must include MCP output locale data');
+assert.ok(packageJson.files.includes('mcp-output-localization.js'), 'MCP package must include MCP output localization helper');
 assert.match(packageJson.description, /multilingual/i, 'MCP package description should mention multilingual search');
 assert.match(serverJson.description, /Multilingual/i, 'MCP server registry description should mention multilingual search');
 assert.doesNotMatch(
@@ -114,6 +126,8 @@ assert.deepEqual(publicAliasData, aliasData, 'public alias artifact must match s
 assert.deepEqual(packagedAliasData, aliasData, 'packaged MCP alias artifact must match source');
 assert.deepEqual(aliasData.locales, expectedLocales, 'alias locales must match supported MCP locales');
 assert.equal(aliasData.aliases.length, expectedLocales.length * 18, 'alias artifact must include 18 categories per locale');
+assert.deepEqual(SUPPORTED_MCP_OUTPUT_LOCALES, expectedLocales, 'MCP output locale helper must expose every supported locale');
+assert.deepEqual(Object.keys(mcpOutputLocales.locales), expectedLocales, 'MCP output locale artifact must include every supported locale');
 
 const synonymKeys = new Set(Object.keys(synonyms));
 for (const alias of aliasData.aliases) {
@@ -379,6 +393,40 @@ for (const [locale, slots] of Object.entries(settingsSlotFixtures)) {
     ['user', 'bell', 'shield-lock', 'palette', 'globe'],
     `recommend_icons should return semantically correct settings-page slots for ${locale}`
   );
+}
+
+for (const locale of expectedLocales) {
+  const localeRecord = mcpOutputLocales.locales[locale];
+  assert.equal(Object.keys(localeRecord.motionLab.presets).length, 80, `${locale} must include all Motion Lab preset overlays`);
+  for (const presetId of ['breathe', 'pulse', 'heartbeat', 'shake', 'spin']) {
+    const summary = localizeMotionPresetSummary({
+      preset: presetId,
+      label: 'English label',
+      group: 'Motion',
+      description: 'English description',
+      supported_triggers: ['loop', 'hover', 'click'],
+    }, locale);
+    assert.equal(summary.preset, presetId, `${locale}:${presetId} must preserve preset id`);
+    assert.ok(summary.localized?.label, `${locale}:${presetId} must include a localized label`);
+    assert.ok(summary.localized?.description, `${locale}:${presetId} must include a localized description`);
+    assert.notEqual(summary.localized.description, 'English description', `${locale}:${presetId} must not reuse the English test description`);
+  }
+
+  const recipe = localizeMotionRecipe({
+    preset_id: 'breathe',
+    preset: 'Breathe',
+    group: 'Motion',
+    trigger: 'hover',
+  }, locale);
+  assert.ok(recipe.localized?.description, `${locale} recipe must include localized Motion Lab description`);
+  assert.ok(recipe.localized?.trigger, `${locale} recipe must include localized trigger label`);
+
+  const selectorInstructions = localizeSelectorInstructions('placeholder', '{{ICON_SELECTOR}}', locale);
+  assert.ok(selectorInstructions?.includes('{{ICON_SELECTOR}}'), `${locale} selector instructions must preserve placeholder token`);
+
+  const converterOptions = localizeConverterOptions(getConverterMcpOptions(), locale);
+  assert.ok(converterOptions.localized?.traceClasses?.['tiny-line-icon']?.bestFor, `${locale} Converter options must include localized tiny-line-icon guidance`);
+  assert.equal(converterOptions.pngToSvg.traceClasses[0], 'general-color', `${locale} Converter localization must preserve functional trace class IDs`);
 }
 
 console.log('verify-mcp-multilingual-support: ok');

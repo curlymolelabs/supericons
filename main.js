@@ -765,8 +765,8 @@ function buildLocalizedPageUrl(locale = activeLocale) {
 }
 
 function syncPageMetadata() {
-  const title = t('seo.title', {}, 'Supericons | Find Icons by Meaning');
-  const description = t('seo.description', {}, '20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.');
+  const title = t('seo.title', {}, 'Supericons | Find the Right Icon Faster');
+  const description = t('seo.description', {}, 'Search 20,000+ curated SVG icons by meaning, use case, or where they appear in your interface. Built for designers, developers, and AI coding agents.');
   const twitterDescription = t('seo.twitterDescription', {}, description);
   const canonicalUrl = buildLocalizedPageUrl(activeLocale);
 

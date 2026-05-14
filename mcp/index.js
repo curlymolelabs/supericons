@@ -29,6 +29,15 @@ import {
 } from './material-export.js';
 import { listMotionLabPresets } from './motion-lab.js';
 import {
+  SUPPORTED_MCP_OUTPUT_LOCALES,
+  localizeConverterOptions,
+  localizeIconNotFoundHint,
+  localizeMotionRecipe,
+  localizeSearchNoResultsHint,
+  localizeSelectorInstructions,
+  localizeWorkflowAccessPayload,
+} from './mcp-output-localization.js';
+import {
   animateMotionLabIconHosted,
   getMotionLabRecipeHosted,
   renderMotionLabAnimatedSvgHosted,
@@ -496,8 +505,11 @@ function buildTextResponse(payload) {
   };
 }
 
-function buildWorkflowAccessResponse(featureName) {
-  return buildTextResponse(buildProWorkflowAccessError(authState, featureName));
+function buildWorkflowAccessResponse(featureName, locale = null) {
+  return buildTextResponse(localizeWorkflowAccessPayload(
+    buildProWorkflowAccessError(authState, featureName),
+    locale
+  ));
 }
 
 function buildStructuredToolErrorResponse(error, fallbackMessage) {
@@ -570,7 +582,7 @@ function buildSelectorInstructions(selectorMode, selectorToken) {
   return 'Use the returned CSS with the SVG selector that targets your inline icon element.';
 }
 
-function buildMotionLabIconLookupError(id, library) {
+function buildMotionLabIconLookupError(id, library, locale = null) {
   if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
     return buildTextResponse({
       ...buildPremiumLibraryAccessError(
@@ -586,6 +598,14 @@ function buildMotionLabIconLookupError(id, library) {
     code: 'icon_not_found',
     message: `Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`,
     hint: 'Confirm the icon id and library, or call search_icons before exporting.',
+    ...(localizeIconNotFoundHint(locale)
+      ? {
+          localized: {
+            locale,
+            hint: localizeIconNotFoundHint(locale),
+          },
+        }
+      : {}),
     retryable: false,
   });
 }
@@ -725,6 +745,8 @@ const productFacts = loadProductFacts();
 const mcpPackage = loadPackageMetadata();
 const freeIconCountLabel = productFacts?.display?.freeIconsAcrossLibrariesFreeLabel
   || `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
+const mcpLocaleSchema = z.enum(SUPPORTED_MCP_OUTPUT_LOCALES);
+const mcpLocaleDescription = `Optional locale for multilingual output. Supported values: ${SUPPORTED_MCP_OUTPUT_LOCALES.join(', ')}.`;
 
 // ============================================================
 // MCP Server
@@ -775,6 +797,14 @@ server.tool(
         hint: locale
           ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
           : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.',
+        ...(localizeSearchNoResultsHint(locale, Boolean(locale))
+          ? {
+              localized: {
+                locale,
+                hint: localizeSearchNoResultsHint(locale, Boolean(locale)),
+              },
+            }
+          : {}),
         retryable: true,
       });
     }
@@ -899,13 +929,15 @@ server.tool(
 server.tool(
   'list_motion_presets',
   'List the Motion Lab presets currently available through Supericons MCP, including preset id, label, group, description, and supported triggers. Motion Lab MCP is a Pro workflow tool.',
-  {},
-  async () => {
+  {
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
+  },
+  async ({ locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Motion Lab MCP');
+      return buildWorkflowAccessResponse('Motion Lab MCP', locale);
     }
     return buildTextResponse({
-      presets: listMotionLabPresets(),
+      presets: listMotionLabPresets(locale),
       source: 'Powered by SuperIcons Motion Lab',
     });
   }
@@ -920,18 +952,20 @@ server.tool(
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
     intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ preset, trigger, duration_ms, intensity_percent }) => {
+  async ({ preset, trigger, duration_ms, intensity_percent, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Motion Lab MCP');
+      return buildWorkflowAccessResponse('Motion Lab MCP', locale);
     }
     try {
-      return buildTextResponse(await getMotionLabRecipeHosted({
+      const recipe = await getMotionLabRecipeHosted({
         preset,
         trigger,
         duration_ms,
         intensity_percent,
-      }));
+      });
+      return buildTextResponse(localizeMotionRecipe(recipe, locale));
     } catch (error) {
       return buildStructuredToolErrorResponse(error, 'Motion Lab recipe generation failed.');
     }
@@ -949,15 +983,16 @@ server.tool(
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
     intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ id, library, preset, trigger, duration_ms, intensity_percent }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Motion Lab MCP');
+      return buildWorkflowAccessResponse('Motion Lab MCP', locale);
     }
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildMotionLabIconLookupError(id, library);
+      return buildMotionLabIconLookupError(id, library, locale);
     }
 
     try {
@@ -970,11 +1005,23 @@ server.tool(
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+        preset: localizeMotionRecipe(
+          await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+          locale
+        ),
         css: cssResponse.css,
         selector_mode: cssResponse.selector_mode,
         ...(cssResponse.selector_token ? { selector_token: cssResponse.selector_token } : {}),
         selector_instructions: buildSelectorInstructions(cssResponse.selector_mode, cssResponse.selector_token),
+        ...(localizeSelectorInstructions(cssResponse.selector_mode, cssResponse.selector_token, locale)
+          ? {
+              localized_selector_instructions: localizeSelectorInstructions(
+                cssResponse.selector_mode,
+                cssResponse.selector_token,
+                locale
+              ),
+            }
+          : {}),
       });
     } catch (error) {
       return buildStructuredToolErrorResponse(error, 'Motion Lab CSS export failed.');
@@ -994,15 +1041,16 @@ server.tool(
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
     intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
     color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Motion Lab MCP');
+      return buildWorkflowAccessResponse('Motion Lab MCP', locale);
     }
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildMotionLabIconLookupError(id, library);
+      return buildMotionLabIconLookupError(id, library, locale);
     }
 
     try {
@@ -1017,7 +1065,10 @@ server.tool(
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+        preset: localizeMotionRecipe(
+          await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+          locale
+        ),
         animated_svg: animatedSvgResponse.animated_svg,
         ...(animatedSvgResponse.applied_color ? { applied_color: animatedSvgResponse.applied_color } : {}),
       });
@@ -1039,15 +1090,16 @@ server.tool(
     duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
     intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
     color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Motion Lab MCP');
+      return buildWorkflowAccessResponse('Motion Lab MCP', locale);
     }
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildMotionLabIconLookupError(id, library);
+      return buildMotionLabIconLookupError(id, library, locale);
     }
 
     try {
@@ -1062,12 +1114,21 @@ server.tool(
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        recipe: bundle.recipe,
+        recipe: localizeMotionRecipe(bundle.recipe, locale),
         css: bundle.css,
         animated_svg: bundle.animated_svg,
         selector_mode: bundle.selector_mode,
         ...(bundle.selector_token ? { selector_token: bundle.selector_token } : {}),
         selector_instructions: buildSelectorInstructions(bundle.selector_mode, bundle.selector_token),
+        ...(localizeSelectorInstructions(bundle.selector_mode, bundle.selector_token, locale)
+          ? {
+              localized_selector_instructions: localizeSelectorInstructions(
+                bundle.selector_mode,
+                bundle.selector_token,
+                locale
+              ),
+            }
+          : {}),
         ...(bundle.applied_color ? { applied_color: bundle.applied_color } : {}),
       });
     } catch (error) {
@@ -1080,12 +1141,14 @@ server.tool(
 server.tool(
   'inspect_converter_options',
   'List the current Converter MCP options, workflow hints, and recommended starting combinations. Converter MCP is a Pro workflow tool.',
-  {},
-  async () => {
+  {
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
+  },
+  async ({ locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Converter MCP');
+      return buildWorkflowAccessResponse('Converter MCP', locale);
     }
-    return buildTextResponse(getConverterMcpOptions());
+    return buildTextResponse(localizeConverterOptions(getConverterMcpOptions(), locale));
   }
 );
 
@@ -1096,10 +1159,11 @@ server.tool(
   {
     imageBase64: z.string().describe('PNG as base64 text or data URL.'),
     mimeType: z.string().optional().describe('Optional MIME type override. Only image/png is currently supported.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ imageBase64, mimeType }) => {
+  async ({ imageBase64, mimeType, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Converter MCP');
+      return buildWorkflowAccessResponse('Converter MCP', locale);
     }
     try {
       return buildTextResponse(inspectConverterInput({
@@ -1120,10 +1184,11 @@ server.tool(
     svg: z.string().describe('Raw SVG string to render.'),
     targetWidth: z.number().min(16).max(2048).optional().default(512).describe('Output width in pixels.'),
     background: z.string().optional().default('transparent').describe('Background color: `transparent` or a hex value like `#ffffff`.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ svg, targetWidth, background }) => {
+  async ({ svg, targetWidth, background, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Converter MCP');
+      return buildWorkflowAccessResponse('Converter MCP', locale);
     }
     try {
       return buildTextResponse(convertSvgToPng({
@@ -1147,10 +1212,11 @@ server.tool(
     colorMode: z.enum(['color', 'mono']).optional().default('color').describe('Tracing color mode.'),
     traceClass: z.enum(['general-color', 'flat-logo-color', 'tile-icon-color', 'tiny-line-icon', 'single-color-mark', 'mono-mask']).optional().default('general-color').describe('Tracing profile tuned for the source image.'),
     uiMode: z.enum(['logo', 'icon']).optional().default('logo').describe('Output bias for logo or icon-style artwork.'),
+    locale: mcpLocaleSchema.optional().describe(mcpLocaleDescription),
   },
-  async ({ imageBase64, qualityMode, colorMode, traceClass, uiMode }) => {
+  async ({ imageBase64, qualityMode, colorMode, traceClass, uiMode, locale }) => {
     if (!hasProWorkflowAccess(authState)) {
-      return buildWorkflowAccessResponse('Converter MCP');
+      return buildWorkflowAccessResponse('Converter MCP', locale);
     }
     try {
       return buildTextResponse(await convertPngToSvg({

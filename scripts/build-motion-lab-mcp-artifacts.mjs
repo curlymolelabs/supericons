@@ -13,20 +13,21 @@ const dataset = JSON.parse(readFileSync(join(repoRoot, 'data', 'motion-lab-prese
 
 const MOTION_LAB_SUPPORTED_TRIGGERS = ['loop', 'hover', 'click'];
 
+const hostedMetadataByPreset = Object.fromEntries(
+  (dataset.presets || []).map((record) => [record.preset, record])
+);
+
 const baselinePresets = presetsModule.MOTION_LAB_PRESET_IDS.map((presetId) => {
   const meta = presetsModule.MOTION_LAB_PRESET_METADATA[presetId];
+  const hostedMeta = hostedMetadataByPreset[presetId] || {};
   return {
     preset: presetId,
     label: meta.label,
     group: meta.group,
-    description: meta.description,
+    description: hostedMeta.description || meta.description,
     supported_triggers: [...MOTION_LAB_SUPPORTED_TRIGGERS],
   };
 });
-
-const hostedMetadataByPreset = Object.fromEntries(
-  (dataset.presets || []).map((record) => [record.preset, record])
-);
 
 const hostedPresetsById = Object.fromEntries(
   presetsModule.MOTION_LAB_PRESET_IDS.map((presetId) => [presetId, presetsModule.MOTION_LAB_PRESETS[presetId]])
@@ -83,5 +84,6 @@ copyFileSync(join(repoRoot, 'public', 'icon-index-solid.json'), join(mcpPublicDi
 copyFileSync(join(repoRoot, 'public', 'synonyms.json'), join(mcpPublicDir, 'synonyms.json'));
 copyFileSync(join(repoRoot, 'public', 'cjk-search-terms.json'), join(mcpPublicDir, 'cjk-search-terms.json'));
 copyFileSync(join(repoRoot, 'public', 'multilingual-search-aliases.json'), join(mcpPublicDir, 'multilingual-search-aliases.json'));
+copyFileSync(join(repoRoot, 'data', 'i18n', 'mcp-output-locales.json'), join(mcpGeneratedDir, 'mcp-output-locales.json'));
 
 console.log(`Motion Lab MCP artifacts built: ${baselinePresets.length} presets.`);

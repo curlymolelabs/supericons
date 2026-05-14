@@ -37,9 +37,9 @@ function privacyPage(data) {
 
 const seo = {
   en: {
-    title: 'Supericons | Find Icons by Meaning',
-    description: '20,000+ curated icons for builders and AI coding agents. Search by words, use case, or UI slot.',
-    twitterDescription: '20,000+ curated icons for builders and AI coding agents.',
+    title: 'Supericons | Find the Right Icon Faster',
+    description: 'Search 20,000+ curated SVG icons by meaning, use case, or where they appear in your interface. Built for designers, developers, and AI coding agents.',
+    twitterDescription: 'Find the right icon faster with 20,000+ curated SVG icons for designers, developers, and AI coding agents.',
   },
   'zh-Hans': {
     title: 'Supericons | 按含义查找图标',
