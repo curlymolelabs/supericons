@@ -3,7 +3,8 @@
 For setup help, start with:
 
 - Supericons website: https://supericons.dev
-- npm package: https://www.npmjs.com/package/supericons-mcp
+- MCP setup page: https://supericons.dev/mcp/
+- npm package: https://www.npmjs.com/package/@supericons/mcp
 - Hosted MCP endpoint: https://mcp.supericons.dev/mcp
 
 When reporting an issue, include:

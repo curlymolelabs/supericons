@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.7
+
+- Updated public setup examples to use `@supericons/mcp`.
+- Added the public MCP setup page link: https://supericons.dev/mcp/.
+- Refreshed public wrapper metadata for the current scoped npm package.
+
 ## 0.4.0
 
 - Added public setup wrapper for Supericons MCP.

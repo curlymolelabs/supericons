@@ -1,12 +1,12 @@
 {
   "name": "supericons",
-  "version": "0.4.1",
+  "version": "0.4.7",
   "description": "Semantic SVG icon search for Codex.",
   "author": {
     "name": "Curly Mole Labs",
     "url": "https://supericons.dev"
   },
-  "homepage": "https://supericons.dev",
+  "homepage": "https://supericons.dev/mcp/",
   "repository": "https://github.com/curlymolelabs/supericons",
   "license": "MIT",
   "keywords": [
@@ -28,14 +28,14 @@
     "capabilities": [
       "Read"
     ],
-    "websiteURL": "https://supericons.dev",
+    "websiteURL": "https://supericons.dev/mcp/",
     "privacyPolicyURL": "https://supericons.dev/privacy",
     "termsOfServiceURL": "https://supericons.dev/terms",
     "defaultPrompt": [
       "Use Supericons to find a Lucide database icon and show the icon id, library, and SVG.",
       "Use Supericons to recommend icons for an AI dashboard sidebar: model, prompt, dataset, evaluation, deployment, and monitoring."
     ],
-    "brandColor": "#ff5a00",
+    "brandColor": "#FF4F00",
     "composerIcon": "./assets/supericons-mark.svg",
     "logo": "./assets/supericons-mark.svg"
   }

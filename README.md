@@ -4,6 +4,16 @@ Semantic SVG icon search for AI coding agents.
 
 Supericons helps agents find icons by meaning, not only by file name. Use it to search 20,000+ free icons, retrieve SVG code, and recommend icon sets for app navigation, dashboards, tools, and product UI.
 
+## Current Package
+
+Use the scoped npm package:
+
+```text
+@supericons/mcp
+```
+
+New installs should use the scoped package above.
+
 ## Quick Install
 
 Use this config in any MCP-capable coding agent:
@@ -13,7 +23,7 @@ Use this config in any MCP-capable coding agent:
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"]
+      "args": ["-y", "@supericons/mcp"]
     }
   }
 }
@@ -49,7 +59,7 @@ Transport: stdio
 Command to launch: npx
 Arguments:
 -y
-supericons-mcp
+@supericons/mcp
 ```
 
 ## IDE Setup Fields
@@ -62,13 +72,13 @@ Transport: stdio
 Command: npx
 Arguments:
 -y
-supericons-mcp
+@supericons/mcp
 ```
 
 If your IDE has one argument field, enter:
 
 ```text
--y supericons-mcp
+-y @supericons/mcp
 ```
 
 Leave environment variables empty for free icon search.
@@ -84,6 +94,12 @@ SUPERICONS_API_KEY=your_api_key_here
 Do not paste API keys into public issues, screenshots, or shared config files.
 
 ## Hosted MCP Endpoint
+
+MCP setup page:
+
+```text
+https://supericons.dev/mcp/
+```
 
 Hosted endpoint:
 
@@ -124,7 +140,8 @@ Use Supericons MCP to recommend icons for an AI dashboard sidebar. The slots are
 ## Links
 
 - Website: https://supericons.dev
-- npm package: https://www.npmjs.com/package/supericons-mcp
+- MCP setup page: https://supericons.dev/mcp/
+- npm package: https://www.npmjs.com/package/@supericons/mcp
 - Hosted MCP: https://mcp.supericons.dev/mcp
 
 ## Public Repo Scope
