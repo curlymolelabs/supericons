@@ -230,7 +230,7 @@
         "kicker": "MCP 设置",
         "pageTitle": "其他 MCP 客户端",
         "summary": "在更多 MCP 客户端中配置 Supericons。",
-        "bodyHtml": "\n      <section class=\"docs-section\" id=\"others-start\">\n        <h2 class=\"docs-section__title\">从通用设置开始</h2>\n        <p class=\"docs-section__copy\">Supericons作为本地 stdioMCP服务器运行。请从 <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">通用设置</a> 指南来获取基础服务器配置和高级API密钥模式，然后将相同的值应用到您的客户端设置界面中。</p>\n        <p class=\"docs-section__copy\">服务器参数保持不变。各客户端的差异主要体现在：MCP设置的存储位置、客户端存储环境参数的方式，以及配置是通过配置文件还是设置界面进行。</p>\n      </section>\n      <section class=\"docs-section\" id=\"others-clients\">\n        <h2 class=\"docs-section__title\">已知客户端</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">OpenCode</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">查看官方指南</a>\n            </div>\n            <p>OpenCode 官方文档，介绍本地和远程 MCP 服务器设置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">Cline</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于 Servers UI 和<code>cline_mcp_settings.json</code>配置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Copilot 代理</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于存储库MCP配置和 Copilot 环境密钥的官方 GitHub 文档。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Windsurf</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于设置界面和<code>mcp_config.json</code>配置。</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"others-not-listed\">\n        <h3>如果您的客户端未列在列表中</h3>\n        <p>如果您的客户端支持本地 stdioMCP服务器，请使用通用设置指南中的服务器值，并将配置位置和语法调整为符合您客户端的格式。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"others-hosted-note\">\n        <h3>???? MCP ??</h3>\n        <p>Supericons ????????????????? MCP ???????????? Smithery???????????? Smithery ????????????????????????????? <code>npx</code> ???</p>\n      </section>\n    "
+        "bodyHtml": "\n      <section class=\"docs-section\" id=\"others-start\">\n        <h2 class=\"docs-section__title\">从通用设置开始</h2>\n        <p class=\"docs-section__copy\">Supericons作为本地 stdioMCP服务器运行。请从 <a href=\"/?view=docs-mcp-universal\" data-docs-view=\"docs-mcp-universal\">通用设置</a> 指南来获取基础服务器配置和高级API密钥模式，然后将相同的值应用到您的客户端设置界面中。</p>\n        <p class=\"docs-section__copy\">服务器参数保持不变。各客户端的差异主要体现在：MCP设置的存储位置、客户端存储环境参数的方式，以及配置是通过配置文件还是设置界面进行。</p>\n      </section>\n      <section class=\"docs-section\" id=\"others-clients\">\n        <h2 class=\"docs-section__title\">已知客户端</h2>\n        <div class=\"docs-grid docs-grid--cards\">\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">OpenCode</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://opencode.ai/docs/mcp-servers\" target=\"_blank\" rel=\"noopener noreferrer\">查看官方指南</a>\n            </div>\n            <p>OpenCode 官方文档，介绍本地和远程 MCP 服务器设置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">Cline</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.cline.bot/mcp/adding-and-configuring-servers\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于 Servers UI 和<code>cline_mcp_settings.json</code>配置。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Copilot 代理</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于存储库MCP配置和 Copilot 环境密钥的官方 GitHub 文档。</p>\n          </article>\n          <article class=\"docs-card\">\n            <div class=\"docs-card__head\">\n              <h3><a href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">Windsurf</a></h3>\n              <a class=\"docs-btn docs-btn--ghost\" href=\"https://docs.windsurf.com/windsurf/cascade/mcp\" target=\"_blank\" rel=\"noopener noreferrer\">打开官方指南</a>\n            </div>\n            <p>关于设置界面和<code>mcp_config.json</code>配置。</p>\n          </article>\n        </div>\n      </section>\n      <section class=\"docs-callout\" id=\"others-not-listed\">\n        <h3>如果您的客户端未列在列表中</h3>\n        <p>如果您的客户端支持本地 stdioMCP服务器，请使用通用设置指南中的服务器值，并将配置位置和语法调整为符合您客户端的格式。</p>\n      </section>\n      <section class=\"docs-callout\" id=\"others-hosted-note\">\n        <h3>关于托管 MCP 链接</h3>\n        <p>Supericons 也为兼容的客户端和目录列表提供托管 MCP 端点。某些托管路径（包括 Smithery）可能需要该客户端先完成 Smithery 身份验证。如果在编程代理中设置失败，请使用通用指南中的本地 <code>npx</code> 设置。</p>\n      </section>\n    "
       },
       "docs-mcp-search-guide": {
         "navLabel": "搜索指南",
@@ -753,7 +753,7 @@
     "headerTitle": "简单透明的价格",
     "headerSubtitle": "免费图标面向所有人。高级动画包让界面更精致。",
     "freeIconsAcrossLibraries": "20,000+ 图标，覆盖 10 个图标库",
-    "mcpServerFreeIcons": "MCP ????? 20,000+ ??? SVG ??",
+    "mcpServerFreeIcons": "包含 20,000+ 个精选 SVG 图标的 MCP 服务器",
     "monthly": "月付",
     "annual": "年付",
     "save45": "节省 45%",
@@ -796,9 +796,9 @@
     }
   },
   "seo": {
-    "title": "Supericons | ?????????",
-    "description": "????????????????????? 20,000+ ??? SVG ???????????? AI ???????",
-    "twitterDescription": "?? Supericons ???????????? 20,000+ ??? SVG ???"
+    "title": "Supericons | 更快找到合适的图标",
+    "description": "按含义、使用场景或界面位置搜索 20,000+ 个精选 SVG 图标。专为设计师、开发者和 AI 编程代理打造。",
+    "twitterDescription": "在 Supericons 中，通过 20,000+ 个精选 SVG 图标更快找到合适图标。"
   },
   "packs": {
     "empty": {
@@ -895,8 +895,8 @@
   },
   "landing": {
     "homeAriaLabel": "Supericons 首页",
-    "heroTitle": "??????????",
-    "heroSubtitle": "????????????????????? 20,000+ ??? SVG ???????????? AI ???????",
+    "heroTitle": "更快找到合适的图标。",
+    "heroSubtitle": "按含义、使用场景或界面位置搜索 20,000+ 个精选 SVG 图标。专为设计师、开发者和 AI 编程代理打造。",
     "startSearching": "立即搜索图标",
     "stats": {
       "icons": "图标",

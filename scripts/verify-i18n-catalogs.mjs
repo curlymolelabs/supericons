@@ -30,7 +30,15 @@ const EXPECTED_NATIVE_LABELS = Object.freeze({
 });
 const QUESTION_MARK_FORBIDDEN_PATHS = new Set([
   'account.password.resetInSeconds',
+  'pricing.mcpServerFreeIcons',
+  'seo.title',
+  'seo.description',
+  'seo.twitterDescription',
+  'landing.heroTitle',
+  'landing.heroSubtitle',
 ]);
+
+const HOSTED_MCP_NOTE_PATTERN = /<section class="docs-callout" id="others-hosted-note">[\s\S]*?<\/section>/;
 
 function flattenMessages(value, prefix = '', out = new Map()) {
   for (const [key, child] of Object.entries(value || {})) {
@@ -79,6 +87,10 @@ for (const locale of SUPPORTED_LOCALES) {
     );
     assert.ok(sourceFlat.get(key).trim(), `${locale}:${key} must not be empty`);
   }
+
+  const hostedMcpNote = source.docs?.pages?.['docs-mcp-others']?.bodyHtml?.match(HOSTED_MCP_NOTE_PATTERN)?.[0] || '';
+  assert.ok(hostedMcpNote, `${locale}:docs-mcp-others must include hosted MCP note`);
+  assert.ok(!hostedMcpNote.includes('?'), `${locale}:docs-mcp-others hosted MCP note must not contain literal question marks`);
 
   for (const outputDir of [publicDir, mcpDir]) {
     const output = await readCatalog(outputDir, locale);
