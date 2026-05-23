@@ -105,6 +105,13 @@ const FLOATING_SEARCH_MEDIA = window.matchMedia('(max-width: 600px)');
 const RECENT_SEARCHES_STORAGE_KEY = 'si-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 const LOCALE_STORAGE_KEY = 'supericons.locale';
+const I18N_CATALOG_CACHE_KEY = (() => {
+  try {
+    return new URL(import.meta.url).pathname.split('/').pop() || 'dev';
+  } catch {
+    return 'dev';
+  }
+})();
 
 let activeLocale = DEFAULT_LOCALE;
 let i18nCatalogs = {};
@@ -725,7 +732,8 @@ function getInitialLocale() {
 }
 
 async function loadLocaleCatalog(locale) {
-  const response = await fetch(`/i18n/messages/${locale}.json`);
+  const cacheKey = encodeURIComponent(I18N_CATALOG_CACHE_KEY);
+  const response = await fetch(`/i18n/messages/${locale}.json?v=${cacheKey}`, { cache: 'no-store' });
   if (!response.ok) throw new Error(`Locale catalog not found: ${locale}`);
   return response.json();
 }
