@@ -8,6 +8,7 @@ const TAG_RE = /(<[^>]+>)/g;
 const CODE_BLOCK_RE = /<pre\b[\s\S]*?<\/pre>|<code\b[\s\S]*?<\/code>/gi;
 
 const groupFilter = readOption('--group');
+const viewFilter = readOption('--view');
 const locale = readOption('--locale');
 const inputFiles = readOption('--input').split(',').map((value) => value.trim()).filter(Boolean);
 const dryRun = process.argv.includes('--dry-run');
@@ -21,6 +22,9 @@ if (locale === DEFAULT_LOCALE || !SUPPORTED_LOCALES.includes(locale)) {
 const selectedGroups = groupFilter
   ? new Set(groupFilter.split(',').map((group) => group.trim()).filter(Boolean))
   : null;
+const selectedViewIds = viewFilter
+  ? viewFilter.split(',').map((view) => view.trim()).filter(Boolean)
+  : null;
 
 function readOption(name) {
   const prefix = `${name}=`;
@@ -29,6 +33,13 @@ function readOption(name) {
 }
 
 function selectedViews() {
+  if (selectedViewIds) {
+    for (const view of selectedViewIds) {
+      if (!DOCS_PAGE_ORDER.includes(view)) throw new Error(`Unknown docs view: ${view}`);
+    }
+    return selectedViewIds;
+  }
+
   if (!selectedGroups) return DOCS_PAGE_ORDER;
 
   const views = [];

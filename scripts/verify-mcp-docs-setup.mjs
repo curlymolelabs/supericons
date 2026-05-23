@@ -6,6 +6,65 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..');
 const hostedSearchClientUrl = pathToFileURL(path.join(repoRoot, 'mcp', 'hosted-search-client.js')).href;
+const docsPagesSource = await fsRead(path.join(repoRoot, 'docs-pages.js'));
+const docsGuideConfigSource = await fsRead(path.join(repoRoot, 'lib', 'docs-guide-config.js'));
+const landingSource = await fsRead(path.join(repoRoot, 'index.html'));
+
+async function fsRead(file) {
+  const fs = await import('node:fs/promises');
+  return fs.readFile(file, 'utf8');
+}
+
+assert.ok(
+  docsPagesSource.includes('https://opencode.ai/docs/mcp-servers'),
+  'Other clients docs must link to the official OpenCode MCP guide',
+);
+assert.ok(
+  docsPagesSource.includes('Official OpenCode docs for local and remote MCP server setup.'),
+  'OpenCode docs must acknowledge both local and remote MCP support',
+);
+assert.ok(
+  !docsPagesSource.includes('id="docs-opencode-local-json"'),
+  'Other clients overview must not show a config block for only OpenCode',
+);
+assert.ok(
+  !docsPagesSource.includes('Direct hosted HTTP MCP is not the recommended OpenCode setup right now'),
+  'docs must not imply OpenCode remote MCP is unsupported or broadly discouraged',
+);
+assert.ok(
+  docsPagesSource.includes('Smithery authentication'),
+  'docs must mention that Smithery hosted access may require Smithery authentication',
+);
+for (const [sourceName, source] of [
+  ['docs-pages.js', docsPagesSource],
+  ['lib/docs-guide-config.js', docsGuideConfigSource],
+  ['index.html', landingSource],
+]) {
+  assert.ok(
+    source.includes('@supericons/mcp@latest'),
+    `${sourceName} must include explicit @supericons/mcp@latest setup examples`,
+  );
+  assert.ok(
+    !source.includes('supericons-mcp'),
+    `${sourceName} must not use the old supericons-mcp package in live setup docs`,
+  );
+}
+assert.ok(
+  docsPagesSource.includes('<code>recommend_icons</code>'),
+  'MCP docs must document recommend_icons',
+);
+assert.ok(
+  docsPagesSource.includes('<code>limit_per_slot</code>'),
+  'recommend_icons docs must include limit_per_slot',
+);
+assert.ok(
+  docsPagesSource.includes('<code>response_mode</code>'),
+  'recommend_icons docs must include response_mode',
+);
+assert.ok(
+  docsPagesSource.includes('Use <code>plan</code> for compact icon IDs and reasons'),
+  'recommend_icons docs must recommend plan mode for compact agent output',
+);
 
 function runScenario(envOverrides = {}) {
   const script = `

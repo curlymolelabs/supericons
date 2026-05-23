@@ -152,7 +152,7 @@ const docsPages = {
           </article>
         </div>
         <p class="docs-section__copy">Free icon browsing and the customize panel are self-explanatory in the app. This docs section covers MCP integration, Motion Lab, and Converter, where setup or parameter choices are non-obvious.</p>
-        <p class="docs-section__copy">Supericons is also listed on <a href="https://smithery.ai/servers/curly-mole-labs/supericons" target="_blank" rel="noopener noreferrer">Smithery</a>.</p>
+        <p class="docs-section__copy">Supericons is also listed on <a href="https://smithery.ai/servers/curly-mole-labs/supericons" target="_blank" rel="noopener noreferrer">Smithery</a>. If your client connects through Smithery, it may ask you to sign in to Smithery first.</p>
       </section>
     `,
   },
@@ -351,7 +351,7 @@ const docsPages = {
           <div class="docs-field-row">
             <div class="docs-field-row__body">
               <span class="docs-field-row__label">Argument 2</span>
-              <code id="docs-universal-field-arg-package">supericons-mcp</code>
+              <code id="docs-universal-field-arg-package">@supericons/mcp@latest</code>
             </div>
             <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-field-arg-package">Copy</button>
           </div>
@@ -371,11 +371,11 @@ const docsPages = {
         <div class="docs-grid docs-grid--cards">
           <article class="docs-card">
             <h3>If your IDE has separate argument rows</h3>
-            <p>Add two arguments. First add <code>-y</code>. Then add <code>supericons-mcp</code>.</p>
+            <p>Add two arguments. First add <code>-y</code>. Then add <code>@supericons/mcp@latest</code>.</p>
           </article>
           <article class="docs-card">
             <h3>If your IDE has one argument field</h3>
-            <p>Paste <code>-y supericons-mcp</code> into the argument field.</p>
+            <p>Paste <code>-y @supericons/mcp@latest</code> into the argument field.</p>
           </article>
           <article class="docs-card">
             <h3>If your IDE asks for environment variables</h3>
@@ -383,7 +383,7 @@ const docsPages = {
           </article>
           <article class="docs-card">
             <h3>If your IDE asks for HTTP</h3>
-            <p>Choose <code>stdio</code> instead. This setup runs the local Supericons MCP package through <code>npx</code>.</p>
+            <p>Choose <code>stdio</code> instead when your client supports local MCP servers. This setup runs the local Supericons MCP package through <code>npx</code>.</p>
           </article>
         </div>
       </section>
@@ -398,7 +398,7 @@ Use these MCP values:
 Name: supericons
 Transport: stdio
 Command: npx
-Arguments: -y supericons-mcp
+Arguments: -y @supericons/mcp@latest
 
 After saving, restart or reconnect MCP if this IDE requires it. Then test it by asking Supericons MCP to search for a database icon.</code></pre>
         </div>
@@ -413,7 +413,7 @@ After saving, restart or reconnect MCP if this IDE requires it. Then test it by 
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"]
+      "args": ["-y", "@supericons/mcp@latest"]
     }
   }
 }</code></pre>
@@ -426,7 +426,7 @@ After saving, restart or reconnect MCP if this IDE requires it. Then test it by 
     "supericons": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "supericons-mcp"]
+      "args": ["-y", "@supericons/mcp@latest"]
     }
   }
 }</code></pre>
@@ -476,7 +476,7 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"],
+      "args": ["-y", "@supericons/mcp@latest"],
       "env": {
         "SUPERICONS_API_KEY": "your-key-here"
       }
@@ -528,7 +528,7 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
           </article>
           <article class="docs-card">
             <h3>The arguments do not work</h3>
-            <p>If separate rows fail, try one argument line: <code>-y supericons-mcp</code>. If one line fails, split it into <code>-y</code> and <code>supericons-mcp</code>.</p>
+            <p>If separate rows fail, try one argument line: <code>-y @supericons/mcp@latest</code>. If one line fails, split it into <code>-y</code> and <code>@supericons/mcp@latest</code>.</p>
           </article>
         </div>
       </section>
@@ -548,10 +548,10 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-claude-cli">Copy</button>
           <pre><code id="docs-claude-cli"># macOS / Linux
-claude mcp add supericons -- npx -y supericons-mcp
+claude mcp add supericons -- npx -y @supericons/mcp@latest
 
 # Windows
-claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
+claude mcp add supericons -- cmd /c npx -y @supericons/mcp@latest</code></pre>
         </div>
         <h3>Option 2: Config file</h3>
         <p class="docs-section__copy">Claude Code stores MCP servers in a JSON config file. Choose the scope that fits your workflow:</p>
@@ -566,7 +566,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"]
+      "args": ["-y", "@supericons/mcp@latest"]
     }
   }
 }</code></pre>
@@ -587,7 +587,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"],
+      "args": ["-y", "@supericons/mcp@latest"],
       "env": {
         "SUPERICONS_API_KEY": "your-key-here"
       }
@@ -624,7 +624,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
     kicker: 'MCP Setup',
     pageTitle: 'Codex',
     summary: 'Add Supericons via CLI command or TOML config. Works in Codex CLI and the IDE extension.',
-    verifiedNote: 'Verified against official OpenAI Codex documentation as of 10 April 2026.',
+    verifiedNote: 'Verified against official Codex documentation as of 10 April 2026.',
     bodyHtml: `
       <section class="docs-callout" id="codex-scope">
         <h3>Scope</h3>
@@ -636,7 +636,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
         <p class="docs-section__copy">The quickest way to add Supericons. Run this once:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-codex-cli">Copy</button>
-          <pre><code id="docs-codex-cli">codex mcp add supericons -- npx -y supericons-mcp</code></pre>
+          <pre><code id="docs-codex-cli">codex mcp add supericons -- npx -y @supericons/mcp@latest</code></pre>
         </div>
         <h3>Option 2: Config file</h3>
         <p class="docs-section__copy">Codex reads MCP server config from a TOML file. Choose the scope that fits your workflow:</p>
@@ -649,7 +649,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-codex-config">Copy</button>
           <pre><code id="docs-codex-config">[mcp_servers.supericons]
 command = "npx"
-args = ["-y", "supericons-mcp"]</code></pre>
+args = ["-y", "@supericons/mcp@latest"]</code></pre>
         </div>
         <h3>Verify it is working</h3>
         <p class="docs-section__copy">In the Codex TUI, type:</p>
@@ -665,7 +665,7 @@ args = ["-y", "supericons-mcp"]</code></pre>
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-codex-premium">Copy</button>
           <pre><code id="docs-codex-premium">[mcp_servers.supericons]
 command = "npx"
-args = ["-y", "supericons-mcp"]
+args = ["-y", "@supericons/mcp@latest"]
 env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <div class="docs-callout">
@@ -709,7 +709,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"]
+      "args": ["-y", "@supericons/mcp@latest"]
     }
   }
 }</code></pre>
@@ -727,7 +727,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"],
+      "args": ["-y", "@supericons/mcp@latest"],
       "env": {
         "SUPERICONS_API_KEY": "your-key-here"
       }
@@ -753,7 +753,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </article>
           <article class="docs-card">
             <h3><code>npx</code> takes a long time on first run</h3>
-            <p>The first run of <code>npx -y supericons-mcp</code> downloads the package from npm. This is a one-time delay. Subsequent starts are faster.</p>
+            <p>The first run of <code>npx -y @supericons/mcp@latest</code> downloads the package from npm. This is a one-time delay. Subsequent starts are faster.</p>
           </article>
         </div>
       </section>
@@ -778,7 +778,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               <h3><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h3>
               <a class="docs-btn docs-btn--ghost" href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">Open official guide</a>
             </div>
-            <p>Official OpenCode MCP docs for server config and CLI flow.</p>
+            <p>Official OpenCode docs for local and remote MCP server setup.</p>
           </article>
           <article class="docs-card">
             <div class="docs-card__head">
@@ -807,6 +807,10 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>If your client is not listed</h3>
         <p>If your client supports local stdio MCP servers, use the server values from the universal setup guide and adapt the config location and syntax to your client&apos;s format.</p>
       </section>
+      <section class="docs-callout" id="others-hosted-note">
+        <h3>About hosted MCP links</h3>
+        <p>Supericons also has hosted MCP endpoints for compatible clients and registry listings. Some hosted paths, including Smithery, may require that client to complete Smithery authentication first. If setup fails in a coding agent, use the local <code>npx</code> setup from the universal guide.</p>
+      </section>
     `,
   },
   'docs-mcp-search-guide': {
@@ -832,7 +836,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             </thead>
             <tbody>
               <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon. For non-English search, include <code>locale</code>, such as <code>zh-Hans</code>, <code>ja</code>, or <code>ko</code>.</td></tr>
-              <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring. If your slots are not in English, include <code>locale</code>.</td></tr>
+              <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring. Ask for <code>response_mode: "plan"</code> when you want compact output. If your slots are not in English, include <code>locale</code>.</td></tr>
               <tr><td>Fetch one known icon</td><td><code>get_icon</code></td><td>Get the SVG for <code>database</code> from Iconoir.</td></tr>
               <tr><td>See available libraries</td><td><code>list_libraries</code></td><td>List the Supericons icon libraries.</td></tr>
             </tbody>
@@ -941,6 +945,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
             </thead>
             <tbody>
               <tr><td><code>search_icons</code></td><td>Search ${freeIconsAcrossLibrariesFreeLabel}</td><td>Free</td></tr>
+              <tr><td><code>recommend_icons</code></td><td>Choose icons for several app slots, with confidence and alternatives</td><td>Free</td></tr>
               <tr><td><code>get_icon</code></td><td>Retrieve a specific icon by ID and library</td><td>Free</td></tr>
               <tr><td><code>list_libraries</code></td><td>List all available icon libraries</td><td>Free</td></tr>
               <tr><td><code>list_motion_presets</code></td><td>List all Motion Lab animation presets</td><td>Supericons Pro plan</td></tr>
@@ -1003,6 +1008,42 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">Matching icons with SVG code, icon ID, library name, and metadata. When no results are found, returns a message indicating no match.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
+      </section>
+      <section class="docs-section" id="icon-tools-recommend">
+        <h2 class="docs-section__title"><code>recommend_icons</code></h2>
+        <p class="docs-section__copy">Choose icons for several app slots in one call. Use this when you are planning a sidebar, toolbar, bottom navigation, dashboard, or product screen and want consistent icon choices before fetching SVGs.</p>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Default</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>task</code></td><td>string</td><td>Yes</td><td>-</td><td>Overall UI task. Example: "choose icons for an ecommerce admin sidebar"</td></tr>
+              <tr><td><code>slots</code></td><td>string array</td><td>Yes</td><td>-</td><td>One to twelve UI slots, such as <code>["Products", "Orders", "Customers"]</code></td></tr>
+              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Optional library filter, such as <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, or <code>mingcute</code></td></tr>
+              <tr><td><code>style</code></td><td>string</td><td>No</td><td><code>any</code></td><td>Use <code>outline</code>, <code>solid</code>, or <code>any</code></td></tr>
+              <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use when slot labels are not in English. Supported values match <code>search_icons</code></td></tr>
+              <tr><td><code>limit_per_slot</code></td><td>integer</td><td>No</td><td>3</td><td>How many choices to return per slot. Range: 1 to 5</td></tr>
+              <tr><td><code>response_mode</code></td><td>string</td><td>No</td><td><code>plan</code></td><td>Use <code>plan</code> for compact icon IDs and reasons, <code>assets</code> to include SVGs for top choices, or <code>full</code> for the largest response</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Recommended prompt</h3>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-recommend-icons-prompt">Copy</button>
+          <pre><code id="docs-recommend-icons-prompt">Use Supericons recommend_icons first.
+
+Choose Tabler icons for an ecommerce admin: Products, Orders, Customers, Cart, Discounts, Inventory, Shipping, Returns, Payments, and Store settings.
+
+Return a table with slot, icon ID, confidence, and alternatives. Use response_mode: "plan".</code></pre>
+        </div>
         <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
       </section>
       <section class="docs-section" id="icon-tools-get">
@@ -1667,7 +1708,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
         <h2 class="docs-section__title">Recommended server command</h2>
         <p class="docs-section__copy">Use the published MCP package. Set this as your <code>command</code> value in the MCP server config:</p>
         <div class="docs-code">
-          <pre><code>npx -y supericons-mcp</code></pre>
+          <pre><code>npx -y @supericons/mcp@latest</code></pre>
         </div>
         <p class="docs-section__copy">If you are developing against a local checkout, keep the same env block but swap the command to <code>node</code> and point the arg at your own absolute path to <code>mcp/index.js</code>.</p>
       </section>
@@ -1679,7 +1720,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"],
+      "args": ["-y", "@supericons/mcp@latest"],
       "env": {
         "SUPERICONS_API_KEY": "si_your_pro_key_here"
       }
@@ -1696,7 +1737,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
   "mcpServers": {
     "supericons": {
       "command": "npx",
-      "args": ["-y", "supericons-mcp"],
+      "args": ["-y", "@supericons/mcp@latest"],
       "env": {
         "SUPERICONS_API_KEY": "si_your_pro_key_here"
       }
@@ -2169,7 +2210,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
           </article>
           <article class="docs-card">
             <h3><code>npx</code> takes a long time on first run</h3>
-            <p>The first time you run <code>npx -y supericons-mcp</code>, npm downloads the package. Subsequent starts are faster. This one-time delay is normal.</p>
+            <p>The first time you run <code>npx -y @supericons/mcp@latest</code>, npm downloads the package. Subsequent starts are faster. This one-time delay is normal.</p>
           </article>
         </div>
         <div class="docs-table-wrap">

@@ -192,7 +192,7 @@ function localizedDocsBody(locale, title, summary) {
       <section class="docs-callout" id="localized-code-note">
         <h3>${body.note}</h3>
         <p>${body.code}</p>
-        <pre><code>npx -y supericons-mcp
+        <pre><code>npx -y @supericons/mcp@latest
 SUPERICONS_API_KEY</code></pre>
       </section>
     `;

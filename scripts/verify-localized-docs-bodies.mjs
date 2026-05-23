@@ -24,9 +24,19 @@ const FORBIDDEN_PLACEHOLDER_SNIPPETS = [
   'English uses the full source guide.',
 ];
 
+const LOCALIZED_FORBIDDEN_ENGLISH_SNIPPETS = [
+  'Official OpenCode docs for local and remote MCP server setup.',
+];
+
 const REQUIRED_LITERAL_SNIPPETS = [
-  'npx -y supericons-mcp',
+  'npx -y @supericons/mcp@latest',
   'SUPERICONS_API_KEY',
+];
+const STALE_MCP_SETUP_PATTERNS = [
+  /npx\s+-y\s+@supericons\/mcp(?!@latest)/,
+  /-y\s+@supericons\/mcp(?!@latest)/,
+  /["']@supericons\/mcp["']/,
+  /docs-universal-field-arg-package">[\s\n]*@supericons\/mcp(?!@latest)/,
 ];
 
 function bodyMetrics(bodyHtml = '') {
@@ -82,6 +92,12 @@ function assertLocalizedBodyParity({ locale, view, bodyHtml, requireLocalized = 
       englishBody,
       `${locale}/${view}: non-English docs body must not fall back to English source`,
     );
+    for (const snippet of LOCALIZED_FORBIDDEN_ENGLISH_SNIPPETS) {
+      assert.ok(
+        !bodyHtml.includes(snippet),
+        `${locale}/${view}: untranslated English docs copy must be localized: ${snippet}`,
+      );
+    }
   }
   assert.deepEqual(
     localized.tags,
@@ -115,6 +131,18 @@ function assertLocalizedBodyParity({ locale, view, bodyHtml, requireLocalized = 
       assert.ok(
         bodyHtml.includes(snippet),
         `${locale}/${view}: required literal snippet missing: ${snippet}`,
+      );
+    }
+  }
+  if (englishBody.includes('@supericons/mcp@latest')) {
+    assert.ok(
+      bodyHtml.includes('@supericons/mcp@latest'),
+      `${locale}/${view}: missing current MCP package literal @supericons/mcp@latest`,
+    );
+    for (const pattern of STALE_MCP_SETUP_PATTERNS) {
+      assert.ok(
+        !pattern.test(bodyHtml),
+        `${locale}/${view}: stale MCP setup literal must use @supericons/mcp@latest`,
       );
     }
   }

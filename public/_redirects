@@ -1,0 +1,6 @@
+# Manual Netlify uploads copy this file into dist.
+# Existing static files should be served before the app fallback.
+/mcp              /mcp/             301
+/docs             /docs/index.html  200
+/docs/            /docs/index.html  200
+/*                /index.html       200

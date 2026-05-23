@@ -10,7 +10,8 @@ const DEFAULT_OUT_DIR = 'output/docs-body-deepl';
 
 const PROTECTED_TERMS = [
   'SUPERICONS_API_KEY',
-  'supericons-mcp',
+  '@supericons/mcp@latest',
+  '@supericons/mcp',
   'mcpServers',
   'Supericons Pro',
   'Supericons',
@@ -48,12 +49,16 @@ const PROTECTED_TERMS = [
 ];
 
 const groupFilter = readOption('--group');
+const viewFilter = readOption('--view');
 const localeFilter = readOption('--locale');
 const outDir = readOption('--out-dir') || DEFAULT_OUT_DIR;
 const tokenPiecesOnly = process.argv.includes('--token-pieces-only');
 
 const selectedGroups = groupFilter
   ? new Set(groupFilter.split(',').map((group) => group.trim()).filter(Boolean))
+  : null;
+const selectedViewIds = viewFilter
+  ? viewFilter.split(',').map((view) => view.trim()).filter(Boolean)
   : null;
 const selectedLocales = localeFilter
   ? localeFilter.split(',').map((locale) => locale.trim()).filter(Boolean)
@@ -66,6 +71,13 @@ function readOption(name) {
 }
 
 function selectedViews() {
+  if (selectedViewIds) {
+    for (const view of selectedViewIds) {
+      if (!DOCS_PAGE_ORDER.includes(view)) throw new Error(`Unknown docs view: ${view}`);
+    }
+    return selectedViewIds;
+  }
+
   if (!selectedGroups) return DOCS_PAGE_ORDER;
 
   const views = [];

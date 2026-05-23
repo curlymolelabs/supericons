@@ -108,7 +108,7 @@ function bodyHtml(localeConfig, title, summary) {
       <section class="docs-callout" id="localized-code-note">
         <h3>${localeConfig.keep}</h3>
         <p>${localeConfig.codeNote}</p>
-        <pre><code>npx -y supericons-mcp
+        <pre><code>npx -y @supericons/mcp@latest
 SUPERICONS_API_KEY</code></pre>
       </section>
     `;

@@ -4,18 +4,13 @@
   command = "npm run build"
   publish = "dist"
 
-# Keep MCP setup pages as clean public URLs for search engines and sharing.
+# Keep the MCP landing page as a real static page for search engines, MCP
+# directories, and manual sharing. The general SPA fallback below still handles
+# app-only routes.
 [[redirects]]
   from = "/mcp"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/mcp/*"
-  to = "/index.html"
-  status = 200
-  force = true
+  to = "/mcp/"
+  status = 301
 
 # Keep docs hub as a real static document before the SPA fallback.
 [[redirects]]
