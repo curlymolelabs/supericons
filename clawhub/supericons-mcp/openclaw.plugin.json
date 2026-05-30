@@ -1,0 +1,37 @@
+{
+  "id": "supericons-mcp",
+  "name": "Supericons MCP",
+  "description": "Semantic SVG icon search and recommendations for OpenClaw.",
+  "version": "0.4.9",
+  "skills": [
+    "./skills/"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "activation": {
+    "onStartup": false,
+    "onCapabilities": [
+      "tool"
+    ]
+  },
+  "contracts": {
+    "tools": [
+      "supericons_search_icons",
+      "supericons_get_icon",
+      "supericons_list_libraries",
+      "supericons_recommend_icons",
+      "supericons_list_motion_presets",
+      "supericons_get_motion_recipe",
+      "supericons_export_motion_css",
+      "supericons_export_animated_svg",
+      "supericons_animate_icon",
+      "supericons_inspect_converter_options",
+      "supericons_inspect_converter_input",
+      "supericons_convert_png_to_svg",
+      "supericons_convert_svg_to_png"
+    ]
+  }
+}

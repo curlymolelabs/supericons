@@ -1,0 +1,50 @@
+{
+  "name": "@curlymolelabs/supericons-mcp",
+  "version": "0.4.9",
+  "description": "Supericons tools for OpenClaw: semantic SVG icon search and recommendations for coding agents.",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://supericons.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curlymolelabs/supericons.git",
+    "directory": "clawhub/supericons-mcp"
+  },
+  "keywords": [
+    "openclaw",
+    "clawhub",
+    "mcp",
+    "icons",
+    "svg",
+    "design",
+    "coding-agents"
+  ],
+  "files": [
+    "index.js",
+    "openclaw.plugin.json",
+    "skills/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "typebox": "^1.1.39"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.5.27",
+      "minGatewayVersion": "2026.5.27"
+    },
+    "build": {
+      "openclawVersion": "2026.5.27",
+      "pluginSdkVersion": "2026.5.27"
+    }
+  }
+}
