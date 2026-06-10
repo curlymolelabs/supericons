@@ -12,6 +12,8 @@ Use the scoped npm package:
 @supericons/mcp
 ```
 
+Latest verified package version: `0.4.9`.
+
 New installs should use the scoped package above.
 
 ## Quick Install

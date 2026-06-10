@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.9
+
+- Updated public wrapper metadata for `@supericons/mcp` version `0.4.9`.
+- Confirmed the public setup examples still use the scoped package `@supericons/mcp`.
+
 ## 0.4.7
 
 - Updated public setup examples to use `@supericons/mcp`.
