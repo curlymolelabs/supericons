@@ -844,8 +844,9 @@ server.tool(
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
     limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
+    response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
   },
-  async ({ task, library, style, locale, slots, limit_per_slot }) => {
+  async ({ task, library, style, locale, slots, limit_per_slot, response_mode }) => {
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -858,6 +859,7 @@ server.tool(
         locale,
         slots,
         limitPerSlot: limit_per_slot,
+        responseMode: response_mode,
         semanticMap: semanticRegistryMap,
         searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }) =>
           searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }),

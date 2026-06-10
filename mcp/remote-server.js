@@ -58,7 +58,14 @@ const multilingualLocaleValues = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 
 const multilingualLocaleDescription =
   'Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.';
 
-const readOnlySearchAnnotations = {
+const auditedSearchAnnotations = {
+  readOnlyHint: false,
+  destructiveHint: false,
+  idempotentHint: false,
+  openWorldHint: false,
+};
+
+const readOnlyLookupAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
   idempotentHint: true,
@@ -249,7 +256,7 @@ function createServer() {
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
       },
       outputSchema: searchIconsOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
     async ({ query, library, style, locale, limit }) => {
       const results = await searchHostedIcons({ query, library, style, locale, limit });
@@ -271,11 +278,12 @@ function createServer() {
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "outline" for most sidebar and toolbar icon sets unless the user asks otherwise.'),
         locale: z.enum(multilingualLocaleValues).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
         limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('Number of choices to return for each slot. Use 1 for a final pick or 2-3 when the user wants alternatives.'),
+        response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
       },
       outputSchema: recommendIconsOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
-    async ({ task, slots, library, style, locale, limit_per_slot }) => {
+    async ({ task, slots, library, style, locale, limit_per_slot, response_mode }) => {
       const payload = await recommendIconsForTask({
         task,
         slots,
@@ -283,6 +291,7 @@ function createServer() {
         style,
         locale,
         limitPerSlot: limit_per_slot,
+        responseMode: response_mode,
         semanticMap,
         searchIconsForQuery: searchHostedIcons,
         buildIconResult: async (icon) => buildPublicIconResult(icon),
@@ -303,7 +312,7 @@ function createServer() {
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the caller needs a specific variant.'),
       },
       outputSchema: getIconOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
     async ({ id, library, style }) => {
       const candidates = await searchHostedIcons({
@@ -333,7 +342,7 @@ function createServer() {
       title: 'List Libraries',
       description: 'List the free icon libraries available through the hosted Supericons MCP server. Use this before filtering by library or when a user asks which icon libraries are supported.',
       outputSchema: listLibrariesOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: readOnlyLookupAnnotations,
     },
     async () => asStructured({
       libraries: LIBRARIES.map(([id, name, description]) => ({
