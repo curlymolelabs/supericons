@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.10 - 2026-06-27
+
+### Added
+
+- added Supericons (`si`) library discovery for hosted and stdio MCP clients
+- added hosted search support for Supericons AI and developer tool logo queries
+
+### Changed
+
+- updated packaged product facts to reflect 21,367 free icons across 11 libraries
+- sends the public Supabase key header when calling the public MCP search gateway
+
 ## 0.4.5 - 2026-05-14
 
 ### Fixed

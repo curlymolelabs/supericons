@@ -48,17 +48,31 @@ const LIBRARIES = [
   ['material', 'Material Symbols', 'Google Material Symbols'],
   ['mingcute', 'MingCute', 'Modern interface icons'],
   ['phosphor', 'Phosphor', 'Flexible icon family'],
+  ['si', 'Supericons', 'AI and developer tool logos curated for agentic app builders'],
   ['simpleicons', 'Simple Icons', 'Brand and product icons'],
   ['tabler', 'Tabler', 'Large open-source SVG icon library'],
 ];
+const libraryCounts = new Map(
+  (Array.isArray(iconIndex?.libraries) ? iconIndex.libraries : []).map((entry) => [
+    entry.id,
+    Number(entry.count || 0),
+  ])
+);
 
 const libraryKeysDescription =
-  'Supported values include lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, and mingcute.';
+  'Supported values include si, lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, and mingcute.';
 const multilingualLocaleValues = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th'];
 const multilingualLocaleDescription =
   'Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.';
 
-const readOnlySearchAnnotations = {
+const auditedSearchAnnotations = {
+  readOnlyHint: false,
+  destructiveHint: false,
+  idempotentHint: false,
+  openWorldHint: false,
+};
+
+const readOnlyLookupAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
   idempotentHint: true,
@@ -79,6 +93,7 @@ const libraryResultSchema = z.object({
   id: z.string().describe('Library key used in tool calls.'),
   name: z.string().describe('Human-readable library name.'),
   description: z.string().describe('Brief public description of the icon library.'),
+  count: z.number().describe('Number of icons in the library.'),
 });
 
 const searchIconsOutputSchema = {
@@ -240,7 +255,7 @@ function createServer() {
     'search_icons',
     {
       title: 'Search Icons',
-      description: `Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. Use this when the user describes an icon concept such as "database", "user profile", "chill", "security", or "AI model". Returns matching icons with SVG code and public semantic guidance.`,
+      description: `Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. Use this when the user describes an icon concept such as "database", "user profile", "chill", "security", "AI model", or "OpenAI Codex logo". Returns matching icons with SVG code and public semantic guidance.`,
       inputSchema: {
         query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
         library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
@@ -249,7 +264,7 @@ function createServer() {
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
       },
       outputSchema: searchIconsOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
     async ({ query, library, style, locale, limit }) => {
       const results = await searchHostedIcons({ query, library, style, locale, limit });
@@ -271,11 +286,12 @@ function createServer() {
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "outline" for most sidebar and toolbar icon sets unless the user asks otherwise.'),
         locale: z.enum(multilingualLocaleValues).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
         limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('Number of choices to return for each slot. Use 1 for a final pick or 2-3 when the user wants alternatives.'),
+        response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
       },
       outputSchema: recommendIconsOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
-    async ({ task, slots, library, style, locale, limit_per_slot }) => {
+    async ({ task, slots, library, style, locale, limit_per_slot, response_mode }) => {
       const payload = await recommendIconsForTask({
         task,
         slots,
@@ -283,6 +299,7 @@ function createServer() {
         style,
         locale,
         limitPerSlot: limit_per_slot,
+        responseMode: response_mode,
         semanticMap,
         searchIconsForQuery: searchHostedIcons,
         buildIconResult: async (icon) => buildPublicIconResult(icon),
@@ -303,7 +320,7 @@ function createServer() {
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the caller needs a specific variant.'),
       },
       outputSchema: getIconOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: auditedSearchAnnotations,
     },
     async ({ id, library, style }) => {
       const candidates = await searchHostedIcons({
@@ -333,13 +350,14 @@ function createServer() {
       title: 'List Libraries',
       description: 'List the free icon libraries available through the hosted Supericons MCP server. Use this before filtering by library or when a user asks which icon libraries are supported.',
       outputSchema: listLibrariesOutputSchema,
-      annotations: readOnlySearchAnnotations,
+      annotations: readOnlyLookupAnnotations,
     },
     async () => asStructured({
       libraries: LIBRARIES.map(([id, name, description]) => ({
         id,
         name,
         description,
+        count: libraryCounts.get(id) || 0,
       })),
       publicRecordCount: registrySummary.publicRecordCount,
     })

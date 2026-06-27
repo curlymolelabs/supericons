@@ -1,12 +1,15 @@
 {
-  "name": "supericons-mcp",
-  "version": "0.4.6",
+  "name": "@supericons/mcp",
+  "version": "0.4.10",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/curlymolelabs/supericons.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "bin": {
     "supericons-mcp": "index.js"
@@ -34,6 +37,7 @@
     "runtime/cjk-search-core.js",
     "runtime/generated-search-intent-rules.js",
     "runtime/icon-semantic-aliases.js",
+    "runtime/supericons-ai-taxonomy.js",
     "runtime/icon-taxonomy-seed.js",
     "runtime/public-metadata-sanitizer.js",
     "runtime/search-intent-core.js",
@@ -46,6 +50,8 @@
   "scripts": {
     "start": "node index.js",
     "start:remote": "node remote-server.js",
+    "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
+    "prepublishOnly": "npm run verify:public-safety && npm run verify:package",
     "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {

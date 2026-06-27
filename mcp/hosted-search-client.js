@@ -51,6 +51,18 @@ function hasSearchResults(payload) {
   return Array.isArray(payload?.results) && payload.results.length > 0;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getRetryDelayMs(response, attempt) {
+  const retryAfter = Number(response.headers.get('retry-after'));
+  if (Number.isFinite(retryAfter) && retryAfter > 0) {
+    return Math.min(retryAfter * 1000, 5000);
+  }
+  return Math.min(500 * 2 ** attempt, 2500);
+}
+
 function buildLocalizedRetryQueries(query, locale) {
   if (!locale || multilingualExpansionTerms.length === 0) return [];
 
@@ -73,31 +85,45 @@ function buildLocalizedRetryQueries(query, locale) {
 }
 
 async function postHostedSearch(url, headers, body) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(body),
-  });
+  let lastStatus = 0;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) {
-    throw new Error(`hosted MCP search failed (${response.status})`);
+    if (response.ok) {
+      return response.json();
+    }
+
+    lastStatus = response.status;
+    if (response.status !== 429 && response.status < 500) break;
+    await sleep(getRetryDelayMs(response, attempt));
   }
 
-  return response.json();
+  throw new Error(`hosted MCP search failed (${lastStatus})`);
 }
 
 async function postPublicSearch(url, headers, body) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(body),
-  });
+  let lastStatus = 0;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) {
-    throw new Error(`public MCP search failed (${response.status})`);
+    if (response.ok) {
+      return response.json();
+    }
+
+    lastStatus = response.status;
+    if (response.status !== 429 && response.status < 500) break;
+    await sleep(getRetryDelayMs(response, attempt));
   }
 
-  return response.json();
+  throw new Error(`public MCP search failed (${lastStatus})`);
 }
 
 async function retryLocalizedHostedSearch({ postSearch, url, headers, body, locale }) {
@@ -115,6 +141,16 @@ async function retryLocalizedHostedSearch({ postSearch, url, headers, body, loca
   }
 
   return null;
+}
+
+function getPublicGatewayAnonKey() {
+  return (
+    process.env.SUPERICONS_MCP_SEARCH_ANON_KEY
+    || process.env.SUPERICONS_SEARCH_ENGINE_ANON_KEY
+    || process.env.SUPABASE_ANON_KEY
+    || process.env.SUPERICONS_SUPABASE_ANON
+    || SUPABASE_ANON
+  );
 }
 
 export async function searchIconsHostedMcp({
@@ -168,12 +204,17 @@ export async function searchIconsHostedMcp({
     }) || payload;
   }
 
+  const publicAnonKey = getPublicGatewayAnonKey();
   const headers = {
     'Content-Type': 'application/json',
+    apikey: publicAnonKey,
   };
 
   if (apiKey) {
     headers['x-supericons-api-key'] = apiKey;
+  }
+  if (looksLikeJwt(publicAnonKey)) {
+    headers.Authorization = `Bearer ${publicAnonKey}`;
   }
 
   const url = getPublicGatewayUrl();

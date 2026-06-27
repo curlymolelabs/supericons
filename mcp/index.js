@@ -710,6 +710,7 @@ const libraryMeta = {
   ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true, hasFilled: true, count: 421, outlineCount: 421, solidCount: 515 },
   simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false, hasFilled: false, count: 3412, outlineCount: 3412, solidCount: 0 },
   mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false, hasFilled: true, count: 1662, outlineCount: 1662, solidCount: 1662 },
+  si: { name: 'Supericons', description: 'First-party AI and developer tool logos curated for agentic app builders', hasStroke: false, hasFilled: false, count: 50, outlineCount: 50, solidCount: 0 },
 };
 
 // Add premium pack libraries
@@ -759,10 +760,10 @@ const server = new McpServer({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code and SI semantic guidance when available. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
+  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code and SI semantic guidance when available, including Supericons AI and developer tool logos. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
-    library: z.string().optional().describe('Filter by free library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, or mingcute'),
+    library: z.string().optional().describe('Filter by free library: si, lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, or mingcute'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
@@ -839,13 +840,14 @@ server.tool(
   'Recommend the most suitable icons for one or more UI slots. Returns shortlist choices with preview-ready SVGs, short reasons, and SI semantic guidance when available.',
   {
     task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
-    library: z.string().optional().describe('Optional library filter such as mingcute, lucide, tabler, material, or simpleicons.'),
+    library: z.string().optional().describe('Optional library filter such as si, mingcute, lucide, tabler, material, or simpleicons.'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to prefer filled variants where they exist.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
     limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
+    response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
   },
-  async ({ task, library, style, locale, slots, limit_per_slot }) => {
+  async ({ task, library, style, locale, slots, limit_per_slot, response_mode }) => {
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -858,6 +860,7 @@ server.tool(
         locale,
         slots,
         limitPerSlot: limit_per_slot,
+        responseMode: response_mode,
         semanticMap: semanticRegistryMap,
         searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }) =>
           searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }),
@@ -880,7 +883,7 @@ server.tool(
   'Retrieve a specific free icon by its ID and library. Returns the full SVG code, metadata, and SI semantic guidance when available. Premium pack icon retrieval is not exposed through MCP yet.',
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
-    library: z.string().describe('Free library name (e.g. "lucide", "tabler", "phosphor", "iconoir", or "mingcute")'),
+    library: z.string().describe('Free library name (e.g. "si", "lucide", "tabler", "phosphor", "iconoir", or "mingcute")'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to request a filled variant when the library supports it.'),
   },
   async ({ id, library, style }) => {
