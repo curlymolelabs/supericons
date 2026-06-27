@@ -12,7 +12,7 @@ Use the scoped npm package:
 @supericons/mcp
 ```
 
-Latest verified package version: `0.4.9`.
+Latest verified package version: `0.4.10`.
 
 New installs should use the scoped package above.
 
@@ -129,6 +129,10 @@ https://mcp.supericons.dev/.well-known/mcp/server-card.json
 `list_libraries`
 : List the free icon libraries available through Supericons MCP.
 
+## Current Library Coverage
+
+Supericons MCP includes 20,000+ free icons across supported open icon libraries, plus the Supericons logo library for AI tools and app-building products.
+
 ## Example Prompts
 
 ```text
@@ -148,4 +152,4 @@ Use Supericons MCP to recommend icons for an AI dashboard sidebar. The slots are
 
 ## Public Repo Scope
 
-This repository is only a lightweight setup wrapper for agent directories and IDE users. It does not include the private Supericons website source, the full semantic registry, internal build workflows, private data, service keys, or premium icon assets.
+This repository is a lightweight public setup wrapper for agent directories and IDE users. It contains install examples, support links, and public wrapper assets for Supericons MCP.

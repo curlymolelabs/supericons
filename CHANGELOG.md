@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.10
+
+- Updated public wrapper metadata for `@supericons/mcp` version `0.4.10`.
+- Confirmed the hosted MCP endpoint and npm package use the current public release.
+- Added a public note that Supericons MCP includes the Supericons logo library for AI tools and app-building products.
+
 ## 0.4.9
 
 - Updated public wrapper metadata for `@supericons/mcp` version `0.4.9`.

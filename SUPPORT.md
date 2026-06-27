@@ -15,4 +15,4 @@ When reporting an issue, include:
 - The query or prompt that failed
 - The error message
 
-Do not include API keys, private registry data, or screenshots that reveal secrets.
+Do not include credentials, customer data, or screenshots that reveal secrets.
