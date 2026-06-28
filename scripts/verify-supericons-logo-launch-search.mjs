@@ -142,8 +142,38 @@ function assertSemanticIncluded(query, expectedIds, semanticMap) {
   console.log(`[PASS] semantic intent: ${query} -> ${ids.slice(0, 5).join(', ')}`);
 }
 
+function assertSupericonsLibraryFirst(query, expectedId, icons, synonyms) {
+  const results = searchIcons(query, icons, synonyms, { library: 'si', limit: 8 });
+  const ids = results.map(iconId);
+  assert.equal(ids[0], expectedId, `${query} should rank ${expectedId} first in the Supericons library. Got: ${ids.join(', ')}`);
+  console.log(`[PASS] si local first: ${query} -> ${ids.slice(0, 5).join(', ')}`);
+}
+
+function assertSupericonsSemanticFirst(query, expectedId, semanticMap) {
+  const ids = searchSemanticRegistryRecords(query, semanticMap, { limit: 8, minimumScore: 1 })
+    .map((match) => match.record.icon_id);
+  assert.equal(ids[0], expectedId, `${query} should rank ${expectedId} first in the Supericons MCP registry. Got: ${ids.join(', ')}`);
+  console.log(`[PASS] si semantic first: ${query} -> ${ids.slice(0, 5).join(', ')}`);
+}
+
+function uniqueStrings(values) {
+  const seen = new Set();
+  const normalized = [];
+  for (const value of values || []) {
+    if (typeof value !== 'string') continue;
+    const trimmed = value.trim();
+    if (!trimmed) continue;
+    const key = trimmed.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    normalized.push(trimmed);
+  }
+  return normalized;
+}
+
 const iconIndex = await readJson('public/icon-index.json');
 const synonyms = await readJson('public/synonyms.json');
+const sourceSupericonsRecords = await readJson('data/si-registry/source/libraries/supericons.json');
 const publicRecords = await readJson('public/registry/records.json');
 const mcpRecords = await readJson('mcp/public/registry-records.json');
 const productFacts = await readJson('data/product-facts.json');
@@ -158,6 +188,7 @@ const mcpSupericonsRecords = mcpRecords.filter((record) => record.icon_id?.start
 const freeLibraryCount = new Set(icons.map((icon) => icon.lib)).size;
 
 assert.equal(supericons.length, 50, 'public icon index should include 50 Supericons logos');
+assert.equal(sourceSupericonsRecords.length, 50, 'source registry should include 50 Supericons logo records');
 assert.equal(publicSupericonsRecords.length, 50, 'public registry should include 50 Supericons logo records');
 assert.equal(mcpSupericonsRecords.length, 50, 'MCP registry should include 50 Supericons logo records');
 assert.deepEqual(mcpRecords, publicRecords, 'MCP registry records should mirror public registry records');
@@ -176,6 +207,36 @@ console.log('[PASS] profile coverage: 50 public/MCP records and 50 public index 
 console.log('[PASS] library discovery: product facts and MCP library metadata include Supericons');
 
 const semanticMap = createSemanticRegistryMap(mcpRecords);
+const supericonsSemanticMap = createSemanticRegistryMap(mcpSupericonsRecords);
+
+for (const record of sourceSupericonsRecords) {
+  const expectedId = record.icon_id;
+  const identityQueries = uniqueStrings([
+    `${record.label} logo`,
+    `${record.source_name} logo`,
+    `${record.icon_id.replace(/^si:/, '')} logo`,
+  ]);
+
+  for (const query of identityQueries) {
+    assertSupericonsLibraryFirst(query, expectedId, icons, synonyms);
+    assertSupericonsSemanticFirst(query, expectedId, supericonsSemanticMap);
+  }
+}
+
+for (const query of [
+  'xai artificial intelligence logo',
+  'XAI logo',
+  'x.ai logo',
+  'grok logo',
+  'grok imagine logo',
+  'grok image generation logo',
+  'grok video generation logo',
+  'grok images logo',
+  'grok video logo',
+]) {
+  assertSupericonsLibraryFirst(query, 'si:x-ai', icons, synonyms);
+  assertSupericonsSemanticFirst(query, 'si:x-ai', supericonsSemanticMap);
+}
 
 for (const [query, expectedId] of [
   ['bolt logo', 'si:bolt'],

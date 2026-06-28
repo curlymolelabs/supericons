@@ -7,7 +7,7 @@ import {
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { Type } from "typebox";
 
-const SUPERICONS_MCP_PACKAGE = "@supericons/mcp@0.4.9";
+const SUPERICONS_MCP_PACKAGE = "@supericons/mcp@0.4.11";
 const LOCALES = [
   "zh-Hans",
   "zh-Hant",
@@ -22,6 +22,7 @@ const LOCALES = [
   "th"
 ];
 const LIBRARIES = [
+  "si",
   "lucide",
   "tabler",
   "phosphor",
@@ -71,7 +72,7 @@ async function getClient() {
       const client = new Client(
         {
           name: "openclaw-supericons",
-          version: "0.4.9"
+          version: "0.4.11"
         },
         {
           capabilities: {}

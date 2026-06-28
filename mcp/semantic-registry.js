@@ -3,14 +3,39 @@ import { join } from 'path';
 import { getBaseSemanticIdsForVariant } from './variant-support.js';
 
 const PUBLIC_SEMANTIC_FIELDS = Object.freeze([
+  'id',
+  'source_library',
   'label',
+  'name',
+  'slug',
   'source_name',
+  'purpose',
+  'category',
+  'asset_type',
+  'pack',
+  'source_url',
+  'source_trust',
+  'meaning',
   'depicts',
   'semantic_tags',
+  'ai_category',
+  'ai_category_label',
+  'ai_filter_tags',
+  'job_category',
+  'secondary_categories',
   'synonyms',
+  'aliases',
+  'search_terms',
+  'filter_tags',
   'use_when',
   'avoid_when',
+  'rights',
+  'variants',
+  'quality_status',
+  'access',
 ]);
+const LOGO_INTENT_TOKENS = new Set(['logo', 'logos', 'icon', 'icons', 'brand', 'brands', 'mark', 'marks', 'symbol', 'symbols']);
+const GENERIC_AI_TOKENS = new Set(['ai', 'artificial', 'intelligence']);
 
 function normalizeText(value) {
   return String(value || '')
@@ -25,6 +50,91 @@ function normalizeText(value) {
 function tokenize(value) {
   const normalized = normalizeText(value);
   return normalized ? normalized.split(' ') : [];
+}
+
+function uniqueStrings(values = []) {
+  const seen = new Set();
+  const output = [];
+
+  for (const value of values) {
+    if (typeof value !== 'string') continue;
+    const normalized = normalizeText(value);
+    if (!normalized || seen.has(normalized)) continue;
+    seen.add(normalized);
+    output.push(normalized);
+  }
+
+  return output;
+}
+
+function getMeaningfulQueryTokens(queryTokens) {
+  const withoutLogoIntent = queryTokens.filter((token) => !LOGO_INTENT_TOKENS.has(token));
+  const candidateTokens = withoutLogoIntent.length > 0 ? withoutLogoIntent : queryTokens;
+  const withoutGenericAi = candidateTokens.length > 1
+    ? candidateTokens.filter((token) => !GENERIC_AI_TOKENS.has(token))
+    : candidateTokens;
+
+  return withoutGenericAi.length > 0 ? withoutGenericAi : candidateTokens;
+}
+
+function buildQueryPhraseVariants(queryTokens, meaningfulTokens) {
+  const variants = [
+    queryTokens.join(' '),
+    meaningfulTokens.join(' '),
+  ];
+
+  for (let size = Math.min(4, meaningfulTokens.length); size >= 2; size -= 1) {
+    for (let index = 0; index <= meaningfulTokens.length - size; index += 1) {
+      variants.push(meaningfulTokens.slice(index, index + size).join(' '));
+    }
+  }
+
+  return uniqueStrings(variants).filter((variant) => variant.length > 2);
+}
+
+function scoreSemanticValue(value, weight, phraseVariants, meaningfulTokens) {
+  const normalized = normalizeText(value);
+  if (!normalized) return 0;
+
+  let score = 0;
+
+  for (const phrase of phraseVariants) {
+    if (normalized === phrase) {
+      score = Math.max(score, weight * 4);
+      continue;
+    }
+
+    if (phrase.length > 2 && normalized.includes(phrase)) {
+      score = Math.max(score, weight * 2.6);
+      continue;
+    }
+
+    if (normalized.length > 2 && phrase.includes(normalized) && tokenize(normalized).length > 1) {
+      score = Math.max(score, weight * 1.6);
+    }
+  }
+
+  if (meaningfulTokens.length > 0) {
+    const valueTokens = new Set(tokenize(normalized));
+    const exactHits = meaningfulTokens.filter((token) => valueTokens.has(token)).length;
+    const includesHits = meaningfulTokens.filter((token) => normalized.includes(token)).length;
+
+    if (exactHits === meaningfulTokens.length) {
+      score = Math.max(score, weight * 1.8);
+    } else if (includesHits > 0) {
+      score += includesHits * weight * 0.35;
+    }
+  }
+
+  return score;
+}
+
+function scoreSemanticValues(values, weight, phraseVariants, meaningfulTokens) {
+  if (!Array.isArray(values)) return 0;
+  return values.reduce(
+    (total, value) => total + scoreSemanticValue(value, weight, phraseVariants, meaningfulTokens),
+    0,
+  );
 }
 
 function buildPossibleRegistryIds(library, id) {
@@ -94,39 +204,50 @@ export function scoreSemanticAlignment(query, semanticRecord) {
   const queryTokens = tokenize(query);
   if (queryTokens.length === 0) return 0;
 
-  const weightedSources = [
-    { value: semanticRecord.label, weight: 6 },
-    { value: semanticRecord.source_name, weight: 5 },
-    { value: semanticRecord.depicts, weight: 4 },
-    { value: semanticRecord.use_when, weight: 3 },
-    { value: semanticRecord.avoid_when, weight: 2 },
-  ];
-
+  const meaningfulTokens = getMeaningfulQueryTokens(queryTokens);
+  const phraseVariants = buildQueryPhraseVariants(queryTokens, meaningfulTokens);
+  const hasLogoIntent = queryTokens.some((token) => LOGO_INTENT_TOKENS.has(token));
+  const isSupericonsBrandLogo = semanticRecord.source_library === 'si'
+    && (
+      semanticRecord.asset_type === 'brand-logo'
+      || semanticRecord.ai_filter_tags?.includes('brand-logo')
+      || semanticRecord.filter_tags?.includes('brand-logo')
+    );
   let score = 0;
 
-  for (const tag of semanticRecord.semantic_tags || []) {
-    const normalized = normalizeText(tag);
-    for (const token of queryTokens) {
-      if (normalized === token) score += 8;
-      else if (normalized.includes(token)) score += 5;
-    }
+  score += scoreSemanticValue(semanticRecord.label, 24, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.name, 24, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.source_name, 22, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.aliases, 22, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.synonyms, 21, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.semantic_tags, 19, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.search_terms, 18, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.meaning, 16, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.purpose, 15, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.ai_filter_tags, 14, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.filter_tags, 13, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValues(semanticRecord.secondary_categories, 12, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.ai_category_label, 10, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.job_category, 10, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.category, 8, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.depicts, 8, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.use_when, 8, phraseVariants, meaningfulTokens);
+  score += scoreSemanticValue(semanticRecord.avoid_when, 1, phraseVariants, meaningfulTokens);
+
+  if (hasLogoIntent && isSupericonsBrandLogo) {
+    score += 10;
   }
 
-  for (const synonym of semanticRecord.synonyms || []) {
-    const normalized = normalizeText(synonym);
-    for (const token of queryTokens) {
-      if (normalized === token) score += 7;
-      else if (normalized.includes(token)) score += 4;
-    }
-  }
-
-  for (const source of weightedSources) {
-    const normalized = normalizeText(source.value);
-    if (!normalized) continue;
-    for (const token of queryTokens) {
-      if (normalized === token) score += source.weight + 2;
-      else if (normalized.includes(token)) score += source.weight;
-    }
+  const identityValues = uniqueStrings([
+    semanticRecord.label,
+    semanticRecord.name,
+    semanticRecord.source_name,
+    ...(semanticRecord.aliases || []),
+    ...(semanticRecord.synonyms || []),
+  ]);
+  const meaningfulQuery = meaningfulTokens.join(' ');
+  if (hasLogoIntent && identityValues.some((value) => value === meaningfulQuery)) {
+    score += 80;
   }
 
   return score;

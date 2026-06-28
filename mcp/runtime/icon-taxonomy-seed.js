@@ -1,6 +1,12 @@
+import {
+  SUPERICONS_AI_CATEGORY_DEFINITIONS,
+  buildSupericonsAiTaxonomyEntries,
+} from './supericons-ai-taxonomy.js';
+
 export const JOB_LIBRARY_PREFIX = 'job:';
 
 export const JOB_CATEGORY_DEFINITIONS = [
+  ...SUPERICONS_AI_CATEGORY_DEFINITIONS,
   {
     id: 'ai-agent-workflows',
     label: 'AI & Automation',
@@ -110,6 +116,8 @@ export const JOB_CATEGORY_DEFINITIONS = [
     sidebarGlyph: 'wb_sunny',
   },
 ];
+
+const JOB_CATEGORY_IDS = new Set(JOB_CATEGORY_DEFINITIONS.map((category) => category.id));
 
 const NAVIGATION_ICON_IDS = [
   'material:menu',
@@ -285,6 +293,7 @@ function buildEntries(jobCategory, iconIds, secondaryCategories) {
 }
 
 export const JOB_ICON_TAXONOMY_SEED = [
+  ...buildSupericonsAiTaxonomyEntries(),
   ...buildEntries('ai-agent-workflows', AI_AGENT_ICON_IDS, ['ai', 'agents', 'automation']),
   ...buildEntries('navigation-wayfinding', NAVIGATION_ICON_IDS, ['navigation', 'wayfinding', 'layout']),
   ...buildEntries('status-feedback', STATUS_ICON_IDS, ['status', 'feedback', 'signals']),
@@ -307,6 +316,11 @@ function iconText(icon = {}) {
     icon.name,
     icon.style,
     icon.type,
+    icon.aiCategory,
+    icon.jobCategory,
+    ...(Array.isArray(icon.aiFilterTags) ? icon.aiFilterTags : []),
+    ...(Array.isArray(icon.semanticTags) ? icon.semanticTags : []),
+    ...(Array.isArray(icon.secondaryCategories) ? icon.secondaryCategories : []),
   ].filter(Boolean).join(' '));
 }
 
@@ -404,6 +418,20 @@ const PURPOSE_INFERENCE_RULES = [
 ];
 
 function inferTaxonomyEntry(icon, index = 0) {
+  const explicitJobCategory = String(icon?.jobCategory || icon?.aiCategory || '').trim();
+  if (explicitJobCategory && JOB_CATEGORY_IDS.has(explicitJobCategory)) {
+    return {
+      iconId: `${icon.lib}:${icon.id}`,
+      sourceLibrary: icon.lib,
+      jobCategory: explicitJobCategory,
+      secondaryCategories: [
+        ...(Array.isArray(icon.secondaryCategories) ? icon.secondaryCategories : []),
+        ...(Array.isArray(icon.aiFilterTags) ? icon.aiFilterTags : []),
+      ],
+      rank: 4000 + index,
+    };
+  }
+
   const text = iconText(icon);
   if (!text) return null;
 

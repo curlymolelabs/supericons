@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.11 - 2026-06-28
+
+### Fixed
+
+- improved `recommend_icons` for Supericons (`si`) brand and logo slots so exact AI tool logos such as OpenAI Codex, Lovable, Kickbacks.ai, and xAI rank correctly
+
 ## 0.4.10 - 2026-06-27
 
 ### Added

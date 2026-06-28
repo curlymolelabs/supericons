@@ -2,7 +2,7 @@
 
 Supericons helps coding agents find SVG icons by meaning, use case, UI slot, or icon library.
 
-This plugin registers OpenClaw tools and forwards each call to the public Supericons MCP package, `@supericons/mcp@0.4.9`.
+This plugin registers OpenClaw tools and forwards each call to the public Supericons MCP package, `@supericons/mcp@0.4.11`.
 
 ## What It Adds
 

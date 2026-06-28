@@ -1,0 +1,2257 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-06-28T09:11:15.950Z",
+  "summary": {
+    "case_count": 19,
+    "passed_cases": 19,
+    "assertion_count": 89,
+    "passed_assertions": 89,
+    "max_plan_chars": 8817
+  },
+  "results": [
+    {
+      "id": "lucide-security-negative-positive",
+      "library": "lucide",
+      "plan_chars": 5379,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Security",
+          "type": "top_in",
+          "expected_ids": [
+            "shield",
+            "shield-check",
+            "lock",
+            "lock-keyhole"
+          ],
+          "passed": true,
+          "top_id": "shield",
+          "actual_ids": [
+            "shield",
+            "shield-check",
+            "clock-arrow-down"
+          ]
+        },
+        {
+          "slot": "Security",
+          "type": "none_match",
+          "pattern": "/open|unlock|ban|minus|off|slash/i",
+          "passed": true,
+          "top_id": "shield",
+          "actual_ids": [
+            "shield",
+            "shield-check",
+            "clock-arrow-down"
+          ]
+        },
+        {
+          "slot": "Unlock account",
+          "type": "any_in",
+          "expected_ids": [
+            "lock-open",
+            "lock-keyhole-open",
+            "unlock"
+          ],
+          "passed": true,
+          "top_id": "lock-open",
+          "actual_ids": [
+            "lock-open",
+            "lock-keyhole-open",
+            "unlock-keyhole"
+          ]
+        },
+        {
+          "slot": "Blocked user",
+          "type": "any_match",
+          "pattern": "/ban|block|user-x|user-minus/i",
+          "passed": true,
+          "top_id": "user-x-2",
+          "actual_ids": [
+            "user-x-2",
+            "user-x",
+            "user-round-x"
+          ]
+        },
+        {
+          "slot": "Disabled notifications",
+          "type": "any_match",
+          "pattern": "/off|bell-off|slash/i",
+          "passed": true,
+          "top_id": "bell-off",
+          "actual_ids": [
+            "bell-off",
+            "dumbbell",
+            "bell-dot"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Security",
+          "recommended": "lucide:shield",
+          "confidence": {
+            "level": "high",
+            "score": 451.5
+          },
+          "alternatives": [
+            "lucide:shield-check",
+            "lucide:clock-arrow-down"
+          ]
+        },
+        {
+          "slot": "Unlock account",
+          "recommended": "lucide:lock-open",
+          "confidence": {
+            "level": "high",
+            "score": 1110.4499999999998
+          },
+          "alternatives": [
+            "lucide:lock-keyhole-open",
+            "lucide:unlock-keyhole"
+          ]
+        },
+        {
+          "slot": "Blocked user",
+          "recommended": "lucide:user-x-2",
+          "confidence": {
+            "level": "medium",
+            "score": 1415.25
+          },
+          "alternatives": [
+            "lucide:user-x",
+            "lucide:user-round-x"
+          ]
+        },
+        {
+          "slot": "Disabled notifications",
+          "recommended": "lucide:bell-off",
+          "confidence": {
+            "level": "high",
+            "score": 997.7
+          },
+          "alternatives": [
+            "lucide:dumbbell",
+            "lucide:bell-dot"
+          ]
+        },
+        {
+          "slot": "Enabled notifications",
+          "recommended": "lucide:bell",
+          "confidence": {
+            "level": "high",
+            "score": 331.04999999999995
+          },
+          "alternatives": [
+            "lucide:bell-dot",
+            "lucide:bell-electric"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lucide-read-more-navigation-negative-positive",
+      "library": "lucide",
+      "plan_chars": 4381,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Read more",
+          "type": "top_in",
+          "expected_ids": [
+            "arrow-right",
+            "move-right"
+          ],
+          "passed": true,
+          "top_id": "arrow-right",
+          "actual_ids": [
+            "arrow-right",
+            "move-right",
+            "chevron-right"
+          ]
+        },
+        {
+          "slot": "Read more",
+          "type": "none_match",
+          "pattern": "/circle|square|up|down|left/i",
+          "passed": true,
+          "top_id": "arrow-right",
+          "actual_ids": [
+            "arrow-right",
+            "move-right",
+            "chevron-right"
+          ]
+        },
+        {
+          "slot": "Next page",
+          "type": "none_match",
+          "pattern": "/left|up|down/i",
+          "passed": true,
+          "top_id": "move-right",
+          "actual_ids": [
+            "move-right",
+            "arrow-right",
+            "chevron-right"
+          ]
+        },
+        {
+          "slot": "Arrow right circle",
+          "type": "any_match",
+          "pattern": "/circle.*arrow.*right|arrow.*right.*circle/i",
+          "passed": true,
+          "top_id": "arrow-right-circle",
+          "actual_ids": [
+            "arrow-right-circle",
+            "arrow-right",
+            "circle-arrow-right"
+          ]
+        },
+        {
+          "slot": "Arrow right square",
+          "type": "any_match",
+          "pattern": "/square.*arrow.*right|arrow.*right.*square/i",
+          "passed": true,
+          "top_id": "square-arrow-right",
+          "actual_ids": [
+            "square-arrow-right",
+            "arrow-right",
+            "arrow-right-square"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Read more",
+          "recommended": "lucide:arrow-right",
+          "confidence": {
+            "level": "high",
+            "score": 1843.8000000000002
+          },
+          "alternatives": [
+            "lucide:move-right",
+            "lucide:chevron-right"
+          ]
+        },
+        {
+          "slot": "Next page",
+          "recommended": "lucide:move-right",
+          "confidence": {
+            "level": "medium",
+            "score": 613.95
+          },
+          "alternatives": [
+            "lucide:arrow-right",
+            "lucide:chevron-right"
+          ]
+        },
+        {
+          "slot": "Arrow right circle",
+          "recommended": "lucide:arrow-right-circle",
+          "confidence": {
+            "level": "high",
+            "score": 1415.3
+          },
+          "alternatives": [
+            "lucide:arrow-right",
+            "lucide:circle-arrow-right"
+          ]
+        },
+        {
+          "slot": "Arrow right square",
+          "recommended": "lucide:square-arrow-right",
+          "confidence": {
+            "level": "high",
+            "score": 1389.3
+          },
+          "alternatives": [
+            "lucide:arrow-right",
+            "lucide:arrow-right-square"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cross-library-back-navigation",
+      "library": "lucide",
+      "plan_chars": 2260,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Previous page",
+          "type": "top_match",
+          "pattern": "/left|back|previous|chevron/i",
+          "passed": true,
+          "top_id": "arrow-left",
+          "actual_ids": [
+            "arrow-left",
+            "chevron-left",
+            "arrow-left-from-line"
+          ]
+        },
+        {
+          "slot": "Previous page",
+          "type": "none_match",
+          "pattern": "/file|archive|audio|floppy|cash|brand|copy|send-to-back/i",
+          "passed": true,
+          "top_id": "arrow-left",
+          "actual_ids": [
+            "arrow-left",
+            "chevron-left",
+            "arrow-left-from-line"
+          ]
+        },
+        {
+          "slot": "Back",
+          "type": "top_match",
+          "pattern": "/left|back|previous|chevron/i",
+          "passed": true,
+          "top_id": "chevron-left",
+          "actual_ids": [
+            "chevron-left",
+            "arrow-left",
+            "arrow-left-from-line"
+          ]
+        },
+        {
+          "slot": "Back",
+          "type": "none_match",
+          "pattern": "/file|archive|audio|floppy|cash|brand|copy|send-to-back/i",
+          "passed": true,
+          "top_id": "chevron-left",
+          "actual_ids": [
+            "chevron-left",
+            "arrow-left",
+            "arrow-left-from-line"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Previous page",
+          "recommended": "lucide:arrow-left",
+          "confidence": {
+            "level": "high",
+            "score": 991.95
+          },
+          "alternatives": [
+            "lucide:chevron-left",
+            "lucide:arrow-left-from-line"
+          ]
+        },
+        {
+          "slot": "Back",
+          "recommended": "lucide:chevron-left",
+          "confidence": {
+            "level": "medium",
+            "score": 732.5999999999999
+          },
+          "alternatives": [
+            "lucide:arrow-left",
+            "lucide:arrow-left-from-line"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mingcute-news-negative-positive",
+      "library": "mingcute",
+      "plan_chars": 8817,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Notifications",
+          "type": "none_match",
+          "pattern": "/off/i",
+          "passed": true,
+          "top_id": "bell_ringing_line",
+          "actual_ids": [
+            "bell_ringing_line",
+            "notification_line",
+            "notification_newdot_line"
+          ]
+        },
+        {
+          "slot": "Notifications off",
+          "type": "any_in",
+          "expected_ids": [
+            "notification_off_line"
+          ],
+          "passed": true,
+          "top_id": "notification_off_line",
+          "actual_ids": [
+            "notification_off_line",
+            "barbell_line"
+          ]
+        },
+        {
+          "slot": "Bookmarks tab",
+          "type": "none_match",
+          "pattern": "/^bookmark_(add|edit|remove)_line$/i",
+          "passed": true,
+          "top_id": "bookmarks_line",
+          "actual_ids": [
+            "bookmarks_line",
+            "bookmark_line",
+            "save_line"
+          ]
+        },
+        {
+          "slot": "Add bookmark",
+          "type": "top_in",
+          "expected_ids": [
+            "bookmark_add_line"
+          ],
+          "passed": true,
+          "top_id": "bookmark_add_line",
+          "actual_ids": [
+            "bookmark_add_line",
+            "add_line",
+            "bookmarks_line"
+          ]
+        },
+        {
+          "slot": "Edit bookmark",
+          "type": "top_in",
+          "expected_ids": [
+            "bookmark_edit_line"
+          ],
+          "passed": true,
+          "top_id": "bookmark_edit_line",
+          "actual_ids": [
+            "bookmark_edit_line",
+            "bookmarks_line",
+            "edit_4_line"
+          ]
+        },
+        {
+          "slot": "Remove bookmark",
+          "type": "top_in",
+          "expected_ids": [
+            "bookmark_remove_line"
+          ],
+          "passed": true,
+          "top_id": "bookmark_remove_line",
+          "actual_ids": [
+            "bookmark_remove_line",
+            "bookmarks_line",
+            "bookmark_line"
+          ]
+        },
+        {
+          "slot": "Search bar",
+          "type": "none_match",
+          "pattern": "/^search_.*_ai_line$/i",
+          "passed": true,
+          "top_id": "search_line",
+          "actual_ids": [
+            "search_line",
+            "search_2_line",
+            "search_3_line"
+          ]
+        },
+        {
+          "slot": "AI search",
+          "type": "any_match",
+          "pattern": "/^search.*ai.*line$|^search_.*_ai_line$/i",
+          "passed": true,
+          "top_id": "search_ai_line",
+          "actual_ids": [
+            "search_ai_line",
+            "search_2_ai_line",
+            "search_3_ai_line"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Notifications",
+          "recommended": "mingcute:bell_ringing_line",
+          "confidence": {
+            "level": "high",
+            "score": 629.9499999999999
+          },
+          "alternatives": [
+            "mingcute:notification_line",
+            "mingcute:notification_newdot_line"
+          ]
+        },
+        {
+          "slot": "Notifications off",
+          "recommended": "mingcute:notification_off_line",
+          "confidence": {
+            "level": "high",
+            "score": 1492.2499999999998
+          },
+          "alternatives": [
+            "mingcute:barbell_line"
+          ]
+        },
+        {
+          "slot": "Bookmarks tab",
+          "recommended": "mingcute:bookmarks_line",
+          "confidence": {
+            "level": "high",
+            "score": 592.05
+          },
+          "alternatives": [
+            "mingcute:bookmark_line",
+            "mingcute:save_line"
+          ]
+        },
+        {
+          "slot": "Add bookmark",
+          "recommended": "mingcute:bookmark_add_line",
+          "confidence": {
+            "level": "high",
+            "score": 2260.1000000000004
+          },
+          "alternatives": [
+            "mingcute:add_line",
+            "mingcute:bookmarks_line"
+          ]
+        },
+        {
+          "slot": "Edit bookmark",
+          "recommended": "mingcute:bookmark_edit_line",
+          "confidence": {
+            "level": "high",
+            "score": 2198.3
+          },
+          "alternatives": [
+            "mingcute:bookmarks_line",
+            "mingcute:edit_4_line"
+          ]
+        },
+        {
+          "slot": "Remove bookmark",
+          "recommended": "mingcute:bookmark_remove_line",
+          "confidence": {
+            "level": "high",
+            "score": 2217.3500000000004
+          },
+          "alternatives": [
+            "mingcute:bookmarks_line",
+            "mingcute:bookmark_line"
+          ]
+        },
+        {
+          "slot": "Search bar",
+          "recommended": "mingcute:search_line",
+          "confidence": {
+            "level": "high",
+            "score": 706.05
+          },
+          "alternatives": [
+            "mingcute:search_2_line",
+            "mingcute:search_3_line"
+          ]
+        },
+        {
+          "slot": "AI search",
+          "recommended": "mingcute:search_ai_line",
+          "confidence": {
+            "level": "high",
+            "score": 1680.4999999999995
+          },
+          "alternatives": [
+            "mingcute:search_2_ai_line",
+            "mingcute:search_3_ai_line"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mingcute-ai-productivity-workspace",
+      "library": "mingcute",
+      "plan_chars": 5588,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "AI assistant",
+          "type": "any_match",
+          "pattern": "/ai|brain|robot|spark/i",
+          "passed": true,
+          "top_id": "brain_line",
+          "actual_ids": [
+            "brain_line",
+            "base_station_2_line",
+            "base_station_line"
+          ]
+        },
+        {
+          "slot": "Smart search",
+          "type": "any_match",
+          "pattern": "/search.*ai|ai.*search|spark|brain/i",
+          "passed": true,
+          "top_id": "search_ai_line",
+          "actual_ids": [
+            "search_ai_line",
+            "search_2_ai_line",
+            "search_3_ai_line"
+          ]
+        },
+        {
+          "slot": "Automation",
+          "type": "any_match",
+          "pattern": "/workflow|flow|robot|spark|automation|refresh|settings/i",
+          "passed": true,
+          "top_id": "refresh_anticlockwise_1_line",
+          "actual_ids": [
+            "refresh_anticlockwise_1_line",
+            "refresh_1_line",
+            "refresh_2_line"
+          ]
+        },
+        {
+          "slot": "Projects",
+          "type": "any_match",
+          "pattern": "/folder|project|briefcase|board|layout|grid/i",
+          "passed": true,
+          "top_id": "folder_3_line",
+          "actual_ids": [
+            "folder_3_line",
+            "folder_2_line",
+            "folder_upload_line"
+          ]
+        },
+        {
+          "slot": "Projects",
+          "type": "none_match",
+          "pattern": "/locked|lock|forbid|private|secure/i",
+          "passed": true,
+          "top_id": "folder_3_line",
+          "actual_ids": [
+            "folder_3_line",
+            "folder_2_line",
+            "folder_upload_line"
+          ]
+        },
+        {
+          "slot": "Tasks",
+          "type": "any_match",
+          "pattern": "/task|check|todo|list|checkbox/i",
+          "passed": true,
+          "top_id": "list_check_2_line",
+          "actual_ids": [
+            "list_check_2_line",
+            "list_check_3_line",
+            "list_check_line"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "AI assistant",
+          "recommended": "mingcute:brain_line",
+          "confidence": {
+            "level": "high",
+            "score": 384.79999999999995
+          },
+          "alternatives": [
+            "mingcute:base_station_2_line",
+            "mingcute:base_station_line"
+          ]
+        },
+        {
+          "slot": "Smart search",
+          "recommended": "mingcute:search_ai_line",
+          "confidence": {
+            "level": "high",
+            "score": 1970.4
+          },
+          "alternatives": [
+            "mingcute:search_2_ai_line",
+            "mingcute:search_3_ai_line"
+          ]
+        },
+        {
+          "slot": "Automation",
+          "recommended": "mingcute:refresh_anticlockwise_1_line",
+          "confidence": {
+            "level": "medium",
+            "score": 237.84999999999997
+          },
+          "alternatives": [
+            "mingcute:refresh_1_line",
+            "mingcute:refresh_2_line"
+          ]
+        },
+        {
+          "slot": "Projects",
+          "recommended": "mingcute:folder_3_line",
+          "confidence": {
+            "level": "high",
+            "score": 754.9499999999999
+          },
+          "alternatives": [
+            "mingcute:folder_2_line",
+            "mingcute:folder_upload_line"
+          ]
+        },
+        {
+          "slot": "Tasks",
+          "recommended": "mingcute:list_check_2_line",
+          "confidence": {
+            "level": "medium",
+            "score": 1146.6
+          },
+          "alternatives": [
+            "mingcute:list_check_3_line",
+            "mingcute:list_check_line"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mingcute-localized-notifications-off",
+      "library": "mingcute",
+      "plan_chars": 1365,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "通知关闭",
+          "type": "top_in",
+          "expected_ids": [
+            "notification_off_line"
+          ],
+          "passed": true,
+          "top_id": "notification_off_line",
+          "actual_ids": [
+            "notification_off_line",
+            "bell_ringing_line",
+            "notification_line"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "通知关闭",
+          "recommended": "mingcute:notification_off_line",
+          "confidence": {
+            "level": "high",
+            "score": 1593.55
+          },
+          "alternatives": [
+            "mingcute:bell_ringing_line",
+            "mingcute:notification_line"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lucide-generic-search-bookmark-link",
+      "library": "lucide",
+      "plan_chars": 2879,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Search",
+          "type": "top_in",
+          "expected_ids": [
+            "search"
+          ],
+          "passed": true,
+          "top_id": "search",
+          "actual_ids": [
+            "search",
+            "search-code",
+            "book-search"
+          ]
+        },
+        {
+          "slot": "Add bookmark",
+          "type": "top_in",
+          "expected_ids": [
+            "bookmark-plus"
+          ],
+          "passed": true,
+          "top_id": "bookmark-plus",
+          "actual_ids": [
+            "bookmark-plus"
+          ]
+        },
+        {
+          "slot": "Link",
+          "type": "none_in",
+          "expected_ids": [
+            "unlink"
+          ],
+          "passed": true,
+          "top_id": "link",
+          "actual_ids": [
+            "link",
+            "link-2",
+            "external-link"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Search",
+          "recommended": "lucide:search",
+          "confidence": {
+            "level": "high",
+            "score": 584.2499999999999
+          },
+          "alternatives": [
+            "lucide:search-code",
+            "lucide:book-search"
+          ]
+        },
+        {
+          "slot": "Add bookmark",
+          "recommended": "lucide:bookmark-plus",
+          "confidence": {
+            "level": "high",
+            "score": 2125.8
+          },
+          "alternatives": []
+        },
+        {
+          "slot": "Link",
+          "recommended": "lucide:link",
+          "confidence": {
+            "level": "high",
+            "score": 758.5
+          },
+          "alternatives": [
+            "lucide:link-2",
+            "lucide:external-link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lucide-billing-currency-negative-positive",
+      "library": "lucide",
+      "plan_chars": 7370,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Billing",
+          "type": "none_in",
+          "expected_ids": [
+            "receipt-indian-rupee",
+            "receipt-cent",
+            "receipt-japanese-yen",
+            "receipt-euro",
+            "receipt-pound-sterling"
+          ],
+          "passed": true,
+          "top_id": "credit-card",
+          "actual_ids": [
+            "credit-card",
+            "wallet-cards",
+            "receipt"
+          ]
+        },
+        {
+          "slot": "Receipt",
+          "type": "none_in",
+          "expected_ids": [
+            "receipt-indian-rupee",
+            "receipt-cent",
+            "receipt-japanese-yen",
+            "receipt-euro",
+            "receipt-pound-sterling"
+          ],
+          "passed": true,
+          "top_id": "receipt",
+          "actual_ids": [
+            "receipt",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Receipt",
+          "type": "none_match",
+          "pattern": "/receipt-(russian-ruble|swiss-franc|turkish-lira|bitcoin|dollar|euro|yen|yuan|rupee|pound|cent)|(?:^|[-_])(ruble|franc|lira|bitcoin|dollar|euro|yen|yuan|rupee|pound|cent)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "receipt",
+          "actual_ids": [
+            "receipt",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Rupee receipt",
+          "type": "any_in",
+          "expected_ids": [
+            "receipt-indian-rupee"
+          ],
+          "passed": true,
+          "top_id": "receipt-indian-rupee",
+          "actual_ids": [
+            "receipt-indian-rupee",
+            "indian-rupee",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Euro receipt",
+          "type": "any_in",
+          "expected_ids": [
+            "receipt-euro"
+          ],
+          "passed": true,
+          "top_id": "receipt-euro",
+          "actual_ids": [
+            "receipt-euro",
+            "euro",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Yen receipt",
+          "type": "any_in",
+          "expected_ids": [
+            "receipt-japanese-yen"
+          ],
+          "passed": true,
+          "top_id": "receipt-japanese-yen",
+          "actual_ids": [
+            "receipt-japanese-yen",
+            "japanese-yen",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Pound receipt",
+          "type": "any_in",
+          "expected_ids": [
+            "receipt-pound-sterling"
+          ],
+          "passed": true,
+          "top_id": "receipt-pound-sterling",
+          "actual_ids": [
+            "receipt-pound-sterling",
+            "pound-sterling",
+            "receipt-text"
+          ]
+        },
+        {
+          "slot": "Cent receipt",
+          "type": "any_in",
+          "expected_ids": [
+            "receipt-cent"
+          ],
+          "passed": true,
+          "top_id": "receipt-cent",
+          "actual_ids": [
+            "receipt-cent",
+            "receipt-text",
+            "badge-cent"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Billing",
+          "recommended": "lucide:credit-card",
+          "confidence": {
+            "level": "high",
+            "score": 1131.4999999999998
+          },
+          "alternatives": [
+            "lucide:wallet-cards",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Receipt",
+          "recommended": "lucide:receipt",
+          "confidence": {
+            "level": "high",
+            "score": 349.69999999999993
+          },
+          "alternatives": [
+            "lucide:receipt-text"
+          ]
+        },
+        {
+          "slot": "Rupee receipt",
+          "recommended": "lucide:receipt-indian-rupee",
+          "confidence": {
+            "level": "high",
+            "score": 811.0999999999999
+          },
+          "alternatives": [
+            "lucide:indian-rupee",
+            "lucide:receipt-text"
+          ]
+        },
+        {
+          "slot": "Euro receipt",
+          "recommended": "lucide:receipt-euro",
+          "confidence": {
+            "level": "high",
+            "score": 1542.5
+          },
+          "alternatives": [
+            "lucide:euro",
+            "lucide:receipt-text"
+          ]
+        },
+        {
+          "slot": "Yen receipt",
+          "recommended": "lucide:receipt-japanese-yen",
+          "confidence": {
+            "level": "high",
+            "score": 811.0999999999999
+          },
+          "alternatives": [
+            "lucide:japanese-yen",
+            "lucide:receipt-text"
+          ]
+        },
+        {
+          "slot": "Pound receipt",
+          "recommended": "lucide:receipt-pound-sterling",
+          "confidence": {
+            "level": "high",
+            "score": 1349.3000000000002
+          },
+          "alternatives": [
+            "lucide:pound-sterling",
+            "lucide:receipt-text"
+          ]
+        },
+        {
+          "slot": "Cent receipt",
+          "recommended": "lucide:receipt-cent",
+          "confidence": {
+            "level": "high",
+            "score": 1542.5
+          },
+          "alternatives": [
+            "lucide:receipt-text",
+            "lucide:badge-cent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phosphor-editor-negative-alternatives",
+      "library": "phosphor",
+      "plan_chars": 6011,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Link",
+          "type": "none_match",
+          "pattern": "/break/i",
+          "passed": true,
+          "top_id": "link-simple",
+          "actual_ids": [
+            "link-simple",
+            "link-simple-horizontal",
+            "link"
+          ]
+        },
+        {
+          "slot": "Image",
+          "type": "none_match",
+          "pattern": "/broken/i",
+          "passed": true,
+          "top_id": "image",
+          "actual_ids": [
+            "image",
+            "images",
+            "file-image"
+          ]
+        },
+        {
+          "slot": "Comments",
+          "type": "none_match",
+          "pattern": "/slash/i",
+          "passed": true,
+          "top_id": "chat-text",
+          "actual_ids": [
+            "chat-text",
+            "chat-teardrop-dots",
+            "chat-teardrop-text"
+          ]
+        },
+        {
+          "slot": "Undo",
+          "type": "top_in",
+          "expected_ids": [
+            "arrow-counter-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-counter-clockwise",
+          "actual_ids": [
+            "arrow-counter-clockwise",
+            "arrows-counter-clockwise",
+            "clock-counter-clockwise"
+          ]
+        },
+        {
+          "slot": "Undo",
+          "type": "none_in",
+          "expected_ids": [
+            "arrow-clockwise",
+            "arrows-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-counter-clockwise",
+          "actual_ids": [
+            "arrow-counter-clockwise",
+            "arrows-counter-clockwise",
+            "clock-counter-clockwise"
+          ]
+        },
+        {
+          "slot": "Undo",
+          "type": "none_in",
+          "expected_ids": [
+            "clock-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-counter-clockwise",
+          "actual_ids": [
+            "arrow-counter-clockwise",
+            "arrows-counter-clockwise",
+            "clock-counter-clockwise"
+          ]
+        },
+        {
+          "slot": "Redo",
+          "type": "top_in",
+          "expected_ids": [
+            "arrow-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-clockwise",
+          "actual_ids": [
+            "arrow-clockwise",
+            "arrows-clockwise",
+            "clock-clockwise"
+          ]
+        },
+        {
+          "slot": "Redo",
+          "type": "none_in",
+          "expected_ids": [
+            "arrow-counter-clockwise",
+            "arrows-counter-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-clockwise",
+          "actual_ids": [
+            "arrow-clockwise",
+            "arrows-clockwise",
+            "clock-clockwise"
+          ]
+        },
+        {
+          "slot": "Redo",
+          "type": "none_in",
+          "expected_ids": [
+            "clock-counter-clockwise"
+          ],
+          "passed": true,
+          "top_id": "arrow-clockwise",
+          "actual_ids": [
+            "arrow-clockwise",
+            "arrows-clockwise",
+            "clock-clockwise"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Link",
+          "recommended": "phosphor:link-simple",
+          "confidence": {
+            "level": "high",
+            "score": 930
+          },
+          "alternatives": [
+            "phosphor:link-simple-horizontal",
+            "phosphor:link"
+          ]
+        },
+        {
+          "slot": "Image",
+          "recommended": "phosphor:image",
+          "confidence": {
+            "level": "high",
+            "score": 553.4
+          },
+          "alternatives": [
+            "phosphor:images",
+            "phosphor:file-image"
+          ]
+        },
+        {
+          "slot": "Comments",
+          "recommended": "phosphor:chat-text",
+          "confidence": {
+            "level": "high",
+            "score": 1214.0000000000002
+          },
+          "alternatives": [
+            "phosphor:chat-teardrop-dots",
+            "phosphor:chat-teardrop-text"
+          ]
+        },
+        {
+          "slot": "Undo",
+          "recommended": "phosphor:arrow-counter-clockwise",
+          "confidence": {
+            "level": "high",
+            "score": 1418.0500000000002
+          },
+          "alternatives": [
+            "phosphor:arrows-counter-clockwise",
+            "phosphor:clock-counter-clockwise"
+          ]
+        },
+        {
+          "slot": "Redo",
+          "recommended": "phosphor:arrow-clockwise",
+          "confidence": {
+            "level": "high",
+            "score": 1220.8000000000002
+          },
+          "alternatives": [
+            "phosphor:arrows-clockwise",
+            "phosphor:clock-clockwise"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phosphor-explicit-editor-states",
+      "library": "phosphor",
+      "plan_chars": 3944,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Broken link",
+          "type": "top_match",
+          "pattern": "/break|broken|slash/i",
+          "passed": true,
+          "top_id": "link-break",
+          "actual_ids": [
+            "link-break",
+            "link-simple-break",
+            "link-simple-horizontal-break"
+          ]
+        },
+        {
+          "slot": "Broken image",
+          "type": "top_match",
+          "pattern": "/broken|off|slash/i",
+          "passed": true,
+          "top_id": "image-broken",
+          "actual_ids": [
+            "image-broken",
+            "image",
+            "images"
+          ]
+        },
+        {
+          "slot": "Comments off",
+          "type": "top_match",
+          "pattern": "/slash|off/i",
+          "passed": true,
+          "top_id": "chat-slash",
+          "actual_ids": [
+            "chat-slash",
+            "chat-centered-slash",
+            "chat-teardrop-slash"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Broken link",
+          "recommended": "phosphor:link-break",
+          "confidence": {
+            "level": "high",
+            "score": 1215.1
+          },
+          "alternatives": [
+            "phosphor:link-simple-break",
+            "phosphor:link-simple-horizontal-break"
+          ]
+        },
+        {
+          "slot": "Broken image",
+          "recommended": "phosphor:image-broken",
+          "confidence": {
+            "level": "high",
+            "score": 1791.0500000000002
+          },
+          "alternatives": [
+            "phosphor:image",
+            "phosphor:images"
+          ]
+        },
+        {
+          "slot": "Comments off",
+          "recommended": "phosphor:chat-slash",
+          "confidence": {
+            "level": "high",
+            "score": 1259.5500000000002
+          },
+          "alternatives": [
+            "phosphor:chat-centered-slash",
+            "phosphor:chat-teardrop-slash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tabler-security-admin-expanded",
+      "library": "tabler",
+      "plan_chars": 5472,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Two-factor auth",
+          "type": "any_match",
+          "pattern": "/lock|key|shield|finger|password|auth|2fa|user-check/i",
+          "passed": true,
+          "top_id": "hand-two-fingers",
+          "actual_ids": [
+            "hand-two-fingers",
+            "auth-2fa",
+            "building-factory"
+          ]
+        },
+        {
+          "slot": "Permissions",
+          "type": "any_match",
+          "pattern": "/lock|key|shield|user|users|adjustments|settings/i",
+          "passed": true,
+          "top_id": "user-key",
+          "actual_ids": [
+            "user-key",
+            "shield-lock",
+            "key"
+          ]
+        },
+        {
+          "slot": "Audit log",
+          "type": "any_match",
+          "pattern": "/history|timeline|list|file|notes|clipboard|report|logs?/i",
+          "passed": true,
+          "top_id": "logic-and",
+          "actual_ids": [
+            "logic-and",
+            "logic-nand",
+            "logs"
+          ]
+        },
+        {
+          "slot": "Security",
+          "type": "none_match",
+          "pattern": "/off|ban|minus|open|unlock/i",
+          "passed": true,
+          "top_id": "shield-lock",
+          "actual_ids": [
+            "shield-lock",
+            "clock-shield",
+            "shield-checkered"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Two-factor auth",
+          "recommended": "tabler:hand-two-fingers",
+          "confidence": {
+            "level": "high",
+            "score": 681.9000000000001
+          },
+          "alternatives": [
+            "tabler:auth-2fa",
+            "tabler:building-factory"
+          ]
+        },
+        {
+          "slot": "Permissions",
+          "recommended": "tabler:user-key",
+          "confidence": {
+            "level": "high",
+            "score": 728.9999999999999
+          },
+          "alternatives": [
+            "tabler:shield-lock",
+            "tabler:key"
+          ]
+        },
+        {
+          "slot": "Audit log",
+          "recommended": "tabler:logic-and",
+          "confidence": {
+            "level": "medium",
+            "score": 676.9000000000001
+          },
+          "alternatives": [
+            "tabler:logic-nand",
+            "tabler:logs"
+          ]
+        },
+        {
+          "slot": "Security",
+          "recommended": "tabler:shield-lock",
+          "confidence": {
+            "level": "high",
+            "score": 687.3499999999999
+          },
+          "alternatives": [
+            "tabler:clock-shield",
+            "tabler:shield-checkered"
+          ]
+        },
+        {
+          "slot": "Users",
+          "recommended": "tabler:users-group",
+          "confidence": {
+            "level": "high",
+            "score": 648.9
+          },
+          "alternatives": [
+            "tabler:users",
+            "tabler:user-search"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ecommerce-cross-library-risk-sample",
+      "library": "lucide",
+      "plan_chars": 4970,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Checkout",
+          "type": "none_match",
+          "pattern": "/fork|knife|git/i",
+          "passed": true,
+          "top_id": "credit-card",
+          "actual_ids": [
+            "credit-card",
+            "shopping-cart",
+            "receipt"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "type": "none_match",
+          "pattern": "/ticket|plane|caret/i",
+          "passed": true,
+          "top_id": "users",
+          "actual_ids": [
+            "users",
+            "users-2",
+            "users-round"
+          ]
+        },
+        {
+          "slot": "Coupons",
+          "type": "none_match",
+          "pattern": "/bean|candy|cannabis|off/i",
+          "passed": true,
+          "top_id": "badge-percent",
+          "actual_ids": [
+            "badge-percent"
+          ]
+        },
+        {
+          "slot": "Orders",
+          "type": "any_match",
+          "pattern": "/package|receipt|shopping|list|clipboard/i",
+          "passed": true,
+          "top_id": "clipboard-list",
+          "actual_ids": [
+            "clipboard-list",
+            "list-ordered",
+            "receipt"
+          ]
+        },
+        {
+          "slot": "Products",
+          "type": "any_match",
+          "pattern": "/package|box|shopping|tag/i",
+          "passed": true,
+          "top_id": "package",
+          "actual_ids": [
+            "package",
+            "tag",
+            "box"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Checkout",
+          "recommended": "lucide:credit-card",
+          "confidence": {
+            "level": "high",
+            "score": 1209.4999999999998
+          },
+          "alternatives": [
+            "lucide:shopping-cart",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "recommended": "lucide:users",
+          "confidence": {
+            "level": "medium",
+            "score": 400.7499999999999
+          },
+          "alternatives": [
+            "lucide:users-2",
+            "lucide:users-round"
+          ]
+        },
+        {
+          "slot": "Coupons",
+          "recommended": "lucide:badge-percent",
+          "confidence": {
+            "level": "high",
+            "score": 256.84999999999997
+          },
+          "alternatives": []
+        },
+        {
+          "slot": "Orders",
+          "recommended": "lucide:clipboard-list",
+          "confidence": {
+            "level": "medium",
+            "score": 652.6
+          },
+          "alternatives": [
+            "lucide:list-ordered",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Products",
+          "recommended": "lucide:package",
+          "confidence": {
+            "level": "medium",
+            "score": 269.84999999999997
+          },
+          "alternatives": [
+            "lucide:tag",
+            "lucide:box"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tabler-ecommerce-risk-sample",
+      "library": "tabler",
+      "plan_chars": 5035,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Storefront",
+          "type": "any_match",
+          "pattern": "/store|building-store|shop|shopping/i",
+          "passed": true,
+          "top_id": "building-store",
+          "actual_ids": [
+            "building-store",
+            "shopping-bag"
+          ]
+        },
+        {
+          "slot": "Storefront",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(cancel|x|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "building-store",
+          "actual_ids": [
+            "building-store",
+            "shopping-bag"
+          ]
+        },
+        {
+          "slot": "Checkout",
+          "type": "none_match",
+          "pattern": "/fork|knife|git|branch|merge/i",
+          "passed": true,
+          "top_id": "credit-card",
+          "actual_ids": [
+            "credit-card",
+            "shopping-cart",
+            "credit-card-pay"
+          ]
+        },
+        {
+          "slot": "Checkout",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(cancel|x|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "credit-card",
+          "actual_ids": [
+            "credit-card",
+            "shopping-cart",
+            "credit-card-pay"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "type": "none_match",
+          "pattern": "/caret|plane|ticket/i",
+          "passed": true,
+          "top_id": "users",
+          "actual_ids": [
+            "users"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(cancel|x|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "users",
+          "actual_ids": [
+            "users"
+          ]
+        },
+        {
+          "slot": "Coupons",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(off|disabled|slash|x)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "percentage",
+          "actual_ids": [
+            "percentage"
+          ]
+        },
+        {
+          "slot": "Coupons",
+          "type": "none_match",
+          "pattern": "/^percentage-\\d+$/i",
+          "passed": true,
+          "top_id": "percentage",
+          "actual_ids": [
+            "percentage"
+          ]
+        },
+        {
+          "slot": "Orders",
+          "type": "any_match",
+          "pattern": "/package|receipt|shopping|list|clipboard|file/i",
+          "passed": true,
+          "top_id": "clipboard-list",
+          "actual_ids": [
+            "clipboard-list"
+          ]
+        },
+        {
+          "slot": "Orders",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(cancel|x|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "clipboard-list",
+          "actual_ids": [
+            "clipboard-list"
+          ]
+        },
+        {
+          "slot": "Products",
+          "type": "any_match",
+          "pattern": "/package|box|shopping|tag|archive/i",
+          "passed": true,
+          "top_id": "shopping-bag",
+          "actual_ids": [
+            "shopping-bag"
+          ]
+        },
+        {
+          "slot": "Products",
+          "type": "none_match",
+          "pattern": "/(?:^|[-_])(cancel|x|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause)(?:[-_]|$)/i",
+          "passed": true,
+          "top_id": "shopping-bag",
+          "actual_ids": [
+            "shopping-bag"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Storefront",
+          "recommended": "tabler:building-store",
+          "confidence": {
+            "level": "high",
+            "score": 1252.5
+          },
+          "alternatives": [
+            "tabler:shopping-bag"
+          ]
+        },
+        {
+          "slot": "Checkout",
+          "recommended": "tabler:credit-card",
+          "confidence": {
+            "level": "high",
+            "score": 1219.3999999999999
+          },
+          "alternatives": [
+            "tabler:shopping-cart",
+            "tabler:credit-card-pay"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "recommended": "tabler:users",
+          "confidence": {
+            "level": "medium",
+            "score": 402.8499999999999
+          },
+          "alternatives": []
+        },
+        {
+          "slot": "Coupons",
+          "recommended": "tabler:percentage",
+          "confidence": {
+            "level": "medium",
+            "score": 520.9
+          },
+          "alternatives": []
+        },
+        {
+          "slot": "Orders",
+          "recommended": "tabler:clipboard-list",
+          "confidence": {
+            "level": "medium",
+            "score": 661
+          },
+          "alternatives": []
+        },
+        {
+          "slot": "Products",
+          "recommended": "tabler:shopping-bag",
+          "confidence": {
+            "level": "high",
+            "score": 1064.3999999999999
+          },
+          "alternatives": []
+        }
+      ]
+    },
+    {
+      "id": "tabler-explicit-media-states",
+      "library": "tabler",
+      "plan_chars": 1400,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Broken image",
+          "type": "top_match",
+          "pattern": "/broken|off/i",
+          "passed": true,
+          "top_id": "photo-off",
+          "actual_ids": [
+            "photo-off",
+            "live-photo-off",
+            "picture-in-picture-off"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Broken image",
+          "recommended": "tabler:photo-off",
+          "confidence": {
+            "level": "high",
+            "score": 1349.4
+          },
+          "alternatives": [
+            "tabler:live-photo-off",
+            "tabler:picture-in-picture-off"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tabler-generic-editor-brand-suppression",
+      "library": "tabler",
+      "plan_chars": 3482,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Image",
+          "type": "top_in",
+          "expected_ids": [
+            "photo",
+            "image-in-picture"
+          ],
+          "passed": true,
+          "top_id": "image-in-picture",
+          "actual_ids": [
+            "image-in-picture",
+            "image-generation",
+            "photo"
+          ]
+        },
+        {
+          "slot": "Image",
+          "type": "none_match",
+          "pattern": "/^brand-/i",
+          "passed": true,
+          "top_id": "image-in-picture",
+          "actual_ids": [
+            "image-in-picture",
+            "image-generation",
+            "photo"
+          ]
+        },
+        {
+          "slot": "Comments",
+          "type": "any_match",
+          "pattern": "/message|messages|comment/i",
+          "passed": true,
+          "top_id": "message-dots",
+          "actual_ids": [
+            "message-dots",
+            "device-mobile-message",
+            "arrow-autofit-content"
+          ]
+        },
+        {
+          "slot": "Comments",
+          "type": "none_match",
+          "pattern": "/^brand-/i",
+          "passed": true,
+          "top_id": "message-dots",
+          "actual_ids": [
+            "message-dots",
+            "device-mobile-message",
+            "arrow-autofit-content"
+          ]
+        },
+        {
+          "slot": "Link",
+          "type": "none_match",
+          "pattern": "/^brand-|unlink/i",
+          "passed": true,
+          "top_id": "link",
+          "actual_ids": [
+            "link",
+            "external-link",
+            "layers-linked"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Image",
+          "recommended": "tabler:image-in-picture",
+          "confidence": {
+            "level": "high",
+            "score": 479.7
+          },
+          "alternatives": [
+            "tabler:image-generation",
+            "tabler:photo"
+          ]
+        },
+        {
+          "slot": "Comments",
+          "recommended": "tabler:message-dots",
+          "confidence": {
+            "level": "high",
+            "score": 624.5500000000001
+          },
+          "alternatives": [
+            "tabler:device-mobile-message",
+            "tabler:arrow-autofit-content"
+          ]
+        },
+        {
+          "slot": "Link",
+          "recommended": "tabler:link",
+          "confidence": {
+            "level": "high",
+            "score": 723.85
+          },
+          "alternatives": [
+            "tabler:external-link",
+            "tabler:layers-linked"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tabler-explicit-commerce-states",
+      "library": "tabler",
+      "plan_chars": 2456,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Store off",
+          "type": "top_match",
+          "pattern": "/off|x|cancel/i",
+          "passed": true,
+          "top_id": "shopping-cart-off",
+          "actual_ids": [
+            "shopping-cart-off",
+            "shopping-bag-x",
+            "shopping-cart-x"
+          ]
+        },
+        {
+          "slot": "Cancel order",
+          "type": "any_match",
+          "pattern": "/cancel|x|remove|minus/i",
+          "passed": true,
+          "top_id": "shopping-cart-cancel",
+          "actual_ids": [
+            "shopping-cart-cancel",
+            "basket-cancel"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Store off",
+          "recommended": "tabler:shopping-cart-off",
+          "confidence": {
+            "level": "high",
+            "score": 1710
+          },
+          "alternatives": [
+            "tabler:shopping-bag-x",
+            "tabler:shopping-cart-x"
+          ]
+        },
+        {
+          "slot": "Cancel order",
+          "recommended": "tabler:shopping-cart-cancel",
+          "confidence": {
+            "level": "high",
+            "score": 1721.95
+          },
+          "alternatives": [
+            "tabler:basket-cancel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phosphor-notifications-settings",
+      "library": "phosphor",
+      "plan_chars": 2460,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Notifications off",
+          "type": "top_match",
+          "pattern": "/bell.*slash|slash.*bell|notification.*slash/i",
+          "passed": true,
+          "top_id": "bell-slash",
+          "actual_ids": [
+            "bell-slash",
+            "bell-simple-slash",
+            "barbell"
+          ]
+        },
+        {
+          "slot": "Settings",
+          "type": "top_in",
+          "expected_ids": [
+            "gear",
+            "gear-six",
+            "sliders-horizontal",
+            "sliders"
+          ],
+          "passed": true,
+          "top_id": "sliders",
+          "actual_ids": [
+            "sliders",
+            "sliders-horizontal",
+            "file-audio"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Notifications off",
+          "recommended": "phosphor:bell-slash",
+          "confidence": {
+            "level": "high",
+            "score": 899.4
+          },
+          "alternatives": [
+            "phosphor:bell-simple-slash",
+            "phosphor:barbell"
+          ]
+        },
+        {
+          "slot": "Settings",
+          "recommended": "phosphor:sliders",
+          "confidence": {
+            "level": "medium",
+            "score": 193.49999999999997
+          },
+          "alternatives": [
+            "phosphor:sliders-horizontal",
+            "phosphor:file-audio"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "all-library-generic-ui-brand-suppression",
+      "plan_chars": 4420,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "slot": "Settings",
+          "type": "none_candidate_match",
+          "pattern": "/^simpleicons:|^.*:brand-/i",
+          "passed": true,
+          "top_id": "settings",
+          "actual_ids": [
+            "iconoir:settings",
+            "mingcute:settings_1_line",
+            "mingcute:settings_6_line"
+          ]
+        },
+        {
+          "slot": "Settings",
+          "type": "top_match",
+          "pattern": "/settings|cog|gear|sliders|adjustments/i",
+          "passed": true,
+          "top_id": "settings",
+          "actual_ids": [
+            "settings",
+            "settings_1_line",
+            "settings_6_line"
+          ]
+        },
+        {
+          "slot": "Search",
+          "type": "none_candidate_match",
+          "pattern": "/^simpleicons:|^.*:brand-/i",
+          "passed": true,
+          "top_id": "exa",
+          "actual_ids": [
+            "si:exa",
+            "bootstrap:search",
+            "mingcute:search_line"
+          ]
+        },
+        {
+          "slot": "Users",
+          "type": "none_candidate_match",
+          "pattern": "/^simpleicons:|^.*:brand-/i",
+          "passed": true,
+          "top_id": "users",
+          "actual_ids": [
+            "heroicons:users",
+            "lucide:users",
+            "tabler:users"
+          ]
+        },
+        {
+          "slot": "Billing",
+          "type": "none_candidate_match",
+          "pattern": "/^simpleicons:|^.*:brand-/i",
+          "passed": true,
+          "top_id": "credit-card",
+          "actual_ids": [
+            "tabler:credit-card",
+            "heroicons:credit-card",
+            "lucide:credit-card"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Settings",
+          "recommended": "iconoir:settings",
+          "confidence": {
+            "level": "high",
+            "score": 1498.25
+          },
+          "alternatives": [
+            "mingcute:settings_1_line",
+            "mingcute:settings_6_line"
+          ]
+        },
+        {
+          "slot": "Search",
+          "recommended": "si:exa",
+          "confidence": {
+            "level": "high",
+            "score": 1972.6999999999998
+          },
+          "alternatives": [
+            "bootstrap:search",
+            "mingcute:search_line"
+          ]
+        },
+        {
+          "slot": "Users",
+          "recommended": "heroicons:users",
+          "confidence": {
+            "level": "medium",
+            "score": 1302.05
+          },
+          "alternatives": [
+            "lucide:users",
+            "tabler:users"
+          ]
+        },
+        {
+          "slot": "Billing",
+          "recommended": "tabler:credit-card",
+          "confidence": {
+            "level": "medium",
+            "score": 1141.3999999999999
+          },
+          "alternatives": [
+            "heroicons:credit-card",
+            "lucide:credit-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lucide-broad-admin-no-duplicate-primary",
+      "library": "lucide",
+      "plan_chars": 6325,
+      "all_slots_resolved": true,
+      "low_confidence_slots": [],
+      "passed": true,
+      "assertions": [
+        {
+          "type": "unique_recommended",
+          "passed": true,
+          "top_id": null,
+          "actual_ids": [
+            "lucide:shopping-bag",
+            "lucide:credit-card",
+            "lucide:wallet-cards",
+            "lucide:clipboard-list",
+            "lucide:package",
+            "lucide:users"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "slot": "Storefront",
+          "recommended": "lucide:shopping-bag",
+          "confidence": {
+            "level": "high",
+            "score": 1206.35
+          },
+          "alternatives": [
+            "lucide:store",
+            "lucide:chess-bishop"
+          ]
+        },
+        {
+          "slot": "Checkout",
+          "recommended": "lucide:credit-card",
+          "confidence": {
+            "level": "high",
+            "score": 1216.4999999999998
+          },
+          "alternatives": [
+            "lucide:shopping-cart",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Billing",
+          "recommended": "lucide:wallet-cards",
+          "confidence": {
+            "level": "medium",
+            "score": 221.84999999999997
+          },
+          "alternatives": [
+            "lucide:credit-card",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Orders",
+          "recommended": "lucide:clipboard-list",
+          "confidence": {
+            "level": "medium",
+            "score": 659.6
+          },
+          "alternatives": [
+            "lucide:list-ordered",
+            "lucide:receipt"
+          ]
+        },
+        {
+          "slot": "Products",
+          "recommended": "lucide:package",
+          "confidence": {
+            "level": "medium",
+            "score": 276.84999999999997
+          },
+          "alternatives": [
+            "lucide:tag",
+            "lucide:package-2"
+          ]
+        },
+        {
+          "slot": "Customers",
+          "recommended": "lucide:users",
+          "confidence": {
+            "level": "medium",
+            "score": 424.9
+          },
+          "alternatives": [
+            "lucide:users-2",
+            "lucide:users-round"
+          ]
+        }
+      ]
+    }
+  ]
+}

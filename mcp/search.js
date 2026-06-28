@@ -38,6 +38,8 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
   : [];
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
 const iconSearchMetadataCache = new WeakMap();
+const LOGO_INTENT_TOKENS = new Set(['logo', 'logos', 'icon', 'icons', 'brand', 'brands', 'mark', 'marks', 'symbol', 'symbols']);
+const GENERIC_AI_LOGO_TOKENS = new Set(['ai', 'artificial', 'intelligence']);
 
 /** Inline Levenshtein distance (capped early for performance) */
 function editDistance(a, b) {
@@ -78,6 +80,60 @@ function getIconSemanticAliases(icon) {
   return iconSemanticAliasMap.get(iconKey(icon)) || null;
 }
 
+function collectIconSearchValues(icon) {
+  const values = [
+    icon.name,
+    icon.id,
+    iconKey(icon),
+    icon.meaning,
+    icon.jobCategory,
+    icon.aiCategory,
+    icon.aiCategoryLabel,
+    icon.assetType,
+    icon.pack,
+    icon.access,
+  ];
+
+  for (const field of [
+    'semanticTags',
+    'synonyms',
+    'aliases',
+    'searchTerms',
+    'filterTags',
+    'aiFilterTags',
+    'secondaryCategories',
+    'variants',
+  ]) {
+    if (Array.isArray(icon[field])) {
+      values.push(...icon[field]);
+    }
+  }
+
+  return values.filter((value) => typeof value === 'string' && value.trim());
+}
+
+function getMeaningfulQueryWords(queryWords) {
+  const withoutLogoIntent = queryWords.filter((word) => !LOGO_INTENT_TOKENS.has(word));
+  const candidateWords = withoutLogoIntent.length > 0 ? withoutLogoIntent : queryWords;
+  const withoutGenericAi = candidateWords.length > 1
+    ? candidateWords.filter((word) => !GENERIC_AI_LOGO_TOKENS.has(word))
+    : candidateWords;
+  return withoutGenericAi.length > 0 ? withoutGenericAi : candidateWords;
+}
+
+function hasLogoIntent(queryWords) {
+  return queryWords.some((word) => LOGO_INTENT_TOKENS.has(word));
+}
+
+function isSupericonsBrandLogo(icon) {
+  return icon.lib === 'si'
+    && (
+      icon.assetType === 'brand-logo'
+      || icon.aiFilterTags?.includes('brand-logo')
+      || icon.filterTags?.includes('brand-logo')
+    );
+}
+
 function getIconSearchMetadata(icon) {
   const cached = iconSearchMetadataCache.get(icon);
   if (cached) return cached;
@@ -91,9 +147,10 @@ function getIconSearchMetadata(icon) {
     ...tokenizeSemanticText(icon.name),
     ...tokenizeSemanticText(icon.id),
     ...tokenizeSemanticText(iconKey(icon)),
+    ...collectIconSearchValues(icon).flatMap((value) => tokenizeSemanticText(value)),
   ]);
   const segments = lowerId.split(/[-_]/).concat(lowerName.split(/[\s\-_]/));
-  const aliases = (getIconSemanticAliases(icon) || [])
+  const aliases = [...(getIconSemanticAliases(icon) || []), ...collectIconSearchValues(icon)]
     .map((alias) => {
       const normalized = normalizeSemanticText(alias);
       return normalized
@@ -120,6 +177,7 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
   if (!normalizedQuery) return 0;
 
   const { name, id, fullId, tokens } = getIconSearchMetadata(icon);
+  const meaningfulQueryWords = getMeaningfulQueryWords(queryWords);
 
   if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
     return 320;
@@ -133,11 +191,11 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
     return 250;
   }
 
-  if (queryWords.length > 0 && queryWords.every((word) => tokens.has(word))) {
+  if (meaningfulQueryWords.length > 0 && meaningfulQueryWords.every((word) => tokens.has(word))) {
     return 190;
   }
 
-  if (queryWords.length > 0 && queryWords.every((word) => (
+  if (meaningfulQueryWords.length > 0 && meaningfulQueryWords.every((word) => (
     name.includes(word) || id.includes(word) || fullId.includes(word)
   ))) {
     return 150;
@@ -153,6 +211,9 @@ function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
   if (!aliases?.length) return 0;
 
   let bestScore = 0;
+  const meaningfulQueryWords = getMeaningfulQueryWords(queryWords);
+  const meaningfulQuery = meaningfulQueryWords.join(' ');
+  const shouldBoostBrandLogo = hasLogoIntent(queryWords) && isSupericonsBrandLogo(icon);
 
   for (const alias of aliases) {
     const { normalized: normalizedAlias, tokens: aliasTokens } = alias;
@@ -168,18 +229,23 @@ function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
       continue;
     }
 
-    if (queryWords.length > 1 && queryWords.every((word) => aliasTokens.has(word))) {
-      bestScore = Math.max(bestScore, 320);
+    if (meaningfulQuery.length > 3 && normalizedAlias.includes(meaningfulQuery)) {
+      bestScore = Math.max(bestScore, shouldBoostBrandLogo ? 520 : 350);
       continue;
     }
 
-    if (queryWords.length === 1 && aliasTokens.has(queryWords[0])) {
-      bestScore = Math.max(bestScore, 260);
+    if (meaningfulQueryWords.length > 1 && meaningfulQueryWords.every((word) => aliasTokens.has(word))) {
+      bestScore = Math.max(bestScore, shouldBoostBrandLogo ? 490 : 320);
       continue;
     }
 
-    if (queryWords.length > 0 && queryWords.every((word) => normalizedAlias.includes(word))) {
-      bestScore = Math.max(bestScore, 220);
+    if (meaningfulQueryWords.length === 1 && aliasTokens.has(meaningfulQueryWords[0])) {
+      bestScore = Math.max(bestScore, shouldBoostBrandLogo ? 460 : 260);
+      continue;
+    }
+
+    if (meaningfulQueryWords.length > 0 && meaningfulQueryWords.every((word) => normalizedAlias.includes(word))) {
+      bestScore = Math.max(bestScore, shouldBoostBrandLogo ? 420 : 220);
     }
   }
 
