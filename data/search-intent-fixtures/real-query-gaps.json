@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "query": "license plate recognition camera scan car",
+      "max_variants": 10,
+      "intent_type": "compound_concept",
+      "expected_variants": [
+        "license plate recognition",
+        "license plate camera",
+        "vehicle scan",
+        "camera scan",
+        "camera",
+        "scan",
+        "car"
+      ],
+      "forbidden_variants": [
+        "license",
+        "plate",
+        "recognition"
+      ],
+      "expected_gap_type": "new_icon_gap",
+      "acceptable_icon_families": [
+        "camera",
+        "scan",
+        "car",
+        "vehicle"
+      ]
+    },
+    {
+      "query": "vercel v0 ai app builder logo",
+      "max_variants": 10,
+      "intent_type": "brand_logo",
+      "expected_variants": [
+        "vercel v0",
+        "v0 app builder",
+        "app builder",
+        "v0",
+        "vercel",
+        "builder"
+      ],
+      "forbidden_variants": [
+        "logo",
+        "app",
+        "ai"
+      ],
+      "expected_gap_type": "library_gap",
+      "acceptable_icon_families": [
+        "vercel",
+        "app builder",
+        "base44",
+        "bolt",
+        "lovable"
+      ]
+    },
+    {
+      "query": "cursor ai code editor logo",
+      "max_variants": 10,
+      "intent_type": "brand_logo",
+      "expected_variants": [
+        "cursor ai code editor",
+        "cursor code editor",
+        "code editor",
+        "cursor",
+        "code",
+        "editor"
+      ],
+      "forbidden_variants": [
+        "logo",
+        "ai"
+      ],
+      "expected_gap_type": "library_gap",
+      "acceptable_icon_families": [
+        "code editor",
+        "code",
+        "codex",
+        "trae",
+        "opencode"
+      ]
+    },
+    {
+      "query": "neck pain person",
+      "max_variants": 10,
+      "intent_type": "compound_concept",
+      "expected_variants": [
+        "neck pain",
+        "person neck",
+        "body pain",
+        "person",
+        "neck",
+        "pain"
+      ],
+      "forbidden_variants": [],
+      "expected_gap_type": "new_icon_gap",
+      "acceptable_icon_families": [
+        "person",
+        "body",
+        "accessibility",
+        "activity"
+      ]
+    },
+    {
+      "query": "dream interpretation moon star eye mystical",
+      "max_variants": 10,
+      "intent_type": "abstract_metaphor",
+      "expected_variants": [
+        "dream interpretation",
+        "moon star eye",
+        "moon",
+        "star",
+        "eye",
+        "sparkles"
+      ],
+      "forbidden_variants": [],
+      "expected_gap_type": "new_icon_gap",
+      "acceptable_icon_families": [
+        "moon",
+        "star",
+        "eye",
+        "sparkles"
+      ]
+    }
+  ]
+}

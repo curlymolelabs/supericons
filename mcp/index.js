@@ -44,6 +44,7 @@ import {
   renderMotionLabCssHosted,
 } from './motion-lab-client.js';
 import {
+  buildIntentQueryVariants,
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
 } from './runtime/search-intent-core.js';
@@ -680,12 +681,25 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
   if (!hasLocalSearchData()) return [];
 
   const { searchIcons } = await import('./search.js');
-  const localResults = searchIcons(query, searchableIcons, synonyms, {
-    library,
-    limit: Math.max(limit * 2, 20),
-    style: requestedStyle,
-    locale,
-  });
+  const localQueryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const localResults = [];
+  const localSeen = new Set();
+
+  for (const queryVariant of localQueryVariants) {
+    const variantResults = searchIcons(queryVariant, searchableIcons, synonyms, {
+      library,
+      limit: Math.max(limit * 2, 20),
+      style: requestedStyle,
+      locale,
+    });
+
+    for (const icon of variantResults) {
+      const key = `${icon.lib}:${icon.id}:${icon.style || VARIANT_STYLES.OUTLINE}`;
+      if (localSeen.has(key)) continue;
+      localSeen.add(key);
+      localResults.push(icon);
+    }
+  }
 
   const baselineResults = requestedStyle === VARIANT_STYLES.SOLID
     ? localResults
