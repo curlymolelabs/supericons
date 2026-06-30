@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.12 - 2026-06-30
+
+### Fixed
+
+- improved MCP local fallback search for long natural-language icon requests such as license plate recognition, AI app builders, code editors, neck pain, and dream interpretation
+
 ## 0.4.11 - 2026-06-28
 
 ### Fixed
