@@ -705,7 +705,11 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
     ? localResults
     : mergeOrderedSearchResults(hostedResults, localResults, requestedStyle);
 
-  const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, { limit });
+  const intentProfile = buildSearchIntentProfile(query);
+  const semanticMergeLimit = intentProfile.expanded ? Math.max(limit * 4, 40) : limit;
+  const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, {
+    limit: semanticMergeLimit,
+  });
   const intentRanked = rerankIconsForIntent(query, merged);
   return mergeOrderedSearchResults(intentRanked, [], requestedStyle).slice(0, Math.max(1, limit));
 }

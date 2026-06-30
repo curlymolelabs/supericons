@@ -64,6 +64,25 @@ const COMPOUND_INTENT_RULES = Object.freeze(
         prefer: ['\\b(camera|scan|vehicle|car|plate|traffic)\\b'],
         avoid: ['\\b(document|file|certificate|food|dish)\\b'],
       },
+      'license plate': {
+        variants: [
+          'license plate',
+          'vehicle plate',
+          'number plate',
+          'vehicle scan',
+          'camera scan',
+          'car scan',
+          'camera',
+          'scan',
+          'car',
+          'license plate camera',
+          'traffic camera',
+          'alpr',
+          'automatic license plate recognition',
+        ],
+        prefer: ['\\b(camera|scan|vehicle|car|plate|traffic|alpr)\\b'],
+        avoid: ['\\blicense(?![-_ ]plate)\\b', '\\b(document|file|certificate|briefcase|circuit|prison|derivatives|off)\\b'],
+      },
       'dream interpretation': {
         variants: [
           'dream interpretation',

@@ -57,6 +57,11 @@ for (const fixture of realQueryGapFixtures.queries || []) {
 
 const keywordBackoffChecks = [
   {
+    query: 'license plate',
+    expected: ['license plate', 'vehicle scan', 'camera scan', 'camera', 'scan', 'car'],
+    forbidden: ['license', 'plate'],
+  },
+  {
     query: 'license plate recognition camera scan car',
     expected: ['camera', 'scan', 'car'],
   },
@@ -116,6 +121,11 @@ const profileAdjustments = [
     query: 'beautiful',
     preferred: { icon_id: 'bootstrap:palette', name: 'palette' },
     avoided: { icon_id: 'lucide:server', name: 'server' },
+  },
+  {
+    query: 'license plate',
+    preferred: { icon_id: 'mingcute:scan_line', name: 'scan' },
+    avoided: { icon_id: 'tabler:license', name: 'license' },
   },
 ];
 

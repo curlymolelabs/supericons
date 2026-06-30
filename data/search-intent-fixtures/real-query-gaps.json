@@ -2,6 +2,33 @@
   "version": 1,
   "queries": [
     {
+      "query": "license plate",
+      "max_variants": 10,
+      "intent_type": "compound_concept",
+      "expected_variants": [
+        "license plate",
+        "vehicle plate",
+        "number plate",
+        "vehicle scan",
+        "camera scan",
+        "camera",
+        "scan",
+        "car"
+      ],
+      "forbidden_variants": [
+        "license",
+        "plate"
+      ],
+      "expected_gap_type": "new_icon_gap",
+      "acceptable_icon_families": [
+        "camera",
+        "scan",
+        "car",
+        "vehicle",
+        "plate"
+      ]
+    },
+    {
       "query": "license plate recognition camera scan car",
       "max_variants": 10,
       "intent_type": "compound_concept",
