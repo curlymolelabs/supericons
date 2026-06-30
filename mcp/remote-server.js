@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
 import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
+import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -175,15 +176,29 @@ function normalizeLocalIcon(icon) {
 function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, locale = null }) {
   if (publicIcons.length === 0) return [];
 
-  return searchLocalIcons(query, publicIcons, synonyms, {
-    library: library || null,
-    style,
-    limit,
-    locale,
-  })
-    .map(normalizeLocalIcon)
-    .filter(Boolean)
-    .slice(0, Math.max(1, limit));
+  const queryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const results = [];
+  const seen = new Set();
+
+  for (const queryVariant of queryVariants) {
+    const variantResults = searchLocalIcons(queryVariant, publicIcons, synonyms, {
+      library: library || null,
+      style,
+      limit: Math.max(limit * 2, 20),
+      locale,
+    });
+
+    for (const icon of variantResults) {
+      const normalized = normalizeLocalIcon(icon);
+      if (!normalized) continue;
+      const key = `${normalized.library}:${normalized.id}:${normalized.style || 'outline'}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      results.push(normalized);
+    }
+  }
+
+  return results.slice(0, Math.max(1, limit));
 }
 
 async function searchHostedIcons({ query, library, style = 'any', limit = 20, locale = null }) {

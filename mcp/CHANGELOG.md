@@ -5,6 +5,8 @@
 ### Fixed
 
 - improved MCP local fallback search for long natural-language icon requests such as license plate recognition, AI app builders, code editors, neck pain, and dream interpretation
+- applied the same long-query fallback behavior to the hosted MCP server fallback path
+- updated packaged MCP server metadata to `0.4.12`
 
 ## 0.4.11 - 2026-06-28
 
