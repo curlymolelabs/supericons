@@ -149,7 +149,7 @@ function getPublicGatewayAnonKey() {
     || process.env.SUPERICONS_SEARCH_ENGINE_ANON_KEY
     || process.env.SUPABASE_ANON_KEY
     || process.env.SUPERICONS_SUPABASE_ANON
-    || SUPABASE_ANON
+    || ''
   );
 }
 
@@ -159,6 +159,7 @@ export async function searchIconsHostedMcp({
   limit = 20,
   style = 'any',
   locale = null,
+  includeQueryFrame = false,
 }) {
   const apiKey = getConfiguredApiKey();
 
@@ -191,6 +192,7 @@ export async function searchIconsHostedMcp({
       style,
       locale,
       source: 'mcp',
+      ...(includeQueryFrame ? { include_query_frame: true } : {}),
     };
     const payload = await postHostedSearch(baseUrl, headers, body);
     if (hasSearchResults(payload) || !locale) return payload;
@@ -207,8 +209,11 @@ export async function searchIconsHostedMcp({
   const publicAnonKey = getPublicGatewayAnonKey();
   const headers = {
     'Content-Type': 'application/json',
-    apikey: publicAnonKey,
   };
+
+  if (publicAnonKey) {
+    headers.apikey = publicAnonKey;
+  }
 
   if (apiKey) {
     headers['x-supericons-api-key'] = apiKey;
@@ -225,6 +230,7 @@ export async function searchIconsHostedMcp({
     style,
     locale,
     source: 'mcp',
+    ...(includeQueryFrame ? { include_query_frame: true } : {}),
   };
   const payload = await postPublicSearch(url, headers, body);
   if (hasSearchResults(payload) || !locale) return payload;

@@ -146,6 +146,22 @@
       "notes": "Positive intelligence or clever automation intent."
     },
     {
+      "term": "powerful",
+      "category": "judgment",
+      "variants": ["power", "bolt", "zap", "rocket", "gauge", "flame"],
+      "prefer": ["power", "bolt", "zap", "rocket", "gauge", "flame"],
+      "avoid": ["power-off", "battery-low", "plug-off", "circle-off"],
+      "notes": "Strength, capability, high energy, or high-performance intent."
+    },
+    {
+      "term": "strong",
+      "category": "judgment",
+      "variants": ["power", "bolt", "zap", "shield", "gauge", "dumbbell"],
+      "prefer": ["power", "bolt", "zap", "shield", "gauge", "dumbbell"],
+      "avoid": ["power-off", "weak", "battery-low", "plug-off", "circle-off"],
+      "notes": "Strength, resilience, or confidence intent."
+    },
+    {
       "term": "stupid",
       "category": "judgment",
       "variants": ["mistake", "error", "confused", "warning", "bug", "brain off"],

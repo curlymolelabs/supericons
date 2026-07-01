@@ -123,6 +123,16 @@ const profileAdjustments = [
     avoided: { icon_id: 'lucide:server', name: 'server' },
   },
   {
+    query: 'powerful',
+    preferred: { icon_id: 'lucide:zap', name: 'zap' },
+    avoided: { icon_id: 'lucide:power-off', name: 'power off' },
+  },
+  {
+    query: 'strong',
+    preferred: { icon_id: 'lucide:shield', name: 'shield' },
+    avoided: { icon_id: 'lucide:power-off', name: 'power off' },
+  },
+  {
     query: 'license plate',
     preferred: { icon_id: 'mingcute:scan_line', name: 'scan' },
     avoided: { icon_id: 'tabler:license', name: 'license' },

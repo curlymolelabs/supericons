@@ -48,6 +48,7 @@ import {
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
 } from './runtime/search-intent-core.js';
+import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -656,7 +657,14 @@ async function resolveAccessibleIcon(id, library, options = {}) {
   return null;
 }
 
-async function searchAccessibleIcons({ query, library, limit, style = VARIANT_STYLES.ANY, locale = null }) {
+async function searchAccessibleIcons({
+  query,
+  library,
+  limit,
+  style = VARIANT_STYLES.ANY,
+  locale = null,
+  includeQueryFrame = false,
+}) {
   const requestedStyle = normalizeRequestedStyle(style);
   const accessibleIcons = getAccessibleIcons();
   const searchableIcons = library
@@ -665,7 +673,14 @@ async function searchAccessibleIcons({ query, library, limit, style = VARIANT_ST
 
   let hostedResults = [];
   try {
-    const hostedPayload = await searchIconsHostedMcp({ query, library, limit, style: requestedStyle, locale });
+    const hostedPayload = await searchIconsHostedMcp({
+      query,
+      library,
+      limit,
+      style: requestedStyle,
+      locale,
+      includeQueryFrame,
+    });
     hostedResults = (hostedPayload.results || [])
       .map(buildHostedIcon)
       .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
@@ -785,8 +800,9 @@ server.tool(
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
+    include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
   },
-  async ({ query, library, style, locale, limit }) => {
+  async ({ query, library, style, locale, limit, include_query_frame }) => {
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
@@ -794,8 +810,16 @@ server.tool(
     }
 
     let results;
+    const queryFrame = include_query_frame ? buildSearchQueryFrame(query, { locale }) : null;
     try {
-      results = await searchAccessibleIcons({ query, library, style, locale, limit });
+      results = await searchAccessibleIcons({
+        query,
+        library,
+        style,
+        locale,
+        limit,
+        includeQueryFrame: include_query_frame,
+      });
     } catch (error) {
       return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
     }
@@ -824,6 +848,7 @@ server.tool(
               },
             }
           : {}),
+        ...(queryFrame ? { query_frame: queryFrame } : {}),
         retryable: true,
       });
     }
@@ -848,7 +873,11 @@ server.tool(
       results: formatted,
       locale: locale || null,
     });
-    return buildTextResponse({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' });
+    return buildTextResponse({
+      results: formatted,
+      ...(queryFrame ? { query_frame: queryFrame } : {}),
+      source: 'Powered by SuperIcons (https://supericons.dev)',
+    });
   }
 );
 
@@ -864,8 +893,9 @@ server.tool(
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
     limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
     response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
+    include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
   },
-  async ({ task, library, style, locale, slots, limit_per_slot, response_mode }) => {
+  async ({ task, library, style, locale, slots, limit_per_slot, response_mode, include_query_frame }) => {
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -879,6 +909,7 @@ server.tool(
         slots,
         limitPerSlot: limit_per_slot,
         responseMode: response_mode,
+        includeQueryFrame: include_query_frame,
         semanticMap: semanticRegistryMap,
         searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }) =>
           searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }),

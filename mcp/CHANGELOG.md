@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.13 - 2026-07-01
+
+### Added
+
+- added opt-in query-frame diagnostics for MCP search and recommendation calls through `include_query_frame`
+
+### Fixed
+
+- improved localized settings-page recommendations so account/profile slots prefer user/profile icons instead of nearby permissions/security icons
+- kept public hosted MCP search gateway requests from sending a fallback Supabase key unless explicitly configured
+
 ## 0.4.12 - 2026-06-30
 
 ### Fixed

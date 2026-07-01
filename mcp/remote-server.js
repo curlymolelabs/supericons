@@ -16,6 +16,7 @@ import { searchIconsHostedMcp } from './hosted-search-client.js';
 import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
+import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -99,6 +100,7 @@ const libraryResultSchema = z.object({
 
 const searchIconsOutputSchema = {
   results: z.array(publicIconResultSchema).describe('Matching icons with SVG code and semantic guidance.'),
+  query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
 };
 
 const recommendIconsOutputSchema = {
@@ -106,6 +108,7 @@ const recommendIconsOutputSchema = {
   library: z.string().optional().describe('Library filter used for recommendations, if provided.'),
   style: z.string().optional().describe('Style preference used for recommendations.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
+  query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
 };
 
@@ -201,7 +204,14 @@ function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, l
   return results.slice(0, Math.max(1, limit));
 }
 
-async function searchHostedIcons({ query, library, style = 'any', limit = 20, locale = null }) {
+async function searchHostedIcons({
+  query,
+  library,
+  style = 'any',
+  limit = 20,
+  locale = null,
+  includeQueryFrame = false,
+}) {
   let payload;
   try {
     payload = await searchIconsHostedMcp({
@@ -210,6 +220,7 @@ async function searchHostedIcons({ query, library, style = 'any', limit = 20, lo
       style,
       limit,
       locale,
+      includeQueryFrame,
     });
   } catch (error) {
     const fallbackResults = searchLocalFallbackIcons({
@@ -277,14 +288,23 @@ function createServer() {
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the user asks for outline or solid icons.'),
         locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
+        include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
       },
       outputSchema: searchIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async ({ query, library, style, locale, limit }) => {
-      const results = await searchHostedIcons({ query, library, style, locale, limit });
+    async ({ query, library, style, locale, limit, include_query_frame }) => {
+      const results = await searchHostedIcons({
+        query,
+        library,
+        style,
+        locale,
+        limit,
+        includeQueryFrame: include_query_frame,
+      });
       return asStructured({
         results: results.map(buildPublicIconResult),
+        ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
       });
     }
   );
@@ -302,11 +322,12 @@ function createServer() {
         locale: z.enum(multilingualLocaleValues).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
         limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('Number of choices to return for each slot. Use 1 for a final pick or 2-3 when the user wants alternatives.'),
         response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
+        include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
       },
       outputSchema: recommendIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async ({ task, slots, library, style, locale, limit_per_slot, response_mode }) => {
+    async ({ task, slots, library, style, locale, limit_per_slot, response_mode, include_query_frame }) => {
       const payload = await recommendIconsForTask({
         task,
         slots,
@@ -315,8 +336,12 @@ function createServer() {
         locale,
         limitPerSlot: limit_per_slot,
         responseMode: response_mode,
+        includeQueryFrame: include_query_frame,
         semanticMap,
-        searchIconsForQuery: searchHostedIcons,
+        searchIconsForQuery: (params) => searchHostedIcons({
+          ...params,
+          includeQueryFrame: include_query_frame,
+        }),
         buildIconResult: async (icon) => buildPublicIconResult(icon),
       });
 

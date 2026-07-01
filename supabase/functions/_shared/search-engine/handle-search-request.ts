@@ -10,6 +10,7 @@ import {
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
 } from '../../../../lib/search-intent-core.js';
+import { buildSearchQueryFrame } from '../../../../lib/search-query-frame.js';
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,6 +18,37 @@ export const corsHeaders = {
 };
 
 const ENGINE_VERSION = 'search-v1';
+const PUBLIC_SEMANTIC_PROFILE_FIELDS = [
+  'source_library',
+  'source_name',
+  'label',
+  'name',
+  'slug',
+  'purpose',
+  'category',
+  'asset_type',
+  'pack',
+  'source_url',
+  'source_trust',
+  'meaning',
+  'depicts',
+  'semantic_tags',
+  'ai_category',
+  'ai_category_label',
+  'ai_filter_tags',
+  'job_category',
+  'secondary_categories',
+  'synonyms',
+  'aliases',
+  'search_terms',
+  'filter_tags',
+  'use_when',
+  'avoid_when',
+  'rights',
+  'variants',
+  'quality_status',
+  'access',
+];
 
 const RAILWAY_PROMOTION_TRIGGERS = {
   averageCpuMs: 1500,
@@ -51,6 +83,32 @@ function normalizeStyle(value: unknown) {
   return 'any';
 }
 
+function normalizeBoolean(value: unknown) {
+  const normalized = String(value || '').trim().toLowerCase();
+  return normalized === '1' || normalized === 'true' || normalized === 'on' || normalized === 'yes';
+}
+
+function buildPublicSemanticPayload(publicRecord: Record<string, unknown>) {
+  const recordPayload = publicRecord.record && typeof publicRecord.record === 'object' && !Array.isArray(publicRecord.record)
+    ? (publicRecord.record as Record<string, unknown>)
+    : {};
+  const semantic: Record<string, unknown> = {};
+
+  for (const field of PUBLIC_SEMANTIC_PROFILE_FIELDS) {
+    const value = publicRecord[field] ?? recordPayload[field];
+    if (Array.isArray(value)) {
+      const clean = value.filter((item) => typeof item === 'string' && item.trim().length > 0);
+      if (clean.length > 0) semantic[field] = clean;
+      continue;
+    }
+    if (typeof value === 'string' && value.trim().length > 0) {
+      semantic[field] = value.trim();
+    }
+  }
+
+  return semantic;
+}
+
 function buildErrorResponse(error: unknown) {
   const normalized = error instanceof SearchEngineHttpError
     ? error
@@ -73,6 +131,94 @@ function buildErrorResponse(error: unknown) {
   }, normalized.status);
 }
 
+function extractBearerToken(req: Request) {
+  const authorization = req.headers.get('authorization') || '';
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  return match?.[1]?.trim() || null;
+}
+
+function isMissingAuditColumnError(error: unknown) {
+  if (!error || typeof error !== 'object') return false;
+  const code = 'code' in error ? String(error.code) : '';
+  const message = 'message' in error ? String(error.message).toLowerCase() : '';
+  return code === '42703' || (message.includes('column') && message.includes('does not exist'));
+}
+
+async function resolveSearchAuditAccount(adminClient: any, req: Request) {
+  const token = extractBearerToken(req);
+  if (!token) {
+    return {
+      userId: null,
+      isRegistered: false,
+      accountPlan: null,
+      subscriptionStatus: null,
+      isPro: false,
+    };
+  }
+
+  try {
+    const { data, error } = await adminClient.auth.getUser(token);
+    const user = data?.user || null;
+    if (error || !user?.id) {
+      return {
+        userId: null,
+        isRegistered: false,
+        accountPlan: null,
+        subscriptionStatus: null,
+        isPro: false,
+      };
+    }
+
+    const { data: subscription } = await adminClient
+      .from('si_subscriptions')
+      .select('status, plan')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    const status = typeof subscription?.status === 'string' ? subscription.status : null;
+    return {
+      userId: user.id,
+      isRegistered: true,
+      accountPlan: typeof subscription?.plan === 'string' ? subscription.plan : null,
+      subscriptionStatus: status,
+      isPro: status === 'active',
+    };
+  } catch {
+    return {
+      userId: null,
+      isRegistered: false,
+      accountPlan: null,
+      subscriptionStatus: null,
+      isPro: false,
+    };
+  }
+}
+
+function stripEnrichedAuditColumns(payload: Record<string, unknown>) {
+  const {
+    country_code: _countryCode,
+    geo_source: _geoSource,
+    user_id: _userId,
+    is_registered: _isRegistered,
+    account_plan: _accountPlan,
+    subscription_status: _subscriptionStatus,
+    is_pro: _isPro,
+    ...basePayload
+  } = payload;
+  return basePayload;
+}
+
+async function insertSearchAudit(adminClient: any, payload: Record<string, unknown>) {
+  const { error } = await adminClient.from('search_request_audit').insert(payload);
+  if (!error) return;
+  if (!isMissingAuditColumnError(error)) throw error;
+
+  const fallback = await adminClient
+    .from('search_request_audit')
+    .insert(stripEnrichedAuditColumns(payload));
+  if (fallback.error) throw fallback.error;
+}
+
 export async function handleSearchRequest(
   req: Request,
   { defaultSource = 'web' }: { defaultSource?: string } = {},
@@ -86,11 +232,23 @@ export async function handleSearchRequest(
   }
 
   const startedAt = Date.now();
-  let adminClient = null;
+  let adminClient: any = null;
   let queryNorm = '';
   let source = defaultSource;
   let library: string | null = null;
-  let identity = { sessionHash: null as string | null, ipHash: null as string | null };
+  let identity = {
+    sessionHash: null as string | null,
+    ipHash: null as string | null,
+    countryCode: null as string | null,
+    geoSource: null as string | null,
+  };
+  let account = {
+    userId: null as string | null,
+    isRegistered: false,
+    accountPlan: null as string | null,
+    subscriptionStatus: null as string | null,
+    isPro: false,
+  };
 
   try {
     const body = await req.json().catch(() => ({}));
@@ -99,6 +257,10 @@ export async function handleSearchRequest(
     source = normalizeSource(body?.source, defaultSource);
     const style = normalizeStyle(body?.style);
     const limit = Math.max(1, Math.min(50, Number(body?.limit || 20)));
+    const includeQueryFrame = normalizeBoolean(body?.include_query_frame);
+    const queryFrame = includeQueryFrame
+      ? buildSearchQueryFrame(queryNorm, { locale: body?.locale || null })
+      : null;
 
     identity = await enforceSearchRateLimit(req);
 
@@ -115,16 +277,17 @@ export async function handleSearchRequest(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
+    account = await resolveSearchAuditAccount(adminClient, req);
 
     const intentProfile = buildSearchIntentProfile(queryNorm);
-    const queryVariants = buildIntentQueryVariants(queryNorm, { maxVariants: 6 });
+    const queryVariants = buildIntentQueryVariants(queryNorm, { maxVariants: 10 });
     const candidateBatches = await Promise.all(
       queryVariants.map((variant, index) =>
         adminClient.rpc('si_search_icon_candidates', {
           p_query: variant,
           p_library: library,
           p_limit: Math.max(limit * 3, 40),
-        }).then((result) => ({ ...result, variant, index }))
+        }).then((result: any) => ({ ...result, variant, index }))
       ),
     );
 
@@ -194,7 +357,7 @@ export async function handleSearchRequest(
     if (resultIconIds.length > 0) {
       const publicRegistryResult = await adminClient
         .from('icon_registry_public_export')
-        .select('icon_id, label, source_name, depicts, semantic_tags, synonyms, use_when, avoid_when')
+        .select('icon_id, source_library, source_name, label, purpose, category, depicts, semantic_tags, synonyms, use_when, avoid_when, record')
         .in('icon_id', resultIconIds);
 
       if (publicRegistryResult.error) throw publicRegistryResult.error;
@@ -209,14 +372,13 @@ export async function handleSearchRequest(
     const results = rankedResults.map((row) => {
       const publicRecord = publicRecordsById.get(row.icon_id);
       if (!publicRecord) return row;
-      const { icon_id: _iconId, ...semantic } = publicRecord;
       return {
         ...row,
-        semantic,
+        semantic: buildPublicSemanticPayload(publicRecord),
       };
     });
 
-    await adminClient.from('search_request_audit').insert({
+    await insertSearchAudit(adminClient, {
       query_norm: queryNorm,
       source,
       library_filter: library,
@@ -225,6 +387,13 @@ export async function handleSearchRequest(
       latency_ms: Date.now() - startedAt,
       session_hash: identity.sessionHash,
       ip_hash: identity.ipHash,
+      country_code: identity.countryCode,
+      geo_source: identity.geoSource,
+      user_id: account.userId,
+      is_registered: account.isRegistered,
+      account_plan: account.accountPlan,
+      subscription_status: account.subscriptionStatus,
+      is_pro: account.isPro,
     });
 
     return buildJsonResponse({
@@ -234,13 +403,14 @@ export async function handleSearchRequest(
       query_expansion: {
         variants: queryVariants,
         expanded: queryVariants.length > 1,
+        ...(queryFrame ? { query_frame: queryFrame } : {}),
       },
       railway_promotion_triggers: RAILWAY_PROMOTION_TRIGGERS,
     });
   } catch (error) {
     if (adminClient && queryNorm) {
       try {
-        await adminClient.from('search_request_audit').insert({
+        await insertSearchAudit(adminClient, {
           query_norm: queryNorm,
           source,
           library_filter: library,
@@ -249,6 +419,13 @@ export async function handleSearchRequest(
           latency_ms: Date.now() - startedAt,
           session_hash: identity.sessionHash,
           ip_hash: identity.ipHash,
+          country_code: identity.countryCode,
+          geo_source: identity.geoSource,
+          user_id: account.userId,
+          is_registered: account.isRegistered,
+          account_plan: account.accountPlan,
+          subscription_status: account.subscriptionStatus,
+          is_pro: account.isPro,
         });
       } catch {
         // Ignore secondary audit failures while returning the primary error.

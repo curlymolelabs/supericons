@@ -41,6 +41,16 @@
       "query": "prompt",
       "expected_variants": ["prompt", "message text", "terminal", "input text"],
       "expected_any_top_concepts": ["message", "terminal", "text", "input"]
+    },
+    {
+      "query": "powerful",
+      "expected_variants": ["powerful", "power", "bolt", "zap", "rocket"],
+      "expected_any_top_concepts": ["power", "bolt", "zap", "rocket", "gauge"]
+    },
+    {
+      "query": "strong",
+      "expected_variants": ["strong", "power", "bolt", "zap", "shield"],
+      "expected_any_top_concepts": ["power", "bolt", "zap", "shield", "gauge"]
     }
   ]
 }

@@ -79,4 +79,5 @@ export const GENERATED_INTENT_RULES = Object.freeze(${JSON.stringify(entries, nu
 `;
 
 writeFileSync(resolve('lib/generated-search-intent-rules.js'), output);
+writeFileSync(resolve('mcp/runtime/generated-search-intent-rules.js'), output);
 console.log('build-search-intent-core-from-dictionary: ok');

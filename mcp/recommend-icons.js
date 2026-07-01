@@ -15,6 +15,7 @@ import {
   buildSearchIntentProfile,
   getIntentCandidateAdjustment,
 } from './runtime/search-intent-core.js';
+import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
@@ -1298,11 +1299,16 @@ function getMatchingSlotRules(slotLabel, intentTerms = []) {
   const slotText = normalizeText(slotLabel);
   const intentText = normalizeText(intentTerms.join(' '));
   return COMMON_SLOT_PREFERENCE_RULES
-    .filter((rule) => rule.slotPatterns.some((pattern) => (
-      pattern.test(slotText) ||
-      pattern.test(rawSlotText) ||
-      pattern.test(intentText)
-    )))
+    .filter((rule) => {
+      const directSlotMatch = rule.slotPatterns.some((pattern) => (
+        pattern.test(slotText) ||
+        pattern.test(rawSlotText)
+      ));
+      if (directSlotMatch) return true;
+
+      return rule.matchIntentTerms === true &&
+        rule.slotPatterns.some((pattern) => pattern.test(intentText));
+    })
     .sort((left, right) => (right.priority || 0) - (left.priority || 0));
 }
 
@@ -1440,11 +1446,13 @@ export async function recommendIconsForTask({
   slots,
   limitPerSlot = 3,
   responseMode = 'plan',
+  includeQueryFrame = false,
   searchIconsForQuery,
   buildIconResult,
   semanticMap,
 }) {
   const normalizedResponseMode = normalizeResponseMode(responseMode);
+  const taskQueryFrame = includeQueryFrame ? buildSearchQueryFrame(task, { locale }) : null;
   const scoredSlotResults = await mapWithConcurrency(slots, SLOT_SEARCH_CONCURRENCY, async (slotLabel) => {
     const intentTerms = buildSlotIntentTerms(task, slotLabel, locale);
     const requestedVariantTerms = dedupe([
@@ -1530,6 +1538,7 @@ export async function recommendIconsForTask({
       queries_used: queryVariants,
       intentTerms,
       requestedVariantTerms,
+      queryFrame: includeQueryFrame ? buildSearchQueryFrame(`${slotLabel} ${task}`, { locale }) : null,
       scored,
     };
   });
@@ -1593,6 +1602,9 @@ export async function recommendIconsForTask({
       recommended: preparedCandidates[0] || null,
       alternatives: preparedCandidates.slice(1),
     };
+    if (includeQueryFrame && slotResult.queryFrame) {
+      slotPayload.query_frame = slotResult.queryFrame;
+    }
     if (confidence.level === 'low') {
       slotPayload.guidance = buildLowConfidenceHint(slotResult.slot, slotResult.queries_used);
     }
@@ -1607,7 +1619,7 @@ export async function recommendIconsForTask({
     .map((slot) => slot.slot);
   const allSlotsResolved = slotResults.every((slot) => Boolean(slot.recommended));
 
-  return {
+  const payload = {
     task,
     library: library || 'all',
     style,
@@ -1618,4 +1630,10 @@ export async function recommendIconsForTask({
     fallback_recommended: !allSlotsResolved || lowConfidenceSlots.length > 0,
     results: slotResults,
   };
+
+  if (includeQueryFrame && taskQueryFrame) {
+    payload.query_frame = taskQueryFrame;
+  }
+
+  return payload;
 }

@@ -1,0 +1,208 @@
+{
+  "schema_version": "semantic-search-v2-evaluation-set-1",
+  "description": "Public-safe evaluation queries for Supericons Semantic Search v2. These fixtures are used to measure exact brand search, long natural-language concepts, localized concepts, negative meaning separation, and recommendation slots before changing production ranking.",
+  "query_groups": [
+    {
+      "id": "brand_logo_exact",
+      "purpose": "Protect exact AI and developer tool logo discovery.",
+      "queries": [
+        {
+          "query": "xai",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:x-ai"],
+          "acceptable_families": ["xai", "x.ai", "grok"]
+        },
+        {
+          "query": "x.ai logo",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:x-ai"],
+          "acceptable_families": ["xai", "x.ai", "grok"]
+        },
+        {
+          "query": "grok ai logo",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:x-ai"],
+          "acceptable_families": ["xai", "x.ai", "grok"]
+        },
+        {
+          "query": "openai codex",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:openai-codex-app"],
+          "acceptable_families": ["codex", "openai codex", "coding agent"]
+        },
+        {
+          "query": "lovable",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:lovable"],
+          "acceptable_families": ["lovable", "ai app builder"]
+        },
+        {
+          "query": "base44",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:base44"],
+          "acceptable_families": ["base44", "ai app builder"]
+        },
+        {
+          "query": "kickbacks ai",
+          "intent_type": "brand_logo",
+          "expected_top_icon_ids": ["si:kickbacks-ai"],
+          "acceptable_families": ["kickbacks", "affiliate", "creator monetization"]
+        }
+      ]
+    },
+    {
+      "id": "long_natural_language",
+      "purpose": "Measure whether long phrases resolve to useful visual families instead of weak standalone words.",
+      "queries": [
+        {
+          "query": "license plate",
+          "intent_type": "compound_concept",
+          "expected_gap_type": "new_icon_gap",
+          "acceptable_families": ["scan", "camera", "vehicle", "car", "ocr"],
+          "avoid_families": ["legal license", "license document", "dinner plate", "food"]
+        },
+        {
+          "query": "license plate recognition camera scan car",
+          "intent_type": "compound_concept",
+          "expected_gap_type": "new_icon_gap",
+          "acceptable_families": ["scan", "camera", "vehicle", "car", "ocr", "traffic camera"],
+          "avoid_families": ["legal license", "license document", "dinner plate", "food"]
+        },
+        {
+          "query": "cursor ai code editor logo",
+          "intent_type": "brand_logo",
+          "expected_gap_type": "library_gap",
+          "acceptable_families": ["code editor", "terminal", "codex", "trae", "opencode"],
+          "avoid_families": ["barcode"]
+        },
+        {
+          "query": "vercel v0 ai app builder logo",
+          "intent_type": "brand_logo",
+          "expected_gap_type": "library_gap",
+          "acceptable_families": ["v0", "vercel", "app builder", "base44", "bolt", "lovable"]
+        },
+        {
+          "query": "neck pain person",
+          "intent_type": "compound_concept",
+          "expected_gap_type": "new_icon_gap",
+          "acceptable_families": ["person", "body", "pain", "accessibility", "activity"]
+        },
+        {
+          "query": "dream interpretation moon star eye mystical",
+          "intent_type": "abstract_metaphor",
+          "expected_gap_type": "new_icon_gap",
+          "acceptable_families": ["moon", "star", "eye", "sparkles", "mystical"]
+        }
+      ]
+    },
+    {
+      "id": "common_ui_concepts",
+      "purpose": "Protect normal UI search quality while semantic search evolves.",
+      "queries": [
+        {
+          "query": "settings",
+          "intent_type": "literal_object",
+          "acceptable_families": ["settings", "cog", "sliders"]
+        },
+        {
+          "query": "user profile",
+          "intent_type": "ui_slot",
+          "acceptable_families": ["user", "profile", "person", "account"]
+        },
+        {
+          "query": "download file",
+          "intent_type": "object_action",
+          "acceptable_families": ["download", "file", "arrow down"]
+        },
+        {
+          "query": "database search",
+          "intent_type": "object_action",
+          "acceptable_families": ["database", "search", "data"]
+        },
+        {
+          "query": "warning alert",
+          "intent_type": "status_feedback",
+          "acceptable_families": ["warning", "alert", "triangle"]
+        }
+      ]
+    },
+    {
+      "id": "localized_concepts",
+      "purpose": "Check multilingual and localized search intent without storing non-ASCII fixture text in this public source file.",
+      "queries": [
+        {
+          "query": "Chinese query meaning license plate recognition",
+          "locale": "zh-Hans",
+          "intent_type": "compound_concept",
+          "acceptable_families": ["scan", "camera", "vehicle", "ocr"]
+        },
+        {
+          "query": "Japanese query meaning scan camera",
+          "locale": "ja",
+          "intent_type": "object_action",
+          "acceptable_families": ["scan", "camera"]
+        },
+        {
+          "query": "buscar icono de base de datos",
+          "locale": "es",
+          "intent_type": "literal_object",
+          "acceptable_families": ["database", "data", "search"]
+        },
+        {
+          "query": "Portuguese query meaning code editor icon",
+          "locale": "pt",
+          "intent_type": "literal_object",
+          "acceptable_families": ["code", "editor", "terminal"]
+        }
+      ]
+    },
+    {
+      "id": "negative_meaning_separation",
+      "purpose": "Verify that concept relationships do not force wrong meanings into the top results.",
+      "queries": [
+        {
+          "query": "software license document",
+          "intent_type": "literal_object",
+          "acceptable_families": ["license", "document", "certificate", "file"],
+          "avoid_families": ["license plate", "car scan", "traffic camera"]
+        },
+        {
+          "query": "dinner plate",
+          "intent_type": "literal_object",
+          "acceptable_families": ["plate", "food", "restaurant", "dish"],
+          "avoid_families": ["license plate", "vehicle scan", "ocr"]
+        },
+        {
+          "query": "legal permit",
+          "intent_type": "literal_object",
+          "acceptable_families": ["document", "license", "certificate", "file"],
+          "avoid_families": ["car", "vehicle", "traffic camera"]
+        }
+      ]
+    },
+    {
+      "id": "recommendation_slots",
+      "purpose": "Ensure recommend_icons can use the same meaning layer for UI slots and agent prompts.",
+      "queries": [
+        {
+          "task": "choose icons for an AI app builder landing page",
+          "slot": "AI app builder logo",
+          "intent_type": "brand_logo",
+          "acceptable_families": ["base44", "bolt", "lovable", "app builder"]
+        },
+        {
+          "task": "choose icons for a vehicle security dashboard",
+          "slot": "license plate recognition",
+          "intent_type": "compound_concept",
+          "acceptable_families": ["scan", "camera", "vehicle", "ocr"]
+        },
+        {
+          "task": "choose icons for a health intake form",
+          "slot": "neck pain",
+          "intent_type": "compound_concept",
+          "acceptable_families": ["person", "body", "pain", "accessibility"]
+        }
+      ]
+    }
+  ]
+}

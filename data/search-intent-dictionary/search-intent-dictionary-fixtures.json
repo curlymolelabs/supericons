@@ -14,6 +14,18 @@
       "expected_avoid": ["bug", "x-circle"]
     },
     {
+      "query": "powerful",
+      "expected_variants": ["power", "bolt", "zap", "rocket", "gauge"],
+      "expected_prefer": ["power", "bolt", "zap", "rocket"],
+      "expected_avoid": ["power-off", "battery-low"]
+    },
+    {
+      "query": "strong",
+      "expected_variants": ["power", "bolt", "zap", "shield", "gauge"],
+      "expected_prefer": ["power", "bolt", "zap", "shield"],
+      "expected_avoid": ["power-off", "battery-low"]
+    },
+    {
       "query": "broken",
       "expected_variants": ["error", "bug", "warning", "x circle", "wrench"],
       "expected_prefer": ["bug", "triangle-alert", "wrench"],

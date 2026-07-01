@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "query": "ai slop",
+      "expected_groups": ["ai_low_quality_output"],
+      "expected_intent_types": ["abstract_metaphor", "quality_negative", "ai_domain"],
+      "expected_positive_concepts": ["bot off", "warning", "trash", "sparkles off"],
+      "expected_avoid_concepts": ["food", "cooking", "animal feed"],
+      "forbidden_groups": ["quality_polish"]
+    },
+    {
+      "query": "low quality ai",
+      "expected_groups": ["ai_low_quality_output"],
+      "expected_positive_concepts": ["bot off", "warning"],
+      "expected_avoid_concepts": ["food"]
+    },
+    {
+      "query": "powerful",
+      "expected_groups": ["power_strength_performance"],
+      "expected_intent_types": ["adjective", "performance_positive"],
+      "expected_positive_concepts": ["power", "bolt", "zap", "gauge"],
+      "expected_avoid_concepts": ["power off", "battery low"]
+    },
+    {
+      "query": "strong",
+      "expected_groups": ["power_strength_performance"],
+      "expected_positive_concepts": ["power", "shield", "dumbbell"],
+      "expected_avoid_concepts": ["weak"]
+    },
+    {
+      "query": "secure checkout",
+      "expected_groups": ["trust_security_privacy"],
+      "expected_intent_types": ["abstract_attribute", "security"],
+      "expected_positive_concepts": ["shield", "lock", "key"],
+      "expected_avoid_concepts": ["unlock"]
+    },
+    {
+      "query": "premium dashboard",
+      "expected_groups": ["quality_polish"],
+      "expected_positive_concepts": ["sparkles", "badge", "gem"],
+      "expected_avoid_concepts": ["bug", "broken"]
+    },
+    {
+      "query": "license plate recognition camera scan car",
+      "expected_groups": ["vision_scan_detection"],
+      "expected_intent_types": ["compound_concept", "object_action", "computer_vision"],
+      "expected_positive_concepts": ["camera", "scan", "car"],
+      "expected_avoid_concepts": ["dinner plate", "shopping cart", "legal license"]
+    },
+    {
+      "query": "dream interpretation moon star eye mystical",
+      "expected_groups": ["mystical_dream_symbol"],
+      "expected_positive_concepts": ["moon", "star", "eye", "sparkles"],
+      "expected_avoid_concepts": ["dreamstime"]
+    },
+    {
+      "query": "agent tool call",
+      "expected_groups": ["agentic_workflow"],
+      "expected_positive_concepts": ["bot", "workflow", "terminal"],
+      "expected_avoid_concepts": ["generic ai logo"]
+    },
+    {
+      "query": "AI 垃圾",
+      "expected_language": "zh-Hans",
+      "expected_groups": ["ai_low_quality_output"],
+      "expected_positive_concepts": ["bot off", "warning"]
+    },
+    {
+      "query": "強力",
+      "expected_language": "zh-Hant",
+      "expected_groups": ["power_strength_performance"],
+      "expected_positive_concepts": ["power", "bolt"]
+    },
+    {
+      "query": "xai logo",
+      "expected_intent_types": ["brand_logo"],
+      "forbidden_groups": ["ai_low_quality_output", "agentic_workflow"]
+    }
+  ]
+}
