@@ -12,7 +12,7 @@ Use the scoped npm package:
 @supericons/mcp
 ```
 
-Latest verified package version: `0.4.10`.
+Latest verified package version: `0.4.13`.
 
 New installs should use the scoped package above.
 
@@ -132,6 +132,8 @@ https://mcp.supericons.dev/.well-known/mcp/server-card.json
 ## Current Library Coverage
 
 Supericons MCP includes 20,000+ free icons across supported open icon libraries, plus the Supericons logo library for AI tools and app-building products.
+
+The current release improves long natural-language icon search and localized icon recommendations while keeping the same setup command.
 
 ## Example Prompts
 

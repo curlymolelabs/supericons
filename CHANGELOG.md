@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.13
+
+- Updated public wrapper metadata for `@supericons/mcp` version `0.4.13`.
+- Confirmed the same `npx -y @supericons/mcp` setup works for the current release.
+- Noted improved long natural-language icon search and localized icon recommendations.
+
 ## 0.4.10
 
 - Updated public wrapper metadata for `@supericons/mcp` version `0.4.10`.
