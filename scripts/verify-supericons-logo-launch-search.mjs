@@ -37,21 +37,21 @@ function requireStringArray(value, message) {
 
 function assertProfileRecord(record) {
   for (const field of [
-    'id',
-    'name',
-    'slug',
-    'pack',
-    'asset_type',
-    'source_url',
-    'source_trust',
-    'meaning',
+    'icon_id',
+    'source_library',
+    'source_name',
+    'label',
+    'purpose',
     'category',
     'job_category',
     'use_when',
     'avoid_when',
-    'rights',
-    'quality_status',
-    'access',
+    'version',
+    'status',
+    'access_tier',
+    'projection_policy',
+    'depicts',
+    'review_state',
   ]) {
     requireString(record[field], `${record.icon_id} should include ${field}`);
   }
@@ -59,23 +59,44 @@ function assertProfileRecord(record) {
   for (const field of [
     'semantic_tags',
     'synonyms',
-    'aliases',
-    'search_terms',
-    'filter_tags',
     'ai_filter_tags',
     'secondary_categories',
-    'variants',
+    'evidence',
   ]) {
     requireStringArray(record[field], `${record.icon_id} should include ${field}`);
   }
 
-  assert.equal(record.id, record.icon_id, `${record.icon_id} should keep id aligned with icon_id`);
-  assert.equal(record.asset_type, 'brand-logo', `${record.icon_id} should be a brand-logo`);
-  assert.equal(record.pack, 'agentic-ai-tools-logos-001', `${record.icon_id} should stay in the launch pack`);
-  assert.equal(record.access, 'free', `${record.icon_id} should stay free`);
-  assert.equal(record.quality_status, 'ready', `${record.icon_id} should be public ready`);
+  assert.equal(record.source_library, 'si', `${record.icon_id} should stay in the Supericons library`);
+  assert.equal(record.category, 'brand_identity', `${record.icon_id} should be a brand identity record`);
+  assert.equal(record.access_tier, 'public_open_record', `${record.icon_id} should stay public`);
+  assert.match(record.projection_policy, /^(public_open_record|future_public_record)$/, `${record.icon_id} should stay on a public projection policy`);
+  assert.equal(record.is_premium, false, `${record.icon_id} should stay free`);
+}
+
+function assertPublicRegistryRecord(record) {
+  for (const field of [
+    'icon_id',
+    'source_library',
+    'source_name',
+    'label',
+    'purpose',
+    'category',
+    'depicts',
+    'use_when',
+    'avoid_when',
+  ]) {
+    requireString(record[field], `${record.icon_id} should include public ${field}`);
+  }
+
+  for (const field of ['semantic_tags', 'synonyms']) {
+    requireStringArray(record[field], `${record.icon_id} should include public ${field}`);
+  }
+
+  assert.equal(record.source_library, 'si', `${record.icon_id} should stay in the Supericons library`);
   assert.equal('access_tier' in record, false, `${record.icon_id} should not expose access_tier publicly`);
   assert.equal('is_premium' in record, false, `${record.icon_id} should not expose is_premium publicly`);
+  assert.equal('internalSignals' in record, false, `${record.icon_id} should not expose internal signals publicly`);
+  assert.equal('editorialNotes' in record, false, `${record.icon_id} should not expose editorial notes publicly`);
 }
 
 function assertPublicIndexProfile(icon) {
@@ -200,10 +221,12 @@ assert.equal(mcpProductFacts.freeLibraryCount, freeLibraryCount, 'MCP product fa
 assert.match(mcpIndexSource, /si:\s*\{\s*name:\s*'Supericons'/, 'local stdio MCP should advertise the Supericons library');
 assert.match(remoteServerSource, /\['si',\s*'Supericons'/, 'hosted MCP should advertise the Supericons library');
 
-for (const record of publicSupericonsRecords) assertProfileRecord(record);
+for (const record of sourceSupericonsRecords) assertProfileRecord(record);
+for (const record of publicSupericonsRecords) assertPublicRegistryRecord(record);
 for (const icon of supericons) assertPublicIndexProfile(icon);
 
-console.log('[PASS] profile coverage: 50 public/MCP records and 50 public index entries include launch profile fields');
+console.log('[PASS] profile coverage: 50 source records include launch profile fields');
+console.log('[PASS] public coverage: 50 public/MCP records expose public-safe semantic fields');
 console.log('[PASS] library discovery: product facts and MCP library metadata include Supericons');
 
 const semanticMap = createSemanticRegistryMap(mcpRecords);
