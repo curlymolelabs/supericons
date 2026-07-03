@@ -17,6 +17,8 @@ import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import {
   buildPreviewBoardUrlForIcons,
+  buildPreviewImageUrl,
+  buildPreviewMarkdownImage,
   buildSearchPreviewUrl,
   enrichPublicIconResult,
   getPublicLibraryMeta,
@@ -77,6 +79,8 @@ const libraryKeysDescription =
 const multilingualLocaleValues = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th'];
 const multilingualLocaleDescription =
   'Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.';
+const previewStyles = new Set(['any', 'outline', 'solid']);
+const previewLocales = new Set(multilingualLocaleValues);
 
 const auditedSearchAnnotations = {
   readOnlyHint: false,
@@ -149,6 +153,8 @@ const recommendIconsOutputSchema = {
 const previewIconsOutputSchema = {
   query: z.string().nullable().optional().describe('Search query used for the visual preview, if any.'),
   preview_url: z.string().describe('Browser URL for visual inspection.'),
+  image_url: z.string().nullable().optional().describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
+  markdown_image: z.string().nullable().optional().describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
   image_included: z.boolean().describe('Whether this response includes MCP image content.'),
   client_display_note: z.string().describe('Plain-language note for clients that do not render images inline.'),
   error: z.string().optional().describe('Recoverable error message when preview inputs are missing or invalid.'),
@@ -325,6 +331,172 @@ async function resolveHostedIconRef(ref, { style = 'any' } = {}) {
   return match ? buildPublicIconResult(match, { style }) : null;
 }
 
+function firstQueryValue(value) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function createPreviewHttpError(status, code, message) {
+  const error = new Error(message);
+  error.status = status;
+  error.code = code;
+  return error;
+}
+
+function normalizePreviewLimit(limit) {
+  const value = Number.parseInt(String(limit ?? ''), 10);
+  if (!Number.isFinite(value)) return 9;
+  return Math.min(12, Math.max(1, value));
+}
+
+function normalizePreviewText(value, { maxLength = 240 } = {}) {
+  const text = String(firstQueryValue(value) || '').trim();
+  if (!text) return '';
+  if (text.length > maxLength) {
+    throw createPreviewHttpError(400, 'preview_query_too_long', `Preview query must be ${maxLength} characters or fewer.`);
+  }
+  return text;
+}
+
+function normalizePreviewStyle(value) {
+  const style = String(firstQueryValue(value) || 'any').trim() || 'any';
+  if (!previewStyles.has(style)) {
+    throw createPreviewHttpError(400, 'invalid_style', 'Preview style must be one of: any, outline, solid.');
+  }
+  return style;
+}
+
+function normalizePreviewLocale(value) {
+  const locale = String(firstQueryValue(value) || '').trim();
+  if (!locale) return undefined;
+  if (!previewLocales.has(locale)) {
+    throw createPreviewHttpError(400, 'invalid_locale', `Preview locale must be one of: ${multilingualLocaleValues.join(', ')}.`);
+  }
+  return locale;
+}
+
+function normalizePreviewIconRefs(input, limit) {
+  const values = Array.isArray(input) ? input : [input];
+  const refs = values
+    .flatMap((value) => String(value || '').split(','))
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const uniqueRefs = [];
+  const seen = new Set();
+  for (const ref of refs) {
+    if (ref.length > 160) {
+      throw createPreviewHttpError(400, 'invalid_icon_ref', 'Preview icon refs must be 160 characters or fewer.');
+    }
+    if (!parseIconRef(ref)) {
+      throw createPreviewHttpError(400, 'invalid_icon_ref', 'Preview icon refs must use library:id format.');
+    }
+    const key = ref.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    uniqueRefs.push(ref);
+    if (uniqueRefs.length >= limit) break;
+  }
+  return uniqueRefs;
+}
+
+function parsePreviewRouteParams(query = {}) {
+  const limit = normalizePreviewLimit(firstQueryValue(query.limit));
+  const iconRefs = normalizePreviewIconRefs(query.icons ?? query.icon_refs, limit);
+  const searchQuery = normalizePreviewText(query.q ?? query.query);
+  if (!searchQuery && iconRefs.length === 0) {
+    throw createPreviewHttpError(400, 'preview_input_required', 'Provide q/query or icons/icon_refs.');
+  }
+  return {
+    query: searchQuery || undefined,
+    iconRefs,
+    library: normalizePreviewText(query.library, { maxLength: 48 }) || undefined,
+    style: normalizePreviewStyle(query.style),
+    locale: normalizePreviewLocale(query.locale),
+    limit,
+  };
+}
+
+function buildDirectPreviewImageFields({ query, iconRefs = [], library, style, locale, limit, icons = [] } = {}) {
+  if (!icons.length) {
+    return {
+      imageUrl: null,
+      markdownImage: null,
+    };
+  }
+  const resolvedRefs = iconRefs.length
+    ? icons.map((icon) => icon.icon_ref).filter(Boolean)
+    : [];
+  const imageOptions = {
+    query: iconRefs.length ? null : query,
+    iconRefs: resolvedRefs,
+    library,
+    style,
+    locale,
+    limit,
+  };
+  const imageUrl = buildPreviewImageUrl(imageOptions);
+  return {
+    imageUrl,
+    markdownImage: buildPreviewMarkdownImage(imageOptions),
+  };
+}
+
+async function buildHostedPreviewModel({
+  query,
+  iconRefs = [],
+  library,
+  style = 'any',
+  locale,
+  limit = 9,
+  includeImage = false,
+} = {}) {
+  const effectiveLimit = normalizePreviewLimit(limit);
+  const fixedRefs = normalizePreviewIconRefs(iconRefs, effectiveLimit);
+  const searchQuery = normalizePreviewText(query);
+  const icons = fixedRefs.length > 0
+    ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
+    : (await searchHostedIcons({
+      query: searchQuery,
+      library,
+      style,
+      locale,
+      limit: effectiveLimit,
+    })).map((icon) => buildPublicIconResult(icon, {
+      query: searchQuery,
+      library,
+      style,
+      locale,
+      limit: effectiveLimit,
+    }));
+
+  const previewUrl = fixedRefs.length > 0
+    ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+    : buildSearchPreviewUrl({ query: searchQuery, library, style, locale, limit: effectiveLimit });
+  const { imageUrl, markdownImage } = buildDirectPreviewImageFields({
+    query: searchQuery,
+    iconRefs: fixedRefs,
+    library,
+    style,
+    locale,
+    limit: effectiveLimit,
+    icons,
+  });
+
+  return {
+    icons,
+    previewUrl,
+    imageUrl,
+    markdownImage,
+    payload: buildPreviewTextPayload({
+      query: searchQuery || null,
+      icons,
+      previewUrl,
+      imageUrl,
+      markdownImage,
+      imageIncluded: Boolean(includeImage && icons.length > 0),
+    }),
+  };
+}
+
 function asPreviewResponse(payload, { imagePng = null, isError = false } = {}) {
   const content = [
     {
@@ -493,7 +665,7 @@ function createServer() {
     'preview_icons',
     {
       title: 'Preview Icons',
-      description: 'Create a visual preview for icon search results or a fixed list of icon refs. Returns a hosted preview URL for all clients and, when requested, an MCP image contact sheet for clients that can render images inline. Terminal clients can open the preview_url in a browser.',
+      description: 'Create a visual preview for icon search results or a fixed list of icon refs. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet. Use markdown_image in final answers when the client supports remote Markdown images; otherwise share image_url or preview_url.',
       inputSchema: {
         query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
         icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
@@ -511,6 +683,8 @@ function createServer() {
         return asPreviewResponse({
           query: null,
           preview_url: buildSearchPreviewUrl({ library, style, locale, limit }),
+          image_url: null,
+          markdown_image: null,
           image_included: false,
           client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
           results: [],
@@ -518,20 +692,14 @@ function createServer() {
         }, { isError: true });
       }
 
-      const fixedRefs = Array.isArray(icon_refs) ? icon_refs.slice(0, limit) : [];
-      const icons = fixedRefs.length > 0
-        ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
-        : (await searchHostedIcons({ query, library, style, locale, limit }))
-          .map((icon) => buildPublicIconResult(icon, { query, library, style, locale, limit }));
-
-      const previewUrl = fixedRefs.length > 0
-        ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
-        : buildSearchPreviewUrl({ query, library, style, locale, limit });
-      const payload = buildPreviewTextPayload({
-        query: query || null,
-        icons,
-        previewUrl,
-        imageIncluded: Boolean(include_image && icons.length > 0),
+      const { icons, payload } = await buildHostedPreviewModel({
+        query,
+        iconRefs: Array.isArray(icon_refs) ? icon_refs : [],
+        library,
+        style,
+        locale,
+        limit,
+        includeImage: include_image,
       });
 
       let imagePng = null;
@@ -636,6 +804,38 @@ app.get('/.well-known/openai-apps-challenge', (_req, res) => {
     return;
   }
   res.status(200).type('text/plain').send(token);
+});
+
+app.get('/preview-icons.png', async (req, res) => {
+  try {
+    const params = parsePreviewRouteParams(req.query);
+    const { icons } = await buildHostedPreviewModel(params);
+    if (!icons.length) {
+      sendJson(res, 404, {
+        error: 'no_preview_icons_found',
+        message: 'No icons were found for this preview request.',
+      });
+      return;
+    }
+
+    const imagePng = buildIconContactSheetPng(icons, {
+      title: params.query ? `Supericons preview: ${params.query}` : 'Supericons icon preview',
+    });
+    res
+      .status(200)
+      .set({
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=300, s-maxage=600',
+        'X-Content-Type-Options': 'nosniff',
+      })
+      .send(Buffer.from(imagePng));
+  } catch (error) {
+    const status = Number(error?.status || 500);
+    sendJson(res, status, {
+      error: error?.code || 'preview_image_unavailable',
+      message: status >= 500 ? 'Preview image generation failed.' : error.message,
+    });
+  }
 });
 
 app.post('/mcp', async (req, res) => {

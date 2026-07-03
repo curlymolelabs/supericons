@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.17 - 2026-07-03
+
+### Added
+
+- added hosted direct PNG preview URLs through `/preview-icons.png`
+- added `image_url` and `markdown_image` fields to `preview_icons` responses
+
 ## 0.4.16 - 2026-07-03
 
 ### Fixed

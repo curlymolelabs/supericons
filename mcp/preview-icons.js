@@ -179,15 +179,19 @@ export function buildPreviewTextPayload({
   query = null,
   icons = [],
   previewUrl,
+  imageUrl,
+  markdownImage,
   imageIncluded = false,
 } = {}) {
   return {
     query,
     preview_url: previewUrl,
+    image_url: imageUrl || null,
+    markdown_image: markdownImage || null,
     image_included: imageIncluded,
     client_display_note: imageIncluded
-      ? 'If your MCP client does not render image content inline, open preview_url in a browser.'
-      : 'Open preview_url in a browser to visually inspect these icons.',
+      ? 'If your MCP client does not render image content inline, use markdown_image in the final answer or open image_url/preview_url in a browser.'
+      : 'Use markdown_image in the final answer when supported, or open image_url/preview_url in a browser.',
     results: icons.map((icon) => ({
       id: icon.id,
       name: icon.name,

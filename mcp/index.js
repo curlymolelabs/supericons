@@ -51,6 +51,8 @@ import {
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import {
   buildPreviewBoardUrlForIcons,
+  buildPreviewImageUrl,
+  buildPreviewMarkdownImage,
   buildSearchPreviewUrl,
   enrichPublicIconResult,
   getPublicLibraryMeta,
@@ -1015,7 +1017,7 @@ server.tool(
 // --- Tool: preview_icons ---
 server.tool(
   'preview_icons',
-  'Create a visual preview for icon search results or a fixed list of icon refs. Returns a browser preview URL for all clients and, when requested, an MCP image contact sheet for clients that can render images inline. Terminal clients can open the preview_url in a browser.',
+  'Create a visual preview for icon search results or a fixed list of icon refs. Returns a browser preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet. Use markdown_image in final answers when the client supports remote Markdown images; otherwise share image_url or preview_url.',
   {
     query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
     icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
@@ -1057,10 +1059,33 @@ server.tool(
     const previewUrl = Array.isArray(icon_refs) && icon_refs.length > 0
       ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
       : buildSearchPreviewUrl({ query, library, style, locale, limit });
+    const previewImageOptions = Array.isArray(icon_refs) && icon_refs.length > 0
+      ? {
+        iconRefs: icons.map((icon) => icon.icon_ref).filter(Boolean),
+        library,
+        style,
+        locale,
+        limit,
+      }
+      : {
+        query,
+        library,
+        style,
+        locale,
+        limit,
+      };
+    const imageUrl = icons.length > 0
+      ? buildPreviewImageUrl(previewImageOptions)
+      : null;
+    const markdownImage = imageUrl
+      ? buildPreviewMarkdownImage(previewImageOptions)
+      : null;
     const payload = buildPreviewTextPayload({
       query: query || null,
       icons,
       previewUrl,
+      imageUrl,
+      markdownImage,
       imageIncluded: Boolean(include_image && icons.length > 0),
     });
 

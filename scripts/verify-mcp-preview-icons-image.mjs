@@ -5,7 +5,12 @@ import { fileURLToPath } from 'node:url';
 import {
   buildIconContactSheetPng,
   buildIconContactSheetSvg,
+  buildPreviewTextPayload,
 } from '../mcp/preview-icons.js';
+import {
+  buildPreviewImageUrl,
+  buildPreviewMarkdownImage,
+} from '../mcp/public-icon-preview.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = dirname(__dirname);
@@ -73,6 +78,31 @@ for (let index = 0; index < pngSignature.length; index += 1) {
 
 if (png.length < 15_000) {
   fail(`contact sheet PNG is unexpectedly small (${png.length} bytes), which suggests blank placeholders.`);
+}
+
+const imageUrl = buildPreviewImageUrl({
+  query: 'ai slop',
+  limit: 3,
+});
+const markdownImage = buildPreviewMarkdownImage({
+  query: 'ai slop',
+  limit: 3,
+});
+const payload = buildPreviewTextPayload({
+  query: 'ai slop',
+  icons,
+  previewUrl: 'https://supericons.dev/?view=icons&preview=mcp&q=ai+slop&limit=3',
+  imageUrl,
+  markdownImage,
+  imageIncluded: true,
+});
+
+if (payload.image_url !== 'https://mcp.supericons.dev/preview-icons.png?q=ai+slop&limit=3') {
+  fail(`unexpected direct preview image URL: ${payload.image_url}`);
+}
+
+if (payload.markdown_image !== `![Supericons preview](${payload.image_url})`) {
+  fail('preview payload does not include a ready-made Markdown image snippet.');
 }
 
 console.log(`MCP preview icon image verified: ${icons.length} icons, ${png.length} PNG bytes.`);

@@ -1,4 +1,5 @@
 const DEFAULT_WEB_BASE_URL = 'https://supericons.dev';
+const DEFAULT_MCP_BASE_URL = 'https://mcp.supericons.dev';
 
 export const PUBLIC_LIBRARY_META = Object.freeze({
   material: {
@@ -55,6 +56,10 @@ function getConfiguredWebBaseUrl() {
   return normalizeBaseUrl(process.env.SUPERICONS_WEB_BASE_URL || DEFAULT_WEB_BASE_URL);
 }
 
+function getConfiguredMcpBaseUrl() {
+  return normalizeBaseUrl(process.env.SUPERICONS_MCP_BASE_URL || DEFAULT_MCP_BASE_URL);
+}
+
 function getIconLibrary(icon = {}) {
   return icon.library || icon.lib || icon.library_key || '';
 }
@@ -102,6 +107,39 @@ export function buildSearchPreviewUrl({
   if (locale) url.searchParams.set('locale', String(locale));
   if (limit) url.searchParams.set('limit', String(limit));
   return url.toString();
+}
+
+export function buildPreviewImageUrl({
+  query,
+  iconRefs,
+  library,
+  style,
+  locale,
+  limit,
+  baseUrl,
+} = {}) {
+  const url = new URL('/preview-icons.png', baseUrl ? normalizeBaseUrl(baseUrl) : getConfiguredMcpBaseUrl());
+  const refs = Array.isArray(iconRefs)
+    ? iconRefs.map(String).map((ref) => ref.trim()).filter(Boolean).slice(0, 12)
+    : [];
+  if (refs.length) {
+    url.searchParams.set('icons', refs.join(','));
+  } else if (query) {
+    url.searchParams.set('q', String(query));
+  }
+  if (library && library !== 'all') url.searchParams.set('library', String(library));
+  if (style && style !== 'any') url.searchParams.set('style', String(style));
+  if (locale) url.searchParams.set('locale', String(locale));
+  if (limit) url.searchParams.set('limit', String(limit));
+  return url.toString();
+}
+
+export function buildPreviewMarkdownImage({
+  alt = 'Supericons preview',
+  ...options
+} = {}) {
+  const imageUrl = buildPreviewImageUrl(options);
+  return `![${String(alt).replace(/[\]\r\n]/g, ' ').trim() || 'Supericons preview'}](${imageUrl})`;
 }
 
 export function buildIconPreviewUrl({ library, id, baseUrl } = {}) {
