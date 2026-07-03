@@ -13,6 +13,7 @@ Search icons using AI-powered synonym expansion.
 - `query` (required): Search term, e.g. "heart", "login", "download"
 - `library` (optional): Filter by library. Use `si` for Supericons AI and developer tool logos. Use `simpleicons` for Simple Icons brand logos.
 - `limit` (optional): Max results, 1-50, default 10
+- Use this when the user mainly needs text results, icon IDs, or SVG-ready matches.
 
 ### recommend_icons
 Recommend a coherent icon set for UI slots.
@@ -29,7 +30,9 @@ Retrieve a specific icon by ID and library.
 Create a visual preview for search results or known icon refs.
 - `query` (optional): Search term to preview, e.g. "license plate recognition camera scan car"
 - `icon_refs` (optional): Known refs, e.g. `["si:x-ai", "mingcute:scan_2_line"]`
-- Returns a browser preview URL for all clients and may include an inline PNG contact sheet when the MCP client supports image content.
+- Returns `preview_url`, `image_url`, `markdown_image`, and may include an inline PNG contact sheet when the MCP client supports image content.
+- Use this before final icon selection when the user asks to see, compare, choose, preview, or visually inspect icons.
+- If the client does not show inline images, include `markdown_image` in the final answer when supported, or share `image_url` and `preview_url`.
 
 ### list_libraries
 List all 11 libraries with names, public labels, counts, and descriptions.
@@ -65,7 +68,8 @@ Add to `.cursor/mcp.json` or equivalent:
 ## Example Prompts
 - "Find me a heart icon from Lucide"
 - "Search for download icons"
-- "Preview icons for license plate recognition camera scan car"
+- "Show me a visual preview of icons for license plate recognition camera scan car"
+- "Use Supericons to visually compare the top 3 icons for ai slop"
 - "Get the settings gear icon from Tabler"
 - "What icon libraries are available?"
 

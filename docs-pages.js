@@ -440,6 +440,8 @@ After saving, restart or reconnect MCP if this IDE requires it. Then test it by 
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-test-prompts">Copy</button>
           <pre><code id="docs-universal-test-prompts">Use Supericons MCP to search for a database icon.
 
+Use Supericons MCP to show me a visual preview of icons for ai slop. Pick the top 3 and explain why each fits.
+
 Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar. The slots are model, prompt, dataset, evaluation, deployment, and monitoring. Show the icon id, library, and short reason for each choice.</code></pre>
         </div>
       </section>
@@ -835,7 +837,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon. For non-English search, include <code>locale</code>, such as <code>zh-Hans</code>, <code>ja</code>, or <code>ko</code>.</td></tr>
+              <tr><td>Find icons from a word or phrase</td><td><code>search_icons</code></td><td>Find me a database icon. Use this when you want text results, icon IDs, or SVGs. For non-English search, include <code>locale</code>, such as <code>zh-Hans</code>, <code>ja</code>, or <code>ko</code>.</td></tr>
+              <tr><td>See icons before choosing</td><td><code>preview_icons</code></td><td>Show me a visual preview of icons for ai slop. If the chat cannot show the image, ask for the image link or browser preview link.</td></tr>
               <tr><td>Choose icons for several UI slots</td><td><code>recommend_icons</code></td><td>Recommend icons for an AI dashboard: model, prompt, dataset, evaluation, deployment, and monitoring. Ask for <code>response_mode: "plan"</code> when you want compact output. If your slots are not in English, include <code>locale</code>.</td></tr>
               <tr><td>Fetch one known icon</td><td><code>get_icon</code></td><td>Get the SVG for <code>database</code> from Iconoir.</td></tr>
               <tr><td>See available libraries</td><td><code>list_libraries</code></td><td>List the Supericons icon libraries.</td></tr>
@@ -871,6 +874,14 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             </ul>
           </article>
           <article class="docs-card">
+            <h3>Preview visually</h3>
+            <ul>
+              <li>Show me a visual preview of icons for ai slop.</li>
+              <li>Visually compare the top 3 icons for smart automation.</li>
+              <li>Preview icons for license plate recognition camera scan car.</li>
+            </ul>
+          </article>
+          <article class="docs-card">
             <h3>Search by UI slot</h3>
             <ul>
               <li>Recommend icons for a mobile bottom nav: home, create, alerts, and profile.</li>
@@ -886,6 +897,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-mcp-search-output-prompts">Copy</button>
           <pre><code id="docs-mcp-search-output-prompts">Show me the top 5 choices with icon id, library, and a short reason.
+
+Show me a visual preview first, then list the icon refs.
 
 Get the SVG for the best result.
 
@@ -945,6 +958,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
             </thead>
             <tbody>
               <tr><td><code>search_icons</code></td><td>Search ${freeIconsAcrossLibrariesFreeLabel}</td><td>Free</td></tr>
+              <tr><td><code>preview_icons</code></td><td>Show a visual contact sheet, direct image link, and browser preview link for search results or known icon refs</td><td>Free</td></tr>
               <tr><td><code>recommend_icons</code></td><td>Choose icons for several app slots, with confidence and alternatives</td><td>Free</td></tr>
               <tr><td><code>get_icon</code></td><td>Retrieve a specific icon by ID and library</td><td>Free</td></tr>
               <tr><td><code>list_libraries</code></td><td>List all available icon libraries</td><td>Free</td></tr>
@@ -1008,6 +1022,37 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">Matching icons with SVG code, icon ID, library name, and metadata. When no results are found, returns a message indicating no match.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
+      </section>
+      <section class="docs-section" id="icon-tools-preview">
+        <h2 class="docs-section__title"><code>preview_icons</code></h2>
+        <p class="docs-section__copy">Create a visual preview for a search phrase or a known list of icon refs. Use this when a human needs to see the icons before choosing one.</p>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Default</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>query</code></td><td>string</td><td>No</td><td>-</td><td>Search phrase to preview. Example: "ai slop" or "license plate recognition camera scan car"</td></tr>
+              <tr><td><code>icon_refs</code></td><td>string array</td><td>No</td><td>-</td><td>Known icon refs in <code>library:id</code> format, such as <code>["si:x-ai", "mingcute:scan_2_line"]</code>. The Supericons library key is <code>si</code>. Provide either <code>query</code> or <code>icon_refs</code>.</td></tr>
+              <tr><td><code>include_image</code></td><td>boolean</td><td>No</td><td><code>false</code></td><td>Set to <code>true</code> when the client can show MCP image content inline.</td></tr>
+              <tr><td><code>limit</code></td><td>integer</td><td>No</td><td>9</td><td>How many icons to show. Range: 1 to 12.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Returns</h3>
+        <p class="docs-section__copy">A browser preview link, a direct PNG image link, a Markdown image snippet, and matching icon refs. Some clients show the image inside the chat. Others may only show the links.</p>
+        <h3>Recommended prompt</h3>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-preview-icons-prompt">Copy</button>
+          <pre><code id="docs-preview-icons-prompt">Use Supericons to show me a visual preview of icons for ai slop. Pick the top 3 results and explain briefly why each icon fits.</code></pre>
+        </div>
         <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
       </section>
       <section class="docs-section" id="icon-tools-recommend">

@@ -1,8 +1,8 @@
 {
   "id": "supericons-mcp",
   "name": "Supericons MCP",
-  "description": "Semantic SVG icon search and recommendations for OpenClaw.",
-  "version": "0.4.11",
+  "description": "Semantic SVG icon search, visual previews, and recommendations for OpenClaw.",
+  "version": "0.4.17",
   "skills": [
     "./skills/"
   ],
@@ -20,6 +20,7 @@
   "contracts": {
     "tools": [
       "supericons_search_icons",
+      "supericons_preview_icons",
       "supericons_get_icon",
       "supericons_list_libraries",
       "supericons_recommend_icons",

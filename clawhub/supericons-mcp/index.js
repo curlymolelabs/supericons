@@ -7,7 +7,7 @@ import {
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { Type } from "typebox";
 
-const SUPERICONS_MCP_PACKAGE = "@supericons/mcp@0.4.11";
+const SUPERICONS_MCP_PACKAGE = "@supericons/mcp@0.4.17";
 const LOCALES = [
   "zh-Hans",
   "zh-Hant",
@@ -72,7 +72,7 @@ async function getClient() {
       const client = new Client(
         {
           name: "openclaw-supericons",
-          version: "0.4.11"
+          version: "0.4.17"
         },
         {
           capabilities: {}
@@ -173,6 +173,20 @@ const tools = [
       limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 50 })),
       locale,
       style
+    })
+  }),
+  proxyTool({
+    name: "supericons_preview_icons",
+    mcpName: "preview_icons",
+    description: "Show a visual preview for Supericons search results or known icon refs.",
+    parameters: Type.Object({
+      query: Type.Optional(Type.String()),
+      icon_refs: Type.Optional(Type.Array(Type.String(), { minItems: 1, maxItems: 12 })),
+      library,
+      limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 12 })),
+      locale,
+      style,
+      include_image: Type.Optional(Type.Boolean())
     })
   }),
   proxyTool({
