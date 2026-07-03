@@ -36,6 +36,11 @@ assert.equal(
 );
 
 assert.equal(
+  buildRouteUrl({ pathname: '/', view: 'icons', search: '?view=icons&preview=mcp&q=xai&library=si&limit=3', hash: '' }),
+  '/?preview=mcp&q=xai&library=si&limit=3',
+);
+
+assert.equal(
   buildRouteUrl({ pathname: '/', view: 'docs-mcp-tools', hash: '#icon-tools-search' }),
   '/?view=docs-mcp-tools#icon-tools-search',
 );

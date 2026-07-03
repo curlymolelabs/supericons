@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.15 - 2026-07-02
+
+### Added
+
+- added public library labels and browser preview URLs to icon search, recommendation, and exact icon responses
+- added `preview_icons` for browser preview links and optional MCP image contact sheets
+- clarified that `si` means Supericons and `simpleicons` means Simple Icons in MCP tool descriptions
+
+## 0.4.14 - 2026-07-02
+
+### Fixed
+
+- updated packaged MCP registry metadata so `server.json` matches the published npm package version
+
 ## 0.4.13 - 2026-07-01
 
 ### Added
@@ -9,6 +23,8 @@
 ### Fixed
 
 - improved localized settings-page recommendations so account/profile slots prefer user/profile icons instead of nearby permissions/security icons
+- improved `smart` searches so generic intelligence queries prefer brain, sparkles, and lightbulb icons instead of AI-tool logos
+- added fallback search behavior for `ai slop` so low-quality AI-output queries can return warning, bug, and bot-off style icons
 - kept public hosted MCP search gateway requests from sending a fallback Supabase key unless explicitly configured
 
 ## 0.4.12 - 2026-06-30

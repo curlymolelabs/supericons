@@ -15,6 +15,17 @@ import { z } from 'zod';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
 import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
+import {
+  buildPreviewBoardUrlForIcons,
+  buildSearchPreviewUrl,
+  enrichPublicIconResult,
+  getPublicLibraryMeta,
+  parseIconRef,
+} from './public-icon-preview.js';
+import {
+  buildIconContactSheetPng,
+  buildPreviewTextPayload,
+} from './preview-icons.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import {
@@ -62,7 +73,7 @@ const libraryCounts = new Map(
 );
 
 const libraryKeysDescription =
-  'Supported values include si, lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, and mingcute.';
+  'Supported values include si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), and mingcute.';
 const multilingualLocaleValues = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th'];
 const multilingualLocaleDescription =
   'Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.';
@@ -85,6 +96,13 @@ const publicIconResultSchema = z.object({
   id: z.string().describe('Icon ID without the library prefix.'),
   name: z.string().describe('Human-readable icon name.'),
   library: z.string().describe('Source icon library key.'),
+  library_key: z.string().describe('Source icon library key repeated for explicit agent display.'),
+  library_name: z.string().describe('Public source library name, for example Supericons or Simple Icons.'),
+  library_label: z.string().describe('Public source library label, for example Supericons (si).'),
+  libraryName: z.string().optional().describe('Legacy camelCase public source library name.'),
+  icon_ref: z.string().describe('Stable icon reference in library:id format.'),
+  icon_preview_url: z.string().nullable().describe('Browser URL for visual inspection of this icon.'),
+  search_preview_url: z.string().nullable().optional().describe('Browser URL for visual inspection of the source search results.'),
   type: z.string().describe('Icon asset type, normally svg.'),
   style: z.string().describe('Icon style such as outline or solid.'),
   svg: z.string().describe('Inline SVG markup for the icon.'),
@@ -94,12 +112,27 @@ const publicIconResultSchema = z.object({
 const libraryResultSchema = z.object({
   id: z.string().describe('Library key used in tool calls.'),
   name: z.string().describe('Human-readable library name.'),
+  label: z.string().optional().describe('Human-readable library label with key, for example Supericons (si).'),
   description: z.string().describe('Brief public description of the icon library.'),
   count: z.number().describe('Number of icons in the library.'),
 });
 
+const previewIconResultSchema = z.object({
+  id: z.string().describe('Icon ID without the library prefix.'),
+  name: z.string().describe('Human-readable icon name.'),
+  library: z.string().describe('Source icon library key.'),
+  library_key: z.string().describe('Source icon library key repeated for explicit agent display.'),
+  library_name: z.string().optional().describe('Public source library name, for example Supericons or Simple Icons.'),
+  library_label: z.string().optional().describe('Public source library label, for example Supericons (si).'),
+  icon_ref: z.string().describe('Stable icon reference in library:id format.'),
+  icon_preview_url: z.string().nullable().optional().describe('Browser URL for visual inspection of this icon.'),
+  style: z.string().optional().describe('Icon style such as outline or solid.'),
+  semantic: z.record(z.unknown()).nullable().optional().describe('Public semantic guidance for search and agent selection.'),
+});
+
 const searchIconsOutputSchema = {
   results: z.array(publicIconResultSchema).describe('Matching icons with SVG code and semantic guidance.'),
+  preview_url: z.string().optional().describe('Browser URL for visual inspection of this search result set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
 };
 
@@ -108,8 +141,18 @@ const recommendIconsOutputSchema = {
   library: z.string().optional().describe('Library filter used for recommendations, if provided.'),
   style: z.string().optional().describe('Style preference used for recommendations.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
+  preview_url: z.string().optional().describe('Browser URL for visual inspection of the recommended icon set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
+};
+
+const previewIconsOutputSchema = {
+  query: z.string().nullable().optional().describe('Search query used for the visual preview, if any.'),
+  preview_url: z.string().describe('Browser URL for visual inspection.'),
+  image_included: z.boolean().describe('Whether this response includes MCP image content.'),
+  client_display_note: z.string().describe('Plain-language note for clients that do not render images inline.'),
+  error: z.string().optional().describe('Recoverable error message when preview inputs are missing or invalid.'),
+  results: z.array(previewIconResultSchema).describe('Icons included in the visual preview.'),
 };
 
 const getIconOutputSchema = {
@@ -255,8 +298,8 @@ async function searchHostedIcons({
   return hostedResults;
 }
 
-function buildPublicIconResult(icon) {
-  return {
+function buildPublicIconResult(icon, options = {}) {
+  const result = {
     id: icon.id,
     name: icon.name,
     library: icon.library,
@@ -264,6 +307,44 @@ function buildPublicIconResult(icon) {
     style: icon.style,
     svg: icon.svg,
     semantic: icon.semantic,
+  };
+  return enrichPublicIconResult(result, options);
+}
+
+async function resolveHostedIconRef(ref, { style = 'any' } = {}) {
+  const parsed = parseIconRef(ref);
+  if (!parsed) return null;
+  const candidates = await searchHostedIcons({
+    query: parsed.id.replace(/[-_]+/g, ' '),
+    library: parsed.library,
+    style,
+    limit: 50,
+  });
+  const normalizedId = parsed.id.toLowerCase();
+  const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
+  return match ? buildPublicIconResult(match, { style }) : null;
+}
+
+function asPreviewResponse(payload, { imagePng = null, isError = false } = {}) {
+  const content = [
+    {
+      type: 'text',
+      text: JSON.stringify(payload, null, 2),
+    },
+  ];
+
+  if (imagePng) {
+    content.push({
+      type: 'image',
+      data: Buffer.from(imagePng).toString('base64'),
+      mimeType: 'image/png',
+    });
+  }
+
+  return {
+    structuredContent: payload,
+    content,
+    ...(isError ? { isError: true } : {}),
   };
 }
 
@@ -281,7 +362,7 @@ function createServer() {
     'search_icons',
     {
       title: 'Search Icons',
-      description: `Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. Use this when the user describes an icon concept such as "database", "user profile", "chill", "security", "AI model", or "OpenAI Codex logo". Returns matching icons with SVG code and public semantic guidance.`,
+      description: `Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. Use this when the user describes an icon concept such as "database", "user profile", "chill", "security", "AI model", or "OpenAI Codex logo". Returns matching icons with SVG code, public semantic guidance, explicit library labels, and browser preview URLs. Library key si means Supericons, not Simple Icons.`,
       inputSchema: {
         query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
         library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
@@ -303,7 +384,14 @@ function createServer() {
         includeQueryFrame: include_query_frame,
       });
       return asStructured({
-        results: results.map(buildPublicIconResult),
+        results: results.map((icon) => buildPublicIconResult(icon, {
+          query,
+          library,
+          style,
+          locale,
+          limit,
+        })),
+        preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
         ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
       });
     }
@@ -313,7 +401,7 @@ function createServer() {
     'recommend_icons',
     {
       title: 'Recommend Icons',
-      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Use this when the user needs several icons that should work together. Returns one recommendation and optional alternatives for each slot.',
+      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Use this when the user needs several icons that should work together. Returns one recommendation and optional alternatives for each slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
       inputSchema: {
         task: z.string().describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app".'),
         slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"].'),
@@ -345,7 +433,24 @@ function createServer() {
         buildIconResult: async (icon) => buildPublicIconResult(icon),
       });
 
-      return asStructured(payload);
+      const iconRefs = [];
+      for (const slot of payload.results || []) {
+        const candidates = [
+          slot.recommended,
+          slot.recommendation,
+          slot.icon,
+          ...(Array.isArray(slot.alternatives) ? slot.alternatives : []),
+          ...(Array.isArray(slot.choices) ? slot.choices : []),
+        ].filter(Boolean);
+        for (const candidate of candidates) {
+          if (candidate.icon_ref) iconRefs.push(candidate.icon_ref);
+        }
+      }
+
+      return asStructured({
+        ...payload,
+        preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+      });
     }
   );
 
@@ -353,7 +458,7 @@ function createServer() {
     'get_icon',
     {
       title: 'Get Icon',
-      description: 'Retrieve one exact SVG icon when the icon ID and library are already known. Use search_icons first if the user only described a concept. Returns SVG code and public semantic guidance for the exact icon.',
+      description: 'Retrieve one exact SVG icon when the icon ID and library are already known. Use search_icons first if the user only described a concept. Returns SVG code, explicit public library labels, visual preview URL, and public semantic guidance for the exact icon.',
       inputSchema: {
         id: z.string().describe('Exact icon ID without the library prefix, for example "database", "user-circle", "brain-circuit", or "arrow-down".'),
         library: z.string().describe(`Required library key for the exact icon. ${libraryKeysDescription}`),
@@ -379,8 +484,64 @@ function createServer() {
       }
 
       return asStructured({
-        icon: buildPublicIconResult(match),
+        icon: buildPublicIconResult(match, { style }),
       });
+    }
+  );
+
+  server.registerTool(
+    'preview_icons',
+    {
+      title: 'Preview Icons',
+      description: 'Create a visual preview for icon search results or a fixed list of icon refs. Returns a hosted preview URL for all clients and, when requested, an MCP image contact sheet for clients that can render images inline. Terminal clients can open the preview_url in a browser.',
+      inputSchema: {
+        query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
+        icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
+        library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
+        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference.'),
+        locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
+        limit: z.number().min(1).max(12).optional().default(9).describe('Maximum icons to include in the preview. Keep this small for image-capable clients.'),
+        include_image: z.boolean().optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. A preview_url is always returned.'),
+      },
+      outputSchema: previewIconsOutputSchema,
+      annotations: readOnlyLookupAnnotations,
+    },
+    async ({ query, icon_refs, library, style, locale, limit, include_image }) => {
+      if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
+        return asPreviewResponse({
+          query: null,
+          preview_url: buildSearchPreviewUrl({ library, style, locale, limit }),
+          image_included: false,
+          client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
+          results: [],
+          error: 'Provide either query or icon_refs.',
+        }, { isError: true });
+      }
+
+      const fixedRefs = Array.isArray(icon_refs) ? icon_refs.slice(0, limit) : [];
+      const icons = fixedRefs.length > 0
+        ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
+        : (await searchHostedIcons({ query, library, style, locale, limit }))
+          .map((icon) => buildPublicIconResult(icon, { query, library, style, locale, limit }));
+
+      const previewUrl = fixedRefs.length > 0
+        ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+        : buildSearchPreviewUrl({ query, library, style, locale, limit });
+      const payload = buildPreviewTextPayload({
+        query: query || null,
+        icons,
+        previewUrl,
+        imageIncluded: Boolean(include_image && icons.length > 0),
+      });
+
+      let imagePng = null;
+      if (include_image && icons.length > 0) {
+        imagePng = buildIconContactSheetPng(icons, {
+          title: query ? `Supericons preview: ${query}` : 'Supericons icon preview',
+        });
+      }
+
+      return asPreviewResponse(payload, { imagePng });
     }
   );
 
@@ -396,6 +557,7 @@ function createServer() {
       libraries: LIBRARIES.map(([id, name, description]) => ({
         id,
         name,
+        label: getPublicLibraryMeta(id, { name, description }).label,
         description,
         count: libraryCounts.get(id) || 0,
       })),
@@ -434,6 +596,7 @@ function buildServerCard(req) {
       'search_icons',
       'recommend_icons',
       'get_icon',
+      'preview_icons',
       'list_libraries',
     ],
   };

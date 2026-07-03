@@ -1,6 +1,6 @@
 {
   "name": "@supericons/mcp",
-  "version": "0.4.13",
+  "version": "0.4.15",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
@@ -30,6 +30,8 @@
     "public/cjk-search-terms.json",
     "public/multilingual-search-aliases.json",
     "public/product-facts.json",
+    "public-icon-preview.js",
+    "preview-icons.js",
     "recommend-icons.js",
     "remote-server.js",
     "server.json",

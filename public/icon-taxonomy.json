@@ -1,10 +1,76 @@
 {
   "version": "p0.02",
-  "generatedAt": "2026-04-16T08:34:19.922Z",
+  "generatedAt": "2026-06-17T17:06:37.494Z",
   "categories": [
     {
+      "id": "ai-app-builders",
+      "label": "AI App Builders",
+      "description": "Text-to-app, text-to-site, no-code, low-code, and vibe-coding products.",
+      "sidebarGlyph": "auto_fix_high"
+    },
+    {
+      "id": "coding-agents-dev-environments",
+      "label": "Coding Agents & Dev Environments",
+      "description": "Agentic IDEs, coding assistants, developer agents, and software-building workspaces.",
+      "sidebarGlyph": "terminal"
+    },
+    {
+      "id": "model-platforms-ai-labs",
+      "label": "Model Platforms & AI Labs",
+      "description": "Foundation model providers, model studios, AI labs, and model API platforms.",
+      "sidebarGlyph": "model_training"
+    },
+    {
+      "id": "ai-search-research-evaluation",
+      "label": "AI Search, Research & Evaluation",
+      "description": "AI-native search, research, retrieval, benchmarking, ranking, and evaluation tools.",
+      "sidebarGlyph": "database_search"
+    },
+    {
+      "id": "generative-media-creative-ai",
+      "label": "Generative Media & Creative AI",
+      "description": "AI video, image, avatar, creative studio, and synthetic media products.",
+      "sidebarGlyph": "movie"
+    },
+    {
+      "id": "voice-audio-ai",
+      "label": "Voice & Audio AI",
+      "description": "Speech, voice, music, audio generation, and audio model products.",
+      "sidebarGlyph": "graphic_eq"
+    },
+    {
+      "id": "agent-infrastructure-runtime",
+      "label": "Agent Infrastructure & Runtime",
+      "description": "Agent runtime, browser automation, memory, vector storage, workflow, and observability infrastructure.",
+      "sidebarGlyph": "account_tree"
+    },
+    {
+      "id": "mcp-tooling-protocols",
+      "label": "MCP, Tooling & Protocols",
+      "description": "MCP servers, tool directories, context services, protocol tooling, and agent tool distribution.",
+      "sidebarGlyph": "hub"
+    },
+    {
+      "id": "general-agents-assistants",
+      "label": "General Agents & Assistants",
+      "description": "General-purpose assistants, autonomous task agents, local agents, and multi-step AI workers.",
+      "sidebarGlyph": "smart_toy"
+    },
+    {
+      "id": "design-ui-intelligence",
+      "label": "Design & UI Intelligence",
+      "description": "Design references, UI kits, component systems, creative assets, and visual product intelligence.",
+      "sidebarGlyph": "palette"
+    },
+    {
+      "id": "agent-business-monetization",
+      "label": "Agent Business & Monetization",
+      "description": "Revenue, referrals, commerce, affiliate, and monetization tools for agent ecosystems.",
+      "sidebarGlyph": "payments"
+    },
+    {
       "id": "ai-agent-workflows",
-      "label": "AI & Agents",
+      "label": "AI & Automation",
       "description": "Curated icons for models, prompts, orchestration, retrieval, and agent runtime surfaces.",
       "sidebarGlyph": "smart_toy"
     },
@@ -15,13 +81,799 @@
       "sidebarGlyph": "dashboard"
     },
     {
+      "id": "actions-controls",
+      "label": "Actions & Controls",
+      "description": "Common commands for creating, editing, deleting, uploading, downloading, sorting, and changing settings.",
+      "sidebarGlyph": "touch_app"
+    },
+    {
       "id": "status-feedback",
       "label": "Status & Feedback",
       "description": "Signals for success, warning, progress, trust, notifications, and user feedback states.",
       "sidebarGlyph": "task_alt"
+    },
+    {
+      "id": "people-accounts",
+      "label": "People & Accounts",
+      "description": "Users, profiles, teams, contacts, identity, roles, and account surfaces.",
+      "sidebarGlyph": "person"
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "description": "Messages, mail, chat, comments, calls, announcements, and language tools.",
+      "sidebarGlyph": "chat"
+    },
+    {
+      "id": "files-content",
+      "label": "Files & Content",
+      "description": "Files, folders, documents, images, attachments, archives, and clipboard flows.",
+      "sidebarGlyph": "folder"
+    },
+    {
+      "id": "data-analytics",
+      "label": "Data & Analytics",
+      "description": "Databases, tables, charts, metrics, reports, dashboards, and trend analysis.",
+      "sidebarGlyph": "bar_chart"
+    },
+    {
+      "id": "commerce-finance",
+      "label": "Commerce & Finance",
+      "description": "Shopping, checkout, billing, payments, receipts, invoices, wallets, and currencies.",
+      "sidebarGlyph": "credit_card"
+    },
+    {
+      "id": "security-access",
+      "label": "Security & Access",
+      "description": "Locks, keys, shields, verification, privacy, scanning, identity checks, and blocked states.",
+      "sidebarGlyph": "shield"
+    },
+    {
+      "id": "media-playback",
+      "label": "Media & Playback",
+      "description": "Audio, video, camera, gallery, image, music, volume, and playback controls.",
+      "sidebarGlyph": "play_circle"
+    },
+    {
+      "id": "devices-hardware",
+      "label": "Devices & Hardware",
+      "description": "Phones, computers, screens, printers, chips, servers, batteries, plugs, and hardware.",
+      "sidebarGlyph": "devices"
+    },
+    {
+      "id": "code-development",
+      "label": "Code & Development",
+      "description": "Code, terminals, APIs, packages, branches, bugs, deployment, and developer tooling.",
+      "sidebarGlyph": "code"
+    },
+    {
+      "id": "design-editing",
+      "label": "Design & Editing",
+      "description": "Color, drawing, typography, crop, align, layers, swatches, and creative editing tools.",
+      "sidebarGlyph": "palette"
+    },
+    {
+      "id": "maps-places-travel",
+      "label": "Maps, Places & Travel",
+      "description": "Maps, pins, location, routes, compass, buildings, transport, and global places.",
+      "sidebarGlyph": "map"
+    },
+    {
+      "id": "time-calendar",
+      "label": "Time & Calendar",
+      "description": "Clocks, calendars, schedules, timers, history, reminders, and alarms.",
+      "sidebarGlyph": "calendar_month"
+    },
+    {
+      "id": "brands-social",
+      "label": "Brands & Social",
+      "description": "Company marks, product logos, social networks, and platform icons.",
+      "sidebarGlyph": "hub"
+    },
+    {
+      "id": "nature-weather-lifestyle",
+      "label": "Nature, Weather & Lifestyle",
+      "description": "Weather, nature, food, health, sport, lifestyle, and everyday world objects.",
+      "sidebarGlyph": "wb_sunny"
     }
   ],
   "entries": [
+    {
+      "iconId": "si:artificial-analysis",
+      "sourceLibrary": "si",
+      "jobCategory": "ai-search-research-evaluation",
+      "secondaryCategories": [
+        "model-benchmarking",
+        "ai-evaluation",
+        "provider-comparison",
+        "ai-benchmarking",
+        "llm-leaderboard"
+      ],
+      "rank": 1000
+    },
+    {
+      "iconId": "si:base44",
+      "sourceLibrary": "si",
+      "jobCategory": "ai-app-builders",
+      "secondaryCategories": [
+        "ai-app-builder",
+        "no-code-low-code",
+        "vibe-coding",
+        "text-to-app",
+        "app-generation"
+      ],
+      "rank": 1001
+    },
+    {
+      "iconId": "si:bolt",
+      "sourceLibrary": "si",
+      "jobCategory": "ai-app-builders",
+      "secondaryCategories": [
+        "ai-app-builder",
+        "browser-app-builder",
+        "vibe-coding",
+        "bolt-new",
+        "web-app-generation"
+      ],
+      "rank": 1002
+    },
+    {
+      "iconId": "si:bridgemind-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "coding-agent",
+        "developer-tooling",
+        "code-assistant",
+        "ai-development",
+        "developer-agent",
+        "code-workflow"
+      ],
+      "rank": 1003
+    },
+    {
+      "iconId": "si:browserbase",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "browser-automation",
+        "web-agent-runtime",
+        "agent-infrastructure",
+        "headless-browser",
+        "web-automation",
+        "agent-runtime"
+      ],
+      "rank": 1004
+    },
+    {
+      "iconId": "si:capcut",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "video-editing",
+        "short-form-video",
+        "creative-ai",
+        "creator-tools",
+        "video-editor",
+        "social-video"
+      ],
+      "rank": 1005
+    },
+    {
+      "iconId": "si:cartesia",
+      "sourceLibrary": "si",
+      "jobCategory": "voice-audio-ai",
+      "secondaryCategories": [
+        "voice-ai",
+        "speech-generation",
+        "audio-models",
+        "text-to-speech",
+        "voice-models",
+        "real-time-audio"
+      ],
+      "rank": 1006
+    },
+    {
+      "iconId": "si:cohere",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "enterprise-llm",
+        "reranking",
+        "model-api",
+        "foundation-models",
+        "embedding-models",
+        "enterprise-ai"
+      ],
+      "rank": 1007
+    },
+    {
+      "iconId": "si:context7",
+      "sourceLibrary": "si",
+      "jobCategory": "mcp-tooling-protocols",
+      "secondaryCategories": [
+        "mcp-docs",
+        "developer-context",
+        "tool-protocol",
+        "context-server",
+        "developer-docs",
+        "mcp"
+      ],
+      "rank": 1008
+    },
+    {
+      "iconId": "si:devin",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "coding-agent",
+        "software-engineering-agent",
+        "autonomous-development",
+        "developer-agent",
+        "engineering-automation",
+        "ai-coding"
+      ],
+      "rank": 1009
+    },
+    {
+      "iconId": "si:exa",
+      "sourceLibrary": "si",
+      "jobCategory": "ai-search-research-evaluation",
+      "secondaryCategories": [
+        "ai-search",
+        "web-search-api",
+        "research-retrieval",
+        "semantic-search",
+        "web-retrieval",
+        "research-api"
+      ],
+      "rank": 1010
+    },
+    {
+      "iconId": "si:factory-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "coding-agent",
+        "software-development",
+        "engineering-automation",
+        "developer-agent",
+        "ai-engineering",
+        "code-automation"
+      ],
+      "rank": 1011
+    },
+    {
+      "iconId": "si:fal-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "image-video-generation",
+        "model-inference",
+        "creative-api",
+        "media-models",
+        "inference-api",
+        "creative-infrastructure"
+      ],
+      "rank": 1012
+    },
+    {
+      "iconId": "si:firecrawl",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "web-crawling",
+        "agent-ingestion",
+        "data-extraction",
+        "web-scraping",
+        "site-ingestion",
+        "agent-data"
+      ],
+      "rank": 1013
+    },
+    {
+      "iconId": "si:glama",
+      "sourceLibrary": "si",
+      "jobCategory": "mcp-tooling-protocols",
+      "secondaryCategories": [
+        "mcp-directory",
+        "tool-discovery",
+        "agent-tools",
+        "mcp",
+        "tool-registry",
+        "agent-tooling"
+      ],
+      "rank": 1014
+    },
+    {
+      "iconId": "si:google-ai-studio",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "model-studio",
+        "gemini",
+        "prompt-prototyping",
+        "google-ai",
+        "model-prototyping",
+        "ai-studio"
+      ],
+      "rank": 1015
+    },
+    {
+      "iconId": "si:google-antigravity",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "agentic-ide",
+        "coding-agent",
+        "developer-environment",
+        "google-ai",
+        "developer-workspace",
+        "ai-coding"
+      ],
+      "rank": 1016
+    },
+    {
+      "iconId": "si:goose",
+      "sourceLibrary": "si",
+      "jobCategory": "general-agents-assistants",
+      "secondaryCategories": [
+        "local-agent",
+        "desktop-agent",
+        "task-automation",
+        "agent-assistant",
+        "local-automation",
+        "multi-step-agent"
+      ],
+      "rank": 1017
+    },
+    {
+      "iconId": "si:hermes-agent",
+      "sourceLibrary": "si",
+      "jobCategory": "general-agents-assistants",
+      "secondaryCategories": [
+        "general-agent",
+        "browser-agent",
+        "task-agent",
+        "autonomous-agent",
+        "ai-assistant",
+        "agent-worker"
+      ],
+      "rank": 1018
+    },
+    {
+      "iconId": "si:heygen",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "avatar-video",
+        "synthetic-video",
+        "ai-video",
+        "video-generation",
+        "avatar-generation",
+        "creative-ai"
+      ],
+      "rank": 1019
+    },
+    {
+      "iconId": "si:higgsfield",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "motion-generation",
+        "creative-ai",
+        "video-generation",
+        "image-to-video",
+        "cinematic-ai"
+      ],
+      "rank": 1020
+    },
+    {
+      "iconId": "si:inngest",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "workflow-orchestration",
+        "durable-functions",
+        "event-driven-agents",
+        "background-jobs",
+        "agent-workflows",
+        "workflow-engine"
+      ],
+      "rank": 1021
+    },
+    {
+      "iconId": "si:kickbacks-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-business-monetization",
+      "secondaryCategories": [
+        "affiliate-monetization",
+        "agent-commerce",
+        "referrals",
+        "revenue-tools",
+        "agent-marketplace",
+        "affiliate-ai"
+      ],
+      "rank": 1022
+    },
+    {
+      "iconId": "si:kilo-code",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "coding-agent",
+        "open-source-ide",
+        "developer-agent",
+        "ai-coding",
+        "code-assistant",
+        "developer-workspace"
+      ],
+      "rank": 1023
+    },
+    {
+      "iconId": "si:kimi",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "chat-assistant",
+        "long-context",
+        "foundation-model",
+        "model-platform",
+        "llm-assistant",
+        "ai-lab"
+      ],
+      "rank": 1024
+    },
+    {
+      "iconId": "si:kling-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "image-to-video",
+        "generative-media",
+        "video-generation",
+        "creative-ai",
+        "synthetic-video"
+      ],
+      "rank": 1025
+    },
+    {
+      "iconId": "si:lovable",
+      "sourceLibrary": "si",
+      "jobCategory": "ai-app-builders",
+      "secondaryCategories": [
+        "ai-app-builder",
+        "vibe-coding",
+        "web-app-generation",
+        "text-to-app",
+        "product-builder",
+        "frontend-generation"
+      ],
+      "rank": 1026
+    },
+    {
+      "iconId": "si:luma-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "3d-generation",
+        "creative-ai",
+        "dream-machine",
+        "video-generation",
+        "world-model"
+      ],
+      "rank": 1027
+    },
+    {
+      "iconId": "si:manus-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "general-agents-assistants",
+      "secondaryCategories": [
+        "general-agent",
+        "autonomous-agent",
+        "multi-step-tasks",
+        "ai-assistant",
+        "agent-worker",
+        "task-automation"
+      ],
+      "rank": 1028
+    },
+    {
+      "iconId": "si:mobbin",
+      "sourceLibrary": "si",
+      "jobCategory": "design-ui-intelligence",
+      "secondaryCategories": [
+        "design-inspiration",
+        "ui-reference",
+        "product-design",
+        "screen-library",
+        "design-research",
+        "ui-patterns"
+      ],
+      "rank": 1029
+    },
+    {
+      "iconId": "si:openai-codex-app",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "coding-agent",
+        "software-engineering-agent",
+        "developer-environment",
+        "ai-coding",
+        "developer-agent",
+        "code-generation"
+      ],
+      "rank": 1030
+    },
+    {
+      "iconId": "si:openclaw",
+      "sourceLibrary": "si",
+      "jobCategory": "general-agents-assistants",
+      "secondaryCategories": [
+        "general-agent",
+        "open-source-agent",
+        "desktop-agent",
+        "autonomous-agent",
+        "agent-assistant",
+        "local-agent"
+      ],
+      "rank": 1031
+    },
+    {
+      "iconId": "si:opencode",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "terminal-coding-agent",
+        "developer-cli",
+        "coding-agent",
+        "ai-coding",
+        "command-line-agent",
+        "code-assistant"
+      ],
+      "rank": 1032
+    },
+    {
+      "iconId": "si:pika",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "generative-video",
+        "creative-ai",
+        "video-generation",
+        "text-to-video",
+        "synthetic-video"
+      ],
+      "rank": 1033
+    },
+    {
+      "iconId": "si:pinecone",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "vector-database",
+        "retrieval-memory",
+        "agent-memory",
+        "embeddings",
+        "semantic-retrieval",
+        "rag-infrastructure"
+      ],
+      "rank": 1034
+    },
+    {
+      "iconId": "si:pixverse",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "generative-video",
+        "creative-ai",
+        "video-generation",
+        "text-to-video",
+        "synthetic-video"
+      ],
+      "rank": 1035
+    },
+    {
+      "iconId": "si:portkey",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "ai-gateway",
+        "llm-observability",
+        "model-routing",
+        "model-gateway",
+        "ai-observability",
+        "llm-routing"
+      ],
+      "rank": 1036
+    },
+    {
+      "iconId": "si:runway",
+      "sourceLibrary": "si",
+      "jobCategory": "generative-media-creative-ai",
+      "secondaryCategories": [
+        "ai-video",
+        "creative-studio",
+        "generative-media",
+        "video-generation",
+        "film-tools",
+        "synthetic-media"
+      ],
+      "rank": 1037
+    },
+    {
+      "iconId": "si:shadcn-ui",
+      "sourceLibrary": "si",
+      "jobCategory": "design-ui-intelligence",
+      "secondaryCategories": [
+        "ui-components",
+        "design-system",
+        "frontend-ui",
+        "component-library",
+        "interface-building"
+      ],
+      "rank": 1038
+    },
+    {
+      "iconId": "si:smithery",
+      "sourceLibrary": "si",
+      "jobCategory": "mcp-tooling-protocols",
+      "secondaryCategories": [
+        "mcp-directory",
+        "mcp-server-hosting",
+        "tool-registry",
+        "mcp",
+        "agent-tools",
+        "server-directory"
+      ],
+      "rank": 1039
+    },
+    {
+      "iconId": "si:stagehand",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "browser-automation",
+        "web-agent-runtime",
+        "agent-testing",
+        "web-automation",
+        "browser-agent",
+        "agent-runtime"
+      ],
+      "rank": 1040
+    },
+    {
+      "iconId": "si:stepfun",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "foundation-model",
+        "chat-assistant",
+        "model-platform",
+        "llm",
+        "ai-lab",
+        "model-api"
+      ],
+      "rank": 1041
+    },
+    {
+      "iconId": "si:suno-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "voice-audio-ai",
+      "secondaryCategories": [
+        "music-generation",
+        "audio-generation",
+        "voice-audio-ai",
+        "ai-music",
+        "song-generation",
+        "audio-models"
+      ],
+      "rank": 1042
+    },
+    {
+      "iconId": "si:supericons",
+      "sourceLibrary": "si",
+      "jobCategory": "design-ui-intelligence",
+      "secondaryCategories": [
+        "ai-icon-library",
+        "design-assets",
+        "ui-icons",
+        "icon-system",
+        "brand-icons",
+        "design-tooling"
+      ],
+      "rank": 1043
+    },
+    {
+      "iconId": "si:temporal",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "durable-workflows",
+        "workflow-orchestration",
+        "agent-runtime",
+        "workflow-engine",
+        "long-running-tasks",
+        "reliable-execution"
+      ],
+      "rank": 1044
+    },
+    {
+      "iconId": "si:trae",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agents-dev-environments",
+      "secondaryCategories": [
+        "agentic-ide",
+        "coding-agent",
+        "developer-environment",
+        "ai-coding",
+        "developer-workspace",
+        "code-assistant"
+      ],
+      "rank": 1045
+    },
+    {
+      "iconId": "si:vercel-eve",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-infrastructure-runtime",
+      "secondaryCategories": [
+        "agent-runtime",
+        "web-agent",
+        "deployment-platform",
+        "ai-agent",
+        "vercel-platform",
+        "web-runtime"
+      ],
+      "rank": 1046
+    },
+    {
+      "iconId": "si:x-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "foundation-model",
+        "grok",
+        "ai-lab",
+        "model-provider",
+        "llm",
+        "xai"
+      ],
+      "rank": 1047
+    },
+    {
+      "iconId": "si:xiaomi-mimo",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "foundation-model",
+        "edge-ai",
+        "ai-lab",
+        "model-provider",
+        "mobile-ai",
+        "xiaomi-ai"
+      ],
+      "rank": 1048
+    },
+    {
+      "iconId": "si:z-ai",
+      "sourceLibrary": "si",
+      "jobCategory": "model-platforms-ai-labs",
+      "secondaryCategories": [
+        "foundation-model",
+        "open-model",
+        "ai-lab",
+        "model-provider",
+        "llm",
+        "zai"
+      ],
+      "rank": 1049
+    },
     {
       "iconId": "material:smart_toy",
       "sourceLibrary": "material",

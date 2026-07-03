@@ -31,7 +31,9 @@ function countMcpTools(source) {
 
 const FREE_MCP_TOOL_IDS = Object.freeze([
   'search_icons',
+  'recommend_icons',
   'get_icon',
+  'preview_icons',
   'list_libraries',
 ]);
 

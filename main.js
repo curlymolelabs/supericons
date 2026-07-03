@@ -993,6 +993,91 @@ function syncTagFilterBar() {
   els.gridFilterBar.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
 }
 
+function parseIconRef(value = '') {
+  const [library, ...idParts] = String(value || '').trim().split(':');
+  const id = idParts.join(':');
+  return library && id ? { library, id } : null;
+}
+
+function findIconByRef(ref) {
+  const parsed = parseIconRef(ref);
+  if (!parsed) return null;
+  return state.icons.find((icon) => icon.lib === parsed.library && icon.id === parsed.id) || null;
+}
+
+function getMcpPreviewUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const query = (params.get('q') || params.get('query') || params.get('search') || '').trim();
+  const library = (params.get('library') || params.get('lib') || '').trim();
+  const iconRef = (params.get('icon') || params.get('icon_ref') || '').trim();
+  const icons = (params.get('icons') || '')
+    .split(',')
+    .map((ref) => ref.trim())
+    .filter(Boolean);
+  const isPreview = params.get('preview') === 'mcp' || Boolean(query || library || iconRef || icons.length);
+  if (!isPreview) return null;
+  return {
+    query,
+    library,
+    iconRef,
+    icons,
+  };
+}
+
+function syncSidebarActiveLibrary() {
+  $$('.sidebar__item').forEach((item) => {
+    item.classList.toggle('active', item.dataset.library === state.activeLibrary);
+  });
+}
+
+function applyMcpPreviewUrlState() {
+  const preview = getMcpPreviewUrlState();
+  if (!preview) return false;
+
+  dismissHero();
+
+  if (preview.library && (preview.library === 'all' || libraryMeta[preview.library])) {
+    state.activeLibrary = preview.library;
+    state.activeJobCategoryFilter = 'all';
+    syncSidebarActiveLibrary();
+  }
+
+  if (preview.query && els.searchInput) {
+    els.searchInput.value = preview.query;
+    syncSearchStateFromInput({ resetSearchContext: true });
+  }
+
+  applyFilters();
+
+  const explicitRefs = [...preview.icons];
+  if (preview.iconRef) explicitRefs.unshift(preview.iconRef);
+  const explicitIcons = explicitRefs
+    .map(findIconByRef)
+    .filter(Boolean);
+
+  if (explicitIcons.length > 0 && !preview.query) {
+    const seen = new Set();
+    state.filteredIcons = explicitIcons.filter((icon) => {
+      const key = iconKey(icon);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    state.tierDividerIndex = -1;
+    state.visibleRange.end = Math.max(state.batchSize, state.filteredIcons.length);
+    updateCounts();
+    renderGrid();
+  }
+
+  const selectedRef = preview.iconRef || explicitRefs[0];
+  const selected = selectedRef ? findIconByRef(selectedRef) : null;
+  if (selected) {
+    selectIcon(selected.id, selected.lib);
+  }
+
+  return true;
+}
+
 // ============================================================
 // Icon + Synonym Loading
 // ============================================================
@@ -1077,11 +1162,13 @@ const libraryMeta = {
   iconoir: { name: 'Iconoir', iconKey: 'iconoir', fallbackIcon: 'circle', hasStroke: true, hasFilled: true },
   ionicons: { name: 'Ionicons', iconKey: 'ionicons', fallbackIcon: 'bolt', hasStroke: true, strokeScale: 21.33, hasFilled: true },
   simpleicons: { name: 'Simple Icons', iconKey: 'simpleicons', fallbackIcon: 'apps', hasStroke: false, hasFilled: false },
+  si: { name: 'Supericons', iconKey: 'supericons', fallbackIcon: 'auto_awesome', hasStroke: false, hasFilled: false },
   mingcute: { name: 'MingCute', iconKey: 'mingcute', fallbackIcon: 'star', hasStroke: false, hasFilled: true, previewSize: 72 },
   premium: { name: 'Premium', iconKey: 'collections', fallbackIcon: 'diamond', hasStroke: true, hasFilled: false },
 };
 
 const librarySidebarOrder = [
+  'si',
   'mingcute',
   'simpleicons',
   'lucide',
@@ -4069,6 +4156,7 @@ async function init() {
   hydrateSidebarIcons();
   loadCollections();
   await loadIcons();
+  applyMcpPreviewUrlState();
   setupInfiniteScroll();
   updateSidebarCounts();
   window.dispatchEvent(new CustomEvent('supericons:locale-change', { detail: { locale: activeLocale } }));

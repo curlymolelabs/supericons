@@ -49,6 +49,17 @@ import {
   getIntentCandidateAdjustment,
 } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
+import {
+  buildPreviewBoardUrlForIcons,
+  buildSearchPreviewUrl,
+  enrichPublicIconResult,
+  getPublicLibraryMeta,
+  parseIconRef,
+} from './public-icon-preview.js';
+import {
+  buildIconContactSheetPng,
+  buildPreviewTextPayload,
+} from './preview-icons.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -397,7 +408,10 @@ async function buildToolIconResult(icon, options = {}) {
     result.semantic = icon.semantic;
   }
 
-  return attachSemanticPayload(result, semanticRegistryMap, icon);
+  return enrichPublicIconResult(
+    attachSemanticPayload(result, semanticRegistryMap, icon),
+    options,
+  );
 }
 
 const { freeIcons, outlineIcons, solidIcons, synonyms } = loadData();
@@ -505,6 +519,34 @@ function buildTextResponse(payload) {
   return {
     content: [{ type: 'text', text: typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2) }],
   };
+}
+
+function buildPreviewResponse(payload, { imagePng = null } = {}) {
+  const content = [
+    {
+      type: 'text',
+      text: JSON.stringify(payload, null, 2),
+    },
+  ];
+
+  if (imagePng) {
+    content.push({
+      type: 'image',
+      data: Buffer.from(imagePng).toString('base64'),
+      mimeType: 'image/png',
+    });
+  }
+
+  return {
+    structuredContent: payload,
+    content,
+  };
+}
+
+async function resolvePreviewIconRef(ref, { style = VARIANT_STYLES.ANY } = {}) {
+  const parsed = parseIconRef(ref);
+  if (!parsed) return null;
+  return resolveAccessibleIcon(parsed.id, parsed.library, { style });
 }
 
 function buildWorkflowAccessResponse(featureName, locale = null) {
@@ -793,10 +835,10 @@ const server = new McpServer({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code and SI semantic guidance when available, including Supericons AI and developer tool logos. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
+  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code, explicit public library labels, browser preview URLs, and SI semantic guidance when available, including Supericons AI and developer tool logos. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
-    library: z.string().optional().describe('Filter by free library: si, lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, or mingcute'),
+    library: z.string().optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
@@ -852,7 +894,13 @@ server.tool(
         retryable: true,
       });
     }
-    const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, { style })))).filter(Boolean);
+    const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, {
+      style,
+      query,
+      library,
+      locale,
+      limit,
+    })))).filter(Boolean);
     if (formatted.length === 0) {
       void logMcpSearchAttempt({
         query,
@@ -875,6 +923,7 @@ server.tool(
     });
     return buildTextResponse({
       results: formatted,
+      preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
       ...(queryFrame ? { query_frame: queryFrame } : {}),
       source: 'Powered by SuperIcons (https://supericons.dev)',
     });
@@ -884,10 +933,10 @@ server.tool(
 // --- Tool: recommend_icons ---
 server.tool(
   'recommend_icons',
-  'Recommend the most suitable icons for one or more UI slots. Returns shortlist choices with preview-ready SVGs, short reasons, and SI semantic guidance when available.',
+  'Recommend the most suitable icons for one or more UI slots. Returns shortlist choices with preview-ready SVGs, explicit public library labels, browser preview URLs, short reasons, and SI semantic guidance when available. Library key si means Supericons, not Simple Icons.',
   {
     task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
-    library: z.string().optional().describe('Optional library filter such as si, mingcute, lucide, tabler, material, or simpleicons.'),
+    library: z.string().optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to prefer filled variants where they exist.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
@@ -913,11 +962,22 @@ server.tool(
         semanticMap: semanticRegistryMap,
         searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }) =>
           searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit, locale: searchLocale }),
-        buildIconResult: buildToolIconResult,
+        buildIconResult: (icon, options = {}) => buildToolIconResult(icon, {
+          ...options,
+          library,
+          locale,
+          limit: limit_per_slot,
+        }),
       });
 
       return buildTextResponse({
         ...payload,
+        preview_url: buildPreviewBoardUrlForIcons(
+          (payload.results || []).flatMap((slot) => [
+            slot.recommended?.icon_ref,
+            ...(Array.isArray(slot.alternatives) ? slot.alternatives.map((icon) => icon.icon_ref) : []),
+          ]).filter(Boolean),
+        ),
         source: 'Powered by SuperIcons (https://supericons.dev)',
       });
     } catch (error) {
@@ -929,10 +989,10 @@ server.tool(
 // --- Tool: get_icon ---
 server.tool(
   'get_icon',
-  'Retrieve a specific free icon by its ID and library. Returns the full SVG code, metadata, and SI semantic guidance when available. Premium pack icon retrieval is not exposed through MCP yet.',
+  'Retrieve a specific free icon by its ID and library. Returns the full SVG code, metadata, explicit public library labels, browser preview URL, and SI semantic guidance when available. Premium pack icon retrieval is not exposed through MCP yet.',
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
-    library: z.string().describe('Free library name (e.g. "si", "lucide", "tabler", "phosphor", "iconoir", or "mingcute")'),
+    library: z.string().describe('Free library key, for example si (Supericons), lucide, tabler, phosphor, iconoir, mingcute, or simpleicons (Simple Icons).'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to request a filled variant when the library supports it.'),
   },
   async ({ id, library, style }) => {
@@ -952,6 +1012,69 @@ server.tool(
   }
 );
 
+// --- Tool: preview_icons ---
+server.tool(
+  'preview_icons',
+  'Create a visual preview for icon search results or a fixed list of icon refs. Returns a browser preview URL for all clients and, when requested, an MCP image contact sheet for clients that can render images inline. Terminal clients can open the preview_url in a browser.',
+  {
+    query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
+    icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
+    library: z.string().optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference.'),
+    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms.'),
+    limit: z.number().min(1).max(12).optional().default(9).describe('Maximum icons to include in the preview. Keep this small for image-capable clients.'),
+    include_image: z.boolean().optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. A preview_url is always returned.'),
+  },
+  async ({ query, icon_refs, library, style, locale, limit, include_image }) => {
+    if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
+      return buildTextResponse({
+        error: 'Provide either query or icon_refs.',
+      });
+    }
+
+    let icons = [];
+    if (Array.isArray(icon_refs) && icon_refs.length > 0) {
+      icons = (await Promise.all(
+        icon_refs.slice(0, limit).map((ref) => resolvePreviewIconRef(ref, { style })),
+      )).filter(Boolean);
+    } else {
+      const results = await searchAccessibleIcons({
+        query,
+        library,
+        style,
+        locale,
+        limit,
+      });
+      icons = (await Promise.all(results.map((icon) => buildToolIconResult(icon, {
+        style,
+        query,
+        library,
+        locale,
+        limit,
+      })))).filter(Boolean);
+    }
+
+    const previewUrl = Array.isArray(icon_refs) && icon_refs.length > 0
+      ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+      : buildSearchPreviewUrl({ query, library, style, locale, limit });
+    const payload = buildPreviewTextPayload({
+      query: query || null,
+      icons,
+      previewUrl,
+      imageIncluded: Boolean(include_image && icons.length > 0),
+    });
+
+    let imagePng = null;
+    if (include_image && icons.length > 0) {
+      imagePng = buildIconContactSheetPng(icons, {
+        title: query ? `Supericons preview: ${query}` : 'Supericons icon preview',
+      });
+    }
+
+    return buildPreviewResponse(payload, { imagePng });
+  }
+);
+
 // --- Tool: list_libraries ---
 server.tool(
   'list_libraries',
@@ -961,6 +1084,7 @@ server.tool(
     const libs = Object.entries(libraryMeta).map(([id, meta]) => ({
       id,
       name: meta.name,
+      label: getPublicLibraryMeta(id, { name: meta.name, description: meta.description }).label,
       count: libCounts[id] || meta.count || 0,
       outlineCount: outlineLibCounts[id] || meta.outlineCount || 0,
       solidCount: id === 'material'

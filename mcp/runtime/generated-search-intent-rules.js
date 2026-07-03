@@ -344,7 +344,6 @@ export const GENERATED_INTENT_RULES = Object.freeze({
   },
   "smart": {
     "variants": [
-      "ai",
       "brain",
       "brain circuit",
       "sparkles",
@@ -360,6 +359,31 @@ export const GENERATED_INTENT_RULES = Object.freeze({
       "bug",
       "x-circle",
       "triangle-alert"
+    ],
+    "avoidUnless": []
+  },
+  "slop": {
+    "variants": [
+      "bot off",
+      "alert triangle",
+      "bug",
+      "trash",
+      "file warning",
+      "circle x"
+    ],
+    "prefer": [
+      "bot-off",
+      "alert-triangle",
+      "bug",
+      "trash",
+      "file-warning",
+      "circle-x"
+    ],
+    "avoid": [
+      "check",
+      "badge-check",
+      "sparkles",
+      "star"
     ],
     "avoidUnless": []
   },
