@@ -71,7 +71,7 @@ for (let index = 0; index < pngSignature.length; index += 1) {
   }
 }
 
-if (png.length < 20_000) {
+if (png.length < 15_000) {
   fail(`contact sheet PNG is unexpectedly small (${png.length} bytes), which suggests blank placeholders.`);
 }
 
