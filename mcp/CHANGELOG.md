@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.16 - 2026-07-03
+
+### Fixed
+
+- fixed `preview_icons` PNG contact sheets so inline MCP image previews render the actual icon glyphs instead of blank placeholder cards
+- added a prepublish verification check for MCP preview image output
+
 ## 0.4.15 - 2026-07-02
 
 ### Added

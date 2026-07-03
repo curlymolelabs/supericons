@@ -27,7 +27,50 @@ function extractSvgParts(svg = '') {
   const attrs = openTag[1] || '';
   const viewBox = attrs.match(/\bviewBox=["']([^"']+)["']/i)?.[1] || '0 0 24 24';
   const body = raw.slice(openTag.index + openTag[0].length, closeIndex);
-  return { viewBox, body };
+  const presentation = {};
+  const allowedAttrs = new Set([
+    'fill',
+    'stroke',
+    'stroke-width',
+    'stroke-linecap',
+    'stroke-linejoin',
+    'stroke-miterlimit',
+    'fill-rule',
+    'clip-rule',
+  ]);
+  for (const match of attrs.matchAll(/\s([a-zA-Z:-]+)=["']([^"']*)["']/g)) {
+    const name = match[1];
+    if (!allowedAttrs.has(name)) continue;
+    presentation[name] = match[2];
+  }
+  return { viewBox, body, presentation };
+}
+
+function parseViewBox(viewBox = '') {
+  const parts = String(viewBox || '')
+    .trim()
+    .split(/[\s,]+/)
+    .map(Number)
+    .filter(Number.isFinite);
+  if (parts.length !== 4 || parts[2] <= 0 || parts[3] <= 0) {
+    return { minX: 0, minY: 0, width: 24, height: 24 };
+  }
+  return {
+    minX: parts[0],
+    minY: parts[1],
+    width: parts[2],
+    height: parts[3],
+  };
+}
+
+function fitViewBoxTransform(viewBox, x, y, size) {
+  const box = parseViewBox(viewBox);
+  const scale = Math.min(size / box.width, size / box.height);
+  const fittedWidth = box.width * scale;
+  const fittedHeight = box.height * scale;
+  const translateX = x + (size - fittedWidth) / 2 - box.minX * scale;
+  const translateY = y + (size - fittedHeight) / 2 - box.minY * scale;
+  return `translate(${translateX.toFixed(3)} ${translateY.toFixed(3)}) scale(${scale.toFixed(6)})`;
 }
 
 function getReason(icon = {}) {
@@ -46,13 +89,24 @@ function getReason(icon = {}) {
 function iconSvgForSheet(icon, x, y, size) {
   const parts = extractSvgParts(icon.svg);
   if (!parts) {
-    return `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="10" fill="#2a2a2a"/>`;
+    return `
+      <rect x="${x}" y="${y}" width="${size}" height="${size}" rx="18" fill="#27272a" stroke="#52525b"/>
+      <path d="M${x + size * 0.28} ${y + size * 0.28} L${x + size * 0.72} ${y + size * 0.72} M${x + size * 0.72} ${y + size * 0.28} L${x + size * 0.28} ${y + size * 0.72}" stroke="#a1a1aa" stroke-width="4" stroke-linecap="round"/>
+    `;
   }
 
+  const transform = fitViewBoxTransform(parts.viewBox, x, y, size);
+  const inheritedAttrs = {
+    fill: 'currentColor',
+    ...parts.presentation,
+  };
+  const inheritedAttrText = Object.entries(inheritedAttrs)
+    .map(([name, value]) => `${name}="${escapeXml(value)}"`)
+    .join(' ');
   return `
-    <svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="${escapeXml(parts.viewBox)}" color="#f4f4f5" fill="none">
-      <g>${parts.body}</g>
-    </svg>
+    <g transform="${transform}" color="#f8fafc" ${inheritedAttrText}>
+      ${parts.body}
+    </g>
   `;
 }
 
@@ -63,7 +117,7 @@ export function buildIconContactSheetSvg(icons = [], {
   const safeIcons = icons.slice(0, 12);
   const columns = 3;
   const cardWidth = 360;
-  const cardHeight = 164;
+  const cardHeight = 184;
   const gap = 20;
   const margin = 36;
   const headerHeight = 96;
@@ -76,18 +130,18 @@ export function buildIconContactSheetSvg(icons = [], {
     const row = Math.floor(index / columns);
     const x = margin + col * (cardWidth + gap);
     const y = headerHeight + row * (cardHeight + gap);
-    const iconSize = 76;
+    const iconSize = 108;
     const iconX = x + 24;
-    const iconY = y + 34;
-    const labelX = x + 122;
+    const iconY = y + 38;
+    const labelX = x + 156;
     const libraryLabel = icon.library_label || icon.libraryName || icon.library_name || icon.library || 'Unknown library';
     const iconRef = icon.icon_ref || `${icon.library || icon.lib}:${icon.id}`;
     const reason = getReason(icon);
 
     return `
       <g>
-        <rect x="${x}" y="${y}" width="${cardWidth}" height="${cardHeight}" rx="14" fill="#191919" stroke="#3a3a3a"/>
-        <rect x="${iconX - 10}" y="${iconY - 10}" width="${iconSize + 20}" height="${iconSize + 20}" rx="14" fill="#111111" stroke="#2f2f2f"/>
+        <rect x="${x}" y="${y}" width="${cardWidth}" height="${cardHeight}" rx="14" fill="#18181b" stroke="#3f3f46"/>
+        <rect x="${iconX - 14}" y="${iconY - 14}" width="${iconSize + 28}" height="${iconSize + 28}" rx="20" fill="#09090b" stroke="#3f3f46"/>
         ${iconSvgForSheet(icon, iconX, iconY, iconSize)}
         <text x="${labelX}" y="${y + 42}" fill="#f4f4f5" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">${escapeXml(truncate(iconRef, 28))}</text>
         <text x="${labelX}" y="${y + 72}" fill="#ff5a1f" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700">${escapeXml(truncate(libraryLabel, 30))}</text>
