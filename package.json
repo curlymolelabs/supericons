@@ -103,7 +103,8 @@
     "converter:proof-smoke": "node tools/converter-proof-service/smoke-client.mjs",
     "start:remote": "npm --prefix mcp run start:remote",
     "build": "npm run build:product-facts && npm run verify:product-facts && npm run build:si-registry && npm run verify:si-registry && npm run build:admin-html && npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:motion-lab-mcp-artifacts && npm run build:bundles && npm run verify:motion-lab-presets && npm run verify:motion-lab-agent-metadata && vite build && node scripts/cleanup-dist-admin-artifacts.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:mcp-search-preview-localization": "node scripts/verify-mcp-search-preview-localization.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",
