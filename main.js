@@ -34,6 +34,7 @@ import {
   fetchPopularityMap,
   logCopyEvent,
   logFavoriteEvent,
+  logNoResultsFeedback,
   logSearchAttempt,
 } from './lib/icon-intelligence.js';
 import {
@@ -153,11 +154,14 @@ const state = {
 };
 
 const SEARCH_ATTEMPT_IDLE_MS = 2500;
+const NO_RESULTS_FEEDBACK_MAX_LENGTH = 400;
 let pendingSearchAttemptPayload = null;
 let pendingSearchAttemptTimer = null;
 let pendingBlurSearchCommitTimer = null;
 let pendingRecentSearchHideTimer = null;
 let hostedSearchRequestSeq = 0;
+let lastNoResultsFeedbackKey = '';
+let noResultsFeedbackSubmitting = false;
 
 let iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
@@ -694,12 +698,16 @@ const els = {
   searchHistory: $('#searchHistory'),
   searchHistoryList: $('#searchHistoryList'),
   searchHistoryClear: $('#searchHistoryClear'),
+  searchLoader: $('#searchLoader'),
   localeSelect: $('#localeSelect'),
   localeSelectWrap: $('#localeSelectWrap'),
   localeSelectLabel: $('#localeSelectLabel'),
   localeMenu: $('#localeMenu'),
   iconGrid: $('#iconGrid'),
   gridEmpty: $('#gridEmpty'),
+  noResultsFeedbackForm: $('#noResultsFeedbackForm'),
+  noResultsFeedbackInput: $('#noResultsFeedbackInput'),
+  noResultsFeedbackStatus: $('#noResultsFeedbackStatus'),
   gridTitle: $('#gridTitle'),
   gridMeta: $('#gridMeta'),
   gridActions: $('.grid-header__actions'),
@@ -991,6 +999,17 @@ function syncTagFilterBar() {
 
   els.gridFilterBar.hidden = !isVisible;
   els.gridFilterBar.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+}
+
+function syncSearchLoader() {
+  if (!els.searchLoader) return false;
+
+  const hasImmediateResults = Array.isArray(state.filteredIcons) && state.filteredIcons.length > 0;
+  const isVisible = Boolean(state.hostedSearchPending && state.searchQuery && !hasImmediateResults && !isStoreView());
+  els.searchLoader.hidden = !isVisible;
+  els.searchLoader.classList.toggle('is-visible', isVisible);
+  els.searchLoader.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+  return isVisible;
 }
 
 function parseIconRef(value = '') {
@@ -1443,6 +1462,13 @@ function renderGrid() {
   }
   els.iconGrid.innerHTML = html;
 
+  if (syncSearchLoader()) {
+    els.iconGrid.style.display = 'none';
+    els.gridEmpty.style.display = 'none';
+    syncNoResultsFeedbackForm(false);
+    return;
+  }
+
   if (icons.length === 0) {
     els.iconGrid.style.display = 'none';
     els.gridEmpty.style.display = '';
@@ -1466,9 +1492,102 @@ function renderGrid() {
     if (emptyText) {
       emptyText.textContent = emptyCopy.text;
     }
+    syncNoResultsFeedbackForm(Boolean(state.searchQuery && !state.hostedSearchPending));
   } else {
     els.iconGrid.style.display = '';
     els.gridEmpty.style.display = 'none';
+    syncNoResultsFeedbackForm(false);
+  }
+}
+
+function setNoResultsFeedbackStatus(message = '', tone = '') {
+  if (!els.noResultsFeedbackStatus) return;
+  els.noResultsFeedbackStatus.textContent = message;
+  els.noResultsFeedbackStatus.classList.toggle('is-success', tone === 'success');
+  els.noResultsFeedbackStatus.classList.toggle('is-error', tone === 'error');
+}
+
+function syncNoResultsFeedbackForm(isVisible) {
+  if (!els.noResultsFeedbackForm) return;
+
+  els.noResultsFeedbackForm.hidden = !isVisible;
+  els.gridEmpty?.classList.toggle('grid-empty--no-results', isVisible);
+  els.gridEmpty?.classList.toggle('grid-empty--welcome', !isVisible);
+
+  if (!isVisible) {
+    lastNoResultsFeedbackKey = '';
+    setNoResultsFeedbackStatus('');
+    return;
+  }
+
+  const query = getCurrentSearchQuery() || '';
+  const feedbackKey = [
+    state.activeLibrary || 'all',
+    getActiveJobCategoryId() || 'all',
+    query.toLowerCase(),
+  ].join('|');
+
+  if (feedbackKey !== lastNoResultsFeedbackKey) {
+    lastNoResultsFeedbackKey = feedbackKey;
+    if (els.noResultsFeedbackInput) {
+      els.noResultsFeedbackInput.value = '';
+    }
+    setNoResultsFeedbackStatus('');
+  }
+
+  if (els.noResultsFeedbackInput) {
+    els.noResultsFeedbackInput.maxLength = NO_RESULTS_FEEDBACK_MAX_LENGTH;
+    els.noResultsFeedbackInput.placeholder = query
+      ? t('app.iconRequestPlaceholderForQuery', { query })
+      : t('app.iconRequestPlaceholder');
+  }
+}
+
+async function submitNoResultsFeedback(event) {
+  event?.preventDefault();
+  if (noResultsFeedbackSubmitting) return;
+
+  const input = els.noResultsFeedbackInput;
+  const submitButton = els.noResultsFeedbackForm?.querySelector('button[type="submit"]');
+  const searchQuery = getCurrentSearchQuery();
+  const feedbackText = String(input?.value || '')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .slice(0, NO_RESULTS_FEEDBACK_MAX_LENGTH);
+
+  if (!searchQuery) {
+    setNoResultsFeedbackStatus(t('app.iconRequestSearchFirst'), 'error');
+    return;
+  }
+
+  if (!feedbackText) {
+    setNoResultsFeedbackStatus(t('app.iconRequestEmpty'), 'error');
+    input?.focus();
+    return;
+  }
+
+  noResultsFeedbackSubmitting = true;
+  if (input) input.disabled = true;
+  if (submitButton) submitButton.disabled = true;
+  setNoResultsFeedbackStatus(t('app.iconRequestSending'));
+
+  const sent = await logNoResultsFeedback({
+    searchQuery,
+    feedbackText,
+    libraryFilter: state.activeLibrary,
+    jobCategory: getActiveJobCategoryId(),
+    uiSurface: 'grid_empty_feedback',
+  });
+
+  noResultsFeedbackSubmitting = false;
+  if (input) input.disabled = false;
+  if (submitButton) submitButton.disabled = false;
+
+  if (sent) {
+    if (input) input.value = '';
+    setNoResultsFeedbackStatus(t('app.iconRequestSaved'), 'success');
+  } else {
+    setNoResultsFeedbackStatus(t('app.iconRequestFailed'), 'error');
   }
 }
 
@@ -3864,6 +3983,12 @@ if (compareDrawerClose) compareDrawerClose.addEventListener('click', () => {
 
 // Search
 let searchDebounce = null;
+els.noResultsFeedbackForm?.addEventListener('submit', submitNoResultsFeedback);
+els.noResultsFeedbackInput?.addEventListener('input', () => {
+  if (els.noResultsFeedbackStatus?.classList.contains('is-error')) {
+    setNoResultsFeedbackStatus('');
+  }
+});
 els.searchToggle?.addEventListener('click', () => {
   const willOpen = !isHeaderSearchOpen();
   setFloatingHeaderSearchOpen(willOpen, { focus: willOpen });

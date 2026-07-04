@@ -399,12 +399,36 @@
                     <!-- Populated by JS. Empty state shown initially: -->
                 </div>
 
-                <div class="grid-empty" id="gridEmpty">
-                    <span class="material-symbols-outlined grid-empty__icon">auto_awesome</span>
+                <div class="search-loader" id="searchLoader" role="status" aria-live="polite" aria-hidden="true" hidden>
+                    <img class="search-loader__mascot" src="/supericons-search-loader.svg" alt="">
+                    <p class="search-loader__message" data-i18n="app.searchingIconsStatus">Searching icons. Finding the closest matches.</p>
+                </div>
+
+                <div class="grid-empty grid-empty--welcome" id="gridEmpty">
+                    <span class="grid-empty__icon grid-empty__mascot" aria-hidden="true">
+                        <span class="grid-empty__mascot-body"></span>
+                        <span class="grid-empty__mascot-smile-patch"></span>
+                        <svg class="grid-empty__mascot-face" viewBox="0 0 76 56" focusable="false" aria-hidden="true">
+                            <ellipse cx="48.5" cy="21" rx="3" ry="4.4"></ellipse>
+                            <ellipse cx="64.7" cy="18.6" rx="3" ry="4.4"></ellipse>
+                            <path class="grid-empty__mascot-mouth grid-empty__mascot-mouth--smile" d="M53.5 29.5 C56.5 34.1 61.4 34.1 64.3 29.5"></path>
+                            <path class="grid-empty__mascot-mouth grid-empty__mascot-mouth--frown" d="M53.5 30.5 C56.5 26.7 61.4 26.7 64.3 30.5"></path>
+                        </svg>
+                    </span>
                     <h2 class="grid-empty__title">Welcome to Supericons</h2>
                     <p class="grid-empty__text">20,000+ icons across 10 libraries including Material Symbols, Lucide,
                         Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in
                         seconds.</p>
+                    <form class="grid-empty__feedback" id="noResultsFeedbackForm" hidden>
+                        <label class="grid-empty__feedback-label" for="noResultsFeedbackInput" data-i18n="app.iconRequestLabel">What icon should we add?</label>
+                        <div class="grid-empty__feedback-row">
+                            <input class="grid-empty__feedback-input" id="noResultsFeedbackInput" name="icon-request"
+                                type="text" maxlength="400" autocomplete="off"
+                                placeholder="Type an icon, app, or idea" data-i18n-placeholder="app.iconRequestPlaceholder" aria-describedby="noResultsFeedbackStatus">
+                            <button class="grid-empty__feedback-submit" type="submit" data-i18n="actions.send">Send</button>
+                        </div>
+                        <p class="grid-empty__feedback-status" id="noResultsFeedbackStatus" role="status" aria-live="polite"></p>
+                    </form>
                 </div>
             </main>
 

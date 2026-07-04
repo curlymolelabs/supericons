@@ -23,7 +23,16 @@
     "darkMode": "Dark Mode",
     "openSearch": "Open search",
     "closeSearch": "Close search",
-    "recentSearches": "Recent searches"
+    "recentSearches": "Recent searches",
+    "searchingIconsStatus": "Searching icons. Finding the closest matches.",
+    "iconRequestLabel": "What icon should we add?",
+    "iconRequestPlaceholder": "Type an icon, app, or idea",
+    "iconRequestPlaceholderForQuery": "Add a detail for \"{query}\"",
+    "iconRequestSearchFirst": "Search first, then tell us what you wanted.",
+    "iconRequestEmpty": "Type the icon, app, or idea you wanted.",
+    "iconRequestSending": "Sending...",
+    "iconRequestSaved": "Thanks. We saved your request.",
+    "iconRequestFailed": "Could not send that yet. Please try again."
   },
   "nav": {
     "browse": "Browse",
@@ -59,7 +68,8 @@
     "clearRecent": "Clear recent",
     "useThis": "Use this",
     "saveToFavorites": "Save {name} to favorites",
-    "removeFromFavorites": "Remove {name} from favorites"
+    "removeFromFavorites": "Remove {name} from favorites",
+    "send": "Send"
   },
   "panels": {
     "compare": "Compare ({count})",
