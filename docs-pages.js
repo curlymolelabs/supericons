@@ -1000,7 +1000,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
       </section>
       <section class="docs-section" id="icon-tools-search">
         <h2 class="docs-section__title"><code>search_icons</code></h2>
-        <p class="docs-section__copy">Search ${freeIconsAcrossLibrariesFreeLabel} using AI-powered synonym expansion. Returns matching icons with SVG code. Premium packs are available when you use an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
+        <p class="docs-section__copy">Search ${freeIconsAcrossLibrariesFreeLabel} using AI-powered synonym expansion. Returns matching icons with SVG code, public library labels, and browser preview links. Premium packs are available when you use an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -1014,19 +1014,19 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
             </thead>
             <tbody>
               <tr><td><code>query</code></td><td>string</td><td>Yes</td><td>-</td><td>Natural language search term. Example: "heart", "login", "download arrow"</td></tr>
-              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Filter by library. Valid values: <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>heroicons</code>, <code>bootstrap</code>, <code>iconoir</code>, <code>ionicons</code>, <code>material</code>, <code>simpleicons</code>, <code>mingcute</code>, or a premium pack name</td></tr>
+              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Filter by library. Use <code>si</code> for Supericons AI and developer tool logos. Use <code>simpleicons</code> for Simple Icons brand logos. Other valid values include <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>heroicons</code>, <code>bootstrap</code>, <code>iconoir</code>, <code>ionicons</code>, <code>material</code>, <code>mingcute</code>, or a premium pack name</td></tr>
               <tr><td><code>limit</code></td><td>integer</td><td>No</td><td>10</td><td>Max results returned. Range: 1 to 50</td></tr>
               <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use for multilingual search terms. Supported values: <code>zh-Hans</code>, <code>zh-Hant</code>, <code>ja</code>, <code>ko</code>, <code>es</code>, <code>de</code>, <code>pt</code>, <code>ar</code>, <code>hi</code>, <code>vi</code>, <code>th</code></td></tr>
             </tbody>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">Matching icons with SVG code, icon ID, library name, and metadata. When no results are found, returns a message indicating no match.</p>
+        <p class="docs-section__copy">Matching icons with SVG code, icon ID, public library label, metadata, and preview links. When no results are found, returns a message indicating no match.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
       </section>
       <section class="docs-section" id="icon-tools-preview">
         <h2 class="docs-section__title"><code>preview_icons</code></h2>
-        <p class="docs-section__copy">Create a visual preview for a search phrase or a known list of icon refs. Use this when a human needs to see the icons before choosing one.</p>
+        <p class="docs-section__copy">Create a visual preview for icon search results or a fixed list of icon refs. It returns a browser preview URL, a direct PNG image URL, and a ready-made Markdown image snippet. Some MCP clients can also show the included PNG contact sheet inside chat.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -1039,25 +1039,28 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>query</code></td><td>string</td><td>No</td><td>-</td><td>Search phrase to preview. Example: "ai slop" or "license plate recognition camera scan car"</td></tr>
-              <tr><td><code>icon_refs</code></td><td>string array</td><td>No</td><td>-</td><td>Known icon refs in <code>library:id</code> format, such as <code>["si:x-ai", "mingcute:scan_2_line"]</code>. The Supericons library key is <code>si</code>. Provide either <code>query</code> or <code>icon_refs</code>.</td></tr>
-              <tr><td><code>include_image</code></td><td>boolean</td><td>No</td><td><code>false</code></td><td>Set to <code>true</code> when the client can show MCP image content inline.</td></tr>
-              <tr><td><code>limit</code></td><td>integer</td><td>No</td><td>9</td><td>How many icons to show. Range: 1 to 12.</td></tr>
+              <tr><td><code>query</code></td><td>string</td><td>No</td><td>-</td><td>Search phrase to preview visually, such as <code>license plate recognition camera scan car</code></td></tr>
+              <tr><td><code>icon_refs</code></td><td>string array</td><td>No</td><td>-</td><td>Known icon refs in <code>library:id</code> format, such as <code>si:x-ai</code> or <code>mingcute:scan_2_line</code></td></tr>
+              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Optional library filter. Use <code>si</code> for Supericons and <code>simpleicons</code> for Simple Icons</td></tr>
+              <tr><td><code>style</code></td><td>string</td><td>No</td><td><code>any</code></td><td>Use <code>outline</code>, <code>solid</code>, or <code>any</code></td></tr>
+              <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use for multilingual search terms. Supported values match <code>search_icons</code></td></tr>
+              <tr><td><code>limit</code></td><td>integer</td><td>No</td><td>9</td><td>Maximum icons included in the preview. Range: 1 to 12</td></tr>
+              <tr><td><code>include_image</code></td><td>boolean</td><td>No</td><td><code>true</code></td><td>When true, Supericons may include a PNG contact sheet for clients that can display images</td></tr>
             </tbody>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">A browser preview link, a direct PNG image link, a Markdown image snippet, and matching icon refs. Some clients show the image inside the chat. Others may only show the links.</p>
+        <p class="docs-section__copy">A <code>preview_url</code> for the Supericons web UI, an <code>image_url</code> for a direct PNG contact sheet, a <code>markdown_image</code> snippet for clients that render remote Markdown images, and matching icon refs. Some clients also show the image inside the chat.</p>
         <h3>Recommended prompt</h3>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-preview-icons-prompt">Copy</button>
           <pre><code id="docs-preview-icons-prompt">Use Supericons to show me a visual preview of icons for ai slop. Pick the top 3 results and explain briefly why each icon fits.</code></pre>
         </div>
-        <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> Free for standard icons. Premium animated icons require the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
       </section>
       <section class="docs-section" id="icon-tools-recommend">
         <h2 class="docs-section__title"><code>recommend_icons</code></h2>
-        <p class="docs-section__copy">Choose icons for several app slots in one call. Use this when you are planning a sidebar, toolbar, bottom navigation, dashboard, or product screen and want consistent icon choices before fetching SVGs.</p>
+        <p class="docs-section__copy">Choose icons for several app slots in one call. Use this when you are planning a sidebar, toolbar, bottom navigation, dashboard, or product screen and want consistent icon choices before fetching SVGs. Results include public library labels and a browser preview link for the recommended set.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -1072,7 +1075,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
             <tbody>
               <tr><td><code>task</code></td><td>string</td><td>Yes</td><td>-</td><td>Overall UI task. Example: "choose icons for an ecommerce admin sidebar"</td></tr>
               <tr><td><code>slots</code></td><td>string array</td><td>Yes</td><td>-</td><td>One to twelve UI slots, such as <code>["Products", "Orders", "Customers"]</code></td></tr>
-              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Optional library filter, such as <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, or <code>mingcute</code></td></tr>
+              <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Optional library filter, such as <code>si</code> for Supericons, <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>mingcute</code>, or <code>simpleicons</code> for Simple Icons</td></tr>
               <tr><td><code>style</code></td><td>string</td><td>No</td><td><code>any</code></td><td>Use <code>outline</code>, <code>solid</code>, or <code>any</code></td></tr>
               <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use when slot labels are not in English. Supported values match <code>search_icons</code></td></tr>
               <tr><td><code>limit_per_slot</code></td><td>integer</td><td>No</td><td>3</td><td>How many choices to return per slot. Range: 1 to 5</td></tr>
@@ -1093,7 +1096,7 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
       </section>
       <section class="docs-section" id="icon-tools-get">
         <h2 class="docs-section__title"><code>get_icon</code></h2>
-        <p class="docs-section__copy">Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
+        <p class="docs-section__copy">Retrieve a specific icon by its ID and library. Returns the full SVG code, metadata, public library label, and preview link. Premium icons require an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -1106,12 +1109,12 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
             </thead>
             <tbody>
               <tr><td><code>id</code></td><td>string</td><td>Yes</td><td>Icon ID. Example: "heart", "arrow-right", "settings"</td></tr>
-              <tr><td><code>library</code></td><td>string</td><td>Yes</td><td>Library name. Example: "lucide", "tabler", "phosphor", or a premium pack name</td></tr>
+              <tr><td><code>library</code></td><td>string</td><td>Yes</td><td>Library key. Example: <code>si</code> for Supericons, <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, or a premium pack name</td></tr>
             </tbody>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">Full SVG code plus icon metadata (ID, name, library, premium status). For premium animated icons, also returns the CSS animation block and a usage HTML snippet.</p>
+        <p class="docs-section__copy">Full SVG code plus icon metadata, including ID, name, library key, public library label, preview link, and premium status. For premium animated icons, also returns the CSS animation block and a usage HTML snippet.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Free for standard icons. Premium animated icons require the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
       </section>
       <section class="docs-section" id="icon-tools-libraries">
@@ -1120,7 +1123,7 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
         <h3>Parameters</h3>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An array of library objects, each with: <code>id</code>, <code>name</code>, <code>count</code>, <code>description</code>, <code>premium</code> (boolean), and <code>accessible</code> (whether your current API key can access it).</p>
+        <p class="docs-section__copy">An array of library objects, each with: <code>id</code>, <code>name</code>, <code>label</code>, <code>count</code>, <code>description</code>, <code>premium</code> (boolean), and <code>accessible</code> (whether your current API key can access it).</p>
         <p class="docs-section__copy"><strong>Access:</strong> Free.</p>
       </section>
     `,
