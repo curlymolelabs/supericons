@@ -716,11 +716,12 @@ export async function fetchUserPurchases() {
 
 /**
  * Resolves whether the signed-in user owns a product, loading the purchase
- * cache on first use. Pro subscribers count as owners for premium packs.
+ * cache on first use. Ownership means an si_purchases row: a direct
+ * purchase, a monthly Pro claim, or a Pro annual launch grant. An active
+ * Pro subscription by itself does not own packs; Pro only earns claims.
  */
 export async function isProductOwned(productId) {
   if (!productId || !isLoggedIn()) return false;
-  if (isPro()) return true;
   const user = getUser();
   if (user && purchasesLoadedForUserId !== user.id) {
     await fetchUserPurchases();
