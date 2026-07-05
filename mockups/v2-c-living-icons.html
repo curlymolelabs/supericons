@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons v2 Concept C: Living Icons</title>
+<style>
+  :root {
+    --accent: #FF4F00;
+    --accent-soft: #ff906c;
+    --accent-dim: #ff7345;
+    --bg: #0e0e0e;
+    --surface: #131313;
+    --surface-2: #1a1919;
+    --surface-3: #212020;
+    --surface-4: #262626;
+    --text: #ffffff;
+    --text-muted: #cccaca;
+    --text-dim: #767575;
+    --outline: rgba(72, 72, 71, 0.55);
+    --outline-ghost: rgba(72, 72, 71, 0.25);
+    --success: #4ade80;
+    --info: #60a5fa;
+    --warn: #facc15;
+    --error: #ff716c;
+    --tertiary: #f2afff;
+    --radius: 0.75rem;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "Cascadia Code", "SF Mono", Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.25rem;
+    height: 52px;
+    background: rgba(14, 14, 14, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--outline-ghost);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: -0.02em;
+  }
+  .logo .mark {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 0.8rem;
+  }
+  nav.topnav { display: flex; gap: 1.1rem; margin-left: 1rem; }
+  nav.topnav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 130ms;
+  }
+  nav.topnav a:hover, nav.topnav a.active { color: var(--text); }
+  .header-spacer { flex: 1; }
+  .header-btn {
+    background: none;
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.3rem 0.72rem;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 150ms;
+  }
+  .header-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+
+  /* ---------- Hero / playground ---------- */
+  .hero { text-align: center; padding: 3rem 0 1.5rem; }
+  .hero .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin-top: 0.6rem;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    max-width: 560px;
+    margin: 0.7rem auto 0;
+    line-height: 1.6;
+  }
+
+  .playground {
+    margin-top: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 18px;
+    padding: 2.25rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  /* the living icon */
+  .stage { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; justify-content: center; }
+  .living {
+    position: relative;
+    width: 148px; height: 148px;
+    display: grid;
+    place-items: center;
+  }
+  .living .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2.5px solid var(--outline);
+    transition: border-color 400ms;
+  }
+  .living .core { color: var(--text); transition: color 400ms; z-index: 2; }
+  .living .halo {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1.5px dashed transparent;
+    transition: border-color 400ms;
+  }
+
+  /* state styles */
+  .living[data-state="idle"] .ring { border-color: var(--outline); }
+  .living[data-state="observing"] .ring { border-color: var(--info); animation: breathe 3.2s ease-in-out infinite; }
+  .living[data-state="planning"] .ring { border-color: var(--tertiary); border-style: dashed; animation: rotate 6s linear infinite; }
+  .living[data-state="executing"] .ring { border-color: var(--accent); border-top-color: transparent; animation: rotate 1.1s linear infinite; }
+  .living[data-state="waiting"] .ring { border-color: var(--warn); animation: breathe 1.6s ease-in-out infinite; }
+  .living[data-state="blocked"] .ring { border-color: var(--error); animation: shake 500ms ease-in-out; }
+  .living[data-state="uncertain"] .ring { border-color: var(--warn); border-style: dotted; animation: breathe 2.2s ease-in-out infinite; }
+  .living[data-state="done"] .ring { border-color: var(--success); }
+  .living[data-state="error"] .ring { border-color: var(--error); animation: blink 900ms step-end infinite; }
+  .living[data-state="executing"] .halo { border-color: rgba(255, 79, 0, 0.35); animation: rotate 4s linear infinite reverse; }
+  .living[data-state="observing"] .core { color: var(--info); }
+  .living[data-state="planning"] .core { color: var(--tertiary); }
+  .living[data-state="executing"] .core { color: var(--accent); }
+  .living[data-state="waiting"] .core { color: var(--warn); }
+  .living[data-state="blocked"] .core, .living[data-state="error"] .core { color: var(--error); }
+  .living[data-state="done"] .core { color: var(--success); }
+
+  @keyframes rotate { to { transform: rotate(360deg); } }
+  @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.7; } }
+  @keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  @keyframes blink { 50% { opacity: 0.25; } }
+
+  .stage-meta { text-align: left; min-width: 220px; }
+  .stage-meta .var {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    display: block;
+  }
+  .stage-meta .var .k { color: var(--info); }
+  .stage-meta .var .v { color: var(--accent-soft); }
+  .stage-meta .a11y {
+    margin-top: 0.55rem;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  .stage-meta .a11y b { color: var(--text-muted); font-weight: 600; }
+
+  .state-bar { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .state-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.76rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all 140ms;
+  }
+  .state-btn:hover { border-color: var(--outline); color: var(--text); }
+  .state-btn.active {
+    background: rgba(255, 79, 0, 0.14);
+    border-color: var(--accent);
+    color: var(--accent-soft);
+  }
+  .playground .hint { font-size: 0.7rem; color: var(--text-dim); }
+
+  /* ---------- Sections ---------- */
+  section.block { margin-top: 3.5rem; }
+  .block-head { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.1rem; }
+  .block-head h2 {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .block-head span { color: var(--text-dim); font-size: 0.76rem; }
+
+  /* grammar composer */
+  .composer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 18px;
+    padding: 1.5rem;
+    align-items: center;
+  }
+  .composer-controls { display: flex; flex-direction: column; gap: 0.9rem; }
+  .composer-controls .row label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+  }
+  .opt-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .opt {
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+    border-radius: 7px;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.72rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 130ms;
+  }
+  .opt.active {
+    background: rgba(255, 79, 0, 0.14);
+    border-color: var(--accent);
+    color: var(--accent-soft);
+  }
+  .composed {
+    position: relative;
+    width: 130px; height: 130px;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+  }
+  .composed .c-ring {
+    position: absolute; inset: 8px;
+    border-radius: 50%;
+    border: 2.5px solid var(--accent);
+    display: none;
+  }
+  .composed .c-ring.show { display: block; }
+  .composed .c-ring.spin { border-top-color: transparent; animation: rotate 1.2s linear infinite; }
+  .composed .c-ring.dashed { border-style: dashed; animation: rotate 6s linear infinite; }
+  .composed .c-core { color: var(--text); z-index: 2; }
+  .composed .c-badge {
+    position: absolute;
+    right: 6px; bottom: 6px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--surface-4);
+    border: 2px solid var(--bg);
+    display: none;
+    place-items: center;
+    z-index: 3;
+    font-size: 0.62rem;
+    font-family: var(--font-mono);
+  }
+  .composed .c-badge.show { display: grid; }
+  .composed .c-auth {
+    position: absolute;
+    left: 6px; top: 6px;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: var(--surface-4);
+    border: 2px solid var(--bg);
+    display: none;
+    place-items: center;
+    z-index: 3;
+  }
+  .composed .c-auth.show { display: grid; }
+  .composer-spec pre {
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 10px;
+    padding: 0.75rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+  .composer-spec .k { color: var(--info); }
+  .composer-spec .s { color: var(--success); }
+
+  /* collections shelf */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
+  .coll {
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 14px;
+    padding: 1.1rem;
+    transition: border-color 150ms, transform 150ms;
+    cursor: pointer;
+  }
+  .coll:hover { border-color: var(--outline); transform: translateY(-3px); }
+  .coll h3 { font-family: var(--font-head); font-size: 0.92rem; font-weight: 600; }
+  .coll .count { color: var(--text-dim); font-size: 0.7rem; margin-top: 0.15rem; }
+  .coll .samples { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+  .coll .samples span {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    display: grid;
+    place-items: center;
+    color: var(--text-muted);
+  }
+  .coll .accent-line { height: 2px; border-radius: 2px; margin-top: 0.9rem; }
+
+  /* agents panel */
+  .agents-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .agents-copy p { color: var(--text-muted); font-size: 0.86rem; line-height: 1.7; }
+  .agents-copy p + p { margin-top: 0.7rem; }
+  .agents-copy .mini-note { color: var(--text-dim); font-size: 0.74rem; margin-top: 0.9rem; }
+  .code-card {
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .code-card .code-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--outline-ghost);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+  .code-card .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+  .code-card pre {
+    padding: 0.85rem 0.95rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+  .code-card .k { color: var(--info); }
+  .code-card .s { color: var(--success); }
+  .code-card .c { color: var(--text-dim); }
+
+  /* ambient surfaces */
+  .ambient {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.9rem;
+  }
+  .amb-card {
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 14px;
+    padding: 1rem;
+  }
+  .amb-card h3 {
+    font-size: 0.66rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+  .ide-line {
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .spin-ico { display: inline-flex; animation: rotate 1.1s linear infinite; color: var(--accent); }
+  .term {
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 8px;
+    padding: 0.6rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .term .prompt { color: var(--success); }
+  .term .spin-char { color: var(--accent); }
+  .notif {
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 10px;
+    padding: 0.65rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.78rem;
+  }
+  .notif .n-ico {
+    position: relative;
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: var(--surface-3);
+    display: grid;
+    place-items: center;
+    color: var(--warn);
+    flex-shrink: 0;
+  }
+  .notif .n-ico::after {
+    content: '';
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--warn);
+    border: 2px solid var(--bg);
+    animation: breathe 1.6s ease-in-out infinite;
+  }
+  .notif .n-text b { font-weight: 600; }
+  .notif .n-text span { display: block; color: var(--text-dim); font-size: 0.68rem; margin-top: 0.1rem; }
+
+  footer {
+    border-top: 1px solid var(--outline-ghost);
+    margin-top: 4rem;
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; font-size: 0.74rem; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 860px) {
+    .composer { grid-template-columns: 1fr; justify-items: center; }
+    .agents-panel { grid-template-columns: 1fr; }
+    nav.topnav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="mark">S</span> Supericons</div>
+  <nav class="topnav">
+    <a href="#" class="active">Living Icons</a>
+    <a href="#">Browse</a>
+    <a href="#">Motion Lab</a>
+    <a href="#">Converter</a>
+    <a href="#">Docs</a>
+  </nav>
+  <div class="header-spacer"></div>
+  <button class="header-btn">EN</button>
+  <button class="header-btn">◐</button>
+  <button class="header-btn" style="border-color: var(--accent); color: var(--accent-soft);">Get Pro</button>
+</header>
+
+<main>
+
+  <!-- Hero: state machine playground -->
+  <section class="hero">
+    <div class="eyebrow">The state language of agentic software</div>
+    <h1>Icons that know what your agent is doing</h1>
+    <p>One icon, nine lifecycle states, zero JavaScript. Set a single CSS variable and the icon signals idle, planning, executing, blocked, or done to your users. Your agent sets the same variable through MCP.</p>
+  </section>
+
+  <div class="playground">
+    <div class="stage">
+      <div class="living" id="living" data-state="executing" role="img" aria-label="Agent is executing">
+        <span class="halo"></span>
+        <span class="ring"></span>
+        <span class="core">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4M8 4h8"/><circle cx="9.5" cy="13" r="0.8" fill="currentColor"/><circle cx="14.5" cy="13" r="0.8" fill="currentColor"/></svg>
+        </span>
+      </div>
+      <div class="stage-meta">
+        <code class="var"><span class="k">--si-state</span>: <span class="v" id="state-var">executing</span>;</code>
+        <div class="a11y" id="a11y-line"><b>aria-label</b> Agent is executing</div>
+        <div class="a11y"><b>reduced motion</b> falls back to color + shape only</div>
+      </div>
+    </div>
+    <div class="state-bar" id="state-bar"></div>
+    <div class="hint">Click a state. The same states stream from AG-UI events: agent.thinking, agent.tool_call, agent.error and friends.</div>
+  </div>
+
+  <!-- Grammar composer -->
+  <section class="block">
+    <div class="block-head">
+      <h2>Icon grammar</h2>
+      <span>compose compound indicators from primitives, no new icons needed</span>
+    </div>
+    <div class="composer">
+      <div class="composer-controls">
+        <div class="row">
+          <label>Base glyph</label>
+          <div class="opt-row" data-group="glyph">
+            <button class="opt active" data-v="bot">bot</button>
+            <button class="opt" data-v="shield">shield</button>
+            <button class="opt" data-v="doc">document</button>
+            <button class="opt" data-v="card">payment</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>State ring</label>
+          <div class="opt-row" data-group="ring">
+            <button class="opt active" data-v="none">none</button>
+            <button class="opt" data-v="executing">executing</button>
+            <button class="opt" data-v="planning">planning</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>Confidence badge</label>
+          <div class="opt-row" data-group="conf">
+            <button class="opt active" data-v="none">none</button>
+            <button class="opt" data-v="92">high 92%</button>
+            <button class="opt" data-v="41">low 41%</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>Authority marker</label>
+          <div class="opt-row" data-group="auth">
+            <button class="opt active" data-v="none">none</button>
+            <button class="opt" data-v="human">human gate</button>
+            <button class="opt" data-v="auto">auto exec</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="composed" id="composed">
+        <span class="c-ring" id="c-ring"></span>
+        <span class="c-core" id="c-core"></span>
+        <span class="c-badge" id="c-badge"></span>
+        <span class="c-auth" id="c-auth"></span>
+      </div>
+
+      <div class="composer-spec">
+        <pre id="spec-pre"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Governance collections -->
+  <section class="block">
+    <div class="block-head">
+      <h2>Governance collections</h2>
+      <span>the vocabulary generic icon sets never built</span>
+    </div>
+    <div class="shelf" id="shelf"></div>
+  </section>
+
+  <!-- For agents -->
+  <section class="block">
+    <div class="block-head">
+      <h2>Built for your agent</h2>
+      <span>one MCP call returns the whole living component</span>
+    </div>
+    <div class="agents-panel">
+      <div class="agents-copy">
+        <p>Humans see a beautiful animated icon. Agents receive the full machine surface: SVG markup, the state stylesheet, accessibility labels, and semantic metadata that says when to use it and when not to.</p>
+        <p>Your agent asks for an intent like <b style="color: var(--accent-soft);">agent.blocked_on_human</b> and gets back a component it can drop into any framework, already matching your project palette.</p>
+        <div class="mini-note">Works today in Claude Code, Codex, Cursor, Cline, Windsurf and any MCP-capable client.</div>
+      </div>
+      <div class="code-card">
+        <div class="code-head"><span class="dot"></span> get_stateful_icon · MCP</div>
+        <pre>{
+  <span class="k">"intent"</span>: <span class="s">"agent.blocked_on_human"</span>,
+  <span class="k">"icon"</span>: <span class="s">"si:pending-approval"</span>,
+  <span class="k">"svg"</span>: <span class="s">"&lt;svg viewBox=\"0 0 24 24\"...&gt;"</span>,
+  <span class="k">"states"</span>: [<span class="s">"idle"</span>, <span class="s">"waiting"</span>, <span class="s">"approved"</span>, <span class="s">"denied"</span>],
+  <span class="k">"css"</span>: <span class="s">"[data-si-state=waiting]{...}"</span>,
+  <span class="k">"a11y"</span>: { <span class="k">"label"</span>: <span class="s">"Waiting for your approval"</span> },
+  <span class="k">"reducedMotion"</span>: <span class="s">"color-shift"</span>  <span class="c">// no spin</span>
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ambient surfaces -->
+  <section class="block">
+    <div class="block-head">
+      <h2>Ambient surfaces</h2>
+      <span>the same signal, wherever attention lives</span>
+    </div>
+    <div class="ambient">
+      <div class="amb-card">
+        <h3>IDE status line</h3>
+        <div class="ide-line">
+          <span class="spin-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg></span>
+          agent executing · editing rate-limit.ts
+        </div>
+      </div>
+      <div class="amb-card">
+        <h3>Terminal</h3>
+        <div class="term">
+          <span class="prompt">$</span> deploy --prod<br>
+          <span class="spin-char" id="term-spin">⠋</span> waiting for approval gate...
+        </div>
+      </div>
+      <div class="amb-card">
+        <h3>Notification</h3>
+        <div class="notif">
+          <span class="n-ico">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></svg>
+          </span>
+          <span class="n-text"><b>Approval needed</b><span>Your agent wants to run a database migration</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a href="#">Browse 21,371 icons</a>
+  <a href="#">MCP setup</a>
+  <a href="#">Docs</a>
+  <a href="#">Pricing</a>
+</footer>
+
+<script>
+  /* ----- state playground ----- */
+  const STATES = [
+    ['idle', 'Agent is idle'],
+    ['observing', 'Agent is observing'],
+    ['planning', 'Agent is planning'],
+    ['executing', 'Agent is executing'],
+    ['waiting', 'Waiting for your approval'],
+    ['blocked', 'Agent is blocked'],
+    ['uncertain', 'Agent is uncertain, review suggested'],
+    ['done', 'Task complete'],
+    ['error', 'Agent hit an error']
+  ];
+  const living = document.getElementById('living');
+  const stateVar = document.getElementById('state-var');
+  const a11yLine = document.getElementById('a11y-line');
+  const stateBar = document.getElementById('state-bar');
+
+  STATES.forEach(([s, label]) => {
+    const b = document.createElement('button');
+    b.className = 'state-btn' + (s === 'executing' ? ' active' : '');
+    b.textContent = s;
+    b.addEventListener('click', () => {
+      stateBar.querySelectorAll('.state-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      living.dataset.state = s;
+      living.setAttribute('aria-label', label);
+      stateVar.textContent = s;
+      a11yLine.innerHTML = `<b>aria-label</b> ${label}`;
+    });
+    stateBar.appendChild(b);
+  });
+
+  /* ----- grammar composer ----- */
+  const CORE_GLYPHS = {
+    bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4M8 4h8"/><circle cx="9.5" cy="13" r="0.8" fill="currentColor"/><circle cx="14.5" cy="13" r="0.8" fill="currentColor"/>',
+    shield: '<path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/>',
+    doc: '<path d="M6 3h9l4 4v14H6zM15 3v4h4"/>',
+    card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/>'
+  };
+  const state = { glyph: 'bot', ring: 'none', conf: 'none', auth: 'none' };
+  const cRing = document.getElementById('c-ring');
+  const cCore = document.getElementById('c-core');
+  const cBadge = document.getElementById('c-badge');
+  const cAuth = document.getElementById('c-auth');
+  const specPre = document.getElementById('spec-pre');
+
+  function renderComposed() {
+    cCore.innerHTML = `<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${CORE_GLYPHS[state.glyph]}</svg>`;
+    cRing.className = 'c-ring';
+    if (state.ring === 'executing') { cRing.classList.add('show', 'spin'); cRing.style.borderColor = 'var(--accent)'; cRing.style.borderTopColor = 'transparent'; }
+    if (state.ring === 'planning') { cRing.classList.add('show', 'dashed'); cRing.style.borderColor = 'var(--tertiary)'; cRing.style.borderTopColor = 'var(--tertiary)'; }
+    cBadge.className = 'c-badge';
+    if (state.conf !== 'none') {
+      cBadge.classList.add('show');
+      cBadge.textContent = state.conf + '%';
+      cBadge.style.color = state.conf === '92' ? 'var(--success)' : 'var(--warn)';
+      cBadge.style.borderColor = 'var(--bg)';
+    }
+    cAuth.className = 'c-auth';
+    if (state.auth !== 'none') {
+      cAuth.classList.add('show');
+      cAuth.innerHTML = state.auth === 'human'
+        ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg>'
+        : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2" stroke-linecap="round"><path d="M13 2 5 13h6l-1 9 8-11h-6z"/></svg>';
+    }
+    const parts = [`base: <span class="s">"${state.glyph}"</span>`];
+    if (state.ring !== 'none') parts.push(`stateRing: <span class="s">"${state.ring}"</span>`);
+    if (state.conf !== 'none') parts.push(`confidence: ${Number(state.conf) / 100}`);
+    if (state.auth !== 'none') parts.push(`authority: <span class="s">"${state.auth === 'human' ? 'human_gated' : 'auto_executed'}"</span>`);
+    specPre.innerHTML = `<span class="k">get_icon_grammar</span>({\n  ${parts.join(',\n  ')}\n})`;
+  }
+
+  document.querySelectorAll('.opt-row').forEach(row => {
+    row.querySelectorAll('.opt').forEach(opt => opt.addEventListener('click', () => {
+      row.querySelectorAll('.opt').forEach(x => x.classList.remove('active'));
+      opt.classList.add('active');
+      state[row.dataset.group] = opt.dataset.v;
+      renderComposed();
+    }));
+  });
+  renderComposed();
+
+  /* ----- governance shelf ----- */
+  const SHELF = [
+    { name: 'Agent Lifecycle', count: '50 icons', color: '#FF4F00',
+      glyphs: ['<path d="M12 3a9 9 0 1 0 9 9"/>', '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4.5"/>', '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'] },
+    { name: 'Trust and Authority', count: '50 icons', color: '#4ade80',
+      glyphs: ['<path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/>', '<circle cx="12" cy="8" r="4"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/>', '<path d="M13 2 5 13h6l-1 9 8-11h-6z"/>'] },
+    { name: 'Risk and Consequences', count: '40 icons', color: '#ff716c',
+      glyphs: ['<path d="M12 3 2 20h20zM12 10v4M12 17.5v.5"/>', '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', '<path d="M4 9h10a5 5 0 0 1 0 10H9M4 9l4-4M4 9l4 4"/>'] },
+    { name: 'Disclosure', count: '30 icons', color: '#60a5fa',
+      glyphs: ['<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>', '<path d="M6 3h9l4 4v14H6zM15 3v4h4"/>', '<circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v5"/>'] }
+  ];
+  const shelf = document.getElementById('shelf');
+  SHELF.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'coll';
+    el.innerHTML = `
+      <h3>${c.name}</h3>
+      <div class="count">${c.count} · stateful · MCP-ready</div>
+      <div class="samples">${c.glyphs.map(g => `<span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${g}</svg></span>`).join('')}</div>
+      <div class="accent-line" style="background: linear-gradient(90deg, ${c.color}, transparent);"></div>`;
+    shelf.appendChild(el);
+  });
+
+  /* ----- terminal spinner ----- */
+  const FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+  let f = 0;
+  setInterval(() => {
+    const el = document.getElementById('term-spin');
+    if (el) el.textContent = FRAMES[f = (f + 1) % FRAMES.length];
+  }, 90);
+</script>
+</body>
+</html>

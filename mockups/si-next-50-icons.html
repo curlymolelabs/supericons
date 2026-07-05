@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Library: The Next 50</title>
+<style>
+  :root {
+    --accent: #FF4F00;
+    --accent-soft: #ff906c;
+    --accent-dim: #ff7345;
+    --bg: #0e0e0e;
+    --surface: #131313;
+    --surface-2: #1a1919;
+    --surface-3: #212020;
+    --text: #ffffff;
+    --text-muted: #cccaca;
+    --text-dim: #767575;
+    --outline: rgba(72, 72, 71, 0.55);
+    --outline-ghost: rgba(72, 72, 71, 0.25);
+    --success: #4ade80;
+    --info: #60a5fa;
+    --radius: 0.75rem;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "Cascadia Code", Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; }
+
+  header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 1rem;
+    height: 56px; padding: 0 1.25rem;
+    background: rgba(14, 14, 14, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--outline-ghost);
+  }
+  .logo { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; }
+  .logo .mark {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    display: grid; place-items: center; color: #fff; font-size: 0.8rem;
+  }
+  .lib-badge {
+    font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-soft); border: 1px solid rgba(255, 79, 0, 0.4);
+    border-radius: 999px; padding: 0.18rem 0.6rem;
+  }
+  .header-spacer { flex: 1; }
+  .size-toggle { display: flex; gap: 0.25rem; align-items: center; }
+  .size-toggle span { font-size: 0.68rem; color: var(--text-dim); margin-right: 0.3rem; }
+  .size-toggle button {
+    background: var(--surface-2); border: 1px solid var(--outline-ghost);
+    color: var(--text-muted); border-radius: 7px; padding: 0.26rem 0.55rem;
+    font-size: 0.7rem; font-family: var(--font-mono); cursor: pointer; transition: all 130ms;
+  }
+  .size-toggle button.active { background: rgba(255, 79, 0, 0.14); border-color: var(--accent); color: var(--accent-soft); }
+
+  .layout { display: grid; grid-template-columns: 230px 1fr; max-width: 1280px; margin: 0 auto; }
+  aside {
+    padding: 1.4rem 1rem;
+    border-right: 1px solid var(--outline-ghost);
+    position: sticky; top: 56px; height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  aside .aside-title { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.7rem; }
+  aside a {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.82rem; padding: 0.42rem 0.6rem; border-radius: 8px;
+    transition: all 130ms;
+  }
+  aside a:hover { background: var(--surface-2); color: var(--text); }
+  aside a .count { color: var(--text-dim); font-size: 0.7rem; }
+  aside .note { margin-top: 1.4rem; font-size: 0.68rem; color: var(--text-dim); line-height: 1.6; padding: 0 0.6rem; }
+
+  main { padding: 1.75rem 1.75rem 4rem; min-width: 0; }
+  .page-head h1 { font-family: var(--font-head); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+  .page-head p { color: var(--text-dim); font-size: 0.84rem; margin-top: 0.35rem; max-width: 640px; line-height: 1.6; }
+
+  section.cat { margin-top: 2.25rem; scroll-margin-top: 76px; }
+  .cat-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.35rem; }
+  .cat-head h2 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 600; }
+  .cat-head .n { color: var(--text-dim); font-size: 0.74rem; }
+  .cat-signal { color: var(--text-dim); font-size: 0.74rem; margin-bottom: 0.9rem; max-width: 700px; line-height: 1.55; }
+  .cat-signal b { color: var(--accent-soft); font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 0.6rem; }
+  .card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: var(--radius);
+    aspect-ratio: 1 / 1.05;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
+    cursor: pointer; transition: border-color 150ms, background 150ms, transform 150ms;
+  }
+  .card:hover { border-color: var(--outline); background: var(--surface-2); transform: translateY(-2px); }
+  .card .glyph { color: var(--text); display: grid; place-items: center; }
+  .card .name {
+    font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-dim); text-align: center; max-width: 92%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card:hover .name { color: var(--text-muted); }
+  .card .motion-badge {
+    position: absolute; top: 7px; right: 7px;
+    font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-soft); background: rgba(255, 79, 0, 0.12);
+    border-radius: 4px; padding: 0.08rem 0.3rem;
+  }
+  .card .tags {
+    position: absolute; inset: auto 6px 6px;
+    display: none; justify-content: center; gap: 0.25rem; flex-wrap: wrap;
+  }
+  .card:hover .tags { display: flex; }
+  .card:hover .name { display: none; }
+  .card .tags span {
+    font-size: 0.52rem; color: var(--text-dim);
+    background: var(--bg); border-radius: 4px; padding: 0.08rem 0.3rem;
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--surface-3); border: 1px solid var(--outline);
+    border-radius: 10px; padding: 0.6rem 1.1rem; font-size: 0.78rem;
+    color: var(--text); transition: transform 250ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: 40; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+
+  footer {
+    border-top: 1px solid var(--outline-ghost);
+    padding: 1rem 1.5rem; display: flex; justify-content: space-between;
+    font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.06em;
+    max-width: 1280px; margin: 0 auto;
+  }
+
+  /* ---- icon animations ---- */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes blinkc { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes dashflow { to { stroke-dashoffset: -20; } }
+  @keyframes sweep { 0% { stroke-dashoffset: 44; } 60% { stroke-dashoffset: 6; } 100% { stroke-dashoffset: 44; } }
+  .anim-spin { animation: spin 1.4s linear infinite; transform-origin: 12px 12px; }
+  .anim-caret { animation: blinkc 1s step-end infinite; }
+  .anim-pulseline { stroke-dasharray: 3 2.4; animation: dashflow 1.6s linear infinite; }
+  .anim-ring { stroke-dasharray: 44; animation: sweep 2.2s ease-in-out infinite; transform: rotate(-90deg); transform-origin: 12px 12px; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-spin, .anim-caret, .anim-pulseline, .anim-ring { animation: none; }
+  }
+
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { display: none; }
+    .size-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="mark">S</span> Supericons</div>
+  <span class="lib-badge">si library proposal</span>
+  <div class="header-spacer"></div>
+  <div class="size-toggle" id="size-toggle">
+    <span>Preview size</span>
+    <button data-s="16">16</button>
+    <button data-s="24" class="active">24</button>
+    <button data-s="32">32</button>
+    <button data-s="48">48</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="aside-title">Categories</div>
+    <nav id="cat-nav"></nav>
+    <div class="note">
+      50 original concept icons proposed for the in-house si library, complementing the existing 50 brand logos. Ranked and grouped by researched demand. Click any icon to copy its SVG.
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-head">
+      <h1>The Next 50</h1>
+      <p>Original icons for the vocabulary agentic software actually needs: agent states, tool calls, approval gates, machine payments, robots, drones, and quantum. Every icon is drawn on a 24 grid at 1.6px stroke with round caps, matching the si house style.</p>
+    </div>
+    <div id="sections"></div>
+  </main>
+</div>
+
+<footer>
+  <span>CURLY MOLE LABS</span>
+  <span>SI LIBRARY · CANDIDATE SET · 24 GRID · CC-ATTRIBUTION PENDING REVIEW</span>
+</footer>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toast-msg">Copied</span></div>
+
+<script>
+  // Each icon: id, name, tags, motion flag, inner SVG markup (24x24, stroke drawn)
+  const CATEGORIES = [
+  {
+    id: 'agent-states',
+    name: 'Agent states and loaders',
+    signal: 'Strongest demand signal: <b>AI thinking and streaming states</b> are now formalized UX patterns (Cloudscape, uxpatterns.dev), and every agent product needs them.',
+    icons: [
+      { id: 'agent-face', name: 'agent face', tags: ['bot', 'avatar', 'assistant'], svg: '<rect x="4.5" y="7" width="15" height="11" rx="3.5"/><path d="M12 7V4.5"/><circle cx="12" cy="3.4" r="1" fill="currentColor" stroke="none"/><path d="M9 11.5v2M15 11.5v2M9.5 16h5"/>' },
+      { id: 'thinking-pulse', name: 'thinking pulse', tags: ['reasoning', 'brain'], motion: true, svg: '<path d="M9 4.5a3 3 0 0 0-3 3v.8a3.2 3.2 0 0 0 0 6.4v.8a3 3 0 0 0 3 3M15 4.5a3 3 0 0 1 3 3v.8a3.2 3.2 0 0 1 0 6.4v.8a3 3 0 0 1-3 3"/><path class="anim-pulseline" d="M6.5 11.5h2.5l1.4-2.8 2.2 5.6 1.4-2.8h3.5"/>' },
+      { id: 'streaming-caret', name: 'streaming caret', tags: ['typing', 'response'], motion: true, svg: '<path d="M4 6.5h10M4 11h12M4 15.5h8"/><rect class="anim-caret" x="16.4" y="13.2" width="1.6" height="5" rx="0.5" fill="currentColor" stroke="none"/>' },
+      { id: 'loader-orbit', name: 'loader orbit', tags: ['loading', 'spinner'], motion: true, svg: '<circle cx="12" cy="12" r="2.2"/><g class="anim-spin"><circle cx="12" cy="12" r="8" stroke-dasharray="2.5 4"/><circle cx="12" cy="4" r="1.6" fill="currentColor" stroke="none"/></g>' },
+      { id: 'progress-ring', name: 'progress ring', tags: ['progress', 'task'], motion: true, svg: '<circle cx="12" cy="12" r="7" opacity="0.25"/><circle class="anim-ring" cx="12" cy="12" r="7"/><path d="M12 8.5v3.5l2.4 1.6"/>' },
+      { id: 'approval-gate', name: 'approval gate', tags: ['consent', 'pause'], svg: '<path d="M4.5 20V8.5L12 4l7.5 4.5V20"/><path d="M9.8 12v4.5M14.2 12v4.5M2.5 20h19"/>' },
+      { id: 'done-spark', name: 'done spark', tags: ['complete', 'success'], svg: '<path d="M4.5 13.5l4.5 4.5L19 8"/><path d="M17.5 2.5v4.6M15.2 4.8h4.6"/>' },
+      { id: 'error-glitch', name: 'error glitch', tags: ['fault', 'alert'], svg: '<path d="M12 4L3 19.5h18z"/><path d="M12 10v4M12 16.8v.4"/><path d="M1.5 13.5h2M20.5 10.5h2"/>' },
+      { id: 'retry-route', name: 'retry route', tags: ['recover', 'reroute'], svg: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.8 3.4v4.4h-4.4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>' },
+      { id: 'agent-handoff', name: 'agent handoff', tags: ['delegate', 'transfer'], svg: '<circle cx="6" cy="13.5" r="3"/><circle cx="18" cy="13.5" r="3"/><path d="M8.5 9.5Q12 6 15.5 9.5"/><path d="M15.5 9.5l-2.4-.4M15.5 9.5l-.5-2.3"/>' }
+    ]
+  },
+  {
+    id: 'agent-workflow',
+    name: 'Agent workflow and MCP',
+    signal: '<b>Tool calls, MCP connectors, planning, orchestration</b>: named patterns in every 2026 agent architecture guide, and the core of your MCP-first positioning.',
+    icons: [
+      { id: 'tool-call', name: 'tool call', tags: ['function', 'invoke'], svg: '<path d="M8 4C5.2 7 5.2 17 8 20M16 4c2.8 3 2.8 13 0 16"/><path d="M13.2 8l-2.6 4.2h3L11 16"/>' },
+      { id: 'mcp-connector', name: 'mcp connector', tags: ['plug', 'server'], svg: '<path d="M9 8V4M15 8V4"/><rect x="6.5" y="8" width="11" height="6.5" rx="2"/><path d="M12 14.5v2.5a3 3 0 0 1-3 3H4.5"/>' },
+      { id: 'plan-branches', name: 'plan branches', tags: ['tasks', 'decompose'], svg: '<rect x="3" y="9.5" width="5.5" height="5" rx="1.2"/><path d="M8.5 12h3.5"/><path d="M12 12c2.6 0 1.6-6 4-6M12 12c2.6 0 1.6 6 4 6"/><rect x="16" y="3.5" width="5" height="5" rx="1.2"/><rect x="16" y="15.5" width="5" height="5" rx="1.2"/>' },
+      { id: 'orchestrator', name: 'orchestrator', tags: ['supervisor', 'multi-agent'], svg: '<circle cx="12" cy="5" r="2.4"/><path d="M10.5 6.8L6.5 14M12 7.5V14M13.5 6.8l4 7.2"/><rect x="4" y="15" width="4.5" height="4.5" rx="1.1"/><rect x="9.75" y="15" width="4.5" height="4.5" rx="1.1"/><rect x="15.5" y="15" width="4.5" height="4.5" rx="1.1"/>' },
+      { id: 'agent-swarm', name: 'agent swarm', tags: ['mesh', 'cluster'], svg: '<circle cx="6" cy="7.5" r="2"/><circle cx="12" cy="4.5" r="2"/><circle cx="18" cy="7.5" r="2"/><circle cx="8.5" cy="16" r="2"/><circle cx="15.5" cy="16" r="2"/><path d="M7.8 8.6l3-2.5M13.2 6.1l3 2.5M7 9.4l1 4.7M17 9.4l-1 4.7M10.5 16h3" opacity="0.55"/>' },
+      { id: 'memory-store', name: 'memory store', tags: ['context', 'recall'], svg: '<ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v11c0 1.6 3.1 2.8 7 2.8s7-1.2 7-2.8V6"/><path d="M8.5 12.5h2l1-1.8 1.8 3.4 1-1.6h1.2"/>' },
+      { id: 'context-gauge', name: 'context gauge', tags: ['window', 'capacity'], svg: '<path d="M4 17.5a8 8 0 0 1 16 0"/><path d="M12 17.5l3.6-5.4"/><circle cx="12" cy="17.5" r="1.3" fill="currentColor" stroke="none"/><path d="M5.5 13l-1.3-.7M12 9.5V8M18.5 13l1.3-.7"/>' },
+      { id: 'token-meter', name: 'token meter', tags: ['usage', 'budget'], svg: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.6" stroke-dasharray="21 8"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>' },
+      { id: 'skill-module', name: 'skill module', tags: ['plugin', 'capability'], svg: '<path d="M5 10h3.1a2.4 2.4 0 1 1 4.8 0H16v3.1a2.4 2.4 0 1 0 0 4.8V21H5z"/><path d="M19 3v4.4M16.8 5.2h4.4"/>' },
+      { id: 'prompt-field', name: 'prompt field', tags: ['input', 'ask'], svg: '<rect x="3" y="8" width="18" height="8.5" rx="2.4"/><path d="M6.8 10.6v3.3"/><path d="M17 10.4l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6z" fill="currentColor" stroke="none"/>' },
+      { id: 'pipeline-run', name: 'pipeline run', tags: ['workflow', 'chain'], svg: '<circle cx="5" cy="12" r="2.1"/><rect x="9.8" y="9.9" width="4.4" height="4.2" rx="1.1"/><circle cx="19" cy="12" r="2.1"/><path d="M7.1 12h2.7M14.2 12h2.7"/>' }
+    ]
+  },
+  {
+    id: 'coding-agent',
+    name: 'Coding agent',
+    signal: 'Cursor calls the diff <b>"the unit of work"</b>. Claude Code, Codex, and Copilot all ship commits and PRs as agent deliverables, none of the big libraries mark them as agent-made.',
+    icons: [
+      { id: 'agent-diff', name: 'agent diff', tags: ['patch', 'change'], svg: '<path d="M5.5 8h5M8 5.5v5M5.5 16.5h5"/><path d="M14 4v16" stroke-dasharray="2.5 2.5"/><path d="M18.3 9.4l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6z" fill="currentColor" stroke="none"/>' },
+      { id: 'agent-pr', name: 'agent pull request', tags: ['git', 'review'], svg: '<circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M6 8.4v7.2"/><circle cx="18" cy="18" r="2.4"/><path d="M11.5 6H15a3 3 0 0 1 3 3v6.6"/><path d="M18 11.8v-1.3"/><circle cx="18" cy="9" r="0.9" fill="currentColor" stroke="none"/>' },
+      { id: 'agent-commit', name: 'agent commit', tags: ['git', 'save'], svg: '<path d="M2.5 12.5h6M15.5 12.5h6"/><circle cx="12" cy="12.5" r="3.2"/><path d="M12 2.8v4M9.9 4.8h4.2"/>' },
+      { id: 'terminal-agent', name: 'terminal agent', tags: ['cli', 'shell'], svg: '<rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M6.5 9.5l3.2 2.7-3.2 2.7M11.5 15.5H16"/><path d="M17.2 7.2l.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z" fill="currentColor" stroke="none"/>' },
+      { id: 'sandbox-run', name: 'sandbox run', tags: ['isolated', 'safe'], svg: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"/><path d="M6.8 13.9l1.7 1.7 2.8-3.2"/>' }
+    ]
+  },
+  {
+    id: 'trust-safety',
+    name: 'Trust and safety',
+    signal: '<b>Guardrails, hallucination detection, prompt injection</b> are named product categories now (CrewAI, Patronus, Galileo). This is the governance vocabulary from the 2027 blueprint.',
+    icons: [
+      { id: 'guardrail-path', name: 'guardrail path', tags: ['bounds', 'policy'], svg: '<path d="M5 4v16M19 4v16"/><path d="M12 4.5v3M12 10.5v3M12 16.5v3" stroke-dasharray="3 2.6"/><path d="M5 8h2.5M19 8h-2.5M5 16h2.5M19 16h-2.5"/>' },
+      { id: 'hallucination-warn', name: 'hallucination warn', tags: ['distortion', 'verify'], svg: '<path d="M4 5.5h16v8.5c-2.7-1.6-5.3 1.6-8 0s-5.3 1.6-8 0z"/><path d="M8.5 17.5L6.5 21v-3.5"/><path d="M12 8v3M12 12.8v.4"/>' },
+      { id: 'prompt-injection', name: 'prompt injection', tags: ['attack', 'input'], svg: '<rect x="3" y="10" width="18" height="7.5" rx="2"/><path d="M16 2.5v5.2M14 5.7l2 2 2-2"/><path d="M7 12.4v2M7 16.2v.3"/>' },
+      { id: 'human-in-loop', name: 'human in loop', tags: ['oversight', 'review'], svg: '<circle cx="12" cy="8.8" r="2.7"/><path d="M8 18.6c.5-2.8 2-4.3 4-4.3s3.5 1.5 4 4.3"/><path d="M4 15.2A8.6 8.6 0 0 1 6.8 5.5M20 8.8A8.6 8.6 0 0 1 18.4 17.2"/><path d="M6.8 5.5 4.4 5.7M6.8 5.5l-.2 2.4M18.4 17.2l2.4-.2M18.4 17.2l.2-2.4"/>' },
+      { id: 'autonomy-dial', name: 'autonomy dial', tags: ['delegation', 'level'], svg: '<circle cx="12" cy="13" r="7.2"/><path d="M12 13l3.4-4.4"/><circle cx="12" cy="13" r="1.2" fill="currentColor" stroke="none"/><path d="M5.6 9.3l-1.4-.9M12 5.8V4.2M18.4 9.3l1.4-.9"/>' },
+      { id: 'agent-id-badge', name: 'agent id badge', tags: ['identity', 'scope'], svg: '<rect x="3" y="5" width="18" height="14.5" rx="2"/><rect x="6" y="9.5" width="5" height="4" rx="1"/><path d="M8.5 9.5V8"/><circle cx="8.5" cy="7.3" r="0.7" fill="currentColor" stroke="none"/><path d="M14 10.5h4M14 13.5h4M14 16.5h2.2"/>' }
+    ]
+  },
+  {
+    id: 'agent-payments',
+    name: 'Agent payments',
+    signal: 'x402 processes an estimated <b>$600M a year</b> already. Coinbase ships agentic wallets. Machine-to-machine payment icons barely exist anywhere.',
+    icons: [
+      { id: 'agent-wallet', name: 'agent wallet', tags: ['funds', 'account'], svg: '<rect x="3" y="7" width="18" height="12.5" rx="2"/><path d="M16 12h5v3h-5a1.5 1.5 0 0 1 0-3z"/><path d="M7 7V4.8"/><circle cx="7" cy="3.9" r="0.8" fill="currentColor" stroke="none"/>' },
+      { id: 'x402-pay', name: 'x402 payment', tags: ['protocol', 'http'], svg: '<rect x="3" y="7.5" width="18" height="9" rx="2.2"/><text x="12" y="14.6" text-anchor="middle" font-family="Consolas, monospace" font-size="6.2" font-weight="600" fill="currentColor" stroke="none">402</text><path d="M7.5 3.5L5 5.5M16.5 20.5l2.5-2"/>' },
+      { id: 'machine-pay', name: 'machine to machine pay', tags: ['m2m', 'autonomous'], svg: '<rect x="2.5" y="10" width="5.5" height="4.5" rx="1.2"/><path d="M5.25 10V8.6"/><rect x="16" y="10" width="5.5" height="4.5" rx="1.2"/><path d="M18.75 10V8.6"/><circle cx="12" cy="12.2" r="2.2"/><path d="M12 11.2v2M11.2 12.2h1.6"/><path d="M8 18.5q4-2.6 8 0" stroke-dasharray="2 2"/>' },
+      { id: 'stablecoin', name: 'stablecoin', tags: ['peg', 'currency'], svg: '<circle cx="12" cy="12" r="8"/><path d="M9 10.4h6M9 13.6h6"/>' },
+      { id: 'spend-limit', name: 'spend limit', tags: ['cap', 'policy'], svg: '<path d="M3 4.5h18" stroke-dasharray="3 2.6"/><rect x="4" y="9.5" width="16" height="10" rx="2"/><path d="M12 16.5V7.8M9.8 10l2.2-2.2L14.2 10"/>' }
+    ]
+  },
+  {
+    id: 'robotics-drones',
+    name: 'Robotics and drones',
+    signal: 'BofA projects <b>90,000 humanoid robots shipped in 2026</b>. Lucide has an open issue that its bot icon reads as a joystick. Delivery drone icons number in the thousands on stock sites.',
+    icons: [
+      { id: 'humanoid-robot', name: 'humanoid robot', tags: ['android', 'bipedal'], svg: '<rect x="9" y="3" width="6" height="5" rx="1.5"/><path d="M10.8 5.4v.8M13.2 5.4v.8"/><rect x="8" y="10" width="8" height="6" rx="1.5"/><path d="M12 8v2M8 11.5l-2.8 1.8M16 11.5l2.8 1.8M10 16v4.5M14 16v4.5"/>' },
+      { id: 'robot-arm', name: 'robot arm', tags: ['manipulator', 'industrial'], svg: '<path d="M4 20.5h9"/><path d="M8 20.5v-6.2l5.2-6.1"/><circle cx="8" cy="14.3" r="1.3"/><circle cx="13.2" cy="8.2" r="1.3"/><path d="M14.4 7.4l3.2-1.8M14.4 9l3.4 1.4"/>' },
+      { id: 'robot-dog', name: 'robot dog', tags: ['quadruped', 'patrol'], svg: '<rect x="5" y="9.5" width="11" height="5" rx="1.8"/><rect x="15" y="5" width="5.5" height="4.5" rx="1.2"/><path d="M16 9.5V9M7 14.5l-1 5.5M10.5 14.5v5.5M13.5 14.5v5.5M16 14.5l1 5.5M5 10.5L2.8 8.6"/><circle cx="18.7" cy="7" r="0.7" fill="currentColor" stroke="none"/>' },
+      { id: 'delivery-robot', name: 'delivery robot', tags: ['sidewalk', 'parcel'], svg: '<rect x="6" y="5.5" width="12" height="10.5" rx="2"/><circle cx="9" cy="18.7" r="1.7"/><circle cx="15" cy="18.7" r="1.7"/><path d="M9 9h6M12 5.5V12"/><path d="M12 12v4" opacity="0.4"/>' },
+      { id: 'drone-quad', name: 'quadcopter drone', tags: ['uav', 'fpv'], svg: '<rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1.4"/><path d="M9.6 9.6L6.4 6.4M14.4 9.6l3.2-3.2M9.6 14.4l-3.2 3.2M14.4 14.4l3.2 3.2"/><path d="M3.4 5.6a4.2 4.2 0 0 1 6 0M14.6 5.6a4.2 4.2 0 0 1 6 0M3.4 18.4a4.2 4.2 0 0 0 6 0M14.6 18.4a4.2 4.2 0 0 0 6 0"/>' },
+      { id: 'drone-delivery', name: 'drone delivery', tags: ['parcel', 'drop'], svg: '<rect x="10" y="6.5" width="4" height="3.4" rx="1"/><path d="M10 7.5L7 5.5M14 7.5l3-2M4.8 4.5a3.4 3.4 0 0 1 4.4 0M14.8 4.5a3.4 3.4 0 0 1 4.4 0"/><path d="M12 9.9v3.6"/><rect x="9.2" y="13.5" width="5.6" height="5" rx="0.9"/><path d="M12 13.5v5"/>' },
+      { id: 'lidar-sensor', name: 'lidar sensor', tags: ['scan', 'range'], svg: '<circle cx="12" cy="15.5" r="2"/><path d="M7.5 11a6.4 6.4 0 0 1 9 0M4.6 8a10.4 10.4 0 0 1 14.8 0"/><path d="M13.4 13.9l4-5.4"/>' }
+    ]
+  },
+  {
+    id: 'quantum-frontier',
+    name: 'Quantum and frontier',
+    signal: 'Qubit and entanglement icons are a real niche (hundreds of stock assets), and <b>AI glasses launch mainstream in fall 2026</b>. Round out the frontier vocabulary.',
+    icons: [
+      { id: 'qubit-sphere', name: 'qubit sphere', tags: ['bloch', 'state'], svg: '<circle cx="12" cy="12" r="8"/><ellipse cx="12" cy="12" rx="8" ry="3"/><path d="M12 12l3.4-4.8"/><circle cx="15.4" cy="7.2" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"/>' },
+      { id: 'entangled-pair', name: 'entangled pair', tags: ['linked', 'correlated'], svg: '<circle cx="8.2" cy="12" r="5"/><circle cx="15.8" cy="12" r="5"/><circle cx="8.2" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="15.8" cy="12" r="0.9" fill="currentColor" stroke="none"/>' },
+      { id: 'quantum-chip', name: 'quantum chip', tags: ['qpu', 'processor'], svg: '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9.5 7V4.5M12 7V4.5M14.5 7V4.5M9.5 19.5V17M12 19.5V17M14.5 19.5V17"/><ellipse cx="12" cy="12" rx="3.2" ry="1.4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="3.2" ry="1.4" transform="rotate(-45 12 12)"/>' },
+      { id: 'ar-glasses', name: 'ai glasses', tags: ['wearable', 'xr'], svg: '<rect x="3.5" y="9" width="7.2" height="5.6" rx="2.2"/><rect x="13.3" y="9" width="7.2" height="5.6" rx="2.2"/><path d="M10.7 11.3h2.6M3.5 10.2L1.8 9M20.5 10.2L22.2 9"/><path d="M16.9 10.8l.4 1 1 .4-1 .4-.4 1-.4-1-1-.4 1-.4z" fill="currentColor" stroke="none"/>' },
+      { id: 'voice-agent', name: 'voice agent', tags: ['speech', 'waveform'], svg: '<path d="M4.5 10.5v3M8 8v8M11.5 5v14M15 8v8M18.5 10.5v3"/><path d="M20.4 3.6l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="currentColor" stroke="none"/>' },
+      { id: 'edge-ai-chip', name: 'edge ai chip', tags: ['npu', 'on-device'], svg: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 6V3.5M15 6V3.5M9 20.5V18M15 20.5V18M6 9H3.5M6 15H3.5M20.5 9H18M20.5 15H18"/><path d="M12 9.4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" fill="currentColor" stroke="none"/>' }
+    ]
+  }
+  ];
+
+  /* ----- render ----- */
+  const sections = document.getElementById('sections');
+  const nav = document.getElementById('cat-nav');
+  let previewSize = 24;
+
+  function iconSvg(icon, size) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="${icon.name}" role="img">${icon.svg}</svg>`;
+  }
+
+  function fullSvgSource(icon) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icon.svg.replace(/ class="[^"]*"/g, '')}</svg>`;
+  }
+
+  function render() {
+    sections.innerHTML = '';
+    nav.innerHTML = '';
+    let total = 0;
+    CATEGORIES.forEach(cat => {
+      total += cat.icons.length;
+      const a = document.createElement('a');
+      a.href = '#' + cat.id;
+      a.innerHTML = `${cat.name} <span class="count">${cat.icons.length}</span>`;
+      nav.appendChild(a);
+
+      const sec = document.createElement('section');
+      sec.className = 'cat';
+      sec.id = cat.id;
+      sec.innerHTML = `
+        <div class="cat-head"><h2>${cat.name}</h2><span class="n">${cat.icons.length} icons</span></div>
+        <div class="cat-signal">${cat.signal}</div>`;
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+      cat.icons.forEach(icon => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          ${icon.motion ? '<span class="motion-badge">motion</span>' : ''}
+          <span class="glyph">${iconSvg(icon, previewSize)}</span>
+          <span class="name">${icon.name}</span>
+          <span class="tags">${icon.tags.map(t => `<span>${t}</span>`).join('')}</span>`;
+        card.addEventListener('click', () => copyIcon(icon));
+        grid.appendChild(card);
+      });
+      sec.appendChild(grid);
+      sections.appendChild(sec);
+    });
+    document.querySelector('.page-head h1').textContent = `The Next ${total}`;
+  }
+
+  /* ----- copy ----- */
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toast-msg');
+  let toastTimer;
+  function copyIcon(icon) {
+    const src = fullSvgSource(icon);
+    if (navigator.clipboard) navigator.clipboard.writeText(src).catch(() => {});
+    toastMsg.textContent = `Copied si:${icon.id} SVG`;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+  }
+
+  /* ----- size toggle ----- */
+  document.querySelectorAll('#size-toggle button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#size-toggle button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    previewSize = parseInt(b.dataset.s, 10);
+    render();
+  }));
+
+  render();
+</script>
+</body>
+</html>

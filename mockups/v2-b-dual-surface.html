@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons v2 Concept B: Dual Surface</title>
+<style>
+  :root {
+    --accent: #FF4F00;
+    --accent-soft: #ff906c;
+    --accent-dim: #ff7345;
+    --bg: #0e0e0e;
+    --surface: #131313;
+    --surface-2: #1a1919;
+    --surface-3: #212020;
+    --surface-4: #262626;
+    --text: #ffffff;
+    --text-muted: #cccaca;
+    --text-dim: #767575;
+    --outline: rgba(72, 72, 71, 0.55);
+    --outline-ghost: rgba(72, 72, 71, 0.25);
+    --success: #4ade80;
+    --info: #60a5fa;
+    --tertiary: #f2afff;
+    --radius: 0.75rem;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "Cascadia Code", "SF Mono", Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0 1.25rem;
+    height: 52px;
+    border-bottom: 1px solid var(--outline-ghost);
+    flex-shrink: 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .logo .mark {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 0.8rem;
+  }
+  .search {
+    flex: 1;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 999px;
+    padding: 0.42rem 0.9rem;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+  }
+  .search input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    min-width: 0;
+  }
+  .header-spacer { flex: 1; }
+  .header-btn {
+    background: none;
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.3rem 0.72rem;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 150ms;
+    white-space: nowrap;
+  }
+  .header-btn:hover { border-color: var(--accent); color: var(--text); }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid;
+    place-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Layout ---------- */
+  .workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 56px 1fr 340px 360px;
+    min-height: 0;
+  }
+
+  /* Icon rail */
+  .rail {
+    border-right: 1px solid var(--outline-ghost);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 0;
+    gap: 0.35rem;
+  }
+  .rail button {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 130ms;
+  }
+  .rail button:hover { background: var(--surface-2); color: var(--text); }
+  .rail button.active { background: rgba(255, 79, 0, 0.14); color: var(--accent-soft); }
+  .rail .rail-sep { width: 22px; height: 1px; background: var(--outline-ghost); margin: 0.4rem 0; }
+
+  /* ---------- Human surface ---------- */
+  .human {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-right: 1px solid var(--outline-ghost);
+  }
+  .surface-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.15rem 0.6rem;
+  }
+  .surface-head h2 {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .surface-head .badge {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 0.14rem 0.55rem;
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-dim);
+  }
+  .badge.human-b { color: var(--accent-soft); border-color: rgba(255, 79, 0, 0.4); }
+  .badge.machine-b { color: var(--info); border-color: rgba(96, 165, 250, 0.4); }
+  .human-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1.15rem 1.15rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 0.55rem;
+    align-content: start;
+  }
+  .cell {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    border-radius: var(--radius);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 150ms;
+  }
+  .cell:hover { border-color: var(--outline); background: var(--surface-2); }
+  .cell.selected { border-color: var(--accent); background: rgba(255, 79, 0, 0.08); }
+  .cell .name {
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    max-width: 88%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cell.agent-pick::after {
+    content: 'agent pick';
+    position: absolute;
+    top: 6px; left: 6px;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--info);
+    background: rgba(96, 165, 250, 0.12);
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+  }
+
+  /* taste bar */
+  .taste-bar {
+    border-top: 1px solid var(--outline-ghost);
+    padding: 0.75rem 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+  }
+  .taste-bar .label {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .swatches { display: flex; gap: 0.32rem; }
+  .swatch {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 120ms;
+  }
+  .swatch:hover { transform: scale(1.15); }
+  .swatch.active { border-color: #fff; }
+  .seg { display: flex; gap: 0.22rem; }
+  .seg button {
+    background: var(--surface);
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 0.24rem 0.55rem;
+    font-size: 0.68rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 130ms;
+  }
+  .seg button.active {
+    background: rgba(255, 79, 0, 0.14);
+    border-color: var(--accent);
+    color: var(--accent-soft);
+  }
+
+  /* ---------- Session spine ---------- */
+  .spine {
+    border-right: 1px solid var(--outline-ghost);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--surface);
+  }
+  .spine-head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1rem 0.6rem;
+  }
+  .spine-head h2 {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+  }
+  .feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.4rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .event {
+    border: 1px solid var(--outline-ghost);
+    border-radius: 10px;
+    background: var(--surface-2);
+    padding: 0.65rem 0.75rem;
+    font-size: 0.76rem;
+    animation: slide-in 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  .event .who {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .event .who .agent-chip {
+    color: var(--info);
+    background: rgba(96, 165, 250, 0.12);
+    border-radius: 4px;
+    padding: 0.08rem 0.35rem;
+  }
+  .event code {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 0.4rem 0.55rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .event code::-webkit-scrollbar { display: none; }
+  .event code .fn { color: var(--info); }
+  .event code .str { color: var(--success); }
+  .event .picks {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+  }
+  .event .pick {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    display: grid;
+    place-items: center;
+    color: var(--text-muted);
+  }
+  .event .actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .event .actions button {
+    flex: 1;
+    border-radius: 6px;
+    padding: 0.32rem 0;
+    font-size: 0.68rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 130ms;
+  }
+  .approve {
+    background: rgba(74, 222, 128, 0.12);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: var(--success);
+  }
+  .approve:hover { background: rgba(74, 222, 128, 0.22); }
+  .swap {
+    background: none;
+    border: 1px solid var(--outline-ghost);
+    color: var(--text-muted);
+  }
+  .swap:hover { border-color: var(--outline); color: var(--text); }
+  .event.approved-state { border-color: rgba(74, 222, 128, 0.4); }
+  .event .approved-note {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--success);
+    display: none;
+  }
+  .spine-foot {
+    border-top: 1px solid var(--outline-ghost);
+    padding: 0.6rem 1rem;
+    font-size: 0.66rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .spine-foot b { color: var(--text-muted); font-weight: 600; }
+
+  /* ---------- Machine surface ---------- */
+  .machine {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #101012;
+  }
+  .machine-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.4rem 1.15rem 1.15rem;
+  }
+  .m-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 0;
+  }
+  .m-preview .m-icon {
+    width: 64px; height: 64px;
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .m-preview h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 600; }
+  .m-preview .sub { color: var(--text-dim); font-size: 0.74rem; margin-top: 0.15rem; }
+  .m-section { margin-top: 0.9rem; }
+  .m-section h4 {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.45rem;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .tag {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 5px;
+    padding: 0.14rem 0.45rem;
+    font-family: var(--font-mono);
+  }
+  .tag.intent { color: var(--accent-soft); border-color: rgba(255, 79, 0, 0.35); }
+  .tag.compose { color: var(--tertiary); border-color: rgba(242, 175, 255, 0.3); }
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 0.8rem;
+    font-size: 0.72rem;
+  }
+  .kv dt { color: var(--text-dim); }
+  .kv dd { color: var(--text-muted); }
+  pre.spec {
+    background: var(--bg);
+    border: 1px solid var(--outline-ghost);
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+  pre.spec .k { color: var(--info); }
+  pre.spec .s { color: var(--success); }
+  .m-copy {
+    margin-top: 0.5rem;
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.78rem;
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: filter 130ms;
+  }
+  .m-copy:hover { filter: brightness(1.1); }
+  .m-copy.copied { background: var(--success); color: #06220f; }
+
+  @media (max-width: 1100px) {
+    .workspace { grid-template-columns: 56px 1fr 320px; }
+    .machine { display: none; }
+  }
+  @media (max-width: 820px) {
+    .workspace { grid-template-columns: 1fr; }
+    .rail, .spine { display: none; }
+    .human { border-right: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="mark">S</span> Supericons</div>
+  <div class="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="text" value="agent status indicators" aria-label="Search icons">
+  </div>
+  <div class="header-spacer"></div>
+  <button class="header-btn">EN</button>
+  <button class="header-btn">◐</button>
+  <div class="avatar">M</div>
+</header>
+
+<div class="workspace">
+
+  <!-- Icon rail -->
+  <nav class="rail">
+    <button class="active" title="Icons"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+    <button title="Favorites"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.4-7 10-7 10z"/></svg></button>
+    <button title="Collections"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v13H4zM8 7V4h8v3"/></svg></button>
+    <div class="rail-sep"></div>
+    <button title="Motion Lab"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c2-5 4-5 6 0s4 5 6 0 4-5 6 0"/></svg></button>
+    <button title="Converter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h10l-3-3M17 16H7l3 3"/></svg></button>
+    <div class="rail-sep"></div>
+    <button title="Docs"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6zM15 3v4h4"/></svg></button>
+  </nav>
+
+  <!-- Human surface -->
+  <section class="human">
+    <div class="surface-head">
+      <h2>Human surface</h2>
+      <span class="badge human-b">taste</span>
+    </div>
+    <div class="human-grid" id="grid"></div>
+    <div class="taste-bar">
+      <span class="label">Taste</span>
+      <div class="swatches" id="swatches"></div>
+      <div class="seg" id="stroke-seg">
+        <button data-v="1">1px</button><button class="active" data-v="1.6">1.5px</button><button data-v="2.2">2px</button>
+      </div>
+      <div class="seg" id="motion-seg">
+        <button class="active">Static</button><button>Pulse</button><button>Spin</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Session spine -->
+  <section class="spine">
+    <div class="spine-head">
+      <span class="live-dot"></span>
+      <h2>Agent session</h2>
+    </div>
+    <div class="feed" id="feed"></div>
+    <div class="spine-foot">
+      Connected via MCP as <b>claude-code</b>. Approvals teach the recommender your taste. Nothing ships without you.
+    </div>
+  </section>
+
+  <!-- Machine surface -->
+  <section class="machine">
+    <div class="surface-head">
+      <h2>Machine surface</h2>
+      <span class="badge machine-b">meaning</span>
+    </div>
+    <div class="machine-body" id="machine-body"></div>
+  </section>
+
+</div>
+
+<script>
+  const GLYPHS = {
+    brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"/><path d="M12 4v14"/>',
+    spinner: '<path d="M12 3a9 9 0 1 0 9 9"/>',
+    shield: '<path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/>',
+    check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+    alert: '<path d="M12 3 2 20h20zM12 10v4M12 17.5v.5"/>',
+    pause: '<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
+    bolt: '<path d="M13 2 5 13h6l-1 9 8-11h-6z"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+    link: '<path d="M9 15 15 9M7 12l-2 2a4 4 0 0 0 6 6l2-2M17 12l2-2a4 4 0 0 0-6-6l-2 2"/>',
+    lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    dots: '<circle cx="5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="19" cy="12" r="1.4" fill="currentColor"/>',
+    undo: '<path d="M4 9h10a5 5 0 0 1 0 10H9M4 9l4-4M4 9l4 4"/>'
+  };
+
+  const ICONS = [
+    { name: 'ai-thinking', lib: 'si', glyph: 'brain', agentPick: true,
+      intent: 'agent.reasoning', a11y: 'Agent is reasoning',
+      tags: ['thinking', 'reasoning', 'cognition', 'agent-state'],
+      compose: ['state-ring', 'confidence-badge'],
+      contexts: ['IDE status line', 'chat header', 'task card'] },
+    { name: 'loader-ring', lib: 'si', glyph: 'spinner', agentPick: true,
+      intent: 'agent.working', a11y: 'Work in progress',
+      tags: ['loading', 'progress', 'busy', 'agent-state'],
+      compose: ['progress-arc', 'time-badge'],
+      contexts: ['buttons', 'terminal spinner', 'toolbar'] },
+    { name: 'pending-approval', lib: 'si', glyph: 'pause', agentPick: true,
+      intent: 'agent.blocked_on_human', a11y: 'Waiting for your approval',
+      tags: ['approval', 'gate', 'waiting', 'governance'],
+      compose: ['authority-marker', 'state-ring'],
+      contexts: ['diff review', 'notifications', 'PR checks'] },
+    { name: 'shield-check', lib: 'lucide', glyph: 'shield', agentPick: false,
+      intent: 'action.approved', a11y: 'Action approved',
+      tags: ['trust', 'approved', 'safe', 'governance'],
+      compose: ['confidence-badge'],
+      contexts: ['audit log', 'settings', 'permissions'] },
+    { name: 'check-circle', lib: 'tabler', glyph: 'check', agentPick: false,
+      intent: 'task.done', a11y: 'Task complete',
+      tags: ['done', 'success', 'complete'],
+      compose: ['state-ring'],
+      contexts: ['task lists', 'toasts', 'CI status'] },
+    { name: 'risk-high', lib: 'si', glyph: 'alert', agentPick: true,
+      intent: 'action.irreversible', a11y: 'High risk, irreversible action',
+      tags: ['risk', 'warning', 'irreversible', 'governance'],
+      compose: ['authority-marker', 'risk-stripe'],
+      contexts: ['confirm dialogs', 'deploy gates', 'billing'] },
+    { name: 'observe-eye', lib: 'si', glyph: 'eye', agentPick: false,
+      intent: 'agent.observing', a11y: 'Agent is observing',
+      tags: ['watching', 'monitoring', 'passive', 'agent-state'],
+      compose: ['state-ring'],
+      contexts: ['background agents', 'watchers', 'dashboards'] },
+    { name: 'connection-lost', lib: 'si', glyph: 'link', agentPick: false,
+      intent: 'session.disconnected', a11y: 'Connection lost',
+      tags: ['offline', 'retry', 'broken', 'infra'],
+      compose: ['retry-badge'],
+      contexts: ['MCP status', 'network banners'] },
+    { name: 'secure-lock', lib: 'mingcute', glyph: 'lock', agentPick: false,
+      intent: 'scope.restricted', a11y: 'Restricted scope',
+      tags: ['security', 'locked', 'permission'],
+      compose: ['authority-marker'],
+      contexts: ['api keys', 'sandbox limits'] },
+    { name: 'dots-loading', lib: 'mingcute', glyph: 'dots', agentPick: false,
+      intent: 'agent.streaming', a11y: 'Response streaming',
+      tags: ['typing', 'streaming', 'progress'],
+      compose: ['state-ring'],
+      contexts: ['chat bubbles', 'inline loaders'] },
+    { name: 'revert-action', lib: 'si', glyph: 'undo', agentPick: false,
+      intent: 'action.reverted', a11y: 'Action reverted',
+      tags: ['undo', 'rollback', 'governance'],
+      compose: ['audit-badge'],
+      contexts: ['audit log', 'history', 'diff view'] },
+    { name: 'auto-executed', lib: 'si', glyph: 'bolt', agentPick: false,
+      intent: 'action.auto_executed', a11y: 'Executed automatically',
+      tags: ['automation', 'trust-level', 'governance'],
+      compose: ['authority-marker', 'confidence-badge'],
+      contexts: ['activity feed', 'agent logs'] }
+  ];
+
+  const SWATCH_COLORS = ['#ffffff', '#FF4F00', '#f2afff', '#60a5fa', '#4ade80', '#facc15'];
+  let currentColor = '#FF4F00';
+  let currentStroke = 1.6;
+
+  function svgFor(key, size, stroke, color) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color || 'currentColor'}" stroke-width="${stroke || 1.6}" stroke-linecap="round" stroke-linejoin="round">${GLYPHS[key]}</svg>`;
+  }
+
+  /* ----- human grid ----- */
+  const grid = document.getElementById('grid');
+  let selected = ICONS[0];
+
+  function renderGrid() {
+    grid.innerHTML = '';
+    ICONS.forEach(icon => {
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (icon.agentPick ? ' agent-pick' : '') + (icon === selected ? ' selected' : '');
+      cell.innerHTML = `<span class="glyph">${svgFor(icon.glyph, 28)}</span><span class="name">${icon.name}</span>`;
+      cell.addEventListener('click', () => { selected = icon; renderGrid(); renderMachine(); });
+      grid.appendChild(cell);
+    });
+  }
+
+  /* ----- machine surface ----- */
+  const machineBody = document.getElementById('machine-body');
+
+  function renderMachine() {
+    const i = selected;
+    machineBody.innerHTML = `
+      <div class="m-preview">
+        <div class="m-icon" style="color:${currentColor}">${svgFor(i.glyph, 36, currentStroke)}</div>
+        <div>
+          <h3>${i.name}</h3>
+          <div class="sub">${i.lib} library · SVG · 24×24 grid</div>
+        </div>
+      </div>
+      <div class="m-section">
+        <h4>Intent</h4>
+        <div class="tags"><span class="tag intent">${i.intent}</span></div>
+      </div>
+      <div class="m-section">
+        <h4>Semantic tags</h4>
+        <div class="tags">${i.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="m-section">
+        <h4>Composable with</h4>
+        <div class="tags">${i.compose.map(t => `<span class="tag compose">${t}</span>`).join('')}</div>
+      </div>
+      <div class="m-section">
+        <h4>Recommended contexts</h4>
+        <dl class="kv">${i.contexts.map((c, n) => `<dt>${String(n + 1).padStart(2, '0')}</dt><dd>${c}</dd>`).join('')}</dl>
+      </div>
+      <div class="m-section">
+        <h4>Component spec</h4>
+<pre class="spec">{
+  <span class="k">"id"</span>: <span class="s">"${i.lib}:${i.name}"</span>,
+  <span class="k">"intent"</span>: <span class="s">"${i.intent}"</span>,
+  <span class="k">"color"</span>: <span class="s">"${currentColor}"</span>,
+  <span class="k">"strokeWidth"</span>: ${currentStroke},
+  <span class="k">"a11y"</span>: { <span class="k">"label"</span>: <span class="s">"${i.a11y}"</span> },
+  <span class="k">"stateful"</span>: ${i.tags.includes('agent-state')},
+  <span class="k">"license"</span>: <span class="s">"free"</span>
+}</pre>
+        <button class="m-copy" id="m-copy">Copy spec + SVG</button>
+      </div>`;
+    const copyBtn = document.getElementById('m-copy');
+    copyBtn.addEventListener('click', () => {
+      copyBtn.textContent = 'Copied for your agent';
+      copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.textContent = 'Copy spec + SVG'; copyBtn.classList.remove('copied'); }, 1400);
+    });
+  }
+
+  /* ----- taste bar ----- */
+  const swatchWrap = document.getElementById('swatches');
+  SWATCH_COLORS.forEach((c, idx) => {
+    const s = document.createElement('span');
+    s.className = 'swatch' + (idx === 1 ? ' active' : '');
+    s.style.background = c;
+    s.addEventListener('click', () => {
+      swatchWrap.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+      currentColor = c;
+      renderMachine();
+    });
+    swatchWrap.appendChild(s);
+  });
+  document.getElementById('stroke-seg').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('stroke-seg').querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentStroke = parseFloat(b.dataset.v);
+    renderMachine();
+  }));
+  document.getElementById('motion-seg').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('motion-seg').querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  }));
+
+  /* ----- agent session feed ----- */
+  const feed = document.getElementById('feed');
+
+  function addEvent(html, approvable) {
+    const ev = document.createElement('div');
+    ev.className = 'event';
+    ev.innerHTML = html;
+    feed.appendChild(ev);
+    feed.scrollTop = feed.scrollHeight;
+    if (approvable) {
+      const approveBtn = ev.querySelector('.approve');
+      const note = ev.querySelector('.approved-note');
+      approveBtn.addEventListener('click', () => {
+        ev.classList.add('approved-state');
+        ev.querySelector('.actions').style.display = 'none';
+        note.style.display = 'block';
+      });
+    }
+    return ev;
+  }
+
+  const SCRIPTED = [
+    () => addEvent(`
+      <div class="who"><span class="agent-chip">claude-code</span> called</div>
+      <code><span class="fn">search_icons</span>({ query: <span class="str">"agent status indicators"</span> })</code>`),
+    () => addEvent(`
+      <div class="who"><span class="agent-chip">claude-code</span> called</div>
+      <code><span class="fn">recommend_icons</span>({ slots: [<span class="str">"thinking"</span>, <span class="str">"working"</span>, <span class="str">"approval"</span>, <span class="str">"risk"</span>] })</code>
+      <div class="picks">
+        <span class="pick">${svgFor('brain', 18)}</span>
+        <span class="pick">${svgFor('spinner', 18)}</span>
+        <span class="pick">${svgFor('pause', 18)}</span>
+        <span class="pick">${svgFor('alert', 18)}</span>
+      </div>
+      <div class="actions">
+        <button class="approve">Approve set</button>
+        <button class="swap">Swap picks</button>
+      </div>
+      <div class="approved-note">Approved. Sent to agent with your palette (#FF4F00, 1.5px).</div>`, true),
+    () => addEvent(`
+      <div class="who"><span class="agent-chip">claude-code</span> called</div>
+      <code><span class="fn">preview_icons</span>({ icons: [<span class="str">"si:ai-thinking"</span>, <span class="str">"si:loader-ring"</span>] })</code>`),
+    () => addEvent(`
+      <div class="who"><span class="agent-chip">claude-code</span> requested</div>
+      <code><span class="fn">get_motion_recipe</span>({ preset: <span class="str">"breathing-pulse"</span>, intent: <span class="str">"agent.reasoning"</span> })</code>
+      <div class="actions">
+        <button class="approve">Looks right</button>
+        <button class="swap">Pick calmer preset</button>
+      </div>
+      <div class="approved-note">Confirmed. Motion recipe pinned to this project.</div>`, true)
+  ];
+
+  let step = 0;
+  function nextEvent() {
+    if (step < SCRIPTED.length) {
+      SCRIPTED[step]();
+      step++;
+      setTimeout(nextEvent, step === 1 ? 1200 : 2600);
+    }
+  }
+
+  renderGrid();
+  renderMachine();
+  setTimeout(nextEvent, 700);
+</script>
+</body>
+</html>

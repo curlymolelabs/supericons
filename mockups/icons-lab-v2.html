@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icons Lab v2: Icon Production Pipeline</title>
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --panel: #131313;
+    --panel-2: #181818;
+    --panel-3: #1f1f1f;
+    --line: #262626;
+    --line-2: #333;
+    --ink: #f2f0ec;
+    --muted: #9a958d;
+    --dim: #6b675f;
+    --accent: #FF4F00;
+    --accent-soft: rgba(255,79,0,.12);
+    --accent-line: rgba(255,79,0,.4);
+    --good: #35c66b;
+    --good-soft: rgba(53,198,107,.12);
+    --warn: #f5b12e;
+    --warn-soft: rgba(245,177,46,.12);
+    --agent: #7aa2ff;
+    --agent-soft: rgba(122,162,255,.12);
+    --radius: 12px;
+    --mono: "SFMono-Regular", Consolas, "Cascadia Mono", monospace;
+    --si-state: 0; /* 0 idle 1 hover 2 active 3 loading 4 success 5 error */
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+  h1,h2,h3,h4 { font-family: "Space Grotesk", "Manrope", ui-sans-serif, system-ui, sans-serif; margin: 0; line-height: 1.15; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  code, pre { font-family: var(--mono); }
+
+  /* ---------- app frame ---------- */
+  .app {
+    display: grid;
+    grid-template-rows: 52px 44px 1fr;
+    grid-template-columns: 264px 1fr 340px;
+    grid-template-areas:
+      "top top top"
+      "stepper stepper stepper"
+      "queue stage agent";
+    height: 100vh;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    grid-area: top;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .wordmark { display: flex; align-items: center; gap: 9px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+  .wordmark .spark { width: 22px; height: 22px; display: grid; place-items: center; background: var(--accent); border-radius: 6px; color: #0e0e0e; }
+  .wordmark small { color: var(--dim); font-weight: 600; font-size: 11px; border: 1px solid var(--line-2); border-radius: 999px; padding: 1px 8px; margin-left: 2px; }
+  .doc-crumb { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+  .doc-crumb b { color: var(--ink); font-weight: 700; }
+  .doc-crumb .slug { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+  .top-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .presence { display: flex; align-items: center; gap: 6px; padding: 5px 11px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 12px; color: var(--muted); }
+  .presence .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .presence.human .dot { background: var(--accent); }
+  .presence.agent .dot { background: var(--agent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border-radius: 9px; font-weight: 700; font-size: 13px;
+    border: 1px solid var(--line-2); color: var(--ink); background: var(--panel-2);
+    transition: border-color .15s, background .15s;
+  }
+  .btn:hover { border-color: var(--accent-line); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #0e0e0e; }
+  .btn.primary:hover { background: #ff6a26; }
+  .btn.primary:disabled { opacity: .35; cursor: not-allowed; }
+  .btn.ghost { background: transparent; }
+
+  /* ---------- pipeline stepper ---------- */
+  .stepper {
+    grid-area: stepper;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    padding: 0 8px;
+    overflow-x: auto;
+  }
+  .step {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 18px; font-size: 13px; font-weight: 700;
+    color: var(--dim); border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .step .num {
+    width: 20px; height: 20px; display: grid; place-items: center;
+    border-radius: 50%; border: 1.5px solid var(--line-2);
+    font-size: 11px; font-family: var(--mono);
+  }
+  .step.done { color: var(--muted); }
+  .step.done .num { border-color: var(--good); color: var(--good); }
+  .step.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .step.active .num { border-color: var(--accent); background: var(--accent); color: #0e0e0e; }
+  .step:hover { color: var(--ink); }
+  .step .gate { font-size: 10px; color: var(--warn); border: 1px solid rgba(245,177,46,.35); border-radius: 999px; padding: 0 7px; font-weight: 700; letter-spacing: .04em; }
+
+  /* ---------- left: production queue ---------- */
+  .queue {
+    grid-area: queue;
+    border-right: 1px solid var(--line);
+    background: var(--panel);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .queue-head { padding: 14px 16px 10px; }
+  .queue-head h3 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+  .queue-head .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .queue-list { flex: 1; overflow-y: auto; padding: 4px 8px 12px; }
+  .q-item {
+    display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center;
+    width: 100%; text-align: left; padding: 9px 10px; border-radius: 10px;
+    border: 1px solid transparent; margin-bottom: 4px;
+  }
+  .q-item:hover { background: var(--panel-2); }
+  .q-item.current { background: var(--panel-2); border-color: var(--accent-line); }
+  .q-thumb { width: 36px; height: 36px; border-radius: 8px; background: var(--panel-3); border: 1px solid var(--line-2); display: grid; place-items: center; }
+  .q-thumb svg { width: 20px; height: 20px; stroke: var(--ink); }
+  .q-name { font-weight: 700; font-size: 13px; }
+  .q-meta { font-size: 11px; color: var(--dim); font-family: var(--mono); }
+  .q-stage { font-size: 10px; font-weight: 800; letter-spacing: .05em; padding: 3px 8px; border-radius: 999px; }
+  .q-stage.brief { color: var(--agent); background: var(--agent-soft); }
+  .q-stage.draft { color: var(--accent); background: var(--accent-soft); }
+  .q-stage.refine { color: var(--warn); background: var(--warn-soft); }
+  .q-stage.ship, .q-stage.shipped { color: var(--good); background: var(--good-soft); }
+  .queue-foot { padding: 10px 16px; border-top: 1px solid var(--line); }
+  .gap-feed { font-size: 12px; color: var(--muted); }
+  .gap-feed b { color: var(--ink); }
+  .gap-feed .gap-q { display: block; font-family: var(--mono); font-size: 11px; color: var(--warn); margin-top: 4px; }
+
+  /* ---------- center: stage workspace ---------- */
+  .stage-area { grid-area: stage; overflow-y: auto; padding: 20px 24px 60px; }
+  .stage-panel { display: none; max-width: 880px; margin: 0 auto; }
+  .stage-panel.active { display: block; }
+  .stage-title { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .stage-title h2 { font-size: 22px; }
+  .stage-title .hint { color: var(--dim); font-size: 13px; }
+  .stage-sub { color: var(--muted); margin: 0 0 18px; max-width: 640px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px; margin-bottom: 14px;
+  }
+  .card h4 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 1400px) { .row3 { grid-template-columns: 1fr 1fr; } }
+
+  /* brief stage */
+  .gap-input { display: flex; gap: 10px; }
+  .gap-input input {
+    flex: 1; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 10px;
+    padding: 11px 14px; color: var(--ink); font-family: var(--mono); font-size: 13px;
+  }
+  .gap-input input:focus { outline: none; border-color: var(--accent-line); }
+  .brief-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  .brief-field b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); margin-bottom: 5px; }
+  .chiprow { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted); }
+  .chip.alias { font-family: var(--mono); font-size: 11px; }
+  .metaphors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .metaphor {
+    border: 1px solid var(--line-2); border-radius: 12px; padding: 14px; text-align: center;
+    background: var(--panel-2); transition: border-color .15s;
+  }
+  .metaphor:hover { border-color: var(--accent-line); }
+  .metaphor.picked { border-color: var(--accent); background: var(--accent-soft); }
+  .metaphor svg { width: 44px; height: 44px; stroke: var(--ink); margin-bottom: 8px; }
+  .metaphor .m-name { font-weight: 700; font-size: 13px; }
+  .metaphor .m-why { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .metaphor .m-score { font-size: 10px; font-family: var(--mono); color: var(--agent); margin-top: 6px; }
+
+  /* draft stage */
+  .draft-layout { display: grid; grid-template-columns: 1fr 200px; gap: 14px; }
+  .canvas-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+  .canvas-tools { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tool { padding: 5px 10px; border-radius: 8px; font-size: 12px; color: var(--muted); border: 1px solid transparent; }
+  .tool:hover { background: var(--panel-3); color: var(--ink); }
+  .tool.on { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+  .artboard {
+    aspect-ratio: 1; max-width: 440px; margin: 0 auto; background: #0a0a0a;
+    border: 1px solid var(--line-2); border-radius: 10px; position: relative; overflow: hidden;
+  }
+  .artboard svg.grid-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .canvas-meta { display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; color: var(--dim); font-family: var(--mono); }
+  .side-stack { display: flex; flex-direction: column; gap: 14px; }
+  .mini-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+  .mini-card h5 { margin: 0 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); }
+  .recipe-line { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: var(--muted); }
+  .recipe-line code { color: var(--ink); font-size: 11px; }
+  .candidates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cand { border: 1px solid var(--line-2); border-radius: 10px; padding: 10px; text-align: center; background: var(--panel-2); }
+  .cand:hover { border-color: var(--accent-line); }
+  .cand.picked { border-color: var(--accent); background: var(--accent-soft); }
+  .cand svg { width: 40px; height: 40px; stroke: var(--ink); }
+  .cand .c-tag { font-size: 10px; font-family: var(--mono); color: var(--dim); display: block; margin-top: 4px; }
+
+  /* refine stage */
+  .qa-list { display: flex; flex-direction: column; gap: 8px; }
+  .qa-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--line); font-size: 13px; }
+  .qa-item .st { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; flex: none; }
+  .qa-item.pass .st { background: var(--good-soft); color: var(--good); }
+  .qa-item.warn .st { background: var(--warn-soft); color: var(--warn); }
+  .qa-item .fix { margin-left: auto; font-size: 11px; color: var(--agent); font-weight: 700; }
+  .qa-item .fix:hover { text-decoration: underline; }
+  .craft-bar { margin-bottom: 10px; }
+  .craft-bar .lbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .craft-bar .lbl b { color: var(--ink); font-family: var(--mono); }
+  .craft-bar .track { height: 6px; border-radius: 999px; background: var(--panel-3); overflow: hidden; }
+  .craft-bar .fill { height: 100%; border-radius: 999px; background: var(--accent); }
+  .sizestrip { display: flex; align-items: flex-end; gap: 22px; padding: 14px 6px 4px; }
+  .sizestrip .cell { text-align: center; }
+  .sizestrip svg { stroke: var(--ink); display: block; margin: 0 auto 6px; }
+  .sizestrip .sz { font-size: 10px; font-family: var(--mono); color: var(--dim); }
+  .bgdots { display: flex; gap: 6px; margin-left: auto; }
+  .bgdot { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-2); }
+
+  /* states stage */
+  .states-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .state-cell { border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 8px; text-align: center; background: var(--panel-2); }
+  .state-cell.on { border-color: var(--accent); background: var(--accent-soft); }
+  .state-cell svg { width: 34px; height: 34px; stroke: var(--ink); }
+  .state-cell .s-name { font-size: 11px; font-family: var(--mono); color: var(--muted); display: block; margin-top: 6px; }
+  .state-stage-demo { display: grid; place-items: center; padding: 26px 0 18px; }
+  .state-stage-demo svg { width: 96px; height: 96px; stroke: var(--ink); transition: transform .3s ease, opacity .3s ease; }
+  .demo-loading svg .spinner-arc { animation: spin 1s linear infinite; transform-origin: 12px 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .state-code { background: #0a0a0a; border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: #cfcac2; overflow-x: auto; }
+  .state-code .k { color: var(--agent); }
+  .state-code .v { color: var(--accent); }
+  .rm-note { font-size: 12px; color: var(--dim); margin-top: 8px; }
+
+  /* package stage */
+  .fmt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .fmt {
+    border: 1px solid var(--line-2); border-radius: 10px; padding: 12px; background: var(--panel-2);
+    display: flex; flex-direction: column; gap: 4px; text-align: left;
+  }
+  .fmt:hover { border-color: var(--accent-line); }
+  .fmt.on { border-color: var(--accent); background: var(--accent-soft); }
+  .fmt b { font-size: 13px; }
+  .fmt span { font-size: 11px; color: var(--muted); }
+  pre.codeblock {
+    margin: 0; background: #0a0a0a; border: 1px solid var(--line-2); border-radius: 10px;
+    padding: 14px; font-size: 12px; color: #cfcac2; overflow-x: auto; line-height: 1.6;
+  }
+  .code-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .code-head code { font-size: 11px; color: var(--dim); }
+  .copy { font-size: 11px; font-weight: 700; color: var(--agent); }
+  .copy:hover { text-decoration: underline; }
+
+  /* ship stage */
+  .gatebox { border: 1px solid rgba(245,177,46,.35); background: var(--warn-soft); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
+  .gatebox h4 { color: var(--warn); margin-bottom: 8px; text-transform: none; letter-spacing: 0; font-size: 14px; }
+  .gate-check { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; color: var(--muted); }
+  .gate-check input { accent-color: var(--accent); width: 15px; height: 15px; }
+  .kv { display: grid; grid-template-columns: 130px 1fr; gap: 6px 14px; font-size: 13px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; font-family: var(--mono); font-size: 12px; }
+
+  /* ---------- right: agent lane ---------- */
+  .agent-lane {
+    grid-area: agent;
+    border-left: 1px solid var(--line);
+    background: var(--panel);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .agent-head { padding: 14px 16px 10px; border-bottom: 1px solid var(--line); }
+  .agent-head h3 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); display: flex; align-items: center; gap: 8px; }
+  .agent-head h3 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--agent); animation: pulse 2s infinite; }
+  .agent-feed { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .msg { border-radius: 10px; padding: 11px 12px; font-size: 12.5px; border: 1px solid var(--line); }
+  .msg.agent { background: var(--panel-2); border-left: 2px solid var(--agent); }
+  .msg.human { background: var(--panel-2); border-left: 2px solid var(--accent); }
+  .msg.system { color: var(--dim); background: transparent; border-style: dashed; font-size: 11.5px; }
+  .msg .who { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+  .msg.agent .who { color: var(--agent); }
+  .msg.human .who { color: var(--accent); }
+  .proposal { border: 1px solid var(--agent); border-radius: 10px; overflow: hidden; background: var(--panel-2); }
+  .proposal .p-head { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: var(--agent-soft); font-size: 12px; font-weight: 700; color: var(--agent); }
+  .proposal .p-body { padding: 10px 12px; font-size: 12px; color: var(--muted); }
+  .p-diff { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 8px 0 4px; }
+  .p-diff svg { width: 34px; height: 34px; stroke: var(--ink); }
+  .p-diff .arrow { color: var(--dim); font-family: var(--mono); }
+  .p-actions { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); }
+  .p-actions .btn { padding: 5px 12px; font-size: 12px; flex: 1; justify-content: center; }
+  .p-actions .approve { background: var(--accent); border-color: var(--accent); color: #0e0e0e; }
+  .p-actions .approve:hover { background: #ff6a26; }
+  .proposal.resolved { opacity: .55; }
+  .proposal.resolved .p-actions { display: none; }
+  .p-resolved-tag { padding: 8px 12px; font-size: 11px; font-weight: 800; border-top: 1px solid var(--line); }
+  .p-resolved-tag.ok { color: var(--good); }
+  .p-resolved-tag.no { color: var(--dim); }
+  .agent-input { padding: 10px 12px; border-top: 1px solid var(--line); }
+  .agent-input .box { display: flex; gap: 8px; }
+  .agent-input input {
+    flex: 1; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 9px;
+    padding: 9px 12px; color: var(--ink); font-size: 13px;
+  }
+  .agent-input input:focus { outline: none; border-color: var(--agent); }
+
+  /* MCP parity strip */
+  .parity {
+    border-top: 1px solid var(--line);
+    padding: 10px 12px;
+    background: #0a0a0a;
+  }
+  .parity .p-lbl { display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+  .parity code { display: block; font-size: 11px; color: #b7d1ff; white-space: pre; overflow-x: auto; }
+  .parity .fn { color: var(--agent); }
+  .parity .str { color: var(--accent); }
+
+  .toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--panel-3); border: 1px solid var(--line-2); border-radius: 10px;
+    padding: 10px 18px; font-size: 13px; font-weight: 600; opacity: 0; transition: all .25s ease;
+    z-index: 50; pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ======= TOP BAR ======= -->
+  <header class="topbar">
+    <div class="wordmark">
+      <span class="spark">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg>
+      </span>
+      Icons Lab <small>v2 concept</small>
+    </div>
+    <div class="doc-crumb">
+      <span>Pipeline /</span> <b>agent-handoff</b>
+      <span class="slug">si-agent-handoff · 24×24 · stroke 1.75</span>
+    </div>
+    <div class="top-right">
+      <span class="presence human"><span class="dot"></span> You (owner)</span>
+      <span class="presence agent"><span class="dot"></span> Agent: drafting</span>
+      <button class="btn ghost" onclick="toast('Checkpoint saved (mock)')">Checkpoint</button>
+      <button class="btn primary" id="advanceBtn" onclick="advanceStage()">Advance stage →</button>
+    </div>
+  </header>
+
+  <!-- ======= PIPELINE STEPPER ======= -->
+  <nav class="stepper" id="stepper">
+    <button class="step done" data-stage="brief"><span class="num">1</span> Brief</button>
+    <button class="step active" data-stage="draft"><span class="num">2</span> Draft</button>
+    <button class="step" data-stage="refine"><span class="num">3</span> Refine</button>
+    <button class="step" data-stage="states"><span class="num">4</span> States</button>
+    <button class="step" data-stage="package"><span class="num">5</span> Package</button>
+    <button class="step" data-stage="ship"><span class="num">6</span> Ship <span class="gate">HUMAN GATE</span></button>
+  </nav>
+
+  <!-- ======= LEFT: PRODUCTION QUEUE ======= -->
+  <aside class="queue">
+    <div class="queue-head">
+      <h3>Production queue</h3>
+      <div class="sub">Icons in flight, sourced from search gaps and pack briefs.</div>
+    </div>
+    <div class="queue-list">
+      <button class="q-item current">
+        <span class="q-thumb"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg></span>
+        <span><span class="q-name">agent-handoff</span><br><span class="q-meta">QA 78 · draft 2 of 3</span></span>
+        <span class="q-stage draft">DRAFT</span>
+      </button>
+      <button class="q-item">
+        <span class="q-thumb"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/><circle cx="12" cy="13" r="2.2"/><path d="M12 15.2V17"/></svg></span>
+        <span><span class="q-name">plate-scan</span><br><span class="q-meta">from search gap</span></span>
+        <span class="q-stage brief">BRIEF</span>
+      </button>
+      <button class="q-item">
+        <span class="q-thumb"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg></span>
+        <span><span class="q-name">focus-target</span><br><span class="q-meta">QA 91 · 2 warns left</span></span>
+        <span class="q-stage refine">REFINE</span>
+      </button>
+      <button class="q-item">
+        <span class="q-thumb"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17 12 4l7 13"/><path d="M8.5 12.5h7"/><circle cx="12" cy="17" r="2"/></svg></span>
+        <span><span class="q-name">rocket-guard</span><br><span class="q-meta">QA 96 · all states ready</span></span>
+        <span class="q-stage ship">SHIP</span>
+      </button>
+    </div>
+    <div class="queue-foot">
+      <div class="gap-feed">
+        <b>Search gap feed</b> · 3 new unresolved queries from supericons.dev
+        <span class="gap-q">"license plate recognition camera"</span>
+        <span class="gap-q">"agent handing off task to human"</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======= CENTER: STAGE WORKSPACE ======= -->
+  <main class="stage-area">
+
+    <!-- STAGE 1: BRIEF -->
+    <section class="stage-panel" id="panel-brief">
+      <div class="stage-title"><h2>1 · Brief</h2><span class="hint">Ideation: turn a gap into a structured icon brief</span></div>
+      <p class="stage-sub">Start from a failed search, a pack gap, or a raw idea. You or the agent expand it into a brief with candidate metaphors. Nothing downstream starts without a picked metaphor.</p>
+
+      <div class="card">
+        <h4>Source</h4>
+        <div class="gap-input">
+          <input value="agent handing off task to human" spellcheck="false">
+          <button class="btn" onclick="toast('Agent expanding brief (mock)')">Expand with agent</button>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-field">
+            <b>Concept</b>
+            <div>An AI agent transfers ownership of a running task to a human reviewer. The moment of transfer matters more than the actors.</div>
+          </div>
+          <div class="brief-field">
+            <b>Aliases to register</b>
+            <div class="chiprow">
+              <span class="chip alias">handoff</span><span class="chip alias">handover</span><span class="chip alias">escalate</span><span class="chip alias">human-in-the-loop</span><span class="chip alias">transfer-control</span>
+            </div>
+          </div>
+          <div class="brief-field">
+            <b>Must read at</b>
+            <div class="chiprow"><span class="chip">16 px</span><span class="chip">24 px</span><span class="chip">dark and light</span></div>
+          </div>
+          <div class="brief-field">
+            <b>Avoid</b>
+            <div class="chiprow"><span class="chip">literal robot faces</span><span class="chip">two full human figures</span><span class="chip">more than 3 strokes of detail</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Candidate metaphors · pick one to draft</h4>
+        <div class="metaphors" id="metaphors">
+          <button class="metaphor picked">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg>
+            <span class="m-name">Node to node</span>
+            <span class="m-why">Transfer between two peers</span>
+            <span class="m-score">clarity 0.91 · novelty 0.62</span>
+          </button>
+          <button class="metaphor">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15V9a2 2 0 0 1 2-2h5"/><path d="m8 4 3 3-3 3"/><path d="M20 9v6a2 2 0 0 1-2 2h-5"/><path d="m16 20-3-3 3-3"/></svg>
+            <span class="m-name">Relay loop</span>
+            <span class="m-why">Continuous exchange</span>
+            <span class="m-score">clarity 0.74 · novelty 0.81</span>
+          </button>
+          <button class="metaphor">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14a4 4 0 1 1 4-4"/><path d="M13 10a4 4 0 1 1 4 4"/><path d="M12 14v6"/><path d="m9.5 17.5 2.5 2.5 2.5-2.5"/></svg>
+            <span class="m-name">Baton drop-in</span>
+            <span class="m-why">Item passed downward to owner</span>
+            <span class="m-score">clarity 0.68 · novelty 0.77</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 2: DRAFT -->
+    <section class="stage-panel active" id="panel-draft">
+      <div class="stage-title"><h2>2 · Draft</h2><span class="hint">Creation: canvas plus agent candidates, recipe enforced live</span></div>
+      <p class="stage-sub">The editor keeps the proven 24×24 grid, keylines and safe area from Icons Lab v1, but the recipe is now a live constraint: everything you or the agent draws snaps to it. Agent candidates land here as editable geometry, never flat images.</p>
+
+      <div class="draft-layout">
+        <div>
+          <div class="canvas-wrap">
+            <div class="canvas-tools">
+              <button class="tool on">Select</button><button class="tool">Points</button><button class="tool">Pen</button><button class="tool">Shapes</button><button class="tool">Boolean</button><button class="tool">Text→Path</button>
+              <span style="flex:1"></span>
+              <button class="tool">Grid ✓</button><button class="tool">Keylines ✓</button><button class="tool">Safe area ✓</button>
+            </div>
+            <div class="artboard">
+              <svg class="grid-svg" viewBox="0 0 24 24">
+                <defs>
+                  <pattern id="g1" width="1" height="1" patternUnits="userSpaceOnUse">
+                    <path d="M1 0H0V1" fill="none" stroke="#1d1d1d" stroke-width="0.03"/>
+                  </pattern>
+                </defs>
+                <rect width="24" height="24" fill="url(#g1)"/>
+                <rect x="2" y="2" width="20" height="20" fill="none" stroke="#2a2a2a" stroke-width="0.06" stroke-dasharray="0.4 0.3"/>
+                <circle cx="12" cy="12" r="10" fill="none" stroke="#242424" stroke-width="0.06"/>
+                <path d="M12 0v24M0 12h24" stroke="#242424" stroke-width="0.05"/>
+                <!-- icon being drafted -->
+                <g fill="none" stroke="#f2f0ec" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="12" r="3"/>
+                  <path d="M9 12h4"/>
+                  <path d="m12 9.5 2.5 2.5-2.5 2.5"/>
+                </g>
+                <!-- selection handles on right circle -->
+                <g fill="#FF4F00">
+                  <rect x="14.7" y="8.7" width="0.6" height="0.6"/><rect x="20.7" y="8.7" width="0.6" height="0.6"/>
+                  <rect x="14.7" y="14.7" width="0.6" height="0.6"/><rect x="20.7" y="14.7" width="0.6" height="0.6"/>
+                </g>
+                <rect x="15" y="9" width="6" height="6" fill="none" stroke="#FF4F00" stroke-width="0.08" stroke-dasharray="0.3 0.2"/>
+              </svg>
+            </div>
+            <div class="canvas-meta">
+              <span>selected: circle "human-node" · x15 y9 w6 h6</span>
+              <span>snap 0.5 · zoom 1800%</span>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h4>Agent candidates · editable geometry, pick or remix</h4>
+            <div class="candidates">
+              <button class="cand picked">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg>
+                <span class="c-tag">v2 · arrow into node</span>
+              </button>
+              <button class="cand">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 10.5c2-1.5 4-1.5 6 0"/><path d="m13.5 9 1.5 1.5-2 .5"/></svg>
+                <span class="c-tag">v1 · arc pass</span>
+              </button>
+              <button class="cand">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/><path d="M12 8.5v7"/></svg>
+                <span class="c-tag">v3 · plus join</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-stack">
+          <div class="mini-card">
+            <h5>Active recipe</h5>
+            <div class="recipe-line"><span>Stroke</span><code>1.75</code></div>
+            <div class="recipe-line"><span>Cap / join</span><code>round</code></div>
+            <div class="recipe-line"><span>Grid step</span><code>0.5</code></div>
+            <div class="recipe-line"><span>Safe area</span><code>2px</code></div>
+            <div class="recipe-line"><span>Corner r</span><code>2</code></div>
+            <div class="recipe-line"><span>Color</span><code>currentColor</code></div>
+          </div>
+          <div class="mini-card">
+            <h5>Structure</h5>
+            <div class="recipe-line"><span>◯ agent-node</span><code>lock</code></div>
+            <div class="recipe-line"><span>◯ human-node</span><code>sel</code></div>
+            <div class="recipe-line"><span>— transfer-line</span><code></code></div>
+            <div class="recipe-line"><span>› transfer-head</span><code></code></div>
+          </div>
+          <div class="mini-card">
+            <h5>Live checks</h5>
+            <div class="recipe-line"><span style="color:var(--good)">✓ inside safe area</span></div>
+            <div class="recipe-line"><span style="color:var(--good)">✓ stroke on recipe</span></div>
+            <div class="recipe-line"><span style="color:var(--warn)">! off-grid point (1)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 3: REFINE -->
+    <section class="stage-panel" id="panel-refine">
+      <div class="stage-title"><h2>3 · Refine</h2><span class="hint">Craft scoring, QA and the squint test in one loop</span></div>
+      <p class="stage-sub">v1 spread QA, craft polish and small-size preview across screens. v2 merges them into a single refine loop: every issue is one click from an agent-proposed fix, and the fix arrives as a reviewable proposal, never a silent change.</p>
+
+      <div class="row2">
+        <div class="card">
+          <h4>QA · 5 pass, 2 warn</h4>
+          <div class="qa-list">
+            <div class="qa-item pass"><span class="st">✓</span> viewBox 0 0 24 24, no transforms</div>
+            <div class="qa-item pass"><span class="st">✓</span> currentColor only, portable</div>
+            <div class="qa-item pass"><span class="st">✓</span> stroke matches recipe 1.75</div>
+            <div class="qa-item pass"><span class="st">✓</span> all objects named</div>
+            <div class="qa-item pass"><span class="st">✓</span> path complexity 14 pts (max 40)</div>
+            <div class="qa-item warn"><span class="st">!</span> 1 point off the 0.5 grid <button class="fix" onclick="toast('Fix queued as agent proposal')">agent fix</button></div>
+            <div class="qa-item warn"><span class="st">!</span> optical center 0.3 low <button class="fix" onclick="toast('Fix queued as agent proposal')">agent fix</button></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h4>Craft score · 82</h4>
+            <div class="craft-bar"><div class="lbl"><span>Balance</span><b>84</b></div><div class="track"><div class="fill" style="width:84%"></div></div></div>
+            <div class="craft-bar"><div class="lbl"><span>Density</span><b>79</b></div><div class="track"><div class="fill" style="width:79%"></div></div></div>
+            <div class="craft-bar"><div class="lbl"><span>16 px readability</span><b>88</b></div><div class="track"><div class="fill" style="width:88%"></div></div></div>
+            <div class="craft-bar"><div class="lbl"><span>Metaphor distinctness</span><b>76</b></div><div class="track"><div class="fill" style="width:76%"></div></div></div>
+          </div>
+          <div class="card">
+            <h4>Squint test</h4>
+            <div class="sizestrip">
+              <div class="cell"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="sz">12</span></div>
+              <div class="cell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="sz">16</span></div>
+              <div class="cell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="sz">24</span></div>
+              <div class="cell"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="sz">48</span></div>
+              <div class="cell"><svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="sz">72</span></div>
+              <div class="bgdots">
+                <span class="bgdot" style="background:#0e0e0e"></span>
+                <span class="bgdot" style="background:#fff"></span>
+                <span class="bgdot" style="background:#f4e9dc"></span>
+                <span class="bgdot" style="background:#12203a"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 4: STATES -->
+    <section class="stage-panel" id="panel-states">
+      <div class="stage-title"><h2>4 · States</h2><span class="hint">One icon, a full agent lifecycle, one CSS variable</span></div>
+      <p class="stage-sub">Icons for agentic products are not static. Each icon ships as a state package: geometry variants plus motion tokens, all driven by <code>--si-state</code> so a host app flips states without swapping assets. Reduced-motion fallbacks are generated, not optional.</p>
+
+      <div class="row2">
+        <div class="card">
+          <h4>State playground · click a state</h4>
+          <div class="state-stage-demo" id="stateDemo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" id="demoSvg">
+              <g id="demoBase">
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="12" r="3"/>
+                <path d="M9 12h4"/>
+                <path d="m12 9.5 2.5 2.5-2.5 2.5"/>
+              </g>
+              <g id="demoOverlay"></g>
+            </svg>
+          </div>
+          <div class="states-grid" id="statesGrid">
+            <button class="state-cell on" data-state="idle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="s-name">idle</span></button>
+            <button class="state-cell" data-state="hover"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="s-name">hover</span></button>
+            <button class="state-cell" data-state="active"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3" fill="rgba(255,79,0,.35)"/><path d="M9 12h4"/><path d="m12 9.5 2.5 2.5-2.5 2.5"/></svg><span class="s-name">active</span></button>
+            <button class="state-cell" data-state="loading"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h2"/><path d="M12.8 12h.4" opacity=".5"/></svg><span class="s-name">loading</span></button>
+            <button class="state-cell" data-state="success"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m16.6 12 1 1 1.8-2"/></svg><span class="s-name">success</span></button>
+            <button class="state-cell" data-state="error"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m16.9 10.9 2.2 2.2M19.1 10.9l-2.2 2.2"/></svg><span class="s-name">error</span></button>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Consumer contract</h4>
+          <pre class="state-code">/* host app flips one variable */
+.si-agent-handoff {
+  <span class="k">--si-state</span>: <span class="v">loading</span>;
+}
+
+/* motion tokens per state */
+{
+  <span class="k">"loading"</span>: {
+    <span class="k">"geometry"</span>: <span class="v">"variant:loading"</span>,
+    <span class="k">"anim"</span>: <span class="v">"dash-flow 900ms linear infinite"</span>,
+    <span class="k">"reducedMotion"</span>: <span class="v">"static-dash"</span>,
+    <span class="k">"aria"</span>: <span class="v">"Task transferring"</span>
+  }
+}</pre>
+          <p class="rm-note">Readiness: 6 of 7 states drafted. Missing: <b>disabled</b>. Ship gate requires every declared state to pass QA with a reduced-motion fallback and an aria label.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 5: PACKAGE -->
+    <section class="stage-panel" id="panel-package">
+      <div class="stage-title"><h2>5 · Package</h2><span class="hint">Formatting and conversion: every target from one source of truth</span></div>
+      <p class="stage-sub">The icon document is the single source. Formats are projections, generated fresh on export so they can never drift. Internal notes, prompts and workspace data never enter any output.</p>
+
+      <div class="card">
+        <h4>Targets</h4>
+        <div class="fmt-grid">
+          <button class="fmt on"><b>SVG</b><span>clean, currentColor, titled</span></button>
+          <button class="fmt on"><b>React TSX</b><span>props: size, state, title</span></button>
+          <button class="fmt"><b>Vue SFC</b><span>same prop contract</span></button>
+          <button class="fmt"><b>Web Component</b><span>&lt;si-icon state="..."&gt;</span></button>
+          <button class="fmt on"><b>PNG</b><span>16 / 24 / 48 / 128, 1x 2x</span></button>
+          <button class="fmt"><b>Sprite sheet</b><span>symbol defs, ids stable</span></button>
+          <button class="fmt on"><b>CSS motion</b><span>keyframes + tokens</span></button>
+          <button class="fmt"><b>Figma-ready</b><span>flattened, named layers</span></button>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="card">
+          <div class="code-head"><code>agent-handoff.svg</code><button class="copy" onclick="toast('SVG copied (mock)')">copy</button></div>
+          <pre class="codeblock">&lt;svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24" fill="none"
+  stroke="currentColor" stroke-width="1.75"
+  stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;title&gt;Agent handoff&lt;/title&gt;
+  &lt;circle cx="6" cy="12" r="3"/&gt;
+  &lt;circle cx="18" cy="12" r="3"/&gt;
+  &lt;path d="M9 12h4"/&gt;
+  &lt;path d="m12 9.5 2.5 2.5-2.5 2.5"/&gt;
+&lt;/svg&gt;</pre>
+        </div>
+        <div class="card">
+          <div class="code-head"><code>AgentHandoff.tsx</code><button class="copy" onclick="toast('TSX copied (mock)')">copy</button></div>
+          <pre class="codeblock">export function AgentHandoff({
+  size = 24,
+  state = "idle",   // idle | hover | active |
+                    // loading | success | error
+  title = "Agent handoff",
+}: SiIconProps) {
+  return (
+    &lt;svg data-si-state={state} ... /&gt;
+  );
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 6: SHIP -->
+    <section class="stage-panel" id="panel-ship">
+      <div class="stage-title"><h2>6 · Ship</h2><span class="hint">Registry export behind an explicit human gate</span></div>
+      <p class="stage-sub">The agent can prepare everything, but publish is a human act. The gate is not a confirm dialog: it is a checklist the pipeline fills in, and you sign off on taste, which no score can measure.</p>
+
+      <div class="gatebox">
+        <h4>Human approval gate</h4>
+        <div class="gate-check"><input type="checkbox" checked disabled> QA: 7 of 7 checks pass (auto)</div>
+        <div class="gate-check"><input type="checkbox" checked disabled> All 7 states ready with reduced-motion fallbacks (auto)</div>
+        <div class="gate-check"><input type="checkbox" checked disabled> Exports are public-safe, no internal metadata (auto)</div>
+        <div class="gate-check"><input type="checkbox" id="tasteCheck" onchange="gateChanged()"> <label for="tasteCheck"><b>I judge this metaphor clear, on-brand and worth shipping</b> (you, required)</label></div>
+        <button class="btn primary" id="publishBtn" disabled style="margin-top:10px" onclick="toast('Published to registry (mock)')">Publish to registry</button>
+      </div>
+
+      <div class="row2">
+        <div class="card">
+          <h4>Registry record preview</h4>
+          <dl class="kv">
+            <dt>id</dt><dd>si-agent-handoff</dd>
+            <dt>pack</dt><dd>ai-agentic</dd>
+            <dt>tier</dt><dd>free</dd>
+            <dt>aliases</dt><dd>handoff, handover, escalate, human-in-the-loop</dd>
+            <dt>states</dt><dd>7 packaged</dd>
+            <dt>version</dt><dd>1.0.0</dd>
+            <dt>license</dt><dd>SI Free</dd>
+          </dl>
+        </div>
+        <div class="card">
+          <h4>Closes the loop</h4>
+          <p style="color:var(--muted); margin:0 0 8px">On publish, the pipeline resolves the originating search gap so the next agent query succeeds:</p>
+          <pre class="codeblock">gap "agent handing off task to human"
+  → resolved_by: si-agent-handoff
+  → search index + MCP recommend updated</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= RIGHT: AGENT LANE ======= -->
+  <aside class="agent-lane">
+    <div class="agent-head">
+      <h3><span class="dot"></span> Agent lane · proposals need your approval</h3>
+    </div>
+    <div class="agent-feed" id="agentFeed">
+      <div class="msg system">Session started · recipe locked to "SI Core 1.75" · checkpoint auto-saved</div>
+      <div class="msg human"><div class="who">You</div>Draft the node-to-node metaphor from the brief, 3 variants.</div>
+      <div class="msg agent"><div class="who">Agent</div>Generated 3 editable candidates on your recipe. v2 reads best at 16 px in my squint pass. All geometry is on-grid except one point on the arrow head.</div>
+
+      <div class="proposal" id="prop1">
+        <div class="p-head">Proposal · snap arrow point to grid</div>
+        <div class="p-body">
+          Move transfer-head point from (14.47, 12) to (14.5, 12). No visual change at any preview size.
+          <div class="p-diff">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 9.5 2.47 2.5-2.47 2.5" stroke="#f5b12e"/></svg>
+            <span class="arrow">→</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 9.5 2.5 2.5-2.5 2.5" stroke="#35c66b"/></svg>
+          </div>
+        </div>
+        <div class="p-actions">
+          <button class="btn approve" onclick="resolveProposal('prop1', true)">Approve</button>
+          <button class="btn" onclick="resolveProposal('prop1', false)">Reject</button>
+        </div>
+      </div>
+
+      <div class="proposal" id="prop2">
+        <div class="p-head">Proposal · nudge optical center up 0.3</div>
+        <div class="p-body">
+          Craft check flags the composition 0.3 low. Shift all objects up 0.3 within safe area. Balance score would move 84 → 91.
+        </div>
+        <div class="p-actions">
+          <button class="btn approve" onclick="resolveProposal('prop2', true)">Approve</button>
+          <button class="btn" onclick="resolveProposal('prop2', false)">Reject</button>
+        </div>
+      </div>
+
+      <div class="msg agent"><div class="who">Agent</div>When you advance to States, I can pre-draft loading, success and error from the state presets. Disabled needs your call on opacity vs desaturation.</div>
+    </div>
+
+    <div class="agent-input">
+      <div class="box">
+        <input placeholder="Ask the agent, or / for commands" id="agentPrompt">
+        <button class="btn" onclick="sendPrompt()">Send</button>
+      </div>
+    </div>
+
+    <div class="parity">
+      <div class="p-lbl"><span>MCP parity · your last action as a tool call</span><button class="copy" onclick="toast('Call copied (mock)')">copy</button></div>
+      <code id="parityCode"><span class="fn">icons_lab.pick_candidate</span>({
+  icon: <span class="str">"si-agent-handoff"</span>,
+  candidate: <span class="str">"v2"</span>,
+  keep_editable: true
+})</code>
+    </div>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var stages = ["brief", "draft", "refine", "states", "package", "ship"];
+  var currentStage = "draft";
+
+  var parityCalls = {
+    brief: '<span class="fn">icons_lab.expand_brief</span>({\n  source_gap: <span class="str">"agent handing off task to human"</span>,\n  metaphor_count: 3\n})',
+    draft: '<span class="fn">icons_lab.pick_candidate</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  candidate: <span class="str">"v2"</span>,\n  keep_editable: true\n})',
+    refine: '<span class="fn">icons_lab.run_qa</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  auto_propose_fixes: true\n})',
+    states: '<span class="fn">icons_lab.set_state</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  state: <span class="str">"idle"</span>\n})',
+    package: '<span class="fn">icons_lab.export</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  targets: [<span class="str">"svg"</span>, <span class="str">"tsx"</span>, <span class="str">"png"</span>, <span class="str">"css-motion"</span>]\n})',
+    ship: '<span class="fn">icons_lab.request_publish</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  requires: <span class="str">"human_approval"</span>\n})'
+  };
+
+  function setStage(stage) {
+    currentStage = stage;
+    document.querySelectorAll(".stage-panel").forEach(function (p) {
+      p.classList.toggle("active", p.id === "panel-" + stage);
+    });
+    var idx = stages.indexOf(stage);
+    document.querySelectorAll(".step").forEach(function (s, i) {
+      s.classList.toggle("active", i === idx);
+      s.classList.toggle("done", i < idx);
+    });
+    document.getElementById("parityCode").innerHTML = parityCalls[stage];
+    document.getElementById("advanceBtn").textContent =
+      idx === stages.length - 1 ? "Awaiting your gate ✓" : "Advance stage →";
+    document.querySelector(".stage-area").scrollTop = 0;
+  }
+
+  document.querySelectorAll(".step").forEach(function (s) {
+    s.addEventListener("click", function () { setStage(s.dataset.stage); });
+  });
+
+  function advanceStage() {
+    var idx = stages.indexOf(currentStage);
+    if (idx < stages.length - 1) setStage(stages[idx + 1]);
+    else toast("Ship requires the human gate below");
+  }
+
+  /* metaphor + candidate pickers */
+  document.querySelectorAll(".metaphors .metaphor").forEach(function (m) {
+    m.addEventListener("click", function () {
+      document.querySelectorAll(".metaphors .metaphor").forEach(function (x) { x.classList.remove("picked"); });
+      m.classList.add("picked");
+      toast("Metaphor picked: " + m.querySelector(".m-name").textContent);
+    });
+  });
+  document.querySelectorAll(".candidates .cand").forEach(function (c) {
+    c.addEventListener("click", function () {
+      document.querySelectorAll(".candidates .cand").forEach(function (x) { x.classList.remove("picked"); });
+      c.classList.add("picked");
+      toast("Candidate loaded into canvas (mock)");
+    });
+  });
+  document.querySelectorAll(".fmt").forEach(function (f) {
+    f.addEventListener("click", function () { f.classList.toggle("on"); });
+  });
+
+  /* state playground */
+  var stateShapes = {
+    idle:    { base: 1, extra: "" },
+    hover:   { base: 1, extra: "", width: 2 },
+    active:  { base: 1, extra: '<circle cx="18" cy="12" r="3" fill="rgba(255,79,0,.35)" stroke="none"/>' },
+    loading: { base: 0, extra: '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h2"/><path class="spinner-arc" d="M12 9.5a2.5 2.5 0 0 1 0 5" opacity=".8"/>' },
+    success: { base: 0, extra: '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m16.6 12 1 1 1.8-2" stroke="#35c66b"/>' },
+    error:   { base: 0, extra: '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h4"/><path d="m16.9 10.9 2.2 2.2M19.1 10.9l-2.2 2.2" stroke="#ff5d5d"/>' }
+  };
+  document.querySelectorAll("#statesGrid .state-cell").forEach(function (cell) {
+    cell.addEventListener("click", function () {
+      document.querySelectorAll("#statesGrid .state-cell").forEach(function (x) { x.classList.remove("on"); });
+      cell.classList.add("on");
+      var st = cell.dataset.state;
+      var cfg = stateShapes[st];
+      var svg = document.getElementById("demoSvg");
+      var demo = document.getElementById("stateDemo");
+      document.getElementById("demoBase").style.display = cfg.base ? "" : "none";
+      document.getElementById("demoOverlay").innerHTML = cfg.extra;
+      svg.setAttribute("stroke-width", cfg.width || 1.75);
+      demo.classList.toggle("demo-loading", st === "loading");
+      document.getElementById("parityCode").innerHTML =
+        '<span class="fn">icons_lab.set_state</span>({\n  icon: <span class="str">"si-agent-handoff"</span>,\n  state: <span class="str">"' + st + '"</span>\n})';
+    });
+  });
+
+  /* proposals */
+  function resolveProposal(id, approved) {
+    var p = document.getElementById(id);
+    p.classList.add("resolved");
+    var tag = document.createElement("div");
+    tag.className = "p-resolved-tag " + (approved ? "ok" : "no");
+    tag.textContent = approved ? "✓ Approved and applied · checkpoint saved" : "Rejected · draft unchanged";
+    p.appendChild(tag);
+    toast(approved ? "Proposal applied, undo available" : "Proposal rejected");
+  }
+
+  /* agent composer */
+  function sendPrompt() {
+    var input = document.getElementById("agentPrompt");
+    if (!input.value.trim()) return;
+    var feed = document.getElementById("agentFeed");
+    var h = document.createElement("div");
+    h.className = "msg human";
+    h.innerHTML = '<div class="who">You</div>';
+    h.appendChild(document.createTextNode(input.value));
+    feed.appendChild(h);
+    var a = document.createElement("div");
+    a.className = "msg agent";
+    a.innerHTML = '<div class="who">Agent</div>Mock response: in the real app this routes through the provider interface and returns editable proposals, never direct edits.';
+    feed.appendChild(a);
+    input.value = "";
+    feed.scrollTop = feed.scrollHeight;
+  }
+  document.getElementById("agentPrompt").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendPrompt();
+  });
+
+  /* ship gate */
+  function gateChanged() {
+    document.getElementById("publishBtn").disabled = !document.getElementById("tasteCheck").checked;
+  }
+
+  /* toast */
+  var toastTimer;
+  function toast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+</script>
+</body>
+</html>
