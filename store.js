@@ -423,6 +423,12 @@ function formatClaimAvailability(nextAvailable) {
 
 function isClaimableProduct(product) {
   if (!product || product.status !== 'active') return false;
+  // claimable is the source of truth for monthly Pro claims; v1_launch keeps
+  // controlling bundle membership and annual grants. Older rows without the
+  // claimable column fall back to the legacy launch-pack rule.
+  if (Object.prototype.hasOwnProperty.call(product, 'claimable')) {
+    return product.claimable === true;
+  }
   if (Object.prototype.hasOwnProperty.call(product, 'v1_launch')) {
     return product.v1_launch === true;
   }
