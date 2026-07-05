@@ -208,23 +208,32 @@ let claimStatusLoadPromise = null;
 let purchasesLoadPromise = null;
 let purchasesLoadedForUserId = null;
 
-// ── Premium Asset Fetcher ─────────────────────────────────────
-// Fetches SVG/CSS through the Edge Function with auth headers.
-// Falls back to direct public URL for local development.
+// ── Premium Asset Fetchers ────────────────────────────────────
+// Public previews come from /packs. Licensed source comes from the Edge Function.
+async function fetchPublicPackAsset(slug, filename) {
+  return fetch(`/packs/${encodeURIComponent(slug)}/${encodeURIComponent(filename)}`);
+}
+
 async function fetchPremiumAsset(slug, filename) {
   const sb = getSupabase();
-  let token = SUPABASE_ANON;
+  let token = null;
 
   if (sb) {
     try {
       const { data: { session } } = await sb.auth.getSession();
       if (session?.access_token) token = session.access_token;
-    } catch (e) { /* use anon token */ }
+    } catch (e) { /* use the synthetic 401 below */ }
   }
 
-  // Try Edge Function first
+  if (!token) {
+    return new Response(JSON.stringify({ error: 'Sign in required' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   try {
-    const res = await fetch(
+    return await fetch(
       `${PREMIUM_ASSET_FN}?slug=${encodeURIComponent(slug)}&file=${encodeURIComponent(filename)}`,
       {
         headers: {
@@ -233,17 +242,10 @@ async function fetchPremiumAsset(slug, filename) {
         },
       }
     );
-    if (res.ok) return res;
   } catch (e) {
-    // Edge Function unavailable
+    // Edge Function unavailable.
   }
 
-  // Fallback: direct public URL (local development only, stripped in production)
-  if (import.meta.env.DEV) {
-    return fetch(`/packs/${slug}/${filename}`);
-  }
-
-  // Production: return a synthetic error response
   return new Response(JSON.stringify({ error: 'Asset unavailable' }), {
     status: 503,
     headers: { 'Content-Type': 'application/json' },
@@ -1800,10 +1802,10 @@ async function getCollectionCSS(slug, cssFilename) {
     return _collectionCSSCache[slug];
   }
 
-  // Fallback: fetch via Edge Function (e.g. customize panel opened directly)
+  // Fallback: fetch public preview CSS when the detail bundle is not loaded.
   const filename = cssFilename || `${slug}.css`;
   try {
-    const res = await fetchPremiumAsset(slug, filename);
+    const res = await fetchPublicPackAsset(slug, filename);
     if (res.ok) {
       _collectionCSSCache[slug] = await res.text();
       return _collectionCSSCache[slug];
@@ -2889,7 +2891,7 @@ async function selectPremiumIcon(iconName, collectionSlug) {
 
     let svgText = currentCollectionBundle?.icons?.[iconName] || '';
     if (!svgText) {
-      const svgRes = await fetchPremiumAsset(collectionSlug, `${iconName}.svg`);
+      const svgRes = await fetchPublicPackAsset(collectionSlug, `${iconName}.svg`);
       if (!svgRes.ok) {
         renderPremiumPanelError(iconName, collectionName, 'We could not load this icon right now. Try another icon or try again.');
         showToast('Could not load icon');
@@ -3495,10 +3497,10 @@ function wirePremiumPanelEvents(panelBody) {
 async function loadCollectionCSS(slug, cssFile) {
   const linkId = `collection-css-${slug}`;
   if (document.getElementById(linkId)) return; // already loaded
-  // Fetch CSS through Edge Function and inject as <style> tag
-  // (cannot use <link> with Edge Function URL due to auth headers)
+  // Fetch public preview CSS and inject as <style> tag.
   try {
-    const res = await fetchPremiumAsset(slug, cssFile);
+    const filename = cssFile || `${slug}.css`;
+    const res = await fetchPublicPackAsset(slug, filename);
     if (!res.ok) return;
     const cssText = await res.text();
     const style = document.createElement('style');
