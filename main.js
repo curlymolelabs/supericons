@@ -31,6 +31,7 @@ import { normalizeCjkSearchText } from './lib/cjk-search-core.js';
 import { buildWebSearchQueryPlan } from './lib/web-cjk-search-smoke.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
+  extractIconCss,
   hasPremiumMotion,
   isPremiumMotionPackProvisioned,
   mountPremiumMotionPreview,
@@ -2638,6 +2639,39 @@ function renderPanelForIcon(icon) {
         productId: PREMIUM_MOTION_PACK.productId,
       });
     });
+    // Owned state: flip the buy row to licensed source actions
+    (async () => {
+      try {
+        const { isProductOwned } = await import('./store.js');
+        const owned = await isProductOwned(PREMIUM_MOTION_PACK.productId);
+        const buyRow = panelBody.querySelector('.premium-motion__buy');
+        const note = panelBody.querySelector('.premium-motion__note');
+        if (!owned || !buyRow || !buyRow.isConnected) return;
+        buyRow.innerHTML = `
+          <button class="premium-motion__buy-btn premium-motion__buy-btn--primary" id="premiumCopySvg">Copy animated SVG</button>
+          <button class="premium-motion__buy-btn" id="premiumCopyCss">Copy animation CSS</button>`;
+        if (note) note.textContent = 'In your library · Agentic Motion · licensed animated source';
+        const copyFromBundle = async (kind) => {
+          try {
+            const { fetchPremiumPackBundle } = await import('./store.js');
+            const bundle = await fetchPremiumPackBundle(PREMIUM_MOTION_PACK.slug);
+            const svgMarkup = bundle?.icons?.[icon.id];
+            if (!svgMarkup) throw new Error('icon missing from bundle');
+            const text = kind === 'svg' ? svgMarkup : extractIconCss(bundle.css, svgMarkup);
+            if (!text) throw new Error('no source');
+            await navigator.clipboard.writeText(text);
+            showToast(kind === 'svg' ? 'Animated SVG copied' : 'Animation CSS copied');
+          } catch (err) {
+            showToast('Could not load the licensed source. Please try again.');
+            console.error('[PremiumMotion] copy failed:', err);
+          }
+        };
+        panelBody.querySelector('#premiumCopySvg')?.addEventListener('click', () => copyFromBundle('svg'));
+        panelBody.querySelector('#premiumCopyCss')?.addEventListener('click', () => copyFromBundle('css'));
+      } catch (err) {
+        // Keep the buy state when ownership cannot be resolved.
+      }
+    })();
   }
 }
 

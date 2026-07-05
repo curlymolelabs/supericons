@@ -714,6 +714,29 @@ export async function fetchUserPurchases() {
   }
 }
 
+/**
+ * Resolves whether the signed-in user owns a product, loading the purchase
+ * cache on first use. Pro subscribers count as owners for premium packs.
+ */
+export async function isProductOwned(productId) {
+  if (!productId || !isLoggedIn()) return false;
+  if (isPro()) return true;
+  const user = getUser();
+  if (user && purchasesLoadedForUserId !== user.id) {
+    await fetchUserPurchases();
+  }
+  return userPurchases.some((purchase) => purchase.product_id === productId);
+}
+
+/**
+ * Fetches a premium pack bundle through the licensed delivery path.
+ */
+export async function fetchPremiumPackBundle(slug) {
+  const res = await fetchPremiumAsset(slug, 'bundle.json');
+  if (!res.ok) throw new Error('Premium asset unavailable');
+  return res.json();
+}
+
 // ── Collection Count ─────────────────────────────────────────
 function updatePackCount() {
   const countEl = document.querySelector('#sidebarAnimatedPacks .sidebar__item-count');
