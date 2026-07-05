@@ -677,6 +677,9 @@ async function resolveAccessibleIcon(id, library, options = {}) {
       library,
       limit: 50,
       style: requestedStyle,
+      usageContext: buildLocalMcpUsageContext('get_icon', {
+        request_id: `get_icon:${library}:${id}`,
+      }),
     });
     const requestedIds = new Set(
       buildVariantLookupCandidates({ library, id, style: requestedStyle }).map((candidate) => candidate.toLowerCase())
@@ -724,6 +727,7 @@ async function searchAccessibleIcons({
       style: requestedStyle,
       locale,
       includeQueryFrame,
+      usageContext: buildLocalMcpUsageContext('search_icons'),
     });
     hostedResults = (hostedPayload.results || [])
       .map(buildHostedIcon)
@@ -825,6 +829,18 @@ const freeIconCountLabel = productFacts?.display?.freeIconsAcrossLibrariesFreeLa
   || `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
 const mcpLocaleSchema = z.enum(SUPPORTED_MCP_OUTPUT_LOCALES);
 const mcpLocaleDescription = `Optional locale for multilingual output. Supported values: ${SUPPORTED_MCP_OUTPUT_LOCALES.join(', ')}.`;
+
+function buildLocalMcpUsageContext(toolName, context = {}) {
+  return {
+    source: 'mcp',
+    channel: 'local_mcp',
+    environment: 'local',
+    client_family: 'mcp_stdio',
+    tool_name: toolName,
+    mcp_server_version: mcpPackage.version,
+    ...context,
+  };
+}
 
 // ============================================================
 // MCP Server

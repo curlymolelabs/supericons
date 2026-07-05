@@ -43,6 +43,7 @@
       --si-shadow-md: 0 8px 24px rgba(0,0,0,0.35);
       --si-shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
       --sidebar-w: 220px;
+      --sidebar-collapsed-w: 68px;
       --drawer-w: 420px;
       --header-h: 52px;
     }
@@ -117,6 +118,7 @@
       display: flex;
       flex: 1;
       overflow: hidden;
+      min-width: 0;
     }
 
     /* ---- SIDEBAR ---- */
@@ -129,6 +131,29 @@
       flex-direction: column;
       padding: 1rem 0;
       overflow-y: auto;
+      transition: width var(--si-transition-base), padding var(--si-transition-base);
+    }
+    body.sidebar-collapsed .sidebar {
+      width: var(--sidebar-collapsed-w);
+      padding-left: 0.35rem;
+      padding-right: 0.35rem;
+    }
+    body.sidebar-collapsed .nav-section { padding: 0; }
+    body.sidebar-collapsed .nav-section__label,
+    body.sidebar-collapsed .nav-item__label,
+    body.sidebar-collapsed .sidebar__divider {
+      display: none;
+    }
+    body.sidebar-collapsed .nav-item {
+      justify-content: center;
+      padding: 0.6rem 0;
+    }
+    body.sidebar-collapsed .nav-item__badge {
+      position: absolute;
+      top: 0.2rem;
+      right: 0.1rem;
+      margin-left: 0;
+      padding: 0 4px;
     }
     .nav-section {
       padding: 0 0.75rem;
@@ -192,6 +217,7 @@
       display: flex;
       overflow: hidden;
       position: relative;
+      min-width: 0;
     }
 
     /* ---- PANELS ---- */
@@ -200,6 +226,7 @@
       display: none;
       flex-direction: column;
       overflow: hidden;
+      min-width: 0;
     }
     .panel.active { display: flex; }
 
@@ -510,12 +537,238 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
+      min-width: 0;
+    }
+    .stats-recent--wide {
+      grid-template-columns: 1fr 1fr;
     }
     .stats-section {
       background: var(--si-surface-container);
       border: 1px solid rgba(72,72,71,0.2);
       border-radius: var(--si-radius-xl);
       padding: 1rem;
+      min-width: 0;
+    }
+    .intelligence-collapsible {
+      margin: 1rem 1.5rem 0;
+      border: 1px solid rgba(72,72,71,0.22);
+      border-radius: var(--si-radius-xl);
+      background: rgba(255,255,255,0.015);
+      overflow: hidden;
+    }
+    .intelligence-collapsible:first-child { margin-top: 1.5rem; }
+    .intelligence-collapsible > summary {
+      min-height: 3rem;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      color: var(--si-text);
+      font-family: var(--si-font-label);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      list-style: none;
+      user-select: none;
+    }
+    .intelligence-collapsible > summary::-webkit-details-marker { display: none; }
+    .intelligence-collapsible > summary::after {
+      content: 'expand_more';
+      font-family: 'Material Symbols Outlined';
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--si-text-dim);
+      transition: transform var(--si-transition-fast);
+    }
+    .intelligence-collapsible[open] > summary {
+      border-bottom: 1px solid rgba(72,72,71,0.22);
+    }
+    .intelligence-collapsible[open] > summary::after {
+      transform: rotate(180deg);
+    }
+    .intelligence-collapsible__hint {
+      margin-left: auto;
+      color: var(--si-text-dim);
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .intelligence-collapsible .stats-grid {
+      padding: 1rem;
+    }
+    .intelligence-collapsible .stats-recent {
+      padding: 0 1rem 1rem;
+    }
+    .decision-cockpit {
+      margin: 1.5rem 1.5rem 0;
+      padding: 1rem;
+      border: 1px solid rgba(255,79,0,0.22);
+      border-radius: var(--si-radius-xl);
+      background: linear-gradient(135deg, rgba(255,79,0,0.08), rgba(255,255,255,0.025));
+      display: grid;
+      gap: 1rem;
+    }
+    .decision-cockpit__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .decision-cockpit__title {
+      font-family: var(--si-font-headline);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--si-text);
+      letter-spacing: -0.02em;
+    }
+    .decision-cockpit__subtitle {
+      margin-top: 0.25rem;
+      font-family: var(--si-font-label);
+      font-size: 0.76rem;
+      color: var(--si-text-dim);
+      line-height: 1.5;
+    }
+    .decision-cockpit__stamp {
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      color: var(--si-text-dim);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 0.28rem 0.55rem;
+      white-space: nowrap;
+      background: rgba(0,0,0,0.16);
+    }
+    .decision-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .decision-action {
+      border: 1px solid rgba(72,72,71,0.22);
+      border-radius: var(--si-radius-lg);
+      background: rgba(18,18,18,0.62);
+      padding: 0.85rem;
+      min-width: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+    .decision-action--hot {
+      border-color: rgba(255,79,0,0.34);
+      background: rgba(255,79,0,0.08);
+    }
+    .decision-action__label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--si-text-dim);
+    }
+    .decision-action__label .material-symbols-outlined { font-size: 14px; }
+    .decision-action__title {
+      font-family: var(--si-font-label);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--si-text);
+      line-height: 1.35;
+    }
+    .decision-action__body {
+      font-family: var(--si-font-label);
+      font-size: 0.73rem;
+      color: var(--si-text-dim);
+      line-height: 1.5;
+    }
+    .decision-action__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      color: var(--si-text-muted);
+    }
+    .decision-metric-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+    .decision-metric {
+      border: 1px solid rgba(72,72,71,0.18);
+      border-radius: var(--si-radius-lg);
+      background: rgba(0,0,0,0.16);
+      padding: 0.7rem;
+      min-width: 0;
+    }
+    .decision-metric__label {
+      font-family: var(--si-font-label);
+      font-size: 0.64rem;
+      color: var(--si-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .decision-metric__value {
+      margin-top: 0.25rem;
+      font-family: var(--si-font-headline);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--si-text);
+      letter-spacing: -0.03em;
+    }
+    .decision-metric__meta {
+      margin-top: 0.2rem;
+      font-family: var(--si-font-label);
+      font-size: 0.66rem;
+      color: var(--si-text-dim);
+      line-height: 1.35;
+    }
+    .umami-import {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .umami-status {
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      color: var(--si-text-dim);
+      line-height: 1.45;
+    }
+    .summary-list {
+      display: grid;
+      gap: 0.45rem;
+    }
+    .summary-list__row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(72,72,71,0.16);
+      font-family: var(--si-font-label);
+      font-size: 0.74rem;
+      color: var(--si-text-dim);
+    }
+    .summary-list__row:last-child { border-bottom: 0; }
+    .summary-list__label {
+      min-width: 0;
+      color: var(--si-text-muted);
+      overflow-wrap: anywhere;
+    }
+    .summary-list__value {
+      color: var(--si-text);
+      font-weight: 700;
+      white-space: nowrap;
     }
     .stats-section__title {
       font-family: var(--si-font-label);
@@ -663,6 +916,214 @@
       justify-content: flex-end;
       gap: 0.5rem;
     }
+    .query-explorer {
+      display: grid;
+      gap: 1rem;
+      min-width: 0;
+    }
+    .query-explorer__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .query-explorer__lead {
+      font-family: var(--si-font-label);
+      font-size: 0.76rem;
+      line-height: 1.55;
+      color: var(--si-text-dim);
+      max-width: 42rem;
+    }
+    .query-explorer__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .query-explorer__filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .query-explorer__filters > * {
+      flex: 1 1 108px;
+      min-width: 0;
+    }
+    .query-explorer__filters .search-input-wrap {
+      max-width: none;
+      width: 100%;
+      flex: 2 1 220px;
+    }
+    #queryExplorerPageSize {
+      flex: 0 0 112px;
+    }
+    .query-explorer__table {
+      overflow: visible;
+      border: 1px solid rgba(72,72,71,0.16);
+      border-radius: var(--si-radius-lg);
+    }
+    .query-explorer__table .data-table {
+      table-layout: fixed;
+      min-width: 0;
+    }
+    .query-explorer__query {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.35;
+    }
+    .query-explorer__context {
+      display: grid;
+      gap: 0.18rem;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+    }
+    .query-explorer__metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.25rem;
+      font-family: var(--si-font-label);
+      font-size: 0.69rem;
+      color: var(--si-text-dim);
+    }
+    .query-explorer__metric-grid strong {
+      display: block;
+      color: var(--si-text);
+      font-size: 0.78rem;
+    }
+    .query-explorer__audience {
+      display: grid;
+      gap: 0.25rem;
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      color: var(--si-text-dim);
+    }
+    .query-explorer__last-seen {
+      display: grid;
+      gap: 0.25rem;
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+    }
+    .query-explorer__last-seen strong {
+      color: var(--si-text-muted);
+      font-weight: 600;
+    }
+    .query-explorer__row-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      white-space: normal;
+    }
+    .query-explorer__summary {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+    }
+    .query-workbench-tabs {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem;
+      width: fit-content;
+      max-width: 100%;
+      border: 1px solid rgba(72,72,71,0.22);
+      border-radius: var(--si-radius-lg);
+      background: var(--si-surface-container-high);
+    }
+    .query-workbench-tab {
+      height: 28px;
+      border: 0;
+      border-radius: var(--si-radius-md);
+      background: transparent;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+    .query-workbench-tab.active {
+      color: var(--si-primary);
+      background: rgba(255,79,0,0.1);
+    }
+    .query-workbench-pane { display: none; min-width: 0; }
+    .query-workbench-pane.active { display: grid; gap: 0.75rem; }
+    .query-activity-cell {
+      display: grid;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+    .query-activity-cell strong {
+      color: var(--si-text);
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .query-activity-cell span {
+      color: var(--si-text-dim);
+      font-size: 0.7rem;
+      overflow-wrap: anywhere;
+    }
+    .query-detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+    .query-detail-metric {
+      border: 1px solid rgba(72,72,71,0.18);
+      border-radius: var(--si-radius-lg);
+      background: var(--si-surface-container);
+      padding: 0.75rem;
+    }
+    .query-detail-metric__label {
+      font-family: var(--si-font-label);
+      font-size: 0.65rem;
+      color: var(--si-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .query-detail-metric__value {
+      margin-top: 0.25rem;
+      font-family: var(--si-font-headline);
+      font-size: 1.25rem;
+      color: var(--si-text);
+      font-weight: 700;
+    }
+    .query-detail-list {
+      display: grid;
+      gap: 0.45rem;
+    }
+    .query-detail-list__item {
+      border-bottom: 1px solid rgba(72,72,71,0.12);
+      padding-bottom: 0.45rem;
+      font-family: var(--si-font-label);
+      font-size: 0.74rem;
+      color: var(--si-text-muted);
+      line-height: 1.45;
+    }
+    .query-detail-list__item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .query-detail-actions {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
 
     /* ---- AUDIT LOG PANEL ---- */
     .audit-filters {
@@ -684,6 +1145,7 @@
     .action-chip.delete { background: rgba(255,113,108,0.1); color: var(--si-error); border: 1px solid rgba(255,113,108,0.18); }
     .action-chip.cancel { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
     .action-chip.revoke { background: rgba(96,165,250,0.1); color: var(--si-info); border: 1px solid rgba(96,165,250,0.2); }
+    .action-chip.search { background: rgba(45,212,191,0.1); color: var(--si-success); border: 1px solid rgba(45,212,191,0.18); }
     .action-chip.ban { background: rgba(99,91,255,0.1); color: #a48dff; border: 1px solid rgba(99,91,255,0.2); }
 
     .payload-toggle {
@@ -1076,6 +1538,29 @@
       border-color: rgba(255,113,108,0.45);
       color: var(--si-error);
     }
+    @media (max-width: 1100px) {
+      .decision-actions {
+        grid-template-columns: 1fr;
+      }
+      .decision-metric-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .query-explorer__filters {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .decision-cockpit {
+        margin: 1rem 1rem 0;
+      }
+      .decision-metric-strip {
+        grid-template-columns: 1fr;
+      }
+      .query-explorer__filters,
+      .query-detail-metrics {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1084,6 +1569,9 @@
 <header class="topbar">
   <span class="topbar__logo">Supericons</span>
   <span class="topbar__badge">Admin</span>
+  <button class="btn btn-ghost btn-sm" id="sidebarToggleBtn" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
+    <span class="material-symbols-outlined" style="font-size:14px">menu_open</span>
+  </button>
   <span class="topbar__spacer"></span>
   <button class="btn btn-ghost btn-sm" id="adminReconnectBtn" type="button">
     <span class="material-symbols-outlined" style="font-size:14px">vpn_key</span>
@@ -1106,30 +1594,30 @@
       <div class="nav-section__label">Overview</div>
       <div class="nav-item active" id="nav-stats" onclick="switchPanel('stats')">
         <span class="material-symbols-outlined nav-item__icon">bar_chart</span>
-        Stats
+        <span class="nav-item__label">Stats</span>
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-section__label">Management</div>
       <div class="nav-item" id="nav-intelligence" onclick="switchPanel('intelligence')">
         <span class="material-symbols-outlined nav-item__icon">insights</span>
-        Icon Intelligence
+        <span class="nav-item__label">Icon Intelligence</span>
       </div>
       <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
         <span class="material-symbols-outlined nav-item__icon">group</span>
-        Users
+        <span class="nav-item__label">Users</span>
         <span class="nav-item__badge" id="navUsersCount">0</span>
       </div>
       <div class="nav-item" id="nav-audit" onclick="switchPanel('audit')">
         <span class="material-symbols-outlined nav-item__icon">history</span>
-        Audit Log
+        <span class="nav-item__label">Audit Log</span>
       </div>
     </div>
     <div class="sidebar__divider"></div>
     <div class="nav-section">
       <a class="nav-item" id="docsLink" href="/docs" target="_blank" rel="noreferrer">
         <span class="material-symbols-outlined nav-item__icon">help_outline</span>
-        Documentation
+        <span class="nav-item__label">Documentation</span>
       </a>
     </div>
   </nav>
@@ -1155,6 +1643,27 @@
       </div>
 
       <div style="flex:1;overflow-y:auto;">
+        <div class="decision-cockpit" aria-live="polite">
+          <div class="decision-cockpit__top">
+            <div>
+              <div class="decision-cockpit__title">Needs attention</div>
+              <div class="decision-cockpit__subtitle">The fastest product decisions from users, searches, channels, and weak results.</div>
+            </div>
+            <div class="decision-cockpit__stamp" id="decisionCockpitStamp">Waiting for data</div>
+          </div>
+          <div class="decision-actions" id="decisionActions">
+            <div class="decision-action">
+              <div class="decision-action__label">
+                <span class="material-symbols-outlined">hourglass_empty</span>
+                Loading
+              </div>
+              <div class="decision-action__title">Checking admin signals</div>
+              <div class="decision-action__body">Connect the admin API to see what needs work first.</div>
+            </div>
+          </div>
+          <div class="decision-metric-strip" id="decisionMetricStrip"></div>
+        </div>
+
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-card__label">
@@ -1217,6 +1726,35 @@
           </div>
         </div>
 
+        <div class="stats-recent stats-recent--wide">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">public</span>
+              Web Audience (Umami)
+            </div>
+            <div class="umami-import">
+              <input id="umamiCsvInput" type="file" accept=".csv,text/csv" multiple hidden />
+              <button class="btn btn-ghost btn-sm" id="umamiCsvButton" type="button">
+                <span class="material-symbols-outlined" style="font-size:14px">upload_file</span>
+                Import CSVs
+              </button>
+              <button class="btn btn-ghost btn-sm" id="umamiCsvClearButton" type="button">
+                <span class="material-symbols-outlined" style="font-size:14px">backspace</span>
+                Clear
+              </button>
+              <span class="umami-status" id="umamiImportStatus">No Umami files loaded</span>
+            </div>
+            <div id="umamiAudienceSummary"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">route</span>
+              Channels and Paths
+            </div>
+            <div id="umamiChannelSummary"></div>
+          </div>
+        </div>
+
         <div class="stats-recent">
           <div class="stats-section">
             <div class="stats-section__title">
@@ -1254,7 +1792,7 @@
         <div class="search-row audit-filters">
           <div class="search-input-wrap" style="max-width:280px">
             <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Filter icon evidence..." id="intelligenceSearch" />
+            <input class="search-input" placeholder="Filter latest activity..." id="intelligenceSearch" aria-label="Filter latest activity" />
           </div>
           <select class="filter-select" id="intelligenceWindowFilter" aria-label="Intelligence time window">
             <option value="1d">Last 24 hours</option>
@@ -1264,9 +1802,10 @@
             <option value="1y">Last 12 months</option>
             <option value="all">All time</option>
           </select>
-          <select class="filter-select" id="intelligenceSignalFilter">
+          <select class="filter-select" id="intelligenceSignalFilter" aria-label="Latest activity signal type">
             <option value="">All signals</option>
             <option value="search_attempt">search_attempt</option>
+            <option value="hosted_search_audit">hosted search audit</option>
             <option value="copy">copy</option>
             <option value="favorite">favorite</option>
             <option value="replace">replace</option>
@@ -1276,10 +1815,34 @@
             <option value="collection">collection</option>
             <option value="social_gallery">social_gallery</option>
           </select>
+          <select class="filter-select" id="intelligenceChannelFilter" aria-label="Usage channel">
+            <option value="all" selected>All channels</option>
+            <option value="web">Web</option>
+            <option value="hosted_mcp">Hosted MCP</option>
+            <option value="local_mcp">Local MCP / npm</option>
+            <option value="cli">CLI</option>
+            <option value="api">API</option>
+            <option value="internal_test">Internal / test</option>
+            <option value="unknown">Unclassified</option>
+          </select>
+          <select class="filter-select" id="intelligenceEnvironmentFilter" aria-label="Usage environment">
+            <option value="live" selected>Production</option>
+            <option value="preview">Preview</option>
+            <option value="local">Local / dev</option>
+            <option value="test">Automated test</option>
+            <option value="legacy">Unclassified source</option>
+            <option value="all">All environments</option>
+          </select>
         </div>
       </div>
 
       <div style="flex:1;overflow-y:auto;">
+        <details class="intelligence-collapsible" id="intelligenceRawSignalsDetails">
+          <summary>
+            Raw Signals And Secondary Metrics
+            <span class="intelligence-collapsible__hint">Open only when debugging event capture</span>
+          </summary>
+
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-card__label">
@@ -1292,7 +1855,7 @@
           <div class="stat-card">
             <div class="stat-card__label">
               <span class="material-symbols-outlined">content_copy</span>
-              <span id="intelligenceCopyEventsLabel">Copy Events (30d)</span>
+              <span id="intelligenceCopyEventsLabel">Icon Copy Events (30d)</span>
             </div>
             <div class="stat-card__value" id="intelligenceCopyEventsValue">0</div>
             <div class="stat-card__delta" id="intelligenceCopyEventsDelta">Selection pressure in the current window</div>
@@ -1300,7 +1863,7 @@
           <div class="stat-card">
             <div class="stat-card__label">
               <span class="material-symbols-outlined">neurology</span>
-              <span id="intelligenceMcpBatchesLabel">MCP Batches (30d)</span>
+              <span id="intelligenceMcpBatchesLabel">MCP Events (30d)</span>
             </div>
             <div class="stat-card__value" id="intelligenceMcpBatchesValue">0</div>
             <div class="stat-card__delta" id="intelligenceMcpBatchesDelta">Agent search sessions logged in the current window</div>
@@ -1319,14 +1882,14 @@
           <div class="stats-section">
             <div class="stats-section__title">
               <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">bolt</span>
-              Top Icons
+              Top Actioned Icons
             </div>
             <div id="intelligenceTopIcons"></div>
           </div>
           <div class="stats-section">
             <div class="stats-section__title">
               <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">category</span>
-              Top Purposes
+              Top Recorded Purposes
             </div>
             <div id="intelligenceTopCategories"></div>
           </div>
@@ -1348,6 +1911,13 @@
             <div id="intelligenceKeySignals"></div>
           </div>
         </div>
+        </details>
+
+        <details class="intelligence-collapsible" id="intelligenceSearchSummaryDetails">
+          <summary>
+            Search Demand Summary
+            <span class="intelligence-collapsible__hint">Open for totals and top query lists</span>
+          </summary>
 
         <div class="stats-grid" style="padding-top:0;">
           <div class="stat-card">
@@ -1400,126 +1970,180 @@
             <div id="searchIntelTopMcpQueries"></div>
           </div>
         </div>
-
-        <div class="stats-recent" style="padding-top:0;">
-          <div class="stats-section" style="grid-column:1 / -1;">
-            <div class="query-review-toolbar">
-              <div class="query-review-toolbar__copy">
-                <div class="stats-section__title" style="margin-bottom:0;">
-                  <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">playlist_add_check_circle</span>
-                  Review Queue
-                </div>
-                <div class="query-review-toolbar__lead">
-                  Active queue mode keeps triage focused on untriaged issues plus items that still need alias or icon work. Reviewed items stay available whenever you turn them back on.
-                </div>
-              </div>
-              <label class="query-review-toggle" for="queryReviewShowReviewed">
-                <input type="checkbox" id="queryReviewShowReviewed" />
-                <span>Show reviewed</span>
-              </label>
-            </div>
-            <div class="query-review-summary" id="queryReviewSummary"></div>
-          </div>
-        </div>
-
-        <div class="stats-recent" style="padding-top:0;">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">crisis_alert</span>
-              Top Zero-Result Queries
-            </div>
-            <div id="searchIntelZeroResultQueries"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">filter_alt</span>
-              Low-Result Queries
-            </div>
-            <div id="searchIntelLowResultQueries"></div>
-          </div>
-        </div>
-
-        <div class="stats-recent" style="padding-top:0;">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">sync_problem</span>
-              Replacement-Heavy Queries
-            </div>
-            <div id="searchIntelReplacementQueries"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">info</span>
-              Search Intelligence Notes
-            </div>
-            <div id="searchIntelNotes"></div>
-          </div>
-        </div>
+        </details>
 
         <div class="stats-recent" style="padding-top:0;grid-template-columns:1fr;">
           <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">rate_review</span>
-              Query Review
-            </div>
-            <div class="query-review-panel">
-              <p class="query-review-lead" id="queryReviewLead">Select a query above to start reviewing it.</p>
-              <div class="query-review-grid">
-                <div class="detail-row">
-                  <span class="detail-row__label">Query</span>
-                  <span class="detail-row__value" id="queryReviewQuery">-</span>
+            <div class="query-explorer">
+              <div class="query-explorer__top">
+                <div>
+                  <div class="stats-section__title" style="margin-bottom:0.35rem;">
+                    <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">manage_search</span>
+                    Query Explorer
+                  </div>
+                  <div class="query-explorer__lead">
+                    Filter, sort, review, and export query evidence from one place.
+                  </div>
                 </div>
-                <div class="detail-row">
-                  <span class="detail-row__label">Library</span>
-                  <span class="detail-row__value" id="queryReviewLibrary">-</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-row__label">Purpose</span>
-                  <span class="detail-row__value" id="queryReviewPurpose">-</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-row__label">Current status</span>
-                  <span class="detail-row__value" id="queryReviewCurrentStatus"><span class="badge badge-review-untriaged">Untriaged</span></span>
+                <div class="query-explorer__actions">
+                  <button class="btn btn-ghost btn-sm" id="queryExplorerExportCsv" type="button">
+                    <span class="material-symbols-outlined" style="font-size:14px">table_view</span>
+                    CSV
+                  </button>
+                  <button class="btn btn-ghost btn-sm" id="queryExplorerExportJson" type="button">
+                    <span class="material-symbols-outlined" style="font-size:14px">data_object</span>
+                    JSON
+                  </button>
+                  <button class="btn btn-primary btn-sm" id="queryExplorerExportAgentPack" type="button">
+                    <span class="material-symbols-outlined" style="font-size:14px">inventory_2</span>
+                    Agent Pack
+                  </button>
                 </div>
               </div>
-              <form class="query-review-form" id="queryReviewForm">
-                <select class="filter-select" id="queryReviewStatus" aria-label="Query review status">
-                  <option value="">Select status</option>
-                  <option value="resolved">Resolved</option>
+
+              <div class="query-explorer__filters">
+                <div class="search-input-wrap">
+                  <span class="material-symbols-outlined">search</span>
+                  <input class="search-input" placeholder="Search queries..." id="queryExplorerSearch" />
+                </div>
+                <select class="filter-select" id="queryExplorerIssueFilter" aria-label="Query issue type">
+                  <option value="">All issues</option>
+                  <option value="zero_result">Zero results</option>
+                  <option value="low_result">Low results</option>
+                  <option value="replacement_heavy">Replaced often</option>
+                  <option value="successful">Successful</option>
+                  <option value="mcp">MCP</option>
+                </select>
+                <select class="filter-select" id="queryExplorerStatusFilter" aria-label="Query review status">
+                  <option value="">All statuses</option>
+                  <option value="untriaged">Untriaged</option>
                   <option value="needs_alias">Needs Alias</option>
                   <option value="needs_icon">Needs Icon</option>
+                  <option value="resolved">Resolved</option>
                   <option value="ignore">Ignore</option>
                 </select>
-                <textarea
-                  class="query-review-textarea"
-                  id="queryReviewNote"
-                  placeholder="Optional note. Example: map to lucide:network or add to icon backlog."
-                ></textarea>
-                <div class="query-review-actions">
-                  <button class="btn btn-ghost" type="button" id="queryReviewClearBtn">Clear Selection</button>
-                  <button class="btn btn-primary" type="submit" id="queryReviewSaveBtn">Save Review</button>
+                <select class="filter-select" id="queryExplorerEnvironmentFilter" aria-label="Query environment">
+                  <option value="live" selected>Production</option>
+                  <option value="preview">Preview</option>
+                  <option value="local">Local / dev</option>
+                  <option value="test">Automated test</option>
+                  <option value="legacy">Unclassified source</option>
+                  <option value="all">All environments</option>
+                </select>
+                <select class="filter-select" id="queryExplorerChannelFilter" aria-label="Query channel">
+                  <option value="all" selected>All channels</option>
+                  <option value="web">Web</option>
+                  <option value="hosted_mcp">Hosted MCP</option>
+                  <option value="local_mcp">Local MCP / npm</option>
+                  <option value="cli">CLI</option>
+                  <option value="api">API</option>
+                  <option value="internal_test">Internal / test</option>
+                  <option value="unknown">Unclassified</option>
+                </select>
+                <input class="filter-select" id="queryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
+                <input class="filter-select" id="queryExplorerPurposeFilter" placeholder="Purpose" aria-label="Purpose filter" />
+                <select class="filter-select" id="queryExplorerSort" aria-label="Sort query rows">
+                  <option value="last_seen" selected>Latest activity</option>
+                  <option value="zero_attempt_count">Zero attempts</option>
+                  <option value="low_attempt_count">Low attempts</option>
+                  <option value="attempt_count">All attempts</option>
+                  <option value="average_result_count">Average results</option>
+                  <option value="minimum_result_count">Minimum results</option>
+                  <option value="replacement_count">Replacements</option>
+                  <option value="mcp_batch_count">MCP events</option>
+                  <option value="first_seen">First seen</option>
+                  <option value="status">Status</option>
+                  <option value="query">Query</option>
+                </select>
+                <select class="filter-select" id="queryExplorerDirection" aria-label="Sort direction">
+                  <option value="desc">Newest first</option>
+                  <option value="asc">Oldest first</option>
+                </select>
+                <select class="filter-select" id="queryExplorerPageSize" aria-label="Rows per page">
+                  <option value="25">25 rows</option>
+                  <option value="50">50 rows</option>
+                  <option value="100">100 rows</option>
+                </select>
+              </div>
+
+              <div class="query-explorer__summary" id="queryExplorerSummary">Loading query rows...</div>
+
+              <div class="query-workbench-tabs" role="tablist" aria-label="Query workspace views">
+                <button class="query-workbench-tab active" id="queryWorkbenchTabQueries" type="button" data-query-workbench-view="queries" role="tab" aria-selected="true" aria-controls="queryWorkbenchPaneQueries">
+                  <span class="material-symbols-outlined" style="font-size:14px">fact_check</span>
+                  Query Issues
+                </button>
+                <button class="query-workbench-tab" id="queryWorkbenchTabActivity" type="button" data-query-workbench-view="activity" role="tab" aria-selected="false" aria-controls="queryWorkbenchPaneActivity">
+                  <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
+                  Latest Activity
+                </button>
+              </div>
+
+              <div class="query-workbench-pane active" id="queryWorkbenchPaneQueries" role="tabpanel" aria-labelledby="queryWorkbenchTabQueries">
+                <div class="query-explorer__table">
+                  <table class="data-table">
+                    <colgroup>
+                      <col style="width:34%" />
+                      <col style="width:24%" />
+                      <col style="width:18%" />
+                      <col style="width:14%" />
+                      <col style="width:10%" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>Query</th>
+                        <th>Health</th>
+                        <th>Audience</th>
+                        <th>Last Activity</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="queryExplorerTableBody"></tbody>
+                  </table>
                 </div>
-              </form>
+
+                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
+                  <span class="pagination__info" id="queryExplorerPaginationInfo">Loading query rows...</span>
+                  <div class="pagination__controls" id="queryExplorerPaginationControls"></div>
+                </div>
+              </div>
+
+              <div class="query-workbench-pane" id="queryWorkbenchPaneActivity" role="tabpanel" aria-labelledby="queryWorkbenchTabActivity">
+                <div class="query-explorer__lead">
+                  Latest timestamped search and usage signals. Filter this feed with the page search, signal, and time-window controls above.
+                </div>
+                <div class="query-explorer__table">
+                  <table class="data-table">
+                    <colgroup>
+                      <col style="width:13%" />
+                      <col style="width:12%" />
+                      <col style="width:15%" />
+                      <col style="width:20%" />
+                      <col style="width:15%" />
+                      <col style="width:25%" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>Signal</th>
+                        <th>Visitor</th>
+                        <th>Query</th>
+                        <th>Surface</th>
+                        <th>Note</th>
+                      </tr>
+                    </thead>
+                    <tbody id="intelligenceEvidenceBody"></tbody>
+                  </table>
+                </div>
+                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
+                  <span class="pagination__info" id="intelligenceEvidencePaginationInfo">Loading evidence...</span>
+                  <div class="pagination__controls" id="intelligenceEvidencePaginationControls"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="table-wrap" style="padding:0 1.5rem 1.5rem;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Signal</th>
-                <th>Icon</th>
-                <th>Query</th>
-                <th>Purpose</th>
-                <th>Surface</th>
-                <th>Note</th>
-              </tr>
-            </thead>
-            <tbody id="intelligenceEvidenceBody"></tbody>
-          </table>
-        </div>
       </div>
     </section>
 
@@ -1762,6 +2386,32 @@
   <div class="drawer-body" id="tab-log" style="display:none">
     <div class="drawer-section-title">Audit History</div>
     <div id="drawerAuditContent"></div>
+  </div>
+</div>
+
+<!-- ===== QUERY DETAIL DRAWER ===== -->
+<div class="drawer-overlay" id="queryDrawerOverlay" onclick="closeQueryDetailDrawer()"></div>
+<div class="drawer query-drawer" id="queryDetailDrawer" aria-hidden="true">
+  <div class="drawer-header">
+    <div class="drawer-avatar">
+      <span class="material-symbols-outlined">manage_search</span>
+    </div>
+    <div class="drawer-user-info">
+      <div class="drawer-user-info__name" id="queryDetailTitle">Query detail</div>
+      <div class="drawer-user-info__email" id="queryDetailContext">Select a query to inspect it.</div>
+      <div class="drawer-user-info__badges" id="queryDetailBadges"></div>
+    </div>
+    <button class="drawer-close" onclick="closeQueryDetailDrawer()" type="button" aria-label="Close query detail">
+      <span class="material-symbols-outlined" style="font-size:20px">close</span>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <div id="queryDetailContent">
+      <div class="empty-state">
+        <span class="material-symbols-outlined">manage_search</span>
+        <span class="empty-state__label">Select a query to inspect it.</span>
+      </div>
+    </div>
   </div>
 </div>
 

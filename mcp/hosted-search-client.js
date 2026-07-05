@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,6 +19,62 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
   ? JSON.parse(readFileSync(multilingualAliasesPath, 'utf8')).aliases || []
   : [];
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
+
+function normalizeUsageToken(value, { maxLength = 80 } = {}) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .slice(0, maxLength);
+}
+
+function normalizeUsageText(value, { maxLength = 120 } = {}) {
+  const text = String(value || '').trim();
+  return text ? text.slice(0, maxLength) : null;
+}
+
+function normalizeUsageHash(value) {
+  const text = String(value || '').trim().toLowerCase();
+  return /^[a-f0-9]{16,128}$/.test(text) ? text : null;
+}
+
+function normalizeUsageCountry(value) {
+  const text = String(value || '').trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(text)) return null;
+  if (['XX', 'ZZ', 'T1'].includes(text)) return null;
+  return text;
+}
+
+function hashSecret(value) {
+  const text = String(value || '').trim();
+  return text ? createHash('sha256').update(text).digest('hex') : null;
+}
+
+function buildUsagePayload(usageContext = {}, { apiKeyHash = null } = {}) {
+  const context = usageContext && typeof usageContext === 'object' ? usageContext : {};
+  const payload = {
+    source: normalizeUsageToken(context.source, { maxLength: 40 }) || 'mcp',
+    channel: normalizeUsageToken(context.channel, { maxLength: 40 }) || 'local_mcp',
+    environment: normalizeUsageToken(context.environment, { maxLength: 40 }) || 'local',
+    client_family: normalizeUsageToken(context.client_family, { maxLength: 64 }) || 'mcp_stdio',
+    tool_name: normalizeUsageToken(context.tool_name, { maxLength: 64 }) || 'search_icons',
+    request_id: normalizeUsageText(context.request_id, { maxLength: 120 }),
+    dedupe_key: normalizeUsageText(context.dedupe_key, { maxLength: 180 }),
+    session_hash: normalizeUsageHash(context.session_hash),
+    ip_hash: normalizeUsageHash(context.ip_hash),
+    country_code: normalizeUsageCountry(context.country_code),
+    geo_source: normalizeUsageToken(context.geo_source, { maxLength: 64 }),
+    anonymous_client_hash: normalizeUsageHash(context.anonymous_client_hash),
+    user_agent_hash: normalizeUsageHash(context.user_agent_hash),
+    api_key_hash: normalizeUsageHash(context.api_key_hash) || apiKeyHash,
+    mcp_server_version: normalizeUsageText(context.mcp_server_version, { maxLength: 40 }),
+  };
+
+  return Object.fromEntries(
+    Object.entries(payload).filter(([, value]) => value !== null && value !== undefined && value !== '')
+  );
+}
 
 function looksLikeJwt(value) {
   return /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(String(value || '').trim());
@@ -160,8 +217,12 @@ export async function searchIconsHostedMcp({
   style = 'any',
   locale = null,
   includeQueryFrame = false,
+  usageContext = null,
 }) {
   const apiKey = getConfiguredApiKey();
+  const usagePayload = buildUsagePayload(usageContext, {
+    apiKeyHash: apiKey ? hashSecret(apiKey) : null,
+  });
 
   if (shouldUseInternalHostedDebug()) {
     const baseUrl = getDirectHostedSearchUrl();
@@ -191,7 +252,7 @@ export async function searchIconsHostedMcp({
       limit,
       style,
       locale,
-      source: 'mcp',
+      ...usagePayload,
       ...(includeQueryFrame ? { include_query_frame: true } : {}),
     };
     const payload = await postHostedSearch(baseUrl, headers, body);
@@ -229,7 +290,7 @@ export async function searchIconsHostedMcp({
     limit,
     style,
     locale,
-    source: 'mcp',
+    ...usagePayload,
     ...(includeQueryFrame ? { include_query_frame: true } : {}),
   };
   const payload = await postPublicSearch(url, headers, body);

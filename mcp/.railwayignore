@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+*.log
+*.err.log
+*.out.log
+tmp/
+.tmp/
+test-results/
+
+# Local-only files that are not needed by the hosted MCP server.
+SKILL.md

@@ -54,6 +54,36 @@ function extractClientIp(req: Request) {
   return realIp.trim() || null;
 }
 
+function normalizeCountryCode(value: string | null) {
+  const normalized = String(value || '').trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(normalized)) return null;
+  if (normalized === 'XX' || normalized === 'ZZ') return null;
+  return normalized;
+}
+
+function extractTrustedCountry(req: Request) {
+  const candidates = [
+    { header: 'cf-ipcountry', source: 'cloudflare' },
+    { header: 'x-vercel-ip-country', source: 'vercel' },
+    { header: 'x-country-code', source: 'proxy' },
+  ];
+
+  for (const candidate of candidates) {
+    const countryCode = normalizeCountryCode(req.headers.get(candidate.header));
+    if (countryCode) {
+      return {
+        countryCode,
+        geoSource: candidate.source,
+      };
+    }
+  }
+
+  return {
+    countryCode: null,
+    geoSource: null,
+  };
+}
+
 async function sha256Hex(value: string) {
   const bytes = new TextEncoder().encode(value);
   const digest = await crypto.subtle.digest('SHA-256', bytes);
@@ -67,10 +97,13 @@ export async function getAuditIdentity(req: Request) {
   const sessionHash = rawSessionHash.trim() || null;
   const ip = extractClientIp(req);
   const ipHash = ip ? await sha256Hex(ip) : null;
+  const geo = extractTrustedCountry(req);
 
   return {
     sessionHash,
     ipHash,
+    countryCode: geo.countryCode,
+    geoSource: geo.geoSource,
   };
 }
 

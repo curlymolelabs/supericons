@@ -7,6 +7,23 @@ type JsonRecord = Record<string, unknown>;
 type SupabaseClient = any;
 type IntelligenceWindowKey = '1d' | '7d' | '30d' | '90d' | '1y' | 'all';
 type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
+type QueryIssueType = 'zero_result' | 'low_result' | 'replacement_heavy' | 'successful' | 'mcp';
+type QueryEnvironment = 'production' | 'preview' | 'local' | 'test' | 'legacy';
+type QueryEnvironmentFilter = QueryEnvironment | 'live' | 'all';
+type QueryChannel = 'web' | 'hosted_mcp' | 'local_mcp' | 'cli' | 'api' | 'internal_test' | 'unknown';
+type QueryChannelFilter = QueryChannel | 'all';
+type QuerySortField =
+  | 'zero_attempt_count'
+  | 'low_attempt_count'
+  | 'attempt_count'
+  | 'average_result_count'
+  | 'minimum_result_count'
+  | 'replacement_count'
+  | 'mcp_batch_count'
+  | 'last_seen'
+  | 'first_seen'
+  | 'status'
+  | 'query';
 type IntelligenceWindow = {
   key: IntelligenceWindowKey;
   shortLabel: string;
@@ -21,6 +38,7 @@ type QueryReviewRow = {
   note?: string | null;
   updated_at?: string | null;
 };
+type SearchEvidenceRow = Record<string, unknown>;
 type AuthUser = {
   id: string;
   email?: string | null;
@@ -38,6 +56,7 @@ type AuthUser = {
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://supericons.dev',
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
 ];
 
 const DEFAULT_APP_BASE_URL = 'https://supericons.dev';
@@ -47,8 +66,27 @@ const RESEND_EMAILS_URL = 'https://api.resend.com/emails';
 const PAGE_SIZE = 25;
 const DELETE_CANCELABLE_STATUSES = new Set(['active', 'trialing', 'past_due', 'unpaid']);
 const EVIDENCE_PAGE_SIZE = 1000;
+const QUERY_QUEUE_MAX_PAGE_SIZE = 100;
+const QUERY_EXPORT_MAX_ROWS = 2000;
 const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
+const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
+const QUERY_ENVIRONMENT_FILTERS = new Set<QueryEnvironmentFilter>(['live', 'production', 'preview', 'local', 'test', 'legacy', 'all']);
+const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'cli', 'api', 'internal_test', 'unknown']);
+const PRODUCTION_ANALYTICS_HOSTS = new Set(['supericons.dev', 'www.supericons.dev']);
+const QUERY_SORT_FIELDS = new Set<QuerySortField>([
+  'zero_attempt_count',
+  'low_attempt_count',
+  'attempt_count',
+  'average_result_count',
+  'minimum_result_count',
+  'replacement_count',
+  'mcp_batch_count',
+  'last_seen',
+  'first_seen',
+  'status',
+  'query',
+]);
 const INTELLIGENCE_WINDOWS: Record<IntelligenceWindowKey, IntelligenceWindow> = {
   '1d': { key: '1d', shortLabel: '24h', longLabel: 'Last 24 hours', days: 1 },
   '7d': { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days', days: 7 },
@@ -88,6 +126,26 @@ function jsonResponse(req: Request, body: JsonRecord, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: getCorsHeaders(req),
+  });
+}
+
+function contentResponse(
+  req: Request,
+  body: string,
+  contentType: string,
+  filename?: string,
+  status = 200,
+) {
+  const headers: Record<string, string> = {
+    ...getCorsHeaders(req),
+    'Content-Type': contentType,
+  };
+  if (filename) {
+    headers['Content-Disposition'] = `attachment; filename="${filename}"`;
+  }
+  return new Response(body, {
+    status,
+    headers,
   });
 }
 
@@ -136,6 +194,22 @@ function normalizeSearchQuery(value: unknown) {
     .replace(/\s+/g, ' ');
 }
 
+function normalizeAnalyticsToken(value: unknown) {
+  return normalizeSearchQuery(value)
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .replace(/_+/g, '_');
+}
+
+function isUnclassifiedAnalyticsToken(value: unknown) {
+  const source = normalizeAnalyticsToken(value);
+  return !source
+    || source === 'unknown'
+    || source === 'legacy'
+    || source === 'unclassified'
+    || source === 'unclassified_hosted_search';
+}
+
 function normalizeReviewLibraryFilter(value: unknown) {
   return normalizeSearchQuery(value) || 'all';
 }
@@ -163,6 +237,177 @@ function buildQueryReviewContextKey({
 function parseIntelligenceWindow(url: URL): IntelligenceWindow {
   const raw = String(url.searchParams.get('window') || '30d').trim().toLowerCase() as IntelligenceWindowKey;
   return INTELLIGENCE_WINDOWS[raw] || INTELLIGENCE_WINDOWS['30d'];
+}
+
+function parseQueryEnvironmentFilter(url: URL): QueryEnvironmentFilter {
+  const raw = normalizeSearchQuery(url.searchParams.get('environment')) as QueryEnvironmentFilter;
+  return QUERY_ENVIRONMENT_FILTERS.has(raw) ? raw : 'live';
+}
+
+function parseQueryChannelFilter(url: URL): QueryChannelFilter {
+  const raw = normalizeSearchQuery(url.searchParams.get('channel')) as QueryChannelFilter;
+  return QUERY_CHANNEL_FILTERS.has(raw) ? raw : 'all';
+}
+
+function getProductionAnalyticsHosts() {
+  const configured = (Deno.env.get('SUPERICONS_PRODUCTION_HOSTS') || '')
+    .split(',')
+    .map((host) => host.trim().toLowerCase())
+    .filter(Boolean);
+  return new Set([...PRODUCTION_ANALYTICS_HOSTS, ...configured]);
+}
+
+function normalizeAnalyticsHost(value: unknown) {
+  let text = String(value || '').trim().toLowerCase();
+  if (!text) return '';
+  text = text.replace(/^\[|\]$/g, '');
+  if (text === '::1') return text;
+  if (text.includes('/') || text.includes(':')) {
+    try {
+      const parsed = new URL(text.includes('://') ? text : `https://${text}`);
+      text = parsed.hostname.toLowerCase();
+    } catch {
+      text = text.split('/')[0].split(':')[0] || text;
+    }
+  }
+  return text.replace(/^\[|\]$/g, '');
+}
+
+function classifyAnalyticsSource(value: unknown): QueryEnvironment | null {
+  const source = normalizeAnalyticsToken(value);
+  if (isUnclassifiedAnalyticsToken(source)) return null;
+  if (source.includes('local')) return 'local';
+  if (source.includes('preview') || source.includes('netlify')) return 'preview';
+  if (source.includes('test') || source.includes('verify') || source.includes('internal') || source.includes('trap')) return 'test';
+  if (
+    source === 'web'
+    || source === 'hosted_search'
+    || source === 'mcp'
+    || source === 'hosted_mcp'
+    || source === 'mcp_search'
+    || source === 'api'
+    || source === 'cli'
+    || source.includes('mcp')
+  ) {
+    return 'production';
+  }
+  return null;
+}
+
+function classifyAnalyticsChannel(value: unknown): QueryChannel | null {
+  const source = normalizeAnalyticsToken(value);
+  if (isUnclassifiedAnalyticsToken(source)) return null;
+  if (source.includes('local_mcp') || source === 'npm' || source === 'npx') return 'local_mcp';
+  if (source === 'mcp' || source === 'hosted_mcp' || source === 'mcp_search' || source.includes('mcp')) return 'hosted_mcp';
+  if (source === 'cli' || source.includes('cli')) return 'cli';
+  if (source === 'api' || source.includes('api')) return 'api';
+  if (source === 'verify' || source === 'internal_test' || source === 'test' || source.includes('test') || source.includes('verify') || source.includes('trap')) return 'internal_test';
+  if (
+    source === 'web'
+    || source === 'site'
+    || source === 'local_web'
+    || source === 'preview_web'
+    || source === 'test_web'
+    || source === 'grid'
+    || source === 'grid_empty_feedback'
+    || source === 'customize'
+    || source === 'store'
+    || source === 'hosted_search'
+    || source === 'search_icons'
+    || source === 'search_engine'
+  ) {
+    return 'web';
+  }
+  return null;
+}
+
+function classifyAnalyticsHost(value: unknown): QueryEnvironment | null {
+  const host = normalizeAnalyticsHost(value);
+  if (!host) return null;
+  if (host === 'localhost' || host === '127.0.0.1' || host === '::1') return 'local';
+  if (getProductionAnalyticsHosts().has(host)) return 'production';
+  if (host.endsWith('.netlify.app')) return 'preview';
+  return null;
+}
+
+function extractContextHost(value: unknown) {
+  const text = String(value || '').trim();
+  if (!text || text.startsWith('/')) return '';
+  try {
+    return new URL(text.includes('://') ? text : `https://${text}`).hostname;
+  } catch {
+    return '';
+  }
+}
+
+function classifySearchEvidenceEnvironment(row: Record<string, unknown>): QueryEnvironment {
+  const rowEnvironment = normalizeSearchQuery(row.environment);
+  if (rowEnvironment === 'production' || rowEnvironment === 'preview' || rowEnvironment === 'local' || rowEnvironment === 'test') {
+    return rowEnvironment;
+  }
+  if (rowEnvironment === 'legacy' && row.source_table !== 'search_request_audit') {
+    return 'legacy';
+  }
+
+  const explicit = classifyAnalyticsSource(row.analytics_source)
+    || (row.source_table === 'search_request_audit' ? classifyAnalyticsSource(row.ui_surface) : null);
+  if (explicit) return explicit;
+
+  const hostEnvironment = classifyAnalyticsHost(row.domain)
+    || classifyAnalyticsHost(extractContextHost(row.context_url));
+  if (hostEnvironment) return hostEnvironment;
+
+  if (row.source_table === 'search_request_audit') {
+    return 'production';
+  }
+
+  return 'legacy';
+}
+
+function classifySearchEvidenceChannel(row: Record<string, unknown>): QueryChannel {
+  const explicit = classifyAnalyticsChannel(row.channel)
+    || classifyAnalyticsChannel(row.analytics_channel)
+    || classifyAnalyticsChannel(row.analytics_source)
+    || classifyAnalyticsChannel(row.ui_surface);
+  if (explicit) return explicit;
+
+  const signalType = normalizeSearchQuery(row.signal_type);
+  if (signalType === 'mcp_call') return 'hosted_mcp';
+
+  if (row.source_table === 'search_request_audit') {
+    return 'unknown';
+  }
+
+  if (signalType === 'search_attempt' || signalType === 'hosted_search_audit' || signalType === 'copy' || signalType === 'favorite' || signalType === 'replace') {
+    return 'web';
+  }
+  return 'unknown';
+}
+
+function evidenceMatchesEnvironment(row: Record<string, unknown>, filter: QueryEnvironmentFilter) {
+  if (filter === 'all') return true;
+  const environment = classifySearchEvidenceEnvironment(row);
+  if (filter === 'live') return environment === 'production';
+  return environment === filter;
+}
+
+function filterEvidenceRowsByEnvironment<T extends Record<string, unknown>>(
+  rows: T[],
+  filter: QueryEnvironmentFilter,
+) {
+  return rows.filter((row) => evidenceMatchesEnvironment(row, filter));
+}
+
+function evidenceMatchesChannel(row: Record<string, unknown>, filter: QueryChannelFilter) {
+  if (filter === 'all') return true;
+  return classifySearchEvidenceChannel(row) === filter;
+}
+
+function filterEvidenceRowsByChannel<T extends Record<string, unknown>>(
+  rows: T[],
+  filter: QueryChannelFilter,
+) {
+  return rows.filter((row) => evidenceMatchesChannel(row, filter));
 }
 
 function getWindowSinceIso(window: IntelligenceWindow) {
@@ -258,6 +503,951 @@ function mergeQueryReview<T extends {
     review_status: review?.status || null,
     review_note: review?.note || null,
     review_updated_at: review?.updated_at || null,
+  };
+}
+
+function parsePositiveInt(value: unknown, fallback: number, max: number) {
+  const parsed = Number.parseInt(String(value || ''), 10);
+  if (!Number.isFinite(parsed) || parsed < 1) return fallback;
+  return Math.min(max, parsed);
+}
+
+function compareNullableValues(a: unknown, b: unknown, direction: 'asc' | 'desc') {
+  const aMissing = a === null || a === undefined || a === '';
+  const bMissing = b === null || b === undefined || b === '';
+  if (aMissing && bMissing) return 0;
+  if (aMissing) return 1;
+  if (bMissing) return -1;
+
+  if (typeof a === 'number' && typeof b === 'number') {
+    return direction === 'asc' ? a - b : b - a;
+  }
+
+  const aTime = typeof a === 'string' ? Date.parse(a) : Number.NaN;
+  const bTime = typeof b === 'string' ? Date.parse(b) : Number.NaN;
+  if (Number.isFinite(aTime) && Number.isFinite(bTime)) {
+    return direction === 'asc' ? aTime - bTime : bTime - aTime;
+  }
+
+  return direction === 'asc'
+    ? String(a).localeCompare(String(b))
+    : String(b).localeCompare(String(a));
+}
+
+async function fetchIconEvidenceRows(
+  adminClient: SupabaseClient,
+  since: string | null,
+) {
+  return await fetchAllRows<SearchEvidenceRow>((from, to) => {
+    let query = adminClient
+      .from('icon_evidence')
+      .select('id, signal_type, search_query, icon_id, batch_id, agent_converged, replaced_with, result_count, library_filter, job_category, ui_surface, domain, context_url, session_hash, evidence_text, created_at')
+      .not('search_query', 'is', null)
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (since) {
+      query = query.gte('created_at', since);
+    }
+
+    return query;
+  });
+}
+
+function toIsoTimeMs(value: unknown) {
+  if (typeof value !== 'string') return null;
+  const time = Date.parse(value);
+  return Number.isFinite(time) ? time : null;
+}
+
+function normalizeAuditCountry(value: unknown) {
+  const text = typeof value === 'string' ? value.trim().toUpperCase() : '';
+  return /^[A-Z]{2}$/.test(text) ? text : null;
+}
+
+function compactHashPrefix(value: unknown) {
+  const text = typeof value === 'string' ? value.trim() : '';
+  return text ? text.slice(0, 12) : null;
+}
+
+function buildIconAttemptIndex(rows: SearchEvidenceRow[]) {
+  return rows
+    .filter((row) => String(row.signal_type || '').toLowerCase() === 'search_attempt')
+    .map((row) => ({
+      query: normalizeSearchQuery(row.search_query),
+      library_filter: normalizeReviewLibraryFilter(row.library_filter),
+      result_count: typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0),
+      created_at_ms: toIsoTimeMs(row.created_at),
+    }))
+    .filter((row) => row.query && Number.isFinite(row.result_count) && row.created_at_ms !== null);
+}
+
+function hasNearbyIconAttempt(
+  iconAttempts: ReturnType<typeof buildIconAttemptIndex>,
+  auditRow: Record<string, unknown>,
+) {
+  const query = normalizeSearchQuery(auditRow.query_norm);
+  const libraryFilter = normalizeReviewLibraryFilter(auditRow.library_filter);
+  const rawResultCount = Number(auditRow.result_count);
+  const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
+  const createdAtMs = toIsoTimeMs(auditRow.created_at);
+  if (!query || resultCount === null || createdAtMs === null) return false;
+
+  return iconAttempts.some((attempt) => (
+    attempt.query === query
+    && attempt.library_filter === libraryFilter
+    && attempt.result_count === resultCount
+    && attempt.created_at_ms !== null
+    && Math.abs(attempt.created_at_ms - createdAtMs) <= 120000
+  ));
+}
+
+function mapAuditRowToEvidenceRow(
+  row: Record<string, unknown>,
+  iconAttempts: ReturnType<typeof buildIconAttemptIndex>,
+) {
+  const status = String(row.status || '').toLowerCase();
+  const resultCount = typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0);
+  const hasIconAttempt = hasNearbyIconAttempt(iconAttempts, row);
+  const source = normalizeSearchQuery(row.source);
+  const channel = classifyAnalyticsChannel(row.channel) || classifyAnalyticsChannel(source) || 'unknown';
+  const environment = classifyAnalyticsSource(row.environment) || classifyAnalyticsSource(source) || 'production';
+  const sourceIsClassified = !isUnclassifiedAnalyticsToken(source);
+  const uiSurface = sourceIsClassified ? source : 'unclassified_hosted_search';
+  return {
+    id: row.id ? `search_request_audit:${String(row.id)}` : null,
+    source_table: 'search_request_audit',
+    analytics_source: sourceIsClassified ? source : null,
+    analytics_channel: channel,
+    environment,
+    channel,
+    signal_type: hasIconAttempt ? 'hosted_search_audit' : 'search_attempt',
+    search_query: normalizeSearchQuery(row.query_norm),
+    icon_id: null,
+    batch_id: null,
+    agent_converged: null,
+    replaced_with: null,
+    result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
+    library_filter: normalizeReviewLibraryFilter(row.library_filter),
+    job_category: null,
+    ui_surface: uiSurface,
+    domain: null,
+    context_url: null,
+    session_hash: row.session_hash || null,
+    ip_hash_prefix: compactHashPrefix(row.ip_hash),
+    country_code: normalizeAuditCountry(row.country_code),
+    geo_source: row.geo_source || null,
+    user_id: row.user_id || null,
+    is_registered: row.is_registered === true || Boolean(row.user_id),
+    account_plan: row.account_plan || null,
+    subscription_status: row.subscription_status || null,
+    is_pro: row.is_pro === true,
+    client_family: row.client_family || null,
+    tool_name: row.tool_name || null,
+    locale: row.locale || null,
+    anonymous_client_hash_prefix: compactHashPrefix(row.anonymous_client_hash),
+    user_agent_hash_prefix: compactHashPrefix(row.user_agent_hash),
+    api_key_hash_prefix: compactHashPrefix(row.api_key_hash),
+    mcp_server_version: row.mcp_server_version || null,
+    request_id: row.request_id || null,
+    dedupe_key: row.dedupe_key || null,
+    audit_status: status || null,
+    latency_ms: row.latency_ms ?? null,
+    evidence_text: `${channel} ${row.tool_name || source || 'hosted search'} ${status || 'audit'}`,
+    created_at: row.created_at || null,
+  };
+}
+
+async function fetchHostedSearchAuditRows(
+  adminClient: SupabaseClient,
+  since: string | null,
+  iconRows: SearchEvidenceRow[],
+) {
+  const fullSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const baseSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, created_at';
+  const iconAttempts = buildIconAttemptIndex(iconRows);
+
+  async function load(select: string) {
+    return await fetchAllRows<Record<string, unknown>>((from, to) => {
+      let query = adminClient
+        .from('search_request_audit')
+        .select(select)
+        .neq('source', 'trap')
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (since) {
+        query = query.gte('created_at', since);
+      }
+
+      return query;
+    });
+  }
+
+  try {
+    const rows = await load(fullSelect);
+    return rows.map((row) => mapAuditRowToEvidenceRow(row, iconAttempts));
+  } catch (error) {
+    if (!isMissingRelationError(error) && !isMissingColumnError(error)) throw error;
+    try {
+      const rows = await load(baseSelect);
+      return rows.map((row) => mapAuditRowToEvidenceRow(row, iconAttempts));
+    } catch (fallbackError) {
+      if (isMissingRelationError(fallbackError)) return [];
+      throw fallbackError;
+    }
+  }
+}
+
+function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
+  const resultCount = typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0);
+  const channel = classifyAnalyticsChannel(row.channel) || 'unknown';
+  const environment = classifyAnalyticsSource(row.environment) || 'production';
+  return {
+    id: row.id ? `mcp_usage_events:${String(row.id)}` : null,
+    source_table: 'mcp_usage_events',
+    analytics_source: channel,
+    analytics_channel: channel,
+    environment,
+    channel,
+    signal_type: 'mcp_call',
+    search_query: normalizeSearchQuery(row.query_norm),
+    icon_id: null,
+    batch_id: row.request_id || row.dedupe_key || null,
+    agent_converged: null,
+    replaced_with: null,
+    result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
+    library_filter: normalizeReviewLibraryFilter(row.library_filter),
+    job_category: null,
+    ui_surface: row.tool_name || row.client_family || channel,
+    domain: null,
+    context_url: null,
+    session_hash: row.session_hash || null,
+    ip_hash_prefix: compactHashPrefix(row.ip_hash),
+    country_code: normalizeAuditCountry(row.country_code),
+    geo_source: row.geo_source || null,
+    user_id: row.user_id || null,
+    is_registered: row.is_registered === true || Boolean(row.user_id),
+    account_plan: row.account_plan || null,
+    subscription_status: row.subscription_status || null,
+    is_pro: row.is_pro === true,
+    client_family: row.client_family || null,
+    tool_name: row.tool_name || null,
+    locale: row.locale || null,
+    anonymous_client_hash_prefix: compactHashPrefix(row.anonymous_client_hash),
+    user_agent_hash_prefix: compactHashPrefix(row.user_agent_hash),
+    api_key_hash_prefix: compactHashPrefix(row.api_key_hash),
+    mcp_server_version: row.mcp_server_version || null,
+    request_id: row.request_id || null,
+    dedupe_key: row.dedupe_key || null,
+    audit_status: row.status || null,
+    latency_ms: row.latency_ms ?? null,
+    evidence_text: `${row.client_family || 'unknown client'} ${row.tool_name || 'mcp tool'} ${row.status || 'event'}`,
+    created_at: row.created_at || null,
+  };
+}
+
+async function fetchMcpUsageEventRows(
+  adminClient: SupabaseClient,
+  since: string | null,
+) {
+  const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, result_count, status, latency_ms, country_code, geo_source, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
+
+  try {
+    const rows = await fetchAllRows<Record<string, unknown>>((from, to) => {
+      let query = adminClient
+        .from('mcp_usage_events')
+        .select(select)
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (since) {
+        query = query.gte('created_at', since);
+      }
+
+      return query;
+    });
+    return rows.map(mapMcpUsageEventToEvidenceRow);
+  } catch (error) {
+    if (isMissingRelationError(error) || isMissingColumnError(error)) return [];
+    throw error;
+  }
+}
+
+async function fetchSearchEvidenceRows(
+  adminClient: SupabaseClient,
+  since: string | null,
+) : Promise<SearchEvidenceRow[]> {
+  const iconRows = await fetchIconEvidenceRows(adminClient, since);
+  const auditRows = await fetchHostedSearchAuditRows(adminClient, since, iconRows);
+  const mcpUsageRows = await fetchMcpUsageEventRows(adminClient, since);
+  const rows: SearchEvidenceRow[] = [...iconRows, ...auditRows, ...mcpUsageRows] as SearchEvidenceRow[];
+  return rows
+    .map((row): SearchEvidenceRow => ({
+      ...row,
+      environment: classifySearchEvidenceEnvironment(row),
+      channel: classifySearchEvidenceChannel(row),
+    }))
+    .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+}
+
+function updateSeenRange(entry: Record<string, unknown>, createdAt: string | null) {
+  if (!createdAt) return;
+  const firstSeen = typeof entry.first_seen === 'string' ? entry.first_seen : null;
+  const lastSeen = typeof entry.last_seen === 'string' ? entry.last_seen : null;
+  if (!firstSeen || createdAt < firstSeen) entry.first_seen = createdAt;
+  if (!lastSeen || createdAt > lastSeen) entry.last_seen = createdAt;
+}
+
+function getQueryWorkbenchEntry(
+  map: Map<string, Record<string, unknown>>,
+  query: string,
+  libraryFilter: unknown,
+  jobCategory: unknown,
+) {
+  const normalizedQuery = normalizeSearchQuery(query);
+  const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
+  const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
+  const key = buildQueryReviewContextKey({
+    query: normalizedQuery,
+    libraryFilter: normalizedLibrary,
+    jobCategory: normalizedJobCategory,
+  });
+  const existing = map.get(key);
+  if (existing) return existing;
+
+  const entry: Record<string, unknown> = {
+    query: normalizedQuery,
+    library_filter: normalizedLibrary,
+    job_category: normalizedJobCategory,
+    attempt_count: 0,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    total_result_count: 0,
+    result_samples: 0,
+    minimum_result_count: null,
+    replacement_count: 0,
+    unique_replacements: new Set<string>(),
+    successful_attempt_count: 0,
+    successful_signal_count: 0,
+    copy_count: 0,
+    favorite_count: 0,
+    unique_icons: new Set<string>(),
+    mcp_batch_ids: new Set<string>(),
+    mcp_converged_batch_ids: new Set<string>(),
+    mcp_result_rows: 0,
+    surfaces: new Set<string>(),
+    domains: new Set<string>(),
+    context_urls: new Set<string>(),
+    session_hashes: new Set<string>(),
+    ip_hash_prefixes: new Set<string>(),
+    api_key_hash_prefixes: new Set<string>(),
+    countries: new Set<string>(),
+    registered_user_ids: new Set<string>(),
+    pro_user_ids: new Set<string>(),
+    account_plans: new Set<string>(),
+    subscription_statuses: new Set<string>(),
+    audit_sources: new Set<string>(),
+    environments: new Set<string>(),
+    channels: new Set<string>(),
+    client_families: new Set<string>(),
+    tools: new Set<string>(),
+    mcp_versions: new Set<string>(),
+    first_seen: null,
+    last_seen: null,
+  };
+  map.set(key, entry);
+  return entry;
+}
+
+function buildQueryWorkbenchRows(
+  evidenceRows: Array<Record<string, unknown>>,
+  reviews: Map<string, QueryReviewRow>,
+) {
+  const map = new Map<string, Record<string, unknown>>();
+
+  for (const row of evidenceRows) {
+    const normalizedQuery = normalizeSearchQuery(row.search_query);
+    if (!normalizedQuery) continue;
+
+    const signalType = String(row.signal_type || '').toLowerCase();
+    const createdAt = typeof row.created_at === 'string' ? row.created_at : null;
+    const libraryFilter = row.library_filter;
+    const jobCategory = row.job_category;
+    const entry = getQueryWorkbenchEntry(map, normalizedQuery, libraryFilter, jobCategory);
+    updateSeenRange(entry, createdAt);
+    (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
+    (entry.channels as Set<string>).add(classifySearchEvidenceChannel(row));
+
+    if (typeof row.ui_surface === 'string' && row.ui_surface.trim()) {
+      (entry.surfaces as Set<string>).add(row.ui_surface.trim());
+    }
+    if (typeof row.domain === 'string' && row.domain.trim()) {
+      (entry.domains as Set<string>).add(row.domain.trim());
+    }
+    if (typeof row.context_url === 'string' && row.context_url.trim()) {
+      (entry.context_urls as Set<string>).add(row.context_url.trim());
+    }
+    if (typeof row.session_hash === 'string' && row.session_hash.trim()) {
+      (entry.session_hashes as Set<string>).add(row.session_hash.trim());
+    }
+    if (typeof row.ip_hash_prefix === 'string' && row.ip_hash_prefix.trim()) {
+      (entry.ip_hash_prefixes as Set<string>).add(row.ip_hash_prefix.trim());
+    }
+    if (typeof row.api_key_hash_prefix === 'string' && row.api_key_hash_prefix.trim()) {
+      (entry.api_key_hash_prefixes as Set<string>).add(row.api_key_hash_prefix.trim());
+    }
+    const countryCode = normalizeAuditCountry(row.country_code);
+    if (countryCode) {
+      (entry.countries as Set<string>).add(countryCode);
+    }
+    if (typeof row.user_id === 'string' && row.user_id.trim()) {
+      (entry.registered_user_ids as Set<string>).add(row.user_id.trim());
+      if (row.is_pro === true) {
+        (entry.pro_user_ids as Set<string>).add(row.user_id.trim());
+      }
+    }
+    if (typeof row.account_plan === 'string' && row.account_plan.trim()) {
+      (entry.account_plans as Set<string>).add(row.account_plan.trim());
+    }
+    if (typeof row.subscription_status === 'string' && row.subscription_status.trim()) {
+      (entry.subscription_statuses as Set<string>).add(row.subscription_status.trim());
+    }
+    if (typeof row.source_table === 'string' && row.source_table.trim()) {
+      (entry.audit_sources as Set<string>).add(row.source_table.trim());
+    }
+    if (typeof row.client_family === 'string' && row.client_family.trim()) {
+      (entry.client_families as Set<string>).add(row.client_family.trim());
+    }
+    if (typeof row.tool_name === 'string' && row.tool_name.trim()) {
+      (entry.tools as Set<string>).add(row.tool_name.trim());
+    }
+    if (typeof row.mcp_server_version === 'string' && row.mcp_server_version.trim()) {
+      (entry.mcp_versions as Set<string>).add(row.mcp_server_version.trim());
+    }
+
+    if (signalType === 'search_attempt') {
+      entry.attempt_count = Number(entry.attempt_count || 0) + 1;
+      const rawResultCount = Number(row.result_count);
+      const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
+      if (resultCount !== null) {
+        entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
+        entry.result_samples = Number(entry.result_samples || 0) + 1;
+        const currentMinimum = typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null;
+        if (currentMinimum === null || resultCount < currentMinimum) {
+          entry.minimum_result_count = resultCount;
+        }
+        if (resultCount === 0) {
+          entry.zero_attempt_count = Number(entry.zero_attempt_count || 0) + 1;
+        } else if (resultCount <= LOW_RESULT_THRESHOLD) {
+          entry.low_attempt_count = Number(entry.low_attempt_count || 0) + 1;
+        } else {
+          entry.successful_attempt_count = Number(entry.successful_attempt_count || 0) + 1;
+        }
+      }
+    }
+
+    if (signalType === 'replace') {
+      entry.replacement_count = Number(entry.replacement_count || 0) + 1;
+      if (typeof row.replaced_with === 'string' && row.replaced_with.trim()) {
+        (entry.unique_replacements as Set<string>).add(row.replaced_with.trim());
+      }
+    }
+
+    if (signalType === 'copy' || signalType === 'favorite') {
+      entry.successful_signal_count = Number(entry.successful_signal_count || 0) + 1;
+      if (signalType === 'copy') entry.copy_count = Number(entry.copy_count || 0) + 1;
+      if (signalType === 'favorite') entry.favorite_count = Number(entry.favorite_count || 0) + 1;
+      if (typeof row.icon_id === 'string' && row.icon_id.trim()) {
+        (entry.unique_icons as Set<string>).add(row.icon_id.trim());
+      }
+    }
+
+    if (signalType === 'mcp_call') {
+      entry.mcp_result_rows = Number(entry.mcp_result_rows || 0) + 1;
+      if (typeof row.batch_id === 'string' && row.batch_id.trim()) {
+        (entry.mcp_batch_ids as Set<string>).add(row.batch_id.trim());
+        if (row.agent_converged === true) {
+          (entry.mcp_converged_batch_ids as Set<string>).add(row.batch_id.trim());
+        }
+      }
+      if (typeof row.icon_id === 'string' && row.icon_id.trim()) {
+        (entry.unique_icons as Set<string>).add(row.icon_id.trim());
+      }
+    }
+  }
+
+  return [...map.values()].map((entry) => {
+    const issueTypes: QueryIssueType[] = [];
+    if (Number(entry.zero_attempt_count || 0) > 0) issueTypes.push('zero_result');
+    if (Number(entry.low_attempt_count || 0) > 0) issueTypes.push('low_result');
+    if (Number(entry.replacement_count || 0) > 0) issueTypes.push('replacement_heavy');
+    if (Number(entry.successful_signal_count || 0) > 0 || Number(entry.successful_attempt_count || 0) > 0) issueTypes.push('successful');
+    if ((entry.mcp_batch_ids as Set<string>).size > 0 || (entry.channels as Set<string>).has('hosted_mcp')) issueTypes.push('mcp');
+
+    const resultSamples = Number(entry.result_samples || 0);
+    const totalResultCount = Number(entry.total_result_count || 0);
+    const review = reviews.get(buildQueryReviewContextKey({
+      query: entry.query,
+      libraryFilter: entry.library_filter,
+      jobCategory: entry.job_category,
+    }));
+
+    return {
+      query: entry.query as string,
+      library_filter: entry.library_filter as string,
+      job_category: entry.job_category as string,
+      issue_types: issueTypes,
+      attempt_count: Number(entry.attempt_count || 0),
+      zero_attempt_count: Number(entry.zero_attempt_count || 0),
+      low_attempt_count: Number(entry.low_attempt_count || 0),
+      average_result_count: resultSamples > 0
+        ? Number((totalResultCount / resultSamples).toFixed(2))
+        : null,
+      minimum_result_count: typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null,
+      replacement_count: Number(entry.replacement_count || 0),
+      unique_replacements: (entry.unique_replacements as Set<string>).size,
+      successful_attempt_count: Number(entry.successful_attempt_count || 0),
+      successful_signal_count: Number(entry.successful_signal_count || 0),
+      copy_count: Number(entry.copy_count || 0),
+      favorite_count: Number(entry.favorite_count || 0),
+      unique_icons: (entry.unique_icons as Set<string>).size,
+      mcp_batch_count: (entry.mcp_batch_ids as Set<string>).size,
+      mcp_converged_batches: (entry.mcp_converged_batch_ids as Set<string>).size,
+      mcp_result_rows: Number(entry.mcp_result_rows || 0),
+      surfaces: [...(entry.surfaces as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      domains: [...(entry.domains as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      context_urls: [...(entry.context_urls as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
+      session_count: (entry.session_hashes as Set<string>).size,
+      ip_hash_count: (entry.ip_hash_prefixes as Set<string>).size,
+      ip_hash_prefixes: [...(entry.ip_hash_prefixes as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
+      api_key_hash_count: (entry.api_key_hash_prefixes as Set<string>).size,
+      api_key_hash_prefixes: [...(entry.api_key_hash_prefixes as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
+      countries: [...(entry.countries as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      registered_user_count: (entry.registered_user_ids as Set<string>).size,
+      pro_user_count: (entry.pro_user_ids as Set<string>).size,
+      account_plans: [...(entry.account_plans as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      subscription_statuses: [...(entry.subscription_statuses as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      audit_sources: [...(entry.audit_sources as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      environments: [...(entry.environments as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      channels: [...(entry.channels as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      client_families: [...(entry.client_families as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      tools: [...(entry.tools as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      mcp_versions: [...(entry.mcp_versions as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      first_seen: typeof entry.first_seen === 'string' ? entry.first_seen : null,
+      last_seen: typeof entry.last_seen === 'string' ? entry.last_seen : null,
+      review_status: review?.status || null,
+      review_note: review?.note || null,
+      review_updated_at: review?.updated_at || null,
+    };
+  });
+}
+
+function parseQueryQueueParams(url: URL, { exportMode = false } = {}) {
+  const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
+  const pageSize = exportMode
+    ? parsePositiveInt(url.searchParams.get('limit') || url.searchParams.get('page_size'), QUERY_EXPORT_MAX_ROWS, QUERY_EXPORT_MAX_ROWS)
+    : parsePositiveInt(url.searchParams.get('page_size'), PAGE_SIZE, QUERY_QUEUE_MAX_PAGE_SIZE);
+  const rawIssueType = normalizeSearchQuery(url.searchParams.get('issue_type')) as QueryIssueType;
+  const rawStatus = normalizeSearchQuery(url.searchParams.get('status'));
+  const rawSort = normalizeSearchQuery(url.searchParams.get('sort')) as QuerySortField;
+  const rawDirection = normalizeSearchQuery(url.searchParams.get('direction'));
+
+  return {
+    page,
+    page_size: pageSize,
+    q: normalizeSearchQuery(url.searchParams.get('q')),
+    issue_type: QUERY_ISSUE_TYPES.has(rawIssueType) ? rawIssueType : '',
+    status: rawStatus === 'untriaged' || QUERY_REVIEW_STATUSES.has(rawStatus as QueryReviewStatus)
+      ? rawStatus
+      : '',
+    environment: parseQueryEnvironmentFilter(url),
+    channel: parseQueryChannelFilter(url),
+    library_filter: normalizeSearchQuery(url.searchParams.get('library_filter')),
+    job_category: normalizeSearchQuery(url.searchParams.get('job_category')),
+    sort: QUERY_SORT_FIELDS.has(rawSort) ? rawSort : 'last_seen',
+    direction: rawDirection === 'asc' ? 'asc' : 'desc',
+  };
+}
+
+function filterQueryWorkbenchRows(
+  rows: ReturnType<typeof buildQueryWorkbenchRows>,
+  params: ReturnType<typeof parseQueryQueueParams>,
+) {
+  return rows.filter((row) => {
+    if (params.q) {
+      const haystack = [
+        row.query,
+        row.library_filter,
+        row.job_category,
+        row.issue_types.join(' '),
+        row.review_status,
+        row.review_note,
+        row.surfaces.join(' '),
+        row.countries.join(' '),
+        row.account_plans.join(' '),
+        row.subscription_statuses.join(' '),
+        row.environments.join(' '),
+        row.channels.join(' '),
+        row.client_families.join(' '),
+        row.tools.join(' '),
+        row.mcp_versions.join(' '),
+      ].filter(Boolean).join(' ').toLowerCase();
+      if (!haystack.includes(params.q)) return false;
+    }
+
+    if (params.issue_type && !row.issue_types.includes(params.issue_type as QueryIssueType)) {
+      return false;
+    }
+
+    if (params.status) {
+      const status = normalizeSearchQuery(row.review_status);
+      if (params.status === 'untriaged') {
+        if (status) return false;
+      } else if (status !== params.status) {
+        return false;
+      }
+    }
+
+    if (params.library_filter && row.library_filter !== params.library_filter) return false;
+    if (params.job_category && row.job_category !== params.job_category) return false;
+    if (params.channel !== 'all' && !row.channels.includes(params.channel as QueryChannel)) return false;
+    return true;
+  });
+}
+
+function sortQueryWorkbenchRows(
+  rows: ReturnType<typeof buildQueryWorkbenchRows>,
+  params: ReturnType<typeof parseQueryQueueParams>,
+) {
+  return [...rows].sort((a, b) => {
+    const field = params.sort;
+    const aValue = field === 'status' ? (a.review_status || 'untriaged') : a[field as keyof typeof a];
+    const bValue = field === 'status' ? (b.review_status || 'untriaged') : b[field as keyof typeof b];
+    const compared = compareNullableValues(aValue, bValue, params.direction as 'asc' | 'desc');
+    if (compared !== 0) return compared;
+    const libraryCompared = a.library_filter.localeCompare(b.library_filter);
+    if (libraryCompared !== 0) return libraryCompared;
+    const jobCompared = a.job_category.localeCompare(b.job_category);
+    if (jobCompared !== 0) return jobCompared;
+    return a.query.localeCompare(b.query);
+  });
+}
+
+function summarizeQueryWorkbenchRows(rows: ReturnType<typeof buildQueryWorkbenchRows>) {
+  const summary = {
+    total_queries: rows.length,
+    untriaged: 0,
+    needs_alias: 0,
+    needs_icon: 0,
+    resolved: 0,
+    ignore: 0,
+    zero_result: 0,
+    low_result: 0,
+    replacement_heavy: 0,
+    successful: 0,
+    mcp: 0,
+  };
+
+  for (const row of rows) {
+    const status = normalizeSearchQuery(row.review_status);
+    if (status === 'needs_alias') summary.needs_alias += 1;
+    else if (status === 'needs_icon') summary.needs_icon += 1;
+    else if (status === 'resolved') summary.resolved += 1;
+    else if (status === 'ignore') summary.ignore += 1;
+    else summary.untriaged += 1;
+
+    for (const issueType of row.issue_types) {
+      summary[issueType] += 1;
+    }
+  }
+
+  return summary;
+}
+
+async function buildQueryQueuePayload(
+  adminClient: SupabaseClient,
+  url: URL,
+  { exportMode = false } = {},
+) {
+  const window = parseIntelligenceWindow(url);
+  const since = getWindowSinceIso(window);
+  const params = parseQueryQueueParams(url, { exportMode });
+  const rawEvidenceRows = await fetchSearchEvidenceRows(adminClient, since);
+  const evidenceRows = filterEvidenceRowsByChannel(
+    filterEvidenceRowsByEnvironment(rawEvidenceRows, params.environment),
+    params.channel,
+  );
+  const contexts = evidenceRows
+    .map((row) => ({
+      query: normalizeSearchQuery(row.search_query),
+      library_filter: normalizeReviewLibraryFilter(row.library_filter),
+      job_category: normalizeReviewJobCategory(row.job_category),
+    }))
+    .filter((context) => context.query);
+  const queryReviews = await fetchQueryReviews(adminClient, contexts);
+  const rows = buildQueryWorkbenchRows(evidenceRows, queryReviews.reviews);
+  const filteredRows = filterQueryWorkbenchRows(rows, params);
+  const sortedRows = sortQueryWorkbenchRows(filteredRows, params);
+  const pageCount = Math.max(1, Math.ceil(sortedRows.length / params.page_size));
+  const currentPage = exportMode ? 1 : Math.min(params.page, pageCount);
+  const start = exportMode ? 0 : (currentPage - 1) * params.page_size;
+  const pagedRows = sortedRows.slice(start, start + params.page_size);
+  const exportContexts = new Set(
+    sortedRows.map((row) => buildQueryReviewContextKey({
+      query: row.query,
+      libraryFilter: row.library_filter,
+      jobCategory: row.job_category,
+    })),
+  );
+  const evidenceSample = exportMode
+    ? evidenceRows
+      .filter((row) => queryEvidenceMatchesExportRows(row, exportContexts))
+      .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')))
+      .slice(0, 500)
+      .map(compactQueryEvidenceRow)
+    : undefined;
+
+  const payload: Record<string, unknown> = {
+    queries: pagedRows,
+    pagination: {
+      page: currentPage,
+      page_size: params.page_size,
+      total: sortedRows.length,
+      page_count: pageCount,
+    },
+    summary: {
+      ...summarizeQueryWorkbenchRows(filteredRows),
+      query_review_feature_available: queryReviews.available,
+    },
+    filters: {
+      q: params.q,
+      issue_type: params.issue_type,
+      status: params.status,
+      environment: params.environment,
+      channel: params.channel,
+      library_filter: params.library_filter,
+      job_category: params.job_category,
+      window: window.key,
+    },
+    sort: {
+      field: params.sort,
+      direction: params.direction,
+    },
+    window: {
+      key: window.key,
+      short_label: window.shortLabel,
+      long_label: window.longLabel,
+    },
+  };
+  if (exportMode) {
+    payload.evidence_sample = evidenceSample;
+    payload.limitations = [
+      'Export rows are bounded by the selected admin filters and maximum query export limit.',
+      'Evidence sample is capped at 500 latest rows for agent readability.',
+      'Raw IP addresses are not stored or exported; dashboard rows use hashed visitor groups.',
+      'Registered/pro fields are populated only when a trusted authenticated hosted-search request includes a user token.',
+      'Country is populated only when the hosting provider forwards a trusted country header.',
+    ];
+  }
+  return payload;
+}
+
+function csvCell(value: unknown) {
+  if (Array.isArray(value)) {
+    return csvCell(value.join('|'));
+  }
+  const text = String(value ?? '');
+  if (!/[",\n\r]/.test(text)) return text;
+  return `"${text.replaceAll('"', '""')}"`;
+}
+
+function queryRowsToCsv(rows: Array<Record<string, unknown>>) {
+  const columns = [
+    'query',
+    'library_filter',
+    'job_category',
+    'issue_types',
+    'review_status',
+    'review_note',
+    'attempt_count',
+    'zero_attempt_count',
+    'low_attempt_count',
+    'average_result_count',
+    'minimum_result_count',
+    'replacement_count',
+    'successful_attempt_count',
+    'successful_signal_count',
+    'copy_count',
+    'favorite_count',
+    'mcp_batch_count',
+    'session_count',
+    'ip_hash_count',
+    'ip_hash_prefixes',
+    'api_key_hash_count',
+    'api_key_hash_prefixes',
+    'countries',
+    'registered_user_count',
+    'pro_user_count',
+    'account_plans',
+    'subscription_statuses',
+    'domains',
+    'audit_sources',
+    'environments',
+    'channels',
+    'client_families',
+    'tools',
+    'mcp_versions',
+    'first_seen',
+    'last_seen',
+  ];
+  return [
+    columns.join(','),
+    ...rows.map((row) => columns.map((column) => csvCell(row[column])).join(',')),
+  ].join('\n');
+}
+
+function compactQueryEvidenceRow(row: Record<string, unknown>) {
+  return {
+    source_table: row.source_table || 'icon_evidence',
+    signal_type: row.signal_type || null,
+    search_query: row.search_query || null,
+    icon_id: row.icon_id || null,
+    result_count: row.result_count ?? null,
+    library_filter: row.library_filter || null,
+    job_category: row.job_category || null,
+    ui_surface: row.ui_surface || null,
+    domain: row.domain || null,
+    context_url: row.context_url || null,
+    environment: classifySearchEvidenceEnvironment(row),
+    channel: classifySearchEvidenceChannel(row),
+    country_code: normalizeAuditCountry(row.country_code),
+    ip_hash_prefix: compactHashPrefix(row.ip_hash_prefix),
+    session_present: typeof row.session_hash === 'string' && row.session_hash.trim().length > 0,
+    registered_user_present: row.is_registered === true || Boolean(row.user_id),
+    account_plan: row.account_plan || null,
+    subscription_status: row.subscription_status || null,
+    pro_user: row.is_pro === true,
+    client_family: row.client_family || null,
+    tool_name: row.tool_name || null,
+    locale: row.locale || null,
+    anonymous_client_hash_prefix: row.anonymous_client_hash_prefix || null,
+    user_agent_hash_prefix: row.user_agent_hash_prefix || null,
+    api_key_hash_prefix: row.api_key_hash_prefix || null,
+    mcp_server_version: row.mcp_server_version || null,
+    request_id: row.request_id || null,
+    dedupe_key: row.dedupe_key || null,
+    audit_status: row.audit_status || null,
+    latency_ms: row.latency_ms ?? null,
+    evidence_text: row.evidence_text || null,
+    replaced_with: row.replaced_with || null,
+    created_at: row.created_at || null,
+  };
+}
+
+function queryEvidenceMatchesExportRows(
+  row: Record<string, unknown>,
+  exportContexts: Set<string>,
+) {
+  return exportContexts.has(buildQueryReviewContextKey({
+    query: normalizeSearchQuery(row.search_query),
+    libraryFilter: normalizeReviewLibraryFilter(row.library_filter),
+    jobCategory: normalizeReviewJobCategory(row.job_category),
+  }));
+}
+
+function buildAgentAnalysisPack(payload: Record<string, unknown>) {
+  const queries = Array.isArray(payload.queries) ? payload.queries as Array<Record<string, unknown>> : [];
+  const evidenceSample = Array.isArray(payload.evidence_sample)
+    ? payload.evidence_sample as Array<Record<string, unknown>>
+    : [];
+  const summary = payload.summary as Record<string, unknown> || {};
+  const filters = payload.filters as Record<string, unknown> || {};
+  const sort = payload.sort as Record<string, unknown> || {};
+  const limitations = Array.isArray(payload.limitations)
+    ? payload.limitations as string[]
+    : [
+      'Export is bounded by the selected admin filters and maximum export row limit.',
+      'Raw IP addresses are not exported; only hash prefixes or aggregate counts may appear.',
+    ];
+  const analysisHints = [
+    'Prioritize repeated zero-result queries before one-off misses.',
+    'Review low-result queries for aliases, localized wording, and ranking problems.',
+    'Compare countries, account status, and surfaces when deciding whether a gap affects paid or recurring users.',
+  ];
+  const exportedAt = typeof payload.exported_at === 'string' ? payload.exported_at : new Date().toISOString();
+  const summaryMarkdown = [
+    '# Supericons Query Analysis Pack',
+    '',
+    `Exported at: ${exportedAt}`,
+    `Window: ${String(filters?.window || '')}`,
+    `Rows included: ${queries.length}`,
+    `Evidence rows included: ${evidenceSample.length}`,
+    '',
+    '## Summary',
+    '',
+    `- Total queries: ${String(summary?.total_queries || 0)}`,
+    `- Untriaged: ${String(summary?.untriaged || 0)}`,
+    `- Needs alias: ${String(summary?.needs_alias || 0)}`,
+    `- Needs icon: ${String(summary?.needs_icon || 0)}`,
+    `- Resolved: ${String(summary?.resolved || 0)}`,
+    `- Ignored: ${String(summary?.ignore || 0)}`,
+    '',
+    '## Filters',
+    '',
+    `- Search: ${String(filters?.q || 'none')}`,
+    `- Issue type: ${String(filters?.issue_type || 'all')}`,
+    `- Status: ${String(filters?.status || 'all')}`,
+    `- Environment: ${String(filters?.environment || 'live')}`,
+    `- Library: ${String(filters?.library_filter || 'all')}`,
+    `- Purpose: ${String(filters?.job_category || 'all')}`,
+    `- Sort: ${String(sort?.field || '')} ${String(sort?.direction || '')}`,
+    '',
+    '## Suggested Analysis',
+    '',
+    ...analysisHints.map((hint) => `- ${hint}`),
+    '',
+    '## Limitations',
+    '',
+    ...limitations.map((limitation) => `- ${limitation}`),
+  ].join('\n');
+
+  return {
+    exported_at: exportedAt,
+    manifest: {
+      format: 'supericons_query_analysis_pack',
+      schema_version: 2,
+      source: payload.fallback_source || 'admin_api',
+      files: ['summary.md', 'queries.json', 'evidence_sample.json', 'export_manifest.json'],
+      row_count: queries.length,
+      evidence_sample_count: evidenceSample.length,
+      recommended_for: ['agent_analysis', 'query_gap_triage', 'supericons_registry_updates'],
+      large_data_strategy: 'Bounded JSON pack for filtered analysis; use CSV for flat spreadsheet work and NDJSON chunks for raw event firehose scale.',
+    },
+    summary,
+    filters,
+    sort,
+    queries,
+    evidence_sample: evidenceSample,
+    limitations,
+    analysis_hints: analysisHints,
+    files: {
+      'summary.md': summaryMarkdown,
+      'queries.json': JSON.stringify(queries, null, 2),
+      'evidence_sample.json': JSON.stringify(evidenceSample, null, 2),
+      'export_manifest.json': JSON.stringify({
+        exported_at: exportedAt,
+        format: 'supericons_query_analysis_pack',
+        schema_version: 2,
+        source: payload.fallback_source || 'admin_api',
+        filters,
+        sort,
+        summary,
+        row_count: queries.length,
+        evidence_sample_count: evidenceSample.length,
+        limitations,
+      }, null, 2),
+    },
   };
 }
 
@@ -398,6 +1588,13 @@ function isMissingRelationError(error: unknown) {
   const code = 'code' in error ? String(error.code) : '';
   const message = 'message' in error ? String(error.message) : '';
   return code === '42P01' || message.toLowerCase().includes('relation') && message.toLowerCase().includes('does not exist');
+}
+
+function isMissingColumnError(error: unknown) {
+  if (!error || typeof error !== 'object') return false;
+  const code = 'code' in error ? String(error.code) : '';
+  const message = 'message' in error ? String(error.message).toLowerCase() : '';
+  return code === '42703' || (message.includes('column') && message.includes('does not exist'));
 }
 
 function summarizeProviders(user: AuthUser) {
@@ -712,39 +1909,26 @@ async function handleStats(req: Request, adminClient: SupabaseClient) {
 async function handleIntelligenceOverview(req: Request, adminClient: SupabaseClient, url: URL) {
   const window = parseIntelligenceWindow(url);
   const since = getWindowSinceIso(window);
+  const environment = parseQueryEnvironmentFilter(url);
+  const channel = parseQueryChannelFilter(url);
 
-  const [metadataCoverageResult, evidenceRows, recentEvidenceResult] = await Promise.all([
+  const [metadataCoverageResult, rawEvidenceRows] = await Promise.all([
     adminClient.from('icon_metadata').select('icon_id', { count: 'exact', head: true }),
-    fetchAllRows<Record<string, unknown>>((from, to) => {
-      let query = adminClient
-        .from('icon_evidence')
-        .select('signal_type, icon_id, batch_id, job_category, agent_converged, search_query, evidence_text, created_at')
-        .order('created_at', { ascending: false })
-        .range(from, to);
-
-      if (since) {
-        query = query.gte('created_at', since);
-      }
-
-      return query;
-    }),
-    (() => {
-      let query = adminClient
-        .from('icon_evidence')
-        .select('signal_type, icon_id, search_query, job_category, evidence_text, created_at')
-        .order('created_at', { ascending: false })
-        .limit(12);
-
-      if (since) {
-        query = query.gte('created_at', since);
-      }
-
-      return query;
-    })(),
+    fetchSearchEvidenceRows(adminClient, since),
   ]);
 
   if (metadataCoverageResult.error) throw metadataCoverageResult.error;
-  if (recentEvidenceResult.error) throw recentEvidenceResult.error;
+
+  const evidenceRows: SearchEvidenceRow[] = filterEvidenceRowsByChannel(
+    filterEvidenceRowsByEnvironment(rawEvidenceRows, environment),
+    channel,
+  )
+    .map((row): SearchEvidenceRow => ({
+      ...row,
+      environment: classifySearchEvidenceEnvironment(row),
+      channel: classifySearchEvidenceChannel(row),
+    }))
+    .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
 
   const copyCounts = new Map<string, number>();
   const downloadCounts = new Map<string, number>();
@@ -763,6 +1947,7 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
     const iconId = typeof row.icon_id === 'string' ? row.icon_id : null;
     const jobCategory = typeof row.job_category === 'string' ? row.job_category : null;
     const batchId = typeof row.batch_id === 'string' ? row.batch_id : null;
+    const rowChannel = classifySearchEvidenceChannel(row);
 
     if (signalType === 'copy') {
       copyEvents += 1;
@@ -789,8 +1974,9 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
       replaceCounts.set(iconId, (replaceCounts.get(iconId) || 0) + 1);
     }
 
-    if (signalType === 'mcp_call' && batchId) {
-      mcpBatchIds.add(batchId);
+    if (rowChannel === 'hosted_mcp') {
+      const eventId = batchId || (typeof row.id === 'string' ? row.id : null) || (typeof row.created_at === 'string' ? `${String(row.search_query || 'mcp')}:${row.created_at}` : null);
+      if (eventId) mcpBatchIds.add(eventId);
     }
 
     if (signalType === 'mcp_call' && iconId && typeof row.agent_converged === 'boolean') {
@@ -889,9 +2075,11 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
         favorite_count_30d: entry.favorite_count,
         popularity_score_30d: entry.popularity_score,
       })),
-      top_replaced_icons: topReplacedIcons,
-      recent_evidence: recentEvidenceResult.data || [],
-    },
+        top_replaced_icons: topReplacedIcons,
+        recent_evidence: evidenceRows.slice(0, 12),
+        environment,
+        channel,
+      },
     metadata_coverage: {
       classified_icons: metadataCoverageResult.count || 0,
     },
@@ -903,25 +2091,21 @@ async function handleIntelligenceEvidence(req: Request, adminClient: SupabaseCli
   const since = getWindowSinceIso(window);
   const q = (url.searchParams.get('q') || '').trim().toLowerCase();
   const signalType = (url.searchParams.get('signal_type') || '').trim().toLowerCase();
-  const limit = Math.min(100, Math.max(10, Number.parseInt(url.searchParams.get('limit') || '50', 10) || 50));
+  const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
+  const pageSize = parsePositiveInt(url.searchParams.get('page_size') || url.searchParams.get('limit'), 50, 100);
+  const environment = parseQueryEnvironmentFilter(url);
+  const channel = parseQueryChannelFilter(url);
 
-  let query = adminClient
-    .from('icon_evidence')
-    .select('id, signal_type, icon_id, search_query, job_category, ui_surface, evidence_text, result_count, library_filter, created_at')
-    .order('created_at', { ascending: false })
-    .limit(limit);
+  const data = filterEvidenceRowsByChannel(
+    filterEvidenceRowsByEnvironment(
+      await fetchSearchEvidenceRows(adminClient, since),
+      environment,
+    ),
+    channel,
+  );
 
-  if (signalType) {
-    query = query.eq('signal_type', signalType);
-  }
-  if (since) {
-    query = query.gte('created_at', since);
-  }
-
-  const { data, error } = await query;
-  if (error) throw error;
-
-  const evidence = ((data || []) as Array<Record<string, unknown>>).filter((row) => {
+  const filteredEvidence = ((data || []) as Array<Record<string, unknown>>).filter((row) => {
+    if (signalType && String(row.signal_type || '').toLowerCase() !== signalType) return false;
     if (!q) return true;
     const haystack = [
       row.icon_id,
@@ -930,17 +2114,37 @@ async function handleIntelligenceEvidence(req: Request, adminClient: SupabaseCli
       row.library_filter,
       row.result_count,
       row.ui_surface,
+      row.country_code,
+      row.ip_hash_prefix,
+      row.api_key_hash_prefix,
+      row.account_plan,
+      row.subscription_status,
+      row.audit_status,
       row.evidence_text,
     ].filter(Boolean).join(' ').toLowerCase();
     return haystack.includes(q);
   });
+  const pageCount = Math.max(1, Math.ceil(filteredEvidence.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const start = (currentPage - 1) * pageSize;
+  const evidence = filteredEvidence.slice(start, start + pageSize);
 
   return jsonResponse(req, {
     evidence,
+    pagination: {
+      page: currentPage,
+      page_size: pageSize,
+      total: filteredEvidence.length,
+      page_count: pageCount,
+    },
     window: {
       key: window.key,
       short_label: window.shortLabel,
       long_label: window.longLabel,
+    },
+    filters: {
+      environment,
+      channel,
     },
   });
 }
@@ -948,20 +2152,10 @@ async function handleIntelligenceEvidence(req: Request, adminClient: SupabaseCli
 async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClient, url: URL) {
   const window = parseIntelligenceWindow(url);
   const since = getWindowSinceIso(window);
-  const data = await fetchAllRows<Record<string, unknown>>((from, to) => {
-    let query = adminClient
-      .from('icon_evidence')
-      .select('signal_type, search_query, icon_id, batch_id, agent_converged, replaced_with, result_count, library_filter, job_category, ui_surface, created_at')
-      .not('search_query', 'is', null)
-      .order('created_at', { ascending: false })
-      .range(from, to);
-
-    if (since) {
-      query = query.gte('created_at', since);
-    }
-
-    return query;
-  });
+  const environment = parseQueryEnvironmentFilter(url);
+  const channel = parseQueryChannelFilter(url);
+  const rawData = await fetchSearchEvidenceRows(adminClient, since);
+  const data = filterEvidenceRowsByChannel(filterEvidenceRowsByEnvironment(rawData, environment), channel);
 
   const querySet = new Set<string>();
   const attemptQuerySet = new Set<string>();
@@ -982,6 +2176,9 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
   const topQueryMap = new Map<string, {
     query: string;
     total_signals: number;
+    successful_attempt_count: number;
+    total_result_count: number;
+    result_samples: number;
     copy_count: number;
     favorite_count: number;
     unique_icons: Set<string>;
@@ -1019,6 +2216,7 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
     const libraryFilter = typeof row.library_filter === 'string' ? row.library_filter : null;
     const jobCategory = typeof row.job_category === 'string' ? row.job_category : null;
     const signalType = String(row.signal_type || '').toLowerCase();
+    const rowChannel = classifySearchEvidenceChannel(row);
     const rawResultCount = Number(row.result_count);
     const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
 
@@ -1053,6 +2251,24 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
         } else if (resultCount <= LOW_RESULT_THRESHOLD) {
           entry.low_attempt_count += 1;
           lowResultQuerySet.add(normalizedQuery);
+        } else {
+          const topEntry = topQueryMap.get(normalizedQuery) || {
+            query: normalizedQuery,
+            total_signals: 0,
+            successful_attempt_count: 0,
+            total_result_count: 0,
+            result_samples: 0,
+            copy_count: 0,
+            favorite_count: 0,
+            unique_icons: new Set<string>(),
+            last_seen: null,
+          };
+          topEntry.total_signals += 1;
+          topEntry.successful_attempt_count += 1;
+          topEntry.total_result_count += resultCount;
+          topEntry.result_samples += 1;
+          if (!topEntry.last_seen || (createdAt && createdAt > topEntry.last_seen)) topEntry.last_seen = createdAt;
+          topQueryMap.set(normalizedQuery, topEntry);
         }
       }
       if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
@@ -1064,6 +2280,9 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
       const entry = topQueryMap.get(normalizedQuery) || {
         query: normalizedQuery,
         total_signals: 0,
+        successful_attempt_count: 0,
+        total_result_count: 0,
+        result_samples: 0,
         copy_count: 0,
         favorite_count: 0,
         unique_icons: new Set<string>(),
@@ -1077,7 +2296,7 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
       topQueryMap.set(normalizedQuery, entry);
     }
 
-    if (signalType === 'mcp_call') {
+    if (rowChannel === 'hosted_mcp') {
       const entry = topMcpMap.get(normalizedQuery) || {
         query: normalizedQuery,
         batch_ids: new Set<string>(),
@@ -1088,14 +2307,15 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
       };
       entry.result_rows += 1;
       if (iconId) entry.unique_icons.add(iconId);
-      if (batchId) {
+      const eventId = batchId || (typeof row.id === 'string' ? row.id : null) || (createdAt ? `${normalizedQuery}:${createdAt}` : null);
+      if (eventId) {
         const beforeSize = entry.batch_ids.size;
-        entry.batch_ids.add(batchId);
+        entry.batch_ids.add(eventId);
         if (entry.batch_ids.size > beforeSize) {
           mcpQueryBatches += 1;
         }
-        if (row.agent_converged === true) {
-          entry.converged_batches.add(batchId);
+        if (signalType === 'mcp_call' && row.agent_converged === true) {
+          entry.converged_batches.add(eventId);
         }
       }
       if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
@@ -1127,6 +2347,10 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
     .map((entry) => ({
       query: entry.query,
       total_signals: entry.total_signals,
+      successful_attempt_count: entry.successful_attempt_count,
+      average_result_count: entry.result_samples > 0
+        ? Number((entry.total_result_count / entry.result_samples).toFixed(2))
+        : null,
       copy_count: entry.copy_count,
       favorite_count: entry.favorite_count,
       unique_icons: entry.unique_icons.size,
@@ -1237,6 +2461,8 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
         replace_query_signals_30d: replaceQuerySignals,
         zero_result_tracking_available: searchAttempts > 0,
         query_review_feature_available: queryReviews.available,
+        environment,
+        channel,
       },
       top_queries: topQueries,
       top_mcp_queries: topMcpQueries,
@@ -1244,6 +2470,166 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
       top_low_result_queries: topLowResultQueries.map((entry) => mergeQueryReview(entry, queryReviews.reviews)),
       top_replacement_queries: topReplacementQueries.map((entry) => mergeQueryReview(entry, queryReviews.reviews)),
     },
+  });
+}
+
+async function handleIntelligenceSearchQueue(req: Request, adminClient: SupabaseClient, url: URL) {
+  const payload = await buildQueryQueuePayload(adminClient, url);
+  return jsonResponse(req, payload);
+}
+
+async function handleIntelligenceSearchDetail(req: Request, adminClient: SupabaseClient, url: URL) {
+  const window = parseIntelligenceWindow(url);
+  const since = getWindowSinceIso(window);
+  const requestedQuery = normalizeSearchQuery(url.searchParams.get('query'));
+  if (!requestedQuery) {
+    return jsonResponse(req, { error: 'query is required' }, 400);
+  }
+
+  const requestedLibrary = normalizeReviewLibraryFilter(url.searchParams.get('library_filter'));
+  const requestedJobCategory = normalizeReviewJobCategory(url.searchParams.get('job_category'));
+  const environment = parseQueryEnvironmentFilter(url);
+  const channel = parseQueryChannelFilter(url);
+  const evidenceRows = filterEvidenceRowsByChannel(
+    filterEvidenceRowsByEnvironment(
+      await fetchSearchEvidenceRows(adminClient, since),
+      environment,
+    ),
+    channel,
+  );
+  const contextEvidenceRows = evidenceRows.filter((row) => (
+    normalizeSearchQuery(row.search_query) === requestedQuery
+    && normalizeReviewLibraryFilter(row.library_filter) === requestedLibrary
+    && normalizeReviewJobCategory(row.job_category) === requestedJobCategory
+  ));
+  const queryReviews = await fetchQueryReviews(adminClient, [{
+    query: requestedQuery,
+    library_filter: requestedLibrary,
+    job_category: requestedJobCategory,
+  }]);
+  const summary = buildQueryWorkbenchRows(contextEvidenceRows, queryReviews.reviews)[0] || {
+    query: requestedQuery,
+    library_filter: requestedLibrary,
+    job_category: requestedJobCategory,
+    issue_types: [],
+    attempt_count: 0,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    average_result_count: null,
+    minimum_result_count: null,
+    replacement_count: 0,
+    unique_replacements: 0,
+    successful_signal_count: 0,
+    copy_count: 0,
+    favorite_count: 0,
+    unique_icons: 0,
+    mcp_batch_count: 0,
+    mcp_converged_batches: 0,
+    mcp_result_rows: 0,
+    surfaces: [],
+    domains: [],
+    context_urls: [],
+    session_count: 0,
+    ip_hash_count: 0,
+    ip_hash_prefixes: [],
+    api_key_hash_count: 0,
+    api_key_hash_prefixes: [],
+    countries: [],
+    registered_user_count: 0,
+    pro_user_count: 0,
+    account_plans: [],
+    subscription_statuses: [],
+    audit_sources: [],
+    environments: [],
+    channels: [],
+    first_seen: null,
+    last_seen: null,
+    review_status: null,
+    review_note: null,
+    review_updated_at: null,
+  };
+
+  const resultCountHistory = contextEvidenceRows
+    .filter((row) => String(row.signal_type || '').toLowerCase() === 'search_attempt')
+    .sort((a, b) => String(a.created_at || '').localeCompare(String(b.created_at || '')))
+    .map((row) => ({
+      created_at: row.created_at || null,
+      result_count: typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0),
+      library_filter: normalizeReviewLibraryFilter(row.library_filter),
+      job_category: normalizeReviewJobCategory(row.job_category),
+      ui_surface: row.ui_surface || null,
+      note: row.evidence_text || null,
+    }));
+
+  const sortedRecentRows = [...contextEvidenceRows]
+    .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+  const compactEvidenceRows = sortedRecentRows.slice(0, 75).map((row) => ({
+    id: row.id || null,
+    ...compactQueryEvidenceRow(row),
+    session_hash: row.session_hash || null,
+  }));
+
+  const review = queryReviews.reviews.get(buildQueryReviewContextKey({
+    query: requestedQuery,
+    libraryFilter: requestedLibrary,
+    jobCategory: requestedJobCategory,
+  })) || null;
+
+  let suggestedNextAction = 'Review query context';
+  if (Number(summary.zero_attempt_count || 0) > 0) {
+    suggestedNextAction = 'Check whether this needs an alias or a new icon';
+  } else if (Number(summary.low_attempt_count || 0) > 0) {
+    suggestedNextAction = 'Check whether aliases or ranking can improve weak results';
+  } else if (Number(summary.replacement_count || 0) > 0) {
+    suggestedNextAction = 'Review ranking because users replace this result';
+  } else if (summary.review_status === 'resolved') {
+    suggestedNextAction = 'Confirm this can stay resolved';
+  }
+
+  return jsonResponse(req, {
+    query_detail: {
+      summary,
+      result_count_history: resultCountHistory,
+      recent_evidence_rows: compactEvidenceRows,
+      related_replacements: compactEvidenceRows.filter((row) => row.signal_type === 'replace'),
+      related_copies: compactEvidenceRows.filter((row) => row.signal_type === 'copy'),
+      related_favorites: compactEvidenceRows.filter((row) => row.signal_type === 'favorite'),
+      review,
+      suggested_next_action: suggestedNextAction,
+    },
+    window: {
+      key: window.key,
+      short_label: window.shortLabel,
+      long_label: window.longLabel,
+    },
+    filters: {
+      environment,
+      channel,
+    },
+  });
+}
+
+async function handleIntelligenceSearchExport(req: Request, adminClient: SupabaseClient, url: URL) {
+  const payload = await buildQueryQueuePayload(adminClient, url, { exportMode: true });
+  const format = normalizeSearchQuery(url.searchParams.get('format')) || 'json';
+  const exportPayload = {
+    exported_at: new Date().toISOString(),
+    ...payload,
+  };
+
+  if (format === 'csv') {
+    const csv = queryRowsToCsv(payload.queries as Array<Record<string, unknown>>);
+    return contentResponse(req, csv, 'text/csv; charset=utf-8', 'supericons-query-intelligence.csv');
+  }
+
+  if (format === 'agent_pack') {
+    return jsonResponse(req, {
+      agent_pack: buildAgentAnalysisPack(exportPayload),
+    });
+  }
+
+  return jsonResponse(req, {
+    export: exportPayload,
   });
 }
 
@@ -1705,6 +3091,18 @@ serve(async (req) => {
 
     if (req.method === 'GET' && segments.length === 2 && segments[0] === 'intelligence' && segments[1] === 'search') {
       return await handleIntelligenceSearch(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'queue') {
+      return await handleIntelligenceSearchQueue(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'query-detail') {
+      return await handleIntelligenceSearchDetail(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'export') {
+      return await handleIntelligenceSearchExport(req, adminClient, url);
     }
 
     if (req.method === 'GET' && segments.length === 2 && segments[0] === 'intelligence' && segments[1] === 'evidence') {

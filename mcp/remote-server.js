@@ -6,6 +6,7 @@
  * The local stdio package in index.js remains the main IDE setup.
  */
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash, randomUUID } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -13,6 +14,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import express from 'express';
 import { z } from 'zod';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { SUPABASE_URL } from './auth.js';
 import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import {
@@ -53,6 +55,8 @@ const publicIcons = [
   ...(Array.isArray(solidIconIndex?.icons) ? solidIconIndex.icons : []),
 ];
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
+const mcpApiKeyAccountCache = new Map();
+const MCP_API_KEY_ACCOUNT_CACHE_MS = 5 * 60 * 1000;
 
 const LIBRARIES = [
   ['bootstrap', 'Bootstrap', 'Official Bootstrap SVG icons'],
@@ -260,6 +264,7 @@ async function searchHostedIcons({
   limit = 20,
   locale = null,
   includeQueryFrame = false,
+  usageContext = null,
 }) {
   let payload;
   try {
@@ -270,6 +275,7 @@ async function searchHostedIcons({
       limit,
       locale,
       includeQueryFrame,
+      usageContext,
     });
   } catch (error) {
     const fallbackResults = searchLocalFallbackIcons({
@@ -448,6 +454,7 @@ async function buildHostedPreviewModel({
   locale,
   limit = 9,
   includeImage = false,
+  usageContext = null,
 } = {}) {
   const effectiveLimit = normalizePreviewLimit(limit);
   const fixedRefs = normalizePreviewIconRefs(iconRefs, effectiveLimit);
@@ -460,6 +467,7 @@ async function buildHostedPreviewModel({
       style,
       locale,
       limit: effectiveLimit,
+      usageContext,
     })).map((icon) => buildPublicIconResult(icon, {
       query: searchQuery,
       library,
@@ -520,7 +528,438 @@ function asPreviewResponse(payload, { imagePng = null, isError = false } = {}) {
   };
 }
 
-function createServer() {
+function normalizeUsageToken(value, { maxLength = 80 } = {}) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .slice(0, maxLength);
+}
+
+function normalizeUsageText(value, { maxLength = 120 } = {}) {
+  const text = String(value || '').trim();
+  return text ? text.slice(0, maxLength) : null;
+}
+
+function normalizeUsageQuery(value) {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ').slice(0, 400) || null;
+}
+
+function hashUsageValue(value) {
+  const text = String(value || '').trim();
+  return text ? createHash('sha256').update(text).digest('hex') : null;
+}
+
+function getFirstHeader(req, names) {
+  for (const name of names) {
+    const value = req.get(name);
+    if (value) return value;
+  }
+  return '';
+}
+
+function getServiceRoleKey() {
+  return process.env.SUPERICONS_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+}
+
+function detectRequestEnvironment(req) {
+  const configured = normalizeUsageToken(process.env.SUPERICONS_MCP_ENVIRONMENT, { maxLength: 40 });
+  if (['production', 'preview', 'local', 'test', 'legacy'].includes(configured)) return configured;
+
+  const host = String(req.get('host') || '').toLowerCase();
+  if (host.includes('localhost') || host.includes('127.0.0.1')) return 'local';
+  if (host.includes('netlify.app') || host.includes('deploy-preview')) return 'preview';
+  if (String(process.env.NODE_ENV || '').toLowerCase() === 'test') return 'test';
+  return 'production';
+}
+
+function detectClientFamily(req, extraHint = '') {
+  const hint = [
+    req.get('x-supericons-client'),
+    req.get('x-mcp-client'),
+    req.get('x-client-name'),
+    extraHint,
+    req.get('user-agent'),
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  if (hint.includes('smithery')) return 'smithery';
+  if (hint.includes('claude')) return 'claude';
+  if (hint.includes('chatgpt') || hint.includes('openai')) return 'chatgpt';
+  if (hint.includes('cursor')) return 'cursor';
+  if (hint.includes('codex')) return 'codex';
+  if (hint.includes('opencode')) return 'opencode';
+  if (hint.includes('slack')) return 'slack';
+  if (hint.includes('telegram')) return 'telegram';
+  if (hint.includes('railway')) return 'railway';
+  return 'unknown';
+}
+
+function normalizeIpToken(value) {
+  let token = String(value || '').trim();
+  if (!token || token.toLowerCase() === 'unknown') return '';
+  token = token.split(',')[0].trim();
+  token = token.replace(/^"|"$/g, '');
+  token = token.replace(/^\[|\]$/g, '');
+  token = token.replace(/^::ffff:/i, '');
+  return token.slice(0, 120);
+}
+
+function getForwardedForToken(value) {
+  const raw = String(value || '');
+  const match = raw.match(/(?:^|[;,])\s*for="?([^";,]+)"?/i);
+  return normalizeIpToken(match?.[1] || '');
+}
+
+function getClientIpToken(req) {
+  const candidates = [
+    req.get('cf-connecting-ip'),
+    req.get('true-client-ip'),
+    req.get('x-forwarded-for'),
+    req.get('x-real-ip'),
+    req.get('x-client-ip'),
+    getForwardedForToken(req.get('forwarded')),
+    req.ip,
+    req.socket?.remoteAddress,
+  ];
+  for (const candidate of candidates) {
+    const token = normalizeIpToken(candidate);
+    if (token) return token;
+  }
+  return '';
+}
+
+function normalizeCountryCode(value) {
+  const raw = String(value || '').trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(raw)) return null;
+  if (['XX', 'ZZ', 'T1'].includes(raw)) return null;
+  return raw;
+}
+
+function getCountryContext(req) {
+  const headerCandidates = [
+    ['cf-ipcountry', req.get('cf-ipcountry')],
+    ['x-vercel-ip-country', req.get('x-vercel-ip-country')],
+    ['x-country-code', req.get('x-country-code')],
+    ['x-railway-edge-country', req.get('x-railway-edge-country')],
+    ['x-railway-country', req.get('x-railway-country')],
+    ['fly-client-ip-country', req.get('fly-client-ip-country')],
+    ['cloudfront-viewer-country', req.get('cloudfront-viewer-country')],
+    ['x-appengine-country', req.get('x-appengine-country')],
+  ];
+  for (const [name, value] of headerCandidates) {
+    const countryCode = normalizeCountryCode(value);
+    if (countryCode) {
+      return {
+        country_code: countryCode,
+        geo_source: name,
+      };
+    }
+  }
+  return {
+    country_code: null,
+    geo_source: null,
+  };
+}
+
+function extractMcpApiKey(req) {
+  const explicit = normalizeUsageText(req.get('x-supericons-api-key'), { maxLength: 240 });
+  if (explicit) return explicit;
+
+  const authHeader = String(req.get('authorization') || '').trim();
+  const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i);
+  const bearerToken = bearerMatch?.[1]?.trim() || '';
+  return bearerToken.startsWith('si_') ? bearerToken.slice(0, 240) : null;
+}
+
+async function fetchSupabaseRestRows(path, serviceRoleKey) {
+  const response = await fetch(`${SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/${path}`, {
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Supabase REST request failed with ${response.status}`);
+  }
+  return await response.json();
+}
+
+async function updateSupabaseRestRow(path, serviceRoleKey, body) {
+  const response = await fetch(`${SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/${path}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok && process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
+    console.warn(`[Supericons MCP] API key last_used update failed (${response.status})`);
+  }
+}
+
+async function resolveMcpApiKeyAccount(apiKey) {
+  const apiKeyHash = hashUsageValue(apiKey);
+  if (!apiKeyHash) {
+    return {
+      api_key_hash: null,
+      api_key_present: false,
+      api_key_valid: null,
+      user_id: null,
+      is_registered: false,
+      is_pro: false,
+      account_plan: null,
+      subscription_status: null,
+    };
+  }
+
+  const cached = mcpApiKeyAccountCache.get(apiKeyHash);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.value;
+  }
+
+  const serviceRoleKey = getServiceRoleKey();
+  const unresolved = {
+    api_key_hash: apiKeyHash,
+    api_key_present: true,
+    api_key_valid: false,
+    user_id: null,
+    is_registered: false,
+    is_pro: false,
+    account_plan: null,
+    subscription_status: null,
+  };
+  if (!serviceRoleKey) {
+    mcpApiKeyAccountCache.set(apiKeyHash, {
+      expiresAt: Date.now() + MCP_API_KEY_ACCOUNT_CACHE_MS,
+      value: unresolved,
+    });
+    return unresolved;
+  }
+
+  try {
+    const keyRows = await fetchSupabaseRestRows(
+      `si_api_keys?select=id,user_id&key_hash=eq.${encodeURIComponent(apiKeyHash)}&revoked=eq.false&limit=1`,
+      serviceRoleKey,
+    );
+    const keyRow = Array.isArray(keyRows) ? keyRows[0] : null;
+    const userId = typeof keyRow?.user_id === 'string' ? keyRow.user_id : null;
+    if (!userId) {
+      mcpApiKeyAccountCache.set(apiKeyHash, {
+        expiresAt: Date.now() + MCP_API_KEY_ACCOUNT_CACHE_MS,
+        value: unresolved,
+      });
+      return unresolved;
+    }
+
+    void updateSupabaseRestRow(
+      `si_api_keys?id=eq.${encodeURIComponent(String(keyRow.id))}`,
+      serviceRoleKey,
+      { last_used: new Date().toISOString() },
+    );
+
+    const subscriptionRows = await fetchSupabaseRestRows(
+      `si_subscriptions?select=status,plan&user_id=eq.${encodeURIComponent(userId)}&status=eq.active&limit=1`,
+      serviceRoleKey,
+    );
+    const subscription = Array.isArray(subscriptionRows) ? subscriptionRows[0] : null;
+    const subscriptionStatus = typeof subscription?.status === 'string' ? subscription.status : null;
+    const value = {
+      api_key_hash: apiKeyHash,
+      api_key_present: true,
+      api_key_valid: true,
+      user_id: userId,
+      is_registered: true,
+      is_pro: subscriptionStatus === 'active',
+      account_plan: typeof subscription?.plan === 'string' ? subscription.plan : null,
+      subscription_status: subscriptionStatus,
+    };
+    mcpApiKeyAccountCache.set(apiKeyHash, {
+      expiresAt: Date.now() + MCP_API_KEY_ACCOUNT_CACHE_MS,
+      value,
+    });
+    return value;
+  } catch (error) {
+    if (process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
+      console.warn('[Supericons MCP] API key attribution lookup failed:', error?.message || error);
+    }
+    mcpApiKeyAccountCache.set(apiKeyHash, {
+      expiresAt: Date.now() + 60_000,
+      value: unresolved,
+    });
+    return unresolved;
+  }
+}
+
+async function buildRequestContext(req) {
+  const userAgent = String(req.get('user-agent') || '').trim();
+  const clientInfoHint = [
+    req.body?.params?.clientInfo?.name,
+    req.body?.params?.clientInfo?.version,
+  ].filter(Boolean).join(' ');
+  const clientFamily = detectClientFamily(req, clientInfoHint);
+  const clientIp = getClientIpToken(req);
+  const monthBucket = new Date().toISOString().slice(0, 7);
+  const apiKeyAccount = await resolveMcpApiKeyAccount(extractMcpApiKey(req));
+  const requestId = normalizeUsageText(
+    req.get('x-request-id') || req.get('cf-ray') || req.body?.id || randomUUID(),
+    { maxLength: 120 },
+  );
+  const country = getCountryContext(req);
+  const sessionHash = hashUsageValue(req.get('mcp-session-id') || req.get('x-session-id') || '');
+
+  return {
+    request_id: requestId,
+    rpc_id: normalizeUsageText(req.body?.id, { maxLength: 80 }),
+    channel: 'hosted_mcp',
+    environment: detectRequestEnvironment(req),
+    client_family: clientFamily,
+    country_code: country.country_code,
+    geo_source: country.geo_source,
+    session_hash: sessionHash,
+    ip_hash: hashUsageValue(clientIp),
+    anonymous_client_hash: hashUsageValue(`${clientIp}|${userAgent}|${clientFamily}|${monthBucket}|supericons-hosted-mcp`),
+    user_agent_hash: hashUsageValue(userAgent),
+    api_key_hash: apiKeyAccount.api_key_hash,
+    api_key_present: apiKeyAccount.api_key_present,
+    api_key_valid: apiKeyAccount.api_key_valid,
+    user_id: apiKeyAccount.user_id,
+    is_registered: apiKeyAccount.is_registered,
+    is_pro: apiKeyAccount.is_pro,
+    account_plan: apiKeyAccount.account_plan,
+    subscription_status: apiKeyAccount.subscription_status,
+    mcp_server_version: packageJson.version,
+  };
+}
+
+function buildToolUsageContext(requestContext, toolName, args = {}) {
+  const context = requestContext || {
+    request_id: randomUUID(),
+    channel: 'hosted_mcp',
+    environment: 'production',
+    client_family: 'unknown',
+    mcp_server_version: packageJson.version,
+  };
+  const argsHash = hashUsageValue(JSON.stringify({
+    query: args.query || null,
+    task: args.task || null,
+    id: args.id || null,
+    library: args.library || null,
+    limit: args.limit || args.limit_per_slot || null,
+  }))?.slice(0, 24);
+
+  return {
+    source: 'mcp',
+    channel: context.channel,
+    environment: context.environment,
+    client_family: context.client_family,
+    tool_name: toolName,
+    request_id: context.request_id,
+    dedupe_key: [context.request_id, context.rpc_id, toolName, argsHash].filter(Boolean).join(':'),
+    session_hash: context.session_hash,
+    ip_hash: context.ip_hash,
+    country_code: context.country_code,
+    geo_source: context.geo_source,
+    anonymous_client_hash: context.anonymous_client_hash,
+    user_agent_hash: context.user_agent_hash,
+    api_key_hash: context.api_key_hash,
+    user_id: context.user_id,
+    is_registered: context.is_registered,
+    is_pro: context.is_pro,
+    account_plan: context.account_plan,
+    subscription_status: context.subscription_status,
+    mcp_server_version: context.mcp_server_version,
+  };
+}
+
+function getResultCountFromToolResult(result) {
+  const payload = result?.structuredContent || {};
+  if (Array.isArray(payload.results)) return payload.results.length;
+  if (Array.isArray(payload.libraries)) return payload.libraries.length;
+  if (payload.icon) return 1;
+  return 0;
+}
+
+function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok') {
+  const context = buildToolUsageContext(requestContext, toolName, args);
+  return {
+    event_id: randomUUID(),
+    request_id: context.request_id,
+    dedupe_key: context.dedupe_key,
+    event_type: toolName === 'preview_icons' ? 'preview' : 'tool_call',
+    channel: context.channel,
+    environment: context.environment,
+    client_family: context.client_family,
+    tool_name: toolName,
+    query_norm: normalizeUsageQuery(args?.query || args?.task || args?.id || null),
+    library_filter: normalizeUsageToken(args?.library, { maxLength: 80 }) || null,
+    result_count: status === 'ok' ? getResultCountFromToolResult(result) : 0,
+    status,
+    latency_ms: Math.max(0, Date.now() - startedAt),
+    country_code: requestContext?.country_code || null,
+    geo_source: requestContext?.geo_source || null,
+    locale: normalizeUsageText(args?.locale, { maxLength: 32 }),
+    session_hash: context.session_hash || null,
+    ip_hash: context.ip_hash || null,
+    anonymous_client_hash: context.anonymous_client_hash || null,
+    user_agent_hash: context.user_agent_hash || null,
+    api_key_hash: context.api_key_hash || null,
+    user_id: context.user_id || null,
+    is_registered: context.is_registered === true,
+    is_pro: context.is_pro === true,
+    account_plan: context.account_plan || null,
+    subscription_status: context.subscription_status || null,
+    mcp_server_version: context.mcp_server_version,
+    metadata: {
+      rpc_id: requestContext?.rpc_id || null,
+      api_key_present: requestContext?.api_key_present === true,
+      api_key_valid: requestContext?.api_key_valid === true,
+    },
+  };
+}
+
+async function logMcpUsageEvent(payload) {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPERICONS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) return;
+
+  try {
+    const response = await fetch(`${SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/mcp_usage_events`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: serviceRoleKey,
+        Authorization: `Bearer ${serviceRoleKey}`,
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok && response.status !== 409 && process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
+      console.warn(`[Supericons MCP] usage ledger write failed (${response.status})`);
+    }
+  } catch (error) {
+    if (process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
+      console.warn('[Supericons MCP] usage ledger write failed:', error?.message || error);
+    }
+  }
+}
+
+async function withMcpUsageEvent(requestContext, toolName, args, handler) {
+  const startedAt = Date.now();
+  try {
+    const result = await handler();
+    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, 'ok'));
+    return result;
+  } catch (error) {
+    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, null, startedAt, 'error'));
+    throw error;
+  }
+}
+
+function createServer({ requestContext = null } = {}) {
   const freeIconCountLabel =
     productFacts?.display?.freeIconsAcrossLibrariesFreeLabel ||
     `${registrySummary.publicRecordCount.toLocaleString()} searchable free icon records`;
@@ -546,7 +985,8 @@ function createServer() {
       outputSchema: searchIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async ({ query, library, style, locale, limit, include_query_frame }) => {
+    async (args) => withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
+      const { query, library, style, locale, limit, include_query_frame } = args;
       const results = await searchHostedIcons({
         query,
         library,
@@ -554,6 +994,7 @@ function createServer() {
         locale,
         limit,
         includeQueryFrame: include_query_frame,
+        usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
       });
       return asStructured({
         results: results.map((icon) => buildPublicIconResult(icon, {
@@ -566,7 +1007,7 @@ function createServer() {
         preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
         ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
       });
-    }
+    })
   );
 
   server.registerTool(
@@ -587,7 +1028,8 @@ function createServer() {
       outputSchema: recommendIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async ({ task, slots, library, style, locale, limit_per_slot, response_mode, include_query_frame }) => {
+    async (args) => withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
+      const { task, slots, library, style, locale, limit_per_slot, response_mode, include_query_frame } = args;
       const payload = await recommendIconsForTask({
         task,
         slots,
@@ -601,6 +1043,12 @@ function createServer() {
         searchIconsForQuery: (params) => searchHostedIcons({
           ...params,
           includeQueryFrame: include_query_frame,
+          usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
+            ...args,
+            query: params.query,
+            library: params.library,
+            limit: params.limit,
+          }),
         }),
         buildIconResult: async (icon) => buildPublicIconResult(icon),
       });
@@ -623,7 +1071,7 @@ function createServer() {
         ...payload,
         preview_url: buildPreviewBoardUrlForIcons(iconRefs),
       });
-    }
+    })
   );
 
   server.registerTool(
@@ -639,12 +1087,14 @@ function createServer() {
       outputSchema: getIconOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async ({ id, library, style }) => {
+    async (args) => withMcpUsageEvent(requestContext, 'get_icon', args, async () => {
+      const { id, library, style } = args;
       const candidates = await searchHostedIcons({
         query: id.replace(/[-_]+/g, ' '),
         library,
         style,
         limit: 50,
+        usageContext: buildToolUsageContext(requestContext, 'get_icon', args),
       });
       const normalizedId = id.toLowerCase();
       const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
@@ -658,7 +1108,7 @@ function createServer() {
       return asStructured({
         icon: buildPublicIconResult(match, { style }),
       });
-    }
+    })
   );
 
   server.registerTool(
@@ -678,7 +1128,8 @@ function createServer() {
       outputSchema: previewIconsOutputSchema,
       annotations: readOnlyLookupAnnotations,
     },
-    async ({ query, icon_refs, library, style, locale, limit, include_image }) => {
+    async (args) => withMcpUsageEvent(requestContext, 'preview_icons', args, async () => {
+      const { query, icon_refs, library, style, locale, limit, include_image } = args;
       if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
         return asPreviewResponse({
           query: null,
@@ -700,6 +1151,7 @@ function createServer() {
         locale,
         limit,
         includeImage: include_image,
+        usageContext: buildToolUsageContext(requestContext, 'preview_icons', args),
       });
 
       let imagePng = null;
@@ -710,7 +1162,7 @@ function createServer() {
       }
 
       return asPreviewResponse(payload, { imagePng });
-    }
+    })
   );
 
   server.registerTool(
@@ -721,7 +1173,7 @@ function createServer() {
       outputSchema: listLibrariesOutputSchema,
       annotations: readOnlyLookupAnnotations,
     },
-    async () => asStructured({
+    async (args = {}) => withMcpUsageEvent(requestContext, 'list_libraries', args, async () => asStructured({
       libraries: LIBRARIES.map(([id, name, description]) => ({
         id,
         name,
@@ -730,7 +1182,7 @@ function createServer() {
         count: libraryCounts.get(id) || 0,
       })),
       publicRecordCount: registrySummary.publicRecordCount,
-    })
+    }))
   );
 
   return server;
@@ -777,7 +1229,10 @@ app.use(express.json({ limit: '1mb' }));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, MCP-Protocol-Version, Mcp-Session-Id');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, MCP-Protocol-Version, Mcp-Session-Id, X-Session-Id, X-Supericons-Api-Key, X-Supericons-Client, X-Mcp-Client, X-Client-Name',
+  );
   if (req.method === 'OPTIONS') {
     res.status(204).end();
     return;
@@ -807,14 +1262,26 @@ app.get('/.well-known/openai-apps-challenge', (_req, res) => {
 });
 
 app.get('/preview-icons.png', async (req, res) => {
+  const requestContext = await buildRequestContext(req);
+  const startedAt = Date.now();
+  const args = {
+    query: req.query?.q || req.query?.query || null,
+    library: req.query?.library || null,
+    locale: req.query?.locale || null,
+    limit: req.query?.limit || null,
+  };
   try {
     const params = parsePreviewRouteParams(req.query);
-    const { icons } = await buildHostedPreviewModel(params);
+    const { icons } = await buildHostedPreviewModel({
+      ...params,
+      usageContext: buildToolUsageContext(requestContext, 'preview_image', args),
+    });
     if (!icons.length) {
       sendJson(res, 404, {
         error: 'no_preview_icons_found',
         message: 'No icons were found for this preview request.',
       });
+      void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, 'preview_image', args, null, startedAt, 'error'));
       return;
     }
 
@@ -829,17 +1296,27 @@ app.get('/preview-icons.png', async (req, res) => {
         'X-Content-Type-Options': 'nosniff',
       })
       .send(Buffer.from(imagePng));
+    void logMcpUsageEvent(buildMcpUsageEventPayload(
+      requestContext,
+      'preview_image',
+      args,
+      { structuredContent: { results: icons } },
+      startedAt,
+      'ok',
+    ));
   } catch (error) {
     const status = Number(error?.status || 500);
     sendJson(res, status, {
       error: error?.code || 'preview_image_unavailable',
       message: status >= 500 ? 'Preview image generation failed.' : error.message,
     });
+    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, 'preview_image', args, null, startedAt, 'error'));
   }
 });
 
 app.post('/mcp', async (req, res) => {
-  const server = createServer();
+  const requestContext = await buildRequestContext(req);
+  const server = createServer({ requestContext });
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
   });

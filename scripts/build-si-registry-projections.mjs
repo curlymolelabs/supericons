@@ -37,7 +37,21 @@ async function readImportSource(importSource) {
 
 async function writeJson(filePath, value) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  const contents = `${JSON.stringify(value, null, 2)}\n`;
+  const maxAttempts = process.platform === 'win32' ? 5 : 1;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      await fs.writeFile(filePath, contents, 'utf8');
+      return;
+    } catch (error) {
+      if (attempt >= maxAttempts || !['EBUSY', 'EPERM', 'UNKNOWN'].includes(error?.code)) {
+        throw error;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, attempt * 100));
+    }
+  }
 }
 
 const sourceRecordGroups = await Promise.all(registryManifest.recordGroups.map((recordGroup) => readRecordGroup(recordGroup)));

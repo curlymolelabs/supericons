@@ -63,8 +63,17 @@ try {
   const page = await browser.newPage();
 
   await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
-  await page.getByRole('textbox', { name: 'Search icons' }).waitFor({ state: 'visible' });
-  await page.getByRole('textbox', { name: 'Search icons' }).fill('claude');
+  const searchInput = page.getByRole('textbox', { name: 'Search icons' });
+  try {
+    await searchInput.waitFor({ state: 'visible', timeout: 3000 });
+  } catch {
+    const heroSearchButton = page.locator('#heroSearchBtn');
+    if (await heroSearchButton.isVisible()) {
+      await heroSearchButton.click();
+    }
+    await searchInput.waitFor({ state: 'visible' });
+  }
+  await searchInput.fill('claude');
   await page.locator('[data-icon-id="claude"][data-icon-lib="simpleicons"]').click();
   await page.locator('#colorHex').fill(targetHex);
 

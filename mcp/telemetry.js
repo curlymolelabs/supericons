@@ -3,6 +3,22 @@ import { SUPABASE_ANON, SUPABASE_URL } from './auth.js';
 
 const PROCESS_SESSION_TOKEN = randomUUID();
 
+function isTelemetryDisabled() {
+  const disableFlag = String(process.env.SUPERICONS_DISABLE_TELEMETRY || '').trim().toLowerCase();
+  const telemetryFlag = String(process.env.SUPERICONS_TELEMETRY || '').trim().toLowerCase();
+  const doNotTrack = String(process.env.DO_NOT_TRACK || '').trim().toLowerCase();
+
+  return disableFlag === '1'
+    || disableFlag === 'true'
+    || disableFlag === 'on'
+    || telemetryFlag === '0'
+    || telemetryFlag === 'false'
+    || telemetryFlag === 'off'
+    || telemetryFlag === 'disabled'
+    || doNotTrack === '1'
+    || doNotTrack === 'true';
+}
+
 function getSessionHash() {
   const today = new Date().toISOString().slice(0, 10);
   return createHash('sha256')
@@ -11,6 +27,8 @@ function getSessionHash() {
 }
 
 async function callRpc(name, payload) {
+  if (isTelemetryDisabled()) return;
+
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
     method: 'POST',
     headers: {
