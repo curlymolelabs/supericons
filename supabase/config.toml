@@ -1,0 +1,6 @@
+# Supabase Edge Function deployment settings.
+#
+# Stripe webhooks authenticate with the Stripe-Signature header inside the
+# function, so Supabase JWT verification must stay off for this endpoint.
+[functions.stripe-webhook]
+verify_jwt = false

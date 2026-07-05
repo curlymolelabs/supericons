@@ -71,6 +71,7 @@
     "verify:commercial-localization": "node scripts/verify-commercial-localization.mjs",
     "verify:logged-in-stripe-localization": "node scripts/verify-logged-in-stripe-localization.mjs",
     "verify:stripe-checkout-locale-contract": "node scripts/verify-stripe-checkout-locale-contract.mjs",
+    "verify:stripe-webhook-gateway": "node scripts/verify-stripe-webhook-gateway.mjs",
     "verify:packs-localization": "node scripts/verify-packs-localization.mjs",
     "verify:icon-grid-behavior": "node scripts/verify-icon-grid-behavior.mjs",
     "verify:customize-preview": "node scripts/verify-customize-preview.mjs",
