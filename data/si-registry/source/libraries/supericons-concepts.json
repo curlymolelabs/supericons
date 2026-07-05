@@ -1,0 +1,2634 @@
+[
+  {
+    "icon_id": "si:agent-commit",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-commit",
+    "label": "Agent Commit",
+    "purpose": "Represent a commit authored by an AI coding agent.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "git",
+      "save",
+      "agent",
+      "commit"
+    ],
+    "use_when": "Use for agent-authored commits in history views and audit logs.",
+    "avoid_when": "Do not use for human commits when authorship matters; use the plain commit icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A commit node on a line with a plus spark above.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ai commit",
+      "bot commit",
+      "automated commit",
+      "agent authored"
+    ],
+    "ai_category": "coding-agent-tools",
+    "ai_category_label": "Coding Agent Tools",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "coding-agent-tools",
+      "git",
+      "save"
+    ],
+    "job_category": "coding-agent-tools",
+    "secondary_categories": [
+      "developer-tools",
+      "version-control"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-diff",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-diff",
+    "label": "Agent Diff",
+    "purpose": "Represent a code diff produced by an AI coding agent.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "patch",
+      "change",
+      "agent",
+      "diff"
+    ],
+    "use_when": "Use for agent-generated diffs, patch reviews, and change previews.",
+    "avoid_when": "Do not use for file comparison without an agent meaning; use a standard diff icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Plus and minus marks beside a dashed divider and a spark.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "code diff",
+      "agent patch",
+      "change set",
+      "ai edit"
+    ],
+    "ai_category": "coding-agent-tools",
+    "ai_category_label": "Coding Agent Tools",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "coding-agent-tools",
+      "patch",
+      "change"
+    ],
+    "job_category": "coding-agent-tools",
+    "secondary_categories": [
+      "developer-tools",
+      "version-control"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-face",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-face",
+    "label": "Agent Face",
+    "purpose": "Represent an AI agent or assistant as a clear, friendly avatar.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "bot",
+      "avatar",
+      "assistant",
+      "agent",
+      "face"
+    ],
+    "use_when": "Use as the avatar or marker for an AI agent, assistant, or bot in chats, dashboards, and activity feeds.",
+    "avoid_when": "Do not use for physical robots or for specific branded assistants that have their own logo.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A rounded robot head with antenna, two eyes, and a smile.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "bot face",
+      "ai avatar",
+      "assistant icon",
+      "agent avatar",
+      "robot head"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "bot",
+      "avatar",
+      "assistant"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "status-feedback",
+      "communication"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-handoff",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-handoff",
+    "label": "Agent Handoff",
+    "purpose": "Show one agent handing a task off to another agent.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "delegate",
+      "transfer",
+      "agent",
+      "handoff"
+    ],
+    "use_when": "Use for delegation and handoff steps in multi-agent workflows and swarm architectures.",
+    "avoid_when": "Do not use for human-to-human assignment; use a person-based icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Two agent nodes with an arced handoff arrow between them.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "delegation",
+      "task transfer",
+      "baton pass",
+      "agent to agent",
+      "handover"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "delegate",
+      "transfer"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "multi-agent",
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-id-badge",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-id-badge",
+    "label": "Agent ID Badge",
+    "purpose": "Represent a scoped identity badge for an AI agent.",
+    "category": "security",
+    "semantic_tags": [
+      "identity",
+      "scope",
+      "agent",
+      "id",
+      "badge"
+    ],
+    "use_when": "Use for agent identities, scoped credentials, and service account views.",
+    "avoid_when": "Do not use for human ID cards; use a person badge instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An ID card with a small antenna bot photo and detail lines.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "agent identity",
+      "bot credential",
+      "service identity",
+      "scoped id"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "identity",
+      "scope"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "governance",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-pr",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-pr",
+    "label": "Agent Pull Request",
+    "purpose": "Represent a pull request opened by an AI coding agent.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "git",
+      "review",
+      "agent",
+      "pull",
+      "request"
+    ],
+    "use_when": "Use for agent-authored pull requests in review queues and activity feeds.",
+    "avoid_when": "Do not use for human pull requests when the distinction matters; use the plain PR icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A pull request graph with an antenna dot marking the agent branch.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ai pull request",
+      "agent pr",
+      "bot pr",
+      "automated pull request"
+    ],
+    "ai_category": "coding-agent-tools",
+    "ai_category_label": "Coding Agent Tools",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "coding-agent-tools",
+      "git",
+      "review"
+    ],
+    "job_category": "coding-agent-tools",
+    "secondary_categories": [
+      "developer-tools",
+      "version-control"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-swarm",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-swarm",
+    "label": "Agent Swarm",
+    "purpose": "Represent a decentralized swarm of cooperating agents.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "mesh",
+      "cluster",
+      "agent",
+      "swarm"
+    ],
+    "use_when": "Use for swarm and mesh multi-agent patterns where agents coordinate as peers.",
+    "avoid_when": "Do not use for supervised hierarchies; use the orchestrator icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Five loosely linked agent nodes in a cluster.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "swarm",
+      "agent mesh",
+      "peer agents",
+      "agent cluster",
+      "distributed agents"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "mesh",
+      "cluster"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "multi-agent",
+      "architecture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-wallet",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-wallet",
+    "label": "Agent Wallet",
+    "purpose": "Represent a wallet owned and operated by an AI agent.",
+    "category": "commerce",
+    "semantic_tags": [
+      "funds",
+      "account",
+      "agent",
+      "wallet"
+    ],
+    "use_when": "Use for agent wallets, agent-held funds, and machine payment accounts.",
+    "avoid_when": "Do not use for human wallets when the distinction matters; use a plain wallet icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A wallet with a card slot and a small antenna on top.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "machine wallet",
+      "bot wallet",
+      "agentic wallet",
+      "ai funds"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "funds",
+      "account"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "crypto",
+      "governance"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:approval-gate",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "approval-gate",
+    "label": "Approval Gate",
+    "purpose": "Show that an agent is paused at a gate waiting for human approval.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "consent",
+      "pause",
+      "approval",
+      "gate"
+    ],
+    "use_when": "Use when an action is queued behind an explicit human consent step, such as a deploy or payment gate.",
+    "avoid_when": "Do not use for generic paused media or ordinary loading states.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A gate structure with pause bars inside.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "consent gate",
+      "approval required",
+      "human gate",
+      "pending approval",
+      "review gate"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "consent",
+      "pause"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "security",
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "needs_approval"
+  },
+  {
+    "icon_id": "si:ar-glasses",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "ar-glasses",
+    "label": "AI Glasses",
+    "purpose": "Represent AI or augmented reality smart glasses.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "wearable",
+      "xr",
+      "ai",
+      "glasses"
+    ],
+    "use_when": "Use for smart glasses hardware, AR interfaces, and wearable AI assistants.",
+    "avoid_when": "Do not use for reading glasses or sunglasses fashion content.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A pair of rounded glasses with a spark in the right lens.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "smart glasses",
+      "ai glasses",
+      "ar wearable",
+      "xr glasses"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "frontier-compute",
+      "wearable",
+      "xr"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:autonomy-dial",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "autonomy-dial",
+    "label": "Autonomy Dial",
+    "purpose": "Represent an adjustable level of agent autonomy or delegation.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "delegation",
+      "level",
+      "autonomy",
+      "dial"
+    ],
+    "use_when": "Use for autonomy settings, progressive delegation, and permission levels.",
+    "avoid_when": "Do not use for volume or brightness dials.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A dial with a needle and level tick marks.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "autonomy level",
+      "delegation dial",
+      "trust level",
+      "permission dial"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "delegation",
+      "level"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "governance",
+      "ui-controls"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:context-gauge",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "context-gauge",
+    "label": "Context Gauge",
+    "purpose": "Show how much of the model context window is used.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "window",
+      "capacity",
+      "context",
+      "gauge"
+    ],
+    "use_when": "Use for context window meters in agent status bars and session dashboards.",
+    "avoid_when": "Do not use for speed or performance gauges unrelated to context.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A semicircular gauge with a needle and tick marks.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "context window",
+      "context meter",
+      "window usage",
+      "context capacity"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "window",
+      "capacity"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "analytics",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:delivery-robot",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "delivery-robot",
+    "label": "Delivery Robot",
+    "purpose": "Represent a wheeled sidewalk delivery robot.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "sidewalk",
+      "parcel",
+      "delivery",
+      "robot"
+    ],
+    "use_when": "Use for last-mile delivery robots, autonomous couriers, and delivery tracking.",
+    "avoid_when": "Do not use for delivery trucks or human couriers.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A boxy robot body with two wheels and a parcel front.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "sidewalk robot",
+      "courier bot",
+      "autonomous delivery",
+      "last mile robot"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "sidewalk",
+      "parcel"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices",
+      "commerce"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:done-spark",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "done-spark",
+    "label": "Done Spark",
+    "purpose": "Show that an agent task finished successfully, with a touch of delight.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "complete",
+      "success",
+      "done",
+      "spark"
+    ],
+    "use_when": "Use for completed agent tasks, successful runs, and finished checklists.",
+    "avoid_when": "Do not use for security approvals or verified trust states; use a shield icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A bold checkmark with a spark at the top right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "task complete",
+      "success check",
+      "finished",
+      "done"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "complete",
+      "success"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "completed"
+  },
+  {
+    "icon_id": "si:drone-delivery",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "drone-delivery",
+    "label": "Drone Delivery",
+    "purpose": "Represent a drone carrying a delivery parcel.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "parcel",
+      "drop",
+      "drone",
+      "delivery"
+    ],
+    "use_when": "Use for drone delivery services, airborne logistics, and package drops.",
+    "avoid_when": "Do not use for surveillance or photography drones; use the plain drone icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A small drone with a parcel hanging beneath it.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "air delivery",
+      "parcel drone",
+      "drone shipping",
+      "aerial delivery"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "parcel",
+      "drop"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices",
+      "commerce"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:drone-quad",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "drone-quad",
+    "label": "Quadcopter Drone",
+    "purpose": "Represent a quadcopter drone.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "uav",
+      "fpv",
+      "quadcopter",
+      "drone"
+    ],
+    "use_when": "Use for drone hardware, flight controls, and aerial robotics.",
+    "avoid_when": "Do not use for airplanes or helicopters.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A center body with four arms and rotor arcs at the corners.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "quadcopter",
+      "uav",
+      "multirotor",
+      "fpv drone"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "uav",
+      "fpv"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:edge-ai-chip",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "edge-ai-chip",
+    "label": "Edge AI Chip",
+    "purpose": "Represent on-device or edge AI compute such as an NPU or local inference hardware.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "npu",
+      "chip",
+      "on-device ai",
+      "edge computing",
+      "local inference",
+      "processor",
+      "hardware acceleration"
+    ],
+    "use_when": "Use when the interface refers to on-device AI, local inference, NPUs, or edge compute capability.",
+    "avoid_when": "Do not use for cloud-hosted AI services, generic CPUs without an AI meaning, or quantum processors; use a matching compute icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A processor chip outline with pins on all four sides and a four-point spark in the center.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "npu",
+      "ai processor",
+      "neural chip",
+      "on-device ai",
+      "ai accelerator",
+      "edge inference"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "edge-ai",
+      "chip",
+      "hardware"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "hardware-devices",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:entangled-pair",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "entangled-pair",
+    "label": "Entangled Pair",
+    "purpose": "Represent quantum entanglement between two particles.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "linked",
+      "correlated",
+      "entangled",
+      "pair"
+    ],
+    "use_when": "Use for entanglement, correlated qubits, and quantum networking.",
+    "avoid_when": "Do not use for linked accounts or paired devices without a quantum meaning.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Two overlapping rings, each with a center particle dot.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "entanglement",
+      "correlated qubits",
+      "quantum pair",
+      "epr pair"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "frontier-compute",
+      "linked",
+      "correlated"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "science"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:error-glitch",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "error-glitch",
+    "label": "Error Glitch",
+    "purpose": "Show that an agent or system hit an error or fault.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "fault",
+      "alert",
+      "error",
+      "glitch"
+    ],
+    "use_when": "Use for failed runs, crashed tools, and fault states in agent dashboards.",
+    "avoid_when": "Do not use for warnings that do not block progress; use a standard warning icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A warning triangle with glitch ticks at its sides.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "fault",
+      "agent error",
+      "failure state",
+      "crash"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "fault",
+      "alert"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "error"
+  },
+  {
+    "icon_id": "si:guardrail-path",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "guardrail-path",
+    "label": "Guardrail Path",
+    "purpose": "Represent guardrails that keep agent behavior inside policy bounds.",
+    "category": "security",
+    "semantic_tags": [
+      "bounds",
+      "policy",
+      "guardrail",
+      "path"
+    ],
+    "use_when": "Use for guardrail settings, policy enforcement, and bounded agent behavior.",
+    "avoid_when": "Do not use for roads or navigation lanes.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Two side rails with a dashed path running between them.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "guardrails",
+      "policy bounds",
+      "safety rails",
+      "constraints"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "bounds",
+      "policy"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "agent-state",
+      "governance"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:hallucination-warn",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "hallucination-warn",
+    "label": "Hallucination Warn",
+    "purpose": "Warn that AI output may be hallucinated or needs verification.",
+    "category": "security",
+    "semantic_tags": [
+      "distortion",
+      "verify",
+      "hallucination",
+      "warn"
+    ],
+    "use_when": "Use for hallucination flags, low-confidence answers, and verify-before-trust prompts.",
+    "avoid_when": "Do not use for general errors; use the error icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A speech bubble with a wavy distorted base and an exclamation mark.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "hallucination",
+      "unverified output",
+      "confabulation warning",
+      "check facts"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "distortion",
+      "verify"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "status-feedback",
+      "governance"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:human-in-loop",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "human-in-loop",
+    "label": "Human In Loop",
+    "purpose": "Show that a human reviews or supervises the agent loop.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "oversight",
+      "review",
+      "human",
+      "in",
+      "loop"
+    ],
+    "use_when": "Use for human oversight steps, review checkpoints, and supervised autonomy.",
+    "avoid_when": "Do not use for user profiles or account pages; use a person icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A person inside circular loop arrows.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "human oversight",
+      "supervised",
+      "review loop",
+      "hitl"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "oversight",
+      "review"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "governance",
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:humanoid-robot",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "humanoid-robot",
+    "label": "Humanoid Robot",
+    "purpose": "Represent a humanoid or bipedal robot as a product, feature, or content subject.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "humanoid",
+      "robot",
+      "bipedal",
+      "android",
+      "robotics",
+      "embodied ai",
+      "physical ai"
+    ],
+    "use_when": "Use when the interface refers to humanoid robots, embodied AI, or robotics products and content.",
+    "avoid_when": "Do not use for software-only AI agents, chatbots, or assistants without a physical body; use an agent lifecycle icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A bipedal robot with a rectangular head, torso, arms angled outward, and two legs.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "android robot",
+      "bipedal robot",
+      "humanoid",
+      "robot body",
+      "embodied agent"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "robotics",
+      "humanoid",
+      "hardware"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "robotics",
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:lidar-sensor",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "lidar-sensor",
+    "label": "Lidar Sensor",
+    "purpose": "Represent a lidar or range sensor scanning its surroundings.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "scan",
+      "range",
+      "lidar",
+      "sensor"
+    ],
+    "use_when": "Use for lidar, proximity sensing, and perception systems in robotics and vehicles.",
+    "avoid_when": "Do not use for wifi or network signal strength; use a signal icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A sensor dot with radiating range arcs and a sweep line.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "range sensor",
+      "lidar scan",
+      "proximity sensor",
+      "perception"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "scan",
+      "range"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:loader-orbit",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "loader-orbit",
+    "label": "Loader Orbit",
+    "purpose": "Show indeterminate progress while an agent or system works.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "loading",
+      "spinner",
+      "loader",
+      "orbit"
+    ],
+    "use_when": "Use for in-progress operations without a known duration, such as tool calls or fetches.",
+    "avoid_when": "Do not use when progress percentage is known; use the progress ring instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A dotted orbit ring with a satellite dot around a core.",
+    "motion": {
+      "has_motion": true,
+      "reduced_motion_fallback": "static orbit ring"
+    },
+    "synonyms": [
+      "spinner",
+      "loading",
+      "busy indicator",
+      "working"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "loading",
+      "spinner"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "loading-states",
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "executing"
+  },
+  {
+    "icon_id": "si:machine-pay",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "machine-pay",
+    "label": "Machine to Machine Pay",
+    "purpose": "Represent an autonomous machine-to-machine payment between agents.",
+    "category": "commerce",
+    "semantic_tags": [
+      "m2m",
+      "autonomous",
+      "machine",
+      "to",
+      "pay"
+    ],
+    "use_when": "Use for agent-to-agent settlement, autonomous transactions, and m2m billing.",
+    "avoid_when": "Do not use for human peer-to-peer payments; use a person-based payment icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Two machines exchanging a coin over a dashed link.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "m2m payment",
+      "agent to agent pay",
+      "autonomous transaction",
+      "machine settlement"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "m2m",
+      "autonomous"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "crypto",
+      "multi-agent"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:mcp-connector",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "mcp-connector",
+    "label": "MCP Connector",
+    "purpose": "Represent an MCP server or protocol connection between an agent and a capability.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "plug",
+      "server",
+      "mcp",
+      "connector"
+    ],
+    "use_when": "Use for MCP servers, connector settings, and integration status in agent tooling.",
+    "avoid_when": "Do not use for physical power plugs or charging; use an electrical icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A connector plug with two prongs and a trailing cable.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "mcp server",
+      "model context protocol",
+      "connector",
+      "integration plug",
+      "agent connection"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "plug",
+      "server"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "mcp",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:memory-store",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "memory-store",
+    "label": "Memory Store",
+    "purpose": "Represent agent memory, recall, or a context store.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "context",
+      "recall",
+      "memory",
+      "store"
+    ],
+    "use_when": "Use for agent memory features, recall surfaces, and long-term context stores.",
+    "avoid_when": "Do not use for plain databases without a memory meaning; use a database icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A database cylinder with a pulse line inside.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "agent memory",
+      "recall",
+      "context store",
+      "long term memory",
+      "knowledge store"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "context",
+      "recall"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "data",
+      "agent-state"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:orchestrator",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "orchestrator",
+    "label": "Orchestrator",
+    "purpose": "Represent a supervisor agent coordinating multiple worker agents.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "supervisor",
+      "multi-agent",
+      "orchestrator"
+    ],
+    "use_when": "Use for supervisor and orchestrator roles in multi-agent architecture diagrams and dashboards.",
+    "avoid_when": "Do not use for load balancers or network fan-out without an agent meaning.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A supervisor node fanned out to three worker nodes.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "supervisor agent",
+      "coordinator",
+      "multi-agent control",
+      "agent manager",
+      "fan out"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "supervisor",
+      "multi-agent"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "multi-agent",
+      "architecture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:pipeline-run",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "pipeline-run",
+    "label": "Pipeline Run",
+    "purpose": "Represent a running workflow pipeline of connected stages.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "workflow",
+      "chain",
+      "pipeline",
+      "run"
+    ],
+    "use_when": "Use for agent workflows, chained steps, and pipeline run views.",
+    "avoid_when": "Do not use for physical pipelines or plumbing.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Three connected stages: node, process box, and node.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "workflow",
+      "pipeline",
+      "chain",
+      "stage run",
+      "sequence"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "workflow",
+      "chain"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "architecture",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:plan-branches",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "plan-branches",
+    "label": "Plan Branches",
+    "purpose": "Show an agent decomposing a goal into branching subtasks.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "tasks",
+      "decompose",
+      "plan",
+      "branches"
+    ],
+    "use_when": "Use for plan visibility, task breakdowns, and to-do trees in agent interfaces.",
+    "avoid_when": "Do not use for git branching; use a version control icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A root node branching into two task nodes.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "task breakdown",
+      "planning tree",
+      "subtasks",
+      "decompose",
+      "plan view"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "tasks",
+      "decompose"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "agent-state",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:progress-ring",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "progress-ring",
+    "label": "Progress Ring",
+    "purpose": "Show determinate progress toward completing a task.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "progress",
+      "task",
+      "ring"
+    ],
+    "use_when": "Use when a task has measurable progress, such as batch exports or multi-step plans.",
+    "avoid_when": "Do not use for unknown-duration waits; use the orbit loader instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A partial ring sweep around a clock glyph.",
+    "motion": {
+      "has_motion": true,
+      "reduced_motion_fallback": "static partial ring"
+    },
+    "synonyms": [
+      "task progress",
+      "completion ring",
+      "percent done",
+      "progress circle"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "progress",
+      "task"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "loading-states",
+      "analytics"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "executing"
+  },
+  {
+    "icon_id": "si:prompt-field",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "prompt-field",
+    "label": "Prompt Field",
+    "purpose": "Represent a prompt input where humans instruct an AI.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "input",
+      "ask",
+      "prompt",
+      "field"
+    ],
+    "use_when": "Use for prompt boxes, instruction fields, and ask-AI entry points.",
+    "avoid_when": "Do not use for generic search fields; use a search icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An input field with a text caret and a spark.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "prompt box",
+      "ask ai",
+      "instruction input",
+      "prompt bar"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "input",
+      "ask"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "ui-controls",
+      "communication"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:prompt-injection",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "prompt-injection",
+    "label": "Prompt Injection",
+    "purpose": "Warn about prompt injection attacks entering an input.",
+    "category": "security",
+    "semantic_tags": [
+      "attack",
+      "input",
+      "prompt",
+      "injection"
+    ],
+    "use_when": "Use for prompt injection detections, input sanitization alerts, and security scans.",
+    "avoid_when": "Do not use for medical injections or vaccines.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An input field with an arrow injecting from above and an alert inside.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "injection attack",
+      "malicious prompt",
+      "input attack",
+      "jailbreak attempt"
+    ],
+    "ai_category": "agent-trust-safety",
+    "ai_category_label": "Agent Trust and Safety",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-trust-safety",
+      "attack",
+      "input"
+    ],
+    "job_category": "agent-trust-safety",
+    "secondary_categories": [
+      "developer-tools",
+      "governance"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:quantum-chip",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "quantum-chip",
+    "label": "Quantum Chip",
+    "purpose": "Represent a quantum processing unit or quantum chip.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "qpu",
+      "processor",
+      "quantum",
+      "chip"
+    ],
+    "use_when": "Use for quantum processors, QPU capacity, and quantum hardware features.",
+    "avoid_when": "Do not use for classical CPUs or NPUs; use the edge AI chip instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A pinned chip containing crossed electron orbit ellipses.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "qpu",
+      "quantum processor",
+      "quantum hardware",
+      "quantum computer"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "frontier-compute",
+      "qpu",
+      "processor"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "hardware-devices",
+      "science"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:qubit-sphere",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "qubit-sphere",
+    "label": "Qubit Sphere",
+    "purpose": "Represent a qubit state on a Bloch sphere.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "bloch",
+      "state",
+      "qubit",
+      "sphere"
+    ],
+    "use_when": "Use for quantum bits, quantum state visualizations, and quantum computing features.",
+    "avoid_when": "Do not use for globes or planets.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A sphere with an equator ellipse and a state vector arrow.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "qubit",
+      "bloch sphere",
+      "quantum bit",
+      "quantum state"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "frontier-compute",
+      "bloch",
+      "state"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "hardware-devices",
+      "science"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:retry-route",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "retry-route",
+    "label": "Retry Route",
+    "purpose": "Show that an agent is retrying or rerouting after a failure.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "recover",
+      "reroute",
+      "retry",
+      "route"
+    ],
+    "use_when": "Use when a failed step is automatically retried or routed down a recovery path.",
+    "avoid_when": "Do not use for manual refresh actions; use a plain refresh icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A circular retry arrow around a route node.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "retry",
+      "recovery routing",
+      "reroute",
+      "auto retry",
+      "failover"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "recover",
+      "reroute"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "agent-state",
+      "status-feedback"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "error"
+  },
+  {
+    "icon_id": "si:robot-arm",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "robot-arm",
+    "label": "Robot Arm",
+    "purpose": "Represent an industrial robot arm or manipulator.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "manipulator",
+      "industrial",
+      "robot",
+      "arm"
+    ],
+    "use_when": "Use for industrial automation, manufacturing robotics, and manipulator controls.",
+    "avoid_when": "Do not use for prosthetics or human arms.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A jointed robot arm on a base with an open gripper.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "manipulator",
+      "industrial robot",
+      "robotic arm",
+      "factory automation"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "manipulator",
+      "industrial"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:robot-dog",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "robot-dog",
+    "label": "Robot Dog",
+    "purpose": "Represent a quadruped robot such as an inspection or patrol robot.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "quadruped",
+      "patrol",
+      "robot",
+      "dog"
+    ],
+    "use_when": "Use for quadruped robots, site inspection bots, and robotics fleet views.",
+    "avoid_when": "Do not use for pets or animal content.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A four-legged robot body with a sensor head and tail antenna.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "quadruped robot",
+      "patrol robot",
+      "inspection robot",
+      "robotic dog"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "quadruped",
+      "patrol"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:sandbox-run",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "sandbox-run",
+    "label": "Sandbox Run",
+    "purpose": "Show code or actions executing inside an isolated sandbox.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "isolated",
+      "safe",
+      "sandbox",
+      "run"
+    ],
+    "use_when": "Use for sandboxed execution, isolated runs, and safe evaluation environments.",
+    "avoid_when": "Do not use for 3D or package contexts; use a box icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An isometric cube with a checkmark on its front face.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "sandboxed",
+      "isolated run",
+      "safe execution",
+      "container run"
+    ],
+    "ai_category": "coding-agent-tools",
+    "ai_category_label": "Coding Agent Tools",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "coding-agent-tools",
+      "isolated",
+      "safe"
+    ],
+    "job_category": "coding-agent-tools",
+    "secondary_categories": [
+      "security",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:skill-module",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "skill-module",
+    "label": "Skill Module",
+    "purpose": "Represent an installable agent skill or plugin capability.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "plugin",
+      "capability",
+      "skill",
+      "module"
+    ],
+    "use_when": "Use for agent skills, plugins, and capability marketplaces.",
+    "avoid_when": "Do not use for jigsaw or puzzle games.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A puzzle piece with a plus spark at the top right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "agent skill",
+      "plugin",
+      "capability module",
+      "extension",
+      "add-on"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "plugin",
+      "capability"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "developer-tools",
+      "mcp"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:spend-limit",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "spend-limit",
+    "label": "Spend Limit",
+    "purpose": "Represent a spending cap or budget ceiling on agent payments.",
+    "category": "commerce",
+    "semantic_tags": [
+      "cap",
+      "policy",
+      "spend",
+      "limit"
+    ],
+    "use_when": "Use for spend limits, budget ceilings, and payment policy controls on agent wallets.",
+    "avoid_when": "Do not use for rate limits on API calls; use a throttling icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A wallet with an upward arrow stopped by a dashed ceiling.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "budget cap",
+      "spending ceiling",
+      "payment limit",
+      "wallet policy"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "cap",
+      "policy"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "crypto",
+      "governance"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:stablecoin",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "stablecoin",
+    "label": "Stablecoin",
+    "purpose": "Represent a stablecoin or pegged digital currency.",
+    "category": "commerce",
+    "semantic_tags": [
+      "peg",
+      "currency",
+      "stablecoin"
+    ],
+    "use_when": "Use for stablecoin balances, pegged settlement rails, and stable-value assets.",
+    "avoid_when": "Do not use for volatile cryptocurrencies or fiat cash.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A coin bearing a double bar equals mark for the peg.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "pegged coin",
+      "digital dollar",
+      "stable currency",
+      "usd coin"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "peg",
+      "currency"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "crypto"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:streaming-caret",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "streaming-caret",
+    "label": "Streaming Caret",
+    "purpose": "Show that an AI response is streaming in token by token.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "typing",
+      "response",
+      "streaming",
+      "caret"
+    ],
+    "use_when": "Use while model output is streaming into a chat bubble, editor, or document.",
+    "avoid_when": "Do not use for long-running background work with no visible output; use a loader or progress icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Three text lines with a blinking caret at the streaming edge.",
+    "motion": {
+      "has_motion": true,
+      "reduced_motion_fallback": "static caret without blink"
+    },
+    "synonyms": [
+      "typing indicator",
+      "response streaming",
+      "live output",
+      "generating text"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-lifecycle-states",
+      "typing",
+      "response"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "status-feedback",
+      "loading-states"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped",
+    "state": "executing"
+  },
+  {
+    "icon_id": "si:terminal-agent",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "terminal-agent",
+    "label": "Terminal Agent",
+    "purpose": "Represent a terminal-native coding agent or CLI assistant.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "cli",
+      "shell",
+      "terminal",
+      "agent"
+    ],
+    "use_when": "Use for CLI agents, terminal sessions driven by AI, and shell integrations.",
+    "avoid_when": "Do not use for plain terminals without an agent meaning; use a standard terminal icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A terminal window with a prompt chevron and a spark.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "cli agent",
+      "terminal ai",
+      "shell assistant",
+      "command line agent"
+    ],
+    "ai_category": "coding-agent-tools",
+    "ai_category_label": "Coding Agent Tools",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "coding-agent-tools",
+      "cli",
+      "shell"
+    ],
+    "job_category": "coding-agent-tools",
+    "secondary_categories": [
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:thinking-pulse",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "thinking-pulse",
+    "label": "Thinking Pulse",
+    "purpose": "Show that an AI agent is reasoning, planning, or deciding what to do next.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "thinking",
+      "reasoning",
+      "planning",
+      "ai agent",
+      "processing",
+      "cognition",
+      "agent state"
+    ],
+    "use_when": "Use when an AI agent is preparing an answer, evaluating options, or choosing a next step and you want a calm in-progress signal distinct from a generic spinner.",
+    "avoid_when": "Do not use when the agent is actively executing changes, waiting for human approval, blocked, or failed; use the matching lifecycle icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "state": "thinking",
+    "depicts": "Two brain lobes with a pulse line running through the center.",
+    "motion": {
+      "has_motion": true,
+      "reduced_motion_fallback": "static glyph without pulse animation"
+    },
+    "synonyms": [
+      "ai thinking",
+      "agent reasoning",
+      "reasoning indicator",
+      "thinking indicator",
+      "agent planning",
+      "brain pulse"
+    ],
+    "ai_category": "agent-lifecycle-states",
+    "ai_category_label": "Agent Lifecycle States",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-state",
+      "thinking",
+      "reasoning",
+      "loading-state"
+    ],
+    "job_category": "agent-lifecycle-states",
+    "secondary_categories": [
+      "status-feedback",
+      "loading-states"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:token-meter",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "token-meter",
+    "label": "Token Meter",
+    "purpose": "Show token usage or budget consumption for a session or task.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "usage",
+      "budget",
+      "token",
+      "meter"
+    ],
+    "use_when": "Use for token counters, usage budgets, and cost meters in agent tooling.",
+    "avoid_when": "Do not use for currency or payments; use a payment icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A coin-like double ring with a partial usage arc.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "token usage",
+      "token budget",
+      "usage meter",
+      "token count"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "usage",
+      "budget"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "analytics",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:tool-call",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "tool-call",
+    "label": "Tool Call",
+    "purpose": "Represent an agent invoking a tool or function call.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "function",
+      "invoke",
+      "tool",
+      "call"
+    ],
+    "use_when": "Use for tool call entries in agent transcripts, traces, and permission prompts.",
+    "avoid_when": "Do not use for general settings or configuration; use a gear icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Function parentheses around a lightning bolt.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "function call",
+      "tool use",
+      "invoke tool",
+      "action call",
+      "mcp tool"
+    ],
+    "ai_category": "agent-workflow-mcp",
+    "ai_category_label": "Agent Workflow and MCP",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-workflow-mcp",
+      "function",
+      "invoke"
+    ],
+    "job_category": "agent-workflow-mcp",
+    "secondary_categories": [
+      "mcp",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:voice-agent",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "voice-agent",
+    "label": "Voice Agent",
+    "purpose": "Represent a voice-first AI agent or speech interface.",
+    "category": "frontier_compute",
+    "semantic_tags": [
+      "speech",
+      "waveform",
+      "voice",
+      "agent"
+    ],
+    "use_when": "Use for voice assistants, speech input, and audio-first agent products.",
+    "avoid_when": "Do not use for music or podcast content; use a media icon instead.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A symmetric waveform with a spark at the top right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "voice assistant",
+      "speech ai",
+      "audio agent",
+      "voice interface"
+    ],
+    "ai_category": "frontier-compute",
+    "ai_category_label": "Frontier Compute",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "frontier-compute",
+      "speech",
+      "waveform"
+    ],
+    "job_category": "frontier-compute",
+    "secondary_categories": [
+      "communication",
+      "hardware-devices"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:x402-pay",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "x402-pay",
+    "label": "X402 Payment",
+    "purpose": "Represent the x402 machine payment protocol built on HTTP 402.",
+    "category": "commerce",
+    "semantic_tags": [
+      "protocol",
+      "http",
+      "x402",
+      "payment"
+    ],
+    "use_when": "Use for x402 protocol support, HTTP 402 payment-required flows, and machine payment rails.",
+    "avoid_when": "Do not use for generic HTTP errors or paywalled articles.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A badge with the number 402 and diagonal motion strokes.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "x402",
+      "http 402",
+      "payment required",
+      "machine payment protocol"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "protocol",
+      "http"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "crypto",
+      "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  }
+]

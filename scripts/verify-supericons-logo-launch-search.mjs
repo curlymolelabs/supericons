@@ -204,14 +204,19 @@ const remoteServerSource = await readText('mcp/remote-server.js');
 
 const icons = iconIndex.icons || [];
 const supericons = icons.filter((icon) => icon.lib === 'si');
+// The si library now carries brand logos plus original concept icons; this
+// launch verifier only asserts the logo slice.
+const supericonsLogos = supericons.filter((icon) => icon.assetType === 'brand-logo');
 const publicSupericonsRecords = publicRecords.filter((record) => record.icon_id?.startsWith('si:'));
 const mcpSupericonsRecords = mcpRecords.filter((record) => record.icon_id?.startsWith('si:'));
+const publicSupericonsLogoRecords = publicSupericonsRecords.filter((record) => record.asset_type !== 'concept');
+const mcpSupericonsLogoRecords = mcpSupericonsRecords.filter((record) => record.asset_type !== 'concept');
 const freeLibraryCount = new Set(icons.map((icon) => icon.lib)).size;
 
-assert.equal(supericons.length, 50, 'public icon index should include 50 Supericons logos');
+assert.equal(supericonsLogos.length, 50, 'public icon index should include 50 Supericons logos');
 assert.equal(sourceSupericonsRecords.length, 50, 'source registry should include 50 Supericons logo records');
-assert.equal(publicSupericonsRecords.length, 50, 'public registry should include 50 Supericons logo records');
-assert.equal(mcpSupericonsRecords.length, 50, 'MCP registry should include 50 Supericons logo records');
+assert.equal(publicSupericonsLogoRecords.length, 50, 'public registry should include 50 Supericons logo records');
+assert.equal(mcpSupericonsLogoRecords.length, 50, 'MCP registry should include 50 Supericons logo records');
 assert.deepEqual(mcpRecords, publicRecords, 'MCP registry records should mirror public registry records');
 assert.equal(freeLibraryCount, 11, 'public icon index should include 11 free libraries including Supericons');
 assert.equal(productFacts.freeIconCount, icons.length, 'data product facts should match public icon count');
@@ -222,8 +227,8 @@ assert.match(mcpIndexSource, /si:\s*\{\s*name:\s*'Supericons'/, 'local stdio MCP
 assert.match(remoteServerSource, /\['si',\s*'Supericons'/, 'hosted MCP should advertise the Supericons library');
 
 for (const record of sourceSupericonsRecords) assertProfileRecord(record);
-for (const record of publicSupericonsRecords) assertPublicRegistryRecord(record);
-for (const icon of supericons) assertPublicIndexProfile(icon);
+for (const record of publicSupericonsLogoRecords) assertPublicRegistryRecord(record);
+for (const icon of supericonsLogos) assertPublicIndexProfile(icon);
 
 console.log('[PASS] profile coverage: 50 source records include launch profile fields');
 console.log('[PASS] public coverage: 50 public/MCP records expose public-safe semantic fields');

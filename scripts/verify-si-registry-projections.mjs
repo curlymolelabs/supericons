@@ -70,10 +70,15 @@ const freeRecordGroups = await Promise.all(
     .filter((recordGroup) => recordGroup.sourceGroup === 'free')
     .map(async (recordGroup) => {
       const records = await readJson(path.join(repoRoot, 'data', 'si-registry', recordGroup.path));
-      return Array.isArray(records) ? records.length : 0;
+      return Array.isArray(records) ? records : [];
     })
 );
-const expectedFreeCount = freeRecordGroups.reduce((total, count) => total + count, 0);
+const expectedFreeCount = freeRecordGroups.reduce((total, records) => total + records.length, 0);
+const expectedFreeReviewStates = freeRecordGroups.flat().reduce((counts, record) => {
+  const key = record.review_state ?? 'unknown';
+  counts[key] = (counts[key] || 0) + 1;
+  return counts;
+}, {});
 const expectedPremiumCount = Object.values(premiumManifest).reduce(
   (total, collection) => total + (Array.isArray(collection?.icons) ? collection.icons.length : 0),
   0
@@ -96,8 +101,8 @@ assert.deepEqual(summary.accessTiers, {
   protected_premium_record: expectedPremiumCount,
 });
 assert.deepEqual(summary.reviewStates, {
-  source_mapped: expectedPremiumCount,
-  human_reviewed: expectedFreeCount,
+  ...expectedFreeReviewStates,
+  source_mapped: (expectedFreeReviewStates.source_mapped || 0) + expectedPremiumCount,
 });
 assert.equal(summary.publicRecordCount, expectedFreeCount);
 assert.equal(summary.internalRecordCount, expectedTotalCount);

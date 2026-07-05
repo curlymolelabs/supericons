@@ -9,9 +9,11 @@
     "data_controls",
     "destructive_actions",
     "engineering_developer_tools",
+    "frontier_compute",
     "message_actions",
     "media_playback",
     "navigation_interface",
+    "physical_automation",
     "search_discovery",
     "security"
     ,
@@ -49,7 +51,16 @@
   ],
   "state": [
     "active",
-    "verified"
+    "verified",
+    "idle",
+    "thinking",
+    "executing",
+    "waiting",
+    "blocked",
+    "needs_approval",
+    "confirmed",
+    "error",
+    "completed"
   ],
   "status": [
     "draft",
