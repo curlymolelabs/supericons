@@ -76,6 +76,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   ar: {
     products: {
       'ai-agentic': { name: 'ذكاء اصطناعي وكيل', description: 'حالات تطبيقات أصلية للذكاء الاصطناعي وحركات ملاحظات الوكلاء' },
+      'agentic-motion': { name: 'حركة الوكلاء', description: 'أيقونات وكلاء حية: تسليم المهام وحالات الوكيل ومدفوعات الآلات بالحركة' },
       'status-feedback': { name: 'الحالة والملاحظات', description: 'حركات حالة التطبيق: تحميل، نجاح، خطأ، إشعارات' },
       ecommerce: { name: 'التجارة الإلكترونية', description: 'حركات ملاحظات السلة والدفع والشحن' },
       'navigation-menus': { name: 'التنقل والقوائم', description: 'حركات واجهة المستخدم: القائمة، التبويبات، الشريط الجانبي، البحث' },
@@ -90,6 +91,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   de: {
     products: {
       'ai-agentic': { name: 'Agentic AI', description: 'KI-native App-Zustände und Agenten-Feedback-Animationen' },
+      'agentic-motion': { name: 'Agentic Motion', description: 'Lebendige Agenten-Icons: Übergaben, Zustände und Maschinenzahlungen in Bewegung' },
       'status-feedback': { name: 'Status & Feedback', description: 'App-Zustandsanimationen: Laden, Erfolg, Fehler und Benachrichtigungen' },
       ecommerce: { name: 'E-Commerce', description: 'Feedback-Animationen für Warenkorb, Zahlung und Versand' },
       'navigation-menus': { name: 'Navigation & Menüs', description: 'UI-Chrome-Animationen: Hamburger, Tabs, Seitenleiste und Suche' },
@@ -104,6 +106,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   en: {
     products: {
       'ai-agentic': { name: 'Agentic AI', description: 'AI-native app states and agent feedback animations' },
+      'agentic-motion': { name: 'Agentic Motion', description: 'Living agent icons: handoffs, lifecycle states, and machine payments in motion' },
       'status-feedback': { name: 'Status & Feedback', description: 'App state animations: loading, success, error, notifications' },
       ecommerce: { name: 'E-commerce', description: 'Cart, payment, and shipping feedback animations' },
       'navigation-menus': { name: 'Navigation & Menus', description: 'UI chrome animations: hamburger, tabs, sidebar, search' },
@@ -118,6 +121,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   es: {
     products: {
       'ai-agentic': { name: 'IA agéntica', description: 'Estados de apps nativas de IA y animaciones de feedback de agentes' },
+      'agentic-motion': { name: 'Agentic Motion', description: 'Iconos de agentes vivos: transferencias, estados y pagos entre máquinas en movimiento' },
       'status-feedback': { name: 'Estado y feedback', description: 'Animaciones de estado de app: carga, éxito, error y notificaciones' },
       ecommerce: { name: 'Comercio electrónico', description: 'Animaciones de feedback para carrito, pago y envío' },
       'navigation-menus': { name: 'Navegación y menús', description: 'Animaciones de interfaz: hamburguesa, pestañas, barra lateral y búsqueda' },
@@ -132,6 +136,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   hi: {
     products: {
       'ai-agentic': { name: 'एजेंटिक AI', description: 'AI-नेटिव ऐप अवस्थाएँ और एजेंट फीडबैक एनिमेशन' },
+      'agentic-motion': { name: 'एजेंटिक मोशन', description: 'जीवंत एजेंट आइकन: हैंडऑफ़, अवस्थाएँ और मशीन भुगतान गति में' },
       'status-feedback': { name: 'स्थिति और फीडबैक', description: 'ऐप स्थिति एनिमेशन: लोडिंग, सफलता, त्रुटि, सूचनाएँ' },
       ecommerce: { name: 'ई-कॉमर्स', description: 'कार्ट, भुगतान और शिपिंग फीडबैक एनिमेशन' },
       'navigation-menus': { name: 'नेविगेशन और मेनू', description: 'UI क्रोम एनिमेशन: हैमबर्गर, टैब, साइडबार, खोज' },
@@ -146,6 +151,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   ja: {
     products: {
       'ai-agentic': { name: 'エージェント AI', description: 'AI ネイティブアプリの状態とエージェントフィードバックのアニメーション' },
+      'agentic-motion': { name: 'エージェンティックモーション', description: '動くエージェントアイコン: ハンドオフ、状態、マシン間決済をアニメーションで表現' },
       'status-feedback': { name: '状態とフィードバック', description: '読み込み、成功、エラー、通知などのアプリ状態アニメーション' },
       ecommerce: { name: 'E コマース', description: 'カート、決済、配送フィードバックのアニメーション' },
       'navigation-menus': { name: 'ナビゲーションとメニュー', description: 'ハンバーガー、タブ、サイドバー、検索などの UI クロームアニメーション' },
@@ -160,6 +166,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   ko: {
     products: {
       'ai-agentic': { name: '에이전트 AI', description: 'AI 네이티브 앱 상태와 에이전트 피드백 애니메이션' },
+      'agentic-motion': { name: '에이전틱 모션', description: '살아있는 에이전트 아이콘: 핸드오프, 상태, 머신 결제를 모션으로 표현' },
       'status-feedback': { name: '상태 및 피드백', description: '로딩, 성공, 오류, 알림 등 앱 상태 애니메이션' },
       ecommerce: { name: '이커머스', description: '장바구니, 결제, 배송 피드백 애니메이션' },
       'navigation-menus': { name: '내비게이션 및 메뉴', description: '햄버거, 탭, 사이드바, 검색 등 UI 크롬 애니메이션' },
@@ -174,6 +181,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   pt: {
     products: {
       'ai-agentic': { name: 'IA agêntica', description: 'Estados de apps nativos de IA e animações de feedback de agentes' },
+      'agentic-motion': { name: 'Agentic Motion', description: 'Ícones de agentes vivos: transferências, estados e pagamentos entre máquinas em movimento' },
       'status-feedback': { name: 'Status e feedback', description: 'Animações de estado do app: carregamento, sucesso, erro e notificações' },
       ecommerce: { name: 'E-commerce', description: 'Animações de feedback para carrinho, pagamento e entrega' },
       'navigation-menus': { name: 'Navegação e menus', description: 'Animações de interface: menu, abas, barra lateral e busca' },
@@ -188,6 +196,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   th: {
     products: {
       'ai-agentic': { name: 'AI แบบเอเจนต์', description: 'สถานะแอปแบบ AI-native และแอนิเมชันฟีดแบ็กของเอเจนต์' },
+      'agentic-motion': { name: 'เอเจนติกโมชัน', description: 'ไอคอนเอเจนต์ที่มีชีวิต: การส่งต่องาน สถานะ และการชำระเงินระหว่างเครื่องแบบเคลื่อนไหว' },
       'status-feedback': { name: 'สถานะและฟีดแบ็ก', description: 'แอนิเมชันสถานะแอป: โหลด สำเร็จ ข้อผิดพลาด การแจ้งเตือน' },
       ecommerce: { name: 'อีคอมเมิร์ซ', description: 'แอนิเมชันฟีดแบ็กสำหรับรถเข็น การชำระเงิน และการจัดส่ง' },
       'navigation-menus': { name: 'การนำทางและเมนู', description: 'แอนิเมชัน UI: เมนู แท็บ แถบด้านข้าง การค้นหา' },
@@ -202,6 +211,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   vi: {
     products: {
       'ai-agentic': { name: 'AI tác nhân', description: 'Trạng thái app gốc AI và hiệu ứng phản hồi tác nhân' },
+      'agentic-motion': { name: 'Agentic Motion', description: 'Biểu tượng agent sống động: bàn giao, trạng thái và thanh toán máy với máy trong chuyển động' },
       'status-feedback': { name: 'Trạng thái và phản hồi', description: 'Hiệu ứng trạng thái app: tải, thành công, lỗi, thông báo' },
       ecommerce: { name: 'Thương mại điện tử', description: 'Hiệu ứng phản hồi cho giỏ hàng, thanh toán và giao hàng' },
       'navigation-menus': { name: 'Điều hướng và menu', description: 'Hiệu ứng giao diện: hamburger, tab, thanh bên, tìm kiếm' },
@@ -216,6 +226,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   'zh-Hans': {
     products: {
       'ai-agentic': { name: '代理式 AI', description: 'AI 原生应用状态和代理反馈动效' },
+      'agentic-motion': { name: '智能体动效', description: '生动的智能体图标：任务交接、状态与机器支付的动态呈现' },
       'status-feedback': { name: '状态与反馈', description: '应用状态动效：加载、成功、错误、通知' },
       ecommerce: { name: '电商', description: '购物车、付款和配送反馈动效' },
       'navigation-menus': { name: '导航与菜单', description: '界面框架动效：汉堡菜单、标签页、侧边栏、搜索' },
@@ -230,6 +241,7 @@ const checkoutCopy: Record<string, CheckoutLocaleCopy> = {
   'zh-Hant': {
     products: {
       'ai-agentic': { name: '代理式 AI', description: 'AI 原生應用狀態與代理回饋動效' },
+      'agentic-motion': { name: '智慧代理動效', description: '生動的代理圖示：任務交接、狀態與機器支付的動態呈現' },
       'status-feedback': { name: '狀態與回饋', description: '應用狀態動效：載入、成功、錯誤、通知' },
       ecommerce: { name: '電子商務', description: '購物車、付款與配送回饋動效' },
       'navigation-menus': { name: '導覽與選單', description: '介面框架動效：漢堡選單、分頁、側邊欄、搜尋' },

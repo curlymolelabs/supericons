@@ -31,6 +31,12 @@ import { normalizeCjkSearchText } from './lib/cjk-search-core.js';
 import { buildWebSearchQueryPlan } from './lib/web-cjk-search-smoke.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
+  hasPremiumMotion,
+  isPremiumMotionPackProvisioned,
+  mountPremiumMotionPreview,
+  PREMIUM_MOTION_PACK,
+} from './lib/si-premium-motion.js';
+import {
   fetchPopularityMap,
   logCopyEvent,
   logFavoriteEvent,
@@ -103,6 +109,8 @@ const COLOR_PALETTES = {
 
 const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
 const FLOATING_SEARCH_MEDIA = window.matchMedia('(max-width: 600px)');
+const SEARCH_ANALYTICS_PRODUCTION_HOSTS = new Set(['supericons.dev', 'www.supericons.dev']);
+const SEARCH_ANALYTICS_SOURCE_VALUES = new Set(['web', 'local_web', 'preview_web', 'test_web']);
 const RECENT_SEARCHES_STORAGE_KEY = 'si-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 const LOCALE_STORAGE_KEY = 'supericons.locale';
@@ -273,7 +281,7 @@ function applyExportCustomization(rawSvg, icon, customize = state.customize, opt
   const exportStrokeWidth = getExportStrokeWidth(icon, c);
   if (/stroke-width="/i.test(svg)) {
     svg = svg.replace(/stroke-width="[^"]*"/gi, `stroke-width="${exportStrokeWidth}"`);
-  } else if (libraryMeta[icon.lib]?.hasStroke !== false && /\bstroke="/i.test(svg)) {
+  } else if (iconSupportsStroke(icon) && /\bstroke="/i.test(svg)) {
     svg = svg.replace(/<svg([^>]*)>/i, `<svg$1 stroke-width="${exportStrokeWidth}">`);
   }
 
@@ -447,6 +455,42 @@ function iconKey(icon) {
 
 function getCurrentSearchQuery() {
   return state.searchQuery?.trim() || null;
+}
+
+function readSearchAnalyticsEnvValue(name) {
+  try {
+    return String(import.meta.env?.[name] || '').trim();
+  } catch {
+    return '';
+  }
+}
+
+function getSearchAnalyticsProductionHosts() {
+  const configured = readSearchAnalyticsEnvValue('VITE_SUPERICONS_PRODUCTION_HOSTS')
+    .split(',')
+    .map((host) => host.trim().toLowerCase())
+    .filter(Boolean);
+  return new Set([...SEARCH_ANALYTICS_PRODUCTION_HOSTS, ...configured]);
+}
+
+function getSearchAnalyticsSource() {
+  const override = readSearchAnalyticsEnvValue('VITE_SUPERICONS_ANALYTICS_SOURCE')
+    || String(window.__SUPERICONS_ANALYTICS_SOURCE__ || '').trim();
+  const normalizedOverride = override.toLowerCase();
+  if (SEARCH_ANALYTICS_SOURCE_VALUES.has(normalizedOverride)) return normalizedOverride;
+
+  const hostname = String(window.location?.hostname || '').trim().toLowerCase();
+  if (!hostname) return 'web';
+  if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname === '[::1]') {
+    return 'local_web';
+  }
+  if (getSearchAnalyticsProductionHosts().has(hostname)) {
+    return 'web';
+  }
+  if (hostname.endsWith('.netlify.app')) {
+    return 'preview_web';
+  }
+  return 'preview_web';
 }
 
 function getResultPositionForIcon(icon) {
@@ -1186,6 +1230,14 @@ const libraryMeta = {
   premium: { name: 'Premium', iconKey: 'collections', fallbackIcon: 'diamond', hasStroke: true, hasFilled: false },
 };
 
+// Stroke support is a library-level default, but the si library mixes filled
+// brand logos with stroke-drawn concept icons, so concept icons override it.
+function iconSupportsStroke(icon) {
+  if (!icon) return false;
+  if (icon.lib === 'si') return icon.assetType === 'concept-icon';
+  return libraryMeta[icon.lib]?.hasStroke !== false;
+}
+
 const librarySidebarOrder = [
   'si',
   'mingcute',
@@ -1431,7 +1483,7 @@ function renderIconCell(icon) {
   }
 
   const libMeta = libraryMeta[icon.lib] || {};
-  const libSupportsStroke = libMeta.hasStroke !== false;
+  const libSupportsStroke = iconSupportsStroke(icon);
   const scaledStroke = c.strokeWidth * (libMeta.strokeScale || 1);
   const strokeStyle = libSupportsStroke ? `--si-stroke-width:${scaledStroke};` : '';
   const isFilled = !libSupportsStroke;
@@ -1857,7 +1909,7 @@ async function refreshHostedSearchResults({
       library: getHostedSearchLibraryFilter(),
       limit: Math.max(state.batchSize, 60),
       locale,
-      source: 'web',
+      source: getSearchAnalyticsSource(),
     });
 
     if (requestId !== hostedSearchRequestSeq) return;
@@ -2313,7 +2365,7 @@ function renderPanelForIcon(icon) {
     const fontVars = `font-variation-settings:'FILL' ${c.materialFill},'wght' ${c.materialWeight},'GRAD' ${c.materialGrade},'opsz' ${c.materialOpticalSize};`;
     els.panelPreview.innerHTML = `<span class="material-symbols-outlined panel__preview-icon" style="font-size:64px;${fontVars}color:${c.color};">${icon.id}</span>`;
   } else {
-    const isFilled = libraryMeta[icon.lib]?.hasStroke === false;
+    const isFilled = !iconSupportsStroke(icon);
     const filledClass = isFilled ? ' panel__preview-icon--filled' : '';
     const previewScale = (libraryMeta[icon.lib]?.strokeScale || 1);
     const previewSize = libraryMeta[icon.lib]?.previewSize || 64;
@@ -2382,7 +2434,7 @@ function renderPanelForIcon(icon) {
 
     <!-- Stroke Width (SVG only) -->
     ${icon.type === 'svg' ? (() => {
-      const supportsStroke = libraryMeta[icon.lib]?.hasStroke !== false;
+      const supportsStroke = iconSupportsStroke(icon);
       const disabledAttr = supportsStroke ? '' : ' disabled';
       const disabledClass = supportsStroke ? '' : ' customize-slider--disabled';
       const hint = supportsStroke ? '' : `<p class="customize-hint"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:-2px">info</span> ${t('customize.strokeNoEffect')}</p>`;
@@ -2472,6 +2524,20 @@ function renderPanelForIcon(icon) {
       ` : ''}
     </div>
 
+    ${hasPremiumMotion(icon) ? `
+    <!-- Premium Motion -->
+    <div class="panel__section premium-motion">
+      <div class="panel__section-title">Premium motion <span class="premium-motion__gem">◆</span></div>
+      <div class="premium-motion__preview" id="premiumMotionPreview"></div>
+      <div class="premium-motion__hint">Hover the preview to play the animated version</div>
+      <div class="premium-motion__buy">
+        <button class="premium-motion__buy-btn premium-motion__buy-btn--primary" id="premiumBuyIcon">Buy icon · $1</button>
+        <button class="premium-motion__buy-btn" id="premiumBuyPack">Buy pack · $9.99</button>
+      </div>
+      <div class="premium-motion__note">Included with Pro · animated source delivered after purchase · static version stays free</div>
+    </div>
+    ` : ''}
+
     <!-- Export -->
     <div class="panel__section">
       <div class="panel__section-title">${t('customize.export')}</div>
@@ -2551,6 +2617,28 @@ function renderPanelForIcon(icon) {
 
   // Attach customize event listeners
   attachCustomizeListeners(icon);
+
+  // Premium motion preview (full fidelity, closed shadow root)
+  const premiumHost = panelBody.querySelector('#premiumMotionPreview');
+  if (premiumHost) {
+    mountPremiumMotionPreview(premiumHost, icon);
+    const buyIcon = panelBody.querySelector('#premiumBuyIcon');
+    const buyPack = panelBody.querySelector('#premiumBuyPack');
+    if (buyIcon) buyIcon.addEventListener('click', () => {
+      showToast('Single icon purchase is coming after the pack pilot.');
+    });
+    if (buyPack) buyPack.addEventListener('click', async () => {
+      if (!isPremiumMotionPackProvisioned()) {
+        showToast('This pack is not provisioned for checkout yet.');
+        return;
+      }
+      const { startPackCheckout } = await import('./store.js');
+      startPackCheckout({
+        priceId: PREMIUM_MOTION_PACK.stripePriceId,
+        productId: PREMIUM_MOTION_PACK.productId,
+      });
+    });
+  }
 }
 
 // ============================================================
@@ -2618,7 +2706,7 @@ function renderBatchPanel() {
     if (icon.type === 'font') {
       return `<div class="batch-preview-item" title="${icon.name}"><span class="material-symbols-outlined" style="font-size:24px;color:${c.color}">${icon.id}</span></div>`;
     }
-    const isFilled = libraryMeta[icon.lib]?.hasStroke === false;
+    const isFilled = !iconSupportsStroke(icon);
     const cls = isFilled ? ' panel__preview-icon--filled' : '';
     const previewScale = (libraryMeta[icon.lib]?.strokeScale || 1);
     return `<div class="batch-preview-item${cls}" title="${icon.name}" style="color:${c.color};--si-stroke-width:${c.strokeWidth * previewScale}">${normSvg(icon.svg)}</div>`;
@@ -3356,7 +3444,7 @@ function updatePreview(icon) {
     const fontVars = `font-variation-settings:'FILL' ${c.materialFill},'wght' ${c.materialWeight},'GRAD' ${c.materialGrade},'opsz' ${c.materialOpticalSize};`;
     iconHtml = `<span class="material-symbols-outlined panel__preview-icon ${animClass}" style="font-size:64px;${fontVars}color:${c.color};">${icon.id}</span>`;
   } else {
-    const isFilled = libraryMeta[icon.lib]?.hasStroke === false;
+    const isFilled = !iconSupportsStroke(icon);
     const filledClass = isFilled ? ' panel__preview-icon--filled' : '';
     const liveScale = (libraryMeta[icon.lib]?.strokeScale || 1);
     const previewSize = libraryMeta[icon.lib]?.previewSize || 64;

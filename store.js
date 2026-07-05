@@ -1061,6 +1061,7 @@ function renderPackCatalog() {
     }
     // Sort products by demand priority
     const slugPriority = {
+      'agentic-motion': 0,
       'ai-agentic': 1,
       'status-feedback': 2,
       'navigation-ui': 3,
@@ -1072,7 +1073,7 @@ function renderPackCatalog() {
       'media-playback': 9,
       'security-auth': 10,
     };
-    const sorted = [...products].sort((a, b) => (slugPriority[a.slug] || 99) - (slugPriority[b.slug] || 99));
+    const sorted = [...products].sort((a, b) => (slugPriority[a.slug] ?? 99) - (slugPriority[b.slug] ?? 99));
     sorted.forEach(product => {
       catalog.appendChild(createPackCard(product));
     });
@@ -1144,7 +1145,11 @@ function createPackCard(product) {
 
   card.innerHTML = `
     <div class="pack-card__header">
-      <span class="pack-card__type">${product.pack_type === 'bundle' ? t('packs.types.bundle', {}, 'Bundle') : t('packs.types.launchEdition', {}, 'Launch Edition')}</span>
+      <span class="pack-card__type">${product.pack_type === 'bundle'
+        ? t('packs.types.bundle', {}, 'Bundle')
+        : (product.v1_launch
+          ? t('packs.types.launchEdition', {}, 'Launch Edition')
+          : t('packs.types.supericonsEdition', {}, 'Supericons Edition'))}</span>
       ${isPurchased ? `<span class="pack-card__badge ${badgeMeta.className}">${badgeMeta.text}</span>` : ''}
     </div>
     <h3 class="pack-card__name">${getLocalizedProductName(product)}</h3>
@@ -6178,6 +6183,59 @@ async function handleLaunchEditionPurchase() {
   } catch (err) {
     showToast(err.message || t('purchaseFlow.paymentError', {}, 'Payment error. Please try again.'));
     console.error('[Store] Launch Edition checkout error:', err);
+  }
+}
+
+/**
+ * Starts a Stripe checkout for a single premium pack by explicit price and
+ * product ids. Used by surfaces outside the packs view, such as the premium
+ * motion section in the customize panel.
+ */
+export async function startPackCheckout({ priceId, productId, successParams = {} }) {
+  if (!priceId || !productId) {
+    showToast(t('purchaseFlow.checkoutFailed', {}, 'Checkout failed'));
+    return;
+  }
+  if (!isLoggedIn()) {
+    promptForAuth('purchase');
+    showToast(t('purchaseFlow.signInToPurchase', {}, 'Sign in to continue your purchase'));
+    return;
+  }
+
+  showToast(t('purchaseFlow.redirecting', {}, 'Redirecting to checkout...'));
+
+  try {
+    const sb = getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
+    const token = session?.access_token;
+
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'apikey': SUPABASE_ANON,
+      },
+      body: JSON.stringify({
+        price_id: priceId,
+        product_id: productId,
+        mode: 'payment',
+        locale: getStripeLocale(),
+        success_url: buildLocalizedReturnUrl({ purchase: 'success', product_id: productId, ...successParams }),
+        cancel_url: buildLocalizedReturnUrl({ purchase: 'canceled' }),
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || t('purchaseFlow.checkoutFailed', {}, 'Checkout failed'));
+    }
+
+    const { url } = await res.json();
+    if (url) window.location.href = url;
+  } catch (err) {
+    showToast(err.message || t('purchaseFlow.paymentError', {}, 'Payment error. Please try again.'));
+    console.error('[Store] Pack checkout error:', err);
   }
 }
 // ── Credit Redemption ─────────────────────────────────────────

@@ -4923,5 +4923,621 @@
       "terminal-access": "d2l01n",
       "data-guard": "wa7g98"
     }
+  },
+  "agentic-motion": {
+    "name": "Agentic Motion",
+    "description": "Living agent icons: handoffs, lifecycle states, and machine payments in motion",
+    "css": "agentic-motion.css",
+    "icons": [
+      {
+        "name": "agent-commit",
+        "purpose": "Represent a commit authored by an AI coding agent.",
+        "tags": [
+          "git",
+          "save",
+          "agent",
+          "commit"
+        ],
+        "category": "coding"
+      },
+      {
+        "name": "agent-diff",
+        "purpose": "Represent a code diff produced by an AI coding agent.",
+        "tags": [
+          "patch",
+          "change",
+          "agent",
+          "diff"
+        ],
+        "category": "coding"
+      },
+      {
+        "name": "agent-face",
+        "purpose": "Represent an AI agent or assistant as a clear, friendly avatar.",
+        "tags": [
+          "bot",
+          "avatar",
+          "assistant",
+          "agent",
+          "face"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "agent-handoff",
+        "purpose": "A task dot travels the arc from one agent to the other; the receiver pulses on catch.",
+        "tags": [
+          "handoff",
+          "delegation",
+          "multi-agent",
+          "transfer",
+          "agent"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "agent-id-badge",
+        "purpose": "Represent a scoped identity badge for an AI agent.",
+        "tags": [
+          "identity",
+          "scope",
+          "agent",
+          "id",
+          "badge"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "agent-pr",
+        "purpose": "Represent a pull request opened by an AI coding agent.",
+        "tags": [
+          "git",
+          "review",
+          "agent",
+          "pull",
+          "request"
+        ],
+        "category": "coding"
+      },
+      {
+        "name": "agent-swarm",
+        "purpose": "Represent a decentralized swarm of cooperating agents.",
+        "tags": [
+          "mesh",
+          "cluster",
+          "agent",
+          "swarm"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "agent-wallet",
+        "purpose": "Represent a wallet owned and operated by an AI agent.",
+        "tags": [
+          "funds",
+          "account",
+          "agent",
+          "wallet"
+        ],
+        "category": "payments"
+      },
+      {
+        "name": "approval-gate",
+        "purpose": "Show that an agent is paused at a gate waiting for human approval.",
+        "tags": [
+          "consent",
+          "pause",
+          "approval",
+          "gate"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "ar-glasses",
+        "purpose": "Represent AI or augmented reality smart glasses.",
+        "tags": [
+          "wearable",
+          "xr",
+          "ai",
+          "glasses"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "autonomy-dial",
+        "purpose": "Represent an adjustable level of agent autonomy or delegation.",
+        "tags": [
+          "delegation",
+          "level",
+          "autonomy",
+          "dial"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "context-gauge",
+        "purpose": "Show how much of the model context window is used.",
+        "tags": [
+          "window",
+          "capacity",
+          "context",
+          "gauge"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "delivery-robot",
+        "purpose": "Represent a wheeled sidewalk delivery robot.",
+        "tags": [
+          "sidewalk",
+          "parcel",
+          "delivery",
+          "robot"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "done-spark",
+        "purpose": "Show that an agent task finished successfully, with a touch of delight.",
+        "tags": [
+          "complete",
+          "success",
+          "done",
+          "spark"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "drone-delivery",
+        "purpose": "Represent a drone carrying a delivery parcel.",
+        "tags": [
+          "parcel",
+          "drop",
+          "drone",
+          "delivery"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "drone-quad",
+        "purpose": "Represent a quadcopter drone.",
+        "tags": [
+          "uav",
+          "fpv",
+          "quadcopter",
+          "drone"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "edge-ai-chip",
+        "purpose": "Represent on-device or edge AI compute such as an NPU or local inference hardware.",
+        "tags": [
+          "npu",
+          "chip",
+          "on-device ai",
+          "edge computing",
+          "local inference"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "entangled-pair",
+        "purpose": "Represent quantum entanglement between two particles.",
+        "tags": [
+          "linked",
+          "correlated",
+          "entangled",
+          "pair"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "error-glitch",
+        "purpose": "Show that an agent or system hit an error or fault.",
+        "tags": [
+          "fault",
+          "alert",
+          "error",
+          "glitch"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "guardrail-path",
+        "purpose": "Represent guardrails that keep agent behavior inside policy bounds.",
+        "tags": [
+          "bounds",
+          "policy",
+          "guardrail",
+          "path"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "hallucination-warn",
+        "purpose": "Warn that AI output may be hallucinated or needs verification.",
+        "tags": [
+          "distortion",
+          "verify",
+          "hallucination",
+          "warn"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "human-in-loop",
+        "purpose": "Show that a human reviews or supervises the agent loop.",
+        "tags": [
+          "oversight",
+          "review",
+          "human",
+          "in",
+          "loop"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "humanoid-robot",
+        "purpose": "Represent a humanoid or bipedal robot as a product, feature, or content subject.",
+        "tags": [
+          "humanoid",
+          "robot",
+          "bipedal",
+          "android",
+          "robotics"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "lidar-sensor",
+        "purpose": "Represent a lidar or range sensor scanning its surroundings.",
+        "tags": [
+          "scan",
+          "range",
+          "lidar",
+          "sensor"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "loader-orbit",
+        "purpose": "Show indeterminate progress while an agent or system works.",
+        "tags": [
+          "loading",
+          "spinner",
+          "loader",
+          "orbit"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "machine-pay",
+        "purpose": "Represent an autonomous machine-to-machine payment between agents.",
+        "tags": [
+          "m2m",
+          "autonomous",
+          "machine",
+          "to",
+          "pay"
+        ],
+        "category": "payments"
+      },
+      {
+        "name": "mcp-connector",
+        "purpose": "Represent an MCP server or protocol connection between an agent and a capability.",
+        "tags": [
+          "plug",
+          "server",
+          "mcp",
+          "connector"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "memory-store",
+        "purpose": "Represent agent memory, recall, or a context store.",
+        "tags": [
+          "context",
+          "recall",
+          "memory",
+          "store"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "orchestrator",
+        "purpose": "Represent a supervisor agent coordinating multiple worker agents.",
+        "tags": [
+          "supervisor",
+          "multi-agent",
+          "orchestrator"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "pipeline-run",
+        "purpose": "Represent a running workflow pipeline of connected stages.",
+        "tags": [
+          "workflow",
+          "chain",
+          "pipeline",
+          "run"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "plan-branches",
+        "purpose": "Show an agent decomposing a goal into branching subtasks.",
+        "tags": [
+          "tasks",
+          "decompose",
+          "plan",
+          "branches"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "progress-ring",
+        "purpose": "Show determinate progress toward completing a task.",
+        "tags": [
+          "progress",
+          "task",
+          "ring"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "prompt-field",
+        "purpose": "Represent a prompt input where humans instruct an AI.",
+        "tags": [
+          "input",
+          "ask",
+          "prompt",
+          "field"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "prompt-injection",
+        "purpose": "Warn about prompt injection attacks entering an input.",
+        "tags": [
+          "attack",
+          "input",
+          "prompt",
+          "injection"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "quantum-chip",
+        "purpose": "Represent a quantum processing unit or quantum chip.",
+        "tags": [
+          "qpu",
+          "processor",
+          "quantum",
+          "chip"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "qubit-sphere",
+        "purpose": "Represent a qubit state on a Bloch sphere.",
+        "tags": [
+          "bloch",
+          "state",
+          "qubit",
+          "sphere"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "retry-route",
+        "purpose": "Show that an agent is retrying or rerouting after a failure.",
+        "tags": [
+          "recover",
+          "reroute",
+          "retry",
+          "route"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "robot-arm",
+        "purpose": "Represent an industrial robot arm or manipulator.",
+        "tags": [
+          "manipulator",
+          "industrial",
+          "robot",
+          "arm"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "robot-dog",
+        "purpose": "Represent a quadruped robot such as an inspection or patrol robot.",
+        "tags": [
+          "quadruped",
+          "patrol",
+          "robot",
+          "dog"
+        ],
+        "category": "robotics"
+      },
+      {
+        "name": "sandbox-run",
+        "purpose": "Show code or actions executing inside an isolated sandbox.",
+        "tags": [
+          "isolated",
+          "safe",
+          "sandbox",
+          "run"
+        ],
+        "category": "coding"
+      },
+      {
+        "name": "skill-module",
+        "purpose": "Represent an installable agent skill or plugin capability.",
+        "tags": [
+          "plugin",
+          "capability",
+          "skill",
+          "module"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "spend-limit",
+        "purpose": "Represent a spending cap or budget ceiling on agent payments.",
+        "tags": [
+          "cap",
+          "policy",
+          "spend",
+          "limit"
+        ],
+        "category": "payments"
+      },
+      {
+        "name": "stablecoin",
+        "purpose": "Represent a stablecoin or pegged digital currency.",
+        "tags": [
+          "peg",
+          "currency",
+          "stablecoin"
+        ],
+        "category": "payments"
+      },
+      {
+        "name": "streaming-caret",
+        "purpose": "Show that an AI response is streaming in token by token.",
+        "tags": [
+          "typing",
+          "response",
+          "streaming",
+          "caret"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "terminal-agent",
+        "purpose": "Represent a terminal-native coding agent or CLI assistant.",
+        "tags": [
+          "cli",
+          "shell",
+          "terminal",
+          "agent"
+        ],
+        "category": "coding"
+      },
+      {
+        "name": "thinking-pulse",
+        "purpose": "Show that an AI agent is reasoning, planning, or deciding what to do next.",
+        "tags": [
+          "thinking",
+          "reasoning",
+          "planning",
+          "ai agent",
+          "processing"
+        ],
+        "category": "agent"
+      },
+      {
+        "name": "token-meter",
+        "purpose": "Show token usage or budget consumption for a session or task.",
+        "tags": [
+          "usage",
+          "budget",
+          "token",
+          "meter"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "tool-call",
+        "purpose": "Represent an agent invoking a tool or function call.",
+        "tags": [
+          "function",
+          "invoke",
+          "tool",
+          "call"
+        ],
+        "category": "workflow"
+      },
+      {
+        "name": "voice-agent",
+        "purpose": "Represent a voice-first AI agent or speech interface.",
+        "tags": [
+          "speech",
+          "waveform",
+          "voice",
+          "agent"
+        ],
+        "category": "frontier"
+      },
+      {
+        "name": "x402-pay",
+        "purpose": "Represent the x402 machine payment protocol built on HTTP 402.",
+        "tags": [
+          "protocol",
+          "http",
+          "x402",
+          "payment"
+        ],
+        "category": "payments"
+      }
+    ],
+    "icon_count": 50,
+    "classMap": {
+      "agent-commit": "ps6z1y",
+      "agent-diff": "bjs1js",
+      "agent-face": "uvwdjc",
+      "agent-handoff": "kq2v7d",
+      "agent-id-badge": "c8vved",
+      "agent-pr": "nqsihd",
+      "agent-swarm": "bc6uu6",
+      "agent-wallet": "fwgjup",
+      "approval-gate": "w7gk2q",
+      "ar-glasses": "fgwvw0",
+      "autonomy-dial": "cg35d9",
+      "context-gauge": "f0mw15",
+      "delivery-robot": "m4525a",
+      "done-spark": "r15eou",
+      "drone-delivery": "ul94up",
+      "drone-quad": "gdg4ai",
+      "edge-ai-chip": "oaqhy4",
+      "entangled-pair": "xa5113",
+      "error-glitch": "d3wv5t",
+      "guardrail-path": "cgz6q8",
+      "hallucination-warn": "p0sgf9",
+      "human-in-loop": "r8cbyb",
+      "humanoid-robot": "urj0re",
+      "lidar-sensor": "l7qdoh",
+      "loader-orbit": "o1l6ch",
+      "machine-pay": "n0le2h",
+      "mcp-connector": "h21o87",
+      "memory-store": "fxpan9",
+      "orchestrator": "u8v88e",
+      "pipeline-run": "fjoeaj",
+      "plan-branches": "ctdr3h",
+      "progress-ring": "bcpbju",
+      "prompt-field": "zwkuvg",
+      "prompt-injection": "qvzzwl",
+      "quantum-chip": "exwtn2",
+      "qubit-sphere": "ahmzd2",
+      "retry-route": "ocnxeh",
+      "robot-arm": "lzk3jl",
+      "robot-dog": "yifrzq",
+      "sandbox-run": "vmgy7a",
+      "skill-module": "wjxkce",
+      "spend-limit": "iienea",
+      "stablecoin": "thetjx",
+      "streaming-caret": "lxziwk",
+      "terminal-agent": "m24bgi",
+      "thinking-pulse": "ux5x14",
+      "token-meter": "aqoldt",
+      "tool-call": "imwbu5",
+      "voice-agent": "a94hvu",
+      "x402-pay": "tqg8jo"
+    }
   }
 }

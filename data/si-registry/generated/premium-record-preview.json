@@ -1,5 +1,1961 @@
 [
   {
+    "icon_id": "si:agentic-motion-agent-commit",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-commit",
+    "source_asset_name": "agent-commit",
+    "label": "Agent Commit",
+    "purpose": "Represent a commit authored by an AI coding agent.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "git",
+      "save",
+      "agent",
+      "commit",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate git, save, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "coding",
+    "depicts": "Premium Agent Commit icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-diff",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-diff",
+    "source_asset_name": "agent-diff",
+    "label": "Agent Diff",
+    "purpose": "Represent a code diff produced by an AI coding agent.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "patch",
+      "change",
+      "agent",
+      "diff",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate patch, change, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "coding",
+    "depicts": "Premium Agent Diff icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-face",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-face",
+    "source_asset_name": "agent-face",
+    "label": "Agent Face",
+    "purpose": "Represent an AI agent or assistant as a clear, friendly avatar.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "bot",
+      "avatar",
+      "assistant",
+      "agent",
+      "face",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate bot, avatar, assistant.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Agent Face icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-handoff",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-handoff",
+    "source_asset_name": "agent-handoff",
+    "label": "Agent Handoff",
+    "purpose": "A task dot travels the arc from one agent to the other; the receiver pulses on catch.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "handoff",
+      "delegation",
+      "multi-agent",
+      "transfer",
+      "agent",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate handoff, delegation, multi-agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Agent Handoff icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-id-badge",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-id-badge",
+    "source_asset_name": "agent-id-badge",
+    "label": "Agent Id Badge",
+    "purpose": "Represent a scoped identity badge for an AI agent.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "identity",
+      "scope",
+      "agent",
+      "id",
+      "badge",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate identity, scope, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Agent Id Badge icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-pr",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-pr",
+    "source_asset_name": "agent-pr",
+    "label": "Agent Pr",
+    "purpose": "Represent a pull request opened by an AI coding agent.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "git",
+      "review",
+      "agent",
+      "pull",
+      "request",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate git, review, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "coding",
+    "depicts": "Premium Agent Pr icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-swarm",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-swarm",
+    "source_asset_name": "agent-swarm",
+    "label": "Agent Swarm",
+    "purpose": "Represent a decentralized swarm of cooperating agents.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "mesh",
+      "cluster",
+      "agent",
+      "swarm",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate mesh, cluster, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Agent Swarm icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-agent-wallet",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-agent-wallet",
+    "source_asset_name": "agent-wallet",
+    "label": "Agent Wallet",
+    "purpose": "Represent a wallet owned and operated by an AI agent.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "funds",
+      "account",
+      "agent",
+      "wallet",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate funds, account, agent.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "payments",
+    "depicts": "Premium Agent Wallet icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-approval-gate",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-approval-gate",
+    "source_asset_name": "approval-gate",
+    "label": "Approval Gate",
+    "purpose": "Show that an agent is paused at a gate waiting for human approval.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "consent",
+      "pause",
+      "approval",
+      "gate",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate consent, pause, approval.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Approval Gate icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-ar-glasses",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-ar-glasses",
+    "source_asset_name": "ar-glasses",
+    "label": "Ar Glasses",
+    "purpose": "Represent AI or augmented reality smart glasses.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "wearable",
+      "xr",
+      "ai",
+      "glasses",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate wearable, xr, ai.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Ar Glasses icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-autonomy-dial",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-autonomy-dial",
+    "source_asset_name": "autonomy-dial",
+    "label": "Autonomy Dial",
+    "purpose": "Represent an adjustable level of agent autonomy or delegation.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "delegation",
+      "level",
+      "autonomy",
+      "dial",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate delegation, level, autonomy.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Autonomy Dial icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-context-gauge",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-context-gauge",
+    "source_asset_name": "context-gauge",
+    "label": "Context Gauge",
+    "purpose": "Show how much of the model context window is used.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "window",
+      "capacity",
+      "context",
+      "gauge",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate window, capacity, context.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Context Gauge icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-delivery-robot",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-delivery-robot",
+    "source_asset_name": "delivery-robot",
+    "label": "Delivery Robot",
+    "purpose": "Represent a wheeled sidewalk delivery robot.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "sidewalk",
+      "parcel",
+      "delivery",
+      "robot",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate sidewalk, parcel, delivery.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Delivery Robot icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-done-spark",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-done-spark",
+    "source_asset_name": "done-spark",
+    "label": "Done Spark",
+    "purpose": "Show that an agent task finished successfully, with a touch of delight.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "complete",
+      "success",
+      "done",
+      "spark",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate complete, success, done.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Done Spark icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-drone-delivery",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-drone-delivery",
+    "source_asset_name": "drone-delivery",
+    "label": "Drone Delivery",
+    "purpose": "Represent a drone carrying a delivery parcel.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "parcel",
+      "drop",
+      "drone",
+      "delivery",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate parcel, drop, drone.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Drone Delivery icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-drone-quad",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-drone-quad",
+    "source_asset_name": "drone-quad",
+    "label": "Drone Quad",
+    "purpose": "Represent a quadcopter drone.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "uav",
+      "fpv",
+      "quadcopter",
+      "drone",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate uav, fpv, quadcopter.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Drone Quad icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-edge-ai-chip",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-edge-ai-chip",
+    "source_asset_name": "edge-ai-chip",
+    "label": "Edge Ai Chip",
+    "purpose": "Represent on-device or edge AI compute such as an NPU or local inference hardware.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "npu",
+      "chip",
+      "on-device ai",
+      "edge computing",
+      "local inference",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate npu, chip, on-device ai.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Edge Ai Chip icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-entangled-pair",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-entangled-pair",
+    "source_asset_name": "entangled-pair",
+    "label": "Entangled Pair",
+    "purpose": "Represent quantum entanglement between two particles.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "linked",
+      "correlated",
+      "entangled",
+      "pair",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate linked, correlated, entangled.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Entangled Pair icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-error-glitch",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-error-glitch",
+    "source_asset_name": "error-glitch",
+    "label": "Error Glitch",
+    "purpose": "Show that an agent or system hit an error or fault.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "fault",
+      "alert",
+      "error",
+      "glitch",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate fault, alert, error.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Error Glitch icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-guardrail-path",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-guardrail-path",
+    "source_asset_name": "guardrail-path",
+    "label": "Guardrail Path",
+    "purpose": "Represent guardrails that keep agent behavior inside policy bounds.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "bounds",
+      "policy",
+      "guardrail",
+      "path",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate bounds, policy, guardrail.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Guardrail Path icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-hallucination-warn",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-hallucination-warn",
+    "source_asset_name": "hallucination-warn",
+    "label": "Hallucination Warn",
+    "purpose": "Warn that AI output may be hallucinated or needs verification.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "distortion",
+      "verify",
+      "hallucination",
+      "warn",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate distortion, verify, hallucination.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Hallucination Warn icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-human-in-loop",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-human-in-loop",
+    "source_asset_name": "human-in-loop",
+    "label": "Human In Loop",
+    "purpose": "Show that a human reviews or supervises the agent loop.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "oversight",
+      "review",
+      "human",
+      "in",
+      "loop",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate oversight, review, human.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Human In Loop icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-humanoid-robot",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-humanoid-robot",
+    "source_asset_name": "humanoid-robot",
+    "label": "Humanoid Robot",
+    "purpose": "Represent a humanoid or bipedal robot as a product, feature, or content subject.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "humanoid",
+      "robot",
+      "bipedal",
+      "android",
+      "robotics",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate humanoid, robot, bipedal.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Humanoid Robot icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-lidar-sensor",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-lidar-sensor",
+    "source_asset_name": "lidar-sensor",
+    "label": "Lidar Sensor",
+    "purpose": "Represent a lidar or range sensor scanning its surroundings.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "scan",
+      "range",
+      "lidar",
+      "sensor",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate scan, range, lidar.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Lidar Sensor icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-loader-orbit",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-loader-orbit",
+    "source_asset_name": "loader-orbit",
+    "label": "Loader Orbit",
+    "purpose": "Show indeterminate progress while an agent or system works.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "loading",
+      "spinner",
+      "loader",
+      "orbit",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate loading, spinner, loader.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Loader Orbit icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-machine-pay",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-machine-pay",
+    "source_asset_name": "machine-pay",
+    "label": "Machine Pay",
+    "purpose": "Represent an autonomous machine-to-machine payment between agents.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "m2m",
+      "autonomous",
+      "machine",
+      "to",
+      "pay",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate m2m, autonomous, machine.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "payments",
+    "depicts": "Premium Machine Pay icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-mcp-connector",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-mcp-connector",
+    "source_asset_name": "mcp-connector",
+    "label": "Mcp Connector",
+    "purpose": "Represent an MCP server or protocol connection between an agent and a capability.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "plug",
+      "server",
+      "mcp",
+      "connector",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate plug, server, mcp.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Mcp Connector icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-memory-store",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-memory-store",
+    "source_asset_name": "memory-store",
+    "label": "Memory Store",
+    "purpose": "Represent agent memory, recall, or a context store.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "context",
+      "recall",
+      "memory",
+      "store",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate context, recall, memory.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Memory Store icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-orchestrator",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-orchestrator",
+    "source_asset_name": "orchestrator",
+    "label": "Orchestrator",
+    "purpose": "Represent a supervisor agent coordinating multiple worker agents.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "supervisor",
+      "multi-agent",
+      "orchestrator",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate supervisor, multi-agent, orchestrator.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Orchestrator icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-pipeline-run",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-pipeline-run",
+    "source_asset_name": "pipeline-run",
+    "label": "Pipeline Run",
+    "purpose": "Represent a running workflow pipeline of connected stages.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "workflow",
+      "chain",
+      "pipeline",
+      "run",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate workflow, chain, pipeline.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Pipeline Run icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-plan-branches",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-plan-branches",
+    "source_asset_name": "plan-branches",
+    "label": "Plan Branches",
+    "purpose": "Show an agent decomposing a goal into branching subtasks.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "tasks",
+      "decompose",
+      "plan",
+      "branches",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate tasks, decompose, plan.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Plan Branches icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-progress-ring",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-progress-ring",
+    "source_asset_name": "progress-ring",
+    "label": "Progress Ring",
+    "purpose": "Show determinate progress toward completing a task.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "progress",
+      "task",
+      "ring",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate progress, task, ring.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Progress Ring icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-prompt-field",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-prompt-field",
+    "source_asset_name": "prompt-field",
+    "label": "Prompt Field",
+    "purpose": "Represent a prompt input where humans instruct an AI.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "input",
+      "ask",
+      "prompt",
+      "field",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate input, ask, prompt.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Prompt Field icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-prompt-injection",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-prompt-injection",
+    "source_asset_name": "prompt-injection",
+    "label": "Prompt Injection",
+    "purpose": "Warn about prompt injection attacks entering an input.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "attack",
+      "input",
+      "prompt",
+      "injection",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate attack, input, prompt.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "safety",
+    "depicts": "Premium Prompt Injection icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-quantum-chip",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-quantum-chip",
+    "source_asset_name": "quantum-chip",
+    "label": "Quantum Chip",
+    "purpose": "Represent a quantum processing unit or quantum chip.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "qpu",
+      "processor",
+      "quantum",
+      "chip",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate qpu, processor, quantum.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Quantum Chip icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-qubit-sphere",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-qubit-sphere",
+    "source_asset_name": "qubit-sphere",
+    "label": "Qubit Sphere",
+    "purpose": "Represent a qubit state on a Bloch sphere.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "bloch",
+      "state",
+      "qubit",
+      "sphere",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate bloch, state, qubit.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Qubit Sphere icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-retry-route",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-retry-route",
+    "source_asset_name": "retry-route",
+    "label": "Retry Route",
+    "purpose": "Show that an agent is retrying or rerouting after a failure.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "recover",
+      "reroute",
+      "retry",
+      "route",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate recover, reroute, retry.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Retry Route icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-robot-arm",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-robot-arm",
+    "source_asset_name": "robot-arm",
+    "label": "Robot Arm",
+    "purpose": "Represent an industrial robot arm or manipulator.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "manipulator",
+      "industrial",
+      "robot",
+      "arm",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate manipulator, industrial, robot.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Robot Arm icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-robot-dog",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-robot-dog",
+    "source_asset_name": "robot-dog",
+    "label": "Robot Dog",
+    "purpose": "Represent a quadruped robot such as an inspection or patrol robot.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "quadruped",
+      "patrol",
+      "robot",
+      "dog",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate quadruped, patrol, robot.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "robotics",
+    "depicts": "Premium Robot Dog icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-sandbox-run",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-sandbox-run",
+    "source_asset_name": "sandbox-run",
+    "label": "Sandbox Run",
+    "purpose": "Show code or actions executing inside an isolated sandbox.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "isolated",
+      "safe",
+      "sandbox",
+      "run",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate isolated, safe, sandbox.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "coding",
+    "depicts": "Premium Sandbox Run icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-skill-module",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-skill-module",
+    "source_asset_name": "skill-module",
+    "label": "Skill Module",
+    "purpose": "Represent an installable agent skill or plugin capability.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "plugin",
+      "capability",
+      "skill",
+      "module",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate plugin, capability, skill.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Skill Module icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-spend-limit",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-spend-limit",
+    "source_asset_name": "spend-limit",
+    "label": "Spend Limit",
+    "purpose": "Represent a spending cap or budget ceiling on agent payments.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "cap",
+      "policy",
+      "spend",
+      "limit",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate cap, policy, spend.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "payments",
+    "depicts": "Premium Spend Limit icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-stablecoin",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-stablecoin",
+    "source_asset_name": "stablecoin",
+    "label": "Stablecoin",
+    "purpose": "Represent a stablecoin or pegged digital currency.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "peg",
+      "currency",
+      "stablecoin",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate peg, currency, stablecoin.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "payments",
+    "depicts": "Premium Stablecoin icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-streaming-caret",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-streaming-caret",
+    "source_asset_name": "streaming-caret",
+    "label": "Streaming Caret",
+    "purpose": "Show that an AI response is streaming in token by token.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "typing",
+      "response",
+      "streaming",
+      "caret",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate typing, response, streaming.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Streaming Caret icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-terminal-agent",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-terminal-agent",
+    "source_asset_name": "terminal-agent",
+    "label": "Terminal Agent",
+    "purpose": "Represent a terminal-native coding agent or CLI assistant.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "cli",
+      "shell",
+      "terminal",
+      "agent",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate cli, shell, terminal.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "coding",
+    "depicts": "Premium Terminal Agent icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-thinking-pulse",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-thinking-pulse",
+    "source_asset_name": "thinking-pulse",
+    "label": "Thinking Pulse",
+    "purpose": "Show that an AI agent is reasoning, planning, or deciding what to do next.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "thinking",
+      "reasoning",
+      "planning",
+      "ai agent",
+      "processing",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate thinking, reasoning, planning.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "agent",
+    "depicts": "Premium Thinking Pulse icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-token-meter",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-token-meter",
+    "source_asset_name": "token-meter",
+    "label": "Token Meter",
+    "purpose": "Show token usage or budget consumption for a session or task.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "usage",
+      "budget",
+      "token",
+      "meter",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate usage, budget, token.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Token Meter icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-tool-call",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-tool-call",
+    "source_asset_name": "tool-call",
+    "label": "Tool Call",
+    "purpose": "Represent an agent invoking a tool or function call.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "function",
+      "invoke",
+      "tool",
+      "call",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate function, invoke, tool.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "workflow",
+    "depicts": "Premium Tool Call icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-voice-agent",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-voice-agent",
+    "source_asset_name": "voice-agent",
+    "label": "Voice Agent",
+    "purpose": "Represent a voice-first AI agent or speech interface.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "speech",
+      "waveform",
+      "voice",
+      "agent",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate speech, waveform, voice.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "frontier",
+    "depicts": "Premium Voice Agent icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
+    "icon_id": "si:agentic-motion-x402-pay",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agentic-motion-x402-pay",
+    "source_asset_name": "x402-pay",
+    "label": "X402 Pay",
+    "purpose": "Represent the x402 machine payment protocol built on HTTP 402.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "protocol",
+      "http",
+      "x402",
+      "payment",
+      "ai_agents",
+      "agent_lifecycle",
+      "agentic-motion"
+    ],
+    "use_when": "Use when the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion and the icon should communicate protocol, http, x402.",
+    "avoid_when": "Do not use when the meaning is static branding or has no relation to agent activity.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "agentic-motion",
+    "collection_title": "Agentic Motion",
+    "is_premium": true,
+    "raw_category": "payments",
+    "depicts": "Premium X402 Pay icon from the Agentic Motion collection.",
+    "review_state": "source_mapped",
+    "evidence": [
+      "premium_pack_manifest",
+      "premium_collection_map"
+    ],
+    "editorialNotes": "Source-mapped premium record. Keep protected until premium read surfaces and review flow are productized.",
+    "projectionTargets": [
+      "generated_internal_projection"
+    ]
+  },
+  {
     "icon_id": "si:ai-agentic-agent",
     "source_group": "premium",
     "source_library": "si",

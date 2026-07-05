@@ -817,7 +817,8 @@
     },
     "types": {
       "bundle": "バンドル",
-      "launchEdition": "ローンチ版"
+      "launchEdition": "ローンチ版",
+      "supericonsEdition": "Supericonsエディション"
     },
     "status": {
       "complete": "完了"
@@ -900,6 +901,10 @@
       "security-auth": {
         "name": "セキュリティと認証",
         "description": "ログイン、権限、信頼シグナルのアニメーション"
+      },
+      "agentic-motion": {
+        "name": "エージェンティックモーション",
+        "description": "動くエージェントアイコン: ハンドオフ、状態、マシン間決済をアニメーションで表現"
       }
     }
   },

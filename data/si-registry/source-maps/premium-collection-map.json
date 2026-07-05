@@ -62,5 +62,13 @@
     "intent": "inform",
     "useWhenContext": "the product is showing authentication, access, protection, or account security",
     "avoidWhenContext": "the meaning is unrelated to access, trust, or security"
+  },
+  "agentic-motion": {
+    "idPrefix": "agentic-motion",
+    "category": "agent_lifecycle",
+    "domain": "ai_agents",
+    "intent": "inform",
+    "useWhenContext": "the interface expresses live agent activity such as delegation, lifecycle states, or machine payments and needs meaningful motion",
+    "avoidWhenContext": "the meaning is static branding or has no relation to agent activity"
   }
 }
