@@ -116,6 +116,21 @@ async function getPaymentRequired() {
   return paymentRequired;
 }
 
+async function verifyCorsDeny() {
+  const res = await fetch(endpointUrl(), {
+    method: "GET",
+    headers: {
+      Origin: "https://blocked.example",
+      Accept: "application/json",
+    },
+  });
+  if (res.status !== 403) {
+    const text = await res.text();
+    fail(`Expected disallowed browser origin 403, got ${res.status}: ${text.slice(0, 300)}`);
+  }
+  record("origin-allowlist", "PASS", "Disallowed browser origin is rejected before payment handling.");
+}
+
 async function paidRequest(paymentHeader: string, icon = "x402-pay") {
   return await fetch(endpointUrl(icon), {
     headers: {
@@ -156,6 +171,7 @@ async function main() {
   requiredEnv("X402_FACILITATOR_URL");
   requiredEnv("X402_RECEIVING_ADDRESS");
 
+  await verifyCorsDeny();
   const paymentRequired = await getPaymentRequired();
   if (challengeOnly) {
     record("paid-path", "SKIP", "Challenge-only mode does not sign or settle a payment.");

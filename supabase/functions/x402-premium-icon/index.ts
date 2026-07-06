@@ -24,6 +24,7 @@ type ChargedState = boolean | "unknown";
 type AuditRow = {
   id: string;
   request_id: string;
+  updated_at?: string;
   pack_slug: string;
   icon_name: string;
   resource_path: string;
@@ -41,23 +42,65 @@ type AuditRow = {
   last_error_message: string | null;
 };
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, payment-signature, payment-required, payment-response",
-  "Access-Control-Expose-Headers": "PAYMENT-REQUIRED, PAYMENT-RESPONSE",
-};
+const DEFAULT_ALLOWED_ORIGINS = [
+  "https://supericons.dev",
+  "https://www.supericons.dev",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:4173",
+];
 
-const JSON_HEADERS = {
-  ...corsHeaders,
-  "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control": "private, no-store",
-};
+const CORS_ALLOWED_HEADERS =
+  "authorization, x-client-info, apikey, content-type, payment-signature, payment-required, payment-response";
+const CORS_EXPOSE_HEADERS = "PAYMENT-REQUIRED, PAYMENT-RESPONSE";
 
 let httpServerPromise: Promise<x402HTTPResourceServer> | null = null;
 
 function env(name: string, fallback = "") {
   return Deno.env.get(name)?.trim() || fallback;
+}
+
+function configuredAllowedOrigins() {
+  const configured = env("X402_ALLOWED_ORIGINS")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  return configured.length ? configured : DEFAULT_ALLOWED_ORIGINS;
+}
+
+function corsOriginForRequest(req: Request) {
+  const origin = req.headers.get("Origin");
+  if (!origin) return "";
+  const allowedOrigins = configuredAllowedOrigins();
+  if (allowedOrigins.includes("*")) return origin;
+  return allowedOrigins.includes(origin) ? origin : "";
+}
+
+function isDisallowedCorsRequest(req: Request) {
+  return Boolean(req.headers.get("Origin") && !corsOriginForRequest(req));
+}
+
+function corsHeadersForRequest(req: Request) {
+  const allowedOrigins = configuredAllowedOrigins();
+  const fallbackOrigin = allowedOrigins.includes("*") ? "*" : allowedOrigins[0];
+  const headers: Record<string, string> = {
+    "Access-Control-Allow-Origin": fallbackOrigin,
+    "Access-Control-Allow-Headers": CORS_ALLOWED_HEADERS,
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Expose-Headers": CORS_EXPOSE_HEADERS,
+    "Vary": "Origin",
+  };
+  const origin = corsOriginForRequest(req);
+  if (origin) headers["Access-Control-Allow-Origin"] = origin;
+  return headers;
+}
+
+function jsonHeadersForRequest(req: Request) {
+  return {
+    ...corsHeadersForRequest(req),
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "private, no-store",
+  };
 }
 
 function supportEmail() {
@@ -69,6 +112,7 @@ function requestId() {
 }
 
 function jsonResponse(
+  req: Request,
   status: number,
   code: string,
   message: string,
@@ -89,7 +133,7 @@ function jsonResponse(
     {
       status,
       headers: {
-        ...JSON_HEADERS,
+        ...jsonHeadersForRequest(req),
         ...headers,
       },
     },
@@ -97,10 +141,11 @@ function jsonResponse(
 }
 
 function paidJsonResponse(
+  req: Request,
   body: Record<string, unknown>,
   paymentResponseHeader?: string | null,
 ) {
-  const headers: Record<string, string> = { ...JSON_HEADERS };
+  const headers: Record<string, string> = { ...jsonHeadersForRequest(req) };
   if (paymentResponseHeader) {
     headers["PAYMENT-RESPONSE"] = paymentResponseHeader;
   }
@@ -108,6 +153,7 @@ function paidJsonResponse(
 }
 
 function responseFromInstructions(
+  req: Request,
   instructions: { status: number; headers: Record<string, string>; body?: unknown; isHtml?: boolean },
 ) {
   const contentType = instructions.headers["Content-Type"] || instructions.headers["content-type"];
@@ -118,8 +164,8 @@ function responseFromInstructions(
   return new Response(body, {
     status: instructions.status,
     headers: {
-      ...corsHeaders,
       ...instructions.headers,
+      ...corsHeadersForRequest(req),
       "Content-Type": contentType || "application/json; charset=utf-8",
     },
   });
@@ -324,6 +370,138 @@ async function updateAuditRow(
   return data as AuditRow;
 }
 
+function positiveIntEnv(name: string, fallback: number) {
+  const value = Number.parseInt(env(name), 10);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function requestIpMaterial(req: Request) {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return req.headers.get("cf-connecting-ip") ||
+    forwarded ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+}
+
+async function enforceRateLimit(
+  client: AdminSupabaseClient,
+  req: Request,
+  pack: string,
+  icon: string,
+  request_id: string,
+) {
+  if (env("X402_RATE_LIMIT_ENABLED", "1") === "0") return null;
+
+  const windowSeconds = positiveIntEnv("X402_RATE_LIMIT_WINDOW_SECONDS", 60);
+  const maxRequests = positiveIntEnv("X402_RATE_LIMIT_MAX_REQUESTS", 30);
+  const windowMs = windowSeconds * 1000;
+  const windowStart = new Date(Math.floor(Date.now() / windowMs) * windowMs).toISOString();
+  const bucketKey = await sha256Hex([
+    "x402-premium-icon",
+    requestIpMaterial(req),
+    pack || "missing-pack",
+    icon || "missing-icon",
+  ].join("|"));
+
+  const table = client.from("si_x402_rate_limit_counters") as any;
+  const { data, error } = await table
+    .select("request_count")
+    .eq("bucket_key", bucketKey)
+    .eq("window_start", windowStart)
+    .limit(1);
+  if (error) throw error;
+
+  const currentCount = Number(data?.[0]?.request_count || 0);
+  if (currentCount >= maxRequests) {
+    return jsonResponse(
+      req,
+      429,
+      "rate_limited",
+      "Too many x402 requests. Please retry after the current rate-limit window.",
+      false,
+      request_id,
+      { retry_after_seconds: windowSeconds },
+      { "Retry-After": String(windowSeconds) },
+    );
+  }
+
+  if (data?.[0]) {
+    const { error: updateError } = await table
+      .update({ request_count: currentCount + 1, updated_at: new Date().toISOString() })
+      .eq("bucket_key", bucketKey)
+      .eq("window_start", windowStart);
+    if (updateError) throw updateError;
+  } else {
+    const { error: insertError } = await table.insert({
+      bucket_key: bucketKey,
+      window_start: windowStart,
+      window_seconds: windowSeconds,
+      request_count: 1,
+      updated_at: new Date().toISOString(),
+    });
+    if (insertError) throw insertError;
+  }
+
+  return null;
+}
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function isLikelyFacilitatorUnavailable(error: unknown) {
+  const message = errorMessage(error).toLowerCase();
+  return [
+    "facilitator",
+    "fetch",
+    "network",
+    "connection",
+    "timeout",
+    "temporarily unavailable",
+    "econn",
+    "enotfound",
+    "eai_again",
+  ].some((needle) => message.includes(needle));
+}
+
+function isRetryableFacilitatorPending(row: AuditRow, pack: string, icon: string) {
+  return row.status === "settlement_pending" &&
+    row.last_error_code === "facilitator_unavailable" &&
+    rowResourceMatches(row, pack, icon);
+}
+
+async function recordFacilitatorUnavailable(
+  client: AdminSupabaseClient,
+  row: AuditRow | null,
+  error: unknown,
+) {
+  if (!row) return;
+  await updateAuditRow(client, row.id, {
+    status: "settlement_pending",
+    last_error_code: "facilitator_unavailable",
+    last_error_message: errorMessage(error),
+  });
+}
+
+function facilitatorUnavailableResponse(
+  req: Request,
+  request_id: string,
+  charged: ChargedState,
+  row: AuditRow | null = null,
+) {
+  const extra = row?.payment_identifier ? { payment_identifier: row.payment_identifier } : {};
+  return jsonResponse(
+    req,
+    503,
+    "facilitator_unavailable",
+    "The payment facilitator is temporarily unavailable. Retry with the same signed payment before creating a new payment.",
+    charged,
+    request_id,
+    extra,
+    { "Retry-After": "30" },
+  );
+}
+
 function extractIconCss(bundleCss: string, svgMarkup: string) {
   const rootMatch = /class="([a-z0-9]+)"/.exec(svgMarkup || "");
   if (!bundleCss || !rootMatch) return "";
@@ -394,12 +572,14 @@ async function buildDeliveryPayload(client: AdminSupabaseClient, row: AuditRow) 
 }
 
 async function redeliverExisting(
+  req: Request,
   client: AdminSupabaseClient,
   row: AuditRow,
   request_id: string,
 ) {
   if (!isRedeliveryOpen(row)) {
     return jsonResponse(
+      req,
       410,
       "redelivery_window_expired",
       "This payment's redelivery window has expired.",
@@ -419,7 +599,7 @@ async function redeliverExisting(
       delivered_at: new Date().toISOString(),
       delivery_attempts: 1,
     });
-    return paidJsonResponse(payload, row.payment_response_header);
+    return paidJsonResponse(req, payload, row.payment_response_header);
   } catch (error) {
     console.error("x402 redelivery failed:", error);
     await updateAuditRow(client, row.id, {
@@ -428,6 +608,7 @@ async function redeliverExisting(
       last_error_message: error instanceof Error ? error.message : "Delivery failed",
     });
     return jsonResponse(
+      req,
       503,
       "delivery_failed_after_settlement",
       "Payment was already settled, but the icon could not be delivered.",
@@ -442,6 +623,7 @@ async function redeliverExisting(
 }
 
 async function handleExistingPayment(
+  req: Request,
   client: AdminSupabaseClient,
   row: AuditRow,
   pack: string,
@@ -450,6 +632,7 @@ async function handleExistingPayment(
 ) {
   if (!rowResourceMatches(row, pack, icon)) {
     return jsonResponse(
+      req,
       409,
       "payment_reused_for_different_resource",
       "This signed payment was already used for a different Supericons resource.",
@@ -464,6 +647,7 @@ async function handleExistingPayment(
 
   if (row.status === "settlement_pending") {
     return jsonResponse(
+      req,
       409,
       "payment_already_processing",
       "This signed payment is already being processed.",
@@ -476,10 +660,11 @@ async function handleExistingPayment(
   }
 
   if (["settled", "redelivered", "delivery_failed"].includes(row.status)) {
-    return await redeliverExisting(client, row, request_id);
+    return await redeliverExisting(req, client, row, request_id);
   }
 
   return jsonResponse(
+    req,
     402,
     "payment_verification_failed",
     row.last_error_message || "This signed payment did not verify.",
@@ -493,29 +678,53 @@ async function handleExistingPayment(
 
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    if (isDisallowedCorsRequest(req)) {
+      return jsonResponse(
+        req,
+        403,
+        "invalid_request",
+        "This origin is not allowed to call the x402 endpoint.",
+        false,
+        requestId(),
+      );
+    }
+    return new Response("ok", { headers: corsHeadersForRequest(req) });
   }
 
   const request_id = requestId();
 
   try {
+    if (isDisallowedCorsRequest(req)) {
+      return jsonResponse(
+        req,
+        403,
+        "invalid_request",
+        "This origin is not allowed to call the x402 endpoint.",
+        false,
+        request_id,
+      );
+    }
+
     if (req.method !== "GET") {
-      return jsonResponse(405, "invalid_request", "Only GET is supported.", false, request_id);
+      return jsonResponse(req, 405, "invalid_request", "Only GET is supported.", false, request_id);
     }
 
     const { url, pack, icon } = parseQuery(req);
     const paymentHeader = getPaymentHeader(req);
     const client = adminClient();
     const signedHash = paymentHeader ? await sha256Hex(paymentHeader.trim()) : "";
+    const rateLimitResponse = await enforceRateLimit(client, req, pack, icon, request_id);
+    if (rateLimitResponse) return rateLimitResponse;
 
     if (!isAllowedResource(pack, icon)) {
       if (signedHash) {
         const existing = await findAuditRow(client, signedHash);
         if (existing) {
-          return await handleExistingPayment(client, existing, pack, icon, request_id);
+          return await handleExistingPayment(req, client, existing, pack, icon, request_id);
         }
       }
       return jsonResponse(
+        req,
         400,
         "invalid_pack_or_icon",
         "This x402 beta only supports agentic-motion/x402-pay.",
@@ -528,22 +737,37 @@ serve(async (req: Request) => {
     if (signedHash) {
       const existing = await findAuditRow(client, signedHash);
       if (existing) {
-        return await handleExistingPayment(client, existing, pack, icon, request_id);
+        if (isRetryableFacilitatorPending(existing, pack, icon)) {
+          pendingRow = existing;
+        } else {
+          return await handleExistingPayment(req, client, existing, pack, icon, request_id);
+        }
       }
 
-      try {
-        pendingRow = await insertPendingRow(client, pack, icon, signedHash, request_id);
-      } catch (error) {
-        console.warn("x402 pending insert failed, checking for duplicate:", error);
-        const duplicate = await findAuditRow(client, signedHash);
-        if (duplicate) {
-          return await handleExistingPayment(client, duplicate, pack, icon, request_id);
+      if (!pendingRow) {
+        try {
+          pendingRow = await insertPendingRow(client, pack, icon, signedHash, request_id);
+        } catch (error) {
+          console.warn("x402 pending insert failed, checking for duplicate:", error);
+          const duplicate = await findAuditRow(client, signedHash);
+          if (duplicate) {
+            return await handleExistingPayment(req, client, duplicate, pack, icon, request_id);
+          }
+          throw error;
         }
-        throw error;
       }
     }
 
-    const httpServer = await getHttpServer();
+    let httpServer: x402HTTPResourceServer;
+    try {
+      httpServer = await getHttpServer();
+    } catch (error) {
+      if (isLikelyFacilitatorUnavailable(error)) {
+        await recordFacilitatorUnavailable(client, pendingRow, error);
+        return facilitatorUnavailableResponse(req, request_id, false, pendingRow);
+      }
+      throw error;
+    }
     const adapter = httpAdapter(req);
     const context = {
       adapter,
@@ -551,7 +775,16 @@ serve(async (req: Request) => {
       method: req.method,
       paymentHeader,
     };
-    const paymentResult = await httpServer.processHTTPRequest(context);
+    let paymentResult: Awaited<ReturnType<x402HTTPResourceServer["processHTTPRequest"]>>;
+    try {
+      paymentResult = await httpServer.processHTTPRequest(context);
+    } catch (error) {
+      if (isLikelyFacilitatorUnavailable(error)) {
+        await recordFacilitatorUnavailable(client, pendingRow, error);
+        return facilitatorUnavailableResponse(req, request_id, false, pendingRow);
+      }
+      throw error;
+    }
 
     if (paymentResult.type === "payment-error") {
       if (pendingRow) {
@@ -561,21 +794,23 @@ serve(async (req: Request) => {
           last_error_message: "Payment verification failed.",
         });
       }
-      return responseFromInstructions(paymentResult.response);
+      return responseFromInstructions(req, paymentResult.response);
     }
 
     if (paymentResult.type !== "payment-verified") {
-      return jsonResponse(500, "internal_error", "Unexpected payment state.", "unknown", request_id);
+      return jsonResponse(req, 500, "internal_error", "Unexpected payment state.", "unknown", request_id);
     }
 
     if (!pendingRow) {
-      return jsonResponse(500, "internal_error", "Missing payment audit lock.", "unknown", request_id);
+      return jsonResponse(req, 500, "internal_error", "Missing payment audit lock.", "unknown", request_id);
     }
 
     const payerAddress = getPayerAddress(paymentResult.paymentPayload);
     const stagedRow = await updateAuditRow(client, pendingRow.id, {
       payer_address: payerAddress,
       is_test_wallet: isTestWallet(payerAddress),
+      last_error_code: null,
+      last_error_message: null,
     });
 
     let deliveryPayload: Record<string, unknown>;
@@ -594,20 +829,30 @@ serve(async (req: Request) => {
         last_error_message: error instanceof Error ? error.message : "Delivery preflight failed",
       });
       return jsonResponse(
+        req,
         503,
-        "delivery_failed_after_settlement",
+        "internal_error",
         "The icon could not be prepared, so settlement was not attempted.",
         false,
         request_id,
       );
     }
 
-    const settlement = await httpServer.processSettlement(
-      paymentResult.paymentPayload,
-      paymentResult.paymentRequirements,
-      paymentResult.declaredExtensions,
-      { request: context },
-    );
+    let settlement: Awaited<ReturnType<x402HTTPResourceServer["processSettlement"]>>;
+    try {
+      settlement = await httpServer.processSettlement(
+        paymentResult.paymentPayload,
+        paymentResult.paymentRequirements,
+        paymentResult.declaredExtensions,
+        { request: context },
+      );
+    } catch (error) {
+      if (isLikelyFacilitatorUnavailable(error)) {
+        await recordFacilitatorUnavailable(client, stagedRow, error);
+        return facilitatorUnavailableResponse(req, request_id, "unknown", stagedRow);
+      }
+      throw error;
+    }
 
     if (!settlement.success) {
       await updateAuditRow(client, stagedRow.id, {
@@ -616,6 +861,7 @@ serve(async (req: Request) => {
         last_error_message: settlement.errorMessage || settlement.errorReason || "Settlement failed",
       });
       return jsonResponse(
+        req,
         402,
         "payment_verification_failed",
         settlement.errorMessage || settlement.errorReason || "Payment could not be settled.",
@@ -643,6 +889,8 @@ serve(async (req: Request) => {
       payment_response_header: paymentResponseHeader,
       facilitator_response: settlement,
       delivery_attempts: 1,
+      last_error_code: null,
+      last_error_message: null,
     });
 
     deliveryPayload = {
@@ -660,10 +908,11 @@ serve(async (req: Request) => {
       },
     };
 
-    return paidJsonResponse(deliveryPayload, paymentResponseHeader);
+    return paidJsonResponse(req, deliveryPayload, paymentResponseHeader);
   } catch (error) {
     console.error("x402 premium icon error:", error);
     return jsonResponse(
+      req,
       500,
       "internal_error",
       error instanceof Error ? error.message : "Unexpected server error.",
