@@ -160,6 +160,28 @@ async function updateRedeliveryExpiry(paymentHeader: string) {
   record("force-redelivery-expiry", "PASS", "Updated audit row expiry in local/test DB.");
 }
 
+function redactLongHex(value: string) {
+  return value.replace(/0x[0-9a-fA-F]{96,}/g, "0x[hex-redacted]");
+}
+
+async function auditDiagnosticForPayment(paymentHeader: string) {
+  const signedHash = await sha256Hex(paymentHeader.trim());
+  const supabase = createClient(requiredEnv("SUPABASE_URL"), requiredEnv("SUPABASE_SERVICE_ROLE_KEY"), {
+    auth: { persistSession: false },
+  });
+  const table = supabase.from("si_x402_icon_payments") as any;
+  const { data, error } = await table
+    .select("status, charged, last_error_code, last_error_message, settlement_reference, transaction_hash")
+    .eq("signed_payment_payload_hash", signedHash)
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (error) return `audit lookup failed: ${error.message}`;
+  const row = data?.[0];
+  if (!row) return "audit row not found";
+  return redactLongHex(JSON.stringify(row));
+}
+
 async function main() {
   loadEnvFile("supabase/.env.local");
 
@@ -185,7 +207,12 @@ async function main() {
   const paymentResponseHeader = paid.headers.get("PAYMENT-RESPONSE");
   const paidBody = await paid.json().catch(() => null);
   if (paid.status !== 200) {
-    fail(`Expected paid 200, got ${paid.status}: ${JSON.stringify(paidBody).slice(0, 500)}`);
+    const auditDiagnostic = await auditDiagnosticForPayment(header);
+    fail(
+      `Expected paid 200, got ${paid.status}: ${
+        redactLongHex(JSON.stringify(paidBody)).slice(0, 500)
+      }. Audit: ${auditDiagnostic.slice(0, 1000)}`,
+    );
   }
   if (!paymentResponseHeader) fail("Paid response missing PAYMENT-RESPONSE header.");
   decodePaymentResponseHeader(paymentResponseHeader);

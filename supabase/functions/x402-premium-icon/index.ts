@@ -403,16 +403,21 @@ async function enforceRateLimit(
     icon || "missing-icon",
   ].join("|"));
 
-  const table = client.from("si_x402_rate_limit_counters") as any;
-  const { data, error } = await table
-    .select("request_count")
-    .eq("bucket_key", bucketKey)
-    .eq("window_start", windowStart)
-    .limit(1);
-  if (error) throw error;
+  const { data, error } = await (client as any).rpc("si_x402_increment_rate_limit", {
+    p_bucket_key: bucketKey,
+    p_window_start: windowStart,
+    p_window_seconds: windowSeconds,
+  });
+  if (error) {
+    console.error("x402 rate-limit increment failed:", error);
+    throw error;
+  }
 
-  const currentCount = Number(data?.[0]?.request_count || 0);
-  if (currentCount >= maxRequests) {
+  const currentCount = Array.isArray(data)
+    ? Number(data[0]?.si_x402_increment_rate_limit ?? data[0] ?? 0)
+    : Number(data ?? 0);
+
+  if (currentCount > maxRequests) {
     return jsonResponse(
       req,
       429,
@@ -423,23 +428,6 @@ async function enforceRateLimit(
       { retry_after_seconds: windowSeconds },
       { "Retry-After": String(windowSeconds) },
     );
-  }
-
-  if (data?.[0]) {
-    const { error: updateError } = await table
-      .update({ request_count: currentCount + 1, updated_at: new Date().toISOString() })
-      .eq("bucket_key", bucketKey)
-      .eq("window_start", windowStart);
-    if (updateError) throw updateError;
-  } else {
-    const { error: insertError } = await table.insert({
-      bucket_key: bucketKey,
-      window_start: windowStart,
-      window_seconds: windowSeconds,
-      request_count: 1,
-      updated_at: new Date().toISOString(),
-    });
-    if (insertError) throw insertError;
   }
 
   return null;
@@ -825,13 +813,13 @@ serve(async (req: Request) => {
       });
       await updateAuditRow(client, stagedRow.id, {
         status: "verify_failed",
-        last_error_code: "delivery_preflight_failed",
+        last_error_code: "asset_unavailable",
         last_error_message: error instanceof Error ? error.message : "Delivery preflight failed",
       });
       return jsonResponse(
         req,
         503,
-        "internal_error",
+        "asset_unavailable",
         "The icon could not be prepared, so settlement was not attempted.",
         false,
         request_id,

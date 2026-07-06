@@ -276,6 +276,7 @@ The endpoint must not include other pack icons in the paid response. [SOURCE: do
 | `409` | `payment_reused_for_different_resource` | `true` for original resource only | Same signed payment payload is replayed for a different icon or pack. | Reuse the original signed payment for the original resource or make a new payment. | [ASSUMPTION] |
 | `410` | `redelivery_window_expired` | `true` | Same signed payment is replayed for the same resource after the redelivery window. | Contact support with receipt data; do not loop or create a second payment unless the buyer explicitly approves. | [ASSUMPTION] |
 | `429` | `rate_limited` | `false` | Too many unpaid or failed verification attempts. | Back off and retry later. | [ASSUMPTION] |
+| `503` | `asset_unavailable` | `false` | The icon asset or scoped CSS cannot be prepared before settlement. | Do not reuse this payment; no charge was attempted. Escalate the broken resource. | [ASSUMPTION] |
 | `503` | `facilitator_unavailable` | `false` unless `settlement_reference` is present | Facilitator cannot verify or settle. | Retry later; do not create a new payment if a settlement reference exists. | [ASSUMPTION] |
 | `503` | `delivery_failed_after_settlement` | `true` | Payment settled, but storage read or payload assembly failed. | Retry same payment and same resource within redelivery window. | [ASSUMPTION] |
 | `500` | `internal_error` | `unknown` unless response includes settlement data | Unexpected server error. | Retry same payment first; escalate with receipt data if present. | [ASSUMPTION] |
@@ -356,6 +357,8 @@ The table must have no anon or authenticated client policies in v1; Supabase ser
 
 Plain unpaid `402` hits should not create one row per request in this table. Use aggregate counters, edge logs, or sampled records for unpaid probes so bot traffic does not pollute payment analytics. [ASSUMPTION]
 
+Rate-limit counters must be incremented atomically in the database, for example with an RPC that performs `insert ... on conflict ... do update set request_count = request_count + 1 returning request_count`, so concurrent requests cannot undercount or turn a first-window collision into a `500`. [ASSUMPTION]
+
 The final schema may split attempts and settlements into separate tables if implementation proves that cleaner, but the final model must preserve the statuses and recovery data above. [ASSUMPTION]
 
 ## Success Metrics
@@ -391,10 +394,11 @@ After 60 days on mainnet, use this decision rule: if there are at least 10 organ
 11. RLS is enabled on payment audit tables, and no anon/auth client policy exposes payment metadata. [ASSUMPTION]
 12. Plain unpaid `402` requests are sampled or counted, not fully inserted one row per request. [ASSUMPTION]
 13. Successful, failed, redelivered, duplicate, and rate-limited attempts are represented in the audit store. [ASSUMPTION]
-14. The purchased icon renders and animates correctly using only the returned SVG and CSS in an isolated verification page. [ASSUMPTION]
-15. The visible app `$1` button is hidden behind a beta flag until unpaid, paid, invalid, redelivery, leakage, CSS-isolation, and error-contract checks pass. [ASSUMPTION]
-16. The preview-fidelity launch gate is resolved before any mainnet launch. [SOURCE: docs/x402-vs-stripe-payment-research-2026-07-05.md]
-17. Stripe pack checkout and Pro checkout behavior remain unchanged. [SOURCE: docs/x402-vs-stripe-payment-research-2026-07-05.md]
+14. Rate-limit increments are atomic under concurrent requests. [ASSUMPTION]
+15. The purchased icon renders and animates correctly using only the returned SVG and CSS in an isolated verification page. [ASSUMPTION]
+16. The visible app `$1` button is hidden behind a beta flag until unpaid, paid, invalid, redelivery, leakage, CSS-isolation, and error-contract checks pass. [ASSUMPTION]
+17. The preview-fidelity launch gate is resolved before any mainnet launch. [SOURCE: docs/x402-vs-stripe-payment-research-2026-07-05.md]
+18. Stripe pack checkout and Pro checkout behavior remain unchanged. [SOURCE: docs/x402-vs-stripe-payment-research-2026-07-05.md]
 
 ## Risks
 
