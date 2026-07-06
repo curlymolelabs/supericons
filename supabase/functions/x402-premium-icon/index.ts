@@ -107,6 +107,23 @@ function supportEmail() {
   return env("X402_SUPPORT_EMAIL", X402_SINGLE_ICON_CONFIG.supportEmail);
 }
 
+function publicResourceUrl() {
+  const configuredUrl = env("X402_PUBLIC_RESOURCE_URL");
+  if (configuredUrl) return configuredUrl;
+
+  const configuredBase = env("X402_PUBLIC_RESOURCE_BASE_URL");
+  const supabaseUrl = env("SUPABASE_URL");
+  const baseUrl = configuredBase ||
+    (supabaseUrl
+      ? `${supabaseUrl.replace(/\/+$/, "")}/functions/v1/x402-premium-icon`
+      : "http://127.0.0.1:54321/functions/v1/x402-premium-icon");
+
+  const url = new URL(baseUrl);
+  url.searchParams.set("pack", X402_SINGLE_ICON_CONFIG.packSlug);
+  url.searchParams.set("icon", X402_SINGLE_ICON_CONFIG.iconName);
+  return url.toString();
+}
+
 function requestId() {
   return crypto.randomUUID();
 }
@@ -261,6 +278,7 @@ async function getHttpServer() {
             price,
             maxTimeoutSeconds: 120,
           },
+          resource: publicResourceUrl(),
           description: "Supericons single animated icon license",
           mimeType: "application/json",
           serviceName: "Supericons",

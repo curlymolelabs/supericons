@@ -64,6 +64,43 @@ function endpointUrl(icon = "x402-pay") {
   return url.toString();
 }
 
+function verifyResourceUrl(paymentRequired: unknown) {
+  const resourceUrl = (paymentRequired as { resource?: { url?: string } })?.resource?.url;
+  if (!resourceUrl) fail("PAYMENT-REQUIRED resource.url is missing.");
+
+  let parsed: URL;
+  try {
+    parsed = new URL(resourceUrl);
+  } catch {
+    fail(`PAYMENT-REQUIRED resource.url is not a valid URL: ${resourceUrl}`);
+  }
+
+  if (!parsed.pathname.endsWith("/functions/v1/x402-premium-icon")) {
+    fail(`PAYMENT-REQUIRED resource.url has wrong path: ${resourceUrl}`);
+  }
+  if (parsed.searchParams.get("pack") !== "agentic-motion") {
+    fail(`PAYMENT-REQUIRED resource.url has wrong pack query: ${resourceUrl}`);
+  }
+  if (parsed.searchParams.get("icon") !== "x402-pay") {
+    fail(`PAYMENT-REQUIRED resource.url has wrong icon query: ${resourceUrl}`);
+  }
+
+  const expectedUrl = env("X402_EXPECTED_RESOURCE_URL");
+  const requestUrl = new URL(endpointUrl());
+  const shouldMatchRequestUrl = requestUrl.hostname.endsWith(".supabase.co");
+  if (expectedUrl && resourceUrl !== expectedUrl) {
+    fail(`PAYMENT-REQUIRED resource.url mismatch. Expected ${expectedUrl}, got ${resourceUrl}`);
+  }
+  if (shouldMatchRequestUrl && resourceUrl !== requestUrl.toString()) {
+    fail(`PAYMENT-REQUIRED resource.url mismatch. Expected ${requestUrl.toString()}, got ${resourceUrl}`);
+  }
+  if ((expectedUrl || shouldMatchRequestUrl) && parsed.protocol !== "https:") {
+    fail(`PAYMENT-REQUIRED resource.url must use https for hosted checks: ${resourceUrl}`);
+  }
+
+  record("resource-url", "PASS", "PAYMENT-REQUIRED resource.url points at the public x402 endpoint.");
+}
+
 function assertLocalOrExplicitRemoteMutation() {
   const supabaseUrl = requiredEnv("SUPABASE_URL");
   const allowHosted = env("X402_ALLOW_HOSTED_DB_MUTATION") === "1";
@@ -112,6 +149,7 @@ async function getPaymentRequired() {
   }
   if (!paymentRequiredHeader) fail("Missing PAYMENT-REQUIRED header.");
   const paymentRequired = decodePaymentRequiredHeader(paymentRequiredHeader);
+  verifyResourceUrl(paymentRequired);
   record("unpaid-402", "PASS", "Endpoint returned 402 with PAYMENT-REQUIRED.");
   return paymentRequired;
 }
