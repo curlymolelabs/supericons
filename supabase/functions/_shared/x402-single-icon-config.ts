@@ -8,7 +8,7 @@ export const X402_SINGLE_ICON_CONFIG = Object.freeze({
   mainnetNetwork: "eip155:8453",
   testnetFacilitatorUrl: "https://x402.org/facilitator",
   cdpFacilitatorUrl: "https://api.cdp.coinbase.com/platform/v2/x402",
-  supportEmail: "support@supericons.dev",
+  supportEmail: "hello@supericons.dev",
   redeliveryWindowSeconds: 30 * 60,
   assetPath: "agentic-motion/x402-pay.svg",
   // Source stylesheet used to extract only the purchased icon's scoped CSS.

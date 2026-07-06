@@ -49,7 +49,7 @@ The agent should keep the x402 payment response, settlement reference, or receip
 
 ## Support and Disputes
 
-For settlement disputes, paid-but-not-delivered cases, duplicate charge concerns, or license questions, contact support@supericons.dev with receipt data and the requested icon name.
+For settlement disputes, paid-but-not-delivered cases, duplicate charge concerns, or license questions, contact hello@supericons.dev with receipt data and the requested icon name.
 
 ## Refunds
 

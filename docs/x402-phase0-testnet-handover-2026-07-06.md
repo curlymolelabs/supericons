@@ -25,7 +25,7 @@ X402_RECEIVING_ADDRESS        merchant receiving address (Account 2)
 X402_TEST_WALLET_ADDRESSES    comma-separated buyer + receiving addresses, excluded from organic metrics
 X402_FACILITATOR_URL          https://x402.org/facilitator (keyless testnet facilitator for this first run)
 X402_NETWORK                  eip155:84532 (Base Sepolia)
-X402_SUPPORT_EMAIL            placeholder, see open items
+X402_SUPPORT_EMAIL            hello@supericons.dev
 ```
 
 Rules for the agent:
@@ -50,7 +50,7 @@ Prerequisite: this requires the `x402-premium-icon` function and the migration t
 
 1. Migration is missing columns the PRD v3 schema requires: `paid_at`, `delivered_at`, `redelivery_expires_at`, `transaction_hash`, and the `duplicate` status. Restore them or amend the PRD deliberately; the 30-minute window and 410 logic need a settlement timestamp or expiry column.
 2. The spike report's "Planned Endpoint Shape" error codes (401/403/500 variants) contradict the PRD v3 error contract (402 payment_verification_failed, 503 delivery_failed_after_settlement, 503 facilitator_unavailable). The PRD contract is authoritative; update the spike report to reference it.
-3. `support@supericons.dev` is an unconfirmed placeholder. Ask the owner to confirm or replace it before it ships in any error response.
+3. Support email is resolved to `hello@supericons.dev` to match the public Supericons terms and contact copy.
 4. In `x402-single-icon-config.ts`, `cssPath` points at the full pack stylesheet. It is the extraction source only; the endpoint must never serve it raw. Add a comment saying so.
 
 ## Boundaries
