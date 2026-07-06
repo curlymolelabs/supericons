@@ -197,6 +197,7 @@ The x402 path should remain separate from `si_purchases`, because a single-icon 
 | FR18 | Enforce database-level uniqueness for signed payment hash, payment identifier, and settlement reference when present; the first valid settlement row wins and concurrent duplicates take the redelivery or processing path. | Risk: duplicate charge/concurrency | [ASSUMPTION] |
 | FR19 | Enable RLS on the x402 audit table and expose no anon/auth read or write policies; only service-role server code may read or write payer addresses and settlement metadata. | Risk: payment metadata exposure | [ASSUMPTION] |
 | FR20 | Return `410 redelivery_window_expired` when the original signed payment is replayed for the same resource after the redelivery window. | User job: AI coding agent | [ASSUMPTION] |
+| FR21 | Support a reversible endpoint kill switch that returns `503 endpoint_disabled` before database, rate-limit, facilitator, or payment-challenge work. | Risk: emergency rollback and testnet exposure | [ASSUMPTION] |
 
 ## API Contract
 
@@ -276,6 +277,7 @@ The endpoint must not include other pack icons in the paid response. [SOURCE: do
 | `409` | `payment_reused_for_different_resource` | `true` for original resource only | Same signed payment payload is replayed for a different icon or pack. | Reuse the original signed payment for the original resource or make a new payment. | [ASSUMPTION] |
 | `410` | `redelivery_window_expired` | `true` | Same signed payment is replayed for the same resource after the redelivery window. | Contact support with receipt data; do not loop or create a second payment unless the buyer explicitly approves. | [ASSUMPTION] |
 | `429` | `rate_limited` | `false` | Too many unpaid or failed verification attempts. | Back off and retry later. | [ASSUMPTION] |
+| `503` | `endpoint_disabled` | `false` | The x402 endpoint is intentionally paused by operator configuration. | Stop payment attempts and retry only after the endpoint is re-enabled. | [ASSUMPTION] |
 | `503` | `asset_unavailable` | `false` | The icon asset or scoped CSS cannot be prepared before settlement. | Do not reuse this payment; no charge was attempted. Escalate the broken resource. | [ASSUMPTION] |
 | `503` | `facilitator_unavailable` | `false` unless `settlement_reference` is present | Facilitator cannot verify or settle. | Retry later; do not create a new payment if a settlement reference exists. | [ASSUMPTION] |
 | `503` | `delivery_failed_after_settlement` | `true` | Payment settled, but storage read or payload assembly failed. | Retry same payment and same resource within redelivery window. | [ASSUMPTION] |

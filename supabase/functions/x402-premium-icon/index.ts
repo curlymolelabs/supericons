@@ -107,6 +107,10 @@ function supportEmail() {
   return env("X402_SUPPORT_EMAIL", X402_SINGLE_ICON_CONFIG.supportEmail);
 }
 
+function endpointDisabled() {
+  return env("X402_ENDPOINT_DISABLED") === "1";
+}
+
 function publicResourceUrl() {
   const configuredUrl = env("X402_PUBLIC_RESOURCE_URL");
   if (configuredUrl) return configuredUrl;
@@ -278,6 +282,7 @@ async function getHttpServer() {
             price,
             maxTimeoutSeconds: 120,
           },
+          // Static while the beta supports one resource; make this request-specific before adding more icons.
           resource: publicResourceUrl(),
           description: "Supericons single animated icon license",
           mimeType: "application/json",
@@ -713,6 +718,19 @@ serve(async (req: Request) => {
 
     if (req.method !== "GET") {
       return jsonResponse(req, 405, "invalid_request", "Only GET is supported.", false, request_id);
+    }
+
+    if (endpointDisabled()) {
+      return jsonResponse(
+        req,
+        503,
+        "endpoint_disabled",
+        "The x402 single-icon endpoint is temporarily disabled.",
+        false,
+        request_id,
+        {},
+        { "Retry-After": "300" },
+      );
     }
 
     const { url, pack, icon } = parseQuery(req);

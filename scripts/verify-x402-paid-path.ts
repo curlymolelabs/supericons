@@ -154,6 +154,28 @@ async function getPaymentRequired() {
   return paymentRequired;
 }
 
+async function verifyEndpointDisabled() {
+  const res = await fetch(endpointUrl(), {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  const paymentRequiredHeader = res.headers.get("PAYMENT-REQUIRED");
+  const body = await res.json().catch(() => null);
+
+  if (res.status !== 503) {
+    fail(`Expected disabled endpoint 503, got ${res.status}: ${JSON.stringify(body).slice(0, 300)}`);
+  }
+  if (paymentRequiredHeader) {
+    fail("Disabled endpoint must not return PAYMENT-REQUIRED.");
+  }
+  if (body?.error !== "endpoint_disabled" || body?.charged !== false) {
+    fail(`Disabled endpoint returned the wrong error contract: ${JSON.stringify(body).slice(0, 300)}`);
+  }
+
+  record("endpoint-disabled", "PASS", "Endpoint returned 503 without payment terms while disabled.");
+}
+
 async function verifyCorsDeny() {
   const res = await fetch(endpointUrl(), {
     method: "GET",
@@ -224,14 +246,25 @@ async function main() {
   loadEnvFile("supabase/.env.local");
 
   const challengeOnly = Deno.args.includes("--challenge-only");
+  const expectDisabled = Deno.args.includes("--expect-disabled");
   console.log("[x402-paid-path] Endpoint:", endpointUrl());
-  console.log("[x402-paid-path] Mode:", challengeOnly ? "challenge-only" : "full paid path");
+  console.log(
+    "[x402-paid-path] Mode:",
+    expectDisabled ? "expect-disabled" : challengeOnly ? "challenge-only" : "full paid path",
+  );
 
-  requiredEnv("X402_NETWORK");
-  requiredEnv("X402_FACILITATOR_URL");
-  requiredEnv("X402_RECEIVING_ADDRESS");
+  if (!expectDisabled) {
+    requiredEnv("X402_NETWORK");
+    requiredEnv("X402_FACILITATOR_URL");
+    requiredEnv("X402_RECEIVING_ADDRESS");
+  }
 
   await verifyCorsDeny();
+  if (expectDisabled) {
+    await verifyEndpointDisabled();
+    return;
+  }
+
   const paymentRequired = await getPaymentRequired();
   if (challengeOnly) {
     record("paid-path", "SKIP", "Challenge-only mode does not sign or settle a payment.");

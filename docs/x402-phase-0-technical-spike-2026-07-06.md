@@ -94,6 +94,7 @@ Expected high-level responses are defined in the PRD error table:
 - `409 payment_reused_for_different_resource`: signed payment was replayed against another resource.
 - `410 redelivery_window_expired`: valid old payment, but the redelivery window has passed.
 - `429 rate_limited`: request is blocked before facilitator settlement.
+- `503 endpoint_disabled`: endpoint is paused before payment terms, rate limiting, database writes, or facilitator calls.
 - `503 facilitator_unavailable`: facilitator cannot verify or settle.
 - `503 delivery_failed_after_settlement`: payment settled, but storage read or payload assembly failed.
 - `500 internal_error`: unexpected server error.
@@ -111,6 +112,7 @@ X402_NETWORK
 X402_PRICE_USD
 X402_TEST_WALLET_ADDRESSES
 X402_SUPPORT_EMAIL
+X402_ENDPOINT_DISABLED
 ```
 
 `X402_RECEIVING_ADDRESS` should be the merchant receiving wallet. `X402_TEST_WALLET_ADDRESSES` should list internal wallets excluded from organic purchase metrics.
