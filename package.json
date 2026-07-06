@@ -74,6 +74,8 @@
     "verify:stripe-webhook-gateway": "node scripts/verify-stripe-webhook-gateway.mjs",
     "verify:premium-asset-contract": "node scripts/verify-premium-asset-contract.mjs",
     "verify:premium-pack-storage": "node scripts/verify-premium-pack-storage.mjs",
+    "verify:x402-phase0-artifacts": "node scripts/verify-x402-phase0-artifacts.mjs",
+    "verify:x402-paid-path": "deno run --node-modules-dir=auto --allow-env --allow-net --allow-read=supabase/.env.local scripts/verify-x402-paid-path.ts",
     "upload:premium-pack-storage": "node scripts/upload-premium-pack-to-storage.mjs",
     "verify:packs-localization": "node scripts/verify-packs-localization.mjs",
     "verify:icon-grid-behavior": "node scripts/verify-icon-grid-behavior.mjs",

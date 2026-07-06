@@ -4,3 +4,9 @@
 # function, so Supabase JWT verification must stay off for this endpoint.
 [functions.stripe-webhook]
 verify_jwt = false
+
+# x402 buyers and agents must reach this endpoint without a Supabase JWT so the
+# function can answer with HTTP 402 payment terms. Payment authenticity is
+# enforced inside the function with signed x402 payment verification.
+[functions.x402-premium-icon]
+verify_jwt = false
