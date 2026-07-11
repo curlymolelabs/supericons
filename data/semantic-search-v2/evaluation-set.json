@@ -277,22 +277,22 @@
         {
           "case_id": "j11-chooser",
           "query": "chooser",
-          "intent_type": "ui_slot",
+          "intent_type": "ambiguous_concept",
           "surfaces": ["search_icons", "recommend_icons"],
-          "expected_outcome": "useful_family",
+          "expected_outcome": "useful_family_or_interpretation_options",
           "confidence_expectation": "normal_or_related",
-          "acceptable_families": ["select", "dropdown", "list select", "chooser"],
-          "proposed_avoid_families": ["color picker", "lasso"]
+          "acceptable_families": ["selection control", "file chooser", "color chooser", "dropdown", "list select"]
         },
         {
           "case_id": "j11-picker",
           "query": "picker",
-          "intent_type": "ui_slot",
+          "intent_type": "ambiguous_concept",
           "surfaces": ["search_icons", "recommend_icons"],
-          "expected_outcome": "useful_family",
+          "expected_outcome": "interpretation_diversity",
           "confidence_expectation": "normal_or_related",
-          "acceptable_families": ["picker", "select", "dropdown", "list select"],
-          "proposed_avoid_families": ["eyedropper", "color picker"]
+          "interpretation_family_ids": ["selection_control", "color_picker", "date_time_picker", "file_picker", "emoji_picker"],
+          "minimum_distinct_families_top_8": 3,
+          "acceptable_families": ["selection control", "color picker", "date picker", "time picker", "file picker", "emoji picker"]
         },
         {
           "case_id": "j11-magnifier",
@@ -310,7 +310,8 @@
           "surfaces": ["search_icons", "recommend_icons"],
           "expected_outcome": "useful_family",
           "confidence_expectation": "normal_or_related",
-          "acceptable_families": ["alarm", "alarm clock", "bell"],
+          "acceptable_families": ["alarm", "alarm clock"],
+          "proposed_related_families": ["timer", "reminder", "bell", "notification", "warning"],
           "proposed_avoid_families": ["barbell"]
         },
         {
@@ -321,6 +322,7 @@
           "expected_outcome": "useful_family",
           "confidence_expectation": "normal_or_related",
           "acceptable_families": ["alert", "warning", "triangle alert", "circle alert"],
+          "proposed_related_families": ["alarm", "bell", "notification"],
           "proposed_avoid_families": ["barbell"]
         },
         {
@@ -330,7 +332,8 @@
           "surfaces": ["search_icons", "recommend_icons"],
           "expected_outcome": "useful_family",
           "confidence_expectation": "normal_or_related",
-          "acceptable_families": ["bell", "notification", "alarm"],
+          "acceptable_families": ["bell", "notification"],
+          "proposed_related_families": ["alarm", "reminder", "alert"],
           "proposed_avoid_families": ["barbell"]
         }
       ]
@@ -558,6 +561,138 @@
           "surfaces": ["search_icons", "recommend_icons"],
           "expected_outcome": "equivalent_builder_contract",
           "acceptable_families": ["scan", "camera", "vehicle", "ocr"]
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_intent_diversity",
+      "purpose": "Define measurable interpretation breadth for ambiguous search and context narrowing for recommendation.",
+      "source_evidence": "owner feedback recorded 2026-07-11",
+      "review_status": "policy_seed_pending_owner_scoring",
+      "queries": [
+        {
+          "case_id": "ambiguity-hello",
+          "query": "hello",
+          "intent_type": "ambiguous_concept",
+          "surfaces": ["search_icons"],
+          "expected_outcome": "interpretation_diversity",
+          "interpretation_family_ids": ["greeting_gesture", "friendly_face", "communication", "written_greeting"],
+          "minimum_distinct_families_top_8": 3,
+          "acceptable_families": ["waving hand", "raised hand", "smile", "friendly face", "chat", "message", "speech", "text", "typography"],
+          "prohibited_top_icon_refs": ["simpleicons:hellofresh"]
+        },
+        {
+          "case_id": "ambiguity-hello-onboarding",
+          "query": "hello onboarding screen",
+          "task": "Choose an icon for a friendly onboarding screen.",
+          "slot": "hello",
+          "intent_type": "context_narrowed_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "context_narrowed_family",
+          "interpretation_family_ids": ["greeting_gesture", "friendly_face"],
+          "expected_primary_interpretation_family": "greeting_gesture",
+          "acceptable_families": ["waving hand", "raised hand", "smile", "friendly face", "welcome"]
+        },
+        {
+          "case_id": "ambiguity-say-hello",
+          "query": "say hello",
+          "task": "Choose an icon for starting a conversation.",
+          "slot": "say hello",
+          "intent_type": "context_narrowed_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "context_narrowed_family",
+          "interpretation_family_ids": ["communication", "greeting_gesture"],
+          "expected_primary_interpretation_family": "communication",
+          "acceptable_families": ["speech", "chat", "message", "wave", "greeting"]
+        },
+        {
+          "case_id": "ambiguity-hello-message",
+          "query": "hello message",
+          "task": "Choose an icon for a greeting message.",
+          "slot": "hello message",
+          "intent_type": "context_narrowed_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "context_narrowed_family",
+          "interpretation_family_ids": ["communication", "written_greeting"],
+          "expected_primary_interpretation_family": "communication",
+          "acceptable_families": ["chat", "message", "speech bubble", "text message"]
+        },
+        {
+          "case_id": "ambiguity-hello-pixel-text",
+          "query": "hello pixel text",
+          "task": "Choose an icon for a retro pixel greeting.",
+          "slot": "hello pixel text",
+          "intent_type": "context_narrowed_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "context_narrowed_family_or_honest_gap",
+          "interpretation_family_ids": ["written_greeting", "pixel_display", "game_dialogue"],
+          "expected_primary_interpretation_family": "written_greeting",
+          "acceptable_families": ["text", "typography", "pixel", "terminal", "game dialogue"],
+          "expected_gap_type": "new_icon_gap"
+        },
+        {
+          "case_id": "ambiguity-hello-mouth",
+          "query": "hello mouth",
+          "task": "Choose an icon for a spoken greeting.",
+          "slot": "hello mouth",
+          "intent_type": "context_narrowed_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "context_narrowed_family",
+          "interpretation_family_ids": ["spoken_greeting", "communication", "friendly_face"],
+          "expected_primary_interpretation_family": "spoken_greeting",
+          "acceptable_families": ["mouth", "lips", "voice", "speech", "speaking face"]
+        }
+      ]
+    },
+    {
+      "id": "brand_intent_gating",
+      "purpose": "Protect generic concepts from accidental brand dominance while preserving explicit brand and logo identity search.",
+      "source_evidence": "owner feedback recorded 2026-07-11",
+      "review_status": "policy_seed_pending_owner_scoring",
+      "queries": [
+        {
+          "case_id": "brand-gate-hello",
+          "query": "hello",
+          "intent_type": "ambiguous_concept",
+          "surfaces": ["search_icons"],
+          "brand_match_class": "prefix_or_substring",
+          "expected_brand_behavior": "brand_not_top_without_intent",
+          "expected_outcome": "concept_before_brand",
+          "acceptable_families": ["greeting", "wave", "smile", "chat", "message"],
+          "prohibited_top_icon_refs": ["simpleicons:hellofresh"]
+        },
+        {
+          "case_id": "brand-gate-hellofresh",
+          "query": "hellofresh",
+          "intent_type": "brand_logo",
+          "surfaces": ["search_icons"],
+          "brand_match_class": "distinctive_exact",
+          "expected_brand_behavior": "exact_identity_priority",
+          "expected_outcome": "exact_identity",
+          "expected_top_icon_ids": ["simpleicons:hellofresh"],
+          "acceptable_families": ["hellofresh"]
+        },
+        {
+          "case_id": "brand-gate-hellofresh-logo",
+          "query": "HelloFresh logo",
+          "intent_type": "brand_logo",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "brand_match_class": "distinctive_exact",
+          "expected_brand_behavior": "exact_identity_priority",
+          "expected_outcome": "exact_identity",
+          "expected_top_icon_ids": ["simpleicons:hellofresh"],
+          "acceptable_families": ["hellofresh"]
+        },
+        {
+          "case_id": "brand-gate-swift",
+          "query": "swift",
+          "intent_type": "ambiguous_concept",
+          "surfaces": ["search_icons"],
+          "brand_match_class": "ambiguous_exact",
+          "expected_brand_behavior": "brand_shares_with_concept_without_intent",
+          "expected_outcome": "interpretation_diversity",
+          "interpretation_family_ids": ["speed_motion", "brand_identity"],
+          "acceptable_families": ["speed", "motion", "fast", "swift brand"]
         }
       ]
     }

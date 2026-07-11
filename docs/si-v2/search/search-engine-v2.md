@@ -1,7 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.0
+Version: 1.1
 Approved: 2026-07-11
+Amended: 2026-07-11
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -82,6 +83,8 @@ When schema-native icons are published, their public meaning, appearance, use gu
 5. Admin review is the taste gate. Automation proposes; approved records and decisions control.
 6. Search status is evidence-based: implemented, verified, packaged, deployed, and observed live are different states.
 7. Failure must degrade to useful deterministic behavior, not an empty or misleading response.
+8. Ambiguous short queries should show useful interpretation breadth in search, while recommendation uses task and slot context before asking for clarification.
+9. Brand identity priority applies to genuine identity matches, not accidental prefixes, substrings, or ambiguous common words.
 
 ## Authoritative dependencies
 
@@ -192,6 +195,8 @@ Rules:
 5. Suppress generic standalone tokens such as `icon`, `logo`, `app`, and `ai` unless they are part of a stronger phrase.
 6. Build bounded variants in this order: full query, compound/alias, object-action/device pairs, strong visual terms, safe fallback.
 7. Keep library preference separate from semantic meaning.
+8. Detect when a short query has multiple plausible visual meanings and assign stable interpretation-family IDs.
+9. Classify brand matches as distinctive exact, ambiguous exact, or prefix/substring matches before ranking.
 
 ### Public and privileged diagnostics
 
@@ -212,6 +217,38 @@ Rules:
 Candidate sets are deduplicated by icon reference and fused using a deterministic, inspectable method such as reciprocal rank fusion plus the existing reranker. Signals may include exactness, lexical rank, intent overlap, semantic rank, public visual fit, popularity, reviewed editorial signals, avoid rules, collision risk, and library behavior.
 
 Exact brand, icon ID, and known-name canaries must remain ahead of broad semantic candidates. Vector scores are inputs, not final authority.
+
+### Ambiguous-query behavior
+
+An ambiguous query has multiple plausible visual meanings and insufficient context to choose one confidently.
+
+For `search_icons` and list-style web search:
+
+- retrieve candidates for each approved interpretation family;
+- label results with stable public-safe interpretation-family IDs;
+- when at least three relevant families exist in the catalog, cover at least three families in the top eight;
+- do not add weak candidates merely to satisfy a diversity count; and
+- let added query context narrow or remove the diversity requirement.
+
+For `recommend_icons`:
+
+- use the task and slot together to narrow the meaning;
+- return one decisive recommendation when the context supports it; and
+- when context remains insufficient, return `needs_clarification` with labeled interpretation options instead of presenting a guess as confident.
+
+Exact icon IDs and clear identity queries are not diversified.
+
+### Brand-intent gating
+
+Brand candidates use three match classes:
+
+- `distinctive_exact`: the query exactly matches a maintained distinctive brand name or alias;
+- `ambiguous_exact`: the query exactly matches a maintained brand term that is also a common concept; and
+- `prefix_or_substring`: only part of the brand label or alias matches.
+
+Distinctive exact matches retain identity priority. Ambiguous exact matches require context or share the result set with non-brand interpretations. Prefix or substring matches cannot take top rank without a brand signal such as `logo`, `brand`, `company`, `product`, or another approved identity cue.
+
+The rule is generic. Query-specific fixtures such as `hello` and `HelloFresh logo` prove the behavior but do not create query-specific ranking code.
 
 ### Library-filter behavior
 
@@ -262,6 +299,26 @@ Results should support this public shape where the surface can carry it:
 
 `icon_ref` is the current library/registry reference. `si_id` is present only when an SI v2 record exists. User-facing output uses full library names. Public responses must not expose internal scores by default.
 
+Ambiguous flows may additionally return this optional public-safe shape:
+
+```json
+{
+  "needs_clarification": true,
+  "interpretations": [
+    {
+      "family_id": "greeting_gesture",
+      "label": "Greeting gesture"
+    },
+    {
+      "family_id": "communication",
+      "label": "Message or speech"
+    }
+  ]
+}
+```
+
+The labels explain broad visual directions only. They do not expose scores or private ranking signals.
+
 ## Functional requirements
 
 | ID | requirement | maps to | acceptance signal |
@@ -292,6 +349,8 @@ Results should support this public shape where the surface can carry it:
 | `FR-24` | Protect p95 latency, error rate, cost, candidate fan-out, and rate limits with measured guardrails. | Reliability/business risk | Shadow and beta gates report all guardrails. |
 | `FR-25` | Keep all public outputs free of gated terms, private evidence, credentials, and operational identifiers. | `NG-03` | Public-safety and sentinel leakage checks pass. |
 | `FR-26` | Require explicit owner approval before Supabase/Netlify deployment or npm publication. | Release risk | Status ledger links each external mutation to approval and verification evidence. |
+| `FR-27` | Diversify ambiguous list-search results across approved interpretation families, while recommendation uses task context and asks for clarification when needed. | Human and agent jobs; ambiguity risk | Approved ambiguous cases cover at least three relevant families in the top eight when available; recommendation cases narrow correctly or return labeled clarification options. |
+| `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
 
 ## Constraints
 
@@ -318,6 +377,8 @@ The fixed suite targets 225 owner-reviewed queries, retaining the existing 28-qu
 - web versus MCP and `search_icons` versus `recommend_icons`;
 - `all`, strict-library, and preferred-library behavior;
 - likely automation/test patterns versus reviewed product-demand cases.
+- ambiguous short queries versus context-narrowed forms;
+- generic concept queries that collide with brand prefixes, substrings, or common-word brand names.
 
 Each case defines expected useful families, unacceptable results, required confidence behavior, and relevant surface/library/locale context. A smaller smoke subset runs on every release.
 
@@ -335,6 +396,8 @@ Each case defines expected useful families, unacceptable results, required confi
 - Time from search to accepted downstream action.
 - Reviewed query clusters resolved per week.
 - Percentage of reviewed gaps resolved through maintained records/graphs rather than hidden one-off patches.
+- Ambiguous-query interpretation-family coverage in the top eight.
+- Clarification rate for recommendation requests with insufficient context.
 
 ### Guardrail metrics
 
@@ -345,6 +408,7 @@ Each case defines expected useful families, unacceptable results, required confi
 - Public leakage incidents and failed sentinel checks.
 - Rate-limit and abuse/noise share.
 - Candidate fan-out and query-embedding cache hit rate.
+- Accidental brand-dominance rate for generic concept queries.
 
 Metric definitions and thresholds that remain undecided are tracked as open questions and must be set before the relevant rollout gate.
 
@@ -353,7 +417,7 @@ Metric definitions and thresholds that remain undecided are tracked as open ques
 | phase | objective | exit gate |
 | --- | --- | --- |
 | `P0` Governance and baseline | Approve canonical docs, preserve sanitized baseline, expand stratified evaluation, define library and acceptance contracts. | Traceability audit passes; baseline has reviewed denominators and exact canaries. |
-| `P1` Shared deterministic understanding | Align query frames, intent rules, library behavior, and `recommend_icons` without semantic ranking. | Surface-parity, recommendation, library, and exact-match fixtures pass. |
+| `P1` Shared deterministic understanding | Align query frames, intent rules, library behavior, ambiguity handling, brand gating, and `recommend_icons` without semantic ranking. | Surface-parity, recommendation, library, ambiguity, brand-collision, and exact-match fixtures pass. |
 | `P2` Search projection | Generate five-type localized documents from approved projections. | Determinism, migration compatibility, and public-safety checks pass. |
 | `P3` Offline embeddings | Generate versioned embeddings and prepare vector storage/RPC without user-visible ranking. | Incremental sync, rollback, cost, and model metadata checks pass. |
 | `P4` Shadow retrieval and fusion | Compare vector/hybrid candidates with current results while serving current ranking. | Top-3 improves or stays neutral, exact canaries pass, latency/cost acceptable, leakage checks pass. |
@@ -399,6 +463,8 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 | Localization is uneven | Measured multilingual experiment and high-value localized fixtures |
 | Schema/runtime names diverge | Keep implemented table/generator names until an approved migration changes them |
 | Deployment state is mistaken for local completion | Lifecycle status ledger with verification and deployment evidence |
+| Diversification adds weak or noisy results | Require approved families, catalog availability, relevance floors, and context-based narrowing |
+| Common-word or substring brand matches dominate concepts | Maintain brand match classes and require brand intent for ambiguous or partial matches |
 
 ## Open questions
 
@@ -410,6 +476,8 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - `OQ-06` What minimum geography/client attribution is useful when trusted headers or authenticated identity are absent?
 - `OQ-07` Should approved search reviews edit SI v2 records directly or create owner-approved change proposals?
 - `OQ-08` Which conditions justify a dedicated vector service instead of pgvector?
+- `OQ-09` Who maintains the distinctive versus ambiguous brand-term classification, and what evidence changes it?
+- `OQ-10` What ambiguity signal and relevance floor trigger diversified search or recommendation clarification?
 
 ## Acceptance criteria for the first hybrid beta
 
@@ -424,6 +492,9 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - Shadow/beta evidence reports quality, p95 latency, errors, cost, exact regressions, and acceptance denominators.
 - The implementation-status ledger identifies what is local, verified, packaged, deployed, and observed live.
 - Owner approval and a rollback path are recorded before any external deployment or publication.
+- Approved ambiguous search cases cover the required interpretation families without weak filler results.
+- Ambiguous recommendation cases use context or return labeled clarification options.
+- Generic prefix/substring brand collisions do not outrank concept results without brand intent.
 
 ## Change policy
 

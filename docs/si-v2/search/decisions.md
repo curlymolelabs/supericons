@@ -28,6 +28,8 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-013` | Admin review is the taste gate; raw demand does not auto-edit records | Accepted | Learning loop |
 | `D-014` | MCP-first beta after shadow gates | Accepted | Rollout |
 | `D-015` | Raw query export remains private; repository evidence is sanitized | Accepted | Evidence/privacy |
+| `D-016` | Ambiguous search diversifies; recommendation narrows with context or asks for clarification | Accepted | Query understanding and result behavior |
+| `D-017` | Brand priority requires the appropriate identity match class and intent | Accepted | Retrieval and reranking |
 
 ## Decision records
 
@@ -179,6 +181,24 @@ Status: Accepted
 Decision: raw admin query exports remain in private analytics storage. Repository evidence contains aggregate counts, reviewed generic queries, limitations, source metadata, and a checksum only.
 
 Reason: raw packs include hashed identifiers, context URLs, account attributes, and unreviewed evidence that should not enter a potentially public repository.
+
+### D-016: Surface-specific ambiguous-query behavior
+
+Date: 2026-07-11
+Status: Accepted
+
+Decision: list-style search diversifies an ambiguous short query across approved interpretation families. When at least three relevant families exist, the top eight should cover at least three without adding weak filler. Recommendation uses task and slot context to narrow first. If the meaning remains unclear, it returns labeled interpretation options and `needs_clarification` instead of a confident guess.
+
+Reason: broad words such as `hello` can mean a gesture, friendly face, message, spoken greeting, or written greeting. One forced meaning hides useful options, while unconditional diversification can make a recommendation indecisive. Surface-specific handling preserves both discovery and decisiveness.
+
+### D-017: Generic brand-intent gating
+
+Date: 2026-07-11
+Status: Accepted
+
+Decision: brand matches are classified as distinctive exact, ambiguous exact, or prefix/substring. Distinctive exact identity keeps priority. Ambiguous common-word identity requires context or shares the result set with concept interpretations. Prefix or substring matches cannot take top rank without an approved brand-intent signal.
+
+Reason: a bare concept such as `hello` must not become a HelloFresh search merely because the brand contains the query. The same rule must protect other concept and brand collisions without creating one-query ranking patches.
 
 ## Adding or superseding a decision
 

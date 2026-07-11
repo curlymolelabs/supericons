@@ -32,6 +32,7 @@ const ALLOWED_REVIEW_STATUSES = new Set([
   'public_safe_seed_pending_owner_scoring',
   'contract_seed_pending_owner_scoring',
   'contract_seed',
+  'policy_seed_pending_owner_scoring',
   'owner_reviewed',
 ]);
 
@@ -42,6 +43,16 @@ const LIBRARY_BEHAVIOR_BY_MODE = {
   prefer: 'requested_library_first_then_labeled_alternatives',
   all: 'all_eligible_libraries',
 };
+const ALLOWED_BRAND_MATCH_CLASSES = new Set([
+  'distinctive_exact',
+  'ambiguous_exact',
+  'prefix_or_substring',
+]);
+const ALLOWED_BRAND_BEHAVIORS = new Set([
+  'exact_identity_priority',
+  'brand_not_top_without_intent',
+  'brand_shares_with_concept_without_intent',
+]);
 
 async function readJson(relativePath) {
   return JSON.parse(await fs.readFile(path.join(repoRoot, relativePath), 'utf8'));
@@ -81,10 +92,10 @@ function assertEvaluationSet(evaluationSet) {
   );
 
   const groups = evaluationSet.query_groups || [];
-  assert.ok(groups.length >= 9, 'evaluation set should cover the approved query dimensions');
+  assert.ok(groups.length >= 11, 'evaluation set should cover the approved query dimensions');
 
   const queries = flattenEvaluationQueries(evaluationSet);
-  assert.ok(queries.length >= 60, 'evaluation set should include the first expansion beyond the 28-query seed');
+  assert.ok(queries.length >= 70, 'evaluation set should include ambiguity and brand-gating policy cases');
   assert.ok(
     queries.length < evaluationSet.target_case_count,
     'candidate case count should remain below the target until owner scoring is complete',
@@ -100,6 +111,8 @@ function assertEvaluationSet(evaluationSet) {
     'july_11_regression_seeds',
     'library_mode_contract',
     'cross_surface_query_frame',
+    'ambiguous_intent_diversity',
+    'brand_intent_gating',
   ]);
 
   for (const groupId of requiredGroups) {
@@ -135,7 +148,13 @@ function assertEvaluationSet(evaluationSet) {
       caseIds.add(query.case_id);
     }
 
-    if (['july_11_regression_seeds', 'library_mode_contract', 'cross_surface_query_frame'].includes(query.group_id)) {
+    if ([
+      'july_11_regression_seeds',
+      'library_mode_contract',
+      'cross_surface_query_frame',
+      'ambiguous_intent_diversity',
+      'brand_intent_gating',
+    ].includes(query.group_id)) {
       assert.ok(query.case_id, `${query.group_id}: expanded cases should declare case_id`);
       assert.ok(query.expected_outcome, `${query.case_id}: expanded cases should declare expected_outcome`);
     }
@@ -154,6 +173,62 @@ function assertEvaluationSet(evaluationSet) {
       );
     }
 
+    if (query.proposed_related_families) {
+      assert.ok(
+        Array.isArray(query.proposed_related_families) && query.proposed_related_families.length > 0,
+        `${query.case_id}: proposed_related_families should be non-empty`,
+      );
+    }
+
+    if (query.interpretation_family_ids) {
+      assert.ok(
+        Array.isArray(query.interpretation_family_ids) && query.interpretation_family_ids.length > 0,
+        `${query.case_id}: interpretation_family_ids should be non-empty`,
+      );
+      for (const familyId of query.interpretation_family_ids) {
+        assert.match(familyId, /^[a-z0-9_]+$/, `${query.case_id}: interpretation family should be snake_case`);
+      }
+    }
+
+    if (query.minimum_distinct_families_top_8) {
+      assert.ok(
+        query.minimum_distinct_families_top_8 >= 2 && query.minimum_distinct_families_top_8 <= 8,
+        `${query.case_id}: minimum family diversity should fit within the top eight`,
+      );
+      assert.ok(
+        query.interpretation_family_ids?.length >= query.minimum_distinct_families_top_8,
+        `${query.case_id}: declared families should cover the diversity minimum`,
+      );
+    }
+
+    if (query.expected_primary_interpretation_family) {
+      assert.ok(
+        query.interpretation_family_ids?.includes(query.expected_primary_interpretation_family),
+        `${query.case_id}: primary interpretation should be in interpretation_family_ids`,
+      );
+    }
+
+    if (query.brand_match_class) {
+      assert.ok(
+        ALLOWED_BRAND_MATCH_CLASSES.has(query.brand_match_class),
+        `${query.case_id}: unsupported brand match class`,
+      );
+      assert.ok(
+        ALLOWED_BRAND_BEHAVIORS.has(query.expected_brand_behavior),
+        `${query.case_id}: unsupported brand behavior`,
+      );
+    }
+
+    if (query.prohibited_top_icon_refs) {
+      assert.ok(
+        Array.isArray(query.prohibited_top_icon_refs) && query.prohibited_top_icon_refs.length > 0,
+        `${query.case_id}: prohibited_top_icon_refs should be non-empty`,
+      );
+      for (const iconRef of query.prohibited_top_icon_refs) {
+        assert.match(iconRef, /^[a-z0-9-]+:[a-z0-9._-]+$/i, `${query.case_id}: invalid prohibited icon ref`);
+      }
+    }
+
     if (query.library_mode) {
       assert.ok(ALLOWED_LIBRARY_MODES.has(query.library_mode), `${query.case_id}: unsupported library mode`);
       assert.equal(
@@ -169,7 +244,7 @@ function assertEvaluationSet(evaluationSet) {
     assertNoUnsafeText(`evaluation query ${query.query || query.slot}`, JSON.stringify(query));
   }
 
-  assert.ok(caseIds.size >= 30, 'expanded evaluation cases should have stable IDs');
+  assert.ok(caseIds.size >= 40, 'expanded evaluation cases should have stable IDs');
 
   return {
     candidate_case_count: queries.length,

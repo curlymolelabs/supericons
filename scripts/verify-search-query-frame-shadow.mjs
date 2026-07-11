@@ -62,8 +62,14 @@ assert.ok(
 
 const parityGroup = evaluationSet.query_groups.find((group) => group.id === 'cross_surface_query_frame');
 assert.ok(parityGroup, 'evaluation set should include cross-surface query-frame cases');
+const ambiguityGroup = evaluationSet.query_groups.find((group) => group.id === 'ambiguous_intent_diversity');
+assert.ok(ambiguityGroup, 'evaluation set should include ambiguous-intent cases');
+const parityCases = [
+  ...parityGroup.queries,
+  ...ambiguityGroup.queries.filter((testCase) => testCase.task && testCase.slot),
+];
 
-for (const testCase of parityGroup.queries) {
+for (const testCase of parityCases) {
   const searchFrame = buildWebSearchQueryFrame(testCase.query);
   const packagedFrame = buildMcpSearchQueryFrame(testCase.query);
   assert.deepEqual(

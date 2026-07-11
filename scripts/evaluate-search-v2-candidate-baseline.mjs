@@ -60,20 +60,25 @@ function runObservedSearch(testCase) {
     zero_result: results.length === 0,
     top_icon_refs: results.map((icon) => `${icon.lib}:${icon.id}`),
     proposed_avoid_hits: [...new Set(proposedAvoidHits)],
+    prohibited_top_hit: (testCase.prohibited_top_icon_refs || []).includes(
+      results[0] ? `${results[0].lib}:${results[0].id}` : '',
+    ),
+  };
+}
+
+function summarizeQueryFrame(query) {
+  const frame = buildSearchQueryFrame(query);
+  return {
+    matched: frame.matched,
+    intent_types: frame.intent_types,
+    meaning_groups: frame.meaning_groups,
+    confidence_floor: frame.confidence_floor,
   };
 }
 
 const julyCases = getGroup('july_11_regression_seeds').queries.map((testCase) => ({
   ...runObservedSearch({ ...testCase, library_mode: 'all' }),
-  query_frame: (() => {
-    const frame = buildSearchQueryFrame(testCase.query);
-    return {
-      matched: frame.matched,
-      intent_types: frame.intent_types,
-      meaning_groups: frame.meaning_groups,
-      confidence_floor: frame.confidence_floor,
-    };
-  })(),
+  query_frame: summarizeQueryFrame(testCase.query),
 }));
 
 const libraryCases = getGroup('library_mode_contract').queries.map((testCase) => {
@@ -92,6 +97,27 @@ const libraryCases = getGroup('library_mode_contract').queries.map((testCase) =>
 
 const observedLibraryCases = libraryCases.filter((entry) => entry.status !== 'not_implemented');
 
+const ambiguityCases = getGroup('ambiguous_intent_diversity').queries.map((testCase) => ({
+  ...runObservedSearch({ ...testCase, library_mode: 'all' }),
+  query_frame: summarizeQueryFrame(testCase.query),
+  diversification_status: 'not_implemented',
+  expected_interpretation_family_ids: testCase.interpretation_family_ids,
+  expected_primary_interpretation_family: testCase.expected_primary_interpretation_family || null,
+}));
+
+const brandCases = getGroup('brand_intent_gating').queries.map((testCase) => {
+  const observed = runObservedSearch({ ...testCase, library_mode: 'all' });
+  const expectedTop = testCase.expected_top_icon_ids || [];
+  return {
+    ...observed,
+    brand_match_class: testCase.brand_match_class,
+    expected_brand_behavior: testCase.expected_brand_behavior,
+    expected_top_match: expectedTop.length > 0
+      ? expectedTop.includes(observed.top_icon_refs[0] || '')
+      : null,
+  };
+});
+
 console.log(JSON.stringify({
   schema_version: evaluationSet.schema_version,
   candidate_case_count: evaluationSet.query_groups.flatMap((group) => group.queries || []).length,
@@ -104,7 +130,16 @@ console.log(JSON.stringify({
     preferred_library_cases_not_implemented: libraryCases.filter((entry) => entry.status === 'not_implemented').length,
     cases_with_proposed_avoid_hits: [...julyCases, ...observedLibraryCases]
       .filter((entry) => entry.proposed_avoid_hits?.length > 0).length,
+    ambiguity_policy_cases: ambiguityCases.length,
+    ambiguity_cases_with_unclassified_frames: ambiguityCases.filter((entry) => !entry.query_frame.matched).length,
+    ambiguity_diversification_cases_not_implemented: ambiguityCases
+      .filter((entry) => entry.diversification_status === 'not_implemented').length,
+    brand_policy_cases: brandCases.length,
+    prohibited_brand_top_hits: brandCases.filter((entry) => entry.prohibited_top_hit).length,
+    exact_brand_cases_passing_current_top: brandCases.filter((entry) => entry.expected_top_match === true).length,
   },
   july_cases: julyCases,
   library_cases: libraryCases,
+  ambiguity_cases: ambiguityCases,
+  brand_cases: brandCases,
 }, null, 2));
