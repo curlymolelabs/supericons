@@ -211,7 +211,7 @@
       "id": "july_11_regression_seeds",
       "purpose": "Turn the reviewed public-safe July search terms into candidate regression cases without promoting them to global aliases.",
       "source_evidence": "references/verification/search-query-baseline-2026-07-11.md",
-      "review_status": "public_safe_seed_pending_owner_scoring",
+      "review_status": "owner_reviewed",
       "library_modes_to_score": ["strict", "prefer", "all"],
       "queries": [
         {
@@ -568,7 +568,7 @@
       "id": "ambiguous_intent_diversity",
       "purpose": "Define measurable interpretation breadth for ambiguous search and context narrowing for recommendation.",
       "source_evidence": "owner feedback recorded 2026-07-11",
-      "review_status": "policy_seed_pending_owner_scoring",
+      "review_status": "owner_reviewed",
       "queries": [
         {
           "case_id": "ambiguity-hello",
@@ -648,7 +648,7 @@
       "id": "brand_intent_gating",
       "purpose": "Protect generic concepts from accidental brand dominance while preserving explicit brand and logo identity search.",
       "source_evidence": "owner feedback recorded 2026-07-11",
-      "review_status": "policy_seed_pending_owner_scoring",
+      "review_status": "owner_reviewed",
       "queries": [
         {
           "case_id": "brand-gate-hello",

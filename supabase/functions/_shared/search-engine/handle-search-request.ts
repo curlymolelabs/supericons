@@ -11,6 +11,7 @@ import {
   getIntentCandidateAdjustment,
 } from '../../../../lib/search-intent-core.js';
 import { buildSearchQueryFrame } from '../../../../lib/search-query-frame.js';
+import { buildSearchRankingQueryVariants } from '../../../../lib/search-ranking-policy.js';
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -402,7 +403,11 @@ export async function handleSearchRequest(
     account = await resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash);
 
     const intentProfile = buildSearchIntentProfile(queryNorm);
-    const queryVariants = buildIntentQueryVariants(queryNorm, { maxVariants: 10 });
+    const queryVariants = buildSearchRankingQueryVariants(
+      queryNorm,
+      buildIntentQueryVariants(queryNorm, { maxVariants: 10 }),
+      { maxVariants: 14 },
+    );
     const candidateBatches = await Promise.all(
       queryVariants.map((variant, index) =>
         adminClient.rpc('si_search_icon_candidates', {

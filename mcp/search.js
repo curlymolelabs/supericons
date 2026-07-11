@@ -13,6 +13,11 @@ import {
 import { createIconSemanticAliasMap } from './runtime/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from './runtime/icon-taxonomy-seed.js';
 import {
+  getBrandRankAdjustment,
+  getMeaningPolicyPenalty,
+  getSearchInterpretationPlan,
+} from './runtime/search-ranking-policy.js';
+import {
   compareVariantPreference,
   getConceptKeyForIcon,
   iconMatchesRequestedStyle,
@@ -355,7 +360,68 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     return merged.slice(0, Math.max(1, limit));
   }
 
+  const interpretationPlan = getSearchInterpretationPlan(query);
+  if (interpretationPlan?.families?.length) {
+    return searchIconsWithInterpretationPlan(query, icons, synonyms, interpretationPlan, options);
+  }
+
   return searchIconsForSingleQuery(query, icons, synonyms, options);
+}
+
+function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options = {}) {
+  const limit = Math.max(1, Number(options.limit || 20));
+  const perQueryLimit = Math.max(limit, 12);
+  const familyBatches = plan.families.map((family) => {
+    const results = [];
+    const seen = new Set();
+    for (const retrievalQuery of family.retrieval_queries || []) {
+      for (const icon of searchIconsForSingleQuery(retrievalQuery, icons, synonyms, {
+        ...options,
+        limit: perQueryLimit,
+      })) {
+        const key = iconKey(icon);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        results.push(icon);
+      }
+    }
+    return { family, results };
+  });
+
+  const originalResults = searchIconsForSingleQuery(query, icons, synonyms, {
+    ...options,
+    limit: perQueryLimit,
+  });
+  const selected = [];
+  const selectedKeys = new Set();
+  let resultIndex = 0;
+
+  while (selected.length < limit) {
+    let added = false;
+    for (const batch of familyBatches) {
+      const icon = batch.results[resultIndex];
+      if (!icon) continue;
+      const key = iconKey(icon);
+      if (selectedKeys.has(key)) continue;
+      selected.push(icon);
+      selectedKeys.add(key);
+      added = true;
+      if (selected.length >= limit) break;
+    }
+    if (!added && resultIndex >= perQueryLimit) break;
+    resultIndex += 1;
+    if (resultIndex > perQueryLimit) break;
+  }
+
+  for (const icon of originalResults) {
+    if (selected.length >= limit) break;
+    const key = iconKey(icon);
+    if (selectedKeys.has(key)) continue;
+    selected.push(icon);
+    selectedKeys.add(key);
+  }
+
+  return selected.slice(0, limit);
 }
 
 function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
@@ -395,9 +461,18 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
       icon,
       aliasScore: getCuratedAliasScore(icon, normalizedQuery, queryWords),
       directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
+      brandAdjustment: getBrandRankAdjustment(query, icon),
+      meaningPenalty: getMeaningPolicyPenalty(query, icon),
     }))
     .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
     .sort((a, b) => {
+      const aAdjustment = a.brandAdjustment.boost - a.brandAdjustment.penalty - a.meaningPenalty;
+      const bAdjustment = b.brandAdjustment.boost - b.brandAdjustment.penalty - b.meaningPenalty;
+      if (aAdjustment !== bAdjustment) {
+        const aTotal = a.aliasScore + a.directScore + aAdjustment;
+        const bTotal = b.aliasScore + b.directScore + bAdjustment;
+        if (bTotal !== aTotal) return bTotal - aTotal;
+      }
       if (b.aliasScore !== a.aliasScore) return b.aliasScore - a.aliasScore;
       if (b.directScore !== a.directScore) return b.directScore - a.directScore;
 

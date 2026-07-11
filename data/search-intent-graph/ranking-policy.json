@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "maintainer": "owner_approved_search_policy",
+  "change_evidence": "data/semantic-search-v2/evaluation-set.json",
+  "brand_intent_terms": ["logo", "logos", "brand", "brands", "wordmark", "mark", "marks"],
+  "interpretation_families": [
+    {
+      "id": "greeting_gesture",
+      "label": "Greeting gesture",
+      "retrieval_queries": ["waving hand", "raised hand", "wave"],
+      "candidate_terms": ["wave", "waving", "raised hand", "hand"],
+      "context_terms": ["onboarding", "welcome", "friendly", "gesture", "hand"]
+    },
+    {
+      "id": "friendly_face",
+      "label": "Friendly face",
+      "retrieval_queries": ["smile", "friendly face"],
+      "candidate_terms": ["smile", "smiling", "happy", "face"],
+      "context_terms": ["onboarding", "welcome", "friendly", "face", "smile"]
+    },
+    {
+      "id": "communication",
+      "label": "Message or conversation",
+      "retrieval_queries": ["chat", "message", "speech bubble"],
+      "candidate_terms": ["chat", "message", "speech", "conversation", "reply"],
+      "context_terms": ["say", "message", "chat", "conversation", "talk", "speech"]
+    },
+    {
+      "id": "written_greeting",
+      "label": "Written greeting",
+      "retrieval_queries": ["text", "typography"],
+      "candidate_terms": ["text", "type", "typography", "letter"],
+      "context_terms": ["text", "written", "type", "typography", "pixel", "retro"]
+    },
+    {
+      "id": "spoken_greeting",
+      "label": "Spoken greeting",
+      "retrieval_queries": ["mouth", "voice", "speaking face"],
+      "candidate_terms": ["mouth", "lips", "voice", "speaking", "speech"],
+      "context_terms": ["mouth", "lips", "voice", "spoken", "speaking"]
+    },
+    {
+      "id": "pixel_display",
+      "label": "Pixel display",
+      "retrieval_queries": ["pixel", "display"],
+      "candidate_terms": ["pixel", "display", "monitor", "screen"],
+      "context_terms": ["pixel", "retro", "display"]
+    },
+    {
+      "id": "game_dialogue",
+      "label": "Game dialogue",
+      "retrieval_queries": ["game dialogue", "terminal message"],
+      "candidate_terms": ["game", "dialogue", "terminal", "message"],
+      "context_terms": ["game", "dialogue", "pixel", "retro"]
+    },
+    {
+      "id": "speed_motion",
+      "label": "Speed or motion",
+      "retrieval_queries": ["speed", "fast", "motion"],
+      "candidate_terms": ["speed", "fast", "motion", "gauge", "rocket", "zap"],
+      "context_terms": ["speed", "fast", "motion", "performance"]
+    },
+    {
+      "id": "brand_identity",
+      "label": "Brand identity",
+      "retrieval_queries": ["swift brand"],
+      "candidate_terms": ["brand", "logo", "swift"],
+      "context_terms": ["brand", "logo", "wordmark"]
+    },
+    {
+      "id": "selection_control",
+      "label": "Selection control",
+      "retrieval_queries": ["select", "dropdown", "list select"],
+      "candidate_terms": ["select", "dropdown", "chooser", "selector", "list"],
+      "context_terms": ["select", "selection", "control", "option"]
+    },
+    {
+      "id": "color_picker",
+      "label": "Color picker",
+      "retrieval_queries": ["color picker", "eyedropper"],
+      "candidate_terms": ["color picker", "eyedropper", "palette", "color"],
+      "context_terms": ["color", "colour", "palette"]
+    },
+    {
+      "id": "date_time_picker",
+      "label": "Date or time picker",
+      "retrieval_queries": ["date picker", "time picker", "calendar clock"],
+      "candidate_terms": ["date", "time", "calendar", "clock"],
+      "context_terms": ["date", "time", "calendar", "schedule"]
+    },
+    {
+      "id": "file_picker",
+      "label": "File picker",
+      "retrieval_queries": ["file select", "folder open"],
+      "candidate_terms": ["file", "folder", "upload", "browse"],
+      "context_terms": ["file", "folder", "upload", "browse"]
+    },
+    {
+      "id": "emoji_picker",
+      "label": "Emoji picker",
+      "retrieval_queries": ["emoji", "smile"],
+      "candidate_terms": ["emoji", "smile", "face", "emoticon"],
+      "context_terms": ["emoji", "emoticon", "reaction"]
+    },
+    {
+      "id": "settings_control",
+      "label": "Settings control",
+      "retrieval_queries": ["cog", "gear", "settings"],
+      "candidate_terms": ["cog", "gear", "settings"],
+      "context_terms": []
+    },
+    {
+      "id": "reply_action",
+      "label": "Reply action",
+      "retrieval_queries": ["reply", "message reply", "respond"],
+      "candidate_terms": ["reply", "respond", "message reply"],
+      "context_terms": []
+    },
+    {
+      "id": "search_zoom",
+      "label": "Search or zoom",
+      "retrieval_queries": ["search", "magnifying glass", "zoom"],
+      "candidate_terms": ["search", "magnifier", "magnifying", "zoom"],
+      "context_terms": []
+    },
+    {
+      "id": "alarm_clock",
+      "label": "Alarm or alarm clock",
+      "retrieval_queries": ["alarm", "alarm clock"],
+      "candidate_terms": ["alarm", "alarm clock"],
+      "context_terms": []
+    },
+    {
+      "id": "alert_warning",
+      "label": "Alert or warning",
+      "retrieval_queries": ["alert", "warning", "triangle alert"],
+      "candidate_terms": ["alert", "warning", "triangle alert", "circle alert"],
+      "context_terms": []
+    },
+    {
+      "id": "bell_notification",
+      "label": "Bell or notification",
+      "retrieval_queries": ["bell", "notification"],
+      "candidate_terms": ["bell", "notification"],
+      "context_terms": []
+    }
+  ],
+  "query_policies": [
+    {
+      "id": "hello",
+      "trigger_terms": ["hello"],
+      "match": "token",
+      "bare_query_family_ids": ["greeting_gesture", "friendly_face", "communication", "written_greeting"],
+      "minimum_distinct_families_top_8": 3,
+      "context_family_order": ["spoken_greeting", "communication", "written_greeting", "pixel_display", "game_dialogue", "greeting_gesture", "friendly_face"]
+    },
+    {
+      "id": "swift",
+      "trigger_terms": ["swift"],
+      "match": "exact",
+      "bare_query_family_ids": ["speed_motion", "brand_identity"],
+      "minimum_distinct_families_top_8": 2
+    },
+    {
+      "id": "picker",
+      "trigger_terms": ["picker"],
+      "match": "token",
+      "bare_query_family_ids": ["selection_control", "color_picker", "date_time_picker", "file_picker", "emoji_picker"],
+      "minimum_distinct_families_top_8": 3,
+      "context_family_order": ["color_picker", "date_time_picker", "file_picker", "emoji_picker", "selection_control"]
+    },
+    {
+      "id": "cog",
+      "trigger_terms": ["cog"],
+      "match": "exact",
+      "bare_query_family_ids": ["settings_control"],
+      "minimum_distinct_families_top_8": 1,
+      "avoid_candidate_terms": ["incognito"]
+    },
+    {
+      "id": "reply",
+      "trigger_terms": ["respond", "reply"],
+      "match": "exact",
+      "bare_query_family_ids": ["reply_action"],
+      "minimum_distinct_families_top_8": 1,
+      "avoid_candidate_terms": ["threads"]
+    },
+    {
+      "id": "selection-control",
+      "trigger_terms": ["combobox", "dropdown", "select", "chooser"],
+      "match": "exact",
+      "bare_query_family_ids": ["selection_control"],
+      "minimum_distinct_families_top_8": 1
+    },
+    {
+      "id": "magnifier",
+      "trigger_terms": ["magnifier"],
+      "match": "exact",
+      "bare_query_family_ids": ["search_zoom"],
+      "minimum_distinct_families_top_8": 1
+    },
+    {
+      "id": "alarm",
+      "trigger_terms": ["alarm"],
+      "match": "exact",
+      "bare_query_family_ids": ["alarm_clock"],
+      "minimum_distinct_families_top_8": 1,
+      "avoid_candidate_terms": ["barbell"]
+    },
+    {
+      "id": "alert",
+      "trigger_terms": ["alert"],
+      "match": "exact",
+      "bare_query_family_ids": ["alert_warning"],
+      "minimum_distinct_families_top_8": 1,
+      "avoid_candidate_terms": ["barbell"]
+    },
+    {
+      "id": "bell",
+      "trigger_terms": ["bell"],
+      "match": "exact",
+      "bare_query_family_ids": ["bell_notification"],
+      "minimum_distinct_families_top_8": 1,
+      "avoid_candidate_terms": ["barbell"]
+    }
+  ],
+  "brand_terms": [
+    {
+      "term": "hellofresh",
+      "aliases": ["hello fresh"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["simpleicons:hellofresh"]
+    },
+    {
+      "term": "swift",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["simpleicons:swift", "iconoir:apple-swift", "tabler:brand-swift"]
+    }
+  ]
+}
