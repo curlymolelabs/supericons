@@ -1,0 +1,434 @@
+# SI Search Engine v2
+
+Version: 1.0
+Approved: 2026-07-11
+Status: canonical product and technical specification
+
+## Authority and scope
+
+This document is the official specification for SI Search Engine v2 across the web UI, hosted MCP, local MCP, and future CLI/API surfaces. It owns intended search behavior, architecture, requirements, safety gates, metrics, and rollout order.
+
+Related authority is deliberately separated:
+
+- [`decisions.md`](decisions.md) records why accepted decisions were made. A decision is active only when this specification is updated in the same change.
+- [`implementation-status.md`](implementation-status.md) records what is implemented, verified, packaged, deployed, and observed live. It does not define intended behavior.
+- [`consolidation-traceability.md`](consolidation-traceability.md) is frozen evidence showing how the four earlier planning generations were handled. It is not normative.
+
+When sources conflict:
+
+1. This document controls intended search behavior.
+2. Verified code, deployment records, and production checks control what currently exists.
+3. The SI v2 schema and registry contracts control their field and projection definitions; this document controls how search consumes them.
+4. A conflict must be resolved in the specification and decision log, never by silently choosing a convenient source.
+
+## Product question
+
+How should Supericons evolve from deterministic keyword and rule patches into a production-safe hybrid system that understands exact identities, visual meaning, relationships, UI jobs, localized language, and long natural-language requests while keeping web and agent behavior aligned?
+
+## Problem statement
+
+The current engine has useful exact, registry, alias, use-case, intent, and reranking signals, but new phrases still require manual rules and different surfaces can follow different recommendation paths. Search failures are therefore a mixture of metadata gaps, intent gaps, library-filter gaps, relationship gaps, genuine missing icons, and noise.
+
+The sanitized seven-day baseline reports 534 zero-result query records among 2,196 summary records. Its bounded detail contains 1,069 zero-result attempts among 4,045 attempts; 984 of those zero-result attempts came from `recommend_icons`. The sample is predominantly hosted MCP and has sparse acceptance signals, so it is a prioritization signal rather than a production-wide estimate of human impact. [Evidence: `references/verification/search-query-baseline-2026-07-11.md`]
+
+SI v2 also introduces public, gated, and internal record fields. Search must benefit from richer record meaning without leaking paid design intelligence, private evidence, or operational identifiers into public results.
+
+## Target users and jobs
+
+### Human web users
+
+When people do not know an icon's exact name, they need to describe its object, action, feeling, UI job, brand, or visual metaphor and quickly receive useful, honest options.
+
+### MCP and API agents
+
+When an agent chooses an icon, it needs consistent search and recommendation behavior, stable icon references, public-safe match reasons, confidence, use/avoid guidance, and preview support.
+
+### Supericons administrators and curators
+
+When a search fails or produces weak results, maintainers need evidence that distinguishes metadata, intent, relationship, library-filter, new-icon, and abuse/noise gaps. They also need to know whether behavior is local-only, deployed, or observed live before acting on it.
+
+### Future creators and publishers
+
+When schema-native icons are published, their public meaning, appearance, use guidance, and approved relationships should become searchable without duplicating hidden keyword records.
+
+## Goals
+
+- `G-01` Improve meaning-based discovery for short concepts, UI jobs, long phrases, and localized queries.
+- `G-02` Preserve exact rank quality for icon IDs, known names, brands, and logos.
+- `G-03` Use one query-understanding and candidate contract across web search, hosted MCP, local MCP, CLI/API, and `recommend_icons`.
+- `G-04` Use SI v2 records and registry projections as maintained search intelligence.
+- `G-05` Return agent-ready, public-safe explanations, confidence, use/avoid guidance, and previews.
+- `G-06` Turn repeated weak searches into reviewed record, graph, ranking, library, or Icons Lab work.
+- `G-07` Keep exact/rule search available when embeddings or vector retrieval fail.
+- `G-08` Measure search quality, acceptance, latency, client concentration, and hosted resource pressure without storing raw sensitive identifiers in public artifacts.
+
+## Non-goals
+
+- `NG-01` Do not replace the existing web search workflow with a separate AI-search screen.
+- `NG-02` Do not call a general-purpose language model for every public search request.
+- `NG-03` Do not make gated design intelligence, internal notes, raw evidence, or operational identifiers publicly downloadable or explainable.
+- `NG-04` Do not auto-promote raw searches or feedback into public records without review.
+- `NG-05` Do not require a new vector vendor before Supabase/Postgres with pgvector is evaluated against explicit gates.
+- `NG-06` Do not create new icons inside the search-engine implementation; create reviewed Icons Lab briefs instead.
+- `NG-07` Do not include payment, entitlement, affiliate, or deployment-platform redesign in this program.
+- `NG-08` Do not treat liveness checks, scanners, or concentrated automation as equivalent to user demand.
+
+## Product principles
+
+1. Exact identity beats fuzzy similarity when identity matters.
+2. Meaning retrieval broadens discovery without weakening exact results.
+3. Query interpretation, retrieval lanes, and public explanations are separate contracts.
+4. Public fields explain results; gated fields may influence internal ranking only under the leakage rules below.
+5. Admin review is the taste gate. Automation proposes; approved records and decisions control.
+6. Search status is evidence-based: implemented, verified, packaged, deployed, and observed live are different states.
+7. Failure must degrade to useful deterministic behavior, not an empty or misleading response.
+
+## Authoritative dependencies
+
+| dependency | owns | search v2 use |
+| --- | --- | --- |
+| `docs/si-v2/supericon-schema-v1.md` | SI v2 record fields and public/gated/internal tiers | Source-field eligibility and projection rules |
+| `docs/si-v2/PRD-si-v2-blueprint.md` | Program rings, approval gates, and MCP-first sequencing | Rollout mapping and owner gates |
+| `docs/registry/registry-projection-contract.md` | Registry projection contract | Current public/search record inputs |
+| `docs/registry/semantic-registry-maintenance.md` | Registry maintenance workflow | Approved record changes and generated projections |
+| `docs/registry/supabase-registry-schema-design.md` | Hosted registry storage design | Hosted source compatibility |
+| `docs/cjk-search-quality.md` and i18n contracts | Existing localized search behavior | Locale dictionary and regression requirements |
+| MCP hosted-search boundary documents | Hosted/public authentication and setup boundaries | Public payload and privileged diagnostic separation |
+
+## Architecture
+
+```mermaid
+flowchart LR
+  A["SI and registry source records"] --> B["Public/search projections"]
+  B --> C["Five semantic document types"]
+  C --> D["Offline embedding pipeline"]
+  Q["Query"] --> F["Shared query frame"]
+  F --> X["Exact and lexical lane"]
+  F --> R["Intent and relationship lane"]
+  F --> V["Vector lane"]
+  D --> V
+  X --> M["Candidate fusion and reranking"]
+  R --> M
+  V --> M
+  M --> O["Results and public-safe explanations"]
+  O --> E["Usage evidence and reviewed gap queue"]
+  E --> A
+```
+
+### Online and offline boundary
+
+The default request path is bounded and deterministic apart from the request-time query embedding used when the semantic lane is enabled. Document generation, icon embeddings, relationship seeding, model-assisted drafts, evaluation, and review happen offline.
+
+If the semantic lane is disabled, slow, unavailable, or over budget, exact, lexical, and approved intent lanes must complete the request.
+
+## Data and projection contracts
+
+### Semantic documents
+
+The initial runtime contract has exactly five document types:
+
+| type | purpose | representative public/search inputs |
+| --- | --- | --- |
+| `identity` | Exact identity, name, brand, aliases | label, name, source name, icon ID, public synonyms |
+| `meaning` | Purpose and correct use | meaning, purpose, `use_when` |
+| `visual` | Literal appearance | `depicts`, style, public visual tags |
+| `domain` | Domain and category context | category, job category, pack, public search terms |
+| `negative` | Avoid misleading matches | public `avoid_when`, contraindications, approved negative terms |
+
+Locale is a dimension on these documents. Localized aliases are source inputs that produce localized `identity` or `meaning` documents. A sixth document type requires a new accepted decision and a compatible migration.
+
+The implemented table name remains `icon_search_semantic_documents`. The canonical implementation must extend that table and its generator rather than introducing the proposed parallel `supericon_search_documents` name.
+
+### Embeddings
+
+Embeddings are stored separately from documents and include:
+
+- document ID;
+- embedding vector;
+- embedding provider/model identifier;
+- embedding version;
+- content hash;
+- creation/update time.
+
+Only changed content is re-embedded. A bad embedding version must be removable without deleting source documents.
+
+Supabase/Postgres with pgvector is the first experiment. A dedicated vector service requires evidence that pgvector fails an approved quality, filtering, latency, scale, reliability, or cost gate.
+
+### Relationships
+
+`icon_search_relationships` is the bounded runtime graph shape for concept expansion and avoid/collision edges. Initial edges come from reviewed demand and fixtures. As SI v2 records adopt approved association, anti-association, and `distinct_from` fields, generated runtime edges may use them without exposing gated wording.
+
+### Reviews and evidence
+
+Search reviews must link to existing query/audit evidence instead of creating a disconnected analytics silo. Review outcomes classify the gap and identify the promoted change type: record metadata, public alias, intent group, relationship edge, ranking change, library behavior, new icon brief, or ignore/noise.
+
+Raw IP addresses, raw user-agent strings, API keys, private prompts, private notes, and unreviewed raw evidence must not enter public search artifacts or repository verification snapshots.
+
+## Query understanding contract
+
+Every surface uses the same compact query frame before candidate retrieval. It may include:
+
+```json
+{
+  "normalized_query": "license plate recognition camera scan car",
+  "intent_types": ["compound_concept", "literal_object"],
+  "meaning_groups": ["vision_scan_detection"],
+  "objects": ["license plate", "car"],
+  "actions": ["recognize", "scan"],
+  "devices": ["camera"],
+  "domain_terms": ["vehicle", "vision"],
+  "avoid_concepts": ["dinner plate", "legal license"],
+  "fallback_terms": ["scan", "camera", "car"],
+  "confidence_floor": "medium"
+}
+```
+
+Rules:
+
+1. Normalize query and locale.
+2. Preserve exact identity tokens and recognized brand/logo intent.
+3. Match approved compound phrases and meaning groups.
+4. Extract objects, actions, devices, domains, and atomic avoid concepts.
+5. Suppress generic standalone tokens such as `icon`, `logo`, `app`, and `ai` unless they are part of a stronger phrase.
+6. Build bounded variants in this order: full query, compound/alias, object-action/device pairs, strong visual terms, safe fallback.
+7. Keep library preference separate from semantic meaning.
+
+### Public and privileged diagnostics
+
+- `include_query_frame` is an optional public-safe interpretation summary. It may expose normalized public query understanding but no private scores, gated terms, internal candidates, or ranking strategy.
+- `debug_intent` is privileged. It may expose retrieval lanes, scores, candidate diagnostics, and internal ranking signals to authorized admin tooling only. It is omitted from public hosted MCP contracts.
+
+## Retrieval and ranking
+
+### Candidate lanes
+
+1. Exact/identity: icon ref, SI ID, label, source name, slug, library, brand aliases.
+2. Lexical/registry: full text, public synonyms, aliases, use cases, public semantic fields.
+3. Intent/relationship: approved query-frame expansions and bounded graph edges.
+4. Semantic: vector similarity over generated documents.
+
+### Fusion and reranking
+
+Candidate sets are deduplicated by icon reference and fused using a deterministic, inspectable method such as reciprocal rank fusion plus the existing reranker. Signals may include exactness, lexical rank, intent overlap, semantic rank, public visual fit, popularity, reviewed editorial signals, avoid rules, collision risk, and library behavior.
+
+Exact brand, icon ID, and known-name canaries must remain ahead of broad semantic candidates. Vector scores are inputs, not final authority.
+
+### Library-filter behavior
+
+The caller contract must distinguish:
+
+- `strict`: return only the requested library; if no confident match exists, explain the library-specific gap without silently crossing libraries.
+- `prefer`: rank the requested library first, then return clearly labeled cross-library alternatives when the preferred library has no useful match.
+- `all`: search all eligible libraries.
+
+Existing inputs that do not declare a mode retain their current strict behavior until an API-compatible migration is approved. Evaluation must cover the same concept across `all` and individual libraries.
+
+## Public explanation and leakage contract
+
+Public `why_it_fits`, `matched_concepts`, use/avoid guidance, and query-frame output may make claims only from:
+
+- public projection fields;
+- public search documents;
+- the user's submitted query;
+- approved public templates; and
+- non-sensitive public labels for rank behavior.
+
+Gated fields may influence internal retrieval or scores but must not contribute facts, quoted wording, distinctive terms, or explanation reasons. Public templates may use normal connective language; safety is based on claim provenance, not literal token equality.
+
+Leakage verification must seed distinctive gated sentinel terms and assert that they never appear in public web, MCP, exported query-pack, preview, or diagnostic output. No request-time generated explanation is permitted in the default path.
+
+## Result contract
+
+Results should support this public shape where the surface can carry it:
+
+```json
+{
+  "icon_ref": "supericons:x-ai",
+  "si_id": "si:x-ai",
+  "id": "x-ai",
+  "library_key": "supericons",
+  "library_name": "Supericons",
+  "label": "xAI",
+  "kind": "brand_logo",
+  "confidence": "high",
+  "match_type": "exact_brand",
+  "matched_concepts": ["xai"],
+  "why_it_fits": "Official xAI brand mark.",
+  "use_when": "Use when the interface refers to xAI.",
+  "avoid_when": "Avoid for generic AI actions.",
+  "preview_url": "https://supericons.dev/?view=icons&preview=mcp&library=supericons&icon=supericons%3Ax-ai"
+}
+```
+
+`icon_ref` is the current library/registry reference. `si_id` is present only when an SI v2 record exists. User-facing output uses full library names. Public responses must not expose internal scores by default.
+
+## Functional requirements
+
+| ID | requirement | maps to | acceptance signal |
+| --- | --- | --- | --- |
+| `FR-01` | Preserve existing public search entry points and basic web workflow during rollout. | Human job; `NG-01` | Existing default requests remain compatible behind disabled flags. |
+| `FR-02` | Use one shared query-frame contract across web, hosted MCP, local MCP, CLI/API, and `recommend_icons`. | `G-03` | Shared fixtures produce equivalent public query frames on every surface. |
+| `FR-03` | Preserve exact icon ID, brand, logo, and known-name priority. | `G-02` | Approved exact canaries remain rank 1. |
+| `FR-04` | Generate search documents from SI v2 and current registry projections. | `G-04` | Deterministic generation passes source and public-safety checks. |
+| `FR-05` | Keep the five semantic document types and locale dimension defined above. | Data-contract risk | Generator, migration, and tests agree on the same set. |
+| `FR-06` | Generate and sync embeddings offline with model/version/hash lifecycle and rollback. | `G-01`, `G-07` | Unchanged rows are skipped and an embedding version can be removed safely. |
+| `FR-07` | Add vector candidate retrieval behind an independently controlled flag and time budget. | `G-01`, availability risk | Shadow retrieval can be enabled or disabled without changing default results. |
+| `FR-08` | Fuse exact, lexical, intent/relationship, and semantic candidates deterministically. | `G-01`, `G-02` | Candidate provenance is inspectable and duplicates are removed. |
+| `FR-09` | Apply public avoid guidance, approved relationship edges, and collision penalties during reranking. | Relevance risk | Known false-positive fixtures are suppressed without exact-match regressions. |
+| `FR-10` | Align `recommend_icons` with shared query understanding and candidate intelligence. | `G-03`; July baseline | Recommendation fixtures use the shared contract and reduce repeated zero-result clusters. |
+| `FR-11` | Implement explicit `strict`, `prefer`, and `all` library behavior without breaking existing callers. | Library-filter risk | Cross-library fixtures pass and default compatibility is documented. |
+| `FR-12` | Return confidence and honest low-confidence fallback behavior. | Human and agent jobs | Weak matches are labeled or return a clear library/new-icon gap. |
+| `FR-13` | Return public-safe match explanations, use/avoid guidance, full library names, and stable icon refs. | `G-05` | Payload fixtures match the public result contract. |
+| `FR-14` | Preserve preview URLs and image/preview support where the client supports them. | Agent job | MCP preview smoke tests pass. |
+| `FR-15` | Keep `include_query_frame` public-safe and `debug_intent` privileged. | Leakage risk | Public schemas omit privileged fields and sentinel tests pass. |
+| `FR-16` | Classify weak searches as metadata, intent, relationship, library-filter, new-icon, or abuse/noise gaps. | `G-06` | Every reviewed cluster receives one primary disposition. |
+| `FR-17` | Provide a reviewed admin workflow: export, cluster, classify, add tests, make the smallest change, verify, approve, then sync/deploy. | Admin job | A real cluster completes the workflow with evidence links. |
+| `FR-18` | Produce a bounded Icons Lab brief for approved `new_icon_gap` cases. | Creator job; `NG-06` | Brief contains label, meaning, must-show, avoid, and aliases. |
+| `FR-19` | Link result selection, preview, fetch, copy/export, replacement, and reformulation to a durable search/request journey where privacy permits. | Measurement need | Acceptance and reformulation metrics can use stable denominators. |
+| `FR-20` | Log aggregate-safe search quality, latency, surface, tool, locale, library, and client-segment evidence. | `G-08` | Admin reporting separates tool calls, likely automation, and sparse/unknown attribution. |
+| `FR-21` | Maintain a fixed stratified evaluation suite plus a rolling production-derived suite. | Regression risk | Each case has expected families, unacceptable results, surface/tool/library/locale metadata, and owner review. |
+| `FR-22` | Preserve deterministic fallback when embedding/vector work fails or exceeds budget. | `G-07` | Failure injection returns exact/rule results within the fallback budget. |
+| `FR-23` | Support localized search through locale dictionaries and evaluated multilingual retrieval without creating a new document type by default. | `G-01` | Localized fixtures meet approved usefulness thresholds. |
+| `FR-24` | Protect p95 latency, error rate, cost, candidate fan-out, and rate limits with measured guardrails. | Reliability/business risk | Shadow and beta gates report all guardrails. |
+| `FR-25` | Keep all public outputs free of gated terms, private evidence, credentials, and operational identifiers. | `NG-03` | Public-safety and sentinel leakage checks pass. |
+| `FR-26` | Require explicit owner approval before Supabase/Netlify deployment or npm publication. | Release risk | Status ledger links each external mutation to approval and verification evidence. |
+
+## Constraints
+
+- Current public APIs remain available until a compatible migration is approved.
+- Semantic and relationship schema changes remain additive until v2 is proven.
+- Hosted functions retain current CORS, authentication, rate-limit, and audit boundaries.
+- Query fan-out and semantic candidates are bounded.
+- No secrets, credentials, raw personal identifiers, private prompts, or internal process metadata enter public docs, packages, responses, or logs.
+- No Supabase or Netlify deployment and no npm publication occurs without explicit owner approval.
+- Search v2 does not define the missing SI schema `live` section; that is a separate schema correction.
+
+## Evaluation and success metrics
+
+### Evaluation suites
+
+The fixed suite targets 225 owner-reviewed queries, retaining the existing 28-query seed while expanding coverage. It is stratified across:
+
+- exact brand/logo and icon IDs;
+- common UI concepts and short synonyms;
+- long natural-language concepts;
+- localized queries;
+- negative/avoid and collision cases;
+- no-result and low-result cases;
+- web versus MCP and `search_icons` versus `recommend_icons`;
+- `all`, strict-library, and preferred-library behavior;
+- likely automation/test patterns versus reviewed product-demand cases.
+
+Each case defines expected useful families, unacceptable results, required confidence behavior, and relevant surface/library/locale context. A smaller smoke subset runs on every release.
+
+### Primary metrics
+
+- Human-rated top-3 usefulness on the fixed suite.
+- Exact brand/logo/icon rank-1 accuracy.
+- `recommend_icons` acceptance rate using a defined downstream action.
+- Long-query successful-family rate.
+
+### Supporting metrics
+
+- Zero-result and low-confidence rates by surface, tool, library mode, locale, and query class.
+- Query reformulation rate within a linked journey.
+- Time from search to accepted downstream action.
+- Reviewed query clusters resolved per week.
+- Percentage of reviewed gaps resolved through maintained records/graphs rather than hidden one-off patches.
+
+### Guardrail metrics
+
+- Search p95 latency for web and MCP separately.
+- Hosted function error and timeout rates.
+- Cost per 1,000 searches and embedding rebuild cost.
+- Exact short-query regression rate.
+- Public leakage incidents and failed sentinel checks.
+- Rate-limit and abuse/noise share.
+- Candidate fan-out and query-embedding cache hit rate.
+
+Metric definitions and thresholds that remain undecided are tracked as open questions and must be set before the relevant rollout gate.
+
+## Rollout plan
+
+| phase | objective | exit gate |
+| --- | --- | --- |
+| `P0` Governance and baseline | Approve canonical docs, preserve sanitized baseline, expand stratified evaluation, define library and acceptance contracts. | Traceability audit passes; baseline has reviewed denominators and exact canaries. |
+| `P1` Shared deterministic understanding | Align query frames, intent rules, library behavior, and `recommend_icons` without semantic ranking. | Surface-parity, recommendation, library, and exact-match fixtures pass. |
+| `P2` Search projection | Generate five-type localized documents from approved projections. | Determinism, migration compatibility, and public-safety checks pass. |
+| `P3` Offline embeddings | Generate versioned embeddings and prepare vector storage/RPC without user-visible ranking. | Incremental sync, rollback, cost, and model metadata checks pass. |
+| `P4` Shadow retrieval and fusion | Compare vector/hybrid candidates with current results while serving current ranking. | Top-3 improves or stays neutral, exact canaries pass, latency/cost acceptable, leakage checks pass. |
+| `P5` MCP-first beta | Enable hybrid results for an approved MCP cohort behind flags. | MCP payload, preview, recommendation, usage, rollback, and guardrail checks pass. |
+| `P6` Web beta | Enable hybrid web results behind a default-off flag. | Web UX, relevance, latency, fallback, and public-output checks pass. |
+| `P7` Reviewed learning loop | Turn repeated gaps into approved record, graph, ranking, library, or Icons Lab changes. | At least one real cluster completes the taste-gated loop with measurable improvement. |
+
+Embeddings may be built offline while `P0` and `P1` finish, but `P4` cannot exit before their contracts and evaluation gates pass.
+
+### Feature flags
+
+The rollout retains these planned controls unless implementation evidence requires an approved rename:
+
+- `SEARCH_SEMANTIC_V2_SHADOW`
+- `SEARCH_SEMANTIC_V2_ENABLED`
+- `SEARCH_SEMANTIC_V2_RERANKER_ENABLED`
+
+Semantic retrieval must also have an independent time-budget/kill-switch path.
+
+### SI v2 ring mapping
+
+| search phase | SI v2 program ring |
+| --- | --- |
+| `P0` | Ring 0 governance and support work |
+| `P1`-`P2` | Ring 0 foundation / Ring 1 pack support |
+| `P3`-`P4` | Ring 1-2 infrastructure and feature-flag discipline |
+| `P5` | Ring 2 MCP-first delivery |
+| `P6` | Ring 2 live-site default-off rollout |
+| `P7` | Ring 3 contribution pipeline |
+
+## Risks and mitigations
+
+| risk | mitigation |
+| --- | --- |
+| Fuzzy but visually wrong results | Exact priority, reviewed families, avoid/collision fixtures, human evaluation |
+| Gated intelligence leaks | Public claim provenance, deterministic templates, gated sentinel fixtures, privileged debug separation |
+| Search becomes slow or expensive | Offline icon embeddings, query cache, bounded candidates, time budget, kill switch, deterministic fallback |
+| Web, hosted MCP, local MCP, and recommendations drift | Shared query contract, runtime parity checks, cross-surface fixtures |
+| Library constraints create silent dead ends | Explicit strict/prefer/all contract and cross-library evaluation |
+| Raw demand data is misread | Stratified evidence, automation flags, acceptance denominators, bounded-snapshot caveats |
+| Manual keyword work continues under a new name | Taste-gated record/graph changes and reviewed emergency aliases only |
+| Admin queue becomes subjective or overwhelming | Stable gap taxonomy, clustering, frequency/impact evidence, owner approval |
+| Localization is uneven | Measured multilingual experiment and high-value localized fixtures |
+| Schema/runtime names diverge | Keep implemented table/generator names until an approved migration changes them |
+| Deployment state is mistaken for local completion | Lifecycle status ledger with verification and deployment evidence |
+
+## Open questions
+
+- `OQ-01` What p95 latency and error budgets apply separately to web, hosted MCP, and local MCP?
+- `OQ-02` Which embedding provider/model and dimensions win the documented multilingual quality, latency, cost, and rebuild experiment?
+- `OQ-03` What downstream event defines `recommend_icons` acceptance: fetch, preview, copy/export, or another tool action?
+- `OQ-04` What confidence thresholds separate normal, related, fallback, clarification, and gap-classification behavior?
+- `OQ-05` When should hosted MCP require an API key, apply throttling, or use a paid/x402 action based on usage and cost evidence?
+- `OQ-06` What minimum geography/client attribution is useful when trusted headers or authenticated identity are absent?
+- `OQ-07` Should approved search reviews edit SI v2 records directly or create owner-approved change proposals?
+- `OQ-08` Which conditions justify a dedicated vector service instead of pgvector?
+
+## Acceptance criteria for the first hybrid beta
+
+- Exact approved identity canaries remain rank 1.
+- Broad and long-query fixtures return an approved useful family in the top 3 or an honest low-confidence/gap response.
+- `search_icons` and `recommend_icons` use the same query-understanding contract.
+- Strict, preferred, and all-library fixtures behave as specified.
+- Public MCP results include stable refs, full library names, confidence, public-safe reasons, and preview support where available.
+- Public query frames contain no privileged scores or gated terms; `debug_intent` is inaccessible from public hosted MCP.
+- Gated sentinel fixtures do not appear in any public explanation, preview, export, or diagnostic.
+- Search returns deterministic results when semantic retrieval is disabled or fails.
+- Shadow/beta evidence reports quality, p95 latency, errors, cost, exact regressions, and acceptance denominators.
+- The implementation-status ledger identifies what is local, verified, packaged, deployed, and observed live.
+- Owner approval and a rollback path are recorded before any external deployment or publication.
+
+## Change policy
+
+- Requirements use stable IDs. Do not renumber existing IDs; add new ones or supersede them through an accepted decision.
+- Every accepted architectural or product decision updates this document and `decisions.md` in the same change.
+- Implementation claims update `implementation-status.md` only when linked evidence exists.
+- New production evidence may reprioritize phases or fixtures without silently rewriting contracts.
+- Historical source plans remain superseded in place until a later link-safe archive pass.

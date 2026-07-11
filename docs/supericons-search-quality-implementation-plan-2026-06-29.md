@@ -1,5 +1,7 @@
 # Supericons Search Quality Implementation Plan
 
+> **Superseded on 2026-07-11.** This document is retained as historical input. For current requirements, use [`docs/si-v2/search/search-engine-v2.md`](si-v2/search/search-engine-v2.md); for resolved choices and verified delivery state, use [`decisions.md`](si-v2/search/decisions.md) and [`implementation-status.md`](si-v2/search/implementation-status.md).
+
 Date: 2026-06-29
 
 Status: Draft implementation plan
