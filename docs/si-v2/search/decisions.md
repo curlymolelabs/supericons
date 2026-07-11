@@ -30,6 +30,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-015` | Raw query export remains private; repository evidence is sanitized | Accepted | Evidence/privacy |
 | `D-016` | Ambiguous search diversifies; recommendation narrows with context or asks for clarification | Accepted | Query understanding and result behavior |
 | `D-017` | Brand priority requires the appropriate identity match class and intent | Accepted | Retrieval and reranking |
+| `D-018` | Owner-approved evidence governs brand-term classification changes | Accepted | Retrieval governance |
 
 ## Decision records
 
@@ -199,6 +200,19 @@ Status: Accepted
 Decision: brand matches are classified as distinctive exact, ambiguous exact, or prefix/substring. Distinctive exact identity keeps priority. Ambiguous common-word identity requires context or shares the result set with concept interpretations. Prefix or substring matches cannot take top rank without an approved brand-intent signal.
 
 Reason: a bare concept such as `hello` must not become a HelloFresh search merely because the brand contains the query. The same rule must protect other concept and brand collisions without creating one-query ranking patches.
+
+### D-018: Brand-term classification governance
+
+Date: 2026-07-12
+Status: Accepted
+
+Decision: engineering or admin review may propose a brand-term addition or reclassification, and the owner approves it in `data/search-intent-graph/ranking-policy.json`. Each change requires a stable collision or identity fixture plus approved registry identity evidence or sanitized search evidence. Exact identity canaries must continue to pass. Usage frequency alone cannot add or reclassify a brand term.
+
+Reason: FR-28 depends on maintained coverage as new brand and common-word collisions appear. A clear evidence rule lets coverage grow without allowing raw demand or hidden aliases to edit meaning automatically.
+
+Specification change: version 1.2 adds the brand-classification maintenance rule and resolves `OQ-09`.
+
+Superseded decisions: none.
 
 ## Adding or superseding a decision
 

@@ -35,12 +35,22 @@ for (const family of policy.interpretation_families || []) {
   assert.ok(family.label, `${family.id}: family label is required`);
   assert.ok(family.retrieval_queries?.length > 0, `${family.id}: retrieval queries are required`);
   assert.ok(family.candidate_terms?.length > 0, `${family.id}: candidate terms are required`);
+  for (const iconRef of family.candidate_icon_refs || []) {
+    assert.match(iconRef, /^[a-z0-9-]+:[a-z0-9._-]+$/i, `${family.id}: invalid candidate icon ref`);
+  }
 }
 
 for (const queryPolicy of policy.query_policies || []) {
   assert.ok(queryPolicy.trigger_terms?.length > 0, `${queryPolicy.id}: trigger terms are required`);
   for (const familyId of queryPolicy.bare_query_family_ids || []) {
     assert.ok(familyIds.has(familyId), `${queryPolicy.id}: unknown family ${familyId}`);
+  }
+  for (const [trigger, familyOverrides] of Object.entries(queryPolicy.retrieval_queries_by_trigger || {})) {
+    assert.ok(queryPolicy.trigger_terms.includes(trigger), `${queryPolicy.id}: retrieval override uses unknown trigger ${trigger}`);
+    for (const [familyId, retrievalQueries] of Object.entries(familyOverrides)) {
+      assert.ok(familyIds.has(familyId), `${queryPolicy.id}: retrieval override uses unknown family ${familyId}`);
+      assert.ok(retrievalQueries.length > 0, `${queryPolicy.id}: retrieval override for ${familyId} should not be empty`);
+    }
   }
 }
 

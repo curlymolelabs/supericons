@@ -13,9 +13,9 @@ import {
 import { createIconSemanticAliasMap } from './runtime/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from './runtime/icon-taxonomy-seed.js';
 import {
-  getBrandRankAdjustment,
-  getMeaningPolicyPenalty,
   getSearchInterpretationPlan,
+  normalizeSearchLibraryMode,
+  rerankSearchCandidatesAtFusion,
 } from './runtime/search-ranking-policy.js';
 import {
   compareVariantPreference,
@@ -331,6 +331,7 @@ function expandSearchTerms(query, synonyms) {
  */
 export function searchIcons(query, icons, synonyms, options = {}) {
   const { library, limit = 20, style = 'any' } = options;
+  const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
   const cjkExpansion = expandCjkQuery(query, {
     locale: options.locale,
     terms: multilingualExpansionTerms,
@@ -345,6 +346,7 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     for (const variant of queryVariants.slice(1)) {
       const results = searchIconsForSingleQuery(variant, icons, synonyms, {
         library,
+        libraryMode,
         limit: Math.max(limit * 2, 20),
         style,
       });
@@ -357,7 +359,10 @@ export function searchIcons(query, icons, synonyms, options = {}) {
       }
     }
 
-    return merged.slice(0, Math.max(1, limit));
+    return rerankSearchCandidatesAtFusion(query, merged, {
+      libraryMode,
+      requestedLibrary: library,
+    }).slice(0, Math.max(1, limit));
   }
 
   const interpretationPlan = getSearchInterpretationPlan(query);
@@ -374,11 +379,17 @@ function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options
   const familyBatches = plan.families.map((family) => {
     const results = [];
     const seen = new Set();
+    const retrievalBatches = [];
     for (const retrievalQuery of family.retrieval_queries || []) {
-      for (const icon of searchIconsForSingleQuery(retrievalQuery, icons, synonyms, {
+      retrievalBatches.push(searchIconsForSingleQuery(retrievalQuery, icons, synonyms, {
         ...options,
         limit: perQueryLimit,
-      })) {
+      }));
+    }
+    for (let index = 0; index < perQueryLimit; index += 1) {
+      for (const retrievalResults of retrievalBatches) {
+        const icon = retrievalResults[index];
+        if (!icon) continue;
         const key = iconKey(icon);
         if (seen.has(key)) continue;
         seen.add(key);
@@ -421,16 +432,20 @@ function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options
     selectedKeys.add(key);
   }
 
-  return selected.slice(0, limit);
+  return rerankSearchCandidatesAtFusion(query, selected, {
+    libraryMode: options.libraryMode,
+    requestedLibrary: options.library,
+  }).slice(0, limit);
 }
 
 function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
   const { library, limit = 20, style = 'any' } = options;
+  const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
   const normalizedStyle = normalizeRequestedStyle(style);
 
   // Library filter
   let filtered = icons;
-  if (library) {
+  if (library && libraryMode === 'strict') {
     filtered = filtered.filter(icon => icon.lib === library);
   }
   filtered = filtered.filter((icon) => iconMatchesRequestedStyle(icon, normalizedStyle));
@@ -461,18 +476,9 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
       icon,
       aliasScore: getCuratedAliasScore(icon, normalizedQuery, queryWords),
       directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
-      brandAdjustment: getBrandRankAdjustment(query, icon),
-      meaningPenalty: getMeaningPolicyPenalty(query, icon),
     }))
     .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
     .sort((a, b) => {
-      const aAdjustment = a.brandAdjustment.boost - a.brandAdjustment.penalty - a.meaningPenalty;
-      const bAdjustment = b.brandAdjustment.boost - b.brandAdjustment.penalty - b.meaningPenalty;
-      if (aAdjustment !== bAdjustment) {
-        const aTotal = a.aliasScore + a.directScore + aAdjustment;
-        const bTotal = b.aliasScore + b.directScore + bAdjustment;
-        if (bTotal !== aTotal) return bTotal - aTotal;
-      }
       if (b.aliasScore !== a.aliasScore) return b.aliasScore - a.aliasScore;
       if (b.directScore !== a.directScore) return b.directScore - a.directScore;
 
@@ -491,7 +497,10 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
 
   const merged = [...tier1, ...tier2];
   if (normalizedStyle !== 'any') {
-    return merged.slice(0, limit);
+    return rerankSearchCandidatesAtFusion(query, merged, {
+      libraryMode,
+      requestedLibrary: library,
+    }).slice(0, limit);
   }
 
   const selected = new Map();
@@ -512,5 +521,9 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
     }
   }
 
-  return orderedKeys.map((key) => selected.get(key)).slice(0, limit);
+  return rerankSearchCandidatesAtFusion(
+    query,
+    orderedKeys.map((key) => selected.get(key)),
+    { libraryMode, requestedLibrary: library },
+  ).slice(0, limit);
 }

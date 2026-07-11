@@ -140,6 +140,8 @@ const previewIconResultSchema = z.object({
 
 const searchIconsOutputSchema = {
   results: z.array(publicIconResultSchema).describe('Matching icons with SVG code and semantic guidance.'),
+  library_mode: z.enum(['strict', 'prefer', 'all']).describe('Library behavior used for this search.'),
+  requested_library: z.string().nullable().describe('Preferred or required library, when supplied.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of this search result set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
 };
@@ -229,7 +231,7 @@ function normalizeLocalIcon(icon) {
   };
 }
 
-function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, locale = null }) {
+function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', style = 'any', limit = 20, locale = null }) {
   if (publicIcons.length === 0) return [];
 
   const queryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
@@ -239,6 +241,7 @@ function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, l
   for (const queryVariant of queryVariants) {
     const variantResults = searchLocalIcons(queryVariant, publicIcons, synonyms, {
       library: library || null,
+      libraryMode,
       style,
       limit: Math.max(limit * 2, 20),
       locale,
@@ -260,6 +263,7 @@ function searchLocalFallbackIcons({ query, library, style = 'any', limit = 20, l
 async function searchHostedIcons({
   query,
   library,
+  libraryMode = 'strict',
   style = 'any',
   limit = 20,
   locale = null,
@@ -271,6 +275,7 @@ async function searchHostedIcons({
     payload = await searchIconsHostedMcp({
       query,
       library: library || null,
+      libraryMode,
       style,
       limit,
       locale,
@@ -281,6 +286,7 @@ async function searchHostedIcons({
     const fallbackResults = searchLocalFallbackIcons({
       query,
       library,
+      libraryMode,
       style,
       limit,
       locale,
@@ -301,6 +307,7 @@ async function searchHostedIcons({
   const fallbackResults = searchLocalFallbackIcons({
     query,
     library,
+    libraryMode,
     style,
     limit,
     locale,
@@ -977,6 +984,7 @@ function createServer({ requestContext = null } = {}) {
       inputSchema: {
         query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
         library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
+        library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
         style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the user asks for outline or solid icons.'),
         locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
@@ -986,10 +994,14 @@ function createServer({ requestContext = null } = {}) {
       annotations: auditedSearchAnnotations,
     },
     async (args) => withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
-      const { query, library, style, locale, limit, include_query_frame } = args;
+      const { query, library, library_mode, style, locale, limit, include_query_frame } = args;
+      if (library_mode === 'prefer' && !library) {
+        throw new Error('Preferred-library mode requires a library. Provide a library or use all mode.');
+      }
       const results = await searchHostedIcons({
         query,
         library,
+        libraryMode: library_mode,
         style,
         locale,
         limit,
@@ -1004,6 +1016,8 @@ function createServer({ requestContext = null } = {}) {
           locale,
           limit,
         })),
+        library_mode,
+        requested_library: library || null,
         preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
         ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
       });

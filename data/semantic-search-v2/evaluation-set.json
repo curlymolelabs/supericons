@@ -342,7 +342,7 @@
       "id": "library_mode_contract",
       "purpose": "Define strict, preferred, and all-library behavior for reviewed July regression terms before runtime support is enabled.",
       "source_evidence": "references/verification/search-query-baseline-2026-07-11.md",
-      "review_status": "contract_seed_pending_owner_scoring",
+      "review_status": "owner_reviewed",
       "queries": [
         {
           "case_id": "library-cog-bootstrap-strict",
@@ -351,9 +351,10 @@
           "library_mode": "strict",
           "requested_library": "bootstrap",
           "expected_library_behavior": "requested_library_only",
-          "expected_outcome": "useful_family_or_honest_library_gap",
+          "expected_outcome": "useful_family",
           "acceptable_families": ["cog", "gear", "settings"],
-          "proposed_avoid_families": ["incognito"]
+          "proposed_avoid_families": ["incognito"],
+          "prohibited_top_icon_refs": ["bootstrap:incognito"]
         },
         {
           "case_id": "library-cog-bootstrap-prefer",
@@ -363,6 +364,8 @@
           "requested_library": "bootstrap",
           "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
           "expected_outcome": "useful_family",
+          "minimum_requested_library_results_top_3": 1,
+          "minimum_cross_library_alternatives_top_8": 1,
           "acceptable_families": ["cog", "gear", "settings"],
           "proposed_avoid_families": ["incognito"]
         },
@@ -382,8 +385,10 @@
           "library_mode": "strict",
           "requested_library": "phosphor",
           "expected_library_behavior": "requested_library_only",
-          "expected_outcome": "useful_family_or_honest_library_gap",
-          "acceptable_families": ["reply", "respond", "message reply"]
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["reply", "respond", "message reply"],
+          "proposed_avoid_families": ["threads logo"],
+          "prohibited_top_icon_refs": ["phosphor:threads-logo"]
         },
         {
           "case_id": "library-respond-phosphor-prefer",
@@ -393,7 +398,10 @@
           "requested_library": "phosphor",
           "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["reply", "respond", "message reply"]
+          "minimum_requested_library_results_top_3": 1,
+          "minimum_cross_library_alternatives_top_8": 1,
+          "acceptable_families": ["reply", "respond", "message reply"],
+          "proposed_avoid_families": ["threads logo"]
         },
         {
           "case_id": "library-respond-all",
@@ -402,7 +410,8 @@
           "library_mode": "all",
           "expected_library_behavior": "all_eligible_libraries",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["reply", "respond", "message reply"]
+          "acceptable_families": ["reply", "respond", "message reply"],
+          "proposed_avoid_families": ["threads logo"]
         },
         {
           "case_id": "library-combobox-bootstrap-strict",
@@ -411,8 +420,10 @@
           "library_mode": "strict",
           "requested_library": "bootstrap",
           "expected_library_behavior": "requested_library_only",
-          "expected_outcome": "useful_family_or_honest_library_gap",
-          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"],
+          "proposed_avoid_families": ["radioactive"],
+          "prohibited_top_icon_refs": ["bootstrap:radioactive"]
         },
         {
           "case_id": "library-combobox-bootstrap-prefer",
@@ -422,7 +433,10 @@
           "requested_library": "bootstrap",
           "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+          "minimum_requested_library_results_top_3": 1,
+          "minimum_cross_library_alternatives_top_8": 1,
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"],
+          "proposed_avoid_families": ["radioactive"]
         },
         {
           "case_id": "library-combobox-all",
@@ -431,7 +445,8 @@
           "library_mode": "all",
           "expected_library_behavior": "all_eligible_libraries",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"],
+          "proposed_avoid_families": ["radioactive"]
         },
         {
           "case_id": "library-magnifier-lucide-strict",
@@ -440,7 +455,7 @@
           "library_mode": "strict",
           "requested_library": "lucide",
           "expected_library_behavior": "requested_library_only",
-          "expected_outcome": "useful_family_or_honest_library_gap",
+          "expected_outcome": "useful_family",
           "acceptable_families": ["search", "magnifying glass", "zoom"]
         },
         {
@@ -451,6 +466,8 @@
           "requested_library": "lucide",
           "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
           "expected_outcome": "useful_family",
+          "minimum_requested_library_results_top_3": 1,
+          "minimum_cross_library_alternatives_top_8": 1,
           "acceptable_families": ["search", "magnifying glass", "zoom"]
         },
         {
@@ -469,8 +486,9 @@
           "library_mode": "strict",
           "requested_library": "phosphor",
           "expected_library_behavior": "requested_library_only",
-          "expected_outcome": "useful_family_or_honest_library_gap",
-          "acceptable_families": ["bell", "notification", "alarm"],
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["bell", "notification"],
+          "proposed_related_families": ["alarm", "reminder", "alert"],
           "proposed_avoid_families": ["barbell"]
         },
         {
@@ -481,7 +499,10 @@
           "requested_library": "phosphor",
           "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["bell", "notification", "alarm"],
+          "minimum_requested_library_results_top_3": 1,
+          "minimum_cross_library_alternatives_top_8": 1,
+          "acceptable_families": ["bell", "notification"],
+          "proposed_related_families": ["alarm", "reminder", "alert"],
           "proposed_avoid_families": ["barbell"]
         },
         {
@@ -491,7 +512,8 @@
           "library_mode": "all",
           "expected_library_behavior": "all_eligible_libraries",
           "expected_outcome": "useful_family",
-          "acceptable_families": ["bell", "notification", "alarm"],
+          "acceptable_families": ["bell", "notification"],
+          "proposed_related_families": ["alarm", "reminder", "alert"],
           "proposed_avoid_families": ["barbell"]
         }
       ]

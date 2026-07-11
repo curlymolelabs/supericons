@@ -112,8 +112,9 @@
     {
       "id": "reply_action",
       "label": "Reply action",
-      "retrieval_queries": ["reply", "message reply", "respond"],
+      "retrieval_queries": ["reply", "message reply", "respond", "arrow bend up left"],
       "candidate_terms": ["reply", "respond", "message reply"],
+      "candidate_icon_refs": ["phosphor:arrow-bend-up-left"],
       "context_terms": []
     },
     {
@@ -190,7 +191,27 @@
       "trigger_terms": ["combobox", "dropdown", "select", "chooser"],
       "match": "exact",
       "bare_query_family_ids": ["selection_control"],
-      "minimum_distinct_families_top_8": 1
+      "minimum_distinct_families_top_8": 1,
+      "retrieval_queries_by_trigger": {
+        "combobox": {
+          "selection_control": ["chevron down", "dropdown", "list select"]
+        },
+        "dropdown": {
+          "selection_control": ["dropdown", "chevron down", "list"]
+        },
+        "select": {
+          "selection_control": ["select", "box select", "cursor select"]
+        },
+        "chooser": {
+          "selection_control": ["file select", "dropdown", "color picker"]
+        }
+      },
+      "avoid_candidate_terms_by_trigger": {
+        "combobox": ["radioactive", "color picker", "lasso"],
+        "dropdown": ["radioactive", "book open", "open source"],
+        "select": ["radioactive"],
+        "chooser": []
+      }
     },
     {
       "id": "magnifier",

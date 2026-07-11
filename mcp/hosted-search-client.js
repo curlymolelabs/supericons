@@ -213,6 +213,7 @@ function getPublicGatewayAnonKey() {
 export async function searchIconsHostedMcp({
   query,
   library = null,
+  libraryMode = 'strict',
   limit = 20,
   style = 'any',
   locale = null,
@@ -249,6 +250,7 @@ export async function searchIconsHostedMcp({
     const body = {
       query,
       library,
+      library_mode: libraryMode,
       limit,
       style,
       locale,
@@ -287,6 +289,7 @@ export async function searchIconsHostedMcp({
   const body = {
     query,
     library,
+    library_mode: libraryMode,
     limit,
     style,
     locale,

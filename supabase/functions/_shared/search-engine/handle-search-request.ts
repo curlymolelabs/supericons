@@ -11,7 +11,10 @@ import {
   getIntentCandidateAdjustment,
 } from '../../../../lib/search-intent-core.js';
 import { buildSearchQueryFrame } from '../../../../lib/search-query-frame.js';
-import { buildSearchRankingQueryVariants } from '../../../../lib/search-ranking-policy.js';
+import {
+  buildSearchRankingQueryVariants,
+  normalizeSearchLibraryMode,
+} from '../../../../lib/search-ranking-policy.js';
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -376,6 +379,24 @@ export async function handleSearchRequest(
     const body = await req.json().catch(() => ({}));
     queryNorm = normalizeQuery(body?.query);
     library = normalizeLibrary(body?.library);
+    const rawLibraryMode = String(body?.library_mode || 'strict').trim().toLowerCase();
+    if (!['strict', 'prefer', 'all'].includes(rawLibraryMode)) {
+      throw new SearchEngineHttpError('Unsupported library mode.', {
+        status: 400,
+        code: 'invalid_library_mode',
+        hint: 'Use strict, prefer, or all.',
+        retryable: false,
+      });
+    }
+    const libraryMode = normalizeSearchLibraryMode(rawLibraryMode);
+    if (libraryMode === 'prefer' && !library) {
+      throw new SearchEngineHttpError('Preferred-library mode requires a library.', {
+        status: 400,
+        code: 'preferred_library_required',
+        hint: 'Provide a library or use all mode.',
+        retryable: false,
+      });
+    }
     source = normalizeSource(body?.source, defaultSource);
     auditContext = buildSearchAuditContext(body as Record<string, unknown>, source);
     const style = normalizeStyle(body?.style);
@@ -412,7 +433,7 @@ export async function handleSearchRequest(
       queryVariants.map((variant, index) =>
         adminClient.rpc('si_search_icon_candidates', {
           p_query: variant,
-          p_library: library,
+          p_library: libraryMode === 'strict' ? library : null,
           p_limit: Math.max(limit * 3, 40),
         }).then((result: any) => ({ ...result, variant, index }))
       ),
@@ -474,6 +495,7 @@ export async function handleSearchRequest(
       (candidates || []) as CandidateRow[],
       manifestsById,
       featuresById,
+      { libraryMode, requestedLibrary: library },
     )
       .filter((row) => style === 'any' || row.style === style)
       .slice(0, limit);
@@ -527,6 +549,8 @@ export async function handleSearchRequest(
     return buildJsonResponse({
       query: queryNorm,
       results,
+      library_mode: libraryMode,
+      requested_library: library,
       engine_version: ENGINE_VERSION,
       query_expansion: {
         variants: queryVariants,

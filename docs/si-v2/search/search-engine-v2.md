@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.1
+Version: 1.2
 Approved: 2026-07-11
-Amended: 2026-07-11
+Amended: 2026-07-12
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -250,6 +250,8 @@ Distinctive exact matches retain identity priority. Ambiguous exact matches requ
 
 The rule is generic. Query-specific fixtures such as `hello` and `HelloFresh logo` prove the behavior but do not create query-specific ranking code.
 
+Engineering or admin review may propose brand-term additions or reclassification. The owner approves changes in `data/search-intent-graph/ranking-policy.json`. Every change requires a stable collision or identity fixture plus approved registry identity evidence or sanitized search evidence, and exact identity canaries must keep passing. Usage frequency alone cannot change a brand classification.
+
 ### Library-filter behavior
 
 The caller contract must distinguish:
@@ -476,8 +478,11 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - `OQ-06` What minimum geography/client attribution is useful when trusted headers or authenticated identity are absent?
 - `OQ-07` Should approved search reviews edit SI v2 records directly or create owner-approved change proposals?
 - `OQ-08` Which conditions justify a dedicated vector service instead of pgvector?
-- `OQ-09` Who maintains the distinctive versus ambiguous brand-term classification, and what evidence changes it?
 - `OQ-10` What ambiguity signal and relevance floor trigger diversified search or recommendation clarification?
+
+## Resolved questions
+
+- `OQ-09` Resolved by `D-018`: engineering or admin review proposes brand-term changes, the owner approves them in the maintained ranking policy, and approved identity or sanitized search evidence plus stable fixtures governs changes.
 
 ## Acceptance criteria for the first hybrid beta
 

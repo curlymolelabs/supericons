@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { buildSearchQueryFrame } from '../lib/search-query-frame.js';
+import { getCandidateInterpretationFamilyIds } from '../lib/search-ranking-policy.js';
 import { searchIcons } from '../mcp/search.js';
 
 const repoRoot = join(import.meta.dirname, '..');
@@ -34,11 +35,9 @@ function matchesFamily(icon, family) {
 }
 
 function runObservedSearch(testCase) {
-  const searchable = testCase.library_mode === 'strict'
-    ? icons.filter((icon) => icon.lib === testCase.requested_library)
-    : icons;
-  const results = searchIcons(testCase.query, searchable, synonyms, {
-    library: testCase.library_mode === 'strict' ? testCase.requested_library : undefined,
+  const results = searchIcons(testCase.query, icons, synonyms, {
+    library: testCase.requested_library,
+    libraryMode: testCase.library_mode || 'all',
     limit: 5,
   });
   const proposedAvoidHits = [];
@@ -81,29 +80,34 @@ const julyCases = getGroup('july_11_regression_seeds').queries.map((testCase) =>
   query_frame: summarizeQueryFrame(testCase.query),
 }));
 
-const libraryCases = getGroup('library_mode_contract').queries.map((testCase) => {
-  if (testCase.library_mode === 'prefer') {
-    return {
-      case_id: testCase.case_id,
-      query: testCase.query,
-      library_mode: testCase.library_mode,
-      requested_library: testCase.requested_library,
-      status: 'not_implemented',
-      reason: 'Current search accepts a library filter but has no preferred-library fallback mode.',
-    };
-  }
-  return runObservedSearch(testCase);
+const libraryCases = getGroup('library_mode_contract').queries.map(runObservedSearch);
+const observedLibraryCases = libraryCases;
+
+const ambiguityCases = getGroup('ambiguous_intent_diversity').queries.map((testCase) => {
+  const observed = runObservedSearch({ ...testCase, library_mode: 'all' });
+  const observedFamilyIds = [...new Set(observed.top_icon_refs.flatMap((ref) => {
+    const [lib, id] = ref.split(':');
+    const icon = icons.find((entry) => entry.lib === lib && entry.id === id);
+    return icon ? getCandidateInterpretationFamilyIds(testCase.query, icon) : [];
+  }))];
+  const minimumFamilies = testCase.minimum_distinct_families_top_8 || 1;
+  const primaryFamily = testCase.expected_primary_interpretation_family || null;
+  const firstRef = observed.top_icon_refs[0] || '';
+  const [firstLib, firstId] = firstRef.split(':');
+  const firstIcon = icons.find((entry) => entry.lib === firstLib && entry.id === firstId);
+  const firstFamilyIds = firstIcon ? getCandidateInterpretationFamilyIds(testCase.query, firstIcon) : [];
+  const passes = observedFamilyIds.length >= minimumFamilies
+    && (!primaryFamily || firstFamilyIds.includes(primaryFamily));
+
+  return {
+    ...observed,
+    query_frame: summarizeQueryFrame(testCase.query),
+    diversification_status: passes ? 'implemented_and_observed' : 'observed_expectation_gap',
+    observed_interpretation_family_ids: observedFamilyIds,
+    expected_interpretation_family_ids: testCase.interpretation_family_ids,
+    expected_primary_interpretation_family: primaryFamily,
+  };
 });
-
-const observedLibraryCases = libraryCases.filter((entry) => entry.status !== 'not_implemented');
-
-const ambiguityCases = getGroup('ambiguous_intent_diversity').queries.map((testCase) => ({
-  ...runObservedSearch({ ...testCase, library_mode: 'all' }),
-  query_frame: summarizeQueryFrame(testCase.query),
-  diversification_status: 'not_implemented',
-  expected_interpretation_family_ids: testCase.interpretation_family_ids,
-  expected_primary_interpretation_family: testCase.expected_primary_interpretation_family || null,
-}));
 
 const brandCases = getGroup('brand_intent_gating').queries.map((testCase) => {
   const observed = runObservedSearch({ ...testCase, library_mode: 'all' });
@@ -127,13 +131,13 @@ console.log(JSON.stringify({
     july_seed_unclassified_frames: julyCases.filter((entry) => !entry.query_frame.matched).length,
     observed_library_cases: observedLibraryCases.length,
     observed_library_zero_results: observedLibraryCases.filter((entry) => entry.zero_result).length,
-    preferred_library_cases_not_implemented: libraryCases.filter((entry) => entry.status === 'not_implemented').length,
+    preferred_library_cases_not_implemented: 0,
     cases_with_proposed_avoid_hits: [...julyCases, ...observedLibraryCases]
       .filter((entry) => entry.proposed_avoid_hits?.length > 0).length,
     ambiguity_policy_cases: ambiguityCases.length,
     ambiguity_cases_with_unclassified_frames: ambiguityCases.filter((entry) => !entry.query_frame.matched).length,
     ambiguity_diversification_cases_not_implemented: ambiguityCases
-      .filter((entry) => entry.diversification_status === 'not_implemented').length,
+      .filter((entry) => entry.diversification_status !== 'implemented_and_observed').length,
     brand_policy_cases: brandCases.length,
     prohibited_brand_top_hits: brandCases.filter((entry) => entry.prohibited_top_hit).length,
     exact_brand_cases_passing_current_top: brandCases.filter((entry) => entry.expected_top_match === true).length,

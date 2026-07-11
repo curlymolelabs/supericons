@@ -50,6 +50,10 @@ import {
 } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import {
+  normalizeSearchLibraryMode,
+  rerankSearchCandidatesAtFusion,
+} from './runtime/search-ranking-policy.js';
+import {
   buildPreviewBoardUrlForIcons,
   buildPreviewImageUrl,
   buildPreviewMarkdownImage,
@@ -707,14 +711,16 @@ async function resolveAccessibleIcon(id, library, options = {}) {
 async function searchAccessibleIcons({
   query,
   library,
+  libraryMode = 'strict',
   limit,
   style = VARIANT_STYLES.ANY,
   locale = null,
   includeQueryFrame = false,
 }) {
+  const normalizedLibraryMode = normalizeSearchLibraryMode(libraryMode);
   const requestedStyle = normalizeRequestedStyle(style);
   const accessibleIcons = getAccessibleIcons();
-  const searchableIcons = library
+  const searchableIcons = library && normalizedLibraryMode === 'strict'
     ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
     : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
@@ -723,6 +729,7 @@ async function searchAccessibleIcons({
     const hostedPayload = await searchIconsHostedMcp({
       query,
       library,
+      libraryMode: normalizedLibraryMode,
       limit,
       style: requestedStyle,
       locale,
@@ -751,6 +758,7 @@ async function searchAccessibleIcons({
   for (const queryVariant of localQueryVariants) {
     const variantResults = searchIcons(queryVariant, searchableIcons, synonyms, {
       library,
+      libraryMode: normalizedLibraryMode,
       limit: Math.max(limit * 2, 20),
       style: requestedStyle,
       locale,
@@ -774,7 +782,11 @@ async function searchAccessibleIcons({
     limit: semanticMergeLimit,
   });
   const intentRanked = rerankIconsForIntent(query, merged);
-  return mergeOrderedSearchResults(intentRanked, [], requestedStyle).slice(0, Math.max(1, limit));
+  return rerankSearchCandidatesAtFusion(
+    query,
+    mergeOrderedSearchResults(intentRanked, [], requestedStyle),
+    { libraryMode: normalizedLibraryMode, requestedLibrary: library },
+  ).slice(0, Math.max(1, limit));
 }
 
 // ============================================================
@@ -857,16 +869,25 @@ server.tool(
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
     library: z.string().optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute'),
+    library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
     style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
     include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
   },
-  async ({ query, library, style, locale, limit, include_query_frame }) => {
+  async ({ query, library, library_mode, style, locale, limit, include_query_frame }) => {
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
+    }
+    if (library_mode === 'prefer' && !library) {
+      return buildTextResponse({
+        error: 'Preferred-library mode requires a library',
+        code: 'preferred_library_required',
+        hint: 'Provide a library or use all mode.',
+        retryable: false,
+      });
     }
 
     let results;
@@ -875,6 +896,7 @@ server.tool(
       results = await searchAccessibleIcons({
         query,
         library,
+        libraryMode: library_mode,
         style,
         locale,
         limit,
@@ -896,6 +918,7 @@ server.tool(
         code: 'no_icons_found',
         query,
         library: library || null,
+        library_mode,
         locale: locale || null,
         hint: locale
           ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
@@ -941,6 +964,8 @@ server.tool(
     });
     return buildTextResponse({
       results: formatted,
+      library_mode,
+      requested_library: library || null,
       preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
       ...(queryFrame ? { query_frame: queryFrame } : {}),
       source: 'Powered by SuperIcons (https://supericons.dev)',

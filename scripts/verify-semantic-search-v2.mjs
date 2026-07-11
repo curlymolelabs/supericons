@@ -239,6 +239,16 @@ function assertEvaluationSet(evaluationSet) {
       if (query.library_mode === 'strict' || query.library_mode === 'prefer') {
         assert.ok(query.requested_library, `${query.case_id}: requested_library is required for ${query.library_mode}`);
       }
+      if (query.library_mode === 'prefer') {
+        assert.ok(
+          query.minimum_requested_library_results_top_3 >= 1,
+          `${query.case_id}: prefer mode should require a requested-library result in the top three`,
+        );
+        assert.ok(
+          query.minimum_cross_library_alternatives_top_8 >= 1,
+          `${query.case_id}: prefer mode should require a cross-library alternative in the top eight`,
+        );
+      }
     }
 
     assertNoUnsafeText(`evaluation query ${query.query || query.slot}`, JSON.stringify(query));
