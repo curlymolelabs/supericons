@@ -19,8 +19,8 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `P0` Governance and baseline | In progress; traceability corrected, independently audited, and re-frozen; evaluation expansion open | Official documentation set; sanitized July 11 baseline; 28-query semantic evaluation seed | Structural traceability coverage, local links, artifact paths, semantic output counts, source checksum, and prohibited-metadata scan passed; destination meanings corrected July 11 and passed the independent semantic audit recorded in the traceability file; existing 28-query seed verified July 1 | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `references/verification/search-query-baseline-2026-07-11.md`; `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md` |
-| `P1` Shared deterministic understanding | Partially implemented | Search intent core, generated rules/graph, shared query-frame modules, opt-in `include_query_frame`, recommendation query-frame hooks | Intent graph, query-frame shadow, semantic smoke, hosted search, CJK, and package checks passed in saved July 1 verification | MCP package build was verified in the saved query-frame record; no publication proved | Not verified; saved record says no Supabase/Netlify deploy | Not verified | `references/verification/semantic-search-v2-intent-graph-phase-1-2026-07-01.md`; `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md` |
+| `P0` Governance and baseline | In progress; traceability complete, candidate suite expanded, owner scoring and target expansion open | Official documentation set; sanitized July 11 baseline; 61-case candidate evaluation suite toward the 225-case target | Traceability audit passed; 61-case schema and review-status checks passed; 12 July seeds, 15 library cases, and 6 cross-surface cases added; owner scoring is not recorded | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `references/verification/search-query-baseline-2026-07-11.md`; `references/verification/search-v2-evaluation-expansion-2026-07-11.md` |
+| `P1` Shared deterministic understanding | Partially implemented | Search intent core, generated rules/graph, shared query-frame modules, opt-in `include_query_frame`, recommendation query-frame hooks | Intent graph, semantic smoke, recommendation modes, and expanded six-case search/recommendation query-frame contract passed; all 12 July seed frames remain unclassified | MCP package build was verified in the saved query-frame record; no publication proved | Not verified; saved record says no Supabase/Netlify deploy | Not verified | `references/verification/semantic-search-v2-intent-graph-phase-1-2026-07-01.md`; `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md`; `references/verification/search-v2-evaluation-expansion-2026-07-11.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
 | `P3` Offline embeddings | Not implemented | No embedding generation/sync artifact or embedding storage migration was verified | Not verified | Not applicable | Not verified | Not verified | Repository inventory on 2026-07-11; canonical requirement only |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
@@ -66,6 +66,8 @@ Saved evidence states that default ranking and the default public response remai
 
 Saved July 1 verification reports 28 evaluation queries, 75,560 documents, five document types, 11 libraries, and 41 skipped unresolved or duplicate-resolved registry rows.
 
+The July 11 candidate expansion contains 61 cases: 28 legacy seeds pending owner confirmation, 12 public-safe July seeds pending owner scoring, 15 library contract seeds pending owner scoring, and 6 cross-surface contract cases. Current in-memory verification generated 75,810 documents from the current workspace inputs and did not replace the saved July 1 output artifact.
+
 ### Current query evidence
 
 - `references/verification/search-query-baseline-2026-07-11.md` is the public-safe controlling snapshot.
@@ -86,11 +88,11 @@ This ledger does not infer current production deployment from file presence, pac
 
 Complete `P0` and the remaining `P1` contract work before enabling semantic ranking:
 
-1. Expand the fixed evaluation suite toward the approved stratified target.
-2. Define the downstream acceptance event and confidence thresholds.
-3. Add library-mode fixtures and preserve backward-compatible strict behavior.
-4. Add the reviewed July 11 regression seeds.
-5. Verify shared query-frame behavior for `search_icons` and `recommend_icons` without changing public ranking.
+1. Owner-confirm the legacy seed and score the July/library candidate expectations.
+2. Expand the fixed evaluation suite from 61 candidates toward the approved 225-case target.
+3. Define the downstream acceptance event and confidence behavior.
+4. Implement preferred-library behavior while preserving backward-compatible strict behavior.
+5. Improve reviewed July query families through maintained intent or record data, then add ranking assertions.
 
 Offline `P3` embedding implementation may proceed in parallel after its model/version/rollback contract is specified, but `P4` cannot exit before these gates pass.
 

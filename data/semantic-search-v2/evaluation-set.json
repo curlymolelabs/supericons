@@ -1,6 +1,9 @@
 {
-  "schema_version": "semantic-search-v2-evaluation-set-1",
-  "description": "Public-safe evaluation queries for Supericons Semantic Search v2. These fixtures are used to measure exact brand search, long natural-language concepts, localized concepts, negative meaning separation, and recommendation slots before changing production ranking.",
+  "schema_version": "semantic-search-v2-evaluation-set-2",
+  "description": "Public-safe evaluation cases for Supericons Semantic Search v2. These fixtures protect exact search, long natural-language concepts, localized concepts, negative meaning separation, recommendation slots, library behavior, and shared query understanding before production ranking changes.",
+  "target_case_count": 225,
+  "default_review_status": "legacy_seed_pending_owner_confirmation",
+  "review_policy": "Public-safe seeds may enter the candidate suite, but expected families and unacceptable results require owner review before they count toward a release gate.",
   "query_groups": [
     {
       "id": "brand_logo_exact",
@@ -201,6 +204,360 @@
           "slot": "neck pain",
           "intent_type": "compound_concept",
           "acceptable_families": ["person", "body", "pain", "accessibility"]
+        }
+      ]
+    },
+    {
+      "id": "july_11_regression_seeds",
+      "purpose": "Turn the reviewed public-safe July search terms into candidate regression cases without promoting them to global aliases.",
+      "source_evidence": "references/verification/search-query-baseline-2026-07-11.md",
+      "review_status": "public_safe_seed_pending_owner_scoring",
+      "library_modes_to_score": ["strict", "prefer", "all"],
+      "queries": [
+        {
+          "case_id": "j11-cog",
+          "query": "cog",
+          "intent_type": "literal_object",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["cog", "gear", "settings"],
+          "proposed_avoid_families": ["incognito"]
+        },
+        {
+          "case_id": "j11-respond",
+          "query": "respond",
+          "intent_type": "object_action",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["reply", "respond", "message reply"],
+          "proposed_avoid_families": ["threads logo"]
+        },
+        {
+          "case_id": "j11-reply",
+          "query": "reply",
+          "intent_type": "object_action",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["reply", "message reply", "respond"],
+          "proposed_avoid_families": ["threads logo"]
+        },
+        {
+          "case_id": "j11-combobox",
+          "query": "combobox",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"],
+          "proposed_avoid_families": ["color picker", "lasso"]
+        },
+        {
+          "case_id": "j11-dropdown",
+          "query": "dropdown",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["dropdown", "select", "chevron down", "list"],
+          "proposed_avoid_families": ["book open", "open source logo"]
+        },
+        {
+          "case_id": "j11-select",
+          "query": "select",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["select", "box select", "list select", "cursor select"],
+          "proposed_avoid_families": ["radioactive"]
+        },
+        {
+          "case_id": "j11-chooser",
+          "query": "chooser",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["select", "dropdown", "list select", "chooser"],
+          "proposed_avoid_families": ["color picker", "lasso"]
+        },
+        {
+          "case_id": "j11-picker",
+          "query": "picker",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["picker", "select", "dropdown", "list select"],
+          "proposed_avoid_families": ["eyedropper", "color picker"]
+        },
+        {
+          "case_id": "j11-magnifier",
+          "query": "magnifier",
+          "intent_type": "literal_object",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["search", "magnifying glass", "zoom"]
+        },
+        {
+          "case_id": "j11-alarm",
+          "query": "alarm",
+          "intent_type": "status_feedback",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["alarm", "alarm clock", "bell"],
+          "proposed_avoid_families": ["barbell"]
+        },
+        {
+          "case_id": "j11-alert",
+          "query": "alert",
+          "intent_type": "status_feedback",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["alert", "warning", "triangle alert", "circle alert"],
+          "proposed_avoid_families": ["barbell"]
+        },
+        {
+          "case_id": "j11-bell",
+          "query": "bell",
+          "intent_type": "status_feedback",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "useful_family",
+          "confidence_expectation": "normal_or_related",
+          "acceptable_families": ["bell", "notification", "alarm"],
+          "proposed_avoid_families": ["barbell"]
+        }
+      ]
+    },
+    {
+      "id": "library_mode_contract",
+      "purpose": "Define strict, preferred, and all-library behavior for reviewed July regression terms before runtime support is enabled.",
+      "source_evidence": "references/verification/search-query-baseline-2026-07-11.md",
+      "review_status": "contract_seed_pending_owner_scoring",
+      "queries": [
+        {
+          "case_id": "library-cog-bootstrap-strict",
+          "query": "cog",
+          "intent_type": "literal_object",
+          "library_mode": "strict",
+          "requested_library": "bootstrap",
+          "expected_library_behavior": "requested_library_only",
+          "expected_outcome": "useful_family_or_honest_library_gap",
+          "acceptable_families": ["cog", "gear", "settings"],
+          "proposed_avoid_families": ["incognito"]
+        },
+        {
+          "case_id": "library-cog-bootstrap-prefer",
+          "query": "cog",
+          "intent_type": "literal_object",
+          "library_mode": "prefer",
+          "requested_library": "bootstrap",
+          "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["cog", "gear", "settings"],
+          "proposed_avoid_families": ["incognito"]
+        },
+        {
+          "case_id": "library-cog-all",
+          "query": "cog",
+          "intent_type": "literal_object",
+          "library_mode": "all",
+          "expected_library_behavior": "all_eligible_libraries",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["cog", "gear", "settings"]
+        },
+        {
+          "case_id": "library-respond-phosphor-strict",
+          "query": "respond",
+          "intent_type": "object_action",
+          "library_mode": "strict",
+          "requested_library": "phosphor",
+          "expected_library_behavior": "requested_library_only",
+          "expected_outcome": "useful_family_or_honest_library_gap",
+          "acceptable_families": ["reply", "respond", "message reply"]
+        },
+        {
+          "case_id": "library-respond-phosphor-prefer",
+          "query": "respond",
+          "intent_type": "object_action",
+          "library_mode": "prefer",
+          "requested_library": "phosphor",
+          "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["reply", "respond", "message reply"]
+        },
+        {
+          "case_id": "library-respond-all",
+          "query": "respond",
+          "intent_type": "object_action",
+          "library_mode": "all",
+          "expected_library_behavior": "all_eligible_libraries",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["reply", "respond", "message reply"]
+        },
+        {
+          "case_id": "library-combobox-bootstrap-strict",
+          "query": "combobox",
+          "intent_type": "ui_slot",
+          "library_mode": "strict",
+          "requested_library": "bootstrap",
+          "expected_library_behavior": "requested_library_only",
+          "expected_outcome": "useful_family_or_honest_library_gap",
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+        },
+        {
+          "case_id": "library-combobox-bootstrap-prefer",
+          "query": "combobox",
+          "intent_type": "ui_slot",
+          "library_mode": "prefer",
+          "requested_library": "bootstrap",
+          "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+        },
+        {
+          "case_id": "library-combobox-all",
+          "query": "combobox",
+          "intent_type": "ui_slot",
+          "library_mode": "all",
+          "expected_library_behavior": "all_eligible_libraries",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["select", "dropdown", "list select", "chevron down"]
+        },
+        {
+          "case_id": "library-magnifier-lucide-strict",
+          "query": "magnifier",
+          "intent_type": "literal_object",
+          "library_mode": "strict",
+          "requested_library": "lucide",
+          "expected_library_behavior": "requested_library_only",
+          "expected_outcome": "useful_family_or_honest_library_gap",
+          "acceptable_families": ["search", "magnifying glass", "zoom"]
+        },
+        {
+          "case_id": "library-magnifier-lucide-prefer",
+          "query": "magnifier",
+          "intent_type": "literal_object",
+          "library_mode": "prefer",
+          "requested_library": "lucide",
+          "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["search", "magnifying glass", "zoom"]
+        },
+        {
+          "case_id": "library-magnifier-all",
+          "query": "magnifier",
+          "intent_type": "literal_object",
+          "library_mode": "all",
+          "expected_library_behavior": "all_eligible_libraries",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["search", "magnifying glass", "zoom"]
+        },
+        {
+          "case_id": "library-bell-phosphor-strict",
+          "query": "bell",
+          "intent_type": "status_feedback",
+          "library_mode": "strict",
+          "requested_library": "phosphor",
+          "expected_library_behavior": "requested_library_only",
+          "expected_outcome": "useful_family_or_honest_library_gap",
+          "acceptable_families": ["bell", "notification", "alarm"],
+          "proposed_avoid_families": ["barbell"]
+        },
+        {
+          "case_id": "library-bell-phosphor-prefer",
+          "query": "bell",
+          "intent_type": "status_feedback",
+          "library_mode": "prefer",
+          "requested_library": "phosphor",
+          "expected_library_behavior": "requested_library_first_then_labeled_alternatives",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["bell", "notification", "alarm"],
+          "proposed_avoid_families": ["barbell"]
+        },
+        {
+          "case_id": "library-bell-all",
+          "query": "bell",
+          "intent_type": "status_feedback",
+          "library_mode": "all",
+          "expected_library_behavior": "all_eligible_libraries",
+          "expected_outcome": "useful_family",
+          "acceptable_families": ["bell", "notification", "alarm"],
+          "proposed_avoid_families": ["barbell"]
+        }
+      ]
+    },
+    {
+      "id": "cross_surface_query_frame",
+      "purpose": "Verify that search and recommendation use the same query-frame builder while recommendation keeps its task context.",
+      "source_evidence": "references/verification/search-query-baseline-2026-07-11.md",
+      "review_status": "contract_seed",
+      "queries": [
+        {
+          "case_id": "parity-cog",
+          "query": "cog",
+          "task": "Choose an icon for a settings screen.",
+          "slot": "cog",
+          "intent_type": "literal_object",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["cog", "gear", "settings"]
+        },
+        {
+          "case_id": "parity-reply",
+          "query": "reply",
+          "task": "Choose an icon for a communication toolbar.",
+          "slot": "reply",
+          "intent_type": "object_action",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["reply", "respond", "message reply"]
+        },
+        {
+          "case_id": "parity-combobox",
+          "query": "combobox",
+          "task": "Choose an icon for form controls.",
+          "slot": "combobox",
+          "intent_type": "ui_slot",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["select", "dropdown", "list select"]
+        },
+        {
+          "case_id": "parity-magnifier",
+          "query": "magnifier",
+          "task": "Choose an icon for a search interface.",
+          "slot": "magnifier",
+          "intent_type": "literal_object",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["search", "magnifying glass", "zoom"]
+        },
+        {
+          "case_id": "parity-alert",
+          "query": "alert",
+          "task": "Choose an icon for a notification center.",
+          "slot": "alert",
+          "intent_type": "status_feedback",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["alert", "warning", "notification"]
+        },
+        {
+          "case_id": "parity-license-plate-recognition",
+          "query": "license plate recognition",
+          "task": "Choose an icon for a vehicle security dashboard.",
+          "slot": "license plate recognition",
+          "intent_type": "compound_concept",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "expected_outcome": "equivalent_builder_contract",
+          "acceptable_families": ["scan", "camera", "vehicle", "ocr"]
         }
       ]
     }

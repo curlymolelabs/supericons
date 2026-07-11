@@ -10,6 +10,10 @@ import { recommendIconsForTask } from '../mcp/recommend-icons.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
+const evaluationSet = JSON.parse(readFileSync(
+  join(repoRoot, 'data', 'semantic-search-v2', 'evaluation-set.json'),
+  'utf8',
+));
 
 function runClientProbe(modulePath, callSource, env = {}) {
   const moduleUrl = pathToFileURL(join(repoRoot, modulePath)).href;
@@ -55,6 +59,49 @@ assert.ok(
   webFrame.meaning_groups.includes('vision_scan_detection'),
   'long license-plate query should expose the vision scan intent group',
 );
+
+const parityGroup = evaluationSet.query_groups.find((group) => group.id === 'cross_surface_query_frame');
+assert.ok(parityGroup, 'evaluation set should include cross-surface query-frame cases');
+
+for (const testCase of parityGroup.queries) {
+  const searchFrame = buildWebSearchQueryFrame(testCase.query);
+  const packagedFrame = buildMcpSearchQueryFrame(testCase.query);
+  assert.deepEqual(
+    packagedFrame,
+    searchFrame,
+    `${testCase.case_id}: web and MCP search builders should return the same frame`,
+  );
+
+  const recommendation = await recommendIconsForTask({
+    task: testCase.task,
+    slots: [testCase.slot],
+    limitPerSlot: 1,
+    responseMode: 'plan',
+    includeQueryFrame: true,
+    semanticMap: new Map(),
+    searchIconsForQuery: async () => [
+      { id: 'check', name: 'Check', lib: 'lucide', style: 'outline', svg: '<svg></svg>' },
+    ],
+    buildIconResult: async (icon) => ({
+      id: icon.id,
+      name: icon.name,
+      library: icon.lib,
+      style: icon.style,
+      svg: icon.svg,
+    }),
+  });
+
+  assert.deepEqual(
+    recommendation.query_frame,
+    buildWebSearchQueryFrame(testCase.task),
+    `${testCase.case_id}: recommendation task should use the shared query-frame builder`,
+  );
+  assert.deepEqual(
+    recommendation.results[0]?.query_frame,
+    buildWebSearchQueryFrame(`${testCase.slot} ${testCase.task}`),
+    `${testCase.case_id}: recommendation slot should use the shared query-frame builder with task context`,
+  );
+}
 
 const webDefaultCalls = runClientProbe(
   'lib/search-engine-client.js',

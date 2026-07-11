@@ -27,6 +27,22 @@ const SECRET_OR_INTERNAL_PATTERNS = [
   /<\/svg>/i,
 ];
 
+const ALLOWED_REVIEW_STATUSES = new Set([
+  'legacy_seed_pending_owner_confirmation',
+  'public_safe_seed_pending_owner_scoring',
+  'contract_seed_pending_owner_scoring',
+  'contract_seed',
+  'owner_reviewed',
+]);
+
+const ALLOWED_SURFACES = new Set(['search_icons', 'recommend_icons', 'web']);
+const ALLOWED_LIBRARY_MODES = new Set(['strict', 'prefer', 'all']);
+const LIBRARY_BEHAVIOR_BY_MODE = {
+  strict: 'requested_library_only',
+  prefer: 'requested_library_first_then_labeled_alternatives',
+  all: 'all_eligible_libraries',
+};
+
 async function readJson(relativePath) {
   return JSON.parse(await fs.readFile(path.join(repoRoot, relativePath), 'utf8'));
 }
@@ -48,17 +64,31 @@ function assertNoUnsafeText(label, value) {
 }
 
 function assertEvaluationSet(evaluationSet) {
+  assert.ok(
+    !/[\u2013\u2014]/.test(JSON.stringify(evaluationSet)),
+    'agent-authored evaluation content should not contain forbidden punctuation',
+  );
   assert.equal(
     evaluationSet.schema_version,
-    'semantic-search-v2-evaluation-set-1',
+    'semantic-search-v2-evaluation-set-2',
     'evaluation set schema version should be explicit',
+  );
+  assert.equal(evaluationSet.target_case_count, 225, 'evaluation set should declare the approved target');
+  assert.ok(evaluationSet.review_policy, 'evaluation set should explain its review policy');
+  assert.ok(
+    ALLOWED_REVIEW_STATUSES.has(evaluationSet.default_review_status),
+    'evaluation set should declare a supported default review status',
   );
 
   const groups = evaluationSet.query_groups || [];
-  assert.ok(groups.length >= 5, 'evaluation set should cover multiple query groups');
+  assert.ok(groups.length >= 9, 'evaluation set should cover the approved query dimensions');
 
   const queries = flattenEvaluationQueries(evaluationSet);
-  assert.ok(queries.length >= 25, 'evaluation set should include at least 25 queries');
+  assert.ok(queries.length >= 60, 'evaluation set should include the first expansion beyond the 28-query seed');
+  assert.ok(
+    queries.length < evaluationSet.target_case_count,
+    'candidate case count should remain below the target until owner scoring is complete',
+  );
 
   const requiredGroups = new Set([
     'brand_logo_exact',
@@ -67,10 +97,28 @@ function assertEvaluationSet(evaluationSet) {
     'localized_concepts',
     'negative_meaning_separation',
     'recommendation_slots',
+    'july_11_regression_seeds',
+    'library_mode_contract',
+    'cross_surface_query_frame',
   ]);
 
   for (const groupId of requiredGroups) {
     assert.ok(groups.some((group) => group.id === groupId), `missing evaluation group ${groupId}`);
+  }
+
+  const groupIds = new Set();
+  const caseIds = new Set();
+  const reviewStatusCounts = new Map();
+
+  for (const group of groups) {
+    assert.ok(group.id, 'evaluation group should declare id');
+    assert.ok(!groupIds.has(group.id), `duplicate evaluation group ${group.id}`);
+    groupIds.add(group.id);
+    assert.ok(group.purpose, `${group.id}: evaluation group should declare purpose`);
+
+    const reviewStatus = group.review_status || evaluationSet.default_review_status;
+    assert.ok(ALLOWED_REVIEW_STATUSES.has(reviewStatus), `${group.id}: unsupported review status ${reviewStatus}`);
+    reviewStatusCounts.set(reviewStatus, (reviewStatusCounts.get(reviewStatus) || 0) + (group.queries || []).length);
   }
 
   for (const query of queries) {
@@ -80,8 +128,56 @@ function assertEvaluationSet(evaluationSet) {
       Array.isArray(query.acceptable_families) || Array.isArray(query.expected_top_icon_ids),
       `${query.query || query.slot}: query should define acceptable_families or expected_top_icon_ids`,
     );
+
+    if (query.case_id) {
+      assert.match(query.case_id, /^[a-z0-9-]+$/, `${query.case_id}: case_id should be stable kebab-case`);
+      assert.ok(!caseIds.has(query.case_id), `duplicate evaluation case_id ${query.case_id}`);
+      caseIds.add(query.case_id);
+    }
+
+    if (['july_11_regression_seeds', 'library_mode_contract', 'cross_surface_query_frame'].includes(query.group_id)) {
+      assert.ok(query.case_id, `${query.group_id}: expanded cases should declare case_id`);
+      assert.ok(query.expected_outcome, `${query.case_id}: expanded cases should declare expected_outcome`);
+    }
+
+    if (query.surfaces) {
+      assert.ok(Array.isArray(query.surfaces) && query.surfaces.length > 0, `${query.case_id}: surfaces should be non-empty`);
+      for (const surface of query.surfaces) {
+        assert.ok(ALLOWED_SURFACES.has(surface), `${query.case_id}: unsupported surface ${surface}`);
+      }
+    }
+
+    if (query.proposed_avoid_families) {
+      assert.ok(
+        Array.isArray(query.proposed_avoid_families) && query.proposed_avoid_families.length > 0,
+        `${query.case_id}: proposed_avoid_families should be non-empty`,
+      );
+    }
+
+    if (query.library_mode) {
+      assert.ok(ALLOWED_LIBRARY_MODES.has(query.library_mode), `${query.case_id}: unsupported library mode`);
+      assert.equal(
+        query.expected_library_behavior,
+        LIBRARY_BEHAVIOR_BY_MODE[query.library_mode],
+        `${query.case_id}: library behavior should match mode`,
+      );
+      if (query.library_mode === 'strict' || query.library_mode === 'prefer') {
+        assert.ok(query.requested_library, `${query.case_id}: requested_library is required for ${query.library_mode}`);
+      }
+    }
+
     assertNoUnsafeText(`evaluation query ${query.query || query.slot}`, JSON.stringify(query));
   }
+
+  assert.ok(caseIds.size >= 30, 'expanded evaluation cases should have stable IDs');
+
+  return {
+    candidate_case_count: queries.length,
+    target_case_count: evaluationSet.target_case_count,
+    remaining_to_target: evaluationSet.target_case_count - queries.length,
+    stable_case_id_count: caseIds.size,
+    review_status_counts: Object.fromEntries([...reviewStatusCounts.entries()].sort()),
+  };
 }
 
 function assertSemanticDocuments(payload, registryRecords, iconIndex) {
@@ -148,13 +244,14 @@ const iconIndex = await readJson('public/icon-index.json');
 const registryRaw = await readJson('public/registry/records.json');
 const registryRecords = Array.isArray(registryRaw) ? registryRaw : registryRaw.records || [];
 
-assertEvaluationSet(evaluationSet);
+const evaluationSummary = assertEvaluationSet(evaluationSet);
 const semanticPayload = buildSemanticSearchDocuments(iconIndex, registryRaw);
 const summary = assertSemanticDocuments(semanticPayload, registryRecords, iconIndex);
 
 console.log(JSON.stringify({
   status: 'ok',
   evaluation_queries: flattenEvaluationQueries(evaluationSet).length,
+  evaluation: evaluationSummary,
   semantic_documents: summary.document_count,
   semantic_documents_by_type: summary.by_type,
   skipped: summary.skipped_count,
