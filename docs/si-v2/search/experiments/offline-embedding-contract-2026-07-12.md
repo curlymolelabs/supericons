@@ -6,6 +6,8 @@ Status: draft for owner approval
 
 Authority: experiment protocol only. [`search-engine-v2.md`](../search-engine-v2.md) remains the product and technical specification. This document does not select a provider or model and does not authorize deployment.
 
+Current candidate research: [`embedding-candidate-shortlist-2026-07-12.md`](embedding-candidate-shortlist-2026-07-12.md).
+
 ## Problem statement
 
 The deterministic search layer now handles approved meanings, ambiguous terms, brand collisions, and library behavior, but it cannot reliably retrieve icons for every long, unfamiliar, or multilingual query. Search v2 needs an embedding model that improves those cases without weakening exact matches, exposing private data, increasing latency beyond an approved budget, or making rollback difficult.
@@ -170,10 +172,10 @@ If no candidate meets every rule, keep deterministic search as the served path a
 
 ## Experiment sequence
 
-1. Complete owner review of the 28 legacy evaluation cases.
-2. Replace the three translated placeholder queries with native-language fixtures.
+1. Complete owner review of the 28 legacy evaluation cases. Completed 2026-07-12.
+2. Replace the three translated placeholder queries with native-language fixtures. Completed 2026-07-12.
 3. Expand and owner-review the multilingual tiers.
-4. Verify current candidate models and prices from official provider documentation.
+4. Verify current candidate models and prices from official provider documentation. Initial shortlist completed 2026-07-12; recheck required before paid execution.
 5. Freeze the experiment inputs and record document and locale counts.
 6. Generate candidate embeddings offline with separate versions.
 7. Run deterministic, vector-only, and hybrid offline comparisons.
@@ -209,8 +211,8 @@ These questions require owner confirmation before the model-selection experiment
 This contract is ready to execute when:
 
 - the owner approves the experiment scope and selection rule;
-- legacy expected results are owner-reviewed;
-- native multilingual fixtures replace the translated placeholders;
+- legacy expected results are owner-reviewed, completed 2026-07-12;
+- native multilingual fixtures replace the translated placeholders, completed 2026-07-12;
 - current candidate models and provider constraints are verified;
 - latency and cost ceilings are recorded; and
 - the offline runner, versioned storage change, and rollback plan have implementation tasks.

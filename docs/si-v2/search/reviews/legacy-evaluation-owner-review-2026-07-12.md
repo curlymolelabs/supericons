@@ -2,17 +2,19 @@
 
 Date: 2026-07-12
 
-Status: awaiting owner decision
+Status: approved and recorded
 
 Authority: review packet only. The approved results must be recorded in `data/semantic-search-v2/evaluation-set.json` before they count toward a release gate.
 
-## Decision requested
+## Owner decision
 
-Review the 28 inherited cases below. The quickest response is:
+On 2026-07-12, the owner approved all recommendations in this packet:
 
-> Approve all recommendations except Lxx: [change]
+- 19 cases approved as written;
+- 6 cases approved with the recommended adjustments; and
+- 3 placeholder translations approved for replacement with native-language queries.
 
-`Approve` means the useful families, avoid families, exact result, and gap classification are suitable regression expectations. `Adjust` means keep the case but change its expectation. `Replace` means the current query is not a valid fixture.
+The recorded replacements are `车牌识别` for Simplified Chinese, `カメラでスキャン` for Japanese, and `ícone de editor de código` for Brazilian Portuguese. The evaluation data is the controlling machine-readable record.
 
 ## Recommended approval set
 
@@ -63,13 +65,13 @@ These three entries describe a translation in English rather than containing the
 | L20 | `Japanese query meaning scan camera` | `ja` | Replace with an owner-approved Japanese query drawn from the public dictionary ground truth. Preserve scan and camera as proposed useful families. | Replace |
 | L22 | `Portuguese query meaning code editor icon` | `pt` | Replace with an owner-approved Portuguese query and record whether it is Brazilian Portuguese or another locale. Preserve code, editor, and terminal as proposed useful families. | Replace |
 
-## Effect of approval
+## Recorded effect
 
-If all recommendations are approved:
+The approval was recorded in `data/semantic-search-v2/evaluation-set.json`:
 
-- 19 cases can be marked owner-reviewed without content changes;
-- 6 cases need adjusted expectations before being marked owner-reviewed;
-- 3 placeholder queries need native-language replacements; and
-- the fixed suite remains 72 cases until replacements or additional cases are added.
+- all 28 inherited cases now have stable case IDs and owner-reviewed status;
+- the 6 adjusted cases carry sharper preferred, related, insufficient, identity, or required-signal expectations;
+- the 3 English placeholders were replaced with native-language queries; and
+- the fixed suite remains 72 cases until additional cases are added.
 
 Approval does not deploy search, select an embedding model, or change ranking by itself.

@@ -98,7 +98,7 @@ function assertEvaluationSet(evaluationSet) {
   assert.ok(queries.length >= 70, 'evaluation set should include ambiguity and brand-gating policy cases');
   assert.ok(
     queries.length < evaluationSet.target_case_count,
-    'candidate case count should remain below the target until owner scoring is complete',
+    'candidate case count should remain below the target until suite expansion is complete',
   );
 
   const requiredGroups = new Set([
@@ -142,10 +142,23 @@ function assertEvaluationSet(evaluationSet) {
       `${query.query || query.slot}: query should define acceptable_families or expected_top_icon_ids`,
     );
 
-    if (query.case_id) {
-      assert.match(query.case_id, /^[a-z0-9-]+$/, `${query.case_id}: case_id should be stable kebab-case`);
-      assert.ok(!caseIds.has(query.case_id), `duplicate evaluation case_id ${query.case_id}`);
-      caseIds.add(query.case_id);
+    assert.ok(query.case_id, `${query.group_id}: every evaluation case should declare a stable case_id`);
+    assert.match(query.case_id, /^[a-z0-9-]+$/, `${query.case_id}: case_id should be stable kebab-case`);
+    assert.ok(!caseIds.has(query.case_id), `duplicate evaluation case_id ${query.case_id}`);
+    caseIds.add(query.case_id);
+
+    for (const field of [
+      'related_families',
+      'insufficient_families',
+      'required_signal_families',
+    ]) {
+      if (query[field]) {
+        assert.ok(Array.isArray(query[field]) && query[field].length > 0, `${query.case_id}: ${field} should be non-empty`);
+      }
+    }
+
+    if (query.identity_substitution_allowed !== undefined) {
+      assert.equal(typeof query.identity_substitution_allowed, 'boolean', `${query.case_id}: identity substitution rule should be boolean`);
     }
 
     if ([
