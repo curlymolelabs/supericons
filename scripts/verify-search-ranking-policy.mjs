@@ -42,6 +42,13 @@ for (const family of policy.interpretation_families || []) {
 
 for (const queryPolicy of policy.query_policies || []) {
   assert.ok(queryPolicy.trigger_terms?.length > 0, `${queryPolicy.id}: trigger terms are required`);
+  assert.ok(queryPolicy.bare_intent_types?.length > 0, `${queryPolicy.id}: public intent types are required`);
+  for (const intentType of [
+    ...(queryPolicy.bare_intent_types || []),
+    ...(queryPolicy.context_intent_types || []),
+  ]) {
+    assert.match(intentType, /^[a-z0-9_]+$/, `${queryPolicy.id}: intent type should be snake_case`);
+  }
   for (const familyId of queryPolicy.bare_query_family_ids || []) {
     assert.ok(familyIds.has(familyId), `${queryPolicy.id}: unknown family ${familyId}`);
   }

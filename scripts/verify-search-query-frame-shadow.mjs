@@ -64,6 +64,21 @@ const parityGroup = evaluationSet.query_groups.find((group) => group.id === 'cro
 assert.ok(parityGroup, 'evaluation set should include cross-surface query-frame cases');
 const ambiguityGroup = evaluationSet.query_groups.find((group) => group.id === 'ambiguous_intent_diversity');
 assert.ok(ambiguityGroup, 'evaluation set should include ambiguous-intent cases');
+const julyGroup = evaluationSet.query_groups.find((group) => group.id === 'july_11_regression_seeds');
+assert.ok(julyGroup, 'evaluation set should include July regression cases');
+
+for (const testCase of [...julyGroup.queries, ...ambiguityGroup.queries]) {
+  const frame = buildWebSearchQueryFrame(testCase.query);
+  assert.equal(frame.matched, true, `${testCase.case_id}: maintained policy query should be classified`);
+  assert.ok(!frame.intent_types.includes('unclassified'), `${testCase.case_id}: intent type should not remain unclassified`);
+  assert.ok(frame.interpretation_family_ids.length > 0, `${testCase.case_id}: frame should expose interpretation family IDs`);
+  assert.deepEqual(
+    frame.interpretations.map((entry) => entry.family_id),
+    frame.interpretation_family_ids,
+    `${testCase.case_id}: interpretation labels should align with family IDs`,
+  );
+  assert.deepEqual(buildMcpSearchQueryFrame(testCase.query), frame, `${testCase.case_id}: web and MCP frames should match`);
+}
 const parityCases = [
   ...parityGroup.queries,
   ...ambiguityGroup.queries.filter((testCase) => testCase.task && testCase.slot),
@@ -104,7 +119,7 @@ for (const testCase of parityCases) {
   );
   assert.deepEqual(
     recommendation.results[0]?.query_frame,
-    buildWebSearchQueryFrame(`${testCase.slot} ${testCase.task}`),
+    buildWebSearchQueryFrame(testCase.slot, { context: testCase.task }),
     `${testCase.case_id}: recommendation slot should use the shared query-frame builder with task context`,
   );
 }

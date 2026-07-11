@@ -151,6 +151,8 @@ const recommendIconsOutputSchema = {
   library: z.string().optional().describe('Library filter used for recommendations, if provided.'),
   style: z.string().optional().describe('Style preference used for recommendations.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
+  needs_clarification: z.boolean().describe('Whether one or more ambiguous slots require more context.'),
+  clarification_slots: z.array(z.string()).describe('Slots that need the caller to choose an interpretation.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of the recommended icon set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
@@ -1028,7 +1030,7 @@ function createServer({ requestContext = null } = {}) {
     'recommend_icons',
     {
       title: 'Recommend Icons',
-      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Use this when the user needs several icons that should work together. Returns one recommendation and optional alternatives for each slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
+      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
       inputSchema: {
         task: z.string().describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app".'),
         slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"].'),

@@ -151,6 +151,8 @@
       "id": "hello",
       "trigger_terms": ["hello"],
       "match": "token",
+      "bare_intent_types": ["ambiguous_concept"],
+      "context_intent_types": ["context_narrowed_concept"],
       "bare_query_family_ids": ["greeting_gesture", "friendly_face", "communication", "written_greeting"],
       "minimum_distinct_families_top_8": 3,
       "context_family_order": ["spoken_greeting", "communication", "written_greeting", "pixel_display", "game_dialogue", "greeting_gesture", "friendly_face"]
@@ -159,6 +161,7 @@
       "id": "swift",
       "trigger_terms": ["swift"],
       "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
       "bare_query_family_ids": ["speed_motion", "brand_identity"],
       "minimum_distinct_families_top_8": 2
     },
@@ -166,6 +169,8 @@
       "id": "picker",
       "trigger_terms": ["picker"],
       "match": "token",
+      "bare_intent_types": ["ambiguous_concept"],
+      "context_intent_types": ["context_narrowed_concept"],
       "bare_query_family_ids": ["selection_control", "color_picker", "date_time_picker", "file_picker", "emoji_picker"],
       "minimum_distinct_families_top_8": 3,
       "context_family_order": ["color_picker", "date_time_picker", "file_picker", "emoji_picker", "selection_control"]
@@ -174,6 +179,7 @@
       "id": "cog",
       "trigger_terms": ["cog"],
       "match": "exact",
+      "bare_intent_types": ["literal_object"],
       "bare_query_family_ids": ["settings_control"],
       "minimum_distinct_families_top_8": 1,
       "avoid_candidate_terms": ["incognito"]
@@ -182,6 +188,7 @@
       "id": "reply",
       "trigger_terms": ["respond", "reply"],
       "match": "exact",
+      "bare_intent_types": ["object_action"],
       "bare_query_family_ids": ["reply_action"],
       "minimum_distinct_families_top_8": 1,
       "avoid_candidate_terms": ["threads"]
@@ -190,6 +197,7 @@
       "id": "selection-control",
       "trigger_terms": ["combobox", "dropdown", "select", "chooser"],
       "match": "exact",
+      "bare_intent_types": ["ui_slot"],
       "bare_query_family_ids": ["selection_control"],
       "minimum_distinct_families_top_8": 1,
       "retrieval_queries_by_trigger": {
@@ -217,6 +225,7 @@
       "id": "magnifier",
       "trigger_terms": ["magnifier"],
       "match": "exact",
+      "bare_intent_types": ["literal_object"],
       "bare_query_family_ids": ["search_zoom"],
       "minimum_distinct_families_top_8": 1
     },
@@ -224,6 +233,7 @@
       "id": "alarm",
       "trigger_terms": ["alarm"],
       "match": "exact",
+      "bare_intent_types": ["status_feedback"],
       "bare_query_family_ids": ["alarm_clock"],
       "minimum_distinct_families_top_8": 1,
       "avoid_candidate_terms": ["barbell"]
@@ -232,6 +242,7 @@
       "id": "alert",
       "trigger_terms": ["alert"],
       "match": "exact",
+      "bare_intent_types": ["status_feedback"],
       "bare_query_family_ids": ["alert_warning"],
       "minimum_distinct_families_top_8": 1,
       "avoid_candidate_terms": ["barbell"]
@@ -240,6 +251,7 @@
       "id": "bell",
       "trigger_terms": ["bell"],
       "match": "exact",
+      "bare_intent_types": ["status_feedback"],
       "bare_query_family_ids": ["bell_notification"],
       "minimum_distinct_families_top_8": 1,
       "avoid_candidate_terms": ["barbell"]

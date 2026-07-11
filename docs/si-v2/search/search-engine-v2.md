@@ -186,6 +186,36 @@ Every surface uses the same compact query frame before candidate retrieval. It m
 }
 ```
 
+Maintained ambiguous concepts additionally expose stable public interpretation options:
+
+```json
+{
+  "normalized_query": "hello",
+  "intent_types": ["ambiguous_concept"],
+  "interpretation_family_ids": ["greeting_gesture", "friendly_face", "communication", "written_greeting"],
+  "interpretations": [
+    {
+      "family_id": "greeting_gesture",
+      "label": "Greeting gesture"
+    },
+    {
+      "family_id": "friendly_face",
+      "label": "Friendly face"
+    },
+    {
+      "family_id": "communication",
+      "label": "Message or conversation"
+    },
+    {
+      "family_id": "written_greeting",
+      "label": "Written greeting"
+    }
+  ],
+  "interpretation_status": "ambiguous",
+  "needs_clarification": true
+}
+```
+
 Rules:
 
 1. Normalize query and locale.

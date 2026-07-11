@@ -19,8 +19,8 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `P0` Governance and baseline | In progress; traceability complete, candidate suite expanded, remaining legacy scoring and target expansion open | Official specification version 1.2; sanitized July 11 baseline; 71-case candidate evaluation suite toward the 225-case target | Traceability audit passed; 71-case schema and review-status checks passed; all 12 July meaning seeds, 15 library cases, and 10 ambiguity/brand policy cases are owner-reviewed; 28 legacy cases remain open | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `references/verification/search-query-baseline-2026-07-11.md`; `references/verification/search-v2-evaluation-expansion-2026-07-11.md`; `references/verification/search-v2-ambiguity-policy-2026-07-11.md`; `references/verification/search-ranking-policy-2026-07-11.md`; `references/verification/search-library-modes-2026-07-12.md` |
-| `P1` Shared deterministic understanding | Partially implemented and locally verified | Search intent core, generated rules/graph, shared query-frame modules, opt-in `include_query_frame`, recommendation query-frame hooks, maintained ranking policy, ambiguity diversification, brand-intent gating, final-fusion policy enforcement, and explicit strict/prefer/all search modes in local and hosted MCP code | The 15 owner-reviewed library cases pass in local search; strict, prefer, and all behavior also pass hosted synthetic checks; lexical, synonym, intent-family, and future-vector candidates cannot bypass the tested final policy boundary; recommendation clarification remains incomplete | MCP package build was verified in the saved query-frame record; the new library-mode slice was not packaged | Not deployed | Not observed live | `references/verification/semantic-search-v2-intent-graph-phase-1-2026-07-01.md`; `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md`; `references/verification/search-ranking-policy-2026-07-11.md`; `references/verification/search-library-modes-2026-07-12.md` |
+| `P0` Governance and baseline | In progress; traceability complete, candidate suite expanded, remaining legacy scoring and target expansion open | Official specification version 1.2; sanitized July 11 baseline; 72-case candidate evaluation suite toward the 225-case target | Traceability audit passed; 72-case schema and review-status checks passed; 38 cases are owner-reviewed and 28 legacy cases remain open | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `references/verification/search-query-baseline-2026-07-11.md`; `references/verification/search-v2-evaluation-expansion-2026-07-11.md`; `references/verification/search-v2-ambiguity-policy-2026-07-11.md`; `references/verification/search-ranking-policy-2026-07-11.md`; `references/verification/search-library-modes-2026-07-12.md`; `references/verification/search-query-frame-clarification-2026-07-12.md` |
+| `P1` Shared deterministic understanding | Current approved implementation scope is locally complete; broader phase exit remains gated by evaluation expansion and unresolved confidence and relevance decisions | Search intent core, generated rules/graph, shared policy-aware query-frame modules, opt-in `include_query_frame`, recommendation clarification, maintained ranking policy, ambiguity diversification, brand-intent gating, final-fusion policy enforcement, and explicit strict/prefer/all search modes in local and hosted MCP code | All 12 July meaning seeds and 7 ambiguity policy cases now produce classified query frames; ambiguous recommendation slots return public labeled options without internal scores; contextual tasks can narrow the slot; the 15 library cases and existing ranking-policy checks pass | Earlier MCP package build was verified in the saved query-frame record; this clarification slice was checked by package dry run but was not published | Not deployed | Not observed live | `references/verification/semantic-search-v2-intent-graph-phase-1-2026-07-01.md`; `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md`; `references/verification/search-ranking-policy-2026-07-11.md`; `references/verification/search-library-modes-2026-07-12.md`; `references/verification/search-query-frame-clarification-2026-07-12.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
 | `P3` Offline embeddings | Not implemented | No embedding generation/sync artifact or embedding storage migration was verified | Not verified | Not applicable | Not verified | Not verified | Repository inventory on 2026-07-11; canonical requirement only |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
@@ -49,6 +49,7 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 - `scripts/build-search-ranking-policy.mjs`
 - `scripts/verify-search-ranking-policy.mjs`
 - `scripts/verify-search-library-modes.mjs`
+- `scripts/verify-recommend-icons-clarification.mjs`
 
 ### Opt-in query-frame surfaces
 
@@ -59,7 +60,7 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 - `mcp/remote-server.js`
 - `mcp/recommend-icons.js`
 
-Query-frame diagnostics remain opt-in. The additive library-mode contract defaults to strict, preserving existing library-filter selection behavior when callers omit the new input.
+Query-frame diagnostics remain opt-in. Public recommendation responses can now carry `needs_clarification`, `clarification_slots`, and labeled interpretation options without exposing internal scores. The additive library-mode contract defaults to strict, preserving existing library-filter selection behavior when callers omit the new input.
 
 ### Search projection
 
@@ -72,7 +73,7 @@ Query-frame diagnostics remain opt-in. The additive library-mode contract defaul
 
 Saved July 1 verification reports 28 evaluation queries, 75,560 documents, five document types, 11 libraries, and 41 skipped unresolved or duplicate-resolved registry rows.
 
-The July 11 candidate suite contains 71 cases: 28 legacy seeds pending owner confirmation, 12 owner-reviewed July meaning seeds, 15 owner-reviewed library contract cases, 6 cross-surface contract cases, and 10 owner-reviewed ambiguity/brand policy cases. Current in-memory verification generated 75,810 documents from the current workspace inputs and did not replace the saved July 1 output artifact.
+The current candidate suite contains 72 cases: 28 legacy seeds pending owner confirmation, 12 owner-reviewed July meaning seeds, 15 owner-reviewed library contract cases, 6 cross-surface contract cases, 7 owner-reviewed ambiguity cases, and 4 owner-reviewed brand cases. Current in-memory verification generated 75,810 documents from the current workspace inputs and did not replace the saved July 1 output artifact.
 
 ### Current query evidence
 
@@ -92,12 +93,11 @@ This ledger does not infer current production deployment from file presence, pac
 
 ## Immediate next gate
 
-Complete `P0` and the remaining `P1` contract work before enabling semantic ranking:
+Complete the remaining evaluation and measurement gates before enabling semantic ranking:
 
 1. Owner-confirm the 28 legacy seeds.
-2. Expand the fixed evaluation suite from 71 candidates toward the approved 225-case target.
+2. Expand the fixed evaluation suite from 72 candidates toward the approved 225-case target.
 3. Define the downstream acceptance event and confidence behavior.
-4. Add recommendation clarification behavior and its public MCP contract description.
 
 Offline `P3` embedding implementation may proceed in parallel after its model/version/rollback contract is specified, but `P4` cannot exit before these gates pass.
 

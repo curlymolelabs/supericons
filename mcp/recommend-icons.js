@@ -1429,6 +1429,10 @@ function buildLowConfidenceHint(slotLabel, queriesUsed) {
   return `Low confidence for ${slotLabel}. Try search_icons with: ${queriesUsed.slice(0, 3).join(', ')}.`;
 }
 
+function buildClarificationHint(slotLabel) {
+  return `Choose the intended meaning for ${slotLabel}, then request recommendations again with that context.`;
+}
+
 function normalizeResponseMode(responseMode) {
   if (responseMode === 'assets' || responseMode === 'full') return responseMode;
   return 'plan';
@@ -1454,6 +1458,18 @@ export async function recommendIconsForTask({
   const normalizedResponseMode = normalizeResponseMode(responseMode);
   const taskQueryFrame = includeQueryFrame ? buildSearchQueryFrame(task, { locale }) : null;
   const scoredSlotResults = await mapWithConcurrency(slots, SLOT_SEARCH_CONCURRENCY, async (slotLabel) => {
+    const interpretationFrame = buildSearchQueryFrame(slotLabel, { locale, context: task });
+    if (interpretationFrame.needs_clarification) {
+      return {
+        slot: slotLabel,
+        queries_used: [],
+        intentTerms: [],
+        requestedVariantTerms: [],
+        interpretationFrame,
+        queryFrame: includeQueryFrame ? interpretationFrame : null,
+        scored: [],
+      };
+    }
     const intentTerms = buildSlotIntentTerms(task, slotLabel, locale);
     const requestedVariantTerms = dedupe([
       ...tokenizeText(slotLabel),
@@ -1538,7 +1554,8 @@ export async function recommendIconsForTask({
       queries_used: queryVariants,
       intentTerms,
       requestedVariantTerms,
-      queryFrame: includeQueryFrame ? buildSearchQueryFrame(`${slotLabel} ${task}`, { locale }) : null,
+      interpretationFrame,
+      queryFrame: includeQueryFrame ? interpretationFrame : null,
       scored,
     };
   });
@@ -1546,6 +1563,23 @@ export async function recommendIconsForTask({
   const usedIconKeys = new Set();
   const slotResults = [];
   for (const slotResult of scoredSlotResults) {
+    if (slotResult.interpretationFrame.needs_clarification) {
+      const slotPayload = {
+        slot: slotResult.slot,
+        confidence: { level: 'low' },
+        recommended: null,
+        alternatives: [],
+        needs_clarification: true,
+        interpretations: slotResult.interpretationFrame.interpretations,
+        guidance: buildClarificationHint(slotResult.slot),
+      };
+      if (includeQueryFrame && slotResult.queryFrame) {
+        slotPayload.query_frame = slotResult.queryFrame;
+      }
+      slotResults.push(slotPayload);
+      continue;
+    }
+
     const sorted = [...slotResult.scored].sort((left, right) => {
       const leftKey = `${left.icon.lib}:${left.icon.id}`;
       const rightKey = `${right.icon.lib}:${right.icon.id}`;
@@ -1617,7 +1651,10 @@ export async function recommendIconsForTask({
   const lowConfidenceSlots = slotResults
     .filter((slot) => !slot.recommended || slot.confidence?.level === 'low')
     .map((slot) => slot.slot);
-  const allSlotsResolved = slotResults.every((slot) => Boolean(slot.recommended));
+  const clarificationSlots = slotResults
+    .filter((slot) => slot.needs_clarification)
+    .map((slot) => slot.slot);
+  const allSlotsResolved = slotResults.every((slot) => Boolean(slot.recommended) && !slot.needs_clarification);
 
   const payload = {
     task,
@@ -1626,6 +1663,8 @@ export async function recommendIconsForTask({
     response_mode: normalizedResponseMode,
     slot_count: slots.length,
     all_slots_resolved: allSlotsResolved,
+    needs_clarification: clarificationSlots.length > 0,
+    clarification_slots: clarificationSlots,
     low_confidence_slots: lowConfidenceSlots,
     fallback_recommended: !allSlotsResolved || lowConfidenceSlots.length > 0,
     results: slotResults,

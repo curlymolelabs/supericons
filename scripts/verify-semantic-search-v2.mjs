@@ -201,6 +201,16 @@ function assertEvaluationSet(evaluationSet) {
       );
     }
 
+    if (query.expected_needs_clarification) {
+      assert.ok(query.surfaces?.includes('recommend_icons'), `${query.case_id}: clarification should target recommend_icons`);
+      assert.ok(query.task && query.slot, `${query.case_id}: clarification case should include task and slot context`);
+      assert.ok(query.minimum_interpretation_options >= 2, `${query.case_id}: clarification should require multiple options`);
+      assert.ok(
+        query.interpretation_family_ids?.length >= query.minimum_interpretation_options,
+        `${query.case_id}: declared families should cover the clarification minimum`,
+      );
+    }
+
     if (query.expected_primary_interpretation_family) {
       assert.ok(
         query.interpretation_family_ids?.includes(query.expected_primary_interpretation_family),

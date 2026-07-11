@@ -604,6 +604,19 @@
           "prohibited_top_icon_refs": ["simpleicons:hellofresh"]
         },
         {
+          "case_id": "ambiguity-recommend-hello-needs-clarification",
+          "query": "hello",
+          "task": "Choose an icon.",
+          "slot": "hello",
+          "intent_type": "ambiguous_concept",
+          "surfaces": ["recommend_icons"],
+          "expected_outcome": "needs_clarification",
+          "expected_needs_clarification": true,
+          "interpretation_family_ids": ["greeting_gesture", "friendly_face", "communication", "written_greeting"],
+          "minimum_interpretation_options": 3,
+          "acceptable_families": ["waving hand", "friendly face", "chat", "message", "text"]
+        },
+        {
           "case_id": "ambiguity-hello-onboarding",
           "query": "hello onboarding screen",
           "task": "Choose an icon for a friendly onboarding screen.",

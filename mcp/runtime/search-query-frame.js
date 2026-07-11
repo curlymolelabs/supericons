@@ -2,6 +2,7 @@ import {
   GENERATED_INTENT_GRAPH_GROUPS,
   GENERATED_INTENT_GRAPH_PHRASES,
 } from './generated-search-intent-graph.js';
+import { getSearchInterpretationPlan } from './search-ranking-policy.js';
 
 const LOGO_INTENT_TOKENS = new Set(['logo', 'logos', 'brand', 'brands', 'mark', 'marks']);
 
@@ -101,9 +102,10 @@ function resolveLanguage(matches, fallbackLanguage) {
   return localizedMatch?.locale || 'en';
 }
 
-function getConfidenceFloor(groups) {
+function getConfidenceFloor(groups, interpretationPlan) {
   if (groups.some((group) => group.confidenceFloor === 'high')) return 'high';
   if (groups.some((group) => group.confidenceFloor === 'medium')) return 'medium';
+  if (interpretationPlan && !interpretationPlan.needs_clarification) return 'medium';
   return 'low';
 }
 
@@ -115,11 +117,18 @@ export function buildSearchQueryFrame(query, options = {}) {
   const matchedGroups = matchedGroupIds
     .map((id) => groupsById.get(id))
     .filter(Boolean);
+  const interpretationPlan = getSearchInterpretationPlan(query, { context: options.context });
+  const interpretations = (interpretationPlan?.families || []).map((family) => ({
+    family_id: family.id,
+    label: family.label,
+  }));
+  const interpretationFamilyIds = interpretations.map((entry) => entry.family_id);
   const hasLogoIntent = tokens.some((token) => LOGO_INTENT_TOKENS.has(token));
   const intentTypes = uniqueIdentifiers([
     ...(hasLogoIntent ? ['brand_logo'] : []),
     ...matchedGroups.flatMap((group) => group.intentTypes || []),
-    ...(matchedGroups.length === 0 && !hasLogoIntent ? ['unclassified'] : []),
+    ...(interpretationPlan?.intent_types || []),
+    ...(matchedGroups.length === 0 && !hasLogoIntent && !interpretationPlan ? ['unclassified'] : []),
   ]);
 
   return {
@@ -137,17 +146,31 @@ export function buildSearchQueryFrame(query, options = {}) {
     positive_concepts: unique(matchedGroups.flatMap((group) => group.positiveConcepts || [])),
     avoid_concepts: unique(matchedGroups.flatMap((group) => group.avoidConcepts || [])),
     fallback_terms: unique(matchedGroups.flatMap((group) => group.fallbackTerms || [])),
-    result_families: uniqueIdentifiers(matchedGroups.flatMap((group) => group.resultFamilies || [])),
+    result_families: uniqueIdentifiers([
+      ...matchedGroups.flatMap((group) => group.resultFamilies || []),
+      ...interpretationFamilyIds,
+    ]),
+    interpretation_family_ids: interpretationFamilyIds,
+    interpretations,
+    interpretation_status: interpretationPlan?.interpretation_status || 'none',
+    needs_clarification: Boolean(interpretationPlan?.needs_clarification),
     gap_strategies: uniqueRaw(matchedGroups.map((group) => group.gapStrategy)),
-    confidence_floor: getConfidenceFloor(matchedGroups),
-    match_reasons: matchedPhrases.map((match) => ({
-      type: 'intent_group',
-      group_id: match.groupId,
-      phrase: match.phrase,
-      locale: match.locale,
-    })),
+    confidence_floor: getConfidenceFloor(matchedGroups, interpretationPlan),
+    match_reasons: [
+      ...matchedPhrases.map((match) => ({
+        type: 'intent_group',
+        group_id: match.groupId,
+        phrase: match.phrase,
+        locale: match.locale,
+      })),
+      ...(interpretationPlan ? [{
+        type: 'ranking_policy',
+        policy_id: interpretationPlan.policy_id,
+        trigger: interpretationPlan.trigger,
+      }] : []),
+    ],
     is_brand_logo_query: hasLogoIntent,
-    matched: matchedGroups.length > 0 || hasLogoIntent,
+    matched: matchedGroups.length > 0 || hasLogoIntent || Boolean(interpretationPlan),
   };
 }
 

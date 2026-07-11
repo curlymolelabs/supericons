@@ -976,7 +976,7 @@ server.tool(
 // --- Tool: recommend_icons ---
 server.tool(
   'recommend_icons',
-  'Recommend the most suitable icons for one or more UI slots. Returns shortlist choices with preview-ready SVGs, explicit public library labels, browser preview URLs, short reasons, and SI semantic guidance when available. Library key si means Supericons, not Simple Icons.',
+  'Recommend the most suitable icons for one or more UI slots. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Returns shortlist choices with preview-ready SVGs, explicit public library labels, browser preview URLs, short reasons, and SI semantic guidance when available. Library key si means Supericons, not Simple Icons.',
   {
     task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
     library: z.string().optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),

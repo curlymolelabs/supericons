@@ -17,6 +17,8 @@ Search icons using AI-powered synonym expansion.
 
 ### recommend_icons
 Recommend a coherent icon set for UI slots.
+- Uses task and slot context to narrow words with several possible meanings.
+- Returns labeled interpretation options with `needs_clarification` when the intended meaning is still unclear.
 - `task` (required): Overall UI task, e.g. "choose icons for an AI dashboard sidebar"
 - `slots` (required): UI slots, e.g. `["Models", "Prompts", "Settings"]`
 - `library` (optional): Filter by library. Use `si` for Supericons, not Simple Icons.

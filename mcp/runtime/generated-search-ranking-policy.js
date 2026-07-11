@@ -407,6 +407,12 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "hello"
       ],
       "match": "token",
+      "bare_intent_types": [
+        "ambiguous_concept"
+      ],
+      "context_intent_types": [
+        "context_narrowed_concept"
+      ],
       "bare_query_family_ids": [
         "greeting_gesture",
         "friendly_face",
@@ -430,6 +436,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "swift"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "ambiguous_concept"
+      ],
       "bare_query_family_ids": [
         "speed_motion",
         "brand_identity"
@@ -442,6 +451,12 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "picker"
       ],
       "match": "token",
+      "bare_intent_types": [
+        "ambiguous_concept"
+      ],
+      "context_intent_types": [
+        "context_narrowed_concept"
+      ],
       "bare_query_family_ids": [
         "selection_control",
         "color_picker",
@@ -464,6 +479,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "cog"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "literal_object"
+      ],
       "bare_query_family_ids": [
         "settings_control"
       ],
@@ -479,6 +497,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "reply"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "object_action"
+      ],
       "bare_query_family_ids": [
         "reply_action"
       ],
@@ -496,6 +517,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "chooser"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "ui_slot"
+      ],
       "bare_query_family_ids": [
         "selection_control"
       ],
@@ -553,6 +577,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "magnifier"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "literal_object"
+      ],
       "bare_query_family_ids": [
         "search_zoom"
       ],
@@ -564,6 +591,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "alarm"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "status_feedback"
+      ],
       "bare_query_family_ids": [
         "alarm_clock"
       ],
@@ -578,6 +608,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "alert"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "status_feedback"
+      ],
       "bare_query_family_ids": [
         "alert_warning"
       ],
@@ -592,6 +625,9 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "bell"
       ],
       "match": "exact",
+      "bare_intent_types": [
+        "status_feedback"
+      ],
       "bare_query_family_ids": [
         "bell_notification"
       ],
