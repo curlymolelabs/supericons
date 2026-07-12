@@ -38,6 +38,8 @@ The executor was tightened after the first audit:
 - Each provider request reserves one approved request before network activity begins. The executor refuses a call when the approved count is exhausted.
 - A provider failure now carries a public-safe summary with attempted-request count, failed candidate, failed input stage, zero retries, and no stored vectors.
 - The command-line runner emits structured JSON without a stack trace. A missing-key check reported zero attempted requests.
+- An append-only local ledger is atomically created before the first request. A completed run, concurrent start, or partial-failure replay using the same approval is rejected before a provider call.
+- The partial-failure test recorded reservation, one request attempt, and failure. A second executor instance made zero calls, and the ledger contained no credential, input, vector, or response data.
 
 ## Security and misuse review
 
@@ -45,7 +47,7 @@ The executor was tightened after the first audit:
 - Credential values enter request headers only. They are not included in plans, results, errors, or files.
 - Provider response bodies and vectors remain in memory. Only counts, latency, usage, estimated cost, and retrieval ranks enter the result summary.
 - Provider errors expose the provider name and HTTP status only. Response bodies are not logged.
-- A successful authorization is intended for one run. The authorization file must be marked consumed immediately after a successful live sample. Concurrent execution remains an operator-controlled residual risk because the command has no durable replay lock.
+- A successful authorization is intended for one run. Atomic ledger creation blocks concurrent and repeated execution across processes. The authorization file must be marked consumed immediately after a successful live sample. A partial failure remains blocked until the owner gives fresh approval.
 
 ## Residual risk
 

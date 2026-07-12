@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 import { executeEmbeddingSample } from '../lib/search-v2-embedding-executor.js';
+import { createFileEmbeddingSampleLedger } from '../lib/search-v2-embedding-ledger.js';
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
@@ -13,15 +14,19 @@ function readArgument(name) {
 }
 
 try {
+  const authorization = readJson('data/semantic-search-v2/embedding-sample-authorization.json');
   const result = await executeEmbeddingSample({
     sampleSet: readJson('data/semantic-search-v2/embedding-sample-set.json'),
     candidates: readJson('data/semantic-search-v2/embedding-candidates.json').candidates,
-    authorization: readJson('data/semantic-search-v2/embedding-sample-authorization.json'),
+    authorization,
     pricing: readJson('data/semantic-search-v2/embedding-sample-pricing.json'),
     suppliedFingerprint: readArgument('--authorization-fingerprint'),
     suppliedSpendCapUsd: Number(readArgument('--spend-cap-usd')),
     environment: process.env,
     fetchImpl: globalThis.fetch,
+    executionLedger: createFileEmbeddingSampleLedger({
+      rootDirectory: authorization.execution_ledger_root,
+    }),
   });
   console.log(JSON.stringify(result, null, 2));
 } catch (error) {

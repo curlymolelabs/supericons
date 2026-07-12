@@ -7,6 +7,8 @@
   "maximum_requests": 8,
   "maximum_retries": 0,
   "vector_storage_allowed": false,
+  "execution_ledger_required": true,
+  "execution_ledger_root": "tmp/search-v2-embedding-sample",
   "spend_cap_usd": 1,
   "scope": "exact_sample_only"
 }

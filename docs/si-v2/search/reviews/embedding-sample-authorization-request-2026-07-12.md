@@ -67,6 +67,7 @@ Approved on 2026-07-12 with these fixed limits:
 - eight provider requests total;
 - no retries;
 - no vector storage; and
+- a local one-run ledger that blocks concurrent or repeated execution; and
 - sample spend cap of $1.
 
 This approval is valid for one execution of the exact sample. Any changed payload, candidate, limit, or retry behavior requires a new approval.

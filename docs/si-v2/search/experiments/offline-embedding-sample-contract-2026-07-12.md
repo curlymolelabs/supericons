@@ -35,6 +35,7 @@ Planning needs no credentials. The executor requires all of the following before
 - the selected candidate IDs;
 - no more than 12 total inputs per candidate;
 - provider credentials supplied only through environment variables; and
+- an append-only local execution ledger reserved before network activity; and
 - confirmation that response vectors and usage stay local.
 
 Credential environment variables are `VOYAGE_API_KEY`, `GEMINI_API_KEY`, and `OPENAI_API_KEY`. The plan contains the variable names but never reads or prints their values.
@@ -82,7 +83,7 @@ The execution output contains request counts, latency, response validation summa
 
 The implemented planner reads local JSON and writes JSON to standard output. It has no network primitive, reads no credential value, writes no file, and creates no embedding.
 
-The executor reads credentials from environment variables, sends the approved sample to the four named providers, keeps responses in memory, and writes only a public-safe summary to standard output. It does not write files or store vectors.
+The executor reads credentials from environment variables, sends the approved sample to the four named providers, and keeps responses in memory. It writes a public-safe summary to standard output and an append-only execution ledger under `tmp/search-v2-embedding-sample/`, which is ignored by Git. The ledger contains only the fingerprint, timestamps, request counts, candidate IDs, input stages, and completion state. It never contains credentials, input text, vectors, or provider responses.
 
 ## Failure modes
 
@@ -92,4 +93,4 @@ Response validation fails on a missing vector list, wrong vector count, wrong di
 
 No automatic retry behavior is approved for the first paid sample. A failure returns to owner review before another provider call.
 
-The approval is recorded as `approved_once`. After a successful live execution, the authorization record must be changed to `consumed` before any other run. The current command has no durable replay lock, so operators must not run it concurrently.
+The approval is recorded as `approved_once`. Atomic ledger creation blocks concurrent starts and any later execution using the same approval. After a successful live execution, the authorization record must be changed to `consumed`. After a partial failure, the ledger remains in place and a rerun is prohibited until the owner gives fresh approval. Preserving or archiving the failed ledger is part of that review.
