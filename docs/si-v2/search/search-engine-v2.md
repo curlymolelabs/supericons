@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.4
+Version: 1.5
 Approved: 2026-07-11
 Amended: 2026-07-12
 Status: canonical product and technical specification
@@ -24,7 +24,7 @@ When sources conflict:
 
 ## Product question
 
-How should Supericons evolve from deterministic keyword and rule patches into a production-safe hybrid system that understands exact identities, visual meaning, relationships, UI jobs, localized language, and long natural-language requests while keeping web and agent behavior aligned?
+How should Supericons improve exact identities, visual meaning, relationships, UI jobs, localized language, and long natural-language requests through a deterministic-first search system, while keeping web and MCP behavior aligned and avoiding open-ended model cost on free requests?
 
 ## Problem statement
 
@@ -62,6 +62,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 - `G-06` Turn repeated weak searches into reviewed record, graph, ranking, library, or Icons Lab work.
 - `G-07` Keep exact/rule search available when embeddings or vector retrieval fail.
 - `G-08` Measure search quality, acceptance, latency, client concentration, and hosted resource pressure without storing raw sensitive identifiers in public artifacts.
+- `G-09` Keep the default free web and MCP search path deterministic and free of paid model calls per request.
 
 ## Non-goals
 
@@ -73,6 +74,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 - `NG-06` Do not create new icons inside the search-engine implementation; create reviewed Icons Lab briefs instead.
 - `NG-07` Do not include payment, entitlement, affiliate, or deployment-platform redesign in this program.
 - `NG-08` Do not treat liveness checks, scanners, or concentrated automation as equivalent to user demand.
+- `NG-09` Do not call an AI agent, general-purpose language model, or metered third-party embedding API in the default free search path.
 
 ## Product principles
 
@@ -85,6 +87,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 7. Failure must degrade to useful deterministic behavior, not an empty or misleading response.
 8. Ambiguous short queries should show useful interpretation breadth in search, while recommendation uses task and slot context before asking for clarification.
 9. Brand identity priority applies to genuine identity matches, not accidental prefixes, substrings, or ambiguous common words.
+10. Deterministic search ships and is measured before semantic retrieval is reconsidered. AI may help offline with reviewed maintenance, but it does not decide live search results by default.
 
 ## Authoritative dependencies
 
@@ -99,6 +102,8 @@ When schema-native icons are published, their public meaning, appearance, use gu
 | MCP hosted-search boundary documents | Hosted/public authentication and setup boundaries | Public payload and privileged diagnostic separation |
 
 ## Architecture
+
+The diagram below is a future-capable architecture, not the current release requirement. The exact, lexical, intent, relationship, and deterministic reranking path is the approved default. The vector lane remains paused unless deterministic beta evidence shows a material gap and the owner approves a model shortlist and cost boundary.
 
 ```mermaid
 flowchart LR
@@ -120,9 +125,11 @@ flowchart LR
 
 ### Online and offline boundary
 
-The default request path is bounded and deterministic apart from the request-time query embedding used when the semantic lane is enabled. Document generation, icon embeddings, relationship seeding, model-assisted drafts, evaluation, and review happen offline.
+The approved default request path is fully deterministic. It uses exact, lexical, approved intent, relationship, library, ambiguity, brand, and reranking rules without an AI agent or paid model call.
 
-If the semantic lane is disabled, slow, unavailable, or over budget, exact, lexical, and approved intent lanes must complete the request.
+If a semantic lane is reconsidered later, document generation, icon embeddings, relationship seeding, model-assisted drafts, evaluation, and review happen offline. A request-time query encoder requires a new accepted decision covering whether it runs locally or externally, its fixed model version, resource limits, funding, abuse protection, and rollback.
+
+The exact, lexical, and approved intent lanes must complete every default free request. A future semantic lane may add candidates only behind an independently controlled flag and may never become an unbounded paid fallback for free MCP traffic.
 
 ## Data and projection contracts
 
@@ -362,9 +369,9 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-03` | Preserve exact icon ID, brand, logo, and known-name priority. | `G-02` | Approved exact canaries remain rank 1. |
 | `FR-04` | Generate search documents from SI v2 and current registry projections. | `G-04` | Deterministic generation passes source and public-safety checks. |
 | `FR-05` | Keep the five semantic document types and locale dimension defined above. | Data-contract risk | Generator, migration, and tests agree on the same set. |
-| `FR-06` | Generate and sync embeddings offline with model/version/hash lifecycle and rollback. | `G-01`, `G-07` | Unchanged rows are skipped and an embedding version can be removed safely. |
-| `FR-07` | Add vector candidate retrieval behind an independently controlled flag and time budget. | `G-01`, availability risk | Shadow retrieval can be enabled or disabled without changing default results. |
-| `FR-08` | Fuse exact, lexical, intent/relationship, and semantic candidates deterministically. | `G-01`, `G-02` | Candidate provenance is inspectable and duplicates are removed. |
+| `FR-06` | If semantic retrieval is later approved, generate and sync embeddings offline with model/version/hash lifecycle and rollback. | `G-01`, `G-07`, `D-021` | Unchanged rows are skipped and an embedding version can be removed safely. |
+| `FR-07` | If semantic retrieval is later approved, add vector candidate retrieval behind an independently controlled flag and time budget. | `G-01`, availability risk, `D-021` | Shadow retrieval can be enabled or disabled without changing default results. |
+| `FR-08` | Fuse exact, lexical, and intent/relationship candidates deterministically, adding semantic candidates only when that lane is separately approved and enabled. | `G-01`, `G-02`, `D-021` | Candidate provenance is inspectable and duplicates are removed. |
 | `FR-09` | Apply public avoid guidance, approved relationship edges, and collision penalties during reranking. | Relevance risk | Known false-positive fixtures are suppressed without exact-match regressions. |
 | `FR-10` | Align `recommend_icons` with shared query understanding and candidate intelligence. | `G-03`; July baseline | Recommendation fixtures use the shared contract and reduce repeated zero-result clusters. |
 | `FR-11` | Implement explicit `strict`, `prefer`, and `all` library behavior without breaking existing callers. | Library-filter risk | Cross-library fixtures pass and default compatibility is documented. |
@@ -387,6 +394,8 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
 | `FR-29` | Proactively review the bounded SI brand-logo set while classifying external brand collisions reactively from approved evidence. | Brand-maintenance cost; `D-019` | The 50 SI brand records have an owner-review disposition; ambiguous approved terms have concept and explicit-identity fixtures; unclassified external exact matches keep the documented fallback. |
 | `FR-30` | Apply separate hard-safety, per-locale, and aggregate quality gates to embedding candidates, while recording meaning approval and language assurance honestly. | Multilingual quality risk; `D-020` | Exact identity, blocked-alias, and safety fixtures have zero failures; every reviewed locale with at least five cases has at most one semantic failure; aggregate multilingual pass rate is at least 90 percent. |
+| `FR-31` | Keep the default free web and MCP request path free of AI-agent, general-purpose LLM, and metered third-party embedding calls. | `G-09`; variable-cost and abuse risk; `D-021` | Default-path tests prove zero model-provider calls, while fixed ranking and fallback fixtures remain deterministic. |
+| `FR-32` | Package and measure the deterministic MCP search before any embedding provider or local-model experiment resumes. The owner approves every future model shortlist first. | Product-fit and operating-cost risk; `D-021` | Deterministic MCP package checks pass, a controlled beta has reviewed evidence, and any later model experiment links to owner-approved candidates and a bounded cost or local-resource plan. |
 
 ## Constraints
 
@@ -453,7 +462,7 @@ Metric definitions and thresholds that remain undecided are tracked as open ques
 | phase | objective | exit gate |
 | --- | --- | --- |
 | `P0` Governance and baseline | Approve canonical docs, preserve sanitized baseline, expand stratified evaluation, define library and acceptance contracts. | Traceability audit passes; baseline has reviewed denominators and exact canaries. |
-| `P1` Shared deterministic understanding | Align query frames, intent rules, library behavior, ambiguity handling, brand gating, and `recommend_icons` without semantic ranking. | Surface-parity, recommendation, library, ambiguity, brand-collision, and exact-match fixtures pass. |
+| `P1` Shared deterministic understanding | Align query frames, intent rules, library behavior, ambiguity handling, brand gating, and `recommend_icons` without semantic ranking, then package the behavior for a controlled MCP beta. | Surface-parity, recommendation, library, ambiguity, brand-collision, exact-match, package, and default-path no-model-call fixtures pass. |
 | `P2` Search projection | Generate five-type localized documents from approved projections. | Determinism, migration compatibility, and public-safety checks pass. |
 | `P3` Offline embeddings | Generate versioned embeddings and prepare vector storage/RPC without user-visible ranking. | Incremental sync, rollback, cost, and model metadata checks pass. |
 | `P4` Shadow retrieval and fusion | Compare vector/hybrid candidates with current results while serving current ranking. | Top-3 improves or stays neutral, exact canaries pass, latency/cost acceptable, leakage checks pass. |
@@ -461,7 +470,15 @@ Metric definitions and thresholds that remain undecided are tracked as open ques
 | `P6` Web beta | Enable hybrid web results behind a default-off flag. | Web UX, relevance, latency, fallback, and public-output checks pass. |
 | `P7` Reviewed learning loop | Turn repeated gaps into approved record, graph, ranking, library, or Icons Lab changes. | At least one real cluster completes the taste-gated loop with measurable improvement. |
 
-Embeddings may be built offline while `P0` and `P1` finish, but `P4` cannot exit before their contracts and evaluation gates pass.
+Phases `P3` through `P6` are conditional and paused. They may resume only after deterministic MCP beta evidence shows a material unresolved meaning gap and the owner accepts a new decision covering the model shortlist, local or external execution, cost, abuse protection, and rollback.
+
+### Deterministic MCP beta gate
+
+- The packaged default path makes no AI-agent, LLM, or embedding-provider call.
+- Exact, library, ambiguity, brand, clarification, and cross-surface fixtures pass.
+- Same query, catalog version, policy version, and options produce the same ordered results.
+- Hosted latency, error, zero-result, low-confidence, reformulation, and abuse evidence is captured with stable denominators.
+- Deployment or publication still requires the explicit approval in `FR-26`.
 
 ### Feature flags
 
@@ -505,7 +522,7 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 ## Open questions
 
 - `OQ-01` What p95 latency and error budgets apply separately to web, hosted MCP, and local MCP?
-- `OQ-02` Which embedding provider/model and dimensions win the documented multilingual quality, latency, cost, and rebuild experiment?
+- `OQ-02` If deterministic beta evidence justifies semantic retrieval, which owner-approved local or external model and dimensions win the documented multilingual quality, latency, cost, and rebuild experiment?
 - `OQ-03` What downstream event defines `recommend_icons` acceptance: fetch, preview, copy/export, or another tool action?
 - `OQ-04` What confidence thresholds separate normal, related, fallback, clarification, and gap-classification behavior?
 - `OQ-05` When should hosted MCP require an API key, apply throttling, or use a paid/x402 action based on usage and cost evidence?

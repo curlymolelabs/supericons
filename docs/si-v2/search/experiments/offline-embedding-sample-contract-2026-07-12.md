@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: exact sample executor implemented and authorized; provider execution awaits environment credentials
+Status: external sample authorization revoked before execution; contract retained as paused reference
 
 ## Name
 
@@ -18,13 +18,15 @@ npm run plan:search-v2-embedding-sample
 
 It prints the exact provider request descriptions, input limit, expected query-to-document pairs, and authorization fingerprint. It does not call a provider.
 
-The approved execution command is:
+The formerly approved execution command was:
 
 ```text
 npm run run:search-v2-embedding-sample -- --authorization-fingerprint a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287 --spend-cap-usd 1
 ```
 
 The executor makes at most eight sequential provider requests, does not retry, keeps vectors in memory only, and prints a result summary without vector values or credentials. The planner reports `provider_execution_in_plan: false` and `separate_executor_available: true` so planning-only behavior is not confused with executor availability.
+
+The authorization file now has status `revoked_by_owner`, so this command fails before credentials, ledger creation, or network activity. It must not be run unless a new accepted decision and authorization replace the revoked record.
 
 ## Authorization
 

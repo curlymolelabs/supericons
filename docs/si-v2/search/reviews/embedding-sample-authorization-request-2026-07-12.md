@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: approved for one exact sample execution
+Status: revoked by owner before execution
 
 Authorization fingerprint:
 
@@ -71,3 +71,7 @@ Approved on 2026-07-12 with these fixed limits:
 - sample spend cap of $1.
 
 This approval is valid for one execution of the exact sample. Any changed payload, candidate, limit, or retry behavior requires a new approval.
+
+## Revocation recorded
+
+The owner revoked this authorization on 2026-07-12 before any provider request was made. The provider comparison remains paused reference material. A future model experiment requires a new owner-approved shortlist, decision, authorization, and cost or local-resource boundary under `D-021`.

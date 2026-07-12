@@ -33,6 +33,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-018` | Owner-approved evidence governs brand-term classification changes | Accepted | Retrieval governance |
 | `D-019` | Proactively classify the bounded SI brand set; classify external brands when collision evidence appears | Accepted | Retrieval governance |
 | `D-020` | Separate multilingual meaning approval, language assurance, and native review; use hard, locale, and aggregate embedding gates | Accepted | Evaluation governance |
+| `D-021` | Ship and measure deterministic MCP search before reconsidering semantic retrieval; no paid model call in the default free request path | Accepted | Architecture and rollout |
 
 ## Decision records
 
@@ -245,6 +246,21 @@ Alternatives rejected or deferred: marking automated language checks as native r
 Specification change: version 1.4 adds `FR-30` and the multilingual embedding evaluation gate.
 
 Superseded decisions: none.
+
+### D-021: Deterministic-first MCP search and paused provider work
+
+Date: 2026-07-12
+Status: Accepted
+
+Decision: revoke the approved external embedding sample before execution. Package and measure the deterministic search behavior through a controlled MCP beta before reconsidering semantic retrieval. The default free web and MCP request path must not call an AI agent, general-purpose language model, or metered third-party embedding API. AI may assist offline with reviewed search maintenance. Any future local or external model experiment begins with an owner-approved shortlist and an explicit cost, resource, abuse-protection, and rollback boundary.
+
+Reason: the deterministic engine is implemented locally but has not been packaged, deployed, or measured as the new default. Adding provider accounts and per-request model exposure before that evidence would create setup burden, variable-cost risk, abuse risk, and a harder rollback path without proving a material quality advantage. The owner also requires model-provider choices to be reviewed before engineering treats them as candidates.
+
+Alternatives rejected or deferred: running the already-approved Voyage, Gemini, and OpenAI sample now; calling an agent for each search; placing a paid embedding API in the default free MCP request path. A pinned local encoder or a bounded external experiment remains deferred until deterministic evidence justifies it.
+
+Specification change: version 1.5 adds `G-09`, `NG-09`, `FR-31`, `FR-32`, the deterministic MCP beta gate, and the conditional pause on phases `P3` through `P6`.
+
+Superseded decisions: none. `D-010`, `D-014`, and `D-020` remain conditional future controls if semantic retrieval is later re-approved.
 
 ## Adding or superseding a decision
 

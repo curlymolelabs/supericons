@@ -11,6 +11,8 @@ const readJson = (path) => JSON.parse(readFileSync(path, 'utf8'));
 const sampleSet = readJson('data/semantic-search-v2/embedding-sample-set.json');
 const candidates = readJson('data/semantic-search-v2/embedding-candidates.json').candidates;
 const authorization = readJson('data/semantic-search-v2/embedding-sample-authorization.json');
+assert.equal(authorization.status, 'revoked_by_owner');
+const approvedTestAuthorization = { ...authorization, status: 'approved_once' };
 const pricing = readJson('data/semantic-search-v2/embedding-sample-pricing.json');
 const environment = {
   VOYAGE_API_KEY: 'test-voyage-secret',
@@ -79,7 +81,7 @@ const allowedLedger = createMemoryLedger();
 const result = await executeEmbeddingSample({
   sampleSet,
   candidates,
-  authorization,
+  authorization: approvedTestAuthorization,
   pricing,
   suppliedFingerprint: authorization.authorization_fingerprint,
   suppliedSpendCapUsd: 1,
@@ -103,7 +105,7 @@ await assert.rejects(
   executeEmbeddingSample({
     sampleSet,
     candidates,
-    authorization,
+    authorization: approvedTestAuthorization,
     pricing,
     suppliedFingerprint: authorization.authorization_fingerprint,
     suppliedSpendCapUsd: 1,
@@ -116,17 +118,18 @@ await assert.rejects(
 assert.equal(replay.calls.length, 0, 'a consumed approval must make zero calls on replay');
 
 for (const deniedCase of [
+  { name: 'revoked authorization', suppliedFingerprint: authorization.authorization_fingerprint, suppliedSpendCapUsd: 1, environment, authorization },
   { name: 'wrong fingerprint', suppliedFingerprint: '0'.repeat(64), suppliedSpendCapUsd: 1, environment },
   { name: 'wrong cap', suppliedFingerprint: authorization.authorization_fingerprint, suppliedSpendCapUsd: 2, environment },
   { name: 'missing key', suppliedFingerprint: authorization.authorization_fingerprint, suppliedSpendCapUsd: 1, environment: { ...environment, OPENAI_API_KEY: '' } },
-  { name: 'wrong ledger root', suppliedFingerprint: authorization.authorization_fingerprint, suppliedSpendCapUsd: 1, environment, authorization: { ...authorization, execution_ledger_root: 'output' } },
+  { name: 'wrong ledger root', suppliedFingerprint: authorization.authorization_fingerprint, suppliedSpendCapUsd: 1, environment, authorization: { ...approvedTestAuthorization, execution_ledger_root: 'output' } },
 ]) {
   const denied = createMockFetch();
   await assert.rejects(
     executeEmbeddingSample({
       sampleSet,
       candidates,
-      authorization: deniedCase.authorization || authorization,
+      authorization: deniedCase.authorization || approvedTestAuthorization,
       pricing,
       suppliedFingerprint: deniedCase.suppliedFingerprint,
       suppliedSpendCapUsd: deniedCase.suppliedSpendCapUsd,
@@ -145,7 +148,7 @@ try {
   await executeEmbeddingSample({
     sampleSet,
     candidates,
-    authorization,
+    authorization: approvedTestAuthorization,
     pricing,
     suppliedFingerprint: authorization.authorization_fingerprint,
     suppliedSpendCapUsd: 1,
@@ -184,7 +187,7 @@ await assert.rejects(
   executeEmbeddingSample({
     sampleSet,
     candidates,
-    authorization,
+    authorization: approvedTestAuthorization,
     pricing,
     suppliedFingerprint: authorization.authorization_fingerprint,
     suppliedSpendCapUsd: 1,
@@ -214,7 +217,7 @@ assert.throws(
 );
 rmSync(concurrentLedgerRoot, { recursive: true, force: true });
 
-const missingKeyRun = spawnSync(process.execPath, [
+const revokedRun = spawnSync(process.execPath, [
   'scripts/run-search-v2-embedding-sample.mjs',
   '--authorization-fingerprint',
   authorization.authorization_fingerprint,
@@ -230,13 +233,14 @@ const missingKeyRun = spawnSync(process.execPath, [
     OPENAI_API_KEY: '',
   },
 });
-assert.equal(missingKeyRun.status, 1);
-const missingKeyFailure = JSON.parse(missingKeyRun.stderr);
-assert.equal(missingKeyFailure.status, 'failed_before_execution');
-assert.equal(missingKeyFailure.request_attempt_count, 0);
-assert.equal(missingKeyFailure.retry_count, 0);
-assert.equal(missingKeyFailure.vectors_stored, false);
-assert.doesNotMatch(missingKeyRun.stderr, /\bat file:\/\//, 'CLI failure should not print a stack trace');
+assert.equal(revokedRun.status, 1);
+const revokedFailure = JSON.parse(revokedRun.stderr);
+assert.equal(revokedFailure.status, 'failed_before_execution');
+assert.equal(revokedFailure.request_attempt_count, 0);
+assert.equal(revokedFailure.retry_count, 0);
+assert.equal(revokedFailure.vectors_stored, false);
+assert.match(revokedFailure.error, /not active/);
+assert.doesNotMatch(revokedRun.stderr, /\bat file:\/\//, 'CLI failure should not print a stack trace');
 
 for (const file of [
   'data/semantic-search-v2/embedding-sample-authorization.json',
@@ -252,10 +256,10 @@ for (const file of [
 console.log(JSON.stringify({
   status: 'ok',
   allowed_requests: result.request_count,
-  denied_cases: 4,
+  denied_cases: 5,
   replay_cases_blocked: 2,
   concurrent_reservations_blocked: 1,
   failed_request_attempts: failedCalls,
-  missing_key_cli_request_attempts: missingKeyFailure.request_attempt_count,
+  revoked_cli_request_attempts: revokedFailure.request_attempt_count,
   vectors_stored: result.vectors_stored,
 }, null, 2));

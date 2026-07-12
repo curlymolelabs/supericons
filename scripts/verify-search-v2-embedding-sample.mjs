@@ -10,6 +10,7 @@ import {
 
 const sampleSet = JSON.parse(readFileSync('data/semantic-search-v2/embedding-sample-set.json', 'utf8'));
 const candidateConfig = JSON.parse(readFileSync('data/semantic-search-v2/embedding-candidates.json', 'utf8'));
+const authorization = JSON.parse(readFileSync('data/semantic-search-v2/embedding-sample-authorization.json', 'utf8'));
 const specification = readFileSync('docs/si-v2/search/search-engine-v2.md', 'utf8');
 const decisions = readFileSync('docs/si-v2/search/decisions.md', 'utf8');
 const authorizationRequest = readFileSync(
@@ -18,9 +19,13 @@ const authorizationRequest = readFileSync(
 );
 const candidates = validateEmbeddingCandidates(candidateConfig);
 
-assert.match(specification, /Version: 1\.4/);
+assert.match(specification, /Version: 1\.5/);
 assert.match(specification, /FR-30/);
+assert.match(specification, /FR-31/);
+assert.match(specification, /FR-32/);
 assert.match(decisions, /D-020: Multilingual assurance and embedding gates/);
+assert.match(decisions, /D-021: Deterministic-first MCP search and paused provider work/);
+assert.equal(authorization.status, 'revoked_by_owner');
 
 const google = candidates.find((candidate) => candidate.provider === 'google');
 assert.equal(google?.model, 'gemini-embedding-2', 'E3 should use Gemini Embedding 2');

@@ -1,7 +1,9 @@
 {
   "schema_version": "search-v2-embedding-sample-authorization-1",
-  "status": "approved_once",
+  "status": "revoked_by_owner",
   "approved_date": "2026-07-12",
+  "revoked_date": "2026-07-12",
+  "revocation_reason": "deterministic_mcp_beta_precedes_any_model_experiment",
   "authorization_fingerprint": "a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287",
   "maximum_inputs_per_candidate": 12,
   "maximum_requests": 8,
