@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
+import { aggregateLocaleAttemptCounts } from '../../../lib/search-beta-measurement.js';
 
 type AuditOutcome = 'started' | 'succeeded' | 'failed';
 type JsonRecord = Record<string, unknown>;
@@ -1445,15 +1446,7 @@ function buildAgentAnalysisPack(payload: Record<string, unknown>) {
     'Compare countries, account status, and surfaces when deciding whether a gap affects paid or recurring users.',
   ];
   const exportedAt = typeof payload.exported_at === 'string' ? payload.exported_at : new Date().toISOString();
-  const localeAttemptCounts: Record<string, number> = {};
-  for (const query of queries) {
-    const counts = query.locale_attempt_counts && typeof query.locale_attempt_counts === 'object'
-      ? query.locale_attempt_counts as Record<string, unknown>
-      : {};
-    for (const [locale, count] of Object.entries(counts)) {
-      localeAttemptCounts[locale] = Number(localeAttemptCounts[locale] || 0) + Number(count || 0);
-    }
-  }
+  const localeAttemptCounts = aggregateLocaleAttemptCounts(queries);
   const summaryMarkdown = [
     '# Supericons Query Analysis Pack',
     '',

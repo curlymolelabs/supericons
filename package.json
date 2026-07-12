@@ -101,6 +101,7 @@
     "run:search-v2-embedding-sample": "node scripts/run-search-v2-embedding-sample.mjs",
     "verify:search-v2-deterministic-mcp-default": "node scripts/verify-search-v2-deterministic-mcp-default.mjs",
     "verify:search-v2-beta-gate-a": "node scripts/verify-search-v2-beta-gate-a.mjs",
+    "verify:search-v2-beta-migration-smoke": "node scripts/verify-search-v2-beta-migration-smoke.mjs",
     "measure:search-v2-beta-latency": "node scripts/measure-search-v2-beta-latency.mjs",
     "verify:semantic-search-v2-smoke": "node scripts/verify-semantic-search-v2-smoke.mjs",
     "evaluate:search-v2-candidate-baseline": "node scripts/evaluate-search-v2-candidate-baseline.mjs",

@@ -1,7 +1,7 @@
 # Deterministic MCP beta measurement and rollback plan
 
 Date: 2026-07-12
-Status: Gate A release candidate prepared locally; migration smoke remains blocked; no deployment or publication is authorized by this document
+Status: Gate A target checks complete locally; Gate B remains blocked by historical migration-version collisions; no deployment or publication is authorized by this document
 Authority: operational beta plan under `D-021`, `FR-26`, `FR-31`, and `FR-32`
 
 ## Purpose
@@ -267,8 +267,8 @@ Record the trigger, time, affected version and endpoint, request volume, user im
 
 ## Current blockers before external beta
 
-- the additive migration has not run in a disposable local or approved test database
-- `library_mode`, `search_outcome`, confidence label, and beta cohort are locally contract-tested but not observed in a real database row
+- the target migration and RPC passed in disposable PostgreSQL, but the repository's full Supabase migration chain cannot rebuild because older migration files share version prefixes
+- the safe hosted migration reconciliation and apply method has not been approved
 - acceptance telemetry remains too sparse for an automatic usefulness rate
 - no deployment or publication approval has been granted
 
