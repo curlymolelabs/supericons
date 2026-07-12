@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { rerankHostedSearchCandidates } from '../lib/hosted-search-core.js';
 import {
+  getBrandRankAdjustment,
   getCandidateInterpretationFamilyIds,
   getSearchInterpretationPlan,
   getSearchRankingPolicy,
@@ -143,6 +144,54 @@ const lovableLogoCase = evaluationSet.query_groups
   .find((entry) => entry.id === 'brand_intent_gating')
   ?.queries.find((entry) => entry.case_id === 'brand-gate-lovable-logo');
 assert.deepEqual(lovableLogoCase?.expected_top_icon_ids, ['si:lovable'], 'explicit Lovable logo fixture should require rank 1');
+
+const ambiguousConceptExpectations = new Map([
+  ['artificial analysis', ['data_analysis']],
+  ['bolt', ['electrical_power', 'speed_motion']],
+  ['cohere', ['cohesion_connection']],
+  ['goose', ['bird_animal']],
+  ['opencode', ['source_code']],
+  ['open code', ['source_code']],
+  ['pinecone', ['pine_nature']],
+  ['portkey', ['key_object']],
+  ['runway', ['airport_runway', 'fashion_runway']],
+  ['smithery', ['workshop_craft']],
+  ['stagehand', ['theatre_stage']],
+  ['temporal', ['time_concept']],
+  ['grok', ['understanding_insight']],
+  ['codex', ['book_manuscript']],
+]);
+for (const [query, requiredFamilies] of ambiguousConceptExpectations) {
+  const results = localSearch(query);
+  const families = resultFamilyIds(query, results);
+  for (const familyId of requiredFamilies) {
+    assert.ok(families.has(familyId), `${query}: top eight should include ${familyId}`);
+  }
+}
+
+for (const brandTerm of policy.brand_terms.filter((entry) => entry.match_class === 'ambiguous_exact')) {
+  const explicitResults = localSearch(`${brandTerm.term} logo`);
+  assert.ok(
+    brandTerm.icon_refs.includes(iconRef(explicitResults[0])),
+    `${brandTerm.term}: explicit logo query should rank an approved identity first`,
+  );
+}
+
+for (const brandTerm of policy.brand_terms) {
+  const candidate = { icon_id: brandTerm.icon_refs[0], name: brandTerm.term, assetType: 'brand-logo' };
+  for (const blockedAlias of brandTerm.blocked_aliases || []) {
+    assert.equal(
+      getBrandRankAdjustment(blockedAlias, candidate).match_class,
+      'blocked_alias',
+      `${blockedAlias}: rejected alias should use the generic blocked-alias rule`,
+    );
+    assert.notEqual(
+      iconRef(localSearch(blockedAlias)[0] || {}),
+      brandTerm.icon_refs[0],
+      `${blockedAlias}: rejected alias should not rank the SI brand first`,
+    );
+  }
+}
 
 const pickerResults = localSearch('picker');
 assert.ok(

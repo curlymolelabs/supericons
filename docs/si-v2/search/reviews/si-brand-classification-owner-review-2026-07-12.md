@@ -2,9 +2,13 @@
 
 Date: 2026-07-12
 
-Status: awaiting owner review
+Status: approved with one correction
 
-Authority: review proposal only. Approved entries must be recorded in `data/search-intent-graph/ranking-policy.json` with stable fixtures before they affect maintained ranking behavior.
+Authority: approved classification record. The maintained implementation lives in `data/search-intent-graph/ranking-policy.json` and its stable fixtures.
+
+Decision recorded: all proposed classifications were approved except Supericons. Exact single-token `supericons` is `distinctive_exact`; the two-word phrase `super icons` remains descriptive and is not an identity alias.
+
+Implementation record: all 50 approved SI records are active in the maintained ranking policy. The policy contains 34 distinctive and 16 ambiguous SI record classifications, qualified identity terms where needed, and shared rejected-alias handling. Stable fixtures cover all 50 explicit logo queries, useful concept sharing, and rejected aliases.
 
 ## Decision requested
 
@@ -63,7 +67,7 @@ Registry aliases shown in source metadata are evidence inputs only. This packet 
 | 41 | Stagehand | `ambiguous_exact` | Bare `stagehand` shares with the occupation. Browserbase or automation context selects the brand. |
 | 42 | StepFun | `distinctive_exact` | Approve `stepfun` and `step fun`. |
 | 43 | Suno | `distinctive_exact` | Approve `suno` and `suno ai`; music terms remain context. |
-| 44 | Supericons | `ambiguous_exact` | Bare `super icons` can describe icons generally. Exact `supericons` or explicit brand context may select the product. |
+| 44 | Supericons | `distinctive_exact` | Approve exact single-token `supericons`. The two-word phrase `super icons` remains descriptive and is not an identity alias. |
 | 45 | Temporal | `ambiguous_exact` | Bare `temporal` shares with time-related meaning. `temporal io` or workflow context selects the brand. |
 | 46 | Trae | `distinctive_exact` | Approve `trae` and `trae ai`. |
 | 47 | Vercel Eve | `distinctive_exact` | Approve `vercel eve`. Bare `eve` remains unapproved because it is a common name. |

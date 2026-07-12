@@ -38,12 +38,13 @@ Sources: [Voyage text embeddings](https://docs.voyageai.com/docs/embeddings), [V
 
 ### Google
 
-- Google documents `gemini-embedding-001` as its highest-quality unified English, multilingual, and code embedding model.
+- The current shortlist still names `gemini-embedding-001`, but Google now also lists stable `gemini-embedding-2`. The newer model supports text and other media, while this experiment requires text only.
 - The default output is 3072 dimensions, with reduced output dimensions supported.
 - Retrieval task types are supported for query and document inputs.
+- Reduced-dimension output from `gemini-embedding-001` must be normalized by the runner. Google documents automatic normalization for reduced-dimension `gemini-embedding-2` output.
 - Current Vertex pricing lists Gemini Embedding at $0.00015 per 1,000 input tokens for online requests and $0.00012 for batch requests.
 
-Sources: [Google text embeddings](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings), [Vertex AI pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing).
+Sources: [Google Gemini embeddings](https://ai.google.dev/gemini-api/docs/embeddings), [Google text embeddings](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings), [Vertex AI pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing).
 
 ### OpenAI
 
@@ -106,6 +107,7 @@ Extend the existing semantic-document path with a separate versioned embedding t
 ## Open decisions
 
 - Approve or change the five candidate configurations.
+- Decide whether E3 preserves the approved `gemini-embedding-001` comparison or changes to `gemini-embedding-2` before the first paid sample.
 - Set the maximum total experiment spend.
 - Decide whether Google authentication complexity is acceptable for the first run.
 - Decide whether E5 should run only after E1 through E4, reducing initial provider work.

@@ -98,9 +98,10 @@ function assertEvaluationSet(evaluationSet) {
 
   const queries = flattenEvaluationQueries(evaluationSet);
   assert.ok(queries.length >= 70, 'evaluation set should include ambiguity and brand-gating policy cases');
-  assert.ok(
-    queries.length < evaluationSet.target_case_count,
-    'candidate case count should remain below the target until suite expansion is complete',
+  assert.equal(
+    queries.length,
+    evaluationSet.target_case_count,
+    'candidate case count should match the approved fixed-suite target',
   );
 
   const requiredGroups = new Set([
@@ -115,10 +116,27 @@ function assertEvaluationSet(evaluationSet) {
     'cross_surface_query_frame',
     'ambiguous_intent_diversity',
     'brand_intent_gating',
+    'si_brand_policy_contract',
+    'multilingual_cjk_candidates',
+    'multilingual_latin_candidates',
+    'multilingual_complex_script_candidates',
+    'multilingual_mixed_script_candidates',
   ]);
 
   for (const groupId of requiredGroups) {
     assert.ok(groups.some((group) => group.id === groupId), `missing evaluation group ${groupId}`);
+  }
+
+  const expectedExpandedGroupCounts = new Map([
+    ['si_brand_policy_contract', 81],
+    ['multilingual_cjk_candidates', 18],
+    ['multilingual_latin_candidates', 18],
+    ['multilingual_complex_script_candidates', 24],
+    ['multilingual_mixed_script_candidates', 11],
+  ]);
+  for (const [groupId, expectedCount] of expectedExpandedGroupCounts) {
+    const group = groups.find((entry) => entry.id === groupId);
+    assert.equal(group?.queries?.length, expectedCount, `${groupId}: case count should stay fixed`);
   }
 
   const groupIds = new Set();
@@ -298,7 +316,23 @@ function assertEvaluationSet(evaluationSet) {
       }
     }
 
+    if (query.paired_with_case_id) {
+      assert.ok(
+        queries.some((entry) => entry.case_id === query.paired_with_case_id),
+        `${query.case_id}: paired filler case should reference an existing case`,
+      );
+    }
+
     assertNoUnsafeText(`evaluation query ${query.query || query.slot}`, JSON.stringify(query));
+  }
+
+  const multilingualCandidates = queries.filter((query) => query.group_id.startsWith('multilingual_'));
+  assert.equal(multilingualCandidates.length, 71, 'multilingual candidate tier should contain 71 cases');
+  for (const locale of ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'pt-BR', 'de', 'ar', 'hi', 'th', 'vi']) {
+    assert.ok(
+      multilingualCandidates.some((query) => query.locale === locale),
+      `multilingual candidate tier should include ${locale}`,
+    );
   }
 
   assert.ok(caseIds.size >= 40, 'expanded evaluation cases should have stable IDs');

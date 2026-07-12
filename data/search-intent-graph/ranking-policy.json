@@ -75,6 +75,104 @@
       "context_terms": ["love", "heart", "favorite", "affection", "romance"]
     },
     {
+      "id": "data_analysis",
+      "label": "Data or analysis",
+      "retrieval_queries": ["analytics", "chart"],
+      "candidate_terms": ["analysis", "analytics", "chart", "insights", "data"],
+      "context_terms": ["analysis", "analytics", "benchmark", "chart", "data"]
+    },
+    {
+      "id": "electrical_power",
+      "label": "Lightning or power",
+      "retrieval_queries": ["lightning", "battery bolt"],
+      "candidate_terms": ["lightning", "battery", "electric", "power", "zap"],
+      "context_terms": ["lightning", "electric", "power", "energy"]
+    },
+    {
+      "id": "cohesion_connection",
+      "label": "Join or connect",
+      "retrieval_queries": ["link", "connection"],
+      "candidate_terms": ["link", "connection", "join", "merge", "unite"],
+      "context_terms": ["join", "connect", "merge", "unite", "together"]
+    },
+    {
+      "id": "bird_animal",
+      "label": "Bird or animal",
+      "retrieval_queries": ["bird", "duck"],
+      "candidate_terms": ["bird", "duck", "animal"],
+      "context_terms": ["bird", "animal", "wildlife"]
+    },
+    {
+      "id": "source_code",
+      "label": "Source code",
+      "retrieval_queries": ["source code", "code"],
+      "candidate_terms": ["source code", "code", "code blocks", "terminal"],
+      "context_terms": ["source", "code", "developer", "programming"]
+    },
+    {
+      "id": "pine_nature",
+      "label": "Pine tree or nature",
+      "retrieval_queries": ["pine tree", "tree pine"],
+      "candidate_terms": ["pine tree", "tree pine", "tree", "nature"],
+      "context_terms": ["pine", "tree", "nature", "forest"]
+    },
+    {
+      "id": "key_object",
+      "label": "Key object",
+      "retrieval_queries": ["key", "key round"],
+      "candidate_terms": ["key", "keys"],
+      "context_terms": ["key", "unlock", "magic"]
+    },
+    {
+      "id": "airport_runway",
+      "label": "Airport runway",
+      "retrieval_queries": ["plane takeoff", "airport"],
+      "candidate_terms": ["plane takeoff", "airplane takeoff", "flight takeoff", "airport", "plane"],
+      "context_terms": ["airport", "plane", "flight", "takeoff"]
+    },
+    {
+      "id": "fashion_runway",
+      "label": "Fashion runway",
+      "retrieval_queries": ["clothes hanger", "shirt"],
+      "candidate_terms": ["clothes hanger", "hanger", "shirt", "dress", "fashion"],
+      "context_terms": ["fashion", "model", "clothing", "show"]
+    },
+    {
+      "id": "workshop_craft",
+      "label": "Workshop or craft",
+      "retrieval_queries": ["hammer", "anvil"],
+      "candidate_terms": ["hammer", "anvil", "workshop", "tools"],
+      "context_terms": ["smith", "workshop", "craft", "forge"]
+    },
+    {
+      "id": "theatre_stage",
+      "label": "Theatre or stage work",
+      "retrieval_queries": ["spotlight", "theater masks"],
+      "candidate_terms": ["spotlight", "theater", "theatre", "masks", "stage"],
+      "context_terms": ["theatre", "theater", "stage", "show"]
+    },
+    {
+      "id": "time_concept",
+      "label": "Time",
+      "retrieval_queries": ["clock", "time"],
+      "candidate_terms": ["clock", "time", "hourglass", "history"],
+      "context_terms": ["time", "clock", "duration", "history"]
+    },
+    {
+      "id": "understanding_insight",
+      "label": "Understanding or insight",
+      "retrieval_queries": ["brain", "insight"],
+      "candidate_terms": ["brain", "insight", "idea", "understand"],
+      "context_terms": ["understand", "insight", "knowledge", "idea"]
+    },
+    {
+      "id": "book_manuscript",
+      "label": "Book or manuscript",
+      "retrieval_queries": ["book", "scroll"],
+      "candidate_terms": ["book", "scroll", "manuscript", "library"],
+      "context_terms": ["book", "manuscript", "ancient", "library"]
+    },
+    {
       "id": "selection_control",
       "label": "Selection control",
       "retrieval_queries": ["select", "dropdown", "list select"],
@@ -190,6 +288,150 @@
       }
     },
     {
+      "id": "artificial-analysis-brand-collision",
+      "trigger_terms": ["artificial analysis"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "data_analysis"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "artificial analysis": { "brand_identity": ["artificial analysis"] }
+      }
+    },
+    {
+      "id": "bolt-brand-collision",
+      "trigger_terms": ["bolt"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "electrical_power", "speed_motion"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "bolt": { "brand_identity": ["bolt"] }
+      }
+    },
+    {
+      "id": "cohere-brand-collision",
+      "trigger_terms": ["cohere"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "cohesion_connection"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "cohere": { "brand_identity": ["cohere"] }
+      }
+    },
+    {
+      "id": "goose-brand-collision",
+      "trigger_terms": ["goose"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "bird_animal"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "goose": { "brand_identity": ["goose"] }
+      }
+    },
+    {
+      "id": "opencode-brand-collision",
+      "trigger_terms": ["opencode", "open code"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "source_code"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "opencode": { "brand_identity": ["opencode"] },
+        "open code": { "brand_identity": ["open code"] }
+      }
+    },
+    {
+      "id": "pinecone-brand-collision",
+      "trigger_terms": ["pinecone"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "pine_nature"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "pinecone": { "brand_identity": ["pinecone"] }
+      }
+    },
+    {
+      "id": "portkey-brand-collision",
+      "trigger_terms": ["portkey"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "key_object"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "portkey": { "brand_identity": ["portkey"] }
+      }
+    },
+    {
+      "id": "runway-brand-collision",
+      "trigger_terms": ["runway"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "airport_runway", "fashion_runway"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "runway": { "brand_identity": ["runway"] }
+      }
+    },
+    {
+      "id": "smithery-brand-collision",
+      "trigger_terms": ["smithery"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "workshop_craft"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "smithery": { "brand_identity": ["smithery"] }
+      }
+    },
+    {
+      "id": "stagehand-brand-collision",
+      "trigger_terms": ["stagehand"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "theatre_stage"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "stagehand": { "brand_identity": ["stagehand"] }
+      }
+    },
+    {
+      "id": "temporal-brand-collision",
+      "trigger_terms": ["temporal"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "time_concept"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "temporal": { "brand_identity": ["temporal"] }
+      }
+    },
+    {
+      "id": "grok-brand-collision",
+      "trigger_terms": ["grok"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "understanding_insight"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "grok": { "brand_identity": ["grok"] }
+      }
+    },
+    {
+      "id": "codex-brand-collision",
+      "trigger_terms": ["codex"],
+      "match": "exact",
+      "bare_intent_types": ["ambiguous_concept"],
+      "bare_query_family_ids": ["brand_identity", "book_manuscript"],
+      "minimum_distinct_families_top_8": 2,
+      "retrieval_queries_by_trigger": {
+        "codex": { "brand_identity": ["codex"] }
+      }
+    },
+    {
       "id": "picker",
       "trigger_terms": ["picker"],
       "match": "token",
@@ -289,16 +531,435 @@
       "icon_refs": ["simpleicons:hellofresh"]
     },
     {
-      "term": "swift",
+      "term": "artificial analysis",
       "aliases": [],
       "match_class": "ambiguous_exact",
-      "icon_refs": ["simpleicons:swift", "iconoir:apple-swift", "tabler:brand-swift"]
+      "icon_refs": ["si:artificial-analysis"]
+    },
+    {
+      "term": "artificialanalysis",
+      "aliases": ["artificialanalysis ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:artificial-analysis"]
+    },
+    {
+      "term": "base44",
+      "aliases": ["base 44"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:base44"]
+    },
+    {
+      "term": "bolt",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:bolt"]
+    },
+    {
+      "term": "bolt new",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:bolt"]
+    },
+    {
+      "term": "bridgemind",
+      "aliases": ["bridge mind", "bridgemind ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:bridgemind-ai"]
+    },
+    {
+      "term": "browserbase",
+      "aliases": [],
+      "blocked_aliases": ["browser base"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:browserbase"]
+    },
+    {
+      "term": "capcut",
+      "aliases": ["cap cut"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:capcut"]
+    },
+    {
+      "term": "cartesia",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:cartesia"]
+    },
+    {
+      "term": "cohere",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:cohere"]
+    },
+    {
+      "term": "cohere ai",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:cohere"]
+    },
+    {
+      "term": "context7",
+      "aliases": ["context 7"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:context7"]
+    },
+    {
+      "term": "devin",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:devin"]
+    },
+    {
+      "term": "devin ai",
+      "aliases": ["cognition devin"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:devin"]
+    },
+    {
+      "term": "exa",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:exa"]
+    },
+    {
+      "term": "exa ai",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:exa"]
+    },
+    {
+      "term": "factory ai",
+      "aliases": [],
+      "blocked_aliases": ["factory"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:factory-ai"]
+    },
+    {
+      "term": "fal ai",
+      "aliases": [],
+      "blocked_aliases": ["fal"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:fal-ai"]
+    },
+    {
+      "term": "firecrawl",
+      "aliases": ["fire crawl"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:firecrawl"]
+    },
+    {
+      "term": "glama",
+      "aliases": ["glama ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:glama"]
+    },
+    {
+      "term": "google ai studio",
+      "aliases": [],
+      "blocked_aliases": ["ai studio"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:google-ai-studio"]
+    },
+    {
+      "term": "google antigravity",
+      "aliases": [],
+      "blocked_aliases": ["antigravity"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:google-antigravity"]
+    },
+    {
+      "term": "goose",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:goose"]
+    },
+    {
+      "term": "goose ai",
+      "aliases": ["block goose"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:goose"]
+    },
+    {
+      "term": "hermes agent",
+      "aliases": [],
+      "blocked_aliases": ["hermes"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:hermes-agent"]
+    },
+    {
+      "term": "heygen",
+      "aliases": ["hey gen"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:heygen"]
+    },
+    {
+      "term": "higgsfield",
+      "aliases": ["higgsfield ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:higgsfield"]
+    },
+    {
+      "term": "inngest",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:inngest"]
+    },
+    {
+      "term": "kickbacks ai",
+      "aliases": [],
+      "blocked_aliases": ["kickbacks"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:kickbacks-ai"]
+    },
+    {
+      "term": "kilo code",
+      "aliases": ["kilocode"],
+      "blocked_aliases": ["kilo"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:kilo-code"]
+    },
+    {
+      "term": "kimi",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:kimi"]
+    },
+    {
+      "term": "kimi ai",
+      "aliases": ["moonshot kimi"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:kimi"]
+    },
+    {
+      "term": "kling ai",
+      "aliases": ["klingai"],
+      "blocked_aliases": ["kling"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:kling-ai"]
     },
     {
       "term": "lovable",
       "aliases": [],
       "match_class": "ambiguous_exact",
       "icon_refs": ["si:lovable"]
+    },
+    {
+      "term": "luma ai",
+      "aliases": [],
+      "blocked_aliases": ["luma"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:luma-ai"]
+    },
+    {
+      "term": "manus ai",
+      "aliases": [],
+      "blocked_aliases": ["manus"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:manus-ai"]
+    },
+    {
+      "term": "mobbin",
+      "aliases": ["mobbin design"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:mobbin"]
+    },
+    {
+      "term": "openai codex",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:openai-codex-app"]
+    },
+    {
+      "term": "codex",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:openai-codex-app"]
+    },
+    {
+      "term": "openclaw",
+      "aliases": [],
+      "blocked_aliases": ["open claw"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:openclaw"]
+    },
+    {
+      "term": "opencode",
+      "aliases": ["open code"],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:opencode"]
+    },
+    {
+      "term": "opencode ai",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:opencode"]
+    },
+    {
+      "term": "pika",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:pika"]
+    },
+    {
+      "term": "pika ai",
+      "aliases": ["pika labs"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:pika"]
+    },
+    {
+      "term": "pinecone",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:pinecone"]
+    },
+    {
+      "term": "pinecone db",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:pinecone"]
+    },
+    {
+      "term": "pixverse",
+      "aliases": ["pixverse ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:pixverse"]
+    },
+    {
+      "term": "portkey",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:portkey"]
+    },
+    {
+      "term": "portkey ai",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:portkey"]
+    },
+    {
+      "term": "runway",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:runway"]
+    },
+    {
+      "term": "runway ai",
+      "aliases": ["runway ml"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:runway"]
+    },
+    {
+      "term": "shadcn",
+      "aliases": ["shadcn ui"],
+      "blocked_aliases": ["components"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:shadcn-ui"]
+    },
+    {
+      "term": "smithery",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:smithery"]
+    },
+    {
+      "term": "smithery ai",
+      "aliases": ["smithery mcp"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:smithery"]
+    },
+    {
+      "term": "stagehand",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:stagehand"]
+    },
+    {
+      "term": "browserbase stagehand",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:stagehand"]
+    },
+    {
+      "term": "stepfun",
+      "aliases": ["step fun"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:stepfun"]
+    },
+    {
+      "term": "suno",
+      "aliases": ["suno ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:suno-ai"]
+    },
+    {
+      "term": "supericons",
+      "aliases": [],
+      "blocked_aliases": ["super icons"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:supericons"]
+    },
+    {
+      "term": "temporal",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:temporal"]
+    },
+    {
+      "term": "temporal io",
+      "aliases": [],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:temporal"]
+    },
+    {
+      "term": "trae",
+      "aliases": ["trae ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:trae"]
+    },
+    {
+      "term": "vercel eve",
+      "aliases": [],
+      "blocked_aliases": ["eve"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:vercel-eve"]
+    },
+    {
+      "term": "xai",
+      "aliases": ["x ai"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:x-ai"]
+    },
+    {
+      "term": "grok",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["si:x-ai"]
+    },
+    {
+      "term": "grok ai",
+      "aliases": ["xai grok"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:x-ai"]
+    },
+    {
+      "term": "xiaomi mimo",
+      "aliases": [],
+      "blocked_aliases": ["mimo"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:xiaomi-mimo"]
+    },
+    {
+      "term": "z ai",
+      "aliases": ["zai"],
+      "blocked_aliases": ["glm"],
+      "match_class": "distinctive_exact",
+      "icon_refs": ["si:z-ai"]
+    },
+    {
+      "term": "swift",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": ["simpleicons:swift", "iconoir:apple-swift", "tabler:brand-swift"]
     }
   ]
 }
