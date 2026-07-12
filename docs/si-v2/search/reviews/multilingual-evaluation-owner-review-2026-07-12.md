@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: awaiting owner meaning approval
+Status: owner meaning approval recorded
 
 Scope: 71 multilingual candidate cases in `data/semantic-search-v2/evaluation-set.json`.
 
@@ -12,7 +12,7 @@ This review asks the owner to approve intended icon meanings and unacceptable re
 
 Language assurance is recorded separately:
 
-- meaning approval: awaiting owner review;
+- meaning approval: owner approved;
 - language assurance: automated high confidence, not native reviewed; and
 - native-language review: not completed.
 
@@ -78,3 +78,7 @@ Reply with:
 > Approve multilingual meaning mappings and unacceptable-result rules as recorded. Language assurance remains automated high confidence, not native reviewed.
 
 List any case-specific correction after that sentence.
+
+## Decision recorded
+
+The owner approved the multilingual meaning mappings and unacceptable-result rules as recorded on 2026-07-12. Language assurance remains automated high confidence, not native reviewed. No case-specific correction was requested.

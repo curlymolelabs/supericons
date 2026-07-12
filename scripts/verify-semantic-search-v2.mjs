@@ -153,7 +153,7 @@ function assertEvaluationSet(evaluationSet) {
     assert.ok(ALLOWED_REVIEW_STATUSES.has(reviewStatus), `${group.id}: unsupported review status ${reviewStatus}`);
     reviewStatusCounts.set(reviewStatus, (reviewStatusCounts.get(reviewStatus) || 0) + (group.queries || []).length);
     if (group.id.startsWith('multilingual_')) {
-      assert.equal(group.meaning_review_status, 'awaiting_owner_review', `${group.id}: meaning review should stay honest`);
+      assert.equal(group.meaning_review_status, 'owner_approved', `${group.id}: owner meaning approval should be recorded`);
       assert.equal(
         group.language_assurance,
         'automated_high_confidence_not_native_reviewed',

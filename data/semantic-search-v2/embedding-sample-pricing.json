@@ -1,0 +1,24 @@
+{
+  "schema_version": "search-v2-embedding-sample-pricing-1",
+  "checked_date": "2026-07-12",
+  "currency": "USD",
+  "unit": "per_million_input_tokens",
+  "candidates": {
+    "e1-voyage-4-large-1024": {
+      "price": 0.12,
+      "source": "https://docs.voyageai.com/docs/pricing"
+    },
+    "e2-voyage-4-lite-512": {
+      "price": 0.02,
+      "source": "https://docs.voyageai.com/docs/pricing"
+    },
+    "e3-gemini-embedding-2-1024": {
+      "price": 0.2,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    "e4-text-embedding-3-large-1024": {
+      "price": 0.13,
+      "source": "https://developers.openai.com/api/docs/models/text-embedding-3-large"
+    }
+  }
+}

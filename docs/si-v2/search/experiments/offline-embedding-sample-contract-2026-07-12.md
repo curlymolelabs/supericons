@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: sample planning implemented; provider execution not implemented or authorized
+Status: exact sample executor implemented and authorized; provider execution awaits environment credentials
 
 ## Name
 
@@ -10,7 +10,7 @@ Search v2 provider comparison sample.
 
 ## Caller and trigger
 
-The caller is a local owner-approved operator. The implemented command is:
+The caller is a local owner-approved operator. The planning command is:
 
 ```text
 npm run plan:search-v2-embedding-sample
@@ -18,9 +18,17 @@ npm run plan:search-v2-embedding-sample
 
 It prints the exact provider request descriptions, input limit, expected query-to-document pairs, and authorization fingerprint. It does not call a provider.
 
+The approved execution command is:
+
+```text
+npm run run:search-v2-embedding-sample -- --authorization-fingerprint a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287 --spend-cap-usd 1
+```
+
+The executor makes at most eight sequential provider requests, does not retry, keeps vectors in memory only, and prints a result summary without vector values or credentials.
+
 ## Authorization
 
-Planning needs no credentials. A future executor must require all of the following before one provider request is made:
+Planning needs no credentials. The executor requires all of the following before one provider request is made:
 
 - explicit owner approval of the exact authorization fingerprint;
 - an approved sample spend cap;
@@ -68,9 +76,13 @@ The planning output contains:
 - request method, URL, credential variable name, and body for each candidate; and
 - a deterministic SHA-256 authorization fingerprint.
 
+The execution output contains request counts, latency, response validation summaries, provider-reported token usage when available, estimated sample cost, and expected-document ranks. It never contains vectors or credential values.
+
 ## Side effects
 
 The implemented planner reads local JSON and writes JSON to standard output. It has no network primitive, reads no credential value, writes no file, and creates no embedding.
+
+The executor reads credentials from environment variables, sends the approved sample to the four named providers, keeps responses in memory, and writes only a public-safe summary to standard output. It does not write files or store vectors.
 
 ## Failure modes
 
@@ -79,3 +91,5 @@ Planning fails closed on an unsupported provider, unknown candidate, empty input
 Response validation fails on a missing vector list, wrong vector count, wrong dimensions, non-finite value, or failed unit-norm check.
 
 No automatic retry behavior is approved for the first paid sample. A failure returns to owner review before another provider call.
+
+The approval is recorded as `approved_once`. After a successful live execution, the authorization record must be changed to `consumed` before any other run. The current command has no durable replay lock, so operators must not run it concurrently.

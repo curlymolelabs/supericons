@@ -886,8 +886,8 @@
     {
       "id": "multilingual_cjk_candidates",
       "purpose": "Candidate CJK cases for dictionary validation, native phrasing review, and filler-word handling before embedding comparison.",
-      "review_status": "contract_seed_pending_owner_scoring",
-      "meaning_review_status": "awaiting_owner_review",
+      "review_status": "owner_reviewed",
+      "meaning_review_status": "owner_approved",
       "language_assurance": "automated_high_confidence_not_native_reviewed",
       "native_language_review": "not_completed",
       "queries": [
@@ -914,8 +914,8 @@
     {
       "id": "multilingual_latin_candidates",
       "purpose": "Candidate Spanish, Brazilian Portuguese, and German cases for accents, compounds, word order, and locale-aware filler handling.",
-      "review_status": "contract_seed_pending_owner_scoring",
-      "meaning_review_status": "awaiting_owner_review",
+      "review_status": "owner_reviewed",
+      "meaning_review_status": "owner_approved",
       "language_assurance": "automated_high_confidence_not_native_reviewed",
       "native_language_review": "not_completed",
       "queries": [
@@ -942,8 +942,8 @@
     {
       "id": "multilingual_complex_script_candidates",
       "purpose": "Candidate Arabic, Hindi, Thai, and Vietnamese cases for script and token-boundary evaluation.",
-      "review_status": "contract_seed_pending_owner_scoring",
-      "meaning_review_status": "awaiting_owner_review",
+      "review_status": "owner_reviewed",
+      "meaning_review_status": "owner_approved",
       "language_assurance": "automated_high_confidence_not_native_reviewed",
       "native_language_review": "not_completed",
       "queries": [
@@ -976,8 +976,8 @@
     {
       "id": "multilingual_mixed_script_candidates",
       "purpose": "Candidate mixed-script cases combining maintained brand identity with a native-language concept.",
-      "review_status": "contract_seed_pending_owner_scoring",
-      "meaning_review_status": "awaiting_owner_review",
+      "review_status": "owner_reviewed",
+      "meaning_review_status": "owner_approved",
       "language_assurance": "automated_high_confidence_not_native_reviewed",
       "native_language_review": "not_completed",
       "queries": [

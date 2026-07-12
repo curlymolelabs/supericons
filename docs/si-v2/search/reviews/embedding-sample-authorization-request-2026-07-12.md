@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: awaiting paid-call approval and sample spend cap
+Status: approved for one exact sample execution
 
 Authorization fingerprint:
 
@@ -57,3 +57,16 @@ Reply with:
 > Approve embedding sample fingerprint `a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287`, maximum 12 inputs per candidate, eight requests total, no retries, no storage. Sample spend cap: $[amount].
 
 Approval authorizes implementation and execution of this exact sample only. It does not authorize full-corpus embedding generation.
+
+## Approval recorded
+
+Approved on 2026-07-12 with these fixed limits:
+
+- authorization fingerprint `a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287`;
+- maximum 12 inputs per candidate;
+- eight provider requests total;
+- no retries;
+- no vector storage; and
+- sample spend cap of $1.
+
+This approval is valid for one execution of the exact sample. Any changed payload, candidate, limit, or retry behavior requires a new approval.
