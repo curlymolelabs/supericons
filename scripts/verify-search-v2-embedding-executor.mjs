@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 import { executeEmbeddingSample } from '../lib/search-v2-embedding-executor.js';
@@ -90,8 +91,9 @@ for (const deniedCase of [
 }
 
 let failedCalls = 0;
-await assert.rejects(
-  executeEmbeddingSample({
+let executionFailure = null;
+try {
+  await executeEmbeddingSample({
     sampleSet,
     candidates,
     authorization,
@@ -103,10 +105,41 @@ await assert.rejects(
       failedCalls += 1;
       return { ok: false, status: 503 };
     },
-  }),
-  /status 503/,
-);
+  });
+} catch (error) {
+  executionFailure = error;
+}
+assert.match(executionFailure?.message || '', /status 503/);
 assert.equal(failedCalls, 1, 'provider failure must not be retried');
+assert.equal(executionFailure?.execution_summary?.request_attempt_count, 1);
+assert.equal(executionFailure?.execution_summary?.retry_count, 0);
+assert.equal(executionFailure?.execution_summary?.failed_candidate_id, 'e1-voyage-4-large-1024');
+assert.equal(executionFailure?.execution_summary?.failed_input_kind, 'document');
+assert.doesNotMatch(JSON.stringify(executionFailure?.execution_summary), /test-(?:voyage|gemini|openai)-secret/);
+
+const missingKeyRun = spawnSync(process.execPath, [
+  'scripts/run-search-v2-embedding-sample.mjs',
+  '--authorization-fingerprint',
+  authorization.authorization_fingerprint,
+  '--spend-cap-usd',
+  '1',
+], {
+  cwd: process.cwd(),
+  encoding: 'utf8',
+  env: {
+    ...process.env,
+    VOYAGE_API_KEY: '',
+    GEMINI_API_KEY: '',
+    OPENAI_API_KEY: '',
+  },
+});
+assert.equal(missingKeyRun.status, 1);
+const missingKeyFailure = JSON.parse(missingKeyRun.stderr);
+assert.equal(missingKeyFailure.status, 'failed_before_execution');
+assert.equal(missingKeyFailure.request_attempt_count, 0);
+assert.equal(missingKeyFailure.retry_count, 0);
+assert.equal(missingKeyFailure.vectors_stored, false);
+assert.doesNotMatch(missingKeyRun.stderr, /\bat file:\/\//, 'CLI failure should not print a stack trace');
 
 for (const file of [
   'data/semantic-search-v2/embedding-sample-authorization.json',
@@ -123,5 +156,6 @@ console.log(JSON.stringify({
   allowed_requests: result.request_count,
   denied_cases: 3,
   failed_request_attempts: failedCalls,
+  missing_key_cli_request_attempts: missingKeyFailure.request_attempt_count,
   vectors_stored: result.vectors_stored,
 }, null, 2));

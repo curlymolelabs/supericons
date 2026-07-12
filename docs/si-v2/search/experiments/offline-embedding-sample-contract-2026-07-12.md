@@ -24,7 +24,7 @@ The approved execution command is:
 npm run run:search-v2-embedding-sample -- --authorization-fingerprint a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287 --spend-cap-usd 1
 ```
 
-The executor makes at most eight sequential provider requests, does not retry, keeps vectors in memory only, and prints a result summary without vector values or credentials.
+The executor makes at most eight sequential provider requests, does not retry, keeps vectors in memory only, and prints a result summary without vector values or credentials. The planner reports `provider_execution_in_plan: false` and `separate_executor_available: true` so planning-only behavior is not confused with executor availability.
 
 ## Authorization
 
@@ -76,7 +76,7 @@ The planning output contains:
 - request method, URL, credential variable name, and body for each candidate; and
 - a deterministic SHA-256 authorization fingerprint.
 
-The execution output contains request counts, latency, response validation summaries, provider-reported token usage when available, estimated sample cost, and expected-document ranks. It never contains vectors or credential values.
+The execution output contains request counts, latency, response validation summaries, provider-reported token usage when available, estimated sample cost, and expected-document ranks. A failed provider call produces a safe summary with attempted-request count, failed candidate, and input stage. A failure before execution reports zero attempted requests. Output never contains vectors, response bodies, credential values, or a stack trace.
 
 ## Side effects
 

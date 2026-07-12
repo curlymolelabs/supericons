@@ -31,7 +31,9 @@ assert.deepEqual(buildEmbeddingSamplePlan({ sampleSet, candidates }), plan, 'sam
 assert.equal(plan.mode, 'sample-plan');
 assert.equal(plan.network_allowed, false);
 assert.equal(plan.writes_allowed, false);
-assert.equal(plan.provider_execution_implemented, false);
+assert.equal(plan.provider_execution_in_plan, false);
+assert.equal(plan.separate_executor_available, true);
+assert.equal('provider_execution_implemented' in plan, false, 'planner output should not use the misleading old field');
 assert.equal(plan.authorization_required_for_execution, true);
 assert.match(plan.authorization_fingerprint, /^[a-f0-9]{64}$/);
 assert.ok(
@@ -137,5 +139,6 @@ console.log(JSON.stringify({
   authorization_fingerprint: plan.authorization_fingerprint,
   candidates: plan.candidates.map((candidate) => candidate.id),
   total_inputs_per_candidate: plan.total_inputs_per_candidate,
-  provider_execution_implemented: plan.provider_execution_implemented,
+  provider_execution_in_plan: plan.provider_execution_in_plan,
+  separate_executor_available: plan.separate_executor_available,
 }, null, 2));

@@ -30,6 +30,15 @@ This check covers multilingual meaning approval, the exact paid-sample authoriza
 | Live provider sample | Blocked before any provider call | The exact approved command failed closed because `VOYAGE_API_KEY`, `GEMINI_API_KEY`, and `OPENAI_API_KEY` were absent from the current process environment. |
 | General backend helper | Did not run its discovered build | The helper failed to start `npm` on Windows with `FileNotFoundError: [WinError 2]`. Focused Node checks above ran directly. |
 
+## Hardening follow-up
+
+The executor was tightened after the first audit:
+
+- The planner now reports `provider_execution_in_plan: false` and `separate_executor_available: true`. The misleading `provider_execution_implemented` field was removed without changing the authorization fingerprint.
+- Each provider request reserves one approved request before network activity begins. The executor refuses a call when the approved count is exhausted.
+- A provider failure now carries a public-safe summary with attempted-request count, failed candidate, failed input stage, zero retries, and no stored vectors.
+- The command-line runner emits structured JSON without a stack trace. A missing-key check reported zero attempted requests.
+
 ## Security and misuse review
 
 - The executor checks the recorded fingerprint, supplied fingerprint, exact $1 cap, input limit, request limit, zero-retry rule, storage rule, and all required credentials before its first provider call.
