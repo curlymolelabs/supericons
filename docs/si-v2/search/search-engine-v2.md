@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.3
+Version: 1.4
 Approved: 2026-07-11
 Amended: 2026-07-12
 Status: canonical product and technical specification
@@ -386,6 +386,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-27` | Diversify ambiguous list-search results across approved interpretation families, while recommendation uses task context and asks for clarification when needed. | Human and agent jobs; ambiguity risk | Approved ambiguous cases cover at least three relevant families in the top eight when available; recommendation cases narrow correctly or return labeled clarification options. |
 | `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
 | `FR-29` | Proactively review the bounded SI brand-logo set while classifying external brand collisions reactively from approved evidence. | Brand-maintenance cost; `D-019` | The 50 SI brand records have an owner-review disposition; ambiguous approved terms have concept and explicit-identity fixtures; unclassified external exact matches keep the documented fallback. |
+| `FR-30` | Apply separate hard-safety, per-locale, and aggregate quality gates to embedding candidates, while recording meaning approval and language assurance honestly. | Multilingual quality risk; `D-020` | Exact identity, blocked-alias, and safety fixtures have zero failures; every reviewed locale with at least five cases has at most one semantic failure; aggregate multilingual pass rate is at least 90 percent. |
 
 ## Constraints
 
@@ -401,7 +402,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 
 ### Evaluation suites
 
-The fixed suite targets 225 owner-reviewed queries, retaining the existing 28-query seed while expanding coverage. It is stratified across:
+The fixed suite contains 225 stable queries, retaining the existing 28-query seed while expanding coverage. Candidate fixtures count toward structural coverage but do not satisfy the release gate until their recorded meaning and language checks are complete. It is stratified across:
 
 - exact brand/logo and icon IDs;
 - common UI concepts and short synonyms;
@@ -534,6 +535,7 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - Ambiguous recommendation cases use context or return labeled clarification options.
 - Generic prefix/substring brand collisions do not outrank concept results without brand intent.
 - The bounded SI brand review is complete before embedding baseline capture; external catalogs remain evidence-driven rather than manually classified in full.
+- Embedding candidates pass every hard identity, blocked-alias, and safety fixture, no reviewed locale loses more than one of at least five semantic cases, and the aggregate reviewed multilingual pass rate is at least 90 percent.
 
 ## Change policy
 

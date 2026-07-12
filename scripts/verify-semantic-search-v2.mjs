@@ -152,6 +152,15 @@ function assertEvaluationSet(evaluationSet) {
     const reviewStatus = group.review_status || evaluationSet.default_review_status;
     assert.ok(ALLOWED_REVIEW_STATUSES.has(reviewStatus), `${group.id}: unsupported review status ${reviewStatus}`);
     reviewStatusCounts.set(reviewStatus, (reviewStatusCounts.get(reviewStatus) || 0) + (group.queries || []).length);
+    if (group.id.startsWith('multilingual_')) {
+      assert.equal(group.meaning_review_status, 'awaiting_owner_review', `${group.id}: meaning review should stay honest`);
+      assert.equal(
+        group.language_assurance,
+        'automated_high_confidence_not_native_reviewed',
+        `${group.id}: language assurance should distinguish automated and native review`,
+      );
+      assert.equal(group.native_language_review, 'not_completed', `${group.id}: native review should not be implied`);
+    }
   }
 
   for (const query of queries) {
@@ -328,12 +337,17 @@ function assertEvaluationSet(evaluationSet) {
 
   const multilingualCandidates = queries.filter((query) => query.group_id.startsWith('multilingual_'));
   assert.equal(multilingualCandidates.length, 71, 'multilingual candidate tier should contain 71 cases');
+  const localeCounts = {};
+  for (const query of multilingualCandidates) localeCounts[query.locale] = (localeCounts[query.locale] || 0) + 1;
   for (const locale of ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'pt-BR', 'de', 'ar', 'hi', 'th', 'vi']) {
-    assert.ok(
-      multilingualCandidates.some((query) => query.locale === locale),
-      `multilingual candidate tier should include ${locale}`,
-    );
+    assert.ok(localeCounts[locale] >= 5, `multilingual candidate tier should include at least five ${locale} cases`);
   }
+  assert.equal(localeCounts['zh-Hant'], 5, 'Traditional Chinese should have five measurable cases');
+  assert.equal(
+    multilingualCandidates.filter((query) => query.query === 'OpenAI 标志').length,
+    1,
+    'mixed-script OpenAI identity fixture should exist exactly once',
+  );
 
   assert.ok(caseIds.size >= 40, 'expanded evaluation cases should have stable IDs');
 

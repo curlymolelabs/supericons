@@ -95,6 +95,8 @@
     "plan:search-v2-embeddings": "node scripts/search-v2-embedding-runner.mjs --mode plan",
     "dry-run:search-v2-embeddings": "node scripts/search-v2-embedding-runner.mjs --mode dry-run",
     "verify:search-v2-embedding-runner": "node scripts/verify-search-v2-embedding-runner.mjs",
+    "plan:search-v2-embedding-sample": "node scripts/plan-search-v2-embedding-sample.mjs",
+    "verify:search-v2-embedding-sample": "node scripts/verify-search-v2-embedding-sample.mjs",
     "verify:semantic-search-v2-smoke": "node scripts/verify-semantic-search-v2-smoke.mjs",
     "evaluate:search-v2-candidate-baseline": "node scripts/evaluate-search-v2-candidate-baseline.mjs",
     "verify:supericons-logo-launch-search": "node scripts/verify-supericons-logo-launch-search.mjs",

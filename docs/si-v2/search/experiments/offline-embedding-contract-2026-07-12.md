@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 
-Status: draft for owner approval
+Status: approved through sample planning; provider calls remain separately gated
 
 Authority: experiment protocol only. [`search-engine-v2.md`](../search-engine-v2.md) remains the product and technical specification. This document does not select a provider or model and does not authorize deployment.
 
@@ -158,6 +158,9 @@ Acceptance signal: approved native queries keep their intended concept terms aft
 ### Guardrails
 
 - Exact canaries must not regress.
+- Blocked-alias and safety fixtures must have zero failures.
+- Every reviewed locale with at least five cases may have at most one semantic failure.
+- The aggregate reviewed multilingual pass rate must be at least 90 percent.
 - No prohibited result may gain rank because it arrived from the vector lane.
 - No locale tier may be hidden inside an overall average.
 - Deterministic fallback must continue to work when vector retrieval is disabled, slow, invalid, or unavailable.
@@ -168,11 +171,14 @@ Acceptance signal: approved native queries keep their intended concept terms aft
 A winning configuration must:
 
 1. preserve every approved exact rank-1 canary;
-2. improve or hold useful-family top-3 quality overall;
-3. improve at least one long-query or multilingual tier without a material regression in another tier;
-4. pass policy-boundary, incremental-sync, failure-injection, and rollback checks;
-5. fit the approved latency and cost budgets once `OQ-01` and the cost ceiling are resolved; and
-6. have no unresolved public-safety or provider data-handling blocker.
+2. pass every blocked-alias and safety fixture;
+3. pass all but at most one reviewed semantic case in every locale with at least five cases;
+4. pass at least 90 percent of reviewed multilingual cases overall;
+5. improve or hold useful-family top-3 quality overall;
+6. improve at least one long-query or multilingual tier without a material regression in another tier;
+7. pass policy-boundary, incremental-sync, failure-injection, and rollback checks;
+8. fit the approved latency and cost budgets once `OQ-01` and the cost ceiling are resolved; and
+9. have no unresolved public-safety or provider data-handling blocker.
 
 If no candidate meets every rule, keep deterministic search as the served path and record the experiment as inconclusive. Do not select the least-bad candidate merely to advance the roadmap.
 
@@ -207,10 +213,9 @@ If no candidate meets every rule, keep deterministic search as the served path a
 
 These questions require owner confirmation before the model-selection experiment can produce a final decision:
 
-- What material-regression limit should apply to each locale tier?
 - What p95 query-embedding latency budget applies to hosted MCP, web, and local MCP?
 - What full-rebuild and per-1,000-search cost ceilings are acceptable?
-- How many owner-reviewed cases are required per multilingual locale before model selection is final?
+- Should native-speaker review become mandatory before public rollout, or remain a post-beta quality loop when meaning approval and language assurance are already recorded?
 - Should Brazilian Portuguese be the first Portuguese ground-truth locale, with other variants added only when demand evidence supports them?
 
 ## Done criteria
@@ -220,6 +225,7 @@ This contract is ready to execute when:
 - the owner approves the experiment scope and selection rule;
 - legacy expected results are owner-reviewed, completed 2026-07-12;
 - native multilingual fixtures replace the translated placeholders, completed 2026-07-12;
+- multilingual fixtures record owner meaning approval, language assurance, and native-review state separately;
 - current candidate models and provider constraints are verified;
 - latency and cost ceilings are recorded; and
 - the offline runner, versioned storage change, and rollback plan have implementation tasks.

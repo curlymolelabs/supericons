@@ -4,6 +4,8 @@ Date: 2026-07-12
 
 Status: `plan` and `dry-run` implemented locally; networked modes not implemented
 
+The separately bounded sample plan and provider-response validation contract lives in [`offline-embedding-sample-contract-2026-07-12.md`](offline-embedding-sample-contract-2026-07-12.md). No provider executor is implemented.
+
 ## Name
 
 Search v2 offline embedding runner.

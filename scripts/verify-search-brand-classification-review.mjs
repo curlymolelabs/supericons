@@ -30,7 +30,7 @@ assert.deepEqual(
 assert.match(review, /Status: approved with one correction/);
 assert.match(review, /Exact single-token `supericons` is `distinctive_exact`/);
 assert.match(decisions, /D-019: Bounded brand-classification scope/);
-assert.match(specification, /Version: 1\.3/);
+assert.match(specification, /Version: 1\.4/);
 assert.match(specification, /FR-29/);
 
 const lovable = policy.brand_terms.find((entry) => entry.term === 'lovable');

@@ -1,0 +1,74 @@
+{
+  "schema_version": "search-v2-embedding-sample-set-1",
+  "maximum_total_inputs_per_candidate": 12,
+  "documents": [
+    {
+      "id": "sample-doc-search",
+      "locale": "en",
+      "text": "Search icon showing a magnifying glass used to find information."
+    },
+    {
+      "id": "sample-doc-settings",
+      "locale": "en",
+      "text": "Settings icon showing a gear or cog for configuration controls."
+    },
+    {
+      "id": "sample-doc-database",
+      "locale": "en",
+      "text": "Database icon showing stacked data storage cylinders."
+    },
+    {
+      "id": "sample-doc-upload",
+      "locale": "en",
+      "text": "Upload file icon showing a document moving upward into storage."
+    },
+    {
+      "id": "sample-doc-notification",
+      "locale": "en",
+      "text": "Notification icon showing a bell for alerts and updates."
+    },
+    {
+      "id": "sample-doc-openai",
+      "locale": "en",
+      "text": "OpenAI brand identity and official logo."
+    }
+  ],
+  "queries": [
+    {
+      "id": "sample-query-zh-hans-search",
+      "locale": "zh-Hans",
+      "text": "搜索图标",
+      "expected_document_id": "sample-doc-search"
+    },
+    {
+      "id": "sample-query-ja-settings",
+      "locale": "ja",
+      "text": "設定の歯車",
+      "expected_document_id": "sample-doc-settings"
+    },
+    {
+      "id": "sample-query-zh-hant-database",
+      "locale": "zh-Hant",
+      "text": "資料庫",
+      "expected_document_id": "sample-doc-database"
+    },
+    {
+      "id": "sample-query-hi-upload",
+      "locale": "hi",
+      "text": "फ़ाइल अपलोड",
+      "expected_document_id": "sample-doc-upload"
+    },
+    {
+      "id": "sample-query-ar-notification",
+      "locale": "ar",
+      "text": "جرس الإشعارات",
+      "expected_document_id": "sample-doc-notification"
+    },
+    {
+      "id": "sample-query-zh-hans-openai",
+      "locale": "zh-Hans",
+      "text": "OpenAI 标志",
+      "expected_document_id": "sample-doc-openai"
+    }
+  ]
+}

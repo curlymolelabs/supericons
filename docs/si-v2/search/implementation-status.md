@@ -19,10 +19,10 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `P0` Governance and baseline | Fixed-suite size reached; multilingual language scoring and threshold decisions remain | Official specification version 1.3; sanitized July 11 baseline; 225-case evaluation suite; approved 28-case legacy review and 50-SI-brand classification records | Traceability audit passed; all 225 cases have stable IDs; 148 cases are owner-reviewed, 6 are contract fixtures, and 71 multilingual candidates await language scoring | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `docs/si-v2/search/reviews/legacy-evaluation-owner-review-2026-07-12.md`; `docs/si-v2/search/reviews/si-brand-classification-owner-review-2026-07-12.md`; `references/verification/search-v2-brand-activation-and-evaluation-target-2026-07-12.md`; `references/verification/search-query-baseline-2026-07-11.md` |
+| `P0` Governance and baseline | Fixed-suite size and multilingual thresholds reached; owner meaning review remains | Official specification version 1.4; sanitized July 11 baseline; 225-case evaluation suite; approved legacy and SI-brand reviews; 71-case multilingual meaning-review packet | Traceability audit passed; all 225 cases have stable IDs; 148 cases are owner-reviewed, 6 are contract fixtures, and 71 multilingual candidates record automated language assurance without claiming native review | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `docs/si-v2/search/reviews/multilingual-evaluation-owner-review-2026-07-12.md`; `references/verification/search-v2-multilingual-gate-and-sample-plan-2026-07-12.md`; `references/verification/search-v2-brand-activation-and-evaluation-target-2026-07-12.md`; `references/verification/search-query-baseline-2026-07-11.md` |
 | `P1` Shared deterministic understanding | Approved deterministic scope is locally complete; release thresholds remain open | Search intent core, generated rules/graph, shared policy-aware query-frame modules, recommendation clarification, maintained ranking policy, ambiguity diversification, all 50 approved SI brand classifications, rejected-alias enforcement, final-fusion policy enforcement, and explicit strict/prefer/all search modes in local and hosted MCP code | All 50 explicit SI logo searches rank the expected identity first; 16 approved ambiguous SI records use concept sharing where useful families exist; all 17 rejected aliases use the shared penalty and do not rank the SI brand first | Earlier MCP package build was verified in the saved query-frame record; this brand activation was not packaged or published | Not deployed | Not observed live | `references/verification/search-v2-brand-activation-and-evaluation-target-2026-07-12.md`; `references/verification/search-v2-brand-and-runner-foundation-2026-07-12.md`; `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md`; `references/verification/search-library-modes-2026-07-12.md`; `references/verification/search-query-frame-clarification-2026-07-12.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
-| `P3` Offline embeddings | Planning foundation implemented; provider execution and storage not started | Provider-neutral candidate config, pure work-plan module, and no-network `plan` and `dry-run` CLI modes; no embedding generation/sync adapter or storage migration | Full plan and one-candidate dry run passed for 75,810 English documents; deterministic fingerprint, dimensions, selection, batches, and fail-closed modes verified; no provider API or vector behavior tested | Not applicable | Not verified | Not verified | `docs/si-v2/search/experiments/offline-embedding-runner-contract-2026-07-12.md`; `references/verification/search-v2-brand-and-runner-foundation-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-contract-2026-07-12.md`; `docs/si-v2/search/experiments/embedding-candidate-shortlist-2026-07-12.md` |
+| `P3` Offline embeddings | Work planning and exact sample planning implemented; provider execution and storage not started | Provider-neutral candidate config, Gemini Embedding 2 E3, no-network corpus plan/dry-run modes, fixed 12-input sample, provider request adapters, and response validation; no network executor, embedding generation, sync adapter, or storage migration | Corpus plan/dry run passed for 75,810 English documents; sample planning produced four candidates and authorization fingerprint `a95e424c435893b9009d898dcd386c79cacd382c49238c69c5729645ade8f287`; synthetic responses verified count, dimensions, finite values, and unit norm; no provider API or retrieval quality tested | Not applicable | Not verified | Not verified | `references/verification/search-v2-multilingual-gate-and-sample-plan-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-sample-contract-2026-07-12.md`; `docs/si-v2/search/reviews/embedding-sample-authorization-request-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-runner-contract-2026-07-12.md` |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
 | `P5` MCP-first hybrid beta | Not implemented | Existing MCP search/recommendation surfaces and preview support exist; hybrid vector ranking does not | Existing non-hybrid MCP/package checks exist; beta gates not run | Current package build history exists; v2 hybrid package not verified | Not verified | Not verified | `references/verification/semantic-search-v2-query-frame-shadow-2026-07-01.md`; canonical beta gates |
 | `P6` Web hybrid beta | Not implemented | Existing web/hosted deterministic search exists; hybrid vector ranking does not | Existing hosted search checks exist; web beta gates not run | Not applicable | Not verified | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; canonical beta gates |
@@ -59,6 +59,12 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 - `scripts/search-v2-embedding-runner.mjs`
 - `scripts/verify-search-v2-embedding-runner.mjs`
 - `docs/si-v2/search/experiments/offline-embedding-runner-contract-2026-07-12.md`
+- `data/semantic-search-v2/embedding-sample-set.json`
+- `lib/search-v2-embedding-provider.js`
+- `lib/search-v2-embedding-sample.js`
+- `scripts/plan-search-v2-embedding-sample.mjs`
+- `scripts/verify-search-v2-embedding-sample.mjs`
+- `docs/si-v2/search/experiments/offline-embedding-sample-contract-2026-07-12.md`
 
 ### Opt-in query-frame surfaces
 
@@ -90,10 +96,10 @@ The legacy review approved 19 cases as written, adjusted 6 expectations, and rep
 
 | phase | plain-language position |
 | --- | --- |
-| `P0` | The 225-case fixed-suite size is reached. Language scoring for 71 multilingual candidates and threshold decisions remain. |
+| `P0` | The 225-case suite and multilingual thresholds are fixed. Owner meaning approval for 71 multilingual candidates remains. |
 | `P1` | The approved deterministic behavior and bounded 50-brand policy are locally tested. Nothing from this batch is deployed. |
 | `P2` | Semantic document generation and a migration draft exist, but current input drift and deployment remain unresolved. |
-| `P3` | Plan and dry-run foundations exist. Provider calls, embedding storage, sample execution, and rollback execution are not implemented. |
+| `P3` | Corpus and exact sample planning exist. Provider calls, embedding storage, sample execution, and rollback execution are not implemented. |
 | `P4` | Vector retrieval, shadow comparison, and hybrid fusion are not implemented. |
 | `P5` | MCP hybrid beta is not implemented or published. |
 | `P6` | Web hybrid beta is not implemented or deployed. |
@@ -121,10 +127,10 @@ This ledger does not infer current production deployment from file presence, pac
 
 Complete the remaining evaluation and measurement gates before enabling semantic ranking:
 
-1. Score the 71 multilingual candidates, including native phrasing and dictionary checks for the CJK tier.
-2. Decide whether the Google comparison keeps `gemini-embedding-001` or moves to the newer `gemini-embedding-2` before any provider call.
-3. Define the downstream acceptance event, confidence thresholds, and per-locale regression limit.
-4. Keep provider calls, paid execution, and baseline capture blocked until those gates pass.
+1. Approve or amend the expected meaning and unacceptable-result rules in the 71-case multilingual review packet.
+2. Approve the exact sample fingerprint and set a sample-only spend cap.
+3. Keep provider execution absent until that exact approval is recorded.
+4. Define the downstream acceptance event and confidence thresholds before P4 exits.
 
 Offline `P3` embedding implementation may proceed in parallel after its model/version/rollback contract is specified, but `P4` cannot exit before these gates pass.
 

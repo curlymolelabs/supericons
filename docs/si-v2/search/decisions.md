@@ -32,6 +32,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-017` | Brand priority requires the appropriate identity match class and intent | Accepted | Retrieval and reranking |
 | `D-018` | Owner-approved evidence governs brand-term classification changes | Accepted | Retrieval governance |
 | `D-019` | Proactively classify the bounded SI brand set; classify external brands when collision evidence appears | Accepted | Retrieval governance |
+| `D-020` | Separate multilingual meaning approval, language assurance, and native review; use hard, locale, and aggregate embedding gates | Accepted | Evaluation governance |
 
 ## Decision records
 
@@ -227,6 +228,21 @@ Reason: owner-controlled SI brands are a small, high-priority set where common-w
 Alternatives rejected or deferred: a separate brand-classification system; manual classification of every external brand; automatic promotion of every registry alias.
 
 Specification change: version 1.3 adds `FR-29` and the bounded brand-maintenance rule.
+
+Superseded decisions: none.
+
+### D-020: Multilingual assurance and embedding gates
+
+Date: 2026-07-12
+Status: Accepted
+
+Decision: multilingual fixtures record meaning approval, language assurance, and native-language review separately. Lack of native review is disclosed and does not become a false owner-language claim. An embedding candidate must pass every exact-identity, blocked-alias, and safety fixture. Each reviewed locale with at least five semantic cases may fail at most one case, and the aggregate reviewed multilingual pass rate must be at least 90 percent.
+
+Reason: the fixed suite includes languages the owner does not speak, and small locale groups make percentage-only rules unstable. Separate assurance labels preserve honest evidence, while zero-tolerance safety gates and bounded semantic misses prevent aggregate scores from hiding a weak locale.
+
+Alternatives rejected or deferred: marking automated language checks as native review; using one aggregate score without locale gates; setting confidence-score cutoffs before provider evidence exists.
+
+Specification change: version 1.4 adds `FR-30` and the multilingual embedding evaluation gate.
 
 Superseded decisions: none.
 
