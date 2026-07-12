@@ -621,7 +621,7 @@ function mapAuditRowToEvidenceRow(
     analytics_channel: channel,
     environment,
     channel,
-    signal_type: hasIconAttempt ? 'hosted_search_audit' : 'search_attempt',
+    signal_type: row.beta_cohort || hasIconAttempt ? 'hosted_search_audit' : 'search_attempt',
     search_query: normalizeSearchQuery(row.query_norm),
     icon_id: null,
     batch_id: null,
@@ -629,6 +629,10 @@ function mapAuditRowToEvidenceRow(
     replaced_with: null,
     result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
     library_filter: normalizeReviewLibraryFilter(row.library_filter),
+    library_mode: row.library_mode || null,
+    search_outcome: row.search_outcome || null,
+    confidence_label: row.confidence_label || null,
+    beta_cohort: row.beta_cohort || null,
     job_category: null,
     ui_surface: uiSurface,
     domain: null,
@@ -663,7 +667,7 @@ async function fetchHostedSearchAuditRows(
   since: string | null,
   iconRows: SearchEvidenceRow[],
 ) {
-  const fullSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const fullSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
   const baseSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, created_at';
   const iconAttempts = buildIconAttemptIndex(iconRows);
 
@@ -706,11 +710,12 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
   return {
     id: row.id ? `mcp_usage_events:${String(row.id)}` : null,
     source_table: 'mcp_usage_events',
+    event_type: row.event_type || null,
     analytics_source: channel,
     analytics_channel: channel,
     environment,
     channel,
-    signal_type: 'mcp_call',
+    signal_type: row.event_type === 'search_outcome' ? 'search_attempt' : 'mcp_call',
     search_query: normalizeSearchQuery(row.query_norm),
     icon_id: null,
     batch_id: row.request_id || row.dedupe_key || null,
@@ -718,6 +723,10 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     replaced_with: null,
     result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
     library_filter: normalizeReviewLibraryFilter(row.library_filter),
+    library_mode: row.library_mode || null,
+    search_outcome: row.search_outcome || null,
+    confidence_label: row.confidence_label || null,
+    beta_cohort: row.beta_cohort || null,
     job_category: null,
     ui_surface: row.tool_name || row.client_family || channel,
     domain: null,
@@ -751,7 +760,7 @@ async function fetchMcpUsageEventRows(
   adminClient: SupabaseClient,
   since: string | null,
 ) {
-  const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, result_count, status, latency_ms, country_code, geo_source, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
+  const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, latency_ms, country_code, geo_source, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
 
   try {
     const rows = await fetchAllRows<Record<string, unknown>>((from, to) => {
@@ -823,6 +832,8 @@ function getQueryWorkbenchEntry(
     attempt_count: 0,
     zero_attempt_count: 0,
     low_attempt_count: 0,
+    clarification_attempt_count: 0,
+    error_attempt_count: 0,
     total_result_count: 0,
     result_samples: 0,
     minimum_result_count: null,
@@ -853,6 +864,12 @@ function getQueryWorkbenchEntry(
     client_families: new Set<string>(),
     tools: new Set<string>(),
     mcp_versions: new Set<string>(),
+    locales: new Set<string>(),
+    library_modes: new Set<string>(),
+    search_outcomes: new Set<string>(),
+    confidence_labels: new Set<string>(),
+    beta_cohorts: new Set<string>(),
+    locale_attempt_counts: {} as Record<string, number>,
     first_seen: null,
     last_seen: null,
   };
@@ -925,9 +942,38 @@ function buildQueryWorkbenchRows(
     if (typeof row.mcp_server_version === 'string' && row.mcp_server_version.trim()) {
       (entry.mcp_versions as Set<string>).add(row.mcp_server_version.trim());
     }
+    if (typeof row.locale === 'string' && row.locale.trim()) {
+      (entry.locales as Set<string>).add(row.locale.trim());
+    }
+    if (typeof row.library_mode === 'string' && row.library_mode.trim()) {
+      (entry.library_modes as Set<string>).add(row.library_mode.trim());
+    }
+    if (typeof row.search_outcome === 'string' && row.search_outcome.trim()) {
+      (entry.search_outcomes as Set<string>).add(row.search_outcome.trim());
+    }
+    if (typeof row.confidence_label === 'string' && row.confidence_label.trim()) {
+      (entry.confidence_labels as Set<string>).add(row.confidence_label.trim());
+    }
+    if (typeof row.beta_cohort === 'string' && row.beta_cohort.trim()) {
+      (entry.beta_cohorts as Set<string>).add(row.beta_cohort.trim());
+    }
 
     if (signalType === 'search_attempt') {
       entry.attempt_count = Number(entry.attempt_count || 0) + 1;
+      const localeKey = typeof row.locale === 'string' && row.locale.trim()
+        ? row.locale.trim()
+        : '(missing)';
+      const localeAttemptCounts = entry.locale_attempt_counts as Record<string, number>;
+      localeAttemptCounts[localeKey] = Number(localeAttemptCounts[localeKey] || 0) + 1;
+      const searchOutcome = String(row.search_outcome || '').toLowerCase();
+      if (searchOutcome === 'clarification') {
+        entry.clarification_attempt_count = Number(entry.clarification_attempt_count || 0) + 1;
+        continue;
+      }
+      if (searchOutcome === 'error') {
+        entry.error_attempt_count = Number(entry.error_attempt_count || 0) + 1;
+        continue;
+      }
       const rawResultCount = Number(row.result_count);
       const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
       if (resultCount !== null) {
@@ -1001,6 +1047,8 @@ function buildQueryWorkbenchRows(
       attempt_count: Number(entry.attempt_count || 0),
       zero_attempt_count: Number(entry.zero_attempt_count || 0),
       low_attempt_count: Number(entry.low_attempt_count || 0),
+      clarification_attempt_count: Number(entry.clarification_attempt_count || 0),
+      error_attempt_count: Number(entry.error_attempt_count || 0),
       average_result_count: resultSamples > 0
         ? Number((totalResultCount / resultSamples).toFixed(2))
         : null,
@@ -1034,6 +1082,15 @@ function buildQueryWorkbenchRows(
       client_families: [...(entry.client_families as Set<string>)].sort((a, b) => a.localeCompare(b)),
       tools: [...(entry.tools as Set<string>)].sort((a, b) => a.localeCompare(b)),
       mcp_versions: [...(entry.mcp_versions as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      locales: [...(entry.locales as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      library_modes: [...(entry.library_modes as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      search_outcomes: [...(entry.search_outcomes as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      confidence_labels: [...(entry.confidence_labels as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      beta_cohorts: [...(entry.beta_cohorts as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      locale_attempt_counts: Object.fromEntries(
+        Object.entries(entry.locale_attempt_counts as Record<string, number>)
+          .sort(([left], [right]) => left.localeCompare(right)),
+      ),
       first_seen: typeof entry.first_seen === 'string' ? entry.first_seen : null,
       last_seen: typeof entry.last_seen === 'string' ? entry.last_seen : null,
       review_status: review?.status || null,
@@ -1273,6 +1330,8 @@ function queryRowsToCsv(rows: Array<Record<string, unknown>>) {
     'attempt_count',
     'zero_attempt_count',
     'low_attempt_count',
+    'clarification_attempt_count',
+    'error_attempt_count',
     'average_result_count',
     'minimum_result_count',
     'replacement_count',
@@ -1298,6 +1357,11 @@ function queryRowsToCsv(rows: Array<Record<string, unknown>>) {
     'client_families',
     'tools',
     'mcp_versions',
+    'locales',
+    'library_modes',
+    'search_outcomes',
+    'confidence_labels',
+    'beta_cohorts',
     'first_seen',
     'last_seen',
   ];
@@ -1310,11 +1374,16 @@ function queryRowsToCsv(rows: Array<Record<string, unknown>>) {
 function compactQueryEvidenceRow(row: Record<string, unknown>) {
   return {
     source_table: row.source_table || 'icon_evidence',
+    event_type: row.event_type || null,
     signal_type: row.signal_type || null,
     search_query: row.search_query || null,
     icon_id: row.icon_id || null,
     result_count: row.result_count ?? null,
     library_filter: row.library_filter || null,
+    library_mode: row.library_mode || null,
+    search_outcome: row.search_outcome || null,
+    confidence_label: row.confidence_label || null,
+    beta_cohort: row.beta_cohort || null,
     job_category: row.job_category || null,
     ui_surface: row.ui_surface || null,
     domain: row.domain || null,
@@ -1376,6 +1445,15 @@ function buildAgentAnalysisPack(payload: Record<string, unknown>) {
     'Compare countries, account status, and surfaces when deciding whether a gap affects paid or recurring users.',
   ];
   const exportedAt = typeof payload.exported_at === 'string' ? payload.exported_at : new Date().toISOString();
+  const localeAttemptCounts: Record<string, number> = {};
+  for (const query of queries) {
+    const counts = query.locale_attempt_counts && typeof query.locale_attempt_counts === 'object'
+      ? query.locale_attempt_counts as Record<string, unknown>
+      : {};
+    for (const [locale, count] of Object.entries(counts)) {
+      localeAttemptCounts[locale] = Number(localeAttemptCounts[locale] || 0) + Number(count || 0);
+    }
+  }
   const summaryMarkdown = [
     '# Supericons Query Analysis Pack',
     '',
@@ -1392,6 +1470,7 @@ function buildAgentAnalysisPack(payload: Record<string, unknown>) {
     `- Needs icon: ${String(summary?.needs_icon || 0)}`,
     `- Resolved: ${String(summary?.resolved || 0)}`,
     `- Ignored: ${String(summary?.ignore || 0)}`,
+    `- Locale attempt counts: ${JSON.stringify(localeAttemptCounts)}`,
     '',
     '## Filters',
     '',
@@ -1428,6 +1507,11 @@ function buildAgentAnalysisPack(payload: Record<string, unknown>) {
     filters,
     sort,
     queries,
+    measurement: {
+      locale_attempt_counts: Object.fromEntries(
+        Object.entries(localeAttemptCounts).sort(([left], [right]) => left.localeCompare(right)),
+      ),
+    },
     evidence_sample: evidenceSample,
     limitations,
     analysis_hints: analysisHints,
@@ -2515,6 +2599,8 @@ async function handleIntelligenceSearchDetail(req: Request, adminClient: Supabas
     attempt_count: 0,
     zero_attempt_count: 0,
     low_attempt_count: 0,
+    clarification_attempt_count: 0,
+    error_attempt_count: 0,
     average_result_count: null,
     minimum_result_count: null,
     replacement_count: 0,
@@ -2542,6 +2628,11 @@ async function handleIntelligenceSearchDetail(req: Request, adminClient: Supabas
     audit_sources: [],
     environments: [],
     channels: [],
+    locales: [],
+    library_modes: [],
+    search_outcomes: [],
+    confidence_labels: [],
+    beta_cohorts: [],
     first_seen: null,
     last_seen: null,
     review_status: null,
@@ -2556,6 +2647,10 @@ async function handleIntelligenceSearchDetail(req: Request, adminClient: Supabas
       created_at: row.created_at || null,
       result_count: typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0),
       library_filter: normalizeReviewLibraryFilter(row.library_filter),
+      library_mode: row.library_mode || null,
+      search_outcome: row.search_outcome || null,
+      confidence_label: row.confidence_label || null,
+      beta_cohort: row.beta_cohort || null,
       job_category: normalizeReviewJobCategory(row.job_category),
       ui_surface: row.ui_surface || null,
       note: row.evidence_text || null,

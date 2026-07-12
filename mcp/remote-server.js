@@ -32,6 +32,7 @@ import {
 } from './preview-icons.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
+import { getBetaCohortForVersion } from './release-channel.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -42,6 +43,7 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(__dirname, 'public');
 const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
+const mcpBetaCohort = getBetaCohortForVersion(packageJson.version);
 const productFacts = JSON.parse(readFileSync(join(dataDir, 'product-facts.json'), 'utf8'));
 const registrySummary = JSON.parse(readFileSync(join(dataDir, 'registry-summary.json'), 'utf8'));
 const iconIndexPath = join(dataDir, 'icon-index.json');
@@ -824,7 +826,7 @@ async function buildRequestContext(req) {
     request_id: requestId,
     rpc_id: normalizeUsageText(req.body?.id, { maxLength: 80 }),
     channel: 'hosted_mcp',
-    environment: detectRequestEnvironment(req),
+    environment: mcpBetaCohort ? 'preview' : detectRequestEnvironment(req),
     client_family: clientFamily,
     country_code: country.country_code,
     geo_source: country.geo_source,
@@ -841,6 +843,7 @@ async function buildRequestContext(req) {
     account_plan: apiKeyAccount.account_plan,
     subscription_status: apiKeyAccount.subscription_status,
     mcp_server_version: packageJson.version,
+    beta_cohort: mcpBetaCohort,
   };
 }
 
@@ -881,15 +884,39 @@ function buildToolUsageContext(requestContext, toolName, args = {}) {
     account_plan: context.account_plan,
     subscription_status: context.subscription_status,
     mcp_server_version: context.mcp_server_version,
+    beta_cohort: context.beta_cohort || mcpBetaCohort,
   };
 }
 
-function getResultCountFromToolResult(result) {
+function getResultCountFromToolResult(result, toolName) {
   const payload = result?.structuredContent || {};
+  if (toolName === 'recommend_icons' && Array.isArray(payload.results)) {
+    return payload.results.filter((slot) => Boolean(slot?.recommended)).length;
+  }
   if (Array.isArray(payload.results)) return payload.results.length;
   if (Array.isArray(payload.libraries)) return payload.libraries.length;
   if (payload.icon) return 1;
   return 0;
+}
+
+function getSearchOutcomeFromToolResult(result, toolName, status) {
+  if (status === 'error') return 'error';
+  const payload = result?.structuredContent || {};
+  if (toolName === 'recommend_icons' && payload.needs_clarification === true) return 'clarification';
+  return getResultCountFromToolResult(result, toolName) > 0 ? 'results' : 'zero';
+}
+
+function getConfidenceLabelFromToolResult(result) {
+  const payload = result?.structuredContent || {};
+  const direct = payload?.query_frame?.confidence_floor;
+  if (['low', 'medium', 'high'].includes(direct)) return direct;
+  const labels = Array.isArray(payload.results)
+    ? payload.results.map((slot) => slot?.confidence?.level).filter(Boolean)
+    : [];
+  if (labels.includes('low')) return 'low';
+  if (labels.includes('medium')) return 'medium';
+  if (labels.includes('high')) return 'high';
+  return null;
 }
 
 function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok') {
@@ -898,14 +925,28 @@ function buildMcpUsageEventPayload(requestContext, toolName, args, result, start
     event_id: randomUUID(),
     request_id: context.request_id,
     dedupe_key: context.dedupe_key,
-    event_type: toolName === 'preview_icons' ? 'preview' : 'tool_call',
+    event_type: ['search_icons', 'recommend_icons'].includes(toolName)
+      ? 'search_outcome'
+      : toolName === 'preview_icons'
+        ? 'preview'
+        : 'tool_call',
     channel: context.channel,
     environment: context.environment,
     client_family: context.client_family,
     tool_name: toolName,
     query_norm: normalizeUsageQuery(args?.query || args?.task || args?.id || null),
     library_filter: normalizeUsageToken(args?.library, { maxLength: 80 }) || null,
-    result_count: status === 'ok' ? getResultCountFromToolResult(result) : 0,
+    library_mode: ['search_icons', 'recommend_icons'].includes(toolName)
+      ? normalizeUsageToken(args?.library_mode, { maxLength: 20 }) || 'strict'
+      : null,
+    result_count: status === 'ok' ? getResultCountFromToolResult(result, toolName) : 0,
+    search_outcome: ['search_icons', 'recommend_icons'].includes(toolName)
+      ? getSearchOutcomeFromToolResult(result, toolName, status)
+      : null,
+    confidence_label: ['search_icons', 'recommend_icons'].includes(toolName)
+      ? getConfidenceLabelFromToolResult(result)
+      : null,
+    beta_cohort: context.beta_cohort || null,
     status,
     latency_ms: Math.max(0, Date.now() - startedAt),
     country_code: requestContext?.country_code || null,

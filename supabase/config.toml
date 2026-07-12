@@ -10,3 +10,8 @@ verify_jwt = false
 # enforced inside the function with signed x402 payment verification.
 [functions.x402-premium-icon]
 verify_jwt = false
+
+# This endpoint is isolated from the production MCP search path. Beta identity
+# and measurement are enforced inside the shared search handler.
+[functions.mcp-search-v2-beta]
+verify_jwt = false

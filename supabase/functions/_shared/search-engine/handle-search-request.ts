@@ -151,6 +151,7 @@ function buildSearchAuditContext(body: Record<string, unknown>, source: string) 
     mcp_server_version: normalizeAuditText(body?.mcp_server_version, { maxLength: 40 }),
     request_id: normalizeAuditText(body?.request_id, { maxLength: 120 }),
     dedupe_key: normalizeAuditText(body?.dedupe_key, { maxLength: 180 }),
+    beta_cohort: normalizeAuditToken(body?.beta_cohort, { maxLength: 80 }) || null,
     session_hash: normalizeAuditHash(body?.session_hash),
     ip_hash: normalizeAuditHash(body?.ip_hash),
     country_code: normalizeAuditCountry(body?.country_code),
@@ -311,6 +312,10 @@ function stripEnrichedAuditColumns(payload: Record<string, unknown>) {
     mcp_server_version: _mcpServerVersion,
     request_id: _requestId,
     dedupe_key: _dedupeKey,
+    library_mode: _libraryMode,
+    search_outcome: _searchOutcome,
+    confidence_label: _confidenceLabel,
+    beta_cohort: _betaCohort,
     ...basePayload
   } = payload;
   return basePayload;
@@ -329,7 +334,15 @@ async function insertSearchAudit(adminClient: any, payload: Record<string, unkno
 
 export async function handleSearchRequest(
   req: Request,
-  { defaultSource = 'web' }: { defaultSource?: string } = {},
+  {
+    defaultSource = 'web',
+    defaultEnvironment = null,
+    betaCohort = null,
+  }: {
+    defaultSource?: string;
+    defaultEnvironment?: string | null;
+    betaCohort?: string | null;
+  } = {},
 ) {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -344,6 +357,7 @@ export async function handleSearchRequest(
   let queryNorm = '';
   let source = defaultSource;
   let library: string | null = null;
+  let libraryMode = 'strict';
   let identity = {
     sessionHash: null as string | null,
     ipHash: null as string | null,
@@ -369,6 +383,7 @@ export async function handleSearchRequest(
     mcp_server_version: null as string | null,
     request_id: null as string | null,
     dedupe_key: null as string | null,
+    beta_cohort: betaCohort,
     session_hash: null as string | null,
     ip_hash: null as string | null,
     country_code: null as string | null,
@@ -388,7 +403,7 @@ export async function handleSearchRequest(
         retryable: false,
       });
     }
-    const libraryMode = normalizeSearchLibraryMode(rawLibraryMode);
+    libraryMode = normalizeSearchLibraryMode(rawLibraryMode);
     if (libraryMode === 'prefer' && !library) {
       throw new SearchEngineHttpError('Preferred-library mode requires a library.', {
         status: 400,
@@ -399,12 +414,13 @@ export async function handleSearchRequest(
     }
     source = normalizeSource(body?.source, defaultSource);
     auditContext = buildSearchAuditContext(body as Record<string, unknown>, source);
+    if (defaultEnvironment) auditContext.environment = defaultEnvironment;
+    if (betaCohort) auditContext.beta_cohort = betaCohort;
     const style = normalizeStyle(body?.style);
     const limit = Math.max(1, Math.min(50, Number(body?.limit || 20)));
     const includeQueryFrame = normalizeBoolean(body?.include_query_frame);
-    const queryFrame = includeQueryFrame
-      ? buildSearchQueryFrame(queryNorm, { locale: body?.locale || null })
-      : null;
+    const auditQueryFrame = buildSearchQueryFrame(queryNorm, { locale: body?.locale || null });
+    const queryFrame = includeQueryFrame ? auditQueryFrame : null;
 
     identity = await enforceSearchRateLimit(req);
 
@@ -531,7 +547,10 @@ export async function handleSearchRequest(
       query_norm: queryNorm,
       source,
       library_filter: library,
+      library_mode: libraryMode,
       result_count: results.length,
+      search_outcome: results.length > 0 ? 'results' : 'zero',
+      confidence_label: auditQueryFrame.confidence_floor,
       status: 'ok',
       latency_ms: Date.now() - startedAt,
       ...auditContext,
@@ -566,7 +585,10 @@ export async function handleSearchRequest(
           query_norm: queryNorm,
           source,
           library_filter: library,
+          library_mode: libraryMode,
           result_count: 0,
+          search_outcome: 'error',
+          confidence_label: null,
           status: 'error',
           latency_ms: Date.now() - startedAt,
           ...auditContext,

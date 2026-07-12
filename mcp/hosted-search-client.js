@@ -8,6 +8,10 @@ import {
   expandCjkQuery,
   normalizeCjkSearchText,
 } from './runtime/cjk-search-core.js';
+import {
+  getBetaCohortForVersion,
+  getDefaultHostedSearchFunctionName,
+} from './release-channel.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
@@ -19,6 +23,10 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
   ? JSON.parse(readFileSync(multilingualAliasesPath, 'utf8')).aliases || []
   : [];
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
+const packageMetadata = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
+const mcpPackageVersion = String(packageMetadata.version || '');
+const defaultHostedSearchFunctionName = getDefaultHostedSearchFunctionName(mcpPackageVersion);
+const defaultBetaCohort = getBetaCohortForVersion(mcpPackageVersion);
 
 function normalizeUsageToken(value, { maxLength = 80 } = {}) {
   return String(value || '')
@@ -69,6 +77,7 @@ function buildUsagePayload(usageContext = {}, { apiKeyHash = null } = {}) {
     user_agent_hash: normalizeUsageHash(context.user_agent_hash),
     api_key_hash: normalizeUsageHash(context.api_key_hash) || apiKeyHash,
     mcp_server_version: normalizeUsageText(context.mcp_server_version, { maxLength: 40 }),
+    beta_cohort: normalizeUsageToken(context.beta_cohort, { maxLength: 80 }) || defaultBetaCohort,
   };
 
   return Object.fromEntries(
@@ -93,7 +102,7 @@ function shouldUseInternalHostedDebug() {
 function getPublicGatewayUrl() {
   return (
     process.env.SUPERICONS_MCP_SEARCH_URL
-    || `${SUPABASE_URL}/functions/v1/mcp-search`
+    || `${SUPABASE_URL}/functions/v1/${defaultHostedSearchFunctionName}`
   ).replace(/\/+$/, '');
 }
 

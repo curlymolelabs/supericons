@@ -1,7 +1,7 @@
 # Deterministic MCP beta measurement and rollback plan
 
 Date: 2026-07-12
-Status: prepared for review; no deployment or publication is authorized by this document
+Status: Gate A release candidate prepared locally; migration smoke remains blocked; no deployment or publication is authorized by this document
 Authority: operational beta plan under `D-021`, `FR-26`, `FR-31`, and `FR-32`
 
 ## Purpose
@@ -199,6 +199,7 @@ The July 11 zero-result rates remain sequencing context, not the release target.
 - run package public-safety and content checks
 - prove zero model-provider calls
 - run failure-injection checks for audit write failure and hosted search failure
+- record p50 and p95 latency for a fixed replay set, including environment and sample count
 - save the exact package version, endpoint name, and commit
 
 ### Gate B: owner approval
@@ -208,6 +209,7 @@ Request one explicit approval that names:
 - Supabase beta function endpoint
 - npm prerelease version and `beta` tag
 - beta duration and cohort
+- beta adoption method: invited users, a prerelease README note, or both
 - rollback target
 - expected external mutations
 
@@ -265,9 +267,8 @@ Record the trigger, time, affected version and endpoint, request volume, user im
 
 ## Current blockers before external beta
 
-- isolated Supabase beta endpoint is not yet implemented
-- prerelease package version is not yet prepared
-- `library_mode`, `search_outcome`, confidence label, and beta cohort are not yet verified in audit rows
+- the additive migration has not run in a disposable local or approved test database
+- `library_mode`, `search_outcome`, confidence label, and beta cohort are locally contract-tested but not observed in a real database row
 - acceptance telemetry remains too sparse for an automatic usefulness rate
 - no deployment or publication approval has been granted
 

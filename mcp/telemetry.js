@@ -80,21 +80,35 @@ export async function logMcpSearchAttempt({
   query,
   resultCount,
   libraryFilter = null,
+  libraryMode = 'strict',
+  searchOutcome = null,
+  toolName = 'search_icons',
   locale = null,
+  confidenceLabel = null,
+  betaCohort = null,
+  mcpServerVersion = null,
 }) {
   const normalizedQuery = String(query || '').trim().toLowerCase().replace(/\s+/g, ' ');
   const safeResultCount = Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null;
   if (!normalizedQuery || safeResultCount === null) return;
 
+  const normalizedOutcome = String(searchOutcome || (safeResultCount > 0 ? 'results' : 'zero'))
+    .trim()
+    .toLowerCase();
+
   try {
-    await callRpc('si_log_icon_evidence', {
-      p_signal_type: 'search_attempt',
-      p_search_query: normalizedQuery,
+    await callRpc('si_log_mcp_search_outcome', {
+      p_query_norm: normalizedQuery,
       p_result_count: safeResultCount,
       p_library_filter: libraryFilter || 'all',
-      p_ui_surface: 'mcp',
-      p_evidence_text: locale ? `search_icons locale=${locale}` : 'search_icons',
+      p_library_mode: libraryMode,
+      p_search_outcome: normalizedOutcome,
+      p_tool_name: toolName,
       p_session_hash: getSessionHash(),
+      p_locale: locale,
+      p_confidence_label: confidenceLabel,
+      p_beta_cohort: betaCohort,
+      p_mcp_server_version: mcpServerVersion,
       p_created_at: new Date().toISOString(),
     });
   } catch (error) {

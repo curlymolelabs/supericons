@@ -74,6 +74,7 @@ import {
   hasProWorkflowAccess,
 } from './workflow-access.js';
 import { logMcpSearchAttempt, logMcpSearchBatch } from './telemetry.js';
+import { getBetaCohortForVersion } from './release-channel.js';
 import {
   attachSemanticPayload,
   createSemanticRegistryMap,
@@ -837,6 +838,7 @@ for (const icon of solidIcons) {
 const freeLibraryCount = Object.values(libraryMeta).filter(meta => !meta.premium).length;
 const productFacts = loadProductFacts();
 const mcpPackage = loadPackageMetadata();
+const mcpBetaCohort = getBetaCohortForVersion(mcpPackage.version);
 const freeIconCountLabel = productFacts?.display?.freeIconsAcrossLibrariesFreeLabel
   || `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
 const mcpLocaleSchema = z.enum(SUPPORTED_MCP_OUTPUT_LOCALES);
@@ -845,11 +847,12 @@ const mcpLocaleDescription = `Optional locale for multilingual output. Supported
 function buildLocalMcpUsageContext(toolName, context = {}) {
   return {
     source: 'mcp',
-    channel: 'local_mcp',
-    environment: 'local',
+    channel: mcpBetaCohort ? 'hosted_mcp' : 'local_mcp',
+    environment: mcpBetaCohort ? 'preview' : 'local',
     client_family: 'mcp_stdio',
     tool_name: toolName,
     mcp_server_version: mcpPackage.version,
+    beta_cohort: mcpBetaCohort,
     ...context,
   };
 }
@@ -891,7 +894,8 @@ server.tool(
     }
 
     let results;
-    const queryFrame = include_query_frame ? buildSearchQueryFrame(query, { locale }) : null;
+    const auditQueryFrame = buildSearchQueryFrame(query, { locale });
+    const queryFrame = include_query_frame ? auditQueryFrame : null;
     try {
       results = await searchAccessibleIcons({
         query,
@@ -903,6 +907,18 @@ server.tool(
         includeQueryFrame: include_query_frame,
       });
     } catch (error) {
+      void logMcpSearchAttempt({
+        query,
+        resultCount: 0,
+        libraryFilter: library || 'all',
+        libraryMode: library_mode,
+        searchOutcome: 'error',
+        toolName: 'search_icons',
+        locale: locale || null,
+        confidenceLabel: auditQueryFrame.confidence_floor,
+        betaCohort: mcpBetaCohort,
+        mcpServerVersion: mcpPackage.version,
+      });
       return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
     }
 
@@ -911,7 +927,13 @@ server.tool(
         query,
         resultCount: 0,
         libraryFilter: library || 'all',
+        libraryMode: library_mode,
+        searchOutcome: 'zero',
+        toolName: 'search_icons',
         locale: locale || null,
+        confidenceLabel: auditQueryFrame.confidence_floor,
+        betaCohort: mcpBetaCohort,
+        mcpServerVersion: mcpPackage.version,
       });
       return buildTextResponse({
         error: 'No icons found',
@@ -947,7 +969,13 @@ server.tool(
         query,
         resultCount: 0,
         libraryFilter: library || 'all',
+        libraryMode: library_mode,
+        searchOutcome: 'zero',
+        toolName: 'search_icons',
         locale: locale || null,
+        confidenceLabel: auditQueryFrame.confidence_floor,
+        betaCohort: mcpBetaCohort,
+        mcpServerVersion: mcpPackage.version,
       });
       return buildTextResponse(`Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
     }
@@ -955,7 +983,13 @@ server.tool(
       query,
       resultCount: formatted.length,
       libraryFilter: library || 'all',
+      libraryMode: library_mode,
+      searchOutcome: 'results',
+      toolName: 'search_icons',
       locale: locale || null,
+      confidenceLabel: auditQueryFrame.confidence_floor,
+      betaCohort: mcpBetaCohort,
+      mcpServerVersion: mcpPackage.version,
     });
     void logMcpSearchBatch({
       query,
@@ -1013,6 +1047,34 @@ server.tool(
         }),
       });
 
+      const recommendedCount = (payload.results || []).filter((slot) => Boolean(slot.recommended)).length;
+      const confidenceLabels = (payload.results || [])
+        .map((slot) => slot.confidence?.level)
+        .filter((label) => ['low', 'medium', 'high'].includes(label));
+      const confidenceLabel = confidenceLabels.includes('low')
+        ? 'low'
+        : confidenceLabels.includes('medium')
+          ? 'medium'
+          : confidenceLabels.includes('high')
+            ? 'high'
+            : null;
+      void logMcpSearchAttempt({
+        query: task,
+        resultCount: recommendedCount,
+        libraryFilter: library || 'all',
+        libraryMode: 'strict',
+        searchOutcome: payload.needs_clarification
+          ? 'clarification'
+          : recommendedCount > 0
+            ? 'results'
+            : 'zero',
+        toolName: 'recommend_icons',
+        locale: locale || null,
+        confidenceLabel,
+        betaCohort: mcpBetaCohort,
+        mcpServerVersion: mcpPackage.version,
+      });
+
       return buildTextResponse({
         ...payload,
         preview_url: buildPreviewBoardUrlForIcons(
@@ -1024,6 +1086,17 @@ server.tool(
         source: 'Powered by SuperIcons (https://supericons.dev)',
       });
     } catch (error) {
+      void logMcpSearchAttempt({
+        query: task,
+        resultCount: 0,
+        libraryFilter: library || 'all',
+        libraryMode: 'strict',
+        searchOutcome: 'error',
+        toolName: 'recommend_icons',
+        locale: locale || null,
+        betaCohort: mcpBetaCohort,
+        mcpServerVersion: mcpPackage.version,
+      });
       return buildStructuredToolErrorResponse(error, 'SuperIcons icon recommendation is unavailable.');
     }
   }
