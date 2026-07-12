@@ -31,6 +31,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-016` | Ambiguous search diversifies; recommendation narrows with context or asks for clarification | Accepted | Query understanding and result behavior |
 | `D-017` | Brand priority requires the appropriate identity match class and intent | Accepted | Retrieval and reranking |
 | `D-018` | Owner-approved evidence governs brand-term classification changes | Accepted | Retrieval governance |
+| `D-019` | Proactively classify the bounded SI brand set; classify external brands when collision evidence appears | Accepted | Retrieval governance |
 
 ## Decision records
 
@@ -211,6 +212,21 @@ Decision: engineering or admin review may propose a brand-term addition or recla
 Reason: FR-28 depends on maintained coverage as new brand and common-word collisions appear. A clear evidence rule lets coverage grow without allowing raw demand or hidden aliases to edit meaning automatically.
 
 Specification change: version 1.2 adds the brand-classification maintenance rule and resolves `OQ-09`.
+
+Superseded decisions: none.
+
+### D-019: Bounded brand-classification scope
+
+Date: 2026-07-12
+Status: Accepted
+
+Decision: proactively review the 50 owner-controlled SI brand-logo records and explicitly approve ambiguous terms and aliases in the maintained ranking policy. Unclassified brand-logo candidates retain the current distinctive exact fallback, while the generic prefix/substring gate applies automatically. External brand catalogs are not manually classified in full; a term is added reactively when stable identity or collision evidence justifies it. Registry aliases are review inputs and do not become brand-ranking aliases automatically.
+
+Reason: owner-controlled SI brands are a small, high-priority set where common-word collisions can be prevented before embeddings amplify them. Manually classifying thousands of external brands would create an unbounded taxonomy project with little evidence of value.
+
+Alternatives rejected or deferred: a separate brand-classification system; manual classification of every external brand; automatic promotion of every registry alias.
+
+Specification change: version 1.3 adds `FR-29` and the bounded brand-maintenance rule.
 
 Superseded decisions: none.
 

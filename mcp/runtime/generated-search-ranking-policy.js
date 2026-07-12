@@ -207,6 +207,29 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
       ]
     },
     {
+      "id": "love_affection",
+      "label": "Love or affection",
+      "retrieval_queries": [
+        "love",
+        "heart",
+        "favorite"
+      ],
+      "candidate_terms": [
+        "love",
+        "heart",
+        "favorite",
+        "affection",
+        "romance"
+      ],
+      "context_terms": [
+        "love",
+        "heart",
+        "favorite",
+        "affection",
+        "romance"
+      ]
+    },
+    {
       "id": "selection_control",
       "label": "Selection control",
       "retrieval_queries": [
@@ -446,6 +469,43 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
       "minimum_distinct_families_top_8": 2
     },
     {
+      "id": "lovable",
+      "trigger_terms": [
+        "lovable"
+      ],
+      "match": "token",
+      "bare_intent_types": [
+        "ambiguous_concept"
+      ],
+      "context_intent_types": [
+        "context_narrowed_concept"
+      ],
+      "bare_query_family_ids": [
+        "brand_identity",
+        "love_affection"
+      ],
+      "minimum_distinct_families_top_8": 2,
+      "context_family_order": [
+        "brand_identity",
+        "love_affection"
+      ],
+      "avoid_candidate_terms": [
+        "boxing glove"
+      ],
+      "retrieval_queries_by_trigger": {
+        "lovable": {
+          "brand_identity": [
+            "lovable"
+          ],
+          "love_affection": [
+            "love",
+            "heart",
+            "favorite"
+          ]
+        }
+      }
+    },
+    {
       "id": "picker",
       "trigger_terms": [
         "picker"
@@ -656,6 +716,14 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "simpleicons:swift",
         "iconoir:apple-swift",
         "tabler:brand-swift"
+      ]
+    },
+    {
+      "term": "lovable",
+      "aliases": [],
+      "match_class": "ambiguous_exact",
+      "icon_refs": [
+        "si:lovable"
       ]
     }
   ]

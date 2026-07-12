@@ -110,6 +110,40 @@ const swiftFamilies = resultFamilyIds('swift', swiftResults);
 assert.ok(swiftFamilies.has('speed_motion'), 'bare swift should include speed or motion');
 assert.ok(swiftFamilies.has('brand_identity'), 'bare swift should retain the brand interpretation');
 
+const lovableResults = localSearch('lovable');
+const lovableFamilies = resultFamilyIds('lovable', lovableResults);
+assert.ok(lovableResults.some((icon) => iconRef(icon) === 'si:lovable'), 'bare lovable should retain the brand interpretation');
+assert.ok(lovableFamilies.has('brand_identity'), 'bare lovable should identify the brand family');
+assert.ok(lovableFamilies.has('love_affection'), 'bare lovable should include love or affection concepts');
+assert.ok(
+  lovableResults.every((icon) => !iconRef(icon).includes('boxing-glove')),
+  'bare lovable should not admit boxing glove substring leakage',
+);
+assert.equal(iconRef(localSearch('lovable logo')[0]), 'si:lovable', 'explicit Lovable logo should keep identity priority');
+
+const lovableBrandTerm = policy.brand_terms.find((entry) => entry.term === 'lovable');
+assert.equal(lovableBrandTerm?.match_class, 'ambiguous_exact', 'Lovable should be maintained as ambiguous exact');
+assert.equal(getSearchInterpretationPlan('lovable')?.needs_clarification, true, 'bare lovable should remain explicitly ambiguous');
+assert.deepEqual(
+  getSearchInterpretationPlan('lovable logo')?.families.map((family) => family.id),
+  ['brand_identity'],
+  'explicit Lovable logo context should narrow to brand identity',
+);
+
+const lovableCase = evaluationSet.query_groups
+  .find((entry) => entry.id === 'brand_logo_exact')
+  ?.queries.find((entry) => entry.case_id === 'legacy-brand-lovable');
+assert.equal(lovableCase?.expected_top_icon_ids, undefined, 'bare lovable should permit rather than require brand rank 1');
+assert.ok(
+  lovableCase?.required_interpretation_families_top_8?.includes('love_affection'),
+  'bare lovable fixture should require love or affection in the top eight',
+);
+
+const lovableLogoCase = evaluationSet.query_groups
+  .find((entry) => entry.id === 'brand_intent_gating')
+  ?.queries.find((entry) => entry.case_id === 'brand-gate-lovable-logo');
+assert.deepEqual(lovableLogoCase?.expected_top_icon_ids, ['si:lovable'], 'explicit Lovable logo fixture should require rank 1');
+
 const pickerResults = localSearch('picker');
 assert.ok(
   resultFamilyIds('picker', pickerResults).size >= 3,
@@ -150,4 +184,6 @@ console.log(JSON.stringify({
   hello_top_8: helloResults.map(iconRef),
   hello_family_count_top_8: resultFamilyIds('hello', helloResults).size,
   picker_family_count_top_8: resultFamilyIds('picker', pickerResults).size,
+  lovable_top_8: lovableResults.map(iconRef),
+  lovable_family_count_top_8: lovableFamilies.size,
 }, null, 2));

@@ -41,9 +41,16 @@
         {
           "case_id": "legacy-brand-lovable",
           "query": "lovable",
-          "intent_type": "brand_logo",
-          "expected_top_icon_ids": ["si:lovable"],
-          "acceptable_families": ["lovable", "ai app builder"]
+          "intent_type": "ambiguous_concept",
+          "surfaces": ["search_icons"],
+          "brand_match_class": "ambiguous_exact",
+          "expected_brand_behavior": "brand_permitted_top_and_shares_with_concept",
+          "expected_outcome": "interpretation_diversity",
+          "allowed_top_icon_ids": ["si:lovable"],
+          "interpretation_family_ids": ["brand_identity", "love_affection"],
+          "required_interpretation_families_top_8": ["brand_identity", "love_affection"],
+          "minimum_distinct_families_top_8": 2,
+          "acceptable_families": ["lovable brand", "love", "heart", "favorite", "affection"]
         },
         {
           "case_id": "legacy-brand-base44",
@@ -772,6 +779,17 @@
           "expected_outcome": "interpretation_diversity",
           "interpretation_family_ids": ["speed_motion", "brand_identity"],
           "acceptable_families": ["speed", "motion", "fast", "swift brand"]
+        },
+        {
+          "case_id": "brand-gate-lovable-logo",
+          "query": "lovable logo",
+          "intent_type": "brand_logo",
+          "surfaces": ["search_icons", "recommend_icons"],
+          "brand_match_class": "ambiguous_exact",
+          "expected_brand_behavior": "explicit_intent_identity_priority",
+          "expected_outcome": "exact_identity",
+          "expected_top_icon_ids": ["si:lovable"],
+          "acceptable_families": ["lovable brand"]
         }
       ]
     }

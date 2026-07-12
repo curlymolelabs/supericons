@@ -50,8 +50,10 @@ const ALLOWED_BRAND_MATCH_CLASSES = new Set([
 ]);
 const ALLOWED_BRAND_BEHAVIORS = new Set([
   'exact_identity_priority',
+  'explicit_intent_identity_priority',
   'brand_not_top_without_intent',
   'brand_shares_with_concept_without_intent',
+  'brand_permitted_top_and_shares_with_concept',
 ]);
 
 async function readJson(relativePath) {
@@ -229,6 +231,28 @@ function assertEvaluationSet(evaluationSet) {
         query.interpretation_family_ids?.includes(query.expected_primary_interpretation_family),
         `${query.case_id}: primary interpretation should be in interpretation_family_ids`,
       );
+    }
+
+    if (query.required_interpretation_families_top_8) {
+      assert.ok(
+        Array.isArray(query.required_interpretation_families_top_8)
+          && query.required_interpretation_families_top_8.length > 0,
+        `${query.case_id}: required top-eight interpretation families should be non-empty`,
+      );
+      for (const familyId of query.required_interpretation_families_top_8) {
+        assert.ok(
+          query.interpretation_family_ids?.includes(familyId),
+          `${query.case_id}: required top-eight family should be declared in interpretation_family_ids`,
+        );
+      }
+    }
+
+    if (query.allowed_top_icon_ids) {
+      assert.ok(
+        Array.isArray(query.allowed_top_icon_ids) && query.allowed_top_icon_ids.length > 0,
+        `${query.case_id}: allowed_top_icon_ids should be non-empty`,
+      );
+      assert.equal(query.expected_top_icon_ids, undefined, `${query.case_id}: allowed and required top IDs should not conflict`);
     }
 
     if (query.brand_match_class) {

@@ -16,6 +16,14 @@ On 2026-07-12, the owner approved all recommendations in this packet:
 
 The recorded replacements are `车牌识别` for Simplified Chinese, `カメラでスキャン` for Japanese, and `ícone de editor de código` for Brazilian Portuguese. The evaluation data is the controlling machine-readable record.
 
+### Clarification added 2026-07-12
+
+In the original tables, `None` in the "avoid or exact rule" column means "No additional exact or avoid rule." The expected useful-family column still defines the required result families. For example, `settings` still expects settings, cog, or sliders; it simply does not force one exact icon or add a special exclusion list.
+
+### L05 amendment added 2026-07-12
+
+The original L05 Lovable approval is superseded by the owner's later clarification. Bare `lovable` is `ambiguous_exact`: the brand is permitted but not required at rank 1, and brand plus love/affection interpretations must appear in the top eight. Explicit `lovable logo` requires `si:lovable` at rank 1. The machine-readable evaluation set contains the active expectation.
+
 ## Recommended approval set
 
 These 19 cases are clear enough to approve as written.

@@ -47,3 +47,7 @@ The approval batch did not modify the CJK fixture files, multilingual dictionari
 - Native multilingual coverage is not broad enough for final model selection.
 - No embedding generation, vector retrieval, deployment, or publication occurred.
 - Model choice, latency ceilings, cost ceilings, and multilingual regression limits remain open.
+
+## Later amendment
+
+On 2026-07-12, the owner clarified that L05 Lovable must share bare-query results with love and affection meanings while allowing, but not requiring, the brand at rank 1. A separate explicit `lovable logo` fixture preserves identity rank 1. The original review record is annotated, and the active evaluation data carries the amended rule.

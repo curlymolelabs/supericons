@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.2
+Version: 1.3
 Approved: 2026-07-11
 Amended: 2026-07-12
 Status: canonical product and technical specification
@@ -282,6 +282,8 @@ The rule is generic. Query-specific fixtures such as `hello` and `HelloFresh log
 
 Engineering or admin review may propose brand-term additions or reclassification. The owner approves changes in `data/search-intent-graph/ranking-policy.json`. Every change requires a stable collision or identity fixture plus approved registry identity evidence or sanitized search evidence, and exact identity canaries must keep passing. Usage frequency alone cannot change a brand classification.
 
+The bounded owner-maintained pass covers the 50 SI brand-logo records. Approved ambiguous terms and aliases are stored in the maintained ranking policy. Unclassified brand-logo candidates retain the distinctive exact fallback, and the generic prefix/substring gate still applies. External brand catalogs are classified reactively when stable collision or identity evidence appears. Registry aliases are evidence for review, not automatic brand-ranking aliases.
+
 ### Library-filter behavior
 
 The caller contract must distinguish:
@@ -383,6 +385,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-26` | Require explicit owner approval before Supabase/Netlify deployment or npm publication. | Release risk | Status ledger links each external mutation to approval and verification evidence. |
 | `FR-27` | Diversify ambiguous list-search results across approved interpretation families, while recommendation uses task context and asks for clarification when needed. | Human and agent jobs; ambiguity risk | Approved ambiguous cases cover at least three relevant families in the top eight when available; recommendation cases narrow correctly or return labeled clarification options. |
 | `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
+| `FR-29` | Proactively review the bounded SI brand-logo set while classifying external brand collisions reactively from approved evidence. | Brand-maintenance cost; `D-019` | The 50 SI brand records have an owner-review disposition; ambiguous approved terms have concept and explicit-identity fixtures; unclassified external exact matches keep the documented fallback. |
 
 ## Constraints
 
@@ -530,11 +533,13 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - Approved ambiguous search cases cover the required interpretation families without weak filler results.
 - Ambiguous recommendation cases use context or return labeled clarification options.
 - Generic prefix/substring brand collisions do not outrank concept results without brand intent.
+- The bounded SI brand review is complete before embedding baseline capture; external catalogs remain evidence-driven rather than manually classified in full.
 
 ## Change policy
 
 - Requirements use stable IDs. Do not renumber existing IDs; add new ones or supersede them through an accepted decision.
 - Every accepted architectural or product decision updates this document and `decisions.md` in the same change.
+- Increase the specification version when requirements or accepted decisions change. An amended-date-only edit is limited to explanations, examples, and other changes that do not alter requirements.
 - Implementation claims update `implementation-status.md` only when linked evidence exists.
 - New production evidence may reprioritize phases or fixtures without silently rewriting contracts.
 - Historical source plans remain superseded in place until a later link-safe archive pass.

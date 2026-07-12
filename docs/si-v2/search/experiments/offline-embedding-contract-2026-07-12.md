@@ -130,6 +130,12 @@ The next sanitized analytics export must include aggregate query counts by local
 
 Acceptance signal: locale totals reconcile with the overall sanitized query denominator, and sparse or unknown attribution remains visible.
 
+### ER-08: locale-aware generic instructions
+
+Handle common icon-search instructions and filler phrases by locale during deterministic query backoff and multilingual evaluation. Examples include `icono de`, `ícone de`, `图标`, `アイコン`, and `아이콘`. Suppression must be phrase-aware or context-aware so a translated word with real concept meaning is not removed blindly.
+
+Acceptance signal: approved native queries keep their intended concept terms after backoff; generic instruction wording does not create zero results or dominate semantic similarity; and paired fixtures prove both suppression and preservation behavior.
+
 ## Success metrics
 
 ### Primary quality metrics
@@ -175,6 +181,7 @@ If no candidate meets every rule, keep deterministic search as the served path a
 1. Complete owner review of the 28 legacy evaluation cases. Completed 2026-07-12.
 2. Replace the three translated placeholder queries with native-language fixtures. Completed 2026-07-12.
 3. Expand and owner-review the multilingual tiers.
+   Include paired localized filler-phrase fixtures and shorter concept-only controls for Spanish, Brazilian Portuguese, CJK, and complex-script tiers.
 4. Verify current candidate models and prices from official provider documentation. Initial shortlist completed 2026-07-12; recheck required before paid execution.
 5. Freeze the experiment inputs and record document and locale counts.
 6. Generate candidate embeddings offline with separate versions.

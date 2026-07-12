@@ -1,0 +1,53 @@
+{
+  "schema_version": "search-v2-embedding-candidates-1",
+  "checked_date": "2026-07-12",
+  "storage_index_limit_dimensions": 2000,
+  "candidates": [
+    {
+      "id": "e1-voyage-4-large-1024",
+      "provider": "voyage",
+      "model": "voyage-4-large",
+      "dimensions": 1024,
+      "document_input_type": "document",
+      "query_input_type": "query",
+      "purpose": "quality_ceiling"
+    },
+    {
+      "id": "e2-voyage-4-lite-512",
+      "provider": "voyage",
+      "model": "voyage-4-lite",
+      "dimensions": 512,
+      "document_input_type": "document",
+      "query_input_type": "query",
+      "purpose": "latency_cost_floor"
+    },
+    {
+      "id": "e3-gemini-embedding-001-1024",
+      "provider": "google",
+      "model": "gemini-embedding-001",
+      "dimensions": 1024,
+      "document_input_type": "RETRIEVAL_DOCUMENT",
+      "query_input_type": "RETRIEVAL_QUERY",
+      "purpose": "independent_multilingual_candidate"
+    },
+    {
+      "id": "e4-text-embedding-3-large-1024",
+      "provider": "openai",
+      "model": "text-embedding-3-large",
+      "dimensions": 1024,
+      "document_input_type": "document",
+      "query_input_type": "query",
+      "purpose": "independent_quality_candidate"
+    },
+    {
+      "id": "e5-text-embedding-3-small-1024",
+      "provider": "openai",
+      "model": "text-embedding-3-small",
+      "dimensions": 1024,
+      "document_input_type": "document",
+      "query_input_type": "query",
+      "purpose": "optional_cost_control",
+      "optional": true
+    }
+  ]
+}
