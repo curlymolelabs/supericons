@@ -1,6 +1,6 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-13
+Last verified: 2026-07-14
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
 ## Lifecycle definitions
@@ -20,7 +20,7 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `P0` Governance and baseline | Complete for the approved fixed-suite scope | Official specification version 1.5; sanitized July 11 baseline; 225-case evaluation suite; approved legacy, SI-brand, and multilingual meaning reviews; deterministic-first decision `D-021` | Traceability audit passed; all 225 cases have stable IDs; 219 cases are owner-reviewed and 6 are contract fixtures; revoked provider authorization fails closed before execution | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `docs/si-v2/search/reviews/multilingual-evaluation-owner-review-2026-07-12.md`; `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `references/verification/search-query-baseline-2026-07-11.md` |
-| `P1` Shared deterministic understanding | Latency rerun prepared and awaiting a new fingerprint-bound approval | Search intent core, generated rules/graph, shared policy-aware query-frame modules, recommendation clarification, maintained ranking policy, ambiguity diversification, all 50 approved SI brand classifications, rejected-alias enforcement, final-fusion policy enforcement, strict/prefer/all modes, additive audit contract, safe stage timing, approximate candidate payload measurement, additive SVG-free beta candidate RPC, final-result SVG hydration, deterministic final tie-break, distinct family retrieval, repeated live-parity gate, localized MCP measurement, guarded SQL runner, clarification-safe aggregation, locale-count helper, prerelease routing, and rollback plan | Earlier treatment warm search p95 was 1,785.161 ms across 25 requests with zero errors; the rerun base now passes tie, retrieval, repeated-parity-verifier, exact HTTP parity, library-mode, and 225-case checks | The `@supericons/mcp` 0.4.18-beta.0 package dry-run and package checks verified 38 files; not published | Beta measurement schema and migrations `20260712` and `20260713150000` remain deployed; isolated beta function is deleted; production functions remain on versions 34 and 35 | Earlier control and treatment search were observed live; recommendation was not measured; the corrected rerun has not been observed live | `references/verification/search-v2-latency-rerun-preparation-2026-07-13.md`; `references/verification/search-v2-latency-rerun-base-2026-07-13.md`; `references/verification/search-v2-latency-gate-a-partial-execution-2026-07-13.md`; `references/verification/search-v2-deterministic-tie-fix-2026-07-13.md` |
+| `P1` Shared deterministic understanding | Latency rerun stopped on the approved cold-request rule; warm direct search passes | Search intent core, generated rules/graph, shared policy-aware query-frame modules, recommendation clarification, maintained ranking policy, ambiguity diversification, all 50 approved SI brand classifications, rejected-alias enforcement, final-fusion policy enforcement, strict/prefer/all modes, additive audit contract, safe stage timing, approximate candidate payload measurement, additive SVG-free beta candidate RPC, final-result SVG hydration, deterministic final tie-break, distinct family retrieval, repeated live-parity gate, localized MCP measurement, guarded SQL runner, clarification-safe aggregation, locale-count helper, prerelease routing, and rollback plan | Repeated live parity passed five cases; treatment direct warm p95 was 1,645.140 ms across 25 requests with zero errors; two consecutive treatment first requests exceeded 2,000 ms, so localized treatment and recommendation were not measured | The `@supericons/mcp` 0.4.18-beta.0 package dry-run and package checks verified 38 files; not published | Beta measurement schema and migrations `20260712` and `20260713150000` remain deployed; isolated beta function is deleted; production functions remain on versions 34 and 35 | Control and treatment parity and direct search were observed live; localized control was observed live; localized treatment and recommendation were not measured | `references/verification/search-v2-latency-rerun-execution-2026-07-14.md`; `references/verification/search-v2-latency-rerun-preparation-2026-07-13.md`; `references/verification/search-v2-latency-rerun-base-2026-07-13.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
 | `P3` Offline embeddings | Conditional and paused by `D-021`; external sample authorization revoked before execution | Provider-neutral planning, sample, adapters, response validation, executor, and replay ledger remain as inactive reference artifacts; no corpus embedding generation, sync adapter, or vector-storage migration | Revoked authorization is verified to fail before credentials, ledger creation, or network activity; no live provider response or retrieval quality was tested | Not applicable | Not verified | Not verified | `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-sample-contract-2026-07-12.md`; `docs/si-v2/search/reviews/embedding-sample-authorization-request-2026-07-12.md` |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
@@ -103,7 +103,7 @@ The legacy review approved 19 cases as written, adjusted 6 expectations, and rep
 | phase | plain-language position |
 | --- | --- |
 | `P0` | Complete for the approved fixed-suite scope: all 225 cases are owner-reviewed or fixed contract fixtures. |
-| `P1` | Deterministic behavior passed live checks, but the isolated beta was rolled back before publication because two consecutive live p95 checks exceeded 2,000 ms. The additive measurement schema remains deployed. |
+| `P1` | Repeated live response parity and direct warm search passed. The isolated beta was rolled back because two consecutive treatment first requests exceeded 2,000 ms. Localized treatment and recommendation remain unmeasured. |
 | `P2` | Semantic document generation and a migration draft exist, but current input drift and deployment remain unresolved. |
 | `P3` | Conditional and paused. The external sample was revoked before execution; no provider keys are needed. |
 | `P4` | Conditional and paused. Vector retrieval, shadow comparison, and hybrid fusion are not implemented. |
@@ -131,13 +131,13 @@ This ledger does not infer current production deployment from file presence, pac
 
 ## Immediate next gate
 
-Resolve the live response-parity stop before another deterministic MCP beta:
+Reduce first-request work before another deterministic MCP beta:
 
-1. Use [`references/verification/search-v2-deterministic-mcp-beta-gate-c-rollback-2026-07-13.md`](../../../references/verification/search-v2-deterministic-mcp-beta-gate-c-rollback-2026-07-13.md) as the controlling failure and rollback record.
-2. Review the rerun base and preparation evidence.
-3. Obtain explicit owner approval for fingerprint `5be12fca18ad902af3569366691a17bbfaafb6114cec4dc413945c8d18c586c6` before any hosted deployment.
-4. Keep normal `db push`, historical renames, and older ledger repair prohibited.
-5. Run a new Gate A and request a new external approval before redeploying or publishing.
+1. Use [`references/verification/search-v2-latency-rerun-execution-2026-07-14.md`](../../../references/verification/search-v2-latency-rerun-execution-2026-07-14.md) as the controlling latency and rollback record.
+2. Reduce repeated candidate and metadata database work while preserving exact live response parity.
+3. Keep normal `db push`, historical renames, and older ledger repair prohibited.
+4. Run local parity and latency gates before preparing a new fingerprint-bound live request.
+5. Require a separate owner approval before any hosted redeployment or npm publication.
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 
