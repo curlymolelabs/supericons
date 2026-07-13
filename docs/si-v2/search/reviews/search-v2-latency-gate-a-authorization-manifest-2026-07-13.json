@@ -1,0 +1,113 @@
+{
+  "schema_version": "search-v2-latency-gate-a-authorization-1",
+  "status": "awaiting_owner_approval",
+  "endpoint": "mcp-search-v2-beta",
+  "beta_cohort": "deterministic-v2-beta",
+  "control_commit": "ba7f7ea18",
+  "treatment_commit": "cacd283cb",
+  "migration": {
+    "version": "20260713150000",
+    "path": "supabase/migrations/20260713150000_search_v2_lightweight_candidates.sql",
+    "sha256": "8ad558920ae3565bd26fe3706a1ba8ef0e8c3b2ac9ddafce9f7b15e995ede42e",
+    "runner": "scripts/apply-search-v2-lightweight-candidates-hosted.ps1"
+  },
+  "measurement": {
+    "same_isolated_endpoint": true,
+    "deployment_sequence": [
+      "control_search",
+      "treatment_search",
+      "control_recommendation",
+      "treatment_recommendation"
+    ],
+    "search_inputs": [
+      {
+        "query": "settings",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": "en"
+      },
+      {
+        "query": "hello",
+        "library_mode": "all",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "query": "cog",
+        "library": "bootstrap",
+        "library_mode": "strict",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "query": "combobox",
+        "library": "bootstrap",
+        "library_mode": "prefer",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "query": "设置",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": "zh-Hans"
+      }
+    ],
+    "recommendation_input": {
+      "task": "Choose an icon for application settings.",
+      "slots": [
+        "cog"
+      ],
+      "library_mode": "all",
+      "locale": "en"
+    },
+    "warm_search_samples_per_variant": 25,
+    "warm_recommendation_samples_per_variant": 20,
+    "first_request_rule": "Record the first request after each deployment separately. Do not include it only inside a warm average.",
+    "matched_conditions": "Use the same client, region, inputs, sample counts, request order, and short time window for control and treatment."
+  },
+  "limits": {
+    "hosted_search_p95_ms": 2000,
+    "one_slot_recommendation_p95_ms": 3000,
+    "maximum_error_rate_percent": 1,
+    "maximum_deployments": 4,
+    "npm_publications": 0,
+    "production_function_deployments": 0,
+    "model_provider_calls": 0
+  },
+  "required_evidence": [
+    "complete control and treatment HTTP response parity",
+    "client end-to-end latency",
+    "first request latency separated from warm samples",
+    "candidate search stage latency",
+    "candidate SVG character count",
+    "approximate total candidate payload characters",
+    "search and recommendation error counts",
+    "production web and MCP function versions before and after",
+    "isolated endpoint deletion after measurement"
+  ],
+  "allowed_external_mutations": [
+    "apply the exact lightweight candidate RPC migration with the guarded runner",
+    "repair only migration history version 20260713150000 after SQL and postflight pass",
+    "deploy control commit ba7f7ea18 to mcp-search-v2-beta for search measurement",
+    "deploy treatment commit cacd283cb to mcp-search-v2-beta for search measurement",
+    "deploy control commit ba7f7ea18 to mcp-search-v2-beta for recommendation measurement",
+    "deploy treatment commit cacd283cb to mcp-search-v2-beta for recommendation measurement",
+    "delete mcp-search-v2-beta after measurement or immediately after a rollback trigger"
+  ],
+  "prohibited_actions": [
+    "normal supabase db push",
+    "repair of any older migration history entry",
+    "deployment of search-icons or mcp-search",
+    "npm publication or tag change",
+    "Netlify deployment",
+    "external model-provider call",
+    "user invitation or public beta message"
+  ],
+  "rollback": {
+    "latency_failure": "Delete the isolated beta endpoint, leave stable production functions unchanged, and retain the unused additive RPC for separate review.",
+    "sql_failure": "Rely on the single-transaction rollback and do not repair migration history.",
+    "history_repair_failure": "Do not rerun the SQL. Verify the function and retry only the exact history repair.",
+    "parity_or_security_failure": "Stop before treatment measurement, delete the isolated endpoint, and record the failure."
+  }
+}
