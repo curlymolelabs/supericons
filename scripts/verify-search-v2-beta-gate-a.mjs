@@ -22,6 +22,7 @@ const hostedClient = read('mcp/hosted-search-client.js');
 const localMcp = read('mcp/index.js');
 const hostedMcp = read('mcp/remote-server.js');
 const adminApi = read('supabase/functions/admin-api/index.ts');
+const hostedMigrationRunner = read('scripts/apply-search-v2-beta-hosted.ps1');
 
 assert.equal(packageJson.version, '0.4.18-beta.0');
 assert.equal(packageLock.version, packageJson.version);
@@ -38,6 +39,9 @@ assert.ok(betaEndpoint.includes(`betaCohort: '${DETERMINISTIC_BETA_COHORT}'`));
 assert.match(supabaseConfig, /\[functions\.mcp-search-v2-beta\]\s+verify_jwt = false/);
 assert.ok(hostedClient.includes('getDefaultHostedSearchFunctionName'));
 assert.ok(hostedClient.includes('beta_cohort'));
+assert.ok(hostedMigrationRunner.includes(
+  '$script:databaseUrl = "${poolerUrl}?sslmode=require&application_name=supericons_gate_b"',
+), 'hosted runner must preserve the pooler URL when adding connection options');
 
 const rollbackPosition = migration.indexOf('-- Rollback plan');
 const firstAlterPosition = migration.indexOf('alter table');

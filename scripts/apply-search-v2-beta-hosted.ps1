@@ -78,7 +78,7 @@ if (-not $poolerUrl.StartsWith('postgresql://')) {
     throw 'Linked Supabase pooler URL is invalid.'
 }
 
-$script:databaseUrl = "$poolerUrl?sslmode=require&application_name=supericons_gate_b"
+$script:databaseUrl = "${poolerUrl}?sslmode=require&application_name=supericons_gate_b"
 $securePassword = Read-Host 'Supabase database password' -AsSecureString
 
 try {
