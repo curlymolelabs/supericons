@@ -12,7 +12,15 @@ const SEARCH_CASES = [
   { id: 'hello-all', query: 'hello', library_mode: 'all', limit: 8, locale: 'en' },
   { id: 'cog-bootstrap-strict', query: 'cog', library: 'bootstrap', library_mode: 'strict', limit: 8, locale: 'en' },
   { id: 'combobox-bootstrap-prefer', query: 'combobox', library: 'bootstrap', library_mode: 'prefer', limit: 8, locale: 'en' },
-  { id: 'settings-zh-hans', query: '设置', library_mode: 'all', limit: 5, locale: 'zh-Hans' },
+  {
+    id: 'settings-zh-hans-expanded',
+    query: 'settings',
+    library_mode: 'all',
+    limit: 5,
+    locale: null,
+    localized_query: '设置',
+    localized_locale: 'zh-Hans',
+  },
 ];
 
 function readArg(name) {
@@ -62,6 +70,8 @@ async function postSearch(searchCase) {
         library_mode: searchCase.library_mode,
         limit: searchCase.limit,
         locale: searchCase.locale,
+        localized_query: searchCase.localized_query || null,
+        localized_locale: searchCase.localized_locale || null,
         source: 'mcp_beta',
         environment: 'preview',
         client_family: 'latency_gate_a',
@@ -115,6 +125,125 @@ async function runSearch(variant) {
     endpoint: 'mcp-search-v2-beta',
     first_request: firstRequest,
     warm_summary: summaryFor(warmSamples),
+    warm_samples: warmSamples,
+  };
+}
+
+async function runParity(variant) {
+  const samples = [];
+  for (let repetition = 0; repetition < 3; repetition += 1) {
+    for (const searchCase of SEARCH_CASES) {
+      samples.push(await postSearch(searchCase));
+    }
+  }
+
+  const cases = SEARCH_CASES.map((searchCase) => {
+    const caseSamples = samples.filter((sample) => sample.case_id === searchCase.id);
+    const first = caseSamples[0];
+    const responseHashes = [...new Set(caseSamples.map((sample) => sample.response_sha256))];
+    return {
+      case_id: searchCase.id,
+      samples: caseSamples.length,
+      successful: caseSamples.filter((sample) => sample.ok).length,
+      stable_within_variant: responseHashes.length === 1,
+      response_sha256: responseHashes.length === 1 ? responseHashes[0] : null,
+      distinct_response_hashes: responseHashes,
+      status: first?.status || 0,
+      result_count: first?.result_count || 0,
+      result_icon_ids: first?.result_icon_ids || [],
+      svg_result_count: first?.svg_result_count || 0,
+      response_characters: first?.response_characters || 0,
+    };
+  });
+
+  return {
+    mode: 'parity',
+    variant,
+    endpoint: 'mcp-search-v2-beta',
+    first_request: samples[0],
+    parity_summary: {
+      cases: cases.length,
+      requests: samples.length,
+      all_requests_successful: samples.every((sample) => sample.ok),
+      all_cases_stable_within_variant: cases.every((entry) => entry.stable_within_variant),
+    },
+    cases,
+    samples,
+  };
+}
+
+async function runLocalizedOnce(searchIconsHostedMcp) {
+  const originalFetch = globalThis.fetch;
+  let hostedRequests = 0;
+  globalThis.fetch = async (...args) => {
+    hostedRequests += 1;
+    return originalFetch(...args);
+  };
+
+  const startedAt = performance.now();
+  let payload = null;
+  let error = null;
+  try {
+    payload = await searchIconsHostedMcp({
+      query: '设置',
+      libraryMode: 'all',
+      limit: 5,
+      locale: 'zh-Hans',
+      usageContext: {
+        source: 'mcp_beta',
+        channel: 'hosted_mcp',
+        environment: 'preview',
+        client_family: 'latency_gate_a',
+        tool_name: 'search_icons',
+        beta_cohort: 'deterministic-v2-beta',
+      },
+    });
+  } catch (caught) {
+    error = caught instanceof Error ? caught.message : 'localized_search_failed';
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  const publicSummary = payload
+    ? {
+        result_count: Array.isArray(payload.results) ? payload.results.length : 0,
+        result_icon_ids: Array.isArray(payload.results)
+          ? payload.results.map((row) => String(row?.icon_id || '')).filter(Boolean)
+          : [],
+      }
+    : null;
+  return {
+    ok: Boolean(payload && !error),
+    duration_ms: Number((performance.now() - startedAt).toFixed(3)),
+    hosted_requests: hostedRequests,
+    response_sha256: publicSummary ? sha256(JSON.stringify(publicSummary)) : null,
+    ...publicSummary,
+    error,
+  };
+}
+
+async function runLocalized(variant) {
+  process.env.SUPERICONS_MCP_SEARCH_URL = ENDPOINT;
+  process.env.SUPERICONS_MCP_SEARCH_ANON_KEY = '';
+  process.env.SUPERICONS_API_KEY = '';
+  const { searchIconsHostedMcp } = await import('../mcp/hosted-search-client.js');
+
+  const firstRequest = await runLocalizedOnce(searchIconsHostedMcp);
+  const warmSamples = [];
+  for (let index = 0; index < 5; index += 1) {
+    warmSamples.push(await runLocalizedOnce(searchIconsHostedMcp));
+  }
+
+  return {
+    mode: 'localized',
+    variant,
+    endpoint: 'mcp-search-v2-beta',
+    first_request: firstRequest,
+    warm_summary: {
+      ...summaryFor(warmSamples),
+      hosted_requests: warmSamples.reduce((total, sample) => total + sample.hosted_requests, 0),
+      hosted_requests_per_search: warmSamples.map((sample) => sample.hosted_requests),
+    },
     warm_samples: warmSamples,
   };
 }
@@ -238,16 +367,25 @@ async function runRecommendation(variant) {
 const mode = readArg('mode');
 const variant = readArg('variant');
 const output = readArg('output');
-assert.ok(['search', 'recommendation'].includes(mode), 'Use --mode search or --mode recommendation.');
+const manifestHash = readArg('manifest-hash');
+assert.ok(
+  ['parity', 'search', 'localized', 'recommendation'].includes(mode),
+  'Use --mode parity, search, localized, or recommendation.',
+);
 assert.ok(['control', 'treatment'].includes(variant), 'Use --variant control or --variant treatment.');
 assert.ok(output, 'Provide --output with a local JSON path.');
+assert.match(manifestHash || '', /^[a-f0-9]{64}$/, 'Provide --manifest-hash with the approved fingerprint.');
 
-const result = mode === 'search'
-  ? await runSearch(variant)
-  : await runRecommendation(variant);
+const runners = {
+  parity: runParity,
+  search: runSearch,
+  localized: runLocalized,
+  recommendation: runRecommendation,
+};
+const result = await runners[mode](variant);
 const artifact = {
   schema_version: 1,
-  manifest_sha256: 'fcdfaeef7f19af49536438ca1518655813fcffd103866d352cdb792c6821bb25',
+  manifest_sha256: manifestHash,
   measured_at: new Date().toISOString(),
   ...result,
 };
@@ -261,9 +399,16 @@ console.log(JSON.stringify({
   mode: artifact.mode,
   variant: artifact.variant,
   first_request_ms: artifact.first_request.duration_ms,
-  warm_summary: artifact.warm_summary,
+  summary: artifact.warm_summary || artifact.parity_summary,
 }, null, 2));
 
-if (!artifact.first_request.ok || artifact.warm_summary.errors > 0) {
+if (
+  !artifact.first_request.ok
+  || (artifact.warm_summary && artifact.warm_summary.errors > 0)
+  || (artifact.parity_summary && (
+    !artifact.parity_summary.all_requests_successful
+    || !artifact.parity_summary.all_cases_stable_within_variant
+  ))
+) {
   process.exitCode = 1;
 }

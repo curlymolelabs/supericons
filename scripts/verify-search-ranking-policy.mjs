@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { rerankHostedSearchCandidates } from '../lib/hosted-search-core.js';
 import {
+  buildSearchRankingQueryVariants,
   getBrandRankAdjustment,
   getCandidateInterpretationFamilyIds,
   getSearchInterpretationPlan,
@@ -71,6 +72,13 @@ assert.equal(
   hashFile('lib/search-ranking-policy.js'),
   hashFile('mcp/runtime/search-ranking-policy.js'),
   'ranking policy runtime copies should match',
+);
+
+const cogRetrievalVariants = buildSearchRankingQueryVariants('cog', ['cog'], { maxVariants: 14 });
+assert.deepEqual(
+  cogRetrievalVariants,
+  ['cog', 'gear'],
+  'cog should add the first distinct settings-family retrieval term without expanding every synonym',
 );
 
 const evaluationSet = readJson('data/semantic-search-v2/evaluation-set.json');
