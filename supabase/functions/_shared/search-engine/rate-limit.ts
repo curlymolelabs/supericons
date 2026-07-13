@@ -54,6 +54,13 @@ function extractClientIp(req: Request) {
   return realIp.trim() || null;
 }
 
+export function exceedsSearchRateLimit(currentCount: number, requestCost: number, perMinute: number) {
+  const normalizedCount = Math.max(0, Math.floor(Number(currentCount) || 0));
+  const normalizedRequestCost = Math.max(1, Math.floor(Number(requestCost) || 1));
+  const normalizedLimit = Math.max(1, Math.floor(Number(perMinute) || 1));
+  return normalizedCount + normalizedRequestCost > normalizedLimit;
+}
+
 function normalizeCountryCode(value: string | null) {
   const normalized = String(value || '').trim().toUpperCase();
   if (!/^[A-Z]{2}$/.test(normalized)) return null;
@@ -107,7 +114,7 @@ export async function getAuditIdentity(req: Request) {
   };
 }
 
-export async function enforceSearchRateLimit(req: Request) {
+export async function enforceSearchRateLimit(req: Request, requestCost = 1) {
   const identity = await getAuditIdentity(req);
   if (!identity.ipHash) return identity;
 
@@ -129,7 +136,7 @@ export async function enforceSearchRateLimit(req: Request) {
   }
 
   const perMinute = getSearchRateLimitPerMinute();
-  if ((count || 0) >= perMinute) {
+  if (exceedsSearchRateLimit(count || 0, requestCost, perMinute)) {
     throw new SearchEngineHttpError('Too many hosted search requests.', {
       status: 429,
       code: 'search_rate_limited',

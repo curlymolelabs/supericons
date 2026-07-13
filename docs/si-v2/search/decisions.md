@@ -262,6 +262,23 @@ Specification change: version 1.5 adds `G-09`, `NG-09`, `FR-31`, `FR-32`, the de
 
 Superseded decisions: none. `D-010`, `D-014`, and `D-020` remain conditional future controls if semantic retrieval is later re-approved.
 
+### D-022: Deterministic round-trip reduction with preserved controls
+
+Date: 2026-07-14
+Status: Accepted
+
+Decision: reduce hosted search latency through two bounded deterministic paths. First, send the generated candidate-query array through one database function while retaining each row's query text and position. Second, allow one recommendation request to carry all resolved logical searches. The grouped request reserves one existing rate-limit unit for every logical query, and every logical search keeps its synchronous audit write. Clarification is evaluated before retrieval and sends no search queries. Production functions remain unchanged until a separate deployment approval and live parity gate.
+
+Measurement records worker request order and module age at handler entry without calling that value module-load time. Safety failures stop an internal run. A latency miss records evidence and blocks publication, but it does not prevent later approved diagnostic phases from identifying the slow stage.
+
+Reason: live measurement showed that removing candidate SVG data greatly reduced payload size, but candidate database work still dominated warm search and a one-slot recommendation still performed four serialized hosted searches. Fewer deterministic round trips target the measured causes without adding a model call, variable provider cost, or a new ranking system. Keeping audit writes synchronous preserves the current rate limiter, which counts those rows.
+
+Alternatives rejected or deferred: backgrounding audit writes before the rate limiter has an independent counter; treating the 14-variant ceiling as a fixed query count; scheduled warm pings; moving search to a new host before reducing known round trips; changing matching or ranking in the same measurement slice.
+
+Specification change: version 1.6 adds `FR-33`, `FR-34`, `FR-35`, and the deterministic round-trip parity and control rules.
+
+Superseded decisions: none.
+
 ## Adding or superseding a decision
 
 Every new entry must include:

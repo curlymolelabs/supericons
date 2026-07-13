@@ -24,10 +24,14 @@ for (const file of requiredDeterministicFiles) {
 }
 
 assert.equal(authorization.status, 'revoked_by_owner');
-assert.match(specification, /Version: 1\.5/);
+assert.match(specification, /Version: 1\.6/);
 assert.match(specification, /FR-31/);
 assert.match(specification, /FR-32/);
+assert.match(specification, /FR-33/);
+assert.match(specification, /FR-34/);
+assert.match(specification, /FR-35/);
 assert.match(decisions, /D-021: Deterministic-first MCP search and paused provider work/);
+assert.match(decisions, /D-022: Deterministic round-trip reduction with preserved controls/);
 
 const forbiddenPathPattern = /(?:^|[/\\])(?:search-v2-)?embedding-(?:provider|executor|ledger|sample|candidates)/i;
 const forbiddenSourcePatterns = [

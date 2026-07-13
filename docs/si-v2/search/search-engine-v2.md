@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.5
+Version: 1.6
 Approved: 2026-07-11
-Amended: 2026-07-12
+Amended: 2026-07-14
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -88,6 +88,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 8. Ambiguous short queries should show useful interpretation breadth in search, while recommendation uses task and slot context before asking for clarification.
 9. Brand identity priority applies to genuine identity matches, not accidental prefixes, substrings, or ambiguous common words.
 10. Deterministic search ships and is measured before semantic retrieval is reconsidered. AI may help offline with reviewed maintenance, but it does not decide live search results by default.
+11. Remove avoidable network and database round trips only when exact result and response parity remain checked.
 
 ## Authoritative dependencies
 
@@ -396,6 +397,9 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-30` | Apply separate hard-safety, per-locale, and aggregate quality gates to embedding candidates, while recording meaning approval and language assurance honestly. | Multilingual quality risk; `D-020` | Exact identity, blocked-alias, and safety fixtures have zero failures; every reviewed locale with at least five cases has at most one semantic failure; aggregate multilingual pass rate is at least 90 percent. |
 | `FR-31` | Keep the default free web and MCP request path free of AI-agent, general-purpose LLM, and metered third-party embedding calls. | `G-09`; variable-cost and abuse risk; `D-021` | Default-path tests prove zero model-provider calls, while fixed ranking and fallback fixtures remain deterministic. |
 | `FR-32` | Package and measure the deterministic MCP search before any embedding provider or local-model experiment resumes. The owner approves every future model shortlist first. | Product-fit and operating-cost risk; `D-021` | Deterministic MCP package checks pass, a controlled beta has reviewed evidence, and any later model experiment links to owner-approved candidates and a bounded cost or local-resource plan. |
+| `FR-33` | A hosted search may send its generated query variants through one bounded array RPC only when each candidate retains its query-variant text and order, per-variant limits remain unchanged, and final response bytes remain equal to the separate-call path. | `G-03`, `FR-24`, `D-022` | Disposable PostgreSQL parity, malformed-provenance rejection, ranking parity, and full HTTP response parity pass. |
+| `FR-34` | A recommendation may group its resolved search queries into one hosted request. Every logical query still consumes one rate-limit unit and writes its audit row synchronously. A slot that needs clarification performs no retrieval. | `G-03`, `G-08`, `FR-24`, `FR-27`, `D-022` | Grouped-request, rate-limit-cost, audit-boundary, clarification, and recommendation-result parity checks pass. |
+| `FR-35` | Internal latency measurement must distinguish worker request order and module age from measured handler stages. Safety failures stop the run, while a performance miss records evidence and blocks publication without hiding later diagnostic phases. | `G-08`, `FR-24`, `D-022` | Timing output remains public-safe, first requests are reported separately, and the approved measurement manifest separates safety stops from publication limits. |
 
 ## Constraints
 

@@ -316,3 +316,64 @@ export async function searchIconsHostedMcp({
     locale,
   }) || payload;
 }
+
+export async function searchIconQueriesHostedMcp({ queries }) {
+  if (!Array.isArray(queries) || queries.length < 1 || queries.length > 96) {
+    throw new Error('grouped hosted search requires between 1 and 96 queries');
+  }
+
+  const apiKey = getConfiguredApiKey();
+  const apiKeyHash = apiKey ? hashSecret(apiKey) : null;
+  const groupedQueries = queries.map((entry, index) => {
+    const {
+      libraryMode = 'strict',
+      includeQueryFrame = false,
+      usageContext = null,
+      ...searchFields
+    } = entry || {};
+    const usagePayload = buildUsagePayload(usageContext, { apiKeyHash });
+    const baseDedupeKey = usagePayload.dedupe_key;
+    return {
+      ...searchFields,
+      library_mode: libraryMode,
+      ...usagePayload,
+      ...(baseDedupeKey ? { dedupe_key: `${baseDedupeKey}:${index}`.slice(0, 180) } : {}),
+      ...(includeQueryFrame ? { include_query_frame: true } : {}),
+    };
+  });
+
+  let url;
+  let postSearch;
+  let publicKey;
+  if (shouldUseInternalHostedDebug()) {
+    url = getDirectHostedSearchUrl();
+    postSearch = postHostedSearch;
+    publicKey = process.env.SUPERICONS_SEARCH_ENGINE_ANON_KEY || process.env.SUPABASE_ANON_KEY || SUPABASE_ANON;
+    if (shouldRequireJwt() && !looksLikeJwt(publicKey)) {
+      throw new Error('hosted MCP search requires a legacy Supabase anon JWT; publishable keys are not valid bearer tokens');
+    }
+  } else {
+    url = getPublicGatewayUrl();
+    postSearch = postPublicSearch;
+    publicKey = getPublicGatewayAnonKey();
+  }
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (publicKey) headers.apikey = publicKey;
+  if (apiKey) headers['x-supericons-api-key'] = apiKey;
+  if (looksLikeJwt(publicKey)) headers.Authorization = `Bearer ${publicKey}`;
+
+  const payload = await postSearch(url, headers, { queries: groupedQueries });
+  if (!Array.isArray(payload?.responses) || payload.responses.length !== groupedQueries.length) {
+    throw new Error('grouped hosted search returned an invalid response');
+  }
+
+  return payload.responses.map((entry, index) => {
+    if (entry?.index !== index || !Number.isInteger(entry?.status)) {
+      throw new Error('grouped hosted search returned responses out of order');
+    }
+    return entry.status >= 200 && entry.status < 300 && entry.body && typeof entry.body === 'object'
+      ? entry.body
+      : { results: [], grouped_status: entry.status };
+  });
+}

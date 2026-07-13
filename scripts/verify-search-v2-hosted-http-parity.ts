@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 
 import { handleSearchRequest } from '../supabase/functions/_shared/search-engine/handle-search-request.ts';
 
-type CandidateMode = 'control' | 'treatment';
+type CandidateMode = 'control' | 'treatment' | 'batched';
 type Scenario = 'svg' | 'null_svg' | 'candidate_error';
 
 const identity = {
@@ -52,10 +52,20 @@ function createAdminClient(mode: CandidateMode, scenario: Scenario) {
     auth: {
       getUser: async () => ({ data: { user: null }, error: null }),
     },
-    rpc: async (name: string) => {
+    rpc: async (name: string, params: Record<string, unknown>) => {
       calls.rpcNames.push(name);
       if (scenario === 'candidate_error') {
         return { data: null, error: new Error('Candidate lookup failed.') };
+      }
+      if (name === 'si_search_icon_candidates_v3') {
+        return {
+          data: (params.p_queries as string[]).map((variant, index) => ({
+            ...candidate,
+            query_variant: variant,
+            query_variant_rank: index,
+          })),
+          error: null,
+        };
       }
       return { data: [candidate], error: null };
     },
@@ -136,7 +146,8 @@ async function runPath(mode: CandidateMode, body: Record<string, unknown>, scena
     candidateRpcName: mode === 'control'
       ? 'si_search_icon_candidates'
       : 'si_search_icon_candidates_v2',
-    hydrateFinalSvg: mode === 'treatment',
+    candidateBatchRpcName: mode === 'batched' ? 'si_search_icon_candidates_v3' : null,
+    hydrateFinalSvg: mode !== 'control',
     adminClientFactory: () => adminClient,
     rateLimitEnforcer: async () => identity,
   });
@@ -159,13 +170,18 @@ const cases = [
 for (const testCase of cases) {
   const control = await runPath('control', testCase.body, testCase.scenario);
   const treatment = await runPath('treatment', testCase.body, testCase.scenario);
+  const batched = await runPath('batched', testCase.body, testCase.scenario);
   assert.equal(treatment.status, control.status, `${testCase.id}: status changed`);
   assert.deepEqual(treatment.headers, control.headers, `${testCase.id}: headers changed`);
   assert.equal(treatment.body, control.body, `${testCase.id}: response bytes changed`);
+  assert.equal(batched.status, treatment.status, `${testCase.id}: batched status changed`);
+  assert.deepEqual(batched.headers, treatment.headers, `${testCase.id}: batched headers changed`);
+  assert.equal(batched.body, treatment.body, `${testCase.id}: batched response bytes changed`);
 
   if (testCase.id.endsWith('_result') && testCase.id !== 'empty_result') {
     assert.ok(control.calls.rpcNames.every((name) => name === 'si_search_icon_candidates'));
     assert.ok(treatment.calls.rpcNames.every((name) => name === 'si_search_icon_candidates_v2'));
+    assert.deepEqual(batched.calls.rpcNames, ['si_search_icon_candidates_v3']);
     assert.equal(control.calls.tables.includes('icon_catalog'), false);
     assert.equal(treatment.calls.tables.includes('icon_catalog'), true);
   }
@@ -193,7 +209,9 @@ assert.deepEqual(Object.keys(svgResponse.results[0].semantic), [
 console.log(JSON.stringify({
   status: 'ok',
   full_http_parity_cases: cases.length,
+  batched_http_parity_cases: cases.length,
   exact_status_headers_and_body_match: true,
+  one_batched_candidate_rpc: true,
   svg_value_preserved: true,
   null_svg_preserved: true,
   semantic_field_order_preserved: true,

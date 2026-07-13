@@ -10,10 +10,12 @@ export type SearchTimingStage =
   | 'audit_write';
 
 export interface SearchStageTimingRecord {
-  schema_version: 1;
+  schema_version: 2;
   event: 'search_stage_timing';
   measurement_variant: 'control' | 'treatment' | 'unspecified';
   worker_state: 'first_request' | 'reused_worker';
+  worker_request_ordinal: number;
+  module_age_ms_at_handler_entry: number;
   outcome: 'results' | 'zero' | 'error' | 'empty_query';
   total_ms: number;
   stages_ms: Partial<Record<SearchTimingStage, number>>;
@@ -34,6 +36,7 @@ export type SearchStageTimingSink = (record: SearchStageTimingRecord) => void;
 export type SearchTimingVariant = 'control' | 'treatment' | 'unspecified';
 
 let workerRequestCount = 0;
+const moduleEvaluatedAt = performance.now();
 
 function elapsedMs(startedAt: number, now: () => number) {
   return Number(Math.max(0, now() - startedAt).toFixed(3));
@@ -65,6 +68,10 @@ export function createSearchStageTimer(
   const startedAt = now();
   const workerState = workerRequestCount === 0 ? 'first_request' : 'reused_worker';
   workerRequestCount += 1;
+  const workerRequestOrdinal = workerRequestCount;
+  const moduleAgeMsAtHandlerEntry = Number(
+    Math.max(0, performance.now() - moduleEvaluatedAt).toFixed(3),
+  );
   const stages: Partial<Record<SearchTimingStage, number>> = {};
   const counts = {
     query_variants: 0,
@@ -119,10 +126,12 @@ export function createSearchStageTimer(
   function finish(outcome: SearchStageTimingRecord['outcome']) {
     if (!enabled || !sink) return;
     const record: SearchStageTimingRecord = {
-      schema_version: 1,
+      schema_version: 2,
       event: 'search_stage_timing',
       measurement_variant: measurementVariant,
       worker_state: workerState,
+      worker_request_ordinal: workerRequestOrdinal,
+      module_age_ms_at_handler_entry: moduleAgeMsAtHandlerEntry,
       outcome,
       total_ms: elapsedMs(startedAt, now),
       stages_ms: { ...stages },

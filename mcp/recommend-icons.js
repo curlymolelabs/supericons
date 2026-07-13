@@ -1452,22 +1452,23 @@ export async function recommendIconsForTask({
   responseMode = 'plan',
   includeQueryFrame = false,
   searchIconsForQuery,
+  searchIconsForQueries = null,
   buildIconResult,
   semanticMap,
 }) {
   const normalizedResponseMode = normalizeResponseMode(responseMode);
   const taskQueryFrame = includeQueryFrame ? buildSearchQueryFrame(task, { locale }) : null;
-  const scoredSlotResults = await mapWithConcurrency(slots, SLOT_SEARCH_CONCURRENCY, async (slotLabel) => {
+  const slotPlans = slots.map((slotLabel, slotIndex) => {
     const interpretationFrame = buildSearchQueryFrame(slotLabel, { locale, context: task });
     if (interpretationFrame.needs_clarification) {
       return {
+        slotIndex,
         slot: slotLabel,
         queries_used: [],
         intentTerms: [],
         requestedVariantTerms: [],
         interpretationFrame,
         queryFrame: includeQueryFrame ? interpretationFrame : null,
-        scored: [],
       };
     }
     const intentTerms = buildSlotIntentTerms(task, slotLabel, locale);
@@ -1480,22 +1481,98 @@ export async function recommendIconsForTask({
       ...buildBrandLogoQueryVariants(task, slotLabel, library),
       ...buildSlotQueryVariants(task, slotLabel, locale),
     ]).slice(0, locale ? 8 : 4);
-    const pooledIcons = [];
-    const seen = new Set();
 
-    const resultGroups = await mapWithConcurrency(queryVariants, SLOT_QUERY_CONCURRENCY, async (queryVariant) => {
-      try {
-        return await searchIconsForQuery({
-          query: queryVariant,
+    return {
+      slotIndex,
+      slot: slotLabel,
+      queries_used: queryVariants,
+      intentTerms,
+      requestedVariantTerms,
+      interpretationFrame,
+      queryFrame: includeQueryFrame ? interpretationFrame : null,
+    };
+  });
+
+  const groupedResultsBySlot = new Map();
+  if (typeof searchIconsForQueries === 'function') {
+    const groupedRequests = [];
+    const groupedLocations = [];
+    for (const plan of slotPlans) {
+      if (plan.interpretationFrame.needs_clarification) continue;
+      for (const [variantIndex, query] of plan.queries_used.entries()) {
+        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex });
+        groupedRequests.push({
+          query,
           library,
           style,
           limit: Math.max(limitPerSlot * 5, 10),
           locale,
         });
-      } catch {
-        return [];
       }
-    });
+    }
+
+    let groupedResults = [];
+    if (groupedRequests.length > 0) {
+      try {
+        const received = await searchIconsForQueries(groupedRequests);
+        groupedResults = Array.isArray(received) ? received : [];
+      } catch {
+        groupedResults = [];
+      }
+    }
+
+    for (const plan of slotPlans) {
+      groupedResultsBySlot.set(
+        plan.slotIndex,
+        Array.from({ length: plan.queries_used.length }, () => []),
+      );
+    }
+    for (const [resultIndex, location] of groupedLocations.entries()) {
+      const slotGroups = groupedResultsBySlot.get(location.slotIndex);
+      slotGroups[location.variantIndex] = Array.isArray(groupedResults[resultIndex])
+        ? groupedResults[resultIndex]
+        : [];
+    }
+  }
+
+  const scoredSlotResults = await mapWithConcurrency(slotPlans, SLOT_SEARCH_CONCURRENCY, async (plan) => {
+    const {
+      slot: slotLabel,
+      queries_used: queryVariants,
+      intentTerms,
+      requestedVariantTerms,
+      interpretationFrame,
+      queryFrame,
+    } = plan;
+    if (interpretationFrame.needs_clarification) {
+      return {
+        slot: slotLabel,
+        queries_used: [],
+        intentTerms: [],
+        requestedVariantTerms: [],
+        interpretationFrame,
+        queryFrame,
+        scored: [],
+      };
+    }
+
+    const pooledIcons = [];
+    const seen = new Set();
+    const resultGroups = typeof searchIconsForQueries === 'function'
+      ? groupedResultsBySlot.get(plan.slotIndex)
+      : await mapWithConcurrency(queryVariants, SLOT_QUERY_CONCURRENCY, async (queryVariant) => {
+        try {
+          return await searchIconsForQuery({
+            query: queryVariant,
+            library,
+            style,
+            limit: Math.max(limitPerSlot * 5, 10),
+            locale,
+          });
+        } catch {
+          return [];
+        }
+      });
 
     for (const results of resultGroups) {
       for (const icon of results) {
@@ -1555,7 +1632,7 @@ export async function recommendIconsForTask({
       intentTerms,
       requestedVariantTerms,
       interpretationFrame,
-      queryFrame: includeQueryFrame ? interpretationFrame : null,
+      queryFrame,
       scored,
     };
   });

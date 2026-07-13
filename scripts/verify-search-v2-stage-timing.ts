@@ -35,10 +35,12 @@ timer.finish('results');
 
 assert.equal(records.length, 1);
 assert.deepEqual(records[0], {
-  schema_version: 1,
+  schema_version: 2,
   event: 'search_stage_timing',
   measurement_variant: 'control',
   worker_state: 'first_request',
+  worker_request_ordinal: 1,
+  module_age_ms_at_handler_entry: records[0].module_age_ms_at_handler_entry,
   outcome: 'results',
   total_ms: 16.75,
   stages_ms: {
@@ -57,6 +59,8 @@ assert.deepEqual(records[0], {
     response_json_characters: 8400,
   },
 });
+assert.equal(typeof records[0].module_age_ms_at_handler_entry, 'number');
+assert.ok(records[0].module_age_ms_at_handler_entry >= 0);
 
 let operationRan = false;
 const disabled = createSearchStageTimer(null, () => 0);

@@ -5,7 +5,8 @@ import { dirname, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
 const PROJECT_REF = 'kcjmkakdhsqplvasgkjv';
-const ENDPOINT = `https://${PROJECT_REF}.supabase.co/functions/v1/mcp-search-v2-beta`;
+const ENDPOINT_NAME = process.env.SUPERICONS_SEARCH_V2_MEASUREMENT_ENDPOINT || 'mcp-search-v2-beta';
+const ENDPOINT = `https://${PROJECT_REF}.supabase.co/functions/v1/${ENDPOINT_NAME}`;
 
 const SEARCH_CASES = [
   { id: 'settings-all', query: 'settings', library_mode: 'all', limit: 5, locale: 'en' },
@@ -122,7 +123,7 @@ async function runSearch(variant) {
   return {
     mode: 'search',
     variant,
-    endpoint: 'mcp-search-v2-beta',
+    endpoint: ENDPOINT_NAME,
     first_request: firstRequest,
     warm_summary: summaryFor(warmSamples),
     warm_samples: warmSamples,
@@ -159,7 +160,7 @@ async function runParity(variant) {
   return {
     mode: 'parity',
     variant,
-    endpoint: 'mcp-search-v2-beta',
+    endpoint: ENDPOINT_NAME,
     first_request: samples[0],
     parity_summary: {
       cases: cases.length,
@@ -237,7 +238,7 @@ async function runLocalized(variant) {
   return {
     mode: 'localized',
     variant,
-    endpoint: 'mcp-search-v2-beta',
+    endpoint: ENDPOINT_NAME,
     first_request: firstRequest,
     warm_summary: {
       ...summaryFor(warmSamples),
@@ -267,13 +268,26 @@ function normalizeHostedIcon(row) {
   };
 }
 
-async function runRecommendationOnce(recommendIconsForTask, searchIconsHostedMcp) {
+async function runRecommendationOnce(
+  recommendIconsForTask,
+  searchIconsHostedMcp,
+  searchIconQueriesHostedMcp,
+  recommendationPath,
+) {
   let hostedSearchCalls = 0;
   const startedAt = performance.now();
   let payload = null;
   let error = null;
 
   try {
+    const commonUsageContext = {
+      source: 'mcp_beta',
+      channel: 'hosted_mcp',
+      environment: 'preview',
+      client_family: 'latency_gate_a',
+      tool_name: 'recommend_icons',
+      beta_cohort: 'deterministic-v2-roundtrip-measurement',
+    };
     payload = await recommendIconsForTask({
       task: 'Choose an icon for application settings.',
       slots: ['cog'],
@@ -291,17 +305,21 @@ async function runRecommendationOnce(recommendIconsForTask, searchIconsHostedMcp
           style,
           limit,
           locale,
-          usageContext: {
-            source: 'mcp_beta',
-            channel: 'hosted_mcp',
-            environment: 'preview',
-            client_family: 'latency_gate_a',
-            tool_name: 'recommend_icons',
-            beta_cohort: 'deterministic-v2-beta',
-          },
+          usageContext: commonUsageContext,
         });
         return (result.results || []).map(normalizeHostedIcon).filter(Boolean);
       },
+      ...(recommendationPath === 'grouped' ? {
+        searchIconsForQueries: async (queries) => {
+          hostedSearchCalls += 1;
+          const results = await searchIconQueriesHostedMcp({
+            queries: queries.map((query) => ({ ...query, libraryMode: 'all', usageContext: commonUsageContext })),
+          });
+          return results.map((result) => (
+            (result.results || []).map(normalizeHostedIcon).filter(Boolean)
+          ));
+        },
+      } : {}),
       buildIconResult: async (icon) => ({
         id: icon.id,
         name: icon.name,
@@ -339,21 +357,34 @@ async function runRecommendation(variant) {
   process.env.SUPERICONS_MCP_SEARCH_URL = ENDPOINT;
   process.env.SUPERICONS_MCP_SEARCH_ANON_KEY = '';
   process.env.SUPERICONS_API_KEY = '';
-  const [{ recommendIconsForTask }, { searchIconsHostedMcp }] = await Promise.all([
+  const recommendationPath = readArg('recommendation-path') || 'separate';
+  assert.ok(['separate', 'grouped'].includes(recommendationPath), 'Use separate or grouped recommendation path.');
+  const [{ recommendIconsForTask }, { searchIconsHostedMcp, searchIconQueriesHostedMcp }] = await Promise.all([
     import('../mcp/recommend-icons.js'),
     import('../mcp/hosted-search-client.js'),
   ]);
 
-  const firstRequest = await runRecommendationOnce(recommendIconsForTask, searchIconsHostedMcp);
+  const firstRequest = await runRecommendationOnce(
+    recommendIconsForTask,
+    searchIconsHostedMcp,
+    searchIconQueriesHostedMcp,
+    recommendationPath,
+  );
   const warmSamples = [];
   for (let index = 0; index < 20; index += 1) {
-    warmSamples.push(await runRecommendationOnce(recommendIconsForTask, searchIconsHostedMcp));
+    warmSamples.push(await runRecommendationOnce(
+      recommendIconsForTask,
+      searchIconsHostedMcp,
+      searchIconQueriesHostedMcp,
+      recommendationPath,
+    ));
   }
 
   return {
     mode: 'recommendation',
     variant,
-    endpoint: 'mcp-search-v2-beta',
+    endpoint: ENDPOINT_NAME,
+    recommendation_path: recommendationPath,
     first_request: firstRequest,
     warm_summary: {
       ...summaryFor(warmSamples),

@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 import { buildPrivateRowMaps } from './catalog.ts';
+import { retrieveCandidateBatches } from './candidate-retrieval.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
@@ -198,7 +199,7 @@ function buildPublicSemanticPayload(publicRecord: Record<string, unknown>) {
   return semantic;
 }
 
-function buildErrorResponse(error: unknown) {
+export function buildErrorResponse(error: unknown) {
   const normalized = error instanceof SearchEngineHttpError
     ? error
     : new SearchEngineHttpError(
@@ -339,6 +340,19 @@ async function insertSearchAudit(adminClient: any, payload: Record<string, unkno
   if (fallback.error) throw fallback.error;
 }
 
+export interface SearchRequestHandlerOptions {
+  defaultSource?: string;
+  defaultEnvironment?: string | null;
+  betaCohort?: string | null;
+  timingSink?: SearchStageTimingSink | null;
+  candidateRpcName?: 'si_search_icon_candidates' | 'si_search_icon_candidates_v2';
+  candidateBatchRpcName?: 'si_search_icon_candidates_v3' | null;
+  hydrateFinalSvg?: boolean;
+  adminClientFactory?: (() => any) | null;
+  rateLimitEnforcer?: typeof enforceSearchRateLimit;
+  measurementVariant?: SearchTimingVariant;
+}
+
 export async function handleSearchRequest(
   req: Request,
   {
@@ -347,21 +361,12 @@ export async function handleSearchRequest(
     betaCohort = null,
     timingSink = null,
     candidateRpcName = 'si_search_icon_candidates',
+    candidateBatchRpcName = null,
     hydrateFinalSvg = false,
     adminClientFactory = null,
     rateLimitEnforcer = enforceSearchRateLimit,
     measurementVariant = 'unspecified',
-  }: {
-    defaultSource?: string;
-    defaultEnvironment?: string | null;
-    betaCohort?: string | null;
-    timingSink?: SearchStageTimingSink | null;
-    candidateRpcName?: 'si_search_icon_candidates' | 'si_search_icon_candidates_v2';
-    hydrateFinalSvg?: boolean;
-    adminClientFactory?: (() => any) | null;
-    rateLimitEnforcer?: typeof enforceSearchRateLimit;
-    measurementVariant?: SearchTimingVariant;
-  } = {},
+  }: SearchRequestHandlerOptions = {},
 ) {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -475,15 +480,13 @@ export async function handleSearchRequest(
     );
     const candidateBatches = await timing.measure(
       'candidate_search',
-      () => Promise.all(
-        queryVariants.map((variant, index) =>
-          adminClient.rpc(candidateRpcName, {
-            p_query: variant,
-            p_library: libraryMode === 'strict' ? library : null,
-            p_limit: Math.max(limit * 3, 40),
-          }).then((result: any) => ({ ...result, variant, index }))
-        ),
-      ),
+      () => retrieveCandidateBatches(adminClient, {
+        queryVariants,
+        candidateRpcName,
+        candidateBatchRpcName,
+        library: libraryMode === 'strict' ? library : null,
+        limit: Math.max(limit * 3, 40),
+      }),
     );
     timing.addCounts({
       query_variants: queryVariants.length,
