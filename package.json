@@ -83,6 +83,7 @@
     "verify:search-query-fixtures": "node scripts/verify-search-query-fixtures.mjs",
     "verify:search-catalog-sync": "node scripts/verify-search-catalog-sync.mjs",
     "verify:hosted-search-engine": "node scripts/verify-hosted-search-engine.mjs",
+    "verify:hosted-search-deterministic-ties": "node scripts/verify-hosted-search-deterministic-ties.mjs",
     "verify:search-intent-expansion": "node scripts/verify-search-intent-expansion.mjs",
     "verify:search-intent-dictionary": "node scripts/verify-search-intent-dictionary.mjs",
     "verify:search-intent-graph": "node scripts/verify-search-intent-graph.mjs",
