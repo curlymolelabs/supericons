@@ -15,6 +15,7 @@ function read(path) {
 const packageJson = JSON.parse(read('mcp/package.json'));
 const packageLock = JSON.parse(read('mcp/package-lock.json'));
 const migration = read('supabase/migrations/20260712_search_v2_beta_measurement.sql');
+const lightweightCandidateMigration = read('supabase/migrations/20260713150000_search_v2_lightweight_candidates.sql');
 const handler = read('supabase/functions/_shared/search-engine/handle-search-request.ts');
 const betaEndpoint = read('supabase/functions/mcp-search-v2-beta/index.ts');
 const supabaseConfig = read('supabase/config.toml');
@@ -36,6 +37,10 @@ assert.equal(getBetaCohortForVersion('0.4.17'), null);
 assert.ok(betaEndpoint.includes("defaultSource: 'mcp_beta'"));
 assert.ok(betaEndpoint.includes("defaultEnvironment: 'preview'"));
 assert.ok(betaEndpoint.includes(`betaCohort: '${DETERMINISTIC_BETA_COHORT}'`));
+assert.ok(betaEndpoint.includes("candidateRpcName: 'si_search_icon_candidates_v2'"));
+assert.ok(betaEndpoint.includes('hydrateFinalSvg: true'));
+assert.match(lightweightCandidateMigration, /create or replace function public\.si_search_icon_candidates_v2/);
+assert.doesNotMatch(lightweightCandidateMigration, /drop function[^;]*si_search_icon_candidates\s*\(/i);
 assert.match(supabaseConfig, /\[functions\.mcp-search-v2-beta\]\s+verify_jwt = false/);
 assert.ok(hostedClient.includes('getDefaultHostedSearchFunctionName'));
 assert.ok(hostedClient.includes('beta_cohort'));

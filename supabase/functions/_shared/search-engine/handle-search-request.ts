@@ -4,6 +4,7 @@ import { buildPrivateRowMaps } from './catalog.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
+import { hydrateFinalSvgRows, type FinalSvgRow } from './result-hydration.ts';
 import { createSearchStageTimer, type SearchStageTimingSink } from './stage-timing.ts';
 import type { CandidateRow, PrivateFeatureRow, PrivateManifestRow } from './types.ts';
 import {
@@ -340,11 +341,15 @@ export async function handleSearchRequest(
     defaultEnvironment = null,
     betaCohort = null,
     timingSink = null,
+    candidateRpcName = 'si_search_icon_candidates',
+    hydrateFinalSvg = false,
   }: {
     defaultSource?: string;
     defaultEnvironment?: string | null;
     betaCohort?: string | null;
     timingSink?: SearchStageTimingSink | null;
+    candidateRpcName?: 'si_search_icon_candidates' | 'si_search_icon_candidates_v2';
+    hydrateFinalSvg?: boolean;
   } = {},
 ) {
   if (req.method === 'OPTIONS') {
@@ -459,7 +464,7 @@ export async function handleSearchRequest(
       'candidate_search',
       () => Promise.all(
         queryVariants.map((variant, index) =>
-          adminClient.rpc('si_search_icon_candidates', {
+          adminClient.rpc(candidateRpcName, {
             p_query: variant,
             p_library: libraryMode === 'strict' ? library : null,
             p_limit: Math.max(limit * 3, 40),
@@ -547,16 +552,36 @@ export async function handleSearchRequest(
     timing.addCounts({ final_results: rankedResults.length });
 
     const resultIconIds = rankedResults.map((row) => row.icon_id);
+    let finalRankedResults = rankedResults;
     let publicRecordsById = new Map<string, Record<string, unknown>>();
 
     if (resultIconIds.length > 0) {
-      const publicRegistryResult = await timing.measure<any>(
-        'public_semantic',
-        () => adminClient
-          .from('icon_registry_public_export')
-          .select('icon_id, source_library, source_name, label, purpose, category, depicts, semantic_tags, synonyms, use_when, avoid_when, record')
-          .in('icon_id', resultIconIds),
-      );
+      const [finalSvgResult, publicRegistryResult] = await Promise.all([
+        hydrateFinalSvg
+          ? timing.measure<any>(
+            'final_svg',
+            () => adminClient
+              .from('icon_catalog')
+              .select('icon_id, svg')
+              .in('icon_id', resultIconIds),
+          )
+          : Promise.resolve(null),
+        timing.measure<any>(
+          'public_semantic',
+          () => adminClient
+            .from('icon_registry_public_export')
+            .select('icon_id, source_library, source_name, label, purpose, category, depicts, semantic_tags, synonyms, use_when, avoid_when, record')
+            .in('icon_id', resultIconIds),
+        ),
+      ]);
+
+      if (finalSvgResult?.error) throw finalSvgResult.error;
+      if (finalSvgResult) {
+        finalRankedResults = hydrateFinalSvgRows(
+          rankedResults,
+          (finalSvgResult.data || []) as FinalSvgRow[],
+        );
+      }
 
       if (publicRegistryResult.error) throw publicRegistryResult.error;
       publicRecordsById = new Map(
@@ -567,7 +592,7 @@ export async function handleSearchRequest(
       );
     }
 
-    const results = rankedResults.map((row) => {
+    const results = finalRankedResults.map((row) => {
       const publicRecord = publicRecordsById.get(row.icon_id);
       if (!publicRecord) return row;
       return {

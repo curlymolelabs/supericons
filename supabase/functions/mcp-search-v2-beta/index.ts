@@ -7,4 +7,6 @@ serve((req) => handleSearchRequest(req, {
   defaultEnvironment: 'preview',
   betaCohort: 'deterministic-v2-beta',
   timingSink: (record) => console.log(JSON.stringify(record)),
+  candidateRpcName: 'si_search_icon_candidates_v2',
+  hydrateFinalSvg: true,
 }));
