@@ -1,6 +1,6 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-12
+Last verified: 2026-07-13
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
 ## Lifecycle definitions
@@ -20,7 +20,7 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `P0` Governance and baseline | Complete for the approved fixed-suite scope | Official specification version 1.5; sanitized July 11 baseline; 225-case evaluation suite; approved legacy, SI-brand, and multilingual meaning reviews; deterministic-first decision `D-021` | Traceability audit passed; all 225 cases have stable IDs; 219 cases are owner-reviewed and 6 are contract fixtures; revoked provider authorization fails closed before execution | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `docs/si-v2/search/reviews/multilingual-evaluation-owner-review-2026-07-12.md`; `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `references/verification/search-query-baseline-2026-07-11.md` |
-| `P1` Shared deterministic understanding | Gate A target checks complete locally; Gate B blocked by historical migration-version collisions | Search intent core, generated rules/graph, shared policy-aware query-frame modules, recommendation clarification, maintained ranking policy, ambiguity diversification, all 50 approved SI brand classifications, rejected-alias enforcement, final-fusion policy enforcement, strict/prefer/all modes, isolated beta endpoint, additive audit contract, clarification-safe aggregation, locale-count helper, prerelease routing, and rollback plan | Deterministic and 225-case checks passed; Deno checks passed; telemetry success and failure passed with a stub transport; target migration passed on disposable PostgreSQL 17 with valid and invalid RPC checks; clarification and zero stayed separate; full Supabase chain rebuild failed on older duplicate migration versions | Not packaged; the `@supericons/mcp` 0.4.18-beta.0 dry-run listed 38 files without publication | Not deployed | Not observed live | `references/verification/search-v2-deterministic-mcp-beta-migration-smoke-2026-07-13.md`; `references/verification/search-v2-deterministic-mcp-beta-gate-a-2026-07-12.md`; `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md` |
+| `P1` Shared deterministic understanding | Gate A complete locally; beta-only migration reconciliation complete; Gate B owner approval pending | Search intent core, generated rules/graph, shared policy-aware query-frame modules, recommendation clarification, maintained ranking policy, ambiguity diversification, all 50 approved SI brand classifications, rejected-alias enforcement, final-fusion policy enforcement, strict/prefer/all modes, isolated beta endpoint, additive audit contract, clarification-safe aggregation, locale-count helper, prerelease routing, and rollback plan | Deterministic and 225-case checks passed; Deno checks passed; telemetry success and failure passed with a stub transport; target migration passed again on disposable PostgreSQL 17 with valid and invalid RPC checks; hosted schema inventory proved the target prerequisites exist and the target objects are absent; normal `db push` remains prohibited | Not packaged; the `@supericons/mcp` 0.4.18-beta.0 dry-run listed 38 files without publication | Not deployed | Not observed live | `references/verification/search-v2-hosted-migration-inventory-2026-07-13.md`; `references/verification/search-v2-deterministic-mcp-beta-migration-smoke-2026-07-13.md`; `references/verification/search-v2-deterministic-mcp-beta-gate-a-2026-07-12.md`; `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
 | `P3` Offline embeddings | Conditional and paused by `D-021`; external sample authorization revoked before execution | Provider-neutral planning, sample, adapters, response validation, executor, and replay ledger remain as inactive reference artifacts; no corpus embedding generation, sync adapter, or vector-storage migration | Revoked authorization is verified to fail before credentials, ledger creation, or network activity; no live provider response or retrieval quality was tested | Not applicable | Not verified | Not verified | `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-sample-contract-2026-07-12.md`; `docs/si-v2/search/reviews/embedding-sample-authorization-request-2026-07-12.md` |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
@@ -111,7 +111,7 @@ The legacy review approved 19 cases as written, adjusted 6 expectations, and rep
 | `P6` | Conditional and paused. Web hybrid beta is not implemented or deployed. |
 | `P7` | Review and admin foundations exist, but the full measured learning loop is not verified. |
 
-For the deterministic-first scope, the next material step is a read-only inventory of hosted migration history followed by a separate safe reconciliation plan. Gate B external approval follows only after the deployment path is proven. Optional semantic phases `P3` through `P6` are paused and are not current release requirements.
+For the deterministic-first scope, the read-only hosted migration inventory and beta-only reconciliation plan are complete. The hosted schema contains most historical objects but the hosted ledger records only one older version, so normal `db push` remains prohibited. Gate B external approval follows only for the exact transactional beta migration, isolated function, and prerelease package. Optional semantic phases `P3` through `P6` are paused and are not current release requirements.
 
 ### Current query evidence
 
@@ -133,13 +133,11 @@ This ledger does not infer current production deployment from file presence, pac
 
 Complete the deterministic MCP beta gate before reconsidering semantic ranking:
 
-1. Read the hosted Supabase migration ledger without applying or repairing anything.
-2. Compare hosted versions with the seven duplicate-prefix groups in the repository.
-3. Write a separate reconciliation and rollback plan. Do not rename historical files by assumption.
-4. Re-prove the migration apply method in a disposable or approved test environment.
-5. Prepare the Gate B approval request naming the endpoint, prerelease version, cohort, duration, adoption method, migration method, external mutations, and rollback target.
-6. Do not deploy or publish until that request receives explicit owner approval.
-7. Run and close the beta using [`experiments/deterministic-mcp-beta-measurement-and-rollback-plan-2026-07-12.md`](experiments/deterministic-mcp-beta-measurement-and-rollback-plan-2026-07-12.md).
+1. Use [`experiments/hosted-migration-reconciliation-plan-2026-07-13.md`](experiments/hosted-migration-reconciliation-plan-2026-07-13.md) as the controlling database release plan.
+2. Keep normal `db push`, historical renames, and older ledger repair prohibited.
+3. Prepare the Gate B approval request naming the endpoint, prerelease version, cohort, duration, adoption method, exact transactional migration method, version `20260712` history repair, external mutations, and rollback target.
+4. Do not deploy, repair, or publish until that request receives explicit owner approval.
+5. Run and close the beta using [`experiments/deterministic-mcp-beta-measurement-and-rollback-plan-2026-07-12.md`](experiments/deterministic-mcp-beta-measurement-and-rollback-plan-2026-07-12.md).
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 
