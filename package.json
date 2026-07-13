@@ -107,6 +107,7 @@
     "verify:search-v2-lightweight-candidates-smoke": "node scripts/verify-search-v2-lightweight-candidates-smoke.mjs",
     "verify:search-v2-lightweight-hosted-runner": "node scripts/verify-search-v2-lightweight-hosted-runner.mjs",
     "verify:search-v2-latency-gate-a-packet": "node scripts/verify-search-v2-latency-gate-a-packet.mjs",
+    "verify:search-v2-latency-rerun-packet": "node scripts/verify-search-v2-latency-rerun-packet.mjs",
     "verify:search-v2-live-parity-artifacts": "node scripts/verify-search-v2-live-parity-artifacts.mjs",
     "verify:search-v2-live-parity-verifier": "node scripts/verify-search-v2-live-parity-verifier.mjs",
     "verify:search-v2-result-hydration": "deno run --allow-read scripts/verify-search-v2-result-hydration.ts",

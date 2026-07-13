@@ -1,0 +1,161 @@
+{
+  "schema_version": "search-v2-latency-rerun-authorization-1",
+  "status": "awaiting_owner_approval",
+  "supersedes_consumed_manifest": "fcdfaeef7f19af49536438ca1518655813fcffd103866d352cdb792c6821bb25",
+  "endpoint": "mcp-search-v2-beta",
+  "beta_cohort": "deterministic-v2-beta",
+  "base_commit": "5a2d054af",
+  "control_commit": "53191e366",
+  "treatment_commit": "87c445b7c",
+  "database": {
+    "required_migration_version": "20260713150000",
+    "required_migration_sha256": "8ad558920ae3565bd26fe3706a1ba8ef0e8c3b2ac9ddafce9f7b15e995ede42e",
+    "migration_already_applied": true,
+    "sql_mutations_authorized": 0,
+    "history_repairs_authorized": 0
+  },
+  "deployment_sequence": [
+    "control_parity",
+    "treatment_parity",
+    "control_search",
+    "treatment_search",
+    "control_recommendation",
+    "treatment_recommendation"
+  ],
+  "parity_precheck": {
+    "must_pass_before_latency": true,
+    "requests_per_case_per_variant": 3,
+    "cases": [
+      {
+        "case_id": "settings-all",
+        "query": "settings",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": "en"
+      },
+      {
+        "case_id": "hello-all",
+        "query": "hello",
+        "library_mode": "all",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "case_id": "cog-bootstrap-strict",
+        "query": "cog",
+        "library": "bootstrap",
+        "library_mode": "strict",
+        "limit": 8,
+        "locale": "en",
+        "minimum_results": 1
+      },
+      {
+        "case_id": "combobox-bootstrap-prefer",
+        "query": "combobox",
+        "library": "bootstrap",
+        "library_mode": "prefer",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "case_id": "settings-zh-hans-expanded",
+        "query": "settings",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": null,
+        "localized_query": "设置",
+        "localized_locale": "zh-Hans",
+        "minimum_results": 1
+      }
+    ],
+    "within_variant_rule": "Every repeated response for a case must have one exact body hash, status, result order, and SVG availability.",
+    "cross_variant_rule": "Control and treatment must have equal status, exact body hash, result order, and SVG availability for every case.",
+    "failure_action": "Delete the isolated endpoint immediately. Do not start latency sampling."
+  },
+  "search_measurement": {
+    "first_request_per_variant": 1,
+    "warm_requests_per_variant": 25,
+    "fixed_case_repetitions": 5,
+    "localized_mcp_first_request_per_variant": 1,
+    "localized_mcp_warm_requests_per_variant": 5,
+    "localized_mcp_expected_hosted_requests": 2,
+    "same_client_region_order_and_short_window": true
+  },
+  "recommendation_measurement": {
+    "task": "Choose an icon for application settings.",
+    "slots": [
+      "cog"
+    ],
+    "library_mode": "all",
+    "locale": "en",
+    "first_request_per_variant": 1,
+    "warm_recommendations_per_variant": 20,
+    "report_hosted_search_calls": true
+  },
+  "limits": {
+    "direct_hosted_search_p95_ms": 2000,
+    "localized_mcp_search_p95_ms": 2000,
+    "one_slot_recommendation_p95_ms": 3000,
+    "maximum_error_rate_percent": 1,
+    "maximum_function_deployments": 6,
+    "npm_publications": 0,
+    "production_function_deployments": 0,
+    "model_provider_calls": 0
+  },
+  "cold_request_rule": {
+    "report_every_first_request_separately": true,
+    "do_not_include_only_inside_warm_averages": true,
+    "two_consecutive_treatment_first_requests_above_the_relevant_limit": "fail"
+  },
+  "required_stage_evidence": [
+    "search_stage_timing logs exported from the isolated function",
+    "measurement variant and worker state",
+    "total and per-stage duration",
+    "candidate row and query-variant counts",
+    "candidate SVG characters",
+    "approximate candidate payload characters",
+    "final response characters"
+  ],
+  "required_closeout_evidence": [
+    "production search-icons and mcp-search versions before and after",
+    "npm latest and beta tags before and after",
+    "exact repeated parity result",
+    "direct hosted search first and warm results",
+    "localized MCP first and warm results",
+    "recommendation first and warm results",
+    "hosted search calls per recommendation",
+    "safe stage-log export or an explicit incomplete-measurement verdict",
+    "isolated endpoint deletion"
+  ],
+  "allowed_external_mutations": [
+    "deploy control commit 53191e366 to mcp-search-v2-beta for parity",
+    "deploy treatment commit 87c445b7c to mcp-search-v2-beta for parity",
+    "deploy control commit 53191e366 to mcp-search-v2-beta for search measurement",
+    "deploy treatment commit 87c445b7c to mcp-search-v2-beta for search measurement",
+    "deploy control commit 53191e366 to mcp-search-v2-beta for recommendation measurement",
+    "deploy treatment commit 87c445b7c to mcp-search-v2-beta for recommendation measurement",
+    "delete mcp-search-v2-beta after measurement or immediately after a stop trigger"
+  ],
+  "allowed_read_only_actions": [
+    "list hosted functions and npm tags before and after",
+    "send the fixed internal measurement requests",
+    "export only search_stage_timing function logs for the measurement window"
+  ],
+  "prohibited_actions": [
+    "normal supabase db push",
+    "any hosted SQL mutation",
+    "any migration history repair",
+    "deployment of search-icons or mcp-search",
+    "npm publication or tag change",
+    "Netlify deployment",
+    "external model-provider call",
+    "user invitation or public beta message",
+    "scheduled warm ping"
+  ],
+  "rollback": {
+    "parity_failure": "Delete the isolated endpoint and do not begin latency sampling.",
+    "latency_or_error_failure": "Delete the isolated endpoint, leave stable production functions unchanged, and record the failed gate.",
+    "security_or_private_data_failure": "Stop immediately, delete the isolated endpoint, and do not export or commit unsafe log content.",
+    "log_export_failure": "Delete the isolated endpoint and mark the measurement incomplete. Do not publish."
+  }
+}
