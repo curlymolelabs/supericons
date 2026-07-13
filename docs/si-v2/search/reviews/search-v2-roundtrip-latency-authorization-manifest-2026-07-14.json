@@ -1,0 +1,172 @@
+{
+  "schema_version": "search-v2-roundtrip-latency-authorization-1",
+  "status": "awaiting_owner_approval",
+  "implementation_commit": "8ba345fa9",
+  "measurement_runner": {
+    "path": "scripts/run-search-v2-roundtrip-latency-measurement.mjs",
+    "sha256": "bba4cf618fc5c6b01bd162492790bb67495e4a9942d37905b4a790d6fbbe3a11"
+  },
+  "control_endpoint": "mcp-search-v2-control",
+  "treatment_endpoint": "mcp-search-v2-treatment",
+  "beta_cohort": "deterministic-v2-roundtrip-measurement",
+  "database": {
+    "migration_version": "20260714120000",
+    "migration_sha256": "f965c0b354a8d2e31be8791ac5b2041838be6bc8a2b40a97735f90d27f81cded",
+    "allowed_sql_mutations": 1,
+    "allowed_history_repairs": [
+      "20260714120000"
+    ],
+    "normal_db_push_allowed": false,
+    "older_history_repair_allowed": false
+  },
+  "variant_contract": {
+    "control_candidate_rpc": "si_search_icon_candidates_v2",
+    "treatment_candidate_rpc": "si_search_icon_candidates_v3",
+    "control_recommendation_path": "separate",
+    "treatment_recommendation_path": "grouped",
+    "control_function_deployments": 1,
+    "treatment_function_deployments": 1,
+    "maximum_function_deployments": 2
+  },
+  "parity_gate": {
+    "requests_per_case_per_variant": 3,
+    "cases": [
+      {
+        "case_id": "settings-all",
+        "query": "settings",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": "en"
+      },
+      {
+        "case_id": "hello-all",
+        "query": "hello",
+        "library_mode": "all",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "case_id": "cog-bootstrap-strict",
+        "query": "cog",
+        "library": "bootstrap",
+        "library_mode": "strict",
+        "limit": 8,
+        "locale": "en",
+        "minimum_results": 1
+      },
+      {
+        "case_id": "combobox-bootstrap-prefer",
+        "query": "combobox",
+        "library": "bootstrap",
+        "library_mode": "prefer",
+        "limit": 8,
+        "locale": "en"
+      },
+      {
+        "case_id": "settings-zh-hans-expanded",
+        "query": "settings",
+        "library_mode": "all",
+        "limit": 5,
+        "locale": null,
+        "localized_query": "设置",
+        "localized_locale": "zh-Hans",
+        "minimum_results": 1
+      }
+    ],
+    "within_variant_rule": "Repeated responses for each case must have one status, exact body hash, result order, and SVG availability.",
+    "cross_variant_rule": "Control and treatment must have equal status, exact body hash, result order, and SVG availability for every case.",
+    "classification": "safety_stop"
+  },
+  "measurement_sequence": [
+    "deploy_control_once",
+    "deploy_treatment_once",
+    "interleaved_parity",
+    "interleaved_direct_search",
+    "interleaved_localized_search",
+    "interleaved_recommendation",
+    "safe_stage_log_export",
+    "delete_both_isolated_endpoints"
+  ],
+  "search_measurement": {
+    "first_requests_per_variant": 1,
+    "warm_requests_per_variant": 25,
+    "fixed_case_repetitions": 5,
+    "interleaved_control_treatment": true
+  },
+  "localized_measurement": {
+    "first_searches_per_variant": 1,
+    "warm_searches_per_variant": 5,
+    "report_hosted_requests_per_search": true,
+    "interleaved_control_treatment": true
+  },
+  "recommendation_measurement": {
+    "task": "Choose an icon for application settings.",
+    "slots": [
+      "cog"
+    ],
+    "library_mode": "all",
+    "locale": "en",
+    "first_recommendations_per_variant": 1,
+    "warm_recommendations_per_variant": 20,
+    "expected_control_hosted_requests": 4,
+    "expected_treatment_hosted_requests": 1,
+    "report_actual_http_requests": true,
+    "require_exact_public_result_parity": true,
+    "interleaved_control_treatment": true
+  },
+  "publication_limits": {
+    "direct_hosted_search_p95_ms": 2000,
+    "localized_mcp_search_p95_ms": 2000,
+    "one_slot_recommendation_p95_ms": 3000,
+    "maximum_error_rate_percent": 1,
+    "two_consecutive_first_requests_above_limit": "performance_failure",
+    "performance_failure_action": "Complete the remaining safe diagnostic phases, block publication, and record the failed surface."
+  },
+  "safety_stop_conditions": [
+    "control and treatment response parity differs",
+    "a production function version changes",
+    "npm tags change",
+    "private data or credentials appear in logs or artifacts",
+    "an unapproved external call or mutation occurs",
+    "a deployed isolated function differs from implementation commit 8ba345fa9"
+  ],
+  "required_stage_evidence": [
+    "measurement variant",
+    "worker state and worker request ordinal",
+    "module age at handler entry",
+    "total and per-stage duration",
+    "query variant and candidate row counts",
+    "candidate SVG and approximate payload characters",
+    "final response characters"
+  ],
+  "allowed_external_mutations": [
+    "apply only migration 20260714120000 through the hash-pinned runner",
+    "repair only migration history version 20260714120000 after SQL success",
+    "deploy implementation commit 8ba345fa9 to mcp-search-v2-control once",
+    "deploy implementation commit 8ba345fa9 to mcp-search-v2-treatment once",
+    "insert the normal synchronous search audit rows generated by the fixed internal measurement requests",
+    "delete mcp-search-v2-control after measurement or a safety stop",
+    "delete mcp-search-v2-treatment after measurement or a safety stop"
+  ],
+  "allowed_read_only_actions": [
+    "list hosted functions and npm tags before and after",
+    "export only public-safe search_stage_timing records for the measurement window"
+  ],
+  "prohibited_actions": [
+    "normal supabase db push",
+    "repair of any older migration history",
+    "deployment of search-icons or mcp-search",
+    "npm publication or tag change",
+    "Netlify deployment",
+    "external model-provider call",
+    "scheduled warm ping",
+    "public beta invitation"
+  ],
+  "rollback": {
+    "sql_failure": "The transaction rolls back. Do not repair migration history or deploy either endpoint.",
+    "repair_failure_after_sql_success": "Verify the batched function and retry only the exact history repair. Do not rerun the SQL by assumption.",
+    "safety_stop": "Delete both isolated endpoints immediately and record the stop. Leave production functions and npm unchanged.",
+    "performance_failure": "Finish the remaining safe diagnostic phases, delete both isolated endpoints, record the failed publication gate, and leave production functions and npm unchanged.",
+    "successful_measurement": "Delete both isolated endpoints. Any beta or publication step requires a separate owner approval."
+  }
+}
