@@ -6,4 +6,5 @@ serve((req) => handleSearchRequest(req, {
   defaultSource: 'mcp_beta',
   defaultEnvironment: 'preview',
   betaCohort: 'deterministic-v2-beta',
+  timingSink: (record) => console.log(JSON.stringify(record)),
 }));

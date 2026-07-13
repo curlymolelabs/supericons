@@ -4,6 +4,7 @@ import { buildPrivateRowMaps } from './catalog.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
+import { createSearchStageTimer, type SearchStageTimingSink } from './stage-timing.ts';
 import type { CandidateRow, PrivateFeatureRow, PrivateManifestRow } from './types.ts';
 import {
   buildIntentQueryVariants,
@@ -338,10 +339,12 @@ export async function handleSearchRequest(
     defaultSource = 'web',
     defaultEnvironment = null,
     betaCohort = null,
+    timingSink = null,
   }: {
     defaultSource?: string;
     defaultEnvironment?: string | null;
     betaCohort?: string | null;
+    timingSink?: SearchStageTimingSink | null;
   } = {},
 ) {
   if (req.method === 'OPTIONS') {
@@ -353,6 +356,7 @@ export async function handleSearchRequest(
   }
 
   const startedAt = Date.now();
+  const timing = createSearchStageTimer(timingSink);
   let adminClient: any = null;
   let queryNorm = '';
   let source = defaultSource;
@@ -391,7 +395,7 @@ export async function handleSearchRequest(
   };
 
   try {
-    const body = await req.json().catch(() => ({}));
+    const body = await timing.measure('request_parse', () => req.json().catch(() => ({})));
     queryNorm = normalizeQuery(body?.query);
     library = normalizeLibrary(body?.library);
     const rawLibraryMode = String(body?.library_mode || 'strict').trim().toLowerCase();
@@ -422,22 +426,28 @@ export async function handleSearchRequest(
     const auditQueryFrame = buildSearchQueryFrame(queryNorm, { locale: body?.locale || null });
     const queryFrame = includeQueryFrame ? auditQueryFrame : null;
 
-    identity = await enforceSearchRateLimit(req);
+    identity = await timing.measure('rate_limit', () => enforceSearchRateLimit(req));
 
     if (!queryNorm) {
-      return buildJsonResponse({
+      const response = buildJsonResponse({
         query: queryNorm,
         results: [],
         engine_version: ENGINE_VERSION,
         railway_promotion_triggers: RAILWAY_PROMOTION_TRIGGERS,
       });
+      timing.addApproximateSizes({ response_json_characters: 0 });
+      timing.finish('empty_query');
+      return response;
     }
 
     adminClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
-    account = await resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash);
+    account = await timing.measure(
+      'account_resolution',
+      () => resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash),
+    );
 
     const intentProfile = buildSearchIntentProfile(queryNorm);
     const queryVariants = buildSearchRankingQueryVariants(
@@ -445,15 +455,31 @@ export async function handleSearchRequest(
       buildIntentQueryVariants(queryNorm, { maxVariants: 10 }),
       { maxVariants: 14 },
     );
-    const candidateBatches = await Promise.all(
-      queryVariants.map((variant, index) =>
-        adminClient.rpc('si_search_icon_candidates', {
-          p_query: variant,
-          p_library: libraryMode === 'strict' ? library : null,
-          p_limit: Math.max(limit * 3, 40),
-        }).then((result: any) => ({ ...result, variant, index }))
+    const candidateBatches = await timing.measure(
+      'candidate_search',
+      () => Promise.all(
+        queryVariants.map((variant, index) =>
+          adminClient.rpc('si_search_icon_candidates', {
+            p_query: variant,
+            p_library: libraryMode === 'strict' ? library : null,
+            p_limit: Math.max(limit * 3, 40),
+          }).then((result: any) => ({ ...result, variant, index }))
+        ),
       ),
     );
+    timing.addCounts({
+      query_variants: queryVariants.length,
+      candidate_rows: candidateBatches.reduce((total, batch) => total + (batch.data?.length || 0), 0),
+    });
+    timing.addApproximateSizes({
+      candidate_svg_characters: candidateBatches.reduce(
+        (total, batch) => total + (batch.data || []).reduce(
+          (batchTotal: number, row: CandidateRow) => batchTotal + (typeof row.svg === 'string' ? row.svg.length : 0),
+          0,
+        ),
+        0,
+      ),
+    });
 
     const candidatesById = new Map<string, CandidateRow>();
     for (const batch of candidateBatches) {
@@ -480,6 +506,7 @@ export async function handleSearchRequest(
     }
 
     const candidates = [...candidatesById.values()];
+    timing.addCounts({ unique_candidates: candidates.length });
 
     const iconIds = candidates.map((row) => row.icon_id);
 
@@ -487,7 +514,7 @@ export async function handleSearchRequest(
     let features: PrivateFeatureRow[] = [];
 
     if (iconIds.length > 0) {
-      const [manifestResult, featureResult] = await Promise.all([
+      const [manifestResult, featureResult] = await timing.measure('private_metadata', () => Promise.all([
         adminClient
           .from('icon_search_private_manifest')
           .select('icon_id, semantic_aliases, use_cases, contraindications, trust_tier, explanation_short')
@@ -496,7 +523,7 @@ export async function handleSearchRequest(
           .from('icon_search_private_features')
           .select('icon_id, popularity_score, behavioral_score, editorial_score, replace_risk_score, manual_boost, manual_penalty')
           .in('icon_id', iconIds),
-      ]);
+      ]));
 
       if (manifestResult.error) throw manifestResult.error;
       if (featureResult.error) throw featureResult.error;
@@ -505,25 +532,31 @@ export async function handleSearchRequest(
       features = (featureResult.data || []) as PrivateFeatureRow[];
     }
 
-    const { manifestsById, featuresById } = buildPrivateRowMaps(manifests, features);
-    const rankedResults = rerankCandidates(
-      queryNorm,
-      (candidates || []) as CandidateRow[],
-      manifestsById,
-      featuresById,
-      { libraryMode, requestedLibrary: library },
-    )
-      .filter((row) => style === 'any' || row.style === style)
-      .slice(0, limit);
+    const rankedResults = timing.measureSync('reranking', () => {
+      const { manifestsById, featuresById } = buildPrivateRowMaps(manifests, features);
+      return rerankCandidates(
+        queryNorm,
+        (candidates || []) as CandidateRow[],
+        manifestsById,
+        featuresById,
+        { libraryMode, requestedLibrary: library },
+      )
+        .filter((row) => style === 'any' || row.style === style)
+        .slice(0, limit);
+    });
+    timing.addCounts({ final_results: rankedResults.length });
 
     const resultIconIds = rankedResults.map((row) => row.icon_id);
     let publicRecordsById = new Map<string, Record<string, unknown>>();
 
     if (resultIconIds.length > 0) {
-      const publicRegistryResult = await adminClient
-        .from('icon_registry_public_export')
-        .select('icon_id, source_library, source_name, label, purpose, category, depicts, semantic_tags, synonyms, use_when, avoid_when, record')
-        .in('icon_id', resultIconIds);
+      const publicRegistryResult = await timing.measure<any>(
+        'public_semantic',
+        () => adminClient
+          .from('icon_registry_public_export')
+          .select('icon_id, source_library, source_name, label, purpose, category, depicts, semantic_tags, synonyms, use_when, avoid_when, record')
+          .in('icon_id', resultIconIds),
+      );
 
       if (publicRegistryResult.error) throw publicRegistryResult.error;
       publicRecordsById = new Map(
@@ -543,7 +576,7 @@ export async function handleSearchRequest(
       };
     });
 
-    await insertSearchAudit(adminClient, {
+    await timing.measure('audit_write', () => insertSearchAudit(adminClient, {
       query_norm: queryNorm,
       source,
       library_filter: library,
@@ -563,9 +596,9 @@ export async function handleSearchRequest(
       account_plan: account.accountPlan,
       subscription_status: account.subscriptionStatus,
       is_pro: account.isPro,
-    });
+    }));
 
-    return buildJsonResponse({
+    const responseBody = {
       query: queryNorm,
       results,
       library_mode: libraryMode,
@@ -577,7 +610,10 @@ export async function handleSearchRequest(
         ...(queryFrame ? { query_frame: queryFrame } : {}),
       },
       railway_promotion_triggers: RAILWAY_PROMOTION_TRIGGERS,
-    });
+    };
+    timing.addApproximateSizes({ response_json_characters: JSON.stringify(responseBody).length });
+    timing.finish(results.length > 0 ? 'results' : 'zero');
+    return buildJsonResponse(responseBody);
   } catch (error) {
     if (adminClient && queryNorm) {
       try {
@@ -607,6 +643,7 @@ export async function handleSearchRequest(
       }
     }
 
+    timing.finish('error');
     return buildErrorResponse(error);
   }
 }
