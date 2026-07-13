@@ -108,7 +108,17 @@ try {
   waitForDatabase();
   runSql(prerequisiteSql);
   runSql(readFileSync('supabase/migrations/20260503_icon_catalog_public_payload.sql', 'utf8'));
+  const preflightResult = runSql(readFileSync(
+    'scripts/sql/search-v2-lightweight-candidates-hosted-preflight.sql',
+    'utf8',
+  ));
+  assert.ok(preflightResult.includes('lightweight_candidates_preflight_ok'));
   runSql(readFileSync('supabase/migrations/20260713150000_search_v2_lightweight_candidates.sql', 'utf8'));
+  const postflightResult = runSql(readFileSync(
+    'scripts/sql/search-v2-lightweight-candidates-hosted-postflight.sql',
+    'utf8',
+  ));
+  assert.ok(postflightResult.includes('lightweight_candidates_postflight_ok'));
 
   const cases = [
     { query: 'settings', library: null },
@@ -151,6 +161,8 @@ try {
     v2_svg_column: false,
     existing_rpc_preserved_after_rollback: true,
     final_svg_lookup_plan: 'primary_key_index_scan',
+    hosted_preflight: 'passed',
+    hosted_postflight: 'passed',
     hosted_systems_touched: false,
   }, null, 2));
 } finally {

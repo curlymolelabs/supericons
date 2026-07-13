@@ -37,8 +37,15 @@ assert.equal(getBetaCohortForVersion('0.4.17'), null);
 assert.ok(betaEndpoint.includes("defaultSource: 'mcp_beta'"));
 assert.ok(betaEndpoint.includes("defaultEnvironment: 'preview'"));
 assert.ok(betaEndpoint.includes(`betaCohort: '${DETERMINISTIC_BETA_COHORT}'`));
-assert.ok(betaEndpoint.includes("candidateRpcName: 'si_search_icon_candidates_v2'"));
-assert.ok(betaEndpoint.includes('hydrateFinalSvg: true'));
+const betaVariant = betaEndpoint.includes("measurementVariant: 'control'") ? 'control' : 'treatment';
+if (betaVariant === 'control') {
+  assert.ok(betaEndpoint.includes("candidateRpcName: 'si_search_icon_candidates'"));
+  assert.ok(betaEndpoint.includes('hydrateFinalSvg: false'));
+} else {
+  assert.ok(betaEndpoint.includes("measurementVariant: 'treatment'"));
+  assert.ok(betaEndpoint.includes("candidateRpcName: 'si_search_icon_candidates_v2'"));
+  assert.ok(betaEndpoint.includes('hydrateFinalSvg: true'));
+}
 assert.match(lightweightCandidateMigration, /create or replace function public\.si_search_icon_candidates_v2/);
 assert.doesNotMatch(lightweightCandidateMigration, /drop function[^;]*si_search_icon_candidates\s*\(/i);
 assert.match(supabaseConfig, /\[functions\.mcp-search-v2-beta\]\s+verify_jwt = false/);
@@ -131,6 +138,7 @@ console.log(JSON.stringify({
   package_version: packageJson.version,
   beta_endpoint: 'mcp-search-v2-beta',
   beta_cohort: DETERMINISTIC_BETA_COHORT,
+  beta_measurement_variant: betaVariant,
   audit_fields: ['library_mode', 'search_outcome', 'confidence_label', 'beta_cohort'],
   telemetry_success_path: 'verified_with_stub_transport',
   telemetry_failure_path: 'contained_with_stub_transport',

@@ -12,6 +12,7 @@ export type SearchTimingStage =
 export interface SearchStageTimingRecord {
   schema_version: 1;
   event: 'search_stage_timing';
+  measurement_variant: 'control' | 'treatment' | 'unspecified';
   worker_state: 'first_request' | 'reused_worker';
   outcome: 'results' | 'zero' | 'error' | 'empty_query';
   total_ms: number;
@@ -24,11 +25,13 @@ export interface SearchStageTimingRecord {
   };
   approximate_sizes: {
     candidate_svg_characters: number;
+    candidate_payload_characters: number;
     response_json_characters: number;
   };
 }
 
 export type SearchStageTimingSink = (record: SearchStageTimingRecord) => void;
+export type SearchTimingVariant = 'control' | 'treatment' | 'unspecified';
 
 let workerRequestCount = 0;
 
@@ -36,9 +39,27 @@ function elapsedMs(startedAt: number, now: () => number) {
   return Number(Math.max(0, now() - startedAt).toFixed(3));
 }
 
+function approximatePrimitiveJsonCharacters(value: unknown) {
+  if (value === null || value === undefined) return 4;
+  if (typeof value === 'string') return value.length + 2;
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value).length;
+  return 2;
+}
+
+export function estimateCandidatePayloadCharacters(rows: Array<Record<string, unknown>>) {
+  return rows.reduce((total, row) => {
+    const entries = Object.entries(row);
+    const entryCharacters = entries.reduce((rowTotal, [key, value]) => (
+      rowTotal + key.length + 3 + approximatePrimitiveJsonCharacters(value)
+    ), 0);
+    return total + 2 + entryCharacters + Math.max(0, entries.length - 1);
+  }, 2 + Math.max(0, rows.length - 1));
+}
+
 export function createSearchStageTimer(
   sink: SearchStageTimingSink | null = null,
   now: () => number = () => performance.now(),
+  measurementVariant: SearchTimingVariant = 'unspecified',
 ) {
   const enabled = typeof sink === 'function';
   const startedAt = now();
@@ -53,6 +74,7 @@ export function createSearchStageTimer(
   };
   const approximateSizes = {
     candidate_svg_characters: 0,
+    candidate_payload_characters: 0,
     response_json_characters: 0,
   };
 
@@ -99,6 +121,7 @@ export function createSearchStageTimer(
     const record: SearchStageTimingRecord = {
       schema_version: 1,
       event: 'search_stage_timing',
+      measurement_variant: measurementVariant,
       worker_state: workerState,
       outcome,
       total_ms: elapsedMs(startedAt, now),

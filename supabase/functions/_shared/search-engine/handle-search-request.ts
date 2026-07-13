@@ -5,7 +5,12 @@ import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
 import { hydrateFinalSvgRows, type FinalSvgRow } from './result-hydration.ts';
-import { createSearchStageTimer, type SearchStageTimingSink } from './stage-timing.ts';
+import {
+  createSearchStageTimer,
+  estimateCandidatePayloadCharacters,
+  type SearchStageTimingSink,
+  type SearchTimingVariant,
+} from './stage-timing.ts';
 import type { CandidateRow, PrivateFeatureRow, PrivateManifestRow } from './types.ts';
 import {
   buildIntentQueryVariants,
@@ -343,6 +348,9 @@ export async function handleSearchRequest(
     timingSink = null,
     candidateRpcName = 'si_search_icon_candidates',
     hydrateFinalSvg = false,
+    adminClientFactory = null,
+    rateLimitEnforcer = enforceSearchRateLimit,
+    measurementVariant = 'unspecified',
   }: {
     defaultSource?: string;
     defaultEnvironment?: string | null;
@@ -350,6 +358,9 @@ export async function handleSearchRequest(
     timingSink?: SearchStageTimingSink | null;
     candidateRpcName?: 'si_search_icon_candidates' | 'si_search_icon_candidates_v2';
     hydrateFinalSvg?: boolean;
+    adminClientFactory?: (() => any) | null;
+    rateLimitEnforcer?: typeof enforceSearchRateLimit;
+    measurementVariant?: SearchTimingVariant;
   } = {},
 ) {
   if (req.method === 'OPTIONS') {
@@ -361,7 +372,7 @@ export async function handleSearchRequest(
   }
 
   const startedAt = Date.now();
-  const timing = createSearchStageTimer(timingSink);
+  const timing = createSearchStageTimer(timingSink, undefined, measurementVariant);
   let adminClient: any = null;
   let queryNorm = '';
   let source = defaultSource;
@@ -431,7 +442,7 @@ export async function handleSearchRequest(
     const auditQueryFrame = buildSearchQueryFrame(queryNorm, { locale: body?.locale || null });
     const queryFrame = includeQueryFrame ? auditQueryFrame : null;
 
-    identity = await timing.measure('rate_limit', () => enforceSearchRateLimit(req));
+    identity = await timing.measure('rate_limit', () => rateLimitEnforcer(req));
 
     if (!queryNorm) {
       const response = buildJsonResponse({
@@ -445,10 +456,12 @@ export async function handleSearchRequest(
       return response;
     }
 
-    adminClient = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-    );
+    adminClient = adminClientFactory
+      ? adminClientFactory()
+      : createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      );
     account = await timing.measure(
       'account_resolution',
       () => resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash),
@@ -483,6 +496,9 @@ export async function handleSearchRequest(
           0,
         ),
         0,
+      ),
+      candidate_payload_characters: estimateCandidatePayloadCharacters(
+        candidateBatches.flatMap((batch) => batch.data || []) as Array<Record<string, unknown>>,
       ),
     });
 

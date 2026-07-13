@@ -25,8 +25,15 @@ assert.match(handler, /hydrateFinalSvg = false/);
 assert.match(handler, /\.from\('icon_catalog'\)\s*\.select\('icon_id, svg'\)\s*\.in\('icon_id', resultIconIds\)/s);
 assert.match(handler, /const results = finalRankedResults\.map\(\(row\) =>/);
 assert.match(handler, /\.\.\.row,\s*semantic: buildPublicSemanticPayload\(publicRecord\)/s);
-assert.match(betaEndpoint, /candidateRpcName: 'si_search_icon_candidates_v2'/);
-assert.match(betaEndpoint, /hydrateFinalSvg: true/);
+const betaVariant = betaEndpoint.includes("measurementVariant: 'control'") ? 'control' : 'treatment';
+if (betaVariant === 'control') {
+  assert.match(betaEndpoint, /candidateRpcName: 'si_search_icon_candidates'/);
+  assert.match(betaEndpoint, /hydrateFinalSvg: false/);
+} else {
+  assert.match(betaEndpoint, /measurementVariant: 'treatment'/);
+  assert.match(betaEndpoint, /candidateRpcName: 'si_search_icon_candidates_v2'/);
+  assert.match(betaEndpoint, /hydrateFinalSvg: true/);
+}
 assert.doesNotMatch(webEndpoint, /si_search_icon_candidates_v2|hydrateFinalSvg/);
 assert.doesNotMatch(stableMcpEndpoint, /si_search_icon_candidates_v2|hydrateFinalSvg/);
 
@@ -58,7 +65,8 @@ console.log(JSON.stringify({
   deterministic_result_fingerprint: fingerprint,
   stable_web_endpoint_uses_existing_rpc: true,
   stable_mcp_endpoint_uses_existing_rpc: true,
-  beta_endpoint_uses_lightweight_rpc: true,
-  beta_final_svg_hydration_enabled: true,
+  beta_measurement_variant: betaVariant,
+  beta_endpoint_uses_lightweight_rpc: betaVariant === 'treatment',
+  beta_final_svg_hydration_enabled: betaVariant === 'treatment',
   public_semantic_mapping_preserved: true,
 }, null, 2));
