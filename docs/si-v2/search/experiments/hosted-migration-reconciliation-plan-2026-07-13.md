@@ -28,7 +28,7 @@ If the migration transaction fails, the entire transaction must roll back and no
 
 After Gate B approval:
 
-1. Re-run a read-only hosted preflight proving the two audit tables exist and the beta objects are absent.
+1. Run `scripts/apply-search-v2-beta-hosted.ps1 -ExecuteApprovedGateB`, which first performs a read-only hosted preflight proving the two audit tables exist and the beta objects are absent.
 2. Apply only `20260712_search_v2_beta_measurement.sql` with PostgreSQL single-transaction behavior and stop on the first error.
 3. Run the same RPC and invalid-input checks used by the disposable PostgreSQL smoke, inside transactions that roll back their test rows.
 4. Mark only version `20260712` as applied in the hosted migration ledger.

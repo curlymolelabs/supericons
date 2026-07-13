@@ -12,10 +12,12 @@ The smoke uses `public.ecr.aws/supabase/postgres:17.6.1.132`, creates only the t
 
 ## Passed checks
 
+- The exact hosted preflight passed before the migration.
 - 8 additive columns exist across `search_request_audit` and `mcp_usage_events`.
 - 6 label constraints exist and are validated.
 - 2 partial beta-cohort indexes exist.
 - `si_log_mcp_search_outcome` exists.
+- The exact hosted postflight passed after the migration and rolled its test row back.
 - A valid clarification outcome writes the approved public fields.
 - Invalid library mode is rejected.
 - Invalid search outcome is rejected.
@@ -66,6 +68,17 @@ Do not rename historical migration files or repair hosted migration history with
 - The Supabase PostgreSQL image restarts during bootstrap. The final smoke waits for stable readiness.
 - The image's GraphQL placeholder trigger expects the full Supabase bootstrap. The final minimal-schema smoke disables that unrelated placeholder trigger inside the disposable container only.
 - Schema setup and migration apply use the image's owning `supabase_admin` role.
+
+## Gate B hosted runner
+
+`scripts/apply-search-v2-beta-hosted.ps1` binds execution to the approved migration SHA-256, requires the explicit `-ExecuteApprovedGateB` switch, prompts for the database password without echoing it, and removes password environment variables in a `finally` block.
+
+The runner uses the same checked SQL files exercised by this disposable smoke:
+
+- `scripts/sql/search-v2-beta-hosted-preflight.sql`
+- `scripts/sql/search-v2-beta-hosted-postflight.sql`
+
+The preflight stops if either required audit table is missing or if any target beta object already exists. The postflight verifies the expected schema counts, one valid audit write, and four rejected invalid inputs. Its test transaction is rolled back before the runner repairs migration version `20260712`.
 
 ## External state
 

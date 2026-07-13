@@ -167,6 +167,21 @@ try {
   waitForStableDatabase();
   queryDatabase(prerequisiteSchema, { user: 'supabase_admin' });
 
+  const hostedPreflight = readFileSync('scripts/sql/search-v2-beta-hosted-preflight.sql', 'utf8');
+  const hostedPreflightResult = runDocker([
+    'exec',
+    '-i',
+    containerName,
+    'psql',
+    '-U',
+    'supabase_admin',
+    '-d',
+    'postgres',
+    '-v',
+    'ON_ERROR_STOP=1',
+  ], { input: hostedPreflight });
+  assert.match(hostedPreflightResult.stdout, /hosted_beta_preflight_ok/);
+
   const migration = readFileSync('supabase/migrations/20260712_search_v2_beta_measurement.sql', 'utf8');
   runDocker([
     'exec',
@@ -180,6 +195,21 @@ try {
     '-v',
     'ON_ERROR_STOP=1',
   ], { input: migration });
+
+  const hostedPostflight = readFileSync('scripts/sql/search-v2-beta-hosted-postflight.sql', 'utf8');
+  const hostedPostflightResult = runDocker([
+    'exec',
+    '-i',
+    containerName,
+    'psql',
+    '-U',
+    'supabase_admin',
+    '-d',
+    'postgres',
+    '-v',
+    'ON_ERROR_STOP=1',
+  ], { input: hostedPostflight });
+  assert.match(hostedPostflightResult.stdout, /hosted_beta_postflight_ok/);
 
   const schemaLines = queryDatabase(`
   select concat_ws('|',
@@ -288,6 +318,8 @@ try {
     columns_verified: 8,
     constraints_verified: 6,
     indexes_verified: 2,
+    hosted_preflight: 'passed',
+    hosted_postflight: 'passed_with_rows_rolled_back',
     rpc_success_path: 'passed_and_rolled_back',
     invalid_rpc_cases: invalidCases.length,
     clarification_zero_separation: 'passed_and_rolled_back',
