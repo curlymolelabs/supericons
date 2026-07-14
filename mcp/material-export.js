@@ -26,6 +26,16 @@ export const MATERIAL_EXPORT_DEFAULT_AXES = {
   opsz: 24,
 };
 
+export const MATERIAL_MCP_PRESETS = {
+  outline: { fill: 0, wght: 300, grad: 0, opsz: 24, snapped: false },
+  solid: { fill: 1, wght: 400, grad: 0, opsz: 24, snapped: false },
+};
+
+export function getMaterialMcpPreset(style = 'outline') {
+  const preset = style === 'solid' ? MATERIAL_MCP_PRESETS.solid : MATERIAL_MCP_PRESETS.outline;
+  return { ...preset };
+}
+
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }

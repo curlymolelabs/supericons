@@ -24,6 +24,7 @@ import {
   MATERIAL_EXPORT_STORAGE,
   buildMaterialCacheKey,
   buildMaterialOwnedSnapshotUrl,
+  getMaterialMcpPreset,
   getMaterialManifestEntry,
   normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
 } from './material-export.js';
@@ -306,13 +307,10 @@ function loadMaterialExportManifest() {
 }
 
 function getMaterialExportAxes(style = VARIANT_STYLES.OUTLINE) {
-  const manifest = loadMaterialExportManifest();
   const normalizedStyle = normalizeRequestedStyle(style);
-  return {
-    ...MATERIAL_EXPORT_DEFAULT_AXES,
-    ...(manifest?.defaultAxes || {}),
-    fill: normalizedStyle === VARIANT_STYLES.SOLID ? 1 : 0,
-  };
+  return getMaterialMcpPreset(
+    normalizedStyle === VARIANT_STYLES.SOLID ? VARIANT_STYLES.SOLID : VARIANT_STYLES.OUTLINE,
+  );
 }
 
 function normalizeMaterialSnapshotSvg(rawSvg) {
@@ -796,7 +794,7 @@ async function searchAccessibleIcons({
 // Library Metadata
 // ============================================================
 const libraryMeta = {
-  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true, count: 4205, outlineCount: 4205, solidCount: 4205 },
+  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true, count: 4262, outlineCount: 4262, solidCount: 4262 },
   lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true, hasFilled: false, count: 1951, outlineCount: 1951, solidCount: 0 },
   tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true, hasFilled: true, count: 5021, outlineCount: 5021, solidCount: 1053 },
   phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false, hasFilled: true, count: 1512, outlineCount: 1512, solidCount: 1512 },

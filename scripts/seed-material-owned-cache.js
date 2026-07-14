@@ -4,7 +4,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import {
-  MATERIAL_EXPORT_DEFAULT_AXES,
+  MATERIAL_MCP_PRESETS,
   buildMaterialOwnedStoragePath,
   buildMaterialUpstreamSnapshotUrl,
   normalizeMaterialSnapshotSvg,
@@ -47,8 +47,8 @@ const HOT_ICON_IDS = [
 ];
 
 const PRESETS = {
-  default: { ...MATERIAL_EXPORT_DEFAULT_AXES },
-  filled: { fill: 1, wght: 400, grad: 0, opsz: 24, snapped: false },
+  default: { ...MATERIAL_MCP_PRESETS.outline },
+  filled: { ...MATERIAL_MCP_PRESETS.solid },
 };
 
 function parseArgs(argv) {

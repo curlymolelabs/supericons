@@ -29,6 +29,7 @@
     "verify:si-registry": "node scripts/verify-si-registry-projections.mjs",
     "verify:si-registry-source-boundaries": "node scripts/verify-si-registry-source-boundaries.mjs",
     "verify:mcp-variant-access": "node scripts/verify-mcp-variant-access.mjs",
+    "verify:material-mcp-contract": "node scripts/verify-material-mcp-contract.mjs",
     "dry-run:registry-supabase-import": "node scripts/dry-run-registry-supabase-import.mjs",
     "import:registry-supabase": "node scripts/import-registry-to-supabase.mjs",
     "export:registry-supabase": "node scripts/export-registry-from-supabase.mjs",

@@ -195,12 +195,15 @@ for (const searchCase of searchCases) {
 async function buildIconResult(icon, options = {}) {
   const requestedStyle = normalizeRequestedStyle(options.style);
   const semanticRecord = getSemanticRecordForIcon(semanticRegistryMap, icon);
+  if (!icon.svg) {
+    throw new Error(`Verification requires a real SVG for ${icon.lib}:${icon.id}.`);
+  }
   return {
     id: icon.id,
     library: icon.lib,
     name: icon.name,
     style: icon.lib === 'material' ? requestedStyle : (icon.style || 'outline'),
-    svg: icon.svg || '<material-snapshot />',
+    svg: icon.svg,
     semantic: semanticRecord ? buildPublicSemanticPayload(semanticRecord) : null,
   };
 }
