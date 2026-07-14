@@ -116,6 +116,7 @@
     "verify:search-v2-latency-gate-a-packet": "node scripts/verify-search-v2-latency-gate-a-packet.mjs",
     "verify:search-v2-latency-rerun-packet": "node scripts/verify-search-v2-latency-rerun-packet.mjs",
     "verify:search-v2-roundtrip-latency-packet": "node scripts/verify-search-v2-roundtrip-latency-packet.mjs",
+    "verify:search-v2-search-only-beta-packet": "node scripts/verify-search-v2-search-only-beta-packet.mjs",
     "verify:search-v2-tool-scoped-beta": "node scripts/verify-search-v2-tool-scoped-beta.mjs",
     "verify:search-v2-tool-scoped-package": "node scripts/verify-search-v2-tool-scoped-package.mjs",
     "verify:search-v2-tool-latency-migration-smoke": "node scripts/verify-search-v2-tool-latency-migration-smoke.mjs",

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_search_only_beta",
+  "date": "2026-07-14",
+  "implementation": {
+    "commit": "3bac7e87f03298dd184225af4d0ad40d5ea0cd98",
+    "endpoint": "mcp-search-v2-beta",
+    "endpoint_entry_sha256": "dbb1978efee923e2f1d89ed64ba40419602684cd5dc0b598f7d75be0dac09d47",
+    "beta_cohort": "deterministic-v2-beta"
+  },
+  "database": {
+    "migration_version": "20260714180000",
+    "migration_file": "supabase/migrations/20260714180000_search_v2_tool_latency_evidence.sql",
+    "migration_sha256": "d482408f156320fbbf518d6d66ac51ba1c1660321bacff9485f4e32a408fc3b5",
+    "runner": "scripts/apply-search-v2-tool-latency-hosted.ps1",
+    "runner_sha256": "d17cf9a35aecad6a5048f59a6267990f7da6f502e812de500c3103801a00d218",
+    "normal_db_push_allowed": false,
+    "older_migration_repair_allowed": false
+  },
+  "package": {
+    "name": "@supericons/mcp",
+    "version": "0.4.18-beta.0",
+    "publish_tag": "beta",
+    "clean_commit_file_count": 38,
+    "clean_commit_tarball_sha256": "7754183e61f8e5aca0b6d57eba06e8704ce70dd263a7acdd5558e47e166948db",
+    "clean_commit_npm_shasum": "f3bde0a3520c0eab2bd0a2a092f0bffe8b9cd075",
+    "latest_tag_must_remain": "0.4.17"
+  },
+  "tool_routes": {
+    "search_icons": "mcp-search-v2-beta",
+    "recommend_icons": "mcp-search"
+  },
+  "external_actions": {
+    "maximum_sql_migrations": 1,
+    "maximum_migration_history_repairs": 1,
+    "maximum_isolated_function_deployments": 1,
+    "maximum_npm_prerelease_publications": 1,
+    "production_function_deployments": 0,
+    "normal_database_pushes": 0,
+    "model_provider_calls": 0,
+    "scheduled_warm_pings": 0,
+    "automatic_public_messages": 0
+  },
+  "beta_window": {
+    "starts_at": "first_verified_eligible_search_icons_request",
+    "initial_days": 7,
+    "maximum_days_if_underpowered": 14,
+    "minimum_eligible_attempts": 200,
+    "minimum_session_hashes": 20,
+    "internal_tests_excluded": true,
+    "clarification_is_not_zero": true
+  },
+  "release_gates": {
+    "search_warm_p95_ms_max": 2000,
+    "error_rate_percent_max": 1,
+    "first_request_reported_separately": true,
+    "end_to_end_tool_latency_reported_separately": true,
+    "recommendation_response_byte_parity_required": true,
+    "production_search_functions_unchanged": true,
+    "npm_latest_unchanged": true
+  },
+  "rollback": {
+    "database_failure": "transaction_rollback_and_no_history_repair",
+    "history_repair_failure": "verify_objects_then_retry_only_exact_repair",
+    "endpoint_failure": "delete_isolated_beta_endpoint",
+    "package_failure": "deprecate_prerelease_and_keep_latest_unchanged",
+    "measurement_failure": "stop_invites_record_evidence_and_delete_endpoint"
+  },
+  "excluded_scope": [
+    "recommend_icons_beta_route",
+    "shared_recommendation_v4_migration",
+    "recommendation_treatment_endpoint",
+    "production_function_deployment",
+    "normal_database_push",
+    "older_migration_repair",
+    "npm_latest_change",
+    "scheduled_warm_ping",
+    "automatic_public_invitation",
+    "model_provider_call"
+  ]
+}
