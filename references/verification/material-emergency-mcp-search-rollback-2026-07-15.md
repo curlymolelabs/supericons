@@ -135,3 +135,17 @@ The 127 version 37 HTTP 500 rows have a 3,744 ms median, 35,531 ms p95, and 140,
 The companion audit query produced 19 successfully recorded error rows. Its SHA-256 is `e268798adc02767ad9b5ea644feba1c57bd8dd576ed0bf81aa72a722217a9b53`. Eleven were production hosted MCP requests classified as ChatGPT: nine `recommend_icons` and two `get_icon`. Four were `local_web` with local environment, three were the emergency rollback probe, and one was classified as an internal test. These are request attempts, not unique users. The production ChatGPT group may include verification traffic, so it is evidence of user-facing-channel impact but not a verified organic-user count.
 
 The 19 audit rows versus 144 Edge failure rows confirms material audit undercount during the incident. Every recorded audit error has a null `error_code`, which is consistent with the handler's compatibility fallback stripping enriched audit columns when an enriched insert encounters a missing-column response. This observation does not identify the primary search failure.
+
+## Postgres failure evidence
+
+The owner exported 93 Postgres error rows for the incident window. The export has SHA-256 `66e24ca8256973b90bf4d70bd5af3cf870069d3c7787d6e5bf2b3f8820794ceb` and contains:
+
+- 91 `canceling statement due to statement timeout` errors;
+- one later duplicate-key error on `mcp_usage_events_dedupe_key_idx`, outside the search outage diagnosis;
+- one parallel-worker termination caused by an administrator command.
+
+The statement timeouts run from `2026-07-15 00:10:21` through `00:19:42` Singapore time. An expanded `00:19:30` event identifies the timed-out statement as the PostgREST wrapper around `public.si_search_icon_candidates(p_query, p_library, p_limit)`.
+
+Edge failures began at `00:06:56`, before the first retained Postgres timeout. Nine version 37 HTTP 500 rows occurred in this early interval, with a 2,865 ms median and 6,157 ms maximum execution time. The remaining 135 non-success Edge rows overlap or follow the Postgres timeout interval and have a much longer tail, up to about 150 seconds.
+
+This localizes the immediate database failure to candidate-search statement timeouts. It disproves the missing-RPC hypothesis because the RPC was found and executed. It does not yet establish why the RPC became slow or overloaded. The retained query text uses bound parameters, so the failing query and library values are not present in the Postgres export.
