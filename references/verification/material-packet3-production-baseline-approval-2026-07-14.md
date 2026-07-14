@@ -2,7 +2,9 @@
 
 Date: 2026-07-14
 
-Status: Ready for independent review and owner approval. No Packet 3 production measurement has run.
+Status: Superseded before execution by Packet 3R. No Packet 3 production measurement ran under this fingerprint.
+
+Packet 3R classifies the synthetic traffic as `internal_test` and changes all text-file pins to LF-normalized SHA-256 values. See `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
 
 ## Why the original Packet 3 commands were blocked
 

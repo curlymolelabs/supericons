@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R and Packet 2S completed successfully and are closed. Packet 2R made no production change and is closed. Corrected Packet 3 is ready for independent review and owner approval.
+Status: Packet 1R and Packet 2S completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 3R is ready for independent review and owner approval.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -130,7 +130,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 ## Packet 3: fresh production latency baseline
 
-Execution status: ready for separate approval with fingerprint `f7402463de1f9558bce7696c98bd27b8700979abd3b99c159f6dd58ab2d45883`. The corrected Material-only runner targets stable `mcp-search`, enforces production audit fields, removes beta fields, and leaves the shared Search v2 runner unchanged. See `references/verification/material-packet3-production-baseline-approval-2026-07-14.md`.
+Execution status: Packet 3 was superseded before execution. Packet 3R is ready for separate approval with fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`. The Material-only runner targets stable `mcp-search`, classifies its synthetic traffic as internal testing against production, removes beta fields, uses line-ending-independent hashes, and leaves the shared Search v2 runner unchanged. See `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
 
 ### Authorized activity
 
@@ -146,7 +146,7 @@ Retain both output files. Any request error blocks the search deploy.
 
 ### Approval sentence
 
-> Approve Material production Packet 3 for fingerprint `f7402463de1f9558bce7696c98bd27b8700979abd3b99c159f6dd58ab2d45883`: run only the guarded stable `mcp-search` direct-search and grouped-recommendation baselines, retain both artifacts, require the production audit contract with no beta fields, and require zero request errors. No deploy, migration, seed, deletion, Railway change, npm publication, beta request, or rerun after failure is authorized.
+> Approve Material production Packet 3R for fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`: run only the guarded stable `mcp-search` direct-search and grouped-recommendation baselines, classify every request as internal testing against production, retain both artifacts, and require zero request errors. No deploy, migration, seed, deletion, Railway change, npm publication, beta request, or rerun after failure is authorized.
 
 ## Packet 4: Material snapshot function deploy
 
@@ -188,7 +188,7 @@ supabase functions deploy mcp-search --project-ref kcjmkakdhsqplvasgkjv --no-ver
 npm run verify:material-production-release -- --revision 425d8c2873e244988ed93ade18396e0f5c688f5e --output tmp/material-search-production.json --search-url https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search
 ```
 
-Then repeat Packet 3 with `--variant treatment` and new output paths. Direct search must remain at or under 2,000 ms warm p95 and within 100 ms of baseline. Grouped recommendation must remain within 100 ms p95 of its own baseline. Its pre-existing absolute latency does not block this Material release.
+After the deploy, run a separately fingerprinted treatment-measurement runner that uses the same internal-test production audit contract and new output paths. Packet 3R is a baseline-only packet and must not be rerun. Direct search must remain at or under 2,000 ms warm p95 and within 100 ms of baseline. Grouped recommendation must remain within 100 ms p95 of its own baseline. Its pre-existing absolute latency does not block this Material release.
 
 ### Stop and rollback conditions
 
