@@ -78,6 +78,20 @@ rollback_deployment_authorized=false
 beta_change_authorized=false
 ```
 
+## Pre-deploy version 36 provenance
+
+Version 36 is the expected pre-Material production deployment. It was created on 2026-07-05 at `05:09:18.858Z` (`13:09:18.858` Asia/Singapore) by this successful paired command:
+
+```powershell
+supabase functions deploy search-icons mcp-search --project-ref kcjmkakdhsqplvasgkjv --no-verify-jwt --use-api
+```
+
+The retained deployment transcript shows both functions uploaded and completed. Production metadata gives `mcp-search` version 36 and `search-icons` version 35 the same update timestamp, which ties both version numbers to that paired deploy. The deploy shipped the hosted MCP attribution handoff for country, geo source, IP hash, and session hash. It predates the Material implementation.
+
+The source inputs used by that deploy were subsequently checkpointed in commit `02b2c22ea8a76decee92d83c853ca6cf33899e6c`. The retained execution record shows no edit to an uploaded search-function file between the successful deploy and that checkpoint. An attempted archived-body download returned HTTP 401, so direct byte comparison of the hosted bundle to the checkpoint is unavailable. The pre-deploy identity is instead bound by the retained deployment transcript, the exact shared production timestamp, live pre-Material behavior, function version 36, and bundle SHA-256 `3416251449e61cd0c96abfaa0fd8fc1b4c15f572b40aec295c7f5c6efa97d5d5`.
+
+Earlier Search v2 records reported `search-icons` version 34 and `mcp-search` version 35. Those records were one version low and are corrected to 35 and 36. No unexplained `mcp-search` deployment occurred during the Material program, and the Packet 5R fingerprint remains unchanged because this provenance note does not alter the fingerprinted approval text.
+
 ## Authorized activity
 
 Deploy only the stable `mcp-search` function to project `kcjmkakdhsqplvasgkjv` with gateway JWT verification disabled. Then run:

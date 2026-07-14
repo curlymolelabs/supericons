@@ -121,7 +121,7 @@ Rollback order: revert the handler and candidate-query functions first, then dro
 
 Acceptance: `settings` and `cog` all-library searches return the full requested count; strict material returns the explicit message; results for non-material queries are byte-identical to pre-change output except for the Material exclusion (parity proof retained). Verification record in `references/verification/`.
 
-Governance: own hash-pinned approval packet; first production `mcp-search` function deploy of the program (production currently at version 35); Railway MCP deploy included if the remote-server change ships in the same step.
+Governance: own hash-pinned approval packet; first production `mcp-search` function deploy of the program (production currently at version 36, corrected from an earlier one-version-low report); Railway MCP deploy included if the remote-server change ships in the same step.
 
 ### Batch 1: contract lock and failing gates (no serving change)
 

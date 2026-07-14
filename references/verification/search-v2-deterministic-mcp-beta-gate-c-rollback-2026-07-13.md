@@ -53,8 +53,10 @@ One full recommendation check took 40,831 ms on its first run and 7,641 ms on a 
 
 | item | verified state |
 | --- | --- |
-| `search-icons` | Active, version 34, returned HTTP 200 with three results |
-| `mcp-search` | Active, version 35, returned HTTP 200 with three results |
+| `search-icons` | Active, version 35, returned HTTP 200 with three results |
+| `mcp-search` | Active, version 36, returned HTTP 200 with three results |
+
+Correction recorded 2026-07-14: the original table reported both production function versions one version low. The retained 2026-07-05 paired deployment transcript and the functions' shared production update timestamp establish `search-icons` version 35 and `mcp-search` version 36.
 | `mcp-search-v2-beta` | Absent from the hosted function list |
 | npm `latest` | `0.4.17` |
 | npm beta prerelease | Not published in this execution |
