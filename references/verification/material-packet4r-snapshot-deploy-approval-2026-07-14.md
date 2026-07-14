@@ -2,7 +2,26 @@
 
 Date: 2026-07-14
 
-Status: Ready for independent review and owner approval. No Packet 4 or Packet 4R deployment has run.
+Status: Completed successfully. Packet 4R is closed and must not be rerun.
+
+## Completion evidence
+
+The approved deployment command completed with exit code 0 on 2026-07-14 and reported only `serve-material-snapshot` deployed to project `kcjmkakdhsqplvasgkjv`.
+
+The linked production function list then reported:
+
+- Function: `serve-material-snapshot`
+- Status: `ACTIVE`
+- Version: 49
+- Gateway JWT verification: false
+- Deployed bundle SHA-256: `c9fb88d2babc89c7a1f94037aa8d5d470ef163b90b2a8bd6b0bc88a55cf36ca1`
+
+Both fixed `material:settings` probes passed on their first post-deploy attempt:
+
+- Outline: HTTP 200, `image/svg+xml`, cache hit, axes `fill=0,wght=300,grad=0,opsz=24`, source revision `30f8fddd293b1f0189896dc4aaecdfaba1d37ae0`, 1,337 bytes, SHA-256 `56d601be3e1f01215f4c757f98829109f0e5c0d7817718147cc495ba7fbcbeef`.
+- Solid: HTTP 200, `image/svg+xml`, cache hit, axes `fill=1,wght=400,grad=0,opsz=24`, source revision `30f8fddd293b1f0189896dc4aaecdfaba1d37ae0`, 480 bytes, SHA-256 `f00b353efc4767f8b30359f28e9289cc45fcbce9a037d4e237fdb50b5e7d71d7`.
+
+No search deploy, database mutation, seed, deletion, Railway deploy, npm publication, beta change, rollback deployment, or second function deployment ran.
 
 ## Why Packet 4R replaces Packet 4
 

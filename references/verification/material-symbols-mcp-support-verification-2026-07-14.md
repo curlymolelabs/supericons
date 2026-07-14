@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Local implementation verified. Production Packet 1R, Packet 2S, and Packet 3R completed successfully. The migration, private table, all 8,524 pinned hosted assets, and fresh pre-deploy latency baselines are complete. Serving deploys, live verification, and npm publication remain separately gated release actions.
+Status: Local implementation verified. Production Packet 1R, Packet 2S, Packet 3R, and Packet 4R completed successfully. The migration, private table, all 8,524 pinned hosted assets, fresh pre-deploy latency baselines, and the Material snapshot function are in production. Hosted search, MCP serving, final live verification, and npm publication remain separately gated release actions.
 
 ## Scope verified
 
@@ -28,6 +28,7 @@ Status: Local implementation verified. Production Packet 1R, Packet 2S, and Pack
 | Full asset coverage | `references/verification/material-full-asset-validation-2026-07-14.json` | Passed | 8,524 of 8,524 assets succeeded, zero exceptions, zero resume reuse in the final from-scratch run. SHA-256: `4e04f3894566fc0b8f9011f38847f27cb40d48d738415ea9c6df41f1d58e9e92`. |
 | Production hosted seed | Packet 2S guarded runner and retained report | Passed | Canary matched first. Full report recorded 8,524 successful, 0 resumed, and 0 failed. SQL postflight found 8,524 rows, 4,262 rows per variant, and 8,524 required Storage objects. Report SHA-256: `44c86cf6b87babf9a7d9382b61ba19f575067614fa87cb3c8925f8ccf0782da0`. |
 | Production latency baseline | Packet 3R guarded runner and retained artifacts | Passed | Direct search recorded 26 requests, zero errors, and 3,337.062 ms warm p95. Grouped recommendation recorded 21 requests, zero errors, and 459.204 ms warm p95. Both artifacts carry the internal-test production audit contract and no beta fields. Artifact SHA-256 values: `0344385fd16aac5aa6e55ff2a5dd5fd82f5f1f86230025025922ea1de27332ae` and `151ec835b5ac0e510510f692f395eee2169e461606470b9fae14a4c6714cea99`. |
+| Production snapshot function | Packet 4R deployment and fixed-preset probes | Passed | `serve-material-snapshot` is active at version 49 with gateway JWT verification disabled. Outline and solid `material:settings` returned HTTP 200, cache hits, exact axes, the pinned source revision, and the exact validated SVG checksums. |
 | Hosted serving | `npm run verify:material-serving` | Passed | Strict outline and solid hydration, mandatory hydration, all-mode count preservation, grouped recommendation hydration, audited errors, and fail-closed MCP normalization verified. |
 | HTTP handler parity | `npm run verify:search-v2-hosted-http-parity` | Passed | Five direct and five grouped cases retained exact response parity, including Material SVG hydration. |
 | Grouped recommendation integration | `npm run verify:search-v2-shared-recommendation-pipeline` | Passed | Four logical queries, one candidate RPC, bounded metadata and SVG reads, one audit insert, and error-path audit rows verified. |
@@ -63,14 +64,13 @@ No SVG payload is committed in the verification report.
 
 ## Remaining production gates
 
-Packet 1R, Packet 2S, and Packet 3R are complete and closed. Their recovery and execution evidence are recorded in `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`, `references/verification/material-packet2s-hosted-seed-approval-2026-07-14.md`, and `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
+Packet 1R, Packet 2S, Packet 3R, and Packet 4R are complete and closed. Their recovery and execution evidence are recorded in `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`, `references/verification/material-packet2s-hosted-seed-approval-2026-07-14.md`, `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`, and `references/verification/material-packet4r-snapshot-deploy-approval-2026-07-14.md`.
 
 These checks require the owner-gated release sequence:
 
-1. Deploy the snapshot function through Packet 4.
-2. Deploy stable hosted search through Packet 5, then run the separately fingerprinted treatment measurement and production release verification.
-3. Require direct search to meet both the 2,000 ms absolute gate and the baseline comparison. The pre-deploy direct-search baseline is 3,337.062 ms, so the absolute gate is the tighter requirement. Require grouped recommendation to remain within 100 ms of its 459.204 ms baseline.
-4. Deploy the Railway MCP surface through Packet 6 after Packet 5 is green.
-5. Publish the npm package through Packet 7 only after all hosted gates are green.
+1. Deploy stable hosted search through Packet 5, then run the separately fingerprinted treatment measurement and production release verification.
+2. Require direct search to meet both the 2,000 ms absolute gate and the baseline comparison. The pre-deploy direct-search baseline is 3,337.062 ms, so the absolute gate is the tighter requirement. Require grouped recommendation to remain within 100 ms of its 459.204 ms baseline.
+3. Deploy the Railway MCP surface through Packet 6 after Packet 5 is green.
+4. Publish the npm package through Packet 7 only after all hosted gates are green.
 
 Browser or Playwright validation is not applicable because this implementation changes no UI screen.
