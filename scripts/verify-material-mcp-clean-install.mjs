@@ -45,6 +45,11 @@ try {
   ], tempDir);
 
   const installedPackageDir = join(installDir, 'node_modules', '@supericons', 'mcp');
+  const installedPackage = JSON.parse(readFileSync(
+    join(installedPackageDir, 'package.json'),
+    'utf8',
+  ));
+  assert.equal(installedPackage.version, '0.4.18');
   const installedIndex = JSON.parse(readFileSync(
     join(installedPackageDir, 'public', 'icon-index.json'),
     'utf8',
@@ -104,6 +109,7 @@ try {
   console.log(JSON.stringify({
     status: 'ok',
     clean_install_material_ids: 4262,
+    package_version: installedPackage.version,
     list_libraries_truthful: true,
     exact_outline_svg: true,
     exact_solid_svg: true,

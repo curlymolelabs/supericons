@@ -31,9 +31,9 @@ Status: Local implementation verified. Production migration, seed, deploy, live 
 | Grouped recommendation integration | `npm run verify:search-v2-shared-recommendation-pipeline` | Passed | Four logical queries, one candidate RPC, bounded metadata and SVG reads, one audit insert, and error-path audit rows verified. |
 | Result hydration regression | `npm run verify:search-v2-result-hydration` | Passed | Order, SVG values, null behavior, and missing-row failure behavior verified. |
 | Timing regression | `npm run verify:search-v2-stage-timing` | Passed | Safe fields, sink isolation, disabled path, and payload measurement verified. |
-| MCP package inventory | `npm run verify:material-mcp-package` | Passed | Icon indexes, package manifest, capability helper, pinned revision, and 8,524-asset report included in the gate. Packed size was 4,768,631 bytes. |
+| MCP package inventory | `npm run verify:material-mcp-package` | Passed | Stable package version `0.4.18`, production `mcp-search` routing, icon indexes, package manifest, capability helper, pinned revision, and 8,524-asset report included in the gate. Packed size was 4,768,628 bytes. |
 | Public function configuration | `npm run verify:material-mcp-package` | Passed | Stable MCP search and Material snapshot functions explicitly disable Supabase JWT verification in checked-in configuration. Product access controls remain inside the MCP server. |
-| Clean npm install | `npm run verify:material-mcp-clean-install` | Passed | A real tarball install reported 4,262 Material IDs and returned valid SVG for exact outline and solid `material:settings` requests. |
+| Clean npm install | `npm run verify:material-mcp-clean-install` | Passed | A real `0.4.18` tarball install reported 4,262 Material IDs and returned valid SVG for exact outline and solid `material:settings` requests. |
 | Production release runner | `npm run verify:material-production-runner` | Passed | A controlled local service exercised 92 production-shaped search checks and five tools through the actual hosted MCP HTTP server. No hosted system was touched. |
 | Existing variant behavior | `npm run verify:mcp-variant-access` | Passed | 13 lookup, search, and recommendation checks passed. |
 | Existing grouped client | `npm run verify:hosted-search-grouped-client` | Passed | One HTTP request and preserved logical response order. |
