@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "manifest_sha256": "d0ebaabd2ccb439755ad5bd53d44faa1ba0c8ab08acd96ed52e92d6bf07937c8",
+  "implementation_commit": "8ba345fa9",
+  "migration_version": "20260714120000",
+  "raw_artifact_sha256": "c95dc9f2719218909a6c92cae8c18a02df07361a5feef88350eb4c360e29dee2",
+  "parity_passed": true,
+  "safety_stop": false,
+  "direct_search": {
+    "control_first_ms": 916.872,
+    "treatment_first_ms": 962.804,
+    "control_warm_p95_ms": 2162.117,
+    "treatment_warm_p95_ms": 1647.287,
+    "treatment_p95_reduction_percent": 23.81,
+    "treatment_passed_limit": true
+  },
+  "localized_search": {
+    "control_first_ms": 1590.371,
+    "treatment_first_ms": 1459.073,
+    "control_warm_p95_ms": 1512.686,
+    "treatment_warm_p95_ms": 1549.441,
+    "treatment_p95_change_percent": 2.43,
+    "treatment_passed_limit": true
+  },
+  "recommendation": {
+    "public_result_parity": true,
+    "control_first_ms": 12155.676,
+    "treatment_first_ms": 6303.357,
+    "control_warm_p50_ms": 12941.588,
+    "treatment_warm_p50_ms": 6525.023,
+    "control_warm_p95_ms": 22966.01,
+    "treatment_warm_p95_ms": 16868.76,
+    "treatment_p50_reduction_percent": 49.58,
+    "treatment_p95_reduction_percent": 26.55,
+    "query_variants_per_sample": 8,
+    "manifest_expected_query_variants_per_sample": 4,
+    "control_search_callback_calls_per_sample": 8,
+    "control_actual_http_requests_per_sample": 8,
+    "treatment_grouped_callback_calls_per_sample": 1,
+    "treatment_actual_http_requests_per_sample": 1,
+    "measurement_contract_match": false,
+    "treatment_limit_multiple": 5.62,
+    "treatment_passed_limit": false
+  },
+  "errors": {
+    "direct_search_percent": 0,
+    "localized_search_percent": 0,
+    "recommendation_percent": 0
+  },
+  "stage_log_export": {
+    "status": "unavailable",
+    "reason": "The read-only Management API returned HTTP 403 for both supported log-query endpoints."
+  },
+  "closeout": {
+    "isolated_control_endpoint_deleted": true,
+    "isolated_treatment_endpoint_deleted": true,
+    "production_search_icons_version": 34,
+    "production_mcp_search_version": 35,
+    "npm_latest": "0.4.17",
+    "production_deployment_performed": false,
+    "npm_publication_performed": false,
+    "model_provider_call_performed": false
+  },
+  "decision": "publication_blocked_and_recommendation_measurement_contract_missed"
+}
