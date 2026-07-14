@@ -42,7 +42,8 @@ After implementation, the same focused checks passed.
 | Recommendation uses one grouped callback, preserves exact results, and keeps clarification at zero retrieval | Pass | `npm run verify:recommend-icons-grouped-search` |
 | Full HTTP status, headers, body bytes, SVG values, semantic field order, and errors | Pass, 5 cases on both lightweight and batched paths | `npm run verify:search-v2-hosted-http-parity` |
 | Timing output is public-safe and cannot change responses | Pass | `npm run verify:search-v2-stage-timing` |
-| Fixed search suite and deterministic fingerprint | Pass, 225 cases, fingerprint `1f142d55c0a959c679c58e9c8af12af8c6e2a826eb6dcefcb974b484640ebc51` | `npm run verify:search-v2-phase1-parity` |
+| Fixed search suite and committed fingerprint continuity | Pass, 225 cases, clean parent and implementation fingerprints both `e610fce301e92bef374fca076526ef07f0fe2f31b8d63a933cca399266593e76` | `npm run verify:search-v2-roundtrip-latency-packet` |
+| Working-tree fingerprint source diagnostics | Pass, the verifier reports its source revision and dirty search inputs | `npm run verify:search-v2-phase1-parity` |
 | Recommendation clarification | Pass | `npm run verify:recommend-icons-clarification` |
 | Ranking policy and library modes | Pass | `npm run verify:search-ranking-policy`; `npm run verify:search-library-modes` |
 | Default request path has no model-provider call | Pass | `npm run verify:search-v2-deterministic-mcp-default` |
@@ -65,6 +66,12 @@ The guarded runner:
 - removes password environment variables in a `finally` block.
 
 The hosted migration ledger remains incomplete. Normal `supabase db push` remains prohibited.
+
+## Fingerprint source correction
+
+The earlier `564464d5...` and `1f142d55...` values were produced from different combinations of uncommitted taxonomy and generated icon-index files. They do not describe the committed before-and-after implementation pair. The clean parent commit `aad99541b` and clean implementation commit `8ba345fa9` both produce `e610fce3...`.
+
+The full reproduction matrix and the one changed working-tree case are recorded in [`search-v2-fingerprint-source-correction-2026-07-14.md`](search-v2-fingerprint-source-correction-2026-07-14.md).
 
 ## What is not verified
 

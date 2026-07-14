@@ -23,8 +23,11 @@ The treatment does not add AI, embeddings, fuzzy model output, or a paid provide
 | Manifest SHA-256 | `d0ebaabd2ccb439755ad5bd53d44faa1ba0c8ab08acd96ed52e92d6bf07937c8` |
 | Measurement runner | `scripts/run-search-v2-roundtrip-latency-measurement.mjs` |
 | Measurement runner SHA-256 | `bba4cf618fc5c6b01bd162492790bb67495e4a9942d37905b4a790d6fbbe3a11` |
+| Clean committed 225-case fingerprint | `e610fce301e92bef374fca076526ef07f0fe2f31b8d63a933cca399266593e76` |
 
 The control uses the current lightweight candidate function and separate recommendation searches. The treatment uses one ordered candidate-array function and one grouped recommendation request.
+
+The implementation commit and its parent produce the same 225-case fingerprint when each is checked in a temporary clean worktree. Uncommitted catalog and taxonomy files in the main working tree are excluded from this proof.
 
 ## Requested external actions
 

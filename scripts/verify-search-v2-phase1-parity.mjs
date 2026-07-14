@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
@@ -11,6 +12,34 @@ function read(path) {
 function readJson(path) {
   return JSON.parse(read(path));
 }
+
+const fingerprintInputPaths = [
+  'data/semantic-search-v2/evaluation-set.json',
+  'data/i18n/cjk-search-terms.json',
+  'data/i18n/multilingual-search-aliases.json',
+  'mcp/search.js',
+  'mcp/variant-support.js',
+  'mcp/public/cjk-search-terms.json',
+  'mcp/public/icon-index.json',
+  'mcp/public/multilingual-search-aliases.json',
+  'mcp/public/synonyms.json',
+  'mcp/runtime/cjk-search-core.js',
+  'mcp/runtime/icon-semantic-aliases.js',
+  'mcp/runtime/icon-taxonomy-seed.js',
+  'mcp/runtime/search-ranking-policy.js',
+];
+
+const sourceRevision = execFileSync('git', ['rev-parse', '--short=10', 'HEAD'], {
+  encoding: 'utf8',
+}).trim();
+const dirtyFingerprintInputs = execFileSync(
+  'git',
+  ['status', '--porcelain=v1', '--untracked-files=all', '--', ...fingerprintInputPaths],
+  { encoding: 'utf8' },
+)
+  .split(/\r?\n/)
+  .map((line) => line.trimEnd())
+  .filter(Boolean);
 
 const evaluationSet = readJson('data/semantic-search-v2/evaluation-set.json');
 const icons = readJson('mcp/public/icon-index.json').icons;
@@ -63,6 +92,9 @@ console.log(JSON.stringify({
   fixed_suite_cases_executed: observations.length,
   stable_case_ids: 225,
   deterministic_result_fingerprint: fingerprint,
+  source_revision: sourceRevision,
+  fingerprint_inputs_clean: dirtyFingerprintInputs.length === 0,
+  dirty_fingerprint_inputs: dirtyFingerprintInputs,
   stable_web_endpoint_uses_existing_rpc: true,
   stable_mcp_endpoint_uses_existing_rpc: true,
   beta_measurement_variant: betaVariant,

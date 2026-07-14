@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const manifestPath = 'docs/si-v2/search/reviews/search-v2-roundtrip-latency-authorization-manifest-2026-07-14.json';
 const packetPath = 'docs/si-v2/search/reviews/search-v2-roundtrip-latency-approval-request-2026-07-14.md';
@@ -9,6 +11,7 @@ const evidencePath = 'references/verification/search-v2-roundtrip-latency-prepar
 const expectedManifestHash = 'd0ebaabd2ccb439755ad5bd53d44faa1ba0c8ab08acd96ed52e92d6bf07937c8';
 const expectedMigrationHash = 'f965c0b354a8d2e31be8791ac5b2041838be6bc8a2b40a97735f90d27f81cded';
 const expectedRunnerHash = 'bba4cf618fc5c6b01bd162492790bb67495e4a9942d37905b4a790d6fbbe3a11';
+const expectedCommittedFingerprint = 'e610fce301e92bef374fca076526ef07f0fe2f31b8d63a933cca399266593e76';
 
 function read(path) {
   return readFileSync(path, 'utf8');
@@ -16,6 +19,35 @@ function read(path) {
 
 function gitShow(commit, path) {
   return execFileSync('git', ['show', `${commit}:${path}`], { encoding: 'utf8' });
+}
+
+function verifyCommittedFingerprint(commit) {
+  const temporaryRoot = mkdtempSync(join(tmpdir(), 'supericons-search-fingerprint-'));
+  const worktreePath = join(temporaryRoot, 'worktree');
+  let worktreeAdded = false;
+
+  try {
+    execFileSync('git', ['worktree', 'add', '--detach', '--quiet', worktreePath, commit], {
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    worktreeAdded = true;
+    const output = execFileSync(process.execPath, ['scripts/verify-search-v2-phase1-parity.mjs'], {
+      cwd: worktreePath,
+      encoding: 'utf8',
+      maxBuffer: 10 * 1024 * 1024,
+    });
+    return JSON.parse(output);
+  } finally {
+    try {
+      if (worktreeAdded) {
+        execFileSync('git', ['worktree', 'remove', '--force', worktreePath], {
+          stdio: ['ignore', 'pipe', 'pipe'],
+        });
+      }
+    } finally {
+      rmSync(temporaryRoot, { recursive: true, force: true });
+    }
+  }
 }
 
 const manifestText = read(manifestPath);
@@ -67,6 +99,18 @@ const committedMigrationHash = createHash('sha256')
   .update(gitShow(manifest.implementation_commit, 'supabase/migrations/20260714120000_search_v2_batched_candidates.sql'))
   .digest('hex');
 assert.equal(committedMigrationHash, expectedMigrationHash);
+
+const parentCommit = execFileSync('git', ['rev-parse', `${manifest.implementation_commit}^`], {
+  encoding: 'utf8',
+}).trim();
+const parentFingerprint = verifyCommittedFingerprint(parentCommit);
+const implementationFingerprint = verifyCommittedFingerprint(manifest.implementation_commit);
+assert.equal(parentFingerprint.deterministic_result_fingerprint, expectedCommittedFingerprint);
+assert.equal(implementationFingerprint.deterministic_result_fingerprint, expectedCommittedFingerprint);
+assert.equal(
+  implementationFingerprint.deterministic_result_fingerprint,
+  parentFingerprint.deterministic_result_fingerprint,
+);
 assert.ok(runner.includes(`$expectedMigrationHash = '${expectedMigrationHash}'`));
 assert.doesNotMatch(runner, /supabase db push/i);
 assert.match(measurementRunner, /mcp-search-v2-control/);
@@ -80,6 +124,7 @@ for (const artifact of [packet, evidence]) {
   assert.ok(artifact.includes(expectedManifestHash));
   assert.ok(artifact.includes(manifest.implementation_commit));
   assert.ok(artifact.includes(expectedMigrationHash));
+  assert.ok(artifact.includes(expectedCommittedFingerprint));
 }
 assert.match(packet, /No production function deployment, normal database push, older migration repair, npm publication, scheduled warm ping, public invitation, or model-provider call is authorized/);
 assert.match(packet, /Latency and error limits are publication gates, not early diagnostic stops/);
@@ -91,6 +136,9 @@ console.log(JSON.stringify({
   implementation_commit: manifest.implementation_commit,
   migration_sha256: migrationHash,
   measurement_runner_sha256: measurementRunnerHash,
+  parent_commit: parentCommit.slice(0, 10),
+  committed_result_fingerprint: implementationFingerprint.deterministic_result_fingerprint,
+  committed_parent_matches_implementation: true,
   isolated_endpoints: [manifest.control_endpoint, manifest.treatment_endpoint],
   maximum_function_deployments: manifest.variant_contract.maximum_function_deployments,
   production_function_deployments: 0,

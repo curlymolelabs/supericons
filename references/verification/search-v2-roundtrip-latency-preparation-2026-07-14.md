@@ -18,7 +18,9 @@ Manifest fingerprint: `d0ebaabd2ccb439755ad5bd53d44faa1ba0c8ab08acd96ed52e92d6bf
 
 ## Local proof
 
-The controlling local proof is [`search-v2-roundtrip-reduction-local-2026-07-14.md`](search-v2-roundtrip-reduction-local-2026-07-14.md). It records disposable PostgreSQL parity and rollback, exact HTTP response parity, grouped recommendation result parity, synchronous audit behavior, rate-limit cost, safe timing fields, the unchanged 225-case fingerprint, and the no-model-call gate.
+The controlling local proof is [`search-v2-roundtrip-reduction-local-2026-07-14.md`](search-v2-roundtrip-reduction-local-2026-07-14.md). It records disposable PostgreSQL parity and rollback, exact HTTP response parity, grouped recommendation result parity, synchronous audit behavior, rate-limit cost, safe timing fields, and the no-model-call gate.
+
+Clean worktrees for parent commit `aad99541b` and implementation commit `8ba345fa9` both produce the 225-case fingerprint `e610fce301e92bef374fca076526ef07f0fe2f31b8d63a933cca399266593e76`. The fingerprint source correction is recorded in [`search-v2-fingerprint-source-correction-2026-07-14.md`](search-v2-fingerprint-source-correction-2026-07-14.md). Formal packet verification now checks the two committed trees instead of using unrelated working-tree catalog changes.
 
 The authorization packet adds no runtime behavior. It binds the exact implementation, migration, measurement runner, endpoints, request counts, standard audit rows, stop rules, publication limits, and rollback actions for owner review.
 
