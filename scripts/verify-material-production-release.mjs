@@ -20,14 +20,6 @@ function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
 }
 
-function chunks(values, size) {
-  const result = [];
-  for (let index = 0; index < values.length; index += size) {
-    result.push(values.slice(index, index + size));
-  }
-  return result;
-}
-
 function isSvg(value) {
   return typeof value === 'string'
     && /^<svg\b/i.test(value.trim())
@@ -123,7 +115,8 @@ async function runSearchGate(searchUrl, apiKey) {
 
   const summaries = [];
   const requestDurations = [];
-  for (const batch of chunks(cases, 24)) {
+  for (let index = 0; index < cases.length; index += 1) {
+    const testCase = cases[index];
     const headers = { 'Content-Type': 'application/json' };
     if (apiKey) headers['x-supericons-api-key'] = apiKey;
     const timed = await runTimed(async () => {
@@ -131,56 +124,46 @@ async function runSearchGate(searchUrl, apiKey) {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          queries: batch.map((entry, index) => ({
-            ...entry.request,
-            source: 'verify',
-            channel: 'internal_test',
-            environment: 'production',
-            client_family: 'material_release_gate',
-            tool_name: 'search_icons',
-            dedupe_key: `material-release:${entry.id}:${index}`.slice(0, 180),
-          })),
+          ...testCase.request,
+          source: 'verify',
+          channel: 'internal_test',
+          environment: 'production',
+          client_family: 'material_release_gate',
+          tool_name: 'search_icons',
+          dedupe_key: `material-release:${testCase.id}:${index}`.slice(0, 180),
         }),
       });
       const rawBody = await response.text();
-      assert.equal(response.status, 200, `grouped search returned ${response.status}: ${rawBody.slice(0, 300)}`);
+      assert.equal(response.status, 200, `${testCase.id} returned ${response.status}: ${rawBody.slice(0, 300)}`);
       return JSON.parse(rawBody);
     });
     requestDurations.push(timed.duration_ms);
-    assert.equal(timed.value.responses?.length, batch.length, 'grouped search response count changed');
+    assert.ok(Array.isArray(timed.value?.results), `${testCase.id} returned no results array`);
+    assert.notEqual(timed.value?.error_code, 'material_asset_unavailable', `${testCase.id} hit an asset gap`);
+    const results = timed.value.results;
 
-    for (let index = 0; index < batch.length; index += 1) {
-      const testCase = batch[index];
-      const entry = timed.value.responses[index];
-      assert.equal(entry?.index, index, `${testCase.id} returned out of order`);
-      assert.ok(entry.status >= 200 && entry.status < 300, `${testCase.id} returned status ${entry.status}`);
-      assert.ok(Array.isArray(entry.body?.results), `${testCase.id} returned no results array`);
-      assert.notEqual(entry.body?.error_code, 'material_asset_unavailable', `${testCase.id} hit an asset gap`);
-      const results = entry.body.results;
-
-      if (testCase.kind === 'relevance') {
-        const acceptable = results.find((row) => testCase.acceptableIconIds.includes(iconId(row)));
-        assert.ok(acceptable, `${testCase.id} returned no acceptable Material icon`);
-        assert.ok(isSvg(acceptable.svg), `${testCase.id} returned an invalid SVG`);
-        assert.equal(acceptable.style, testCase.request.style, `${testCase.id} returned the wrong style`);
-      } else if (testCase.kind === 'all_mode') {
-        assert.equal(results.length, testCase.request.limit, `${testCase.id} returned a shortened result set`);
-        assert.ok(results.every((row) => isSvg(row.svg)), `${testCase.id} returned a result without valid SVG`);
-      }
-
-      summaries.push({
-        id: testCase.id,
-        kind: testCase.kind,
-        result_count: results.length,
-        result_icon_ids: results.map(iconId),
-      });
+    if (testCase.kind === 'relevance') {
+      const acceptable = results.find((row) => testCase.acceptableIconIds.includes(iconId(row)));
+      assert.ok(acceptable, `${testCase.id} returned no acceptable Material icon`);
+      assert.ok(isSvg(acceptable.svg), `${testCase.id} returned an invalid SVG`);
+      assert.equal(acceptable.style, testCase.request.style, `${testCase.id} returned the wrong style`);
+    } else if (testCase.kind === 'all_mode') {
+      assert.equal(results.length, testCase.request.limit, `${testCase.id} returned a shortened result set`);
+      assert.ok(results.every((row) => isSvg(row.svg)), `${testCase.id} returned a result without valid SVG`);
     }
+
+    summaries.push({
+      id: testCase.id,
+      kind: testCase.kind,
+      result_count: results.length,
+      result_icon_ids: results.map(iconId),
+    });
   }
 
   return {
     endpoint: searchUrl,
-    grouped_requests: requestDurations.length,
-    grouped_request_durations_ms: requestDurations,
+    request_count: requestDurations.length,
+    request_durations_ms: requestDurations,
     logical_queries: cases.length,
     relevance_checks: summaries.filter((entry) => entry.kind === 'relevance').length,
     smoke_checks: summaries.filter((entry) => entry.kind === 'smoke').length,

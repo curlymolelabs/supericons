@@ -49,25 +49,19 @@ const server = createServer((request, response) => {
   request.on('end', () => {
     try {
       const payload = JSON.parse(rawBody);
-      response.writeHead(200, { 'Content-Type': 'application/json' });
-      if (Array.isArray(payload.queries)) {
-        assert.ok(payload.queries.every((query) => (
-          query.source === 'verify'
-          && query.channel === 'internal_test'
-          && query.environment === 'production'
-          && query.client_family === 'material_release_gate'
-          && query.tool_name === 'search_icons'
-          && typeof query.dedupe_key === 'string'
-        )), 'Production release query audit contract changed.');
-        const responses = payload.queries.map((query, index) => ({
-          index,
-          status: 200,
-          body: { results: resultsFor(query) },
-        }));
-        response.end(JSON.stringify({ responses }));
-      } else {
-        response.end(JSON.stringify({ results: resultsFor(payload) }));
+      assert.equal(payload.queries, undefined, 'Stable mcp-search does not accept a grouped query envelope.');
+      if (payload.client_family === 'material_release_gate') {
+        assert.ok(
+          payload.source === 'verify'
+          && payload.channel === 'internal_test'
+          && payload.environment === 'production'
+          && payload.tool_name === 'search_icons'
+          && typeof payload.dedupe_key === 'string',
+          'Production release query audit contract changed.',
+        );
       }
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify({ results: resultsFor(payload) }));
     } catch (error) {
       response.writeHead(500, { 'Content-Type': 'application/json' });
       response.end(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }));
@@ -165,6 +159,7 @@ try {
   assert.equal(result.code, 0, result.stderr || result.stdout);
   const artifact = JSON.parse(readFileSync(outputPath, 'utf8'));
   assert.equal(artifact.revision, revision);
+  assert.equal(artifact.search.request_count, 92);
   assert.equal(artifact.search.logical_queries, 92);
   assert.equal(artifact.search.relevance_checks, 40);
   assert.equal(artifact.search.smoke_checks, 50);
@@ -181,7 +176,7 @@ try {
   );
   console.log(JSON.stringify({
     status: 'ok',
-    grouped_requests: artifact.search.grouped_requests,
+    request_count: artifact.search.request_count,
     logical_queries: artifact.search.logical_queries,
     relevance_checks: artifact.search.relevance_checks,
     smoke_checks: artifact.search.smoke_checks,
