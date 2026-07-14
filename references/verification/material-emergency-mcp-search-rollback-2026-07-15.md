@@ -2,7 +2,7 @@
 
 Date: 2026-07-15
 
-Status: Executed. Restoration failed. Production version 38 remains active.
+Status: Executed. Production restored on version 38 after a transient first-probe failure.
 
 ## Incident
 
@@ -95,6 +95,27 @@ Two earlier attempts are excluded from the result:
 
 ## Current production state
 
-Production `mcp-search` version 38 remains active and fails a valid Lucide strict request with HTTP 500. The rollback deployment therefore did not restore search service. No database, migration, storage, Railway, npm, beta, or other function change was made.
+The first valid postdeployment probe failed, so the original stop decision was correct with the evidence available at that time. A later independent probe set established that version 38 had become healthy. The rollback deployment restored the pre-Material serving behavior after a transient first-probe failure. No database, migration, storage, Railway, npm, beta, or other function change was made.
 
-The failure is not yet attributed to a verified root cause. The previously suggested missing `si_search_icon_candidates_v3` dependency does not match the pinned checkpoint's default request path, which uses the existing `si_search_icon_candidates` RPC. Further production deployment is outside this authorization. The next step is read-only inspection of the function and database logs for the failed version 38 request before preparing any new recovery action.
+## Warm restoration verification
+
+At `2026-07-15T00:30:55+08:00`, production metadata still reported active `mcp-search` version 38, bundle SHA-256 `90c21f737fa5ac3a1162e8ba527b94c97555e9bd93c94afd4845a66298f570ce`, and `verify_jwt=false`. Six sequential production requests then produced:
+
+| Probe | HTTP | Duration | Results | Valid SVGs |
+| --- | ---: | ---: | ---: | ---: |
+| Lucide strict `calendar`, first | 200 | 4,178.7 ms | 5 | 5 |
+| Lucide strict `calendar`, second | 200 | 1,198.8 ms | 5 | 5 |
+| All-mode `settings` | 200 | 3,166.7 ms | 10 | 9 |
+| All-mode `cog` | 200 | 1,797.1 ms | 10 | 10 |
+| Legacy Material outline `settings` | 200 | 1,857.9 ms | 5 | 0 |
+| Legacy Material solid `settings` | 200 | 1,413.2 ms | 0 | 0 |
+
+The result matches the known pre-Material capability state. Normal Lucide search works. All-mode returns the requested row count, although Material still consumes one `settings` slot without a deliverable SVG. Material outline rows remain rankable without SVG, and Material solid remains empty.
+
+## Remaining diagnosis
+
+The failed first version 38 probe is consistent with deployment warm-up or another transient runtime condition, but the available evidence does not prove a cold-start root cause. The first later Lucide request took 4.2 seconds and the immediate repeat took 1.2 seconds, which supports a warm-up effect without establishing that it caused the earlier HTTP 500.
+
+The persistent version 37 outage remains specific to that deployed code or its runtime interaction. The previously suggested missing `si_search_icon_candidates_v3` dependency does not match the pinned checkpoint's default request path, which uses the existing `si_search_icon_candidates` RPC. Version 37 function logs are still required to identify the exact exception.
+
+An impact count from `search_request_audit` alone may undercount failed requests. The handler suppresses secondary audit-write failures while returning the primary error, so any database failure that also prevents the audit insert will leave no audit row. Edge request logs should be the primary source for total HTTP 500 requests in the outage window, with audit rows used as supporting evidence.
