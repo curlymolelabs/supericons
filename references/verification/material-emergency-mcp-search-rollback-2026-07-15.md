@@ -119,3 +119,19 @@ The failed first version 38 probe is consistent with deployment warm-up or anoth
 The persistent version 37 outage remains specific to that deployed code or its runtime interaction. The previously suggested missing `si_search_icon_candidates_v3` dependency does not match the pinned checkpoint's default request path, which uses the existing `si_search_icon_candidates` RPC. Version 37 function logs are still required to identify the exact exception.
 
 An impact count from `search_request_audit` alone may undercount failed requests. The handler suppresses secondary audit-write failures while returning the primary error, so any database failure that also prevents the audit insert will leave no audit row. Edge request logs should be the primary source for total HTTP 500 requests in the outage window, with audit rows used as supporting evidence.
+
+## Retained impact aggregates
+
+The owner exported the full non-success invocation query for `2026-07-14T15:30:00Z` through `2026-07-14T16:35:00Z`. The export contains 144 unique Edge log rows, which is below its raised 1,000-row limit and therefore removes the earlier 100-row dashboard cap for this filter. Its SHA-256 is `a3e6b799dd2ed6923cba6a622bfdb972e616386371416bc25f84103ed11c5d70`.
+
+| Version | HTTP status | Rows | First event, Singapore time | Last event, Singapore time |
+| ---: | ---: | ---: | --- | --- |
+| 37 | 500 | 127 | 2026-07-15 00:06:56 | 2026-07-15 00:17:58 |
+| 37 | 546 | 2 | 2026-07-15 00:17:55 | 2026-07-15 00:18:09 |
+| 38 | 500 | 15 | 2026-07-15 00:18:30 | 2026-07-15 00:19:45 |
+
+The 127 version 37 HTTP 500 rows have a 3,744 ms median, 35,531 ms p95, and 140,657 ms maximum execution time. The mixed fast and slow distribution does not support one uniform 18-second timeout explanation. The two HTTP 546 rows each ran for about 150 seconds. The 15 version 38 transition failures have a 37,950 ms median, 92,215 ms p95, and 93,840 ms maximum.
+
+The companion audit query produced 19 successfully recorded error rows. Its SHA-256 is `e268798adc02767ad9b5ea644feba1c57bd8dd576ed0bf81aa72a722217a9b53`. Eleven were production hosted MCP requests classified as ChatGPT: nine `recommend_icons` and two `get_icon`. Four were `local_web` with local environment, three were the emergency rollback probe, and one was classified as an internal test. These are request attempts, not unique users. The production ChatGPT group may include verification traffic, so it is evidence of user-facing-channel impact but not a verified organic-user count.
+
+The 19 audit rows versus 144 Edge failure rows confirms material audit undercount during the incident. Every recorded audit error has a null `error_code`, which is consistent with the handler's compatibility fallback stripping enriched audit columns when an enriched insert encounters a missing-column response. This observation does not identify the primary search failure.
