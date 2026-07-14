@@ -2,11 +2,11 @@
 
 Date: 2026-07-14
 
-Status: Packet 1 stopped after its original SQL applied. Do not rerun Packet 1. A separate Packet 1R recovery is required before Packet 2.
+Status: Packet 1R completed successfully. Packet 1 is closed and must not be rerun. Packet 2 is ready for its separate approval.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
-Packet 1R recovery fingerprint: `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`. Packet 2 remains blocked until Packet 1R passes.
+Packet 1R recovery fingerprint: `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`. Its guarded runner returned exit code 0 after the recovery preflight, private-role revocation, full hosted postflight, exact two-version history repair, and final linked migration list. Packet 2 remains blocked only on its own approval and preconditions.
 
 ## Pinned release
 
@@ -41,19 +41,17 @@ The temporary Batch 0 Material exclusion is not deployed as a separate release. 
 - Package routing is pinned to stable `mcp-search`, not the paused Search v2 beta endpoint.
 - The full verification record is `references/verification/material-symbols-mcp-support-verification-2026-07-14.md`.
 
-## Current access prerequisites
+## Access prerequisites
 
-The following command-line access checks failed on 2026-07-14 and must be completed by the owner before their related packet can run:
+Supabase CLI authentication and project linking were sufficient for Packet 1R. The database password was entered only in the guarded interactive process and was removed from that process after completion.
 
-- Supabase CLI: not authenticated.
-- Railway CLI: not linked to a project.
-- npm CLI: not authenticated for publication.
+Railway and npm access were not used or rechecked during Packet 1R. Their related packets must verify access immediately before execution.
 
 No credential value belongs in this file or in committed shell history.
 
 ## Packet 1: production migration
 
-Execution status: stopped after SQL and before migration-history repair. This packet is closed and must not be rerun.
+Execution status: the original SQL stopped at postflight, then the approved Packet 1R recovery passed. Both exact migration-history versions are applied. This packet is closed and must not be rerun.
 
 ### Authorized mutation
 

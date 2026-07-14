@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Recovery implemented and locally verified. Production recovery has not run and requires a separate owner approval.
+Status: Production recovery completed. Packet 1 is closed and Packet 2 requires its separate approval.
 
 ## Pinned recovery
 
@@ -91,6 +91,22 @@ Do not restore anonymous or authenticated privileges. A full feature rollback us
 - The recovery runner refuses to start without its approval switch.
 
 One disposable PostgreSQL attempt failed before SQL because its container socket was not ready. The immediate retry passed the full migration and rollback sequence. This startup flake is recorded and is not reported as a clean first-attempt pass.
+
+## Production recovery result
+
+The owner approved fingerprint `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`. The guarded production runner returned exit code 0.
+
+The runner can return 0 only after this fixed sequence succeeds:
+
+1. The recovery preflight confirms that the table exists, is empty, has RLS enabled, and still has the diagnosed direct-role privilege mismatch.
+2. Recovery migration `20260714223000` runs in one transaction.
+3. The full hosted postflight confirms the private-role boundary, service-role access, constraints, indexes, error columns, and empty table.
+4. Migration-history versions `20260714220000` and `20260714223000` are marked applied.
+5. The final linked migration list succeeds.
+
+No original migration SQL was rerun. No seed, function deploy, Railway deploy, npm publication, normal database push, data write, or privilege grant ran in Packet 1R.
+
+The repository now also runs `npm run verify:private-table-migrations`. For migrations after `20260714223000`, every newly created table must declare whether it is private or public. A private table must revoke direct `anon` and `authenticated` access in the same migration.
 
 ## Approved command after owner authorization
 
