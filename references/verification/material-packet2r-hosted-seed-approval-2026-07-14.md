@@ -2,11 +2,21 @@
 
 Date: 2026-07-14
 
-Status: Ready for owner approval. No Packet 2 production seed has run.
+Status: Closed after a failed no-write attempt. Do not rerun Packet 2R.
+
+## Execution result
+
+The owner approved Packet 2R with fingerprint `a1d4e4e983f31e6542691c8ba5d9d1f2648bd74116ac97147ecd1faedda1e2ff`.
+
+The runner preflight passed, then all 8,524 Storage upload attempts returned HTTP 400. The retained report recorded 8,524 requested, 0 successful, 0 resumed, and 8,524 failed. Its SHA-256 was `00bdba6670479e20a754ecb3e23858052dc016cb4c0b141f7c9d9062e9b7f40c`.
+
+A post-failure read-only production preflight passed with the same state as before execution: 0 table rows and 91 existing Storage objects, split into 90 outline and 1 solid. Packet 2R therefore made no production change.
+
+The seeder sent every supplied key as both `apikey` and `Authorization: Bearer`. Supabase does not accept its new non-JWT secret keys as bearer tokens. The key type was not retained, but the HTTP 400 failure under the old headers and the successful live read-only check under the corrected headers are consistent with a new secret key. Packet 2S corrects this header contract and adds a one-asset canary before the full seed. See `references/verification/material-packet2s-hosted-seed-approval-2026-07-14.md`.
 
 ## Why Packet 2R is required
 
-The approved Packet 2 attempt returned exit code 1 at its read-only preflight because the Material storage prefix was not empty. The runner stopped before the service-role prompt and created no hosted seed report.
+The original approved Packet 2 attempt returned exit code 1 at its read-only preflight because the Material storage prefix was not empty. The runner stopped before the service-role prompt and created no hosted seed report.
 
 A separate read-only production inventory found:
 

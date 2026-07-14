@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R completed successfully. Packet 1 is closed and must not be rerun. Packet 2 is ready for its separate approval.
+Status: Packet 1R completed successfully. Packet 1 is closed. Packet 2R made no production change and is closed. Packet 2S is ready for independent review and owner approval.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -85,7 +85,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-asset
 
 ## Packet 2: hosted asset seed
 
-Execution status: the first approved attempt stopped at its empty-prefix preflight before any seed. A read-only inventory found 91 existing required paths and 0 other paths. Packet 2R preserves those objects and is ready for separate approval with fingerprint `a1d4e4e983f31e6542691c8ba5d9d1f2648bd74116ac97147ecd1faedda1e2ff`. See `references/verification/material-packet2r-hosted-seed-approval-2026-07-14.md`.
+Execution status: the first approved attempt stopped at its empty-prefix preflight before any seed. Packet 2R then passed preflight, but its old header contract caused all 8,524 Storage uploads to return HTTP 400. Its retained report recorded 0 successful assets. A post-failure read-only preflight confirmed 0 table rows and the unchanged 91 existing objects, so Packet 2R made no production change and is closed. Packet 2S corrects new Supabase secret-key handling and adds a verified one-asset canary before the full seed. See `references/verification/material-packet2s-hosted-seed-approval-2026-07-14.md`.
 
 ### Authorized mutation
 
@@ -126,7 +126,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 ### Approval sentence
 
-> Approve Material production Packet 2R for fingerprint `a1d4e4e983f31e6542691c8ba5d9d1f2648bd74116ac97147ecd1faedda1e2ff`: preserve the 91 verified existing fixed-path objects, run the guarded no-resume seed only if the table is empty and every existing Material-prefix object is one of the two pinned preset paths, upsert all 8,524 pinned assets, retain and verify the hosted report, and require 8,524 table rows plus 8,524 required storage matches. No migration, deletion, function deploy, Railway deploy, npm publication, beta change, or rerun after partial failure is authorized.
+> Approve Material production Packet 2S for fingerprint `07bd55ac6e294ea9fa7d9dad78f36d16677d2b763fe784285401be5dc8937f4c`: use the corrected Supabase secret-key headers, preserve the 91 verified existing objects, write and verify the single pinned `material:settings` outline canary, then run the guarded no-resume seed for all 8,524 pinned assets only if the canary passes. Require 8,524 table rows and 8,524 required Storage matches. No migration, deletion, function deploy, Railway deploy, npm publication, beta change, or rerun after partial failure is authorized.
 
 ## Packet 3: fresh production latency baseline
 
