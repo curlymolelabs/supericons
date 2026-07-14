@@ -6,6 +6,8 @@ Status: Packet 1 stopped after its original SQL applied. Do not rerun Packet 1. 
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
+Packet 1R recovery fingerprint: `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`. Packet 2 remains blocked until Packet 1R passes.
+
 ## Pinned release
 
 - Implementation revision: `425d8c2873e244988ed93ade18396e0f5c688f5e`

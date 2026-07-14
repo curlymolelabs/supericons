@@ -4,6 +4,27 @@ Date: 2026-07-14
 
 Status: Recovery implemented and locally verified. Production recovery has not run and requires a separate owner approval.
 
+## Pinned recovery
+
+- Original implementation revision: `425d8c2873e244988ed93ade18396e0f5c688f5e`
+- Recovery tooling revision: `03d53c8847649f019105b98f1b3391c7fa1c1f48`
+- Original migration SHA-256: `497f6b838e8e3b01e8a3bbeb8d2e57327512c16784d3ad37c2824b6c99699d08`
+- Recovery migration SHA-256: `2be4ba6f0cf81f1093108dedf41b27328590c92cc77a36f251f0e69b3f91827e`
+- Recovery approval fingerprint: `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`
+- Supabase project: `kcjmkakdhsqplvasgkjv`
+
+The approval fingerprint is SHA-256 over this exact UTF-8 text with LF line endings, including one trailing LF after the final line:
+
+```text
+incident=material_packet1_private_roles_recovery
+original_implementation_revision=425d8c2873e244988ed93ade18396e0f5c688f5e
+recovery_tooling_revision=03d53c8847649f019105b98f1b3391c7fa1c1f48
+original_migration_sha256=497f6b838e8e3b01e8a3bbeb8d2e57327512c16784d3ad37c2824b6c99699d08
+recovery_migration_sha256=2be4ba6f0cf81f1093108dedf41b27328590c92cc77a36f251f0e69b3f91827e
+project_ref=kcjmkakdhsqplvasgkjv
+production_table_required_empty=true
+```
+
 ## What happened
 
 The guarded Packet 1 runner applied the exact original migration transaction. Its fixed postflight then failed with:
@@ -70,3 +91,15 @@ Do not restore anonymous or authenticated privileges. A full feature rollback us
 - The recovery runner refuses to start without its approval switch.
 
 One disposable PostgreSQL attempt failed before SQL because its container socket was not ready. The immediate retry passed the full migration and rollback sequence. This startup flake is recorded and is not reported as a clean first-attempt pass.
+
+## Approved command after owner authorization
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-private-roles-recovery-hosted.ps1 -ExecuteApprovedMaterialPrivateRolesRecovery
+```
+
+Stop if the table is missing, contains any row, lacks RLS, no longer has the diagnosed privilege mismatch, any hash differs, the recovery transaction fails, or the full postflight fails.
+
+## Approval sentence
+
+> Approve Material production Packet 1R for fingerprint `71f9c2be7843ec48475479f4529ff73aaf0a8ba47ef359d6c3e00c7c592b4d29`: apply only recovery migration `20260714223000` to the empty RLS-enabled Material asset table, rerun the full postflight, and repair only migration-history versions `20260714220000` and `20260714223000` after postflight passes. Do not rerun the original migration SQL. No seed, function deploy, Railway deploy, npm publish, normal database push, data write, or privilege grant is authorized.
