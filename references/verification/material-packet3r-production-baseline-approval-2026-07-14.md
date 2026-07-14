@@ -22,6 +22,16 @@ The artifact verifier passed with the pinned release fingerprint, exact request 
 
 The direct-search baseline is above the active 2,000 ms release gate. Packet 3R is still successful because its purpose was to measure the pre-deploy baseline. Packet 5 must independently prove that the deployed treatment is at or below 2,000 ms warm p95 and no more than 100 ms slower than this baseline. If it does not, the serving release cannot remain deployed under the current contract.
 
+## Post-incident validity correction
+
+Packet 3R completed its approved commands and passed the gates that existed at execution time. A later semantic review proved those gates were insufficient.
+
+The 459.204 ms recommendation value is invalid for latency comparison. All 21 samples used a grouped request contract that stable `mcp-search` does not support. The transport failure was converted to empty recommendation groups, while the runner marked the remaining payload successful. No sample returned a recommendation or clarification, and every sample had the same response hash.
+
+The 3,337.062 ms search value is also not sufficient to bind a recovery gate. The runner encoded no per-case semantic expectations, 10 of 25 warm samples returned zero results, one case exercised the known pre-Material SVG gap, and the measured p95 already exceeded the proposed 2,000 ms treatment ceiling.
+
+Retain both artifacts as evidence of the measurement defect. Do not pin either latency value into a replacement recovery packet. A new owner-approved baseline must use the real per-query recommendation path and enforce the semantic validity contract recorded in `references/verification/material-emergency-mcp-search-rollback-2026-07-15.md`.
+
 ## Why Packet 3R replaces Packet 3
 
 Packet 3 was technically executable but had two avoidable weaknesses:

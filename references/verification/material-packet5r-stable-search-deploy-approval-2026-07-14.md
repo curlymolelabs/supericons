@@ -16,6 +16,12 @@ Packet 5R closes both gaps:
 - The 19 local modules in the `mcp-search` dependency graph are pinned by one aggregate hash and confirmed unchanged from implementation revision `425d8c2873e244988ed93ade18396e0f5c688f5e`.
 - Every output path is write-once. Existing evidence blocks the command before new live requests run.
 
+## Post-incident supersession notice
+
+This packet is no longer executable. Packet 5R deployed version 37 and was followed by the emergency version 38 rollback. The later incident review also invalidated both pinned latency comparisons: the recommendation baseline measured a swallowed grouped-contract failure, and the search baseline lacked semantic expectations while already exceeding its proposed absolute gate.
+
+Any replacement Packet 5 must use a fresh, owner-approved, semantically gated baseline. It must not reuse the recommendation baseline hash, the 459.204 ms recommendation value, the 3,337.062 ms search value as a binding comparison, or the 2,000 ms absolute ceiling without new evidence.
+
 ## Pinned packet
 
 - Release fingerprint: `534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a`

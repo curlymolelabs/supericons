@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "analysis_date": "2026-07-15",
+  "control": {
+    "revision": "02b2c22ea8a76decee92d83c853ca6cf33899e6c",
+    "variant": "control",
+    "stable_http_contract": "single_search_per_post",
+    "hosted_recommendation_transport": "separate_per_query",
+    "slot_search_concurrency": 2,
+    "slot_query_concurrency": 1,
+    "candidate_calls_parallel_within_search": true,
+    "structural_candidate_statement_ceiling": 20,
+    "scenarios": [
+      {
+        "id": "packet3r-one-slot",
+        "slots": 1,
+        "search_requests": 8,
+        "maximum_concurrent_search_requests": 1,
+        "total_candidate_statements": 28,
+        "maximum_concurrent_candidate_statements": 9,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "cog choose an icon for application settings",
+            "candidate_variant_count": 9
+          }
+        ],
+        "maximum_candidate_variants_per_search": 9
+      },
+      {
+        "id": "four-slot-navigation",
+        "slots": 4,
+        "search_requests": 32,
+        "maximum_concurrent_search_requests": 2,
+        "total_candidate_statements": 137,
+        "maximum_concurrent_candidate_statements": 20,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "alerts tab choose icons for a mobile application bottom navigation",
+            "candidate_variant_count": 10
+          },
+          {
+            "query": "profile tab choose icons for a mobile application bottom navigation",
+            "candidate_variant_count": 10
+          }
+        ],
+        "maximum_candidate_variants_per_search": 10
+      },
+      {
+        "id": "twelve-slot-structural-sample",
+        "slots": 12,
+        "search_requests": 96,
+        "maximum_concurrent_search_requests": 2,
+        "total_candidate_statements": 422,
+        "maximum_concurrent_candidate_statements": 20,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "create action choose clear icons for twelve named application navigation destinations",
+            "candidate_variant_count": 10
+          },
+          {
+            "query": "alerts tab choose clear icons for twelve named application navigation destinations",
+            "candidate_variant_count": 10
+          }
+        ],
+        "maximum_candidate_variants_per_search": 10
+      }
+    ]
+  },
+  "treatment": {
+    "revision": "425d8c2873e244988ed93ade18396e0f5c688f5e",
+    "variant": "treatment",
+    "stable_http_contract": "single_search_per_post",
+    "hosted_recommendation_transport": "separate_per_query",
+    "slot_search_concurrency": 2,
+    "slot_query_concurrency": 1,
+    "candidate_calls_parallel_within_search": true,
+    "structural_candidate_statement_ceiling": 28,
+    "scenarios": [
+      {
+        "id": "packet3r-one-slot",
+        "slots": 1,
+        "search_requests": 4,
+        "maximum_concurrent_search_requests": 1,
+        "total_candidate_statements": 21,
+        "maximum_concurrent_candidate_statements": 9,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "cog choose an icon for application settings",
+            "candidate_variant_count": 9
+          }
+        ],
+        "maximum_candidate_variants_per_search": 9
+      },
+      {
+        "id": "four-slot-navigation",
+        "slots": 4,
+        "search_requests": 16,
+        "maximum_concurrent_search_requests": 2,
+        "total_candidate_statements": 42,
+        "maximum_concurrent_candidate_statements": 13,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "home tab choose icons for a mobile application bottom navigation",
+            "candidate_variant_count": 10
+          },
+          {
+            "query": "magnifying glass",
+            "candidate_variant_count": 3
+          }
+        ],
+        "maximum_candidate_variants_per_search": 10
+      },
+      {
+        "id": "twelve-slot-structural-sample",
+        "slots": 12,
+        "search_requests": 48,
+        "maximum_concurrent_search_requests": 2,
+        "total_candidate_statements": 162,
+        "maximum_concurrent_candidate_statements": 20,
+        "queries_at_candidate_statement_peak": [
+          {
+            "query": "help choose clear icons for twelve named application navigation destinations",
+            "candidate_variant_count": 10
+          },
+          {
+            "query": "messages choose clear icons for twelve named application navigation destinations",
+            "candidate_variant_count": 10
+          }
+        ],
+        "maximum_candidate_variants_per_search": 10
+      }
+    ]
+  },
+  "conclusion": {
+    "grouped_v37_incident_theory_supported": false,
+    "reason": "Both deployed hosted MCP revisions used separate per-query recommendation requests, and stable mcp-search accepted one search per POST.",
+    "outer_recommendation_concurrency_changed": false,
+    "observed_sample_peak_changed": false,
+    "theoretical_candidate_statement_ceiling_changed": true,
+    "treatment_generated_fewer_search_requests_in_all_scenarios": true,
+    "remaining_risk": "Each individual search fans candidate variants concurrently, while up to two recommendation searches can overlap. The treatment theoretical inner ceiling is higher even though these recommendation samples did not reach it."
+  },
+  "retained_baselines": {
+    "recommendation": {
+      "path": "tmp/material-baseline-recommendation.json",
+      "recommendation_path": "grouped",
+      "samples": 21,
+      "samples_marked_ok": 21,
+      "samples_with_recommendations": 0,
+      "samples_needing_clarification": 0,
+      "distinct_response_hashes": 1,
+      "valid_for_latency_comparison": false,
+      "reason": "Every sample was accepted without a recommendation or clarification after a grouped transport mismatch was swallowed."
+    },
+    "search": {
+      "path": "tmp/material-baseline-search.json",
+      "warm_p95_ms": 3337.062,
+      "configured_absolute_gate_ms": 2000,
+      "warm_samples": 25,
+      "zero_result_warm_samples": 10,
+      "distinct_warm_response_hashes": 4,
+      "cases": [
+        {
+          "case_id": "settings-all",
+          "intended_outcome": "nonzero_with_svg",
+          "encoded_in_original_runner": false,
+          "samples": 6,
+          "distinct_response_hashes": 1,
+          "result_counts": [
+            5
+          ],
+          "svg_result_counts": [
+            5
+          ],
+          "durations_ms": [
+            5529.922,
+            2488.573,
+            1076.484,
+            1006.304,
+            959.37,
+            987.861
+          ]
+        },
+        {
+          "case_id": "hello-all",
+          "intended_outcome": "known_pre_material_ranked_without_svg",
+          "encoded_in_original_runner": false,
+          "samples": 5,
+          "distinct_response_hashes": 1,
+          "result_counts": [
+            1
+          ],
+          "svg_result_counts": [
+            0
+          ],
+          "durations_ms": [
+            4440.152,
+            1453.906,
+            1573.689,
+            1752.611,
+            796.799
+          ]
+        },
+        {
+          "case_id": "cog-bootstrap-strict",
+          "intended_outcome": "zero_for_strict_library_inventory",
+          "encoded_in_original_runner": false,
+          "samples": 5,
+          "distinct_response_hashes": 1,
+          "result_counts": [
+            0
+          ],
+          "svg_result_counts": [
+            0
+          ],
+          "durations_ms": [
+            3337.062,
+            554.061,
+            829.581,
+            818.086,
+            597.622
+          ]
+        },
+        {
+          "case_id": "combobox-bootstrap-prefer",
+          "intended_outcome": "unasserted_zero",
+          "encoded_in_original_runner": false,
+          "samples": 5,
+          "distinct_response_hashes": 1,
+          "result_counts": [
+            0
+          ],
+          "svg_result_counts": [
+            0
+          ],
+          "durations_ms": [
+            1085.199,
+            538.134,
+            997.785,
+            690.653,
+            515.799
+          ]
+        },
+        {
+          "case_id": "settings-zh-hans-expanded",
+          "intended_outcome": "nonzero_with_svg",
+          "encoded_in_original_runner": false,
+          "samples": 5,
+          "distinct_response_hashes": 1,
+          "result_counts": [
+            5
+          ],
+          "svg_result_counts": [
+            5
+          ],
+          "durations_ms": [
+            2729.339,
+            1102.133,
+            1177.381,
+            858.07,
+            952.731
+          ]
+        }
+      ],
+      "valid_for_original_packet3r_gates": true,
+      "valid_as_semantic_search_baseline": false,
+      "valid_for_2000ms_absolute_recovery_gate": false,
+      "reasons": [
+        "The original runner asserted transport success but encoded no per-case semantic outcomes.",
+        "One case measured the known pre-Material SVG capability defect.",
+        "One prefer-mode zero result had no encoded expectation.",
+        "The measured warm p95 already exceeded the proposed absolute recovery gate."
+      ]
+    }
+  },
+  "required_rebaseline_contract": {
+    "recommendation_transport": "separate_per_query",
+    "recommendation_sample_valid_when": "recommended_ids_nonempty_or_needs_clarification_true",
+    "grouped_transport_requires_responses_envelope": true,
+    "all_samples_identical_response_hash_fails_run": true,
+    "search_zero_results_require_explicit_fixture_expectation": true,
+    "absolute_latency_gate_requires_new_evidence": true
+  }
+}

@@ -149,3 +149,38 @@ The statement timeouts run from `2026-07-15 00:10:21` through `00:19:42` Singapo
 Edge failures began at `00:06:56`, before the first retained Postgres timeout. Nine version 37 HTTP 500 rows occurred in this early interval, with a 2,865 ms median and 6,157 ms maximum execution time. The remaining 135 non-success Edge rows overlap or follow the Postgres timeout interval and have a much longer tail, up to about 150 seconds.
 
 This localizes the immediate database failure to candidate-search statement timeouts. It disproves the missing-RPC hypothesis because the RPC was found and executed. It does not yet establish why the RPC became slow or overloaded. The retained query text uses bound parameters, so the failing query and library values are not present in the Postgres export.
+
+## Local recommendation concurrency correction
+
+The stable version 37 deployment did not group one complete `recommend_icons` operation into one `mcp-search` request. The exact control revision `02b2c22ea8a76decee92d83c853ca6cf33899e6c` and treatment revision `425d8c2873e244988ed93ade18396e0f5c688f5e` both use the hosted MCP's separate `searchIconsForQuery` path. Stable `mcp-search` accepts one search per POST in both revisions.
+
+The reproducible local analysis is `scripts/analyze-material-incident-concurrency.mjs`. Its retained result is `references/verification/material-incident-concurrency-analysis-2026-07-15.json`.
+
+Both revisions allow two recommendation slots to search concurrently and one query per slot at a time. Each individual search then runs its candidate variants concurrently. Across the three retained recommendation-shaped scenarios:
+
+| Scenario | Control search requests | Treatment search requests | Control peak candidate statements | Treatment peak candidate statements |
+| --- | ---: | ---: | ---: | ---: |
+| Packet 3R one-slot task | 8 | 4 | 9 | 9 |
+| Four-slot navigation | 32 | 16 | 20 | 13 |
+| Twelve-slot structural sample | 96 | 48 | 20 | 20 |
+
+The treatment reduced the generated recommendation search requests in all three scenarios and did not increase the observed candidate-statement peak. Its theoretical per-recommendation ceiling is higher, 28 candidate statements instead of 20, because a treatment search may create up to 14 candidate variants while two searches overlap. None of the retained scenarios reached that treatment ceiling.
+
+This disproves the grouped-v37 incident theory and provides no evidence that recommendation concurrency increased in the retained samples. It does not make the existing pattern cheap: two overlapping searches can still produce 20 concurrent candidate statements on the production path.
+
+## Packet 3R baseline validity correction
+
+The Packet 3R recommendation artifact is invalid for latency comparison. All 21 samples were marked successful, but none returned a recommendation or clarification, and all had the same response hash. The runner sent a grouped envelope to stable `mcp-search`, which returned its ordinary single-search response. The grouped client rejected the missing `responses` envelope, `recommendIconsForTask` converted the failure to empty result groups, and the measurement runner treated the remaining payload as success.
+
+The direct-search artifact also lacks semantic gates. Its 25 warm samples contain 10 deterministic zero-result samples and only four response hashes. Some behavior is explainable from the pre-Material state, including the known SVG-less Material row and the strict Bootstrap inventory zero. The `combobox-bootstrap-prefer` zero had no encoded expectation. The measured 3,337.062 ms warm p95 also already exceeds the proposed 2,000 ms treatment ceiling. The artifact remains evidence of what the old runner measured, but it is not sufficient to bind the recovery latency contract.
+
+Future baseline measurement must:
+
+1. use the real separate per-query recommendation transport used by Railway;
+2. accept a recommendation sample only when it returns a recommendation or an explicit clarification;
+3. require a grouped request to receive a grouped `responses` envelope;
+4. reject a run when every sample has the same response hash;
+5. declare the expected outcome for every zero-result search case; and
+6. set any absolute latency ceiling from fresh, semantically valid evidence.
+
+The SQL-first database diagnostic remains independent of these invalid baselines. The actual production remeasurement creates audit traffic and requires a separate owner-approved packet.

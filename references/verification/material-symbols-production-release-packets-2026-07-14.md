@@ -132,6 +132,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 Execution status: Packet 3 was superseded before execution. Packet 3R completed with exit code 0 under fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`. The retained direct-search artifact contains 26 requests, zero errors, and a 3,337.062 ms warm p95. The retained grouped-recommendation artifact contains 21 requests, zero errors, and a 459.204 ms warm p95. Both artifacts carry the required internal-test production audit contract and no beta fields. Their SHA-256 values are `0344385fd16aac5aa6e55ff2a5dd5fd82f5f1f86230025025922ea1de27332ae` and `151ec835b5ac0e510510f692f395eee2169e461606470b9fae14a4c6714cea99`. Packet 3R is closed and must not be rerun. See `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
 
+Post-incident correction: neither latency value may be used by a replacement release packet. The recommendation runner swallowed an unsupported grouped-contract failure and returned no recommendations in all 21 samples. The search runner had no semantic outcome gates, included 10 zero-result warm samples, exercised known broken behavior, and measured a p95 above the proposed absolute treatment gate. A new baseline requires its own owner approval.
+
 ### Authorized activity
 
 Run the guarded direct-search and grouped-recommendation measurements against the current stable `mcp-search` before its deploy. These requests create only normal production search audit rows.
@@ -197,6 +199,8 @@ npm run verify:material-production-release -- --revision 425d8c2873e244988ed93ad
 ```
 
 After the deploy, run a separately fingerprinted treatment-measurement runner that uses the same internal-test production audit contract and new output paths. Packet 3R is a baseline-only packet and must not be rerun. Direct search must remain at or under 2,000 ms warm p95 and within 100 ms of baseline. Grouped recommendation must remain within 100 ms p95 of its own baseline. Its pre-existing absolute latency does not block this Material release.
+
+Post-incident correction: the preceding latency contract is void. The version 37 deployment was rolled back, and both Packet 3R comparison values were invalidated. The replacement release packet must define a new evidence-backed latency contract after a semantically gated, owner-approved baseline run through the real production transport.
 
 ### Stop and rollback conditions
 

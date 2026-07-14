@@ -37,6 +37,7 @@
     "verify:material-hosted-auth-contract": "node scripts/verify-material-hosted-auth-contract.mjs",
     "verify:material-production-latency-profile": "node scripts/verify-material-production-latency-profile.mjs",
     "verify:material-production-latency-artifacts": "node scripts/verify-material-production-latency-artifacts.mjs",
+    "verify:material-incident-concurrency": "node scripts/analyze-material-incident-concurrency.mjs",
     "verify:material-production-baseline-runner": "node scripts/verify-material-production-baseline-runner.mjs",
     "verify:material-production-treatment-artifacts": "node scripts/verify-material-production-treatment-artifacts.mjs",
     "verify:material-production-treatment-runner": "node scripts/verify-material-production-treatment-runner.mjs",
