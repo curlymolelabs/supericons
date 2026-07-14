@@ -15,8 +15,8 @@ export function assertMeasurementTarget(profile, endpointName) {
 export function buildMeasurementUsageContext(profile, toolName, options = {}) {
   if (profile === 'production') {
     return {
-      source: 'mcp',
-      channel: 'hosted_mcp',
+      source: 'verify',
+      channel: 'internal_test',
       environment: 'production',
       client_family: 'material_release_latency',
       tool_name: toolName,
@@ -55,8 +55,8 @@ export function productionizeMeasurementPayload(value, options = {}) {
     ].some((key) => Object.hasOwn(output, key));
     if (!hasUsageFields) return output;
 
-    output.source = 'mcp';
-    output.channel = 'hosted_mcp';
+    output.source = 'verify';
+    output.channel = 'internal_test';
     output.environment = 'production';
     output.client_family = 'material_release_latency';
     delete output.beta_cohort;

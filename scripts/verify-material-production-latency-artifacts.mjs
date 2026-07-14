@@ -15,8 +15,8 @@ assert.ok(readArg('recommendation'), 'Provide --recommendation artifact path.');
 assert.match(manifestHash || '', /^[a-f0-9]{64}$/, 'Provide the approved manifest hash.');
 
 const expectedAuditContract = {
-  source: 'mcp',
-  channel: 'hosted_mcp',
+  source: 'verify',
+  channel: 'internal_test',
   environment: 'production',
   client_family: 'material_release_latency',
   beta_cohort: null,

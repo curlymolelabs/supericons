@@ -9,17 +9,23 @@ function read(path) {
   return readFileSync(path, 'utf8');
 }
 
-function hash(path) {
-  return createHash('sha256').update(read(path)).digest('hex');
+function normalizedHash(value) {
+  return createHash('sha256').update(value.replace(/\r\n?/g, '\n')).digest('hex');
 }
+
+function hash(path) {
+  return normalizedHash(read(path));
+}
+
+assert.equal(normalizedHash('line one\nline two\n'), normalizedHash('line one\r\nline two\r\n'));
 
 const runner = read('scripts/run-material-production-baseline.ps1');
 const expectedHashes = {
-  measurementRunner: '710d88083f9768c7bfa2d52fd6272a4e8edd519440f1bd694eb4d23938cb7b41',
-  measurementProfile: '5e8260820c401b5e70401a3580fcc7956336b4fe230a31cd9bf84777df2050ec',
-  sharedBetaRunner: 'e7be5a51fb3d449285a4929c3e343b0134fa781ea56dbbbbe191938ed57ba1a9',
-  profileVerifier: 'ae929b27138c989fdfdc15150c7e04b09c6976a24e19effb504c84a1efe46dbb',
-  artifactVerifier: '3566158976047eede62c8556e998ec62fd2f722899182519574b262bbd6df96e',
+  measurementRunner: 'ccc227f446ae18ec0212bb2582e5bfe3cf1c6297a935bc648e2c22576cb4f719',
+  measurementProfile: '155a2391296732730d31a11556d54669e959c724613718c90b895da100970b2a',
+  sharedBetaRunner: '774d698b94afa7adc40104226f603b9d13b3c07539eb7c7c9aa81904cf011018',
+  profileVerifier: '4d3420f8a25320e202320e2080bb266ca0af08929cbdd0e0d98d65ffcdb2c4dd',
+  artifactVerifier: 'cb242285317dae13a4cec97c05523b24cd116da364161a0363b809045f39b40c',
 };
 
 assert.equal(hash('scripts/run-material-production-latency-baseline.mjs'), expectedHashes.measurementRunner);
@@ -32,6 +38,8 @@ for (const expectedHash of Object.values(expectedHashes)) {
 }
 
 assert.match(runner, /\[switch\]\$ExecuteApprovedMaterialProductionBaseline/);
+assert.match(runner, /function Get-NormalizedTextSha256/);
+assert.match(runner, /\.Replace\("`r`n", "`n"\)\.Replace\("`r", "`n"\)/);
 assert.match(runner, /SUPERICONS_SEARCH_V2_MEASUREMENT_ENDPOINT = 'mcp-search'/);
 assert.match(runner, /material-baseline-search\.json/);
 assert.match(runner, /material-baseline-recommendation\.json/);
@@ -49,8 +57,8 @@ const temporaryDirectory = mkdtempSync(join(tmpdir(), 'supericons-material-basel
 try {
   const manifestHash = '5'.repeat(64);
   const auditContract = {
-    source: 'mcp',
-    channel: 'hosted_mcp',
+    source: 'verify',
+    channel: 'internal_test',
     environment: 'production',
     client_family: 'material_release_latency',
     beta_cohort: null,
@@ -101,7 +109,8 @@ try {
 console.log(JSON.stringify({
   status: 'ok',
   stable_endpoint_pinned: true,
-  shared_beta_runner_hash_pinned: true,
+  shared_beta_runner_normalized_hash_pinned: true,
+  line_ending_independence_verified: true,
   production_audit_contract_verified: true,
   preview_tamper_rejected: true,
   output_overwrite_blocked: true,

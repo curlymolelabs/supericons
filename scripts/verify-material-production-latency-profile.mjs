@@ -19,8 +19,8 @@ assert.throws(
 );
 
 assert.deepEqual(buildMeasurementUsageContext('production', 'search_icons'), {
-  source: 'mcp',
-  channel: 'hosted_mcp',
+  source: 'verify',
+  channel: 'internal_test',
   environment: 'production',
   client_family: 'material_release_latency',
   tool_name: 'search_icons',
@@ -50,8 +50,8 @@ const productionized = productionizeMeasurementPayload({
 }, { runId: '11111111-1111-4111-8111-111111111111', requestSequence: 3 });
 assert.deepEqual(productionized.queries[0], {
   query: 'settings',
-  source: 'mcp',
-  channel: 'hosted_mcp',
+  source: 'verify',
+  channel: 'internal_test',
   environment: 'production',
   client_family: 'material_release_latency',
   tool_name: 'recommend_icons',
@@ -75,8 +75,8 @@ assert.match(sharedRunner, /environment: 'preview'/);
 console.log(JSON.stringify({
   status: 'ok',
   stable_endpoint_required_for_production: true,
-  production_source: 'mcp',
-  production_channel: 'hosted_mcp',
+  production_source: 'verify',
+  production_channel: 'internal_test',
   production_environment: 'production',
   production_beta_cohort_present: false,
   stable_request_count_locked: true,

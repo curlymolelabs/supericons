@@ -72,8 +72,8 @@ const retainedArtifact = {
   measurement_run_id: runId,
   sanitized_request_count: sanitizedRequestCount,
   audit_contract: {
-    source: 'mcp',
-    channel: 'hosted_mcp',
+    source: 'verify',
+    channel: 'internal_test',
     environment: 'production',
     client_family: 'material_release_latency',
     beta_cohort: null,

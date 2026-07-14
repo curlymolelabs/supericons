@@ -19,18 +19,38 @@ $recommendationOutputPath = Join-Path $repoRoot 'tmp\material-baseline-recommend
 $releaseFingerprint = '534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a'
 
 $expectedHashes = @{
-    $measurementRunnerPath = '710d88083f9768c7bfa2d52fd6272a4e8edd519440f1bd694eb4d23938cb7b41'
-    $measurementProfilePath = '5e8260820c401b5e70401a3580fcc7956336b4fe230a31cd9bf84777df2050ec'
-    $sharedBetaRunnerPath = 'e7be5a51fb3d449285a4929c3e343b0134fa781ea56dbbbbe191938ed57ba1a9'
-    $profileVerifierPath = 'ae929b27138c989fdfdc15150c7e04b09c6976a24e19effb504c84a1efe46dbb'
-    $artifactVerifierPath = '3566158976047eede62c8556e998ec62fd2f722899182519574b262bbd6df96e'
+    $measurementRunnerPath = 'ccc227f446ae18ec0212bb2582e5bfe3cf1c6297a935bc648e2c22576cb4f719'
+    $measurementProfilePath = '155a2391296732730d31a11556d54669e959c724613718c90b895da100970b2a'
+    $sharedBetaRunnerPath = '774d698b94afa7adc40104226f603b9d13b3c07539eb7c7c9aa81904cf011018'
+    $profileVerifierPath = '4d3420f8a25320e202320e2080bb266ca0af08929cbdd0e0d98d65ffcdb2c4dd'
+    $artifactVerifierPath = 'cb242285317dae13a4cec97c05523b24cd116da364161a0363b809045f39b40c'
+}
+
+function Get-NormalizedTextSha256 {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    $text = [System.IO.File]::ReadAllText($Path)
+    $normalized = $text.Replace("`r`n", "`n").Replace("`r", "`n")
+    $utf8 = [System.Text.UTF8Encoding]::new($false)
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        return [System.BitConverter]::ToString(
+            $sha256.ComputeHash($utf8.GetBytes($normalized))
+        ).Replace('-', '').ToLowerInvariant()
+    }
+    finally {
+        $sha256.Dispose()
+    }
 }
 
 foreach ($entry in $expectedHashes.GetEnumerator()) {
     if (-not (Test-Path -LiteralPath $entry.Key)) {
         throw "Required Packet 3 file is missing: $($entry.Key)"
     }
-    $actualHash = (Get-FileHash -LiteralPath $entry.Key -Algorithm SHA256).Hash.ToLowerInvariant()
+    $actualHash = Get-NormalizedTextSha256 -Path $entry.Key
     if ($actualHash -ne $entry.Value) {
         throw "Packet 3 file hash changed: $($entry.Key)"
     }
