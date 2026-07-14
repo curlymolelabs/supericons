@@ -134,7 +134,7 @@ async function runSearchGate(searchUrl, apiKey) {
           queries: batch.map((entry, index) => ({
             ...entry.request,
             source: 'verify',
-            channel: 'hosted_mcp',
+            channel: 'internal_test',
             environment: 'production',
             client_family: 'material_release_gate',
             tool_name: 'search_icons',

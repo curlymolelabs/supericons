@@ -51,6 +51,14 @@ const server = createServer((request, response) => {
       const payload = JSON.parse(rawBody);
       response.writeHead(200, { 'Content-Type': 'application/json' });
       if (Array.isArray(payload.queries)) {
+        assert.ok(payload.queries.every((query) => (
+          query.source === 'verify'
+          && query.channel === 'internal_test'
+          && query.environment === 'production'
+          && query.client_family === 'material_release_gate'
+          && query.tool_name === 'search_icons'
+          && typeof query.dedupe_key === 'string'
+        )), 'Production release query audit contract changed.');
         const responses = payload.queries.map((query, index) => ({
           index,
           status: 200,
@@ -175,6 +183,7 @@ try {
     smoke_checks: artifact.search.smoke_checks,
     all_mode_checks: artifact.search.all_mode_checks,
     hosted_mcp_tools_checked: 5,
+    internal_test_audit_contract: true,
     hosted_systems_touched: false,
   }, null, 2));
 } finally {
