@@ -12,6 +12,8 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $seederPath = Join-Path $PSScriptRoot 'seed-material-owned-cache.js'
 $expectedAssetReportPath = Join-Path $repoRoot 'references\verification\material-full-asset-validation-2026-07-14.json'
 $reportVerifierPath = Join-Path $PSScriptRoot 'verify-material-hosted-seed-report.mjs'
+$authContractVerifierPath = Join-Path $PSScriptRoot 'verify-material-hosted-auth-contract.mjs'
+$canaryReportVerifierPath = Join-Path $PSScriptRoot 'verify-material-hosted-canary-report.mjs'
 $preflightPath = Join-Path $PSScriptRoot 'sql\material-assets-hosted-seed-preflight.sql'
 $postflightPath = Join-Path $PSScriptRoot 'sql\material-assets-hosted-seed-postflight.sql'
 $poolerPath = Join-Path $repoRoot 'supabase\.temp\pooler-url'
@@ -19,11 +21,14 @@ $reportPath = Join-Path $repoRoot 'tmp\material-hosted-seed-425d8c287.json'
 $postgresImage = 'public.ecr.aws/supabase/postgres:17.6.1.132'
 $projectRef = 'kcjmkakdhsqplvasgkjv'
 $supabaseUrl = "https://$projectRef.supabase.co"
+$canaryReportPath = Join-Path $repoRoot 'tmp\material-hosted-canary-425d8c287.json'
 
 $expectedHashes = @{
-    $seederPath = 'a3dd8a252819930cd7ab1dfa014eea76907fff6b9a9d2ed51715214fced82b19'
+    $seederPath = '915d8f9f6562fae556493cabc4c1f0d0e4e82ea087c0cd9e7fe0bdd0d0dc94fa'
     $expectedAssetReportPath = '4e04f3894566fc0b8f9011f38847f27cb40d48d738415ea9c6df41f1d58e9e92'
     $reportVerifierPath = '1e8f7fe040c721e5691fb501ccd4f1529628a0737041a5a6b58b70da90059d24'
+    $authContractVerifierPath = '7e91ffe0f9d97f3e73c4d846c4d566e3bffb2c276af017cc680ac1bd55ca00d4'
+    $canaryReportVerifierPath = '55186111a5d704531fffe570c4d90e3d80bb8bd37412deea848de9f0dd99c76c'
     $preflightPath = '2f0e40e64baa64046a96c8b6df457b9a421e350de7a95b22016daff71b718ff0'
     $postflightPath = '4a20a37ab27537ba710e8d323785ab287310bfc4ed3d36d7f916856df40a8453'
 }
@@ -53,6 +58,11 @@ foreach ($entry in $expectedHashes.GetEnumerator()) {
     if ($actualHash -ne $entry.Value) {
         throw "Packet 2 file hash changed: $($entry.Key)"
     }
+}
+
+& node $authContractVerifierPath
+if ($LASTEXITCODE -ne 0) {
+    throw 'Material hosted authentication contract verification failed.'
 }
 
 if (-not (Test-Path -LiteralPath $poolerPath)) {
@@ -94,8 +104,30 @@ try {
     $env:SUPABASE_SERVICE_ROLE_KEY = $plainServiceRoleKey
     $plainServiceRoleKey = $null
 
-    if (Test-Path -LiteralPath $reportPath) {
-        Remove-Item -LiteralPath $reportPath -Force
+    foreach ($retainedReportPath in @($canaryReportPath, $reportPath)) {
+        if (Test-Path -LiteralPath $retainedReportPath) {
+            Remove-Item -LiteralPath $retainedReportPath -Force
+        }
+    }
+
+    & node $seederPath `
+        --icons=settings `
+        --presets=default `
+        --hosted `
+        --no-resume `
+        --concurrency=1 `
+        --retries=3 `
+        --request-timeout-ms=15000 `
+        "--report=$canaryReportPath"
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Material hosted canary failed. Do not start the full seed or rerun without a new inspection and approval.'
+    }
+
+    & node $canaryReportVerifierPath `
+        "--report=$canaryReportPath" `
+        "--expected-report=$expectedAssetReportPath"
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Material hosted canary report verification failed. Do not start the full seed or rerun without a new inspection and approval.'
     }
 
     & node $seederPath `

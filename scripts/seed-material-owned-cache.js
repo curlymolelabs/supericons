@@ -127,6 +127,55 @@ async function loadMaterialAliases(args) {
   ]));
 }
 
+function decodeJwtPayload(value) {
+  try {
+    const payload = String(value).split('.')[1];
+    if (!payload) return null;
+    return JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  } catch {
+    return null;
+  }
+}
+
+export function buildSupabaseAdminHeaders(serviceRoleKey) {
+  const key = String(serviceRoleKey || '').trim();
+  if (!key) throw new Error('Supabase admin key was empty');
+  if (key.startsWith('sb_publishable_')) {
+    throw new Error('A publishable key cannot seed private Material assets');
+  }
+  if (key.startsWith('sb_secret_')) {
+    return { apikey: key };
+  }
+
+  const payload = decodeJwtPayload(key);
+  if (payload?.role !== 'service_role') {
+    throw new Error('Expected a Supabase secret key or legacy service_role JWT');
+  }
+  return {
+    apikey: key,
+    authorization: `Bearer ${key}`,
+  };
+}
+
+export async function readHostedError(response, operation) {
+  let detail = '';
+  try {
+    const body = await response.text();
+    if (body) {
+      try {
+        const parsed = JSON.parse(body);
+        detail = String(parsed.code || parsed.error || parsed.message || '').trim();
+      } catch {
+        detail = body.trim();
+      }
+    }
+  } catch {
+    detail = '';
+  }
+  const safeDetail = detail.replace(/[\r\n]+/g, ' ').slice(0, 200);
+  return new Error(`${operation} failed (${response.status})${safeDetail ? `: ${safeDetail}` : ''}`);
+}
+
 function getHostedConfig() {
   const supabaseUrl = String(process.env.SUPABASE_URL || '').replace(/\/+$/, '');
   const serviceRoleKey = process.env.SUPERICONS_SUPABASE_SERVICE_ROLE_KEY
@@ -135,7 +184,28 @@ function getHostedConfig() {
   if (!supabaseUrl || !serviceRoleKey) {
     throw new Error('--hosted requires SUPABASE_URL and a Supabase service-role key');
   }
-  return { supabaseUrl, serviceRoleKey };
+  return {
+    supabaseUrl,
+    adminHeaders: buildSupabaseAdminHeaders(serviceRoleKey),
+  };
+}
+
+async function verifyHostedAccess(config) {
+  const tableResponse = await fetch(
+    `${config.supabaseUrl}/rest/v1/material_icon_assets?select=icon_id&limit=0`,
+    { headers: config.adminHeaders },
+  );
+  if (!tableResponse.ok) throw await readHostedError(tableResponse, 'Asset-table access check');
+
+  const storageResponse = await fetch(`${config.supabaseUrl}/storage/v1/object/list/material-icons`, {
+    method: 'POST',
+    headers: {
+      ...config.adminHeaders,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ prefix: 'materialsymbolsoutlined', limit: 1, offset: 0 }),
+  });
+  if (!storageResponse.ok) throw await readHostedError(storageResponse, 'Storage access check');
 }
 
 async function uploadHostedAsset(config, storagePath, svg) {
@@ -143,28 +213,26 @@ async function uploadHostedAsset(config, storagePath, svg) {
   const response = await fetch(`${config.supabaseUrl}/storage/v1/object/material-icons/${encodedPath}`, {
     method: 'POST',
     headers: {
-      apikey: config.serviceRoleKey,
-      authorization: `Bearer ${config.serviceRoleKey}`,
-      'content-type': 'image/svg+xml; charset=utf-8',
+      ...config.adminHeaders,
+      'content-type': 'image/svg+xml',
       'x-upsert': 'true',
     },
     body: svg,
   });
-  if (!response.ok) throw new Error(`Storage upload failed (${response.status})`);
+  if (!response.ok) throw await readHostedError(response, 'Storage upload');
 }
 
 async function upsertHostedAsset(config, row) {
   const response = await fetch(`${config.supabaseUrl}/rest/v1/material_icon_assets?on_conflict=icon_id,variant`, {
     method: 'POST',
     headers: {
-      apikey: config.serviceRoleKey,
-      authorization: `Bearer ${config.serviceRoleKey}`,
+      ...config.adminHeaders,
       'content-type': 'application/json',
       prefer: 'resolution=merge-duplicates,return=minimal',
     },
     body: JSON.stringify(row),
   });
-  if (!response.ok) throw new Error(`Asset-table upsert failed (${response.status})`);
+  if (!response.ok) throw await readHostedError(response, 'Asset-table upsert');
 }
 
 async function fetchMaterialSvg(task, args, aliasesById) {
@@ -270,6 +338,7 @@ export async function runMaterialSeed(argv = process.argv.slice(2)) {
   }
 
   const hostedConfig = args.hosted ? getHostedConfig() : null;
+  if (hostedConfig) await verifyHostedAccess(hostedConfig);
   const aliasesById = await loadMaterialAliases(args);
   const tasks = iconIds.flatMap((iconId) => presets.map(([presetName, preset]) => ({
     iconId,
