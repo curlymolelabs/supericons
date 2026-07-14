@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R, Packet 2S, Packet 3R, and Packet 4R completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 4 stopped before deployment and was superseded by Packet 4R. Packet 5 remains separately gated.
+Status: Packet 1R, Packet 2S, Packet 3R, and Packet 4R completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 4 stopped before deployment and was superseded by Packet 4R. Packet 5 is superseded before execution by Packet 5R, which is ready for independent review and owner approval.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -177,6 +177,8 @@ Redeploy the previous function version. The seeded private assets remain safe an
 > Approve Material production Packet 4 for fingerprint `534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a`: deploy only `serve-material-snapshot` from revision `425d8c2873e244988ed93ade18396e0f5c688f5e` and run its two fixed-preset probes. No search deploy, Railway deploy, npm publish, migration, or seed is authorized.
 
 ## Packet 5: stable hosted search deploy
+
+Execution status: Superseded before deployment by Packet 5R. The replacement adds the missing separately fingerprinted treatment runner, preserves Packet 3R reproducibility, classifies all synthetic traffic as internal testing, pins the complete 19-file deploy surface, and records production function version 36 as the rollback target. See `references/verification/material-packet5r-stable-search-deploy-approval-2026-07-14.md`.
 
 ### Authorized mutation
 

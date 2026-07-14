@@ -68,7 +68,7 @@ Packet 1R, Packet 2S, Packet 3R, and Packet 4R are complete and closed. Their re
 
 These checks require the owner-gated release sequence:
 
-1. Deploy stable hosted search through Packet 5, then run the separately fingerprinted treatment measurement and production release verification.
+1. Deploy stable hosted search through Packet 5R, then run its fingerprinted treatment measurement and production release verification.
 2. Require direct search to meet both the 2,000 ms absolute gate and the baseline comparison. The pre-deploy direct-search baseline is 3,337.062 ms, so the absolute gate is the tighter requirement. Require grouped recommendation to remain within 100 ms of its 459.204 ms baseline.
 3. Deploy the Railway MCP surface through Packet 6 after Packet 5 is green.
 4. Publish the npm package through Packet 7 only after all hosted gates are green.
