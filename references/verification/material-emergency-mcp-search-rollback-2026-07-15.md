@@ -2,7 +2,7 @@
 
 Date: 2026-07-15
 
-Status: Owner authorized. Preflight complete. Deployment pending.
+Status: Executed. Restoration failed. Production version 38 remains active.
 
 ## Incident
 
@@ -70,3 +70,31 @@ other_function_change_authorized=false
 ## Stop conditions
 
 Stop before deployment if the active version, active bundle hash, target revision, target surface hash, clean-worktree state, Deno check, or JWT setting differs. After deployment, stop if Lucide strict or all-mode does not return HTTP 200 with results, or if legacy Material behavior differs from the pre-Material state.
+
+## Execution result
+
+The predeployment checks confirmed that production was still on version 37 with bundle SHA-256 `3ab7d0b18b8b48d123c851c3896fb62ea23c42a39b94c094b735b29caf1eac01` and `verify_jwt=false`. The authorized source checkpoint and 13-file surface also matched the pinned values above.
+
+The isolated checkpoint was deployed as `mcp-search` version 38. Supabase reported:
+
+- Active version: 38
+- Active bundle SHA-256: `90c21f737fa5ac3a1162e8ba527b94c97555e9bd93c94afd4845a66298f570ce`
+- JWT verification: false
+- Function changed: `mcp-search` only
+
+The freshly built version 38 bundle does not have the recorded historical version 36 bundle hash. Supabase does not provide a direct version rollback operation, so this action rebuilt and redeployed the pinned source checkpoint as a new function version.
+
+## Restoration probes
+
+The first valid Lucide strict probe against version 38 returned HTTP 500 `search_service_unavailable` after about 17.8 seconds. This failed the first postdeployment stop condition. The all-mode and legacy Material probes were not continued as release evidence after that failure.
+
+Two earlier attempts are excluded from the result:
+
+- A three-probe Node process exceeded its 120-second command timeout without producing retained results.
+- A curl request returned HTTP 200 for an empty query because PowerShell quoting produced an invalid request body. It was not a valid restoration probe.
+
+## Current production state
+
+Production `mcp-search` version 38 remains active and fails a valid Lucide strict request with HTTP 500. The rollback deployment therefore did not restore search service. No database, migration, storage, Railway, npm, beta, or other function change was made.
+
+The failure is not yet attributed to a verified root cause. The previously suggested missing `si_search_icon_candidates_v3` dependency does not match the pinned checkpoint's default request path, which uses the existing `si_search_icon_candidates` RPC. Further production deployment is outside this authorization. The next step is read-only inspection of the function and database logs for the failed version 38 request before preparing any new recovery action.
