@@ -18,7 +18,8 @@ const corsHeaders = {
 };
 
 const SOURCE = {
-  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web',
+  revision: '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0',
+  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/symbols/web',
   styleDir: 'materialsymbolsoutlined',
 };
 
@@ -193,6 +194,7 @@ serve(async (req) => {
         'X-Cache-Status': 'hit',
         'X-Material-Icon': iconId,
         'X-Material-Axes': JSON.stringify(axes),
+        'X-Material-Source-Revision': SOURCE.revision,
       });
     }
 
@@ -224,6 +226,7 @@ serve(async (req) => {
         'X-Cache-Status': 'miss-not-persisted',
         'X-Material-Icon': iconId,
         'X-Material-Axes': JSON.stringify(axes),
+        'X-Material-Source-Revision': SOURCE.revision,
       });
     }
 
@@ -231,6 +234,7 @@ serve(async (req) => {
       'X-Cache-Status': 'filled',
       'X-Material-Icon': iconId,
       'X-Material-Axes': JSON.stringify(axes),
+      'X-Material-Source-Revision': SOURCE.revision,
     });
   } catch (err) {
     console.error('serve-material-snapshot error:', err);

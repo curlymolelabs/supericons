@@ -1,6 +1,7 @@
 export const MATERIAL_EXPORT_SOURCE = {
-  ref: 'master',
-  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web',
+  ref: '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0',
+  repository: 'google/material-design-icons',
+  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/symbols/web',
   styleDir: 'materialsymbolsoutlined',
 };
 
