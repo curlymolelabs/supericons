@@ -1,0 +1,28 @@
+{
+  "artifact": "material_relevance_fixture",
+  "purpose": "Curated relevance set: 20 exact concepts with acceptable Material icon IDs. A strict material search for each query must return at least one acceptable ID with valid inline SVG in both outline and solid presets. Every listed ID was verified present in public/icon-index.json (lib=material) on 2026-07-14.",
+  "date": "2026-07-14",
+  "query_count": 20,
+  "queries": [
+    { "query": "calendar", "acceptable_icon_ids": ["calendar_month", "event", "today"] },
+    { "query": "calendar date", "acceptable_icon_ids": ["calendar_month", "event", "today"] },
+    { "query": "schedule", "acceptable_icon_ids": ["schedule", "calendar_month"] },
+    { "query": "settings", "acceptable_icon_ids": ["settings"] },
+    { "query": "home", "acceptable_icon_ids": ["home"] },
+    { "query": "search", "acceptable_icon_ids": ["search"] },
+    { "query": "star", "acceptable_icon_ids": ["star", "favorite"] },
+    { "query": "alarm", "acceptable_icon_ids": ["alarm"] },
+    { "query": "palette", "acceptable_icon_ids": ["palette"] },
+    { "query": "dark mode", "acceptable_icon_ids": ["dark_mode"] },
+    { "query": "light mode", "acceptable_icon_ids": ["light_mode"] },
+    { "query": "theme", "acceptable_icon_ids": ["palette", "dark_mode", "light_mode"] },
+    { "query": "notifications", "acceptable_icon_ids": ["notifications"] },
+    { "query": "delete", "acceptable_icon_ids": ["delete"] },
+    { "query": "edit", "acceptable_icon_ids": ["edit"] },
+    { "query": "download", "acceptable_icon_ids": ["download"] },
+    { "query": "upload", "acceptable_icon_ids": ["upload"] },
+    { "query": "lock", "acceptable_icon_ids": ["lock"] },
+    { "query": "user profile", "acceptable_icon_ids": ["person"] },
+    { "query": "dashboard", "acceptable_icon_ids": ["dashboard"] }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "artifact": "hosted_capability_probes",
+  "date": "2026-07-14",
+  "endpoint": "production mcp-search edge function (version 35 at probe time)",
+  "method": "direct POST with source=internal_test so probes classify as test traffic",
+  "findings": {
+    "material_strict_returns_rows_without_svg": "material strict search returns ranked rows but every row has null svg, so the MCP server drops them all",
+    "solid_style_returns_zero_for_all_libraries": "style=solid returns zero results for every probed library because only the outline index is synced to the hosted catalog"
+  },
+  "probes": [
+    {
+      "request": {
+        "query": "calendar",
+        "library": "material",
+        "library_mode": "strict",
+        "limit": 5
+      },
+      "result_count": 5,
+      "libraries": [
+        "material"
+      ],
+      "all_results_have_svg": false
+    },
+    {
+      "request": {
+        "query": "calendar",
+        "style": "solid",
+        "limit": 10
+      },
+      "result_count": 0,
+      "libraries": [],
+      "all_results_have_svg": true
+    },
+    {
+      "request": {
+        "query": "calendar",
+        "library": "lucide",
+        "library_mode": "strict",
+        "style": "solid",
+        "limit": 10
+      },
+      "result_count": 0,
+      "libraries": [],
+      "all_results_have_svg": true
+    },
+    {
+      "request": {
+        "query": "star",
+        "library": "tabler",
+        "library_mode": "strict",
+        "style": "solid",
+        "limit": 10
+      },
+      "result_count": 0,
+      "libraries": [],
+      "all_results_have_svg": true
+    },
+    {
+      "request": {
+        "query": "star",
+        "library": "tabler",
+        "library_mode": "strict",
+        "style": "any",
+        "limit": 5
+      },
+      "result_count": 5,
+      "libraries": [
+        "tabler"
+      ],
+      "all_results_have_svg": true
+    }
+  ]
+}

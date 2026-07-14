@@ -1,0 +1,524 @@
+{
+  "artifact": "material_acceptance_queries",
+  "purpose": "Observed smoke set: real production requests that hit the material library filter. Most rows originate from recommend_icons internal fan-out, so this set tests that material requests do not fail or silently disappear; it is not a relevance fixture.",
+  "generated_from": {
+    "export_file": "supericons-query-agent-pack (3).json",
+    "export_sha256": "13e62da7b3645746a65f629b737c53a8795bb551bbc3995d105aab31676151e9",
+    "exported_at": "2026-07-14T03:55:33.536Z",
+    "window": "7d",
+    "total_rows_in_export": 2000,
+    "sampling_note": "Agent packs export the top rows sorted by last activity; counts are lower bounds for the full window."
+  },
+  "selection_rules": {
+    "library_filter": "material",
+    "min_zero_attempts": 1,
+    "max_query_words": 6,
+    "ranking": "attempts desc",
+    "cap": 50
+  },
+  "query_count": 50,
+  "queries": [
+    {
+      "query": "silhouettes cartoon styling",
+      "attempts": 51,
+      "zero_attempts": 51,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:58:44.150818+00:00",
+      "last_seen": "2026-07-14T03:03:44.556254+00:00"
+    },
+    {
+      "query": "visually distinct 18px",
+      "attempts": 20,
+      "zero_attempts": 20,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:29.662898+00:00",
+      "last_seen": "2026-07-13T14:39:53.085834+00:00"
+    },
+    {
+      "query": "18px",
+      "attempts": 12,
+      "zero_attempts": 12,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:51.650781+00:00",
+      "last_seen": "2026-07-13T14:39:52.133127+00:00"
+    },
+    {
+      "query": "calendar",
+      "attempts": 8,
+      "zero_attempts": 6,
+      "tools": [
+        "recommend_icons",
+        "search_icons"
+      ],
+      "first_seen": "2026-07-10T08:13:40.392697+00:00",
+      "last_seen": "2026-07-14T03:36:54.632252+00:00"
+    },
+    {
+      "query": "calendar event",
+      "attempts": 7,
+      "zero_attempts": 6,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-10T08:13:42.040647+00:00",
+      "last_seen": "2026-07-14T03:03:49.150144+00:00"
+    },
+    {
+      "query": "schedule",
+      "attempts": 7,
+      "zero_attempts": 6,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-10T08:13:43.768697+00:00",
+      "last_seen": "2026-07-14T03:03:50.676364+00:00"
+    },
+    {
+      "query": "aijob micro application",
+      "attempts": 6,
+      "zero_attempts": 6,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:48.006788+00:00",
+      "last_seen": "2026-07-13T14:39:51.042782+00:00"
+    },
+    {
+      "query": "choose mature technical",
+      "attempts": 6,
+      "zero_attempts": 6,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:58:50.470908+00:00",
+      "last_seen": "2026-07-14T03:03:13.615495+00:00"
+    },
+    {
+      "query": "calendar date",
+      "attempts": 3,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons",
+        "search_icons"
+      ],
+      "first_seen": "2026-07-14T03:00:04.559541+00:00",
+      "last_seen": "2026-07-14T03:36:28.58908+00:00"
+    },
+    {
+      "query": "management aijob micro",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:34.721954+00:00",
+      "last_seen": "2026-07-13T14:39:38.052125+00:00"
+    },
+    {
+      "query": "moon",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:39:05.266323+00:00",
+      "last_seen": "2026-07-14T02:58:53.235248+00:00"
+    },
+    {
+      "query": "operations aijob micro",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:32.986835+00:00",
+      "last_seen": "2026-07-13T14:39:23.155873+00:00"
+    },
+    {
+      "query": "palette",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:39:03.967185+00:00",
+      "last_seen": "2026-07-14T02:58:52.071119+00:00"
+    },
+    {
+      "query": "sun moon",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:39:08.177021+00:00",
+      "last_seen": "2026-07-14T02:58:56.179424+00:00"
+    },
+    {
+      "query": "theme",
+      "attempts": 3,
+      "zero_attempts": 3,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:39:06.674335+00:00",
+      "last_seen": "2026-07-14T02:58:54.742447+00:00"
+    },
+    {
+      "query": "alarm",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:59.948039+00:00",
+      "last_seen": "2026-07-14T03:03:51.618771+00:00"
+    },
+    {
+      "query": "alert",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:58.729891+00:00",
+      "last_seen": "2026-07-14T03:03:50.271306+00:00"
+    },
+    {
+      "query": "appearance",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:39:09.149564+00:00",
+      "last_seen": "2026-07-13T14:39:23.405649+00:00"
+    },
+    {
+      "query": "bar chart",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:31.823268+00:00",
+      "last_seen": "2026-07-14T03:03:15.475219+00:00"
+    },
+    {
+      "query": "battery",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:43.314535+00:00",
+      "last_seen": "2026-07-14T03:03:28.91048+00:00"
+    },
+    {
+      "query": "battery choose mature",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:48.676662+00:00",
+      "last_seen": "2026-07-14T03:03:36.638967+00:00"
+    },
+    {
+      "query": "bell",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:57.180349+00:00",
+      "last_seen": "2026-07-14T03:03:48.562792+00:00"
+    },
+    {
+      "query": "business",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:57.061428+00:00",
+      "last_seen": "2026-07-13T14:38:22.25025+00:00"
+    },
+    {
+      "query": "business card manager",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:43.189043+00:00",
+      "last_seen": "2026-07-13T14:38:15.917482+00:00"
+    },
+    {
+      "query": "checklist",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:35.644911+00:00",
+      "last_seen": "2026-07-14T03:03:20.471852+00:00"
+    },
+    {
+      "query": "contract",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:38:51.03925+00:00",
+      "last_seen": "2026-07-13T14:39:01.771588+00:00"
+    },
+    {
+      "query": "electronic",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:38:49.708136+00:00",
+      "last_seen": "2026-07-13T14:39:00.493074+00:00"
+    },
+    {
+      "query": "gauge",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:34.419751+00:00",
+      "last_seen": "2026-07-14T03:03:19.110107+00:00"
+    },
+    {
+      "query": "heart rate ecg",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:24.235878+00:00",
+      "last_seen": "2026-07-14T03:03:07.654438+00:00"
+    },
+    {
+      "query": "metrics chart",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:33.326333+00:00",
+      "last_seen": "2026-07-14T03:03:17.760662+00:00"
+    },
+    {
+      "query": "next alarm",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:51.782831+00:00",
+      "last_seen": "2026-07-14T03:03:39.677992+00:00"
+    },
+    {
+      "query": "next alarm choose",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:58.304327+00:00",
+      "last_seen": "2026-07-14T03:03:46.296724+00:00"
+    },
+    {
+      "query": "notification",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:55.828755+00:00",
+      "last_seen": "2026-07-14T03:03:47.50425+00:00"
+    },
+    {
+      "query": "respiration lungs",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:49.894705+00:00",
+      "last_seen": "2026-07-14T03:03:39.720804+00:00"
+    },
+    {
+      "query": "respiration lungs choose",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:54.469001+00:00",
+      "last_seen": "2026-07-14T03:03:46.069173+00:00"
+    },
+    {
+      "query": "steps footprints",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:23.897113+00:00",
+      "last_seen": "2026-07-14T03:03:07.64363+00:00"
+    },
+    {
+      "query": "steps footprints choose",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:30.082557+00:00",
+      "last_seen": "2026-07-14T03:03:13.942356+00:00"
+    },
+    {
+      "query": "stress pulse",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:30.568832+00:00",
+      "last_seen": "2026-07-14T03:03:15.050091+00:00"
+    },
+    {
+      "query": "stress pulse choose",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:35.279176+00:00",
+      "last_seen": "2026-07-14T03:03:21.331658+00:00"
+    },
+    {
+      "query": "sunrise",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:36.383734+00:00",
+      "last_seen": "2026-07-14T03:03:21.49725+00:00"
+    },
+    {
+      "query": "sunrise choose mature",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:41.751544+00:00",
+      "last_seen": "2026-07-14T03:03:27.096253+00:00"
+    },
+    {
+      "query": "sunset",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:36.613169+00:00",
+      "last_seen": "2026-07-14T03:03:22.382252+00:00"
+    },
+    {
+      "query": "sunset choose mature",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:41.667587+00:00",
+      "last_seen": "2026-07-14T03:03:27.426095+00:00"
+    },
+    {
+      "query": "user group",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:58.078141+00:00",
+      "last_seen": "2026-07-13T14:38:14.475487+00:00"
+    },
+    {
+      "query": "users",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:37:54.615894+00:00",
+      "last_seen": "2026-07-13T14:38:11.888264+00:00"
+    },
+    {
+      "query": "wind direction course",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:49.923697+00:00",
+      "last_seen": "2026-07-14T03:03:36.721404+00:00"
+    },
+    {
+      "query": "wind direction course pointer",
+      "attempts": 2,
+      "zero_attempts": 2,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-14T02:59:43.353429+00:00",
+      "last_seen": "2026-07-14T03:03:28.931236+00:00"
+    },
+    {
+      "query": "administration",
+      "attempts": 1,
+      "zero_attempts": 1,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:38:50.037087+00:00",
+      "last_seen": "2026-07-13T14:38:50.037087+00:00"
+    },
+    {
+      "query": "administration console aijob",
+      "attempts": 1,
+      "zero_attempts": 1,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:38:44.264655+00:00",
+      "last_seen": "2026-07-13T14:38:44.264655+00:00"
+    },
+    {
+      "query": "agent aijob micro",
+      "attempts": 1,
+      "zero_attempts": 1,
+      "tools": [
+        "recommend_icons"
+      ],
+      "first_seen": "2026-07-13T14:38:33.340256+00:00",
+      "last_seen": "2026-07-13T14:38:33.340256+00:00"
+    }
+  ]
+}
