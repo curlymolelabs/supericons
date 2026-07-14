@@ -29,6 +29,24 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
 const SLOT_SEARCH_CONCURRENCY = 2;
 const SLOT_QUERY_CONCURRENCY = 1;
+const SUPPORTED_LOCALIZED_RECOMMENDATION_LOCALES = new Set([
+  'zh-Hans',
+  'zh-Hant',
+  'ja',
+  'ko',
+  'es',
+  'de',
+  'pt',
+  'ar',
+  'hi',
+  'vi',
+  'th',
+]);
+
+export function getRecommendationQueryVariantLimit(locale) {
+  const normalizedLocale = String(locale || '').trim();
+  return SUPPORTED_LOCALIZED_RECOMMENDATION_LOCALES.has(normalizedLocale) ? 8 : 4;
+}
 
 const GENERIC_SLOT_WORDS = new Set([
   'action',
@@ -1480,7 +1498,7 @@ export async function recommendIconsForTask({
     const queryVariants = dedupe([
       ...buildBrandLogoQueryVariants(task, slotLabel, library),
       ...buildSlotQueryVariants(task, slotLabel, locale),
-    ]).slice(0, locale ? 8 : 4);
+    ]).slice(0, getRecommendationQueryVariantLimit(locale));
 
     return {
       slotIndex,

@@ -9,5 +9,7 @@ serve((req) => handleSearchRequest(req, {
   timingSink: (record) => console.log(JSON.stringify(record)),
   measurementVariant: 'treatment',
   candidateRpcName: 'si_search_icon_candidates_v2',
+  candidateBatchRpcName: 'si_search_icon_candidates_v3',
   hydrateFinalSvg: true,
+  includeTimingInResponse: true,
 }));

@@ -72,6 +72,11 @@ export function createSearchStageTimer(
   const moduleAgeMsAtHandlerEntry = Number(
     Math.max(0, performance.now() - moduleEvaluatedAt).toFixed(3),
   );
+  const requestContext = Object.freeze({
+    worker_state: workerState,
+    worker_request_ordinal: workerRequestOrdinal,
+    module_age_ms_at_handler_entry: Math.round(moduleAgeMsAtHandlerEntry),
+  });
   const stages: Partial<Record<SearchTimingStage, number>> = {};
   const counts = {
     query_variants: 0,
@@ -124,7 +129,7 @@ export function createSearchStageTimer(
   }
 
   function finish(outcome: SearchStageTimingRecord['outcome']) {
-    if (!enabled || !sink) return;
+    if (!enabled || !sink) return null;
     const record: SearchStageTimingRecord = {
       schema_version: 2,
       event: 'search_stage_timing',
@@ -144,10 +149,12 @@ export function createSearchStageTimer(
     } catch {
       // Timing output must never change the search response.
     }
+    return record;
   }
 
   return {
     enabled,
+    requestContext,
     measure,
     measureSync,
     addCounts,

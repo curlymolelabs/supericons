@@ -15,3 +15,6 @@ verify_jwt = false
 # and measurement are enforced inside the shared search handler.
 [functions.mcp-search-v2-beta]
 verify_jwt = false
+
+[functions.mcp-search-v2-recommend-treatment]
+verify_jwt = false

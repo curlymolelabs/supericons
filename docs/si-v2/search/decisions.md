@@ -271,13 +271,30 @@ Decision: reduce hosted search latency through two bounded deterministic paths. 
 
 Measurement records worker request order and module age at handler entry without calling that value module-load time. Safety failures stop an internal run. A latency miss records evidence and blocks publication, but it does not prevent later approved diagnostic phases from identifying the slow stage.
 
-Reason: live measurement showed that removing candidate SVG data greatly reduced payload size, but candidate database work still dominated warm search and a one-slot recommendation still performed four serialized hosted searches. Fewer deterministic round trips target the measured causes without adding a model call, variable provider cost, or a new ranking system. Keeping audit writes synchronous preserves the current rate limiter, which counts those rows.
+Reason: live measurement showed that removing candidate SVG data greatly reduced payload size, but candidate database work still dominated warm search and a one-slot recommendation still performed multiple concurrent full search pipelines. Fewer deterministic round trips target the measured causes without adding a model call, variable provider cost, or a new ranking system. Keeping audit writes synchronous preserves the current rate limiter, which counts those rows.
 
 Alternatives rejected or deferred: backgrounding audit writes before the rate limiter has an independent counter; treating the 14-variant ceiling as a fixed query count; scheduled warm pings; moving search to a new host before reducing known round trips; changing matching or ranking in the same measurement slice.
 
 Specification change: version 1.6 adds `FR-33`, `FR-34`, `FR-35`, and the deterministic round-trip parity and control rules.
 
 Superseded decisions: none.
+
+### D-023: Tool-scoped beta gates and workload-valid latency evidence
+
+Date: 2026-07-14
+Status: Accepted
+
+Decision: allow `search_icons` and `recommend_icons` to enter an opt-in prerelease beta independently. A search-only beta routes `search_icons` to the isolated v2 endpoint while `recommend_icons` keeps the stable endpoint, stable cohort, and exact public response behavior. English recommendation omits locale and uses at most four reviewed query variants. Only supported non-English locales may use the localized limit of eight. Every measurement must prove that its public inputs are legal and that its generated workload matches the approved manifest before deployment.
+
+Latency evidence separates total MCP tool duration from individual hosted-search duration. The beta search audit persists public-safe worker state, request order, and module age so cold and reused-worker results can be compared without relying on function-log access. Logical recommendation queries continue to consume their existing rate-limit units and retain one audit row per logical query, although those rows may be written through one synchronous bulk database call.
+
+Reason: the latest live treatment passed the direct and localized warm-search limits, while recommendation remained too slow under a measurement workload that incorrectly passed `locale: 'en'` and generated eight queries instead of the approved four. The same run proved that package-wide beta routing and function logs are too coarse for an independent search release and for reliable end-to-end tool measurement.
+
+Alternatives rejected or deferred: publishing both tools behind one package-wide route; treating `en` as a localized public input; replacing per-query audit rows with one recommendation row before rate limiting has an independent counter; calling the latest direct-search phase sample a cold request; automatically switching recommendation to the local index without a separate quality, size, startup, memory, freshness, and telemetry evaluation.
+
+Specification change: version 1.7 adds `FR-36`, `FR-37`, and `FR-38`.
+
+Superseded decisions: none. `D-022` remains active for the deterministic round-trip controls.
 
 ## Adding or superseding a decision
 

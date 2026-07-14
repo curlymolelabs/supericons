@@ -29,7 +29,7 @@ export const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-si-session-hash, x-supericons-api-key',
 };
 
-const ENGINE_VERSION = 'search-v1';
+export const ENGINE_VERSION = 'search-v1';
 const PUBLIC_SEMANTIC_PROFILE_FIELDS = [
   'source_library',
   'source_name',
@@ -62,14 +62,14 @@ const PUBLIC_SEMANTIC_PROFILE_FIELDS = [
   'access',
 ];
 
-const RAILWAY_PROMOTION_TRIGGERS = {
+export const RAILWAY_PROMOTION_TRIGGERS = {
   averageCpuMs: 1500,
   p95LatencyMs: 2000,
   requiresPython: false,
   requiresLongLivedWorker: false,
 };
 
-function buildJsonResponse(body: unknown, status = 200) {
+export function buildJsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -79,12 +79,12 @@ function buildJsonResponse(body: unknown, status = 200) {
   });
 }
 
-function normalizeLibrary(value: unknown) {
+export function normalizeLibrary(value: unknown) {
   const normalized = String(value || '').trim().toLowerCase();
   return normalized || null;
 }
 
-function normalizeSource(value: unknown, fallback = 'web') {
+export function normalizeSource(value: unknown, fallback = 'web') {
   const normalized = String(value || '').trim().toLowerCase();
   return normalized || fallback;
 }
@@ -140,7 +140,7 @@ function environmentFromSource(source: unknown) {
   return null;
 }
 
-function buildSearchAuditContext(body: Record<string, unknown>, source: string) {
+export function buildSearchAuditContext(body: Record<string, unknown>, source: string) {
   const channelToken = normalizeAuditToken(body?.channel);
   const environmentToken = normalizeAuditToken(body?.environment);
   const clientFamily = normalizeAuditToken(body?.client_family, { maxLength: 64 }) || 'unknown';
@@ -167,18 +167,18 @@ function buildSearchAuditContext(body: Record<string, unknown>, source: string) 
   };
 }
 
-function normalizeStyle(value: unknown) {
+export function normalizeStyle(value: unknown) {
   const normalized = String(value || '').trim().toLowerCase();
   if (normalized === 'outline' || normalized === 'solid') return normalized;
   return 'any';
 }
 
-function normalizeBoolean(value: unknown) {
+export function normalizeBoolean(value: unknown) {
   const normalized = String(value || '').trim().toLowerCase();
   return normalized === '1' || normalized === 'true' || normalized === 'on' || normalized === 'yes';
 }
 
-function buildPublicSemanticPayload(publicRecord: Record<string, unknown>) {
+export function buildPublicSemanticPayload(publicRecord: Record<string, unknown>) {
   const recordPayload = publicRecord.record && typeof publicRecord.record === 'object' && !Array.isArray(publicRecord.record)
     ? (publicRecord.record as Record<string, unknown>)
     : {};
@@ -281,7 +281,7 @@ async function resolveSearchAuditAccountByApiKeyHash(adminClient: any, apiKeyHas
   return await resolveSearchAuditAccountFromUserId(adminClient, apiKeyRow.user_id);
 }
 
-async function resolveSearchAuditAccount(adminClient: any, req: Request, apiKeyHash: string | null = null) {
+export async function resolveSearchAuditAccount(adminClient: any, req: Request, apiKeyHash: string | null = null) {
   const token = extractBearerToken(req);
   if (!token) {
     return await resolveSearchAuditAccountByApiKeyHash(adminClient, apiKeyHash);
@@ -324,20 +324,27 @@ function stripEnrichedAuditColumns(payload: Record<string, unknown>) {
     search_outcome: _searchOutcome,
     confidence_label: _confidenceLabel,
     beta_cohort: _betaCohort,
+    worker_state: _workerState,
+    worker_request_ordinal: _workerRequestOrdinal,
+    module_age_ms_at_handler_entry: _moduleAgeMsAtHandlerEntry,
     ...basePayload
   } = payload;
   return basePayload;
 }
 
-async function insertSearchAudit(adminClient: any, payload: Record<string, unknown>) {
-  const { error } = await adminClient.from('search_request_audit').insert(payload);
+export async function insertSearchAuditRows(adminClient: any, payloads: Array<Record<string, unknown>>) {
+  const { error } = await adminClient.from('search_request_audit').insert(payloads);
   if (!error) return;
   if (!isMissingAuditColumnError(error)) throw error;
 
   const fallback = await adminClient
     .from('search_request_audit')
-    .insert(stripEnrichedAuditColumns(payload));
+    .insert(payloads.map(stripEnrichedAuditColumns));
   if (fallback.error) throw fallback.error;
+}
+
+export async function insertSearchAudit(adminClient: any, payload: Record<string, unknown>) {
+  await insertSearchAuditRows(adminClient, [payload]);
 }
 
 export interface SearchRequestHandlerOptions {
@@ -348,6 +355,7 @@ export interface SearchRequestHandlerOptions {
   candidateRpcName?: 'si_search_icon_candidates' | 'si_search_icon_candidates_v2';
   candidateBatchRpcName?: 'si_search_icon_candidates_v3' | null;
   hydrateFinalSvg?: boolean;
+  includeTimingInResponse?: boolean;
   adminClientFactory?: (() => any) | null;
   rateLimitEnforcer?: typeof enforceSearchRateLimit;
   measurementVariant?: SearchTimingVariant;
@@ -363,6 +371,7 @@ export async function handleSearchRequest(
     candidateRpcName = 'si_search_icon_candidates',
     candidateBatchRpcName = null,
     hydrateFinalSvg = false,
+    includeTimingInResponse = false,
     adminClientFactory = null,
     rateLimitEnforcer = enforceSearchRateLimit,
     measurementVariant = 'unspecified',
@@ -630,6 +639,7 @@ export async function handleSearchRequest(
       confidence_label: auditQueryFrame.confidence_floor,
       status: 'ok',
       latency_ms: Date.now() - startedAt,
+      ...timing.requestContext,
       ...auditContext,
       session_hash: auditContext.session_hash || identity.sessionHash,
       ip_hash: auditContext.ip_hash || identity.ipHash,
@@ -656,8 +666,11 @@ export async function handleSearchRequest(
       railway_promotion_triggers: RAILWAY_PROMOTION_TRIGGERS,
     };
     timing.addApproximateSizes({ response_json_characters: JSON.stringify(responseBody).length });
-    timing.finish(results.length > 0 ? 'results' : 'zero');
-    return buildJsonResponse(responseBody);
+    const timingRecord = timing.finish(results.length > 0 ? 'results' : 'zero');
+    return buildJsonResponse({
+      ...responseBody,
+      ...(includeTimingInResponse && timingRecord ? { measurement_timing: timingRecord } : {}),
+    });
   } catch (error) {
     if (adminClient && queryNorm) {
       try {
@@ -671,6 +684,7 @@ export async function handleSearchRequest(
           confidence_label: null,
           status: 'error',
           latency_ms: Date.now() - startedAt,
+          ...timing.requestContext,
           ...auditContext,
           session_hash: auditContext.session_hash || identity.sessionHash,
           ip_hash: auditContext.ip_hash || identity.ipHash,

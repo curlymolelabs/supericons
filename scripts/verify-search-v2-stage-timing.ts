@@ -12,6 +12,9 @@ const timer = createSearchStageTimer(
   () => clock,
   'control',
 );
+assert.equal(timer.requestContext.worker_state, 'first_request');
+assert.equal(timer.requestContext.worker_request_ordinal, 1);
+assert.equal(Number.isInteger(timer.requestContext.module_age_ms_at_handler_entry), true);
 
 await timer.measure('candidate_search', async () => {
   clock += 12.5;
@@ -31,9 +34,10 @@ timer.addApproximateSizes({
   response_json_characters: 8400,
 });
 clock += 1;
-timer.finish('results');
+const returnedRecord = timer.finish('results');
 
 assert.equal(records.length, 1);
+assert.equal(returnedRecord, records[0]);
 assert.deepEqual(records[0], {
   schema_version: 2,
   event: 'search_stage_timing',
@@ -60,10 +64,12 @@ assert.deepEqual(records[0], {
   },
 });
 assert.equal(typeof records[0].module_age_ms_at_handler_entry, 'number');
-assert.ok(records[0].module_age_ms_at_handler_entry >= 0);
+assert.ok(Number(records[0].module_age_ms_at_handler_entry) >= 0);
 
 let operationRan = false;
 const disabled = createSearchStageTimer(null, () => 0);
+assert.equal(disabled.requestContext.worker_state, 'reused_worker');
+assert.equal(disabled.requestContext.worker_request_ordinal, 2);
 await disabled.measure('candidate_search', async () => {
   operationRan = true;
 });

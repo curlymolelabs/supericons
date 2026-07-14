@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.6
+Version: 1.7
 Approved: 2026-07-11
 Amended: 2026-07-14
 Status: canonical product and technical specification
@@ -400,6 +400,9 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-33` | A hosted search may send its generated query variants through one bounded array RPC only when each candidate retains its query-variant text and order, per-variant limits remain unchanged, and final response bytes remain equal to the separate-call path. | `G-03`, `FR-24`, `D-022` | Disposable PostgreSQL parity, malformed-provenance rejection, ranking parity, and full HTTP response parity pass. |
 | `FR-34` | A recommendation may group its resolved search queries into one hosted request. Every logical query still consumes one rate-limit unit and writes its audit row synchronously. A slot that needs clarification performs no retrieval. | `G-03`, `G-08`, `FR-24`, `FR-27`, `D-022` | Grouped-request, rate-limit-cost, audit-boundary, clarification, and recommendation-result parity checks pass. |
 | `FR-35` | Internal latency measurement must distinguish worker request order and module age from measured handler stages. Safety failures stop the run, while a performance miss records evidence and blocks publication without hiding later diagnostic phases. | `G-08`, `FR-24`, `D-022` | Timing output remains public-safe, first requests are reported separately, and the approved measurement manifest separates safety stops from publication limits. |
+| `FR-36` | `search_icons` and `recommend_icons` may enter an opt-in prerelease beta independently. A tool that is not approved for the beta must keep the stable endpoint, cohort, and public response behavior. | `G-03`, `G-07`, `FR-24`, `FR-26`, `D-023` | Tool-specific route tests, exact recommendation response parity, package clean-install checks, and separate rollback checks pass before publication. |
+| `FR-37` | Measurement workloads must use legal public inputs and must match the approved generated-query count before deployment. English recommendation omits locale and uses at most four reviewed query variants. Only supported non-English locales may use the localized limit of eight. | `G-03`, `G-08`, `FR-24`, `D-023` | Schema-valid workload fixtures fail closed on unsupported locale values and on planned-versus-generated count differences. |
+| `FR-38` | Beta evidence must record end-to-end MCP tool latency separately from individual hosted-search latency. Search audit evidence must persist public-safe worker state, worker request order, and module age so cold and reused-worker results can be compared without function-log access. | `G-08`, `FR-20`, `FR-24`, `D-023` | Sanitized exports report tool p50/p95 and worker-state cohorts without raw queries, SVG content, credentials, or personal identifiers. |
 
 ## Constraints
 

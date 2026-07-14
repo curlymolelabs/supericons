@@ -9,8 +9,8 @@ import {
   normalizeCjkSearchText,
 } from './runtime/cjk-search-core.js';
 import {
-  getBetaCohortForVersion,
-  getDefaultHostedSearchFunctionName,
+  getBetaCohortForTool,
+  getHostedSearchFunctionNameForTool,
 } from './release-channel.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,8 +25,6 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
 const packageMetadata = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
 const mcpPackageVersion = String(packageMetadata.version || '');
-const defaultHostedSearchFunctionName = getDefaultHostedSearchFunctionName(mcpPackageVersion);
-const defaultBetaCohort = getBetaCohortForVersion(mcpPackageVersion);
 
 function normalizeUsageToken(value, { maxLength = 80 } = {}) {
   return String(value || '')
@@ -59,14 +57,15 @@ function hashSecret(value) {
   return text ? createHash('sha256').update(text).digest('hex') : null;
 }
 
-function buildUsagePayload(usageContext = {}, { apiKeyHash = null } = {}) {
+function buildUsagePayload(usageContext = {}, { apiKeyHash = null, routeToolName = null } = {}) {
   const context = usageContext && typeof usageContext === 'object' ? usageContext : {};
+  const toolName = normalizeUsageToken(routeToolName || context.tool_name, { maxLength: 64 }) || 'search_icons';
   const payload = {
     source: normalizeUsageToken(context.source, { maxLength: 40 }) || 'mcp',
     channel: normalizeUsageToken(context.channel, { maxLength: 40 }) || 'local_mcp',
     environment: normalizeUsageToken(context.environment, { maxLength: 40 }) || 'local',
     client_family: normalizeUsageToken(context.client_family, { maxLength: 64 }) || 'mcp_stdio',
-    tool_name: normalizeUsageToken(context.tool_name, { maxLength: 64 }) || 'search_icons',
+    tool_name: toolName,
     request_id: normalizeUsageText(context.request_id, { maxLength: 120 }),
     dedupe_key: normalizeUsageText(context.dedupe_key, { maxLength: 180 }),
     session_hash: normalizeUsageHash(context.session_hash),
@@ -77,7 +76,8 @@ function buildUsagePayload(usageContext = {}, { apiKeyHash = null } = {}) {
     user_agent_hash: normalizeUsageHash(context.user_agent_hash),
     api_key_hash: normalizeUsageHash(context.api_key_hash) || apiKeyHash,
     mcp_server_version: normalizeUsageText(context.mcp_server_version, { maxLength: 40 }),
-    beta_cohort: normalizeUsageToken(context.beta_cohort, { maxLength: 80 }) || defaultBetaCohort,
+    beta_cohort: normalizeUsageToken(context.beta_cohort, { maxLength: 80 })
+      || getBetaCohortForTool(mcpPackageVersion, toolName),
   };
 
   return Object.fromEntries(
@@ -99,10 +99,10 @@ function shouldUseInternalHostedDebug() {
   return raw === '1' || raw === 'true' || raw === 'on';
 }
 
-function getPublicGatewayUrl() {
+function getPublicGatewayUrl(toolName = 'search_icons') {
   return (
     process.env.SUPERICONS_MCP_SEARCH_URL
-    || `${SUPABASE_URL}/functions/v1/${defaultHostedSearchFunctionName}`
+    || `${SUPABASE_URL}/functions/v1/${getHostedSearchFunctionNameForTool(mcpPackageVersion, toolName)}`
   ).replace(/\/+$/, '');
 }
 
@@ -228,10 +228,12 @@ export async function searchIconsHostedMcp({
   locale = null,
   includeQueryFrame = false,
   usageContext = null,
+  routeToolName = null,
 }) {
   const apiKey = getConfiguredApiKey();
   const usagePayload = buildUsagePayload(usageContext, {
     apiKeyHash: apiKey ? hashSecret(apiKey) : null,
+    routeToolName,
   });
 
   if (shouldUseInternalHostedDebug()) {
@@ -294,7 +296,7 @@ export async function searchIconsHostedMcp({
     headers.Authorization = `Bearer ${publicAnonKey}`;
   }
 
-  const url = getPublicGatewayUrl();
+  const url = getPublicGatewayUrl(usagePayload.tool_name);
   const body = {
     query,
     library,
@@ -324,14 +326,17 @@ export async function searchIconQueriesHostedMcp({ queries }) {
 
   const apiKey = getConfiguredApiKey();
   const apiKeyHash = apiKey ? hashSecret(apiKey) : null;
+  const routeToolNames = new Set();
   const groupedQueries = queries.map((entry, index) => {
     const {
       libraryMode = 'strict',
       includeQueryFrame = false,
       usageContext = null,
+      routeToolName = null,
       ...searchFields
     } = entry || {};
-    const usagePayload = buildUsagePayload(usageContext, { apiKeyHash });
+    const usagePayload = buildUsagePayload(usageContext, { apiKeyHash, routeToolName });
+    routeToolNames.add(usagePayload.tool_name);
     const baseDedupeKey = usagePayload.dedupe_key;
     return {
       ...searchFields,
@@ -341,6 +346,10 @@ export async function searchIconQueriesHostedMcp({ queries }) {
       ...(includeQueryFrame ? { include_query_frame: true } : {}),
     };
   });
+  if (routeToolNames.size !== 1) {
+    throw new Error('grouped hosted search requires one tool route per request');
+  }
+  const [routeToolName] = routeToolNames;
 
   let url;
   let postSearch;
@@ -353,7 +362,7 @@ export async function searchIconQueriesHostedMcp({ queries }) {
       throw new Error('hosted MCP search requires a legacy Supabase anon JWT; publishable keys are not valid bearer tokens');
     }
   } else {
-    url = getPublicGatewayUrl();
+    url = getPublicGatewayUrl(routeToolName);
     postSearch = postPublicSearch;
     publicKey = getPublicGatewayAnonKey();
   }

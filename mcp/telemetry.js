@@ -87,6 +87,7 @@ export async function logMcpSearchAttempt({
   confidenceLabel = null,
   betaCohort = null,
   mcpServerVersion = null,
+  latencyMs = null,
 }) {
   const normalizedQuery = String(query || '').trim().toLowerCase().replace(/\s+/g, ' ');
   const safeResultCount = Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null;
@@ -95,9 +96,12 @@ export async function logMcpSearchAttempt({
   const normalizedOutcome = String(searchOutcome || (safeResultCount > 0 ? 'results' : 'zero'))
     .trim()
     .toLowerCase();
+  const safeLatencyMs = Number.isFinite(latencyMs)
+    ? Math.max(0, Math.round(latencyMs))
+    : null;
 
   try {
-    await callRpc('si_log_mcp_search_outcome', {
+    await callRpc('si_log_mcp_search_outcome_v2', {
       p_query_norm: normalizedQuery,
       p_result_count: safeResultCount,
       p_library_filter: libraryFilter || 'all',
@@ -109,6 +113,7 @@ export async function logMcpSearchAttempt({
       p_confidence_label: confidenceLabel,
       p_beta_cohort: betaCohort,
       p_mcp_server_version: mcpServerVersion,
+      p_latency_ms: safeLatencyMs,
       p_created_at: new Date().toISOString(),
     });
   } catch (error) {

@@ -32,7 +32,7 @@ import {
 } from './preview-icons.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
-import { getBetaCohortForVersion } from './release-channel.js';
+import { getBetaCohortForTool } from './release-channel.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -43,7 +43,6 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(__dirname, 'public');
 const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
-const mcpBetaCohort = getBetaCohortForVersion(packageJson.version);
 const productFacts = JSON.parse(readFileSync(join(dataDir, 'product-facts.json'), 'utf8'));
 const registrySummary = JSON.parse(readFileSync(join(dataDir, 'registry-summary.json'), 'utf8'));
 const iconIndexPath = join(dataDir, 'icon-index.json');
@@ -826,7 +825,7 @@ async function buildRequestContext(req) {
     request_id: requestId,
     rpc_id: normalizeUsageText(req.body?.id, { maxLength: 80 }),
     channel: 'hosted_mcp',
-    environment: mcpBetaCohort ? 'preview' : detectRequestEnvironment(req),
+    environment: detectRequestEnvironment(req),
     client_family: clientFamily,
     country_code: country.country_code,
     geo_source: country.geo_source,
@@ -843,7 +842,7 @@ async function buildRequestContext(req) {
     account_plan: apiKeyAccount.account_plan,
     subscription_status: apiKeyAccount.subscription_status,
     mcp_server_version: packageJson.version,
-    beta_cohort: mcpBetaCohort,
+    beta_cohort: null,
   };
 }
 
@@ -863,10 +862,11 @@ function buildToolUsageContext(requestContext, toolName, args = {}) {
     limit: args.limit || args.limit_per_slot || null,
   }))?.slice(0, 24);
 
+  const toolBetaCohort = getBetaCohortForTool(packageJson.version, toolName);
   return {
     source: 'mcp',
     channel: context.channel,
-    environment: context.environment,
+    environment: toolBetaCohort ? 'preview' : context.environment,
     client_family: context.client_family,
     tool_name: toolName,
     request_id: context.request_id,
@@ -884,7 +884,7 @@ function buildToolUsageContext(requestContext, toolName, args = {}) {
     account_plan: context.account_plan,
     subscription_status: context.subscription_status,
     mcp_server_version: context.mcp_server_version,
-    beta_cohort: context.beta_cohort || mcpBetaCohort,
+    beta_cohort: toolBetaCohort,
   };
 }
 
