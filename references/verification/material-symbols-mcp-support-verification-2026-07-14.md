@@ -66,7 +66,7 @@ Packet 1R and Packet 2S are complete and closed. Their recovery and execution ev
 
 These checks require the owner-gated release sequence:
 
-1. Correct and approve the stable-production latency runner, then capture fresh per-tool baselines before the search deploy.
+1. Review and approve the corrected stable-production latency packet, then capture fresh per-tool baselines before the search deploy.
 2. Deploy the hosted search and MCP surfaces through their separate packets.
 3. Run `npm run verify:material-production-release` with the approved revision, output path, production search URL, and hosted MCP URL. It executes the observed smoke set, the 20-query relevance set in both styles, exact `get_icon`, recommendations, preview, all-mode count checks, and capability checks.
 4. Compare post-deploy p95 latency to each fresh baseline using the PRD budget.

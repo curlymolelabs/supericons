@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R and Packet 2S completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 requires a corrected stable-production measurement package and separate approval.
+Status: Packet 1R and Packet 2S completed successfully and are closed. Packet 2R made no production change and is closed. Corrected Packet 3 is ready for independent review and owner approval.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -130,25 +130,23 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 ## Packet 3: fresh production latency baseline
 
-Execution status: blocked pending a corrected approval package. The current measurement script can target stable `mcp-search`, but it still labels requests as beta preview traffic. Do not run the commands below until they are replaced by a fingerprinted stable-production runner.
+Execution status: ready for separate approval with fingerprint `f7402463de1f9558bce7696c98bd27b8700979abd3b99c159f6dd58ab2d45883`. The corrected Material-only runner targets stable `mcp-search`, enforces production audit fields, removes beta fields, and leaves the shared Search v2 runner unchanged. See `references/verification/material-packet3-production-baseline-approval-2026-07-14.md`.
 
 ### Authorized activity
 
-Run fixed search and grouped recommendation measurements against the current stable `mcp-search` before its deploy. These requests create only normal search audit rows.
+Run the guarded direct-search and grouped-recommendation measurements against the current stable `mcp-search` before its deploy. These requests create only normal production search audit rows.
 
 ### Commands
 
 ```powershell
-$env:SUPERICONS_SEARCH_V2_MEASUREMENT_ENDPOINT='mcp-search'
-node scripts/run-search-v2-latency-measurement.mjs --mode search --variant control --output tmp/material-baseline-search.json --manifest-hash 534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a
-node scripts/run-search-v2-latency-measurement.mjs --mode recommendation --variant control --recommendation-path grouped --output tmp/material-baseline-recommendation.json --manifest-hash 534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-material-production-baseline.ps1 -ExecuteApprovedMaterialProductionBaseline
 ```
 
 Retain both output files. Any request error blocks the search deploy.
 
 ### Approval sentence
 
-> Approve Material production Packet 3 for fingerprint `534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a`: run the fixed direct-search and grouped-recommendation baseline requests against stable `mcp-search`. No deploy, seed, migration, publication, or unrelated measurement is authorized.
+> Approve Material production Packet 3 for fingerprint `f7402463de1f9558bce7696c98bd27b8700979abd3b99c159f6dd58ab2d45883`: run only the guarded stable `mcp-search` direct-search and grouped-recommendation baselines, retain both artifacts, require the production audit contract with no beta fields, and require zero request errors. No deploy, migration, seed, deletion, Railway change, npm publication, beta request, or rerun after failure is authorized.
 
 ## Packet 4: Material snapshot function deploy
 
