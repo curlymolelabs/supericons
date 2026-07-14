@@ -152,7 +152,7 @@ if (!STATIC_ONLY) {
   assert.match(fingerprintInput, /exact_full_table_counts_authorized=false\n/);
   assert.match(fingerprintInput, /candidate_rpc_execution_authorized=false\n/);
   assert.match(fingerprintInput, /load_test_authorized=false\n/);
-  assert.match(fingerprintInput, /database_writes_authorized=false\n/);
+  assert.match(fingerprintInput, /diagnostic_sql_database_writes_authorized=false\n/);
   assert.match(fingerprintInput, /deployments_authorized=0\n/);
   assert.match(document, new RegExp(`Approve Material incident SQL diagnostic for fingerprint ${'`'}${fingerprint}${'`'}`));
 }
