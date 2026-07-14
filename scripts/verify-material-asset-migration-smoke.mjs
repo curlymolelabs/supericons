@@ -74,9 +74,12 @@ values ('material:settings', 'settings', 'material', 'outline', 'font', 'setting
 `;
 
 const migration = readFileSync('supabase/migrations/20260714220000_material_icon_assets.sql', 'utf8');
+const privateRolesMigration = readFileSync('supabase/migrations/20260714223000_material_icon_assets_private_roles.sql', 'utf8');
 const hostedPreflight = readFileSync('scripts/sql/material-assets-hosted-preflight.sql', 'utf8');
 const hostedPostflight = readFileSync('scripts/sql/material-assets-hosted-postflight.sql', 'utf8');
+const recoveryPreflight = readFileSync('scripts/sql/material-assets-private-roles-recovery-preflight.sql', 'utf8');
 const rollback = readFileSync('supabase/rollbacks/20260714220000_material_icon_assets.down.sql', 'utf8');
+const privateRolesRollback = readFileSync('supabase/rollbacks/20260714223000_material_icon_assets_private_roles.down.sql', 'utf8');
 const revision = 'a'.repeat(40);
 const checksum = 'b'.repeat(64);
 
@@ -90,9 +93,15 @@ try {
   ]);
   waitForDatabase();
   runSql(prerequisiteSql);
+  runSql('alter default privileges in schema public grant select on tables to anon, authenticated;');
   runSql(hostedPreflight);
   runSql(migration);
+  const productionPrivilegeFailure = runSql(hostedPostflight, { expectFailure: true });
+  assert.match(productionPrivilegeFailure, /A public role can read material_icon_assets/);
+  runSql(recoveryPreflight);
+  runSql(privateRolesMigration);
   runSql(hostedPostflight);
+  runSql(privateRolesMigration);
   runSql(migration);
 
   runSql(`
@@ -123,6 +132,7 @@ try {
   `).trim();
   assert.equal(schema, '9|2|2|3');
 
+  runSql(privateRolesRollback);
   runSql(rollback);
   const rolledBack = runSql(`
     select concat_ws('|',
@@ -137,6 +147,8 @@ try {
     migration_idempotent: true,
     hosted_preflight_verified: true,
     hosted_postflight_verified: true,
+    production_default_privilege_mismatch_reproduced: true,
+    private_role_recovery_verified: true,
     valid_service_role_write: true,
     invalid_svg_rejected: true,
     invalid_variant_rejected: true,

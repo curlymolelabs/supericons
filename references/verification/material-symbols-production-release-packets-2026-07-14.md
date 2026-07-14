@@ -2,7 +2,9 @@
 
 Date: 2026-07-14
 
-Status: Ready for owner-gated production execution. No production system was changed while preparing these packets.
+Status: Packet 1 stopped after its original SQL applied. Do not rerun Packet 1. A separate Packet 1R recovery is required before Packet 2.
+
+Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
 ## Pinned release
 
@@ -48,6 +50,8 @@ The following command-line access checks failed on 2026-07-14 and must be comple
 No credential value belongs in this file or in committed shell history.
 
 ## Packet 1: production migration
+
+Execution status: stopped after SQL and before migration-history repair. This packet is closed and must not be rerun.
 
 ### Authorized mutation
 

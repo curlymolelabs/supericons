@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Local implementation verified. Production migration, seed, deploy, live latency measurement, and npm publication remain owner-gated release actions.
+Status: Local implementation verified. Production Packet 1 applied its original SQL but stopped at the private-access postflight before history repair. Recovery, seed, deploy, live latency measurement, and npm publication remain owner-gated release actions.
 
 ## Scope verified
 
@@ -60,6 +60,8 @@ No SVG payload is committed in the verification report.
 `npm run verify:hosted-search-engine` fails because the generated registry row contains the synonym `server stack` while the verifier expects only `self hosted` and `server cluster`. The verifier, hosted search core, and registry inputs are unchanged from baseline commit `c37aefccf`. This is not a Material serving regression and is not part of the required Material release gates.
 
 ## Production-only gates not yet run
+
+Packet 1 incident: the production project granted direct table privileges to `anon` or `authenticated` through default privileges. The new table is empty and RLS-enabled, but the access postflight correctly blocked migration-history repair. Packet 1 must not be rerun. The recovery evidence and replacement runner are recorded in `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
 These checks require the owner-gated release sequence:
 
