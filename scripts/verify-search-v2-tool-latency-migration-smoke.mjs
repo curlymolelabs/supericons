@@ -42,6 +42,19 @@ function waitForSupabaseBootstrap() {
   throw new Error('Supabase PostgreSQL bootstrap did not complete.');
 }
 
+function waitForStableDatabase() {
+  let consecutiveReadyChecks = 0;
+  for (let attempt = 0; attempt < 160; attempt += 1) {
+    const result = spawnSync('docker', [
+      'exec', containerName, 'pg_isready', '-U', 'supabase_admin', '-d', 'postgres',
+    ], { encoding: 'utf8' });
+    consecutiveReadyChecks = result.status === 0 ? consecutiveReadyChecks + 1 : 0;
+    if (consecutiveReadyChecks >= 10) return;
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 250);
+  }
+  throw new Error('Supabase PostgreSQL did not remain ready after bootstrap.');
+}
+
 function runSql(sql, { expectFailure = false } = {}) {
   const result = runDocker([
     'exec', '-i', containerName, 'psql', '-U', 'supabase_admin', '-d', 'postgres',
@@ -120,6 +133,7 @@ try {
   ]);
   waitForDatabase();
   waitForSupabaseBootstrap();
+  waitForStableDatabase();
   runSql(prerequisiteSchema);
 
   runSql(readFileSync('supabase/migrations/20260712_search_v2_beta_measurement.sql', 'utf8'));
