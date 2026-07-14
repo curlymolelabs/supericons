@@ -2,7 +2,23 @@
 
 Date: 2026-07-14
 
-Status: Ready for independent review and owner approval. No Packet 2S production write has run.
+Status: Completed successfully. Packet 2S is closed and must not be rerun.
+
+## Execution result
+
+The owner authorized the auditor-approved Packet 2S fingerprint `07bd55ac6e294ea9fa7d9dad78f36d16677d2b763fe784285401be5dc8937f4c`.
+
+The guarded runner returned exit code 0. The canary report matched the pinned `material:settings` outline asset, checksum, and upstream revision. The full hosted report then matched all 8,524 pinned assets exactly.
+
+- Canary report SHA-256: `f44ad160cad193c6cf6803c8f55e3a1aa1f6287eb441c3220d12390e20cde5fb`
+- Full hosted report SHA-256: `44c86cf6b87babf9a7d9382b61ba19f575067614fa87cb3c8925f8ccf0782da0`
+- Requested assets: 8,524
+- Successful assets: 8,524
+- Resumed assets: 0
+- Failed assets: 0
+- Source revision: `30f8fddd293b1f0189896dc4aaecdfaba1d37ae0`
+
+The production SQL postflight passed with exactly 8,524 table rows, 4,262 outline rows, 4,262 solid rows, 8,524 required Storage objects, and 8,524 total objects under the fixed Material prefix.
 
 ## Why Packet 2S is required
 
