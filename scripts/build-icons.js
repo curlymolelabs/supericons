@@ -18,6 +18,7 @@ import { readdir, readFile, writeFile, mkdir } from 'fs/promises';
 import { join, basename, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { MATERIAL_EXPORT_SOURCE } from '../material-export.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -67,8 +68,7 @@ async function readSvgDir(dirPath) {
 
 async function fetchMaterialSymbols() {
   console.log('  Fetching Material Symbols codepoints from GitHub...');
-  const url =
-    'https://raw.githubusercontent.com/google/material-design-icons/master/variablefont/MaterialSymbolsOutlined%5BFILL%2CGRAD%2Copsz%2Cwght%5D.codepoints';
+  const url = MATERIAL_EXPORT_SOURCE.codepointsUrl;
 
   const response = await fetch(url);
   if (!response.ok) {

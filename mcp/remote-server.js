@@ -33,6 +33,7 @@ import {
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
+import { buildLibraryCapability } from './library-capabilities.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -78,6 +79,7 @@ const libraryCounts = new Map(
     Number(entry.count || 0),
   ])
 );
+const hostedOutlineCounts = Object.fromEntries(libraryCounts);
 
 const libraryKeysDescription =
   'Supported values include si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), and mingcute.';
@@ -124,6 +126,9 @@ const libraryResultSchema = z.object({
   label: z.string().optional().describe('Human-readable library label with key, for example Supericons (si).'),
   description: z.string().describe('Brief public description of the icon library.'),
   count: z.number().describe('Number of icons in the library.'),
+  outlineCount: z.number().describe('Number of outline icons served by the hosted MCP server.'),
+  solidCount: z.number().describe('Number of solid icons served by the hosted MCP server.'),
+  supportedStyles: z.array(z.enum(['outline', 'solid'])).describe('Styles verified on the hosted serving path.'),
 });
 
 const previewIconResultSchema = z.object({
@@ -1040,7 +1045,7 @@ function createServer({ requestContext = null } = {}) {
         query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
         library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
         library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the user asks for outline or solid icons.'),
+        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
         locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
         include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
@@ -1151,7 +1156,7 @@ function createServer({ requestContext = null } = {}) {
       inputSchema: {
         id: z.string().describe('Exact icon ID without the library prefix, for example "database", "user-circle", "brain-circuit", or "arrow-down".'),
         library: z.string().describe(`Required library key for the exact icon. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the caller needs a specific variant.'),
+        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
       },
       outputSchema: getIconOutputSchema,
       annotations: auditedSearchAnnotations,
@@ -1243,13 +1248,19 @@ function createServer({ requestContext = null } = {}) {
       annotations: readOnlyLookupAnnotations,
     },
     async (args = {}) => withMcpUsageEvent(requestContext, 'list_libraries', args, async () => asStructured({
-      libraries: LIBRARIES.map(([id, name, description]) => ({
-        id,
-        name,
-        label: getPublicLibraryMeta(id, { name, description }).label,
-        description,
-        count: libraryCounts.get(id) || 0,
-      })),
+      libraries: LIBRARIES.map(([id, name, description]) => {
+        const capability = buildLibraryCapability(id, {
+          outlineCounts: hostedOutlineCounts,
+          materialUsesOutlineForSolid: true,
+        });
+        return {
+          id,
+          name,
+          label: getPublicLibraryMeta(id, { name, description }).label,
+          description,
+          ...capability,
+        };
+      }),
       publicRecordCount: registrySummary.publicRecordCount,
     }))
   );

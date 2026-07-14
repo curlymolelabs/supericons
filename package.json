@@ -33,6 +33,8 @@
     "verify:material-asset-migration": "node scripts/verify-material-asset-migration-smoke.mjs",
     "verify:material-seeder": "node scripts/verify-material-seeder.mjs",
     "verify:material-serving": "deno run --allow-read scripts/verify-material-serving.ts",
+    "verify:material-mcp-package": "node scripts/verify-material-mcp-package.mjs",
+    "verify:material-mcp-clean-install": "node scripts/verify-material-mcp-clean-install.mjs",
     "dry-run:registry-supabase-import": "node scripts/dry-run-registry-supabase-import.mjs",
     "import:registry-supabase": "node scripts/import-registry-to-supabase.mjs",
     "export:registry-supabase": "node scripts/export-registry-from-supabase.mjs",

@@ -18,3 +18,13 @@ verify_jwt = false
 
 [functions.mcp-search-v2-recommend-treatment]
 verify_jwt = false
+
+# Public MCP clients reach this stable search endpoint without a Supabase JWT.
+# Product API keys and paid access are enforced inside the MCP server.
+[functions.mcp-search]
+verify_jwt = false
+
+# The local MCP package uses this endpoint to fetch Material SVG snapshots on
+# cache misses. The function only serves the fixed public Material presets.
+[functions.serve-material-snapshot]
+verify_jwt = false

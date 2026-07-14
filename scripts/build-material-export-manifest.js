@@ -18,6 +18,7 @@ const ROOT = join(__dirname, '..');
 const PUBLIC_DIR = join(ROOT, 'public');
 const SNAPSHOT_DIR = join(PUBLIC_DIR, 'material-export');
 const OUTPUT_PATH = join(PUBLIC_DIR, 'material-export-manifest.json');
+const MCP_OUTPUT_PATH = join(ROOT, 'mcp', 'public', 'material-export-manifest.json');
 
 async function walk(dir) {
   const results = [];
@@ -67,8 +68,22 @@ async function main() {
     },
     entries,
   };
+  const mcpManifest = {
+    ...manifest,
+    storage: {
+      ...manifest.storage,
+      entryCount: 0,
+    },
+    entries: {},
+  };
 
-  await writeFile(OUTPUT_PATH, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  const serialized = `${JSON.stringify(manifest, null, 2)}\n`;
+  const mcpSerialized = `${JSON.stringify(mcpManifest, null, 2)}\n`;
+  await mkdir(dirname(MCP_OUTPUT_PATH), { recursive: true });
+  await Promise.all([
+    writeFile(OUTPUT_PATH, serialized, 'utf8'),
+    writeFile(MCP_OUTPUT_PATH, mcpSerialized, 'utf8'),
+  ]);
   console.log(`Wrote material export manifest to ${OUTPUT_PATH} (${Object.keys(entries).length} owned entries)`);
 }
 

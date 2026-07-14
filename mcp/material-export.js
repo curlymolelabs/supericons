@@ -2,6 +2,7 @@ export const MATERIAL_EXPORT_SOURCE = {
   ref: '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0',
   repository: 'google/material-design-icons',
   baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/symbols/web',
+  codepointsUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/variablefont/MaterialSymbolsOutlined%5BFILL%2CGRAD%2Copsz%2Cwght%5D.codepoints',
   styleDir: 'materialsymbolsoutlined',
 };
 

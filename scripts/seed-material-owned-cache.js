@@ -13,6 +13,10 @@ import {
   checksumMaterialSvg,
   normalizeAndValidateMaterialSvg,
 } from '../lib/material-asset-pipeline.js';
+import {
+  MATERIAL_GSTATIC_FALLBACKS,
+  buildMaterialGstaticFallbackUrl,
+} from '../lib/material-gstatic-fallbacks.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -43,6 +47,8 @@ export function parseMaterialSeedArgs(argv) {
     dryRun: false,
     concurrency: 6,
     retries: 3,
+    requestTimeoutMs: 15000,
+    resume: true,
     reportPath: DEFAULT_REPORT_PATH,
   };
 
@@ -50,6 +56,7 @@ export function parseMaterialSeedArgs(argv) {
     if (raw === '--all') args.all = true;
     else if (raw === '--hosted') args.hosted = true;
     else if (raw === '--dry-run') args.dryRun = true;
+    else if (raw === '--no-resume') args.resume = false;
     else if (raw.startsWith('--icons=')) {
       args.icons = raw.slice('--icons='.length).split(',').map((value) => value.trim()).filter(Boolean);
     } else if (raw.startsWith('--presets=')) {
@@ -58,6 +65,11 @@ export function parseMaterialSeedArgs(argv) {
       args.concurrency = Math.max(1, Math.min(20, Number.parseInt(raw.slice('--concurrency='.length), 10) || 1));
     } else if (raw.startsWith('--retries=')) {
       args.retries = Math.max(1, Math.min(8, Number.parseInt(raw.slice('--retries='.length), 10) || 1));
+    } else if (raw.startsWith('--request-timeout-ms=')) {
+      args.requestTimeoutMs = Math.max(
+        1000,
+        Math.min(60000, Number.parseInt(raw.slice('--request-timeout-ms='.length), 10) || 15000),
+      );
     } else if (raw.startsWith('--report=')) {
       args.reportPath = resolve(raw.slice('--report='.length));
     }
@@ -75,11 +87,11 @@ function getMaterialIconIds() {
     .sort();
 }
 
-async function fetchWithRetries(url, retries) {
+async function fetchWithRetries(url, retries, requestTimeoutMs) {
   let lastError = null;
   for (let attempt = 1; attempt <= retries; attempt += 1) {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { signal: AbortSignal.timeout(requestTimeoutMs) });
       if (response.ok) return response;
       lastError = new Error(`Upstream returned ${response.status}`);
       if (response.status < 500 && response.status !== 429) break;
@@ -91,6 +103,28 @@ async function fetchWithRetries(url, retries) {
     }
   }
   throw lastError || new Error('Upstream request failed');
+}
+
+async function loadMaterialAliases(args) {
+  const response = await fetchWithRetries(
+    MATERIAL_EXPORT_SOURCE.codepointsUrl,
+    args.retries,
+    args.requestTimeoutMs,
+  );
+  const namesByCodepoint = new Map();
+  const codepointByName = new Map();
+  for (const line of (await response.text()).trim().split('\n')) {
+    const [name, codepoint] = line.trim().split(/\s+/);
+    if (!name || !codepoint) continue;
+    codepointByName.set(name, codepoint);
+    const names = namesByCodepoint.get(codepoint) || [];
+    names.push(name);
+    namesByCodepoint.set(codepoint, names);
+  }
+  return new Map([...codepointByName].map(([name, codepoint]) => [
+    name,
+    (namesByCodepoint.get(codepoint) || []).filter((candidate) => candidate !== name).sort(),
+  ]));
 }
 
 function getHostedConfig() {
@@ -133,10 +167,44 @@ async function upsertHostedAsset(config, row) {
   if (!response.ok) throw new Error(`Asset-table upsert failed (${response.status})`);
 }
 
-async function seedAsset(task, args, hostedConfig) {
-  const upstreamUrl = buildMaterialUpstreamSnapshotUrl(task.iconId, task.axes);
-  const response = await fetchWithRetries(upstreamUrl, args.retries);
-  const svg = normalizeAndValidateMaterialSvg(await response.text());
+async function fetchMaterialSvg(task, args, aliasesById) {
+  let lastError = null;
+  for (const sourceIconId of [task.iconId, ...(aliasesById.get(task.iconId) || [])]) {
+    try {
+      const upstreamUrl = buildMaterialUpstreamSnapshotUrl(sourceIconId, task.axes);
+      const response = await fetchWithRetries(upstreamUrl, args.retries, args.requestTimeoutMs);
+      return {
+        svg: normalizeAndValidateMaterialSvg(await response.text()),
+        sourceIconId,
+        sourceKind: sourceIconId === task.iconId ? 'pinned_snapshot' : 'pinned_codepoint_alias',
+      };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  const expectedChecksum = MATERIAL_GSTATIC_FALLBACKS[task.iconId]?.[task.variant];
+  if (expectedChecksum) {
+    const fallbackUrl = buildMaterialGstaticFallbackUrl(task.iconId, task.variant);
+    const response = await fetchWithRetries(fallbackUrl, args.retries, args.requestTimeoutMs);
+    const rawSvg = (await response.text()).trim();
+    const actualChecksum = checksumMaterialSvg(rawSvg);
+    if (actualChecksum !== expectedChecksum) {
+      throw new Error(`Gstatic fallback checksum mismatch for ${task.iconId}:${task.variant}`);
+    }
+    return {
+      svg: normalizeAndValidateMaterialSvg(rawSvg),
+      sourceIconId: task.iconId,
+      sourceKind: 'checksum_pinned_gstatic',
+    };
+  }
+
+  throw lastError || new Error(`No Material SVG source found for ${task.iconId}`);
+}
+
+async function seedAsset(task, args, hostedConfig, aliasesById) {
+  const resolved = await fetchMaterialSvg(task, args, aliasesById);
+  const svg = resolved.svg;
   const checksum = checksumMaterialSvg(svg);
   const storagePath = buildMaterialOwnedStoragePath(task.iconId, task.axes);
   const row = {
@@ -144,19 +212,22 @@ async function seedAsset(task, args, hostedConfig) {
     variant: task.variant,
     svg,
     axes: task.axes,
-    source_repo: MATERIAL_EXPORT_SOURCE.repository,
+    source_repo: resolved.sourceKind === 'checksum_pinned_gstatic'
+      ? 'google/material-symbols-gstatic'
+      : MATERIAL_EXPORT_SOURCE.repository,
     source_revision: MATERIAL_EXPORT_SOURCE.ref,
     checksum,
     license: 'Apache-2.0',
   };
 
   if (!args.dryRun) {
-    const outputPath = join(SNAPSHOT_DIR, storagePath);
-    await mkdir(dirname(outputPath), { recursive: true });
-    await writeFile(outputPath, `${svg}\n`, 'utf8');
     if (hostedConfig) {
       await uploadHostedAsset(hostedConfig, storagePath, svg);
       await upsertHostedAsset(hostedConfig, row);
+    } else {
+      const outputPath = join(SNAPSHOT_DIR, storagePath);
+      await mkdir(dirname(outputPath), { recursive: true });
+      await writeFile(outputPath, `${svg}\n`, 'utf8');
     }
   }
 
@@ -166,6 +237,8 @@ async function seedAsset(task, args, hostedConfig) {
     storage_path: storagePath,
     checksum,
     source_revision: row.source_revision,
+    source_icon_id: resolved.sourceIconId,
+    source_kind: resolved.sourceKind,
   };
 }
 
@@ -197,17 +270,38 @@ export async function runMaterialSeed(argv = process.argv.slice(2)) {
   }
 
   const hostedConfig = args.hosted ? getHostedConfig() : null;
+  const aliasesById = await loadMaterialAliases(args);
   const tasks = iconIds.flatMap((iconId) => presets.map(([presetName, preset]) => ({
     iconId,
     presetName,
     variant: preset.variant,
     axes: preset.axes,
   })));
-  const failures = [];
-  const assets = (await mapConcurrent(tasks, args.concurrency, async (task) => {
+  const mode = args.dryRun ? 'dry_run' : (args.hosted ? 'hosted_seed' : 'local_seed');
+  const selectedTaskKeys = new Set(tasks.map((task) => `${task.iconId}:${task.variant}`));
+  let resumedAssets = [];
+  if (args.resume && existsSync(args.reportPath)) {
     try {
-      const asset = await seedAsset(task, args, hostedConfig);
-      console.log(`${args.dryRun ? 'Validated' : 'Seeded'} ${asset.storage_path}`);
+      const previous = JSON.parse(readFileSync(args.reportPath, 'utf8'));
+      if (previous.source_revision === MATERIAL_EXPORT_SOURCE.ref && previous.mode === mode) {
+        resumedAssets = (previous.assets || []).filter((asset) => {
+          const iconId = String(asset.icon_id || '').replace(/^material:/, '');
+          return selectedTaskKeys.has(`${iconId}:${asset.variant}`);
+        });
+      }
+    } catch {
+      resumedAssets = [];
+    }
+  }
+  const resumedTaskKeys = new Set(resumedAssets.map((asset) => (
+    `${String(asset.icon_id).replace(/^material:/, '')}:${asset.variant}`
+  )));
+  const pendingTasks = tasks.filter((task) => !resumedTaskKeys.has(`${task.iconId}:${task.variant}`));
+  const failures = [];
+  let processed = 0;
+  const newAssets = (await mapConcurrent(pendingTasks, args.concurrency, async (task) => {
+    try {
+      const asset = await seedAsset(task, args, hostedConfig, aliasesById);
       return asset;
     } catch (error) {
       failures.push({
@@ -217,17 +311,24 @@ export async function runMaterialSeed(argv = process.argv.slice(2)) {
         message: error instanceof Error ? error.message : String(error),
       });
       return null;
+    } finally {
+      processed += 1;
+      if (processed % 100 === 0 || processed === pendingTasks.length) {
+        console.log(`Material assets processed: ${processed}/${pendingTasks.length}`);
+      }
     }
   })).filter(Boolean);
+  const assets = [...resumedAssets, ...newAssets];
 
   failures.sort((left, right) => left.icon_id.localeCompare(right.icon_id) || left.variant.localeCompare(right.variant));
   assets.sort((left, right) => left.icon_id.localeCompare(right.icon_id) || left.variant.localeCompare(right.variant));
   const report = {
     source_repo: MATERIAL_EXPORT_SOURCE.repository,
     source_revision: MATERIAL_EXPORT_SOURCE.ref,
-    mode: args.dryRun ? 'dry_run' : (args.hosted ? 'hosted_seed' : 'local_seed'),
+    mode,
     requested_icons: iconIds.length,
     requested_assets: tasks.length,
+    resumed_assets: resumedAssets.length,
     successful_assets: assets.length,
     failed_assets: failures.length,
     exception_rate: tasks.length > 0 ? failures.length / tasks.length : 0,
