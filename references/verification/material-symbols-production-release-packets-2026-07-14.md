@@ -85,7 +85,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-asset
 
 ## Packet 2: hosted asset seed
 
-Execution status: ready for separate approval. The hardened packet fingerprint is `09a42dbf198729a5f0ca775273d4db8ce423caec46fa0ab6257ea6b6df6039e5`. See `references/verification/material-packet2-hosted-seed-approval-2026-07-14.md`.
+Execution status: the first approved attempt stopped at its empty-prefix preflight before any seed. A read-only inventory found 91 existing required paths and 0 other paths. Packet 2R preserves those objects and is ready for separate approval with fingerprint `a1d4e4e983f31e6542691c8ba5d9d1f2648bd74116ac97147ecd1faedda1e2ff`. See `references/verification/material-packet2r-hosted-seed-approval-2026-07-14.md`.
 
 ### Authorized mutation
 
@@ -126,7 +126,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 ### Approval sentence
 
-> Approve Material production Packet 2 for fingerprint `09a42dbf198729a5f0ca775273d4db8ce423caec46fa0ab6257ea6b6df6039e5`: run the guarded from-scratch hosted seed only if the Material table and storage prefix are empty, write exactly 8,524 pinned assets, retain and verify the hosted report, and require exact table, variant, and private storage counts. No migration, deletion, function deploy, Railway deploy, npm publication, beta change, or rerun after partial failure is authorized.
+> Approve Material production Packet 2R for fingerprint `a1d4e4e983f31e6542691c8ba5d9d1f2648bd74116ac97147ecd1faedda1e2ff`: preserve the 91 verified existing fixed-path objects, run the guarded no-resume seed only if the table is empty and every existing Material-prefix object is one of the two pinned preset paths, upsert all 8,524 pinned assets, retain and verify the hosted report, and require 8,524 table rows plus 8,524 required storage matches. No migration, deletion, function deploy, Railway deploy, npm publication, beta change, or rerun after partial failure is authorized.
 
 ## Packet 3: fresh production latency baseline
 

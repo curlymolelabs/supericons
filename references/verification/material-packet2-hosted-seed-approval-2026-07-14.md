@@ -2,7 +2,9 @@
 
 Date: 2026-07-14
 
-Status: Ready for owner approval. No Packet 2 production write has run.
+Status: Superseded. The approved attempt stopped at its empty-prefix preflight before the service-role prompt. No Packet 2 seed report was created. Use the Packet 2R approval package instead.
+
+Production preflight result: the Material storage prefix contained 91 objects, so this packet correctly stopped. A follow-up read-only inventory confirmed that all 91 are required paths from the pinned asset set, with 90 outline paths, 1 solid path, and 0 other paths. The empty-prefix assumption was wrong because the private bucket predates the new asset table.
 
 ## Pinned packet
 
