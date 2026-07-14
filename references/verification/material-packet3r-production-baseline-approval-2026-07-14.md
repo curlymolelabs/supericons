@@ -2,7 +2,25 @@
 
 Date: 2026-07-14
 
-Status: Ready for independent review and owner approval. No Packet 3R production measurement has run.
+Status: Completed successfully. Packet 3R is closed and must not be rerun.
+
+## Completion evidence
+
+The approved guarded runner completed with exit code 0 on 2026-07-14. It created only internal-test audit traffic against the stable production endpoint and retained both measurement artifacts.
+
+- Direct-search artifact: `tmp/material-baseline-search.json`
+- Direct-search artifact SHA-256: `0344385fd16aac5aa6e55ff2a5dd5fd82f5f1f86230025025922ea1de27332ae`
+- Direct-search requests: 26 total, 25 warm samples, zero errors
+- Direct-search warm p95: 3,337.062 ms
+- Grouped-recommendation artifact: `tmp/material-baseline-recommendation.json`
+- Grouped-recommendation artifact SHA-256: `151ec835b5ac0e510510f692f395eee2169e461606470b9fae14a4c6714cea99`
+- Grouped-recommendation requests: 21 total, 20 warm samples, zero errors
+- Grouped-recommendation warm p95: 459.204 ms
+- Audit contract in both artifacts: `source=verify`, `channel=internal_test`, `environment=production`, `client_family=material_release_latency`, with no beta cohort
+
+The artifact verifier passed with the pinned release fingerprint, exact request counts, positive p95 values, zero errors, the required audit contract, and no beta fields. No deploy, migration, seed, deletion, Railway change, npm publication, or beta request ran.
+
+The direct-search baseline is above the active 2,000 ms release gate. Packet 3R is still successful because its purpose was to measure the pre-deploy baseline. Packet 5 must independently prove that the deployed treatment is at or below 2,000 ms warm p95 and no more than 100 ms slower than this baseline. If it does not, the serving release cannot remain deployed under the current contract.
 
 ## Why Packet 3R replaces Packet 3
 

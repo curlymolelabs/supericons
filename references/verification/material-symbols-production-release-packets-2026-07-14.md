@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R and Packet 2S completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 3R is ready for independent review and owner approval.
+Status: Packet 1R, Packet 2S, and Packet 3R completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 4 remains separately gated.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -130,7 +130,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hoste
 
 ## Packet 3: fresh production latency baseline
 
-Execution status: Packet 3 was superseded before execution. Packet 3R is ready for separate approval with fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`. The Material-only runner targets stable `mcp-search`, classifies its synthetic traffic as internal testing against production, removes beta fields, uses line-ending-independent hashes, and leaves the shared Search v2 runner unchanged. See `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
+Execution status: Packet 3 was superseded before execution. Packet 3R completed with exit code 0 under fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`. The retained direct-search artifact contains 26 requests, zero errors, and a 3,337.062 ms warm p95. The retained grouped-recommendation artifact contains 21 requests, zero errors, and a 459.204 ms warm p95. Both artifacts carry the required internal-test production audit contract and no beta fields. Their SHA-256 values are `0344385fd16aac5aa6e55ff2a5dd5fd82f5f1f86230025025922ea1de27332ae` and `151ec835b5ac0e510510f692f395eee2169e461606470b9fae14a4c6714cea99`. Packet 3R is closed and must not be rerun. See `references/verification/material-packet3r-production-baseline-approval-2026-07-14.md`.
 
 ### Authorized activity
 
@@ -143,6 +143,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-material-product
 ```
 
 Retain both output files. Any request error blocks the search deploy.
+
+The measured direct-search baseline is already above the 2,000 ms active gate. This does not invalidate the baseline packet, but Packet 5 treatment evidence must meet the 2,000 ms absolute gate as well as the no-more-than-100-ms regression gate. Failure requires the Packet 5 rollback path.
 
 ### Approval sentence
 
