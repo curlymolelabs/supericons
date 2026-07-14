@@ -10,7 +10,7 @@
 // 5. Return the Supericons-owned SVG payload
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -121,7 +121,7 @@ function svgResponse(svg: string, headers: Record<string, string>) {
 
 let bucketReady = false;
 
-async function ensureBucket(admin: ReturnType<typeof createClient>) {
+async function ensureBucket(admin: SupabaseClient) {
   if (bucketReady) return true;
 
   const existing = await admin.storage.getBucket(STORAGE.bucket);

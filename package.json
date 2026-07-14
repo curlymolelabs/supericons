@@ -41,6 +41,7 @@
     "verify:material-hosted-seed-report": "node scripts/verify-material-hosted-seed-report.mjs",
     "verify:private-table-migrations": "node scripts/verify-private-table-migration-privileges.mjs",
     "verify:material-seeder": "node scripts/verify-material-seeder.mjs",
+    "verify:material-snapshot-function": "deno check supabase/functions/serve-material-snapshot/index.ts",
     "verify:material-serving": "deno run --allow-read scripts/verify-material-serving.ts",
     "verify:material-mcp-package": "node scripts/verify-material-mcp-package.mjs",
     "verify:material-mcp-clean-install": "node scripts/verify-material-mcp-clean-install.mjs",
