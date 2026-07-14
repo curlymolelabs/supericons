@@ -34,6 +34,7 @@ import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
 import { buildLibraryCapability } from './library-capabilities.js';
+import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -863,7 +864,7 @@ async function buildRequestContext(req) {
   };
 }
 
-function buildToolUsageContext(requestContext, toolName, args = {}) {
+function buildToolUsageContext(requestContext, toolName, args = {}, { eventId = randomUUID() } = {}) {
   const context = requestContext || {
     request_id: randomUUID(),
     channel: 'hosted_mcp',
@@ -887,7 +888,15 @@ function buildToolUsageContext(requestContext, toolName, args = {}) {
     client_family: context.client_family,
     tool_name: toolName,
     request_id: context.request_id,
-    dedupe_key: [context.request_id, context.rpc_id, toolName, argsHash].filter(Boolean).join(':'),
+    dedupe_key: buildMcpUsageDedupeKey({
+      sessionHash: context.session_hash,
+      anonymousClientHash: context.anonymous_client_hash,
+      requestId: context.request_id,
+      rpcId: context.rpc_id,
+      toolName,
+      argsHash,
+      eventId,
+    }),
     session_hash: context.session_hash,
     ip_hash: context.ip_hash,
     country_code: context.country_code,
@@ -937,9 +946,10 @@ function getConfidenceLabelFromToolResult(result) {
 }
 
 function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok') {
-  const context = buildToolUsageContext(requestContext, toolName, args);
+  const eventId = randomUUID();
+  const context = buildToolUsageContext(requestContext, toolName, args, { eventId });
   return {
-    event_id: randomUUID(),
+    event_id: eventId,
     request_id: context.request_id,
     dedupe_key: context.dedupe_key,
     event_type: ['search_icons', 'recommend_icons'].includes(toolName)

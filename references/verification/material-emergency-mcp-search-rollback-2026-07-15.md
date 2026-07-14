@@ -150,6 +150,14 @@ Edge failures began at `00:06:56`, before the first retained Postgres timeout. N
 
 This localizes the immediate database failure to candidate-search statement timeouts. It disproves the missing-RPC hypothesis because the RPC was found and executed. It does not yet establish why the RPC became slow or overloaded. The retained query text uses bound parameters, so the failing query and library values are not present in the Postgres export.
 
+## MCP usage dedupe defect
+
+The separate duplicate-key error confirmed a telemetry defect in the hosted MCP request ledger. The old key combined `request_id`, `rpc_id`, tool name, and an argument hash. When the transport supplied no separate request header, `request_id` and `rpc_id` could both use the JSON-RPC request ID. Different client sessions commonly begin with JSON-RPC ID `1`, so two sessions calling the same tool with the same arguments could produce the same key. The second event was then rejected by the unique index, which undercounted usage.
+
+The local fix builds a compact hashed key from stable session identity first, anonymous client identity second, and a unique event ID only when neither stable identity exists. The operation identity prefers the JSON-RPC ID, so a retry from the same session with the same tool and arguments keeps the same key even if the transport request header changes. The unique event fallback prevents unrelated requests without stable identity from sharing a constant.
+
+The regression verifier is `scripts/verify-mcp-usage-dedupe.mjs`. It proves that two sessions using JSON-RPC ID `1` for the same tool and arguments get different keys, that the same session retry keeps the same key, that anonymous client identities remain separate, and that the per-event fallback is required. This is a local code fix only. Production telemetry remains affected until the hosted MCP service is released through its owner-approved packet.
+
 ## Local recommendation concurrency correction
 
 The stable version 37 deployment did not group one complete `recommend_icons` operation into one `mcp-search` request. The exact control revision `02b2c22ea8a76decee92d83c853ca6cf33899e6c` and treatment revision `425d8c2873e244988ed93ade18396e0f5c688f5e` both use the hosted MCP's separate `searchIconsForQuery` path. Stable `mcp-search` accepts one search per POST in both revisions.
