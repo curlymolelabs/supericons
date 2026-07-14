@@ -30,6 +30,7 @@ export const corsHeaders = {
 };
 
 export const ENGINE_VERSION = 'search-v1';
+const MATERIAL_LIBRARY_ID = 'material';
 const PUBLIC_SEMANTIC_PROFILE_FIELDS = [
   'source_library',
   'source_name',
@@ -481,6 +482,15 @@ export async function handleSearchRequest(
       () => resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash),
     );
 
+    if (libraryMode === 'strict' && library === MATERIAL_LIBRARY_ID) {
+      throw new SearchEngineHttpError('Material Symbols are temporarily unavailable while SVG serving support is being completed.', {
+        status: 503,
+        code: 'material_support_pending',
+        hint: 'Retry this Material search after support is enabled.',
+        retryable: true,
+      });
+    }
+
     const intentProfile = buildSearchIntentProfile(queryNorm);
     const queryVariants = buildSearchRankingQueryVariants(
       queryNorm,
@@ -518,6 +528,7 @@ export async function handleSearchRequest(
     for (const batch of candidateBatches) {
       if (batch.error) throw batch.error;
       for (const rawRow of (batch.data || []) as CandidateRow[]) {
+        if (rawRow.source_library === MATERIAL_LIBRARY_ID) continue;
         const adjustment = getIntentCandidateAdjustment(rawRow, intentProfile);
         const row = {
           ...rawRow,

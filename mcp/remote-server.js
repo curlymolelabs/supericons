@@ -198,7 +198,15 @@ function normalizeHostedIcon(row) {
   const [libraryFromId, ...idParts] = String(row.icon_id).split(':');
   const library = row.library || row.source_library || libraryFromId;
   const id = idParts.join(':') || row.id || row.name;
-  if (!library || !id || !row.svg) return null;
+  if (!library || !id) return null;
+  if (!row.svg) {
+    if (library === 'material') {
+      const error = new Error('Material Symbols are temporarily unavailable while SVG serving support is being completed.');
+      error.code = 'material_support_pending';
+      throw error;
+    }
+    return null;
+  }
 
   const icon = {
     id,
