@@ -85,6 +85,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-asset
 
 ## Packet 2: hosted asset seed
 
+Execution status: ready for separate approval. The hardened packet fingerprint is `09a42dbf198729a5f0ca775273d4db8ce423caec46fa0ab6257ea6b6df6039e5`. See `references/verification/material-packet2-hosted-seed-approval-2026-07-14.md`.
+
 ### Authorized mutation
 
 Upload and upsert exactly 4,262 Material IDs in outline and solid presets, for 8,524 table rows and corresponding private bucket objects.
@@ -100,7 +102,7 @@ Upload and upsert exactly 4,262 Material IDs in outline and solid presets, for 8
 ### Approved command
 
 ```powershell
-node scripts/seed-material-owned-cache.js --all --hosted --no-resume --concurrency=6 --retries=3 --request-timeout-ms=15000 --report=tmp/material-hosted-seed-425d8c287.json
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/apply-material-hosted-seed.ps1 -ExecuteApprovedMaterialHostedSeed
 ```
 
 ### Required result
@@ -124,7 +126,7 @@ node scripts/seed-material-owned-cache.js --all --hosted --no-resume --concurren
 
 ### Approval sentence
 
-> Approve Material production Packet 2 for fingerprint `534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a`: run one from-scratch hosted seed for 8,524 fixed Material assets and verify exact table, variant, and private bucket counts. No function deploy, Railway deploy, npm publish, database migration, or deletion is authorized.
+> Approve Material production Packet 2 for fingerprint `09a42dbf198729a5f0ca775273d4db8ce423caec46fa0ab6257ea6b6df6039e5`: run the guarded from-scratch hosted seed only if the Material table and storage prefix are empty, write exactly 8,524 pinned assets, retain and verify the hosted report, and require exact table, variant, and private storage counts. No migration, deletion, function deploy, Railway deploy, npm publication, beta change, or rerun after partial failure is authorized.
 
 ## Packet 3: fresh production latency baseline
 
