@@ -175,6 +175,10 @@ try {
   assert.equal(artifact.hosted_mcp.exact_icon_checks.solid, true);
   assert.ok(artifact.hosted_mcp.recommendation_icon_id);
   assert.ok(artifact.hosted_mcp.preview_result_count > 0);
+  assert.match(
+    readFileSync('scripts/verify-material-production-release.mjs', 'utf8'),
+    /Production release evidence already exists/,
+  );
   console.log(JSON.stringify({
     status: 'ok',
     grouped_requests: artifact.search.grouped_requests,

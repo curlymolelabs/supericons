@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
@@ -296,6 +296,8 @@ assert.ok(output, 'Provide --output with a local JSON path.');
 assert.match(revision, /^[a-f0-9]{40}$/, 'Provide --revision with the approved 40-character commit SHA.');
 assert.ok(isAllowedEndpoint(searchUrl), 'The search gate requires HTTPS except for a local verification server.');
 if (mcpUrl) assert.ok(isAllowedEndpoint(mcpUrl), 'The hosted MCP gate requires HTTPS except for a local verification server.');
+const outputPath = resolve(output);
+assert.equal(existsSync(outputPath), false, `Production release evidence already exists: ${outputPath}`);
 
 const artifact = {
   schema_version: 1,
@@ -305,7 +307,6 @@ const artifact = {
   hosted_mcp: mcpUrl ? await runMcpGate(mcpUrl, apiKey) : null,
 };
 
-const outputPath = resolve(output);
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, `${JSON.stringify(artifact, null, 2)}\n`, 'utf8');
 console.log(JSON.stringify({
