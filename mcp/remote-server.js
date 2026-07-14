@@ -194,18 +194,23 @@ function asStructured(payload, { isError = false } = {}) {
 }
 
 function normalizeHostedIcon(row) {
-  if (!row?.icon_id) return null;
+  if (!row?.icon_id) {
+    const error = new Error('Hosted search returned a result without an icon ID.');
+    error.code = 'search_result_invalid';
+    throw error;
+  }
   const [libraryFromId, ...idParts] = String(row.icon_id).split(':');
   const library = row.library || row.source_library || libraryFromId;
   const id = idParts.join(':') || row.id || row.name;
-  if (!library || !id) return null;
+  if (!library || !id) {
+    const error = new Error(`Hosted search returned an invalid icon reference: ${row.icon_id}.`);
+    error.code = 'search_result_invalid';
+    throw error;
+  }
   if (!row.svg) {
-    if (library === 'material') {
-      const error = new Error('Material Symbols are temporarily unavailable while SVG serving support is being completed.');
-      error.code = 'material_support_pending';
-      throw error;
-    }
-    return null;
+    const error = new Error(`Hosted search returned a result without usable SVG: ${row.icon_id}.`);
+    error.code = library === 'material' ? 'material_asset_unavailable' : 'search_result_svg_unavailable';
+    throw error;
   }
 
   const icon = {
@@ -308,7 +313,6 @@ async function searchHostedIcons({
 
   const hostedResults = (payload.results || [])
     .map(normalizeHostedIcon)
-    .filter(Boolean)
     .slice(0, Math.max(1, limit));
 
   if (hostedResults.length > 0) {

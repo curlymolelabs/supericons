@@ -101,6 +101,14 @@ function createAdminClient(mode: CandidateMode, scenario: Scenario) {
       if (table === 'icon_catalog') {
         return createQuery({ data: [{ icon_id: candidate.icon_id, svg }], error: null });
       }
+      if (table === 'material_icon_assets') {
+        return createQuery({
+          data: scenario === 'null_svg'
+            ? [{ icon_id: candidate.icon_id, variant: 'solid', svg: '<svg>material-settings</svg>' }]
+            : [],
+          error: null,
+        });
+      }
       if (table === 'icon_registry_public_export') {
         return createQuery({
           data: [{
@@ -183,14 +191,17 @@ for (const testCase of cases) {
     assert.ok(treatment.calls.rpcNames.every((name) => name === 'si_search_icon_candidates_v2'));
     assert.deepEqual(batched.calls.rpcNames, ['si_search_icon_candidates_v3']);
     assert.equal(control.calls.tables.includes('icon_catalog'), false);
-    assert.equal(treatment.calls.tables.includes('icon_catalog'), true);
+    assert.equal(
+      treatment.calls.tables.includes('icon_catalog'),
+      testCase.scenario !== 'null_svg',
+    );
   }
 }
 
 const svgResponse = JSON.parse((await runPath('treatment', { query: 'settings', limit: 1 }, 'svg')).body);
 const nullSvgResponse = JSON.parse((await runPath('treatment', { query: 'settings', style: 'solid', limit: 1 }, 'null_svg')).body);
 assert.equal(svgResponse.results[0].svg, '<svg>settings</svg>');
-assert.equal(nullSvgResponse.results[0].svg, null);
+assert.equal(nullSvgResponse.results[0].svg, '<svg>material-settings</svg>');
 assert.deepEqual(Object.keys(svgResponse.results[0].semantic), [
   'source_library',
   'source_name',
@@ -213,7 +224,7 @@ console.log(JSON.stringify({
   exact_status_headers_and_body_match: true,
   one_batched_candidate_rpc: true,
   svg_value_preserved: true,
-  null_svg_preserved: true,
+  material_svg_hydrated: true,
   semantic_field_order_preserved: true,
   error_response_preserved: true,
 }, null, 2));

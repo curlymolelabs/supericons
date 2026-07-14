@@ -3,10 +3,12 @@ export type SearchTimingStage =
   | 'rate_limit'
   | 'account_resolution'
   | 'candidate_search'
+  | 'material_eligibility'
   | 'private_metadata'
   | 'reranking'
   | 'public_semantic'
   | 'final_svg'
+  | 'material_svg'
   | 'audit_write';
 
 export interface SearchStageTimingRecord {

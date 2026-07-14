@@ -5,7 +5,14 @@ import { retrieveCandidateBatches } from './candidate-retrieval.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
 import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
-import { hydrateFinalSvgRows, type FinalSvgRow } from './result-hydration.ts';
+import { hydrateServingSvgRows, type FinalSvgRow } from './result-hydration.ts';
+import {
+  filterEligibleMaterialCandidates,
+  materialStyleMatches,
+  resolveMaterialVariant,
+  uniqueMaterialCandidateIds,
+  type MaterialAssetRow,
+} from './material-serving.ts';
 import {
   createSearchStageTimer,
   estimateCandidatePayloadCharacters,
@@ -325,6 +332,7 @@ function stripEnrichedAuditColumns(payload: Record<string, unknown>) {
     search_outcome: _searchOutcome,
     confidence_label: _confidenceLabel,
     beta_cohort: _betaCohort,
+    error_code: _errorCode,
     worker_state: _workerState,
     worker_request_ordinal: _workerRequestOrdinal,
     module_age_ms_at_handler_entry: _moduleAgeMsAtHandlerEntry,
@@ -482,15 +490,6 @@ export async function handleSearchRequest(
       () => resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash),
     );
 
-    if (libraryMode === 'strict' && library === MATERIAL_LIBRARY_ID) {
-      throw new SearchEngineHttpError('Material Symbols are temporarily unavailable while SVG serving support is being completed.', {
-        status: 503,
-        code: 'material_support_pending',
-        hint: 'Retry this Material search after support is enabled.',
-        retryable: true,
-      });
-    }
-
     const intentProfile = buildSearchIntentProfile(queryNorm);
     const queryVariants = buildSearchRankingQueryVariants(
       queryNorm,
@@ -528,7 +527,6 @@ export async function handleSearchRequest(
     for (const batch of candidateBatches) {
       if (batch.error) throw batch.error;
       for (const rawRow of (batch.data || []) as CandidateRow[]) {
-        if (rawRow.source_library === MATERIAL_LIBRARY_ID) continue;
         const adjustment = getIntentCandidateAdjustment(rawRow, intentProfile);
         const row = {
           ...rawRow,
@@ -549,7 +547,39 @@ export async function handleSearchRequest(
       }
     }
 
-    const candidates = [...candidatesById.values()];
+    const unfilteredCandidates = [...candidatesById.values()];
+    const materialVariant = resolveMaterialVariant(style);
+    const materialCandidateIds = uniqueMaterialCandidateIds(unfilteredCandidates);
+    let eligibleMaterialIds = new Set<string>();
+    if (materialCandidateIds.length > 0) {
+      const materialEligibilityResult = await timing.measure<any>(
+        'material_eligibility',
+        () => adminClient
+          .from('material_icon_assets')
+          .select('icon_id')
+          .eq('variant', materialVariant)
+          .in('icon_id', materialCandidateIds),
+      );
+      if (materialEligibilityResult.error) throw materialEligibilityResult.error;
+      eligibleMaterialIds = new Set(
+        (materialEligibilityResult.data || []).map((row: { icon_id: string }) => row.icon_id),
+      );
+    }
+    const candidates = filterEligibleMaterialCandidates(unfilteredCandidates, eligibleMaterialIds);
+    if (
+      libraryMode === 'strict'
+      && library === MATERIAL_LIBRARY_ID
+      && materialCandidateIds.length > 0
+      && candidates.length === 0
+    ) {
+      throw new SearchEngineHttpError('Matching Material icons exist, but their SVG assets are unavailable.', {
+        status: 503,
+        code: 'material_asset_unavailable',
+        hint: 'Retry after the Material asset store is restored.',
+        retryable: true,
+        details: { variant: materialVariant },
+      });
+    }
     timing.addCounts({ unique_candidates: candidates.length });
 
     const iconIds = candidates.map((row) => row.icon_id);
@@ -585,24 +615,40 @@ export async function handleSearchRequest(
         featuresById,
         { libraryMode, requestedLibrary: library },
       )
-        .filter((row) => style === 'any' || row.style === style)
+        .filter((row) => materialStyleMatches(row, style))
         .slice(0, limit);
     });
     timing.addCounts({ final_results: rankedResults.length });
 
     const resultIconIds = rankedResults.map((row) => row.icon_id);
+    const materialResultIds = rankedResults
+      .filter((row) => row.source_library === MATERIAL_LIBRARY_ID)
+      .map((row) => row.icon_id);
+    const catalogResultIds = rankedResults
+      .filter((row) => row.source_library !== MATERIAL_LIBRARY_ID)
+      .map((row) => row.icon_id);
     let finalRankedResults = rankedResults;
     let publicRecordsById = new Map<string, Record<string, unknown>>();
 
     if (resultIconIds.length > 0) {
-      const [finalSvgResult, publicRegistryResult] = await Promise.all([
-        hydrateFinalSvg
+      const [finalSvgResult, materialSvgResult, publicRegistryResult] = await Promise.all([
+        hydrateFinalSvg && catalogResultIds.length > 0
           ? timing.measure<any>(
             'final_svg',
             () => adminClient
               .from('icon_catalog')
               .select('icon_id, svg')
-              .in('icon_id', resultIconIds),
+              .in('icon_id', catalogResultIds),
+          )
+          : Promise.resolve(null),
+        materialResultIds.length > 0
+          ? timing.measure<any>(
+            'material_svg',
+            () => adminClient
+              .from('material_icon_assets')
+              .select('icon_id, variant, svg')
+              .eq('variant', materialVariant)
+              .in('icon_id', materialResultIds),
           )
           : Promise.resolve(null),
         timing.measure<any>(
@@ -615,12 +661,12 @@ export async function handleSearchRequest(
       ]);
 
       if (finalSvgResult?.error) throw finalSvgResult.error;
-      if (finalSvgResult) {
-        finalRankedResults = hydrateFinalSvgRows(
-          rankedResults,
-          (finalSvgResult.data || []) as FinalSvgRow[],
-        );
-      }
+      if (materialSvgResult?.error) throw materialSvgResult.error;
+      finalRankedResults = hydrateServingSvgRows(rankedResults, {
+        catalogSvgRows: finalSvgResult ? (finalSvgResult.data || []) as FinalSvgRow[] : null,
+        materialSvgRows: materialSvgResult ? (materialSvgResult.data || []) as MaterialAssetRow[] : [],
+        materialVariant,
+      });
 
       if (publicRegistryResult.error) throw publicRegistryResult.error;
       publicRecordsById = new Map(
@@ -692,6 +738,7 @@ export async function handleSearchRequest(
           library_mode: libraryMode,
           result_count: 0,
           search_outcome: 'error',
+          error_code: error instanceof SearchEngineHttpError ? error.code : 'search_service_unavailable',
           confidence_label: null,
           status: 'error',
           latency_ms: Date.now() - startedAt,
