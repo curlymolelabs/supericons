@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Packet 1R, Packet 2S, and Packet 3R completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 4 remains separately gated.
+Status: Packet 1R, Packet 2S, and Packet 3R completed successfully and are closed. Packet 2R made no production change and is closed. Packet 3 was superseded before execution. Packet 4 stopped before deployment and is superseded by Packet 4R.
 
 Execution update, 2026-07-14: the production project applies default table privileges to `anon` or `authenticated`. The original migration revoked `PUBLIC` but did not remove those direct role privileges. Its transaction created an empty, RLS-enabled table and additive audit columns. The fixed postflight then stopped before migration-history repair. No seed or serving deploy ran. See `references/verification/material-packet1-partial-apply-recovery-2026-07-14.md`.
 
@@ -151,6 +151,8 @@ The measured direct-search baseline is already above the 2,000 ms active gate. T
 > Approve Material production Packet 3R for fingerprint `80f193e20bbaf3dc175f8088e812256f9ec65bc274578ff15f76887ab9a9bcd4`: run only the guarded stable `mcp-search` direct-search and grouped-recommendation baselines, classify every request as internal testing against production, retain both artifacts, and require zero request errors. No deploy, migration, seed, deletion, Railway change, npm publication, beta request, or rerun after failure is authorized.
 
 ## Packet 4: Material snapshot function deploy
+
+Execution status: Superseded by Packet 4R before deployment. The approved project access, revision match, configuration check, and seeder integration gate passed. The current Deno type check rejected the generic `ReturnType<typeof createClient>` annotation before the deployment command ran. No production change occurred. The type-only correction and new approval fingerprint are recorded in `references/verification/material-packet4r-snapshot-deploy-approval-2026-07-14.md`.
 
 ### Authorized mutation
 
