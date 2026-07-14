@@ -128,6 +128,19 @@ try {
     insert into supabase_migrations.schema_migrations (version)
     values ('20260714220000'), ('20260714223000');
   `);
+  runSql(`
+    insert into storage.objects (bucket_id, name)
+    values ('material-icons', 'materialsymbolsoutlined/not_in_catalog/fill-0/wght-300/grad-0/opsz-24.svg');
+  `);
+  const unexpectedExistingObjectFailure = runSql(seedPreflight, { expectFailure: true });
+  assert.match(unexpectedExistingObjectFailure, /outside the two fixed preset paths/);
+  runSql(`
+    delete from storage.objects where bucket_id = 'material-icons';
+    insert into storage.objects (bucket_id, name)
+    values
+      ('material-icons', 'materialsymbolsoutlined/settings/fill-0/wght-300/grad-0/opsz-24.svg'),
+      ('material-icons', 'materialsymbolsoutlined/settings/fill-1/wght-400/grad-0/opsz-24.svg');
+  `);
   runSql(seedPreflight);
   runSql(`
     insert into public.icon_catalog (icon_id, name, source_library, style, icon_type, search_text)
@@ -177,7 +190,7 @@ try {
     where bucket_id = 'material-icons'
       and name = 'materialsymbolsoutlined/test_0001/fill-0/wght-300/grad-0/opsz-24.svg';
   ` + seedPostflight, { expectFailure: true });
-  assert.match(missingObjectFailure, /Unexpected Material storage object count|missing matching storage objects/);
+  assert.match(missingObjectFailure, /Unexpected required Material storage object count|missing matching storage objects/);
   runSql(`
     insert into storage.objects (bucket_id, name)
     values ('material-icons', 'materialsymbolsoutlined/test_0001/fill-0/wght-300/grad-0/opsz-24.svg');
@@ -236,6 +249,8 @@ try {
     production_default_privilege_mismatch_reproduced: true,
     private_role_recovery_verified: true,
     hosted_seed_preflight_verified: true,
+    hosted_seed_valid_existing_paths_allowed: true,
+    hosted_seed_unrelated_existing_path_rejected: true,
     hosted_seed_exact_counts_verified: true,
     hosted_seed_missing_object_rejected: true,
     valid_service_role_write: true,

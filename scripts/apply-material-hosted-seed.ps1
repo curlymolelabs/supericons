@@ -24,8 +24,8 @@ $expectedHashes = @{
     $seederPath = 'a3dd8a252819930cd7ab1dfa014eea76907fff6b9a9d2ed51715214fced82b19'
     $expectedAssetReportPath = '4e04f3894566fc0b8f9011f38847f27cb40d48d738415ea9c6df41f1d58e9e92'
     $reportVerifierPath = '1e8f7fe040c721e5691fb501ccd4f1529628a0737041a5a6b58b70da90059d24'
-    $preflightPath = '897ffbfad2a4ff65fb0286b7a972f0aee7231bba6a3e6da858d7cf20aee83cee'
-    $postflightPath = 'a06ad0cc8a4c4e9cb9b5ad01f3f6328c64dce1598302fd243a97216b2125a5d4'
+    $preflightPath = '2f0e40e64baa64046a96c8b6df457b9a421e350de7a95b22016daff71b718ff0'
+    $postflightPath = '4a20a37ab27537ba710e8d323785ab287310bfc4ed3d36d7f916856df40a8453'
 }
 
 function Invoke-PsqlFile {

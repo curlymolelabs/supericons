@@ -24,8 +24,8 @@ const expectedHashes = {
   seeder: 'a3dd8a252819930cd7ab1dfa014eea76907fff6b9a9d2ed51715214fced82b19',
   assetReport: '4e04f3894566fc0b8f9011f38847f27cb40d48d738415ea9c6df41f1d58e9e92',
   reportVerifier: '1e8f7fe040c721e5691fb501ccd4f1529628a0737041a5a6b58b70da90059d24',
-  preflight: '897ffbfad2a4ff65fb0286b7a972f0aee7231bba6a3e6da858d7cf20aee83cee',
-  postflight: 'a06ad0cc8a4c4e9cb9b5ad01f3f6328c64dce1598302fd243a97216b2125a5d4',
+  preflight: '2f0e40e64baa64046a96c8b6df457b9a421e350de7a95b22016daff71b718ff0',
+  postflight: '4a20a37ab27537ba710e8d323785ab287310bfc4ed3d36d7f916856df40a8453',
 };
 
 assert.equal(hash(seederPath), expectedHashes.seeder);
@@ -59,15 +59,19 @@ assert.doesNotMatch(runner, /storage\/v1\/object\/material-icons.*DELETE/is);
 const preflight = read(preflightPath);
 const postflight = read(postflightPath);
 assert.match(preflight, /material_icon_assets is not empty/);
-assert.match(preflight, /Material bucket prefix is not empty/);
+assert.match(preflight, /outside the two fixed preset paths/);
+assert.match(preflight, /existing_material_objects/);
+assert.match(preflight, /existing_outline_objects/);
+assert.match(preflight, /existing_solid_objects/);
 assert.match(preflight, /20260714220000/);
 assert.match(preflight, /20260714223000/);
 assert.match(postflight, /v_table_count <> 8524/);
 assert.match(postflight, /v_outline_count <> 4262/);
 assert.match(postflight, /v_solid_count <> 4262/);
-assert.match(postflight, /v_storage_count <> 8524/);
+assert.match(postflight, /v_required_storage_count <> 8524/);
 assert.match(postflight, /v_missing_object_count <> 0/);
-assert.match(postflight, /v_unexpected_object_count <> 0/);
+assert.match(postflight, /total_prefix_objects/);
+assert.doesNotMatch(postflight, /v_unexpected_object_count/);
 
 const temporaryDirectory = mkdtempSync(join(tmpdir(), 'supericons-material-hosted-report-'));
 try {
@@ -96,6 +100,9 @@ console.log(JSON.stringify({
   preflight_sha256: expectedHashes.preflight,
   postflight_sha256: expectedHashes.postflight,
   exact_table_and_storage_counts: true,
+  valid_existing_fixed_paths_allowed: true,
+  unrelated_existing_paths_rejected: true,
+  unrelated_cached_variants_preserved: true,
   exact_report_match_verified: true,
   tampered_report_rejected: true,
   secret_prompts_hidden: true,

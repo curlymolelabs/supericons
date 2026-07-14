@@ -7,9 +7,9 @@ declare
   v_outline_count integer;
   v_solid_count integer;
   v_icon_count integer;
-  v_storage_count integer;
+  v_required_storage_count integer;
+  v_total_storage_count integer;
   v_missing_object_count integer;
-  v_unexpected_object_count integer;
 begin
   select count(*),
          count(*) filter (where variant = 'outline'),
@@ -50,13 +50,34 @@ begin
   end if;
 
   select count(*)
-  into v_storage_count
+  into v_total_storage_count
   from storage.objects
   where bucket_id = 'material-icons'
     and name like 'materialsymbolsoutlined/%';
 
-  if v_storage_count <> 8524 then
-    raise exception 'Unexpected Material storage object count: %', v_storage_count;
+  with expected_objects as (
+    select
+      'materialsymbolsoutlined/'
+      || regexp_replace(icon_id, '^material:', '')
+      || '/fill-' || (axes ->> 'fill')
+      || '/wght-' || (axes ->> 'wght')
+      || '/' || case (axes ->> 'grad')
+        when '-25' then 'grad-neg25'
+        else 'grad-' || (axes ->> 'grad')
+      end
+      || '/opsz-' || (axes ->> 'opsz') || '.svg' as name
+    from public.material_icon_assets
+  )
+  select count(*)
+  into v_required_storage_count
+  from expected_objects expected
+  join storage.objects stored
+    on stored.bucket_id = 'material-icons'
+   and stored.name = expected.name;
+
+  if v_required_storage_count <> 8524 then
+    raise exception 'Unexpected required Material storage object count: % of 8524. Total prefix objects: %',
+      v_required_storage_count, v_total_storage_count;
   end if;
 
   with expected_objects as (
@@ -83,37 +104,32 @@ begin
   if v_missing_object_count <> 0 then
     raise exception 'Material table rows missing matching storage objects: %', v_missing_object_count;
   end if;
-
-  with expected_objects as (
-    select
-      'materialsymbolsoutlined/'
-      || regexp_replace(icon_id, '^material:', '')
-      || '/fill-' || (axes ->> 'fill')
-      || '/wght-' || (axes ->> 'wght')
-      || '/' || case (axes ->> 'grad')
-        when '-25' then 'grad-neg25'
-        else 'grad-' || (axes ->> 'grad')
-      end
-      || '/opsz-' || (axes ->> 'opsz') || '.svg' as name
-    from public.material_icon_assets
-  )
-  select count(*)
-  into v_unexpected_object_count
-  from storage.objects stored
-  left join expected_objects expected on expected.name = stored.name
-  where stored.bucket_id = 'material-icons'
-    and stored.name like 'materialsymbolsoutlined/%'
-    and expected.name is null;
-
-  if v_unexpected_object_count <> 0 then
-    raise exception 'Unexpected objects exist under the Material storage prefix: %', v_unexpected_object_count;
-  end if;
 end
 $material_seed_postflight$;
 
+with expected_objects as (
+  select
+    'materialsymbolsoutlined/'
+    || regexp_replace(icon_id, '^material:', '')
+    || '/fill-' || (axes ->> 'fill')
+    || '/wght-' || (axes ->> 'wght')
+    || '/' || case (axes ->> 'grad')
+      when '-25' then 'grad-neg25'
+      else 'grad-' || (axes ->> 'grad')
+    end
+    || '/opsz-' || (axes ->> 'opsz') || '.svg' as name
+  from public.material_icon_assets
+)
 select
   (select count(*) from public.material_icon_assets) as table_rows,
   (select count(*) from public.material_icon_assets where variant = 'outline') as outline_rows,
   (select count(*) from public.material_icon_assets where variant = 'solid') as solid_rows,
-  (select count(*) from storage.objects where bucket_id = 'material-icons' and name like 'materialsymbolsoutlined/%') as storage_objects,
+  (
+    select count(*)
+    from expected_objects expected
+    join storage.objects stored
+      on stored.bucket_id = 'material-icons'
+     and stored.name = expected.name
+  ) as required_storage_objects,
+  (select count(*) from storage.objects where bucket_id = 'material-icons' and name like 'materialsymbolsoutlined/%') as total_prefix_objects,
   'material_assets_hosted_seed_postflight_ok' as result;

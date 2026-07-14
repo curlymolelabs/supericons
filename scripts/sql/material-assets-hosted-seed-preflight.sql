@@ -37,15 +37,36 @@ begin
     raise exception 'The private material-icons bucket is missing or public';
   end if;
 
-  if (
-    select count(*)
-    from storage.objects
-    where bucket_id = 'material-icons'
-      and name like 'materialsymbolsoutlined/%'
-  ) <> 0 then
-    raise exception 'The Material bucket prefix is not empty. Do not overwrite or delete objects under this packet.';
+  if exists (
+    with expected_objects as (
+      select
+        'materialsymbolsoutlined/'
+        || regexp_replace(icon_id, '^material:', '')
+        || preset.path_suffix as name
+      from public.icon_catalog
+      cross join (values
+        ('/fill-0/wght-300/grad-0/opsz-24.svg'),
+        ('/fill-1/wght-400/grad-0/opsz-24.svg')
+      ) preset(path_suffix)
+      where icon_id like 'material:%'
+    )
+    select 1
+    from storage.objects stored
+    left join expected_objects expected on expected.name = stored.name
+    where stored.bucket_id = 'material-icons'
+      and stored.name like 'materialsymbolsoutlined/%'
+      and expected.name is null
+  ) then
+    raise exception 'The Material bucket prefix contains an object outside the two fixed preset paths. Stop before overwriting or deleting anything.';
   end if;
 end
 $material_seed_preflight$;
 
-select 'material_assets_hosted_seed_preflight_ok' as result;
+select
+  count(*) as existing_material_objects,
+  count(*) filter (where name ~ '/fill-0/wght-300/grad-0/opsz-24\.svg$') as existing_outline_objects,
+  count(*) filter (where name ~ '/fill-1/wght-400/grad-0/opsz-24\.svg$') as existing_solid_objects,
+  'material_assets_hosted_seed_preflight_ok' as result
+from storage.objects
+where bucket_id = 'material-icons'
+  and name like 'materialsymbolsoutlined/%';
