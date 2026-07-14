@@ -74,6 +74,8 @@ values ('material:settings', 'settings', 'material', 'outline', 'font', 'setting
 `;
 
 const migration = readFileSync('supabase/migrations/20260714220000_material_icon_assets.sql', 'utf8');
+const hostedPreflight = readFileSync('scripts/sql/material-assets-hosted-preflight.sql', 'utf8');
+const hostedPostflight = readFileSync('scripts/sql/material-assets-hosted-postflight.sql', 'utf8');
 const rollback = readFileSync('supabase/rollbacks/20260714220000_material_icon_assets.down.sql', 'utf8');
 const revision = 'a'.repeat(40);
 const checksum = 'b'.repeat(64);
@@ -88,7 +90,9 @@ try {
   ]);
   waitForDatabase();
   runSql(prerequisiteSql);
+  runSql(hostedPreflight);
   runSql(migration);
+  runSql(hostedPostflight);
   runSql(migration);
 
   runSql(`
@@ -131,6 +135,8 @@ try {
   console.log(JSON.stringify({
     status: 'ok',
     migration_idempotent: true,
+    hosted_preflight_verified: true,
+    hosted_postflight_verified: true,
     valid_service_role_write: true,
     invalid_svg_rejected: true,
     invalid_variant_rejected: true,

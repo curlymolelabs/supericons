@@ -23,6 +23,7 @@ Status: Local implementation verified. Production migration, seed, deploy, live 
 |---|---|---|---|
 | Material contract | `npm run verify:material-mcp-contract` | Passed | 4,262 unique IDs. Outline uses fill 0 and weight 300. Solid uses fill 1 and weight 400. |
 | Migration and rollback | `npm run verify:material-asset-migration` | Passed | Idempotence, service-role write, rejected invalid rows, denied anonymous read, and rollback verified in disposable PostgreSQL. No hosted system touched. |
+| Guarded hosted migration | `npm run verify:material-hosted-migration-runner` | Passed | Exact migration hash, single-transaction apply, narrow migration-history repair, hidden password prompt, partial-apply preflight, and private-access postflight verified. The preflight and postflight SQL also passed in disposable PostgreSQL. |
 | Seeder unit and integration | `npm run verify:material-seeder` | Passed | Direct snapshot, pinned alias, checksum-pinned fallback, SVG normalization, unsafe SVG rejection, retries, and resume behavior verified. |
 | Full asset coverage | `references/verification/material-full-asset-validation-2026-07-14.json` | Passed | 8,524 of 8,524 assets succeeded, zero exceptions, zero resume reuse in the final from-scratch run. SHA-256: `4e04f3894566fc0b8f9011f38847f27cb40d48d738415ea9c6df41f1d58e9e92`. |
 | Hosted serving | `npm run verify:material-serving` | Passed | Strict outline and solid hydration, mandatory hydration, all-mode count preservation, grouped recommendation hydration, audited errors, and fail-closed MCP normalization verified. |
@@ -33,6 +34,7 @@ Status: Local implementation verified. Production migration, seed, deploy, live 
 | MCP package inventory | `npm run verify:material-mcp-package` | Passed | Icon indexes, package manifest, capability helper, pinned revision, and 8,524-asset report included in the gate. Packed size was 4,768,631 bytes. |
 | Public function configuration | `npm run verify:material-mcp-package` | Passed | Stable MCP search and Material snapshot functions explicitly disable Supabase JWT verification in checked-in configuration. Product access controls remain inside the MCP server. |
 | Clean npm install | `npm run verify:material-mcp-clean-install` | Passed | A real tarball install reported 4,262 Material IDs and returned valid SVG for exact outline and solid `material:settings` requests. |
+| Production release runner | `npm run verify:material-production-runner` | Passed | A controlled local service exercised 92 production-shaped search checks and five tools through the actual hosted MCP HTTP server. No hosted system was touched. |
 | Existing variant behavior | `npm run verify:mcp-variant-access` | Passed | 13 lookup, search, and recommendation checks passed. |
 | Existing grouped client | `npm run verify:hosted-search-grouped-client` | Passed | One HTTP request and preserved logical response order. |
 | Existing recommendations | `npm run verify:recommend-icons-grouped-search` | Passed | Grouped request behavior and recommendation parity preserved. |
@@ -65,7 +67,7 @@ These checks require the owner-gated release sequence:
 2. Run the hosted seed and verify exactly 8,524 table rows and 8,524 bucket objects.
 3. Capture fresh per-tool production latency baselines before the search deploy.
 4. Deploy the hosted search and MCP surfaces.
-5. Run the observed smoke set, the 20-query relevance set in both styles, exact `get_icon`, grouped recommendations, all-mode count checks, and audit classification checks against production.
+5. Run `npm run verify:material-production-release` with the approved revision, output path, production search URL, and hosted MCP URL. It executes the observed smoke set, the 20-query relevance set in both styles, exact `get_icon`, recommendations, preview, all-mode count checks, and capability checks.
 6. Compare post-deploy p95 latency to each fresh baseline using the PRD budget.
 7. Publish the npm package only after hosted gates are green.
 
