@@ -33,6 +33,8 @@
     "verify:material-asset-migration": "node scripts/verify-material-asset-migration-smoke.mjs",
     "verify:material-hosted-migration-runner": "node scripts/verify-material-hosted-migration-runner.mjs",
     "verify:material-hosted-recovery-runner": "node scripts/verify-material-hosted-recovery-runner.mjs",
+    "verify:material-hosted-seed-runner": "node scripts/verify-material-hosted-seed-runner.mjs",
+    "verify:material-hosted-seed-report": "node scripts/verify-material-hosted-seed-report.mjs",
     "verify:private-table-migrations": "node scripts/verify-private-table-migration-privileges.mjs",
     "verify:material-seeder": "node scripts/verify-material-seeder.mjs",
     "verify:material-serving": "deno run --allow-read scripts/verify-material-serving.ts",
