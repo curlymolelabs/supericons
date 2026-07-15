@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-07-15T20:41:16.8442871Z",
+  "baseline_revision": "31ac66dfecc40e4549f08fc3d9dea99d583a3393",
+  "implementation_revision": "3ce3224205c4ef13f7eb3ad0d83556db4c08c708",
+  "scope": "Admin dashboard Phase A local implementation",
+  "hosted_systems_touched": false,
+  "results": {
+    "metric_contract": {
+      "status": "pass",
+      "tests": 10
+    },
+    "private_table_migration_policy": {
+      "status": "pass",
+      "created_tables_checked": 2,
+      "self_tests": 4
+    },
+    "database_migration": {
+      "status": "pass",
+      "database": "disposable PostgreSQL 17",
+      "idempotent_apply": true,
+      "additive_columns": 3,
+      "validated_constraints": 2,
+      "private_rollup_tables": 2,
+      "supporting_indexes": 5,
+      "invalid_rows_rejected": true,
+      "public_role_reads_rejected": true,
+      "rollback_verified": true
+    },
+    "admin_api": {
+      "status": "pass",
+      "deno_check": true,
+      "contract_checks": 19,
+      "default_query_origin": "agent_query",
+      "bounded_one_day_rollup_refresh": true,
+      "partial_rollup_write_replay": true,
+      "mcp_search_changed": false
+    },
+    "hosted_mcp_telemetry": {
+      "status": "pass",
+      "query_origin_cases": 4,
+      "requested_limit_cases": 4,
+      "public_ip_cases": 12,
+      "trusted_header_precedence": true,
+      "private_ip_country_rejected": true,
+      "geoip_reader": "maxmind@5.0.6",
+      "geoip_database": "@ip-location-db/geolite2-country-mmdb@2.3.2026061719",
+      "dataset_age_days_at_verification": 28,
+      "known_lookup": "8.8.8.8=US"
+    },
+    "usage_dedupe": {
+      "status": "pass",
+      "cross_session_id_1_distinct": true,
+      "same_session_retry_stable": true,
+      "per_event_fallback_distinct": true
+    },
+    "railway_server_regression": {
+      "status": "pass",
+      "material_contract": true,
+      "material_hydration_checks": 11,
+      "telemetry_payload_fields_verified": [
+        "query_origin",
+        "requested_limit",
+        "client_ip_public"
+      ]
+    },
+    "mcp_package": {
+      "status": "pass",
+      "material_ids": 4262,
+      "material_variants": 8524,
+      "clean_install": true,
+      "outline_svg": true,
+      "solid_svg": true,
+      "direct_dependency_advisories": 0,
+      "pre_existing_transitive_advisories": [
+        "hono@4.12.18",
+        "qs@6.15.0"
+      ]
+    },
+    "source_policy": {
+      "status": "pass",
+      "forbidden_dash_characters": 0,
+      "diff_check": "pass",
+      "mcp_search_unchanged_from_baseline": true,
+      "worktree_clean": true
+    }
+  },
+  "production_acceptance_remaining": [
+    "Apply the additive migration under a separate owner-approved packet.",
+    "Deploy admin-api under a separate owner-approved packet and finish the bounded completed-day rollup backfill.",
+    "Measure the 24-hour queue p95 and all-time rollup response against the production database.",
+    "Deploy the Railway telemetry writer under a separate owner-approved packet.",
+    "Measure country coverage on new public-IP hosted MCP events after 24 hours."
+  ],
+  "pre_existing_non_blocking_findings": [
+    "The general public-safety scanner flags two instruction-like phrases in mcp/public/icon-index.json. That file is byte-unchanged from the pinned baseline.",
+    "The older Motion Lab package allowlist rejects Material package files that are already present at the pinned baseline. The active Material package and clean-install gates pass."
+  ]
+}
