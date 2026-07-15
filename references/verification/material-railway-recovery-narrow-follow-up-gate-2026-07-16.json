@@ -1,0 +1,78 @@
+{
+  "artifact": "material_railway_recovery_live_gate",
+  "profile": "follow-up",
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "request_timeout_ms": 120000,
+  "engine_latency_limit_ms": 3000,
+  "started_at": "2026-07-15T18:06:01.256Z",
+  "checks": [
+    {
+      "name": "recommend_icons returns valid Material SVG within the candidate-local limit",
+      "elapsed_ms": 561.4,
+      "path": "candidate_local"
+    },
+    {
+      "name": "all-mode settings returns 10/10 deliverable rows",
+      "elapsed_ms": 5387.8,
+      "path": "engine"
+    },
+    {
+      "name": "all-mode cog returns 10/10 deliverable rows",
+      "elapsed_ms": 3578.3,
+      "path": "engine"
+    },
+    {
+      "name": "all-mode solid returns 10/10 deliverable Material rows within the candidate-local limit",
+      "elapsed_ms": 323.1,
+      "path": "candidate_local"
+    },
+    {
+      "name": "lucide strict regression returns five valid rows",
+      "elapsed_ms": 3288.6,
+      "path": "engine"
+    },
+    {
+      "name": "recommend_icons candidate-local warm p95 is within 3000 ms",
+      "warm_p95_ms": 578.3,
+      "path": "candidate_local"
+    }
+  ],
+  "latency": {
+    "recommend_icons": {
+      "samples_ms": [
+        578.3,
+        557,
+        539,
+        573.6,
+        548.3
+      ],
+      "warm_p95_ms": 578.3,
+      "gate_ms": 3000
+    }
+  },
+  "engine_latency_observations": [
+    {
+      "case_id": "all_mode_settings",
+      "metric": "elapsed_ms",
+      "through_candidate_ms": 5387.8,
+      "observation_threshold_ms": 3000,
+      "threshold_exceeded": true
+    },
+    {
+      "case_id": "all_mode_cog",
+      "metric": "elapsed_ms",
+      "through_candidate_ms": 3578.3,
+      "observation_threshold_ms": 3000,
+      "threshold_exceeded": true
+    },
+    {
+      "case_id": "lucide_strict_calendar",
+      "metric": "elapsed_ms",
+      "through_candidate_ms": 3288.6,
+      "observation_threshold_ms": 3000,
+      "threshold_exceeded": true
+    }
+  ],
+  "status": "ok",
+  "finished_at": "2026-07-15T18:06:17.792Z"
+}

@@ -1,0 +1,86 @@
+{
+  "artifact": "material_railway_recovery_live_gate",
+  "profile": "material-local",
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "request_timeout_ms": 120000,
+  "engine_latency_limit_ms": 3000,
+  "started_at": "2026-07-15T18:05:40.661Z",
+  "checks": [
+    {
+      "name": "health reports complete local Material bundle"
+    },
+    {
+      "name": "list_libraries advertises material 4262"
+    },
+    {
+      "name": "material search + get_icon deliver valid outline SVG"
+    },
+    {
+      "name": "material search + get_icon deliver valid solid SVG"
+    },
+    {
+      "name": "solid and outline variants are visibly distinct payloads"
+    },
+    {
+      "name": "preview_icons returns Material rows and PNG image content"
+    },
+    {
+      "name": "relevance fixture outline: 20/20 in top 5",
+      "misses": []
+    },
+    {
+      "name": "relevance fixture solid: 20/20 in top 5",
+      "misses": []
+    },
+    {
+      "name": "search_icons warm p95 is within 2000 ms",
+      "warm_p95_ms": 330.6
+    },
+    {
+      "name": "get_icon warm p95 is within 2000 ms",
+      "warm_p95_ms": 254.2
+    },
+    {
+      "name": "preview_icons warm p95 is within 2000 ms",
+      "warm_p95_ms": 258.4
+    }
+  ],
+  "latency": {
+    "search_icons": {
+      "samples_ms": [
+        320.7,
+        330.6,
+        323,
+        322.7,
+        321.2
+      ],
+      "warm_p95_ms": 330.6,
+      "gate_ms": 2000
+    },
+    "get_icon": {
+      "samples_ms": [
+        254.2,
+        242.7,
+        243.1,
+        253.9,
+        246.8
+      ],
+      "warm_p95_ms": 254.2,
+      "gate_ms": 2000
+    },
+    "preview_icons": {
+      "samples_ms": [
+        254,
+        251.1,
+        255.6,
+        249.8,
+        258.4
+      ],
+      "warm_p95_ms": 258.4,
+      "gate_ms": 2000
+    }
+  },
+  "engine_latency_observations": [],
+  "status": "ok",
+  "finished_at": "2026-07-15T18:06:00.918Z"
+}
