@@ -27,10 +27,13 @@ const intervalMilliseconds = readPositiveInteger('interval-ms', 0, 0, 300000);
 const latencyLimitMilliseconds = readPositiveInteger('latency-limit-ms', 3000, 1, 120000);
 const requestTimeoutMilliseconds = readPositiveInteger('request-timeout-ms', 10000, 1, 120000);
 const clientFamily = readArg('client-family') || 'material_railway_recovery';
+const latencyPolicy = readArg('latency-policy') || 'blocking';
 
 assert.match(searchUrl, /^https?:\/\//, 'Provide --search-url with an HTTP or HTTPS endpoint');
 assert.ok(readArg('output'), 'Provide --output with a write-once JSON path');
 assert.equal(existsSync(outputPath), false, `Probe evidence already exists: ${outputPath}`);
+assert.ok(['blocking', 'record-only'].includes(latencyPolicy),
+  '--latency-policy must be blocking or record-only');
 
 const runId = randomUUID();
 const artifact = {
@@ -41,6 +44,7 @@ const artifact = {
     count,
     interval_ms: intervalMilliseconds,
     latency_limit_ms: latencyLimitMilliseconds,
+    latency_policy: latencyPolicy,
     request_timeout_ms: requestTimeoutMilliseconds,
     source: 'verify',
     channel: 'internal_test',
@@ -94,8 +98,11 @@ for (let index = 0; index < count; index += 1) {
         failure = `probe ${index + 1} returned an invalid Lucide result set`;
         probe.error = failure;
       } else if (probe.duration_ms > latencyLimitMilliseconds) {
-        failure = `probe ${index + 1} took ${probe.duration_ms} ms, above ${latencyLimitMilliseconds} ms`;
-        probe.error = failure;
+        probe.latency_exceeded = true;
+        if (latencyPolicy === 'blocking') {
+          failure = `probe ${index + 1} took ${probe.duration_ms} ms, above ${latencyLimitMilliseconds} ms`;
+          probe.error = failure;
+        }
       }
     }
   } catch (error) {

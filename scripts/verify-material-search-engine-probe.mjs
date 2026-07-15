@@ -73,7 +73,15 @@ try {
   assert.equal(slow.artifact.status, 'degraded');
   assert.match(slow.artifact.error, /above 10 ms/);
 
-  console.log('verify-material-search-engine-probe: 3 checks passed');
+  const slowRecorded = await runProbe('slow-recorded', [
+    '--latency-limit-ms', '10', '--latency-policy', 'record-only',
+  ]);
+  assert.equal(slowRecorded.result.status, 0, slowRecorded.result.stderr || slowRecorded.result.stdout);
+  assert.equal(slowRecorded.artifact.status, 'ok');
+  assert.equal(slowRecorded.artifact.contract.latency_policy, 'record-only');
+  assert.equal(slowRecorded.artifact.probes[0].latency_exceeded, true);
+
+  console.log('verify-material-search-engine-probe: 4 checks passed');
 } finally {
   await new Promise((resolvePromise) => server.close(resolvePromise));
   rmSync(workspace, { recursive: true, force: true });

@@ -1,9 +1,8 @@
 // Split production gate for the Railway Material recovery release.
 //
-// The material-local profile is deterministic and runs once. The
-// engine-dependent profile may be retried only by the guarded recovery
-// runner. Latency failures from real engine paths include the exact direct
-// search request needed for query-matched attribution.
+// The material-local profile is deterministic and runs once. The follow-up
+// profile keeps correctness and candidate-local latency blocking while it
+// records latency from the existing Supabase engine without blocking release.
 
 import assert from 'node:assert/strict';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -61,8 +60,8 @@ const outputPath = resolve(readArg('output') || '');
 const requestTimeoutMs = readPositiveInteger('request-timeout-ms', 120000, 60000, 180000);
 const engineLatencyLimitMs = readPositiveInteger('engine-latency-limit-ms', 3000, 1, 120000);
 
-assert.ok(['material-local', 'engine-dependent'].includes(profile),
-  'Provide --profile material-local or --profile engine-dependent');
+assert.ok(['material-local', 'follow-up'].includes(profile),
+  'Provide --profile material-local or --profile follow-up');
 assert.match(mcpUrl, /^https?:\/\//, 'Provide --mcp-url with an HTTP or HTTPS endpoint');
 assert.ok(readArg('output'), 'Provide --output with a write-once JSON path');
 assert.equal(existsSync(outputPath), false, `Recovery gate evidence already exists: ${outputPath}`);
@@ -83,7 +82,7 @@ const summary = {
   started_at: new Date().toISOString(),
   checks: [],
   latency: {},
-  latency_failures: [],
+  engine_latency_observations: [],
 };
 
 function record(name, detail = {}) {
@@ -91,15 +90,13 @@ function record(name, detail = {}) {
   console.log(`ok - ${name}`);
 }
 
-function recordEngineLatency({ caseId, throughCandidateMs, directRequest, expected }) {
-  if (throughCandidateMs <= engineLatencyLimitMs) return;
-  summary.latency_failures.push({
+function recordEngineLatency({ caseId, throughCandidateMs }) {
+  summary.engine_latency_observations.push({
     case_id: caseId,
     metric: 'elapsed_ms',
     through_candidate_ms: throughCandidateMs,
-    gate_ms: engineLatencyLimitMs,
-    direct_request: directRequest,
-    expected,
+    observation_threshold_ms: engineLatencyLimitMs,
+    threshold_exceeded: throughCandidateMs > engineLatencyLimitMs,
   });
 }
 
@@ -214,7 +211,7 @@ async function runMaterialLocalProfile() {
   assert.equal(summary.checks.length, 11, 'material-local profile must retain exactly 11 checks');
 }
 
-async function runEngineDependentProfile() {
+async function runFollowUpProfile() {
   const recommendationRaw = await callToolRaw('recommend_icons', {
     task: 'Choose a Material icon for application settings.',
     slots: ['settings'], library: 'material', style: 'solid', limit_per_slot: 3, response_mode: 'assets',
@@ -235,14 +232,6 @@ async function runEngineDependentProfile() {
     recordEngineLatency({
       caseId: `all_mode_${query}`,
       throughCandidateMs: searchRaw.elapsedMs,
-      directRequest: {
-        query,
-        library_mode: 'strict',
-        style: 'any',
-        limit: 10,
-        locale: null,
-      },
-      expected: { result_count: 10 },
     });
     record(`all-mode ${query} returns 10/10 deliverable rows`, {
       elapsed_ms: searchRaw.elapsedMs,
@@ -272,15 +261,6 @@ async function runEngineDependentProfile() {
   recordEngineLatency({
     caseId: 'lucide_strict_calendar',
     throughCandidateMs: lucideRaw.elapsedMs,
-    directRequest: {
-      query: 'calendar',
-      library: 'lucide',
-      library_mode: 'strict',
-      style: 'any',
-      limit: 5,
-      locale: null,
-    },
-    expected: { result_count: 5, library: 'lucide' },
   });
   record('lucide strict regression returns five valid rows', {
     elapsed_ms: lucideRaw.elapsedMs,
@@ -305,19 +285,14 @@ async function runEngineDependentProfile() {
     warm_p95_ms: recommendP95Ms,
     path: 'candidate_local',
   });
-  assert.equal(summary.checks.length, 6, 'engine-dependent profile must retain exactly 6 checks');
+  assert.equal(summary.checks.length, 6, 'follow-up profile must retain exactly 6 checks');
 }
 
 await client.connect(transport, { timeout: requestTimeoutMs });
 try {
   if (profile === 'material-local') await runMaterialLocalProfile();
-  else await runEngineDependentProfile();
-  if (summary.latency_failures.length > 0) {
-    summary.status = 'latency_failed';
-    process.exitCode = 1;
-  } else {
-    summary.status = 'ok';
-  }
+  else await runFollowUpProfile();
+  summary.status = 'ok';
 } catch (error) {
   summary.status = 'failed';
   summary.error = error.message;
