@@ -2,7 +2,8 @@
 //
 // The material-local profile is deterministic and runs once. The
 // engine-dependent profile may be retried only by the guarded recovery
-// runner, which pairs each failure with a direct search-engine control probe.
+// runner. Latency failures from real engine paths include the exact direct
+// search request needed for query-matched attribution.
 
 import assert from 'node:assert/strict';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -82,11 +83,24 @@ const summary = {
   started_at: new Date().toISOString(),
   checks: [],
   latency: {},
+  latency_failures: [],
 };
 
 function record(name, detail = {}) {
   summary.checks.push({ name, ...detail });
   console.log(`ok - ${name}`);
+}
+
+function recordEngineLatency({ caseId, throughCandidateMs, directRequest, expected }) {
+  if (throughCandidateMs <= engineLatencyLimitMs) return;
+  summary.latency_failures.push({
+    case_id: caseId,
+    metric: 'elapsed_ms',
+    through_candidate_ms: throughCandidateMs,
+    gate_ms: engineLatencyLimitMs,
+    direct_request: directRequest,
+    expected,
+  });
 }
 
 async function callToolRaw(name, args) {
@@ -210,18 +224,30 @@ async function runEngineDependentProfile() {
   assert.ok(isSvg(recommended?.svg), 'recommendation missing valid material SVG');
   assert.ok(recommendationRaw.elapsedMs <= engineLatencyLimitMs,
     `recommend_icons took ${recommendationRaw.elapsedMs} ms, above ${engineLatencyLimitMs} ms`);
-  record('recommend_icons returns valid Material SVG within the engine limit',
-    { elapsed_ms: recommendationRaw.elapsedMs });
+  record('recommend_icons returns valid Material SVG within the candidate-local limit',
+    { elapsed_ms: recommendationRaw.elapsedMs, path: 'candidate_local' });
 
   for (const query of ['settings', 'cog']) {
     const searchRaw = await callToolRaw('search_icons', { query, limit: 10 });
     const search = searchRaw.payload;
     assert.equal(search.results?.length, 10, `all-mode ${query} returned short results`);
     assert.ok(search.results.every((row) => isSvg(row.svg)), `all-mode ${query} has undeliverable rows`);
-    assert.ok(searchRaw.elapsedMs <= engineLatencyLimitMs,
-      `all-mode ${query} took ${searchRaw.elapsedMs} ms, above ${engineLatencyLimitMs} ms`);
-    record(`all-mode ${query} returns 10/10 deliverable rows within the engine limit`,
-      { elapsed_ms: searchRaw.elapsedMs });
+    recordEngineLatency({
+      caseId: `all_mode_${query}`,
+      throughCandidateMs: searchRaw.elapsedMs,
+      directRequest: {
+        query,
+        library_mode: 'strict',
+        style: 'any',
+        limit: 10,
+        locale: null,
+      },
+      expected: { result_count: 10 },
+    });
+    record(`all-mode ${query} returns 10/10 deliverable rows`, {
+      elapsed_ms: searchRaw.elapsedMs,
+      path: 'engine',
+    });
   }
 
   const allModeSolidRaw = await callToolRaw('search_icons', {
@@ -234,8 +260,8 @@ async function runEngineDependentProfile() {
   )), 'all-mode solid returned an unsupported or undeliverable row');
   assert.ok(allModeSolidRaw.elapsedMs <= engineLatencyLimitMs,
     `all-mode solid took ${allModeSolidRaw.elapsedMs} ms, above ${engineLatencyLimitMs} ms`);
-  record('all-mode solid returns 10/10 deliverable Material rows within the engine limit',
-    { elapsed_ms: allModeSolidRaw.elapsedMs });
+  record('all-mode solid returns 10/10 deliverable Material rows within the candidate-local limit',
+    { elapsed_ms: allModeSolidRaw.elapsedMs, path: 'candidate_local' });
 
   const lucideRaw = await callToolRaw('search_icons', {
     query: 'calendar', library: 'lucide', library_mode: 'strict', limit: 5,
@@ -243,9 +269,23 @@ async function runEngineDependentProfile() {
   const lucide = lucideRaw.payload;
   assert.equal(lucide.results?.length, 5);
   assert.ok(lucide.results.every((row) => isSvg(row.svg) && row.library === 'lucide'));
-  assert.ok(lucideRaw.elapsedMs <= engineLatencyLimitMs,
-    `lucide strict took ${lucideRaw.elapsedMs} ms, above ${engineLatencyLimitMs} ms`);
-  record('lucide strict regression is valid within the engine limit', { elapsed_ms: lucideRaw.elapsedMs });
+  recordEngineLatency({
+    caseId: 'lucide_strict_calendar',
+    throughCandidateMs: lucideRaw.elapsedMs,
+    directRequest: {
+      query: 'calendar',
+      library: 'lucide',
+      library_mode: 'strict',
+      style: 'any',
+      limit: 5,
+      locale: null,
+    },
+    expected: { result_count: 5, library: 'lucide' },
+  });
+  record('lucide strict regression returns five valid rows', {
+    elapsed_ms: lucideRaw.elapsedMs,
+    path: 'engine',
+  });
 
   const recommendationSamples = [];
   for (let index = 0; index < 5; index += 1) {
@@ -261,7 +301,10 @@ async function runEngineDependentProfile() {
     warm_p95_ms: recommendP95Ms,
     gate_ms: 3000,
   };
-  record('recommend_icons warm p95 is within 3000 ms', { warm_p95_ms: recommendP95Ms });
+  record('recommend_icons candidate-local warm p95 is within 3000 ms', {
+    warm_p95_ms: recommendP95Ms,
+    path: 'candidate_local',
+  });
   assert.equal(summary.checks.length, 6, 'engine-dependent profile must retain exactly 6 checks');
 }
 
@@ -269,7 +312,12 @@ await client.connect(transport, { timeout: requestTimeoutMs });
 try {
   if (profile === 'material-local') await runMaterialLocalProfile();
   else await runEngineDependentProfile();
-  summary.status = 'ok';
+  if (summary.latency_failures.length > 0) {
+    summary.status = 'latency_failed';
+    process.exitCode = 1;
+  } else {
+    summary.status = 'ok';
+  }
 } catch (error) {
   summary.status = 'failed';
   summary.error = error.message;
