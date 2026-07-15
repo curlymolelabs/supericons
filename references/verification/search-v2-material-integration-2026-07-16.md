@@ -61,8 +61,8 @@ Package source version `0.4.18` contains the Material library capability data, h
 | Railway hosted MCP | Live health reports version `0.4.18`, 8,524 Material assets, and source revision `30f8fddd293b1f0189896dc4aaecdfaba1d37ae0`. | Read-only health request in this session and `material-railway-recovery-narrow-completion-2026-07-16.md`. |
 | npm registry | `latest` remains `0.4.17`. | Read-only registry check in this session. Package `0.4.18` is not recorded as published. |
 | Supabase database and Storage | Saved release evidence records migrations `20260714220000` and `20260714223000` as applied, with 8,524 table rows and 8,524 required Storage objects. | Packet 1R and Packet 2S records. Current live database state was not queried in this integration. |
-| Supabase snapshot function | Saved release evidence records `serve-material-snapshot` version 49 as active and verified with outline and solid probes. | Packet 4R record. Current live function metadata awaits an authenticated read-only check. |
-| Supabase stable search | Saved incident evidence records the emergency rollback as `mcp-search` version 38. | Current live function metadata awaits an authenticated read-only check. No Supabase function was deployed here. |
+| Supabase snapshot function | Live function metadata reports `serve-material-snapshot` version 49 as active. | Authenticated read-only function list in this session and Packet 4R probe evidence. |
+| Supabase stable search | Live function metadata reports `mcp-search` version 38 and `search-icons` version 35 as active. | Authenticated read-only function list in this session. No Supabase function was deployed here. |
 | Search v2 beta | No integrated beta was deployed or published. The earlier `0.4.18-beta.0` packet predates Material support. | A fresh version, fingerprint, and approval packet are required. |
 
 ## Verification results
@@ -104,7 +104,7 @@ The Material branch did not introduce either dependency version, and no direct u
 
 - No Search v2 requirement changed, so the specification and decision log were not amended.
 - The old search-only beta authorization is stale and must not be executed.
-- Current Supabase function and migration state must be checked read-only after authentication.
+- Current Supabase function state is verified. The Material migration ledger still requires a read-only database check before a hosted release packet is prepared.
 - After independent review, integrate this branch into main without disturbing unrelated work.
 - Recut the search-only beta from the reconciled code with a new version, fingerprint, Material regression checks, bounded concurrency, platform-log error accounting, usage dedupe verification, and cold-request reporting.
 - Keep the shared recommendation treatment local until the corrected legal workload projects a pass and receives a separate measurement approval.
