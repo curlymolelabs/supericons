@@ -2,11 +2,11 @@
 
 Date: 2026-07-15
 
-Status: Ready for independent audit. Not executed.
+Status: Ready for owner-coordinated audit. Not executed.
 
 ## Outcome
 
-This packet retries the already verified Railway Material hydration release without changing its implementation. It adds a stability precondition and separates deterministic Material checks from checks that depend on the existing Supabase search engine.
+This packet retries the already verified Railway Material hydration release without changing its implementation. It uses a retryable stability precondition and separates deterministic Material checks from checks that depend on the existing Supabase search engine.
 
 The candidate serves all 8,524 pinned Material SVG assets from the Railway MCP bundle. It does not deploy or modify the Supabase search function.
 
@@ -17,6 +17,10 @@ The first candidate reached Railway status `SUCCESS` and passed nine production 
 Direct search-engine probes from a separate network path recorded an overlapping congestion period. The retained notes are in `references/verification/material-railway-incident-engine-probes-2026-07-15.json`. The probe record supports a dependency-related explanation for the timed-out request but does not identify the underlying database cause.
 
 The original packet completed its authorized rollback. Production is currently healthy on the verified pre-Material deployment.
+
+The first recovery packet then stopped before upload because its second direct probe completed in 3,508.5 ms against a 3,000 ms health threshold. The response was HTTP 200 with the required three Lucide results. The retained attempt record is `references/verification/material-railway-recovery-preflight-attempt-2026-07-15.md`.
+
+This respin raises only the dependency health threshold to 5,000 ms and lets the read-only preflight try up to three numbered windows. The 3,000 ms user-facing engine gate remains separate.
 
 ## Pinned implementation
 
@@ -47,11 +51,13 @@ Before an upload, the runner sends six direct Lucide search probes to the stable
 
 - Six consecutive HTTP 200 responses are required.
 - Every response must contain three Lucide results.
-- Every response must finish within 3,000 ms.
+- Every response must finish within 5,000 ms.
 - The probes use `source=verify`, `channel=internal_test`, `environment=production`, and `client_family=material_railway_recovery`.
-- The runner stops before upload on the first failed or slow probe.
+- A failed window writes numbered evidence and does not consume the packet immediately.
 
 The probe interval is 36 seconds, so the first and sixth probes are separated by 180 seconds.
+
+The runner may try up to three numbered stability windows inside a 15-minute retry budget. It waits 90 seconds after a failed window if another attempt fits inside the remaining budget. The first complete healthy window permits the upload. If no window passes, the runner stops before upload and retains every attempt.
 
 ## Split production gates
 
@@ -86,8 +92,9 @@ Each all-mode, Lucide, and initial recommendation request must also complete wit
 
 After each failed engine-dependent attempt, the runner sends one direct search-engine control probe:
 
+- A control is healthy only when it returns the required result set within 5,000 ms.
 - Healthy control plus failed candidate gate means candidate failure and immediate rollback.
-- Degraded control means an engine episode. The runner waits 90 seconds and retries if time and attempts remain.
+- A failed, invalid, or slower control means an engine episode. The runner waits 90 seconds and retries if time and attempts remain.
 - Three degraded attempts, or expiry of the ten-minute retry window, means the candidate remains unverified. The runner restores the verified rollback revision and records `dependency_unresolved_after_retry_budget` or `dependency_unresolved_after_retry_window`.
 
 This final rule fails closed. The runner never leaves an incompletely verified candidate active.
@@ -109,7 +116,7 @@ The legacy gate must then show a healthy service, three valid Lucide results, an
 All production evidence paths are write-once. The packet retains:
 
 - Legacy preflight behavior
-- Six-probe search-engine stability preflight
+- Up to three numbered six-probe search-engine stability preflights
 - The single-attempt Material-local gate
 - Up to three engine-dependent attempt artifacts
 - A direct control artifact after each failed engine-dependent attempt
@@ -137,16 +144,16 @@ Not authorized:
 
 The approval fingerprint is SHA-256 over the LF-normalized, LF-terminated UTF-8 content of `references/verification/material-railway-recovery-fingerprint-2026-07-15.txt`. Text file hashes use the same normalization. The gzip bundle uses its raw bytes:
 
-`ecc2692bb00a119f9750e27a6f7dd18423ca354fca7a1b49caac32734acc334f`
+`8990c4ae5a0b5d9362d0dcd16bdc9b2a202ed1e6bec7af5710d0c113cd6c9939`
 
 Key pinned packet hashes:
 
-- Runner: `572a5d5f630ebb6902645506ae64ec3b375aa6350ae1de4735fb4d76672a7de4`
-- Packet verifier: `bfaf1699c4efff4fc71175fa8ac2fedd4e9338ff8a5c3d22915cea36ffa85958`
+- Runner: `ac4b0e9618cd22e143220f1518b50d3c4fa2d5f5f94787fdd44e5c986fa1af82`
+- Packet verifier: `051d6ceac9887e0e654f6444cdb1b90f5c5a72c556f7bdb2ef3917c260559af2`
 - Split recovery gate: `1a364416953be026a0a1a72fc7f3115bcbb8c7efdfcf89ddb107734035c09cdf`
 - Direct search probe: `abaa6601236c625387ad03b3084609fb9d569083dbc43dc6d304856a3b2c7941`
 - Direct search probe verifier: `30602fb5e3394432592f8f257aa330e260519a5b499113c68ebe546db49d0809`
 
 ## Approval sentence
 
-> Approve the Material Railway hydration recovery for fingerprint `ecc2692bb00a119f9750e27a6f7dd18423ca354fca7a1b49caac32734acc334f`: require six consecutive direct-engine probes over three minutes, all HTTP 200 under 3,000 ms, then deploy implementation revision `13f28d7e72484538b0a2be14f680ef8a4c4e3c52` once to Railway project `b53f5f48-607f-49ae-a71e-37cc766f6973`, production environment `6345c75b-5ac2-40d6-b176-a4a783ce3eb3`, service `352420e5-6a02-43a4-99f2-f6dbde522acb`. Run the 11 Material-local checks once and allow up to three engine-dependent attempts over ten minutes, with a direct control probe after each failure. If the control is healthy while the candidate fails, or the dependency retry budget expires, deploy rollback revision `02b2c22ea8a76decee92d83c853ca6cf33899e6c` and verify the legacy contract. No Supabase deployment or configuration change, direct database or storage change, npm publication, beta change, Railway configuration change, or other Railway service change is authorized.
+> Approve the Material Railway hydration recovery for fingerprint `8990c4ae5a0b5d9362d0dcd16bdc9b2a202ed1e6bec7af5710d0c113cd6c9939`: allow up to three numbered preflight windows within 15 minutes, each requiring six consecutive direct-engine probes over three minutes with all responses HTTP 200 under 5,000 ms, then deploy implementation revision `13f28d7e72484538b0a2be14f680ef8a4c4e3c52` once to Railway project `b53f5f48-607f-49ae-a71e-37cc766f6973`, production environment `6345c75b-5ac2-40d6-b176-a4a783ce3eb3`, service `352420e5-6a02-43a4-99f2-f6dbde522acb`. Run the 11 Material-local checks once and allow up to three engine-dependent attempts over ten minutes, with a direct control probe using the same 5,000 ms health threshold after each failure. If the control is healthy while the candidate fails, or the dependency retry budget expires, deploy rollback revision `02b2c22ea8a76decee92d83c853ca6cf33899e6c` and verify the legacy contract. No Supabase deployment or configuration change, direct database or storage change, npm publication, beta change, Railway configuration change, or other Railway service change is authorized.

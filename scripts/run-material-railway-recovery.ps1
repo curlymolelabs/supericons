@@ -24,7 +24,11 @@ $ExpectedVersion = '0.4.18'
 $ExpectedAssetCount = 8524
 $StabilityProbeCount = 6
 $StabilityProbeIntervalMilliseconds = 36000
-$StabilityLatencyLimitMilliseconds = 3000
+$HealthyProbeLatencyLimitMilliseconds = 5000
+$EngineGateLatencyLimitMilliseconds = 3000
+$MaxPreflightAttempts = 3
+$MaxPreflightRetryWindowSeconds = 900
+$PreflightRetryDelaySeconds = 90
 $McpRequestTimeoutMilliseconds = 120000
 $MaxEngineAttempts = 3
 $MaxEngineRetryWindowSeconds = 600
@@ -32,11 +36,10 @@ $EngineRetryDelaySeconds = 90
 
 $Root = Split-Path -Parent $PSScriptRoot
 $FingerprintSource = Join-Path $Root 'references/verification/material-railway-recovery-fingerprint-2026-07-15.txt'
-$StabilityEvidence = Join-Path $Root 'references/verification/material-railway-recovery-stability-preflight-2026-07-15.json'
-$LegacyPreflightEvidence = Join-Path $Root 'references/verification/material-railway-recovery-legacy-preflight-2026-07-15.json'
-$MaterialEvidence = Join-Path $Root 'references/verification/material-railway-recovery-material-gate-2026-07-15.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/material-railway-recovery-completion-2026-07-15.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/material-railway-recovery-rollback-2026-07-15.json'
+$LegacyPreflightEvidence = Join-Path $Root 'references/verification/material-railway-recovery-respin-legacy-preflight-2026-07-15.json'
+$MaterialEvidence = Join-Path $Root 'references/verification/material-railway-recovery-respin-material-gate-2026-07-15.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/material-railway-recovery-respin-completion-2026-07-15.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/material-railway-recovery-respin-rollback-2026-07-15.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -226,7 +229,7 @@ function Invoke-RecoveryLiveGate {
     '--profile', $Profile,
     '--mcp-url', $McpUrl,
     '--request-timeout-ms', "$McpRequestTimeoutMilliseconds",
-    '--engine-latency-limit-ms', "$StabilityLatencyLimitMilliseconds",
+    '--engine-latency-limit-ms', "$EngineGateLatencyLimitMilliseconds",
     '--output', $OutputRelative
   )
 }
@@ -245,7 +248,7 @@ function Invoke-SearchEngineProbe {
     '--output', $OutputRelative,
     '--count', "$Count",
     '--interval-ms', "$IntervalMilliseconds",
-    '--latency-limit-ms', "$StabilityLatencyLimitMilliseconds",
+    '--latency-limit-ms', "$HealthyProbeLatencyLimitMilliseconds",
     '--request-timeout-ms', "$RequestTimeoutMilliseconds",
     '--client-family', 'material_railway_recovery'
   )
@@ -266,7 +269,7 @@ function Invoke-Rollback {
     -Message 'Restore verified pre-Material Railway MCP source' `
     -Workspace $Workspace
 
-  $legacyOutputRelative = 'tmp/material-railway-recovery-run/rollback-legacy-gate.json'
+  $legacyOutputRelative = 'tmp/material-railway-recovery-respin-run/rollback-legacy-gate.json'
   $legacyOutput = Join-Path $Root $legacyOutputRelative
   Invoke-CheckedCommand -FilePath 'node' -Arguments @(
     'scripts/verify-material-railway-legacy-live.mjs',
@@ -313,15 +316,17 @@ if ((git rev-parse "$RollbackRevision`^{tree}") -ne $RollbackTree) {
 }
 
 $evidencePaths = @(
-  $StabilityEvidence,
   $LegacyPreflightEvidence,
   $MaterialEvidence,
   $CompletionEvidence,
   $RollbackEvidence
 )
+for ($attempt = 1; $attempt -le $MaxPreflightAttempts; $attempt += 1) {
+  $evidencePaths += Join-Path $Root "references/verification/material-railway-recovery-respin-stability-preflight-attempt-$attempt-2026-07-15.json"
+}
 for ($attempt = 1; $attempt -le $MaxEngineAttempts; $attempt += 1) {
-  $evidencePaths += Join-Path $Root "references/verification/material-railway-recovery-engine-attempt-$attempt-2026-07-15.json"
-  $evidencePaths += Join-Path $Root "references/verification/material-railway-recovery-control-attempt-$attempt-2026-07-15.json"
+  $evidencePaths += Join-Path $Root "references/verification/material-railway-recovery-respin-engine-attempt-$attempt-2026-07-15.json"
+  $evidencePaths += Join-Path $Root "references/verification/material-railway-recovery-respin-control-attempt-$attempt-2026-07-15.json"
 }
 foreach ($path in $evidencePaths) {
   if (Test-Path -LiteralPath $path) {
@@ -351,23 +356,50 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @(
   'scripts/verify-material-railway-legacy-live.mjs',
   '--mcp-url', $McpUrl,
   '--expect-version', '0.4.17',
-  '--output', 'references/verification/material-railway-recovery-legacy-preflight-2026-07-15.json'
+  '--output', 'references/verification/material-railway-recovery-respin-legacy-preflight-2026-07-15.json'
 )
 
-$stabilityExitCode = Invoke-SearchEngineProbe `
-  -Count $StabilityProbeCount `
-  -IntervalMilliseconds $StabilityProbeIntervalMilliseconds `
-  -OutputRelative 'references/verification/material-railway-recovery-stability-preflight-2026-07-15.json' `
-  -RequestTimeoutMilliseconds 10000
-if ($stabilityExitCode -ne 0) {
-  throw 'The direct search engine did not sustain six healthy probes over three minutes. No upload was attempted.'
+$preflightAttempts = @()
+$preflightPassed = $false
+$preflightDeadline = (Get-Date).ToUniversalTime().AddSeconds($MaxPreflightRetryWindowSeconds)
+for ($attempt = 1; $attempt -le $MaxPreflightAttempts; $attempt += 1) {
+  $stabilityRelative = "references/verification/material-railway-recovery-respin-stability-preflight-attempt-$attempt-2026-07-15.json"
+  $stabilityPath = Join-Path $Root $stabilityRelative
+  $stabilityExitCode = Invoke-SearchEngineProbe `
+    -Count $StabilityProbeCount `
+    -IntervalMilliseconds $StabilityProbeIntervalMilliseconds `
+    -OutputRelative $stabilityRelative `
+    -RequestTimeoutMilliseconds 10000
+  $stability = Get-Content -LiteralPath $stabilityPath -Raw | ConvertFrom-Json
+  $stabilityHealthy = (
+    $stabilityExitCode -eq 0 -and
+    $stability.status -eq 'ok' -and
+    @($stability.probes).Count -eq $StabilityProbeCount
+  )
+  $preflightAttempts += [ordered]@{
+    attempt = $attempt
+    evidence_path = $stabilityRelative
+    status = $stability.status
+    probes_completed = @($stability.probes).Count
+    error = Get-OptionalProperty -Value $stability -Name 'error'
+  }
+  if ($stabilityHealthy) {
+    $preflightPassed = $true
+    break
+  }
+  if ($attempt -ge $MaxPreflightAttempts) {
+    throw 'The direct search engine did not pass any of the three stability windows. No upload was attempted.'
+  }
+  if ((Get-Date).ToUniversalTime().AddSeconds($PreflightRetryDelaySeconds) -gt $preflightDeadline) {
+    throw 'The 15-minute preflight retry window expired. No upload was attempted.'
+  }
+  Start-Sleep -Seconds $PreflightRetryDelaySeconds
 }
-$stability = Get-Content -LiteralPath $StabilityEvidence -Raw | ConvertFrom-Json
-if ($stability.status -ne 'ok' -or @($stability.probes).Count -ne $StabilityProbeCount) {
-  throw 'The retained stability evidence does not satisfy the six-probe contract.'
+if (-not $preflightPassed) {
+  throw 'The direct search engine stability preflight did not pass. No upload was attempted.'
 }
 
-$workspace = Join-Path $Root 'tmp/material-railway-recovery-run'
+$workspace = Join-Path $Root 'tmp/material-railway-recovery-respin-run'
 if (Test-Path -LiteralPath $workspace) {
   Remove-Item -LiteralPath $workspace -Recurse -Force
 }
@@ -388,7 +420,7 @@ try {
   $health = Wait-ForCandidateHealth
   $materialExitCode = Invoke-RecoveryLiveGate `
     -Profile 'material-local' `
-    -OutputRelative 'references/verification/material-railway-recovery-material-gate-2026-07-15.json'
+    -OutputRelative 'references/verification/material-railway-recovery-respin-material-gate-2026-07-15.json'
   $materialGate = Get-Content -LiteralPath $MaterialEvidence -Raw | ConvertFrom-Json
   if ($materialExitCode -ne 0 -or $materialGate.status -ne 'ok' -or @($materialGate.checks).Count -ne 11) {
     throw 'candidate_material_local_gate_failed'
@@ -398,7 +430,7 @@ try {
   $engineGatePassed = $false
   $retryDeadline = (Get-Date).ToUniversalTime().AddSeconds($MaxEngineRetryWindowSeconds)
   for ($attempt = 1; $attempt -le $MaxEngineAttempts; $attempt += 1) {
-    $engineRelative = "references/verification/material-railway-recovery-engine-attempt-$attempt-2026-07-15.json"
+    $engineRelative = "references/verification/material-railway-recovery-respin-engine-attempt-$attempt-2026-07-15.json"
     $enginePath = Join-Path $Root $engineRelative
     $engineExitCode = Invoke-RecoveryLiveGate -Profile 'engine-dependent' -OutputRelative $engineRelative
     $engineGate = Get-Content -LiteralPath $enginePath -Raw | ConvertFrom-Json
@@ -414,7 +446,7 @@ try {
       break
     }
 
-    $controlRelative = "references/verification/material-railway-recovery-control-attempt-$attempt-2026-07-15.json"
+    $controlRelative = "references/verification/material-railway-recovery-respin-control-attempt-$attempt-2026-07-15.json"
     $controlPath = Join-Path $Root $controlRelative
     $controlExitCode = Invoke-SearchEngineProbe `
       -Count 1 `
@@ -457,8 +489,8 @@ try {
     candidate_deployment_id = $candidate.id
     candidate_image_digest = $candidate.meta.imageDigest
     health = $health
-    stability_preflight_path = 'references/verification/material-railway-recovery-stability-preflight-2026-07-15.json'
-    material_gate_path = 'references/verification/material-railway-recovery-material-gate-2026-07-15.json'
+    stability_preflight_attempts = $preflightAttempts
+    material_gate_path = 'references/verification/material-railway-recovery-respin-material-gate-2026-07-15.json'
     material_gate_checks = @($materialGate.checks).Count
     engine_attempts = $engineAttempts
     engine_gate_checks = 6

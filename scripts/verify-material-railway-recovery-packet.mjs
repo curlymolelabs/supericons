@@ -37,6 +37,9 @@ const searchProbePath = 'scripts/probe-material-search-engine.mjs';
 const searchProbeVerifierPath = 'scripts/verify-material-search-engine-probe.mjs';
 const incidentProbePath = 'references/verification/material-railway-incident-engine-probes-2026-07-15.json';
 const incidentRecordPath = 'references/verification/material-railway-release-attempt-2026-07-15.md';
+const priorPreflightRecordPath = 'references/verification/material-railway-recovery-preflight-attempt-2026-07-15.md';
+const priorLegacyPreflightPath = 'references/verification/material-railway-recovery-legacy-preflight-2026-07-15.json';
+const priorStabilityPreflightPath = 'references/verification/material-railway-recovery-stability-preflight-2026-07-15.json';
 
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
@@ -68,6 +71,9 @@ assert.deepEqual(fields, {
   material_hydration_sha256: fields.material_hydration_sha256,
   incident_probe_sha256: fields.incident_probe_sha256,
   incident_record_sha256: fields.incident_record_sha256,
+  prior_preflight_record_sha256: fields.prior_preflight_record_sha256,
+  prior_legacy_preflight_sha256: fields.prior_legacy_preflight_sha256,
+  prior_stability_preflight_sha256: fields.prior_stability_preflight_sha256,
   bundle_sha256: '66ef383bad9e3847da107f0d8f37f0bd1cb695afd4e3c4cd3470ef1c97723ed9',
   hash_mode: 'lf_normalized_utf8_for_text_raw_sha256_for_bundle',
   project_id: 'b53f5f48-607f-49ae-a71e-37cc766f6973',
@@ -86,7 +92,11 @@ assert.deepEqual(fields, {
   stability_probe_count: '6',
   stability_window_seconds: '180',
   stability_interval_ms: '36000',
-  stability_latency_limit_ms: '3000',
+  healthy_probe_latency_limit_ms: '5000',
+  engine_gate_latency_limit_ms: '3000',
+  preflight_attempt_limit: '3',
+  preflight_retry_window_seconds: '900',
+  preflight_retry_delay_seconds: '90',
   material_local_gate_checks: '11',
   engine_dependent_gate_checks: '6',
   postdeploy_gate_checks: '17',
@@ -112,7 +122,8 @@ const hashFields = [
   'search_probe_sha256', 'search_probe_verifier_sha256', 'asset_bundle_gate_sha256',
   'hydration_gate_sha256', 'server_contract_gate_sha256', 'usage_dedupe_gate_sha256',
   'remote_server_sha256', 'material_hydration_sha256', 'incident_probe_sha256',
-  'incident_record_sha256', 'bundle_sha256',
+  'incident_record_sha256', 'prior_preflight_record_sha256',
+  'prior_legacy_preflight_sha256', 'prior_stability_preflight_sha256', 'bundle_sha256',
 ];
 for (const field of hashFields) {
   assert.match(fields[field], /^[0-9a-f]{64}$/, `${field} must be a lowercase SHA-256 value.`);
@@ -133,6 +144,9 @@ for (const [path, field] of [
   ['mcp/material-hydration.js', 'material_hydration_sha256'],
   [incidentProbePath, 'incident_probe_sha256'],
   [incidentRecordPath, 'incident_record_sha256'],
+  [priorPreflightRecordPath, 'prior_preflight_record_sha256'],
+  [priorLegacyPreflightPath, 'prior_legacy_preflight_sha256'],
+  [priorStabilityPreflightPath, 'prior_stability_preflight_sha256'],
 ]) {
   assert.equal(sha256TextFile(path), fields[field], `${path} hash does not match the recovery packet.`);
 }
@@ -158,6 +172,11 @@ assert.equal((runner.match(/Start-RevisionDeployment/g) || []).length, 3,
   'Runner must call the deployment helper only for candidate and rollback.');
 assert.match(runner, /\$StabilityProbeCount = 6/);
 assert.match(runner, /\$StabilityProbeIntervalMilliseconds = 36000/);
+assert.match(runner, /\$HealthyProbeLatencyLimitMilliseconds = 5000/);
+assert.match(runner, /\$EngineGateLatencyLimitMilliseconds = 3000/);
+assert.match(runner, /\$MaxPreflightAttempts = 3/);
+assert.match(runner, /\$MaxPreflightRetryWindowSeconds = 900/);
+assert.match(runner, /\$PreflightRetryDelaySeconds = 90/);
 assert.match(runner, /\$MaxEngineAttempts = 3/);
 assert.match(runner, /\$MaxEngineRetryWindowSeconds = 600/);
 assert.match(runner, /\$EngineRetryDelaySeconds = 90/);
@@ -166,6 +185,18 @@ assert.match(runner, /-Profile 'material-local'/);
 assert.match(runner, /-Profile 'engine-dependent'/);
 assert.match(runner, /candidate_engine_gate_failed_with_healthy_control_attempt_/);
 assert.match(runner, /dependency_unresolved_after_retry_budget/);
+assert.match(runner, /material-railway-recovery-respin-stability-preflight-attempt-\$attempt-2026-07-15\.json/);
+assert.match(runner, /-le \$MaxPreflightAttempts/);
+assert.match(runner, /The direct search engine did not pass any of the three stability windows/);
+assert.match(runner, /'--latency-limit-ms', "\$HealthyProbeLatencyLimitMilliseconds"/,
+  'Preflight and direct control probes must share the 5,000 ms health threshold.');
+assert.match(runner, /'--engine-latency-limit-ms', "\$EngineGateLatencyLimitMilliseconds"/,
+  'User-facing engine gate latency must remain a separate explicit threshold.');
+assert.equal(
+  runner.includes('material-railway-recovery-stability-preflight-2026-07-15.json'),
+  false,
+  'The consumed singleton preflight evidence path must not be reused.',
+);
 assert.match(runner, /Invoke-SearchEngineProbe[\s\S]+-Count 1/,
   'Every failed engine gate must be followed by a direct control probe.');
 assert.ok(
@@ -216,13 +247,16 @@ console.log(JSON.stringify({
   stability_preflight: {
     probes: Number(fields.stability_probe_count),
     window_seconds: Number(fields.stability_window_seconds),
-    latency_limit_ms: Number(fields.stability_latency_limit_ms),
+    healthy_latency_limit_ms: Number(fields.healthy_probe_latency_limit_ms),
+    attempt_limit: Number(fields.preflight_attempt_limit),
+    retry_window_seconds: Number(fields.preflight_retry_window_seconds),
   },
   postdeploy_gates: {
     material_local: Number(fields.material_local_gate_checks),
     engine_dependent: Number(fields.engine_dependent_gate_checks),
     total: Number(fields.postdeploy_gate_checks),
     engine_attempt_limit: Number(fields.engine_attempt_limit),
+    engine_latency_limit_ms: Number(fields.engine_gate_latency_limit_ms),
   },
   mutations: {
     railway_candidate_deployments: 1,
