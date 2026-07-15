@@ -1,0 +1,3 @@
+-- No standalone rollback is allowed for this security hardening migration.
+-- Never restore anon or authenticated access to material_icon_assets.
+-- A full feature rollback uses 20260714220000_material_icon_assets.down.sql.

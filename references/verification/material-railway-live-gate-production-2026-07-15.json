@@ -1,0 +1,39 @@
+{
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "started_at": "2026-07-15T12:18:27.573Z",
+  "checks": [
+    {
+      "name": "health reports complete local Material bundle"
+    },
+    {
+      "name": "list_libraries advertises material 4262"
+    },
+    {
+      "name": "material search + get_icon deliver valid outline SVG"
+    },
+    {
+      "name": "material search + get_icon deliver valid solid SVG"
+    },
+    {
+      "name": "solid and outline variants are visibly distinct payloads"
+    },
+    {
+      "name": "recommend_icons returns valid material SVG"
+    },
+    {
+      "name": "preview_icons returns Material rows and PNG image content"
+    },
+    {
+      "name": "relevance fixture outline: 20/20 in top 5",
+      "misses": []
+    },
+    {
+      "name": "relevance fixture solid: 20/20 in top 5",
+      "misses": []
+    }
+  ],
+  "latency": {},
+  "status": "failed",
+  "error": "MCP error -32001: Request timed out",
+  "finished_at": "2026-07-15T12:19:48.938Z"
+}

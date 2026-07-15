@@ -74,9 +74,11 @@ Read-only checks after endpoint deletion confirmed:
 | --- | --- |
 | `mcp-search-v2-control` | Absent |
 | `mcp-search-v2-treatment` | Absent |
-| Production `search-icons` | Active, version 34 |
-| Production `mcp-search` | Active, version 35 |
+| Production `search-icons` | Active, version 35 |
+| Production `mcp-search` | Active, version 36 |
 | npm `latest` | `0.4.17` |
+
+Correction recorded 2026-07-14: the original table reported both production function versions one version low. The retained 2026-07-05 paired deployment transcript and the functions' shared production update timestamp establish `search-icons` version 35 and `mcp-search` version 36.
 
 ## Decision and next engineering target
 

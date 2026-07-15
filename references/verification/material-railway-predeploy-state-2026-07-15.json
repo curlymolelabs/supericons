@@ -1,0 +1,36 @@
+{
+  "artifact": "material_railway_predeploy_state",
+  "observed_at": "2026-07-15T04:39:28.9135935Z",
+  "railway": {
+    "project_id": "b53f5f48-607f-49ae-a71e-37cc766f6973",
+    "project_name": "supericons-converter-node",
+    "environment_id": "6345c75b-5ac2-40d6-b176-a4a783ce3eb3",
+    "environment_name": "production",
+    "service_id": "352420e5-6a02-43a4-99f2-f6dbde522acb",
+    "service_name": "scintillating-imagination",
+    "deployment_id": "36e284e7-df61-4c4b-95c6-f17492db5cf7",
+    "deployment_status": "SUCCESS",
+    "image_digest": "sha256:2e246dabd3caabd1ca13da1de88ab75d682c3b59aa06f32b2411b12b6841f73f",
+    "created_at": "2026-07-05T05:26:16.418Z",
+    "start_command": "npm run start:remote",
+    "healthcheck_path": "/health",
+    "custom_domain": "mcp.supericons.dev"
+  },
+  "live_probes": {
+    "health_http_status": 200,
+    "health_version": "0.4.17",
+    "health_material_assets_field_present": false,
+    "material_settings_outline": {
+      "http_tool_error": false,
+      "result_count": 0,
+      "latency_ms": 5016
+    },
+    "lucide_calendar": {
+      "http_tool_error": false,
+      "result_count": 3,
+      "all_results_have_svg": true,
+      "latency_ms": 2630
+    }
+  },
+  "mutation_performed": false
+}

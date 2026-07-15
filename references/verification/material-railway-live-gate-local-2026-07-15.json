@@ -1,0 +1,111 @@
+{
+  "mcp_url": "http://127.0.0.1:8792/mcp",
+  "started_at": "2026-07-15T04:33:10.029Z",
+  "checks": [
+    {
+      "name": "health reports complete local Material bundle"
+    },
+    {
+      "name": "list_libraries advertises material 4262"
+    },
+    {
+      "name": "material search + get_icon deliver valid outline SVG"
+    },
+    {
+      "name": "material search + get_icon deliver valid solid SVG"
+    },
+    {
+      "name": "solid and outline variants are visibly distinct payloads"
+    },
+    {
+      "name": "recommend_icons returns valid material SVG"
+    },
+    {
+      "name": "preview_icons returns Material rows and PNG image content"
+    },
+    {
+      "name": "relevance fixture outline: 20/20 in top 5",
+      "misses": []
+    },
+    {
+      "name": "relevance fixture solid: 20/20 in top 5",
+      "misses": []
+    },
+    {
+      "name": "all-mode settings returns 10/10 deliverable rows"
+    },
+    {
+      "name": "all-mode cog returns 10/10 deliverable rows"
+    },
+    {
+      "name": "all-mode solid returns 10/10 deliverable Material rows"
+    },
+    {
+      "name": "lucide strict regression untouched"
+    },
+    {
+      "name": "search_icons warm p95 is within 2000 ms",
+      "warm_p95_ms": 101.9
+    },
+    {
+      "name": "get_icon warm p95 is within 2000 ms",
+      "warm_p95_ms": 2.8
+    },
+    {
+      "name": "preview_icons warm p95 is within 2000 ms",
+      "warm_p95_ms": 317.4
+    },
+    {
+      "name": "recommend_icons warm p95 is within 3000 ms",
+      "warm_p95_ms": 450.9
+    }
+  ],
+  "latency": {
+    "search_icons": {
+      "samples_ms": [
+        98.5,
+        99.2,
+        97.1,
+        101.9,
+        101.6
+      ],
+      "warm_p95_ms": 101.9,
+      "gate_ms": 2000
+    },
+    "get_icon": {
+      "samples_ms": [
+        2.8,
+        2.7,
+        2.7,
+        2.3,
+        2.7
+      ],
+      "warm_p95_ms": 2.8,
+      "gate_ms": 2000
+    },
+    "preview_icons": {
+      "samples_ms": [
+        317.4,
+        283.9,
+        287.1,
+        276.7,
+        286.5
+      ],
+      "warm_p95_ms": 317.4,
+      "gate_ms": 2000
+    },
+    "recommend_icons": {
+      "samples_ms": [
+        409.1,
+        425.5,
+        424.7,
+        450.9,
+        410.4
+      ],
+      "warm_p95_ms": 450.9,
+      "gate_ms": 3000
+    }
+  },
+  "status": "ok",
+  "finished_at": "2026-07-15T04:33:30.886Z"
+}

@@ -1,0 +1,37 @@
+{
+  "artifact": "material_search_engine_stability_probe",
+  "search_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search",
+  "started_at": "2026-07-15T15:28:34.315Z",
+  "contract": {
+    "count": 6,
+    "interval_ms": 36000,
+    "latency_limit_ms": 5000,
+    "request_timeout_ms": 10000,
+    "source": "verify",
+    "channel": "internal_test",
+    "environment": "production",
+    "client_family": "material_railway_recovery"
+  },
+  "probes": [
+    {
+      "sequence": 1,
+      "started_at": "2026-07-15T15:28:34.316Z",
+      "duration_ms": 2444.2,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:28:36.763Z"
+    },
+    {
+      "sequence": 2,
+      "started_at": "2026-07-15T15:29:12.764Z",
+      "duration_ms": 9100.2,
+      "status_code": 200,
+      "result_count": 3,
+      "error": "probe 2 took 9100.2 ms, above 5000 ms",
+      "finished_at": "2026-07-15T15:29:21.865Z"
+    }
+  ],
+  "status": "degraded",
+  "error": "probe 2 took 9100.2 ms, above 5000 ms",
+  "finished_at": "2026-07-15T15:29:21.865Z"
+}

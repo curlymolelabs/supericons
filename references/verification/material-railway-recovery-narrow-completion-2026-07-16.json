@@ -1,0 +1,58 @@
+{
+    "artifact":  "material_railway_recovery_completion",
+    "approval_fingerprint":  "6fde47285e50415b2b25233606a6ae7530ed87fecfee8b05a43c32c7354f8165",
+    "implementation_revision":  "13f28d7e72484538b0a2be14f680ef8a4c4e3c52",
+    "predeployment_id":  "9186be87-a85f-4dd8-9807-323394e47c33",
+    "candidate_deployment_id":  "5ea2e0b8-201a-4be9-81b7-a450d7f85c61",
+    "candidate_image_digest":  "sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58",
+    "health":  {
+                   "ok":  true,
+                   "service":  "supericons-remote-mcp",
+                   "version":  "0.4.18",
+                   "material_assets":  {
+                                           "available":  true,
+                                           "source_revision":  "30f8fddd293b1f0189896dc4aaecdfaba1d37ae0",
+                                           "asset_count":  8524
+                                       }
+               },
+    "stability_preflight_attempts":  [
+                                         {
+                                             "attempt":  1,
+                                             "evidence_path":  "references/verification/material-railway-recovery-narrow-stability-preflight-attempt-1-2026-07-16.json",
+                                             "status":  "ok",
+                                             "probes_completed":  6,
+                                             "error":  null
+                                         }
+                                     ],
+    "material_gate_path":  "references/verification/material-railway-recovery-narrow-material-gate-2026-07-16.json",
+    "material_gate_checks":  11,
+    "follow_up_gate_path":  "references/verification/material-railway-recovery-narrow-follow-up-gate-2026-07-16.json",
+    "follow_up_gate_checks":  6,
+    "engine_latency_observations":  [
+                                        {
+                                            "case_id":  "all_mode_settings",
+                                            "metric":  "elapsed_ms",
+                                            "through_candidate_ms":  5387.8,
+                                            "observation_threshold_ms":  3000,
+                                            "threshold_exceeded":  true
+                                        },
+                                        {
+                                            "case_id":  "all_mode_cog",
+                                            "metric":  "elapsed_ms",
+                                            "through_candidate_ms":  3578.3,
+                                            "observation_threshold_ms":  3000,
+                                            "threshold_exceeded":  true
+                                        },
+                                        {
+                                            "case_id":  "lucide_strict_calendar",
+                                            "metric":  "elapsed_ms",
+                                            "through_candidate_ms":  3288.6,
+                                            "observation_threshold_ms":  3000,
+                                            "threshold_exceeded":  true
+                                        }
+                                    ],
+    "total_gate_checks":  17,
+    "rollback_used":  false,
+    "started_at":  "2026-07-15T18:03:44.2413666Z",
+    "finished_at":  "2026-07-15T18:06:17.8324190Z"
+}

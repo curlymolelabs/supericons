@@ -116,8 +116,10 @@ Read-only closeout checks verified:
 
 | item | state after rollback |
 | --- | --- |
-| `search-icons` | Active, version 34, HTTP 200 |
-| `mcp-search` | Active, version 35, HTTP 200 |
+| `search-icons` | Active, version 35, HTTP 200 |
+| `mcp-search` | Active, version 36, HTTP 200 |
+
+Correction recorded 2026-07-14: the original table reported both production function versions one version low. The retained 2026-07-05 paired deployment transcript and the functions' shared production update timestamp establish `search-icons` version 35 and `mcp-search` version 36.
 | `mcp-search-v2-beta` | Absent |
 | npm `latest` | `0.4.17` |
 | npm beta tag | Absent |

@@ -10,7 +10,7 @@
 // 5. Return the Supericons-owned SVG payload
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,7 +18,8 @@ const corsHeaders = {
 };
 
 const SOURCE = {
-  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web',
+  revision: '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0',
+  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/symbols/web',
   styleDir: 'materialsymbolsoutlined',
 };
 
@@ -120,7 +121,7 @@ function svgResponse(svg: string, headers: Record<string, string>) {
 
 let bucketReady = false;
 
-async function ensureBucket(admin: ReturnType<typeof createClient>) {
+async function ensureBucket(admin: SupabaseClient) {
   if (bucketReady) return true;
 
   const existing = await admin.storage.getBucket(STORAGE.bucket);
@@ -193,6 +194,7 @@ serve(async (req) => {
         'X-Cache-Status': 'hit',
         'X-Material-Icon': iconId,
         'X-Material-Axes': JSON.stringify(axes),
+        'X-Material-Source-Revision': SOURCE.revision,
       });
     }
 
@@ -224,6 +226,7 @@ serve(async (req) => {
         'X-Cache-Status': 'miss-not-persisted',
         'X-Material-Icon': iconId,
         'X-Material-Axes': JSON.stringify(axes),
+        'X-Material-Source-Revision': SOURCE.revision,
       });
     }
 
@@ -231,6 +234,7 @@ serve(async (req) => {
       'X-Cache-Status': 'filled',
       'X-Material-Icon': iconId,
       'X-Material-Axes': JSON.stringify(axes),
+      'X-Material-Source-Revision': SOURCE.revision,
     });
   } catch (err) {
     console.error('serve-material-snapshot error:', err);

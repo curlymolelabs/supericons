@@ -1,6 +1,8 @@
 export const MATERIAL_EXPORT_SOURCE = {
-  ref: 'master',
-  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web',
+  ref: '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0',
+  repository: 'google/material-design-icons',
+  baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/symbols/web',
+  codepointsUrl: 'https://raw.githubusercontent.com/google/material-design-icons/30f8fddd293b1f0189896dc4aaecdfaba1d37ae0/variablefont/MaterialSymbolsOutlined%5BFILL%2CGRAD%2Copsz%2Cwght%5D.codepoints',
   styleDir: 'materialsymbolsoutlined',
 };
 
@@ -25,6 +27,16 @@ export const MATERIAL_EXPORT_DEFAULT_AXES = {
   grad: 0,
   opsz: 24,
 };
+
+export const MATERIAL_MCP_PRESETS = {
+  outline: { fill: 0, wght: 300, grad: 0, opsz: 24, snapped: false },
+  solid: { fill: 1, wght: 400, grad: 0, opsz: 24, snapped: false },
+};
+
+export function getMaterialMcpPreset(style = 'outline') {
+  const preset = style === 'solid' ? MATERIAL_MCP_PRESETS.solid : MATERIAL_MCP_PRESETS.outline;
+  return { ...preset };
+}
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);

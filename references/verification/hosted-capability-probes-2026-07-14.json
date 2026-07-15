@@ -1,7 +1,7 @@
 {
   "artifact": "hosted_capability_probes",
   "date": "2026-07-14",
-  "endpoint": "production mcp-search edge function (version 35 at probe time)",
+  "endpoint": "production mcp-search edge function (version 36 at probe time; corrected from an earlier one-version-low report)",
   "method": "direct POST with source=internal_test so probes classify as test traffic",
   "findings": {
     "material_strict_returns_rows_without_svg": "material strict search returns ranked rows but every row has null svg, so the MCP server drops them all",

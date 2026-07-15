@@ -1,0 +1,18 @@
+{
+  "artifact": "material_railway_recovery_live_gate",
+  "profile": "engine-dependent",
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "request_timeout_ms": 120000,
+  "engine_latency_limit_ms": 3000,
+  "started_at": "2026-07-15T15:38:40.002Z",
+  "checks": [
+    {
+      "name": "recommend_icons returns valid Material SVG within the engine limit",
+      "elapsed_ms": 1274.6
+    }
+  ],
+  "latency": {},
+  "status": "failed",
+  "error": "all-mode settings took 5555.7 ms, above 3000 ms",
+  "finished_at": "2026-07-15T15:38:47.443Z"
+}

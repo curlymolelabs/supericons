@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "manifest_sha256": "534b6bb9e1405a6a15096081f8245117f5f470cdf22044c57640d06afa393b5a",
+  "measured_at": "2026-07-14T13:41:45.274Z",
+  "mode": "search",
+  "variant": "control",
+  "endpoint": "mcp-search",
+  "first_request": {
+    "case_id": "settings-all",
+    "ok": true,
+    "status": 200,
+    "duration_ms": 5529.922,
+    "response_characters": 11042,
+    "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+    "result_count": 5,
+    "result_icon_ids": [
+      "mingcute:settings_1_line",
+      "iconoir:settings",
+      "mingcute:settings_3_line",
+      "mingcute:settings_4_line",
+      "mingcute:settings_5_line"
+    ],
+    "svg_result_count": 5,
+    "error": null
+  },
+  "warm_summary": {
+    "samples": 25,
+    "successful": 25,
+    "errors": 0,
+    "error_rate_percent": 0,
+    "p50_ms": 997.785,
+    "p95_ms": 3337.062,
+    "maximum_ms": 4440.152
+  },
+  "warm_samples": [
+    {
+      "case_id": "settings-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 2488.573,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "hello-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 4440.152,
+      "response_characters": 685,
+      "response_sha256": "b8e6b0e4957b39c531b459769e8f8977f638977e945b5d30f51af0dd6e257815",
+      "result_count": 1,
+      "result_icon_ids": [
+        "material:nest_hello_doorbell"
+      ],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "cog-bootstrap-strict",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 3337.062,
+      "response_characters": 239,
+      "response_sha256": "51e942d6f9cd4dd91b672a79a7905c20e4186d502f9e0e746c31beee849dd6b0",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "combobox-bootstrap-prefer",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1085.199,
+      "response_characters": 249,
+      "response_sha256": "d84b468202b182fbc52343271eb78add962176b692cd0448752e7f600058d34b",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "settings-zh-hans-expanded",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 2729.339,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "settings-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1076.484,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "hello-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1453.906,
+      "response_characters": 685,
+      "response_sha256": "b8e6b0e4957b39c531b459769e8f8977f638977e945b5d30f51af0dd6e257815",
+      "result_count": 1,
+      "result_icon_ids": [
+        "material:nest_hello_doorbell"
+      ],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "cog-bootstrap-strict",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 554.061,
+      "response_characters": 239,
+      "response_sha256": "51e942d6f9cd4dd91b672a79a7905c20e4186d502f9e0e746c31beee849dd6b0",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "combobox-bootstrap-prefer",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 538.134,
+      "response_characters": 249,
+      "response_sha256": "d84b468202b182fbc52343271eb78add962176b692cd0448752e7f600058d34b",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "settings-zh-hans-expanded",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1102.133,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "settings-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1006.304,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "hello-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1573.689,
+      "response_characters": 685,
+      "response_sha256": "b8e6b0e4957b39c531b459769e8f8977f638977e945b5d30f51af0dd6e257815",
+      "result_count": 1,
+      "result_icon_ids": [
+        "material:nest_hello_doorbell"
+      ],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "cog-bootstrap-strict",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 829.581,
+      "response_characters": 239,
+      "response_sha256": "51e942d6f9cd4dd91b672a79a7905c20e4186d502f9e0e746c31beee849dd6b0",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "combobox-bootstrap-prefer",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 997.785,
+      "response_characters": 249,
+      "response_sha256": "d84b468202b182fbc52343271eb78add962176b692cd0448752e7f600058d34b",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "settings-zh-hans-expanded",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1177.381,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "settings-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 959.37,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "hello-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 1752.611,
+      "response_characters": 685,
+      "response_sha256": "b8e6b0e4957b39c531b459769e8f8977f638977e945b5d30f51af0dd6e257815",
+      "result_count": 1,
+      "result_icon_ids": [
+        "material:nest_hello_doorbell"
+      ],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "cog-bootstrap-strict",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 818.086,
+      "response_characters": 239,
+      "response_sha256": "51e942d6f9cd4dd91b672a79a7905c20e4186d502f9e0e746c31beee849dd6b0",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "combobox-bootstrap-prefer",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 690.653,
+      "response_characters": 249,
+      "response_sha256": "d84b468202b182fbc52343271eb78add962176b692cd0448752e7f600058d34b",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "settings-zh-hans-expanded",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 858.07,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "settings-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 987.861,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    },
+    {
+      "case_id": "hello-all",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 796.799,
+      "response_characters": 685,
+      "response_sha256": "b8e6b0e4957b39c531b459769e8f8977f638977e945b5d30f51af0dd6e257815",
+      "result_count": 1,
+      "result_icon_ids": [
+        "material:nest_hello_doorbell"
+      ],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "cog-bootstrap-strict",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 597.622,
+      "response_characters": 239,
+      "response_sha256": "51e942d6f9cd4dd91b672a79a7905c20e4186d502f9e0e746c31beee849dd6b0",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "combobox-bootstrap-prefer",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 515.799,
+      "response_characters": 249,
+      "response_sha256": "d84b468202b182fbc52343271eb78add962176b692cd0448752e7f600058d34b",
+      "result_count": 0,
+      "result_icon_ids": [],
+      "svg_result_count": 0,
+      "error": null
+    },
+    {
+      "case_id": "settings-zh-hans-expanded",
+      "ok": true,
+      "status": 200,
+      "duration_ms": 952.731,
+      "response_characters": 11042,
+      "response_sha256": "08040073428cff506250ac99ae3ea88ce692eab3888d4f1a7bcb104b5cf10c9a",
+      "result_count": 5,
+      "result_icon_ids": [
+        "mingcute:settings_1_line",
+        "iconoir:settings",
+        "mingcute:settings_3_line",
+        "mingcute:settings_4_line",
+        "mingcute:settings_5_line"
+      ],
+      "svg_result_count": 5,
+      "error": null
+    }
+  ],
+  "measurement_profile": "production",
+  "measurement_run_id": "161aec09-f6d1-415e-8d78-ce71f1676560",
+  "sanitized_request_count": 26,
+  "audit_contract": {
+    "source": "verify",
+    "channel": "internal_test",
+    "environment": "production",
+    "client_family": "material_release_latency",
+    "beta_cohort": null
+  }
+}

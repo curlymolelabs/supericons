@@ -24,10 +24,12 @@ import {
   MATERIAL_EXPORT_STORAGE,
   buildMaterialCacheKey,
   buildMaterialOwnedSnapshotUrl,
+  getMaterialMcpPreset,
   getMaterialManifestEntry,
   normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
 } from './material-export.js';
 import { listMotionLabPresets } from './motion-lab.js';
+import { buildLibraryCapability, countIconsByLibrary } from './library-capabilities.js';
 import {
   SUPPORTED_MCP_OUTPUT_LOCALES,
   localizeConverterOptions,
@@ -86,7 +88,6 @@ import {
   compareVariantPreference,
   getConceptKeyForIcon,
   iconMatchesRequestedStyle,
-  librarySupportsSolid,
   normalizeRequestedStyle,
   VARIANT_STYLES,
 } from './variant-support.js';
@@ -306,13 +307,10 @@ function loadMaterialExportManifest() {
 }
 
 function getMaterialExportAxes(style = VARIANT_STYLES.OUTLINE) {
-  const manifest = loadMaterialExportManifest();
   const normalizedStyle = normalizeRequestedStyle(style);
-  return {
-    ...MATERIAL_EXPORT_DEFAULT_AXES,
-    ...(manifest?.defaultAxes || {}),
-    fill: normalizedStyle === VARIANT_STYLES.SOLID ? 1 : 0,
-  };
+  return getMaterialMcpPreset(
+    normalizedStyle === VARIANT_STYLES.SOLID ? VARIANT_STYLES.SOLID : VARIANT_STYLES.OUTLINE,
+  );
 }
 
 function normalizeMaterialSnapshotSvg(rawSvg) {
@@ -796,7 +794,7 @@ async function searchAccessibleIcons({
 // Library Metadata
 // ============================================================
 const libraryMeta = {
-  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true, count: 4205, outlineCount: 4205, solidCount: 4205 },
+  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true, count: 4262, outlineCount: 4262, solidCount: 4262 },
   lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true, hasFilled: false, count: 1951, outlineCount: 1951, solidCount: 0 },
   tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true, hasFilled: true, count: 5021, outlineCount: 5021, solidCount: 1053 },
   phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false, hasFilled: true, count: 1512, outlineCount: 1512, solidCount: 1512 },
@@ -825,18 +823,8 @@ for (const packName of packDirNames) {
 }
 
 // Compute counts per library
-const libCounts = {};
-for (const icon of allIcons) {
-  libCounts[icon.lib] = (libCounts[icon.lib] || 0) + 1;
-}
-const outlineLibCounts = {};
-for (const icon of outlineIcons) {
-  outlineLibCounts[icon.lib] = (outlineLibCounts[icon.lib] || 0) + 1;
-}
-const solidLibCounts = {};
-for (const icon of solidIcons) {
-  solidLibCounts[icon.lib] = (solidLibCounts[icon.lib] || 0) + 1;
-}
+const outlineLibCounts = countIconsByLibrary(outlineIcons);
+const solidLibCounts = countIconsByLibrary(solidIcons);
 const freeLibraryCount = Object.values(libraryMeta).filter(meta => !meta.premium).length;
 const productFacts = loadProductFacts();
 const mcpPackage = loadPackageMetadata();
@@ -875,7 +863,7 @@ server.tool(
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
     library: z.string().optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute'),
     library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
-    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other libraries report their supported styles in list_libraries.'),
     locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
     include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
@@ -1126,7 +1114,7 @@ server.tool(
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
     library: z.string().describe('Free library key, for example si (Supericons), lucide, tabler, phosphor, iconoir, mingcute, or simpleicons (Simple Icons).'),
-    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to request a filled variant when the library supports it.'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other libraries report their supported styles in list_libraries.'),
   },
   async ({ id, library, style }) => {
     // Check if requesting premium library without access
@@ -1237,22 +1225,24 @@ server.tool(
   'List the free icon libraries available through Supericons MCP with their names, icon counts, and descriptions.',
   {},
   async () => {
-    const libs = Object.entries(libraryMeta).map(([id, meta]) => ({
-      id,
-      name: meta.name,
-      label: getPublicLibraryMeta(id, { name: meta.name, description: meta.description }).label,
-      count: libCounts[id] || meta.count || 0,
-      outlineCount: outlineLibCounts[id] || meta.outlineCount || 0,
-      solidCount: id === 'material'
-        ? (librarySupportsSolid(id) ? outlineLibCounts[id] || meta.solidCount || meta.outlineCount || 0 : 0)
-        : (solidLibCounts[id] || meta.solidCount || 0),
-      hasStroke: meta.hasStroke,
-      hasFilled: meta.hasFilled || librarySupportsSolid(id),
-      supportedStyles: meta.hasFilled || librarySupportsSolid(id) ? ['outline', 'solid'] : ['outline'],
-      description: meta.description,
-      premium: meta.premium || false,
-      accessible: meta.premium ? hasLibraryAccess(id) : true,
-    }));
+    const libs = Object.entries(libraryMeta).map(([id, meta]) => {
+      const capability = buildLibraryCapability(id, {
+        outlineCounts: outlineLibCounts,
+        solidCounts: solidLibCounts,
+        materialUsesOutlineForSolid: true,
+      });
+      return {
+        id,
+        name: meta.name,
+        label: getPublicLibraryMeta(id, { name: meta.name, description: meta.description }).label,
+        ...capability,
+        hasStroke: meta.hasStroke,
+        hasFilled: capability.solidCount > 0,
+        description: meta.description,
+        premium: meta.premium || false,
+        accessible: meta.premium ? hasLibraryAccess(id) : true,
+      };
+    });
     return buildTextResponse(libs);
   }
 );

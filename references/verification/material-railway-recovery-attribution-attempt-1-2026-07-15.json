@@ -1,0 +1,33 @@
+{
+  "artifact": "material_engine_latency_attribution",
+  "search_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search",
+  "gate_evidence_path": "D:\\Personal\\Business\\Curly Mole Labs\\Experiments\\Apps\\DailySprint\\supericons-material-symbols-support\\references\\verification\\material-railway-recovery-attribution-engine-attempt-1-2026-07-15.json",
+  "overhead_budget_ms": 1000,
+  "request_timeout_ms": 120000,
+  "started_at": "2026-07-15T16:41:50.626Z",
+  "comparisons": [
+    {
+      "case_id": "all_mode_settings",
+      "metric": "elapsed_ms",
+      "through_candidate_ms": 4893.3,
+      "overhead_budget_ms": 1000,
+      "direct_request": {
+        "query": "settings",
+        "library_mode": "strict",
+        "style": "any",
+        "limit": 10,
+        "locale": null
+      },
+      "started_at": "2026-07-15T16:41:50.628Z",
+      "status_code": 200,
+      "direct_engine_ms": 1632,
+      "result_count": 10,
+      "allowed_candidate_ms": 2632,
+      "observed_overhead_ms": 3261.3,
+      "status": "candidate_overhead",
+      "finished_at": "2026-07-15T16:41:52.261Z"
+    }
+  ],
+  "status": "candidate_overhead",
+  "finished_at": "2026-07-15T16:41:52.261Z"
+}

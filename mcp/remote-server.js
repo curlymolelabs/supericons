@@ -14,6 +14,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import express from 'express';
 import { z } from 'zod';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { getMaterialBundleStatus, hydrateMaterialHostedRows } from './material-hydration.js';
 import { SUPABASE_URL } from './auth.js';
 import { searchIcons as searchLocalIcons } from './search.js';
 import { recommendIconsForTask } from './recommend-icons.js';
@@ -33,6 +34,8 @@ import {
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
+import { buildLibraryCapability } from './library-capabilities.js';
+import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -78,6 +81,7 @@ const libraryCounts = new Map(
     Number(entry.count || 0),
   ])
 );
+const hostedOutlineCounts = Object.fromEntries(libraryCounts);
 
 const libraryKeysDescription =
   'Supported values include si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), and mingcute.';
@@ -124,6 +128,9 @@ const libraryResultSchema = z.object({
   label: z.string().optional().describe('Human-readable library label with key, for example Supericons (si).'),
   description: z.string().describe('Brief public description of the icon library.'),
   count: z.number().describe('Number of icons in the library.'),
+  outlineCount: z.number().describe('Number of outline icons served by the hosted MCP server.'),
+  solidCount: z.number().describe('Number of solid icons served by the hosted MCP server.'),
+  supportedStyles: z.array(z.enum(['outline', 'solid'])).describe('Styles verified on the hosted serving path.'),
 });
 
 const previewIconResultSchema = z.object({
@@ -194,11 +201,24 @@ function asStructured(payload, { isError = false } = {}) {
 }
 
 function normalizeHostedIcon(row) {
-  if (!row?.icon_id) return null;
+  if (!row?.icon_id) {
+    const error = new Error('Hosted search returned a result without an icon ID.');
+    error.code = 'search_result_invalid';
+    throw error;
+  }
   const [libraryFromId, ...idParts] = String(row.icon_id).split(':');
   const library = row.library || row.source_library || libraryFromId;
   const id = idParts.join(':') || row.id || row.name;
-  if (!library || !id || !row.svg) return null;
+  if (!library || !id) {
+    const error = new Error(`Hosted search returned an invalid icon reference: ${row.icon_id}.`);
+    error.code = 'search_result_invalid';
+    throw error;
+  }
+  if (!row.svg) {
+    const error = new Error(`Hosted search returned a result without usable SVG: ${row.icon_id}.`);
+    error.code = library === 'material' ? 'material_asset_unavailable' : 'search_result_svg_unavailable';
+    throw error;
+  }
 
   const icon = {
     id,
@@ -216,6 +236,20 @@ function normalizeHostedIcon(row) {
     ...icon,
     semantic: buildPublicSemanticPayload(semanticRecord) || icon.semantic || null,
   };
+}
+
+function getHostedRowIdentity(row) {
+  const [libraryFromId, ...idParts] = String(row?.icon_id || '').split(':');
+  return {
+    library: row?.library || row?.source_library || libraryFromId || null,
+    id: idParts.join(':') || row?.id || row?.name || null,
+  };
+}
+
+function isExactHostedRow(row, library, id) {
+  const identity = getHostedRowIdentity(row);
+  return identity.library === library
+    && String(identity.id || '').toLowerCase() === String(id || '').toLowerCase();
 }
 
 function normalizeLocalIcon(icon) {
@@ -263,6 +297,72 @@ function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', styl
   return results.slice(0, Math.max(1, limit));
 }
 
+function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId = null }) {
+  if (exactIconId) {
+    const exact = publicIcons.find((icon) => (
+      icon?.lib === 'material' && String(icon.id).toLowerCase() === exactIconId.toLowerCase()
+    ));
+    if (!exact) return [];
+    return [{
+      icon_id: `material:${exact.id}`,
+      id: exact.id,
+      name: exact.name || exact.id.replace(/[-_]/g, ' '),
+      library: 'material',
+      icon_type: 'font',
+      style: 'outline',
+      svg: null,
+    }];
+  }
+
+  const normalizedQuery = String(query || '').trim().toLowerCase();
+  const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+  const directSynonyms = tokens.flatMap((token) => synonyms[token] || []);
+  const reverseSynonyms = Object.entries(synonyms)
+    .filter(([, values]) => Array.isArray(values) && values.some((value) => tokens.includes(String(value).toLowerCase())))
+    .map(([key]) => key);
+  const queryVariants = [...new Set([
+    normalizedQuery,
+    ...directSynonyms,
+    ...reverseSynonyms,
+    ...buildIntentQueryVariants(query, { maxVariants: 10 }),
+  ].map((value) => String(value || '').trim()).filter(Boolean))].slice(0, 16);
+  const rows = [];
+  const seen = new Set();
+  const rankedByVariant = queryVariants.map((queryVariant) => (
+    searchLocalIcons(queryVariant, publicIcons, synonyms, {
+      library: 'material',
+      libraryMode: 'strict',
+      style: 'any',
+      limit: Math.max(limit, 20),
+      locale,
+    })
+  ));
+
+  for (let rank = 0; rows.length < Math.max(1, limit); rank += 1) {
+    let foundAtRank = false;
+    for (const variantResults of rankedByVariant) {
+      const icon = variantResults[rank];
+      if (!icon) continue;
+      foundAtRank = true;
+      if (icon?.lib !== 'material' || !icon.id || seen.has(icon.id)) continue;
+      seen.add(icon.id);
+      rows.push({
+        icon_id: `material:${icon.id}`,
+        id: icon.id,
+        name: icon.name || icon.id.replace(/[-_]/g, ' '),
+        library: 'material',
+        icon_type: 'font',
+        style: 'outline',
+        svg: null,
+      });
+      if (rows.length >= Math.max(1, limit)) break;
+    }
+    if (!foundAtRank) break;
+  }
+
+  return rows;
+}
+
 async function searchHostedIcons({
   query,
   library,
@@ -272,35 +372,70 @@ async function searchHostedIcons({
   locale = null,
   includeQueryFrame = false,
   usageContext = null,
+  exactIconId = null,
 }) {
-  let payload;
-  try {
-    payload = await searchIconsHostedMcp({
-      query,
-      library: library || null,
-      libraryMode,
-      style,
-      limit,
-      locale,
-      includeQueryFrame,
-      usageContext,
-    });
-  } catch (error) {
-    const fallbackResults = searchLocalFallbackIcons({
-      query,
-      library,
-      libraryMode,
-      style,
-      limit,
-      locale,
-    });
-    if (fallbackResults.length > 0) return fallbackResults;
+  // Material is the only library with verified solid support in the stable
+  // hosted catalog. Its rows are tagged outline, so solid searches must rank
+  // Material without the engine style filter and select the solid asset here.
+  const allModeMaterialSolid = libraryMode === 'all' && style === 'solid';
+  const hostedLibrary = allModeMaterialSolid ? 'material' : library;
+  const hostedLibraryMode = allModeMaterialSolid ? 'strict' : libraryMode;
+  const hostedStyle = hostedLibrary === 'material' && style === 'solid' ? 'any' : style;
+  const hostedLimit = exactIconId ? Math.max(limit, 50) : limit;
+  const useLocalMaterialRanking = hostedLibrary === 'material' && hostedLibraryMode === 'strict';
+
+  let rankedRows;
+  if (useLocalMaterialRanking) {
+    rankedRows = searchLocalMaterialRows({ query, limit: hostedLimit, locale, exactIconId });
+  } else {
+    let payload;
+    try {
+      payload = await searchIconsHostedMcp({
+        query,
+        library: hostedLibrary || null,
+        libraryMode: hostedLibraryMode,
+        style: hostedStyle,
+        limit: hostedLimit,
+        locale,
+        includeQueryFrame,
+        usageContext,
+      });
+    } catch (error) {
+      const fallbackResults = searchLocalFallbackIcons({
+        query,
+        library,
+        libraryMode,
+        style,
+        limit,
+        locale,
+      });
+      const selectedFallback = exactIconId
+        ? fallbackResults.filter((icon) => (
+          icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase()
+        )).slice(0, 1)
+        : fallbackResults;
+      if (selectedFallback.length > 0) return selectedFallback;
+      throw error;
+    }
+    rankedRows = Array.isArray(payload.results) ? payload.results : [];
+  }
+
+  const selectedRows = exactIconId
+    ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
+    : rankedRows.slice(0, Math.max(1, limit));
+  const hydration = await hydrateMaterialHostedRows(selectedRows, {
+    style,
+    onError: (error) => console.error('[SuperIcons] Material hydration failed:', error.message),
+  });
+  const selectedMaterialRows = selectedRows.filter((row) => getHostedRowIdentity(row).library === 'material');
+  if (hydration.failed > 0 && selectedMaterialRows.length > 0 && hydration.kept.length === 0) {
+    const error = new Error('Material assets are temporarily unavailable from the snapshot service.');
+    error.code = 'material_asset_unavailable';
     throw error;
   }
 
-  const hostedResults = (payload.results || [])
+  const hostedResults = hydration.kept
     .map(normalizeHostedIcon)
-    .filter(Boolean)
     .slice(0, Math.max(1, limit));
 
   if (hostedResults.length > 0) {
@@ -341,6 +476,7 @@ async function resolveHostedIconRef(ref, { style = 'any' } = {}) {
     library: parsed.library,
     style,
     limit: 50,
+    exactIconId: parsed.id,
   });
   const normalizedId = parsed.id.toLowerCase();
   const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
@@ -846,7 +982,7 @@ async function buildRequestContext(req) {
   };
 }
 
-function buildToolUsageContext(requestContext, toolName, args = {}) {
+function buildToolUsageContext(requestContext, toolName, args = {}, { eventId = randomUUID() } = {}) {
   const context = requestContext || {
     request_id: randomUUID(),
     channel: 'hosted_mcp',
@@ -870,7 +1006,15 @@ function buildToolUsageContext(requestContext, toolName, args = {}) {
     client_family: context.client_family,
     tool_name: toolName,
     request_id: context.request_id,
-    dedupe_key: [context.request_id, context.rpc_id, toolName, argsHash].filter(Boolean).join(':'),
+    dedupe_key: buildMcpUsageDedupeKey({
+      sessionHash: context.session_hash,
+      anonymousClientHash: context.anonymous_client_hash,
+      requestId: context.request_id,
+      rpcId: context.rpc_id,
+      toolName,
+      argsHash,
+      eventId,
+    }),
     session_hash: context.session_hash,
     ip_hash: context.ip_hash,
     country_code: context.country_code,
@@ -919,10 +1063,19 @@ function getConfidenceLabelFromToolResult(result) {
   return null;
 }
 
-function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok') {
-  const context = buildToolUsageContext(requestContext, toolName, args);
+function buildMcpUsageEventPayload(
+  requestContext,
+  toolName,
+  args,
+  result,
+  startedAt,
+  status = 'ok',
+  error = null,
+) {
+  const eventId = randomUUID();
+  const context = buildToolUsageContext(requestContext, toolName, args, { eventId });
   return {
-    event_id: randomUUID(),
+    event_id: eventId,
     request_id: context.request_id,
     dedupe_key: context.dedupe_key,
     event_type: ['search_icons', 'recommend_icons'].includes(toolName)
@@ -948,6 +1101,9 @@ function buildMcpUsageEventPayload(requestContext, toolName, args, result, start
       : null,
     beta_cohort: context.beta_cohort || null,
     status,
+    error_code: status === 'error'
+      ? normalizeUsageToken(error?.code, { maxLength: 80 }) || null
+      : null,
     latency_ms: Math.max(0, Date.now() - startedAt),
     country_code: requestContext?.country_code || null,
     geo_source: requestContext?.geo_source || null,
@@ -1004,7 +1160,15 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
     void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, 'ok'));
     return result;
   } catch (error) {
-    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, null, startedAt, 'error'));
+    void logMcpUsageEvent(buildMcpUsageEventPayload(
+      requestContext,
+      toolName,
+      args,
+      null,
+      startedAt,
+      'error',
+      error,
+    ));
     throw error;
   }
 }
@@ -1028,7 +1192,7 @@ function createServer({ requestContext = null } = {}) {
         query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
         library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
         library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the user asks for outline or solid icons.'),
+        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
         locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
         limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
         include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
@@ -1139,7 +1303,7 @@ function createServer({ requestContext = null } = {}) {
       inputSchema: {
         id: z.string().describe('Exact icon ID without the library prefix, for example "database", "user-circle", "brain-circuit", or "arrow-down".'),
         library: z.string().describe(`Required library key for the exact icon. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "any" unless the caller needs a specific variant.'),
+        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
       },
       outputSchema: getIconOutputSchema,
       annotations: auditedSearchAnnotations,
@@ -1151,6 +1315,7 @@ function createServer({ requestContext = null } = {}) {
         library,
         style,
         limit: 50,
+        exactIconId: id,
         usageContext: buildToolUsageContext(requestContext, 'get_icon', args),
       });
       const normalizedId = id.toLowerCase();
@@ -1231,13 +1396,19 @@ function createServer({ requestContext = null } = {}) {
       annotations: readOnlyLookupAnnotations,
     },
     async (args = {}) => withMcpUsageEvent(requestContext, 'list_libraries', args, async () => asStructured({
-      libraries: LIBRARIES.map(([id, name, description]) => ({
-        id,
-        name,
-        label: getPublicLibraryMeta(id, { name, description }).label,
-        description,
-        count: libraryCounts.get(id) || 0,
-      })),
+      libraries: LIBRARIES.map(([id, name, description]) => {
+        const capability = buildLibraryCapability(id, {
+          outlineCounts: hostedOutlineCounts,
+          materialUsesOutlineForSolid: true,
+        });
+        return {
+          id,
+          name,
+          label: getPublicLibraryMeta(id, { name, description }).label,
+          description,
+          ...capability,
+        };
+      }),
       publicRecordCount: registrySummary.publicRecordCount,
     }))
   );
@@ -1298,10 +1469,16 @@ app.use((req, res, next) => {
 });
 
 app.get('/health', (_req, res) => {
+  const materialAssets = getMaterialBundleStatus();
   sendJson(res, 200, {
     ok: true,
     service: 'supericons-remote-mcp',
     version: packageJson.version,
+    material_assets: {
+      available: materialAssets.available,
+      source_revision: materialAssets.sourceRevision,
+      asset_count: materialAssets.assetCount,
+    },
   });
 });
 
@@ -1367,7 +1544,15 @@ app.get('/preview-icons.png', async (req, res) => {
       error: error?.code || 'preview_image_unavailable',
       message: status >= 500 ? 'Preview image generation failed.' : error.message,
     });
-    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, 'preview_image', args, null, startedAt, 'error'));
+    void logMcpUsageEvent(buildMcpUsageEventPayload(
+      requestContext,
+      'preview_image',
+      args,
+      null,
+      startedAt,
+      'error',
+      error,
+    ));
   }
 });
 

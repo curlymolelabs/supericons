@@ -22,7 +22,14 @@ import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
 import {
   retrieveRecommendationCandidateBatches,
 } from './recommendation-candidate-retrieval.ts';
-import { hydrateFinalSvgRows, type FinalSvgRow } from './result-hydration.ts';
+import { hydrateServingSvgRows, type FinalSvgRow } from './result-hydration.ts';
+import {
+  filterEligibleMaterialCandidates,
+  materialStyleMatches,
+  resolveMaterialVariant,
+  uniqueMaterialCandidateIds,
+  type MaterialAssetRow,
+} from './material-serving.ts';
 import {
   createSearchStageTimer,
   estimateCandidatePayloadCharacters,
@@ -241,7 +248,7 @@ export async function handleSharedRecommendationSearchRequest(
       ),
     });
 
-    const candidatesByLogicalQuery = plans.map((plan, logicalQueryIndex) => {
+    const unfilteredCandidatesByLogicalQuery = plans.map((plan, logicalQueryIndex) => {
       const candidatesById = new Map<string, CandidateRow>();
       for (const batch of logicalBatches[logicalQueryIndex]) {
         if (batch.error) throw batch.error;
@@ -265,6 +272,44 @@ export async function handleSharedRecommendationSearchRequest(
       }
       return [...candidatesById.values()];
     });
+    const materialVariant = resolveMaterialVariant(plans[0].style);
+    const materialCandidateIds = [...new Set(
+      unfilteredCandidatesByLogicalQuery.flatMap((candidates) => uniqueMaterialCandidateIds(candidates)),
+    )];
+    let eligibleMaterialIds = new Set<string>();
+    if (materialCandidateIds.length > 0) {
+      const materialEligibilityResult = await timing.measure<any>(
+        'material_eligibility',
+        () => adminClient
+          .from('material_icon_assets')
+          .select('icon_id')
+          .eq('variant', materialVariant)
+          .in('icon_id', materialCandidateIds),
+      );
+      if (materialEligibilityResult.error) throw materialEligibilityResult.error;
+      eligibleMaterialIds = new Set(
+        (materialEligibilityResult.data || []).map((row: { icon_id: string }) => row.icon_id),
+      );
+    }
+    const candidatesByLogicalQuery = unfilteredCandidatesByLogicalQuery.map((candidates) => (
+      filterEligibleMaterialCandidates(candidates, eligibleMaterialIds)
+    ));
+    if (
+      plans[0].libraryMode === 'strict'
+      && plans[0].library === 'material'
+      && candidatesByLogicalQuery.some((candidates, index) => (
+        uniqueMaterialCandidateIds(unfilteredCandidatesByLogicalQuery[index]).length > 0
+        && candidates.length === 0
+      ))
+    ) {
+      throw new SearchEngineHttpError('Matching Material icons exist, but their SVG assets are unavailable.', {
+        status: 503,
+        code: 'material_asset_unavailable',
+        hint: 'Retry after the Material asset store is restored.',
+        retryable: true,
+        details: { variant: materialVariant },
+      });
+    }
     timing.addCounts({
       unique_candidates: new Set(
         candidatesByLogicalQuery.flatMap((candidates) => candidates.map((row) => row.icon_id)),
@@ -302,7 +347,7 @@ export async function handleSharedRecommendationSearchRequest(
         featuresById,
         { libraryMode: plan.libraryMode, requestedLibrary: plan.library },
       )
-        .filter((row) => plan.style === 'any' || row.style === plan.style)
+        .filter((row) => materialStyleMatches(row, plan.style))
         .slice(0, plan.limit))
     ));
     timing.addCounts({
@@ -312,14 +357,31 @@ export async function handleSharedRecommendationSearchRequest(
     const resultIconIds = [...new Set(
       rankedByLogicalQuery.flatMap((rows) => rows.map((row) => row.icon_id)),
     )];
+    const materialResultIds = [...new Set(
+      rankedByLogicalQuery.flatMap((rows) => rows
+        .filter((row) => row.source_library === 'material')
+        .map((row) => row.icon_id)),
+    )];
+    const catalogResultIds = resultIconIds.filter((iconId) => !materialResultIds.includes(iconId));
     let finalSvgById = new Map<string, string | null>();
+    let materialSvgRows: MaterialAssetRow[] = [];
     let publicRecordsById = new Map<string, Record<string, unknown>>();
     if (resultIconIds.length > 0) {
-      const [finalSvgResult, publicRegistryResult] = await Promise.all([
-        hydrateFinalSvg
+      const [finalSvgResult, materialSvgResult, publicRegistryResult] = await Promise.all([
+        hydrateFinalSvg && catalogResultIds.length > 0
           ? timing.measure<any>(
             'final_svg',
-            () => adminClient.from('icon_catalog').select('icon_id, svg').in('icon_id', resultIconIds),
+            () => adminClient.from('icon_catalog').select('icon_id, svg').in('icon_id', catalogResultIds),
+          )
+          : Promise.resolve(null),
+        materialResultIds.length > 0
+          ? timing.measure<any>(
+            'material_svg',
+            () => adminClient
+              .from('material_icon_assets')
+              .select('icon_id, variant, svg')
+              .eq('variant', materialVariant)
+              .in('icon_id', materialResultIds),
           )
           : Promise.resolve(null),
         timing.measure<any>(
@@ -331,11 +393,13 @@ export async function handleSharedRecommendationSearchRequest(
         ),
       ]);
       if (finalSvgResult?.error) throw finalSvgResult.error;
+      if (materialSvgResult?.error) throw materialSvgResult.error;
       if (finalSvgResult) {
         finalSvgById = new Map(
           ((finalSvgResult.data || []) as FinalSvgRow[]).map((row) => [row.icon_id, row.svg]),
         );
       }
+      materialSvgRows = materialSvgResult ? (materialSvgResult.data || []) as MaterialAssetRow[] : [];
       if (publicRegistryResult.error) throw publicRegistryResult.error;
       publicRecordsById = new Map(
         (publicRegistryResult.data || []).map((record: Record<string, unknown>) => [
@@ -346,12 +410,15 @@ export async function handleSharedRecommendationSearchRequest(
     }
 
     const resultsByLogicalQuery = rankedByLogicalQuery.map((rows) => {
-      const hydratedRows = hydrateFinalSvg
-        ? hydrateFinalSvgRows(
-          rows,
-          rows.map((row) => ({ icon_id: row.icon_id, svg: finalSvgById.get(row.icon_id) ?? null })),
-        )
-        : rows;
+      const hydratedRows = hydrateServingSvgRows(rows, {
+        catalogSvgRows: hydrateFinalSvg
+          ? rows
+            .filter((row) => row.source_library !== 'material')
+            .map((row) => ({ icon_id: row.icon_id, svg: finalSvgById.get(row.icon_id) ?? null }))
+          : null,
+        materialSvgRows,
+        materialVariant,
+      });
       return hydratedRows.map((row) => {
         const publicRecord = publicRecordsById.get(row.icon_id);
         return publicRecord
@@ -429,6 +496,7 @@ export async function handleSharedRecommendationSearchRequest(
             library_mode: plan.libraryMode,
             result_count: 0,
             search_outcome: 'error',
+            error_code: error instanceof SearchEngineHttpError ? error.code : 'search_service_unavailable',
             confidence_label: null,
             status: 'error',
             latency_ms: Date.now() - startedAt,

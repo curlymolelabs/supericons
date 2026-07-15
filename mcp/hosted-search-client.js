@@ -152,6 +152,7 @@ function buildLocalizedRetryQueries(query, locale) {
 
 async function postHostedSearch(url, headers, body) {
   let lastStatus = 0;
+  let lastPayload = null;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const response = await fetch(url, {
       method: 'POST',
@@ -164,15 +165,21 @@ async function postHostedSearch(url, headers, body) {
     }
 
     lastStatus = response.status;
+    lastPayload = await response.json().catch(() => null);
     if (response.status !== 429 && response.status < 500) break;
     await sleep(getRetryDelayMs(response, attempt));
   }
 
-  throw new Error(`hosted MCP search failed (${lastStatus})`);
+  const error = new Error(lastPayload?.message || `hosted MCP search failed (${lastStatus})`);
+  error.code = lastPayload?.error || 'hosted_search_failed';
+  error.status = lastStatus;
+  error.retryable = Boolean(lastPayload?.retryable);
+  throw error;
 }
 
 async function postPublicSearch(url, headers, body) {
   let lastStatus = 0;
+  let lastPayload = null;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const response = await fetch(url, {
       method: 'POST',
@@ -185,11 +192,16 @@ async function postPublicSearch(url, headers, body) {
     }
 
     lastStatus = response.status;
+    lastPayload = await response.json().catch(() => null);
     if (response.status !== 429 && response.status < 500) break;
     await sleep(getRetryDelayMs(response, attempt));
   }
 
-  throw new Error(`public MCP search failed (${lastStatus})`);
+  const error = new Error(lastPayload?.message || `public MCP search failed (${lastStatus})`);
+  error.code = lastPayload?.error || 'public_search_failed';
+  error.status = lastStatus;
+  error.retryable = Boolean(lastPayload?.retryable);
+  throw error;
 }
 
 async function retryLocalizedHostedSearch({ postSearch, url, headers, body, locale }) {
