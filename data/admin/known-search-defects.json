@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "defects": [
+    {
+      "id": "material_assets_unavailable_before_2026_07_15",
+      "name": "Material assets unavailable before hosted hydration",
+      "classification": "engine_defect",
+      "library_filters": [
+        "material"
+      ],
+      "search_outcomes": [
+        "zero"
+      ],
+      "statuses": [
+        "ok"
+      ],
+      "error_codes": [],
+      "match_null_error_code": true,
+      "starts_at": null,
+      "ends_at_inclusive": "2026-07-15T18:06:17.8324190Z",
+      "production_reference": "railway:5ea2e0b8-201a-4be9-81b7-a450d7f85c61"
+    }
+  ]
+}
