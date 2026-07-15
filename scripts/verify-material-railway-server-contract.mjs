@@ -138,6 +138,13 @@ try {
   assert.equal(parsePayload(exact).icon.id, 'settings');
   assert.equal(snapshotRequests.length, 1, 'exact lookup must fetch one asset');
   assert.equal(snapshotRequests[0].icon, 'settings');
+  const exactEvent = await waitForUsageEvent((event) => (
+    event.tool_name === 'get_icon' && event.status === 'ok'
+  ));
+  assert.equal(exactEvent.query_origin, 'icon_lookup');
+  assert.equal(exactEvent.requested_limit, 1);
+  assert.equal(exactEvent.client_ip_public, false);
+  assert.equal(exactEvent.country_code, null);
 
   const preview = await client.callTool({
     name: 'preview_icons',
@@ -166,6 +173,12 @@ try {
   assert.ok(allModePayload.results.every((row) => row.library === 'material' && row.style === 'solid' && row.svg));
   assert.ok(snapshotRequests.length - beforeAllMode <= 5);
   assert.equal(hostedSearchRequests, 0, 'verified Material-only solid mode must not contact hosted search');
+  const searchEvent = await waitForUsageEvent((event) => (
+    event.tool_name === 'search_icons' && event.status === 'ok'
+  ));
+  assert.equal(searchEvent.query_origin, 'agent_query');
+  assert.equal(searchEvent.requested_limit, 5);
+  assert.equal(searchEvent.client_ip_public, false);
 
   snapshotFailure = true;
   const failed = await client.callTool({
@@ -187,6 +200,18 @@ try {
     all_mode_solid_count: allModePayload.results.length,
     error_code: errorEvent.error_code,
     hosted_search_requests: hostedSearchRequests,
+    telemetry_contract: {
+      get_icon: {
+        query_origin: exactEvent.query_origin,
+        requested_limit: exactEvent.requested_limit,
+        client_ip_public: exactEvent.client_ip_public,
+      },
+      search_icons: {
+        query_origin: searchEvent.query_origin,
+        requested_limit: searchEvent.requested_limit,
+        client_ip_public: searchEvent.client_ip_public,
+      },
+    },
   }));
 } finally {
   await client.close().catch(() => {});

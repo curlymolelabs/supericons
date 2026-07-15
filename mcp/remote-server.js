@@ -37,6 +37,11 @@ import { getBetaCohortForTool } from './release-channel.js';
 import { buildLibraryCapability } from './library-capabilities.js';
 import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
 import {
+  deriveMcpQueryOrigin,
+  getMcpRequestedLimit,
+  resolveCountryContext,
+} from './usage-attribution.js';
+import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
   getSemanticRecordForIcon,
@@ -775,14 +780,7 @@ function getClientIpToken(req) {
   return '';
 }
 
-function normalizeCountryCode(value) {
-  const raw = String(value || '').trim().toUpperCase();
-  if (!/^[A-Z]{2}$/.test(raw)) return null;
-  if (['XX', 'ZZ', 'T1'].includes(raw)) return null;
-  return raw;
-}
-
-function getCountryContext(req) {
+function getCountryContext(req, clientIp) {
   const headerCandidates = [
     ['cf-ipcountry', req.get('cf-ipcountry')],
     ['x-vercel-ip-country', req.get('x-vercel-ip-country')],
@@ -793,19 +791,7 @@ function getCountryContext(req) {
     ['cloudfront-viewer-country', req.get('cloudfront-viewer-country')],
     ['x-appengine-country', req.get('x-appengine-country')],
   ];
-  for (const [name, value] of headerCandidates) {
-    const countryCode = normalizeCountryCode(value);
-    if (countryCode) {
-      return {
-        country_code: countryCode,
-        geo_source: name,
-      };
-    }
-  }
-  return {
-    country_code: null,
-    geo_source: null,
-  };
+  return resolveCountryContext({ clientIp, headerCandidates });
 }
 
 function extractMcpApiKey(req) {
@@ -954,7 +940,7 @@ async function buildRequestContext(req) {
     req.get('x-request-id') || req.get('cf-ray') || req.body?.id || randomUUID(),
     { maxLength: 120 },
   );
-  const country = getCountryContext(req);
+  const country = getCountryContext(req, clientIp);
   const sessionHash = hashUsageValue(req.get('mcp-session-id') || req.get('x-session-id') || '');
 
   return {
@@ -965,6 +951,7 @@ async function buildRequestContext(req) {
     client_family: clientFamily,
     country_code: country.country_code,
     geo_source: country.geo_source,
+    client_ip_public: country.client_ip_public,
     session_hash: sessionHash,
     ip_hash: hashUsageValue(clientIp),
     anonymous_client_hash: hashUsageValue(`${clientIp}|${userAgent}|${clientFamily}|${monthBucket}|supericons-hosted-mcp`),
@@ -1092,6 +1079,8 @@ function buildMcpUsageEventPayload(
     library_mode: ['search_icons', 'recommend_icons'].includes(toolName)
       ? normalizeUsageToken(args?.library_mode, { maxLength: 20 }) || 'strict'
       : null,
+    query_origin: deriveMcpQueryOrigin(toolName),
+    requested_limit: getMcpRequestedLimit(toolName, args),
     result_count: status === 'ok' ? getResultCountFromToolResult(result, toolName) : 0,
     search_outcome: ['search_icons', 'recommend_icons'].includes(toolName)
       ? getSearchOutcomeFromToolResult(result, toolName, status)
@@ -1107,6 +1096,7 @@ function buildMcpUsageEventPayload(
     latency_ms: Math.max(0, Date.now() - startedAt),
     country_code: requestContext?.country_code || null,
     geo_source: requestContext?.geo_source || null,
+    client_ip_public: requestContext?.client_ip_public === true,
     locale: normalizeUsageText(args?.locale, { maxLength: 32 }),
     session_hash: context.session_hash || null,
     ip_hash: context.ip_hash || null,

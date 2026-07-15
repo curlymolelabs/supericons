@@ -58,9 +58,9 @@ The first registry entry covers only Material zero-result outcomes before the su
 
 ## Country lookup and licensing decision
 
-The Railway fallback will use the exact `geoip-country` dataset package version `5.0.202607150057`, after trusted country headers and only for a valid public client IP. It is country-only and its installed unpacked size is about 8.2 MB.
+The Railway fallback will use the maintained MaxMind database reader `maxmind` version `5.0.6` with the exact data-only package `@ip-location-db/geolite2-country-mmdb` version `2.3.2026061719`, after trusted country headers and only for a valid public client IP. It is country-only. The pinned data package adds about 18.1 MB unpacked to the server installation.
 
-The approved specification proposed quarterly updates. That cadence is not used because the current GeoLite2 terms require old database versions to stop being used and be destroyed within 30 days after an update. The implementation therefore requires a dependency and notice review at least every 30 days. The exact package version stays pinned in each release for repeatable builds.
+The approved specification proposed quarterly updates. That cadence is not used because the current GeoLite2 terms require old database versions to stop being used and be destroyed within 30 days after an update. The implementation therefore requires a dependency and notice review at least every 30 days. The exact reader and data package versions stay pinned in each release for repeatable builds. A deprecated country lookup package was rejected after its direct dependency path triggered a security advisory.
 
 Private, reserved, documentation, loopback, link-local, multicast, and unparseable IP values return no country. A successful local lookup records `geo_source = railway_geoip`. Only the two-letter country code is stored.
 
@@ -72,4 +72,3 @@ Private, reserved, documentation, loopback, link-local, multicast, and unparseab
 - Hosted MCP attribution, requested-limit, public-IP, GeoIP, and two-session dedupe tests.
 - Clean-install or production-equivalent hosted server smoke test.
 - Release packet verifiers that reject unpinned surfaces or unauthorized mutation commands.
-

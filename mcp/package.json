@@ -57,6 +57,7 @@
     "semantic-registry.js",
     "telemetry.js",
     "usage-dedupe.js",
+    "usage-attribution.js",
     "variant-support.js",
     "workflow-access.js"
   ],
@@ -68,10 +69,12 @@
     "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {
+    "@ip-location-db/geolite2-country-mmdb": "2.3.2026061719",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "@neplex/vectorizer": "^0.0.5",
     "@resvg/resvg-js": "^2.6.2",
     "express": "^5.2.1",
+    "maxmind": "5.0.6",
     "zod": "^3.24.0"
   }
 }
