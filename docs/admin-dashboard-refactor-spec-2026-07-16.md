@@ -9,39 +9,47 @@
 
 Everything the UI will display must first be true and fast. Additive migrations only. Every production mutation (migration, admin-api function deploy, Railway deploy) ships under the established guarded-packet discipline with owner approval sentences.
 
-### A1. query_origin tagging
+### A1. query_origin classification WITHOUT touching mcp-search
 
-- Additive columns `query_origin text` on `search_request_audit` and `mcp_usage_events`. No write backfill; reads treat NULL as `legacy_unknown`.
-- Writers in the hosted MCP server set per call site: `agent_query` (top-level search_icons and the recommend_icons task string), `recommend_variant` (recommendation inner per-query searches), `icon_lookup` (get_icon resolution searches). The engine handler passes the field through from the request body into both audit writes.
+- No mcp-search deployment in Phase A. Origin is obtained two ways:
+  a. `search_request_audit` rows: derived at READ time in the admin API from existing fields. Mapping: `tool_name = 'recommend_icons'` means `recommend_variant`; `tool_name = 'get_icon'` means `icon_lookup`; `tool_name = 'search_icons'` (or web sources) means `agent_query`; anything unclassifiable means `legacy_unknown`.
+  b. `mcp_usage_events`: additive `query_origin text` column written by the Railway server (which already knows the call site); the recommend task string is `agent_query`, inner slot searches are not usage events. NULL reads as `legacy_unknown`.
+- Additive `requested_limit integer` column on `mcp_usage_events`, written by the Railway server from tool args. Low-result definition (restored from the 2026-07-14 PRD): `0 < result_count < min(requested_limit, 3)`; a result_count equal to requested_limit is a capped success, never low. Audit-table rows without requested_limit keep the legacy definition and are labeled approximate.
+- Known-defect classification (restored): a small versioned defect registry (JSON in the repo, loaded by the admin API) mapping error_code values, date ranges, and library filters to named defects; matching rows are excluded from true-zero and shown under Engine health. The Material historical zeros (through 2026-07-16) become the first registry entry.
 - Admin API groups and filters by origin. Default views and all headline counts use `agent_query` only; `legacy_unknown` is its own visible bucket, never merged.
-- Acceptance: the Top MCP Queries list filtered to agent_query contains no recommendation slot fragments (current examples: reply, respond, answer, dropdown). A spot query proves inner recommendation searches carry `recommend_variant`.
+- Acceptance: the Top MCP Queries list filtered to agent_query contains no recommendation slot fragments (current examples: reply, respond, answer, dropdown); a search with limit 3 returning 3 is not counted low; pre-fix material zeros appear as defect-classified, not as content gaps.
 
-### A2. Visitor identity and unique-visitor counting
+### A2. Estimated unique clients (identity precedence)
 
 - One precedence rule everywhere: `user_id`, else `api_key_hash`, else `anonymous_client_hash`, else `session_hash`, else `ip_hash`. First non-null becomes `visitor_key` (prefixed by kind, for example `anon:abc123`). Never union different hash kinds as separate visitors for the same row.
 - Admin API returns per-query-row `unique_visitors` and per-window totals: unique visitors, searches per visitor, and returning visitors (seen in a prior window).
 - Dedupe-aware counting: rows in `search_request_audit` and `mcp_usage_events` sharing a `dedupe_key` count once (reliable now that the v2 dedupe key shipped in MCP 0.4.18).
-- Acceptance: a manual SQL spot check of one 24h window matches the endpoint's unique-visitor total; a single client issuing 10 searches shows 10 searches, 1 visitor.
+- Honesty constraint: the anonymous client hash includes a monthly rotation bucket (remote-server.js identity derivation), so cross-month identity is not stable. All UI copy says "estimated unique clients"; returning-client metrics are computed within a calendar month only, and the limitation is documented in the dashboard help text.
+- Acceptance: a manual SQL spot check of one 24h window matches the endpoint's estimated-unique-clients total; a single client issuing 10 searches shows 10 searches, 1 client.
 
 ### A3. Country capture on Railway
 
-- Country-level GeoIP inside the hosted MCP server, computed from the client IP before hashing, only when the existing header chain (cf-ipcountry and friends) yields nothing. Use a country-only dataset small enough to bundle (geoip-country class, a few MB); record `geo_source: railway_geoip`. Include dataset license notice in the repo license documentation.
-- Acceptance: at least 90 percent of new hosted MCP events carry `country_code` within 24 hours of deploy; the dashboard audience line shows countries instead of "country not captured" for new traffic.
+- Country-level GeoIP inside the hosted MCP server, computed from the client IP before hashing, only when the existing header chain (cf-ipcountry and friends) yields nothing. Concrete requirements: a country-only GeoLite2-derived package small enough to bundle (a few MB, executor selects and pins the exact package and dataset version); GeoLite2 license notice and attribution added to the repo license documentation; dataset updates via pinned dependency bumps on a quarterly cadence recorded in the spec; private, reserved, or unparseable client IPs yield country null with geo_source null (never a guessed country); record `geo_source: railway_geoip` on successful lookups.
+- Acceptance: at least 90 percent of new hosted MCP events carry `country_code` within 24 hours of deploy, where the denominator excludes internal_test and verify channels and events without a valid public client IP; the dashboard audience line shows countries for new traffic.
 
 ### A4. Endpoint speed: indexes plus rollups
 
 - Add supporting indexes for the windowed aggregation paths (created_at plus the grouping columns actually used by the queue endpoint) on both telemetry tables.
-- New additive table `admin_search_rollups`: daily buckets keyed by (day, channel, environment, query_origin) storing searches, zero_results, low_results, errors, and distinct-visitor count for that day. Maintained by a scheduled job or on-demand refresh triggered by the admin API when a day is stale.
-- Windowing policy: 24h and 7d views aggregate raw rows (index-backed); longer windows and "all time" read rollups only and label visitor totals as per-day sums.
+- Two additive rollup tables, split by purpose: `admin_rollup_overview` keyed by (day, channel, environment, query_origin) for KPI totals, and `admin_rollup_queries` keyed by (day, query_norm, library_filter, query_origin) storing searches, zero, low, and errors, which serves the all-time query worklist. Maintained by on-demand refresh when a day is stale.
+- Distinct-client counts are computed only from raw rows within bounded windows (24h, 7d, calendar month). Longer windows display per-day client-day sums labeled exactly that ("client-days"), never as unique clients.
 - Acceptance: queue endpoint p95 under 1.5 seconds for the 24h window at current volume; "all time" responds under 1 second from rollups; no full-history raw scans remain in any default path.
 
 ### A5. Honest field exposure
 
 - API stops emitting permanently empty fields for MCP rows (plan, purpose, source domain, replaced counts) except inside the detail drawer payload where present. Country and visitor kind are emitted explicitly so the UI never invents placeholders.
 
+### Implementation baseline (mandatory)
+
+- Production Railway MCP runs branch `codex/material-railway-hydration-release` at `31ac66dfe` (v0.4.18 with the dedupe fix). Main still carries `0.4.18-beta.0` without it. All Phase A Railway-side work branches from `31ac66dfe` in a CLEAN dedicated worktree; the dirty main worktree (uncommitted admin.html, admin-app.js, admin-api changes) is not an implementation base. The executor verifies the deployed admin-api baseline as part of packet preparation, as done for prior packets. Merging the release branch back to main is a separate follow-up task, not part of Phase A.
+
 ### Phase A packaging
 
-Three external mutations, sequenced: (1) migration (columns, indexes, rollup table), (2) admin-api function deploy, (3) Railway MCP deploy (origin tagging plus GeoIP; note this is also the release vehicle for the npm-pending dedupe fix already live in 0.4.18). Each gets the standard fingerprinted packet, auditor verification, and owner sentence. Gate probes classify as internal_test. Rollback per packet: additive schema stays; function and Railway deploys roll back by redeploying prior versions (deployment IDs pinned pre-deploy).
+Three external mutations, sequenced: (1) migration (mcp_usage_events columns, indexes, two rollup tables), (2) admin-api function deploy (read-time origin derivation, identity precedence, defect registry, rollups), (3) Railway MCP deploy (origin and requested_limit writing plus GeoIP). No mcp-search deployment. Each mutation gets the standard fingerprinted packet, auditor verification, and owner sentence. Gate probes classify as internal_test. Rollback per packet: additive schema stays; function and Railway deploys roll back by redeploying prior pinned versions (deployment IDs captured pre-deploy).
 
 ## Phase B: UI consolidation (local-only, no production gates)
 
