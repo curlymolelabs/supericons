@@ -198,4 +198,3 @@ comment on table public.admin_rollup_overview is
   'Private completed-UTC-day KPI totals for the admin dashboard.';
 comment on table public.admin_rollup_queries is
   'Private completed-UTC-day per-query totals for the admin gap worklist.';
-

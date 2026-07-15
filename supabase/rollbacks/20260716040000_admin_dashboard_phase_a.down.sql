@@ -13,4 +13,3 @@ alter table if exists public.mcp_usage_events
   drop column if exists client_ip_public,
   drop column if exists requested_limit,
   drop column if exists query_origin;
-

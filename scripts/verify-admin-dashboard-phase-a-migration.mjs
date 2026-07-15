@@ -179,4 +179,3 @@ try {
 } finally {
   removeContainer();
 }
-
