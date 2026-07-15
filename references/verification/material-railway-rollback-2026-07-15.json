@@ -1,0 +1,23 @@
+{
+    "artifact":  "material_railway_rollback",
+    "approval_fingerprint":  "0830bf06faeeb14cf8fee1b050a8783d0fe6cbebdd17f7ce2a10a95b73fbaea7",
+    "reason":  "node failed with exit code 1",
+    "failed_deployment_id":  "f542a597-04b5-4a60-987b-9d3737c2fcbc",
+    "rollback_revision":  "02b2c22ea8a76decee92d83c853ca6cf33899e6c",
+    "rollback_deployment_id":  "e789c810-ad5d-4808-9bdc-396a799372c5",
+    "rollback_image_digest":  "sha256:043f4d748963bcd3e6198880472066a02690351569c601db0ef289b52cef9392",
+    "started_at":  "2026-07-15T12:19:48.9714173Z",
+    "finished_at":  "2026-07-15T12:21:11.1250301Z",
+    "legacy_gate":  {
+                        "artifact":  "material_railway_legacy_live_probe",
+                        "mcp_url":  "https://mcp.supericons.dev/mcp",
+                        "started_at":  "2026-07-15T12:21:05.843Z",
+                        "status":  "ok",
+                        "health_version":  "0.4.17",
+                        "material_result_count":  0,
+                        "material_latency_ms":  2381.6,
+                        "lucide_result_count":  3,
+                        "lucide_latency_ms":  1767.9,
+                        "finished_at":  "2026-07-15T12:21:11.085Z"
+                    }
+}
