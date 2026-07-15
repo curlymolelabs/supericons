@@ -15,6 +15,10 @@ import {
 import { logMcpSearchAttempt } from '../mcp/telemetry.js';
 
 const betaVersion = '0.4.18-beta.0';
+const packageVersion = JSON.parse(readFileSync('mcp/package.json', 'utf8')).version;
+const activeSearchFunction = getHostedSearchFunctionNameForTool(packageVersion, 'search_icons');
+const activeRecommendationFunction = getHostedSearchFunctionNameForTool(packageVersion, 'recommend_icons');
+const activeSearchCohort = getBetaCohortForTool(packageVersion, 'search_icons');
 assert.equal(
   getHostedSearchFunctionNameForTool(betaVersion, 'search_icons'),
   BETA_HOSTED_SEARCH_FUNCTION,
@@ -140,9 +144,9 @@ try {
 
   const hostedRequests = requests.filter((request) => !request.url.includes('/rest/v1/rpc/'));
   assert.equal(hostedRequests.length, 2);
-  assert.match(hostedRequests[0].url, new RegExp(`/${BETA_HOSTED_SEARCH_FUNCTION}$`));
-  assert.match(hostedRequests[1].url, new RegExp(`/${STABLE_HOSTED_SEARCH_FUNCTION}$`));
-  assert.equal(hostedRequests[0].body.beta_cohort, DETERMINISTIC_BETA_COHORT);
+  assert.match(hostedRequests[0].url, new RegExp(`/${activeSearchFunction}$`));
+  assert.match(hostedRequests[1].url, new RegExp(`/${activeRecommendationFunction}$`));
+  assert.equal(hostedRequests[0].body.beta_cohort, activeSearchCohort || undefined);
   assert.equal(hostedRequests[1].body.beta_cohort, undefined);
   assert.equal(hostedRequests[1].body.tool_name, 'recommend_icons');
 
@@ -211,9 +215,13 @@ try {
 
 console.log(JSON.stringify({
   status: 'ok',
-  search_route: BETA_HOSTED_SEARCH_FUNCTION,
-  recommendation_route: STABLE_HOSTED_SEARCH_FUNCTION,
-  search_beta_cohort: DETERMINISTIC_BETA_COHORT,
+  package_version: packageVersion,
+  active_search_route: activeSearchFunction,
+  active_recommendation_route: activeRecommendationFunction,
+  active_search_beta_cohort: activeSearchCohort,
+  beta_contract_search_route: BETA_HOSTED_SEARCH_FUNCTION,
+  beta_contract_recommendation_route: STABLE_HOSTED_SEARCH_FUNCTION,
+  beta_contract_search_cohort: DETERMINISTIC_BETA_COHORT,
   recommendation_beta_cohort: null,
   english_variant_limit: 4,
   localized_variant_limit: 8,

@@ -1,6 +1,6 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-14
+Last verified: 2026-07-16
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
 ## Lifecycle definitions
@@ -20,7 +20,7 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 | phase | current state | implemented | locally verified | packaged | deployed | observed live | controlling evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `P0` Governance and baseline | Complete for the approved fixed-suite scope | Official specification version 1.7; sanitized July 11 baseline; 225-case evaluation suite; approved legacy, SI-brand, and multilingual meaning reviews; deterministic-first decisions `D-021` through `D-023` | Traceability audit passed; all 225 cases have stable IDs; 219 cases are owner-reviewed and 6 are contract fixtures; revoked provider authorization fails closed before execution | Not applicable | Not applicable | Not applicable | `docs/si-v2/search/consolidation-traceability.md`; `docs/si-v2/search/reviews/multilingual-evaluation-owner-review-2026-07-12.md`; `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `references/verification/search-query-baseline-2026-07-11.md` |
-| `P1` Shared deterministic understanding | Search-only beta preparation and the one-slot shared recommendation treatment are locally verified; neither is released | Search intent and ranking policy; recommendation clarification; strict/prefer/all modes; tool-scoped beta routing; legal English and localized workload limits; end-to-end tool latency logging; persisted worker evidence; SVG-free ordered candidate RPCs; shared recommendation candidate, metadata, semantic, SVG, and bulk-audit work; logical-query rate-limit accounting; public-safe in-band timing; guarded SQL runners; rollback plans | The 225-case, ranking, library, clarification, routing, full recommendation byte-parity, HTTP parity, stage-timing, Deno type, and PostgreSQL 17 gates pass. The shared four-query treatment uses one candidate RPC and one bulk audit insert while keeping four rate units and four audit rows. Existing live evidence still shows direct search at 1,647.287 ms p95 and localized search at 1,549.441 ms p95, while the prior recommendation measurement is invalid for the intended English workload because it used eight queries. | The current `@supericons/mcp` 0.4.18-beta.0 package dry-run and clean install contain 38 expected files; not published | Migrations `20260712`, `20260713150000`, and `20260714120000` are deployed. Migrations `20260714180000` and `20260714190000` are local only. Isolated round-trip endpoints were deleted. Production functions remain unchanged. | Existing live parity passed with zero request errors. The current tool-scoped and shared-treatment changes have not been observed live. | `references/verification/search-v2-tool-scoped-beta-and-shared-recommendation-local-2026-07-14.md`; `references/verification/search-v2-roundtrip-latency-execution-2026-07-14.md`; `references/verification/search-v2-roundtrip-latency-summary-2026-07-14.json` |
+| `P1` Shared deterministic understanding | Search v2 and Material support are reconciled and locally verified on an isolated integration branch; a fresh beta is not yet cut | Search intent and ranking policy; recommendation clarification; strict/prefer/all modes; legal English and localized workload limits; end-to-end tool latency logging; persisted worker evidence; SVG-free ordered candidate RPCs; shared recommendation candidate, metadata, semantic, SVG, and bulk-audit work; logical-query rate-limit accounting; public-safe in-band timing; Material ranking and fixed-preset SVG hydration; usage-event dedupe; guarded SQL runners; rollback plans | The 225-case, ranking, library, clarification, routing, full recommendation byte-parity, HTTP parity, Material serving, package safety, stage-timing, Deno, deterministic-default, and PostgreSQL 17 gates pass on merge commit `4c794104f`. The Search v2 result fingerprint is `e610fce3...593e76`. Existing live Search v2 evidence still shows direct search at 1,647.287 ms p95 and localized search at 1,549.441 ms p95. The prior recommendation measurement remains invalid for the intended English workload because it used eight queries. | Stable package source `0.4.18` passes package inventory and clean-install gates; npm `latest` remains `0.4.17` | Saved evidence records Search v2 migrations through `20260714120000`, Material migrations `20260714220000` and `20260714223000`, `serve-material-snapshot` version 49, and emergency rollback `mcp-search` version 38. Current live Supabase metadata awaits an authenticated read-only check. Migrations `20260714180000` and `20260714190000` remain local only. | Railway health was observed live at MCP version `0.4.18` with 8,524 Material assets. Search v2 beta behavior has not been observed live. | `references/verification/search-v2-material-integration-2026-07-16.md`; `references/verification/material-railway-recovery-narrow-completion-2026-07-16.md`; `references/verification/search-v2-roundtrip-latency-execution-2026-07-14.md` |
 | `P2` Search projection | Partially implemented | Five-type semantic document generator, 75,560-document local output, additive `icon_search_semantic_documents` migration draft | Document determinism, registry compatibility, public safety, and 28-query seed passed July 1 | Not applicable | Not verified; saved record says migration was not deployed | Not verified | `references/verification/semantic-search-v2-phase-0-1-2026-07-01.md`; `supabase/migrations/20260701_semantic_search_v2_documents.sql` |
 | `P3` Offline embeddings | Conditional and paused by `D-021`; external sample authorization revoked before execution | Provider-neutral planning, sample, adapters, response validation, executor, and replay ledger remain as inactive reference artifacts; no corpus embedding generation, sync adapter, or vector-storage migration | Revoked authorization is verified to fail before credentials, ledger creation, or network activity; no live provider response or retrieval quality was tested | Not applicable | Not verified | Not verified | `references/verification/search-v2-deterministic-first-pivot-2026-07-12.md`; `docs/si-v2/search/experiments/offline-embedding-sample-contract-2026-07-12.md`; `docs/si-v2/search/reviews/embedding-sample-authorization-request-2026-07-12.md` |
 | `P4` Shadow retrieval and fusion | Not implemented | Query-frame diagnostics exist, but no vector retrieval/fusion path was verified | Not verified | Not applicable | Not verified | Not verified | Query-frame shadow verification explicitly leaves default ranking unchanged |
@@ -121,23 +121,27 @@ For the deterministic-first scope, the read-only hosted migration inventory and 
 
 ## Deployment and publication state
 
-The saved July 1 verification records explicitly report:
+| surface | current evidence |
+| --- | --- |
+| Integration source | Search v2 and Material coexist on merge commit `4c794104f`. No release was made from the integration branch. |
+| Railway hosted MCP | Live health reports MCP version `0.4.18` and 8,524 Material assets. |
+| npm registry | Read-only registry verification reports `latest` at `0.4.17`. |
+| Supabase database and Storage | Saved Material release records report the two Material migrations, 8,524 private asset rows, and 8,524 Storage objects. Current live state was not queried in the integration. |
+| Supabase functions | Saved records report snapshot function version 49 and stable search rollback version 38. Current live metadata awaits an authenticated read-only check. |
+| Search v2 beta | The earlier packet predates Material and is stale. No integrated beta endpoint or npm prerelease exists. |
 
-- no Netlify deployment;
-- no Supabase deployment or catalog sync for the query-frame/semantic-v2 slices; and
-- no npm publication.
-
-This ledger does not infer current production deployment from file presence, package metadata, or a later version string. A current environment check is required before marking any v2 behavior deployed or observed live.
+The complete four-surface map and its evidence limits are recorded in `references/verification/search-v2-material-integration-2026-07-16.md`.
 
 ## Immediate next gate
 
-Split the two tool gates:
-
-1. Prepare one fingerprint-bound search-only beta request covering migration `20260714180000`, the isolated `mcp-search-v2-beta` function, the npm `beta` tag, the stable recommendation route, the seven-day window, and rollback.
-2. Keep `recommend_icons` on the stable endpoint during that beta and verify its full response bytes remain unchanged.
-3. Use beta evidence to report real first-request and reused-worker search latency separately from end-to-end MCP tool latency.
-4. Keep the shared recommendation treatment local until a legal one-slot workload and an evidence-based local estimate support a confirmatory measurement request.
-5. If a later shared-treatment live p95 passes 3,000 ms, prepare a separate recommendation beta. If it fails, evaluate the local MCP index against quality, package size, startup, memory, freshness, and telemetry before choosing it.
+1. Complete one authenticated, read-only Supabase state check for function versions and the Material migration ledger.
+2. Independently review the integration report and combined verification evidence.
+3. Integrate the reviewed branch into main without disturbing unrelated work.
+4. Resolve or explicitly accept the inherited `hono` and `qs` advisories before the next npm publication or production code deployment.
+5. Recut the search-only beta with a fresh package version and fingerprint. Add Material checks, bounded concurrency, platform-log error accounting, dedupe verification, and separate cold-request reporting.
+6. Keep `recommend_icons` on the stable endpoint during that beta and verify its complete response bytes remain unchanged.
+7. Keep the shared recommendation treatment local until a legal one-slot workload and an evidence-based local estimate support a confirmatory measurement request.
+8. If a later shared-treatment live p95 passes 3,000 ms, prepare a separate recommendation beta. If it fails, evaluate the local MCP index against quality, package size, startup, memory, freshness, and telemetry before choosing it.
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 

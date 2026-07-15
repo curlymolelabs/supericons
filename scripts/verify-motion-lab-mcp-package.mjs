@@ -13,12 +13,17 @@ const expectedFiles = [
   'generated/motion-lab-baseline.json',
   'hosted-search-client.js',
   'index.js',
+  'library-capabilities.js',
   'material-export.js',
+  'material-hydration.js',
   'mcp-output-localization.js',
   'motion-lab-client.js',
   'motion-lab.js',
   'package.json',
   'public/cjk-search-terms.json',
+  'public/icon-index-solid.json',
+  'public/icon-index.json',
+  'public/material-export-manifest.json',
   'public/multilingual-search-aliases.json',
   'public/product-facts.json',
   'public-icon-preview.js',
@@ -42,13 +47,12 @@ const expectedFiles = [
   'search.js',
   'server.json',
   'telemetry.js',
+  'usage-dedupe.js',
   'variant-support.js',
   'workflow-access.js',
 ];
 
 const blockedFiles = [
-  'public/icon-index.json',
-  'public/icon-index-solid.json',
   'public/registry-records.json',
   'public/registry-summary.json',
   'public/synonyms.json',
@@ -109,7 +113,7 @@ if (blocked.length) {
   fail(`protected package includes bulk registry files: ${blocked.join(', ')}`);
 }
 
-if (Number(packInfo.unpackedSize || 0) > 2_500_000) {
+if (Number(packInfo.unpackedSize || 0) > 25_000_000) {
   fail(`protected package is too large: ${packInfo.unpackedSize} bytes unpacked`);
 }
 
