@@ -1,0 +1,67 @@
+{
+  "artifact": "material_search_engine_stability_probe",
+  "search_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search",
+  "started_at": "2026-07-15T15:33:08.949Z",
+  "contract": {
+    "count": 6,
+    "interval_ms": 36000,
+    "latency_limit_ms": 5000,
+    "request_timeout_ms": 10000,
+    "source": "verify",
+    "channel": "internal_test",
+    "environment": "production",
+    "client_family": "material_railway_recovery"
+  },
+  "probes": [
+    {
+      "sequence": 1,
+      "started_at": "2026-07-15T15:33:08.951Z",
+      "duration_ms": 4554.7,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:33:13.508Z"
+    },
+    {
+      "sequence": 2,
+      "started_at": "2026-07-15T15:33:49.516Z",
+      "duration_ms": 3684.3,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:33:53.201Z"
+    },
+    {
+      "sequence": 3,
+      "started_at": "2026-07-15T15:34:29.215Z",
+      "duration_ms": 3105,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:34:32.320Z"
+    },
+    {
+      "sequence": 4,
+      "started_at": "2026-07-15T15:35:08.326Z",
+      "duration_ms": 3165.5,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:35:11.492Z"
+    },
+    {
+      "sequence": 5,
+      "started_at": "2026-07-15T15:35:47.507Z",
+      "duration_ms": 4407.6,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:35:51.917Z"
+    },
+    {
+      "sequence": 6,
+      "started_at": "2026-07-15T15:36:27.923Z",
+      "duration_ms": 3943.6,
+      "status_code": 200,
+      "result_count": 3,
+      "finished_at": "2026-07-15T15:36:31.867Z"
+    }
+  ],
+  "status": "ok",
+  "finished_at": "2026-07-15T15:36:31.867Z"
+}
