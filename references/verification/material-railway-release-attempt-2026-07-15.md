@@ -46,6 +46,14 @@ The next MCP request exceeded the client's 60-second timeout. Based on the fixed
 
 Candidate container logs show normal startup followed by the expected stop signal after rollback. They do not contain an application exception for the timed-out request.
 
+## Independent search-engine controls
+
+Direct production search-engine probes ran from a separate network path during the candidate gate. The retained notes are in `references/verification/material-railway-incident-engine-probes-2026-07-15.json`.
+
+The controls recorded one HTTP 500 after 27,326 ms during the gate window, followed by slow successful responses of 14,556 ms, 20,470 ms, and 14,870 ms. A later response completed in 950 ms at `2026-07-15T12:20:42Z`.
+
+These controls support a dependency congestion explanation for the timed-out all-mode request. They do not identify the underlying database cause. The original response bodies and client log file were not retained, so the artifact records the contemporaneous measurements and their limitation rather than presenting them as independently reproducible raw logs.
+
 ## Automatic rollback
 
 The runner detected that the candidate had reached `SUCCESS`, so the approved conditional rollback ran immediately.

@@ -1,0 +1,62 @@
+{
+  "artifact": "material_railway_incident_engine_probes",
+  "date": "2026-07-15",
+  "source_network_path": "separate from the Railway release runner",
+  "request_contract": {
+    "method": "direct POST to production mcp-search",
+    "source": "internal_test"
+  },
+  "retention_basis": "Contemporaneous probe notes retained after the incident. Raw response bodies and the original client log file were not retained.",
+  "probes_utc": [
+    {
+      "started_at": "2026-07-15T12:18:52Z",
+      "time_precision": "approximate",
+      "finished_at": "2026-07-15T12:19:19Z",
+      "status_code": 500,
+      "duration_ms": 27326,
+      "query": "star",
+      "library": "tabler",
+      "library_mode": "strict"
+    },
+    {
+      "observed_at": "2026-07-15T12:19:42Z",
+      "status_code": 200,
+      "duration_ms": 14556,
+      "result_count": 3
+    },
+    {
+      "observed_at": "2026-07-15T12:20:11Z",
+      "status_code": 200,
+      "duration_ms": 20470,
+      "result_count": 3
+    },
+    {
+      "observed_at": "2026-07-15T12:20:33Z",
+      "status_code": 200,
+      "duration_ms": 14870,
+      "result_count": 3
+    },
+    {
+      "observed_at": "2026-07-15T12:20:42Z",
+      "status_code": 200,
+      "duration_ms": 950,
+      "result_count": 3
+    },
+    {
+      "observed_at": "2026-07-15T12:14:00Z",
+      "time_precision": "approximate",
+      "status_code": 500,
+      "duration_ms": 47320,
+      "query": "calendar",
+      "library": "lucide",
+      "library_mode": "strict",
+      "related_controls": {
+        "snapshot_status_code": 200,
+        "snapshot_duration_ms": 12659,
+        "external_reference_status_code": 204,
+        "external_reference_duration_ms": 23
+      }
+    }
+  ],
+  "interpretation": "A search-engine congestion period overlapped the candidate gate window from 12:18:27Z to 12:19:48Z and cleared by 12:20:42Z. This supports a dependency-related explanation for the timed-out all-mode request, but does not identify the underlying database cause."
+}
