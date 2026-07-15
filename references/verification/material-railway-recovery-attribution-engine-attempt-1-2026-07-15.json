@@ -1,0 +1,73 @@
+{
+  "artifact": "material_railway_recovery_live_gate",
+  "profile": "engine-dependent",
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "request_timeout_ms": 120000,
+  "engine_latency_limit_ms": 3000,
+  "started_at": "2026-07-15T16:41:35.769Z",
+  "checks": [
+    {
+      "name": "recommend_icons returns valid Material SVG within the candidate-local limit",
+      "elapsed_ms": 787.1,
+      "path": "candidate_local"
+    },
+    {
+      "name": "all-mode settings returns 10/10 deliverable rows",
+      "elapsed_ms": 4893.3,
+      "path": "engine"
+    },
+    {
+      "name": "all-mode cog returns 10/10 deliverable rows",
+      "elapsed_ms": 2131.3,
+      "path": "engine"
+    },
+    {
+      "name": "all-mode solid returns 10/10 deliverable Material rows within the candidate-local limit",
+      "elapsed_ms": 373.1,
+      "path": "candidate_local"
+    },
+    {
+      "name": "lucide strict regression returns five valid rows",
+      "elapsed_ms": 2791.9,
+      "path": "engine"
+    },
+    {
+      "name": "recommend_icons candidate-local warm p95 is within 3000 ms",
+      "warm_p95_ms": 783,
+      "path": "candidate_local"
+    }
+  ],
+  "latency": {
+    "recommend_icons": {
+      "samples_ms": [
+        624,
+        592.2,
+        633.4,
+        783,
+        567
+      ],
+      "warm_p95_ms": 783,
+      "gate_ms": 3000
+    }
+  },
+  "latency_failures": [
+    {
+      "case_id": "all_mode_settings",
+      "metric": "elapsed_ms",
+      "through_candidate_ms": 4893.3,
+      "gate_ms": 3000,
+      "direct_request": {
+        "query": "settings",
+        "library_mode": "strict",
+        "style": "any",
+        "limit": 10,
+        "locale": null
+      },
+      "expected": {
+        "result_count": 10
+      }
+    }
+  ],
+  "status": "latency_failed",
+  "finished_at": "2026-07-15T16:41:50.538Z"
+}
