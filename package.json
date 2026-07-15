@@ -42,6 +42,7 @@
     "verify:mcp-usage-dedupe": "node scripts/verify-mcp-usage-dedupe.mjs",
     "verify:admin-dashboard-phase-a-metrics": "node scripts/verify-admin-dashboard-phase-a-metrics.mjs",
     "verify:admin-dashboard-phase-a-migration": "node scripts/verify-admin-dashboard-phase-a-migration.mjs",
+    "verify:admin-dashboard-phase-a-api": "node scripts/verify-admin-dashboard-phase-a-api.mjs",
     "verify:material-production-baseline-runner": "node scripts/verify-material-production-baseline-runner.mjs",
     "verify:material-production-treatment-artifacts": "node scripts/verify-material-production-treatment-artifacts.mjs",
     "verify:material-production-treatment-runner": "node scripts/verify-material-production-treatment-runner.mjs",
