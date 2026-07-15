@@ -927,41 +927,115 @@ async function upsertRollupRows(
   }
 }
 
+async function findNextCompletedTelemetryDay(
+  adminClient: SupabaseClient,
+  afterDay: string | null,
+  currentDayStart: string,
+) {
+  const after = afterDay ? nextUtcDayStartIso(afterDay) : null;
+
+  async function loadFirstAuditTime() {
+    let query = adminClient
+      .from('search_request_audit')
+      .select('created_at')
+      .neq('source', 'trap')
+      .not('query_norm', 'is', null)
+      .lt('created_at', currentDayStart)
+      .order('created_at', { ascending: true })
+      .limit(1);
+    if (after) query = query.gte('created_at', after);
+    const { data, error } = await query;
+    if (error) {
+      if (isMissingRelationError(error) || isMissingColumnError(error)) return null;
+      throw error;
+    }
+    return data?.[0]?.created_at ? String(data[0].created_at) : null;
+  }
+
+  async function loadFirstUsageTime() {
+    let query = adminClient
+      .from('mcp_usage_events')
+      .select('created_at')
+      .eq('event_type', 'search_outcome')
+      .not('query_norm', 'is', null)
+      .lt('created_at', currentDayStart)
+      .order('created_at', { ascending: true })
+      .limit(1);
+    if (after) query = query.gte('created_at', after);
+    const { data, error } = await query;
+    if (error) {
+      if (isMissingRelationError(error) || isMissingColumnError(error)) return null;
+      throw error;
+    }
+    return data?.[0]?.created_at ? String(data[0].created_at) : null;
+  }
+
+  const candidates = (await Promise.all([loadFirstAuditTime(), loadFirstUsageTime()]))
+    .filter((value): value is string => Boolean(value))
+    .sort();
+  return candidates.length > 0 ? candidates[0].slice(0, 10) : null;
+}
+
 async function ensureCompletedDayRollups(adminClient: SupabaseClient) {
-  const latestResult = await adminClient
-    .from('admin_rollup_overview')
-    .select('day')
-    .order('day', { ascending: false })
-    .limit(1);
-  if (latestResult.error) {
-    if (isMissingRelationError(latestResult.error)) return { available: false, refreshed_days: [] };
-    throw latestResult.error;
+  async function loadLatestDay(table: string) {
+    const result = await adminClient
+      .from(table)
+      .select('day')
+      .order('day', { ascending: false })
+      .limit(1);
+    if (result.error) {
+      if (isMissingRelationError(result.error)) return { available: false, day: null };
+      throw result.error;
+    }
+    return {
+      available: true,
+      day: result.data?.[0]?.day ? String(result.data[0].day) : null,
+    };
   }
 
+  const [overviewState, queryState] = await Promise.all([
+    loadLatestDay('admin_rollup_overview'),
+    loadLatestDay('admin_rollup_queries'),
+  ]);
+  if (!overviewState.available || !queryState.available) {
+    return { available: false, complete: false, refreshed_days: [] };
+  }
+  const latestDay = overviewState.day && queryState.day
+    ? [overviewState.day, queryState.day].sort()[0]
+    : null;
   const currentDayStart = currentUtcDayStartIso();
-  const latestDay = latestResult.data?.[0]?.day ? String(latestResult.data[0].day) : null;
-  const since = latestDay ? nextUtcDayStartIso(latestDay) : null;
-  if (since && since >= currentDayStart) {
-    return { available: true, refreshed_days: [] };
+  const nextDay = await findNextCompletedTelemetryDay(adminClient, latestDay, currentDayStart);
+  if (!nextDay) {
+    return { available: true, complete: true, refreshed_days: [] };
   }
 
-  const rawRows = await fetchTelemetryEvidenceRows(adminClient, since, currentDayStart);
+  const dayStart = `${nextDay}T00:00:00.000Z`;
+  const dayEnd = nextUtcDayStartIso(nextDay);
+  if (!dayEnd || dayEnd > currentDayStart) {
+    return { available: true, complete: true, refreshed_days: [] };
+  }
+
+  const rawRows = await fetchTelemetryEvidenceRows(adminClient, dayStart, dayEnd);
   const rollups = buildAdminRollups(rawRows, knownSearchDefects);
-  await upsertRollupRows(
-    adminClient,
-    'admin_rollup_overview',
-    rollups.overview,
-    'day,channel,environment,query_origin',
-  );
+  if (rollups.overview.length === 0) {
+    throw new Error(`Completed telemetry day ${nextDay} produced no overview rollups.`);
+  }
   await upsertRollupRows(
     adminClient,
     'admin_rollup_queries',
     rollups.queries,
     'day,query_norm,library_filter,query_origin,channel,environment,tool_name',
   );
+  await upsertRollupRows(
+    adminClient,
+    'admin_rollup_overview',
+    rollups.overview,
+    'day,channel,environment,query_origin',
+  );
   return {
     available: true,
-    refreshed_days: [...new Set(rollups.overview.map((row: Record<string, unknown>) => String(row.day)))].sort(),
+    complete: false,
+    refreshed_days: [nextDay],
   };
 }
 
@@ -1129,6 +1203,7 @@ async function buildPhaseADashboardPayload(adminClient: SupabaseClient, url: URL
       anonymous_identity_rotates_monthly: true,
       returning_clients_are_within_calendar_month: true,
       long_windows_use_client_days: usesRollups,
+      rollup_backfill_complete: usesRollups ? rollupState.complete === true : true,
       approximate_low_results_excluded_from_headline_rate: true,
     },
   };
@@ -1136,6 +1211,10 @@ async function buildPhaseADashboardPayload(adminClient: SupabaseClient, url: URL
 
 async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, url: URL) {
   return jsonResponse(req, await buildPhaseADashboardPayload(adminClient, url));
+}
+
+async function handlePhaseARollupRefresh(req: Request, adminClient: SupabaseClient) {
+  return jsonResponse(req, await ensureCompletedDayRollups(adminClient));
 }
 
 function updateSeenRange(entry: Record<string, unknown>, createdAt: string | null) {
@@ -3819,6 +3898,10 @@ serve(async (req) => {
 
     if (req.method === 'GET' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'dashboard') {
       return await handlePhaseADashboard(req, adminClient, url);
+    }
+
+    if (req.method === 'POST' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'refresh-rollups') {
+      return await handlePhaseARollupRefresh(req, adminClient);
     }
 
     if (req.method === 'GET' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'query-detail') {

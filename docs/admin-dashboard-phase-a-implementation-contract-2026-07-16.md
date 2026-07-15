@@ -55,6 +55,11 @@ The first registry entry covers only Material zero-result outcomes before the su
 - The null or empty library key is stored as `all` so conflict keys are stable.
 - Current UTC day data always comes from raw rows.
 - Bounded client totals come from raw rows. Longer windows expose summed client-days and do not claim cross-month unique clients.
+- One refresh request may read and write only one completed UTC day. It discovers the earliest unrolled search day with one indexed row from each telemetry source.
+- Refresh progress is the older of the two rollup-table progress markers. A partial two-table write therefore replays the affected day on retry.
+- Per-query batches write before the smaller overview completion marker. A failure inside a large per-query day cannot advance completed-day progress.
+- A normal dashboard GET may advance the rollup by one day, but it may never scan full history in one request.
+- The admin API release packet must call the guarded `refresh-rollups` route until it reports complete before the long-window dashboard contract is accepted.
 
 ## Country lookup and licensing decision
 

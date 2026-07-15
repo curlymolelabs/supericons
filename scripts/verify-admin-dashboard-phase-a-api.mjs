@@ -42,6 +42,30 @@ requirePattern(
   'On-demand refresh must write both rollup purposes.',
 );
 requirePattern(
+  /upsertRollupRows\([\s\S]*?'admin_rollup_queries'[\s\S]*?upsertRollupRows\([\s\S]*?'admin_rollup_overview'/,
+  'Per-query rollups must finish before the overview completion marker is written.',
+);
+requirePattern(
+  /function findNextCompletedTelemetryDay[\s\S]*?\.limit\(1\)[\s\S]*?\.limit\(1\)/,
+  'Rollup refresh discovery must read at most one candidate row from each telemetry source.',
+);
+requirePattern(
+  /fetchTelemetryEvidenceRows\(adminClient, dayStart, dayEnd\)/,
+  'Each rollup refresh must read exactly one completed UTC day.',
+);
+requirePattern(
+  /loadLatestDay\('admin_rollup_overview'\)[\s\S]*?loadLatestDay\('admin_rollup_queries'\)/,
+  'Rollup progress must inspect both rollup tables.',
+);
+requirePattern(
+  /\[overviewState\.day, queryState\.day\]\.sort\(\)\[0\]/,
+  'A partial two-table write must replay from the older progress marker.',
+);
+requirePattern(
+  /req\.method === 'POST'[\s\S]*?segments\[2\] === 'refresh-rollups'[\s\S]*?handlePhaseARollupRefresh/,
+  'The guarded release flow needs a bounded rollup refresh route.',
+);
+requirePattern(
   /segments\[2\] === 'dashboard'[\s\S]*?handlePhaseADashboard/,
   'The Phase A dashboard route must be registered.',
 );
@@ -59,6 +83,12 @@ assert.ok(compactActivity, 'The Phase A activity projection is missing.');
 for (const forbidden of ['account_plan', 'purpose', 'domain', 'replaced_with', '_estimated_client_key']) {
   assert.ok(!compactActivity.includes(forbidden), `Latest activity must not expose ${forbidden}.`);
 }
+
+assert.doesNotMatch(
+  source,
+  /fetchTelemetryEvidenceRows\(adminClient, since, currentDayStart\)/,
+  'A dashboard request must never backfill full history in one scan.',
+);
 
 const searchSurfaceDiff = spawnSync('git', [
   'diff',
@@ -82,6 +112,5 @@ console.log(JSON.stringify({
   bounded_raw_and_rollup_paths: true,
   compact_activity_contract: true,
   mcp_search_changed: false,
-  checks: 12,
+  checks: 19,
 }, null, 2));
-
