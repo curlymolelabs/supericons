@@ -1,10 +1,10 @@
 /**
- * SuperIcons MCP: Railway-side Material SVG hydration.
+ * SuperIcons MCP: Material SVG hydration for hosted and local MCP results.
  *
  * The stable hosted search engine returns ranked Material rows without SVG
  * payloads. Railway ships the complete validated fixed-preset asset bundle
- * beside this module. The deployed snapshot function remains a fallback when
- * the local bundle is absent, such as an installed npm package.
+ * beside this module. The deployed snapshot function remains a fallback for
+ * older packages or custom builds where the local bundle is absent.
  *
  * Contract notes:
  * - Fixed MCP presets only: outline (fill 0, wght 300) and solid (fill 1,

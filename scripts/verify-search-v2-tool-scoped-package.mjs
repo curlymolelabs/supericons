@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   mkdtempSync,
   mkdirSync,
@@ -44,6 +45,9 @@ try {
   for (const required of [
     'hosted-search-client.js',
     'index.js',
+    'material-mcp-assets.json.gz',
+    'material-mcp-assets-manifest.json',
+    'public/synonyms.json',
     'recommend-icons.js',
     'release-channel.js',
     'remote-server.js',
@@ -72,13 +76,21 @@ try {
   );
   assert.equal(
     release.getHostedSearchFunctionNameForTool(installedPackage.version, 'search_icons'),
-    'mcp-search-v2-beta',
+    'mcp-search',
   );
   assert.equal(
     release.getHostedSearchFunctionNameForTool(installedPackage.version, 'recommend_icons'),
     'mcp-search',
   );
   assert.equal(release.getBetaCohortForTool(installedPackage.version, 'recommend_icons'), null);
+  assert.equal(release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+    toolName: 'search_icons',
+    query: 'settings',
+  }), true);
+  assert.equal(release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+    toolName: 'search_icons',
+    query: '设置',
+  }), false);
 
   const installedTelemetry = readFileSync(join(installedRoot, 'telemetry.js'), 'utf8');
   const installedIndex = readFileSync(join(installedRoot, 'index.js'), 'utf8');
@@ -87,16 +99,55 @@ try {
   assert.match(installedIndex, /toolName:\s*'recommend_icons'/);
   assert.match(installedIndex, /latencyMs:\s*performance\.now\(\) - toolStartedAt/);
 
+  const { searchIcons } = await import(
+    `${pathToFileURL(join(installedRoot, 'search.js')).href}?quality=${Date.now()}`
+  );
+  const evaluationSet = JSON.parse(readFileSync(
+    join(repoRoot, 'data', 'semantic-search-v2', 'evaluation-set.json'),
+    'utf8',
+  ));
+  const installedIcons = JSON.parse(readFileSync(
+    join(installedRoot, 'public', 'icon-index.json'),
+    'utf8',
+  )).icons;
+  const installedSynonyms = JSON.parse(readFileSync(
+    join(installedRoot, 'public', 'synonyms.json'),
+    'utf8',
+  ));
+  const observations = evaluationSet.query_groups.flatMap((group) => group.queries || [])
+    .map((entry) => {
+      const query = String(entry.query || entry.slot || entry.task || '').trim();
+      const results = searchIcons(query, installedIcons, installedSynonyms, {
+        library: entry.requested_library || null,
+        libraryMode: entry.library_mode || 'all',
+        limit: 8,
+      });
+      return {
+        case_id: entry.case_id,
+        result_refs: results.map((icon) => `${icon.lib}:${icon.id}`),
+      };
+    });
+  const installedFingerprint = createHash('sha256')
+    .update(JSON.stringify(observations))
+    .digest('hex');
+  assert.equal(
+    installedFingerprint,
+    'ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8',
+    'Clean-installed package changed the fixed search fingerprint.',
+  );
+
   console.log(JSON.stringify({
     status: 'ok',
     package: installedPackage.name,
     version: installedPackage.version,
     packed_files: packRecord.files.length,
     clean_install: true,
-    search_route: 'mcp-search-v2-beta',
+    search_route: 'local_first_english',
+    localized_search_route: 'mcp-search',
     recommendation_route: 'mcp-search',
     recommendation_beta_cohort: null,
     latency_rpc: 'si_log_mcp_search_outcome_v2',
+    fixed_search_fingerprint: installedFingerprint,
     published: false,
   }, null, 2));
 } finally {

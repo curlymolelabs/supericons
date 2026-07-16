@@ -1,12 +1,13 @@
 # Deterministic MCP beta measurement and rollback plan
 
 Date: 2026-07-12
-Status: Gate A target checks complete locally; Gate B remains blocked by historical migration-version collisions; no deployment or publication is authorized by this document
-Authority: operational beta plan under `D-021`, `FR-26`, `FR-31`, and `FR-32`
+Amended: 2026-07-16
+Status: local-first prototype implemented and locally verified; independent review and a new publication approval remain required; no publication is authorized by this document
+Authority: operational beta plan under `D-021`, `D-025`, `FR-26`, `FR-31`, `FR-32`, and `FR-40`
 
 ## Purpose
 
-Ship the locally verified deterministic search behavior to a small, isolated MCP beta, measure whether it solves the real search problems, and decide whether any important meaning gap remains.
+Ship the locally verified deterministic search behavior in an opt-in MCP prerelease, measure whether it solves the real English-like search problems, and decide whether any important meaning gap remains.
 
 The default free search path must remain deterministic. It must not call an AI agent, language model, or paid embedding provider.
 
@@ -44,11 +45,12 @@ The existing logs do not reliably prove that a result was useful. The July 11 ev
 
 ### Included
 
-- `search_icons` and `recommend_icons`
+- `search_icons` requests with no locale and ASCII query text
 - deterministic query understanding and ranking policy
-- ambiguity handling and labeled clarification
+- ambiguity handling and result diversification
 - strict, prefer, and all library modes
-- hosted MCP beta requests only
+- packaged Material outline and solid SVGs
+- MCP tool-outcome telemetry for the eligible local beta cohort
 - the 225-case fixed evaluation suite
 - reviewed live query clusters from the beta
 
@@ -57,6 +59,9 @@ The existing logs do not reliably prove that a result was useful. The July 11 ev
 - default npm release under the `latest` tag
 - general public rollout
 - Netlify or web search changes
+- local-first localized or non-ASCII search
+- local-first `recommend_icons`
+- a Supabase beta function or search migration
 - semantic vector retrieval
 - model-provider calls
 - database writes unrelated to beta measurement
@@ -68,40 +73,45 @@ The beta must not replace the current production search path for all users.
 
 Before any external beta, engineering must provide:
 
-1. A separate beta Supabase function endpoint that imports the deterministic search handler.
-2. A prerelease MCP package version, installed by explicit version or the `beta` npm tag. It must not change the `latest` tag.
-3. A beta identifier carried into the audit record through MCP server version and environment or a dedicated beta cohort field.
-4. A default-off route. Users who do not install the prerelease must remain on the current path.
+1. A prerelease MCP package version, installed by explicit version or the `beta` npm tag. It must not change the `latest` tag.
+2. A package-only local route limited to `search_icons` requests with no locale and ASCII query text.
+3. The stable hosted route for localized and non-ASCII search and every recommendation request, without a beta cohort on those stable requests.
+4. A beta identifier carried into the local tool-outcome record through MCP server version and beta cohort.
+5. A default-off release. Users who do not install the prerelease must remain on the current path.
 
-If a separate endpoint is not implemented, the release is blocked. Deploying the shared handler over the production endpoint is not an isolated beta.
+No hosted function deployment or database migration is required for this beta. A later hosted web or recommendation gate still requires a separate approved attribution measurement and its own isolation plan.
 
 ## Measurement prerequisites
 
-The existing audit data is useful but incomplete. The following additions must be implemented and locally verified before deployment:
+The `mcp_usage_events` tool-outcome path is the beta scorecard source. The following behavior must be implemented and locally verified before publication:
 
 | prerequisite | reason |
 | --- | --- |
 | Record `library_mode` | A library filter alone cannot distinguish strict from prefer behavior. |
 | Record `search_outcome` as `results`, `clarification`, `zero`, or `error` | A clarification response with no icons must not be counted as a failed zero result. |
 | Record a public confidence label when present | This supports low-confidence monitoring without exposing private scores. |
-| Record the beta cohort or prerelease version | Beta and non-beta traffic must not be mixed. |
+| Record the beta cohort and prerelease version | Beta and non-beta traffic must not be mixed. |
 | Add a sanitized export with locale counts | Locale coverage and localized failures need stable denominators. |
 | Link a later icon-use event to a request when possible | This is needed for a real usefulness measure. Until then, reviewed samples remain the quality check. |
+| Record one outcome attempt per eligible local tool call | Local search bypasses the hosted request audit and the tool-level outcome insert has no hosted deduplication key. |
+| Record the packaged index generation date in the response and release record | Local results are a point-in-time snapshot that changes only when a new package ships. |
 
 The audit record must not store raw IP addresses, raw API keys, private prompts, numeric internal scores, or model and review-process metadata.
 
 ## Eligible beta attempt
 
-An eligible attempt is one audit row that meets all of these rules:
+An eligible attempt is one `mcp_usage_events` tool-outcome row that meets all of these rules:
 
 - channel is `hosted_mcp`
-- environment or cohort identifies the deterministic beta
-- tool is `search_icons` or `recommend_icons`
+- cohort identifies the deterministic beta
+- tool is `search_icons`
+- client family is `mcp_stdio`
+- MCP server version is the approved prerelease
+- locale is null
 - status is not an internal test
-- the request is not a duplicate according to its deduplication key
 - the query is non-empty
 
-Errors remain in the reliability denominator but are not added to the relevance denominator. A clarification is a separate outcome, not a zero result.
+Repeated user calls remain separate eligible attempts. The local tool-outcome RPC does not write a deduplication key. Release verification must instead prove that each eligible tool call reaches exactly one results, zero, or error outcome branch. Errors remain in the reliability denominator but are not added to the relevance denominator.
 
 ## Measurement period and minimum sample
 
@@ -122,12 +132,11 @@ Use at least 200 eligible attempts from at least 20 session hashes. If either mi
 ### Supporting measures
 
 - low-result rate, using 1 to 3 returned results
-- clarification rate and clarification resolution rate
-- results by `search_icons` versus `recommend_icons`
 - outcomes by strict, prefer, and all library modes
-- outcomes by locale, including missing-locale counts
 - long-tail query outcomes, reported separately from short exact and brand queries
 - repeated or reformulated queries within a session, reported as an approximation until explicit parent-request linkage exists
+- informational local-versus-hosted top-result divergence on a bounded sanitized sample
+- packaged index generation date and days since generation
 
 ### Guardrails
 
@@ -137,7 +146,9 @@ Use at least 200 eligible attempts from at least 20 session hashes. If either mi
 | Exact, brand, and unacceptable-result regression | Zero approved canary violations. |
 | External model use | Zero AI-agent, language-model, and embedding-provider calls on the default and beta search paths. |
 | Error rate | At most 1 percent of beta requests, excluding deliberate invalid-input checks. |
-| Hosted latency | p95 at or below 2,000 ms. |
+| Local tool latency | Fixed-suite p95 below 500 ms before publication. Live beta tool p95 is reported daily with cold or first-process samples separate from reused-process samples. |
+| Package size | Packed prerelease remains below 7 MB. |
+| Local memory | Combined icon indexes and Material bundle add less than 75 MB RSS in the fixed startup benchmark. |
 | Audit completeness | At least 95 percent of eligible rows contain tool, version or cohort, library mode, search outcome, and locale field presence, where locale may explicitly be null. |
 | Abuse concentration | Report the share of attempts from the largest session and largest anonymous client grouping. Do not use concentrated traffic as proof of broad demand. |
 
@@ -184,7 +195,7 @@ Do not compare raw July 11 and beta percentages as though the traffic mixes were
 Use three views:
 
 1. Fixed-suite comparison: the same 225 cases before and after.
-2. Matched query comparison: replay the same sanitized query, library, mode, tool, and locale combinations through the current and beta paths.
+2. Matched query comparison: replay a bounded sanitized sample of the same English query, library, mode, and style combinations through the local beta and stable hosted paths. Report exact top-result agreement and top-result-set overlap for information. This replay requires explicit approval and must not store raw private context in the repository.
 3. Live beta view: report the beta cohort on its own with denominators and concentration warnings.
 
 The July 11 zero-result rates remain sequencing context, not the release target.
@@ -193,35 +204,38 @@ The July 11 zero-result rates remain sequencing context, not the release target.
 
 ### Gate A: local release candidate
 
-- implement the beta endpoint and missing audit fields
 - build the prerelease package without publishing
+- include the exact Material outline and solid asset bundle
+- include the public synonym map and reproduce the fixed fingerprint from a clean installed tarball
+- prove the local route applies only to eligible English-like `search_icons` calls
+- prove localized, non-ASCII, and recommendation calls keep the stable hosted route without a beta cohort
 - run the 225-case suite and focused ranking checks
 - run package public-safety and content checks
 - prove zero model-provider calls
-- run failure-injection checks for audit write failure and hosted search failure
-- record p50 and p95 latency for a fixed replay set, including environment and sample count
-- save the exact package version, endpoint name, and commit
+- prove one local tool outcome attempt per eligible call and that telemetry failure cannot fail the search
+- record local p50 and p95, package size, startup memory, and snapshot date
+- save the exact package version and commit
 
 ### Gate B: owner approval
 
 Request one explicit approval that names:
 
-- Supabase beta function endpoint
 - npm prerelease version and `beta` tag
 - beta duration and cohort
 - beta adoption method: invited users, a prerelease README note, or both
 - rollback target
 - expected external mutations
+- the maximum stable hosted calls allowed for the informational divergence sample
 
-No Supabase deployment or npm publication occurs before this approval.
+No npm publication or bounded hosted comparison occurs before this approval. The approval must state that no Supabase deployment or database mutation is authorized.
 
 ### Gate C: controlled beta
 
-- deploy only the isolated beta endpoint
 - publish only the approved prerelease under the `beta` tag
-- verify one search, one recommendation, one clarification, one localized query, and one invalid request
-- confirm audit rows carry the beta identifier and new outcome fields
-- if Gate C fails, preserve the approved public-safe response artifacts, bounded audit rows, and platform timing logs before deleting the isolated endpoint
+- verify one local English search, Material outline, Material solid, one localized stable search, one non-ASCII stable search, one stable recommendation, and one invalid request
+- confirm the eligible local tool-outcome row carries the beta identifier and expected fields
+- confirm localized, non-ASCII, and recommendation requests do not carry the beta cohort
+- preserve approved public-safe response artifacts and bounded usage rows if Gate C fails
 - verify the evidence pack is readable and bound to the fixed workload and measurement window before cleanup
 - monitor the guardrails daily
 
@@ -242,23 +256,18 @@ Rollback immediately if any of these occurs:
 - an exact, brand, or prohibited-result canary fails
 - any model-provider call appears on the search path
 - error rate exceeds 1 percent for two consecutive checks or 3 percent in any one-hour window
-- p95 latency exceeds 2,000 ms for two consecutive checks
+- live local tool p95 materially exceeds the local release evidence for two consecutive checks
 - audit data mixes beta and current traffic so the cohort cannot be separated
 - secrets or private search data appear in logs or public responses
-- the beta endpoint affects non-beta users
+- localized, non-ASCII, recommendation, or web traffic enters the local beta route
 
-### Supabase rollback
+### Hosted-service rollback
 
-1. Stop directing the prerelease package to the beta endpoint.
-2. Stop publication and invitations, then keep the isolated endpoint unavailable to users while evidence is collected.
-3. Export only the approved public-safe response artifacts, bounded audit rows, and platform timing logs. Confirm the export covers the failure window and fixed workload.
-4. Disable or remove the isolated beta function after the evidence check completes.
-5. Leave additive audit columns in place unless a separate migration proves they are safe to remove.
-6. Verify the current production endpoint with its saved smoke queries.
+No Supabase function or database change is part of this beta. Verify that stable production functions remain unchanged before publication and at closeout. If a stable fallback is found to carry a beta cohort or changed response behavior, stop the beta and preserve only the approved public-safe evidence.
 
 If the failure exposes secrets or private search data, delete the endpoint immediately and retain only evidence that can be collected without copying the unsafe content. Do not delay a security rollback to complete diagnostics.
 
-The beta must not require a destructive data migration. Search audit additions are nullable and backward-compatible.
+The beta requires no data migration.
 
 ### npm rollback
 
@@ -273,11 +282,12 @@ Record the trigger, time, affected version and endpoint, request volume, user im
 
 ## Current blockers before external beta
 
-- the target migration and RPC passed in disposable PostgreSQL, but the repository's full Supabase migration chain cannot rebuild because older migration files share version prefixes
-- the safe hosted migration reconciliation and apply method has not been approved
+- independent review of the local-first prototype is not complete
+- the publication-only packet has not been written or approved
 - acceptance telemetry remains too sparse for an automatic usefulness rate
-- no deployment or publication approval has been granted
+- the informational hosted comparison needs an explicit request limit in the publication approval
+- hosted attribution remains deferred evidence before a later hosted web or recommendation gate
 
 ## Approval boundary
 
-Creating code, tests, a package dry-run, and deployment commands is allowed as local preparation. Supabase deployment, npm publication, Netlify deployment, external messages, and any model-provider call require separate explicit owner approval.
+Creating code, tests, a package dry-run, and a publication packet is allowed as local preparation. npm publication, any Supabase or Netlify change, a bounded live hosted comparison, external messages, and any model-provider call require separate explicit owner approval.

@@ -156,6 +156,7 @@
     "verify:search-v2-result-hydration": "deno run --allow-read scripts/verify-search-v2-result-hydration.ts",
     "verify:search-v2-hosted-http-parity": "deno run --allow-read --allow-net=esm.sh scripts/verify-search-v2-hosted-http-parity.ts",
     "verify:search-v2-phase1-parity": "node scripts/verify-search-v2-phase1-parity.mjs",
+    "verify:search-v2-local-first-beta": "node scripts/verify-search-v2-local-first-beta.mjs",
     "verify:search-v2-beta-migration-smoke": "node scripts/verify-search-v2-beta-migration-smoke.mjs",
     "measure:search-v2-beta-latency": "node scripts/measure-search-v2-beta-latency.mjs",
     "measure:search-v2-roundtrip-latency": "node scripts/run-search-v2-roundtrip-latency-measurement.mjs",

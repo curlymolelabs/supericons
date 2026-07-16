@@ -16,6 +16,8 @@ const expectedFiles = [
   'library-capabilities.js',
   'material-export.js',
   'material-hydration.js',
+  'material-mcp-assets-manifest.json',
+  'material-mcp-assets.json.gz',
   'mcp-output-localization.js',
   'motion-lab-client.js',
   'motion-lab.js',
@@ -26,6 +28,7 @@ const expectedFiles = [
   'public/material-export-manifest.json',
   'public/multilingual-search-aliases.json',
   'public/product-facts.json',
+  'public/synonyms.json',
   'public-icon-preview.js',
   'preview-icons.js',
   'recommend-icons.js',
@@ -55,7 +58,6 @@ const expectedFiles = [
 const blockedFiles = [
   'public/registry-records.json',
   'public/registry-summary.json',
-  'public/synonyms.json',
 ];
 
 function fail(message) {
@@ -113,7 +115,11 @@ if (blocked.length) {
   fail(`protected package includes bulk registry files: ${blocked.join(', ')}`);
 }
 
-if (Number(packInfo.unpackedSize || 0) > 25_000_000) {
+if (Number(packInfo.size || 0) > 7_000_000) {
+  fail(`protected package is too large: ${packInfo.size} bytes packed`);
+}
+
+if (Number(packInfo.unpackedSize || 0) > 27_000_000) {
   fail(`protected package is too large: ${packInfo.unpackedSize} bytes unpacked`);
 }
 

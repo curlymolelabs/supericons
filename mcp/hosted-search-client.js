@@ -9,7 +9,8 @@ import {
   normalizeCjkSearchText,
 } from './runtime/cjk-search-core.js';
 import {
-  getBetaCohortForTool,
+  DETERMINISTIC_BETA_COHORT,
+  getBetaCohortForRequest,
   getHostedSearchFunctionNameForTool,
 } from './release-channel.js';
 
@@ -57,9 +58,22 @@ function hashSecret(value) {
   return text ? createHash('sha256').update(text).digest('hex') : null;
 }
 
-function buildUsagePayload(usageContext = {}, { apiKeyHash = null, routeToolName = null } = {}) {
+function buildUsagePayload(
+  usageContext = {},
+  {
+    apiKeyHash = null,
+    routeToolName = null,
+    routeLocale = null,
+    routeQuery = '',
+  } = {},
+) {
   const context = usageContext && typeof usageContext === 'object' ? usageContext : {};
   const toolName = normalizeUsageToken(routeToolName || context.tool_name, { maxLength: 64 }) || 'search_icons';
+  const explicitBetaCohort = normalizeUsageToken(context.beta_cohort, { maxLength: 80 });
+  const requestBetaCohort = getBetaCohortForRequest(mcpPackageVersion, toolName, {
+    locale: routeLocale,
+    query: routeQuery,
+  });
   const payload = {
     source: normalizeUsageToken(context.source, { maxLength: 40 }) || 'mcp',
     channel: normalizeUsageToken(context.channel, { maxLength: 40 }) || 'local_mcp',
@@ -76,8 +90,9 @@ function buildUsagePayload(usageContext = {}, { apiKeyHash = null, routeToolName
     user_agent_hash: normalizeUsageHash(context.user_agent_hash),
     api_key_hash: normalizeUsageHash(context.api_key_hash) || apiKeyHash,
     mcp_server_version: normalizeUsageText(context.mcp_server_version, { maxLength: 40 }),
-    beta_cohort: normalizeUsageToken(context.beta_cohort, { maxLength: 80 })
-      || getBetaCohortForTool(mcpPackageVersion, toolName),
+    beta_cohort: explicitBetaCohort === DETERMINISTIC_BETA_COHORT
+      ? requestBetaCohort
+      : explicitBetaCohort || requestBetaCohort,
   };
 
   return Object.fromEntries(
@@ -246,6 +261,8 @@ export async function searchIconsHostedMcp({
   const usagePayload = buildUsagePayload(usageContext, {
     apiKeyHash: apiKey ? hashSecret(apiKey) : null,
     routeToolName,
+    routeLocale: locale,
+    routeQuery: query,
   });
 
   if (shouldUseInternalHostedDebug()) {

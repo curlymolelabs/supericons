@@ -144,6 +144,9 @@ async function runQualityChild() {
     english: {
       cases: english.length,
       zero_results: english.filter((entry) => entry.result_refs.length === 0).length,
+      zero_case_ids: english
+        .filter((entry) => entry.result_refs.length === 0)
+        .map((entry) => entry.case_id),
     },
     multilingual: {
       cases: multilingual.length,
@@ -196,12 +199,15 @@ function measurePackageWithMaterial() {
     });
     const packagePath = join(directory, 'package.json');
     const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
-    packageJson.files = [
-      ...packageJson.files,
-      'material-mcp-assets.json.gz',
-      'material-mcp-assets-manifest.json',
-    ];
-    writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`);
+    if (!packageJson.files.includes('material-mcp-assets.json.gz')
+      || !packageJson.files.includes('material-mcp-assets-manifest.json')) {
+      packageJson.files = [...new Set([
+        ...packageJson.files,
+        'material-mcp-assets.json.gz',
+        'material-mcp-assets-manifest.json',
+      ])];
+      writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`);
+    }
     return packSummary(directory);
   } finally {
     rmSync(directory, { recursive: true, force: true });
@@ -259,7 +265,7 @@ async function main() {
       update_requires_new_package_release: true,
     },
     known_contract_limits: {
-      material_bundle_currently_published: packageJson.files.includes('material-mcp-assets.json.gz'),
+      material_bundle_in_package_manifest: packageJson.files.includes('material-mcp-assets.json.gz'),
       multilingual_zero_result_cases: quality.multilingual.zero_results,
       recommendation_local_first_evaluated: false,
       local_only_telemetry_implemented: indexSource.includes('void logMcpSearchAttempt({'),

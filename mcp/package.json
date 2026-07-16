@@ -26,6 +26,8 @@
     "library-capabilities.js",
     "material-export.js",
     "material-hydration.js",
+    "material-mcp-assets.json.gz",
+    "material-mcp-assets-manifest.json",
     "mcp-output-localization.js",
     "motion-lab-client.js",
     "motion-lab.js",
@@ -35,6 +37,7 @@
     "public/cjk-search-terms.json",
     "public/multilingual-search-aliases.json",
     "public/product-facts.json",
+    "public/synonyms.json",
     "public-icon-preview.js",
     "preview-icons.js",
     "release-channel.js",
@@ -64,7 +67,8 @@
     "start": "node index.js",
     "start:remote": "node remote-server.js",
     "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
-    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:package",
+    "verify:local-first-beta": "node ../scripts/verify-search-v2-local-first-beta.mjs",
+    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:package",
     "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {

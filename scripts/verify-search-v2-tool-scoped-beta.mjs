@@ -2,11 +2,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import {
-  BETA_HOSTED_SEARCH_FUNCTION,
   DETERMINISTIC_BETA_COHORT,
   STABLE_HOSTED_SEARCH_FUNCTION,
+  getBetaCohortForRequest,
   getBetaCohortForTool,
   getHostedSearchFunctionNameForTool,
+  shouldUseLocalFirstBetaSearch,
 } from '../mcp/release-channel.js';
 import {
   getRecommendationQueryVariantLimit,
@@ -21,7 +22,7 @@ const activeRecommendationFunction = getHostedSearchFunctionNameForTool(packageV
 const activeSearchCohort = getBetaCohortForTool(packageVersion, 'search_icons');
 assert.equal(
   getHostedSearchFunctionNameForTool(betaVersion, 'search_icons'),
-  BETA_HOSTED_SEARCH_FUNCTION,
+  STABLE_HOSTED_SEARCH_FUNCTION,
 );
 assert.equal(
   getHostedSearchFunctionNameForTool(betaVersion, 'recommend_icons'),
@@ -37,6 +38,32 @@ assert.equal(
 );
 assert.equal(getBetaCohortForTool(betaVersion, 'search_icons'), DETERMINISTIC_BETA_COHORT);
 assert.equal(getBetaCohortForTool(betaVersion, 'recommend_icons'), null);
+assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
+  query: 'settings',
+}), DETERMINISTIC_BETA_COHORT);
+assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
+  query: '设置',
+}), null);
+assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
+  query: 'settings',
+  locale: 'zh-Hans',
+}), null);
+assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
+  query: '',
+}), null);
+assert.equal(shouldUseLocalFirstBetaSearch(betaVersion, {
+  toolName: 'search_icons',
+  query: 'settings',
+}), true);
+assert.equal(shouldUseLocalFirstBetaSearch(betaVersion, {
+  toolName: 'search_icons',
+  query: '设置',
+}), false);
+assert.equal(shouldUseLocalFirstBetaSearch(betaVersion, {
+  toolName: 'search_icons',
+  query: 'settings',
+  locale: 'zh-Hans',
+}), false);
 
 assert.equal(getRecommendationQueryVariantLimit(null), 4);
 assert.equal(getRecommendationQueryVariantLimit(undefined), 4);
@@ -124,7 +151,7 @@ try {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-    return new Response(JSON.stringify({ query: body.query, results: [] }), {
+    return new Response(JSON.stringify({ query: body.query, results: [stubIcon] }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -144,15 +171,26 @@ try {
     routeToolName: 'recommend_icons',
     usageContext: { tool_name: 'recommend_icons' },
   });
+  await searchIconsHostedMcp({
+    query: '设置',
+    locale: 'zh-Hans',
+    routeToolName: 'search_icons',
+    usageContext: {
+      tool_name: 'search_icons',
+      beta_cohort: DETERMINISTIC_BETA_COHORT,
+    },
+  });
   assert.deepEqual(recommendPayload, searchPayload, 'Routing must not alter the hosted response body.');
 
   const hostedRequests = requests.filter((request) => !request.url.includes('/rest/v1/rpc/'));
-  assert.equal(hostedRequests.length, 2);
+  assert.equal(hostedRequests.length, 3);
   assert.match(hostedRequests[0].url, new RegExp(`/${activeSearchFunction}$`));
   assert.match(hostedRequests[1].url, new RegExp(`/${activeRecommendationFunction}$`));
+  assert.match(hostedRequests[2].url, new RegExp(`/${STABLE_HOSTED_SEARCH_FUNCTION}$`));
   assert.equal(hostedRequests[0].body.beta_cohort, activeSearchCohort || undefined);
   assert.equal(hostedRequests[1].body.beta_cohort, undefined);
   assert.equal(hostedRequests[1].body.tool_name, 'recommend_icons');
+  assert.equal(hostedRequests[2].body.beta_cohort, undefined);
 
   async function buildRecommendation(searchIconsForQueries) {
     return await recommendIconsForTask({
@@ -223,7 +261,8 @@ console.log(JSON.stringify({
   active_search_route: activeSearchFunction,
   active_recommendation_route: activeRecommendationFunction,
   active_search_beta_cohort: activeSearchCohort,
-  beta_contract_search_route: BETA_HOSTED_SEARCH_FUNCTION,
+  beta_contract_search_route: 'local_first_english',
+  beta_contract_hosted_fallback: STABLE_HOSTED_SEARCH_FUNCTION,
   beta_contract_recommendation_route: STABLE_HOSTED_SEARCH_FUNCTION,
   beta_contract_search_cohort: DETERMINISTIC_BETA_COHORT,
   recommendation_beta_cohort: null,

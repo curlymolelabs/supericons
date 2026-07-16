@@ -15,10 +15,9 @@ export function getBetaCohortForVersion(version) {
 }
 
 export function getHostedSearchFunctionNameForTool(version, toolName = 'search_icons') {
-  const normalizedToolName = String(toolName || '').trim().toLowerCase();
-  return isDeterministicBetaVersion(version) && normalizedToolName === 'search_icons'
-    ? BETA_HOSTED_SEARCH_FUNCTION
-    : STABLE_HOSTED_SEARCH_FUNCTION;
+  void version;
+  void toolName;
+  return STABLE_HOSTED_SEARCH_FUNCTION;
 }
 
 export function getBetaCohortForTool(version, toolName = 'search_icons') {
@@ -26,4 +25,27 @@ export function getBetaCohortForTool(version, toolName = 'search_icons') {
   return isDeterministicBetaVersion(version) && normalizedToolName === 'search_icons'
     ? DETERMINISTIC_BETA_COHORT
     : null;
+}
+
+export function getBetaCohortForRequest(
+  version,
+  toolName = 'search_icons',
+  { locale = null, query = '' } = {},
+) {
+  return shouldUseLocalFirstBetaSearch(version, { toolName, query, locale })
+    ? getBetaCohortForTool(version, toolName)
+    : null;
+}
+
+export function shouldUseLocalFirstBetaSearch(
+  version,
+  { toolName = 'search_icons', query = '', locale = null } = {},
+) {
+  const normalizedToolName = String(toolName || '').trim().toLowerCase();
+  const normalizedQuery = String(query || '').trim();
+  return isDeterministicBetaVersion(version)
+    && normalizedToolName === 'search_icons'
+    && !String(locale || '').trim()
+    && normalizedQuery.length > 0
+    && !/[^\x00-\x7f]/.test(normalizedQuery);
 }

@@ -5,8 +5,9 @@
 ### Added
 
 - added complete Material Symbols discovery and fixed-preset SVG delivery for MCP search
-- added an opt-in faster deterministic route for `search_icons`, while `recommend_icons` stays on the stable route
-- added clearer beta measurements for first requests, reused workers, errors, and result outcomes
+- added an opt-in local deterministic route for English-like `search_icons` requests, while localized search and `recommend_icons` stay on the stable hosted route
+- added the public synonym map needed for clean-installed local search to match the reviewed search suite
+- added the packaged search-index date to local beta responses and tool-level beta outcome measurements
 
 ### Fixed
 

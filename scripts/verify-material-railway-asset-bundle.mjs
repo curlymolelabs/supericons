@@ -40,7 +40,8 @@ for (const asset of validation.assets) {
 }
 
 const mcpPackage = JSON.parse(readFileSync(join(rootDir, 'mcp', 'package.json'), 'utf8'));
-assert.ok(!mcpPackage.files.includes('material-mcp-assets.json.gz'), 'Railway-only bundle leaked into npm package');
+assert.ok(mcpPackage.files.includes('material-mcp-assets.json.gz'), 'MCP package is missing the Material bundle');
+assert.ok(mcpPackage.files.includes('material-mcp-assets-manifest.json'), 'MCP package is missing the Material bundle manifest');
 const dockerignore = readFileSync(join(rootDir, '.dockerignore'), 'utf8');
 assert.ok(!/(^|\n)\*\.gz(\n|$)/.test(dockerignore), 'Docker context excludes the Material bundle');
 
@@ -53,4 +54,5 @@ console.log(JSON.stringify({
   asset_count: manifest.asset_count,
   compressed_bytes: manifest.compressed_bytes,
   bundle_sha256: manifest.bundle_sha256,
+  npm_bundle_included: true,
 }));

@@ -314,6 +314,23 @@ Specification change: version 1.8 adds `FR-39` and the expressive-fallback order
 
 Superseded decisions: none.
 
+### D-025: English local-first MCP search beta
+
+Date: 2026-07-16
+Status: Accepted
+
+Decision: the opt-in MCP prerelease may run `search_icons` from its packaged deterministic index and public synonym map only when the request has no locale and contains ASCII text. A request with a locale or non-ASCII text keeps the stable hosted search path. `recommend_icons` and web search also remain on their stable paths. Material outline and solid SVGs are included in the package so eligible Material searches need no asset request. The public beta response identifies the local runtime and the packaged index generation date.
+
+The local beta records one non-blocking tool-outcome telemetry attempt for each eligible call. This tool-level outcome insert does not use the hosted request deduplication key, so beta checks must verify the one-call, one-outcome behavior directly. A telemetry failure must not delay or fail a local search. Local-versus-hosted result differences are reported for information during the beta. Before any later hosted web or recommendation gate, a bounded live attribution check must identify the remaining hosted cost.
+
+Reason: the fixed 225-case suite kept its approved fingerprint on the packaged local path, with local p95 below 500 ms, combined measured memory below 75 MB, and a package below 7 MB. The same local index returned zero for 62 of 75 multilingual cases, so a full local switch would regress localized search. Keeping localized search and recommendation on stable hosting captures the measured English search advantage without claiming unsupported multilingual or recommendation quality.
+
+Alternatives rejected or deferred: another hosted beta deployment before trying the already-packaged local path; routing localized or non-ASCII queries locally; moving recommendation or web search locally without their own gates; dropping the hosted attribution question; treating the earlier hosted request dedupe fix as proof of local tool-outcome completeness.
+
+Specification change: version 1.9 adds `FR-40` and the local-first prerelease boundary.
+
+Superseded decisions: the isolated-endpoint route in `D-023` is replaced for this search-only beta. Its tool independence, legal-workload, and evidence rules remain active. The hosted work in `D-022` and `D-023` remains required evidence before a later hosted surface gate.
+
 ## Adding or superseding a decision
 
 Every new entry must include:
