@@ -128,19 +128,20 @@ For the deterministic-first scope, the read-only hosted migration inventory and 
 | npm registry | Read-only registry verification reports `latest` at `0.4.17`. |
 | Supabase database and Storage | Saved Material release records report the two Material migrations, 8,524 private asset rows, and 8,524 Storage objects. Current live state was not queried in the integration. |
 | Supabase functions | Authenticated read-only verification reports snapshot version 49, stable search version 38, and web search version 35 active. |
-| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. |
+| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. The later local Gate C correction now retains timed error evidence and makes final success depend on every manifest gate, but it does not authorize another live attempt. |
 
 The complete four-surface map and its evidence limits are recorded in `references/verification/search-v2-material-integration-2026-07-16.md`. The later main reconciliation and case-level fingerprint changes are recorded in `references/verification/search-v2-main-reintegration-2026-07-16.md`.
 
 ## Immediate next gate
 
-1. Audit the failed Gate C execution, rollback evidence, and corrected local harness.
-2. Recover the existing platform timing logs for the failed run if they remain available. If they are unavailable, keep the exact slow stage marked unresolved.
-3. Include the deterministic two-request localized path in the next latency budget instead of treating one client call as one hosted request.
-4. Use stage evidence to choose the smallest fix: combine database work if it dominates, or evaluate deterministic local execution if startup dominates independently.
-5. Do not redeploy or publish `0.4.19-beta.0` unchanged. A new live attempt requires a fresh implementation, packet, audit, and owner approval.
+1. Independently review the complete-evidence Gate C correction recorded in `references/verification/search-v2-gate-c-complete-evidence-correction-2026-07-16.md`.
+2. Keep the exact slow stage unresolved unless the existing platform timing logs can still be recovered safely.
+3. Do not redeploy the unchanged beta. Prepare an implementation expected to pass with margin before requesting a new live measurement.
+4. Include the deterministic two-request localized path and exact hosted-request count in every later latency and audit-capture budget.
+5. Bind the live evidence-collection method into the next manifest so platform errors, audit errors, audit capture, production functions, and npm state are checked before publication.
 6. Keep `recommend_icons` on the stable endpoint and leave both drafted monitoring routines inactive.
-7. If a later shared-treatment live p95 passes 3,000 ms, prepare a separate recommendation beta. If it fails, evaluate the local MCP index against quality, package size, startup, memory, freshness, and telemetry before choosing it.
+7. A new live attempt requires a fresh implementation, packet, audit, and owner approval.
+8. If a later shared-treatment live p95 passes 3,000 ms, prepare a separate recommendation beta. If it fails, evaluate the local MCP index against quality, package size, startup, memory, freshness, and telemetry before choosing it.
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 

@@ -207,7 +207,10 @@ export function buildPublicSemanticPayload(publicRecord: Record<string, unknown>
   return semantic;
 }
 
-export function buildErrorResponse(error: unknown) {
+export function buildErrorResponse(
+  error: unknown,
+  { measurementTiming = null }: { measurementTiming?: unknown } = {},
+) {
   const normalized = error instanceof SearchEngineHttpError
     ? error
     : new SearchEngineHttpError(
@@ -226,6 +229,7 @@ export function buildErrorResponse(error: unknown) {
     hint: normalized.hint,
     retryable: normalized.retryable,
     ...normalized.details,
+    ...(measurementTiming ? { measurement_timing: measurementTiming } : {}),
   }, normalized.status);
 }
 
@@ -759,7 +763,9 @@ export async function handleSearchRequest(
       }
     }
 
-    timing.finish('error');
-    return buildErrorResponse(error);
+    const timingRecord = timing.finish('error');
+    return buildErrorResponse(error, {
+      measurementTiming: includeTimingInResponse ? timingRecord : null,
+    });
   }
 }

@@ -4,6 +4,8 @@ Date: 2026-07-16
 Starting revision: `06bf169edc`
 Scope: local measurement and release-stop tooling only
 
+Status: superseded by `search-v2-gate-c-complete-evidence-correction-2026-07-16.md`. Independent review found that this first correction still dropped timing data from measured error responses and could report success before every release requirement was checked.
+
 ## Reason for the correction
 
 The failed search-only beta run exposed two gaps in the local Gate C tooling:
