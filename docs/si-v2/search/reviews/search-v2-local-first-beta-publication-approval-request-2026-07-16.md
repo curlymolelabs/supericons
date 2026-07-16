@@ -2,7 +2,7 @@
 
 Date: 2026-07-16
 Status: staged-browser flow under local verification
-Manifest fingerprint: `b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1`
+Manifest fingerprint: `4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586`
 
 ## Purpose
 
@@ -36,6 +36,8 @@ The replacement uses npm staged publishing. The executor uploads the exact archi
 The staging runner uses npm CLI `11.18.0` through a pinned `npx` command because the installed npm CLI does not yet include staged publishing. A dry run against the exact archive reproduced its name, version, size, file count, npm shasum, and npm integrity. The staging command itself does not require 2FA. Browser approval remains the only owner access step.
 
 The runner creates an atomic, manifest-bound staging receipt in the current user's local application data immediately before the one allowed staging command. It survives process exit, contains no credentials, and blocks a second staging command under the same manifest. Failed preflight does not consume the allowance.
+
+A separate manifest-bound finalizer runs immediately after browser approval. It requires the verified private stage record, checks the public shasum, integrity, `beta` tag, and unchanged `latest` tag, then repeats the real installed-package smoke. Integrity mismatch, tag mismatch, and smoke failure tests each invoke one exact-version deprecation and zero `latest` mutations.
 
 These corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for this safer access path does not require renewed product approval.
 
@@ -133,7 +135,15 @@ After the independent audit passes, the executor runs the bound staging command 
 ```powershell
 & .\scripts\stage-search-v2-local-first-beta.ps1 `
     -ExecuteApprovedStaging `
-    -ApprovedManifestSha256 b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1
+    -ApprovedManifestSha256 4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586
 ```
 
 Only after the runner reports `staged_and_verified` does the owner open npmjs.com Staged Packages and approve the matching package, version, tag, and stage ID. This is an access step, not a new product approval.
+
+Immediately after the owner confirms browser approval, the executor runs the bound finalizer:
+
+```powershell
+& .\scripts\finalize-search-v2-local-first-beta.ps1 `
+    -ExecuteApprovedFinalization `
+    -ApprovedManifestSha256 4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586
+```

@@ -27,7 +27,7 @@ The staging runner creates an atomic, manifest-bound receipt in user-local appli
 | Archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Archive size | 6,108,415 bytes |
 | Files | 47 |
-| Manifest SHA-256 | `b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1` |
+| Manifest SHA-256 | `4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586` |
 | Helper fingerprint | `ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8` |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 
@@ -43,6 +43,8 @@ The staging runner fails before registry contact unless both conditions are supp
 The manifest binds the staging runner, packet verifier, installed-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
 
 The staging runner checks npm authentication, `latest`, target-version absence, and staged-version absence before any upload. It invokes the pinned CLI with the exact archive, tag `beta`, public access, lifecycle scripts disabled, and JSON output. After upload it verifies the returned metadata and private stage record, downloads the staged tarball, matches the approved SHA-256, and runs the installed-package smoke. A failed check blocks browser approval, so no public version exists to roll back.
+
+The manifest also binds a separate post-approval finalizer. It requires the verified stage record, checks the public shasum, integrity, `beta` tag, and unchanged `latest`, and runs the installed-package smoke against the registry version. Any integrity, tag, or smoke failure routes through one exact-version deprecation handler and then confirms both the deprecation and unchanged `latest`.
 
 A local attempt-budget test produced zero stage calls after failed preflight, one call on first use, and zero calls on second use. The receipt is bound to the manifest and package and contains no credential material.
 
@@ -84,6 +86,9 @@ The packet verifier confirmed:
 - the staged result must carry the approved package, version, size, shasum, integrity, tag, and stage ID;
 - the downloaded staged archive must match the approved SHA-256 before browser approval;
 - the downloaded staged archive must pass the real installed-package smoke before browser approval;
+- the post-approval finalizer rejects a missing or wrong-manifest stage record;
+- integrity mismatch, tag mismatch, and installed-smoke failure each invoke one exact-version deprecation;
+- all three rollback cases make zero publish calls and zero `latest` mutations;
 - the comparison runner rejects the wrong approval fingerprint before network contact;
 - the comparison runner's default mode reports zero network calls;
 - every critical executable hash matches the manifest; and
@@ -96,8 +101,12 @@ node --check scripts/smoke-search-v2-local-first-beta-published.mjs
 node --check scripts/run-search-v2-local-hosted-comparison.mjs
 node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
 & .\scripts\stage-search-v2-local-first-beta.ps1 -RunStageAttemptSelfTest
+& .\scripts\finalize-search-v2-local-first-beta.ps1 -RunStageRecordSelfTest
+& .\scripts\finalize-search-v2-local-first-beta.ps1 -RunRollbackSelfTest -RollbackTestScenario integrity_mismatch
+& .\scripts\finalize-search-v2-local-first-beta.ps1 -RunRollbackSelfTest -RollbackTestScenario tag_mismatch
+& .\scripts\finalize-search-v2-local-first-beta.ps1 -RunRollbackSelfTest -RollbackTestScenario smoke_failure
 npx --yes npm@11.18.0 stage publish tmp/search-v2-local-first-beta-release-b06bba157/supericons-mcp-0.4.19-beta.0.tgz --tag beta --ignore-scripts --dry-run --json
-node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1
+node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586
 ```
 
 The packet verifier and npm staged-publication dry run passed. No staged upload, npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.

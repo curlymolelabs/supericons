@@ -125,6 +125,8 @@ assert.equal(
   true,
 );
 assert.equal(manifest.publication_flow.browser_approval_requires_owner_access, true);
+assert.equal(manifest.publication_flow.postapproval_registry_and_smoke_verification_required, true);
+assert.equal(manifest.publication_flow.postapproval_failure_requires_exact_prerelease_deprecation, true);
 assert.equal(manifest.publication_flow.publish_tag_locked_at_staging, 'beta');
 assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
 assert.equal(manifest.publication_attempts.maximum_additional_direct_publish_commands, 0);
@@ -152,6 +154,7 @@ assert.equal(packed.archive_sha256, manifest.package.archive_sha256);
 
 for (const [pathKey, hashKey] of [
   ['stager', 'stager_sha256'],
+  ['postapproval_finalizer', 'postapproval_finalizer_sha256'],
   ['published_smoke', 'published_smoke_sha256'],
   ['hosted_comparison_runner', 'hosted_comparison_runner_sha256'],
 ]) {
@@ -259,6 +262,44 @@ assert.match(stagerText, /'stage',\s*'download'/);
 assert.doesNotMatch(stagerText, /@\('publish',\s*\$archivePath/);
 assert.match(stagerText, /downloaded staged archive does not match the approved SHA-256/);
 
+const finalizerPath = join(repoRoot, manifest.artifacts.postapproval_finalizer);
+const stageRecordGuard = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  finalizerPath,
+  '-RunStageRecordSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(stageRecordGuard.status, 'ok');
+assert.equal(stageRecordGuard.missing_record_rejected, true);
+assert.equal(stageRecordGuard.valid_record_accepted, true);
+assert.equal(stageRecordGuard.wrong_manifest_rejected, true);
+
+for (const scenario of ['integrity_mismatch', 'tag_mismatch', 'smoke_failure']) {
+  const rollbackResult = JSON.parse(execFileSync(powerShell, [
+    '-NoProfile',
+    '-ExecutionPolicy',
+    'Bypass',
+    '-File',
+    finalizerPath,
+    '-RunRollbackSelfTest',
+    '-RollbackTestScenario',
+    scenario,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
+  assert.equal(rollbackResult.status, 'ok');
+  assert.equal(rollbackResult.scenario, scenario);
+  assert.equal(rollbackResult.publish_calls, 0);
+  assert.equal(rollbackResult.deprecation_calls, 1);
+  assert.equal(rollbackResult.latest_mutation_calls, 0);
+}
+
+const finalizerText = readFileSync(finalizerPath, 'utf8');
+assert.match(finalizerText, /Assert-VerifiedStageRecord/);
+assert.match(finalizerText, /Test-PostApprovalRegistryState/);
+assert.match(finalizerText, /Invoke-ExactPrereleaseRollback/);
+assert.match(finalizerText, /--package-spec \$packageSpec/);
+
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
   cwd: repoRoot,
@@ -322,6 +363,8 @@ console.log(JSON.stringify({
   publication_flow: manifest.publication_flow.mode,
   staged_archive_verification: 'hash_and_installed_smoke_required',
   stage_attempt_budget_probe: 'first_one_second_zero',
+  postapproval_stage_record_probe: 'missing_and_wrong_rejected',
+  postapproval_rollback_self_tests: ['integrity_mismatch', 'tag_mismatch', 'smoke_failure'],
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,
