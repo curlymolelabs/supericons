@@ -6,6 +6,7 @@ import {
   mkdtempSync,
   readFileSync,
   rmSync,
+  writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
@@ -43,13 +44,32 @@ function parseToolPayload(result) {
 const packageSpec = getArgument('--package-spec');
 const expectedVersion = getArgument('--expected-version');
 const expectedRouteFingerprint = getArgument('--expected-route-fingerprint');
+const injectHostedCall = args.includes('--inject-hosted-call');
 assert.ok(packageSpec, '--package-spec is required.');
 assert.ok(expectedVersion, '--expected-version is required.');
 assert.match(expectedRouteFingerprint || '', /^[a-f0-9]{64}$/);
 
 const temporaryRoot = mkdtempSync(join(tmpdir(), 'search-v2-published-smoke-'));
+const hostedCallCounterPath = join(temporaryRoot, 'hosted-calls.jsonl');
+const networkInterceptorPath = join(temporaryRoot, 'network-interceptor.mjs');
 let client;
 let transport;
+
+function readHostedCallCount() {
+  if (!existsSync(hostedCallCounterPath)) return 0;
+  return readFileSync(hostedCallCounterPath, 'utf8')
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .length;
+}
+
+function assertNoHostedCalls() {
+  assert.equal(
+    readHostedCallCount(),
+    0,
+    'Hosted calls were observed during the local-first published-package smoke.',
+  );
+}
 
 try {
   runNpm([
@@ -63,6 +83,37 @@ try {
   const installedRoot = join(temporaryRoot, 'node_modules', '@supericons', 'mcp');
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
   assert.equal(installedPackage.version, expectedVersion);
+
+  writeFileSync(networkInterceptorPath, `
+import { appendFileSync } from 'node:fs';
+
+const counterPath = process.env.SUPERICONS_HOSTED_CALL_COUNTER_FILE;
+globalThis.fetch = async function observedFetch(input, init = {}) {
+  const url = typeof input === 'string' ? input : input?.url || String(input);
+  appendFileSync(counterPath, JSON.stringify({
+    method: init.method || input?.method || 'GET',
+    url,
+  }) + '\\n');
+  return new Response(JSON.stringify({ error: 'blocked_by_local_first_smoke' }), {
+    status: 503,
+    headers: { 'content-type': 'application/json' },
+  });
+};
+`, 'utf8');
+
+  const interceptorOption = `--import=${pathToFileURL(networkInterceptorPath).href}`;
+  const childEnvironment = {
+    ...process.env,
+    NODE_OPTIONS: [process.env.NODE_OPTIONS, interceptorOption].filter(Boolean).join(' '),
+    SUPERICONS_API_KEY: '',
+    SUPERICONS_DISABLE_TELEMETRY: '1',
+    SUPERICONS_HOSTED_CALL_COUNTER_FILE: hostedCallCounterPath,
+    SUPERICONS_MATERIAL_SNAPSHOT_URL: 'https://supericons-smoke.invalid/material',
+    SUPERICONS_MCP_SEARCH_URL: 'https://supericons-smoke.invalid/search',
+    SUPERICONS_SEARCH_ENGINE_URL: 'https://supericons-smoke.invalid/search-engine',
+    SUPERICONS_SUPABASE_URL: 'https://supericons-smoke.invalid',
+    SUPERICONS_MCP_LOG_STARTUP: '0',
+  };
 
   const release = await import(pathToFileURL(join(installedRoot, 'release-channel.js')).href);
   const sdkBase = join(
@@ -80,16 +131,22 @@ try {
     command: process.execPath,
     args: [join(installedRoot, 'index.js')],
     cwd: installedRoot,
-    env: {
-      ...process.env,
-      SUPERICONS_API_KEY: '',
-      SUPERICONS_DISABLE_TELEMETRY: '1',
-      SUPERICONS_MCP_LOG_STARTUP: '0',
-    },
+    env: childEnvironment,
     stderr: 'pipe',
   });
   client = new Client({ name: 'search-v2-published-smoke', version: '1.0.0' });
   await client.connect(transport);
+
+  if (injectHostedCall) {
+    execFileSync(process.execPath, [
+      '-e',
+      "fetch('https://supericons-smoke.invalid/negative-probe')",
+    ], {
+      env: childEnvironment,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    assertNoHostedCalls();
+  }
 
   const eligibleCases = evaluationSet.query_groups.flatMap((group) => group.queries || [])
     .filter((entry) => {
@@ -148,6 +205,9 @@ try {
     materialChecks.push({ style, result_count: payload.results.length });
   }
 
+  assertNoHostedCalls();
+  const hostedCallsObserved = readHostedCallCount();
+
   console.log(JSON.stringify({
     status: 'ok',
     package: installedPackage.name,
@@ -156,7 +216,7 @@ try {
     stdio_route_fingerprint: routeFingerprint,
     material_checks: materialChecks,
     telemetry_disabled: true,
-    hosted_calls: 0,
+    hosted_calls: hostedCallsObserved,
   }, null, 2));
 } finally {
   if (transport) await transport.close().catch(() => {});

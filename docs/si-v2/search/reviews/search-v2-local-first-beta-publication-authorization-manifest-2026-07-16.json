@@ -51,7 +51,9 @@
       "solid"
     ],
     "telemetry_disabled": true,
-    "hosted_calls": 0
+    "hosted_calls": 0,
+    "hosted_call_measurement": "outbound_fetch_interceptor",
+    "negative_probe": "one_observed_call_must_fail"
   },
   "hosted_comparison": {
     "purpose": "informational_local_versus_stable_hosted_divergence",
@@ -143,13 +145,13 @@
   },
   "artifacts": {
     "publisher": "scripts/publish-search-v2-local-first-beta.ps1",
-    "publisher_sha256": "e3a41f5f3311e02808829aeae31527847f4d17c00803e7ea24a4a1e7f027f35e",
+    "publisher_sha256": "fb099aa268a7b8de199182aa6e0a223900381eb50fe40c5aa5343322e6ed5c28",
     "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
-    "published_smoke_sha256": "8a47aa4f2ff100c65e63347933a07e1f042708f05727e61ed7abb388b41168f8",
+    "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
     "hosted_comparison_runner": "scripts/run-search-v2-local-hosted-comparison.mjs",
     "hosted_comparison_runner_sha256": "28cb79fcda54282b27da50c4662b7fbf628c175275a4904dc675502bcd32a8e9",
     "packet_verifier": "scripts/verify-search-v2-local-first-beta-publication-packet.mjs",
-    "packet_verifier_sha256": "e280d1d653c2befd066dcedb04011c9b9c8b621fe7ae52f2fe942e73386f3962",
+    "packet_verifier_sha256": "8d830f0f09620096db18be846b96366f867b92b7375284b9249129d00071fb0c",
     "approval_request": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-approval-request-2026-07-16.md"
   },
   "monitoring": {
@@ -159,7 +161,7 @@
   },
   "rollback": {
     "prepublication_failure": "stop_without_registry_mutation",
-    "published_smoke_failure": "deprecate_exact_prerelease_and_keep_latest_unchanged",
+    "postpublication_verification_failure": "deprecate_exact_prerelease_and_keep_latest_unchanged",
     "beta_quality_failure": "deprecate_exact_prerelease_stop_invitations_and_keep_latest_unchanged",
     "stable_fallback_failure": "stop_beta_and_preserve_public_safe_evidence"
   },

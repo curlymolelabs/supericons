@@ -157,6 +157,9 @@ assert.equal(manifest.routes.non_ascii_search_icons, 'stable_mcp_search');
 assert.equal(manifest.routes.recommend_icons, 'stable_mcp_search');
 assert.equal(manifest.routes.web_search, 'unchanged');
 assert.equal(manifest.routes.stable_fallback_beta_cohort, null);
+assert.equal(manifest.published_smoke.hosted_calls, 0);
+assert.equal(manifest.published_smoke.hosted_call_measurement, 'outbound_fetch_interceptor');
+assert.equal(manifest.published_smoke.negative_probe, 'one_observed_call_must_fail');
 
 assert.equal(manifest.hosted_comparison.case_ids.length, 50);
 assert.equal(new Set(manifest.hosted_comparison.case_ids).size, 50);
@@ -177,6 +180,10 @@ assert.equal(manifest.external_actions.npm_latest_changes, 0);
 assert.equal(manifest.external_actions.model_provider_calls, 0);
 assert.equal(manifest.external_actions.monitoring_activations, 0);
 assert.equal(manifest.monitoring.activation_authorized, false);
+assert.equal(
+  manifest.rollback.postpublication_verification_failure,
+  'deprecate_exact_prerelease_and_keep_latest_unchanged',
+);
 
 assert.match(requestText, new RegExp(actualManifestHash));
 assert.match(requestText, /Publish the exact `@supericons\/mcp@0\.4\.19-beta\.0` archive once/);
@@ -205,6 +212,24 @@ requireRejected(spawnSync(powerShell, [
   '-ApprovedManifestSha256',
   '0'.repeat(64),
 ], { cwd: repoRoot, encoding: 'utf8' }), /does not match the owner-approved fingerprint/);
+
+for (const scenario of ['integrity_mismatch', 'tag_mismatch']) {
+  const rollbackResult = JSON.parse(execFileSync(powerShell, [
+    '-NoProfile',
+    '-ExecutionPolicy',
+    'Bypass',
+    '-File',
+    publisherPath,
+    '-RunRollbackSelfTest',
+    '-RollbackTestScenario',
+    scenario,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
+  assert.equal(rollbackResult.status, 'ok');
+  assert.equal(rollbackResult.scenario, scenario);
+  assert.equal(rollbackResult.publish_calls, 1);
+  assert.equal(rollbackResult.deprecation_calls, 1);
+  assert.equal(rollbackResult.latest_mutation_calls, 0);
+}
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -239,6 +264,20 @@ assert.equal(smokeOutput.status, 'ok');
 assert.equal(smokeOutput.eligible_stdio_cases, 150);
 assert.equal(smokeOutput.hosted_calls, 0);
 assert.equal(smokeOutput.material_checks.length, 2);
+requireRejected(spawnSync(process.execPath, [
+  smokePath,
+  '--package-spec',
+  archivePath,
+  '--expected-version',
+  manifest.package.version,
+  '--expected-route-fingerprint',
+  manifest.search_contract.stdio_route_fingerprint,
+  '--inject-hosted-call',
+], {
+  cwd: repoRoot,
+  encoding: 'utf8',
+  maxBuffer: 32 * 1024 * 1024,
+}), /Hosted calls were observed/);
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -250,6 +289,9 @@ console.log(JSON.stringify({
   stdio_route_fingerprint: manifest.search_contract.stdio_route_fingerprint,
   eligible_stdio_cases: smokeOutput.eligible_stdio_cases,
   hosted_comparison_plan_requests: comparisonPlan.maximum_requests,
+  measured_hosted_calls: smokeOutput.hosted_calls,
+  hosted_call_negative_probe: 'rejected',
+  rollback_self_tests: ['integrity_mismatch', 'tag_mismatch'],
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,

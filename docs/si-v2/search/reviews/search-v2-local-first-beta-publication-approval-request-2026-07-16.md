@@ -2,7 +2,7 @@
 
 Date: 2026-07-16
 Status: awaiting owner approval; this file does not authorize an external action
-Manifest fingerprint: `12d163f0a6fc1e6098a04724e15916ce4354e04503190815a956d187c2b2178e`
+Manifest fingerprint: `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b`
 
 ## Purpose
 
@@ -56,9 +56,9 @@ Approval authorizes only these actions:
 
 1. Publish the exact archive once as `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
 2. Keep npm `latest` at `0.4.17`.
-3. Clean-install the published prerelease and run 150 local stdio search cases plus Material outline and solid checks. Telemetry is disabled during this smoke, and it makes zero hosted search calls.
+3. Clean-install the published prerelease and run 150 local stdio search cases plus Material outline and solid checks. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
 4. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero.
-5. If the published-package smoke fails, deprecate only `0.4.19-beta.0` and keep npm `latest` unchanged.
+5. If any check after publication fails, including archive identity, npm tags, or the published-package smoke, deprecate only `0.4.19-beta.0`, confirm the deprecation, and keep npm `latest` unchanged.
 6. Keep the beta open for seven days from the first verified eligible user request. It may extend to 14 days if fewer than 200 eligible attempts or 20 session hashes are available.
 
 The owner may manually share reviewed, plain-language invitations. No automated public message is authorized.
@@ -89,7 +89,7 @@ The beta closeout follows the existing scorecard: relevance review, zero-result 
 ## Rollback
 
 - Before publication: any mismatch stops with no registry change.
-- Failed published-package smoke: deprecate only the exact prerelease and keep `latest` unchanged.
+- Failed post-publication verification: deprecate only the exact prerelease, confirm the deprecation, and keep `latest` unchanged.
 - Beta quality or safety failure: stop invitations, deprecate the exact prerelease, preserve public-safe evidence, and keep stable production unchanged.
 - Stable fallback problem: stop the beta and investigate separately. Do not change the production function under this approval.
 
@@ -112,4 +112,4 @@ This request does not authorize:
 
 To authorize this exact release, reply:
 
-> Approve Search v2 local-first beta publication manifest `12d163f0a6fc1e6098a04724e15916ce4354e04503190815a956d187c2b2178e`. Publish the exact `@supericons/mcp@0.4.19-beta.0` archive once under npm tag `beta`, keep npm `latest` at `0.4.17`, run the local published-package smoke, and run at most 50 sequential sanitized stable-hosted comparison requests with no retries. If the smoke fails, deprecate only this prerelease. No function deployment, database action, production load test, npm `latest` change, monitoring activation, automated public message, scheduled warm ping, or model-provider call is authorized.
+> Approve Search v2 local-first beta publication manifest `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b`. Publish the exact `@supericons/mcp@0.4.19-beta.0` archive once under npm tag `beta`, keep npm `latest` at `0.4.17`, run the measured local published-package smoke, and run at most 50 sequential sanitized stable-hosted comparison requests with no retries. If any post-publication verification fails, deprecate only this prerelease and confirm that `latest` stayed unchanged. No function deployment, database action, production load test, npm `latest` change, monitoring activation, automated public message, scheduled warm ping, or model-provider call is authorized.

@@ -19,7 +19,7 @@ The release contains one opt-in npm prerelease. It requires no Supabase function
 | Archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Archive size | 6,108,415 bytes |
 | Files | 47 |
-| Manifest SHA-256 | `12d163f0a6fc1e6098a04724e15916ce4354e04503190815a956d187c2b2178e` |
+| Manifest SHA-256 | `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b` |
 | Helper fingerprint | `ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8` |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 
@@ -34,7 +34,9 @@ The publisher fails before registry contact unless both conditions are supplied 
 
 The manifest binds the publisher, packet verifier, published-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
 
-The guarded publisher checks npm authentication and live registry state before publication. It publishes the exact archive with lifecycle scripts disabled, verifies the registry shasum and integrity, confirms `latest` remains `0.4.17`, then runs the clean-installed published-package smoke. A failed smoke deprecates only the exact prerelease.
+The guarded publisher checks npm authentication and live registry state before publication. It publishes the exact archive with lifecycle scripts disabled, verifies the registry shasum and integrity, confirms `latest` remains `0.4.17`, then runs the clean-installed published-package smoke. Any failed check after publication uses one rollback handler that deprecates only the exact prerelease, confirms the deprecation, and confirms `latest` remains unchanged.
+
+Mocked integrity-mismatch and tag-mismatch cases each produced exactly one publish call, one exact-version deprecation call, and zero `latest` mutation calls.
 
 ## Published-package smoke
 
@@ -44,7 +46,8 @@ The smoke was run locally against the exact archive with telemetry disabled. It 
 - the installed route fingerprint matches `7a56bd23...32184`;
 - Material outline returns three packaged SVGs;
 - Material solid returns three packaged SVGs; and
-- zero hosted calls are made.
+- an outbound-call interceptor measures zero hosted calls; and
+- a controlled one-call negative probe is rejected.
 
 The same smoke script will install the registry version after publication.
 
@@ -67,6 +70,8 @@ The packet verifier confirmed:
 
 - the publisher rejects a missing execution switch;
 - the publisher rejects the wrong approval fingerprint before npm contact;
+- integrity and tag mismatches after publication each invoke the exact-version rollback once;
+- those rollback cases never republish and never mutate npm `latest`;
 - the comparison runner rejects the wrong approval fingerprint before network contact;
 - the comparison runner's default mode reports zero network calls;
 - every critical executable hash matches the manifest; and
@@ -78,7 +83,7 @@ The packet verifier confirmed:
 node --check scripts/smoke-search-v2-local-first-beta-published.mjs
 node --check scripts/run-search-v2-local-hosted-comparison.mjs
 node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
-node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 12d163f0a6fc1e6098a04724e15916ce4354e04503190815a956d187c2b2178e
+node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b
 ```
 
 The packet verifier passed. No npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
