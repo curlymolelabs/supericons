@@ -41,6 +41,7 @@
     "verify:material-incident-diagnostic-packet": "node scripts/verify-material-incident-diagnostic-packet.mjs",
     "verify:mcp-usage-dedupe": "node scripts/verify-mcp-usage-dedupe.mjs",
     "verify:hosted-search-resilience": "node scripts/verify-hosted-search-resilience.mjs",
+    "verify:railway-mcp-runtime-install": "node scripts/verify-railway-mcp-runtime-install.mjs",
     "verify:admin-dashboard-phase-a-metrics": "node scripts/verify-admin-dashboard-phase-a-metrics.mjs",
     "verify:admin-dashboard-phase-a-migration": "node scripts/verify-admin-dashboard-phase-a-migration.mjs",
     "verify:admin-dashboard-phase-a-api": "node scripts/verify-admin-dashboard-phase-a-api.mjs",
@@ -210,10 +211,12 @@
     "vite-plugin-wasm": "^3.6.0"
   },
   "dependencies": {
+    "@ip-location-db/geolite2-country-mmdb": "2.3.2026061719",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@neplex/vectorizer": "^0.0.5",
     "@resvg/resvg-js": "^2.6.2",
     "express": "^5.2.1",
+    "maxmind": "5.0.6",
     "vectortracer": "^0.1.2",
     "zod": "^3.25.76"
   }
