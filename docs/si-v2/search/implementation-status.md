@@ -135,10 +135,10 @@ The complete four-surface map and its evidence limits are recorded in `reference
 ## Immediate next gate
 
 1. Independently review the case-identity correction recorded in `references/verification/search-v2-gate-c-case-identity-correction-2026-07-16.md`.
-2. Keep the exact slow stage unresolved unless the existing platform timing logs can still be recovered safely.
+2. Keep the exact slow stage unresolved unless the existing platform timing logs can still be recovered safely. The saved SQL proves the slow and failed rows were first requests on new workers, not reused-worker samples.
 3. Do not redeploy the unchanged beta. Prepare an implementation expected to pass with margin before requesting a new live measurement.
 4. Include the deterministic two-request localized path and exact hosted-request count in every later latency and audit-capture budget.
-5. Bind the live evidence-collection method into the next manifest so platform errors, audit errors, audit capture, production functions, and npm state are checked before publication.
+5. Bind the live evidence-collection method into the next manifest so platform errors, audit errors, audit capture, production functions, and npm state are checked before publication. Preserve approved safe evidence before deleting a failed isolated endpoint.
 6. Keep `recommend_icons` on the stable endpoint and leave both drafted monitoring routines inactive.
 7. A new live attempt requires a fresh implementation, packet, audit, and owner approval.
 8. If a later shared-treatment live p95 passes 3,000 ms, prepare a separate recommendation beta. If it fails, evaluate the local MCP index against quality, package size, startup, memory, freshness, and telemetry before choosing it.

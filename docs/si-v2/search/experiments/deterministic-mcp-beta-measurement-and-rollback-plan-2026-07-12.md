@@ -221,6 +221,8 @@ No Supabase deployment or npm publication occurs before this approval.
 - publish only the approved prerelease under the `beta` tag
 - verify one search, one recommendation, one clarification, one localized query, and one invalid request
 - confirm audit rows carry the beta identifier and new outcome fields
+- if Gate C fails, preserve the approved public-safe response artifacts, bounded audit rows, and platform timing logs before deleting the isolated endpoint
+- verify the evidence pack is readable and bound to the fixed workload and measurement window before cleanup
 - monitor the guardrails daily
 
 ### Gate D: closeout
@@ -248,9 +250,13 @@ Rollback immediately if any of these occurs:
 ### Supabase rollback
 
 1. Stop directing the prerelease package to the beta endpoint.
-2. Disable or remove the isolated beta function.
-3. Leave additive audit columns in place unless a separate migration proves they are safe to remove.
-4. Verify the current production endpoint with its saved smoke queries.
+2. Stop publication and invitations, then keep the isolated endpoint unavailable to users while evidence is collected.
+3. Export only the approved public-safe response artifacts, bounded audit rows, and platform timing logs. Confirm the export covers the failure window and fixed workload.
+4. Disable or remove the isolated beta function after the evidence check completes.
+5. Leave additive audit columns in place unless a separate migration proves they are safe to remove.
+6. Verify the current production endpoint with its saved smoke queries.
+
+If the failure exposes secrets or private search data, delete the endpoint immediately and retain only evidence that can be collected without copying the unsafe content. Do not delay a security rollback to complete diagnostics.
 
 The beta must not require a destructive data migration. Search audit additions are nullable and backward-compatible.
 
@@ -263,7 +269,7 @@ The beta must not require a destructive data migration. Search audit additions a
 
 ### Evidence after rollback
 
-Record the trigger, time, affected version and endpoint, request volume, user impact, reversal steps, smoke results, and remaining data caveats. Do not mark rollback complete until the current production path is verified.
+Record the trigger, time, affected version and endpoint, request volume, user impact, preserved evidence, reversal steps, smoke results, and remaining data caveats. Do not mark rollback complete until the current production path is verified.
 
 ## Current blockers before external beta
 
