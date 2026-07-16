@@ -20,6 +20,7 @@ const adminUrl = (readArg('admin-url') || 'https://kcjmkakdhsqplvasgkjv.supabase
 const mode = readArg('mode') || 'candidate';
 const outputPath = readArg('output');
 const maxRefreshDaysText = readArg('max-refresh-days');
+const preflightMaxLatencyMs = Number(readArg('preflight-max-latency-ms') || 10_000);
 const adminSecret = String(process.env.PHASE_A_ADMIN_SECRET || '');
 
 assert.ok(['preflight', 'legacy', 'candidate'].includes(mode), 'Mode must be preflight, legacy, or candidate.');
@@ -29,6 +30,10 @@ const maxRefreshDays = mode === 'candidate' ? Number(maxRefreshDaysText) : 0;
 if (mode === 'candidate') {
   assert.ok(Number.isInteger(maxRefreshDays) && maxRefreshDays >= 0 && maxRefreshDays <= 120,
     'Candidate mode requires --max-refresh-days between 0 and 120.');
+}
+if (mode === 'preflight') {
+  assert.ok(Number.isInteger(preflightMaxLatencyMs) && preflightMaxLatencyMs > 0,
+    'Preflight mode requires a positive --preflight-max-latency-ms value.');
 }
 
 const summary = {
@@ -66,7 +71,7 @@ async function runLegacyPreflight() {
         'content-type': 'application/json',
         'x-admin-secret': adminSecret,
       },
-      signal: AbortSignal.timeout(120_000),
+      signal: AbortSignal.timeout(preflightMaxLatencyMs + 2_000),
     });
     payload = await response.json().catch(() => null);
   } catch (error) {
@@ -79,10 +84,13 @@ async function runLegacyPreflight() {
     payloadHasStats: Boolean(payload?.stats && typeof payload.stats === 'object'),
     errorName: requestError?.name || '',
     errorMessage: requestError instanceof Error ? requestError.message : String(requestError || ''),
+    latencyMs,
+    maxLatencyMs: preflightMaxLatencyMs,
   });
   summary.preflight = {
     http_status: response?.status ?? null,
     latency_ms: latencyMs,
+    max_latency_ms: preflightMaxLatencyMs,
     outcome: classification.outcome,
     reason: classification.reason,
     proceed: classification.proceed,

@@ -1,8 +1,12 @@
+export const ADMIN_API_PREFLIGHT_MAX_LATENCY_MS = 10_000;
+
 export function classifyAdminApiPreflight({
   httpStatus = null,
   payloadHasStats = false,
   errorName = '',
   errorMessage = '',
+  latencyMs = 0,
+  maxLatencyMs = ADMIN_API_PREFLIGHT_MAX_LATENCY_MS,
 } = {}) {
   const normalizedErrorName = String(errorName || '').toLowerCase();
   const normalizedErrorMessage = String(errorMessage || '').toLowerCase();
@@ -11,7 +15,10 @@ export function classifyAdminApiPreflight({
     || normalizedErrorMessage.includes('timed out');
 
   if (timedOut) {
-    return { proceed: true, outcome: 'timeout', reason: 'legacy_service_degraded' };
+    return { proceed: false, outcome: 'timeout', reason: 'shared_database_unhealthy' };
+  }
+  if (Number(latencyMs) > Number(maxLatencyMs)) {
+    return { proceed: false, outcome: 'slow_response', reason: 'shared_database_unhealthy' };
   }
   if (errorName || errorMessage) {
     return { proceed: false, outcome: 'network_error', reason: 'preflight_unreachable' };
