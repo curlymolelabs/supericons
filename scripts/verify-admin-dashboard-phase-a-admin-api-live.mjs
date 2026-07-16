@@ -54,7 +54,7 @@ async function requestJson(path, { method = 'GET' } = {}) {
   return { payload, latency_ms: latencyMs };
 }
 
-async function measureQueue(path, count = 10) {
+async function measureQueue(path, count = 20) {
   await requestJson(path);
   const samples = [];
   for (let index = 0; index < count; index += 1) {
@@ -99,13 +99,6 @@ try {
     const commonFilters = 'environment=production&channel=all&query_origin=agent_query';
     const queue24h = await measureQueue(`/intelligence/search/queue?window=1d&${commonFilters}`);
     const queueAll = await measureQueue(`/intelligence/search/queue?window=all&${commonFilters}`);
-    assert.ok(queue24h.p95_ms < 1500, `24h queue p95 was ${queue24h.p95_ms} ms.`);
-    assert.ok(queueAll.p95_ms < 1000, `All-time queue p95 was ${queueAll.p95_ms} ms.`);
-
-    summary.status = 'ok';
-    summary.rollup_backfill_complete = true;
-    summary.rollup_refreshed_days = refreshResult.refreshed_days;
-    summary.rollup_refresh_call_count = refreshResult.calls;
     summary.dashboard_24h = {
       latency_ms: dashboard.latency_ms,
       latest_activity_count: dashboard.payload.latest_activity.length,
@@ -116,11 +109,18 @@ try {
     summary.performance_contract = {
       queue_24h_p95_limit_ms: 1500,
       queue_all_p95_limit_ms: 1000,
-      warm_samples_each: 10,
+      warm_samples_each: 20,
       rollup_refresh_elapsed_limit_minutes: 20,
       rollup_refresh_day_limit: maxRefreshDays,
       rollup_refresh_call_limit: maxRefreshDays + 1,
     };
+    assert.ok(queue24h.p95_ms < 1500, `24h queue p95 was ${queue24h.p95_ms} ms.`);
+    assert.ok(queueAll.p95_ms < 1000, `All-time queue p95 was ${queueAll.p95_ms} ms.`);
+
+    summary.status = 'ok';
+    summary.rollup_backfill_complete = true;
+    summary.rollup_refreshed_days = refreshResult.refreshed_days;
+    summary.rollup_refresh_call_count = refreshResult.calls;
   }
 } catch (error) {
   summary.status = 'failed';

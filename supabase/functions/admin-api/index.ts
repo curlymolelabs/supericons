@@ -9,6 +9,7 @@ import {
   deriveAuditQueryOrigin,
   matchKnownDefect,
   mergeTelemetryEvidenceRows,
+  queryOriginNeedsLegacyIconEvidence,
   readMcpQueryOrigin,
   summarizeRawSearchAttempts,
 } from '../../../lib/admin-dashboard-metrics.js';
@@ -886,7 +887,14 @@ async function fetchTelemetryEvidenceRows(
 async function fetchSearchEvidenceRows(
   adminClient: SupabaseClient,
   since: string | null,
+  queryOrigin: QueryOriginFilter = 'all',
 ) : Promise<SearchEvidenceRow[]> {
+  if (!queryOriginNeedsLegacyIconEvidence(queryOrigin)) {
+    return (await fetchTelemetryEvidenceRows(adminClient, since))
+      .filter((row) => String(row.query_origin || 'legacy_unknown') === queryOrigin)
+      .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+  }
+
   const iconRows = await fetchIconEvidenceRows(adminClient, since);
   const auditRows = await fetchHostedSearchAuditRows(adminClient, since, iconRows);
   const mcpUsageRows = await fetchMcpUsageEventRows(adminClient, since);
@@ -1907,7 +1915,7 @@ async function buildQueryQueuePayload(
   }
   const since = getWindowSinceIso(window);
   const params = parseQueryQueueParams(url, { exportMode });
-  const rawEvidenceRows = await fetchSearchEvidenceRows(adminClient, since);
+  const rawEvidenceRows = await fetchSearchEvidenceRows(adminClient, since, params.query_origin);
   const evidenceRows = filterEvidenceRowsByQueryOrigin(
     filterEvidenceRowsByChannel(
       filterEvidenceRowsByEnvironment(rawEvidenceRows, params.environment),

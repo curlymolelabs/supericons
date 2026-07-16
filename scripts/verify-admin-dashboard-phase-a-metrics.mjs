@@ -9,6 +9,7 @@ import {
   getRequestedLimitForTool,
   matchKnownDefect,
   mergeTelemetryEvidenceRows,
+  queryOriginNeedsLegacyIconEvidence,
   readMcpQueryOrigin,
   splitCurrentUtcDay,
   summarizeRawSearchAttempts,
@@ -52,6 +53,14 @@ test('derives origins without changing mcp-search', () => {
   assert.equal(deriveAuditQueryOrigin({}), 'legacy_unknown');
   assert.equal(readMcpQueryOrigin({ query_origin: null }), 'legacy_unknown');
   assert.equal(deriveHostedMcpQueryOrigin('recommend_icons'), 'agent_query');
+});
+
+test('loads legacy icon evidence only for queue origins that can include it', () => {
+  assert.equal(queryOriginNeedsLegacyIconEvidence('all'), true);
+  assert.equal(queryOriginNeedsLegacyIconEvidence('legacy_unknown'), true);
+  assert.equal(queryOriginNeedsLegacyIconEvidence('agent_query'), false);
+  assert.equal(queryOriginNeedsLegacyIconEvidence('recommend_variant'), false);
+  assert.equal(queryOriginNeedsLegacyIconEvidence('icon_lookup'), false);
 });
 
 test('records resolved requested limits per tool', () => {

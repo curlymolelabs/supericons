@@ -38,6 +38,14 @@ requirePattern(
   'Long queue windows must switch to completed-day rollups.',
 );
 requirePattern(
+  /!queryOriginNeedsLegacyIconEvidence\(queryOrigin\)[\s\S]*?fetchTelemetryEvidenceRows\(adminClient, since\)/,
+  'Modern query-origin queues must skip legacy icon evidence and fetch telemetry sources concurrently.',
+);
+requirePattern(
+  /fetchSearchEvidenceRows\(adminClient, since, params\.query_origin\)/,
+  'The raw queue must pass its query-origin filter into evidence planning.',
+);
+requirePattern(
   /from\('admin_rollup_overview'\)[\s\S]*?from\('admin_rollup_queries'\)/,
   'On-demand refresh must write both rollup purposes.',
 );
@@ -112,5 +120,5 @@ console.log(JSON.stringify({
   bounded_raw_and_rollup_paths: true,
   compact_activity_contract: true,
   mcp_search_changed: false,
-  checks: 19,
+  checks: 21,
 }, null, 2));
