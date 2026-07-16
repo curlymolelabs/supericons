@@ -2,7 +2,7 @@
 
 Date: 2026-07-16
 Status: awaiting owner approval; this file does not authorize an external action
-Manifest fingerprint: `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b`
+Manifest fingerprint: `f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44`
 
 ## Purpose
 
@@ -26,6 +26,8 @@ The beta does not call an AI agent, language model, or embedding provider. It do
 | Packaged Material assets | 8,524 |
 
 The archive was built from a temporary clean worktree at the implementation commit. Publication must use this exact hash-checked archive with lifecycle scripts disabled. It must not repack the active working folder.
+
+The first approved execution stopped before publication because PowerShell treated npm's expected version-absent result as a fatal command error. Registry checks immediately afterward confirmed that `0.4.19-beta.0` remained absent and npm `latest` remained `0.4.17`. The runner now captures nonzero native-command results for explicit classification, with a regression test for the expected absence result. This changed the manifest fingerprint and requires fresh approval.
 
 ## Route boundary
 
@@ -72,6 +74,8 @@ Immediately before publication, the guarded runner must confirm:
 - the exact archive, publisher, smoke, comparison runner, and manifest hashes match; and
 - the local packet verifier still passes.
 
+The preflight must classify npm's expected version-absent response without terminating or publishing. Any other absence-check failure still stops before registry mutation.
+
 npm login or an npm one-time code may be required. The owner enters it directly in the terminal. No credential or code is placed in chat or in the repository.
 
 ## Informational comparison
@@ -112,4 +116,4 @@ This request does not authorize:
 
 To authorize this exact release, reply:
 
-> Approve Search v2 local-first beta publication manifest `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b`. Publish the exact `@supericons/mcp@0.4.19-beta.0` archive once under npm tag `beta`, keep npm `latest` at `0.4.17`, run the measured local published-package smoke, and run at most 50 sequential sanitized stable-hosted comparison requests with no retries. If any post-publication verification fails, deprecate only this prerelease and confirm that `latest` stayed unchanged. No function deployment, database action, production load test, npm `latest` change, monitoring activation, automated public message, scheduled warm ping, or model-provider call is authorized.
+> Approve Search v2 local-first beta publication manifest `f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44`. Publish the exact `@supericons/mcp@0.4.19-beta.0` archive once under npm tag `beta`, keep npm `latest` at `0.4.17`, run the measured local published-package smoke, and run at most 50 sequential sanitized stable-hosted comparison requests with no retries. If any post-publication verification fails, deprecate only this prerelease and confirm that `latest` stayed unchanged. No function deployment, database action, production load test, npm `latest` change, monitoring activation, automated public message, scheduled warm ping, or model-provider call is authorized.

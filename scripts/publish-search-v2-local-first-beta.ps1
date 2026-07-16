@@ -2,6 +2,7 @@ param(
     [switch]$ExecuteApprovedPublication,
     [string]$ApprovedManifestSha256,
     [switch]$RunRollbackSelfTest,
+    [switch]$RunNativeCommandCaptureSelfTest,
     [ValidateSet('integrity_mismatch', 'tag_mismatch')]
     [string]$RollbackTestScenario
 )
@@ -26,6 +27,22 @@ function Invoke-NpmCommand([scriptblock]$Invoker, [string[]]$Arguments) {
         throw 'The npm command adapter returned an invalid result.'
     }
     return $result
+}
+
+function Invoke-NativeCommandResult([string]$Executable, [string[]]$Arguments) {
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $output = & $Executable @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
+    return [pscustomobject]@{
+        ExitCode = $exitCode
+        Output = ($output | Out-String)
+    }
 }
 
 function Convert-NpmJson([object]$Result, [string]$Description) {
@@ -218,10 +235,30 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
 }
 
 if ($RunRollbackSelfTest) {
-    if ($ExecuteApprovedPublication) {
+    if ($ExecuteApprovedPublication -or $RunNativeCommandCaptureSelfTest) {
         throw 'Rollback self-test and real publication cannot run together.'
     }
     Write-Output (Invoke-RollbackSelfTest $RollbackTestScenario | ConvertTo-Json -Depth 4)
+    exit 0
+}
+
+if ($RunNativeCommandCaptureSelfTest) {
+    if ($ExecuteApprovedPublication) {
+        throw 'Native command self-test and real publication cannot run together.'
+    }
+    $nodeExecutable = (Get-Command node -ErrorAction Stop).Source
+    $capture = Invoke-NativeCommandResult $nodeExecutable @(
+        '-e',
+        "process.stderr.write('E404 expected absence probe'); process.exit(1)"
+    )
+    if ($capture.ExitCode -ne 1 -or $capture.Output -notmatch 'E404 expected absence probe') {
+        throw 'Native command self-test did not capture the expected nonzero result.'
+    }
+    Write-Output ([pscustomobject]@{
+        status = 'ok'
+        exit_code = $capture.ExitCode
+        expected_absence_captured = $true
+    } | ConvertTo-Json -Depth 3)
     exit 0
 }
 
@@ -268,11 +305,7 @@ if ($LASTEXITCODE -ne 0) {
 
 $npmInvoker = {
     param([string[]]$NpmArguments)
-    $output = & npm @NpmArguments 2>&1
-    return [pscustomobject]@{
-        ExitCode = $LASTEXITCODE
-        Output = ($output | Out-String)
-    }
+    return Invoke-NativeCommandResult 'npm' $NpmArguments
 }
 
 $npmUser = Invoke-NpmCommand $npmInvoker @('whoami')

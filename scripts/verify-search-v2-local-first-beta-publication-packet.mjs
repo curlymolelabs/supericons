@@ -230,6 +230,17 @@ for (const scenario of ['integrity_mismatch', 'tag_mismatch']) {
   assert.equal(rollbackResult.deprecation_calls, 1);
   assert.equal(rollbackResult.latest_mutation_calls, 0);
 }
+const nativeCommandCapture = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  publisherPath,
+  '-RunNativeCommandCaptureSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(nativeCommandCapture.status, 'ok');
+assert.equal(nativeCommandCapture.exit_code, 1);
+assert.equal(nativeCommandCapture.expected_absence_captured, true);
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -292,6 +303,7 @@ console.log(JSON.stringify({
   measured_hosted_calls: smokeOutput.hosted_calls,
   hosted_call_negative_probe: 'rejected',
   rollback_self_tests: ['integrity_mismatch', 'tag_mismatch'],
+  native_command_absence_probe: 'captured',
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,

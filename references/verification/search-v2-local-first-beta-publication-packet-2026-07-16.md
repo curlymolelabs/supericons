@@ -10,6 +10,8 @@ The publication-only packet is rebuilt from the independently approved stdio rou
 
 The release contains one opt-in npm prerelease. It requires no Supabase function deployment, database migration, migration-history repair, normal database push, site deployment, model-provider call, or monitoring activation.
 
+The first owner-approved execution stopped during the live version-absence check, before `npm publish`. PowerShell promoted npm's expected nonzero result to a terminating error before the runner could classify the `E404`. Read-only registry checks immediately afterward confirmed npm `latest` at `0.4.17` and the target prerelease absent. The runner now captures native exit code and output under a local non-terminating error preference, then applies the existing fail-closed classification. A direct regression self-test captures exit code 1 and the expected absence marker without terminating the publisher.
+
 ## Bound release
 
 | item | value |
@@ -19,7 +21,7 @@ The release contains one opt-in npm prerelease. It requires no Supabase function
 | Archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Archive size | 6,108,415 bytes |
 | Files | 47 |
-| Manifest SHA-256 | `416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b` |
+| Manifest SHA-256 | `f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44` |
 | Helper fingerprint | `ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8` |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 
@@ -70,6 +72,7 @@ The packet verifier confirmed:
 
 - the publisher rejects a missing execution switch;
 - the publisher rejects the wrong approval fingerprint before npm contact;
+- the publisher captures the expected nonzero version-absence result for explicit classification;
 - integrity and tag mismatches after publication each invoke the exact-version rollback once;
 - those rollback cases never republish and never mutate npm `latest`;
 - the comparison runner rejects the wrong approval fingerprint before network contact;
@@ -83,7 +86,7 @@ The packet verifier confirmed:
 node --check scripts/smoke-search-v2-local-first-beta-published.mjs
 node --check scripts/run-search-v2-local-hosted-comparison.mjs
 node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
-node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 416f698205077aac41c3499b140414500e84cca6fb4709d940dbb0043e99f54b
+node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44
 ```
 
 The packet verifier passed. No npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
