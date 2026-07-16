@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons Converted SVG Loader Preview</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23ff4f00'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0e0e0e;
+      --surface: #171717;
+      --line: #383330;
+      --text: #fff7f1;
+      --muted: #b7aea7;
+      --orange: #ff4f00;
+      font-family: Inter, Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      width: min(1040px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 4.1rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 390px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .states {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 16px;
+    }
+
+    .state-card {
+      min-height: 310px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .state-card--main {
+      min-height: 388px;
+      grid-row: span 2;
+    }
+
+    .loader-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 210px;
+      background: transparent;
+    }
+
+    .state-card--main .loader-wrap {
+      min-height: 280px;
+    }
+
+    .svg-loader {
+      width: var(--loader-size, 128px);
+      height: auto;
+      display: block;
+      background: transparent;
+      border: 0;
+      filter: none;
+    }
+
+    .svg-loader--hero {
+      --loader-size: 178px;
+    }
+
+    .svg-loader--field {
+      --loader-size: 96px;
+    }
+
+    .svg-loader--inline {
+      --loader-size: 86.4px;
+    }
+
+    .loader-shell {
+      display: grid;
+      place-items: center;
+      width: 230px;
+      aspect-ratio: 1;
+      background: transparent;
+      border: 0;
+      overflow: visible;
+    }
+
+    .search-row {
+      width: min(320px, 100%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111;
+    }
+
+    .search-text {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+
+    .search-text strong {
+      font-size: 0.98rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .search-text span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.35;
+    }
+
+    .tiny-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      min-height: 130px;
+    }
+
+    .tiny-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      background: var(--orange);
+      opacity: 0.38;
+      animation: tiny-pulse 1.08s ease-in-out infinite;
+    }
+
+    .tiny-dot:nth-child(1) {
+      animation-delay: -140ms;
+    }
+
+    .tiny-dot:nth-child(3) {
+      animation-delay: 140ms;
+    }
+
+    .state-card h2 {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .state-card p {
+      max-width: 390px;
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    @keyframes tiny-pulse {
+      0%, 100% {
+        opacity: 0.22;
+        transform: translateY(1px) scale(0.84);
+      }
+
+      50% {
+        opacity: 0.66;
+        transform: translateY(-1px) scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tiny-dot {
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .states {
+        grid-template-columns: 1fr;
+      }
+
+      .state-card--main {
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 560px);
+        padding-top: 28px;
+      }
+
+      .hero {
+        display: block;
+      }
+
+      .hero p {
+        margin-top: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>Converted SVG loader</h1>
+      <p>A vector frame loop made from your converted SVG shape, recolored and given a face.</p>
+    </header>
+
+    <section class="states" aria-label="Converted SVG mascot loader previews">
+      <article class="state-card state-card--main">
+        <div class="loader-wrap">
+          <div class="loader-shell" role="status" aria-live="polite" aria-label="Searching icons">
+            <img class="svg-loader svg-loader--hero" src="./supericons-loader-svg-v4.svg" alt="">
+          </div>
+        </div>
+        <div>
+          <h2>Main converted SVG loader</h2>
+          <p>The loader uses six SVG pose frames with a small floating motion on top.</p>
+        </div>
+      </article>
+
+      <article class="state-card">
+        <div class="loader-wrap">
+          <div class="search-row" role="status" aria-live="polite" aria-label="Searching icons">
+            <img class="svg-loader svg-loader--field" src="./supericons-loader-svg-v4.svg" alt="">
+            <span class="search-text">
+              <strong>Searching icons</strong>
+              <span>Finding the closest matches.</span>
+            </span>
+          </div>
+        </div>
+        <div>
+          <h2>Search field size</h2>
+          <p>A compact version for search panels or empty result moments.</p>
+        </div>
+      </article>
+
+      <article class="state-card">
+        <div class="loader-wrap">
+          <div class="tiny-row" role="status" aria-live="polite" aria-label="Loading icons">
+            <span class="tiny-dot" aria-hidden="true"></span>
+            <img class="svg-loader svg-loader--inline" src="./supericons-loader-svg-v4.svg" alt="">
+            <span class="tiny-dot" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div>
+          <h2>Tiny inline loader</h2>
+          <p>A small version for places where the loader has very little room.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

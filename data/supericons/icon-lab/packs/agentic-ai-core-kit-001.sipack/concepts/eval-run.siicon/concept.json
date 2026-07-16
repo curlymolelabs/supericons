@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:eval-run",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "eval-run",
+  "name": "Eval Run",
+  "depicts": "A repeatable test run for agent quality.",
+  "useCase": "Use for evaluation suites, benchmark runs, quality tests, prompt tests, and model checks.",
+  "category": "agentic-ai",
+  "assetType": "workflow-icon",
+  "primaryMetaphor": "A test card with a diagonal quality mark.",
+  "avoidMetaphors": [
+    "school exam",
+    "trophy",
+    "speedometer"
+  ],
+  "siblingConcepts": [
+    "trace-span",
+    "tool-result",
+    "policy-guardrail"
+  ],
+  "searchTerms": [
+    "eval run",
+    "evaluation",
+    "benchmark",
+    "quality test",
+    "prompt test",
+    "agent eval"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

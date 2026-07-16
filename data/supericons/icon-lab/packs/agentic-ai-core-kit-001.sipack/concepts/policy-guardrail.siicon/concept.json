@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:policy-guardrail",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "policy-guardrail",
+  "name": "Policy Guardrail",
+  "depicts": "A boundary that keeps an agent inside allowed behavior.",
+  "useCase": "Use for safety rules, policy checks, compliance boundaries, protected actions, and blocked flows.",
+  "category": "agentic-ai",
+  "assetType": "system-icon",
+  "primaryMetaphor": "A shield-like lane with two horizontal guardrails.",
+  "avoidMetaphors": [
+    "warning triangle only",
+    "police badge",
+    "wall"
+  ],
+  "siblingConcepts": [
+    "approval-gate",
+    "trace-span",
+    "eval-run"
+  ],
+  "searchTerms": [
+    "policy guardrail",
+    "guardrail",
+    "safety policy",
+    "compliance",
+    "blocked action",
+    "protected flow"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

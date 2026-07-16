@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/concept.schema.json",
+  "title": "Icons Lab Concept Brief",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "packId",
+    "slug",
+    "name",
+    "depicts",
+    "useCase",
+    "primaryMetaphor",
+    "avoidMetaphors",
+    "siblingConcepts",
+    "searchTerms",
+    "targetSizes",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^si:[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "packId": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "depicts": {
+      "type": "string"
+    },
+    "useCase": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "assetType": {
+      "type": "string"
+    },
+    "primaryMetaphor": {
+      "type": "string"
+    },
+    "avoidMetaphors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "siblingConcepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "searchTerms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "targetSizes": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "status": {
+      "enum": [
+        "brief_ready",
+        "variant_ready",
+        "owner_review",
+        "approved",
+        "archived"
+      ]
+    }
+  }
+}

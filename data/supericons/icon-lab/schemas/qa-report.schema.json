@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/qa-report.schema.json",
+  "title": "Icons Lab QA Report",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "conceptId",
+    "variantId",
+    "status",
+    "checks",
+    "issues",
+    "warnings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "conceptId": {
+      "type": "string"
+    },
+    "variantId": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "checks": {
+      "type": "object"
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

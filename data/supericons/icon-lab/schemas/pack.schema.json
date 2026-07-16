@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/pack.schema.json",
+  "title": "Icons Lab Pack",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "description",
+    "status",
+    "defaultRecipeId",
+    "concepts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{3}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "owner_review",
+        "approved",
+        "archived"
+      ]
+    },
+    "defaultRecipeId": {
+      "type": "string"
+    },
+    "targetCount": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "targetQualityLevel": {
+      "enum": [
+        "L1 usable",
+        "L2 benchmark",
+        "L3 Supericons grade",
+        "L4 signature"
+      ]
+    },
+    "accessTier": {
+      "enum": [
+        "free_candidate",
+        "premium_candidate",
+        "internal"
+      ]
+    },
+    "concepts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^si:[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "sourcePackage": {
+      "type": "string"
+    }
+  }
+}

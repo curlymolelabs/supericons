@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "conceptId": "si:tool-call",
+  "variantId": "variant-tool-call-outline-001",
+  "status": "pass",
+  "checks": {
+    "viewBox": "pass",
+    "currentColor": "pass",
+    "strokeWidth": "pass",
+    "strokeLinecap": "pass",
+    "strokeLinejoin": "pass",
+    "fill": "pass",
+    "rasterEmbeds": "pass",
+    "foreignObject": "pass",
+    "hiddenText": "pass",
+    "accessibleTitle": "fail",
+    "shapeElementCount": "pass",
+    "safeArea": "pass",
+    "fixedColors": "pass"
+  },
+  "metrics": {
+    "shapeElementCount": 5,
+    "coordinateMin": 4.6,
+    "coordinateMax": 19.4
+  },
+  "issues": [],
+  "warnings": [
+    "SVG should include title and desc elements."
+  ]
+}

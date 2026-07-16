@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/human-review-decision.schema.json",
+  "title": "Icons Lab Human Review Decision",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "conceptId",
+    "variantId",
+    "decision",
+    "reviewerRole",
+    "notes",
+    "decidedAt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "conceptId": {
+      "type": "string"
+    },
+    "variantId": {
+      "type": "string"
+    },
+    "decision": {
+      "enum": [
+        "pending_review",
+        "approved",
+        "changes_requested",
+        "rejected"
+      ]
+    },
+    "reviewerRole": {
+      "enum": [
+        "human_owner",
+        "design_lead"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "decidedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

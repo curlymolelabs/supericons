@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:tool-result",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "tool-result",
+  "name": "Tool Result",
+  "depicts": "A completed response returned from a tool.",
+  "useCase": "Use for returned payloads, command output, tool observations, and result cards.",
+  "category": "agentic-ai",
+  "assetType": "state-icon",
+  "primaryMetaphor": "A small output card receiving a checked result.",
+  "avoidMetaphors": [
+    "clipboard only",
+    "database only",
+    "checkmark-only status"
+  ],
+  "siblingConcepts": [
+    "tool-call",
+    "eval-run",
+    "trace-span"
+  ],
+  "searchTerms": [
+    "tool result",
+    "tool output",
+    "observation",
+    "agent result",
+    "response payload",
+    "result card"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

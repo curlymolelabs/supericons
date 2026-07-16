@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si-filled-rounded-24",
+  "name": "Supericons Filled Rounded 24",
+  "purpose": "Filled static variant template for later pack expansion.",
+  "canvas": {
+    "viewBox": "0 0 24 24",
+    "width": 24,
+    "height": 24,
+    "safeArea": 2
+  },
+  "stroke": {
+    "width": 0,
+    "color": "none",
+    "linecap": "round",
+    "linejoin": "round"
+  },
+  "fill": {
+    "default": "currentColor",
+    "allowedValues": [
+      "currentColor",
+      "none"
+    ]
+  },
+  "density": {
+    "target": "medium",
+    "maxShapeElements": 8
+  },
+  "variants": [
+    "filled"
+  ],
+  "allowedElements": [
+    "svg",
+    "title",
+    "desc",
+    "g",
+    "path",
+    "rect",
+    "circle",
+    "polyline",
+    "polygon",
+    "ellipse"
+  ],
+  "exportRules": {
+    "requireCurrentColor": true,
+    "requireAccessibleTitle": true,
+    "disallowRasterEmbeds": true,
+    "disallowForeignObject": true,
+    "disallowTextElements": true
+  }
+}

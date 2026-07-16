@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si-duotone-rounded-24",
+  "name": "Supericons Duotone Rounded 24",
+  "purpose": "Duotone static variant template for premium icon sets.",
+  "canvas": {
+    "viewBox": "0 0 24 24",
+    "width": 24,
+    "height": 24,
+    "safeArea": 2
+  },
+  "stroke": {
+    "width": 1.5,
+    "color": "currentColor",
+    "linecap": "round",
+    "linejoin": "round"
+  },
+  "fill": {
+    "default": "currentColor",
+    "allowedValues": [
+      "currentColor",
+      "none"
+    ]
+  },
+  "density": {
+    "target": "medium",
+    "maxShapeElements": 12
+  },
+  "variants": [
+    "duotone"
+  ],
+  "allowedElements": [
+    "svg",
+    "title",
+    "desc",
+    "g",
+    "path",
+    "line",
+    "rect",
+    "circle",
+    "polyline",
+    "polygon",
+    "ellipse"
+  ],
+  "exportRules": {
+    "requireCurrentColor": true,
+    "requireAccessibleTitle": true,
+    "disallowRasterEmbeds": true,
+    "disallowForeignObject": true,
+    "disallowTextElements": true
+  }
+}
