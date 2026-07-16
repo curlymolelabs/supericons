@@ -143,6 +143,7 @@
     "verify:search-v2-roundtrip-latency-packet": "node scripts/verify-search-v2-roundtrip-latency-packet.mjs",
     "verify:search-v2-search-only-beta-packet": "node scripts/verify-search-v2-search-only-beta-packet.mjs",
     "verify:search-v2-search-only-beta-packet:2026-07-16": "node scripts/verify-search-v2-search-only-beta-packet-2026-07-16.mjs",
+    "verify:search-v2-search-only-beta-gate-c-runner": "node scripts/verify-search-v2-search-only-beta-gate-c-runner.mjs",
     "verify:search-v2-tool-scoped-beta": "node scripts/verify-search-v2-tool-scoped-beta.mjs",
     "verify:search-v2-tool-scoped-package": "node scripts/verify-search-v2-tool-scoped-package.mjs",
     "verify:search-v2-tool-latency-migration-smoke": "node scripts/verify-search-v2-tool-latency-migration-smoke.mjs",
