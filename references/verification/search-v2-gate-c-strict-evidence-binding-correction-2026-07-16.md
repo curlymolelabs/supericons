@@ -4,6 +4,8 @@ Date: 2026-07-16
 Starting revision: `e314d8751adc7a4760853e9cf01e853e2a31bccf`
 Scope: local evidence validation only
 
+Status: strict value and run-window validation passed independent review. The first artifact-completeness rules were superseded by `search-v2-gate-c-workload-completeness-correction-2026-07-16.md` after independent probes showed missing sample arrays and null worker summaries could still pass.
+
 ## Verified defect
 
 Independent malformed-evidence probes showed that the first complete-evidence evaluator could return success for null numeric values and artifacts outside the claimed live evidence window. JavaScript converted some null values to zero during comparisons, and the evaluator checked only that window values were strings.
@@ -35,7 +37,7 @@ This was a material fail-open defect in release finalization. It did not affect 
 - mismatched manifest or workload identity;
 - breached release limits and missing evidence.
 
-The focused verifier still preserves the ten earlier failure cases and now covers 23 fail-closed cases in total.
+The focused verifier preserved the ten earlier failure cases and covered 23 fail-closed cases at this revision.
 
 No live request, deployment, publication, hosted mutation, database mutation, monitoring activation, or model-provider call occurred during this correction.
 

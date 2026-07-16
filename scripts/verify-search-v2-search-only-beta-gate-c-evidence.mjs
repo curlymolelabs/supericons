@@ -21,87 +21,209 @@ const manifest = {
 };
 const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
 const manifestHash = createHash('sha256').update(manifestText).digest('hex');
-const workerSummary = {
-  first_request: { samples: 1 },
-  reused_worker: { samples: 20 },
-  unknown: { samples: 0 },
-};
-const search = {
-  manifest_sha256: manifestHash,
-  measured_at: '2026-07-16T00:01:00Z',
-  mode: 'search',
-  endpoint: 'mcp-search-v2-beta',
-  variant: 'treatment',
-  warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
-  worker_summary: workerSummary,
-  first_request: { ok: true },
-  warm_samples: Array.from({ length: 5 }, () => ({ ok: true })),
-};
-const localized = {
-  manifest_sha256: manifestHash,
-  measured_at: '2026-07-16T00:02:00Z',
-  mode: 'localized',
-  endpoint: 'mcp-search-v2-beta',
-  variant: 'treatment',
-  warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
-  worker_summary: workerSummary,
-  first_request: { hosted_attempts: [{ ok: true }, { ok: true }] },
-  warm_samples: Array.from(
-    { length: 5 },
-    () => ({ hosted_attempts: [{ ok: true }, { ok: true }] }),
-  ),
-};
-const smoke = {
-  manifest_sha256: manifestHash,
-  measured_at: '2026-07-16T00:03:00Z',
-  mode: 'smoke',
-  endpoint: 'mcp-search-v2-beta',
-  variant: 'treatment',
-  smoke_summary: { all_passed: true },
-  worker_summary: workerSummary,
-  material_outline: { ok: true },
-  material_solid: { ok: true },
-  invalid_request: { ok: false },
-};
-const expectedEligibleRequests = 21;
-const liveEvidence = {
-  manifest_sha256: manifestHash,
-  endpoint: 'mcp-search-v2-beta',
-  workload: {
-    endpoint: 'mcp-search-v2-beta',
-    beta_cohort: 'deterministic-v2-beta',
-    client_family: 'latency_gate_a',
-    measurement_variant: 'treatment',
-    expected_eligible_requests: expectedEligibleRequests,
-  },
-  window: {
-    started_at: '2026-07-16T00:00:00Z',
-    ended_at: '2026-07-16T00:05:00Z',
-  },
-  platform_error_evidence: {
-    readable: true,
-    eligible_requests: expectedEligibleRequests,
-    error_count: 0,
-    source_sha256: 'a'.repeat(64),
-  },
-  search_audit_evidence: {
-    readable: true,
-    expected_eligible_requests: expectedEligibleRequests,
-    captured_rows: expectedEligibleRequests,
-    error_rows: 0,
-    source_sha256: 'b'.repeat(64),
-  },
-  production_functions: {
-    readable: true,
-    search_icons: { before_version: 35, after_version: 35 },
-    mcp_search: { before_version: 38, after_version: 38 },
-  },
-  npm_registry: {
-    readable: true,
-    latest_before: '0.4.17',
-    latest_after: '0.4.17',
-  },
-};
+
+function percentile(values, fraction) {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((left, right) => left - right);
+  const index = Math.min(sorted.length - 1, Math.ceil(sorted.length * fraction) - 1);
+  return Number(sorted[index].toFixed(3));
+}
+
+function summaryFor(samples) {
+  const durations = samples.map((sample) => sample.duration_ms);
+  const errors = samples.filter((sample) => !sample.ok).length;
+  return {
+    samples: samples.length,
+    successful: samples.length - errors,
+    errors,
+    error_rate_percent: Number(((errors / Math.max(1, samples.length)) * 100).toFixed(3)),
+    p50_ms: percentile(durations, 0.5),
+    p95_ms: percentile(durations, 0.95),
+    maximum_ms: durations.length ? Number(Math.max(...durations).toFixed(3)) : 0,
+  };
+}
+
+function timing(workerState, totalMs = 10) {
+  return {
+    event: 'search_stage_timing',
+    worker_state: workerState,
+    total_ms: totalMs,
+  };
+}
+
+function directSample({
+  workerState = 'reused_worker',
+  ok = true,
+  status = 200,
+  durationMs = 12,
+  style = 'outline',
+} = {}) {
+  return {
+    ok,
+    status,
+    duration_ms: durationMs,
+    measurement_timing: timing(workerState, durationMs - 1),
+    result_count: ok ? 2 : 0,
+    svg_result_count: ok ? 2 : 0,
+    result_libraries: ok ? ['material', 'material'] : [],
+    result_styles: ok ? [style, style] : [],
+    response_error_code: ok ? null : 'invalid_library_mode',
+  };
+}
+
+function localizedSample({ workerState = 'reused_worker', durationMs = 25 } = {}) {
+  const hostedAttempts = [
+    {
+      status: 200,
+      duration_ms: 10,
+      measurement_timing: timing(workerState, 9),
+    },
+    {
+      status: 200,
+      duration_ms: 11,
+      measurement_timing: timing('reused_worker', 10),
+    },
+  ];
+  return {
+    ok: true,
+    duration_ms: durationMs,
+    hosted_requests: hostedAttempts.length,
+    hosted_attempts: hostedAttempts,
+  };
+}
+
+function workerSummaryFor(attempts) {
+  const groups = {
+    first_request: [],
+    reused_worker: [],
+    unknown: [],
+  };
+  for (const attempt of attempts) {
+    groups[attempt.measurement_timing.worker_state].push({
+      ok: attempt.ok,
+      duration_ms: attempt.measurement_timing.total_ms,
+    });
+  }
+  return Object.fromEntries(
+    Object.entries(groups).map(([state, samples]) => [state, summaryFor(samples)]),
+  );
+}
+
+function buildArtifacts(hash, endpoint) {
+  const searchFirst = directSample({ workerState: 'first_request' });
+  const searchWarm = Array.from({ length: 25 }, () => directSample());
+  const searchAttempts = [searchFirst, ...searchWarm];
+
+  const localizedFirst = localizedSample({ workerState: 'first_request' });
+  const localizedWarm = Array.from({ length: 5 }, () => localizedSample());
+  const localizedAttempts = [localizedFirst, ...localizedWarm].flatMap((sample) => (
+    sample.hosted_attempts.map((attempt) => ({
+      ok: attempt.status >= 200 && attempt.status < 400,
+      measurement_timing: attempt.measurement_timing,
+    }))
+  ));
+
+  const outline = directSample({ style: 'outline' });
+  const solid = directSample({ style: 'solid' });
+  const invalid = directSample({ ok: false, status: 400 });
+  const smokeAttempts = [outline, solid, invalid];
+
+  return {
+    search: {
+      manifest_sha256: hash,
+      measured_at: '2026-07-16T00:01:00Z',
+      mode: 'search',
+      endpoint,
+      variant: 'treatment',
+      first_request: searchFirst,
+      warm_samples: searchWarm,
+      warm_summary: summaryFor(searchWarm),
+      worker_summary: workerSummaryFor(searchAttempts),
+    },
+    localized: {
+      manifest_sha256: hash,
+      measured_at: '2026-07-16T00:02:00Z',
+      mode: 'localized',
+      endpoint,
+      variant: 'treatment',
+      first_request: localizedFirst,
+      warm_samples: localizedWarm,
+      warm_summary: {
+        ...summaryFor(localizedWarm),
+        hosted_requests: 10,
+        hosted_requests_per_search: [2, 2, 2, 2, 2],
+      },
+      worker_summary: workerSummaryFor(localizedAttempts),
+    },
+    smoke: {
+      manifest_sha256: hash,
+      measured_at: '2026-07-16T00:03:00Z',
+      mode: 'smoke',
+      endpoint,
+      variant: 'treatment',
+      first_request: outline,
+      material_outline: outline,
+      material_solid: solid,
+      invalid_request: invalid,
+      smoke_summary: {
+        material_passed: true,
+        style_passed: true,
+        invalid_request_passed: true,
+        all_passed: true,
+      },
+      worker_summary: workerSummaryFor(smokeAttempts),
+    },
+  };
+}
+
+function buildLiveEvidence({ hash, endpoint, betaCohort, latest }) {
+  return {
+    manifest_sha256: hash,
+    endpoint,
+    workload: {
+      endpoint,
+      beta_cohort: betaCohort,
+      client_family: 'latency_gate_a',
+      measurement_variant: 'treatment',
+      expected_eligible_requests: 41,
+    },
+    window: {
+      started_at: '2026-07-16T00:00:00Z',
+      ended_at: '2026-07-16T00:05:00Z',
+    },
+    platform_error_evidence: {
+      readable: true,
+      eligible_requests: 41,
+      error_count: 0,
+      source_sha256: 'a'.repeat(64),
+    },
+    search_audit_evidence: {
+      readable: true,
+      expected_eligible_requests: 41,
+      captured_rows: 41,
+      error_rows: 0,
+      source_sha256: 'b'.repeat(64),
+    },
+    production_functions: {
+      readable: true,
+      search_icons: { before_version: 35, after_version: 35 },
+      mcp_search: { before_version: 38, after_version: 38 },
+    },
+    npm_registry: {
+      readable: true,
+      latest_before: latest,
+      latest_after: latest,
+    },
+  };
+}
+
+const artifacts = buildArtifacts(manifestHash, manifest.implementation.endpoint);
+const liveEvidence = buildLiveEvidence({
+  hash: manifestHash,
+  endpoint: manifest.implementation.endpoint,
+  betaCohort: manifest.implementation.beta_cohort,
+  latest: manifest.package.latest_tag_must_remain,
+});
 const localGates = {
   recommendation_response_byte_parity: true,
   usage_dedupe: true,
@@ -112,9 +234,9 @@ function evaluate(overrides = {}) {
     manifest,
     manifestText,
     manifestHash,
-    search: structuredClone(search),
-    localized: structuredClone(localized),
-    smoke: structuredClone(smoke),
+    search: structuredClone(artifacts.search),
+    localized: structuredClone(artifacts.localized),
+    smoke: structuredClone(artifacts.smoke),
     liveEvidence: structuredClone(liveEvidence),
     localGates: structuredClone(localGates),
     ...overrides,
@@ -146,12 +268,12 @@ const failureCases = [
   }],
   ['impossible platform errors rejected', () => {
     const value = structuredClone(liveEvidence);
-    value.platform_error_evidence.error_count = expectedEligibleRequests + 1;
+    value.platform_error_evidence.error_count = 42;
     evaluate({ liveEvidence: value });
   }],
   ['platform request count enforced', () => {
     const value = structuredClone(liveEvidence);
-    value.platform_error_evidence.eligible_requests -= 1;
+    value.platform_error_evidence.eligible_requests = 40;
     evaluate({ liveEvidence: value });
   }],
   ['audit evidence required', () => {
@@ -161,12 +283,12 @@ const failureCases = [
   }],
   ['audit capture enforced', () => {
     const value = structuredClone(liveEvidence);
-    value.search_audit_evidence.captured_rows = 19;
+    value.search_audit_evidence.captured_rows = 38;
     evaluate({ liveEvidence: value });
   }],
   ['audit workload count enforced', () => {
     const value = structuredClone(liveEvidence);
-    value.search_audit_evidence.expected_eligible_requests -= 1;
+    value.search_audit_evidence.expected_eligible_requests = 40;
     evaluate({ liveEvidence: value });
   }],
   ['audit errors enforced', () => {
@@ -181,16 +303,16 @@ const failureCases = [
   }],
   ['impossible audit errors rejected', () => {
     const value = structuredClone(liveEvidence);
-    value.search_audit_evidence.error_rows = value.search_audit_evidence.captured_rows + 1;
+    value.search_audit_evidence.error_rows = 42;
     evaluate({ liveEvidence: value });
   }],
   ['null performance rejected', () => {
-    const value = structuredClone(search);
+    const value = structuredClone(artifacts.search);
     value.warm_summary.p95_ms = null;
     evaluate({ search: value });
   }],
   ['empty performance rejected', () => {
-    const value = structuredClone(search);
+    const value = structuredClone(artifacts.search);
     value.warm_summary.error_rate_percent = '';
     evaluate({ search: value });
   }],
@@ -206,7 +328,7 @@ const failureCases = [
     evaluate({ liveEvidence: value });
   }],
   ['out-of-window artifact rejected', () => {
-    const value = structuredClone(search);
+    const value = structuredClone(artifacts.search);
     value.measured_at = '2030-01-01T00:00:00Z';
     evaluate({ search: value });
   }],
@@ -239,6 +361,51 @@ const failureCases = [
     value.npm_registry.latest_after = '0.4.18';
     evaluate({ liveEvidence: value });
   }],
+  ['null worker summary rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.worker_summary.first_request = null;
+    evaluate({ search: value });
+  }],
+  ['missing search first request rejected', () => {
+    const value = structuredClone(artifacts.search);
+    delete value.first_request;
+    evaluate({ search: value });
+  }],
+  ['missing search warm samples rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.warm_samples = [];
+    evaluate({ search: value });
+  }],
+  ['missing localized first request rejected', () => {
+    const value = structuredClone(artifacts.localized);
+    delete value.first_request;
+    evaluate({ localized: value });
+  }],
+  ['missing localized warm samples rejected', () => {
+    const value = structuredClone(artifacts.localized);
+    value.warm_samples = [];
+    evaluate({ localized: value });
+  }],
+  ['missing smoke sample rejected', () => {
+    const value = structuredClone(artifacts.smoke);
+    delete value.material_solid;
+    evaluate({ smoke: value });
+  }],
+  ['inconsistent summary count rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.warm_summary.samples = 24;
+    evaluate({ search: value });
+  }],
+  ['inconsistent latency summary rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.warm_summary.p95_ms = 1;
+    evaluate({ search: value });
+  }],
+  ['inconsistent hosted request count rejected', () => {
+    const value = structuredClone(artifacts.localized);
+    value.warm_summary.hosted_requests = 9;
+    evaluate({ localized: value });
+  }],
 ];
 
 for (const [name, operation] of failureCases) {
@@ -255,91 +422,21 @@ try {
   const actualManifestHash = createHash('sha256')
     .update(actualManifestText.replace(/\r\n?/g, '\n'))
     .digest('hex');
-  const integrationWorkerSummary = {
-    first_request: { samples: 1 },
-    reused_worker: { samples: 1 },
-    unknown: { samples: 0 },
-  };
-  const integrationSearch = {
-    manifest_sha256: actualManifestHash,
-    measured_at: '2026-07-16T00:01:00Z',
-    mode: 'search',
+  const integrationArtifacts = buildArtifacts(
+    actualManifestHash,
+    actualManifest.implementation.endpoint,
+  );
+  const integrationLiveEvidence = buildLiveEvidence({
+    hash: actualManifestHash,
     endpoint: actualManifest.implementation.endpoint,
-    variant: 'treatment',
-    warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
-    worker_summary: integrationWorkerSummary,
-    first_request: { ok: true },
-    warm_samples: Array.from({ length: 25 }, () => ({ ok: true })),
-  };
-  const integrationLocalized = {
-    manifest_sha256: actualManifestHash,
-    measured_at: '2026-07-16T00:02:00Z',
-    mode: 'localized',
-    endpoint: actualManifest.implementation.endpoint,
-    variant: 'treatment',
-    warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
-    worker_summary: integrationWorkerSummary,
-    first_request: { hosted_attempts: [{ ok: true }, { ok: true }] },
-    warm_samples: Array.from(
-      { length: 5 },
-      () => ({ hosted_attempts: [{ ok: true }, { ok: true }] }),
-    ),
-  };
-  const integrationSmoke = {
-    manifest_sha256: actualManifestHash,
-    measured_at: '2026-07-16T00:03:00Z',
-    mode: 'smoke',
-    endpoint: actualManifest.implementation.endpoint,
-    variant: 'treatment',
-    smoke_summary: { all_passed: true },
-    worker_summary: integrationWorkerSummary,
-    material_outline: { ok: true },
-    material_solid: { ok: true },
-    invalid_request: { ok: false },
-  };
-  const integrationLiveEvidence = {
-    manifest_sha256: actualManifestHash,
-    endpoint: actualManifest.implementation.endpoint,
-    workload: {
-      endpoint: actualManifest.implementation.endpoint,
-      beta_cohort: actualManifest.implementation.beta_cohort,
-      client_family: 'latency_gate_a',
-      measurement_variant: 'treatment',
-      expected_eligible_requests: 41,
-    },
-    window: {
-      started_at: '2026-07-16T00:00:00Z',
-      ended_at: '2026-07-16T00:05:00Z',
-    },
-    platform_error_evidence: {
-      readable: true,
-      eligible_requests: 41,
-      error_count: 0,
-      source_sha256: 'c'.repeat(64),
-    },
-    search_audit_evidence: {
-      readable: true,
-      expected_eligible_requests: 41,
-      captured_rows: 41,
-      error_rows: 0,
-      source_sha256: 'd'.repeat(64),
-    },
-    production_functions: {
-      readable: true,
-      search_icons: { before_version: 35, after_version: 35 },
-      mcp_search: { before_version: 38, after_version: 38 },
-    },
-    npm_registry: {
-      readable: true,
-      latest_before: actualManifest.package.latest_tag_must_remain,
-      latest_after: actualManifest.package.latest_tag_must_remain,
-    },
-  };
+    betaCohort: actualManifest.implementation.beta_cohort,
+    latest: actualManifest.package.latest_tag_must_remain,
+  });
 
   for (const [name, value] of Object.entries({
-    'search.json': integrationSearch,
-    'localized.json': integrationLocalized,
-    'smoke.json': integrationSmoke,
+    'search.json': integrationArtifacts.search,
+    'localized.json': integrationArtifacts.localized,
+    'smoke.json': integrationArtifacts.smoke,
     'live-evidence.json': integrationLiveEvidence,
   })) {
     writeFileSync(join(integrationRoot, name), `${JSON.stringify(value, null, 2)}\n`);
@@ -379,6 +476,7 @@ try {
 console.log(JSON.stringify({
   status: 'ok',
   passing_contract: true,
+  fixed_workload_requests: 41,
   powershell_finalize_integration: true,
   fail_closed_cases: failureCases.map(([name]) => name),
 }, null, 2));

@@ -34,17 +34,116 @@ function requiredTimestamp(value, label) {
   return timestamp;
 }
 
+function requiredObject(value, label) {
+  assert.equal(
+    Boolean(value) && typeof value === 'object' && !Array.isArray(value),
+    true,
+    `${label} must be an object`,
+  );
+  return value;
+}
+
+function requiredArray(value, label, expectedLength) {
+  assert.equal(Array.isArray(value), true, `${label} must be an array`);
+  assert.equal(value.length, expectedLength, `${label} count changed`);
+  return value;
+}
+
 function calculatedRate(count, total) {
   return Number(((count / Math.max(1, total)) * 100).toFixed(3));
 }
 
-function requireWorkerSummary(artifact, label) {
-  assert.equal(typeof artifact?.worker_summary, 'object', `${label} worker summary is missing`);
+function summaryCounts(samples) {
+  const durations = samples.map((sample, index) => (
+    requiredFiniteNumber(sample.duration_ms, `summary sample ${index + 1} duration`)
+  ));
+  const errors = samples.filter((sample) => !sample.ok).length;
+  const sorted = [...durations].sort((left, right) => left - right);
+  const percentile = (fraction) => {
+    if (sorted.length === 0) return 0;
+    const index = Math.min(sorted.length - 1, Math.ceil(sorted.length * fraction) - 1);
+    return Number(sorted[index].toFixed(3));
+  };
+  return {
+    samples: samples.length,
+    successful: samples.length - errors,
+    errors,
+    error_rate_percent: calculatedRate(errors, samples.length),
+    p50_ms: percentile(0.5),
+    p95_ms: percentile(0.95),
+    maximum_ms: durations.length ? Number(Math.max(...durations).toFixed(3)) : 0,
+  };
+}
+
+function requireCountSummary(summary, label, expected) {
+  requiredObject(summary, `${label} summary`);
+  const samples = requiredCount(summary.samples, `${label} samples`);
+  const successful = requiredCount(summary.successful, `${label} successful`);
+  const errors = requiredCount(summary.errors, `${label} errors`);
+  const errorRate = requiredFiniteNumber(
+    summary.error_rate_percent,
+    `${label} error rate`,
+    { maximum: 100 },
+  );
+  const p50 = requiredFiniteNumber(summary.p50_ms, `${label} p50`);
+  const p95 = requiredFiniteNumber(summary.p95_ms, `${label} p95`);
+  const maximum = requiredFiniteNumber(summary.maximum_ms, `${label} maximum`);
+  assert.equal(successful + errors, samples, `${label} success and error totals changed`);
+  assert.equal(samples, expected.samples, `${label} sample total changed`);
+  assert.equal(successful, expected.successful, `${label} success total changed`);
+  assert.equal(errors, expected.errors, `${label} error total changed`);
+  assert.equal(errorRate, expected.error_rate_percent, `${label} error rate changed`);
+  assert.equal(p50, expected.p50_ms, `${label} p50 changed`);
+  assert.equal(p95, expected.p95_ms, `${label} p95 changed`);
+  assert.equal(maximum, expected.maximum_ms, `${label} maximum changed`);
+}
+
+function requireTiming(timing, label) {
+  requiredObject(timing, `${label} measurement timing`);
+  assert.equal(timing.event, 'search_stage_timing', `${label} timing event changed`);
+  assert.equal(
+    ['first_request', 'reused_worker', 'unknown'].includes(timing.worker_state),
+    true,
+    `${label} worker state changed`,
+  );
+  requiredFiniteNumber(timing.total_ms, `${label} timing total`);
+  return timing;
+}
+
+function requireDirectSample(sample, label, { expectedOk = true, expectedStatus = 200 } = {}) {
+  requiredObject(sample, label);
+  assert.equal(typeof sample.ok, 'boolean', `${label} ok flag is missing`);
+  assert.equal(sample.ok, expectedOk, `${label} outcome changed`);
+  assert.equal(requiredCount(sample.status, `${label} status`, { minimum: 100 }), expectedStatus);
+  requiredFiniteNumber(sample.duration_ms, `${label} duration`);
+  requireTiming(sample.measurement_timing, label);
+  return sample;
+}
+
+function workerAttempt(sample) {
+  return {
+    ok: sample.ok,
+    duration_ms: sample.measurement_timing.total_ms,
+    measurement_timing: sample.measurement_timing,
+  };
+}
+
+function requireWorkerSummary(artifact, label, attempts) {
+  const workerSummary = requiredObject(artifact?.worker_summary, `${label} worker summary`);
+  const groups = {
+    first_request: [],
+    reused_worker: [],
+    unknown: [],
+  };
+  for (const attempt of attempts) {
+    const state = attempt.measurement_timing.worker_state;
+    groups[state].push(attempt);
+  }
   for (const state of ['first_request', 'reused_worker', 'unknown']) {
-    assert.equal(
-      typeof artifact.worker_summary?.[state],
-      'object',
-      `${label} ${state} summary is missing`,
+    requireCountSummary(
+      workerSummary[state],
+      `${label} ${state}`,
+      summaryCounts(groups[state]),
     );
   }
 }
@@ -62,27 +161,134 @@ function requirePerformance(artifact, label, limits) {
     true,
     `${label} error rate exceeds the limit`,
   );
-  requireWorkerSummary(artifact, label);
 }
 
-function hostedAttemptsFor(sample) {
-  return Array.isArray(sample?.hosted_attempts) ? sample.hosted_attempts.length : 1;
+const fixedWorkload = Object.freeze({
+  search_first_requests: 1,
+  search_warm_samples: 25,
+  localized_first_samples: 1,
+  localized_warm_samples: 5,
+  localized_hosted_attempts_per_sample: 2,
+  smoke_samples: 3,
+  eligible_requests: 41,
+});
+
+function requireSearchWorkload(search) {
+  const first = requireDirectSample(search?.first_request, 'search first request');
+  const warm = requiredArray(
+    search?.warm_samples,
+    'search warm samples',
+    fixedWorkload.search_warm_samples,
+  ).map((sample, index) => requireDirectSample(sample, `search warm sample ${index + 1}`));
+  requireCountSummary(search?.warm_summary, 'search warm', summaryCounts(warm));
+  const attempts = [first, ...warm].map(workerAttempt);
+  requireWorkerSummary(search, 'search', attempts);
+  return attempts;
 }
 
-function eligibleRequestCount(search, localized, smoke) {
-  const directSearch = 1 + (Array.isArray(search?.warm_samples) ? search.warm_samples.length : 0);
-  const localizedSamples = [localized?.first_request, ...(localized?.warm_samples || [])]
-    .filter(Boolean);
-  const localizedRequests = localizedSamples.reduce(
-    (total, sample) => total + hostedAttemptsFor(sample),
-    0,
+function requireLocalizedSample(sample, label) {
+  requiredObject(sample, label);
+  assert.equal(sample.ok, true, `${label} outcome changed`);
+  requiredFiniteNumber(sample.duration_ms, `${label} duration`);
+  const hostedAttempts = requiredArray(
+    sample.hosted_attempts,
+    `${label} hosted attempts`,
+    fixedWorkload.localized_hosted_attempts_per_sample,
+  ).map((attempt, index) => {
+    requiredObject(attempt, `${label} hosted attempt ${index + 1}`);
+    assert.equal(
+      requiredCount(attempt.status, `${label} hosted status ${index + 1}`, { minimum: 100 }),
+      200,
+      `${label} hosted status changed`,
+    );
+    requiredFiniteNumber(attempt.duration_ms, `${label} hosted duration ${index + 1}`);
+    requireTiming(attempt.measurement_timing, `${label} hosted attempt ${index + 1}`);
+    return {
+      ok: true,
+      duration_ms: attempt.measurement_timing.total_ms,
+      measurement_timing: attempt.measurement_timing,
+    };
+  });
+  assert.equal(
+    requiredCount(sample.hosted_requests, `${label} hosted request count`),
+    hostedAttempts.length,
+    `${label} hosted request count changed`,
   );
-  const smokeRequests = [
-    smoke?.material_outline,
-    smoke?.material_solid,
-    smoke?.invalid_request,
-  ].filter(Boolean).length;
-  return directSearch + localizedRequests + smokeRequests;
+  return { sample, hostedAttempts };
+}
+
+function requireLocalizedWorkload(localized) {
+  const first = requireLocalizedSample(localized?.first_request, 'localized first request');
+  const warm = requiredArray(
+    localized?.warm_samples,
+    'localized warm samples',
+    fixedWorkload.localized_warm_samples,
+  ).map((sample, index) => requireLocalizedSample(sample, `localized warm sample ${index + 1}`));
+  requireCountSummary(
+    localized?.warm_summary,
+    'localized warm',
+    summaryCounts(warm.map((entry) => entry.sample)),
+  );
+  const warmHostedRequests = warm.reduce((total, entry) => total + entry.hostedAttempts.length, 0);
+  assert.equal(
+    requiredCount(localized?.warm_summary?.hosted_requests, 'localized warm hosted requests'),
+    warmHostedRequests,
+    'localized warm hosted request total changed',
+  );
+  assert.deepEqual(
+    localized?.warm_summary?.hosted_requests_per_search,
+    Array.from(
+      { length: fixedWorkload.localized_warm_samples },
+      () => fixedWorkload.localized_hosted_attempts_per_sample,
+    ),
+    'localized hosted requests per search changed',
+  );
+  const attempts = [first, ...warm].flatMap((entry) => entry.hostedAttempts);
+  requireWorkerSummary(localized, 'localized', attempts);
+  return attempts;
+}
+
+function requireSmokeWorkload(smoke) {
+  const outline = requireDirectSample(smoke?.material_outline, 'Material outline smoke');
+  const solid = requireDirectSample(smoke?.material_solid, 'Material solid smoke');
+  const invalid = requireDirectSample(smoke?.invalid_request, 'invalid-request smoke', {
+    expectedOk: false,
+    expectedStatus: 400,
+  });
+  for (const [sample, style, label] of [
+    [outline, 'outline', 'Material outline smoke'],
+    [solid, 'solid', 'Material solid smoke'],
+  ]) {
+    const resultCount = requiredCount(sample.result_count, `${label} result count`, { minimum: 1 });
+    assert.equal(
+      requiredCount(sample.svg_result_count, `${label} SVG count`),
+      resultCount,
+      `${label} SVG availability changed`,
+    );
+    assert.equal(Array.isArray(sample.result_libraries), true, `${label} libraries are missing`);
+    assert.equal(
+      sample.result_libraries.length > 0
+        && sample.result_libraries.every((library) => library === 'material'),
+      true,
+      `${label} library result changed`,
+    );
+    assert.equal(Array.isArray(sample.result_styles), true, `${label} styles are missing`);
+    assert.equal(
+      sample.result_styles.length > 0 && sample.result_styles.every((entry) => entry === style),
+      true,
+      `${label} style result changed`,
+    );
+  }
+  assert.equal(invalid.response_error_code, 'invalid_library_mode', 'Invalid request error changed');
+  assert.deepEqual(smoke?.smoke_summary, {
+    material_passed: true,
+    style_passed: true,
+    invalid_request_passed: true,
+    all_passed: true,
+  }, 'Smoke summary changed');
+  const attempts = [outline, solid, invalid].map(workerAttempt);
+  requireWorkerSummary(smoke, 'smoke', attempts);
+  return attempts;
 }
 
 function requireUnchangedFunction(functions, key) {
@@ -145,12 +351,19 @@ export function evaluateGateC({
   for (const [label, artifact] of Object.entries({ search, localized, smoke })) {
     requireArtifactBinding({ artifact, label, manifestHash, manifest, workload, window });
   }
+  const searchAttempts = requireSearchWorkload(search);
+  const localizedAttempts = requireLocalizedWorkload(localized);
+  const smokeAttempts = requireSmokeWorkload(smoke);
   requirePerformance(search, 'search', { p95: p95Limit, errorRate: errorRateLimit });
   requirePerformance(localized, 'localized', { p95: p95Limit, errorRate: errorRateLimit });
-  assert.equal(smoke?.smoke_summary?.all_passed, true, 'Material or invalid-request smoke failed');
-  requireWorkerSummary(smoke, 'smoke');
-  const expectedEligibleRequests = eligibleRequestCount(search, localized, smoke);
-  assert.equal(expectedEligibleRequests > 0, true, 'Expected request count is missing');
+  const expectedEligibleRequests = searchAttempts.length
+    + localizedAttempts.length
+    + smokeAttempts.length;
+  assert.equal(
+    expectedEligibleRequests,
+    fixedWorkload.eligible_requests,
+    'Gate C workload size changed',
+  );
   assert.equal(
     requiredCount(workload?.expected_eligible_requests, 'Live workload request count'),
     expectedEligibleRequests,
