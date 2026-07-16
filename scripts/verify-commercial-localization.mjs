@@ -66,10 +66,13 @@ function assertNoRepeatedHeadings(locale, pageName, headings) {
 function assertLegal(locale, catalog) {
   const terms = catalog.legal?.terms?.bodyHtml || '';
   const privacy = catalog.legal?.privacy?.bodyHtml || '';
-  assert.ok(count(terms, /<section\b/g) >= 6, `${locale} terms must include at least 6 sections`);
+  assert.ok(count(terms, /<section\b/g) >= 7, `${locale} terms must include at least 7 sections`);
   assert.ok(count(privacy, /<section\b/g) >= 10, `${locale} privacy must include at least 10 sections`);
   assert.ok(count(terms, /<p\b/g) >= 10, `${locale} terms must keep detailed paragraph coverage`);
   assert.ok(count(privacy, /<p\b/g) >= 10, `${locale} privacy must keep detailed paragraph coverage`);
+  assert.ok(terms.includes('id="single-icon-license"'), `${locale} terms must include the single-icon license anchor`);
+  assert.ok(terms.includes('v1.0'), `${locale} terms must include the single-icon license version`);
+  assert.ok(terms.includes('hello@supericons.dev'), `${locale} terms must include the license support email`);
   assertNoRepeatedHeadings(locale, 'terms', extractHeadings(terms));
   assertNoRepeatedHeadings(locale, 'privacy', extractHeadings(privacy));
   for (const snippet of forbiddenFallbacks) {

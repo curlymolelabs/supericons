@@ -83,6 +83,24 @@
     "tags": "タグ",
     "tagsWithCount": "タグ（{count}）",
     "categories": {
+      "ai-app-builders": "AI アプリビルダー",
+      "coding-agents-dev-environments": "コーディングエージェントと開発環境",
+      "model-platforms-ai-labs": "モデルプラットフォームと AI ラボ",
+      "ai-search-research-evaluation": "AI 検索・調査・評価",
+      "generative-media-creative-ai": "生成メディアとクリエイティブ AI",
+      "voice-audio-ai": "音声・オーディオ AI",
+      "agent-infrastructure-runtime": "エージェント基盤とランタイム",
+      "mcp-tooling-protocols": "MCP、ツール、プロトコル",
+      "general-agents-assistants": "汎用エージェントとアシスタント",
+      "design-ui-intelligence": "デザインと UI インテリジェンス",
+      "agent-business-monetization": "エージェント事業と収益化",
+      "coding-agent-tools": "コーディングエージェントツール",
+      "agent-lifecycle-states": "エージェントのライフサイクル状態",
+      "agent-trust-safety": "エージェントの信頼と安全",
+      "agent-workflow-mcp": "エージェントワークフローと MCP",
+      "agentic-payments": "エージェント決済",
+      "frontier-compute": "フロンティアコンピュート",
+      "physical-automation": "物理オートメーション",
       "ai-agent-workflows": "AIと自動化",
       "navigation-wayfinding": "ナビゲーション",
       "actions-controls": "操作とコントロール",
@@ -100,7 +118,9 @@
       "maps-places-travel": "地図・場所・旅行",
       "time-calendar": "時間とカレンダー",
       "nature-weather-lifestyle": "自然・天気・ライフスタイル",
-      "brands-social": "ブランドとソーシャル"
+      "brands-social": "ブランドとソーシャル",
+      "trending-culture": "トレンドとカルチャー",
+      "cars-vehicles": "車と乗り物"
     }
   },
   "tools": {
@@ -475,7 +495,6 @@
         "signin": {
           "title": "Supericons にサインイン",
           "desc": "コレクションの購入を 1 つのアカウントに結び付け、ダウンロードと更新を同期します。",
-          "note": "無料アカウントです。無料アイコンにカードは不要です。",
           "submit": "サインイン",
           "toggle": "アカウントがありません。",
           "toggleAction": "登録"
@@ -483,7 +502,6 @@
         "signup": {
           "title": "Supericons アカウントを作成",
           "desc": "購入内容、ダウンロード、今後の更新はこのアカウントに接続されます。",
-          "note": "無料アカウントです。無料アイコンにカードは不要です。",
           "submit": "アカウントを作成",
           "toggle": "すでにアカウントがあります。",
           "toggleAction": "サインイン"
@@ -493,7 +511,6 @@
         "signin": {
           "title": "Supericons にサインイン",
           "desc": "MCP アクセス、ワークフローツール、プレミアムコレクションのために Pro の決済へ進みます。",
-          "note": "無料アカウントです。無料アイコンにカードは不要です。",
           "submit": "サインイン",
           "toggle": "アカウントがありません。",
           "toggleAction": "登録"
@@ -501,7 +518,6 @@
         "signup": {
           "title": "Supericons アカウントを作成",
           "desc": "先にアカウントを設定し、準備できたら Pro の決済へ進みます。",
-          "note": "無料アカウントです。無料アイコンにカードは不要です。",
           "submit": "アカウントを作成",
           "toggle": "すでにアカウントがあります。",
           "toggleAction": "サインイン"
@@ -636,7 +652,7 @@
   "legal": {
     "terms": {
       "pageTitle": "利用規約",
-      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最終更新日：2026年4月8日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 使用権</h3><p>Supericons はデジタル製品向けに無料およびプレミアムのアイコン素材を提供します。無料アイコンは元のオープンソースライセンスを保持します。</p><p>プレミアムアニメーションコレクションは Curly Mole Labs の資産であり、購入したライセンス区分に従って利用します。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 出力での利用</h3><p>MCP サーバーから取得したアイコンは、AI が生成したコード内で使用できます。</p><p>元の SVG と CSS アニメーションソースは Curly Mole Labs の資産であり、抽出、リバースエンジニアリング、一括エクスポートはできません。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 再配布</h3><p>生の SVG または CSS ソースの再配布、アクセスの再販売、サブライセンス、競合するアイコンライブラリの構築はできません。</p><p>ソースファイルが直接公開されない完成済みサイト、アプリ、クライアント成果物ではアイコンを使用できます。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. ライセンス区分</h3><p>単一プロジェクトライセンスは、個別購入と Pro 月額で取得したコレクションに適用されます。</p><p>無制限プロジェクトライセンスは、有効な Pro、Pro 年額に含まれるコレクション、Launch Edition 購入に適用されます。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 返金</h3><p>Pro サブスクリプションはいつでも解約できます。現在の請求期間に対する日割り返金はありません。</p><p>一回限りのデジタル購入は、ダウンロードアクセス付与後は原則返金されません。ただし技術的にアクセスできない場合は 14 日以内にご連絡ください。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 連絡先</h3><p>規約、ライセンス、返金については hello@supericons.dev までご連絡ください。</p></section></div>"
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最終更新日：2026年4月8日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 使用権</h3><p>Supericons はデジタル製品向けに無料およびプレミアムのアイコン素材を提供します。無料アイコンは元のオープンソースライセンスを保持します。</p><p>プレミアムアニメーションコレクションは Curly Mole Labs の資産であり、購入したライセンス区分に従って利用します。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 出力での利用</h3><p>MCP サーバーから取得したアイコンは、AI が生成したコード内で使用できます。</p><p>元の SVG と CSS アニメーションソースは Curly Mole Labs の資産であり、抽出、リバースエンジニアリング、一括エクスポートはできません。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 再配布</h3><p>生の SVG または CSS ソースの再配布、アクセスの再販売、サブライセンス、競合するアイコンライブラリの構築はできません。</p><p>ソースファイルが直接公開されない完成済みサイト、アプリ、クライアント成果物ではアイコンを使用できます。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. ライセンス区分</h3><p>単一プロジェクトライセンスは、個別購入と Pro 月額で取得したコレクションに適用されます。</p><p>無制限プロジェクトライセンスは、有効な Pro、Pro 年額に含まれるコレクション、Launch Edition 購入に適用されます。</p></section><section class=\"terms-section\" id=\"single-icon-license\"><h3 class=\"terms-section__title\">5. 単体アイコン購入</h3><p><strong>単体アイコンライセンス v1.0、2026年7月7日発効。</strong> このセクションは、Supericons の単体アイコン購入フローで購入された有料アニメーションアイコン1点を対象とします。購入者が本人である場合、本人を支援するエージェントである場合、または組織が承認したエージェントである場合を含みます。</p><p>ライセンスは、購入時に支払いウォレットまたはアカウントを管理している個人または組織に帰属します。エージェントが個人または組織の代理で購入した場合、ライセンスはその個人または組織に帰属し、エージェントには帰属しません。</p><p>Supericons は、ライセンス保有者に対し、購入したアイコン、そのアイコン用に提供された SVG、および提供されたアニメーション CSS を、1つの最終製品、クライアント案件、Webサイト、アプリ、プレゼンテーション、社内ツール、またはソフトウェアリポジトリで使用するための、非独占的、全世界的、永続的なライセンスを付与します。</p><p>ライセンス対象プロジェクトのソースコード、ビルド済みアプリファイル、スクリーンショット、デモ、ドキュメント、マーケティングに、アイコンを使用、変更、組み込むことができます。</p><p>アイコンを単体アセットとして再販売、サブライセンス、再配布すること、アイコンパック、テンプレートライブラリ、デザインキット、マーケットプレイス商品、アセットデータベース、競合するアイコンライブラリ、ストックアセット商品、トレーニングセットで公開すること、またはライセンス対象プロジェクトの外で生のソースを共有することはできません。</p><p>x402 の支払い応答、決済参照、または領収書データがある場合は保管してください。配信、重複請求、決済、ライセンスに関する質問は、領収書データとアイコン名を添えて hello@supericons.dev にメールしてください。</p><p>翻訳は便宜上提供されています。翻訳版と英語版が矛盾する場合は、英語版が優先されます。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 返金</h3><p>Pro サブスクリプションはいつでも解約できます。現在の請求期間に対する日割り返金はありません。</p><p>一回限りのデジタル購入は、ダウンロードアクセス付与後は原則返金されません。ただし技術的にアクセスできない場合は 14 日以内にご連絡ください。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. 連絡先</h3><p>規約、ライセンス、返金については hello@supericons.dev までご連絡ください。</p></section></div>"
     },
     "privacy": {
       "pageTitle": "プライバシーポリシー",
