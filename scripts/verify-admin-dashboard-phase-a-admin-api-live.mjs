@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { runBoundedRollupRefresh } from './admin-dashboard-rollup-refresh-gate.mjs';
 
 function readArg(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -17,11 +18,17 @@ const adminUrl = (readArg('admin-url') || 'https://kcjmkakdhsqplvasgkjv.supabase
   .replace(/\/+$/, '');
 const mode = readArg('mode') || 'candidate';
 const outputPath = readArg('output');
+const maxRefreshDaysText = readArg('max-refresh-days');
 const adminSecret = String(process.env.PHASE_A_ADMIN_SECRET || '');
 
 assert.ok(['legacy', 'candidate'].includes(mode), 'Mode must be legacy or candidate.');
 assert.ok(outputPath, 'Provide --output for retained evidence.');
 assert.ok(adminSecret, 'PHASE_A_ADMIN_SECRET must be present in the process environment.');
+const maxRefreshDays = mode === 'candidate' ? Number(maxRefreshDaysText) : 0;
+if (mode === 'candidate') {
+  assert.ok(Number.isInteger(maxRefreshDays) && maxRefreshDays >= 0 && maxRefreshDays <= 120,
+    'Candidate mode requires --max-refresh-days between 0 and 120.');
+}
 
 const summary = {
   artifact: 'admin_dashboard_phase_a_admin_api_live_contract',
@@ -71,25 +78,15 @@ try {
     summary.rollup_writes = 0;
   } else {
     const refreshes = [];
-    let complete = false;
+    summary.rollup_refreshes = refreshes;
+    summary.rollup_refresh_day_limit = maxRefreshDays;
     const refreshDeadline = Date.now() + (20 * 60 * 1000);
-    for (let attempt = 1; attempt <= 60; attempt += 1) {
-      assert.ok(Date.now() < refreshDeadline, 'Rollup refresh exceeded its 20-minute budget.');
-      const refresh = await requestJson('/intelligence/search/refresh-rollups', { method: 'POST' });
-      assert.equal(refresh.payload.available, true, 'Phase A rollup tables are unavailable.');
-      assert.ok(Array.isArray(refresh.payload.refreshed_days));
-      refreshes.push({
-        attempt,
-        latency_ms: refresh.latency_ms,
-        complete: refresh.payload.complete === true,
-        refreshed_days: refresh.payload.refreshed_days,
-      });
-      if (refresh.payload.complete === true) {
-        complete = true;
-        break;
-      }
-    }
-    assert.equal(complete, true, 'Rollup refresh did not finish within 60 bounded calls.');
+    const refreshResult = await runBoundedRollupRefresh({
+      maxRefreshDays,
+      deadlineEpochMs: refreshDeadline,
+      refreshes,
+      requestRefresh: () => requestJson('/intelligence/search/refresh-rollups', { method: 'POST' }),
+    });
 
     const dashboard = await requestJson(
       '/intelligence/search/dashboard?window=1d&environment=production&channel=all&query_origin=agent_query',
@@ -106,8 +103,9 @@ try {
     assert.ok(queueAll.p95_ms < 1000, `All-time queue p95 was ${queueAll.p95_ms} ms.`);
 
     summary.status = 'ok';
-    summary.rollup_refreshes = refreshes;
     summary.rollup_backfill_complete = true;
+    summary.rollup_refreshed_days = refreshResult.refreshed_days;
+    summary.rollup_refresh_call_count = refreshResult.calls;
     summary.dashboard_24h = {
       latency_ms: dashboard.latency_ms,
       latest_activity_count: dashboard.payload.latest_activity.length,
@@ -120,6 +118,8 @@ try {
       queue_all_p95_limit_ms: 1000,
       warm_samples_each: 10,
       rollup_refresh_elapsed_limit_minutes: 20,
+      rollup_refresh_day_limit: maxRefreshDays,
+      rollup_refresh_call_limit: maxRefreshDays + 1,
     };
   }
 } catch (error) {

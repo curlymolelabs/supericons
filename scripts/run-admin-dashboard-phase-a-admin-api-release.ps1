@@ -19,10 +19,11 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-rollback-2026-07-16.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-backlog-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-rollback-2026-07-16.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -206,10 +207,11 @@ function Deploy-Revision {
 function Invoke-PsqlPostflight {
   $arguments = @(
     'run', '--rm', '-i', '-e', 'PGPASSWORD',
+    '-e', 'PGOPTIONS=-c default_transaction_read_only=on',
     '--mount', "type=bind,source=$SqlDirectory,target=/checks,readonly",
     $PostgresImage,
     'psql', $script:DatabaseUrl, '-X', '-v', 'ON_ERROR_STOP=1',
-    '-f', '/checks/admin-dashboard-phase-a-hosted-postflight.sql'
+    '-f', '/checks/admin-dashboard-phase-a-recovery-postflight.sql'
   )
   & docker @arguments
   if ($LASTEXITCODE -ne 0) {
@@ -217,18 +219,54 @@ function Invoke-PsqlPostflight {
   }
 }
 
+function Invoke-PsqlRollupBacklog {
+  $arguments = @(
+    'run', '--rm', '-i', '-e', 'PGPASSWORD',
+    '-e', 'PGOPTIONS=-c default_transaction_read_only=on',
+    '--mount', "type=bind,source=$SqlDirectory,target=/checks,readonly",
+    $PostgresImage,
+    'psql', $script:DatabaseUrl, '-X', '-q', '-A', '-t', '-v', 'ON_ERROR_STOP=1',
+    '-f', '/checks/admin-dashboard-phase-a-rollup-backlog.sql'
+  )
+  $previousErrorActionPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  $output = @(& docker @arguments 2>&1)
+  $exitCode = $LASTEXITCODE
+  $ErrorActionPreference = $previousErrorActionPreference
+  if ($exitCode -ne 0) {
+    throw "The read-only rollup backlog check failed with exit code $exitCode. $($output -join ' ')"
+  }
+  $jsonLine = @($output | Where-Object {
+    $_ -is [string] -and $_.Trim().StartsWith('{') -and $_.Trim().EndsWith('}')
+  })
+  if ($jsonLine.Count -ne 1) {
+    throw "Expected one JSON row from the rollup backlog check, received $($jsonLine.Count)."
+  }
+  try {
+    return $jsonLine[0] | ConvertFrom-Json
+  }
+  catch {
+    throw "The rollup backlog check returned invalid JSON. $($_.Exception.Message)"
+  }
+}
+
 function Invoke-AdminLiveGate {
   param(
     [Parameter(Mandatory = $true)][ValidateSet('legacy', 'candidate')][string]$Mode,
-    [Parameter(Mandatory = $true)][string]$OutputPath
+    [Parameter(Mandatory = $true)][string]$OutputPath,
+    [int]$MaxRefreshDays = 0
   )
 
-  Invoke-CheckedCommand -FilePath 'node' -Arguments @(
+  $arguments = @(
     'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs',
     '--admin-url', $AdminUrl,
     '--mode', $Mode,
     '--output', $OutputPath
   )
+  if ($Mode -eq 'candidate') {
+    $arguments += @('--max-refresh-days', "$MaxRefreshDays")
+  }
+  Invoke-CheckedCommand -FilePath 'node' -Arguments $arguments
   $evidence = Get-Content -LiteralPath (Join-Path $Root $OutputPath) -Raw | ConvertFrom-Json
   if ($evidence.status -ne 'ok') {
     throw "The $Mode admin API live contract failed."
@@ -287,7 +325,7 @@ if ((git rev-parse "$($script:Packet.rollback_revision)`^{tree}") -ne $script:Pa
   throw 'The rollback tree does not match the packet.'
 }
 
-foreach ($path in @($PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence)) {
+foreach ($path in @($BacklogEvidence, $PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence)) {
   if (Test-Path -LiteralPath $path) {
     throw "This packet is write-once and evidence already exists: $path"
   }
@@ -310,6 +348,7 @@ New-Item -ItemType Directory -Path $Workspace | Out-Null
 Invoke-CheckedCommand -FilePath 'deno' -Arguments @('check', 'supabase/functions/admin-api/index.ts')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-metrics.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-api.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs')
 
 $preFunction = Get-AdminFunction
 Assert-FunctionState `
@@ -349,9 +388,27 @@ try {
   docker info --format '{{.ServerVersion}}' | Out-Null
   if ($LASTEXITCODE -ne 0) { throw 'Docker is not available.' }
   Invoke-PsqlPostflight
+  $backlog = Invoke-PsqlRollupBacklog
+  $pendingDayCount = [int]$backlog.pending_day_count
+  $refreshDayLimit = [int]$script:Packet.rollup_refresh_days_max
+  if ($pendingDayCount -lt 0 -or $pendingDayCount -gt $refreshDayLimit) {
+    throw "Measured rollup backlog $pendingDayCount is outside the approved range 0 to $refreshDayLimit."
+  }
+  if ([int]$backlog.pending_on_or_before_latest_complete_day -ne 0) {
+    throw 'The rollup tables contain a historical gap that the sequential refresh API cannot safely repair.'
+  }
+  Write-JsonEvidence -Path $BacklogEvidence -Value ([ordered]@{
+    artifact = 'admin_dashboard_phase_a_admin_api_rollup_backlog'
+    approval_fingerprint = $ApprovalFingerprint
+    measurement = $backlog
+    refresh_day_limit = $refreshDayLimit
+    refresh_call_limit = $refreshDayLimit + 1
+    mutations = 0
+    captured_at = (Get-Date).ToUniversalTime().ToString('o')
+  })
   $preflight = Invoke-AdminLiveGate `
     -Mode legacy `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-preflight-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json'
 
   $candidate = Deploy-Revision `
     -Revision $script:Packet.implementation_revision `
@@ -363,7 +420,8 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-live-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json' `
+    -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
     artifact = 'admin_dashboard_phase_a_admin_api_completion'
@@ -373,6 +431,7 @@ try {
     pre_function_version = [int]$preFunction.version
     candidate_function_version = [int]$candidate.version
     candidate_updated_at = $candidate.updated_at
+    rollup_backlog = $backlog
     preflight = $preflight
     live_contract = $live
     rollback_used = $false

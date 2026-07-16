@@ -29,7 +29,7 @@ const sourcePath = 'references/verification/admin-dashboard-phase-a-admin-api-fi
 const runnerPath = 'scripts/run-admin-dashboard-phase-a-admin-api-release.ps1';
 const verifierPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-packet.mjs';
 const liveGatePath = 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-inventory-2026-07-16.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-inventory-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Approval fingerprint does not match the source.');
@@ -41,7 +41,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_release',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery',
   implementation_revision: '3ce3224205c4ef13f7eb3ad0d83556db4c08c708',
   implementation_tree: '12070a25c24225b11cd19b0987cf500a23de1218',
   rollback_revision: fields.rollback_revision,
@@ -49,6 +49,9 @@ assert.deepEqual(fields, {
   runner_sha256: fields.runner_sha256,
   verifier_sha256: fields.verifier_sha256,
   live_gate_sha256: fields.live_gate_sha256,
+  rollup_gate_helper_sha256: fields.rollup_gate_helper_sha256,
+  rollup_gate_test_sha256: fields.rollup_gate_test_sha256,
+  backlog_sql_sha256: fields.backlog_sql_sha256,
   postflight_sql_sha256: fields.postflight_sql_sha256,
   admin_api_sha256: fields.admin_api_sha256,
   metrics_sha256: fields.metrics_sha256,
@@ -58,6 +61,10 @@ assert.deepEqual(fields, {
   local_verification_sha256: fields.local_verification_sha256,
   inventory_sha256: fields.inventory_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
+  prior_attempt_commit: '332036dc62b350f138c604b97d0ffd7ef5893dc3',
+  prior_preflight_evidence_sha256: '14d794416b2e9437a30af1eea3c5d14f919d1cda46bf6481bacd070e2a52dd9c',
+  prior_live_evidence_sha256: '0aab5e428539579ee054b99b15b47245e68c395a6aaec518a2f8ca67ee3491bb',
+  prior_rollback_evidence_sha256: '0430db340222974562f1b80b6e39e20fdc691e26fb1d87110e17d09c22489524',
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -68,7 +75,9 @@ assert.deepEqual(fields, {
   pre_function_version: fields.pre_function_version,
   pre_function_updated_at: fields.pre_function_updated_at,
   pre_verify_jwt: 'false',
-  rollup_refresh_calls_max: '60',
+  rollup_refresh_days_max: '120',
+  rollup_refresh_confirmation_calls: '1',
+  rollup_refresh_calls_max: '121',
   rollup_refresh_elapsed_limit_minutes: '20',
   queue_24h_p95_limit_ms: '1500',
   queue_all_p95_limit_ms: '1000',
@@ -95,7 +104,10 @@ const textHashes = [
   [runnerPath, 'runner_sha256'],
   [verifierPath, 'verifier_sha256'],
   [liveGatePath, 'live_gate_sha256'],
-  ['scripts/sql/admin-dashboard-phase-a-hosted-postflight.sql', 'postflight_sql_sha256'],
+  ['scripts/admin-dashboard-rollup-refresh-gate.mjs', 'rollup_gate_helper_sha256'],
+  ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs', 'rollup_gate_test_sha256'],
+  ['scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'backlog_sql_sha256'],
+  ['scripts/sql/admin-dashboard-phase-a-recovery-postflight.sql', 'postflight_sql_sha256'],
   ['supabase/functions/admin-api/index.ts', 'admin_api_sha256'],
   ['lib/admin-dashboard-metrics.js', 'metrics_sha256'],
   ['data/admin/known-search-defects.json', 'defect_registry_sha256'],
@@ -135,6 +147,18 @@ assert.ok(
 );
 assert.equal(inventory.mutations, 0);
 
+assert.equal(
+  execFileSync('git', ['rev-parse', fields.prior_attempt_commit], { encoding: 'utf8' }).trim(),
+  fields.prior_attempt_commit,
+);
+for (const [path, field] of [
+  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-live-2026-07-16.json', 'prior_live_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-rollback-2026-07-16.json', 'prior_rollback_evidence_sha256'],
+]) {
+  assert.equal(sha256TextFile(path), fields[field], `${path} recovery evidence hash does not match.`);
+}
+
 const runner = normalizedText(readFileSync(runnerPath, 'utf8'));
 assert.equal((runner.match(/& supabase functions deploy /g) || []).length, 1,
   'Runner must contain one scoped deploy command.');
@@ -142,7 +166,11 @@ assert.match(runner, /--project-ref \$ProjectRef --no-verify-jwt --use-api --wor
 assert.match(runner, /-Revision \$script:Packet\.implementation_revision/);
 assert.match(runner, /-Revision \$script:Packet\.rollback_revision/);
 assert.match(runner, /if \(\$script:CandidateWentLive -and \$script:CandidateFunction\)/);
-assert.match(runner, /admin-dashboard-phase-a-hosted-postflight\.sql/);
+assert.match(runner, /admin-dashboard-phase-a-recovery-postflight\.sql/);
+assert.match(runner, /admin-dashboard-phase-a-rollup-backlog\.sql/);
+assert.match(runner, /PGOPTIONS=-c default_transaction_read_only=on/);
+assert.match(runner, /pending_on_or_before_latest_complete_day/);
+assert.match(runner, /-MaxRefreshDays \$pendingDayCount/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
@@ -162,7 +190,9 @@ for (const prohibited of [
   assert.equal(prohibited.test(runner), false, `Runner contains prohibited command: ${prohibited}`);
 }
 
-const postflight = normalizedText(readFileSync('scripts/sql/admin-dashboard-phase-a-hosted-postflight.sql', 'utf8'));
+const postflight = normalizedText(readFileSync('scripts/sql/admin-dashboard-phase-a-recovery-postflight.sql', 'utf8'));
+assert.match(postflight, /begin read only;/i);
+assert.match(postflight, /rollback;/i);
 for (const prohibited of [
   /\binsert\s+into\b/i,
   /\bupdate\s+public\./i,
@@ -175,9 +205,10 @@ for (const prohibited of [
 }
 
 const liveGate = normalizedText(readFileSync(liveGatePath, 'utf8'));
-assert.match(liveGate, /attempt <= 60/);
 assert.match(liveGate, /20 \* 60 \* 1000/);
 assert.match(liveGate, /refresh-rollups/);
+assert.match(liveGate, /--max-refresh-days/);
+assert.match(liveGate, /runBoundedRollupRefresh/);
 assert.match(liveGate, /measureQueue\([\s\S]*?count = 10/);
 assert.match(liveGate, /queue24h\.p95_ms < 1500/);
 assert.match(liveGate, /queueAll\.p95_ms < 1000/);
@@ -185,6 +216,26 @@ assert.match(liveGate, /window=1d/);
 assert.match(liveGate, /window=all/);
 assert.match(liveGate, /x-admin-secret/);
 assert.equal(liveGate.includes('mcp-search'), false);
+
+const backlogSql = normalizedText(readFileSync('scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'utf8'));
+assert.match(backlogSql, /begin read only;/i);
+assert.match(backlogSql, /rollback;/i);
+assert.match(backlogSql, /pending_day_count/i);
+for (const prohibited of [
+  /\binsert\s+into\b/i,
+  /\bupdate\s+public\./i,
+  /\bdelete\s+from\b/i,
+  /\bdrop\s+(?:table|index|function)\b/i,
+  /\balter\s+table\b/i,
+  /\bcreate\s+(?:table|index|function)\b/i,
+]) {
+  assert.equal(prohibited.test(backlogSql), false, `Backlog check is not read-only: ${prohibited}`);
+}
+
+execFileSync('node', ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs'], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
 
 const adminApi = normalizedText(readFileSync('supabase/functions/admin-api/index.ts', 'utf8'));
 assert.match(adminApi, /segments\[2\] === 'refresh-rollups'/);
@@ -203,7 +254,9 @@ console.log(JSON.stringify({
     verify_jwt: false,
   },
   gates: {
-    rollup_refresh_calls_max: 60,
+    rollup_refresh_days_max: 120,
+    rollup_refresh_confirmation_calls: 1,
+    rollup_refresh_calls_max: 121,
     rollup_refresh_elapsed_limit_minutes: 20,
     queue_24h_p95_limit_ms: 1500,
     queue_all_p95_limit_ms: 1000,
