@@ -4,6 +4,8 @@ Date: 2026-07-16
 Starting revision: `17e1a7f0d55d78c0402aaad088d333f3f9a417eb`
 Scope: local measurement-artifact validation only
 
+Status: sample-presence and summary validation passed independent review. The fixed search-case identity rule was added later in `search-v2-gate-c-case-identity-correction-2026-07-16.md` after independent probes showed that 25 samples from one case could still satisfy the total count.
+
 ## Verified defect
 
 Independent probes confirmed that strictly typed live evidence could still pass without the actual measurement samples. Null worker-state summaries, missing first requests, empty warm arrays, and missing smoke samples were accepted when summary values and live request counts were adjusted to agree.

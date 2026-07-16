@@ -4,25 +4,11 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
+import { SEARCH_CASES, SEARCH_WARM_REPETITIONS } from './search-v2-gate-c-workload.mjs';
+
 const PROJECT_REF = 'kcjmkakdhsqplvasgkjv';
 const ENDPOINT_NAME = process.env.SUPERICONS_SEARCH_V2_MEASUREMENT_ENDPOINT || 'mcp-search-v2-beta';
 const ENDPOINT = `https://${PROJECT_REF}.supabase.co/functions/v1/${ENDPOINT_NAME}`;
-
-const SEARCH_CASES = [
-  { id: 'settings-all', query: 'settings', library_mode: 'all', limit: 5, locale: 'en' },
-  { id: 'hello-all', query: 'hello', library_mode: 'all', limit: 8, locale: 'en' },
-  { id: 'cog-bootstrap-strict', query: 'cog', library: 'bootstrap', library_mode: 'strict', limit: 8, locale: 'en' },
-  { id: 'combobox-bootstrap-prefer', query: 'combobox', library: 'bootstrap', library_mode: 'prefer', limit: 8, locale: 'en' },
-  {
-    id: 'settings-zh-hans-expanded',
-    query: 'settings',
-    library_mode: 'all',
-    limit: 5,
-    locale: null,
-    localized_query: '设置',
-    localized_locale: 'zh-Hans',
-  },
-];
 
 function readArg(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -216,7 +202,7 @@ async function postSearch(searchCase) {
 async function runSearch(variant) {
   const firstRequest = await postSearch(SEARCH_CASES[0]);
   const warmSamples = [];
-  for (let repetition = 0; repetition < 5; repetition += 1) {
+  for (let repetition = 0; repetition < SEARCH_WARM_REPETITIONS; repetition += 1) {
     for (const searchCase of SEARCH_CASES) {
       warmSamples.push(await postSearch(searchCase));
     }

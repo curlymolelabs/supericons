@@ -3,6 +3,8 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
+import { SEARCH_CASES, SEARCH_WARM_REPETITIONS } from './search-v2-gate-c-workload.mjs';
+
 function readArg(name) {
   const index = process.argv.indexOf(`--${name}`);
   return index >= 0 ? process.argv[index + 1] : null;
@@ -46,6 +48,12 @@ function requiredObject(value, label) {
 function requiredArray(value, label, expectedLength) {
   assert.equal(Array.isArray(value), true, `${label} must be an array`);
   assert.equal(value.length, expectedLength, `${label} count changed`);
+  return value;
+}
+
+function requiredString(value, label) {
+  assert.equal(typeof value, 'string', `${label} must be a string`);
+  assert.equal(value.trim().length > 0, true, `${label} is missing`);
   return value;
 }
 
@@ -165,7 +173,9 @@ function requirePerformance(artifact, label, limits) {
 
 const fixedWorkload = Object.freeze({
   search_first_requests: 1,
-  search_warm_samples: 25,
+  search_case_ids: Object.freeze(SEARCH_CASES.map((entry) => entry.id)),
+  search_warm_repetitions: SEARCH_WARM_REPETITIONS,
+  search_warm_samples: SEARCH_CASES.length * SEARCH_WARM_REPETITIONS,
   localized_first_samples: 1,
   localized_warm_samples: 5,
   localized_hosted_attempts_per_sample: 2,
@@ -175,11 +185,29 @@ const fixedWorkload = Object.freeze({
 
 function requireSearchWorkload(search) {
   const first = requireDirectSample(search?.first_request, 'search first request');
+  assert.equal(
+    requiredString(first.case_id, 'search first request case_id'),
+    fixedWorkload.search_case_ids[0],
+    'search first request case changed',
+  );
   const warm = requiredArray(
     search?.warm_samples,
     'search warm samples',
     fixedWorkload.search_warm_samples,
   ).map((sample, index) => requireDirectSample(sample, `search warm sample ${index + 1}`));
+  const caseCounts = new Map(fixedWorkload.search_case_ids.map((caseId) => [caseId, 0]));
+  for (const [index, sample] of warm.entries()) {
+    const caseId = requiredString(sample.case_id, `search warm sample ${index + 1} case_id`);
+    assert.equal(caseCounts.has(caseId), true, `search warm sample ${index + 1} case changed`);
+    caseCounts.set(caseId, caseCounts.get(caseId) + 1);
+  }
+  for (const caseId of fixedWorkload.search_case_ids) {
+    assert.equal(
+      caseCounts.get(caseId),
+      fixedWorkload.search_warm_repetitions,
+      `search warm distribution changed for ${caseId}`,
+    );
+  }
   requireCountSummary(search?.warm_summary, 'search warm', summaryCounts(warm));
   const attempts = [first, ...warm].map(workerAttempt);
   requireWorkerSummary(search, 'search', attempts);

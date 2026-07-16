@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { evaluateGateC } from './search-v2-gate-c-evidence.mjs';
+import { SEARCH_CASES, SEARCH_WARM_REPETITIONS } from './search-v2-gate-c-workload.mjs';
 
 const manifest = {
   implementation: {
@@ -52,6 +53,7 @@ function timing(workerState, totalMs = 10) {
 }
 
 function directSample({
+  caseId = null,
   workerState = 'reused_worker',
   ok = true,
   status = 200,
@@ -59,6 +61,7 @@ function directSample({
   style = 'outline',
 } = {}) {
   return {
+    ...(caseId ? { case_id: caseId } : {}),
     ok,
     status,
     duration_ms: durationMs,
@@ -110,8 +113,14 @@ function workerSummaryFor(attempts) {
 }
 
 function buildArtifacts(hash, endpoint) {
-  const searchFirst = directSample({ workerState: 'first_request' });
-  const searchWarm = Array.from({ length: 25 }, () => directSample());
+  const searchFirst = directSample({
+    caseId: SEARCH_CASES[0].id,
+    workerState: 'first_request',
+  });
+  const searchWarm = Array.from(
+    { length: SEARCH_WARM_REPETITIONS },
+    () => SEARCH_CASES.map((entry) => directSample({ caseId: entry.id })),
+  ).flat();
   const searchAttempts = [searchFirst, ...searchWarm];
 
   const localizedFirst = localizedSample({ workerState: 'first_request' });
@@ -405,6 +414,27 @@ const failureCases = [
     const value = structuredClone(artifacts.localized);
     value.warm_summary.hosted_requests = 9;
     evaluate({ localized: value });
+  }],
+  ['missing search case identity rejected', () => {
+    const value = structuredClone(artifacts.search);
+    delete value.first_request.case_id;
+    for (const sample of value.warm_samples) delete sample.case_id;
+    evaluate({ search: value });
+  }],
+  ['duplicate-only search case distribution rejected', () => {
+    const value = structuredClone(artifacts.search);
+    for (const sample of value.warm_samples) sample.case_id = SEARCH_CASES[0].id;
+    evaluate({ search: value });
+  }],
+  ['unexpected search case identity rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.warm_samples[0].case_id = 'unapproved-case';
+    evaluate({ search: value });
+  }],
+  ['wrong first search case rejected', () => {
+    const value = structuredClone(artifacts.search);
+    value.first_request.case_id = SEARCH_CASES[1].id;
+    evaluate({ search: value });
   }],
 ];
 
