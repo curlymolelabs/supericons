@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "conceptId": "si:agent-core",
+  "variantId": "variant-agent-core-outline-001",
+  "status": "pass",
+  "checks": {
+    "viewBox": "pass",
+    "currentColor": "pass",
+    "strokeWidth": "pass",
+    "strokeLinecap": "pass",
+    "strokeLinejoin": "pass",
+    "fill": "pass",
+    "rasterEmbeds": "pass",
+    "foreignObject": "pass",
+    "hiddenText": "pass",
+    "accessibleTitle": "fail",
+    "shapeElementCount": "pass",
+    "safeArea": "pass",
+    "fixedColors": "pass"
+  },
+  "metrics": {
+    "shapeElementCount": 9,
+    "coordinateMin": 4.8,
+    "coordinateMax": 19.2
+  },
+  "issues": [],
+  "warnings": [
+    "SVG should include title and desc elements."
+  ]
+}

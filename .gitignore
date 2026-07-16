@@ -36,3 +36,27 @@ output/search-intent-suggestions/
 output/tmp-*/
 data/si-registry/staging/library-workbench/
 dc_verify.png
+
+# Local platform state
+.netlify/
+.tmp/
+
+# Generated outputs and logs
+output/
+
+# Raw media and large local-only assets
+video/
+public/videos/
+tools/icon-research/
+
+# Local data exports and private data
+supabase/downloads/
+data/i18n/private/
+
+# Retired June 2026 icons-lab apps (superseded by SI v2 Icon Lab)
+icons-lab/
+icons-lab-prototype/
+
+# Internal process and verification artifacts
+references/
+commands.md

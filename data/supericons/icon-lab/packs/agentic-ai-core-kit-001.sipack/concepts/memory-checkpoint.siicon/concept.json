@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:memory-checkpoint",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "memory-checkpoint",
+  "name": "Memory Checkpoint",
+  "depicts": "A saved memory state that an agent can return to.",
+  "useCase": "Use for checkpoints, saved state, durable memory, resume points, and session snapshots.",
+  "category": "agentic-ai",
+  "assetType": "state-icon",
+  "primaryMetaphor": "A saved note anchored by a checkpoint marker.",
+  "avoidMetaphors": [
+    "cloud sync",
+    "hard drive",
+    "generic bookmark only"
+  ],
+  "siblingConcepts": [
+    "context-window",
+    "context-compaction",
+    "agent-handoff"
+  ],
+  "searchTerms": [
+    "memory checkpoint",
+    "saved state",
+    "agent memory",
+    "resume point",
+    "snapshot",
+    "checkpoint"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

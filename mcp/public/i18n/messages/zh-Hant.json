@@ -83,6 +83,24 @@
     "tags": "標籤",
     "tagsWithCount": "標籤（{count}）",
     "categories": {
+      "ai-app-builders": "AI 應用程式建構器",
+      "coding-agents-dev-environments": "程式碼智能體與開發環境",
+      "model-platforms-ai-labs": "模型平台與 AI 實驗室",
+      "ai-search-research-evaluation": "AI 搜尋、研究與評估",
+      "generative-media-creative-ai": "生成式媒體與創意 AI",
+      "voice-audio-ai": "語音與音訊 AI",
+      "agent-infrastructure-runtime": "智能體基礎設施與執行環境",
+      "mcp-tooling-protocols": "MCP、工具與協定",
+      "general-agents-assistants": "通用智能體與助理",
+      "design-ui-intelligence": "設計與 UI 智能",
+      "agent-business-monetization": "智能體業務與變現",
+      "coding-agent-tools": "程式碼智能體工具",
+      "agent-lifecycle-states": "智能體生命週期狀態",
+      "agent-trust-safety": "智能體信任與安全",
+      "agent-workflow-mcp": "智能體工作流程與 MCP",
+      "agentic-payments": "智能體支付",
+      "frontier-compute": "前沿運算",
+      "physical-automation": "實體自動化",
       "ai-agent-workflows": "AI 與自動化",
       "navigation-wayfinding": "導覽與尋路",
       "actions-controls": "動作與控制",
@@ -100,7 +118,9 @@
       "maps-places-travel": "地圖、地點與旅行",
       "time-calendar": "時間與行事曆",
       "nature-weather-lifestyle": "自然、天氣與生活",
-      "brands-social": "品牌與社群"
+      "brands-social": "品牌與社群",
+      "trending-culture": "潮流與文化",
+      "cars-vehicles": "汽車與車輛"
     }
   },
   "tools": {
@@ -475,7 +495,6 @@
         "signin": {
           "title": "登入以繼續購買",
           "desc": "將集合購買內容綁定到一個帳戶，讓下載和更新保持同步。",
-          "note": "我們會帶你回到這裡，方便你繼續剛才的操作。",
           "submit": "登入並繼續",
           "toggle": "需要先建立帳戶嗎？",
           "toggleAction": "註冊"
@@ -483,7 +502,6 @@
         "signup": {
           "title": "建立帳戶以購買集合",
           "desc": "你的購買內容、下載和未來更新都會連接到這個帳戶。",
-          "note": "我們會帶你回到這裡，方便你繼續剛才的操作。",
           "submit": "建立帳戶",
           "toggle": "已有帳戶。",
           "toggleAction": "登入"
@@ -493,7 +511,6 @@
         "signin": {
           "title": "登入以升級到 Pro",
           "desc": "繼續前往 Pro 結帳，取得 MCP 存取、工作流程工具和高級集合。",
-          "note": "我們會帶你回到這裡，方便你繼續結帳。",
           "submit": "登入並繼續",
           "toggle": "需要先建立帳戶嗎？",
           "toggleAction": "註冊"
@@ -501,7 +518,6 @@
         "signup": {
           "title": "建立帳戶以升級到 Pro",
           "desc": "先設定帳戶，準備好後再繼續 Pro 結帳。",
-          "note": "我們會帶你回到這裡，方便你繼續結帳。",
           "submit": "建立帳戶",
           "toggle": "已有帳戶。",
           "toggleAction": "登入"
@@ -636,7 +652,7 @@
   "legal": {
     "terms": {
       "pageTitle": "服務條款",
-      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最後更新：2026 年 4 月 8 日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 使用權利</h3><p>Supericons 提供免費與進階圖示資源，可用於網站、應用程式與數位產品。免費圖示保留原本的開源授權。</p><p>進階動畫集合由 Curly Mole Labs 擁有，你的使用權依購買的授權類型而定。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 輸出權利</h3><p>透過 Supericons MCP 伺服器取得的圖示可以用於 AI 產生的程式碼輸出。</p><p>底層 SVG 與 CSS 動畫原始檔仍屬於 Curly Mole Labs，不得擷取、逆向工程或批次匯出。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 再散布規則</h3><p>你不得再散布原始 SVG 或 CSS 動畫檔，不得將進階圖示作為開放捆綁資源，不得轉售存取權、轉授權，或建立競爭性圖示庫。</p><p>你可以在完成的網站、應用程式、客戶作品，以及不直接暴露原始檔的編譯輸出中使用圖示。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 授權層級</h3><p>單一專案授權適用於單獨購買與 Pro 月付領取的集合。</p><p>無限專案授權適用於有效 Pro 訂閱、Pro 年付包含集合與 Launch Edition 購買者。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. 退款規則</h3><p>Pro 訂閱可隨時取消，當期費用不提供部分退款。</p><p>一次性數位購買在開通下載後通常不退款；若技術問題導致無法存取，請在 14 天內聯絡我們。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 聯絡方式</h3><p>條款、授權或退款問題請寄信至 hello@supericons.dev。</p></section></div>"
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">最後更新：2026 年 4 月 8 日</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. 使用權利</h3><p>Supericons 提供免費與進階圖示資源，可用於網站、應用程式與數位產品。免費圖示保留原本的開源授權。</p><p>進階動畫集合由 Curly Mole Labs 擁有，你的使用權依購買的授權類型而定。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI 輸出權利</h3><p>透過 Supericons MCP 伺服器取得的圖示可以用於 AI 產生的程式碼輸出。</p><p>底層 SVG 與 CSS 動畫原始檔仍屬於 Curly Mole Labs，不得擷取、逆向工程或批次匯出。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. 再散布規則</h3><p>你不得再散布原始 SVG 或 CSS 動畫檔，不得將進階圖示作為開放捆綁資源，不得轉售存取權、轉授權，或建立競爭性圖示庫。</p><p>你可以在完成的網站、應用程式、客戶作品，以及不直接暴露原始檔的編譯輸出中使用圖示。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. 授權層級</h3><p>單一專案授權適用於單獨購買與 Pro 月付領取的集合。</p><p>無限專案授權適用於有效 Pro 訂閱、Pro 年付包含集合與 Launch Edition 購買者。</p></section><section class=\"terms-section\" id=\"single-icon-license\"><h3 class=\"terms-section__title\">5. 單個圖示購買</h3><p><strong>單個圖示授權 v1.0，自 2026 年 7 月 7 日起生效。</strong>本節適用於透過 Supericons 單個圖示購買流程購買的一個付費動態圖示，包括由個人購買、由協助個人的 agent 購買，或由組織核准的 agent 購買。</p><p>授權歸購買時控制付款錢包或帳戶的個人或組織所有。如果 agent 代表個人或組織購買，授權歸該個人或組織所有，而不是歸 agent 所有。</p><p>Supericons 授予授權持有人一項非獨占、全球、永久的授權，可在一個最終產品、客戶專案、網站、應用程式、簡報、內部工具或軟體儲存庫中使用所購買的圖示，包括交付的 SVG 以及該圖示交付的任何動畫 CSS。</p><p>你可以在該授權專案的原始碼、已建置的應用程式檔案、截圖、示範、文件和行銷材料中使用、修改和包含該圖示。</p><p>你不得將該圖示作為獨立素材轉售、再授權或重新散布，不得將其發布到圖示包、範本庫、設計套件、市集商品、素材資料庫、競爭性圖示庫、庫存素材產品或訓練集中，也不得在授權專案之外分享原始來源檔案。</p><p>請在可用時保留 x402 付款回應、結算參考或收據資料。若有交付、重複收費、結算或授權問題，請將收據資料和圖示名稱寄至 hello@supericons.dev。</p><p>翻譯僅為方便閱讀而提供。如果翻譯版本與英文版本衝突，以英文版本為準。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. 退款規則</h3><p>Pro 訂閱可隨時取消，當期費用不提供部分退款。</p><p>一次性數位購買在開通下載後通常不退款；若技術問題導致無法存取，請在 14 天內聯絡我們。</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. 聯絡方式</h3><p>條款、授權或退款問題請寄信至 hello@supericons.dev。</p></section></div>"
     },
     "privacy": {
       "pageTitle": "隱私權政策",

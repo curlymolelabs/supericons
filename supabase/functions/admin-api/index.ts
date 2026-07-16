@@ -69,6 +69,7 @@ const DELETE_CANCELABLE_STATUSES = new Set(['active', 'trialing', 'past_due', 'u
 const EVIDENCE_PAGE_SIZE = 1000;
 const QUERY_QUEUE_MAX_PAGE_SIZE = 100;
 const QUERY_EXPORT_MAX_ROWS = 2000;
+const QUERY_REVIEW_LOOKUP_CHUNK_SIZE = 10;
 const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
@@ -462,27 +463,62 @@ async function fetchQueryReviews(
     return { available: true, reviews };
   }
 
-  const { data, error } = await adminClient
-    .from('icon_query_reviews')
-    .select('normalized_query, library_filter, job_category, status, note, updated_at')
-    .in('normalized_query', normalizedQueries);
+  let data: QueryReviewRow[] = [];
 
-  if (error) {
+  try {
+    data = await fetchQueryReviewRows(
+      adminClient,
+      normalizedQueries,
+      'normalized_query, library_filter, job_category, status, note, updated_at',
+    );
+  } catch (error) {
     if (isMissingRelationError(error)) {
       return { available: false, reviews };
     }
-    throw error;
+    if (!isMissingColumnError(error)) {
+      console.warn('admin-api query reviews unavailable:', formatAdminErrorMessage(error));
+      return { available: false, reviews };
+    }
+    try {
+      data = await fetchQueryReviewRows(
+        adminClient,
+        normalizedQueries,
+        'normalized_query, library_filter, status, note, updated_at',
+      );
+    } catch (fallbackError) {
+      console.warn('admin-api query reviews fallback unavailable:', formatAdminErrorMessage(fallbackError));
+      return { available: false, reviews };
+    }
   }
 
-  for (const row of (data || []) as QueryReviewRow[]) {
+  for (const row of data) {
     reviews.set(buildQueryReviewContextKey({
       query: row.normalized_query,
       libraryFilter: row.library_filter,
-      jobCategory: row.job_category,
+      jobCategory: row.job_category || '',
     }), row);
   }
 
   return { available: true, reviews };
+}
+
+async function fetchQueryReviewRows(
+  adminClient: SupabaseClient,
+  normalizedQueries: string[],
+  select: string,
+) {
+  const rows: QueryReviewRow[] = [];
+  for (let index = 0; index < normalizedQueries.length; index += QUERY_REVIEW_LOOKUP_CHUNK_SIZE) {
+    const chunk = normalizedQueries.slice(index, index + QUERY_REVIEW_LOOKUP_CHUNK_SIZE);
+    const { data, error } = await adminClient
+      .from('icon_query_reviews')
+      .select(select)
+      .in('normalized_query', chunk);
+
+    if (error) throw error;
+    rows.push(...((data || []) as QueryReviewRow[]));
+  }
+  return rows;
 }
 
 function mergeQueryReview<T extends {
@@ -1672,6 +1708,25 @@ function isMissingColumnError(error: unknown) {
   const code = 'code' in error ? String(error.code) : '';
   const message = 'message' in error ? String(error.message).toLowerCase() : '';
   return code === '42703' || (message.includes('column') && message.includes('does not exist'));
+}
+
+function formatAdminErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  if (!error || typeof error !== 'object') return String(error);
+  const fields = error as Record<string, unknown>;
+  const message = typeof fields.message === 'string' && fields.message.trim()
+    ? fields.message.trim()
+    : 'Admin API request failed';
+  const details = typeof fields.details === 'string' && fields.details.trim()
+    ? fields.details.trim()
+    : '';
+  const hint = typeof fields.hint === 'string' && fields.hint.trim()
+    ? fields.hint.trim()
+    : '';
+  const code = typeof fields.code === 'string' && fields.code.trim()
+    ? `code ${fields.code.trim()}`
+    : '';
+  return [message, details, hint, code].filter(Boolean).join(' - ');
 }
 
 function summarizeProviders(user: AuthUser) {
@@ -3238,7 +3293,7 @@ serve(async (req) => {
     return jsonResponse(req, { error: 'Not found' }, 404);
   } catch (error) {
     console.error('admin-api error:', error);
-    const message = error instanceof Error ? error.message : String(error);
+    const message = formatAdminErrorMessage(error);
     return jsonResponse(req, { error: message }, 500);
   }
 });

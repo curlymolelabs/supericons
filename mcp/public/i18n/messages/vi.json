@@ -83,6 +83,24 @@
     "tags": "Thẻ",
     "tagsWithCount": "Thẻ ({count})",
     "categories": {
+      "ai-app-builders": "Trình tạo ứng dụng AI",
+      "coding-agents-dev-environments": "Tác nhân lập trình và môi trường phát triển",
+      "model-platforms-ai-labs": "Nền tảng mô hình và phòng thí nghiệm AI",
+      "ai-search-research-evaluation": "Tìm kiếm, nghiên cứu và đánh giá bằng AI",
+      "generative-media-creative-ai": "Phương tiện tạo sinh và AI sáng tạo",
+      "voice-audio-ai": "AI giọng nói và âm thanh",
+      "agent-infrastructure-runtime": "Hạ tầng và runtime cho tác nhân",
+      "mcp-tooling-protocols": "MCP, công cụ và giao thức",
+      "general-agents-assistants": "Tác nhân và trợ lý chung",
+      "design-ui-intelligence": "Trí tuệ thiết kế và UI",
+      "agent-business-monetization": "Kinh doanh và kiếm tiền từ tác nhân",
+      "coding-agent-tools": "Công cụ tác nhân lập trình",
+      "agent-lifecycle-states": "Trạng thái vòng đời tác nhân",
+      "agent-trust-safety": "Niềm tin và an toàn của tác nhân",
+      "agent-workflow-mcp": "Quy trình tác nhân và MCP",
+      "agentic-payments": "Thanh toán tác nhân",
+      "frontier-compute": "Điện toán tiên phong",
+      "physical-automation": "Tự động hóa vật lý",
       "ai-agent-workflows": "AI và tự động hóa",
       "navigation-wayfinding": "Điều hướng và tìm đường",
       "actions-controls": "Hành động và điều khiển",
@@ -100,7 +118,9 @@
       "maps-places-travel": "Bản đồ, địa điểm và du lịch",
       "time-calendar": "Thời gian và lịch",
       "nature-weather-lifestyle": "Thiên nhiên, thời tiết và đời sống",
-      "brands-social": "Thương hiệu và xã hội"
+      "brands-social": "Thương hiệu và xã hội",
+      "trending-culture": "Xu hướng và văn hóa",
+      "cars-vehicles": "Ô tô và phương tiện"
     }
   },
   "tools": {
@@ -475,7 +495,6 @@
         "signin": {
           "title": "Đăng nhập Supericons",
           "desc": "Gắn giao dịch mua bộ sưu tập với một tài khoản để lượt tải xuống và cập nhật luôn đồng bộ.",
-          "note": "Tài khoản miễn phí. Không cần thẻ để dùng biểu tượng miễn phí.",
           "submit": "Đăng nhập",
           "toggle": "Chưa có tài khoản.",
           "toggleAction": "Đăng ký"
@@ -483,7 +502,6 @@
         "signup": {
           "title": "Tạo tài khoản Supericons",
           "desc": "Giao dịch mua, lượt tải xuống và cập nhật sau này sẽ được kết nối với tài khoản này.",
-          "note": "Tài khoản miễn phí. Không cần thẻ để dùng biểu tượng miễn phí.",
           "submit": "Tạo tài khoản",
           "toggle": "Đã có tài khoản.",
           "toggleAction": "Đăng nhập"
@@ -493,7 +511,6 @@
         "signin": {
           "title": "Đăng nhập Supericons",
           "desc": "Tiếp tục đến thanh toán Pro để dùng MCP, công cụ quy trình và bộ sưu tập cao cấp.",
-          "note": "Tài khoản miễn phí. Không cần thẻ để dùng biểu tượng miễn phí.",
           "submit": "Đăng nhập",
           "toggle": "Chưa có tài khoản.",
           "toggleAction": "Đăng ký"
@@ -501,7 +518,6 @@
         "signup": {
           "title": "Tạo tài khoản Supericons",
           "desc": "Thiết lập tài khoản trước, rồi tiếp tục thanh toán Pro khi bạn sẵn sàng.",
-          "note": "Tài khoản miễn phí. Không cần thẻ để dùng biểu tượng miễn phí.",
           "submit": "Tạo tài khoản",
           "toggle": "Đã có tài khoản.",
           "toggleAction": "Đăng nhập"
@@ -636,7 +652,7 @@
   "legal": {
     "terms": {
       "pageTitle": "Điều khoản dịch vụ",
-      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Cập nhật lần cuối: 8 tháng 4, 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Quyền sử dụng</h3><p>Supericons cung cấp tài nguyên biểu tượng miễn phí và cao cấp cho sản phẩm số. Biểu tượng miễn phí giữ giấy phép mã nguồn mở gốc.</p><p>Bộ sưu tập động cao cấp thuộc Curly Mole Labs và được dùng theo cấp giấy phép đã mua.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. Quyền với đầu ra AI</h3><p>Biểu tượng lấy qua máy chủ MCP có thể dùng trong mã do AI tạo ra.</p><p>Tệp nguồn SVG và CSS animation vẫn là tài sản của Curly Mole Labs và không được trích xuất, đảo ngược hoặc xuất hàng loạt.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Phân phối lại</h3><p>Bạn không được phân phối lại tệp SVG hoặc CSS gốc, bán lại quyền truy cập, cấp lại giấy phép hoặc tạo thư viện biểu tượng cạnh tranh.</p><p>Bạn có thể dùng biểu tượng trong website, ứng dụng, sản phẩm khách hàng và đầu ra đã biên dịch khi tệp nguồn không bị lộ trực tiếp.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Cấp phép</h3><p>Giấy phép một dự án áp dụng cho mua lẻ và bộ sưu tập nhận qua Pro tháng.</p><p>Giấy phép dự án không giới hạn áp dụng cho Pro đang hoạt động, bộ sưu tập trong Pro năm và mua Launch Edition.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. Hoàn tiền</h3><p>Gói Pro có thể hủy bất cứ lúc nào. Không hoàn tiền một phần cho kỳ thanh toán hiện tại.</p><p>Giao dịch mua kỹ thuật số một lần không hoàn tiền sau khi mở quyền tải xuống, trừ khi lỗi kỹ thuật ngăn truy cập và bạn liên hệ trong 14 ngày.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Liên hệ</h3><p>Về điều khoản, giấy phép hoặc hoàn tiền, hãy gửi email hello@supericons.dev.</p></section></div>"
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Cập nhật lần cuối: 8 tháng 4, 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Quyền sử dụng</h3><p>Supericons cung cấp tài nguyên biểu tượng miễn phí và cao cấp cho sản phẩm số. Biểu tượng miễn phí giữ giấy phép mã nguồn mở gốc.</p><p>Bộ sưu tập động cao cấp thuộc Curly Mole Labs và được dùng theo cấp giấy phép đã mua.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. Quyền với đầu ra AI</h3><p>Biểu tượng lấy qua máy chủ MCP có thể dùng trong mã do AI tạo ra.</p><p>Tệp nguồn SVG và CSS animation vẫn là tài sản của Curly Mole Labs và không được trích xuất, đảo ngược hoặc xuất hàng loạt.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Phân phối lại</h3><p>Bạn không được phân phối lại tệp SVG hoặc CSS gốc, bán lại quyền truy cập, cấp lại giấy phép hoặc tạo thư viện biểu tượng cạnh tranh.</p><p>Bạn có thể dùng biểu tượng trong website, ứng dụng, sản phẩm khách hàng và đầu ra đã biên dịch khi tệp nguồn không bị lộ trực tiếp.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Cấp phép</h3><p>Giấy phép một dự án áp dụng cho mua lẻ và bộ sưu tập nhận qua Pro tháng.</p><p>Giấy phép dự án không giới hạn áp dụng cho Pro đang hoạt động, bộ sưu tập trong Pro năm và mua Launch Edition.</p></section><section class=\"terms-section\" id=\"single-icon-license\"><h3 class=\"terms-section__title\">5. Mua một biểu tượng</h3><p><strong>Giấy phép một biểu tượng v1.0, có hiệu lực từ ngày 7 tháng 7 năm 2026.</strong> Phần này áp dụng cho một biểu tượng động trả phí được mua qua luồng mua một biểu tượng của Supericons, bao gồm giao dịch do một người thực hiện, do tác nhân hỗ trợ một người thực hiện, hoặc do tác nhân được một tổ chức phê duyệt thực hiện.</p><p>Giấy phép thuộc về người hoặc tổ chức kiểm soát ví hoặc tài khoản thanh toán tại thời điểm mua. Nếu tác nhân mua thay cho một người hoặc tổ chức, giấy phép thuộc về người hoặc tổ chức đó, không thuộc về tác nhân.</p><p>Supericons cấp cho chủ giấy phép một giấy phép không độc quyền, toàn cầu và vĩnh viễn để sử dụng biểu tượng đã mua, bao gồm SVG được giao và mọi CSS hoạt ảnh được giao cho biểu tượng đó, trong một sản phẩm cuối, dự án khách hàng, website, ứng dụng, bài thuyết trình, công cụ nội bộ hoặc kho phần mềm.</p><p>Bạn có thể sử dụng, chỉnh sửa và đưa biểu tượng vào mã nguồn, tệp ứng dụng đã build, ảnh chụp màn hình, bản demo, tài liệu và marketing cho dự án được cấp phép đó.</p><p>Bạn không được bán lại, cấp phép lại hoặc phân phối lại biểu tượng như một tài sản độc lập, xuất bản nó trong gói biểu tượng, thư viện mẫu, bộ thiết kế, mặt hàng marketplace, cơ sở dữ liệu tài sản, thư viện biểu tượng cạnh tranh, sản phẩm tài sản stock hoặc tập huấn luyện, hoặc chia sẻ nguồn thô bên ngoài dự án được cấp phép.</p><p>Hãy giữ phản hồi thanh toán x402, mã tham chiếu quyết toán hoặc dữ liệu biên nhận khi có. Với câu hỏi về giao hàng, tính phí trùng, quyết toán hoặc giấy phép, hãy gửi email tới hello@supericons.dev kèm dữ liệu biên nhận và tên biểu tượng.</p><p>Bản dịch được cung cấp để tiện tham khảo. Nếu bản dịch mâu thuẫn với bản tiếng Anh, bản tiếng Anh sẽ được ưu tiên.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Hoàn tiền</h3><p>Gói Pro có thể hủy bất cứ lúc nào. Không hoàn tiền một phần cho kỳ thanh toán hiện tại.</p><p>Giao dịch mua kỹ thuật số một lần không hoàn tiền sau khi mở quyền tải xuống, trừ khi lỗi kỹ thuật ngăn truy cập và bạn liên hệ trong 14 ngày.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. Liên hệ</h3><p>Về điều khoản, giấy phép hoặc hoàn tiền, hãy gửi email hello@supericons.dev.</p></section></div>"
     },
     "privacy": {
       "pageTitle": "Chính sách quyền riêng tư",

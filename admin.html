@@ -460,6 +460,9 @@
       display: flex;
       align-items: center;
       gap: 0.25rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 0;
     }
     .page-btn {
       width: 28px; height: 28px;
@@ -483,6 +486,13 @@
       font-weight: 700;
     }
     .page-btn .material-symbols-outlined { font-size: 14px; }
+    .pagination__ellipsis {
+      width: 22px;
+      text-align: center;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+    }
 
     /* ---- STATS PANEL ---- */
     .stats-grid {
@@ -961,18 +971,39 @@
       flex: 0 0 112px;
     }
     .query-explorer__table {
-      overflow: visible;
+      overflow-x: auto;
+      max-width: 100%;
       border: 1px solid rgba(72,72,71,0.16);
       border-radius: var(--si-radius-lg);
     }
     .query-explorer__table .data-table {
       table-layout: fixed;
+      width: 100%;
+      min-width: 860px;
+    }
+    .query-explorer__table .data-table th,
+    .query-explorer__table .data-table td {
+      overflow: hidden;
       min-width: 0;
     }
     .query-explorer__query {
       max-width: 100%;
       white-space: normal;
       line-height: 1.35;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      text-align: left;
+      width: 100%;
+      min-width: 0;
+    }
+    .query-explorer__query span:last-child {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .query-explorer__context {
       display: grid;
@@ -980,6 +1011,15 @@
       color: var(--si-text-dim);
       font-family: var(--si-font-label);
       font-size: 0.7rem;
+      min-width: 0;
+    }
+    .query-explorer__context span,
+    .query-explorer__audience span,
+    .query-explorer__last-seen span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
     }
     .query-explorer__metric-grid {
       display: grid;

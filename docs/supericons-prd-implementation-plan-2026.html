@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons PRD &amp; Implementation Plan | From Icon Search to Visual Computation Platform</title>
+<meta name="description" content="Product requirements document and phased implementation plan for evolving Supericons from an icon search engine into a visual computation platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#040508;--bg2:#090b10;--bg3:#0f121a;--bg4:#161924;
+  --surface:#1a1d28;--surface2:#222636;
+  --text:#edf0f5;--text2:#9ca3b8;--text3:#5e677a;
+  --accent:#6366f1;--accent2:#818cf8;--accent-glow:rgba(99,102,241,.22);
+  --teal:#0ea5a4;--teal-glow:rgba(14,165,164,.16);
+  --rose:#e11d48;--rose-glow:rgba(225,29,72,.14);
+  --amber:#d97706;--amber-glow:rgba(217,119,6,.16);
+  --cyan:#0891b2;--cyan-glow:rgba(8,145,178,.14);
+  --radius:12px;--radius-lg:18px;--radius-xl:26px;
+  --font:'Inter',system-ui,sans-serif;
+  --font-display:'Space Grotesk','Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --max-w:1100px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.72;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:2px}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 28px}
+
+/* ── TOC Sidebar ── */
+.toc{position:fixed;top:0;left:0;bottom:0;width:260px;background:var(--bg2);border-right:1px solid rgba(255,255,255,.04);overflow-y:auto;padding:32px 24px;z-index:50;transition:transform .3s}
+.toc__title{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:24px;color:var(--accent2)}
+.toc__list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc__item a{font-size:12.5px;color:var(--text2);text-decoration:none;transition:color .2s;display:block;padding:4px 0}
+.toc__item a:hover{color:var(--text)}
+.toc__item--active a{color:var(--accent2)}
+.toc__phase{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;font-weight:600;letter-spacing:.8px;margin-top:16px;margin-bottom:4px}
+@media(max-width:900px){.toc{display:none}}
+
+/* ── Main Content ── */
+.main{margin-left:260px;padding-bottom:120px}
+@media(max-width:900px){.main{margin-left:0}}
+
+/* ── Hero Header ── */
+.hero{padding:100px 28px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 25% 30%,var(--accent-glow),transparent 65%),radial-gradient(ellipse 40% 35% at 75% 65%,var(--teal-glow),transparent 55%);pointer-events:none}
+.hero__badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.06);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:24px}
+.hero__title{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;line-height:1.12;letter-spacing:-1.2px;margin-bottom:20px;position:relative;z-index:2}
+.hero__title span{background:linear-gradient(135deg,var(--accent2) 0%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero__sub{font-size:clamp(1rem,2vw,1.18rem);color:var(--text2);max-width:680px;line-height:1.8;position:relative;z-index:2}
+.hero__meta{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;position:relative;z-index:2}
+.hero__meta-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text3)}
+
+/* ── Section base ── */
+.section{padding:80px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.section__anchor{display:block;position:relative;top:-80px;visibility:hidden}
+.section__eyebrow{font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px}
+.section__title{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;line-height:1.18;letter-spacing:-.5px;margin-bottom:10px}
+.section__desc{font-size:1rem;color:var(--text2);max-width:720px;line-height:1.8;margin-bottom:44px}
+
+/* ── Summary Cards ── */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:40px}
+.summary-card{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);padding:28px;position:relative}
+.summary-card__label{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.summary-card__value{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--text)}
+.summary-card__note{font-size:12px;color:var(--text3);margin-top:4px}
+
+/* ── Phase blocks ── */
+.phase{margin-bottom:56px}
+.phase__header{display:flex;align-items:flex-start;gap:18px;margin-bottom:28px}
+.phase__number{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.4rem;font-weight:800;flex-shrink:0}
+.phase__info{}
+.phase__title{font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:6px}
+.phase__duration{font-size:12px;color:var(--text3);font-family:var(--font-mono)}
+.phase__outcome{font-size:13.5px;color:var(--text2);margin-top:8px;padding:10px 16px;background:var(--bg3);border-radius:8px;border-left:3px solid var(--accent)}
+
+/* ── Milestone tables ── */
+.milestone-table{width:100%;border-collapse:collapse;margin-bottom:32px;font-size:13px}
+.milestone-table th{text-align:left;padding:12px 14px;font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:1px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)}
+.milestone-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;line-height:1.65}
+.milestone-table tr:hover td{background:rgba(255,255,255,.01)}
+.milestone-table .id{font-family:var(--font-mono);font-size:11px;color:var(--text3);white-space:nowrap}
+.milestone-table .task{color:var(--text);font-weight:500}
+.milestone-table .desc{color:var(--text2);font-size:12px}
+.milestone-table .effort{font-family:var(--font-mono);font-size:11px;color:var(--accent2);white-space:nowrap}
+.milestone-table .effort--l{color:var(--teal)}
+.milestone-table .effort--m{color:var(--amber)}
+.milestone-table .effort--h{color:var(--rose)}
+
+/* ── API Spec blocks ── */
+.api-spec{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:28px}
+.api-spec__header{display:flex;align-items:center;gap:10px;padding:14px 20px;background:var(--surface);border-bottom:1px solid rgba(255,255,255,.05)}
+.api-spec__method{font-family:var(--font-mono);font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;color:var(--teal);background:var(--teal-glow)}
+.api-spec__path{font-family:var(--font-mono);font-size:13px;color:var(--text)}
+.api-spec__label{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;margin-left:auto}
+.api-spec__body{padding:18px 20px;font-family:var(--font-mono);font-size:12px;color:var(--text2);line-height:1.75;overflow-x:auto}
+.api-spec__body .comment{color:var(--text3)}
+.api-spec__body .key{color:var(--accent2)}
+.api-spec__body .str{color:var(--teal)}
+.api-spec__body .num{color:var(--amber)}
+.api-spec__body .bool{color:var(--rose)}
+
+/* ── Tech Diagram ── */
+.tech-diagram{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);padding:32px;margin-bottom:28px}
+.tech-row{display:flex;gap:20px;margin-bottom:18px;align-items:flex-start}
+.tech-box{flex:1;background:var(--surface);border-radius:10px;padding:16px 18px;border-left:3px solid var(--accent)}
+.tech-box--teal{border-left-color:var(--teal)}
+.tech-box--amber{border-left-color:var(--amber)}
+.tech-box--rose{border-left-color:var(--rose)}
+.tech-box--cyan{border-left-color:var(--cyan)}
+.tech-box__title{font-family:var(--font-display);font-size:13px;font-weight:700;margin-bottom:6px}
+.tech-box__text{font-size:11.5px;color:var(--text2);line-height:1.6}
+.tech-arrow{display:flex;align-items:center;color:var(--text3);font-family:var(--font-mono);font-size:18px;padding:0 6px;flex-shrink:0}
+
+/* ── Risk Matrix ── */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:32px}
+.risk-card{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);padding:20px 22px}
+.risk-card__severity{display:inline-block;padding:3px 10px;border-radius:5px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:10px}
+.risk-card__severity--h{background:var(--rose-glow);color:var(--rose)}
+.risk-card__severity--m{background:var(--amber-glow);color:var(--amber)}
+.risk-card__severity--l{background:var(--teal-glow);color:var(--teal)}
+.risk-card__title{font-weight:700;margin-bottom:6px;font-size:13px}
+.risk-card__text{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:8px}
+.risk-card__mitigation{font-size:11.5px;color:var(--accent2);line-height:1.55}
+
+/* ── Metric Cards ── */
+.metric-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
+.metric-card{flex:1;min-width:180px;background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);padding:22px}
+.metric-card__name{font-family:var(--font-mono);font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.metric-card__target{font-family:var(--font-display);font-size:1.3rem;font-weight:700}
+.metric-card__detail{font-size:11.5px;color:var(--text2);margin-top:4px}
+
+/* ── Decision Log ── */
+.decision{background:var(--bg3);border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;display:flex;gap:14px}
+.decision__tag{font-family:var(--font-mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--surface);color:var(--accent2);flex-shrink:0;white-space:nowrap}
+.decision__body{font-size:13px;color:var(--text2);line-height:1.65}
+.decision__body strong{color:var(--text)}
+
+/* ── Footer ── */
+.footer{padding:48px 0;font-size:12px;color:var(--text3);border-top:1px solid rgba(255,255,255,.04)}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .container{padding:0 16px}
+  .section{padding:56px 0}
+  .hero{padding:72px 16px 56px}
+  .tech-row{flex-direction:column}
+  .tech-arrow{transform:rotate(90deg);justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOC Sidebar ═══════════ -->
+<nav class="toc">
+  <div class="toc__title">PRD &amp; Implementation Plan</div>
+  <ul class="toc__list">
+    <li class="toc__item"><a href="#summary">Executive Summary</a></li>
+    <li class="toc__item"><a href="#where-we-are">Current State</a></li>
+    <li class="toc__item"><a href="#strategy">Product Strategy</a></li>
+    <li class="toc__phase">Phases</li>
+    <li class="toc__item"><a href="#phase-1">Phase 1 — Atomic State Icons</a></li>
+    <li class="toc__item"><a href="#phase-2">Phase 2 — Parametric System + Runtime</a></li>
+    <li class="toc__item"><a href="#phase-3">Phase 3 — AI Forge + Composition</a></li>
+    <li class="toc__item"><a href="#phase-4">Phase 4 — Registry + Protocol</a></li>
+    <li class="toc__phase">Reference</li>
+    <li class="toc__item"><a href="#architecture">Technical Architecture</a></li>
+    <li class="toc__item"><a href="#decisions">Architecture Decisions</a></li>
+    <li class="toc__item"><a href="#metrics">Success Metrics</a></li>
+    <li class="toc__item"><a href="#risks">Risks &amp; Mitigations</a></li>
+    <li class="toc__item"><a href="#team">Resource Needs</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero__badge">Supericons Product Requirements Document — May 2026</div>
+    <h1 class="hero__title">From Icon Search<br>to <span>Visual Computation</span></h1>
+    <p class="hero__sub">
+      A phased implementation plan to evolve Supericons from the world's most semantic icon search engine
+      into the infrastructure layer for visual meaning — where humans, agents, and software all speak the same visual language.
+    </p>
+    <div class="hero__meta">
+      <div class="hero__meta-item"><span style="color:var(--teal)">&#9679;</span> Current: semantic icon search + MCP</div>
+      <div class="hero__meta-item"><span style="color:var(--accent2)">&#9679;</span> Target: visual computation platform</div>
+      <div class="hero__meta-item"><span style="color:var(--amber)">&#9679;</span> Horizon: 18–24 months</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EXECUTIVE SUMMARY ═══════════ -->
+<section class="section" id="summary">
+  <span class="section__anchor" id="summary"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part I</div>
+    <h2 class="section__title">Executive Summary</h2>
+    <p class="section__desc">
+      Supericons operates at the intersection of three accelerating trends: AI agents building UIs at scale, 
+      the commoditization of visual generation, and the growing need for semantic precision in human-machine interfaces. 
+      This PRD defines the product and implementation path from the current state (icon search + MCP) to a 
+      <strong>visual computation platform</strong> — a new category of software infrastructure.
+    </p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-card__label">Current Product</div>
+        <div class="summary-card__value">21K+ Icons</div>
+        <div class="summary-card__note">10 libraries, semantic search, MCP server with 13 tools, Motion Lab, premium animated packs</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Current Revenue</div>
+        <div class="summary-card__value">$15/mo Pro</div>
+        <div class="summary-card__note">$99/yr annual, premium pack sales, Stripe via Supabase</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Target Phase 1</div>
+        <div class="summary-card__value">State Icons</div>
+        <div class="summary-card__note">Animated state icon library: 200 icons × 8 states, declarative, < 15KB gzip</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Target Phase 4</div>
+        <div class="summary-card__value">Platform</div>
+        <div class="summary-card__note">Registry marketplace, protocol standard, multi-surface rendering, AI-native integration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CURRENT STATE ═══════════ -->
+<section class="section" id="where-we-are">
+  <span class="section__anchor" id="where-we-are"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part II</div>
+    <h2 class="section__title">Where We Are Now</h2>
+    <p class="section__desc">
+      A candid assessment of what exists today, what works, and what gaps exist between the current product and the vision.
+    </p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--teal)">Strength</div>
+        <div class="summary-card__value" style="font-size:1.1rem">Semantic Search Engine</div>
+        <div class="summary-card__note">CJK-optimized, multilingual (12 languages), intent-based ranking, fuzzy matching. The moat is already here.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--teal)">Strength</div>
+        <div class="summary-card__value" style="font-size:1.1rem">MCP Server</div>
+        <div class="summary-card__note">13 tools across free and Pro tiers. npm package (@supericons/mcp). Hosted HTTP transport on Railway. Claude Code, Codex, Cursor, Windsurf, OpenCode support.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--teal)">Strength</div>
+        <div class="summary-card__value" style="font-size:1.1rem">Motion Lab + Converter</div>
+        <div class="summary-card__note">32 animation presets, CSS + animated SVG export. SVG↔PNG converter with quality controls. Pro-gated but full-featured.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--amber)">Gap</div>
+        <div class="summary-card__value" style="font-size:1.1rem">No Runtime SDK</div>
+        <div class="summary-card__note">Icons are downloaded as files or via MCP. No npm package for <em>using</em> icons in apps at runtime. Developers stitch together their own solutions.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--amber)">Gap</div>
+        <div class="summary-card__value" style="font-size:1.1rem">No Parametric System</div>
+        <div class="summary-card__note">Motion Lab applies animation presets, but icons cannot adapt their <em>structure</em> based on state. A "save" icon is always the same SVG, just with different CSS.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--amber)">Gap</div>
+        <div class="summary-card__value" style="font-size:1.1rem">No AI Generation</div>
+        <div class="summary-card__note">No "describe what you need, get an icon" flow. Forge does not exist yet. AI agents using MCP still pick from the existing catalog — they cannot <em>create</em>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRODUCT STRATEGY ═══════════ -->
+<section class="section" id="strategy">
+  <span class="section__anchor" id="strategy"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part III</div>
+    <h2 class="section__title">Product Strategy</h2>
+    <p class="section__desc">
+      The core insight: <strong>SVG is code</strong>. It is structured, parseable, composable, and AI-readable. 
+      This means icons can evolve from static assets into dynamic, programmable visual primitives. 
+      The strategy is to build this capability layer by layer, each phase creating a defensible moat.
+    </p>
+
+    <div class="tech-diagram">
+      <div style="text-align:center;font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text3);margin-bottom:24px">Evolution Path: Each Phase Compounds</div>
+      <div class="tech-row">
+        <div class="tech-box">
+          <div class="tech-box__title">Phase 1</div>
+          <div class="tech-box__text">Animated state icons as a product. Motion Lab is the foundation. Developers get one-line stateful icons. First wedge that proves value.</div>
+        </div>
+        <div class="tech-arrow">&rarr;</div>
+        <div class="tech-box tech-box--teal">
+          <div class="tech-box__title">Phase 2</div>
+          <div class="tech-box__text">Parametric schema + Runtime SDK. Icons become functions of state/context. Web Components ship. Mental model shifts from "find" to "describe."</div>
+        </div>
+        <div class="tech-arrow">&rarr;</div>
+        <div class="tech-box tech-box--amber">
+          <div class="tech-box__title">Phase 3</div>
+          <div class="tech-box__text">AI Forge + Visual Grammar. Text-to-icon generation. Compositional algebra. AI agents create, not just retrieve.</div>
+        </div>
+        <div class="tech-arrow">&rarr;</div>
+        <div class="tech-box tech-box--rose">
+          <div class="tech-box__title">Phase 4</div>
+          <div class="tech-box__text">Registry marketplace + Protocol standard. Network effects. Multi-surface rendering. The HTTP of visual semantics.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--accent2)">Monetization Evolution</div>
+        <div class="summary-card__value" style="font-size:1.1rem">Free &rarr; Pro &rarr; API &rarr; Marketplace</div>
+        <div class="summary-card__note">Phase 1: Pro ($15/mo) for advanced states. Phase 2: Pro for runtime + theming. Phase 3: API credits for Forge. Phase 4: Marketplace revenue share (20%).</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label" style="color:var(--accent2)">Primary Audience</div>
+        <div class="summary-card__value" style="font-size:1.1rem">Devs → Designers → Agents</div>
+        <div class="summary-card__note">Phase 1-2: Frontend developers. Phase 3: Designers + AI agents. Phase 4: Platform builders, enterprises, tooling companies.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 1 ═══════════ -->
+<section class="section" id="phase-1">
+  <span class="section__anchor" id="phase-1"></span>
+  <div class="container">
+    <div class="phase">
+      <div class="phase__header">
+        <div class="phase__number" style="background:var(--accent-glow);color:var(--accent2)">1</div>
+        <div class="phase__info">
+          <div class="phase__title">Atomic State Icons</div>
+          <div class="phase__duration">Months 1–3 | Effort: 10–14 person-weeks</div>
+        </div>
+      </div>
+      <div class="phase__outcome">
+        <strong>Outcome:</strong> A shipped product — 200 animated state icons (8 states × 25 base glyphs) that developers drop in with one import. 
+        Zero dependencies beyond vanilla SVG+CSS. The Motion Lab graduates from a preview tool into a product surface. 
+        Clear market signal: do people pay for animated state icons as a service?
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Milestones</h3>
+      <table class="milestone-table">
+        <thead><tr><th style="width:50px">M</th><th>Task</th><th style="width:70px">Effort</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">M1</td>
+            <td>
+              <div class="task">Define the 8-state semantic model</div>
+              <div class="desc">Standardize states: idle, loading, success, error, warning, disabled, thinking (AI), empty. Each state has a canonical visual treatment (color, animation, shape morph). Document in a one-page spec.</div>
+            </td>
+            <td class="effort effort--l">2d</td>
+          </tr>
+          <tr>
+            <td class="id">M2</td>
+            <td>
+              <div class="task">Curate 25 high-value base glyphs</div>
+              <div class="desc">Select the 25 most-requested action icons from existing catalog (save, upload, download, search, delete, settings, user, bell, lock, share, etc.) based on icon intelligence data (search_attempts, popularity).</div>
+            </td>
+            <td class="effort effort--l">3d</td>
+          </tr>
+          <tr>
+            <td class="id">M3</td>
+            <td>
+              <div class="task">Build the atomic state animation engine</div>
+              <div class="desc">Extract Motion Lab's animation presets into a standalone engine: <code>lib/state-animation-engine.js</code>. Each state maps to a <code>StateRecipe</code>: base SVG + transform rules + color mapping + animation keyframes. Output: pure CSS animation (no Lottie/Rive).</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+          <tr>
+            <td class="id">M4</td>
+            <td>
+              <div class="task">Generate 200 state icon variants</div>
+              <div class="desc">Use the engine to generate all 25 × 8 = 200 combinations. Verify visual quality, animation smoothness, and accessibility (prefers-reduced-motion). Output: optimized SVG+CSS bundle.</div>
+            </td>
+            <td class="effort effort--l">4d</td>
+          </tr>
+          <tr>
+            <td class="id">M5</td>
+            <td>
+              <div class="task">Create the State Icon browser in web app</div>
+              <div class="desc">New view in the web app: "State Icons" tab. Browse by state type, base glyph. Preview all 8 states for each glyph with live animation. Filter/sort. Copy JSX/TSX/SVG.</div>
+            </td>
+            <td class="effort effort--m">1.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M6</td>
+            <td>
+              <div class="task">Ship the <code>@supericons/states</code> npm package</div>
+              <div class="desc">Tree-shakeable ES module. One import per icon: <code>import { SaveIcon } from '@supericons/states'</code>. Each icon is a function: <code>SaveIcon({ state: 'loading', size: 24 })</code> returns an SVG string or renders to DOM. Bundle < 15KB gzipped (only what you use).</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+          <tr>
+            <td class="id">M7</td>
+            <td>
+              <div class="task">Add MCP tools for state icons</div>
+              <div class="desc">Two new MCP tools: <code>list_state_icons</code> (Pro) and <code>get_state_icon</code> (Pro). Accept state, glyph, size. Return optimized animated SVG. Agents building UI now get stateful icons natively.</div>
+            </td>
+            <td class="effort effort--l">4d</td>
+          </tr>
+          <tr>
+            <td class="id">M8</td>
+            <td>
+              <div class="task">Landing page + docs</div>
+              <div class="desc">New landing section: "State Icons." Interactive demo: click through states on a live icon. Docs: setup, usage, customization, accessibility guidance. Examples for React, Vue, Svelte, vanilla JS.</div>
+            </td>
+            <td class="effort effort--l">4d</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">API Shape (M6 Deliverable)</h3>
+      <div class="api-spec">
+        <div class="api-spec__header">
+          <span class="api-spec__method">import</span>
+          <span class="api-spec__path">@supericons/states</span>
+          <span class="api-spec__label">npm package</span>
+        </div>
+        <div class="api-spec__body">
+<span class="comment">// Option A: Per-icon named exports (tree-shakeable)</span>
+<span class="key">import</span> { SaveIcon, UploadIcon, DownloadIcon } <span class="key">from</span> <span class="str">'@supericons/states'</span>;
+
+<span class="comment">// Each icon is a function. State = parameter.</span>
+<span class="key">const</span> svg = <span class="fn">SaveIcon</span>({
+  <span class="key">state</span>: <span class="str">'loading'</span>,   <span class="comment">// 'idle' | 'loading' | 'success' | 'error' | 'warning' | 'disabled' | 'thinking' | 'empty'</span>
+  <span class="key">size</span>: <span class="num">24</span>,           <span class="comment">// px (square)</span>
+  <span class="key">color</span>: <span class="str">'#6366f1'</span>,   <span class="comment">// override state-default color</span>
+  <span class="key">motion</span>: <span class="bool">true</span>        <span class="comment">// respect prefers-reduced-motion</span>
+});
+
+<span class="comment">// Option B: Generic factory (smaller bundle)</span>
+<span class="key">import</span> { createStateIcon } <span class="key">from</span> <span class="str">'@supericons/states'</span>;
+<span class="key">const</span> icon = <span class="fn">createStateIcon</span>(<span class="str">'upload'</span>, { <span class="key">state</span>: <span class="str">'success'</span> });
+<span class="comment">// &lt;svg&gt;...&lt;/svg&gt; string</span>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">State-Semantic Model Spec</h3>
+      <table class="milestone-table">
+        <thead><tr><th>State</th><th>Visual Signature</th><th>Animation</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td>idle</td><td>Neutral fill/stroke, muted opacity</td><td>None (static)</td><td>Icon visible but inactive</td></tr>
+          <tr><td>loading</td><td>Animated spinner overlay, blue tint</td><td>Rotate 360°, infinite, ease linear</td><td>Operation in progress</td></tr>
+          <tr><td>success</td><td>Green fill, checkmark morph-in</td><td>Path draw 0→1, 300ms, ease out</td><td>Operation completed</td></tr>
+          <tr><td>error</td><td>Red fill, X overlay, shake</td><td>Shake 3×, 400ms, then steady</td><td>Operation failed</td></tr>
+          <tr><td>warning</td><td>Amber fill, badge with "!"</td><td>Pulse glow, 2s cycle, subtle</td><td>Needs attention</td></tr>
+          <tr><td>disabled</td><td>Greyed out, dashed stroke</td><td>None</td><td>Unavailable action</td></tr>
+          <tr><td>thinking</td><td>Purple/pink gradient, morphing dots</td><td>Stagger dots 0→1→0, loop</td><td>AI is reasoning</td></tr>
+          <tr><td>empty</td><td>Dashed outline, no fill</td><td>None</td><td>No content / no data</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 2 ═══════════ -->
+<section class="section" id="phase-2">
+  <span class="section__anchor" id="phase-2"></span>
+  <div class="container">
+    <div class="phase">
+      <div class="phase__header">
+        <div class="phase__number" style="background:var(--teal-glow);color:var(--teal)">2</div>
+        <div class="phase__info">
+          <div class="phase__title">Parametric System + Runtime SDK</div>
+          <div class="phase__duration">Months 4–6 | Effort: 14–20 person-weeks</div>
+        </div>
+      </div>
+      <div class="phase__outcome">
+        <strong>Outcome:</strong> A parametric icon schema standard (JSON-based), a runtime engine that interprets schemas (<code>@supericons/runtime</code>), 
+        and Web Component wrappers (<code>&lt;super-icon&gt;</code>). Developers write <code>&lt;super-icon intent="save" state="syncing" /&gt;</code> 
+        and get a correctly animated, accessible, themable icon. The mental model shifts from "which icon asset?" to "what am I trying to communicate?"
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Milestones</h3>
+      <table class="milestone-table">
+        <thead><tr><th style="width:50px">M</th><th>Task</th><th style="width:70px">Effort</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">M9</td>
+            <td>
+              <div class="task">Design the Parametric Icon Schema (PIS) v1</div>
+              <div class="desc">JSON schema that describes an icon as: base glyph reference + state mappings + animation recipes + accessibility metadata + theme variables. Key constraint: must be serializable, diffable, and AI-generatable. Publish as <code>public/schemas/parametric-icon-v1.json</code>.</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+          <tr>
+            <td class="id">M10</td>
+            <td>
+              <div class="task">Build the Parametric Engine</div>
+              <div class="desc">New module: <code>lib/parametric-engine.js</code>. Takes a PIS v1 schema + runtime context (state, theme, motion preference, surface target) and produces optimized SVG+CSS. Handles: path interpolation for morphs, color resolution from theme, animation keyframe generation, aria generation.</div>
+            </td>
+            <td class="effort effort--h">2w</td>
+          </tr>
+          <tr>
+            <td class="id">M11</td>
+            <td>
+              <div class="task">Build the Supericons Runtime</div>
+              <div class="desc"><code>@supericons/runtime</code> npm package. Core Class: <code>IconRuntime</code> with config (theme, motion, a11y), render(intent, state, context), update(state). Plugin system for renderers (default: SVG-DOM, future: Canvas, WebGL). Tree-shakeable: core < 8KB gzipped.</div>
+            </td>
+            <td class="effort effort--h">2w</td>
+          </tr>
+          <tr>
+            <td class="id">M12</td>
+            <td>
+              <div class="task">Build Web Components</div>
+              <div class="desc"><code>&lt;super-icon&gt;</code> and <code>&lt;super-icon-group&gt;</code> as framework-agnostic custom elements. Attributes: intent, state, size, theme, motion. Works in React, Vue, Svelte, vanilla HTML. SSR-friendly (declarative shadow DOM). Ship as <code>@supericons/elements</code>.</div>
+            </td>
+            <td class="effort effort--m">1.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M13</td>
+            <td>
+              <div class="task">Convert existing 21K icon catalog to PIS</div>
+              <div class="desc">Automated pipeline to wrap every existing icon into the parametric schema format. Each icon gets: base glyph, idle state, and metadata. Non-animated by default; animation presets applied via the engine. Result: entire catalog is now parametric-ready.</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+          <tr>
+            <td class="id">M14</td>
+            <td>
+              <div class="task">Theme system v1</div>
+              <div class="desc">Preset themes (Light, Dark, High Contrast). Custom theme via CSS custom properties or JSON config. Theme cascades: global → brand → component → icon. Icons resolve colors from the theme tree.</div>
+            </td>
+            <td class="effort effort--l">4d</td>
+          </tr>
+          <tr>
+            <td class="id">M15</td>
+            <td>
+              <div class="task">PIS Studio (minimal viable)</div>
+              <div class="desc">A new web app surface: "Studio." Load a PIS schema, tweak parameters in real-time, preview across states/themes/surfaces. Export as PIS JSON. This is the seed of a full visual IDE. Initially read-only mode: browse, not yet edit/create.</div>
+            </td>
+            <td class="effort effort--m">1.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M16</td>
+            <td>
+              <div class="task">Update MCP tools to use PIS</div>
+              <div class="desc">New MCP tool: <code>get_parametric_icon</code> (Pro). Accept intent, state, theme. Return resolved SVG. Migrate existing <code>get_icon</code> to also return PIS metadata. Agents start working with the parametric model.</div>
+            </td>
+            <td class="effort effort--l">3d</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">PIS v1 Schema (M9 Key Deliverable)</h3>
+      <div class="api-spec">
+        <div class="api-spec__header">
+          <span class="api-spec__method">PIS</span>
+          <span class="api-spec__path">Parametric Icon Schema v1</span>
+          <span class="api-spec__label">JSON spec</span>
+        </div>
+        <div class="api-spec__body">
+{
+  <span class="key">"pis"</span>: <span class="str">"1.0"</span>,
+  <span class="key">"id"</span>: <span class="str">"si:save:v1"</span>,
+  <span class="key">"intent"</span>: <span class="str">"save"</span>,
+  <span class="key">"label"</span>: { <span class="key">"en"</span>: <span class="str">"Save"</span>, <span class="key">"zh"</span>: <span class="str">"保存"</span> },
+  <span class="key">"glyph"</span>: {
+    <span class="key">"type"</span>: <span class="str">"svg"</span>,
+    <span class="key">"viewBox"</span>: <span class="str">"0 0 24 24"</span>,
+    <span class="key">"paths"</span>: [ ... ]                  <span class="comment">// morphable path data</span>
+  },
+  <span class="key">"states"</span>: {
+    <span class="key">"idle"</span>: { <span class="key">"color"</span>: <span class="str">"currentColor"</span>, <span class="key">"animation"</span>: <span class="bool">null</span> },
+    <span class="key">"loading"</span>: { <span class="key">"color"</span>: <span class="str">"theme.accent"</span>, <span class="key">"animation"</span>: { <span class="key">"type"</span>: <span class="str">"spin"</span>, <span class="key">"duration"</span>: <span class="num">2000</span>, <span class="key">"easing"</span>: <span class="str">"linear"</span>, <span class="key">"infinite"</span>: <span class="bool">true</span> } },
+    <span class="key">"success"</span>: { <span class="key">"color"</span>: <span class="str">"#22c55e"</span>, <span class="key">"morph"</span>: <span class="str">"checkmark"</span>, <span class="key">"animation"</span>: { <span class="key">"type"</span>: <span class="str">"draw"</span>, <span class="key">"duration"</span>: <span class="num">300</span> } },
+    <span class="key">"error"</span>: { <span class="key">"color"</span>: <span class="str">"#ef4444"</span>, <span class="key">"animation"</span>: { <span class="key">"type"</span>: <span class="str">"shake"</span>, <span class="key">"count"</span>: <span class="num">3</span>, <span class="key">"duration"</span>: <span class="num">400</span> } }
+  },
+  <span class="key">"accessibility"</span>: {
+    <span class="key">"role"</span>: <span class="str">"img"</span>,
+    <span class="key">"label"</span>: { <span class="key">"loading"</span>: { <span class="key">"en"</span>: <span class="str">"Saving..."</span> } },
+    <span class="key">"announceStates"</span>: [<span class="str">"loading"</span>, <span class="str">"success"</span>, <span class="str">"error"</span>]
+  }
+}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 3 ═══════════ -->
+<section class="section" id="phase-3">
+  <span class="section__anchor" id="phase-3"></span>
+  <div class="container">
+    <div class="phase">
+      <div class="phase__header">
+        <div class="phase__number" style="background:var(--amber-glow);color:var(--amber)">3</div>
+        <div class="phase__info">
+          <div class="phase__title">AI Forge + Visual Grammar</div>
+          <div class="phase__duration">Months 7–12 | Effort: 18–26 person-weeks</div>
+        </div>
+      </div>
+      <div class="phase__outcome">
+        <strong>Outcome:</strong> Supericons Forge — text-to-parametric-icon generation. Users (and AI agents) describe what they need in natural language, 
+        get back a PIS schema, preview it, tweak parameters, and export. A visual grammar engine that composes icons from primitives, 
+        enabling on-demand creation of icons that do not yet exist in any catalog.
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Milestones</h3>
+      <table class="milestone-table">
+        <thead><tr><th style="width:50px">M</th><th>Task</th><th style="width:70px">Effort</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">M17</td>
+            <td>
+              <div class="task">Build the Visual Grammar Engine</div>
+              <div class="desc">Core library: <code>lib/visual-grammar.js</code>. Defines a composition algebra: Primitives (circle, rect, path, line) + Semantics (actions, objects, modifiers) + Rules (layering, spacing, style inheritance). Input: a structured composition spec. Output: a valid PIS schema. Initially rule-based, with AI as a fallback for novel combinations.</div>
+            </td>
+            <td class="effort effort--h">3w</td>
+          </tr>
+          <tr>
+            <td class="id">M18</td>
+            <td>
+              <div class="task">Build the PIS generation prompt + pipeline</div>
+              <div class="desc">LLM prompt engineering: given a natural language description, output a valid PIS v1 JSON schema. Few-shot examples crafted from existing 21K catalog. Post-processing: validate schema, fix common LLM mistakes (viewBox, coordinate normalization), ensure accessibility labels. Host as Supabase Edge Function: <code>forge-generate</code>.</div>
+            </td>
+            <td class="effort effort--h">2.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M19</td>
+            <td>
+              <div class="task">Build Forge Studio UI</div>
+              <div class="desc">New web app surface: "Forge." Chat-like interface: describe what you need. System generates PIS schema. Preview renders in real-time via runtime. Sliders/controls to tweak parameters (weight, corner radius, complexity). History of generations. "Save to my icons" feature. Pro-gated (5 free generations/month, unlimited with Pro).</div>
+            </td>
+            <td class="effort effort--h">3w</td>
+          </tr>
+          <tr>
+            <td class="id">M20</td>
+            <td>
+              <div class="task">Forge MCP tools</div>
+              <div class="desc">New MCP tools: <code>forge_icon</code> (Pro) — generate a parametric icon from description. <code>refine_icon</code> (Pro) — iterate on an existing generation. <code>compose_icon</code> (Pro) — combine multiple semantic tokens into one composed icon. Agents can now <em>create</em> visual language, not just retrieve it.</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+          <tr>
+            <td class="id">M21</td>
+            <td>
+              <div class="task">Primitive library v1</div>
+              <div class="desc">Define and open-source a library of 100+ visual primitives: basic shapes, common glyphs (person, lock, star, heart, cloud, etc.), and modifier badges (new, beta, AI, premium, etc.). Each primitive has a PIS schema. This is the seed of the registry.</div>
+            </td>
+            <td class="effort effort--m">1.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M22</td>
+            <td>
+              <div class="task">Composition playground in Studio</div>
+              <div class="desc">Extend Studio with a composition mode: drag primitives together, see the composed PIS schema update live, preview states and animations for the composed icon. Export composed icon as PIS or optimized SVG. Think "Figma for icon semantics."</div>
+            </td>
+            <td class="effort effort--m">2w</td>
+          </tr>
+          <tr>
+            <td class="id">M23</td>
+            <td>
+              <div class="task">Forge API (pay-per-use)</div>
+              <div class="desc">REST API endpoint: POST /api/forge. Accept natural language description. Return PIS schema + preview SVG. Token-based billing. Stripe usage-based pricing. This is the first pure-API product line.</div>
+            </td>
+            <td class="effort effort--m">1w</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Visual Grammar Spec (M17)</h3>
+      <div class="api-spec">
+        <div class="api-spec__header">
+          <span class="api-spec__method">Compose</span>
+          <span class="api-spec__path">visual-grammar.js</span>
+          <span class="api-spec__label">API</span>
+        </div>
+        <div class="api-spec__body">
+<span class="comment">// Composition spec: describes WHAT, not HOW</span>
+<span class="key">const</span> spec = {
+  <span class="key">intent</span>: <span class="str">"upload"</span>,        <span class="comment">// semantic intent</span>
+  <span class="key">base</span>: <span class="str">"cloud"</span>,           <span class="comment">// base primitive token</span>
+  <span class="key">action</span>: <span class="str">"up-arrow"</span>,      <span class="comment">// action modifier</span>
+  <span class="key">modifiers</span>: [<span class="str">"secure"</span>, <span class="str">"syncing"</span>], <span class="comment">// context modifiers</span>
+  <span class="key">style</span>: <span class="str">"rounded"</span>,         <span class="comment">// visual style</span>
+  <span class="key">weight</span>: <span class="num">2</span>                 <span class="comment">// stroke weight</span>
+};
+
+<span class="comment">// Grammar engine resolves composition to PIS</span>
+<span class="key">const</span> pis = grammar.<span class="fn">compose</span>(spec);
+<span class="comment">// pis is a valid PIS v1 schema with:</span>
+<span class="comment">// - combined viewBox</span>
+<span class="comment">// - layered paths (cloud beneath arrow)</span>
+<span class="comment">// - lock badge positioned bottom-right</span>
+<span class="comment">// - syncing animation on the arrow</span>
+<span class="comment">// - accessible label: "Uploading securely..."</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 4 ═══════════ -->
+<section class="section" id="phase-4">
+  <span class="section__anchor" id="phase-4"></span>
+  <div class="container">
+    <div class="phase">
+      <div class="phase__header">
+        <div class="phase__number" style="background:var(--rose-glow);color:var(--rose)">4</div>
+        <div class="phase__info">
+          <div class="phase__title">Registry + Protocol</div>
+          <div class="phase__duration">Months 13–24 | Effort: 24–36 person-weeks</div>
+        </div>
+      </div>
+      <div class="phase__outcome">
+        <strong>Outcome:</strong> Supericons is no longer a product — it is infrastructure. An open registry where anyone publishes parametric icon schemas, 
+        composition rules, and animation presets. A protocol that AI agents, IDEs, and design tools speak natively. 
+        A marketplace that generates revenue for creators and Supericons. The "npm of visual semantics."
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Milestones</h3>
+      <table class="milestone-table">
+        <thead><tr><th style="width:50px">M</th><th>Task</th><th style="width:70px">Effort</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">M24</td>
+            <td>
+              <div class="task">Open Registry infrastructure</div>
+              <div class="desc">Supabase-backed registry. Tables: <code>registry_primitives</code>, <code>registry_schemas</code>, <code>registry_versions</code>, <code>registry_publishers</code>. Namespace support: <code>@acme/brand/upload</code>. Versioning: semver. Dependency resolution (schema depends on primitives). CLI tool: <code>npx si publish</code>.</div>
+            </td>
+            <td class="effort effort--h">3w</td>
+          </tr>
+          <tr>
+            <td class="id">M25</td>
+            <td>
+              <div class="task">Registry web app</div>
+              <div class="desc">Browse, search, and discover parametric icon schemas in the registry. Publisher profiles. Popularity metrics. "Add to project" flow. Direct import into Studio for customization.</div>
+            </td>
+            <td class="effort effort--m">2w</td>
+          </tr>
+          <tr>
+            <td class="id">M26</td>
+            <td>
+              <div class="task">Marketplace + payments</div>
+              <div class="desc">Premium schemas in the registry. Stripe Connect for creator payouts. Supericons takes 20% revenue share. Review/rating system. "Try before you buy" preview generator. This is a new business model.</div>
+            </td>
+            <td class="effort effort--h">3w</td>
+          </tr>
+          <tr>
+            <td class="id">M27</td>
+            <td>
+              <div class="task">Multi-surface rendering</div>
+              <div class="desc">Extend Runtime with renderers for: SVG-DOM (current), Canvas 2D, WebGL (Three.js), and abstract metadata (for haptic/LED/AR). Each renderer implements the same Renderer interface. Semantic token → surface-specific output. POC: render an "alert-critical" icon as LED pattern for a robot dashboard.</div>
+            </td>
+            <td class="effort effort--h">2.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M28</td>
+            <td>
+              <div class="task">Protocol specification + SDKs</div>
+              <div class="desc">Formalize the Supericons Visual Protocol (SVP) as an open spec. Define: semantic token format, PIS schema, request/response patterns, error handling, rate limiting. Ship SDKs: TypeScript (primary), Python, Rust. Publish as an RFC-style document. Goal: become a de facto standard for visual communication in AI systems.</div>
+            </td>
+            <td class="effort effort--h">3w</td>
+          </tr>
+          <tr>
+            <td class="id">M29</td>
+            <td>
+              <div class="task">Enterprise features</div>
+              <div class="desc">Private registries. Brand enforcement: only allow icons that match your PIS theme. Audit logging: who used which icon where. SSO/SAML. SLA. Dedicated hosting. On-premise runtime. This unlocks Fortune 500 revenue.</div>
+            </td>
+            <td class="effort effort--h">2.5w</td>
+          </tr>
+          <tr>
+            <td class="id">M30</td>
+            <td>
+              <div class="task">Integration partnerships</div>
+              <div class="desc">Build native integrations with: Figma (plugin), VS Code (extension), Storybook (addon), and major AI coding agents (Cursor, Copilot, Codex). Each integration makes Supericons the default visual layer for that tool.</div>
+            </td>
+            <td class="effort effort--h">2w</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TECHNICAL ARCHITECTURE ═══════════ -->
+<section class="section" id="architecture">
+  <span class="section__anchor" id="architecture"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part IV</div>
+    <h2 class="section__title">Technical Architecture (Target State)</h2>
+    <p class="section__desc">
+      How the pieces fit together across all four phases. The architecture respects existing choices (vanilla JS, Supabase, Vite) 
+      while defining clear interfaces for new capabilities.
+    </p>
+
+    <div class="tech-diagram">
+      <div style="text-align:center;font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--text3);margin-bottom:20px">Platform Architecture — Phase 4 Target</div>
+
+      <div class="tech-row">
+        <div class="tech-box tech-box--cyan" style="flex:1">
+          <div class="tech-box__title">Registry Layer</div>
+          <div class="tech-box__text">
+            Supabase tables for schemas, primitives, versions, publishers. Namespace resolution. CLI publish tool. Marketplace with Stripe Connect.
+          </div>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-box tech-box--amber" style="flex:1">
+          <div class="tech-box__title">Schema Layer (PIS)</div>
+          <div class="tech-box__text">
+            Parametric Icon Schema v1: JSON format. Defines glyphs, states, animations, a11y, themes. Versioned. Diffable. AI-generatable. Source of truth for all icons.
+          </div>
+        </div>
+        <div class="tech-arrow" style="font-size:14px;writing-mode:vertical-lr">&darr;</div>
+        <div class="tech-box" style="flex:1">
+          <div class="tech-box__title">Composition Layer</div>
+          <div class="tech-box__text">
+            Visual grammar engine. Algebras PIS schemas from primitives + semantics + modifiers. Rule-based with AI fallback for novel compositions.
+          </div>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-box tech-box--teal" style="flex:1">
+          <div class="tech-box__title">Runtime Layer</div>
+          <div class="tech-box__text">
+            <code>@supericons/runtime</code>: interprets PIS schemas at render time. Manages state transitions, theme resolution, animation interpolation. Plugin architecture for renderers.
+          </div>
+        </div>
+        <div class="tech-arrow" style="font-size:14px;writing-mode:vertical-lr">&darr;</div>
+        <div class="tech-box tech-box--rose" style="flex:1">
+          <div class="tech-box__title">AI Layer (Forge)</div>
+          <div class="tech-box__text">
+            LLM prompt pipeline: NL → PIS schema. Edge Function hosting. Pay-per-use API. Used by both human Studio UI and MCP agents.
+          </div>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-box" style="flex:1">
+          <div class="tech-box__title">Surface Layer</div>
+          <div class="tech-box__text">
+            Renderers for SVG-DOM, Canvas 2D, WebGL, and abstract (metadata for LED/haptic/AR). One semantic token → any physical expression.
+          </div>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-box tech-box--cyan" style="flex:1">
+          <div class="tech-box__title">Distribution Layer</div>
+          <div class="tech-box__text">
+            npm packages (<code>@supericons/runtime</code>, <code>@supericons/elements</code>, <code>@supericons/states</code>), MCP server (local + hosted HTTP), Forge REST API, Registry API, Web app (supericons.dev), Figma plugin, VS Code extension.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.05rem;margin:28px 0 14px">Key npm Packages (Phase 2+)</h3>
+    <table class="milestone-table">
+      <thead><tr><th>Package</th><th>Size Budget</th><th>Dependencies</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td class="id">@supericons/states</td><td>< 15KB gzip</td><td>None</td><td>200 stateful animated icons. Per-icon exports + factory function.</td></tr>
+        <tr><td class="id">@supericons/runtime</td><td>< 8KB gzip (core)</td><td>None</td><td>PIS schema interpreter. State management. Theme resolution. Plugin system.</td></tr>
+        <tr><td class="id">@supericons/elements</td><td>< 6KB gzip</td><td>@supericons/runtime</td><td>Web Components: &lt;super-icon&gt;, &lt;super-icon-group&gt;.</td></tr>
+        <tr><td class="id">@supericons/forge</td><td>< 4KB gzip</td><td>None</td><td>Forge API client. Text-to-PIS generation.</td></tr>
+        <tr><td class="id">@supericons/react</td><td>< 3KB gzip</td><td>@supericons/runtime</td><td>React wrapper components with Suspense support.</td></tr>
+        <tr><td class="id">@supericons/mcp</td><td>Existing</td><td>MCP SDK</td><td>Expanded with forge, PIS, and state tools.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ ARCHITECTURE DECISIONS ═══════════ -->
+<section class="section" id="decisions">
+  <span class="section__anchor" id="decisions"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part V</div>
+    <h2 class="section__title">Architecture Decisions</h2>
+    <p class="section__desc">
+      Principle-level decisions that guide implementation. Each one is a deliberate trade-off.
+    </p>
+
+    <div class="decision">
+      <span class="decision__tag">AD-01</span>
+      <div class="decision__body">
+        <strong>SVG is the universal intermediate representation.</strong> All icons, regardless of source (catalog, AI-generated, composed), 
+        resolve to optimized SVG before hitting any renderer. SVG is human-readable, AI-parseable, universally supported, and 
+        natively accessible. It is the "bytecode" of visual icons.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-02</span>
+      <div class="decision__body">
+        <strong>CSS for animation, not JavaScript.</strong> The runtime uses CSS animations (keyframes, transitions) for icon motion. 
+        CSS animations run on the compositor thread, avoid main-thread jank, and automatically respect <code>prefers-reduced-motion</code>. 
+        JavaScript is used only for state management and path interpolation where CSS cannot reach (e.g., SVG path morphing).
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-03</span>
+      <div class="decision__body">
+        <strong>Web Components for framework portability, not as the only way.</strong> <code>&lt;super-icon&gt;</code> wraps the runtime 
+        in a custom element that works everywhere. But the low-level <code>@supericons/runtime</code> package has no DOM dependency — 
+        it works in Node, Deno, workers, and non-browser environments. Framework wrappers (React, Vue, Svelte) are thin adapters.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-04</span>
+      <div class="decision__body">
+        <strong>PIS schema is the source of truth, not individual SVG files.</strong> The current catalog of 21K icons gets wrapped in PIS. 
+        Going forward, all new icons are authored as PIS schemas. This enables diffing, versioning, AI generation, composition, 
+        and multi-surface rendering from a single source.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-05</span>
+      <div class="decision__body">
+        <strong>Free core, Pro features, Enterprise platform.</strong> The runtime, elements, states packages, and basic PIS schemas 
+        are free and open-source (MIT). Forge AI generation, advanced animation presets, private registry, and enterprise features 
+        are paid. This matches existing pattern (free icons / Pro Motion Lab). The registry marketplace is open: anyone can publish free schemas. Premium schemas are paid.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-06</span>
+      <div class="decision__body">
+        <strong>MCP first, but not MCP only.</strong> AI agents are a primary design target. Every new capability ships with MCP tools. 
+        But the runtime SDK, web components, and Forge API are usable without MCP. Do not couple the platform to a single protocol, 
+        even if it is currently the most important one.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-07</span>
+      <div class="decision__body">
+        <strong>Accessibility is not a feature. It is a constraint on every feature.</strong> Every PIS schema must include ARIA labels 
+        in all 12 supported languages. Every animation must respect <code>prefers-reduced-motion</code>. Every color mapping must 
+        pass WCAG AA contrast ratios. The runtime validates these automatically.
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision__tag">AD-08</span>
+      <div class="decision__body">
+        <strong>No framework migration. Stay vanilla JS for core.</strong> The current vanilla JS + ES modules architecture works well 
+        for the npm packages and MCP server. Adding React/Vue/etc. would increase bundle size and maintenance burden. 
+        Framework wrappers are thin adapters that depend on the vanilla core.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SUCCESS METRICS ═══════════ -->
+<section class="section" id="metrics">
+  <span class="section__anchor" id="metrics"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part VI</div>
+    <h2 class="section__title">Success Metrics</h2>
+    <p class="section__desc">
+      What "winning" looks like at each phase. Metrics are leading indicators of the next phase, not vanity numbers.
+    </p>
+
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 1 — Adoption</div>
+        <div class="metric-card__target" style="color:var(--accent2)">10K npm downloads</div>
+        <div class="metric-card__detail">@supericons/states monthly downloads by end of Phase 1. Target: 200 developers using state icons in production.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 1 — Revenue Signal</div>
+        <div class="metric-card__target" style="color:var(--teal)">100 Pro upgrades</div>
+        <div class="metric-card__detail">Attributable to state icon feature. "I upgraded for this" survey response + Stripe metadata.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 2 — Runtime Usage</div>
+        <div class="metric-card__target" style="color:var(--accent2)">50K installs</div>
+        <div class="metric-card__detail">@supericons/runtime total npm installs. 500+ apps in production with <super-icon>.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 2 — Paid Runtime</div>
+        <div class="metric-card__target" style="color:var(--teal)">$5K MRR</div>
+        <div class="metric-card__detail">Combined Pro subscriptions + theme licensing. Break-even on infrastructure costs.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 3 — Forge API</div>
+        <div class="metric-card__target" style="color:var(--amber)">100K generations</div>
+        <div class="metric-card__detail">Total Forge API calls. 10% conversion from free to paid API tier. $15K MRR from API alone.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 3 — Agent Adoption</div>
+        <div class="metric-card__target" style="color:var(--amber)">20K MCP installs</div>
+        <div class="metric-card__detail">Total @supericons/mcp installs. Agents using forge_icon for creation, not just search.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 4 — Registry Scale</div>
+        <div class="metric-card__target" style="color:var(--rose)">5K schemas</div>
+        <div class="metric-card__detail">Community-published schemas in the open registry. 50+ publishers. 10+ premium creators.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__name">Phase 4 — Revenue</div>
+        <div class="metric-card__target" style="color:var(--rose)">$50K MRR</div>
+        <div class="metric-card__detail">Combined: Pro ($29/mo), Team ($199/mo), Enterprise (custom), API usage, and marketplace fees.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RISKS ═══════════ -->
+<section class="section" id="risks">
+  <span class="section__anchor" id="risks"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part VII</div>
+    <h2 class="section__title">Risks &amp; Mitigations</h2>
+    <p class="section__desc">
+      The top risks to the plan and how we handle them. Each risk has a mitigation that is actionable today, not a hope.
+    </p>
+
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--h">HIGH</div>
+        <div class="risk-card__title">AI generation quality is not good enough</div>
+        <div class="risk-card__text">LLMs may produce invalid PIS schemas, ugly icons, or semantically wrong outputs. Users try Forge once, get bad results, never return.</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> Phase 3 ships with a hybrid approach. The visual grammar engine handles 80% of cases with rule-based composition (deterministic, high quality). AI is used for the 20% novel cases. Rigorous post-generation validation catches errors before user sees them. If AI quality is insufficient at Phase 3 launch, ship with grammar engine + curated primitives first; AI is gated behind a quality threshold.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--h">HIGH</div>
+        <div class="risk-card__title">No one adopts the parametric model</div>
+        <div class="risk-card__text">Developers are used to downloading SVG files. They may not see the value of a runtime or parametric schema. "Just give me the SVG."</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> Phase 1 (State Icons) proves value before the parametric model is visible. If state icons gain adoption, Phase 2's parametric model is "the same thing, but for any icon." If state icons fail, pivot to a simpler value prop (e.g., better SVG export from MCP) and defer the parametric vision.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--m">MEDIUM</div>
+        <div class="risk-card__title">Bundle size kills runtime adoption</div>
+        <div class="risk-card__text">Frontend developers are extremely sensitive to bundle size. If @supericons/runtime is >20KB, many will reject it outright.</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> Hard budget: core runtime < 8KB gzipped. Tree-shaking is mandatory — every feature is an optional plugin. If performance targets are not met, cut features (e.g., defer Canvas renderer, simplify theme engine). Ship a bundle-size CI check that fails builds on regressions.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--m">MEDIUM</div>
+        <div class="risk-card__title">Big players copy the approach</div>
+        <div class="risk-card__text">Figma, FontAwesome, or a well-funded startup ships a parametric icon system with better design tooling.</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> Speed to protocol standardization is the defense. The semantic search engine, 21K icon catalog, MCP integration, and 12-language i18n are existing moats. The registry network effect (if Phase 4 ships first) is the ultimate defense. Move fast on Phase 1–2 to build brand and community before anyone else ships parametric icons as a product.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--m">MEDIUM</div>
+        <div class="risk-card__title">LLM API costs are unsustainable</div>
+        <div class="risk-card__text">Forge generation requires LLM calls. At scale, costs could exceed revenue from API pricing.</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> Phase 3 uses the grammar engine as primary path (zero marginal cost). LLM calls are reserved for novel compositions that the rule engine cannot handle. Cache generation results aggressively. Monitor cost-to-revenue ratio weekly. If costs exceed 30% of Forge revenue, raise prices or tighten free tier limits.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-card__severity risk-card__severity--l">LOW</div>
+        <div class="risk-card__title">MCP standard changes break the server</div>
+        <div class="risk-card__text">The Model Context Protocol evolves, deprecating or changing the transport/API in ways that break @supericons/mcp.</div>
+        <div class="risk-card__mitigation"><strong>Mitigation:</strong> The MCP server is a thin wrapper over the core runtime. If MCP changes, adapt the server. The runtime, state icons, and Forge API are MCP-agnostic. Additionally, the hosted HTTP transport provides a stable API surface regardless of MCP evolution.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RESOURCE NEEDS ═══════════ -->
+<section class="section" id="team">
+  <span class="section__anchor" id="team"></span>
+  <div class="container">
+    <div class="section__eyebrow">Part VIII</div>
+    <h2 class="section__title">Resource Needs</h2>
+    <p class="section__desc">
+      What it takes to execute this plan. Minimal viable team for Phase 1, growing with revenue.
+    </p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-card__label">Phase 1 Team</div>
+        <div class="summary-card__value" style="font-size:1.1rem">1 Full-Stack Engineer</div>
+        <div class="summary-card__note">Existing codebase knowledge sufficient. Primary work: state animation engine, npm package, web app UI, MCP tools.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Phase 2 Team</div>
+        <div class="summary-card__value" style="font-size:1.1rem">1 Eng + 1 Designer (PT)</div>
+        <div class="summary-card__note">Engineer owns PIS spec, runtime, web components. Designer (part-time) defines visual primitives and theme system.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Phase 3 Team</div>
+        <div class="summary-card__value" style="font-size:1.1rem">2 Engineers + 1 Designer</div>
+        <div class="summary-card__note">One engineer on AI/Forge pipeline (prompt engineering, Edge Functions). One on Studio + visual grammar engine. Designer full-time on primitives and composition UX.</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Phase 4 Team</div>
+        <div class="summary-card__value" style="font-size:1.1rem">3 Engineers + 1 Designer + 1 DevRel</div>
+        <div class="summary-card__note">Third engineer for multi-surface rendering and protocol SDKs. DevRel for registry community, documentation, and partnerships.</div>
+      </div>
+    </div>
+
+    <div class="decision" style="margin-top:20px">
+      <span class="decision__tag" style="font-size:11px">Cost</span>
+      <div class="decision__body">
+        <strong>Infrastructure:</strong> Phase 1–2: negligible increase over current Supabase costs. Phase 3: LLM API costs for Forge (~$0.05–0.15/generation with caching). Phase 4: registry storage + bandwidth scales with community. 
+        <strong>Phase 1 capital:</strong> ~1 month of engineer time. Phase 2: ~1.5 months. Phase 3: ~2.5 months (2 engineers). Phase 4: ~3 months (3 engineers). 
+        <strong>Strategy:</strong> Self-fund Phase 1–2 from existing Pro revenue. Phase 3+ requires either revenue growth, investment, or reduced scope.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    <p>Supericons PRD &amp; Implementation Plan — May 2026</p>
+    <p style="margin-top:4px">Curly Mole Labs. Built on the vision blueprint at docs/supericons-future-vision-blueprint-2026.html</p>
+    <p style="margin-top:4px">Document status: Draft v1. Next review: after Phase 1 state icon launch.</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// Scroll reveal
+(function(){
+  const els = document.querySelectorAll('.summary-card,.phase,.milestone-table,.api-spec,.tech-box,.decision,.risk-card,.metric-card');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.1});
+  els.forEach(el=>{el.classList.add('reveal');obs.observe(el);});
+})();
+
+// TOC active link
+(function(){
+  const sections = document.querySelectorAll('.section__anchor');
+  const links = document.querySelectorAll('.toc__item a');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>{l.parentElement.classList.remove('toc__item--active')});
+        const link = document.querySelector(`.toc__item a[href="#${e.target.id}"]`);
+        if(link) link.parentElement.classList.add('toc__item--active');
+      }
+    });
+  },{threshold:0.3});
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

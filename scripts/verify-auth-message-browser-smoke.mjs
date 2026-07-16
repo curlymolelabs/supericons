@@ -12,7 +12,7 @@ async function openLocale(locale) {
   url.searchParams.set('view', 'icons');
   url.searchParams.set('locale', locale);
   await page.addInitScript(() => localStorage.setItem('si-hero-dismissed', '1'));
-  await page.goto(url.toString(), { waitUntil: 'networkidle' });
+  await page.goto(url.toString(), { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#authSignInBtn', { state: 'visible' });
 }
 
@@ -27,23 +27,26 @@ async function openPricingLocale(locale) {
   pricingUrl.searchParams.set('view', 'pricing');
   pricingUrl.searchParams.set('locale', locale);
   await page.addInitScript(() => localStorage.setItem('si-hero-dismissed', '1'));
-  await page.goto(pricingUrl.toString(), { waitUntil: 'networkidle' });
+  await page.goto(pricingUrl.toString(), { waitUntil: 'domcontentloaded' });
 }
 
 async function assertPricingAuthContext({ locale, buttonSelector, label }) {
   await openPricingLocale(locale);
+  await page.waitForSelector(buttonSelector, { state: 'visible' });
   await page.locator(buttonSelector).click();
   const modal = await page.evaluate(() => ({
     title: document.querySelector('#authModalTitle')?.textContent?.trim() || '',
     desc: document.querySelector('#authModalDesc')?.textContent?.trim() || '',
     note: document.querySelector('#authModalNote')?.textContent?.trim() || '',
+    noteHidden: document.querySelector('#authModalNote')?.hidden ?? false,
     submit: document.querySelector('#authSubmitText')?.textContent?.trim() || ''
   }));
 
   assert.ok(modal.title, `${locale}: ${label} auth title is empty`);
   assert.notEqual(modal.title, modal.submit, `${locale}: ${label} auth title equals action label`);
   assertMessageLike(`${locale}: ${label} auth description`, modal.desc, modal.submit);
-  assertMessageLike(`${locale}: ${label} auth note`, modal.note, modal.submit);
+  assert.equal(modal.note, '', `${locale}: ${label} auth note should be empty`);
+  assert.equal(modal.noteHidden, true, `${locale}: ${label} auth note should be hidden`);
   await page.locator('#authClose').click();
   console.log(`[PASS] ${locale}: ${label} auth context is message-like`);
 }

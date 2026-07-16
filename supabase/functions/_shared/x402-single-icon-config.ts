@@ -14,7 +14,7 @@ export const X402_SINGLE_ICON_CONFIG = Object.freeze({
   // Source stylesheet used to extract only the purchased icon's scoped CSS.
   // The x402 endpoint must never serve this full pack stylesheet raw.
   cssPath: "agentic-motion/agentic-motion.css",
-  licenseUrlPath: "/legal/supericons-single-icon-license",
+  licenseUrlPath: "/terms/#single-icon-license",
 } as const);
 
 export type X402SingleIconConfig = typeof X402_SINGLE_ICON_CONFIG;

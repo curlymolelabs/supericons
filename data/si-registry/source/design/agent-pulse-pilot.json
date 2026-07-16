@@ -1,0 +1,835 @@
+{
+  "schema": "si-design-record@0.1.0",
+  "pack_id": "agent-pulse",
+  "notes": "Ring 0 pilot: 4 design records exercising the two-tier design workflow. Two reference records written retroactively from approved shapes, two rework records carrying full mind maps. Tier projection is defined in lib/si-registry/design-record-shape.js.",
+  "records": [
+    {
+      "icon_id": "si:orb-thinking",
+      "label": "Orb Thinking",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_approved",
+      "face": {
+        "depicts": "One large orb carrying the universal typing ellipsis: a single circle with three equal dots on the horizontal midline.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is reasoning and a response is forming.",
+        "semantic_tags": [
+          "thinking",
+          "reasoning",
+          "processing",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "internal reasoning in progress",
+          "direction": "internal (no waves in or out)",
+          "intensity": "calm"
+        },
+        "mindmap": {
+          "synonyms": [
+            "thinking",
+            "processing",
+            "reasoning",
+            "pondering",
+            "typing indicator",
+            "working on it"
+          ],
+          "associations": [
+            "typing dots",
+            "thought bubble",
+            "brain",
+            "gears",
+            "hourglass",
+            "loading"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "thought bubble with dots",
+              "verdict": "rejected",
+              "reason": "Bubble adds a second container around the orb; double enclosure muddies at small sizes."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "spinner or hourglass",
+              "verdict": "rejected",
+              "reason": "Spinners are the pattern this pack explicitly replaces; hourglass means waiting, not reasoning."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "the orb itself carries the typing ellipsis",
+              "verdict": "chosen",
+              "reason": "Merges the strongest chat convention (typing dots) with the agent identity (orb). One circle, three dots, nothing else."
+            }
+          ],
+          "anti_associations": [
+            "chat comment icon (avoid tail)",
+            "traffic light (avoid vertical dots)",
+            "more/overflow menu (dots without container read as menu)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-idle",
+            "differentiator": "idle has no dots, only the breathing body"
+          },
+          {
+            "icon_id": "si:think-queue",
+            "differentiator": "queue dots sit on a line outside any orb"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "dots brighten in left-to-right sequence",
+          "spec": {
+            "pattern": "seq",
+            "cycle_ms": 2400,
+            "stagger_ms": 350,
+            "rest": "built into cycle",
+            "reduced_motion": "static three dots"
+          }
+        }
+      },
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r8.5 centered at 12,12. Dots r1.15 on the horizontal midline at x 8.2 / 12 / 15.8 (equal 3.8 spacing). Stroke render: 2px circle, filled dots. Solid render: filled circle, dots knocked out at r1.4. Elegance render: gOrb body, gGlass cap upper-left, middle dot accent.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 8.5
+            },
+            {
+              "type": "dot",
+              "cx": 8.2,
+              "cy": 12,
+              "r": 1.15,
+              "onFace": true,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "dot",
+              "cx": 12,
+              "cy": 12,
+              "r": 1.15,
+              "role": "accent",
+              "onFace": true,
+              "anim": {
+                "name": "seq",
+                "delay": 0.35
+              }
+            },
+            {
+              "type": "dot",
+              "cx": 15.8,
+              "cy": 12,
+              "r": 1.15,
+              "onFace": true,
+              "anim": {
+                "name": "seq",
+                "delay": 0.7
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Approved in shape study round one; suitable shape, keep as reference standard.",
+          "status": "promoted"
+        }
+      ],
+      "evidence": [
+        "owner_review_2026-07-06",
+        "shape_study_v1"
+      ]
+    },
+    {
+      "icon_id": "si:voice-wave",
+      "label": "Voice Wave",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_approved",
+      "face": {
+        "depicts": "Five vertical bars in a symmetric equalizer rhythm: heights 5, 10, 15, 10, 5 on a fixed 3.7 beat, round caps.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show live voice or audio activity level.",
+        "semantic_tags": [
+          "voice",
+          "audio",
+          "waveform",
+          "equalizer",
+          "speaking"
+        ],
+        "must_communicate": {
+          "actor": "the sound itself (no orb)",
+          "action": "audio activity",
+          "direction": "none (a level, not a flow)",
+          "intensity": "medium, scalable by animation amplitude"
+        },
+        "mindmap": {
+          "synonyms": [
+            "waveform",
+            "audio level",
+            "equalizer",
+            "voice activity",
+            "sound bars",
+            "vu meter"
+          ],
+          "associations": [
+            "equalizer",
+            "voice memo icon",
+            "recording indicator",
+            "music visualizer"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "mouth or lips",
+              "verdict": "rejected",
+              "reason": "Body-part symbols read wrong for machine audio and age poorly."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "microphone with waves",
+              "verdict": "reserved",
+              "reason": "Mic is reserved for capture-device icons (mic-on, mic-off) later in the pack."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "bare equalizer bars, symmetric rhythm",
+              "verdict": "chosen",
+              "reason": "The most universal audio-activity symbol; without a device it stays neutral about who is speaking."
+            }
+          ],
+          "anti_associations": [
+            "bar chart (avoid baseline-aligned bars; center-align them)",
+            "signal strength (avoid ascending stair heights)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-speaking",
+            "differentiator": "speaking has the orb; voice-wave is the sound alone"
+          },
+          {
+            "icon_id": "si:wave-idle",
+            "differentiator": "idle uses low flat bars at rest amplitude"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "bars scale vertically in a staggered dance, center bar leads",
+          "spec": {
+            "pattern": "eq",
+            "cycle_ms": 1000,
+            "stagger_ms": 120,
+            "rest": "amplitude falls to 0.35 between peaks",
+            "reduced_motion": "static 5-10-15-10-5 frame"
+          }
+        }
+      },
+      "construction": {
+        "grid": 24,
+        "recipe": "Five bars centered at 12,12: x positions 4.6 / 8.3 / 12 / 15.7 / 19.4 (3.7 rhythm), heights 5 / 10 / 15 / 10 / 5, center-aligned vertically. Stroke render: 2px lines, round caps. Solid render: 2.4-wide rounded rects. Elegance render: gInk gradient bars, center bar accent with glow behind.",
+        "params": {
+          "parts": [
+            {
+              "type": "bars",
+              "cy": 12,
+              "w": 2,
+              "accentIndex": 2,
+              "anim": {
+                "name": "eq"
+              },
+              "items": [
+                {
+                  "x": 4.6,
+                  "h": 5
+                },
+                {
+                  "x": 8.3,
+                  "h": 10
+                },
+                {
+                  "x": 12,
+                  "h": 15
+                },
+                {
+                  "x": 15.7,
+                  "h": 10
+                },
+                {
+                  "x": 19.4,
+                  "h": 5
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Approved in shape study round one and survived from mockup revision two; the pack keeper.",
+          "status": "promoted"
+        }
+      ],
+      "evidence": [
+        "owner_review_2026-07-06",
+        "shape_study_v1"
+      ]
+    },
+    {
+      "icon_id": "si:orb-listening",
+      "label": "Orb Listening",
+      "pack_id": "agent-pulse",
+      "version": "0.6.0",
+      "design_state": "shape_approved",
+      "face": {
+        "depicts": "The orb wearing headphones (headband arc plus a rounded pad hugging each side), with one small sound wave per side split into a top and bottom segment, entering from outside each pad. The layered elegance render carries one unsplit wave per side, animated, since motion supplies the inbound effect.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is actively receiving audio input.",
+        "semantic_tags": [
+          "listening",
+          "hearing",
+          "voice input",
+          "receiving",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "receiving audio",
+          "direction": "inbound",
+          "intensity": "quiet (two waves per rule: 1-2 quiet, 3+ loud)"
+        },
+        "mindmap": {
+          "synonyms": [
+            "listening",
+            "hearing",
+            "capturing",
+            "voice input",
+            "sound input",
+            "attentive",
+            "receiving"
+          ],
+          "associations": [
+            "ear",
+            "microphone",
+            "headphone",
+            "dish antenna",
+            "waves arriving",
+            "leaning in",
+            "attention"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "ear with sound waves",
+              "verdict": "rejected",
+              "reason": "Human body part on an agent icon; also collides with accessibility/hearing icons."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "microphone",
+              "verdict": "reserved",
+              "reason": "Mic is the capture device, reserved for mic-on/mic-off icons; listening is a state of the agent."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "sound waves converging on the orb (round-2 variant a)",
+              "verdict": "rejected",
+              "reason": "Owner review 2026-07-06 round 2: still not suitable; four squiggles crowd the orb and the composition stays busy."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "waveform absorbed into the orb (round-2 variant b)",
+              "verdict": "rejected",
+              "reason": "Owner review 2026-07-06 round 2: still not suitable; asymmetric read did not land."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "the orb wearing headphones, with one small incoming wave per side",
+              "verdict": "chosen",
+              "reason": "Owner pick round 3. Headphones are the universal listening posture worn by the agent; the two small waves entering just outside the pads add the inbound direction. Works in both stroke and solid renders."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "signal trail absorbed into the orb (variant d)",
+              "verdict": "rejected",
+              "reason": "Owner review round 3: does not fit; removed from the list."
+            }
+          ],
+          "anti_associations": [
+            "steering wheel",
+            "drone rotor",
+            "alarm/vibration",
+            "wifi",
+            "target",
+            "sun",
+            "customer support headset (no mic boom)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-speaking",
+            "differentiator": "speaking emits arcs outward from the orb; listening waves arrive at it"
+          },
+          {
+            "icon_id": "si:sound-blast",
+            "differentiator": "blast has no orb and fans one direction with 3 waves"
+          },
+          {
+            "icon_id": "si:wave-idle",
+            "differentiator": "idle has no orb and no direction"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "waves pulse inward toward the orb in sequence (outer first), orb glass brightens slightly on arrival",
+          "spec": {
+            "pattern": "seq-inward",
+            "cycle_ms": 2300,
+            "stagger_ms": 300,
+            "rest": "full cycle includes a quiet beat",
+            "reduced_motion": "static waves at rest position"
+          }
+        }
+      },
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5 at 12,14.5. Pads: rounded rects 2.4 x 5.5 (rx 1.2) hugging the orb at x 4.6 and 17, y 11.5. Headband: single arc pad-top to pad-top, M5.8 11.5 a6.2 6.2 0 0 1 12.4 0. Incoming wave (stroke and solid): one r3.4 arc per side (chord y 12.1 to 16.5 at x 3.2 / 20.8, convex toward the orb) split into top and bottom segments with a 1.2 gap at pad-center y 14.3; left top M3.2 12.1 A3.4 3.4 0 0 0 3.96 13.7, left bottom M3.96 14.9 A3.4 3.4 0 0 0 3.2 16.5, right mirrored with sweep 1. Elegance render: one unsplit wave per side, animated inward. Wave stroke weight 1.8 vs 2 for the headphones so the posture stays dominant.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 14.5,
+              "r": 5
+            },
+            {
+              "type": "path",
+              "d": "M5.8 11.5a6.2 6.2 0 0 1 12.4 0",
+              "w": 2
+            },
+            {
+              "type": "pill",
+              "x": 4.6,
+              "y": 11.5,
+              "w": 2.4,
+              "h": 5.5,
+              "rx": 1.2
+            },
+            {
+              "type": "pill",
+              "x": 17,
+              "y": 11.5,
+              "w": 2.4,
+              "h": 5.5,
+              "rx": 1.2
+            },
+            {
+              "type": "path",
+              "d": "M3.2 12.1A3.4 3.4 0 0 0 3.96 13.7M3.96 14.9A3.4 3.4 0 0 0 3.2 16.5",
+              "w": 1.8,
+              "renders": [
+                "stroke",
+                "solid"
+              ]
+            },
+            {
+              "type": "path",
+              "d": "M20.8 12.1A3.4 3.4 0 0 1 20.04 13.7M20.04 14.9A3.4 3.4 0 0 1 20.8 16.5",
+              "w": 1.8,
+              "renders": [
+                "stroke",
+                "solid"
+              ]
+            },
+            {
+              "type": "path",
+              "d": "M3.2 12.1a3.4 3.4 0 0 0 0 4.4",
+              "w": 1.8,
+              "role": "accent",
+              "renders": [
+                "elegance"
+              ],
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "path",
+              "d": "M20.8 12.1a3.4 3.4 0 0 1 0 4.4",
+              "w": 1.8,
+              "role": "accent",
+              "renders": [
+                "elegance"
+              ],
+              "anim": {
+                "name": "seq",
+                "delay": 0.4
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round-one shape read as a steering wheel or drone; arcs too thick to read as sound waves; center did not read as an orb.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Suggestion: two sound wave lines at both left and right side with the orb at the center.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Conventional listening symbol is an ear with 2-3 wave lines; fine for humans, imagine a more fitting symbol for agents.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 2: variants a and b still not suitable.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 3: C might be the best fit; add 2 small wave lines entering the sides representing going in. Both solid and stroke work. D does not fit, remove.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 4 clarification: two wave lines at EACH side for stroke and solid. For the layered version one wave line is good since the animation shows the inbound effect.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 5: two waves per side is too much, too thick. Use one line per side split into top and bottom segments, both sides.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Split-wave render approved. Pilot closed: all 4 records shape_approved.",
+          "status": "promoted"
+        }
+      ],
+      "evidence": [
+        "owner_review_2026-07-06",
+        "mindmap_2026-07-06"
+      ]
+    },
+    {
+      "icon_id": "si:sound-blast",
+      "label": "Sound Blast",
+      "pack_id": "agent-pulse",
+      "version": "0.5.0",
+      "design_state": "shape_approved",
+      "face": {
+        "depicts": "The orb at center, not too small, with two nested sound waves at each of the four diagonal corners. Eight waves total: a lot of noise coming from the agent, in every direction.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Represent a loud, sudden audio burst: a reaction blast moment.",
+        "semantic_tags": [
+          "blast",
+          "boom",
+          "loud",
+          "burst",
+          "reaction",
+          "audio"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present, the agent is the source)",
+          "action": "sudden loud emission",
+          "direction": "outbound in all directions",
+          "intensity": "very loud (eight waves, 3+ means loud per the pack rule)"
+        },
+        "mindmap": {
+          "synonyms": [
+            "sound blast",
+            "boom",
+            "blare",
+            "burst",
+            "loud",
+            "max volume",
+            "shockwave"
+          ],
+          "associations": [
+            "speaker at max",
+            "megaphone",
+            "explosion",
+            "shockwave rings",
+            "comic burst",
+            "clipping"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "comic explosion starburst",
+              "verdict": "rejected",
+              "reason": "Ray language reads as sun or sparkle; also the comic register belongs to the zorb set, not this pack."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "speaker cone with big arcs",
+              "verdict": "rejected",
+              "reason": "Reads as a volume control, and the device grammar is reserved for actual device icons."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "point source fanning three nested arcs one direction",
+              "verdict": "rejected",
+              "reason": "Round 3: owner redirected to an orb-centric composition; the fan reads as the sound alone, but the blast should come from the agent. The dashed-clipping flourish had already been cut as decoration that cost clarity."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "orb at center with two nested waves at each diagonal corner (owner suggestion)",
+              "verdict": "chosen",
+              "reason": "Eight waves in all four diagonal directions read as overwhelming noise from the agent. Corner placement keeps the sides free, so it cannot be confused with orb-speaking's side ripples, and curved arc pairs avoid any sun or sparkle read."
+            }
+          ],
+          "anti_associations": [
+            "sun",
+            "sparkle",
+            "wifi (avoid centered symmetric arcs)",
+            "volume icon (no speaker body)",
+            "sonar (no enclosing circle)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-listening",
+            "differentiator": "listening wears headphones or absorbs a signal; blast radiates waves outward from every corner"
+          },
+          {
+            "icon_id": "si:orb-speaking",
+            "differentiator": "speaking ripples from the sides at conversational intensity (1-2 waves); blast fires 2 waves from all four diagonal corners"
+          },
+          {
+            "icon_id": "si:blast-echo",
+            "differentiator": "echo is concentric full rings; blast is corner arc pairs with the orb as source"
+          },
+          {
+            "icon_id": "si:wave-shout",
+            "differentiator": "shout is a jagged waveform mass with no orb; blast is the agent emitting"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "arcs light in sequence from the source outward, then a long rest; source dot beats once per cycle",
+          "spec": {
+            "pattern": "seq-outward",
+            "cycle_ms": 2600,
+            "stagger_ms": 220,
+            "rest": "roughly 60 percent of cycle",
+            "reduced_motion": "static full fan"
+          }
+        }
+      },
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5 at 12,12. Per diagonal corner, two concentric arcs centered on the orb spanning 50 degrees around the 45-degree diagonal, radii 7.2 and 9.8 (gaps: 2.2 orb-to-inner, 2.6 inner-to-outer). Top-right pair: M18.77 9.54 A7.2 7.2 0 0 0 14.46 5.23 and M21.21 8.65 A9.8 9.8 0 0 0 15.35 2.79; other corners mirrored. 2px round caps in stroke render; solid render fills the orb and thickens arcs to 2.4.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 5
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 7.2,
+              "a1": 20,
+              "a2": 70,
+              "w": 2,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 7.2,
+              "a1": 110,
+              "a2": 160,
+              "w": 2,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 7.2,
+              "a1": 200,
+              "a2": 250,
+              "w": 2,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 7.2,
+              "a1": 290,
+              "a2": 340,
+              "w": 2,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 9.8,
+              "a1": 20,
+              "a2": 70,
+              "w": 2,
+              "role": "accent",
+              "anim": {
+                "name": "seq",
+                "delay": 0.35
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 9.8,
+              "a1": 110,
+              "a2": 160,
+              "w": 2,
+              "role": "accent",
+              "anim": {
+                "name": "seq",
+                "delay": 0.35
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 9.8,
+              "a1": 200,
+              "a2": 250,
+              "w": 2,
+              "role": "accent",
+              "anim": {
+                "name": "seq",
+                "delay": 0.35
+              }
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 9.8,
+              "a1": 290,
+              "a2": 340,
+              "w": 2,
+              "role": "accent",
+              "anim": {
+                "name": "seq",
+                "delay": 0.35
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round-one shape read as the sun, not a sound blast.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Show at least 3 sound wave lines to symbolize many or high audio; must not overlap with orb-listening if illustrated correctly.",
+          "status": "distilled"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 2: three waves sufficient; questioned why the third wave was split into two. Split removed.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 3: draw an orb at the center (not too small) with at least 2 waves at the four corners of the orb; 4x2 waves represents a lot of noise from the orb.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round 3 verdict: the stroke version is suitable. Stroke is the approved reference render.",
+          "status": "promoted"
+        }
+      ],
+      "evidence": [
+        "owner_review_2026-07-06",
+        "mindmap_2026-07-06"
+      ]
+    }
+  ]
+}

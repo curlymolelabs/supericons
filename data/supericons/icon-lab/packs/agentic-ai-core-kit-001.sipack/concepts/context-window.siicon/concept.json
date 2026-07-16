@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:context-window",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "context-window",
+  "name": "Context Window",
+  "depicts": "The active context available to an AI model or agent.",
+  "useCase": "Use for context length, prompt windows, session memory, and visible working set controls.",
+  "category": "agentic-ai",
+  "assetType": "system-icon",
+  "primaryMetaphor": "A bounded document window with aligned context rows.",
+  "avoidMetaphors": [
+    "browser window",
+    "chat bubble",
+    "file-only metaphor"
+  ],
+  "siblingConcepts": [
+    "context-compaction",
+    "memory-checkpoint",
+    "token-meter"
+  ],
+  "searchTerms": [
+    "context window",
+    "context length",
+    "prompt context",
+    "working memory",
+    "session context",
+    "model context"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Pulse | Batch 1 paper review</title>
+<style>
+  :root {
+    --accent: #FF4F00; --accent-soft: #ff906c; --bg: #0e0e0e; --surface: #131313;
+    --surface-2: #1a1919; --text: #ffffff; --text-muted: #cccaca; --text-dim: #767575;
+    --outline-ghost: rgba(72, 72, 71, 0.25); --success: #4ade80;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; }
+  main { max-width: 880px; margin: 0 auto; padding: 2.4rem 1.4rem 6rem; }
+  h1 { font-family: var(--font-head); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+  .sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 0.4rem; max-width: 700px; }
+  .sub b { color: var(--accent-soft); }
+  .lawbox { margin-top: 1.4rem; border: 1px solid var(--outline-ghost); border-radius: 12px; background: var(--surface); padding: 1rem 1.2rem; font-size: 0.78rem; color: var(--text-muted); }
+  .lawbox summary { cursor: pointer; font-family: var(--font-head); font-weight: 600; font-size: 0.85rem; }
+  .lawbox ul { margin: 0.6rem 0 0 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+  .lawbox .why { color: var(--text-dim); font-size: 0.7rem; }
+  .card { margin-top: 1.2rem; border: 1px solid var(--outline-ghost); border-radius: 14px; background: var(--surface); padding: 1.2rem 1.3rem; }
+  .card header { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+  .card .num { font-family: var(--font-head); color: var(--text-dim); font-size: 0.85rem; }
+  .card h2 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; }
+  .card code { font-size: 0.68rem; color: var(--text-dim); background: var(--surface-2); border-radius: 4px; padding: 0.1rem 0.4rem; }
+  .card .state { margin-left: auto; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-soft); background: rgba(255,79,0,0.1); border-radius: 4px; padding: 0.12rem 0.4rem; }
+  .purpose { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.4rem; }
+  .chosen { margin-top: 0.8rem; border-left: 3px solid var(--accent); background: rgba(255, 79, 0, 0.05); border-radius: 0 10px 10px 0; padding: 0.7rem 0.9rem; }
+  .chosen__label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-soft); }
+  .chosen__idea { font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; margin-top: 0.2rem; }
+  .chosen__depicts { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem; }
+  .chosen__reason { color: var(--text-dim); font-size: 0.75rem; margin-top: 0.35rem; }
+  details { margin-top: 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
+  summary { cursor: pointer; color: var(--text-dim); font-size: 0.74rem; }
+  .alts { margin: 0.5rem 0 0 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+  .alts .why { color: var(--text-dim); font-size: 0.7rem; }
+  .row { margin-top: 0.55rem; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: baseline; }
+  .row b { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-right: 0.2rem; }
+  .chip { font-size: 0.66rem; color: var(--text-dim); background: var(--surface-2); border-radius: 4px; padding: 0.1rem 0.4rem; }
+  .motion { font-size: 0.74rem; }
+  .verdict-row { margin-top: 0.8rem; display: flex; gap: 0.5rem; align-items: center; }
+  .verdict-hint { font-size: 0.66rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .v { font-size: 0.7rem; border-radius: 999px; padding: 0.18rem 0.6rem; border: 1px solid var(--outline-ghost); color: var(--text-dim); }
+  .v.approve { border-color: rgba(74, 222, 128, 0.4); color: var(--success); }
+  .v.redirect { border-color: rgba(255, 79, 0, 0.4); color: var(--accent-soft); }
+  footer { margin-top: 2.5rem; color: var(--text-dim); font-size: 0.7rem; letter-spacing: 0.05em; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Agent Pulse · Batch 1: the 10 orb states</h1>
+  <p class="sub">Paper-stage review. <b>No shapes are drawn yet, on purpose</b>: approve or redirect each metaphor in words, and only approved ones get geometry. Generated from <code style="font-size:0.75rem">agent-pulse-batch-1-orbs.json</code> by <code style="font-size:0.75rem">scripts/build-batch-review.mjs</code>; the records are the source of truth.</p>
+
+  <details class="lawbox">
+    <summary>The pack law these were authored under (from the agent-pulse pack record)</summary>
+    <ul><li><b>orb present</b> · the agent is involved; no orb means the sound or signal itself</li><li><b>wave direction</b> · who acts: waves leaving the orb = emitting, waves arriving = receiving</li><li><b>element count</b> · intensity: 1-2 elements quiet, 3 or more loud</li><li><b>position semantics</b> · above the orb = needs human attention; sides = communication; corners = burst energy; front overlay = policy</li><li><b>diagonal slash</b> · off or muted, and nothing else</li><li><b>accent color</b> · Ignition Orange only ever means active or hot; never decoration</li></ul>
+    <ul style="margin-top:0.8rem"><li><b>R1</b> One idea per icon, at most one secondary element. <span class="why">owner review 2026-07-06, round 1 (busy compositions rejected)</span></li><li><b>R2</b> Secondary elements draw lighter than the subject (1.8 vs 2 at 24 grid). <span class="why">orb-listening rounds 4-5 (waves lighter than headphones)</span></li><li><b>R3</b> Sound is wave language (curves), never ray language (straight ticks). <span class="why">sound-blast round 1 (read as sun)</span></li><li><b>R4</b> Symmetric outward arcs around the orb belong exclusively to speaking; anything else wrapping the orb risks wheel/drone reads. <span class="why">orb-listening round 1 (read as steering wheel)</span></li><li><b>R5</b> When a side element feels heavy, split it into segments rather than shrinking or doubling it. <span class="why">orb-listening round 5 (split waves)</span></li><li><b>R6</b> Run the anti-association check before drawing: name what the shape must never read as. <span class="why">rounds 1-2 (sun, wheel, drone all preventable on paper)</span></li><li><b>R7</b> Keep at least 0.5 optical clearance between distinct elements; 1.5 canvas safety margin. <span class="why">pilot construction recipes</span></li><li><b>R8</b> Decoration that tells a story the purpose does not need gets cut. <span class="why">sound-blast round 2 (dashed clipping arc removed)</span></li><li><b>R9</b> Metaphor approval on paper precedes geometry; geometry precedes rendering. <span class="why">pilot workflow, 6 rounds to 1-2 target</span></li></ul>
+  </details>
+
+  
+  <article class="card" id="orb-idle">
+    <header>
+      <span class="num">01</span>
+      <h2>Orb Idle</h2>
+      <code>si:orb-idle</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is present and ready, with nothing happening.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">the unadorned orb itself, breathing</div>
+      <div class="chosen__depicts">The bare orb, nothing else, breathing slowly with a faint halo. Presence without activity.</div>
+      <div class="chosen__reason">Grammar: adornment means activity, so no adornment IS idle. The pack's zero-state; every other icon is idle plus one idea.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · standby LED dot next to the orb <span class="why">Adds a second element to the one state whose meaning is the absence of elements; also collides with status-ambient.</span></li><li><b style="color:var(--text-dim)">rejected</b> · relaxed posture cue (slumped orb) <span class="why">Deforming the orb breaks the shared silhouette every other state depends on.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">record button (avoid solid red-ish fill)</span><span class="chip">radio button</span><span class="chip">generic dot bullet</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-sleeping: sleeping is dimmed with z glyphs; idle is full presence, no glyphs</span><span class="chip">status-ambient: status-ambient is a small accent badge, not the agent orb</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">slow breathe with a faint halo swell</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-speaking">
+    <header>
+      <span class="num">02</span>
+      <h2>Orb Speaking</h2>
+      <code>si:orb-speaking</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is producing speech or audio output.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">orb with face bars + outbound side ripples</div>
+      <div class="chosen__depicts">The orb with small equalizer bars on its face and symmetric ripples emanating outward from both sides. The agent producing audio.</div>
+      <div class="chosen__reason">Owner endorsed this exact composition in the round-1 pack review (one of three keepers). It owns the outbound-side-ripple territory, the mirror of listening's inbound waves.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · mouth or speech lines from a face <span class="why">Body parts stay off agent icons (pack precedent from listening's ear rejection).</span></li><li><b style="color:var(--text-dim)">rejected</b> · loudspeaker with arcs <span class="why">Device grammar reserved for actual device icons; also reads as volume control.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">volume control</span><span class="chip">wifi</span><span class="chip">alarm ring</span><span class="chip">steering wheel (ripples must not wrap the orb)</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-listening: listening wears headphones with inbound waves; speaking ripples outward</span><span class="chip">sound-blast: blast fires 2 waves from all four corners; speaking is calm side ripples</span><span class="chip">voice-wave: voice-wave has no orb</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">face bars dance while ripples expand outward in sequence</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-working">
+    <header>
+      <span class="num">03</span>
+      <h2>Orb Working</h2>
+      <code>si:orb-working</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is actively executing a task.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">one accent arc segment orbiting the orb</div>
+      <div class="chosen__depicts">The orb with a single luminous arc segment sweeping around it. Work orbiting the core, not a full spinner ring.</div>
+      <div class="chosen__reason">A single luminous arc reads as energy moving around a stable core: working, not loading. Partial segment + orb center keeps it out of spinner territory (craft rule R6 check).</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · hourglass <span class="why">Means waiting, not working; also claimed by rate-limited in the states category.</span></li><li><b style="color:var(--text-dim)">rejected</b> · full spinner ring <span class="why">The generic spinner is exactly what this pack exists to replace.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">loading spinner</span><span class="chip">progress ring with percentage</span><span class="chip">radar</span><span class="chip">clock</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-retrying: retrying's arc carries an arrowhead; working's arc is headless</span><span class="chip">orb-idle: idle has no adornment at all</span><span class="chip">task-background: background task is a satellite dot on a dim ring, not an accent arc</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">arc sweeps continuously at working pace</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-waiting-input">
+    <header>
+      <span class="num">04</span>
+      <h2>Orb Waiting for Input</h2>
+      <code>si:orb-waiting-input</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is paused and needs the human to respond.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">one accent dot hovering centered above the orb</div>
+      <div class="chosen__depicts">The orb with a single accent dot hovering centered above it, pulsing gently. The agent holding up the question.</div>
+      <div class="chosen__reason">Grammar: above the orb = needs human attention. Centered (not corner) so it cannot read as a notification badge. The dot is the held question.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · question mark on the orb <span class="why">Question mark reads as help/support, not as a turn-taking request.</span></li><li><b style="color:var(--text-dim)">rejected</b> · raised hand <span class="why">Body parts stay off agent icons.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">notification badge (corner dot)</span><span class="chip">record indicator</span><span class="chip">i/info icon</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-error: error is an exclamation on the face with glitch; waiting is a calm dot above</span><span class="chip">attention-interrupt: interrupt is a bell demanding attention; waiting is patient</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">the dot blinks on a patient cycle; orb stays still</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-done">
+    <header>
+      <span class="num">05</span>
+      <h2>Orb Done</h2>
+      <code>si:orb-done</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent finished the task successfully.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">checkmark drawn across the orb face</div>
+      <div class="chosen__depicts">The orb with an accent checkmark drawn across its face. The agent wearing its result.</div>
+      <div class="chosen__reason">The check is the one universal completion mark; placing it on the face (not a badge corner) makes it the agent's own state, and the draw-on animation gives the completion beat.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · thumbs up <span class="why">Body part, and culturally uneven.</span></li><li><b style="color:var(--text-dim)">rejected</b> · corner check badge on the orb <span class="why">Corner badges read as verification/approval status, not task completion.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">verified badge</span><span class="chip">approval seal</span><span class="chip">checkbox form control</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">burst-check: burst-check is the celebration effect with no orb; orb-done is the settled state</span><span class="chip">done-spark: pack-1 done-spark is a 24px nav glyph, not an orb state</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">check draws on once, then rests; no loop while displayed</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-error">
+    <header>
+      <span class="num">06</span>
+      <h2>Orb Error</h2>
+      <code>si:orb-error</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent hit a fault and needs attention.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">exclamation on the face + glitch slices</div>
+      <div class="chosen__depicts">The orb with an exclamation mark on its face, shivering with occasional horizontal glitch slices. Something is wrong with the agent itself.</div>
+      <div class="chosen__reason">Exclamation is the universal fault mark; the glitch offsets are the agent-native tell (a digital being showing corruption) and give error its motion identity.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · X on the orb <span class="why">X means close or delete, not fault.</span></li><li><b style="color:var(--text-dim)">rejected</b> · warning triangle <span class="why">System-level signage; the fault belongs to the agent, so it should live on the orb.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">close button</span><span class="chip">road warning sign</span><span class="chip">notification badge</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-blocked: blocked is external policy (shield); error is internal fault (exclamation + glitch)</span><span class="chip">orb-waiting-input: waiting is a calm dot above; error is on the face and urgent</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">subtle shake with 2 glitch slices per cycle, mostly at rest</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-blocked">
+    <header>
+      <span class="num">07</span>
+      <h2>Orb Blocked</h2>
+      <code>si:orb-blocked</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show an action was denied by a guardrail or policy.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">shield in front of the orb with an accent bar</div>
+      <div class="chosen__depicts">A shield standing in front of the orb, carrying a horizontal accent bar. Policy standing between the agent and the action.</div>
+      <div class="chosen__reason">Guardrail semantics are protective, not punitive: a shield standing in front reads as policy doing its job. Grammar: front overlay = policy. The bar is the firm no.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · circle-slash over the orb <span class="why">The diagonal slash is claimed by muted/off in the pack grammar; reusing it here would collide.</span></li><li><b style="color:#60a5fa">reserved</b> · padlock <span class="why">Lock is reserved for auth/private semantics elsewhere in the catalog.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">mute slash</span><span class="chip">security/antivirus branding</span><span class="chip">no-entry road sign</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-error: error is internal fault; blocked is external policy, calm and intentional</span><span class="chip">guardrail-path: pack-1 guardrail-path is the policy lane glyph, not an orb state</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">one slow firm breathe of the shield; deliberately calm</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-retrying">
+    <header>
+      <span class="num">08</span>
+      <h2>Orb Retrying</h2>
+      <code>si:orb-retrying</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is recovering and attempting the action again.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">single arc with one arrowhead around the orb</div>
+      <div class="chosen__depicts">The orb with an accent arc circling it, ending in a filled arrowhead. Trying again, deliberately.</div>
+      <div class="chosen__reason">One arc, one head: a single deliberate return. The arrowhead is the differentiator from working's headless arc, and single (not double) keeps it out of sync territory.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (1) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · double circular arrows (refresh) <span class="why">Two arrows read as sync/refresh content, not as a recovery attempt.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">sync icon (two arrows)</span><span class="chip">refresh page</span><span class="chip">recycle symbol (three arrows)</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-working: working's arc is headless and fast; retrying's arc carries an arrowhead and moves slower</span><span class="chip">state-reconnecting: reconnecting is two nodes with a flowing line, no orbit</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">arc completes one revolution, pauses, repeats: the retry rhythm itself</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-handoff">
+    <header>
+      <span class="num">09</span>
+      <h2>Orb Handoff</h2>
+      <code>si:orb-handoff</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show a task being delegated from one agent to another.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">payload dot traveling a dashed arc between two orbs</div>
+      <div class="chosen__depicts">Two smaller orbs side by side with an accent payload dot traveling a dashed arc from one to the other. The task changing hands.</div>
+      <div class="chosen__reason">The arc (not a straight line) is the throw; the glowing payload is the task itself in flight. Two orbs make delegation unambiguous. Straight-line territory stays with reconnecting.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:var(--text-dim)">rejected</b> · handshake <span class="why">Body parts; also reads as agreement, not transfer.</span></li><li><b style="color:var(--text-dim)">rejected</b> · arrow between two nodes <span class="why">Reads as data flow or link, and collides with reconnecting's straight-line territory.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">link/connection icon</span><span class="chip">data sync</span><span class="chip">bluetooth pairing</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">state-reconnecting: reconnecting is a straight flowing line between nodes; handoff is an arc with a discrete payload</span><span class="chip">agent-handoff: pack-1 agent-handoff is the 24px nav glyph; this is the living state</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">payload travels the arc, lands, receiving orb glows briefly, rest, repeat</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <article class="card" id="orb-sleeping">
+    <header>
+      <span class="num">10</span>
+      <h2>Orb Sleeping</h2>
+      <code>si:orb-sleeping</code>
+      <span class="state">metaphor proposed</span>
+    </header>
+    <p class="purpose">Show the agent is dormant on standby, wakeable but not attending.</p>
+    <div class="chosen">
+      <div class="chosen__label">Recommended metaphor</div>
+      <div class="chosen__idea">dimmed orb with rising z glyphs</div>
+      <div class="chosen__depicts">The orb dimmed to about half presence with two small z glyphs rising off its shoulder. Dormant but wakeable.</div>
+      <div class="chosen__reason">The z is the one sleep mark with no competing UI meaning, and dimming the orb itself makes the state legible even at 16px where the z's soften.</div>
+    </div>
+    <details>
+      <summary>Alternatives considered (2) · anti-associations · distinctness · motion</summary>
+      <ul class="alts">
+        <li><b style="color:#60a5fa">reserved</b> · crescent moon on the orb <span class="why">Moon is the OS convention for dark mode and do-not-disturb; reserving it avoids a settings-icon collision.</span></li><li><b style="color:var(--text-dim)">rejected</b> · closed eyes on the orb <span class="why">Facial features turn the orb into a mascot; the pack keeps the orb faceless.</span></li>
+      </ul>
+      <div class="row"><b>Must never read as</b> <span class="chip">dark mode moon</span><span class="chip">do not disturb</span><span class="chip">zzz text emoji clutter (max two z glyphs)</span></div>
+      <div class="row"><b>Distinct from</b> <span class="chip">orb-idle: idle is full-presence and adornment-free; sleeping is dimmed with z glyphs</span></div>
+      <div class="row"><b>Motion</b> <span class="motion">z glyphs rise and fade on a slow cycle; orb breathes extra slowly</span></div>
+    </details>
+    <div class="verdict-row">
+      <span class="verdict-hint">Your verdict:</span>
+      <span class="v approve">approve as recommended</span>
+      <span class="v redirect">redirect (say how)</span>
+    </div>
+  </article>
+
+  <footer><span>CURLY MOLE LABS</span><span>AGENT PULSE · BATCH 1 · METAPHOR GATE · GENERATED FROM RECORDS</span></footer>
+</main>
+</body>
+</html>

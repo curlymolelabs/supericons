@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:token-meter",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "token-meter",
+  "name": "Token Meter",
+  "depicts": "A compact meter for token usage or budget.",
+  "useCase": "Use for token budgets, usage limits, context spend, cost indicators, and model capacity.",
+  "category": "agentic-ai",
+  "assetType": "metric-icon",
+  "primaryMetaphor": "A small segmented meter with three token bars.",
+  "avoidMetaphors": [
+    "coin stack",
+    "battery only",
+    "gas gauge"
+  ],
+  "siblingConcepts": [
+    "context-window",
+    "context-compaction",
+    "eval-run"
+  ],
+  "searchTerms": [
+    "token meter",
+    "token budget",
+    "usage",
+    "context spend",
+    "model capacity",
+    "rate limit"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

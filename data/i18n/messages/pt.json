@@ -83,6 +83,24 @@
     "tags": "Tags",
     "tagsWithCount": "Tags ({count})",
     "categories": {
+      "ai-app-builders": "Criadores de apps de IA",
+      "coding-agents-dev-environments": "Agentes de código e ambientes de desenvolvimento",
+      "model-platforms-ai-labs": "Plataformas de modelos e laboratórios de IA",
+      "ai-search-research-evaluation": "Busca, pesquisa e avaliação com IA",
+      "generative-media-creative-ai": "Mídia generativa e IA criativa",
+      "voice-audio-ai": "IA de voz e áudio",
+      "agent-infrastructure-runtime": "Infraestrutura e runtime de agentes",
+      "mcp-tooling-protocols": "MCP, ferramentas e protocolos",
+      "general-agents-assistants": "Agentes e assistentes gerais",
+      "design-ui-intelligence": "Inteligência de design e UI",
+      "agent-business-monetization": "Negócios e monetização de agentes",
+      "coding-agent-tools": "Ferramentas de agentes de código",
+      "agent-lifecycle-states": "Estados do ciclo de vida de agentes",
+      "agent-trust-safety": "Confiança e segurança de agentes",
+      "agent-workflow-mcp": "Fluxos de agentes e MCP",
+      "agentic-payments": "Pagamentos agentivos",
+      "frontier-compute": "Computação de fronteira",
+      "physical-automation": "Automação física",
       "ai-agent-workflows": "IA e automação",
       "navigation-wayfinding": "Navegação e orientação",
       "actions-controls": "Ações e controles",
@@ -100,7 +118,9 @@
       "maps-places-travel": "Mapas, lugares e viagens",
       "time-calendar": "Tempo e calendário",
       "nature-weather-lifestyle": "Natureza, clima e estilo de vida",
-      "brands-social": "Marcas e social"
+      "brands-social": "Marcas e social",
+      "trending-culture": "Tendências e cultura",
+      "cars-vehicles": "Carros e veículos"
     }
   },
   "tools": {
@@ -475,7 +495,6 @@
         "signin": {
           "title": "Entrar no Supericons",
           "desc": "Mantenha compras de coleções vinculadas a uma conta para que downloads e atualizações fiquem sincronizados.",
-          "note": "Conta gratuita. Não é necessário cartão para usar ícones gratuitos.",
           "submit": "Entrar",
           "toggle": "Ainda não tem conta.",
           "toggleAction": "Cadastrar"
@@ -483,7 +502,6 @@
         "signup": {
           "title": "Criar sua conta Supericons",
           "desc": "Suas compras, downloads e futuras atualizações ficarão conectados a esta conta.",
-          "note": "Conta gratuita. Não é necessário cartão para usar ícones gratuitos.",
           "submit": "Criar conta",
           "toggle": "Já tem uma conta.",
           "toggleAction": "Entrar"
@@ -493,7 +511,6 @@
         "signin": {
           "title": "Entrar no Supericons",
           "desc": "Continue para o checkout Pro para acesso MCP, ferramentas de fluxo de trabalho e coleções premium.",
-          "note": "Conta gratuita. Não é necessário cartão para usar ícones gratuitos.",
           "submit": "Entrar",
           "toggle": "Ainda não tem conta.",
           "toggleAction": "Cadastrar"
@@ -501,7 +518,6 @@
         "signup": {
           "title": "Criar sua conta Supericons",
           "desc": "Configure sua conta primeiro e continue para o checkout Pro quando estiver pronto.",
-          "note": "Conta gratuita. Não é necessário cartão para usar ícones gratuitos.",
           "submit": "Criar conta",
           "toggle": "Já tem uma conta.",
           "toggleAction": "Entrar"
@@ -636,7 +652,7 @@
   "legal": {
     "terms": {
       "pageTitle": "Termos de serviço",
-      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Última atualização: 8 de abril de 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Direitos de uso</h3><p>Supericons oferece ícones gratuitos e premium para produtos digitais. Ícones gratuitos mantêm suas licenças open-source originais.</p><p>Coleções animadas premium pertencem à Curly Mole Labs e são usadas conforme a licença comprada.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. Direitos em saídas de IA</h3><p>Ícones obtidos pelo MCP podem ser usados em código gerado por IA.</p><p>Os arquivos fonte SVG e CSS continuam sendo ativos da Curly Mole Labs e não podem ser extraídos nem exportados em massa.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Redistribuição</h3><p>Você não pode redistribuir SVG ou CSS fonte, revender acesso, sublicenciar acesso ou criar uma biblioteca concorrente.</p><p>Você pode usar ícones em sites, apps e entregáveis finais quando os arquivos fonte não ficam expostos.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Níveis de licença</h3><p>A licença de um projeto vale para compras individuais e resgates do Pro mensal.</p><p>A licença de projetos ilimitados vale para assinaturas Pro ativas, coleções incluídas no Pro anual e compras Launch Edition.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. Reembolsos</h3><p>Assinaturas Pro podem ser canceladas a qualquer momento. Não há reembolso parcial do período atual.</p><p>Compras digitais únicas não são reembolsadas após liberação do download, salvo problema técnico informado em até 14 dias.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Contato</h3><p>Para termos, licenças ou reembolsos, escreva para hello@supericons.dev.</p></section></div>"
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Última atualização: 8 de abril de 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Direitos de uso</h3><p>Supericons oferece ícones gratuitos e premium para produtos digitais. Ícones gratuitos mantêm suas licenças open-source originais.</p><p>Coleções animadas premium pertencem à Curly Mole Labs e são usadas conforme a licença comprada.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. Direitos em saídas de IA</h3><p>Ícones obtidos pelo MCP podem ser usados em código gerado por IA.</p><p>Os arquivos fonte SVG e CSS continuam sendo ativos da Curly Mole Labs e não podem ser extraídos nem exportados em massa.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Redistribuição</h3><p>Você não pode redistribuir SVG ou CSS fonte, revender acesso, sublicenciar acesso ou criar uma biblioteca concorrente.</p><p>Você pode usar ícones em sites, apps e entregáveis finais quando os arquivos fonte não ficam expostos.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Níveis de licença</h3><p>A licença de um projeto vale para compras individuais e resgates do Pro mensal.</p><p>A licença de projetos ilimitados vale para assinaturas Pro ativas, coleções incluídas no Pro anual e compras Launch Edition.</p></section><section class=\"terms-section\" id=\"single-icon-license\"><h3 class=\"terms-section__title\">5. Compras de ícone individual</h3><p><strong>Licença de ícone individual v1.0, em vigor a partir de 7 de julho de 2026.</strong> Esta seção cobre um ícone animado pago comprado pelo fluxo de compra de ícone individual da Supericons, incluindo uma compra feita por uma pessoa, por um agente ajudando uma pessoa ou por um agente aprovado por uma organização.</p><p>A licença pertence à pessoa ou organização que controla a carteira ou conta pagadora no momento da compra. Se um agente compra em nome de uma pessoa ou organização, a licença pertence a essa pessoa ou organização, não ao agente.</p><p>A Supericons concede ao titular da licença uma licença não exclusiva, mundial e perpétua para usar o ícone comprado, incluindo o SVG entregue e qualquer CSS de animação entregue para esse ícone, em um produto final, projeto de cliente, site, app, apresentação, ferramenta interna ou repositório de software.</p><p>Você pode usar, modificar e incluir o ícone em código-fonte, arquivos compilados de aplicativo, capturas de tela, demos, documentação e marketing desse projeto licenciado.</p><p>Você não pode revender, sublicenciar ou redistribuir o ícone como um ativo independente, publicá-lo em um pacote de ícones, biblioteca de modelos, kit de design, item de marketplace, banco de dados de ativos, biblioteca de ícones concorrente, produto de ativos de estoque ou conjunto de treinamento, nem compartilhar a fonte bruta fora do projeto licenciado.</p><p>Guarde a resposta de pagamento x402, a referência de liquidação ou os dados do recibo quando disponíveis. Para dúvidas sobre entrega, cobrança duplicada, liquidação ou licença, envie email para hello@supericons.dev com os dados do recibo e o nome do ícone.</p><p>As traduções são fornecidas por conveniência. Se uma versão traduzida entrar em conflito com a versão em inglês, a versão em inglês prevalece.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Reembolsos</h3><p>Assinaturas Pro podem ser canceladas a qualquer momento. Não há reembolso parcial do período atual.</p><p>Compras digitais únicas não são reembolsadas após liberação do download, salvo problema técnico informado em até 14 dias.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. Contato</h3><p>Para termos, licenças ou reembolsos, escreva para hello@supericons.dev.</p></section></div>"
     },
     "privacy": {
       "pageTitle": "Política de Privacidade",

@@ -373,10 +373,28 @@ async function apiRequest(path, options = {}, retry = true) {
   }
 
   if (!response.ok) {
-    throw new Error(payload.error || `Request failed (${response.status})`);
+    throw new Error(formatApiErrorMessage(payload, response.status));
   }
 
   return payload;
+}
+
+function formatApiErrorMessage(payload, status) {
+  const fallback = `Request failed (${status})`;
+  const raw = payload?.error || payload?.message;
+  if (!raw) return fallback;
+  if (typeof raw === 'string') return raw;
+  if (typeof raw !== 'object') return String(raw);
+  const parts = [
+    raw.message,
+    raw.details,
+    raw.hint,
+    raw.code ? `code ${raw.code}` : '',
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).trim())
+    .filter(Boolean);
+  return parts.length > 0 ? parts.join(' - ') : fallback;
 }
 
 async function apiRawRequest(path, options = {}, retry = true) {
@@ -488,12 +506,17 @@ function renderPagination(containerId, infoId, pagination, onClickName, itemLabe
     container.innerHTML = '';
     return;
   }
+  const pages = getVisiblePaginationPages(pagination);
   let html = `
     <button class="page-btn" type="button" onclick="${onClickName}(${Math.max(1, pagination.page - 1)})">
       <span class="material-symbols-outlined">chevron_left</span>
     </button>
   `;
-  for (let page = 1; page <= pagination.page_count; page += 1) {
+  for (const page of pages) {
+    if (page === 'ellipsis') {
+      html += '<span class="pagination__ellipsis">...</span>';
+      continue;
+    }
     html += `<button class="page-btn ${page === pagination.page ? 'active' : ''}" type="button" onclick="${onClickName}(${page})">${page}</button>`;
   }
   html += `
@@ -502,6 +525,36 @@ function renderPagination(containerId, infoId, pagination, onClickName, itemLabe
     </button>
   `;
   container.innerHTML = html;
+}
+
+function getVisiblePaginationPages(pagination) {
+  const total = Math.max(1, Number(pagination.page_count || 1));
+  const current = Math.min(total, Math.max(1, Number(pagination.page || 1)));
+  if (total <= 9) {
+    return Array.from({ length: total }, (_, index) => index + 1);
+  }
+
+  const visible = new Set([1, total, current, current - 1, current + 1]);
+  if (current <= 4) {
+    [2, 3, 4, 5].forEach((page) => visible.add(page));
+  }
+  if (current >= total - 3) {
+    [total - 4, total - 3, total - 2, total - 1].forEach((page) => visible.add(page));
+  }
+
+  const pages = [...visible]
+    .filter((page) => page >= 1 && page <= total)
+    .sort((a, b) => a - b);
+  const result = [];
+  let previous = 0;
+  for (const page of pages) {
+    if (previous && page - previous > 1) {
+      result.push('ellipsis');
+    }
+    result.push(page);
+    previous = page;
+  }
+  return result;
 }
 
 function sumMetric(rows, metric) {
