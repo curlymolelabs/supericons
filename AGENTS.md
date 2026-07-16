@@ -17,11 +17,11 @@ Scope:
 
 ## Branch and worktree discipline
 
-- Each concurrent workstream (session) must use its own branch and its own git worktree. Do not do feature work directly in the main worktree.
-- The main worktree stays clean. It is used only for reviewed integration of completed branches.
-- Never leave uncommitted changes in the main worktree between sessions. If you find them, they belong to another workstream: do not commit, stash, or move them; ask the owner to have the owning session secure them.
-- Never commit temporary, private, credential, or local platform files (for example `.tmp/`, `.netlify/`, `data/*/private/`, local logs). Review untracked files before any broad commit.
-- Integration into main happens by reviewed merge or fast-forward of a verified branch, never by committing loose changes on main.
+- Prefer a dedicated branch and a separate git worktree for any substantial workstream (as the Material and integration efforts did). This is the safest mode.
+- Sessions working in the shared main worktree must stage with scoped `git add <own paths>` only, never `git add -A` or `git add .`, and must leave the tree clean (work committed) before the session ends.
+- Uncommitted changes you did not make belong to another workstream: do not commit, stash, or move them; ask the owner to have the owning session secure them.
+- Never commit temporary, private, credential, or local platform files (for example `.tmp/`, `.netlify/`, `data/*/private/`, local logs, personal scratchpads). Review every untracked file before any broad commit.
+- Reviewed integration branches merge into main via merge commit or fast-forward after verification; do not bypass an in-flight reviewed integration by committing to main files that the integration also changes.
 
 ## Plain language
 
