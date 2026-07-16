@@ -119,6 +119,10 @@ assert.equal(manifest.package.requires_interactive_otp, true);
 assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
 assert.equal(manifest.publication_attempts.maximum_additional_publish_commands, 1);
 assert.equal(manifest.publication_attempts.maximum_successful_publications, 1);
+assert.equal(manifest.publication_attempts.receipt_schema_version, 1);
+assert.equal(manifest.publication_attempts.receipt_scope, 'user_local_application_data');
+assert.equal(manifest.publication_attempts.receipt_contains_credentials, false);
+assert.equal(manifest.publication_attempts.consumption_timing, 'immediately_before_npm_publish');
 
 const archivePath = join(repoRoot, manifest.package.archive_path);
 assert.equal(sha256File(archivePath), manifest.package.archive_sha256);
@@ -269,6 +273,21 @@ const otpEnvironment = JSON.parse(execFileSync(powerShell, [
 assert.equal(otpEnvironment.status, 'ok');
 assert.equal(otpEnvironment.otp_observed_by_child, true);
 assert.equal(otpEnvironment.prior_environment_restored, true);
+const attemptBudget = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  publisherPath,
+  '-RunAttemptBudgetSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(attemptBudget.status, 'ok');
+assert.equal(attemptBudget.failed_preflight_publish_calls, 0);
+assert.equal(attemptBudget.invalid_otp_publish_calls, 0);
+assert.equal(attemptBudget.first_execution_publish_calls, 1);
+assert.equal(attemptBudget.second_execution_publish_calls, 0);
+assert.equal(attemptBudget.receipt_manifest_bound, true);
+assert.equal(attemptBudget.receipt_contains_credentials, false);
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -333,6 +352,7 @@ console.log(JSON.stringify({
   rollback_self_tests: ['integrity_mismatch', 'tag_mismatch'],
   native_command_absence_probe: 'captured',
   otp_environment_probe: 'injected_and_restored',
+  publish_attempt_budget_probe: 'first_one_second_zero',
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,

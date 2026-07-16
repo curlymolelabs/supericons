@@ -59,7 +59,11 @@
   "publication_attempts": {
     "recorded_eotp_rejections": 1,
     "maximum_additional_publish_commands": 1,
-    "maximum_successful_publications": 1
+    "maximum_successful_publications": 1,
+    "receipt_schema_version": 1,
+    "receipt_scope": "user_local_application_data",
+    "receipt_contains_credentials": false,
+    "consumption_timing": "immediately_before_npm_publish"
   },
   "hosted_comparison": {
     "purpose": "informational_local_versus_stable_hosted_divergence",
@@ -151,13 +155,13 @@
   },
   "artifacts": {
     "publisher": "scripts/publish-search-v2-local-first-beta.ps1",
-    "publisher_sha256": "a87145c2c7ff931280c6ce3c53a90c6dc1cce68ad73014ef43a03aa863b63008",
+    "publisher_sha256": "8eb3c7d38e118d3000254a5520f6b7d453955ef29209c9f4af02e33269a53f00",
     "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
     "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
     "hosted_comparison_runner": "scripts/run-search-v2-local-hosted-comparison.mjs",
     "hosted_comparison_runner_sha256": "28cb79fcda54282b27da50c4662b7fbf628c175275a4904dc675502bcd32a8e9",
     "packet_verifier": "scripts/verify-search-v2-local-first-beta-publication-packet.mjs",
-    "packet_verifier_sha256": "8021307d4288b976c2ed7ade50c0a7b6e0155b0d21da381f12ca4f80d64839d9",
+    "packet_verifier_sha256": "d8d69f49b7153e36e62aa41acdeafd39fa1e854353f663b88dfa5fc063ecb63b",
     "approval_request": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-approval-request-2026-07-16.md"
   },
   "monitoring": {

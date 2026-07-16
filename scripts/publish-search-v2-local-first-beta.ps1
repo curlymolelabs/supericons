@@ -5,6 +5,7 @@ param(
     [switch]$RunRollbackSelfTest,
     [switch]$RunNativeCommandCaptureSelfTest,
     [switch]$RunOtpEnvironmentSelfTest,
+    [switch]$RunAttemptBudgetSelfTest,
     [ValidateSet('integrity_mismatch', 'tag_mismatch')]
     [string]$RollbackTestScenario
 )
@@ -52,6 +53,89 @@ function Invoke-NpmPublishWithOtp(
         [Environment]::SetEnvironmentVariable('NPM_CONFIG_OTP', $previousOtp, 'Process')
         $plainOtp = $null
     }
+}
+
+function Test-SecureOtpFormat([System.Security.SecureString]$SecureOtp) {
+    if ($null -eq $SecureOtp) {
+        throw 'A secure npm one-time password is required.'
+    }
+    $plainOtp = $null
+    try {
+        $plainOtp = [System.Net.NetworkCredential]::new('', $SecureOtp).Password
+        if ($plainOtp -notmatch '^\d{6}$') {
+            throw 'The npm one-time password must contain exactly six digits.'
+        }
+    }
+    finally {
+        $plainOtp = $null
+    }
+}
+
+function Get-PublicationAttemptReceiptPath([string]$ManifestSha256) {
+    $localStateRoot = [Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)
+    if ([string]::IsNullOrWhiteSpace($localStateRoot)) {
+        throw 'Local application data is unavailable, so the publish-command allowance cannot be protected.'
+    }
+    return Join-Path `
+        (Join-Path $localStateRoot 'Supericons\release-attempts') `
+        "$ManifestSha256.json"
+}
+
+function New-PublicationAttemptReceipt(
+    [string]$Path,
+    [string]$ManifestSha256,
+    [string]$PackageSpec
+) {
+    $directory = Split-Path -Parent $Path
+    $null = New-Item -ItemType Directory -Path $directory -Force
+    $payload = [pscustomobject]@{
+        schema_version = 1
+        manifest_sha256 = $ManifestSha256
+        package = $PackageSpec
+        action = 'npm_publish_command_reserved'
+        reserved_at_utc = [DateTime]::UtcNow.ToString('o')
+    } | ConvertTo-Json -Compress
+    $bytes = [System.Text.UTF8Encoding]::new($false).GetBytes($payload)
+    $stream = $null
+    try {
+        $stream = [System.IO.File]::Open(
+            $Path,
+            [System.IO.FileMode]::CreateNew,
+            [System.IO.FileAccess]::Write,
+            [System.IO.FileShare]::None
+        )
+        $stream.Write($bytes, 0, $bytes.Length)
+        $stream.Flush($true)
+    }
+    catch {
+        if (Test-Path -LiteralPath $Path) {
+            throw 'The publish-command allowance for this manifest is already consumed. Do not rerun it.'
+        }
+        throw "The publish-command allowance could not be recorded safely. $($_.Exception.Message)"
+    }
+    finally {
+        if ($null -ne $stream) {
+            $stream.Dispose()
+        }
+    }
+    return $Path
+}
+
+function Invoke-BoundedNpmPublish(
+    [scriptblock]$NpmInvoker,
+    [string[]]$Arguments,
+    [System.Security.SecureString]$SecureOtp,
+    [string]$ReceiptPath,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [bool]$PreflightPassed
+) {
+    if (-not $PreflightPassed) {
+        throw 'Publication preflight did not pass, so no publish command is allowed.'
+    }
+    Test-SecureOtpFormat $SecureOtp
+    $null = New-PublicationAttemptReceipt $ReceiptPath $ManifestSha256 $PackageSpec
+    return Invoke-NpmPublishWithOtp $NpmInvoker $Arguments $SecureOtp
 }
 
 function Invoke-NativeCommandResult([string]$Executable, [string[]]$Arguments) {
@@ -259,8 +343,99 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     }
 }
 
+function Invoke-AttemptBudgetSelfTest {
+    $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-publish-budget-$([guid]::NewGuid().ToString('N'))"
+    $receiptPath = Join-Path $temporaryRoot 'attempt.json'
+    $manifestSha256 = 'a' * 64
+    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $script:AttemptBudgetPublishCalls = 0
+    $mockInvoker = {
+        param([string[]]$NpmArguments)
+        if ($NpmArguments[0] -eq 'publish') {
+            $script:AttemptBudgetPublishCalls += 1
+        }
+        return [pscustomobject]@{ ExitCode = 1; Output = 'EOTP test rejection' }
+    }
+    $validOtp = ConvertTo-SecureString '123456' -AsPlainText -Force
+    $invalidOtp = ConvertTo-SecureString '12x456' -AsPlainText -Force
+    try {
+        $preflightRejected = $false
+        try {
+            $null = Invoke-BoundedNpmPublish `
+                $mockInvoker @('publish', 'approved.tgz') $validOtp `
+                $receiptPath $manifestSha256 $packageSpec $false
+        }
+        catch {
+            $preflightRejected = $_.Exception.Message -match 'preflight did not pass'
+        }
+        if (-not $preflightRejected -or (Test-Path -LiteralPath $receiptPath) -or $script:AttemptBudgetPublishCalls -ne 0) {
+            throw 'Attempt-budget self-test consumed an allowance during failed preflight.'
+        }
+
+        $invalidOtpRejected = $false
+        try {
+            $null = Invoke-BoundedNpmPublish `
+                $mockInvoker @('publish', 'approved.tgz') $invalidOtp `
+                $receiptPath $manifestSha256 $packageSpec $true
+        }
+        catch {
+            $invalidOtpRejected = $_.Exception.Message -match 'exactly six digits'
+        }
+        if (-not $invalidOtpRejected -or (Test-Path -LiteralPath $receiptPath) -or $script:AttemptBudgetPublishCalls -ne 0) {
+            throw 'Attempt-budget self-test consumed an allowance for an invalid OTP.'
+        }
+
+        $firstResult = Invoke-BoundedNpmPublish `
+            $mockInvoker @('publish', 'approved.tgz') $validOtp `
+            $receiptPath $manifestSha256 $packageSpec $true
+        if ($firstResult.ExitCode -ne 1 -or $script:AttemptBudgetPublishCalls -ne 1) {
+            throw 'Attempt-budget self-test did not issue exactly one first publish command.'
+        }
+
+        $secondRejected = $false
+        try {
+            $null = Invoke-BoundedNpmPublish `
+                $mockInvoker @('publish', 'approved.tgz') $validOtp `
+                $receiptPath $manifestSha256 $packageSpec $true
+        }
+        catch {
+            $secondRejected = $_.Exception.Message -match 'already consumed'
+        }
+        if (-not $secondRejected -or $script:AttemptBudgetPublishCalls -ne 1) {
+            throw 'Attempt-budget self-test allowed a second publish command.'
+        }
+
+        $receiptText = Get-Content -Raw -LiteralPath $receiptPath
+        $receipt = $receiptText | ConvertFrom-Json
+        if (
+            $receipt.manifest_sha256 -ne $manifestSha256 -or
+            $receipt.package -ne $packageSpec -or
+            $receipt.action -ne 'npm_publish_command_reserved' -or
+            $receiptText -match '123456|12x456|otp|password|credential'
+        ) {
+            throw 'Attempt-budget receipt is invalid or contains credential material.'
+        }
+
+        return [pscustomobject]@{
+            status = 'ok'
+            failed_preflight_publish_calls = 0
+            invalid_otp_publish_calls = 0
+            first_execution_publish_calls = 1
+            second_execution_publish_calls = 0
+            receipt_manifest_bound = $true
+            receipt_contains_credentials = $false
+        }
+    }
+    finally {
+        $validOtp = $null
+        $invalidOtp = $null
+        Remove-Variable AttemptBudgetPublishCalls -Scope Script -ErrorAction SilentlyContinue
+        Remove-Item -LiteralPath $temporaryRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 if ($RunRollbackSelfTest) {
-    if ($ExecuteApprovedPublication -or $RunNativeCommandCaptureSelfTest -or $RunOtpEnvironmentSelfTest) {
+    if ($ExecuteApprovedPublication -or $RunNativeCommandCaptureSelfTest -or $RunOtpEnvironmentSelfTest -or $RunAttemptBudgetSelfTest) {
         throw 'Rollback self-test and real publication cannot run together.'
     }
     Write-Output (Invoke-RollbackSelfTest $RollbackTestScenario | ConvertTo-Json -Depth 4)
@@ -268,7 +443,7 @@ if ($RunRollbackSelfTest) {
 }
 
 if ($RunNativeCommandCaptureSelfTest) {
-    if ($ExecuteApprovedPublication -or $RunOtpEnvironmentSelfTest) {
+    if ($ExecuteApprovedPublication -or $RunOtpEnvironmentSelfTest -or $RunAttemptBudgetSelfTest) {
         throw 'Native command self-test and real publication cannot run together.'
     }
     $nodeExecutable = (Get-Command node -ErrorAction Stop).Source
@@ -288,7 +463,7 @@ if ($RunNativeCommandCaptureSelfTest) {
 }
 
 if ($RunOtpEnvironmentSelfTest) {
-    if ($ExecuteApprovedPublication) {
+    if ($ExecuteApprovedPublication -or $RunAttemptBudgetSelfTest) {
         throw 'OTP environment self-test and real publication cannot run together.'
     }
     $script:OtpSelfTestObserved = $null
@@ -316,6 +491,14 @@ if ($RunOtpEnvironmentSelfTest) {
     exit 0
 }
 
+if ($RunAttemptBudgetSelfTest) {
+    if ($ExecuteApprovedPublication) {
+        throw 'Attempt-budget self-test and real publication cannot run together.'
+    }
+    Write-Output (Invoke-AttemptBudgetSelfTest | ConvertTo-Json -Depth 4)
+    exit 0
+}
+
 if (-not $ExecuteApprovedPublication) {
     throw 'Publication is disabled. Pass -ExecuteApprovedPublication only for a bounded, independently audited release.'
 }
@@ -334,6 +517,9 @@ if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
 $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
 if ($manifest.package.requires_interactive_otp -and -not $PromptForNpmOtp) {
     throw 'This publication requires -PromptForNpmOtp so the owner can enter the npm code directly in the terminal.'
+}
+if ($manifest.publication_attempts.maximum_additional_publish_commands -ne 1) {
+    throw 'This publisher supports exactly one remaining manifest-bound publish command.'
 }
 $publisherPath = Join-Path $repoRoot $manifest.artifacts.publisher
 if ((Get-NormalizedTextSha256 $publisherPath) -ne $manifest.artifacts.publisher_sha256) {
@@ -393,11 +579,20 @@ $secureOtp = if ($PromptForNpmOtp) {
 else {
     $null
 }
-$publishResult = Invoke-NpmPublishWithOtp `
-    $npmInvoker `
-    @('publish', $archivePath, '--tag', $manifest.package.publish_tag, '--ignore-scripts') `
-    $secureOtp
-$secureOtp = $null
+$attemptReceiptPath = Get-PublicationAttemptReceiptPath $actualManifestSha256
+try {
+    $publishResult = Invoke-BoundedNpmPublish `
+        $npmInvoker `
+        @('publish', $archivePath, '--tag', $manifest.package.publish_tag, '--ignore-scripts') `
+        $secureOtp `
+        $attemptReceiptPath `
+        $actualManifestSha256 `
+        $packageSpec `
+        $true
+}
+finally {
+    $secureOtp = $null
+}
 if ($publishResult.ExitCode -eq 0) {
     $publicationVisible = $true
 }
@@ -411,7 +606,7 @@ else {
     }
     if (-not $publicationVisible) {
         if ($publishResult.Output -match 'EOTP|one-time password') {
-            throw 'npm rejected the one-time password and the target version is absent. Stop and obtain a fresh code before any new attempt.'
+            throw 'npm rejected the one-time password and the target version is absent. This manifest allowance is consumed. Do not rerun without a new independently audited manifest.'
         }
         throw 'npm publication returned an error and visibility is inconclusive. Do not rerun. Reconcile the exact version first.'
     }

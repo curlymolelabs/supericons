@@ -2,7 +2,7 @@
 
 Date: 2026-07-16
 Status: awaiting independent audit and owner terminal access for npm OTP
-Manifest fingerprint: `f1b192a4ef75fa26d56e927b5ef17b07f9447762f3af9b9a63dcbf5a8e772754`
+Manifest fingerprint: `a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663`
 
 ## Purpose
 
@@ -30,6 +30,8 @@ The archive was built from a temporary clean worktree at the implementation comm
 The first execution stopped before publication because PowerShell treated npm's expected version-absent result as a fatal command error. Registry checks immediately afterward confirmed that `0.4.19-beta.0` remained absent and npm `latest` remained `0.4.17`. The runner now captures nonzero native-command results for explicit classification, with a regression test for the expected absence result.
 
 The corrected execution reached `npm publish`, which npm rejected with `EOTP` before creating the version. Read-only reconciliation again confirmed that the prerelease remained absent and `latest` remained `0.4.17`. The guarded runner now requires `-PromptForNpmOtp`, reads the six-digit code as a secure terminal value, exposes it to npm only through the child-process environment, and restores the previous environment immediately afterward.
+
+Independent audit then found that the one-additional-command limit existed only in the manifest. The runner now creates an atomic, manifest-bound receipt in the current user's local application data immediately before the npm publish child starts. The receipt contains the manifest hash, package, action, and timestamp only. It survives process exit and blocks a second publish command under the same manifest. Failed preflight and invalid OTP format stop before the allowance is consumed.
 
 These runner corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for these equivalent safety corrections does not require renewed product approval. The remaining owner step is physical access only: entering the npm OTP directly in the terminal.
 
@@ -80,6 +82,8 @@ Immediately before publication, the guarded runner must confirm:
 
 The preflight must classify npm's expected version-absent response without terminating or publishing. Any other absence-check failure still stops before registry mutation.
 
+Immediately before `npm publish`, the runner must atomically consume the one remaining command allowance. If npm rejects that command, including an expired OTP, the manifest cannot be rerun. A further attempt requires a new independently audited manifest.
+
 npm login and an npm one-time code are required. The owner enters the code directly into the guarded runner's secure terminal prompt. No credential or code is placed in chat, the repository, or the evidence record.
 
 ## Informational comparison
@@ -124,7 +128,7 @@ After the independent audit passes, the owner runs the bound publisher in the in
 & .\scripts\publish-search-v2-local-first-beta.ps1 `
     -ExecuteApprovedPublication `
     -PromptForNpmOtp `
-    -ApprovedManifestSha256 f1b192a4ef75fa26d56e927b5ef17b07f9447762f3af9b9a63dcbf5a8e772754
+    -ApprovedManifestSha256 a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663
 ```
 
 The owner enters the six-digit npm code at the hidden prompt. This is an access step, not a new product approval.
