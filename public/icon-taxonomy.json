@@ -1,6 +1,6 @@
 {
   "version": "p0.02",
-  "generatedAt": "2026-06-17T17:06:37.494Z",
+  "generatedAt": "2026-07-14T16:34:18.641Z",
   "categories": [
     {
       "id": "ai-app-builders",
@@ -67,6 +67,60 @@
       "label": "Agent Business & Monetization",
       "description": "Revenue, referrals, commerce, affiliate, and monetization tools for agent ecosystems.",
       "sidebarGlyph": "payments"
+    },
+    {
+      "id": "coding-agent-tools",
+      "label": "Coding Agent Tools",
+      "description": "Agent-authored code, patches, pull requests, terminals, sandboxes, and developer workflows.",
+      "sidebarGlyph": "terminal"
+    },
+    {
+      "id": "agent-lifecycle-states",
+      "label": "Agent Lifecycle States",
+      "description": "Agent progress, handoffs, approval gates, completion, retries, thinking, loading, and error states.",
+      "sidebarGlyph": "progress_activity"
+    },
+    {
+      "id": "agent-trust-safety",
+      "label": "Agent Trust and Safety",
+      "description": "Identity, guardrails, oversight, prompt attacks, policy boundaries, and safe autonomy controls.",
+      "sidebarGlyph": "verified_user"
+    },
+    {
+      "id": "agent-workflow-mcp",
+      "label": "Agent Workflow and MCP",
+      "description": "Tool calls, MCP connectors, memory, orchestration, planning, context, and multi-agent workflows.",
+      "sidebarGlyph": "account_tree"
+    },
+    {
+      "id": "agentic-payments",
+      "label": "Agentic Payments",
+      "description": "Agent wallets, autonomous payments, spending limits, stablecoins, and x402-style payment flows.",
+      "sidebarGlyph": "payments"
+    },
+    {
+      "id": "frontier-compute",
+      "label": "Frontier Compute",
+      "description": "Edge AI, quantum concepts, chips, sensors, voice interfaces, wearables, and emerging compute surfaces.",
+      "sidebarGlyph": "memory"
+    },
+    {
+      "id": "physical-automation",
+      "label": "Physical Automation",
+      "description": "Robots, drones, delivery automation, sensors, robotic arms, and embodied agent systems.",
+      "sidebarGlyph": "precision_manufacturing"
+    },
+    {
+      "id": "cars-vehicles",
+      "label": "Cars & Vehicles",
+      "description": "Cars, trucks, EVs, and vehicle silhouettes from daily life and current culture.",
+      "sidebarGlyph": "directions_car"
+    },
+    {
+      "id": "trending-culture",
+      "label": "Trending & Culture",
+      "description": "Viral moments, memes, and internet culture: of-the-moment icons that are instantly relatable.",
+      "sidebarGlyph": "local_fire_department"
     },
     {
       "id": "ai-agent-workflows",
@@ -839,9 +893,12 @@
       "secondaryCategories": [
         "foundation-model",
         "grok",
+        "grok-imagine",
         "ai-lab",
         "model-provider",
         "llm",
+        "image-generation",
+        "video-generation",
         "xai"
       ],
       "rank": 1047
@@ -873,6 +930,671 @@
         "zai"
       ],
       "rank": 1049
+    },
+    {
+      "iconId": "si:agent-commit",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agent-tools",
+      "secondaryCategories": [
+        "developer-tools",
+        "version-control",
+        "git",
+        "save"
+      ],
+      "rank": 2000
+    },
+    {
+      "iconId": "si:agent-diff",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agent-tools",
+      "secondaryCategories": [
+        "developer-tools",
+        "version-control",
+        "patch",
+        "change"
+      ],
+      "rank": 2001
+    },
+    {
+      "iconId": "si:agent-face",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "status-feedback",
+        "communication",
+        "bot",
+        "avatar",
+        "assistant"
+      ],
+      "rank": 2002
+    },
+    {
+      "iconId": "si:agent-handoff",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "multi-agent",
+        "agent-state",
+        "delegate",
+        "transfer"
+      ],
+      "rank": 2003
+    },
+    {
+      "iconId": "si:agent-id-badge",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "governance",
+        "developer-tools",
+        "identity",
+        "scope"
+      ],
+      "rank": 2004
+    },
+    {
+      "iconId": "si:agent-pr",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agent-tools",
+      "secondaryCategories": [
+        "developer-tools",
+        "version-control",
+        "git",
+        "review"
+      ],
+      "rank": 2005
+    },
+    {
+      "iconId": "si:agent-swarm",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "multi-agent",
+        "architecture",
+        "mesh",
+        "cluster"
+      ],
+      "rank": 2006
+    },
+    {
+      "iconId": "si:agent-wallet",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "crypto",
+        "governance",
+        "funds",
+        "account"
+      ],
+      "rank": 2007
+    },
+    {
+      "iconId": "si:approval-gate",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "security",
+        "agent-state",
+        "consent",
+        "pause"
+      ],
+      "rank": 2008
+    },
+    {
+      "iconId": "si:ar-glasses",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "hardware-devices",
+        "wearable",
+        "xr"
+      ],
+      "rank": 2009
+    },
+    {
+      "iconId": "si:autonomy-dial",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "governance",
+        "ui-controls",
+        "delegation",
+        "level"
+      ],
+      "rank": 2010
+    },
+    {
+      "iconId": "si:bison-yeet",
+      "sourceLibrary": "si",
+      "jobCategory": "trending-culture",
+      "secondaryCategories": [
+        "humor",
+        "meme",
+        "surprise",
+        "yeet"
+      ],
+      "rank": 2011
+    },
+    {
+      "iconId": "si:context-gauge",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "analytics",
+        "developer-tools",
+        "window",
+        "capacity"
+      ],
+      "rank": 2012
+    },
+    {
+      "iconId": "si:cybertruck",
+      "sourceLibrary": "si",
+      "jobCategory": "cars-vehicles",
+      "secondaryCategories": [
+        "trending-culture",
+        "ev",
+        "tesla",
+        "truck"
+      ],
+      "rank": 2013
+    },
+    {
+      "iconId": "si:cybertruck-low",
+      "sourceLibrary": "si",
+      "jobCategory": "cars-vehicles",
+      "secondaryCategories": [
+        "trending-culture",
+        "ev",
+        "tesla",
+        "truck"
+      ],
+      "rank": 2014
+    },
+    {
+      "iconId": "si:cybertruck-solid",
+      "sourceLibrary": "si",
+      "jobCategory": "cars-vehicles",
+      "secondaryCategories": [
+        "trending-culture",
+        "ev",
+        "tesla",
+        "truck"
+      ],
+      "rank": 2015
+    },
+    {
+      "iconId": "si:delivery-robot",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "commerce",
+        "sidewalk",
+        "parcel"
+      ],
+      "rank": 2016
+    },
+    {
+      "iconId": "si:done-spark",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "agent-state",
+        "complete",
+        "success"
+      ],
+      "rank": 2017
+    },
+    {
+      "iconId": "si:drone-delivery",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "commerce",
+        "parcel",
+        "drop"
+      ],
+      "rank": 2018
+    },
+    {
+      "iconId": "si:drone-quad",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "uav",
+        "fpv"
+      ],
+      "rank": 2019
+    },
+    {
+      "iconId": "si:edge-ai-chip",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "hardware-devices",
+        "developer-tools",
+        "edge-ai",
+        "chip",
+        "hardware"
+      ],
+      "rank": 2020
+    },
+    {
+      "iconId": "si:entangled-pair",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "science",
+        "linked",
+        "correlated"
+      ],
+      "rank": 2021
+    },
+    {
+      "iconId": "si:error-glitch",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "agent-state",
+        "fault",
+        "alert"
+      ],
+      "rank": 2022
+    },
+    {
+      "iconId": "si:guardrail-path",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "agent-state",
+        "governance",
+        "bounds",
+        "policy"
+      ],
+      "rank": 2023
+    },
+    {
+      "iconId": "si:hallucination-warn",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "status-feedback",
+        "governance",
+        "distortion",
+        "verify"
+      ],
+      "rank": 2024
+    },
+    {
+      "iconId": "si:human-in-loop",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "governance",
+        "agent-state",
+        "oversight",
+        "review"
+      ],
+      "rank": 2025
+    },
+    {
+      "iconId": "si:humanoid-robot",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "robotics",
+        "hardware-devices",
+        "humanoid",
+        "hardware"
+      ],
+      "rank": 2026
+    },
+    {
+      "iconId": "si:lidar-sensor",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "scan",
+        "range"
+      ],
+      "rank": 2027
+    },
+    {
+      "iconId": "si:loader-orbit",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "loading-states",
+        "agent-state",
+        "loading",
+        "spinner"
+      ],
+      "rank": 2028
+    },
+    {
+      "iconId": "si:machine-pay",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "crypto",
+        "multi-agent",
+        "m2m",
+        "autonomous"
+      ],
+      "rank": 2029
+    },
+    {
+      "iconId": "si:mcp-connector",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "mcp",
+        "developer-tools",
+        "plug",
+        "server"
+      ],
+      "rank": 2030
+    },
+    {
+      "iconId": "si:memory-store",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "data",
+        "agent-state",
+        "context",
+        "recall"
+      ],
+      "rank": 2031
+    },
+    {
+      "iconId": "si:orchestrator",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "multi-agent",
+        "architecture",
+        "supervisor"
+      ],
+      "rank": 2032
+    },
+    {
+      "iconId": "si:person-airborne",
+      "sourceLibrary": "si",
+      "jobCategory": "trending-culture",
+      "secondaryCategories": [
+        "humor",
+        "meme",
+        "fail",
+        "yeet"
+      ],
+      "rank": 2033
+    },
+    {
+      "iconId": "si:person-launched",
+      "sourceLibrary": "si",
+      "jobCategory": "trending-culture",
+      "secondaryCategories": [
+        "humor",
+        "meme",
+        "launch",
+        "speed"
+      ],
+      "rank": 2034
+    },
+    {
+      "iconId": "si:pipeline-run",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "architecture",
+        "developer-tools",
+        "workflow",
+        "chain"
+      ],
+      "rank": 2035
+    },
+    {
+      "iconId": "si:plan-branches",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "agent-state",
+        "developer-tools",
+        "tasks",
+        "decompose"
+      ],
+      "rank": 2036
+    },
+    {
+      "iconId": "si:progress-ring",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "loading-states",
+        "analytics",
+        "progress",
+        "task"
+      ],
+      "rank": 2037
+    },
+    {
+      "iconId": "si:prompt-field",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "ui-controls",
+        "communication",
+        "input",
+        "ask"
+      ],
+      "rank": 2038
+    },
+    {
+      "iconId": "si:prompt-injection",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-trust-safety",
+      "secondaryCategories": [
+        "developer-tools",
+        "governance",
+        "attack",
+        "input"
+      ],
+      "rank": 2039
+    },
+    {
+      "iconId": "si:quantum-chip",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "hardware-devices",
+        "science",
+        "qpu",
+        "processor"
+      ],
+      "rank": 2040
+    },
+    {
+      "iconId": "si:qubit-sphere",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "hardware-devices",
+        "science",
+        "bloch",
+        "state"
+      ],
+      "rank": 2041
+    },
+    {
+      "iconId": "si:retry-route",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "agent-state",
+        "status-feedback",
+        "recover",
+        "reroute"
+      ],
+      "rank": 2042
+    },
+    {
+      "iconId": "si:robot-arm",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "manipulator",
+        "industrial"
+      ],
+      "rank": 2043
+    },
+    {
+      "iconId": "si:robot-dog",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "hardware-devices",
+        "quadruped",
+        "patrol"
+      ],
+      "rank": 2044
+    },
+    {
+      "iconId": "si:sandbox-run",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agent-tools",
+      "secondaryCategories": [
+        "security",
+        "developer-tools",
+        "isolated",
+        "safe"
+      ],
+      "rank": 2045
+    },
+    {
+      "iconId": "si:skill-module",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "developer-tools",
+        "mcp",
+        "plugin",
+        "capability"
+      ],
+      "rank": 2046
+    },
+    {
+      "iconId": "si:spend-limit",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "crypto",
+        "governance",
+        "cap",
+        "policy"
+      ],
+      "rank": 2047
+    },
+    {
+      "iconId": "si:stablecoin",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "crypto",
+        "peg",
+        "currency"
+      ],
+      "rank": 2048
+    },
+    {
+      "iconId": "si:streaming-caret",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "status-feedback",
+        "loading-states",
+        "typing",
+        "response"
+      ],
+      "rank": 2049
+    },
+    {
+      "iconId": "si:terminal-agent",
+      "sourceLibrary": "si",
+      "jobCategory": "coding-agent-tools",
+      "secondaryCategories": [
+        "developer-tools",
+        "cli",
+        "shell"
+      ],
+      "rank": 2050
+    },
+    {
+      "iconId": "si:thinking-pulse",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-lifecycle-states",
+      "secondaryCategories": [
+        "status-feedback",
+        "loading-states",
+        "agent-state",
+        "thinking",
+        "reasoning",
+        "loading-state"
+      ],
+      "rank": 2051
+    },
+    {
+      "iconId": "si:token-meter",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "analytics",
+        "developer-tools",
+        "usage",
+        "budget"
+      ],
+      "rank": 2052
+    },
+    {
+      "iconId": "si:tool-call",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-workflow-mcp",
+      "secondaryCategories": [
+        "mcp",
+        "developer-tools",
+        "function",
+        "invoke"
+      ],
+      "rank": 2053
+    },
+    {
+      "iconId": "si:voice-agent",
+      "sourceLibrary": "si",
+      "jobCategory": "frontier-compute",
+      "secondaryCategories": [
+        "communication",
+        "hardware-devices",
+        "speech",
+        "waveform"
+      ],
+      "rank": 2054
+    },
+    {
+      "iconId": "si:x402-pay",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "crypto",
+        "developer-tools",
+        "protocol",
+        "http"
+      ],
+      "rank": 2055
     },
     {
       "iconId": "material:smart_toy",

@@ -55,7 +55,7 @@ try {
 
   runNpm(['install', tarballPath], installDir);
 
-  const installedRoot = join(installDir, 'node_modules', 'supericons-mcp');
+  const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   const converterModule = await import(pathToFileURL(join(installedRoot, 'converter.js')).href);
 
   if (typeof converterModule.getConverterMcpOptions !== 'function') {

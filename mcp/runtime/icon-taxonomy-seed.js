@@ -1,12 +1,15 @@
 import {
   SUPERICONS_AI_CATEGORY_DEFINITIONS,
+  SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS,
   buildSupericonsAiTaxonomyEntries,
+  buildSupericonsConceptTaxonomyEntries,
 } from './supericons-ai-taxonomy.js';
 
 export const JOB_LIBRARY_PREFIX = 'job:';
 
 export const JOB_CATEGORY_DEFINITIONS = [
   ...SUPERICONS_AI_CATEGORY_DEFINITIONS,
+  ...SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS,
   {
     id: 'ai-agent-workflows',
     label: 'AI & Automation',
@@ -294,6 +297,7 @@ function buildEntries(jobCategory, iconIds, secondaryCategories) {
 
 export const JOB_ICON_TAXONOMY_SEED = [
   ...buildSupericonsAiTaxonomyEntries(),
+  ...buildSupericonsConceptTaxonomyEntries(),
   ...buildEntries('ai-agent-workflows', AI_AGENT_ICON_IDS, ['ai', 'agents', 'automation']),
   ...buildEntries('navigation-wayfinding', NAVIGATION_ICON_IDS, ['navigation', 'wayfinding', 'layout']),
   ...buildEntries('status-feedback', STATUS_ICON_IDS, ['status', 'feedback', 'signals']),
@@ -418,7 +422,7 @@ const PURPOSE_INFERENCE_RULES = [
 ];
 
 function inferTaxonomyEntry(icon, index = 0) {
-  const explicitJobCategory = String(icon?.jobCategory || icon?.aiCategory || '').trim();
+  const explicitJobCategory = String(icon?.jobCategory || '').trim();
   if (explicitJobCategory && JOB_CATEGORY_IDS.has(explicitJobCategory)) {
     return {
       iconId: `${icon.lib}:${icon.id}`,
