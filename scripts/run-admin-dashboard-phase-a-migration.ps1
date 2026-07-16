@@ -117,6 +117,7 @@ $startedAt = [DateTime]::UtcNow.ToString('o')
 try {
   $plainPassword = [System.Net.NetworkCredential]::new('', $securePassword).Password
   $env:PGPASSWORD = $plainPassword
+  $env:SUPABASE_DB_PASSWORD = $plainPassword
   $plainPassword = $null
 
   $null = Invoke-SupabaseTextCommand -Arguments @('migration', 'list', '--linked')
@@ -155,5 +156,6 @@ try {
 finally {
   $plainPassword = $null
   Remove-Item Env:PGPASSWORD -ErrorAction SilentlyContinue
+  Remove-Item Env:SUPABASE_DB_PASSWORD -ErrorAction SilentlyContinue
   Remove-Variable securePassword -ErrorAction SilentlyContinue
 }

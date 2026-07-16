@@ -38,6 +38,7 @@ assert.equal(fields.migration_version, '20260716040000');
 assert.equal(fields.linked_project_ref_check, 'required');
 assert.equal(fields.migration_postflight_transaction, 'single');
 assert.equal(fields.supabase_cli_exit_code_handling, 'explicit');
+assert.equal(fields.supabase_cli_password_environment, 'SUPABASE_DB_PASSWORD');
 assert.equal(fields.database_url_query_parameters, 'preserved');
 assert.equal(fields.database_migrations_authorized, '1');
 assert.equal(fields.history_repairs_authorized, '1');
@@ -50,6 +51,7 @@ for (const [path, field] of [
   ['supabase/migrations/20260716040000_admin_dashboard_phase_a.sql', 'migration_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-hosted-preflight.sql', 'preflight_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-hosted-postflight.sql', 'postflight_sha256'],
+  ['references/verification/admin-dashboard-phase-a-migration-attempt-1-2026-07-16.json', 'attempt_1_evidence_sha256'],
   ['scripts/run-admin-dashboard-phase-a-migration.ps1', 'runner_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-migration-packet.mjs', 'verifier_sha256'],
 ]) {
@@ -78,10 +80,21 @@ assert.match(runner, /Invoke-SupabaseTextCommand -Arguments @\('migration', 'lis
 assert.match(runner, /'migration', 'repair', \$MigrationVersion, '--status', 'applied', '--linked'/);
 assert.match(runner, /\$exitCode = \$LASTEXITCODE/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
+assert.match(runner, /\$env:PGPASSWORD = \$plainPassword\s+\$env:SUPABASE_DB_PASSWORD = \$plainPassword/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
+assert.match(runner, /Remove-Item Env:SUPABASE_DB_PASSWORD/);
 assert.match(runner, /\[System\.IO\.File\]::WriteAllText/);
 assert.doesNotMatch(runner, /supabase db push/i);
 assert.doesNotMatch(runner, /functions deploy|railway up|npm publish/i);
+
+const attempt = JSON.parse(normalizedText(
+  'references/verification/admin-dashboard-phase-a-migration-attempt-1-2026-07-16.json',
+));
+assert.equal(attempt.approval_fingerprint, '857e6a20755d0b2fe4061de8eaf610f7c3efb0bb1dd65854b5a994bc5e13daea');
+assert.equal(attempt.runner_revision, 'dfe580e8481e4bcab63c3e8caa164c4677c9c2a2');
+assert.equal(attempt.failure_stage, 'supabase_cli_connectivity_precheck');
+assert.equal(attempt.database_sql_started, false);
+assert.equal(attempt.production_mutations, 0);
 
 console.log(JSON.stringify({
   status: 'ok',

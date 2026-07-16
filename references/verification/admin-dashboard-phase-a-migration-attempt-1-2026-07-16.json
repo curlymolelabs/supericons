@@ -1,0 +1,20 @@
+{
+  "artifact": "admin_dashboard_phase_a_migration_attempt",
+  "attempt": 1,
+  "approval_fingerprint": "857e6a20755d0b2fe4061de8eaf610f7c3efb0bb1dd65854b5a994bc5e13daea",
+  "runner_revision": "dfe580e8481e4bcab63c3e8caa164c4677c9c2a2",
+  "runner_exit_code": 1,
+  "completion_evidence_exists": false,
+  "failure_stage": "supabase_cli_connectivity_precheck",
+  "failure_message": "The Supabase CLI required SUPABASE_DB_PASSWORD. The runner supplied only PGPASSWORD.",
+  "post_attempt_diagnostic": {
+    "command": "supabase migration list --linked",
+    "exit_code": 1,
+    "status": "unauthorized",
+    "required_environment_variable": "SUPABASE_DB_PASSWORD"
+  },
+  "database_sql_started": false,
+  "database_sql_started_proof": "The failing CLI connectivity precheck is ordered before both hosted SQL invocations, and the required CLI password environment variable was absent in the launched process environment.",
+  "production_mutations": 0,
+  "finished_at": "2026-07-16T08:28:55.1573786Z"
+}
