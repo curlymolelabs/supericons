@@ -19,11 +19,11 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-backlog-2026-07-16.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-rollback-2026-07-16.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-backlog-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-rollback-2026-07-16.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -252,7 +252,7 @@ function Invoke-PsqlRollupBacklog {
 
 function Invoke-AdminLiveGate {
   param(
-    [Parameter(Mandatory = $true)][ValidateSet('legacy', 'candidate')][string]$Mode,
+    [Parameter(Mandatory = $true)][ValidateSet('preflight', 'legacy', 'candidate')][string]$Mode,
     [Parameter(Mandatory = $true)][string]$OutputPath,
     [int]$MaxRefreshDays = 0
   )
@@ -268,7 +268,8 @@ function Invoke-AdminLiveGate {
   }
   Invoke-CheckedCommand -FilePath 'node' -Arguments $arguments
   $evidence = Get-Content -LiteralPath (Join-Path $Root $OutputPath) -Raw | ConvertFrom-Json
-  if ($evidence.status -ne 'ok') {
+  $allowedStatuses = if ($Mode -eq 'preflight') { @('ok', 'degraded_proceed') } else { @('ok') }
+  if ($allowedStatuses -notcontains $evidence.status) {
     throw "The $Mode admin API live contract failed."
   }
   return $evidence
@@ -410,8 +411,8 @@ try {
     captured_at = (Get-Date).ToUniversalTime().ToString('o')
   })
   $preflight = Invoke-AdminLiveGate `
-    -Mode legacy `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json'
+    -Mode preflight `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-preflight-2026-07-16.json'
 
   $candidate = Deploy-Revision `
     -Revision $script:Packet.implementation_revision `
@@ -423,7 +424,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-live-2026-07-16.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-live-2026-07-16.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{

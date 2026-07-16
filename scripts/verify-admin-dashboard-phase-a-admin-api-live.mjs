@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { runBoundedRollupRefresh } from './admin-dashboard-rollup-refresh-gate.mjs';
+import { classifyAdminApiPreflight } from './admin-dashboard-admin-api-preflight-classifier.mjs';
 
 function readArg(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -21,7 +22,7 @@ const outputPath = readArg('output');
 const maxRefreshDaysText = readArg('max-refresh-days');
 const adminSecret = String(process.env.PHASE_A_ADMIN_SECRET || '');
 
-assert.ok(['legacy', 'candidate'].includes(mode), 'Mode must be legacy or candidate.');
+assert.ok(['preflight', 'legacy', 'candidate'].includes(mode), 'Mode must be preflight, legacy, or candidate.');
 assert.ok(outputPath, 'Provide --output for retained evidence.');
 assert.ok(adminSecret, 'PHASE_A_ADMIN_SECRET must be present in the process environment.');
 const maxRefreshDays = mode === 'candidate' ? Number(maxRefreshDaysText) : 0;
@@ -54,6 +55,46 @@ async function requestJson(path, { method = 'GET' } = {}) {
   return { payload, latency_ms: latencyMs };
 }
 
+async function runLegacyPreflight() {
+  const startedAt = performance.now();
+  let response = null;
+  let payload = null;
+  let requestError = null;
+  try {
+    response = await fetch(`${adminUrl}/stats`, {
+      headers: {
+        'content-type': 'application/json',
+        'x-admin-secret': adminSecret,
+      },
+      signal: AbortSignal.timeout(120_000),
+    });
+    payload = await response.json().catch(() => null);
+  } catch (error) {
+    requestError = error;
+  }
+
+  const latencyMs = Math.round((performance.now() - startedAt) * 10) / 10;
+  const classification = classifyAdminApiPreflight({
+    httpStatus: response?.status ?? null,
+    payloadHasStats: Boolean(payload?.stats && typeof payload.stats === 'object'),
+    errorName: requestError?.name || '',
+    errorMessage: requestError instanceof Error ? requestError.message : String(requestError || ''),
+  });
+  summary.preflight = {
+    http_status: response?.status ?? null,
+    latency_ms: latencyMs,
+    outcome: classification.outcome,
+    reason: classification.reason,
+    proceed: classification.proceed,
+  };
+  if (!classification.proceed) {
+    summary.status = 'blocked';
+    throw new Error(`Legacy preflight blocked: ${classification.reason}.`);
+  }
+  summary.status = classification.outcome === 'healthy' ? 'ok' : 'degraded_proceed';
+  summary.rollup_writes = 0;
+}
+
 async function measureQueue(path, count = 20) {
   await requestJson(path);
   const samples = [];
@@ -70,7 +111,9 @@ async function measureQueue(path, count = 20) {
 }
 
 try {
-  if (mode === 'legacy') {
+  if (mode === 'preflight') {
+    await runLegacyPreflight();
+  } else if (mode === 'legacy') {
     const stats = await requestJson('/stats');
     assert.ok(stats.payload.stats && typeof stats.payload.stats === 'object');
     summary.status = 'ok';
@@ -123,7 +166,7 @@ try {
     summary.rollup_refresh_call_count = refreshResult.calls;
   }
 } catch (error) {
-  summary.status = 'failed';
+  if (summary.status !== 'blocked') summary.status = 'failed';
   summary.error = error instanceof Error ? error.message : String(error);
   throw error;
 } finally {

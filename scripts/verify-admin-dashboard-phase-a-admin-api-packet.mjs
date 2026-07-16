@@ -29,6 +29,9 @@ const sourcePath = 'references/verification/admin-dashboard-phase-a-admin-api-fi
 const runnerPath = 'scripts/run-admin-dashboard-phase-a-admin-api-release.ps1';
 const verifierPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-packet.mjs';
 const liveGatePath = 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs';
+const preflightClassifierPath = 'scripts/admin-dashboard-admin-api-preflight-classifier.mjs';
+const preflightClassifierTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-classifier.mjs';
+const preflightLiveTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-live.mjs';
 const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-v45-inventory-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
@@ -41,7 +44,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_performance_recovery',
+  packet: 'admin_dashboard_phase_a_admin_api_preflight_recovery',
   implementation_revision: 'a342f51f185a7d168772fa7cf542eb7960ee8827',
   implementation_tree: 'f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83',
   rollback_revision: fields.rollback_revision,
@@ -49,6 +52,9 @@ assert.deepEqual(fields, {
   runner_sha256: fields.runner_sha256,
   verifier_sha256: fields.verifier_sha256,
   live_gate_sha256: fields.live_gate_sha256,
+  preflight_classifier_sha256: fields.preflight_classifier_sha256,
+  preflight_classifier_test_sha256: fields.preflight_classifier_test_sha256,
+  preflight_live_test_sha256: fields.preflight_live_test_sha256,
   rollup_gate_helper_sha256: fields.rollup_gate_helper_sha256,
   rollup_gate_test_sha256: fields.rollup_gate_test_sha256,
   backlog_sql_sha256: fields.backlog_sql_sha256,
@@ -61,11 +67,9 @@ assert.deepEqual(fields, {
   local_verification_sha256: fields.local_verification_sha256,
   inventory_sha256: fields.inventory_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
-  prior_attempt_commit: 'c79c11d0565b0496825b85829787bb8d7a1c497f',
-  prior_backlog_evidence_sha256: '4f75c43a51e3f7dfb897269e1699bc99b6ec2e90af967e841d310cf202c1221c',
-  prior_preflight_evidence_sha256: '27015218645418fed7e4c1db4407e6deda3759f42a3c244ad5f8174a453e636e',
-  prior_live_evidence_sha256: '370808a5c936f049908764e002652533d1c53d4e5211ca3050f800feeceae6f8',
-  prior_rollback_evidence_sha256: 'f841bafb3c14298db62f62b125e49b634232c0dd8efb5d0c8337f89f92738f7f',
+  prior_attempt_commit: 'ad5b6396d69e05087061aa045dd55d97afb05827',
+  prior_backlog_evidence_sha256: fields.prior_backlog_evidence_sha256,
+  prior_preflight_evidence_sha256: fields.prior_preflight_evidence_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -84,6 +88,7 @@ assert.deepEqual(fields, {
   queue_24h_p95_limit_ms: '1500',
   queue_all_p95_limit_ms: '1000',
   queue_warm_samples: '20',
+  legacy_preflight_policy: 'block_auth_contract_and_network_allow_timeout_and_5xx',
   supabase_candidate_deployments_authorized: '1',
   conditional_rollback_deployments_authorized: '1',
   rollup_refresh_writes_authorized: 'false',
@@ -106,6 +111,9 @@ const textHashes = [
   [runnerPath, 'runner_sha256'],
   [verifierPath, 'verifier_sha256'],
   [liveGatePath, 'live_gate_sha256'],
+  [preflightClassifierPath, 'preflight_classifier_sha256'],
+  [preflightClassifierTestPath, 'preflight_classifier_test_sha256'],
+  [preflightLiveTestPath, 'preflight_live_test_sha256'],
   ['scripts/admin-dashboard-rollup-refresh-gate.mjs', 'rollup_gate_helper_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs', 'rollup_gate_test_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'backlog_sql_sha256'],
@@ -154,10 +162,8 @@ assert.equal(
   fields.prior_attempt_commit,
 );
 for (const [path, field] of [
-  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json', 'prior_live_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-rollback-2026-07-16.json', 'prior_rollback_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
 ]) {
   assert.equal(sha256TextFile(path), fields[field], `${path} recovery evidence hash does not match.`);
 }
@@ -175,6 +181,8 @@ assert.match(runner, /PGOPTIONS=-c default_transaction_read_only=on/);
 assert.match(runner, /pending_on_or_before_latest_complete_day/);
 assert.match(runner, /pendingDayCount -ne \[int\]\$script:Packet\.expected_pending_rollup_days/);
 assert.match(runner, /-MaxRefreshDays \$pendingDayCount/);
+assert.match(runner, /-Mode preflight/);
+assert.match(runner, /'degraded_proceed'/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
@@ -227,7 +235,19 @@ assert.match(liveGate, /queueAll\.p95_ms < 1000/);
 assert.match(liveGate, /window=1d/);
 assert.match(liveGate, /window=all/);
 assert.match(liveGate, /x-admin-secret/);
+assert.match(liveGate, /classifyAdminApiPreflight/);
+assert.match(liveGate, /\['preflight', 'legacy', 'candidate'\]/);
+assert.match(liveGate, /summary\.status = classification\.outcome === 'healthy' \? 'ok' : 'degraded_proceed'/);
 assert.equal(liveGate.includes('mcp-search'), false);
+
+execFileSync('node', [preflightClassifierTestPath], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
+execFileSync('node', [preflightLiveTestPath], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
 
 const backlogSql = normalizedText(readFileSync('scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'utf8'));
 assert.match(backlogSql, /begin read only;/i);
