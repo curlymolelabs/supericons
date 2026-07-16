@@ -24,7 +24,17 @@ for (const file of requiredDeterministicFiles) {
 }
 
 assert.equal(authorization.status, 'revoked_by_owner');
-assert.match(specification, /Version: 1\.7/);
+const specificationVersionMatch = specification.match(/^Version:\s+(\d+)\.(\d+)$/m);
+assert.ok(specificationVersionMatch, 'search specification should declare a version');
+const specificationVersion = {
+  major: Number(specificationVersionMatch[1]),
+  minor: Number(specificationVersionMatch[2]),
+};
+assert.ok(
+  specificationVersion.major > 1
+    || (specificationVersion.major === 1 && specificationVersion.minor >= 8),
+  'deterministic default verification requires search specification version 1.8 or newer',
+);
 assert.match(specification, /FR-31/);
 assert.match(specification, /FR-32/);
 assert.match(specification, /FR-33/);
@@ -33,9 +43,11 @@ assert.match(specification, /FR-35/);
 assert.match(specification, /FR-36/);
 assert.match(specification, /FR-37/);
 assert.match(specification, /FR-38/);
+assert.match(specification, /FR-39/);
 assert.match(decisions, /D-021: Deterministic-first MCP search and paused provider work/);
 assert.match(decisions, /D-022: Deterministic round-trip reduction with preserved controls/);
 assert.match(decisions, /D-023: Tool-scoped beta gates and workload-valid latency evidence/);
+assert.match(decisions, /D-024: Expressive icons as related fallback results/);
 
 const forbiddenPathPattern = /(?:^|[/\\])(?:search-v2-)?embedding-(?:provider|executor|ledger|sample|candidates)/i;
 const forbiddenSourcePatterns = [

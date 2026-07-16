@@ -5,6 +5,12 @@ const familyById = new Map(
   (policy.interpretation_families || []).map((family) => [family.id, family]),
 );
 const brandIntentTerms = new Set(policy.brand_intent_terms || []);
+const expressiveFallbackTags = new Set(
+  (policy.candidate_strength_policy?.expressive_fallback_tags || []).map(normalizeSearchRankingText),
+);
+const expressiveBroadMatchPenalty = Number(
+  policy.candidate_strength_policy?.broad_match_penalty || 0,
+);
 
 export function normalizeSearchRankingText(value) {
   return String(value || '')
@@ -262,17 +268,52 @@ export function getMeaningPolicyPenalty(query, candidate = {}) {
   )) ? 1000 : 0;
 }
 
+export function getExpressiveFallbackPenalty(query, candidate = {}) {
+  const normalizedQuery = normalizeSearchRankingText(query);
+  if (!normalizedQuery) return 0;
+  const expressiveTags = [
+    candidate.aiCategory,
+    candidate.jobCategory,
+    ...(candidate.aiFilterTags || []),
+    ...(candidate.filterTags || []),
+    ...(candidate.secondaryCategories || []),
+  ].map(normalizeSearchRankingText);
+  const isExpressive = expressiveTags.some((tag) => expressiveFallbackTags.has(tag));
+  if (!isExpressive) return 0;
+  const directMeanings = [
+    candidate.name,
+    candidate.id,
+    candidate.label,
+    ...(candidate.synonyms || []),
+    ...(candidate.aliases || []),
+  ].map(normalizeSearchRankingText).filter(Boolean);
+  const directMatch = directMeanings.some((meaning) => (
+    meaning === normalizedQuery || includesPhrase(meaning, normalizedQuery)
+  ));
+  return directMatch ? 0 : expressiveBroadMatchPenalty;
+}
+
 export function rerankSearchCandidatesAtFusion(query, candidates = [], options = {}) {
   const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
   const requestedLibrary = String(options.requestedLibrary || options.library || '').trim().toLowerCase();
+  const applyExpressiveFallback = options.applyExpressiveFallback !== false;
+  const expressiveFallbackPenaltyByIcon = options.expressiveFallbackPenaltyByIcon instanceof Map
+    ? options.expressiveFallbackPenaltyByIcon
+    : null;
   const scored = candidates
     .map((candidate, index) => {
       const brandAdjustment = getBrandRankAdjustment(query, candidate);
       const meaningPenalty = getMeaningPolicyPenalty(query, candidate);
+      const retainedExpressivePenalty = expressiveFallbackPenaltyByIcon?.get(getCandidateIconRef(candidate));
+      const expressiveFallbackPenalty = applyExpressiveFallback
+        ? (Number.isFinite(retainedExpressivePenalty)
+            ? retainedExpressivePenalty
+            : getExpressiveFallbackPenalty(query, candidate))
+        : 0;
       return {
         candidate,
         index,
-        policyScore: brandAdjustment.boost - brandAdjustment.penalty - meaningPenalty,
+        policyScore: brandAdjustment.boost - brandAdjustment.penalty - meaningPenalty - expressiveFallbackPenalty,
         strongPenalty: brandAdjustment.penalty + meaningPenalty >= 1000,
       };
     })

@@ -3,6 +3,10 @@
   "maintainer": "owner_approved_search_policy",
   "change_evidence": "data/semantic-search-v2/evaluation-set.json",
   "brand_intent_terms": ["logo", "logos", "brand", "brands", "wordmark", "mark", "marks"],
+  "candidate_strength_policy": {
+    "expressive_fallback_tags": ["meme", "humor", "trending-culture"],
+    "broad_match_penalty": 25
+  },
   "interpretation_families": [
     {
       "id": "greeting_gesture",

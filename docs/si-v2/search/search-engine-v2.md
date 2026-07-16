@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.7
+Version: 1.8
 Approved: 2026-07-11
-Amended: 2026-07-14
+Amended: 2026-07-16
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -403,6 +403,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-36` | `search_icons` and `recommend_icons` may enter an opt-in prerelease beta independently. A tool that is not approved for the beta must keep the stable endpoint, cohort, and public response behavior. | `G-03`, `G-07`, `FR-24`, `FR-26`, `D-023` | Tool-specific route tests, exact recommendation response parity, package clean-install checks, and separate rollback checks pass before publication. |
 | `FR-37` | Measurement workloads must use legal public inputs and must match the approved generated-query count before deployment. English recommendation omits locale and uses at most four reviewed query variants. Only supported non-English locales may use the localized limit of eight. | `G-03`, `G-08`, `FR-24`, `D-023` | Schema-valid workload fixtures fail closed on unsupported locale values and on planned-versus-generated count differences. |
 | `FR-38` | Beta evidence must record end-to-end MCP tool latency separately from individual hosted-search latency. Search audit evidence must persist public-safe worker state, worker request order, and module age so cold and reused-worker results can be compared without function-log access. | `G-08`, `FR-20`, `FR-24`, `D-023` | Sanitized exports report tool p50/p95 and worker-state cohorts without raw queries, SVG content, credentials, or personal identifiers. |
+| `FR-39` | Keep an expressive result eligible for a broadly related query, but rank conventional symbols and approved identities ahead of it. Remove this fallback penalty when the query directly matches the icon's name or an approved synonym. | `G-02`, `D-013`, `D-024` | A generic metadata-driven ranking rule and reviewed ordering fixtures prove inclusion, lower broad-query rank, and direct-query priority without query-specific ranking code. |
 
 ## Constraints
 

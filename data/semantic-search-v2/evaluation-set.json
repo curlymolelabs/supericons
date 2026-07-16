@@ -778,7 +778,14 @@
           "expected_brand_behavior": "brand_shares_with_concept_without_intent",
           "expected_outcome": "interpretation_diversity",
           "interpretation_family_ids": ["speed_motion", "brand_identity"],
-          "acceptable_families": ["speed", "motion", "fast", "swift brand"]
+          "acceptable_families": ["speed", "motion", "fast", "swift brand"],
+          "ordering_expectation": {
+            "included_icon_ref": "si:person-launched",
+            "rank_min": 4,
+            "rank_max": 8,
+            "any_brand_ref_before": ["simpleicons:swift", "iconoir:apple-swift", "tabler:brand-swift"],
+            "any_conventional_ref_before": ["material:speed", "material:auto_awesome_motion", "iconoir:fast-arrow-down", "iconoir:dashboard-speed"]
+          }
         },
         {
           "case_id": "brand-gate-lovable-logo",

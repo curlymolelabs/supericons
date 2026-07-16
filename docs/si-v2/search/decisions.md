@@ -34,6 +34,9 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-019` | Proactively classify the bounded SI brand set; classify external brands when collision evidence appears | Accepted | Retrieval governance |
 | `D-020` | Separate multilingual meaning approval, language assurance, and native review; use hard, locale, and aggregate embedding gates | Accepted | Evaluation governance |
 | `D-021` | Ship and measure deterministic MCP search before reconsidering semantic retrieval; no paid model call in the default free request path | Accepted | Architecture and rollout |
+| `D-022` | Reduce deterministic hosted round trips while preserving query provenance, rate limits, audit rows, and public response parity | Accepted | Performance and controls |
+| `D-023` | Gate beta release by tool and reject measurement workloads that do not match legal public inputs | Accepted | Rollout and measurement |
+| `D-024` | Keep expressive related icons visible behind conventional symbols and approved identities unless the query directly names their meaning | Accepted | Retrieval and reranking |
 
 ## Decision records
 
@@ -295,6 +298,21 @@ Alternatives rejected or deferred: publishing both tools behind one package-wide
 Specification change: version 1.7 adds `FR-36`, `FR-37`, and `FR-38`.
 
 Superseded decisions: none. `D-022` remains active for the deterministic round-trip controls.
+
+### D-024: Expressive icons as related fallback results
+
+Date: 2026-07-16
+Status: Accepted
+
+Decision: use approved icon metadata to identify expressive results such as meme, humor, or trending-culture concepts. When an expressive icon is only broadly related to the query, keep it eligible but rank conventional symbols and approved identities first. When the query directly matches the expressive icon's name or an approved synonym, do not apply the fallback penalty. The rule is data-driven and generic. Fixtures may name a reviewed collision, but ranking code must not contain a query-specific exception.
+
+Reason: original and playful Supericons should broaden useful results without displacing the symbols or identities most users expect first. `si:person-launched` is genuinely related to speed and momentum, so excluding it from `swift` would contradict its approved record. Ranking it below conventional speed symbols and Swift identities preserves both relevance and the library's character.
+
+Alternatives rejected or deferred: excluding expressive icons from broad related searches; allowing a newly added expressive result to displace conventional symbols by default; adding a `swift`-specific ranking patch.
+
+Specification change: version 1.8 adds `FR-39` and the expressive-fallback ordering rule.
+
+Superseded decisions: none.
 
 ## Adding or superseding a decision
 
