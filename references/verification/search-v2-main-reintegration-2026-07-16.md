@@ -16,6 +16,7 @@ Pinned inputs and commits:
 - Worktree-policy input: `306ac9e83fc44a2e6759fa0ed24876ec7edb16eb`
 - Worktree-policy merge commit: `368560bffb2c4fc0de610834e8ddba6775d2a6db`
 - Expressive-fallback behavior commit: `d8e80fb2bcbbd4302863c45f75f5ea95e639dfcb`
+- Speed-family retrieval correction: `725bad00a83cd0dfeb598b4c0200b32cc9beed92`
 - Integration branch: `codex/search-v2-material-integration-20260716`
 
 The merge was performed and verified on the integration branch. Main was not changed.
@@ -52,9 +53,9 @@ The local and hosted ranking helpers use the same policy. The hosted reranker re
 The reviewed `swift` top eight are now:
 
 1. `material:speed`
-2. `material:breakfast_dining`
+2. `iconoir:fast-arrow-down`
 3. `material:auto_awesome_motion`
-4. `iconoir:fast-arrow-down`
+4. `iconoir:fast-arrow-down-square`
 5. `iconoir:apple-swift`
 6. `tabler:brand-swift`
 7. `simpleicons:swift`
@@ -62,23 +63,31 @@ The reviewed `swift` top eight are now:
 
 Direct searches remain strong: `person launched` and `takeoff` rank `si:person-launched` first, while `yeet` keeps it in the top three.
 
+The speed family now uses `fast arrow` rather than the overly broad `fast` retrieval phrase. This prevents the word fragment in `breakfast` from entering the `swift` and `bolt` result sets while keeping real fast-arrow symbols. The fixed suite records `material:breakfast_dining` as prohibited for both cases. No query-specific ranking branch or icon-specific exclusion was added.
+
 ## Fingerprint reconciliation
 
 The clean 225-case fingerprint is now:
 
-`f5551b3b1e9a2ccd5d0e5e6a3c024ae0787339523bdfb558675854afcc2380e2`
+`ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8`
 
 The clean run reports `fingerprint_inputs_clean: true` and no dirty fingerprint inputs.
 
-An exact case-by-case comparison against the earlier reviewed integration found two changed cases and 223 unchanged cases.
+An exact case-by-case comparison against the earlier reviewed integration found three changed cases and 222 unchanged cases.
 
 ### `brand-gate-swift`
 
 The earlier catalog did not contain `si:person-launched`. The reintegrated catalog adds it as a reviewed related result. The generic expressive-fallback rule places it at rank 8, after conventional speed results and three Swift identities.
 
+The maintained speed retrieval phrase also removes `material:breakfast_dining`, which previously entered through the `fast` word fragment. `iconoir:fast-arrow-down-square` takes the vacated conventional-result position.
+
 ### `si-brand-logo-factory-ai`
 
 The reintegrated catalog adds `si:robot-arm` at rank 2. Exact `si:factory-ai` remains rank 1, and the remaining results continue to cover factory concepts. This is an expected result of the newly committed icon data, not a ranking-code exception.
+
+### `si-brand-concept-bolt`
+
+The maintained speed retrieval phrase removes `material:breakfast_dining` from the ambiguous `bolt` result set. `iconoir:fast-arrow-down` replaces it, while lightning, electrical-power, and speed interpretations remain present.
 
 No other fixed-suite case changed.
 
@@ -100,6 +109,8 @@ The following checks passed on the reintegrated tree:
 - usage-event deduplication and incident-concurrency analysis
 - disposable PostgreSQL 17 checks for the Material assets, batched candidates, and shared recommendation migrations, with `hosted_systems_touched: false`
 - changed-file whitespace and U+2013/U+2014 punctuation scans
+
+The fingerprint cleanliness check now includes the maintained ranking-policy source and both generated runtime copies. This closes a verification gap where a generated policy edit could affect the fingerprint without appearing in the dirty-input report.
 
 Two stale verifier expectations were corrected:
 
