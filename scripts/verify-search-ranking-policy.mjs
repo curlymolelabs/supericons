@@ -314,9 +314,9 @@ assert.deepEqual(
   'hosted ranking should keep conventional and identity results before an expressive broad match',
 );
 assert.equal(
-  hostedExpressiveOrdering[2]?.match_signals?.expressive_fallback_penalty,
-  25,
-  'hosted ranking should expose the maintained expressive fallback penalty',
+  'expressive_fallback_penalty' in hostedExpressiveOrdering[2].match_signals,
+  false,
+  'hosted ranking should not add the internal expressive penalty to public match signals',
 );
 
 assert.ok(getSearchInterpretationPlan('hello'), 'hello should have a maintained interpretation plan');
