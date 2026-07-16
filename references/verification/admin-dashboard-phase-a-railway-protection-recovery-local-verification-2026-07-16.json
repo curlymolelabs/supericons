@@ -1,0 +1,38 @@
+{
+  "artifact": "admin_dashboard_phase_a_railway_protection_recovery_local_verification",
+  "implementation_revision": "e071fe7966dac6e2316d228ecf82a966af8d3cd2",
+  "railway_runtime_install": {
+    "status": "ok",
+    "install_mode": "root_production_dependencies",
+    "maxmind_version": "5.0.6",
+    "geolite2_country_version": "2.3.2026061719",
+    "usage_attribution_imported": true,
+    "live_dataset_lookup": "8.8.8.8=US"
+  },
+  "phase_a_telemetry": {
+    "status": "ok",
+    "query_origin_cases": 4,
+    "requested_limit_cases": 4,
+    "public_ip_cases": 12
+  },
+  "hosted_search_resilience": {
+    "status": "ok",
+    "checks": 10,
+    "max_concurrent_engine_requests": 2,
+    "internal_5xx_retries": 0,
+    "failure_threshold": 2,
+    "open_duration_ms": 30000
+  },
+  "material_server_contract": "pass",
+  "usage_dedupe_contract": "pass",
+  "material_hydration_checks": 11,
+  "material_hydration_failures": 0,
+  "material_asset_bundle": {
+    "status": "ok",
+    "icon_count": 4262,
+    "asset_count": 8524,
+    "bundle_sha256": "66ef383bad9e3847da107f0d8f37f0bd1cb695afd4e3c4cd3470ef1c97723ed9"
+  },
+  "mcp_package_dry_run": "pass",
+  "synthetic_production_tool_calls": 0
+}

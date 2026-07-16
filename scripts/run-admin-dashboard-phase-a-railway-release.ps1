@@ -12,22 +12,23 @@ Set-StrictMode -Version Latest
 $ProjectId = 'b53f5f48-607f-49ae-a71e-37cc766f6973'
 $EnvironmentId = '6345c75b-5ac2-40d6-b176-a4a783ce3eb3'
 $ServiceId = '352420e5-6a02-43a4-99f2-f6dbde522acb'
-$ImplementationRevision = 'dbec69dc768cd10d2978b2872be993a5c86de78b'
-$ImplementationTree = 'c985431c2988b8b02ae76ff785e54dd2c1db11cc'
+$ImplementationRevision = 'e071fe7966dac6e2316d228ecf82a966af8d3cd2'
+$ImplementationTree = '29c06e3f6ab6a50253cc9cb26ac327e554f8a560'
 $RollbackRevision = '31ac66dfecc40e4549f08fc3d9dea99d583a3393'
 $RollbackTree = '0064918488fe4c37382d2b21da43c1a5ba0f372c'
-$ExpectedPreDeploymentId = '5ea2e0b8-201a-4be9-81b7-a450d7f85c61'
-$ExpectedPreImageDigest = 'sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58'
+$ExpectedActiveDeploymentId = '5ea2e0b8-201a-4be9-81b7-a450d7f85c61'
+$ExpectedActiveImageDigest = 'sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58'
+$ExpectedLatestFailedDeploymentId = 'a62e67b8-be35-4e42-aefb-0a95a2efa714'
 $McpUrl = 'https://mcp.supericons.dev/mcp'
 $ExpectedVersion = '0.4.18'
 $ExpectedAssetCount = 8524
 
 $Root = Split-Path -Parent $PSScriptRoot
 $FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-fingerprint-2026-07-16.txt'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-rollback-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-rollback-2026-07-16.json'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-railway-release'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
@@ -260,23 +261,29 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-mcp-phase-a-
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-server-contract.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-mcp-usage-dedupe.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-hosted-search-resilience.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-railway-mcp-runtime-install.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-hydration.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-asset-bundle.mjs')
 
 $service = Get-TargetServiceInstance
-$pre = $service.latestDeployment
-if ($pre.id -ne $ExpectedPreDeploymentId) {
-  throw "Railway deployment drifted. Expected $ExpectedPreDeploymentId, received $($pre.id)."
+$latest = $service.latestDeployment
+if ($latest.id -ne $ExpectedLatestFailedDeploymentId -or $latest.status -ne 'FAILED') {
+  throw "Railway latest-deployment history drifted from the retained failed attempt."
 }
-if ($pre.status -ne 'SUCCESS') {
-  throw "The current Railway deployment is not healthy: $($pre.status)."
+$active = @($service.activeDeployments) |
+  Where-Object { $_.id -eq $ExpectedActiveDeploymentId }
+if (@($active).Count -ne 1) {
+  throw "The expected active Railway deployment is missing or duplicated."
 }
-if ($pre.meta.imageDigest -ne $ExpectedPreImageDigest) {
+if ($active.status -ne 'SUCCESS') {
+  throw "The active Railway deployment is not healthy: $($active.status)."
+}
+if ($active.meta.imageDigest -ne $ExpectedActiveImageDigest) {
   throw 'The current Railway image digest drifted from the approved packet.'
 }
 
 $preflight = Invoke-LiveHandshake `
-  -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-preflight-2026-07-16.json' `
+  -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-preflight-2026-07-16.json' `
   -ExpectedResilience disabled
 
 $script:CandidateDeploymentId = $null
@@ -285,20 +292,21 @@ $startedAt = (Get-Date).ToUniversalTime().ToString('o')
 try {
   $candidate = Start-RevisionDeployment `
     -Revision $ImplementationRevision `
-    -PreviousDeploymentId $ExpectedPreDeploymentId `
+    -PreviousDeploymentId $ExpectedLatestFailedDeploymentId `
     -Kind 'candidate' `
-    -Message 'Release hosted search protection and Phase A telemetry'
+    -Message 'Recover Railway dependencies and release search protection'
   $script:CandidateWentLive = $true
 
   $live = Invoke-LiveHandshake `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-live-2026-07-16.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-live-2026-07-16.json' `
     -ExpectedResilience enabled
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
     artifact = 'admin_dashboard_phase_a_railway_completion'
     approval_fingerprint = $ApprovalFingerprint
     implementation_revision = $ImplementationRevision
-    predeployment_id = $ExpectedPreDeploymentId
+    active_predeployment_id = $ExpectedActiveDeploymentId
+    prior_failed_deployment_id = $ExpectedLatestFailedDeploymentId
     candidate_deployment_id = $candidate.id
     candidate_image_digest = $candidate.meta.imageDigest
     preflight = $preflight

@@ -40,11 +40,12 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_railway_protection_release',
-  implementation_revision: 'dbec69dc768cd10d2978b2872be993a5c86de78b',
-  implementation_tree: 'c985431c2988b8b02ae76ff785e54dd2c1db11cc',
+  packet: 'admin_dashboard_phase_a_railway_protection_recovery_release',
+  implementation_revision: 'e071fe7966dac6e2316d228ecf82a966af8d3cd2',
+  implementation_tree: '29c06e3f6ab6a50253cc9cb26ac327e554f8a560',
   rollback_revision: '31ac66dfecc40e4549f08fc3d9dea99d583a3393',
   rollback_tree: '0064918488fe4c37382d2b21da43c1a5ba0f372c',
+  failed_attempt_revision: '3f4b059f8a7ff748628fdd80179195cd5320c58b',
   runner_sha256: fields.runner_sha256,
   verifier_sha256: fields.verifier_sha256,
   live_gate_sha256: fields.live_gate_sha256,
@@ -54,21 +55,30 @@ assert.deepEqual(fields, {
   usage_attribution_sha256: fields.usage_attribution_sha256,
   mcp_package_sha256: fields.mcp_package_sha256,
   mcp_lock_sha256: fields.mcp_lock_sha256,
+  root_package_sha256: fields.root_package_sha256,
+  root_lock_sha256: fields.root_lock_sha256,
   telemetry_gate_sha256: fields.telemetry_gate_sha256,
   server_contract_gate_sha256: fields.server_contract_gate_sha256,
   usage_dedupe_gate_sha256: fields.usage_dedupe_gate_sha256,
   hosted_search_resilience_gate_sha256: fields.hosted_search_resilience_gate_sha256,
+  railway_runtime_install_gate_sha256: fields.railway_runtime_install_gate_sha256,
   hydration_gate_sha256: fields.hydration_gate_sha256,
   asset_bundle_gate_sha256: fields.asset_bundle_gate_sha256,
   local_verification_sha256: fields.local_verification_sha256,
+  failed_attempt_sha256: fields.failed_attempt_sha256,
+  failed_preflight_sha256: fields.failed_preflight_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_id: 'b53f5f48-607f-49ae-a71e-37cc766f6973',
   environment_id: '6345c75b-5ac2-40d6-b176-a4a783ce3eb3',
   environment_name: 'production',
   service_id: '352420e5-6a02-43a4-99f2-f6dbde522acb',
   service_name: 'scintillating-imagination',
-  predeployment_id: '5ea2e0b8-201a-4be9-81b7-a450d7f85c61',
-  predeployment_image_digest: 'sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58',
+  active_predeployment_id: '5ea2e0b8-201a-4be9-81b7-a450d7f85c61',
+  active_predeployment_image_digest: 'sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58',
+  latest_failed_deployment_id: 'a62e67b8-be35-4e42-aefb-0a95a2efa714',
+  latest_failed_deployment_status: 'FAILED',
+  prior_attempt_candidate_became_active: 'false',
+  prior_attempt_rollback_deployed: 'false',
   mcp_url: 'https://mcp.supericons.dev/mcp',
   expected_version: '0.4.18',
   expected_material_asset_count: '8524',
@@ -102,13 +112,18 @@ const textHashes = [
   ['mcp/usage-attribution.js', 'usage_attribution_sha256'],
   ['mcp/package.json', 'mcp_package_sha256'],
   ['mcp/package-lock.json', 'mcp_lock_sha256'],
+  ['package.json', 'root_package_sha256'],
+  ['package-lock.json', 'root_lock_sha256'],
   ['scripts/verify-mcp-phase-a-telemetry.mjs', 'telemetry_gate_sha256'],
   ['scripts/verify-material-railway-server-contract.mjs', 'server_contract_gate_sha256'],
   ['scripts/verify-mcp-usage-dedupe.mjs', 'usage_dedupe_gate_sha256'],
   ['scripts/verify-hosted-search-resilience.mjs', 'hosted_search_resilience_gate_sha256'],
+  ['scripts/verify-railway-mcp-runtime-install.mjs', 'railway_runtime_install_gate_sha256'],
   ['scripts/verify-material-railway-hydration.mjs', 'hydration_gate_sha256'],
   ['scripts/verify-material-railway-asset-bundle.mjs', 'asset_bundle_gate_sha256'],
-  ['references/verification/admin-dashboard-phase-a-railway-protection-local-verification-2026-07-16.json', 'local_verification_sha256'],
+  ['references/verification/admin-dashboard-phase-a-railway-protection-recovery-local-verification-2026-07-16.json', 'local_verification_sha256'],
+  ['references/verification/admin-dashboard-phase-a-railway-protection-attempt-1-2026-07-16.json', 'failed_attempt_sha256'],
+  ['references/verification/admin-dashboard-phase-a-railway-protection-preflight-2026-07-16.json', 'failed_preflight_sha256'],
 ];
 for (const [path, field] of textHashes) {
   assert.match(fields[field], /^[0-9a-f]{64}$/, `${field} must be SHA-256.`);
@@ -123,6 +138,9 @@ assert.equal(
   execFileSync('git', ['rev-parse', `${fields.rollback_revision}^{tree}`], { encoding: 'utf8' }).trim(),
   fields.rollback_tree,
 );
+execFileSync('git', [
+  'merge-base', '--is-ancestor', fields.failed_attempt_revision, fields.implementation_revision,
+]);
 
 const runner = normalizedText(readFileSync(runnerPath, 'utf8'));
 assert.equal((runner.match(/& railway up /g) || []).length, 1, 'Runner must contain one upload command.');
@@ -134,11 +152,14 @@ assert.match(runner, /verify-mcp-phase-a-telemetry\.mjs/);
 assert.match(runner, /verify-material-railway-server-contract\.mjs/);
 assert.match(runner, /verify-mcp-usage-dedupe\.mjs/);
 assert.match(runner, /verify-hosted-search-resilience\.mjs/);
+assert.match(runner, /verify-railway-mcp-runtime-install\.mjs/);
 assert.match(runner, /verify-material-railway-hydration\.mjs/);
 assert.match(runner, /verify-material-railway-asset-bundle\.mjs/);
 assert.match(runner, /synthetic_tool_calls -ne 0/);
-assert.match(runner, /Railway deployment drifted/);
+assert.match(runner, /Railway latest-deployment history drifted/);
 assert.match(runner, /Railway image digest drifted/);
+assert.match(runner, /\$ExpectedLatestFailedDeploymentId/);
+assert.match(runner, /\$ExpectedActiveDeploymentId/);
 assert.match(runner, /-ExpectedResilience disabled/);
 assert.match(runner, /-ExpectedResilience enabled/);
 
@@ -189,7 +210,8 @@ console.log(JSON.stringify({
     project_id: fields.project_id,
     environment_id: fields.environment_id,
     service_id: fields.service_id,
-    predeployment_id: fields.predeployment_id,
+    active_predeployment_id: fields.active_predeployment_id,
+    latest_failed_deployment_id: fields.latest_failed_deployment_id,
   },
   live_gate: {
     synthetic_tool_calls: 0,
