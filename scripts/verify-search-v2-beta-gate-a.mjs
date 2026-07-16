@@ -28,7 +28,7 @@ const hostedMcp = read('mcp/remote-server.js');
 const adminApi = read('supabase/functions/admin-api/index.ts');
 const hostedMigrationRunner = read('scripts/apply-search-v2-beta-hosted.ps1');
 
-assert.equal(packageJson.version, '0.4.18-beta.0');
+assert.equal(packageJson.version, '0.4.19-beta.0');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
 assert.ok(packageJson.files.includes('release-channel.js'));

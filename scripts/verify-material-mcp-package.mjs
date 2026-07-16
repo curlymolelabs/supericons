@@ -10,6 +10,7 @@ import {
 } from '../mcp/library-capabilities.js';
 import { MATERIAL_EXPORT_SOURCE } from '../mcp/material-export.js';
 import {
+  BETA_HOSTED_SEARCH_FUNCTION,
   STABLE_HOSTED_SEARCH_FUNCTION,
   getHostedSearchFunctionNameForTool,
 } from '../mcp/release-channel.js';
@@ -37,10 +38,15 @@ const fullValidation = readJson(join(
 const outlineCounts = countIconsByLibrary(outlineIndex.icons);
 const solidCounts = countIconsByLibrary(solidIndex.icons);
 
-assert.equal(packageJson.version, '0.4.18');
+assert.equal(packageJson.version, '0.4.19-beta.0');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
-for (const toolName of ['search_icons', 'recommend_icons', 'get_icon', 'preview_icons']) {
+assert.equal(
+  getHostedSearchFunctionNameForTool(packageJson.version, 'search_icons'),
+  BETA_HOSTED_SEARCH_FUNCTION,
+  'search_icons must use the isolated beta search function',
+);
+for (const toolName of ['recommend_icons', 'get_icon', 'preview_icons']) {
   assert.equal(
     getHostedSearchFunctionNameForTool(packageJson.version, toolName),
     STABLE_HOSTED_SEARCH_FUNCTION,
@@ -119,7 +125,7 @@ console.log(JSON.stringify({
   material_styles: localMaterial.supportedStyles,
   hosted_non_material_solid_advertising: false,
   package_version: packageJson.version,
-  material_tool_route: STABLE_HOSTED_SEARCH_FUNCTION,
+  material_tool_route: BETA_HOSTED_SEARCH_FUNCTION,
   required_package_files: 4,
   packaged_local_cache_entries: 0,
   packed_size_bytes: pack.size,

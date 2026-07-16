@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_beta_incident_guardrails",
+  "date": "2026-07-16",
+  "package_version": "0.4.19-beta.0",
+  "tool_routes": {
+    "search_icons": "mcp-search-v2-beta",
+    "recommend_icons": "mcp-search"
+  },
+  "concurrency": {
+    "grouped_search_internal_max": 2,
+    "material_snapshot_fetch_max": 4,
+    "gate_c_live_smoke_max": 1,
+    "production_load_test_authorized": false
+  },
+  "error_evidence": {
+    "platform_function_error_rate_required": true,
+    "search_audit_error_rate_required": true,
+    "audit_rows_are_not_the_only_error_source": true,
+    "eligible_request_audit_capture_percent_min": 95,
+    "error_rate_percent_max": 1
+  },
+  "usage_integrity": {
+    "dedupe_verification_required": true,
+    "separate_sessions_must_not_collide": true,
+    "same_session_retries_must_dedupe": true
+  },
+  "latency": {
+    "first_request_reported_separately": true,
+    "reused_worker_reported_separately": true,
+    "warm_search_p95_ms_max": 2000,
+    "first_request_is_not_hidden_in_warm_average": true
+  },
+  "material": {
+    "capability_truth_required": true,
+    "outline_and_solid_svg_required": true,
+    "clean_install_required": true
+  },
+  "release": {
+    "gate_c_required_before_npm_publication": true,
+    "production_functions_must_remain_unchanged": true,
+    "npm_latest_must_remain_unchanged": true,
+    "model_provider_calls": 0
+  }
+}

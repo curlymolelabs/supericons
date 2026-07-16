@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.19-beta.0 - 2026-07-16
+
+### Added
+
+- added complete Material Symbols discovery and fixed-preset SVG delivery for MCP search
+- added an opt-in faster deterministic route for `search_icons`, while `recommend_icons` stays on the stable route
+- added clearer beta measurements for first requests, reused workers, errors, and result outcomes
+
+### Fixed
+
+- fixed usage-event deduplication across separate MCP sessions
+- fixed overly broad speed-family matching that allowed a breakfast icon into speed results
+- updated transitive Hono and `qs` packages to versions with no known npm audit findings
+
 ## 0.4.17 - 2026-07-03
 
 ### Added

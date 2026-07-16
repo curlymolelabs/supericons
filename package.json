@@ -126,6 +126,7 @@
     "run:search-v2-embedding-sample": "node scripts/run-search-v2-embedding-sample.mjs",
     "verify:search-v2-deterministic-mcp-default": "node scripts/verify-search-v2-deterministic-mcp-default.mjs",
     "verify:search-v2-beta-gate-a": "node scripts/verify-search-v2-beta-gate-a.mjs",
+    "verify:search-v2-beta-incident-gates": "node scripts/verify-search-v2-beta-incident-gates.mjs",
     "verify:search-v2-stage-timing": "deno run --allow-read scripts/verify-search-v2-stage-timing.ts",
     "verify:search-v2-lightweight-candidates": "node scripts/verify-search-v2-lightweight-candidates.mjs",
     "verify:search-v2-lightweight-candidates-smoke": "node scripts/verify-search-v2-lightweight-candidates-smoke.mjs",

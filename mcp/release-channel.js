@@ -3,7 +3,7 @@ export const STABLE_HOSTED_SEARCH_FUNCTION = 'mcp-search';
 export const BETA_HOSTED_SEARCH_FUNCTION = 'mcp-search-v2-beta';
 
 export function isDeterministicBetaVersion(version) {
-  return /^0\.4\.18-beta\.\d+$/.test(String(version || '').trim());
+  return /^0\.4\.19-beta\.\d+$/.test(String(version || '').trim());
 }
 
 export function getDefaultHostedSearchFunctionName(version) {

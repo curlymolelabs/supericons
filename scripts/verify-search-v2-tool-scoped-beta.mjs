@@ -14,7 +14,7 @@ import {
 } from '../mcp/recommend-icons.js';
 import { logMcpSearchAttempt } from '../mcp/telemetry.js';
 
-const betaVersion = '0.4.18-beta.0';
+const betaVersion = '0.4.19-beta.0';
 const packageVersion = JSON.parse(readFileSync('mcp/package.json', 'utf8')).version;
 const activeSearchFunction = getHostedSearchFunctionNameForTool(packageVersion, 'search_icons');
 const activeRecommendationFunction = getHostedSearchFunctionNameForTool(packageVersion, 'recommend_icons');
@@ -29,6 +29,10 @@ assert.equal(
 );
 assert.equal(
   getHostedSearchFunctionNameForTool('0.4.17', 'search_icons'),
+  STABLE_HOSTED_SEARCH_FUNCTION,
+);
+assert.equal(
+  getHostedSearchFunctionNameForTool('0.4.18-beta.0', 'search_icons'),
   STABLE_HOSTED_SEARCH_FUNCTION,
 );
 assert.equal(getBetaCohortForTool(betaVersion, 'search_icons'), DETERMINISTIC_BETA_COHORT);

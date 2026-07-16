@@ -62,7 +62,10 @@ try {
 
   const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.18-beta.0');
+  assert.equal(installedPackage.version, '0.4.19-beta.0');
+  const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
+  assert.equal(installedServer.version, installedPackage.version);
+  assert.equal(installedServer.packages[0].version, installedPackage.version);
 
   const release = await import(
     `${pathToFileURL(join(installedRoot, 'release-channel.js')).href}?check=${Date.now()}`

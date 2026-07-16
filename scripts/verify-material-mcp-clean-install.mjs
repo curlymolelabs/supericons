@@ -49,7 +49,7 @@ try {
     join(installedPackageDir, 'package.json'),
     'utf8',
   ));
-  assert.equal(installedPackage.version, '0.4.18');
+  assert.equal(installedPackage.version, '0.4.19-beta.0');
   const installedIndex = JSON.parse(readFileSync(
     join(installedPackageDir, 'public', 'icon-index.json'),
     'utf8',
