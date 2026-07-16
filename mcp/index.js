@@ -771,30 +771,42 @@ async function searchAccessibleIcons({
     locale,
   });
 
+  if (useLocalFirst) {
+    const { searchIcons } = await import('./search.js');
+    const contractIcons = requestedStyle === VARIANT_STYLES.ANY
+      ? searchableIcons.filter((icon) => icon.style !== VARIANT_STYLES.SOLID)
+      : searchableIcons;
+    return searchIcons(query, contractIcons, synonyms, {
+      library,
+      libraryMode: normalizedLibraryMode,
+      limit: Math.max(1, limit),
+      style: requestedStyle,
+      locale,
+    });
+  }
+
   let hostedResults = [];
-  if (!useLocalFirst) {
-    try {
-      const hostedPayload = await searchIconsHostedMcp({
-        query,
-        library,
-        libraryMode: normalizedLibraryMode,
-        limit,
-        style: requestedStyle,
-        locale,
-        includeQueryFrame,
-        routeToolName: toolName,
-        usageContext: buildLocalMcpUsageContext(toolName, { locale, query }),
-      });
-      hostedResults = (hostedPayload.results || [])
-        .map(buildHostedIcon)
-        .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
-      if (hostedResults.length > 0) {
-        return hostedResults.slice(0, Math.max(1, limit));
-      }
-    } catch (error) {
-      if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) {
-        throw error;
-      }
+  try {
+    const hostedPayload = await searchIconsHostedMcp({
+      query,
+      library,
+      libraryMode: normalizedLibraryMode,
+      limit,
+      style: requestedStyle,
+      locale,
+      includeQueryFrame,
+      routeToolName: toolName,
+      usageContext: buildLocalMcpUsageContext(toolName, { locale, query }),
+    });
+    hostedResults = (hostedPayload.results || [])
+      .map(buildHostedIcon)
+      .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
+    if (hostedResults.length > 0) {
+      return hostedResults.slice(0, Math.max(1, limit));
+    }
+  } catch (error) {
+    if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) {
+      throw error;
     }
   }
 

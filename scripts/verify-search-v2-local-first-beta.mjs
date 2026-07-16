@@ -281,6 +281,9 @@ try {
     package_pre_publish_runs_local_gate: packageJson.scripts?.prepublishOnly?.includes(
       'verify:local-first-beta',
     ) === true,
+    package_pre_publish_runs_stdio_route_gate: packageJson.scripts?.prepublishOnly?.includes(
+      'verify:route-package',
+    ) === true,
   };
 
   assert.deepEqual(

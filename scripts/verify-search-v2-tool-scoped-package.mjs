@@ -9,16 +9,18 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const repoRoot = process.cwd();
+const repoRoot = resolve(import.meta.dirname, '..');
 const mcpDir = join(repoRoot, 'mcp');
 const tempRoot = mkdtempSync(join(tmpdir(), 'search-v2-tool-scoped-package-'));
 const packDir = join(tempRoot, 'pack');
 const installDir = join(tempRoot, 'install');
 mkdirSync(packDir, { recursive: true });
 mkdirSync(installDir, { recursive: true });
+let client;
+let transport;
 
 function runNpm(args, cwd) {
   const npmExecPath = process.env.npm_execpath;
@@ -136,6 +138,81 @@ try {
     'Clean-installed package changed the fixed search fingerprint.',
   );
 
+  const sdkBase = join(
+    installDir,
+    'node_modules',
+    '@modelcontextprotocol',
+    'sdk',
+    'dist',
+    'esm',
+    'client',
+  );
+  const { Client } = await import(pathToFileURL(join(sdkBase, 'index.js')).href);
+  const { StdioClientTransport } = await import(pathToFileURL(join(sdkBase, 'stdio.js')).href);
+  transport = new StdioClientTransport({
+    command: process.execPath,
+    args: [join(installedRoot, 'index.js')],
+    cwd: installedRoot,
+    env: {
+      ...process.env,
+      SUPERICONS_API_KEY: '',
+      SUPERICONS_DISABLE_TELEMETRY: '1',
+      SUPERICONS_MCP_LOG_STARTUP: '0',
+    },
+    stderr: 'pipe',
+  });
+  client = new Client({ name: 'search-v2-route-package-check', version: '1.0.0' });
+  await client.connect(transport);
+
+  const eligibleCases = evaluationSet.query_groups.flatMap((group) => group.queries || [])
+    .filter((entry) => {
+      const query = String(entry.query || entry.slot || entry.task || '').trim();
+      return release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+        toolName: 'search_icons',
+        query,
+        locale: entry.locale || null,
+      });
+    });
+  assert.equal(eligibleCases.length, 150);
+
+  const helperByCase = new Map(observations.map((entry) => [entry.case_id, entry.result_refs]));
+  const routeObservations = [];
+  for (const entry of eligibleCases) {
+    const query = String(entry.query || entry.slot || entry.task || '').trim();
+    const result = await client.callTool({
+      name: 'search_icons',
+      arguments: {
+        query,
+        ...(entry.requested_library ? { library: entry.requested_library } : {}),
+        library_mode: entry.library_mode || 'all',
+        limit: 8,
+      },
+    });
+    const text = result?.content?.find((content) => content?.type === 'text')?.text;
+    assert.equal(typeof text, 'string', `${entry.case_id} returned no text payload.`);
+    const payload = JSON.parse(text);
+    assert.equal(
+      payload.search_runtime?.mode,
+      'local_first',
+      `${entry.case_id} did not use the installed local-first route.`,
+    );
+    const routeRefs = (payload.results || []).map((icon) => `${icon.library}:${icon.id}`);
+    assert.deepEqual(
+      routeRefs,
+      helperByCase.get(entry.case_id),
+      `${entry.case_id} changed the approved ordered result references.`,
+    );
+    routeObservations.push({ case_id: entry.case_id, result_refs: routeRefs });
+  }
+  const routeFingerprint = createHash('sha256')
+    .update(JSON.stringify(routeObservations))
+    .digest('hex');
+  assert.equal(
+    routeFingerprint,
+    '7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184',
+    'Clean-installed stdio route changed the 150-case ordered result contract.',
+  );
+
   console.log(JSON.stringify({
     status: 'ok',
     package: installedPackage.name,
@@ -148,8 +225,13 @@ try {
     recommendation_beta_cohort: null,
     latency_rpc: 'si_log_mcp_search_outcome_v2',
     fixed_search_fingerprint: installedFingerprint,
+    eligible_stdio_cases: routeObservations.length,
+    stdio_route_fingerprint: routeFingerprint,
+    stdio_ordered_result_parity: true,
     published: false,
   }, null, 2));
 } finally {
+  if (transport) await transport.close().catch(() => {});
+  void client;
   rmSync(tempRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }

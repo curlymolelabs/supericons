@@ -68,7 +68,8 @@
     "start:remote": "node remote-server.js",
     "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
     "verify:local-first-beta": "node ../scripts/verify-search-v2-local-first-beta.mjs",
-    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:package",
+    "verify:route-package": "node ../scripts/verify-search-v2-tool-scoped-package.mjs",
+    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:route-package && npm run verify:package",
     "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {
