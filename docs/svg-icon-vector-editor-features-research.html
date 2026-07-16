@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Icon Vector Editor — Features &amp; Tools Research</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --fg: #1a1a2e;
+      --muted: #6c757d;
+      --accent: #4361ee;
+      --accent-light: #eef1ff;
+      --accent2: #0d9488;
+      --border: #e2e8f0;
+      --card: #ffffff;
+      --code-bg: #f1f5f9;
+      --warn: #fef3c7;
+      --warn-border: #f59e0b;
+      --success: #d1fae5;
+      --success-border: #10b981;
+      --danger: #fee2e2;
+      --danger-border: #ef4444;
+      --nextgen: #ede9fe;
+      --nextgen-border: #7c3aed;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    header .subtitle {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 680px;
+      margin: 0 auto 16px;
+    }
+
+    header .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .toc {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      border: 1px solid var(--border);
+    }
+
+    .toc h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .toc ul {
+      list-style: none;
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .toc li { margin-bottom: 6px; }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .toc ul { columns: 1; }
+    }
+
+    section {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--fg);
+    }
+
+    section h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      color: var(--accent2);
+    }
+
+    p { margin-bottom: 12px; }
+
+    ul, ol {
+      margin: 0 0 16px 20px;
+    }
+
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--accent-light);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    tr:nth-child(even) td { background: #fafbfc; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+
+    .tag-core { background: var(--success); color: #065f46; }
+    .tag-craft { background: #dbeafe; color: #1e40af; }
+    .tag-advanced { background: var(--warn); color: #92400e; }
+    .tag-nextgen { background: var(--nextgen); color: #5b21b6; }
+    .tag-optional { background: #f3f4f6; color: #4b5563; }
+    .tag-skip { background: var(--danger); color: #991b1b; }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .callout-insight {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+    }
+
+    .callout-warn {
+      background: var(--warn);
+      border-left: 4px solid var(--warn-border);
+    }
+
+    .callout-nextgen {
+      background: var(--nextgen);
+      border-left: 4px solid var(--nextgen-border);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .tool-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #fafbfc;
+    }
+
+    .tool-card h4 {
+      margin: 0 0 8px;
+      color: var(--fg);
+      font-size: 15px;
+    }
+
+    .tool-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    .tool-card ul {
+      margin: 0 0 0 16px;
+      font-size: 13px;
+    }
+
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .priority-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .priority-card h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .priority-card ul {
+      margin: 0 0 0 18px;
+      font-size: 13px;
+    }
+
+    .priority-v1 { border-top: 3px solid var(--success-border); }
+    .priority-v2 { border-top: 3px solid var(--accent); }
+    .priority-v3 { border-top: 3px solid var(--warn-border); }
+    .priority-v4 { border-top: 3px solid var(--nextgen-border); }
+
+    code, kbd {
+      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 13px;
+      background: var(--code-bg);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    kbd {
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .sources {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .sources a { color: var(--accent); }
+
+    footer {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>SVG Icon Vector Editor</h1>
+      <p class="subtitle">A research catalog of features, tools, and workflows needed to build a vector editor purpose-built for creating SVG icons — from core primitives to next-generation AI-assisted craft.</p>
+      <p class="meta">Research date: 2026-06-20 · Context: Supericons Icons Lab</p>
+    </header>
+
+    <nav class="toc">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#summary">Executive Summary</a></li>
+        <li><a href="#difference">Icon Editor vs General Vector Editor</a></li>
+        <li><a href="#selection">Selection &amp; Navigation</a></li>
+        <li><a href="#shapes">Shape Tools</a></li>
+        <li><a href="#drawing">Drawing &amp; Path Tools</a></li>
+        <li><a href="#nodes">Node &amp; Path Editing</a></li>
+        <li><a href="#transform">Transform Tools</a></li>
+        <li><a href="#align">Align, Distribute &amp; Arrange</a></li>
+        <li><a href="#boolean">Boolean &amp; Compound Operations</a></li>
+        <li><a href="#style">Style &amp; Appearance</a></li>
+        <li><a href="#layers">Layers, Groups &amp; Object Stack</a></li>
+        <li><a href="#canvas">Canvas, Grid &amp; Viewport</a></li>
+        <li><a href="#icon-discipline">Icon-Specific Discipline Tools</a></li>
+        <li><a href="#preview">Preview &amp; Size Matrix</a></li>
+        <li><a href="#qa">QA, Linting &amp; Cleanup</a></li>
+        <li><a href="#import-export">Import, Export &amp; Code Output</a></li>
+        <li><a href="#nextgen">Next-Gen &amp; AI-Assisted Tools</a></li>
+        <li><a href="#agent">Agent &amp; API Integration</a></li>
+        <li><a href="#keyboard">Keyboard, History &amp; Productivity</a></li>
+        <li><a href="#skip">What to Deliberately Exclude</a></li>
+        <li><a href="#priority">Recommended Build Priority</a></li>
+        <li><a href="#landscape">Competitive Landscape</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ul>
+    </nav>
+
+    <section id="summary">
+      <h2>Executive Summary</h2>
+      <p>An SVG icon vector editor is not a smaller Illustrator or Inkscape clone. It is a <strong>disciplined production tool</strong> optimized for small canvases (typically 16–24 px), stroke consistency, optical balance, themeable output (<code>currentColor</code>), and pack-level coherence. The editor must feel fast, honest, and predictable: every visible control should map to real document behavior.</p>
+
+      <div class="callout callout-insight">
+        <strong>Core insight:</strong> Icon editors succeed when they combine professional vector primitives (select, shapes, pen, nodes, transform, align) with <em>icon-native constraints</em> (grid, keylines, safe area, stroke recipes, small-size preview, SVG linting) and optionally <em>agent-assisted workflows</em> that operate on structured documents rather than raw prompt-to-image blobs.
+      </div>
+
+      <p>Research synthesized from:</p>
+      <ul>
+        <li>Industry vector editors: Inkscape, Figma, Illustrator, Axialis IconVectors, Vector Ink, Online SVG Editor</li>
+        <li>AI-native icon tools: Recraft, Iconly, PolyGlyph, Clearly, Magnific</li>
+        <li>Supericons Icons Lab internal plans, prototype, and style recipes</li>
+        <li>Developer-focused SVG tooling patterns (live code export, MCP automation, cleanup analysis)</li>
+      </ul>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Essential for V1</th>
+            <th>High value V2+</th>
+            <th>Next-gen / AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Creation tools</td>
+            <td>Select, rect, circle, line, pen</td>
+            <td>Arc, polygon, star, rounded-rect presets</td>
+            <td>Prompt-to-path, auto-shape, shape suggestion</td>
+          </tr>
+          <tr>
+            <td>Editing</td>
+            <td>Move, resize, delete, reorder</td>
+            <td>Node edit, boolean ops, group/ungroup</td>
+            <td>AI cleanup, stroke normalize, simplify</td>
+          </tr>
+          <tr>
+            <td>Discipline</td>
+            <td>24×24 grid, safe area, snap</td>
+            <td>Keylines, stroke gap check, optical align</td>
+            <td>Pack consistency scoring, recipe enforcement</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td>Clean SVG export</td>
+            <td>PNG previews, component code export</td>
+            <td>Agent-driven export pipelines, MCP tools</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="difference">
+      <h2>Icon Editor vs General Vector Editor</h2>
+      <p>General illustration tools optimize for arbitrary artboards, rich effects, typography, and complex compositions. An icon editor optimizes for <strong>repeatable, themeable, small-size legible assets</strong> that ship as code.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>General Vector Editor</th>
+            <th>SVG Icon Editor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Canvas</td>
+            <td>Any size, any units</td>
+            <td>Fixed viewBox (e.g. 24×24), live area, safe padding</td>
+          </tr>
+          <tr>
+            <td>Complexity budget</td>
+            <td>Unlimited paths, effects, filters</td>
+            <td>Low node count, no raster embeds, minimal groups</td>
+          </tr>
+          <tr>
+            <td>Color model</td>
+            <td>Full palette, gradients, meshes</td>
+            <td><code>currentColor</code>, stroke/fill roles, theme variants</td>
+          </tr>
+          <tr>
+            <td>Primary output</td>
+            <td>Print, illustration, brand systems</td>
+            <td>SVG for UI, icon fonts, React/Vue/Swift components</td>
+          </tr>
+          <tr>
+            <td>Quality gate</td>
+            <td>Visual judgment</td>
+            <td>Automated QA: grid fit, stroke width, contrast, complexity</td>
+          </tr>
+          <tr>
+            <td>Workflow unit</td>
+            <td>Single artwork</td>
+            <td>Icon <em>pack</em> with shared style recipe</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="selection">
+      <h2>1. Selection &amp; Navigation Tools</h2>
+      <p>Foundation for all editing. Users must be able to identify, isolate, and manipulate objects with zero ambiguity.</p>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Select / Move Tool</h4>
+          <p>Default tool. Click to select, drag to move, marquee for area select.</p>
+          <ul>
+            <li>Single-click object selection</li>
+            <li>Drag-to-move with live position feedback</li>
+            <li>Bounding box with resize handles (where applicable)</li>
+            <li>Click empty canvas to deselect</li>
+            <li>Selection sync with object/layer list</li>
+            <li>Hit-testing with sensible tolerance at small scales</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Multi-Select</h4>
+          <p>Required for align, distribute, group, and batch style edits.</p>
+          <ul>
+            <li>Shift+click additive selection</li>
+            <li>Marquee / lasso selection</li>
+            <li>Select all (<kbd>Ctrl</kbd>+<kbd>A</kbd>)</li>
+            <li>Select same stroke/fill/type</li>
+            <li>Invert selection</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Zoom &amp; Pan</h4>
+          <p>Icons are tiny; users need to inspect pixel-level detail.</p>
+          <ul>
+            <li>Zoom in/out (scroll wheel, pinch)</li>
+            <li>Fit artboard to viewport</li>
+            <li>100% / 400% / 1600% presets</li>
+            <li>Space+drag pan</li>
+            <li>Zoom to selection</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Direct Selection</h4>
+          <p>Select sub-paths or individual points without entering full node mode.</p>
+          <ul>
+            <li>Click segment to select</li>
+            <li>Alt+click to select behind</li>
+            <li>Tab through stacked objects</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Selection affordances</h3>
+      <ul>
+        <li><strong>Bounding box:</strong> Visual frame with corner/side handles for resize</li>
+        <li><strong>Rotation handle:</strong> Optional; many icon sets avoid rotation for grid discipline</li>
+        <li><strong>Center point marker:</strong> For optical alignment reference</li>
+        <li><strong>Smart guides:</strong> Show alignment to artboard center, edges, and other objects while dragging</li>
+        <li><strong>Hover outline:</strong> Pre-select highlight before click</li>
+      </ul>
+    </section>
+
+    <section id="shapes">
+      <h2>2. Shape Tools</h2>
+      <p>Geometric primitives are the backbone of icon design. Most UI icons are built from rectangles, circles, lines, and arcs — not freehand illustration.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>SVG output</th>
+            <th>Typical icon use</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Rectangle</strong></td>
+            <td><code>&lt;rect&gt;</code> with optional <code>rx</code></td>
+            <td>Cards, windows, buttons, containers, badges</td>
+            <td><span class="tag tag-core">Core</span></td>
+          </tr>
+          <tr>
+            <td><strong>Rounded Rectangle</strong></td>
+            <td><code>&lt;rect rx="..."&gt;</code></td>
+            <td>App tiles, chat bubbles, modern UI chrome</td>
+            <td><span class="tag tag-core">Core</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ellipse / Circle</strong></td>
+            <td><code>&lt;circle&gt;</code> or <code>&lt;ellipse&gt;</code></td>
+            <td>Dots, avatars, status indicators, orbits</td>
+            <td><span class="tag tag-core">Core</span></td>
+          </tr>
+          <tr>
+            <td><strong>Line</strong></td>
+            <td><code>&lt;line&gt;</code></td>
+            <td>Separators, arrows (with caps), simple strokes</td>
+            <td><span class="tag tag-core">Core</span></td>
+          </tr>
+          <tr>
+            <td><strong>Polygon</strong></td>
+            <td><code>&lt;polygon&gt;</code></td>
+            <td>Triangles, chevrons, simple arrows</td>
+            <td><span class="tag tag-craft">Craft</span></td>
+          </tr>
+          <tr>
+            <td><strong>Star</strong></td>
+            <td><code>&lt;polygon&gt;</code> or path</td>
+            <td>Favorites, sparkles, ratings</td>
+            <td><span class="tag tag-craft">Craft</span></td>
+          </tr>
+          <tr>
+            <td><strong>Arc / Pie</strong></td>
+            <td><code>&lt;path&gt;</code> arc commands</td>
+            <td>Loaders, progress, partial rings</td>
+            <td><span class="tag tag-craft">Craft</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ring / Donut</strong></td>
+            <td>Compound or stroke-only circle</td>
+            <td>Loaders, focus rings, radio states</td>
+            <td><span class="tag tag-craft">Craft</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Shape tool behaviors</h3>
+      <ul>
+        <li><strong>Click-to-place:</strong> Single click inserts a default-sized shape at cursor (fast icon drafting)</li>
+        <li><strong>Click-drag:</strong> Draw shape with live dimensions</li>
+        <li><strong>Shift-constrain:</strong> Perfect squares, circles, 45° lines</li>
+        <li><strong>From-center draw:</strong> Alt/Option+drag from center point</li>
+        <li><strong>Corner radius handle:</strong> On-canvas radius control for rectangles</li>
+        <li><strong>Convert to path:</strong> Flatten primitive to editable path when needed</li>
+        <li><strong>Concentric radius:</strong> Inner shape radius = outer radius − gap (icon family rule)</li>
+      </ul>
+    </section>
+
+    <section id="drawing">
+      <h2>3. Drawing &amp; Path Tools</h2>
+      <p>When primitives are not enough, path tools let designers craft custom silhouettes, connectors, and organic curves — still within icon discipline.</p>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Pen Tool</h4>
+          <p>Industry-standard Bezier path creation.</p>
+          <ul>
+            <li>Click to place corner points (polyline)</li>
+            <li>Click-drag to place smooth points with handles</li>
+            <li>Close path by clicking first point</li>
+            <li>Finish open path (<kbd>Esc</kbd> or explicit action)</li>
+            <li>Live preview line from last point to cursor</li>
+            <li>Prevent accidental selection while drawing</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Pencil / Freehand</h4>
+          <p>Free drawing with optional stabilization.</p>
+          <ul>
+            <li>Stroke smoothing / stabilizer</li>
+            <li>Auto-simplify on release</li>
+            <li>Best for sketches, rarely for final icon strokes</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Arc Tool</h4>
+          <p>Constrained arc segments for loaders and curves.</p>
+          <ul>
+            <li>Start/mid/end point arc definition</li>
+            <li>Sweep direction toggle</li>
+            <li>Common preset: 270° loader arc</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="tag tag-advanced">Advanced</span> Connector Tool</h4>
+          <p>Orthogonal or angled connectors between anchor points.</p>
+          <ul>
+            <li>Workflow diagrams, node graphs</li>
+            <li>Auto-routed elbows</li>
+            <li>Arrowhead presets</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Path construction helpers</h3>
+      <ul>
+        <li><strong>Join paths:</strong> Merge open endpoints</li>
+        <li><strong>Close path:</strong> Connect last point to first</li>
+        <li><strong>Reverse path direction:</strong> Affects fill rules and animation</li>
+        <li><strong>Offset path:</strong> Expand/contract stroke outline (outline icons)</li>
+        <li><strong>Stroke to path:</strong> Convert stroked line to filled shape (for filled variants)</li>
+        <li><strong>Simplify path:</strong> Reduce node count while preserving silhouette</li>
+        <li><strong>Split path:</strong> Cut at node or point</li>
+      </ul>
+    </section>
+
+    <section id="nodes">
+      <h2>4. Node &amp; Path Editing</h2>
+      <p>Node editing is what separates a toy shape placer from a real vector editor. Icon designers constantly nudge anchors to achieve optical balance at 16 px.</p>
+
+      <h3>Node tool capabilities</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Description</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Select node</td><td>Click anchor point on path</td><td><span class="tag tag-core">Core</span></td></tr>
+          <tr><td>Move node</td><td>Drag with optional grid snap</td><td><span class="tag tag-core">Core</span></td></tr>
+          <tr><td>Add node</td><td>Click on segment to insert point</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Delete node</td><td>Remove point, preserve path continuity</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Convert corner ↔ smooth</td><td>Toggle between corner and smooth Bezier points</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Adjust handles</td><td>Drag control handles independently or mirrored</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Break handle symmetry</td><td>Alt+drag for asymmetric curves</td><td><span class="tag tag-advanced">Advanced</span></td></tr>
+          <tr><td>Select multiple nodes</td><td>Shift+click or marquee on points</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Open/close subpath</td><td>Toggle path closure</td><td><span class="tag tag-craft">Craft</span></td></tr>
+          <tr><td>Scissors / cut at node</td><td>Split path at selected point</td><td><span class="tag tag-advanced">Advanced</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Node editing UX details</h3>
+      <ul>
+        <li>Distinct visual language: anchors (square/circle), handles (lines + dots), selected vs unselected states</li>
+        <li>Enter node mode on double-click path or dedicated Node tool (<kbd>N</kbd>)</li>
+        <li>Show path direction arrows for debugging fill and animation</li>
+        <li>Numeric inspector for selected node X/Y coordinates</li>
+        <li>Snap nodes to grid, pixel grid, and other nodes</li>
+      </ul>
+    </section>
+
+    <section id="transform">
+      <h2>5. Transform Tools</h2>
+      <p>Resize, rotate, flip, and scale objects while respecting icon grid discipline.</p>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Move</h4>
+          <ul>
+            <li>Drag on canvas</li>
+            <li>Arrow keys nudge (1px / 0.5px with modifier)</li>
+            <li>X/Y fields in properties panel</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Resize</h4>
+          <ul>
+            <li>Bounding box handles</li>
+            <li>Shift = proportional scale</li>
+            <li>Alt = resize from center</li>
+            <li>Width/height numeric input</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Rotate</h4>
+          <ul>
+            <li>Rotation handle or angle field</li>
+            <li>15° snap with Shift</li>
+            <li>Often discouraged for grid-aligned icon sets</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Flip &amp; Mirror</h4>
+          <ul>
+            <li>Flip horizontal / vertical</li>
+            <li>Mirror across artboard axis</li>
+            <li>Keyboard shortcuts (<kbd>H</kbd> / <kbd>V</kbd>)</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-advanced">Advanced</span> Scale / Rotate Dialog</h4>
+          <ul>
+            <li>Precise percentage scale</li>
+            <li>Rotate around custom origin</li>
+            <li>Transform copy (duplicate + transform)</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-advanced">Advanced</span> Shear / Skew</h4>
+          <ul>
+            <li>Rare in icons; usually avoided</li>
+            <li>Prefer drawing angled shapes on grid</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="align">
+      <h2>6. Align, Distribute &amp; Arrange</h2>
+      <p>Optical balance matters more than mathematical centering at icon scale. Alignment tools are daily-use features.</p>
+
+      <h3>Align to artboard</h3>
+      <ul>
+        <li>Align left / center / right</li>
+        <li>Align top / middle / bottom</li>
+        <li>Center horizontally &amp; vertically (true center and optical center modes)</li>
+        <li>Fit to safe area / live area</li>
+        <li>Fit to keyline (square, circle, vertical rect, horizontal rect)</li>
+      </ul>
+
+      <h3>Align to selection</h3>
+      <ul>
+        <li>Align edges and centers between 2+ objects</li>
+        <li>Distribute horizontally / vertically with equal spacing</li>
+        <li>Distribute centers</li>
+        <li>Key object alignment (align everything to one locked reference object)</li>
+      </ul>
+
+      <h3>Arrange (z-order)</h3>
+      <ul>
+        <li>Bring forward / send backward</li>
+        <li>Bring to front / send to back</li>
+        <li>Drag-reorder in object list</li>
+      </ul>
+    </section>
+
+    <section id="boolean">
+      <h2>7. Boolean &amp; Compound Operations</h2>
+      <p>Boolean ops let designers build complex silhouettes from simple primitives — essential for subtractive shapes (cutouts, counters, holes).</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Operation</th>
+            <th>Result</th>
+            <th>Icon example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Union</strong></td><td>Combine shapes into one</td><td>Merge overlapping circles into a cloud</td></tr>
+          <tr><td><strong>Subtract</strong></td><td>Remove top shape from bottom</td><td>Keyhole, letter counters, crescent moon</td></tr>
+          <tr><td><strong>Intersect</strong></td><td>Keep overlapping area only</td><td>Lens shapes, partial overlaps</td></tr>
+          <tr><td><strong>Exclude / XOR</strong></td><td>Keep non-overlapping areas</td><td>Venn-style dual forms</td></tr>
+          <tr><td><strong>Divide</strong></td><td>Split into separate paths at intersections</td><td>Coloring individual regions</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Related compound features</h3>
+      <ul>
+        <li><strong>Flatten:</strong> Merge groups into single path</li>
+        <li><strong>Outline stroke:</strong> Boolean-friendly filled outline</li>
+        <li><strong>Live boolean (non-destructive):</strong> Nice-to-have; destructive is acceptable for icon editors</li>
+        <li><strong>Pathfinder panel:</strong> One-click access to all operations</li>
+      </ul>
+    </section>
+
+    <section id="style">
+      <h2>8. Style &amp; Appearance</h2>
+      <p>Stroke and fill controls define the icon family. For Supericons-style icons, stroke discipline is primary.</p>
+
+      <h3>Stroke</h3>
+      <ul>
+        <li>Stroke width (e.g. 1.5px default on 24px canvas)</li>
+        <li>Stroke color (<code>currentColor</code> default)</li>
+        <li>Line cap: butt, round, square</li>
+        <li>Line join: miter, round, bevel</li>
+        <li>Miter limit</li>
+        <li>Dash array (limited use in icons)</li>
+        <li>Stroke alignment: center (default), inside, outside</li>
+        <li>Variable stroke width (rare; illustration feature)</li>
+      </ul>
+
+      <h3>Fill</h3>
+      <ul>
+        <li>Fill: none / solid / <code>currentColor</code></li>
+        <li>Fill rule: nonzero vs evenodd (critical after booleans)</li>
+        <li>Opacity per object</li>
+        <li>Gradient fill (optional; many icon sets avoid)</li>
+      </ul>
+
+      <h3>Appearance management</h3>
+      <ul>
+        <li><strong>Copy style / paste style:</strong> Transfer stroke+fill between objects</li>
+        <li><strong>Eyedropper:</strong> Pick style from canvas object</li>
+        <li><strong>Style presets:</strong> Tied to pack style recipe</li>
+        <li><strong>Global stroke width toggle:</strong> Preview icon at 1px vs 1.5px vs 2px</li>
+        <li><strong>Recolor icon:</strong> Swap palette while preserving structure</li>
+      </ul>
+    </section>
+
+    <section id="layers">
+      <h2>9. Layers, Groups &amp; Object Stack</h2>
+      <p>Icons are simple, but even a 24×24 icon may have 3–12 objects. Users need a trustworthy object stack.</p>
+
+      <h3>Object stack (minimum viable)</h3>
+      <ul>
+        <li>List of top-level SVG elements in paint order</li>
+        <li>Click row to select on canvas</li>
+        <li>Rename object (human-friendly label, not raw SVG id)</li>
+        <li>Show / hide visibility toggle</li>
+        <li>Lock / unlock</li>
+        <li>Drag to reorder z-index</li>
+        <li>Delete from list</li>
+        <li>Duplicate object</li>
+      </ul>
+
+      <h3>Groups &amp; hierarchy (V2+)</h3>
+      <ul>
+        <li>Group / ungroup (<kbd>Ctrl</kbd>+<kbd>G</kbd>)</li>
+        <li>Nested groups with expand/collapse</li>
+        <li>Isolate group (edit inside without affecting rest)</li>
+        <li>Clip groups / clipping masks (limited icon use)</li>
+        <li>Component / symbol reuse across icons in a pack</li>
+      </ul>
+    </section>
+
+    <section id="canvas">
+      <h2>10. Canvas, Grid &amp; Viewport</h2>
+      <p>The artboard is a first-class design constraint, not just a viewport.</p>
+
+      <h3>Artboard defaults (Supericons-aligned)</h3>
+      <ul>
+        <li>viewBox: <code>0 0 24 24</code></li>
+        <li>2px outer padding → 20×20 live area</li>
+        <li>Default stroke: 1.5px, round cap, round join</li>
+        <li>Default fill: none</li>
+        <li>Default color: <code>currentColor</code></li>
+      </ul>
+
+      <h3>Overlays &amp; guides</h3>
+      <ul>
+        <li><strong>Pixel grid:</strong> 1px major, 0.5px minor (toggleable)</li>
+        <li><strong>Safe area overlay:</strong> Visual margin inside viewBox</li>
+        <li><strong>Keyline guides:</strong> Square (~18×18), circle (~20 diameter), vertical rect (~16×20), horizontal rect (~20×16)</li>
+        <li><strong>Center crosshair:</strong> Artboard center lines</li>
+        <li><strong>Smart guides:</strong> Dynamic alignment hints while dragging</li>
+        <li><strong>Rulers:</strong> Optional; less critical at 24px scale</li>
+        <li><strong>Guide lines:</strong> User-placed horizontal/vertical guides</li>
+      </ul>
+
+      <h3>Snapping</h3>
+      <ul>
+        <li>Snap to grid (0.5px or 1px increments)</li>
+        <li>Snap to pixel (whole coordinates)</li>
+        <li>Snap to object edges and centers</li>
+        <li>Snap to keylines and safe area</li>
+        <li>Snap tolerance setting</li>
+        <li>Toggle snap (<kbd>Ctrl</kbd> temporary disable while dragging)</li>
+      </ul>
+    </section>
+
+    <section id="icon-discipline">
+      <h2>11. Icon-Specific Discipline Tools</h2>
+      <p>These features differentiate an icon editor from a generic SVG doodler. They encode professional icon craft as tooling.</p>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4><span class="tag tag-core">Core</span> Style Recipe</h4>
+          <p>Pack-level rules applied to every icon.</p>
+          <ul>
+            <li>Canvas size, stroke width, cap/join</li>
+            <li>Corner radius family default</li>
+            <li>Fill mode (outline vs solid)</li>
+            <li>Color role mapping</li>
+            <li>Recipe compliance indicator</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Optical Balance</h4>
+          <p>Math center ≠ visual center at small sizes.</p>
+          <ul>
+            <li>Optical center nudge presets</li>
+            <li>Visual weight heatmap overlay</li>
+            <li>Compare against keyline templates</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Stroke Gap Analyzer</h4>
+          <p>Ensure minimum gap ≥ stroke width between parallel strokes.</p>
+          <ul>
+            <li>Highlight collapsed gaps at 16px</li>
+            <li>Suggest widen or merge strokes</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Concentric Radius Helper</h4>
+          <p>Nested rounded rects should feel aligned.</p>
+          <ul>
+            <li>Inner rx = outer rx − gap</li>
+            <li>Warn on visually inconsistent nesting</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-craft">Craft</span> Shared Parts Library</h4>
+          <p>Reusable geometry within a pack.</p>
+          <ul>
+            <li>Arrows, pluses, checkmarks, dots</li>
+            <li>Insert preset with recipe styles</li>
+            <li>Pack consistency via part reuse</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-advanced">Advanced</span> Modifier System</h4>
+          <p>Compose icons from base + badge.</p>
+          <ul>
+            <li>Base glyph + corner badge</li>
+            <li>State overlays (check, x, dot)</li>
+            <li>Non-destructive variant generation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="preview">
+      <h2>12. Preview &amp; Size Matrix</h2>
+      <p>Icons must be judged at the sizes where they ship. A 24px canvas lie is common — always preview smaller.</p>
+
+      <h3>Required preview sizes</h3>
+      <ul>
+        <li>16px — compact UI, favicons, dense toolbars</li>
+        <li>20px — common design-system size</li>
+        <li>24px — primary authoring size</li>
+        <li>32px — larger controls</li>
+        <li>48px — touch targets, marketing</li>
+        <li>128px — docs, store listings, QA review</li>
+      </ul>
+
+      <h3>Preview backgrounds</h3>
+      <ul>
+        <li>Transparent (checkerboard)</li>
+        <li>Light (white / warm neutral)</li>
+        <li>Dark (black / cool neutral)</li>
+        <li>Brand color swatches</li>
+        <li>High-contrast accessibility check</li>
+      </ul>
+
+      <h3>Preview modes</h3>
+      <ul>
+        <li>Live sync: edits update all preview cells instantly</li>
+        <li>Side-by-side variant compare (outline vs solid)</li>
+        <li>Pixel preview: rasterized at exact integer sizes</li>
+        <li>Animation preview for loaders and state icons</li>
+        <li>Reduced-motion preview</li>
+      </ul>
+    </section>
+
+    <section id="qa">
+      <h2>13. QA, Linting &amp; Cleanup</h2>
+      <p>QA is a creative tool, not just a gate. Automated checks catch issues humans miss at 16px.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>What it catches</th>
+            <th>Severity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>viewBox validity</td><td>Wrong or missing viewBox</td><td>Error</td></tr>
+          <tr><td>Safe area / live area</td><td>Content clipped or hugging edges</td><td>Warning</td></tr>
+          <tr><td>Keyline fit</td><td>Shape doesn't match family proportions</td><td>Info</td></tr>
+          <tr><td>Stroke consistency</td><td>Mixed stroke widths in one icon</td><td>Warning</td></tr>
+          <tr><td>currentColor usage</td><td>Hardcoded fills break theming</td><td>Warning</td></tr>
+          <tr><td>Grid / pixel alignment</td><td>Subpixel coordinates, blurry rasterization</td><td>Warning</td></tr>
+          <tr><td>Minimum stroke gaps</td><td>Strokes merge at small sizes</td><td>Warning</td></tr>
+          <tr><td>Path/node complexity</td><td>Too many points for an icon</td><td>Info</td></tr>
+          <tr><td>Raster embed detection</td><td>&lt;image&gt; tags in SVG</td><td>Error</td></tr>
+          <tr><td>Hidden text detection</td><td>Text elements used as hack</td><td>Error</td></tr>
+          <tr><td>Unsupported filters/masks</td><td>Filter effects that won't export cleanly</td><td>Warning</td></tr>
+          <tr><td>Empty groups / junk nodes</td><td>Export bloat</td><td>Info</td></tr>
+          <tr><td>Decimal coordinate cleanup</td><td>Unnecessary precision (e.g. 12.00001)</td><td>Info</td></tr>
+          <tr><td>Pack density comparison</td><td>One icon visually heavier than pack mates</td><td>Info</td></tr>
+          <tr><td>Contrast ratio</td><td>Accessibility on light/dark backgrounds</td><td>Warning</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Cleanup actions (one-click fixes)</h3>
+      <ul>
+        <li>Round coordinates to 0.5px or 1px</li>
+        <li>Remove invisible objects</li>
+        <li>Merge duplicate paths</li>
+        <li>Simplify paths (Ramer-Douglas-Peucker or similar)</li>
+        <li>Normalize stroke to recipe default</li>
+        <li>Convert colors to <code>currentColor</code></li>
+        <li>Strip transforms into path coordinates</li>
+        <li>Minify SVG (export-time)</li>
+        <li>Center icon in viewBox / crop whitespace</li>
+      </ul>
+
+      <div class="callout callout-insight">
+        <strong>Reference:</strong> Axialis IconVectors 1.50 introduced "Analyze / Clean Up Icon" as a dedicated workflow — inspect live document, detect off-grid geometry or inconsistent strokes, apply focused fixes. This pattern is ideal for icon editors with agent integration.
+      </div>
+    </section>
+
+    <section id="import-export">
+      <h2>14. Import, Export &amp; Code Output</h2>
+
+      <h3>Import</h3>
+      <ul>
+        <li>SVG file import (parse into editable document model)</li>
+        <li>SVG paste from clipboard</li>
+        <li>PNG / raster import with auto-trace (optional; quality varies)</li>
+        <li>Import from icon library (browse and customize)</li>
+        <li>Preserve or flatten groups on import (user choice)</li>
+      </ul>
+
+      <h3>Export formats</h3>
+      <ul>
+        <li><strong>SVG</strong> — clean, editable, human-readable</li>
+        <li><strong>Minified SVG</strong> — production web assets</li>
+        <li><strong>SVG Symbol / sprite</strong> — icon systems</li>
+        <li><strong>PNG</strong> — raster previews at 16–512px</li>
+        <li><strong>PDF</strong> — occasional print/docs need</li>
+        <li><strong>React TSX / Vue SFC</strong> — component-ready code</li>
+        <li><strong>SwiftUI / XAML / VectorDrawable</strong> — platform-native</li>
+        <li><strong>Icon font</strong> — WOFF/TTF generation (advanced)</li>
+        <li><strong>JSON metadata</strong> — registry-ready records</li>
+        <li><strong>Pack manifest</strong> — batch export for icon families</li>
+      </ul>
+
+      <h3>Live code viewer</h3>
+      <ul>
+        <li>Real-time SVG/code sync as user edits</li>
+        <li>Copy to clipboard</li>
+        <li>Syntax-highlighted output</li>
+        <li>Diff view (before/after cleanup)</li>
+      </ul>
+    </section>
+
+    <section id="nextgen">
+      <h2>15. Next-Gen &amp; AI-Assisted Tools</h2>
+      <p>Modern icon workflows increasingly blend vector editing with generative AI. The critical requirement: <strong>output must remain editable SVG</strong>, not flat raster or untouchable blobs.</p>
+
+      <div class="callout callout-nextgen">
+        <strong>Design principle:</strong> AI should propose, refine, and clean — not replace the document model. Every AI action should be inspectable, undoable, and convertible to normal paths.
+      </div>
+
+      <h3>Generation</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Description</th>
+            <th>Examples in market</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Text-to-icon</strong></td>
+            <td>Prompt → icon candidate in a style preset</td>
+            <td>Recraft, Iconly, PolyGlyph</td>
+          </tr>
+          <tr>
+            <td><strong>Text-to-SVG vector</strong></td>
+            <td>Prompt → layered, named groups, editable paths</td>
+            <td>Clearly, Iconly Vector Studio, PolyGlyph</td>
+          </tr>
+          <tr>
+            <td><strong>Style-locked batch generation</strong></td>
+            <td>Generate 6+ icons in one consistent style</td>
+            <td>Recraft icon sets, Iconly custom templates</td>
+          </tr>
+          <tr>
+            <td><strong>Reference-based generation</strong></td>
+            <td>Match an existing icon's style for new concepts</td>
+            <td>Iconly "Use as Reference", Recraft brand style</td>
+          </tr>
+          <tr>
+            <td><strong>Image-to-vector</strong></td>
+            <td>Raster/sketch → traced SVG</td>
+            <td>PNG-to-SVG tracers, Clearly, Vector Ink</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Auto-shape &amp; smart geometry (high-value next-gen)</h3>
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Auto-Shape for Icons</h4>
+          <p>Recognize intent and propose clean geometric replacements.</p>
+          <ul>
+            <li>Rough sketch → snapped rect/circle/arc</li>
+            <li>Wobbly line → straight or 45° diagonal</li>
+            <li>Almost-symmetric shape → mirror and merge</li>
+            <li>Hand-drawn corner → recipe-compliant radius</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Smart Simplify</h4>
+          <p>Reduce nodes while preserving silhouette readability at 16px.</p>
+          <ul>
+            <li>AI-guided path reduction</li>
+            <li>Preserve semantic corners vs noise</li>
+            <li>Preview at target sizes before commit</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Stroke Normalize</h4>
+          <p>Fix inconsistent stroke widths and caps across imported SVGs.</p>
+          <ul>
+            <li>Detect mixed widths</li>
+            <li>Apply recipe stroke in one action</li>
+            <li>Convert outlines to centered strokes</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Auto-Center &amp; Crop</h4>
+          <p>Remove whitespace and optically center in viewBox.</p>
+          <ul>
+            <li>Flood-fill bounding box trim</li>
+            <li>Optical vs geometric center</li>
+            <li>Fit to safe area automatically</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Metaphor Assistant</h4>
+          <p>Suggest visual metaphors for abstract concepts.</p>
+          <ul>
+            <li>"Context compaction" → funnel, stack, compress arrows</li>
+            <li>Agent handoff → relay, swap, dual nodes</li>
+            <li>Generates brief + 3–5 direction thumbnails</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Variant Generator</h4>
+          <p>Create outline/solid/duotone/badge variants from a base.</p>
+          <ul>
+            <li>Outline → filled silhouette</li>
+            <li>Add corner badge modifier</li>
+            <li>State overlays (active, error, disabled)</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> Pack Consistency Coach</h4>
+          <p>Score icon against pack mates.</p>
+          <ul>
+            <li>Visual density comparison</li>
+            <li>Stroke weight drift detection</li>
+            <li>Corner radius family check</li>
+            <li>Suggest harmonizing edits</li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h4><span class="tag tag-nextgen">Next-gen</span> AI Refinement Loop</h4>
+          <p>Attach current icon + describe change → refined editable result.</p>
+          <ul>
+            <li>"Make the arrow bolder but keep 1.5px stroke"</li>
+            <li>"Simplify the bottom curve"</li>
+            <li>Preserves style recipe constraints</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Post-generation editing (Iconly-style tool suite)</h3>
+      <ul>
+        <li>Recolor to brand palette</li>
+        <li>Adjust stroke thickness slider</li>
+        <li>Smooth edges (multiple algorithms)</li>
+        <li>Background removal (flood fill + manual eraser)</li>
+        <li>Crop and recenter</li>
+        <li>Spot eraser for artifact cleanup</li>
+        <li>Undo/redo on all AI operations</li>
+      </ul>
+    </section>
+
+    <section id="agent">
+      <h2>16. Agent &amp; API Integration</h2>
+      <p>For Supericons Icons Lab, agents are first-class users. The editor document should be addressable via structured tools — not filesystem improvisation.</p>
+
+      <h3>Recommended agent tool surface</h3>
+      <pre style="background:var(--code-bg);padding:16px;border-radius:8px;font-size:13px;overflow-x:auto;margin:16px 0;"><code>icons_lab.list_packs
+icons_lab.get_pack
+icons_lab.create_concept
+icons_lab.update_concept_brief
+icons_lab.propose_metaphors
+icons_lab.add_svg_variant
+icons_lab.render_variant_previews
+icons_lab.run_variant_qa
+icons_lab.compare_pack_consistency
+icons_lab.suggest_metadata
+icons_lab.prepare_export
+icons_lab.request_human_review</code></pre>
+
+      <h3>Live editor MCP pattern (IconVectors-style)</h3>
+      <ul>
+        <li>Agent connects to <em>running editor instance</em>, not detached SVG text</li>
+        <li>Create, draw, edit, inspect, analyze cleanup, render preview, export</li>
+        <li>Document-scoped commands: add rect, update stroke, run QA, export SVG</li>
+        <li>Human approval gate before publishing to registry</li>
+        <li>All agent edits land in undo stack</li>
+      </ul>
+
+      <h3>Agent-safe constraints</h3>
+      <ul>
+        <li>Agents must respect style recipe bounds</li>
+        <li>Agents cannot bypass QA or publish directly</li>
+        <li>Every agent action produces a human-reviewable diff</li>
+        <li>Structured brief + metaphor proposals before generation</li>
+      </ul>
+    </section>
+
+    <section id="keyboard">
+      <h2>17. Keyboard, History &amp; Productivity</h2>
+
+      <h3>Essential shortcuts</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Shortcut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><kbd>V</kbd></td><td>Select tool</td></tr>
+          <tr><td><kbd>N</kbd></td><td>Node tool</td></tr>
+          <tr><td><kbd>P</kbd></td><td>Pen tool</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Rectangle tool</td></tr>
+          <tr><td><kbd>O</kbd></td><td>Ellipse/circle tool</td></tr>
+          <tr><td><kbd>L</kbd></td><td>Line tool</td></tr>
+          <tr><td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Delete selected</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>G</kbd></td><td>Group</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td>Undo / redo</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>V</kbd></td><td>Copy / paste</td></tr>
+          <tr><td><kbd>Arrow keys</kbd></td><td>Nudge selection</td></tr>
+          <tr><td><kbd>Space</kbd> (hold)</td><td>Pan canvas</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>0</kbd></td><td>Fit artboard</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Cancel current tool / finish open path</td></tr>
+        </tbody>
+      </table>
+
+      <h3>History &amp; document</h3>
+      <ul>
+        <li>Undo / redo stack (100+ steps)</li>
+        <li>Autosave / version snapshots</li>
+        <li>Named checkpoints ("before boolean", "v2 direction")</li>
+        <li>Document JSON model separate from SVG export</li>
+        <li>Non-destructive recipe binding</li>
+      </ul>
+
+      <h3>Focus &amp; productivity</h3>
+      <ul>
+        <li>Focus mode (hide panels, maximize canvas)</li>
+        <li>Lock layers/objects</li>
+        <li>Tool memory (return to last tool after space-pan)</li>
+        <li>Contextual toolbar (changes per tool/selection)</li>
+        <li>Properties panel shows only relevant fields per selection type</li>
+      </ul>
+    </section>
+
+    <section id="skip">
+      <h2>18. What to Deliberately Exclude</h2>
+      <p>Scope discipline is a feature. These are common in full vector suites but wrong for an icon editor V1–V2:</p>
+
+      <ul>
+        <li><span class="tag tag-skip">Skip</span> Mesh gradients and complex gradient meshes</li>
+        <li><span class="tag tag-skip">Skip</span> Bitmap filters and Photoshop-style effects</li>
+        <li><span class="tag tag-skip">Skip</span> Full typography / text tool (text in icons is an anti-pattern)</li>
+        <li><span class="tag tag-skip">Skip</span> Multi-page document layout / print prep</li>
+        <li><span class="tag tag-skip">Skip</span> Spray, tweak, sculpt, and illustration-only tools</li>
+        <li><span class="tag tag-skip">Skip</span> Advanced path effects (offset lorem, lattice deformation)</li>
+        <li><span class="tag tag-skip">Skip</span> 3D extrusion and perspective grids</li>
+        <li><span class="tag tag-skip">Skip</span> Marker / arrowhead systems (unless workflow-icon specific)</li>
+        <li><span class="tag tag-skip">Skip</span> Embedded raster editing</li>
+        <li><span class="tag tag-skip">Skip</span> Fake controls that don't modify the document</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>Honesty rule (Icons Lab):</strong> If a tool, button, or panel is not wired to the document model, it must be hidden, disabled with a clear unavailable state, or excluded. A smaller honest editor beats a large fake one.
+      </div>
+    </section>
+
+    <section id="priority">
+      <h2>19. Recommended Build Priority</h2>
+      <p>Phased rollout based on Icons Lab prototype state, Inkscape minimum map, and industry patterns.</p>
+
+      <div class="priority-grid">
+        <div class="priority-card priority-v1">
+          <h3>V1 — Honest Core Editor</h3>
+          <ul>
+            <li>24×24 artboard + grid + safe area</li>
+            <li>Select, move, delete</li>
+            <li>Rectangle, circle, line, pen</li>
+            <li>Object stack (reorder, rename, visibility)</li>
+            <li>Properties: position, size, stroke, fill, radius</li>
+            <li>Snap to grid</li>
+            <li>Align to artboard center</li>
+            <li>Size previews (16–128px)</li>
+            <li>Light / dark / transparent preview</li>
+            <li>Export clean SVG</li>
+            <li>Undo / redo</li>
+          </ul>
+        </div>
+        <div class="priority-card priority-v2">
+          <h3>V2 — Icon Craft</h3>
+          <ul>
+            <li>Node editing (add, delete, move, corner/smooth)</li>
+            <li>Pen curves (click-drag handles)</li>
+            <li>Multi-select</li>
+            <li>Distribute and align between objects</li>
+            <li>Group / ungroup</li>
+            <li>Duplicate, flip</li>
+            <li>Boolean operations (union, subtract)</li>
+            <li>Keyline overlays</li>
+            <li>Style recipe enforcement</li>
+            <li>Basic QA panel (stroke, viewBox, raster, text)</li>
+            <li>SVG import</li>
+            <li>Color controls with currentColor default</li>
+          </ul>
+        </div>
+        <div class="priority-card priority-v3">
+          <h3>V3 — Production System</h3>
+          <ul>
+            <li>Pack workspace + concept backlog</li>
+            <li>Shared parts library</li>
+            <li>Full QA matrix + cleanup actions</li>
+            <li>Pack consistency scoring</li>
+            <li>Variant generator (outline/solid/badge)</li>
+            <li>PNG + component code export</li>
+            <li>Metadata builder</li>
+            <li>Animation preview (loaders)</li>
+            <li>Batch export pipeline</li>
+            <li>Version history / checkpoints</li>
+          </ul>
+        </div>
+        <div class="priority-card priority-v4">
+          <h3>V4 — Agentic &amp; Next-Gen</h3>
+          <ul>
+            <li>Agent dock with wired commands</li>
+            <li>MCP live editor integration</li>
+            <li>Metaphor assistant + brief builder</li>
+            <li>Text-to-icon with recipe lock</li>
+            <li>Auto-shape / smart simplify</li>
+            <li>AI refinement loop on editable SVG</li>
+            <li>Analyze / cleanup automation</li>
+            <li>Human review workflow</li>
+            <li>Registry staging export</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="landscape">
+      <h2>20. Competitive Landscape</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Positioning</th>
+            <th>Notable features for icon work</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Inkscape</strong></td>
+            <td>Free, full-featured desktop vector editor</td>
+            <td>Complete path/node toolset, booleans, path effects, CLI export — benchmark for capability, too broad for icon-only UX</td>
+          </tr>
+          <tr>
+            <td><strong>Figma</strong></td>
+            <td>Collaborative UI design</td>
+            <td>Strong vector tools, components, variants — not SVG-first or recipe-disciplined</td>
+          </tr>
+          <tr>
+            <td><strong>Adobe Illustrator</strong></td>
+            <td>Professional illustration</td>
+            <td>Gold-standard pen, pathfinder, precision — overkill complexity for icon-only workflows</td>
+          </tr>
+          <tr>
+            <td><strong>Axialis IconVectors</strong></td>
+            <td>Developer-focused SVG icon editor</td>
+            <td>Live code export, analyze/cleanup, MCP automation, booleans, pen, node edit, batch export</td>
+          </tr>
+          <tr>
+            <td><strong>Vector Ink</strong></td>
+            <td>Browser vector editor + asset library</td>
+            <td>Pen tool, icon library, AI inpainting, cross-platform</td>
+          </tr>
+          <tr>
+            <td><strong>Online SVG Editor</strong></td>
+            <td>Free browser SVG editor</td>
+            <td>Select, shapes, pen, node edit, layers, undo — good baseline for web editor scope</td>
+          </tr>
+          <tr>
+            <td><strong>Recraft</strong></td>
+            <td>AI vector + icon generation</td>
+            <td>6-icon sets, style control, brand colors, vector editor continuation</td>
+          </tr>
+          <tr>
+            <td><strong>Iconly</strong></td>
+            <td>AI design platform</td>
+            <td>20+ icon styles, 8 post-gen edit tools, vector studio with node edit, API</td>
+          </tr>
+          <tr>
+            <td><strong>PolyGlyph</strong></td>
+            <td>Prompt-to-vector</td>
+            <td>Editable SVG output, anchor/layer control, API</td>
+          </tr>
+          <tr>
+            <td><strong>Clearly</strong></td>
+            <td>AI vector generator</td>
+            <td>Layered named SVG groups, hand-editable in Figma/Illustrator</td>
+          </tr>
+          <tr>
+            <td><strong>Supericons Icons Lab</strong></td>
+            <td>Icon-specific editor + agent workbench</td>
+            <td>24×24 recipe discipline, pack production, QA gates, agent API, honest incremental tooling</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="sources">
+      <h2>21. Sources &amp; Internal References</h2>
+      <div class="sources">
+        <h3>External</h3>
+        <ul>
+          <li><a href="https://iconvectors.io/features.html" target="_blank" rel="noopener">Axialis IconVectors — Features</a></li>
+          <li><a href="https://iconvectors.io/" target="_blank" rel="noopener">Axialis IconVectors — Product</a></li>
+          <li><a href="https://onlinesvgeditor.com/" target="_blank" rel="noopener">Online SVG Editor</a></li>
+          <li><a href="https://vectorink.io/" target="_blank" rel="noopener">Vector Ink</a></li>
+          <li><a href="https://www.recraft.ai/generate/icons" target="_blank" rel="noopener">Recraft AI Icon Generator</a></li>
+          <li><a href="https://iconly.ai/" target="_blank" rel="noopener">Iconly AI Design Platform</a></li>
+          <li><a href="https://polyglyph.io/" target="_blank" rel="noopener">PolyGlyph — Prompt to Vector</a></li>
+          <li><a href="https://www.clearly.sh/vector" target="_blank" rel="noopener">Clearly — AI Vector Generator</a></li>
+          <li><a href="https://inkscape.org/" target="_blank" rel="noopener">Inkscape</a></li>
+        </ul>
+
+        <h3>Internal (Supericons repo)</h3>
+        <ul>
+          <li><code>docs/supericons-icons-lab-inkscape-minimum-editor-map-2026-06-20.md</code></li>
+          <li><code>docs/supericons-icons-lab-honest-editor-implementation-plan-2026-06-20.md</code></li>
+          <li><code>docs/supericons-icons-lab-prd-architecture-blueprint-2026-06-19.md</code></li>
+          <li><code>docs/supericons-icon-craft-and-agentic-design-tool-plan-2026-06-11.md</code></li>
+          <li><code>docs/supericons-icons-lab-refinement-plan-2026-06-20.md</code></li>
+          <li><code>icons-lab-prototype/src/editor/documentModel.js</code></li>
+          <li><code>icons-lab-prototype/src/App.jsx</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>SVG Icon Vector Editor Features Research · Supericons · 2026-06-20</p>
+    </footer>
+  </div>
+</body>
+</html>

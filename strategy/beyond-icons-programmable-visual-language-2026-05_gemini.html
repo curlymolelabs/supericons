@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond Icons: Supericons As A Programmable Visual Language</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --surface-alt: #1a1a24;
+      --surface-hover: #22222e;
+      --border: #2a2a3a;
+      --border-light: #3a3a4a;
+      --text: #e8e8f0;
+      --text-muted: #9090a8;
+      --text-dim: #6a6a80;
+      --accent: #6366f1;
+      --accent-light: #818cf8;
+      --accent-glow: rgba(99,102,241,0.15);
+      --accent-glow-strong: rgba(99,102,241,0.3);
+      --success: #34d399;
+      --success-bg: rgba(52,211,153,0.12);
+      --warning: #fbbf24;
+      --warning-bg: rgba(251,191,36,0.12);
+      --danger: #f87171;
+      --danger-bg: rgba(248,113,113,0.12);
+      --cyan: #22d3ee;
+      --cyan-bg: rgba(34,211,238,0.1);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    header {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+    header::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 40px auto 0;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: var(--accent-glow);
+      color: var(--accent-light);
+      border: 1px solid rgba(99,102,241,0.25);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    section { margin-top: 72px; }
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--accent-glow);
+      color: var(--accent-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    h3 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-top: 24px; margin-bottom: 8px; }
+    p { margin-bottom: 1.25rem; color: var(--text-muted); font-size: 1.05rem; }
+    ul, ol { margin-bottom: 1.25rem; padding-left: 22px; color: var(--text-muted); font-size: 1.05rem; }
+    li { margin-bottom: 6px; }
+    li strong { color: var(--text); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 20px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--border-light); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--surface-hover);
+      color: var(--text-muted);
+    }
+    .badge.accent { background: var(--accent-glow); color: var(--accent-light); }
+    .badge.success { background: var(--success-bg); color: var(--success); }
+    .badge.warning { background: var(--warning-bg); color: var(--warning); }
+    .badge.danger { background: var(--danger-bg); color: var(--danger); }
+    .badge.cyan { background: var(--cyan-bg); color: var(--cyan); }
+
+    pre {
+      background: #08080e;
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      color: var(--text-muted);
+      font-family: "SF Mono", "Fira Code", Consolas, monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .timeline { position: relative; padding-left: 36px; margin-left: 6px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 12px; bottom: 12px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--cyan), var(--success));
+      border-radius: 2px;
+    }
+    .timeline-step {
+      position: relative;
+      margin-bottom: 32px;
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .timeline-step:hover { border-color: var(--accent); transform: translateX(4px); }
+    .timeline-step::before {
+      content: '';
+      position: absolute;
+      left: -42px; top: 24px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent-glow-strong);
+    }
+    .timeline-step h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+    .timeline-step p { margin-bottom: 0; font-size: 0.95rem; }
+    .timeline-step .example { color: var(--text-dim); font-style: italic; font-size: 0.9rem; margin-top: 6px; }
+
+    .grammar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      border: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .grammar-row:hover { border-color: var(--border); }
+    .math-sym { color: var(--text-dim); font-size: 1.1rem; font-weight: 300; }
+
+    .hero-shift { text-align: center; padding: 12px 20px; }
+    .from-to { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+    .label-box { padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.95rem; }
+    .from-box { background: var(--surface-hover); color: var(--text-muted); }
+    .to-box { background: var(--accent-glow-strong); color: var(--accent-light); border: 1px solid rgba(99,102,241,0.3); }
+    .arrow-icon { color: var(--accent-light); font-size: 1.2rem; }
+
+    .demo-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: var(--surface);
+    }
+    .demo-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at center, #14142a 0%, #08080e 70%);
+      min-height: 220px;
+      padding: 30px;
+    }
+    .demo-bar {
+      display: flex;
+      gap: 8px;
+      padding: 14px 18px;
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn:hover { background: #4f46e5; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+    .btn-ghost:hover { background: var(--surface-hover); color: var(--text); border-color: var(--border-light); }
+    .btn-danger { background: var(--danger); }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-success { background: #059669; }
+    .btn-success:hover { background: #047857; }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 4px var(--accent)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 12px var(--accent)); }
+    }
+    @keyframes breathe {
+      0%, 100% { stroke-width: 2; }
+      50% { stroke-width: 3.5; }
+    }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-3px); }
+      40% { transform: translateX(3px); }
+      60% { transform: translateX(-2px); }
+      80% { transform: translateX(2px); }
+    }
+    .anim-pulse { animation: pulse-glow 2.5s ease-in-out infinite; }
+    .anim-breathe { animation: breathe 3s ease-in-out infinite; }
+    .anim-spin { animation: spin-slow 8s linear infinite; transform-origin: center; }
+    .anim-shake { animation: shake 0.5s ease-in-out; }
+
+    .passport-card {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .passport-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .passport-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .passport-icon-wrap {
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-glow);
+      border-radius: 12px;
+      border: 1px solid rgba(99,102,241,0.25);
+    }
+    .passport-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .passport-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .passport-field span { font-size: 0.9rem; color: var(--text); }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .product-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .product-card h4 { font-size: 1rem; color: #fff; margin-bottom: 6px; }
+    .product-card p { font-size: 0.9rem; margin-bottom: 0; }
+
+    .closing-section {
+      text-align: center;
+      margin-top: 80px;
+      padding: 60px 20px;
+    }
+    .closing-section::before {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0 auto 40px;
+    }
+    .closing-quote {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: #fff;
+      line-height: 1.5;
+      font-style: italic;
+      max-width: 700px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 20px 16px 60px; }
+      header { padding: 40px 0 40px; }
+      section { margin-top: 48px; }
+      .grid, .grid-3 { grid-template-columns: 1fr; }
+      .passport-meta { grid-template-columns: 1fr; }
+      .from-to { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Strategy Vision</div>
+    <h1>Beyond Icons: Supericons As A Programmable Visual Language</h1>
+    <p class="subtitle">Icons are no longer static pictures. They are living, programmable primitives that carry meaning, state, motion, and behavior.</p>
+  </header>
+
+  <!-- 1. HERO VISION -->
+  <section id="hero-vision">
+    <h2><span class="num">1</span> Hero Vision</h2>
+    <p>SVG is not just an image format. It is structured visual code. Because modern software can read, edit, compose, animate, and regenerate SVG dynamically, the meaning of "icon" is evolving.</p>
+    <div class="card">
+      <div class="hero-shift">
+        <div class="from-to">
+          <span class="label-box from-box">Icon files</span>
+          <span class="arrow-icon">&rarr;</span>
+          <span class="label-box to-box">Visual software objects</span>
+        </div>
+      </div>
+      <div class="hero-shift">
+        <div class="from-to">
+          <span class="label-box from-box">Static SVGs</span>
+          <span class="arrow-icon">&rarr;</span>
+          <span class="label-box to-box">Programmable meaning</span>
+        </div>
+      </div>
+      <div class="hero-shift">
+        <div class="from-to">
+          <span class="label-box from-box">Icon library</span>
+          <span class="arrow-icon">&rarr;</span>
+          <span class="label-box to-box">Visual language</span>
+        </div>
+      </div>
+    </div>
+    <p>We are moving toward a visual language that software uses to explain state, intent, risk, and trust to humans, and that humans use to verify what AI is doing on their behalf.</p>
+  </section>
+
+  <!-- 2. EVOLUTION MAP -->
+  <section id="evolution-map">
+    <h2><span class="num">2</span> Evolution Map</h2>
+    <p>Icons evolve from inert shapes into a full semantic protocol. Each level builds on the one before it.</p>
+    <div class="timeline">
+      <div class="timeline-step">
+        <h3><span class="badge">Level 1</span> Static Icon</h3>
+        <p>A simple, immutable vector graphic.</p>
+        <div class="example">Example: A standard SVG magnifying glass used for "search".</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge">Level 2</span> Smart Icon</h3>
+        <p>Responds to basic context like color inheritance or theme switching.</p>
+        <div class="example">Example: An icon that reads "currentColor" from its parent container.</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge accent">Level 3</span> Stateful Icon</h3>
+        <p>Bound to application state. Its appearance changes when the state changes.</p>
+        <div class="example">Example: A database icon that turns red and shakes when status = "failed".</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge accent">Level 4</span> Composable Icon</h3>
+        <p>Built on the fly from standardized primitives, layered together.</p>
+        <div class="example">Example: A "User" base shape with an "AI Agent" badge and a "Warning" ring.</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge cyan">Level 5</span> Interactive Icon</h3>
+        <p>Carries micro-interactions and internal transitions.</p>
+        <div class="example">Example: A checkmark that draws itself to confirm success.</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge cyan">Level 6</span> Generative Icon</h3>
+        <p>Generated from intent. Software describes what it needs, and the system produces the right visual.</p>
+        <div class="example">Example: System requests "safe payment, neobrutalist style" and receives a brand-matched shield icon.</div>
+      </div>
+      <div class="timeline-step">
+        <h3><span class="badge success">Level 7</span> Protocol Icon</h3>
+        <p>A shared standard across tools, platforms, and devices. The meaning is universal.</p>
+        <div class="example">Example: A universal signal for "AI is executing a reversible change" understood by browsers, watches, and dashboards.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ICON GRAMMAR -->
+  <section id="icon-grammar">
+    <h2><span class="num">3</span> Icon Grammar</h2>
+    <p>Instead of drawing every possible variation, we treat icons as visual sentences. Combine primitives to formulate precise meaning.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Primitives</h3>
+        <ul style="font-size:0.95rem;">
+          <li><strong>Base Object:</strong> database, model, file, user, payment, server, tool</li>
+          <li><strong>State:</strong> idle, working, blocked, failed, complete</li>
+          <li><strong>Authority:</strong> human, AI agent, system, third-party service</li>
+          <li><strong>Confidence:</strong> high, medium, low, unknown</li>
+          <li><strong>Risk:</strong> safe, caution, dangerous, irreversible</li>
+          <li><strong>Motion:</strong> pulse, trace, spin, breathe, shake, settle</li>
+          <li><strong>Context:</strong> sidebar, dashboard, approval flow, audit log, mobile</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Visual Sentences</h3>
+        <div class="grammar-row">
+          <span class="badge">database</span><span class="math-sym">+</span>
+          <span class="badge accent">agent</span><span class="math-sym">+</span>
+          <span class="badge warning">warning</span><span class="math-sym">+</span>
+          <span class="badge">pulse</span>
+        </div>
+        <div class="grammar-row">
+          <span class="badge">payment</span><span class="math-sym">+</span>
+          <span class="badge accent">human approval</span><span class="math-sym">+</span>
+          <span class="badge danger">high risk</span>
+        </div>
+        <div class="grammar-row">
+          <span class="badge">model</span><span class="math-sym">+</span>
+          <span class="badge warning">low confidence</span><span class="math-sym">+</span>
+          <span class="badge">explanation</span>
+        </div>
+        <div class="grammar-row">
+          <span class="badge">server</span><span class="math-sym">+</span>
+          <span class="badge danger">blocked</span><span class="math-sym">+</span>
+          <span class="badge">retry</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. NAMING -->
+  <section id="naming">
+    <h2><span class="num">4</span> Naming the Architecture</h2>
+    <p>If icons carry structured metadata, we need a clear name for both the product concept and the technical specification.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Candidates</h3>
+        <ul>
+          <li>Icon Passport</li>
+          <li>SI Profile</li>
+          <li>Supericons Signal</li>
+          <li>Icon Grammar</li>
+          <li>Visual Signal</li>
+          <li>Living Icon</li>
+          <li>Programmable Icon</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color: rgba(99,102,241,0.3);">
+        <h3>Recommendations</h3>
+        <p><strong>Product Name:</strong></p>
+        <p style="color:#fff; font-size:1.15rem; font-weight:700; margin-bottom:16px;">Supericons Signal</p>
+        <p style="font-size:0.95rem;">Communicates that icons carry information, not just appearance. Approachable. Sounds like a product customers would explore.</p>
+        <p style="margin-top:16px;"><strong>Technical Name:</strong></p>
+        <p style="color:#fff; font-size:1.15rem; font-weight:700; margin-bottom:16px;">Icon Passport</p>
+        <p style="font-size:0.95rem;">A structured metadata payload that travels with the visual object. Developers instantly understand it as a rich schema attached to art.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ICON PASSPORT -->
+  <section id="icon-passport">
+    <h2><span class="num">5</span> The Icon Passport</h2>
+    <p>Every Supericons icon can carry a payload that describes its full identity. When used in a project, it brings instructions for software and rules for humans.</p>
+    <ul>
+      <li>Meaning, accessibility labels, and recommended use cases</li>
+      <li>Do-not-use rules and brand safety boundaries</li>
+      <li>State variants with motion and color rules</li>
+      <li>Guidance for AI tools (what contexts to use this icon, and where to avoid it)</li>
+      <li>Related icons and source/license notes</li>
+    </ul>
+
+    <h3>Sample Passport (JSON)</h3>
+<pre>{
+  "id": "database-sync",
+  "primitive": "database",
+  "semantics": ["storage", "data", "sync", "remote"],
+  "accessibility": {
+    "label": "Database synchronization in progress",
+    "role": "status"
+  },
+  "states": {
+    "idle":    { "strokeWidth": 2,   "motion": "none",  "color": "neutral" },
+    "working": { "strokeWidth": 2,   "motion": "pulse", "color": "accent"  },
+    "failed":  { "strokeWidth": 2.5, "motion": "shake", "color": "danger"  }
+  },
+  "agent_rules": {
+    "recommended_for": ["background tasks", "data fetching", "sync indicators"],
+    "do_not_use_for": ["local file saving", "user profile creation"]
+  },
+  "related": ["server-status", "cloud-upload", "data-transfer"],
+  "license": "Supericons Premium"
+}</pre>
+
+    <h3>Passport Profile Card</h3>
+    <div class="passport-card" style="margin-top:16px;">
+      <div class="passport-header">
+        <div class="passport-icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:1.05rem; color:#fff;">database-sync</div>
+          <div style="font-size:0.85rem; color:var(--text-dim);">Supericons Premium / database family</div>
+        </div>
+      </div>
+      <div class="passport-meta">
+        <div class="passport-field"><label>Semantics</label><span>storage, data, sync, remote</span></div>
+        <div class="passport-field"><label>A11y Label</label><span>Database synchronization in progress</span></div>
+        <div class="passport-field"><label>States</label><span><span class="badge">idle</span> <span class="badge accent">working</span> <span class="badge danger">failed</span></span></div>
+        <div class="passport-field"><label>Motion</label><span>pulse (working), shake (failed)</span></div>
+        <div class="passport-field"><label>Use For</label><span>Background tasks, data fetching</span></div>
+        <div class="passport-field"><label>Do Not Use For</label><span>Local file saving, user profiles</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. REALISTIC PRODUCTS -->
+  <section id="realistic-products">
+    <h2><span class="num">6</span> Realistic Supericons Products</h2>
+    <p>Near-term, practical products that capitalize on this shift.</p>
+    <div class="grid grid-3">
+      <div class="product-card"><h4>AI Agent Status Pack</h4><p>A grammar pack for visualizing autonomous agent states: thinking, executing, waiting, blocked, complete.</p></div>
+      <div class="product-card"><h4>Trust and Approval System</h4><p>Primitives for authority, risk, and human-in-the-loop decisions in AI-assisted workflows.</p></div>
+      <div class="product-card"><h4>Risk and Consequence Grammar</h4><p>Icons categorized by reversibility and impact level. Safe, caution, dangerous, irreversible.</p></div>
+      <div class="product-card"><h4>Developer Stack Icons</h4><p>Smart objects that compose into living architecture diagrams and status maps.</p></div>
+      <div class="product-card"><h4>Icon Passport Viewer</h4><p>A web inspector that reveals the JSON meaning behind any SVG file.</p></div>
+      <div class="product-card"><h4>Motion Lab v2</h4><p>State-driven animation designer. Assign motions to states visually and export composable CSS rules.</p></div>
+      <div class="product-card"><h4>MCP Composition Tool</h4><p>An API that takes intent descriptions and returns composed, state-ready icon signals.</p></div>
+      <div class="product-card"><h4>Web Component Renderer</h4><p>Drop-in component: &lt;super-signal base="server" state="blocked" /&gt;</p></div>
+      <div class="product-card"><h4>"Explain This Icon"</h4><p>A tool that reads a UI and explains why each icon was chosen, what state it reflects, and what alternatives exist.</p></div>
+    </div>
+  </section>
+
+  <!-- 7. WILD FUTURE -->
+  <section id="wild-future">
+    <h2><span class="num">7</span> Wild Future Possibilities</h2>
+    <p>Dream bigger. What becomes possible when every icon is a programmable signal?</p>
+    <div class="card">
+      <ul>
+        <li><strong>Icons that become tiny dashboards.</strong> A server icon on your desktop unfurls into live metrics when it detects a failure.</li>
+        <li><strong>Icons that explain what an AI agent is doing.</strong> Real-time visual choreography revealing reasoning loops, confidence levels, and decision paths.</li>
+        <li><strong>Icons that open audit trails.</strong> Click any signal icon and see the historical decisions and data that produced its current state.</li>
+        <li><strong>Universal surface adaptation.</strong> One icon compiles differently for Web (rich SVG), Smartwatch (minimal strokes), AR (spatial 3D), LED (dot-matrix), and Haptics (vibration patterns).</li>
+        <li><strong>Brand-safe regeneration.</strong> AI regenerates icons in any brand style in real time while perfectly preserving the semantic meaning underneath.</li>
+        <li><strong>Icons as visual APIs.</strong> External services query and render status through standardized icon endpoints.</li>
+        <li><strong>A shared traffic signal for human-AI trust.</strong> An industry standard for visual trust indicators: "AI is confident", "Human review required", "Action is irreversible".</li>
+        <li><strong>Composable meaning.</strong> Agents compose UI intent the way sentences compose words: base objects, modifiers, states, contexts, all assembled on the fly.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. DEMO GALLERY -->
+  <section id="demo-gallery">
+    <h2><span class="num">8</span> Demo Gallery</h2>
+    <p>Interactive visualizations of programmable icon primitives.</p>
+
+    <h3>Static to Stateful Transformation</h3>
+    <p>Watch a base database icon respond to different application states.</p>
+    <div class="demo-wrap">
+      <div class="demo-canvas">
+        <div id="demo1-container">
+          <svg id="demo1-svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted); transition: color 0.3s;">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          <div id="demo1-label" style="text-align:center; margin-top:12px; font-size:0.8rem; color:var(--text-dim); font-weight:600; text-transform:uppercase; letter-spacing:0.08em;">idle</div>
+        </div>
+      </div>
+      <div class="demo-bar">
+        <button class="btn btn-ghost" onclick="setDemo1('idle')">Idle</button>
+        <button class="btn" onclick="setDemo1('working')">Working</button>
+        <button class="btn btn-danger" onclick="setDemo1('failed')">Failed</button>
+        <button class="btn btn-success" onclick="setDemo1('complete')">Complete</button>
+      </div>
+    </div>
+
+    <h3>Compose a Signal</h3>
+    <p>Toggle primitives to build a composed visual sentence.</p>
+    <div class="demo-wrap">
+      <div class="demo-canvas" style="flex-direction:column; gap:20px;">
+        <div id="demo2-stage" style="position:relative; width:100px; height:100px; display:flex; align-items:center; justify-content:center;">
+          <svg id="d2-base" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted); transition: color 0.3s;">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          <svg id="d2-badge" width="22" height="22" viewBox="0 0 24 24" fill="var(--bg)" stroke="var(--accent-light)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; bottom:2px; right:2px; opacity:0; transition:opacity 0.3s;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4l2 2"></path>
+          </svg>
+          <svg id="d2-ring" width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="1.5" style="position:absolute; top:0; left:0; opacity:0; transition: opacity 0.3s; pointer-events:none;">
+            <circle cx="50" cy="50" r="46" stroke-dasharray="6 10" class="anim-spin"></circle>
+          </svg>
+          <div id="d2-warn" style="position:absolute; top:4px; right:4px; width:12px; height:12px; border-radius:50%; background:var(--warning); opacity:0; transition:opacity 0.3s; box-shadow: 0 0 8px var(--warning);"></div>
+        </div>
+        <div id="d2-readout" style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center;">
+          <span class="badge">database</span>
+        </div>
+      </div>
+      <div class="demo-bar">
+        <button class="btn btn-ghost" onclick="d2Toggle('base')">Swap Base</button>
+        <button class="btn btn-ghost" onclick="d2Toggle('agent')">Agent Badge</button>
+        <button class="btn btn-ghost" onclick="d2Toggle('motion')">Motion Ring</button>
+        <button class="btn btn-ghost" onclick="d2Toggle('warning')">Warning Dot</button>
+      </div>
+    </div>
+
+    <h3>Before and After</h3>
+    <p>Generic icon compared to a Supericons Signal.</p>
+    <div class="grid">
+      <div class="card" style="text-align:center;">
+        <div class="badge">Before: Generic Icon</div>
+        <div style="margin:24px 0;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </div>
+        <p style="font-size:0.9rem; margin-bottom:0;">A static database shape. No state, no meaning, no instructions.</p>
+      </div>
+      <div class="card" style="text-align:center; border-color: rgba(99,102,241,0.3);">
+        <div class="badge accent">After: Supericons Signal</div>
+        <div style="margin:24px 0; position:relative; display:inline-block;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="anim-breathe">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          <div style="position:absolute; top:-4px; right:-10px; width:10px; height:10px; border-radius:50%; background:var(--success); box-shadow: 0 0 6px var(--success);"></div>
+        </div>
+        <p style="font-size:0.9rem; margin-bottom:0;">Stateful, breathing, composable. Carries accessibility, agent rules, and motion definitions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. STRATEGIC MEANING -->
+  <section id="strategic-meaning">
+    <h2><span class="num">9</span> Strategic Meaning</h2>
+    <p>Why does this matter for Supericons right now?</p>
+    <div class="card">
+      <ul>
+        <li><strong>Raw icons are commoditized.</strong> Millions of free static SVGs exist. Competing on volume is a losing game.</li>
+        <li><strong>AI can draw but cannot assign meaning.</strong> Generative models produce shapes, but they require structured instructions to apply consistent semantic meaning.</li>
+        <li><strong>Own the grammar, not just the drawings.</strong> Supericons can define the vocabulary and grammar that software uses to compose visual intent.</li>
+        <li><strong>The defensible moat</strong> is taste, structured metadata, composition workflows, developer tooling, MCP integration, and practical productized examples.</li>
+        <li><strong>The near-term path:</strong> one useful grammar pack, one Icon Passport schema, one compelling demo, and one MCP composition tool that wires meaning to visuals.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. CLOSING -->
+  <div class="closing-section">
+    <p class="closing-quote">"Supericons is not trying to be the biggest icon library. It is trying to define how software sees, explains, and composes visual meaning."</p>
+  </div>
+
+</div>
+
+<script>
+  function setDemo1(state) {
+    const svg = document.getElementById('demo1-svg');
+    const label = document.getElementById('demo1-label');
+    svg.classList.remove('anim-pulse', 'anim-breathe', 'anim-shake');
+    switch(state) {
+      case 'idle':
+        svg.style.color = 'var(--text-muted)';
+        label.textContent = 'idle';
+        label.style.color = 'var(--text-dim)';
+        break;
+      case 'working':
+        svg.style.color = 'var(--accent-light)';
+        svg.classList.add('anim-pulse');
+        label.textContent = 'working';
+        label.style.color = 'var(--accent-light)';
+        break;
+      case 'failed':
+        svg.style.color = 'var(--danger)';
+        svg.classList.add('anim-shake');
+        label.textContent = 'failed';
+        label.style.color = 'var(--danger)';
+        break;
+      case 'complete':
+        svg.style.color = 'var(--success)';
+        label.textContent = 'complete';
+        label.style.color = 'var(--success)';
+        break;
+    }
+  }
+
+  let d2State = { isDb: true, agent: false, motion: false, warn: false };
+  const dbPaths = '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>';
+  const serverPaths = '<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>';
+
+  function d2Toggle(prop) {
+    if (prop === 'base') {
+      d2State.isDb = !d2State.isDb;
+      document.getElementById('d2-base').innerHTML = d2State.isDb ? dbPaths : serverPaths;
+    } else if (prop === 'agent') {
+      d2State.agent = !d2State.agent;
+      document.getElementById('d2-badge').style.opacity = d2State.agent ? '1' : '0';
+    } else if (prop === 'motion') {
+      d2State.motion = !d2State.motion;
+      document.getElementById('d2-ring').style.opacity = d2State.motion ? '1' : '0';
+      document.getElementById('d2-base').style.color = d2State.motion ? 'var(--accent-light)' : 'var(--text-muted)';
+    } else if (prop === 'warning') {
+      d2State.warn = !d2State.warn;
+      document.getElementById('d2-warn').style.opacity = d2State.warn ? '1' : '0';
+    }
+    d2UpdateReadout();
+  }
+
+  function d2UpdateReadout() {
+    const parts = [];
+    parts.push('<span class="badge">' + (d2State.isDb ? 'database' : 'server') + '</span>');
+    if (d2State.agent) parts.push('<span class="badge accent">agent</span>');
+    if (d2State.motion) parts.push('<span class="badge cyan">active</span>');
+    if (d2State.warn) parts.push('<span class="badge warning">warning</span>');
+    document.getElementById('d2-readout').innerHTML = parts.join('<span class="math-sym" style="margin:0 2px;">+</span>');
+  }
+</script>
+</body>
+</html>

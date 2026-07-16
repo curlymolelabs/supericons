@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Icons Lab Agent Factsheet</title>
+  <style>
+    :root {
+      --bg: #f7f4ed;
+      --panel: #fffdf8;
+      --ink: #111827;
+      --muted: #5b6472;
+      --line: #ddd6c9;
+      --accent: #ff4f12;
+      --accent-soft: #fff0e9;
+      --code: #18212f;
+      --good: #15803d;
+      --warn: #b45309;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.12;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 64px);
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .lead {
+      max-width: 850px;
+      font-size: 19px;
+    }
+
+    .meta-grid,
+    .card-grid,
+    .screen-grid,
+    .diagram-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .meta-grid {
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      margin-top: 12px;
+    }
+
+    .card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .screen-grid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .diagram-grid {
+      grid-template-columns: 1fr;
+    }
+
+    section {
+      margin-top: 28px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+    }
+
+    .card,
+    .fact,
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffefa;
+      overflow: hidden;
+    }
+
+    .card,
+    .fact {
+      padding: 18px;
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffefa;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--ink);
+      background: #fff7ef;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code,
+    pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #f0ebe3;
+      color: var(--code);
+      font-size: .92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 16px;
+      border-radius: 12px;
+      background: #151a22;
+      color: #f8fafc;
+      font-size: 14px;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+
+    figcaption {
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .callout {
+      border-color: #ffb088;
+      background: var(--accent-soft);
+    }
+
+    .good {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    .small {
+      font-size: 13px;
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 24px 14px 48px;
+      }
+
+      section,
+      .hero {
+        padding: 20px;
+        border-radius: 14px;
+      }
+
+      th,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      th {
+        border-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Agent handoff factsheet</p>
+        <h1>Icons Lab</h1>
+      </div>
+      <p class="lead">Icons Lab is the separate Supericons workbench for making, refining, checking, packaging, and exporting SVG icons. It is built for a human owner and an AI agent to work together, with the human keeping final taste and approval.</p>
+      <div class="meta-grid">
+        <div class="fact">
+          <strong>Status at this handoff</strong>
+          <p>Local app verified from source and browser screenshots on 2026-07-04.</p>
+        </div>
+        <div class="fact">
+          <strong>Repo location</strong>
+          <p><code>icons-lab/</code> inside the main <code>supericons</code> repo.</p>
+        </div>
+        <div class="fact">
+          <strong>Main local URL used</strong>
+          <p><code>http://127.0.0.1:5181/</code> for this factsheet screenshot run.</p>
+        </div>
+        <div class="fact">
+          <strong>Important git note</strong>
+          <p>Parent git status showed a dirty worktree and <code>icons-lab/</code> as untracked at the time of this handoff. Do not reset or stage unrelated files.</p>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>What Icons Lab Is</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Icon-first editor</h3>
+          <p>It is not meant to be a full drawing suite like a general vector editor. The focus is small SVG icons on a 24 by 24 artboard, with grid, keylines, safe area, stroke rules, and small-size preview.</p>
+        </div>
+        <div class="card">
+          <h3>Human plus agent workspace</h3>
+          <p>The human can draw, import, edit points, approve proposals, and export. The agent can suggest actions such as polishing, adding shapes, making variants, drafting a pack brief, or opening QA.</p>
+        </div>
+        <div class="card">
+          <h3>Production loop</h3>
+          <p>The long-term product direction is: search gap, icon brief, visual candidate, editable SVG, human review, QA, metadata, pack review, and registry-ready export.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Verified Stack</h2>
+      <p>These facts were checked from <code>icons-lab/package.json</code>, <code>vite.config.ts</code>, and source files during this handoff.</p>
+      <table>
+        <tr>
+          <th>Part</th>
+          <th>What is used</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td>App shell</td>
+          <td>React 19, TypeScript 6, Vite 8</td>
+          <td>Builds the browser app and local dev server.</td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td>Zustand 5 and Immer</td>
+          <td>Keeps the active document, selection, tools, undo and redo stacks, pack data, state variants, and agent proposal state.</td>
+        </tr>
+        <tr>
+          <td>Local saving</td>
+          <td>Dexie over IndexedDB</td>
+          <td>Stores the workspace in the browser database named <code>supericons-icons-lab</code>, in a <code>workspace</code> table keyed by <code>main</code>.</td>
+        </tr>
+        <tr>
+          <td>Vector work</td>
+          <td>Custom SVG model plus Paper.js</td>
+          <td>Custom code handles icon objects, points, paths, styles, import, export, and QA. Paper.js is used for path and boolean work.</td>
+        </tr>
+        <tr>
+          <td>Icons in UI</td>
+          <td>Lucide React</td>
+          <td>Provides interface icons in buttons and navigation.</td>
+        </tr>
+        <tr>
+          <td>Tests and checks</td>
+          <td>Vitest and Playwright browser script</td>
+          <td><code>npm run test:model</code> checks model logic. <code>npm run verify:browser</code> drives the app in a browser and captures verification screenshots.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Run And Verify</h2>
+      <p>Use these commands from the current repo. If dependencies are missing, run <code>npm install</code> inside <code>icons-lab/</code> first.</p>
+      <pre><code>cd icons-lab
+npm run dev -- --port 5181
+npm run build
+npm run test:model
+npm run verify:browser</code></pre>
+      <p>The main Supericons site is separate and normally runs from the repo root. Keep the main site server and Icons Lab server on different ports.</p>
+    </section>
+
+    <section>
+      <h2>Key Files And Folders</h2>
+      <table>
+        <tr>
+          <th>Path</th>
+          <th>Why it matters</th>
+        </tr>
+        <tr>
+          <td><code>icons-lab/package.json</code></td>
+          <td>Defines the Icons Lab package, scripts, and dependencies.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/vite.config.ts</code></td>
+          <td>Configures React and separates vendor chunks for build output.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/App.tsx</code></td>
+          <td>Main UI file. It currently contains the app shell, editor, canvas, panels, pack screen, recipe screen, export screen, states screen, history screen, and command palette.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/styles.css</code></td>
+          <td>Main styling for the editor layout, panels, canvas, cards, dock, forms, and responsive behavior.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/store/useIconsLabStore.ts</code></td>
+          <td>Main state store. It owns documents, recipes, packs, states, history, undo and redo, imports, exports, QA actions, and agent proposals.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/store/database.ts</code></td>
+          <td>Dexie database wrapper for local browser saving.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/types.ts</code></td>
+          <td>Core data types for tools, elements, documents, metadata, packs, states, history, QA issues, and agent proposals.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/geometry.ts</code></td>
+          <td>Geometry engine for creating, moving, resizing, aligning, distributing, grouping, path editing, handles, style conversion, and SVG element output.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/importSvg.ts</code></td>
+          <td>Imports SVGs, scales them to 24 by 24, converts supported SVG tags into editable objects, and reports skipped or adjusted content.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/exportSvg.ts</code></td>
+          <td>Renders clean SVG and React component output from the current icon document.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/publishing.ts</code></td>
+          <td>Builds public icon records, public pack manifests, state packages, and export packages.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/qa.ts</code></td>
+          <td>Checks viewBox, empty canvas, safe area, currentColor use, stroke recipe, path complexity, object names, and title.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/craft.ts</code></td>
+          <td>Scores and polishes icon craft, including balance, density, and small-size readability.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/cleanup.ts</code></td>
+          <td>Normalizes the icon to the active recipe before export.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/shapeMagic.ts</code></td>
+          <td>Provides editable smooth shape presets used as fast starting parts.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/state*</code></td>
+          <td>Builds state variants, state presets, readiness checks, and timeline preview data.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/pack*</code></td>
+          <td>Creates pack briefs and checks pack consistency.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/src/domain/agentCommands.ts</code></td>
+          <td>Rule-based command interpreter for the current local agent composer.</td>
+        </tr>
+        <tr>
+          <td><code>icons-lab/scripts/verify-icons-lab-browser.py</code></td>
+          <td>Large browser smoke test that checks many editor paths and saves verification screenshots.</td>
+        </tr>
+        <tr>
+          <td><code>docs/assets/icons-lab-factsheet/</code></td>
+          <td>Stores the screenshots and generated diagrams used by this factsheet.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Current Feature Map</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Editor and canvas</h3>
+          <ul>
+            <li>24 by 24 icon canvas with grid, keylines, snap, zoom, and safe area.</li>
+            <li>Selection handles, point editing, path handles, smooth and corner modes.</li>
+            <li>Tools include select, points, box, soft box, circle, oval, dot, line, arc, corner, route, chevron, arrow, spark, badge, pen, and sketch.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Reusable starts</h3>
+          <ul>
+            <li>Template starts for spark, panel, agent, and workflow icons.</li>
+            <li>Starter parts for common icon pieces.</li>
+            <li>Shape Magic presets for editable smooth shapes.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Properties</h3>
+          <ul>
+            <li>Object name, stroke, fill, stroke width, opacity, line ends, corner joins, and point controls.</li>
+            <li>Arrange tools for alignment, distribution, flip, rotate, grouping, compound paths, and boolean operations.</li>
+            <li>Number fields allow direct entry for precise values.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Import and cleanup</h3>
+          <ul>
+            <li>Imports supported SVG tags such as rect, circle, ellipse, line, path, polygon, and polyline.</li>
+            <li>Reports skipped or adjusted content such as definitions, masks, filters, and other non-editable effects.</li>
+            <li>Normalizes imported geometry into a 24 by 24 icon workspace.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Preview and QA</h3>
+          <ul>
+            <li>Real-size previews at 16, 24, 48, and 128 px.</li>
+            <li>Preview backgrounds include transparent, light, dark, warm, and cool.</li>
+            <li>QA checks cover size, safe area, color portability, stroke consistency, path complexity, object naming, and metadata title.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Pack and registry prep</h3>
+          <ul>
+            <li>Pack metadata includes name, slug, tags, search keywords, status, access tier, version, license, release notes, and preview CTA fields.</li>
+            <li>Pack tools can mark subsets and apply the active recipe to all, marked, or unmarked icons.</li>
+            <li>Export package includes public metadata, SVG assets, and state packages.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>States</h3>
+          <ul>
+            <li>State variants include hover, pressed, active, disabled, loading, success, and error.</li>
+            <li>Each state stores a cloned document so state geometry can change without changing the base icon.</li>
+            <li>Timeline preview shows opacity, scale, rotation, geometry shift, timing, easing, and reduced motion fallback.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>History</h3>
+          <ul>
+            <li>Undo and redo are visible workflow tools.</li>
+            <li>Checkpoints can save known-good states before risky edits or agent actions.</li>
+            <li>Edit log records user, agent, and system actions.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Public Data And Policy Notes</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>SVG stays clean</h3>
+          <p>The SVG export path renders icon geometry and title information. Preview CTA links, affiliate links, pack notes, and internal work notes are not embedded inside the SVG file itself.</p>
+        </div>
+        <div class="card">
+          <h3>Public records are built on purpose</h3>
+          <p><code>publishing.ts</code> builds public icon records, pack manifests, releases, and state packages from selected fields. It does not publish the whole local workspace object.</p>
+        </div>
+        <div class="card">
+          <h3>Preview CTA metadata is allowed outside SVG</h3>
+          <p>Icon and pack metadata support <code>previewCtaLabel</code> and <code>previewCtaUrl</code>. Use these for preview panels or marketplace surfaces, not portable SVG markup.</p>
+        </div>
+        <div class="card">
+          <h3>Human approval matters</h3>
+          <p>The current agent composer creates proposals that can be applied or rejected. The human owner should still decide the final metaphor, quality, and product fit.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Product Direction For The Next Agent</h2>
+      <div class="callout card">
+        <h3>Make Icons Lab the missing-icon production loop</h3>
+        <p>The bigger product goal is not just a drawing editor. Icons Lab should help Supericons turn a weak search result into a better icon. A query like <code>license plate recognition camera scan car</code> should become a clear brief, candidate metaphors, editable SVG drafts, QA checks, useful aliases, and registry-ready metadata.</p>
+        <div class="tag-row">
+          <span class="tag">search gap</span>
+          <span class="tag">structured brief</span>
+          <span class="tag">candidate metaphors</span>
+          <span class="tag">editable SVG</span>
+          <span class="tag">human review</span>
+          <span class="tag">QA</span>
+          <span class="tag">metadata</span>
+          <span class="tag">registry export</span>
+        </div>
+      </div>
+      <div class="card-grid" style="margin-top: 16px;">
+        <div class="card">
+          <h3>Current implementation</h3>
+          <p>The current agent composer is local and rule-based. It can propose known actions such as templates, shapes, polish, QA, pack actions, states, and variants.</p>
+        </div>
+        <div class="card">
+          <h3>Suggested next architecture</h3>
+          <p>Add a provider interface later for candidate generation. Keep Icons Lab as the system of record for brief, import, edit, QA, metadata, human approval, and export.</p>
+          <pre><code>generateVectorCandidates({
+  conceptBrief,
+  styleRecipe,
+  provider,
+  count
+})</code></pre>
+        </div>
+        <div class="card">
+          <h3>Important boundary</h3>
+          <p>External providers should create drafts only. They should not bypass human approval, QA, public-safe export rules, or registry metadata review.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Generated Diagrams</h2>
+      <p>These three project images were generated for this handoff and saved into the repo asset folder.</p>
+      <div class="diagram-grid">
+        <figure>
+          <img src="assets/icons-lab-factsheet/diagram-architecture.png" alt="Icons Lab architecture diagram">
+          <figcaption>Architecture: human owner, AI agent, Icons Lab UI, state store, local saving, SVG modules, export, registry, and optional providers.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/diagram-ux-flow.png" alt="Icons Lab UX flow diagram">
+          <figcaption>UX flow: search gap or missing icon request through brief, candidates, import, review, cleanup, QA, metadata, pack review, and export.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/diagram-ecosystem.png" alt="Icons Lab ecosystem relationship diagram">
+          <figcaption>Ecosystem: how Icons Lab relates to Supericons search, registry, packs, API or MCP consumers, preview metadata, human review, AI agents, and providers.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Current UI Screenshots</h2>
+      <p>These screenshots were captured from a fresh browser session against <code>http://127.0.0.1:5181/</code>. They show the app as it exists in this repo at this handoff.</p>
+      <div class="screen-grid">
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-00-start.png" alt="Icons Lab start screen">
+          <figcaption>Start: creates a blank icon or starts from an editable template.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-01-editor-overview.png" alt="Icons Lab editor overview">
+          <figcaption>Editor overview: canvas-first icon workspace with assets, selected path, grid, keylines, and properties.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-02-editor-tools.png" alt="Icons Lab tools panel">
+          <figcaption>Tools: grouped drawing tools with collapse and expand controls.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-03-editor-assets.png" alt="Icons Lab assets panel">
+          <figcaption>Assets: template starts, starter parts, shape presets, style recipes, and color tokens.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-04-structure-drawer.png" alt="Icons Lab structure drawer">
+          <figcaption>Structure drawer: object list, object visibility, lock, order, grouping, duplicate, and delete actions.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-05-properties-preview-agent.png" alt="Icons Lab properties preview and agent dock">
+          <figcaption>Right dock: draggable sections for properties, preview, QA notes, and agent composer.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-06-command-palette.png" alt="Icons Lab command palette">
+          <figcaption>Command palette: keyboard-friendly way to create, edit, arrange, view, and run production commands.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-07-import-report.png" alt="Icons Lab import report">
+          <figcaption>Import report: imported SVG is normalized, while adjusted or skipped SVG content is shown for review.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-08-pack-workspace.png" alt="Icons Lab pack workspace">
+          <figcaption>Pack workspace: pack metadata, search keywords, access tier, license, CTA fields, and batch recipe actions.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-09-recipe.png" alt="Icons Lab recipe screen">
+          <figcaption>Recipe: shared icon rules such as stroke width, safe area, grid step, corner radius, cap, and join.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-10-export.png" alt="Icons Lab export screen">
+          <figcaption>Export: SVG, metadata, React output, PNG preparation, and QA results.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-11-states.png" alt="Icons Lab states screen">
+          <figcaption>States: create and preview hover, pressed, active, disabled, loading, success, and error variants.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/icons-lab-factsheet/screenshot-12-history.png" alt="Icons Lab history screen">
+          <figcaption>History: checkpoint, restore, undo, redo, and edit log for human and agent actions.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Known Gaps And Cautions</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Not yet a provider hub</h3>
+          <p>External candidate providers are a product direction, not a verified current integration in this repo.</p>
+        </div>
+        <div class="card">
+          <h3>App is still compacted into one main UI file</h3>
+          <p><code>src/App.tsx</code> contains many screens and components. Future cleanup may split it into smaller files, but only after preserving behavior.</p>
+        </div>
+        <div class="card">
+          <h3>Design quality still needs human taste</h3>
+          <p>The app can check geometry, consistency, metadata, and export readiness. It cannot fully judge whether a metaphor is beautiful, obvious, or on-brand without a human review.</p>
+        </div>
+        <div class="card">
+          <h3>Import samples are not final icons</h3>
+          <p>The import screenshot uses a test SVG to prove normalization and reporting. It is intentionally busy and should not be treated as a finished Supericons icon.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Evidence Used For This Factsheet</h2>
+      <ul>
+        <li><span class="good">Verified:</span> <code>icons-lab/package.json</code> shows the Vite, React, TypeScript, Zustand, Dexie, Paper.js, Vitest, and Playwright setup.</li>
+        <li><span class="good">Verified:</span> <code>icons-lab/src/store/database.ts</code> defines the local database <code>supericons-icons-lab</code> and workspace table.</li>
+        <li><span class="good">Verified:</span> <code>icons-lab/src/domain/types.ts</code> defines tools, workspace views, element types, metadata, packs, states, history, QA issues, and agent proposals.</li>
+        <li><span class="good">Verified:</span> <code>icons-lab/src/domain/qa.ts</code> defines the current document QA checks.</li>
+        <li><span class="good">Verified:</span> <code>icons-lab/src/domain/publishing.ts</code> builds public records and package output from selected public fields.</li>
+        <li><span class="good">Verified:</span> Icons Lab was served locally on <code>http://127.0.0.1:5181/</code> and the screenshots in this page were captured from that browser session.</li>
+        <li><span class="warn">Caution:</span> This factsheet is a handoff snapshot. Re-run build, model tests, and browser verification before making release claims.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Fast Continuation Checklist</h2>
+      <ol>
+        <li>Read this factsheet first, then open <code>icons-lab/src/domain/types.ts</code> and <code>icons-lab/src/store/useIconsLabStore.ts</code>.</li>
+        <li>Run Icons Lab on a port separate from the main site.</li>
+        <li>Make small changes and verify with browser screenshots, not just source inspection.</li>
+        <li>Keep public exports clean. Do not leak internal notes, prompts, or workspace-only data.</li>
+        <li>For new agent/provider work, keep external output as drafts until human review and QA pass.</li>
+        <li>Before staging or committing, check parent repo git status and avoid unrelated files.</li>
+      </ol>
+    </section>
+
+    <p class="small">Factsheet path: <code>docs/icons-lab-agent-factsheet-2026-07-04.html</code></p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRD — Supericons State Kit v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #18181b;
+  --ink2: #3f3f46;
+  --ink3: #71717a;
+  --ink4: #a1a1aa;
+  --paper: #fafaf9;
+  --paper2: #f4f4f5;
+  --paper3: #e4e4e7;
+  --rule: #d4d4d8;
+  --accent: #dc2626;
+  --accent-soft: #fef2f2;
+  --teal: #0f766e;
+  --teal-soft: #f0fdfa;
+  --amber: #b45309;
+  --amber-soft: #fffbeb;
+  --blue: #1d4ed8;
+  --blue-soft: #eff6ff;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layout */
+.page { max-width: 780px; margin: 0 auto; padding: 0 32px 120px; }
+
+/* Cover */
+.cover {
+  padding: 80px 0 64px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 64px;
+}
+.cover-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink4);
+  letter-spacing: .04em;
+  margin-bottom: 32px;
+}
+.cover-meta .dot { color: var(--rule); }
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid #fecaca;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.cover h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.cover h1 em {
+  font-style: italic;
+  color: var(--ink3);
+}
+.cover-desc {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  max-width: 560px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+.cover-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 560px;
+}
+.stat {
+  background: var(--paper);
+  padding: 16px 20px;
+}
+.stat-val {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--ink4);
+  font-family: var(--font-mono);
+  letter-spacing: .03em;
+}
+
+/* TOC */
+.toc {
+  background: var(--paper2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin-bottom: 64px;
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 16px;
+}
+.toc-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 32px;
+}
+.toc-list li a {
+  font-size: 13px;
+  color: var(--ink2);
+  text-decoration: none;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 3px 0;
+}
+.toc-list li a:hover { color: var(--accent); }
+.toc-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink4);
+  flex-shrink: 0;
+}
+
+/* Sections */
+.section { margin-bottom: 72px; scroll-margin-top: 32px; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink4);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+
+/* Subsections */
+.subsection { margin-bottom: 36px; }
+.subsection h3 {
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--ink3);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Body text */
+p { color: var(--ink2); margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 500; }
+
+/* Callouts */
+.callout {
+  border-left: 3px solid var(--rule);
+  padding: 14px 20px;
+  margin: 20px 0;
+  background: var(--paper2);
+  border-radius: 0 4px 4px 0;
+}
+.callout.accent { border-color: var(--accent); background: var(--accent-soft); }
+.callout.teal { border-color: var(--teal); background: var(--teal-soft); }
+.callout.amber { border-color: var(--amber); background: var(--amber-soft); }
+.callout.blue { border-color: var(--blue); background: var(--blue-soft); }
+.callout p { font-size: 14px; margin: 0; }
+.callout p + p { margin-top: 6px; }
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.callout.accent .callout-label { color: var(--accent); }
+.callout.teal .callout-label { color: var(--teal); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.blue .callout-label { color: var(--blue); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 20px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--rule);
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--paper3);
+  color: var(--ink2);
+  vertical-align: top;
+}
+td:first-child { color: var(--ink); font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+table { border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+
+/* Icon grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.icon-item {
+  background: var(--paper);
+  padding: 16px 18px;
+}
+.icon-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.icon-desc {
+  font-size: 12px;
+  color: var(--ink4);
+  line-height: 1.4;
+}
+.icon-tag {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 7px;
+  background: var(--paper2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink4);
+}
+
+/* Code */
+code {
+  font-family: var(--font-mono);
+  font-size: .88em;
+  background: var(--paper2);
+  border: 1px solid var(--rule);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+pre {
+  background: var(--ink);
+  color: #e4e4e7;
+  padding: 20px 24px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  margin: 16px 0;
+}
+pre .c { color: #71717a; }
+pre .k { color: #fb923c; }
+pre .s { color: #86efac; }
+pre .v { color: #93c5fd; }
+pre .p { color: #d4d4d8; }
+
+/* Lists */
+ul, ol { padding-left: 20px; color: var(--ink2); margin-bottom: 14px; }
+li { margin-bottom: 6px; line-height: 1.65; }
+li::marker { color: var(--ink4); }
+ul.clean { list-style: none; padding-left: 0; }
+ul.clean li { display: flex; gap: 10px; align-items: flex-start; }
+ul.clean li::before { content: '—'; color: var(--ink4); flex-shrink: 0; font-family: var(--font-mono); font-size: 12px; margin-top: 2px; }
+
+/* Priority pills */
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.pill-p0 { background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; }
+.pill-p1 { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.pill-p2 { background: var(--blue-soft); color: var(--blue); border: 1px solid #bfdbfe; }
+.pill-out { background: var(--paper2); color: var(--ink4); border: 1px solid var(--rule); }
+
+/* Timeline */
+.timeline { margin: 24px 0; }
+.tl-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--paper3);
+  align-items: baseline;
+}
+.tl-row:last-child { border-bottom: none; }
+.tl-week {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink4);
+  padding-top: 2px;
+}
+.tl-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.tl-tasks { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+
+/* Metric cards */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.metric {
+  background: var(--paper);
+  padding: 20px 22px;
+}
+.metric-val {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.metric-label { font-size: 12px; color: var(--ink3); margin-bottom: 4px; }
+.metric-sub { font-size: 11px; color: var(--ink4); font-family: var(--font-mono); }
+
+/* Profile card */
+.profile-card {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+  font-size: 13px;
+}
+.profile-header {
+  background: var(--ink);
+  color: #e4e4e7;
+  padding: 12px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.profile-header .dot-r { width: 8px; height: 8px; border-radius: 50%; background: #dc2626; }
+.profile-header .dot-g { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; }
+.profile-header .dot-a { width: 8px; height: 8px; border-radius: 50%; background: #ca8a04; }
+.profile-body {
+  background: #1c1917;
+  color: #d4d4d8;
+  padding: 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.profile-body .k { color: #fb923c; }
+.profile-body .s { color: #86efac; }
+.profile-body .v { color: #93c5fd; }
+.profile-body .c { color: #52525b; }
+.profile-body .b { color: #e879f9; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .page { padding: 0 18px 80px; }
+  .cover-stats { grid-template-columns: repeat(2, 1fr); }
+  .toc-list { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr; }
+}
+
+/* Print */
+@media print {
+  body { font-size: 12px; }
+  .cover { padding: 40px 0 32px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-meta">
+    <span>Supericons</span>
+    <span class="dot">·</span>
+    <span>State Kit v1</span>
+    <span class="dot">·</span>
+    <span>PRD</span>
+    <span class="dot">·</span>
+    <span>May 2026</span>
+    <span style="margin-left:8px"><span class="status-badge">Draft</span></span>
+  </div>
+  <h1>Supericons<br><em>State Kit v1</em></h1>
+  <p class="cover-desc">
+    A focused, paid product: high-quality animated SVG icons for software states, with semantic profiles, accessibility metadata, and MCP tooling. The first concrete step from icon library toward visual computation platform.
+  </p>
+  <div class="cover-stats">
+    <div class="stat">
+      <div class="stat-val">50</div>
+      <div class="stat-label">Icons at launch</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">3</div>
+      <div class="stat-label">Month timeline</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">1</div>
+      <div class="stat-label">Paid offer</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">v1</div>
+      <div class="stat-label">Wedge product</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list">
+    <li><a href="#problem"><span class="toc-num">01</span> Problem</a></li>
+    <li><a href="#goal"><span class="toc-num">02</span> Goal &amp; success metrics</a></li>
+    <li><a href="#scope"><span class="toc-num">03</span> Scope</a></li>
+    <li><a href="#icons"><span class="toc-num">04</span> Icon set</a></li>
+    <li><a href="#profile"><span class="toc-num">05</span> Icon profile spec</a></li>
+    <li><a href="#delivery"><span class="toc-num">06</span> Delivery formats</a></li>
+    <li><a href="#demo"><span class="toc-num">07</span> Demo page</a></li>
+    <li><a href="#mcp"><span class="toc-num">08</span> MCP tool</a></li>
+    <li><a href="#pricing"><span class="toc-num">09</span> Pricing &amp; packaging</a></li>
+    <li><a href="#timeline"><span class="toc-num">10</span> Build timeline</a></li>
+    <li><a href="#risks"><span class="toc-num">11</span> Risks</a></li>
+    <li><a href="#outofscope"><span class="toc-num">12</span> Out of scope</a></li>
+  </ul>
+</div>
+
+<!-- 01 PROBLEM -->
+<div class="section" id="problem">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Problem</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>What developers actually experience</h3>
+    <p>Every piece of software needs to communicate state to users: something is loading, something succeeded, something went wrong, something is waiting for approval. These are not edge cases. They are the most common interactive moments in any app.</p>
+    <p>Despite this, most teams ship one of three inadequate solutions:</p>
+    <ul class="clean">
+      <li>A static spinner from an icon library, repurposed for every state regardless of meaning</li>
+      <li>A CSS animation hacked together for this one case and never reused</li>
+      <li>A Lottie or Rive file that adds 200KB+ to the bundle and requires a separate player</li>
+    </ul>
+    <p>The result is inconsistency within products and across them. A "loading" icon looks different from the "retrying" state which looks identical to "syncing." Users cannot read the visual signal. Developers waste time on work that should be solved once.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Why existing solutions do not solve this</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Solution</th><th>Problem</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>FontAwesome / Lucide / Phosphor</td><td>Static files only. No state, no animation, no semantic guidance.</td></tr>
+          <tr><td>Lottie / Rive</td><td>Heavy runtime dependency. Complex toolchain. Requires design software expertise. Not developer-friendly.</td></tr>
+          <tr><td>CSS spinners</td><td>One-off. No semantic consistency. No accessibility metadata. No guidance on when to use each.</td></tr>
+          <tr><td>AI-generated SVGs</td><td>Visually inconsistent. No semantic layer. No motion behavior. No accessibility.</td></tr>
+          <tr><td>Building in-house</td><td>Expensive, slow, and not a core competency for most teams.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>What is missing</h3>
+    <p>There is no product that provides animated state icons with:</p>
+    <ul class="clean">
+      <li>Semantic meaning — what this icon communicates, not just what it looks like</li>
+      <li>Behavioral guidance — when to use it, when not to, what it implies to users</li>
+      <li>Accessibility built in — ARIA labels, reduced-motion behavior, contrast requirements met</li>
+      <li>Zero runtime dependency — pure SVG, no player required</li>
+      <li>Agent-readable metadata — so AI coding tools can find and use the right icon</li>
+    </ul>
+    <p>State Kit v1 fills this gap.</p>
+  </div>
+
+  <div class="callout accent">
+    <div class="callout-label">Core insight</div>
+    <p>AI can generate a loading spinner. It cannot generate <em>the right spinner for a high-risk financial transaction</em> with correct ARIA labeling, reduced-motion fallback, and a semantic profile that tells an agent when to use it versus a different icon. That specificity is the product.</p>
+  </div>
+</div>
+
+<!-- 02 GOAL -->
+<div class="section" id="goal">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Goal &amp; success metrics</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>What this product must achieve</h3>
+    <p>State Kit v1 has two parallel goals. First, it must be genuinely useful to developers building real software today. Second, it must establish that Supericons' value is semantic depth and behavioral guidance, not icon quantity. Every decision should serve both goals.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Success metrics — Month 3</h3>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-val">$2k</div>
+        <div class="metric-label">Revenue at 90 days</div>
+        <div class="metric-sub">Evidence the offer lands. Not a business yet — a signal.</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">50</div>
+        <div class="metric-label">Paying customers</div>
+        <div class="metric-sub">Minimum to hear real feedback and spot patterns.</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">200</div>
+        <div class="metric-label">MCP tool calls / week</div>
+        <div class="metric-sub">Proxy for agent adoption. Track from week 2 onward.</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Target</th><th>Why it matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Demo page visit → purchase</td><td>&gt;2%</td><td>Validates the demo converts intent to action</td></tr>
+          <tr><td>Zero accessibility defects reported</td><td>0 by launch</td><td>Accessibility is in the protocol, not bolted on later</td></tr>
+          <tr><td>Unprompted positive mention on X or HN</td><td>3+ in 30 days</td><td>Word-of-mouth proxy; signals the product is memorable</td></tr>
+          <tr><td>Repeat purchase / upgrade request</td><td>5+ in 60 days</td><td>Early signal that Phase 2 packs are viable</td></tr>
+          <tr><td>Refund requests</td><td>&lt;3%</td><td>Floor for product-market fit</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>What this product is not trying to achieve</h3>
+    <ul class="clean">
+      <li>Becoming the largest icon library. Depth beats breadth here.</li>
+      <li>Competing on aesthetics alone. Semantic correctness is the differentiator.</li>
+      <li>Solving every use case. 50 icons done well is the point.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 03 SCOPE -->
+<div class="section" id="scope">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Scope</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>In scope for v1</h3>
+    <ul class="clean">
+      <li>50 animated SVG icons covering the core software state vocabulary</li>
+      <li>One semantic profile per icon (structured JSON): state, risk, confidence, motion behavior, ARIA label, use-when, avoid-when, example contexts</li>
+      <li>Static SVG fallback for every animated icon</li>
+      <li>Reduced-motion variant for every animated icon</li>
+      <li>Three delivery formats: raw SVG, React component, Web Component</li>
+      <li>One MCP search tool: find an icon by intent or state description</li>
+      <li>Demo page with live state toggles, copy-paste snippets, profile viewer</li>
+      <li>One paid purchase path (Lemon Squeezy or Gumroad)</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Out of scope for v1</h3>
+    <p>See Section 12 for full rationale. Summary:</p>
+    <ul class="clean">
+      <li>Parametric customization props (Phase 2)</li>
+      <li>AI-assisted generation (Phase 3 / Forge)</li>
+      <li>Registry or token namespacing (Phase 4)</li>
+      <li>Visual editor / Studio (Phase 4)</li>
+      <li>Native mobile (iOS / Android) renderers</li>
+      <li>Canvas or WebGL output</li>
+      <li>Team collaboration features</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 04 ICON SET -->
+<div class="section" id="icons">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Icon set</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Selection criteria</h3>
+    <p>Every icon in v1 must satisfy all three:</p>
+    <ul class="clean">
+      <li><strong>Real software need.</strong> It appears in actual apps that developers are building today.</li>
+      <li><strong>Distinct meaning.</strong> It communicates something different from every other icon in the set. No near-duplicates.</li>
+      <li><strong>Animated motion adds value.</strong> The animation communicates state, not decoration. A static version would lose information.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Icon set — v1 (50 icons)</h3>
+
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:12px">Priority: <span class="pill pill-p0">P0</span> = launch blockers &nbsp; <span class="pill pill-p1">P1</span> = high value &nbsp; <span class="pill pill-p2">P2</span> = complete the set</p>
+
+    <div class="icon-grid">
+      <!-- Loading / Progress -->
+      <div class="icon-item">
+        <div class="icon-name">loading-ring</div>
+        <div class="icon-desc">General-purpose loading. Rotating ring.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">loading-dots</div>
+        <div class="icon-desc">Pulsing three-dot ellipsis. Conversational contexts.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">loading-bar</div>
+        <div class="icon-desc">Indeterminate progress bar sweep.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">progress-partial</div>
+        <div class="icon-desc">Determinate arc fill. Accepts a value prop in v2.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">uploading</div>
+        <div class="icon-desc">Arrow rising with sweep animation.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">downloading</div>
+        <div class="icon-desc">Arrow falling with sweep animation.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">syncing</div>
+        <div class="icon-desc">Two-direction arrows cycling. Data sync contexts.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">processing</div>
+        <div class="icon-desc">Gear turning. Background task contexts.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+
+      <!-- Success / Completion -->
+      <div class="icon-item">
+        <div class="icon-name">success</div>
+        <div class="icon-desc">Checkmark drawing in. Task complete.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">success-subtle</div>
+        <div class="icon-desc">Muted fade-in check. Low-emphasis confirmations.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">saved</div>
+        <div class="icon-desc">Floppy disk with brief checkmark. Autosave indicator.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">sent</div>
+        <div class="icon-desc">Paper plane launching. Message / email dispatched.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">deployed</div>
+        <div class="icon-desc">Upward arrow resolving to checkmark. Deploy / publish.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+
+      <!-- Error / Failure -->
+      <div class="icon-item">
+        <div class="icon-name">error</div>
+        <div class="icon-desc">X drawing in with brief shake. Hard failure.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">error-critical</div>
+        <div class="icon-desc">Pulsing red X. Unrecoverable failure. Use sparingly.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">failed</div>
+        <div class="icon-desc">X resolving from a broken ring. Process that ran and failed.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">connection-lost</div>
+        <div class="icon-desc">Wifi icon fragmenting. Network / offline state.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+
+      <!-- Warning / Caution -->
+      <div class="icon-item">
+        <div class="icon-name">warning</div>
+        <div class="icon-desc">Triangle drawing in. Recoverable issue.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">warning-pulse</div>
+        <div class="icon-desc">Gently pulsing triangle. Ongoing attention needed.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">caution</div>
+        <div class="icon-desc">Amber slow pulse. Lower urgency than warning.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">expiring-soon</div>
+        <div class="icon-desc">Clock ticking. Certificate, session, or license near expiry.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+
+      <!-- Blocked / Waiting -->
+      <div class="icon-item">
+        <div class="icon-name">blocked</div>
+        <div class="icon-desc">Static lock with subtle pulsing border. No animation of the lock itself — it is stuck.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">paused</div>
+        <div class="icon-desc">Two bars with a gentle breathing pulse. Deliberately halted.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">queued</div>
+        <div class="icon-desc">Three horizontal lines with slow downward motion. In a queue, waiting turn.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">pending-approval</div>
+        <div class="icon-desc">Clock or hourglass, slow tick. Human action required.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">scheduled</div>
+        <div class="icon-desc">Calendar with a slow clock animation. Future-dated task.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">rate-limited</div>
+        <div class="icon-desc">Throttle indicator. Request is being slowed, not stopped.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+
+      <!-- Retry / Recovery -->
+      <div class="icon-item">
+        <div class="icon-name">retrying</div>
+        <div class="icon-desc">Circular arrows with an acceleration easing. System trying again.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">reconnecting</div>
+        <div class="icon-desc">Wifi icon rebuilding bars. Network recovery in progress.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">recovering</div>
+        <div class="icon-desc">Broken ring repairing itself. Failure → recovery transition.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+
+      <!-- AI / Agent states -->
+      <div class="icon-item">
+        <div class="icon-name">ai-thinking</div>
+        <div class="icon-desc">Slow expanding dots or waveform. LLM generating a response.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">ai-working</div>
+        <div class="icon-desc">Spark or node with orbiting motion. Agent executing a multi-step task.</div>
+        <span class="icon-tag">P0</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">ai-reviewing</div>
+        <div class="icon-desc">Magnifier scanning slowly. Agent reading / analyzing content.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">ai-waiting-input</div>
+        <div class="icon-desc">Cursor pulse. Agent has paused and needs human input to continue.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">ai-low-confidence</div>
+        <div class="icon-desc">Amber shimmer on a standard icon. Agent is uncertain about this output.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+
+      <!-- Risk / Trust -->
+      <div class="icon-item">
+        <div class="icon-name">risk-low</div>
+        <div class="icon-desc">Calm green shield. Safe to proceed without review.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">risk-medium</div>
+        <div class="icon-desc">Amber shield with subtle pulse. Proceed with care.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">risk-high</div>
+        <div class="icon-desc">Red shield with attention-getting pulse. Human review required.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">verified</div>
+        <div class="icon-desc">Shield resolving to checkmark. Identity or content verified.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">unverified</div>
+        <div class="icon-desc">Shield with question mark, slow pulse. Source not confirmed.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+
+      <!-- System / Infrastructure -->
+      <div class="icon-item">
+        <div class="icon-name">healthy</div>
+        <div class="icon-desc">Heartbeat line. System or service running normally.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">degraded</div>
+        <div class="icon-desc">Slower heartbeat, amber. Performance below threshold.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">outage</div>
+        <div class="icon-desc">Flatline or broken signal. Service is down.</div>
+        <span class="icon-tag">P1</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">maintenance</div>
+        <div class="icon-desc">Wrench with slow rotation. Planned downtime.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">encrypting</div>
+        <div class="icon-desc">Lock closing with a keyhole sweep. Security operation in progress.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">authenticated</div>
+        <div class="icon-desc">Key turning or badge appearing. Login / auth confirmed.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">idle</div>
+        <div class="icon-desc">Very slow pulse on a neutral circle. System running, no active task.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+      <div class="icon-item">
+        <div class="icon-name">archived</div>
+        <div class="icon-desc">Box closing lid animation. Moved to long-term storage.</div>
+        <span class="icon-tag">P2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <div class="callout-label">Design constraint</div>
+    <p>All 50 icons must belong to the same visual family. Line weight, corner radius, grid size, stroke caps, and color palette are defined once and applied consistently. Inconsistency within the set destroys the product's core value proposition.</p>
+  </div>
+</div>
+
+<!-- 05 PROFILE SPEC -->
+<div class="section" id="profile">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Icon profile spec</h2>
+  </div>
+
+  <p>Every icon ships with a machine-readable JSON profile. This is not documentation — it is data that the MCP tool, future parametric system, and agent workflows consume directly. Write it carefully. These profiles are the semantic layer that justifies the product's existence.</p>
+
+  <div class="subsection">
+    <h3>Profile schema</h3>
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="dot-r"></div><div class="dot-a"></div><div class="dot-g"></div>
+        <span style="margin-left:8px">loading-ring.json</span>
+      </div>
+      <div class="profile-body">
+<span class="p">{</span><br>
+&nbsp;&nbsp;<span class="k">"id"</span>: <span class="s">"loading-ring"</span>,<br>
+&nbsp;&nbsp;<span class="k">"name"</span>: <span class="s">"Loading Ring"</span>,<br>
+&nbsp;&nbsp;<span class="k">"version"</span>: <span class="s">"1.0.0"</span>,<br>
+&nbsp;&nbsp;<span class="c">// What this icon semantically represents</span><br>
+&nbsp;&nbsp;<span class="k">"semantic"</span>: <span class="p">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"base_object"</span>: <span class="s">"process"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"state"</span>: <span class="s">"loading"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"risk_level"</span>: <span class="s">"none"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"confidence"</span>: <span class="s">"high"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"urgency"</span>: <span class="s">"neutral"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"reversible"</span>: <span class="v">true</span><br>
+&nbsp;&nbsp;<span class="p">},</span><br>
+&nbsp;&nbsp;<span class="c">// What to put in aria-label — exact text, not instructions</span><br>
+&nbsp;&nbsp;<span class="k">"accessibility"</span>: <span class="p">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"aria_label"</span>: <span class="s">"Loading"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"aria_live"</span>: <span class="s">"polite"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"role"</span>: <span class="s">"status"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"reduce_motion"</span>: <span class="s">"static-ring"</span><br>
+&nbsp;&nbsp;<span class="p">},</span><br>
+&nbsp;&nbsp;<span class="c">// Motion characteristics — for future parametric control</span><br>
+&nbsp;&nbsp;<span class="k">"motion"</span>: <span class="p">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"type"</span>: <span class="s">"loop"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"duration_ms"</span>: <span class="v">1200</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"easing"</span>: <span class="s">"ease-in-out"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"communicates"</span>: <span class="s">"continuous indeterminate progress"</span><br>
+&nbsp;&nbsp;<span class="p">},</span><br>
+&nbsp;&nbsp;<span class="c">// Guidance — this is the semantic layer humans and agents read</span><br>
+&nbsp;&nbsp;<span class="k">"guidance"</span>: <span class="p">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"use_when"</span>: <span class="p">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"A process has started and completion time is unknown"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"The system is working and the user should wait"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"No specific action is required from the user"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">],</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"avoid_when"</span>: <span class="p">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"You know the completion percentage — use loading-bar instead"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"The wait is for a human action — use pending-approval instead"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"The process has failed and is retrying — use retrying instead"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">],</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"example_contexts"</span>: <span class="p">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"Form submission processing"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"File upload in progress"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"API request pending"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"Dashboard data loading"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">],</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"not_for"</span>: <span class="p">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"AI agent activity — use ai-thinking or ai-working instead"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"Dangerous or irreversible operations — use a warning state"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">]</span><br>
+&nbsp;&nbsp;<span class="p">},</span><br>
+&nbsp;&nbsp;<span class="c">// Files shipped with this icon</span><br>
+&nbsp;&nbsp;<span class="k">"files"</span>: <span class="p">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"animated_svg"</span>: <span class="s">"loading-ring.svg"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"static_svg"</span>: <span class="s">"loading-ring-static.svg"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"reduced_motion_svg"</span>: <span class="s">"loading-ring-reduced.svg"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"react"</span>: <span class="s">"LoadingRing.tsx"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"web_component"</span>: <span class="s">"loading-ring-wc.js"</span><br>
+&nbsp;&nbsp;<span class="p">}</span><br>
+<span class="p">}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Field definitions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>semantic.state</td><td>string enum</td><td>Yes</td><td>loading, success, error, warning, blocked, retrying, idle, pending, processing, ai-active, risk-low, risk-medium, risk-high</td></tr>
+          <tr><td>semantic.risk_level</td><td>string enum</td><td>Yes</td><td>none, low, medium, high, critical</td></tr>
+          <tr><td>semantic.confidence</td><td>string enum</td><td>Yes</td><td>high, medium, low, uncertain — describes what this icon implies about system confidence, not design quality</td></tr>
+          <tr><td>semantic.reversible</td><td>boolean</td><td>Yes</td><td>True if the state can naturally resolve. False for terminal states like error-critical.</td></tr>
+          <tr><td>accessibility.aria_label</td><td>string</td><td>Yes</td><td>Exact text. Not instructions. Tested with a screen reader before shipping.</td></tr>
+          <tr><td>accessibility.aria_live</td><td>string enum</td><td>Yes</td><td>off, polite, assertive. Most states are polite. Critical errors may be assertive.</td></tr>
+          <tr><td>accessibility.reduce_motion</td><td>string</td><td>Yes</td><td>ID of the reduced-motion variant for this icon.</td></tr>
+          <tr><td>motion.communicates</td><td>string</td><td>Yes</td><td>One sentence. What the animation communicates, not describes. This is read by agents.</td></tr>
+          <tr><td>guidance.use_when</td><td>string[]</td><td>Yes</td><td>2–4 items. Specific conditions, not general truisms.</td></tr>
+          <tr><td>guidance.avoid_when</td><td>string[]</td><td>Yes</td><td>2–4 items. Each item names the correct alternative icon.</td></tr>
+          <tr><td>guidance.example_contexts</td><td>string[]</td><td>Yes</td><td>2–6 real app scenarios. Specific, not generic.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <div class="callout-label">Quality bar</div>
+    <p>A profile passes review only when: a developer reading it for the first time knows exactly which icon to use and which to avoid, and an AI agent reading it can construct a correct recommendation without hallucinating. If the guidance is vague enough to apply to any icon, it is not done yet.</p>
+  </div>
+</div>
+
+<!-- 06 DELIVERY FORMATS -->
+<div class="section" id="delivery">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Delivery formats</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>What gets shipped</h3>
+    <p>Every icon is delivered in three formats. All three ship with every purchase. There is no upsell for a specific format.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Format 1 — Raw SVG</h3>
+    <p>Three files per icon: animated, static fallback, reduced-motion. Animation is implemented using CSS <code>@keyframes</code> embedded directly in the SVG. No JavaScript. No external dependencies. Inline in HTML or referenced as an <code>&lt;img&gt;</code> tag or CSS <code>background-image</code>.</p>
+    <div class="callout">
+      <p><strong>Constraint:</strong> Animated SVGs used as <code>&lt;img&gt;</code> or CSS <code>background-image</code> do not animate in most browsers — only inline SVG animates reliably. Document this limitation clearly in the README and demo page. Do not hide it.</p>
+    </div>
+    <p>Reduced-motion variant uses <code>@media (prefers-reduced-motion: reduce)</code> inside the SVG to replace motion with a static or very subtly pulsing version. No JavaScript required.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Format 2 — React component</h3>
+    <p>TypeScript, no runtime dependencies. Props in v1:</p>
+    <pre><span class="c">// LoadingRing.tsx</span>
+<span class="k">interface</span> <span class="p">LoadingRingProps</span> {
+  size?: <span class="v">number</span>;          <span class="c">// px, default 24</span>
+  color?: <span class="v">string</span>;         <span class="c">// CSS color, default currentColor</span>
+  label?: <span class="v">string</span>;         <span class="c">// aria-label override</span>
+  className?: <span class="v">string</span>;
+}</pre>
+    <p>The component wraps inline SVG. It respects <code>prefers-reduced-motion</code> automatically via a <code>useReducedMotion</code> hook, swapping to the static variant without any prop required from the developer.</p>
+    <p>The component includes <code>role="status"</code>, <code>aria-label</code>, and <code>aria-live</code> per the profile spec. Developers can override the label for context-specific strings like "Saving your changes…"</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Format 3 — Web Component</h3>
+    <p>Custom element registered as <code>&lt;si-icon name="loading-ring"&gt;</code>. Framework-agnostic. Works in plain HTML, Vue, Angular, Svelte, and any other environment.</p>
+    <pre><span class="c">&lt;!-- Plain HTML usage --&gt;</span>
+<span class="p">&lt;script</span> <span class="k">type</span>=<span class="s">"module"</span> <span class="k">src</span>=<span class="s">"/si-icons.js"</span><span class="p">&gt;&lt;/script&gt;</span>
+
+<span class="p">&lt;si-icon</span>
+  <span class="k">name</span>=<span class="s">"loading-ring"</span>
+  <span class="k">size</span>=<span class="s">"24"</span>
+  <span class="k">label</span>=<span class="s">"Saving your changes"</span>
+<span class="p">&gt;&lt;/si-icon&gt;</span></pre>
+    <p>Reduced-motion is handled automatically inside the component. No developer action required.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Package structure</h3>
+    <pre>supericons-state-kit-v1/
+├── README.md
+├── CHANGELOG.md
+├── icons/
+│   ├── loading-ring/
+│   │   ├── loading-ring.svg          <span class="c"># animated</span>
+│   │   ├── loading-ring-static.svg   <span class="c"># no animation</span>
+│   │   ├── loading-ring-reduced.svg  <span class="c"># reduced-motion</span>
+│   │   ├── loading-ring.json         <span class="c"># profile</span>
+│   │   ├── LoadingRing.tsx           <span class="c"># React</span>
+│   │   └── loading-ring-wc.js        <span class="c"># Web Component</span>
+│   └── ... (49 more)
+├── react/
+│   └── index.ts                      <span class="c"># barrel export</span>
+├── web-components/
+│   └── si-icons.js                   <span class="c"># single bundle</span>
+└── profiles/
+    └── index.json                    <span class="c"># all 50 profiles in one file</span></pre>
+  </div>
+</div>
+
+<!-- 07 DEMO PAGE -->
+<div class="section" id="demo">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Demo page</h2>
+  </div>
+
+  <p>The demo page is a product, not a marketing page. Most developers who encounter State Kit will make their purchase decision here. If it does not demonstrate value clearly within 30 seconds, the product fails regardless of how good the icons are.</p>
+
+  <div class="subsection">
+    <h3>Page requirements</h3>
+    <ul class="clean">
+      <li><strong>Live icon grid.</strong> All 50 icons visible and animated. Visitors see the product immediately on load, without scrolling or clicking.</li>
+      <li><strong>State toggle.</strong> Click any icon to see its states: animated, static, reduced-motion. One click, instant visual feedback.</li>
+      <li><strong>Profile panel.</strong> Selecting an icon shows the semantic profile inline: state, risk level, use-when, avoid-when, example contexts, ARIA label. This demonstrates the depth behind the visuals.</li>
+      <li><strong>Copy snippet.</strong> Each format (SVG, React, Web Component) has a one-click copy button. The code shown is production-ready — copy, paste, works.</li>
+      <li><strong>Reduced-motion toggle.</strong> A global toggle that simulates <code>prefers-reduced-motion: reduce</code>, so visitors can see what users with that preference experience.</li>
+      <li><strong>Search.</strong> Type "error" or "AI" or "blocked" and the grid filters to matching icons. Uses the profile data, not just icon names.</li>
+      <li><strong>One CTA.</strong> "Buy State Kit — $X" visible at all times. No modal, no email capture gate, no friction before the purchase link.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Performance constraints</h3>
+    <ul class="clean">
+      <li>Page must load in under 2 seconds on a standard connection</li>
+      <li>Icons load lazily as the user scrolls — do not load all 50 SVGs at once</li>
+      <li>No analytics or tracking scripts that block render</li>
+      <li>Passes Lighthouse accessibility audit score of 95+</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>What the demo page is not</h3>
+    <ul class="clean">
+      <li>Not a blog post or explainer. The icons demonstrate themselves.</li>
+      <li>Not a feature list. Show; do not tell.</li>
+      <li>Not a Figma embed or screenshot. Real, live SVGs only.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 08 MCP TOOL -->
+<div class="section" id="mcp">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>MCP tool</h2>
+  </div>
+
+  <p>One tool at launch. Not five tools, not a complex workflow — one reliable tool that solves the specific problem an AI coding agent faces: "I need to show the user that something is loading / failed / blocked. What icon should I use and how do I use it?"</p>
+
+  <div class="subsection">
+    <h3>Tool: search_state_icons</h3>
+    <div class="callout blue">
+      <div class="callout-label">Tool definition</div>
+      <p><strong>Name:</strong> search_state_icons</p>
+      <p><strong>Description:</strong> Find the right Supericons State Kit icon for a software state or interaction. Describe what the user is experiencing or what the system is doing. Returns the icon name, SVG, React usage, semantic profile, and accessibility label.</p>
+    </div>
+    <pre><span class="c">// Input schema</span>
+{
+  <span class="s">"query"</span>: <span class="v">string</span>,         <span class="c">// natural language description of the state</span>
+  <span class="s">"context"</span>?: <span class="v">string</span>,      <span class="c">// optional: app type, user type, risk level hint</span>
+  <span class="s">"format"</span>?: <span class="v">string</span>        <span class="c">// "svg" | "react" | "web-component", default "react"</span>
+}
+
+<span class="c">// Output</span>
+{
+  <span class="s">"icon_id"</span>: <span class="v">string</span>,
+  <span class="s">"icon_name"</span>: <span class="v">string</span>,
+  <span class="s">"match_reason"</span>: <span class="v">string</span>,  <span class="c">// one sentence: why this icon, not another</span>
+  <span class="s">"aria_label"</span>: <span class="v">string</span>,
+  <span class="s">"usage_snippet"</span>: <span class="v">string</span>, <span class="c">// paste-ready code in the requested format</span>
+  <span class="s">"profile"</span>: <span class="v">object</span>,       <span class="c">// full semantic profile JSON</span>
+  <span class="s">"alternatives"</span>: <span class="v">array</span>   <span class="c">// up to 2 other candidates with brief reason each</span>
+}</pre>
+  </div>
+
+  <div class="subsection">
+    <h3>Behavior requirements</h3>
+    <ul class="clean">
+      <li><strong>Deterministic.</strong> The same query returns the same icon. Agents need to trust that the tool will not return different icons for the same state on different calls.</li>
+      <li><strong>Grounded.</strong> Results come only from the actual 50-icon set. The tool never invents an icon ID or returns an icon that does not exist.</li>
+      <li><strong>Match reason is always provided.</strong> An agent should never have to guess why this icon was selected. The match_reason is one clear sentence that distinguishes this icon from its alternatives.</li>
+      <li><strong>Alternatives are conservative.</strong> Return 0–2 alternatives, not 8. More choices create more confusion. If the best match is clear, say so and return no alternatives.</li>
+      <li><strong>Accessibility is pre-filled.</strong> The usage snippet includes aria-label populated from the profile. The developer does not have to think about it unless they want to override it for context.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Example call</h3>
+    <pre><span class="c">// Agent query</span>
+search_state_icons({
+  query: <span class="s">"The payment is being processed and the user should wait"</span>,
+  context: <span class="s">"fintech app, high-value transaction"</span>,
+  format: <span class="s">"react"</span>
+})
+
+<span class="c">// Response</span>
+{
+  icon_id: <span class="s">"loading-ring"</span>,
+  icon_name: <span class="s">"Loading Ring"</span>,
+  match_reason: <span class="s">"Indeterminate wait with no user action needed matches payment processing; loading-bar would imply known progress"</span>,
+  aria_label: <span class="s">"Processing payment"</span>,
+  usage_snippet: <span class="s">"&lt;LoadingRing label='Processing payment' size={24} /&gt;"</span>,
+  profile: { ... },
+  alternatives: [
+    {
+      icon_id: <span class="s">"processing"</span>,
+      reason: <span class="s">"More technical feel; appropriate if the UI is developer-facing"</span>
+    }
+  ]
+}</pre>
+  </div>
+
+  <div class="callout amber">
+    <div class="callout-label">Do not ship</div>
+    <p>Do not ship a tool that generates new SVGs, modifies icons, or creates parametric variants. v1 is search and retrieval only. Generation belongs in Phase 3 (Forge). Trying to do both in v1 dilutes both.</p>
+  </div>
+</div>
+
+<!-- 09 PRICING -->
+<div class="section" id="pricing">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>Pricing &amp; packaging</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Offer</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>Price</th><th>What's included</th><th>License</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solo</td><td>$49 one-time</td><td>All 50 icons in all 3 formats. All profiles. Lifetime updates to v1.x.</td><td>Single developer. One commercial project.</td></tr>
+          <tr><td>Team</td><td>$149 one-time</td><td>Everything in Solo.</td><td>Up to 5 developers. Unlimited commercial projects.</td></tr>
+          <tr><td>Studio</td><td>$349 one-time</td><td>Everything in Team. Priority support. Early access to v2 packs.</td><td>Unlimited developers. Unlimited projects. Agency / consultancy use.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Rationale</h3>
+    <ul class="clean">
+      <li>One-time price removes ongoing cost anxiety. Developers make faster purchase decisions.</li>
+      <li>$49 is impulse-buy territory for a working developer. It does not require budget approval.</li>
+      <li>Three tiers give solo developers, small teams, and agencies a natural landing point. Do not add more tiers.</li>
+      <li>No free tier at launch. A free tier fragments attention, creates support load, and signals that the paid product is optional. Prove value first; open-source decisions come later.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Distribution</h3>
+    <p>Lemon Squeezy as the primary payment processor. Simple to set up, handles VAT, has a clean checkout flow, and supports instant delivery of zip files. No custom payment infrastructure in v1.</p>
+    <p>Deliver a zip file containing the package structure defined in Section 06. Include a brief PDF README with usage instructions, license text, and a link to the demo page for the latest code examples.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>What is not in the price</h3>
+    <ul class="clean">
+      <li>No ongoing subscription. No recurring billing.</li>
+      <li>No SLA or support guarantee. Best-effort email support only.</li>
+      <li>Updates to v1.x are included. v2 (parametric packs) will be a separate purchase at a discount for existing customers.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 10 TIMELINE -->
+<div class="section" id="timeline">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2>Build timeline</h2>
+  </div>
+
+  <div class="callout">
+    <p>Timeline assumes one primary builder. Adjust if there are additional contributors. Do not compress weeks 1–4 — the design foundation created in that period determines the quality of everything that follows.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-row">
+      <div class="tl-week">Weeks 1–2</div>
+      <div>
+        <div class="tl-title">Foundation — visual system and first five icons</div>
+        <div class="tl-tasks">Define the visual system: grid (24×24), stroke weight, corner radius, color palette, animation timing conventions. Design and implement all five P0 loading/progress icons (loading-ring, loading-dots, loading-bar, uploading, downloading). Write their profiles. Get the quality bar right before proceeding. These five icons set the standard for the remaining 45.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-week">Weeks 3–4</div>
+      <div>
+        <div class="tl-title">Core states — all P0 icons complete</div>
+        <div class="tl-tasks">Complete remaining P0 icons: syncing, success, error, error-critical, warning, blocked, paused, pending-approval, retrying, ai-thinking, ai-working. All with animated SVG, static fallback, reduced-motion variant, and profile. Accessibility review on all P0 icons — screen reader test, contrast check, motion review.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-week">Weeks 5–6</div>
+      <div>
+        <div class="tl-title">P1 icons and React component build</div>
+        <div class="tl-tasks">Design and implement all P1 icons. Build the React component wrapper including useReducedMotion hook, TypeScript props, aria-label handling. Write barrel export. Test React components in a real Next.js project. Fix any SVG animation issues discovered in component context.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-week">Weeks 7–8</div>
+      <div>
+        <div class="tl-title">P2 icons, Web Component, and MCP tool</div>
+        <div class="tl-tasks">Design and implement all P2 icons. Build the Web Component (si-icon custom element). Build the MCP search tool — index all profiles, implement semantic search, write the tool definition, test with at least five realistic agent query scenarios. Verify tool output is copy-paste correct.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-week">Weeks 9–10</div>
+      <div>
+        <div class="tl-title">Demo page build and QA</div>
+        <div class="tl-tasks">Build the demo page: live icon grid, state toggle, profile panel, copy snippets, reduced-motion toggle, search. Lighthouse audit — target 95+ accessibility, 90+ performance. Cross-browser test (Chrome, Firefox, Safari, Edge). Test on mobile. Run demo page with 3–5 developers who have not seen it before and observe where they are confused.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-week">Weeks 11–12</div>
+      <div>
+        <div class="tl-title">Packaging, payment, and launch</div>
+        <div class="tl-tasks">Write README, CHANGELOG, license text. Assemble zip file. Set up Lemon Squeezy product page with three tiers. Soft launch to a small list (25–50 people) for final feedback. Fix anything critical. Public launch: post on X, submit to relevant newsletters (Bytes, React Newsletter, TLDR), post on HN Show HN if the response is strong enough.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 11 RISKS -->
+<div class="section" id="risks">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <h2>Risks</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Risk</th><th>Likelihood</th><th>Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Visual inconsistency across 50 icons</td>
+          <td>High</td>
+          <td>Define and document the visual system in week 1. Review every new icon against the first five before proceeding. Do not rush weeks 1–2.</td>
+        </tr>
+        <tr>
+          <td>SVG animation compatibility issues</td>
+          <td>Medium</td>
+          <td>Test every P0 icon in Chrome, Firefox, and Safari before proceeding to P1. Animated SVG has well-known cross-browser edge cases — find them early.</td>
+        </tr>
+        <tr>
+          <td>Profiles are too generic to be useful</td>
+          <td>Medium</td>
+          <td>Use the quality bar: a profile passes only when the avoid_when items each name a specific alternative icon. Generic guidance is a rewrite, not a pass.</td>
+        </tr>
+        <tr>
+          <td>Demo page does not convert</td>
+          <td>Medium</td>
+          <td>Test with 3–5 developers before launch. Watch where they get confused. If they cannot find the copy button in under 10 seconds, redesign that part.</td>
+        </tr>
+        <tr>
+          <td>MCP tool returns hallucinated icon IDs</td>
+          <td>Low with discipline</td>
+          <td>The tool must search against the actual profiles index, not generate freeform. Test with edge-case queries ("what icon for quantum-encrypted upload?") and verify the output references a real icon ID.</td>
+        </tr>
+        <tr>
+          <td>Timeline slips due to icon count</td>
+          <td>Medium</td>
+          <td>P0 icons are launch-blockers. P1 and P2 are not. If week 8 arrives and P2 icons are incomplete, launch with 35–40 icons and ship the rest as a free update. Shipping on time with a strong set beats a perfect set shipped late.</td>
+        </tr>
+        <tr>
+          <td>No one buys it</td>
+          <td>Low-medium</td>
+          <td>The product exists. Learn from the failure mode: is it discovery, demo, price, or the product itself? Each has a different fix. Do not iterate blindly — identify the failure before changing something.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 12 OUT OF SCOPE -->
+<div class="section" id="outofscope">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <h2>Out of scope</h2>
+  </div>
+
+  <p>These are not exclusions due to lack of ambition. They are deliberate deferments because attempting them in v1 would compromise quality, delay launch, or solve problems the product has not yet earned the right to solve.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Why deferred</th><th>When</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Parametric props (color, speed, easing, brand tokens)</td><td>Adds API surface area before we know which parameters developers actually want. Learn from v1 usage first.</td><td>Phase 2</td></tr>
+        <tr><td>AI generation (Forge)</td><td>Generation without a strong corpus of profiles produces wrong output. Build the corpus first.</td><td>Phase 3</td></tr>
+        <tr><td>Visual editor (Studio)</td><td>Premature. Requires understanding how people use the profiles before designing tools to create them.</td><td>Phase 4</td></tr>
+        <tr><td>Registry / namespaced tokens</td><td>No network to create network effects yet.</td><td>Phase 4</td></tr>
+        <tr><td>Native mobile (iOS / Android)</td><td>Different technical stack, different distribution, different buyers. Not the target in v1.</td><td>Future</td></tr>
+        <tr><td>Canvas / WebGL renderers</td><td>SVG covers the vast majority of developer use cases. Canvas and WebGL are specialized.</td><td>Future</td></tr>
+        <tr><td>Team collaboration (shared workspaces, brand config)</td><td>No infrastructure for it and no evidence teams need it yet.</td><td>Phase 2–3</td></tr>
+        <tr><td>Free tier</td><td>Fragments attention and signals the paid product is optional. Decide after v1 has real revenue.</td><td>Revisit at 6 months</td></tr>
+        <tr><td>Second MCP tool (recommend, compose)</td><td>One tool done well is more valuable than three tools done poorly.</td><td>Phase 2</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="padding-top:48px;border-top:1px solid var(--rule);margin-top:48px;font-family:var(--font-mono);font-size:11px;color:var(--ink4);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <span>Supericons · State Kit v1 · PRD · May 2026</span>
+  <span>Curly Mole Labs · Draft</span>
+</div>
+
+</div>
+</body>
+</html>

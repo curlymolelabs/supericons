@@ -1,0 +1,1749 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Beyond Icons: Supericons As A Programmable Visual Language</title>
+  <style>
+    :root {
+      --ink: #151515;
+      --muted: #555b63;
+      --soft: #eef1f5;
+      --paper: #fbfcfd;
+      --white: #ffffff;
+      --line: #d7dde5;
+      --teal: #0d9488;
+      --coral: #ef5d46;
+      --yellow: #f3b61f;
+      --blue: #2f6feb;
+      --violet: #7c3aed;
+      --green: #18a058;
+      --red: #d83933;
+      --shadow: 0 18px 50px rgba(21, 21, 21, 0.08);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      overflow: hidden;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(215, 221, 229, 0.82);
+      background: rgba(251, 252, 253, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .site-nav__inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(21, 21, 21, 0.16);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 7px 9px;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: var(--soft);
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      min-height: min(820px, calc(100vh - 62px));
+      padding: 82px 24px 70px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+      align-items: center;
+      gap: 52px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(3rem, 8vw, 6.8rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 720;
+      font-size: 0.96rem;
+      text-decoration: none;
+    }
+
+    .button--ghost {
+      background: var(--white);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .hero-board {
+      position: relative;
+      min-height: 510px;
+      padding: 22px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .signal-canvas {
+      height: 100%;
+      min-height: 466px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+
+    .canvas-topline,
+    .canvas-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .status-dots {
+      display: inline-flex;
+      gap: 7px;
+    }
+
+    .status-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--line);
+    }
+
+    .status-dots span:nth-child(1) { background: var(--coral); }
+    .status-dots span:nth-child(2) { background: var(--yellow); }
+    .status-dots span:nth-child(3) { background: var(--green); }
+
+    .visual-object {
+      display: grid;
+      place-items: center;
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(215, 221, 229, 0.48) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(215, 221, 229, 0.48) 1px, transparent 1px),
+        #f8fafc;
+      background-size: 28px 28px;
+      overflow: hidden;
+    }
+
+    .signal-orbit {
+      position: absolute;
+      inset: 58px;
+      border: 2px dashed rgba(13, 148, 136, 0.32);
+      border-radius: 50%;
+      animation: spin 24s linear infinite;
+    }
+
+    .signal-object {
+      position: relative;
+      width: min(72%, 300px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+    }
+
+    .signal-ring {
+      position: absolute;
+      inset: 10px;
+      border: 12px solid rgba(13, 148, 136, 0.18);
+      border-top-color: var(--teal);
+      border-right-color: rgba(47, 111, 235, 0.62);
+      border-radius: 50%;
+      animation: spin 8s linear infinite;
+    }
+
+    .signal-core {
+      width: 62%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(21, 21, 21, 0.12);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 18px 42px rgba(21, 21, 21, 0.14);
+      color: var(--ink);
+    }
+
+    .signal-badge {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      font-weight: 800;
+      color: var(--white);
+      box-shadow: 0 10px 28px rgba(21, 21, 21, 0.2);
+    }
+
+    .signal-badge--risk {
+      right: 8%;
+      top: 20%;
+      background: var(--coral);
+    }
+
+    .signal-badge--agent {
+      left: 7%;
+      bottom: 18%;
+      background: var(--blue);
+    }
+
+    .signal-annotation {
+      position: absolute;
+      max-width: 176px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 24px rgba(21, 21, 21, 0.08);
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .signal-annotation strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.82rem;
+      margin-bottom: 2px;
+    }
+
+    .signal-annotation--one {
+      top: 42px;
+      left: 28px;
+    }
+
+    .signal-annotation--two {
+      right: 26px;
+      bottom: 36px;
+    }
+
+    section {
+      padding: 86px 24px;
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(280px, 0.25fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .band-dark {
+      background: #161719;
+      color: var(--white);
+    }
+
+    .band-dark .section-head p,
+    .band-dark .muted,
+    .band-dark .ladder-card p,
+    .band-dark .product-card p {
+      color: #bac1cb;
+    }
+
+    .band-dark .ladder-card,
+    .band-dark .product-card,
+    .band-dark .sentence-card {
+      background: #202226;
+      border-color: #343841;
+      color: var(--white);
+    }
+
+    .ladder {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(150px, 1fr));
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .ladder-card {
+      min-height: 270px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 12px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--ink);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .ladder-card h3,
+    .product-card h3,
+    .sentence-card h3,
+    .name-card h3,
+    .demo-card h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .ladder-card p,
+    .product-card p,
+    .sentence-card p,
+    .name-card p,
+    .demo-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .example-strip {
+      padding: 9px 10px;
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 690;
+    }
+
+    .grammar-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .primitive-board,
+    .sentence-board,
+    .passport-board,
+    .future-map,
+    .strategy-board {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .primitive-cloud {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .primitive-group {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #f8fafc;
+    }
+
+    .primitive-group h3 {
+      margin: 0 0 10px;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      font-size: 0.82rem;
+      font-weight: 680;
+    }
+
+    .sentence-board {
+      display: grid;
+      gap: 14px;
+    }
+
+    .sentence-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .mini-signal {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .mini-signal svg {
+      position: relative;
+      z-index: 2;
+    }
+
+    .mini-ring {
+      position: absolute;
+      inset: 4px;
+      border: 5px solid rgba(13, 148, 136, 0.2);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+    }
+
+    .mini-risk {
+      position: absolute;
+      right: 3px;
+      top: 8px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: var(--coral);
+      border: 3px solid var(--white);
+      z-index: 3;
+    }
+
+    .formula {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 5px;
+    }
+
+    .name-grid,
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .name-card,
+    .product-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 18px;
+    }
+
+    .name-card.recommended {
+      border-color: rgba(13, 148, 136, 0.48);
+      box-shadow: 0 18px 42px rgba(13, 148, 136, 0.13);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(13, 148, 136, 0.1);
+      color: #0f766e;
+      font-weight: 760;
+      font-size: 0.74rem;
+      margin-bottom: 12px;
+    }
+
+    .passport-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .passport-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .field-pill {
+      min-height: 52px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      background: #f8fafc;
+      font-weight: 720;
+      font-size: 0.88rem;
+    }
+
+    pre {
+      margin: 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: #111315;
+      color: #e8eef5;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      tab-size: 2;
+    }
+
+    .future-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      background: #191b1f;
+      border-color: #343841;
+      box-shadow: none;
+    }
+
+    .future-tile {
+      min-height: 168px;
+      border: 1px solid #343841;
+      border-radius: var(--radius);
+      padding: 16px;
+      background: #202226;
+    }
+
+    .future-tile h3 {
+      margin: 12px 0 8px;
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .future-tile p {
+      margin: 0;
+      color: #bac1cb;
+      font-size: 0.9rem;
+    }
+
+    .future-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--yellow);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .demo-card {
+      min-height: 360px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .demo-stage {
+      min-height: 210px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .database-demo {
+      width: 132px;
+      height: 132px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .database-demo .pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 6px solid rgba(239, 93, 70, 0.2);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    .database-demo .warning-dot {
+      position: absolute;
+      right: 4px;
+      top: 16px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--white);
+      font-weight: 900;
+      border: 4px solid var(--white);
+      z-index: 3;
+    }
+
+    .agent-signal {
+      width: 170px;
+      height: 170px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .agent-signal .outer {
+      position: absolute;
+      inset: 0;
+      border: 8px solid rgba(47, 111, 235, 0.15);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 5s linear infinite;
+    }
+
+    .agent-signal .inner {
+      width: 92px;
+      height: 92px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 34px rgba(47, 111, 235, 0.18);
+      z-index: 2;
+    }
+
+    .passport-card-demo {
+      align-items: stretch;
+      justify-items: stretch;
+      padding: 18px;
+    }
+
+    .passport-mini {
+      width: min(100%, 440px);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 14px 34px rgba(21, 21, 21, 0.08);
+    }
+
+    .passport-mini h4 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .passport-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+
+    .passport-row span:first-child {
+      color: var(--muted);
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.55fr) minmax(180px, 0.45fr);
+      gap: 18px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 740;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    select {
+      min-height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 9px;
+      font: inherit;
+      font-size: 0.92rem;
+    }
+
+    .composer-output {
+      min-height: 182px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+    }
+
+    .composed-icon {
+      width: 124px;
+      height: 124px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .composed-icon .state-ring {
+      position: absolute;
+      inset: 2px;
+      border: 7px solid rgba(13, 148, 136, 0.2);
+      border-radius: 50%;
+    }
+
+    .composed-icon[data-state="working"] .state-ring {
+      border-top-color: var(--teal);
+      animation: spin 4.5s linear infinite;
+    }
+
+    .composed-icon[data-state="blocked"] .state-ring {
+      border-color: rgba(216, 57, 51, 0.22);
+      border-top-color: var(--red);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .composed-icon[data-state="complete"] .state-ring {
+      border-color: rgba(24, 160, 88, 0.24);
+      border-top-color: var(--green);
+    }
+
+    .composed-icon .risk-mark {
+      position: absolute;
+      right: 8px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 4px solid #f8fafc;
+      background: var(--yellow);
+    }
+
+    .composed-icon[data-risk="dangerous"] .risk-mark {
+      background: var(--red);
+    }
+
+    .composed-icon[data-risk="safe"] .risk-mark {
+      background: var(--green);
+    }
+
+    .composed-icon .confidence-mark {
+      position: absolute;
+      left: 8px;
+      bottom: 14px;
+      min-width: 38px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 850;
+    }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .compare-panel {
+      display: grid;
+      place-items: center;
+      min-height: 168px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .compare-panel strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .compare-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 1.4rem;
+    }
+
+    .strategy-board {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .moat-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .moat-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+    }
+
+    .moat-dot {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--teal);
+      font-weight: 900;
+    }
+
+    .closing {
+      padding: 108px 24px;
+      text-align: center;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .closing blockquote {
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: clamp(2rem, 5vw, 4.7rem);
+      line-height: 1.02;
+      font-weight: 820;
+      letter-spacing: 0;
+    }
+
+    .closing p {
+      max-width: 720px;
+      margin: 28px auto 0;
+      color: #c4cad3;
+      font-size: 1.08rem;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: block;
+    }
+
+    .icon-small {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.75; }
+      50% { transform: scale(1.06); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (max-width: 1050px) {
+      .hero,
+      .grammar-grid,
+      .passport-layout,
+      .strategy-board {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .future-map,
+      .name-grid,
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-nav__inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero,
+      section {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero-board {
+        padding: 14px;
+      }
+
+      .visual-object {
+        min-height: 360px;
+      }
+
+      .signal-annotation {
+        position: static;
+        margin: 8px;
+        max-width: none;
+      }
+
+      .primitive-cloud,
+      .passport-fields,
+      .future-map,
+      .name-grid,
+      .product-grid,
+      .demo-grid,
+      .composer,
+      .before-after {
+        grid-template-columns: 1fr;
+      }
+
+      .compare-arrow {
+        min-height: 38px;
+      }
+
+      .future-map {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav" aria-label="Page sections">
+      <div class="site-nav__inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg class="icon-small" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12c0-4.1 2.9-7 7-7s7 2.9 7 7-2.9 7-7 7-7-2.9-7-7Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>Supericons Vision</span>
+        </div>
+        <div class="nav-links">
+          <a href="#evolution">Evolution</a>
+          <a href="#grammar">Grammar</a>
+          <a href="#passport">Passport</a>
+          <a href="#demos">Demos</a>
+          <a href="#strategy">Strategy</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <h1>Beyond icons: a programmable visual language.</h1>
+        <p>
+          Supericons can grow from an icon search tool into a system where every icon is a small visual software object. Humans define the meaning. AI shapes the form. Apps bind the icon to live state.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#grammar">
+            See the grammar
+            <svg class="icon-small" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="button button--ghost" href="#demos">Jump to demos</a>
+        </div>
+      </div>
+
+      <div class="hero-board" aria-label="Visual object concept demo">
+        <div class="signal-canvas">
+          <div class="canvas-topline">
+            <span>visual object / live meaning</span>
+            <span class="status-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+          </div>
+          <div class="visual-object">
+            <div class="signal-orbit" aria-hidden="true"></div>
+            <div class="signal-annotation signal-annotation--one">
+              <strong>Meaning</strong>
+              Not just "database." This means agent-managed data with active risk.
+            </div>
+            <div class="signal-object" aria-hidden="true">
+              <div class="signal-ring"></div>
+              <div class="signal-core">
+                <svg class="icon" viewBox="0 0 48 48" fill="none">
+                  <ellipse cx="24" cy="12" rx="14" ry="6" stroke="currentColor" stroke-width="3"/>
+                  <path d="M10 12v20c0 3.3 6.3 6 14 6s14-2.7 14-6V12" stroke="currentColor" stroke-width="3"/>
+                  <path d="M10 22c0 3.3 6.3 6 14 6s14-2.7 14-6" stroke="currentColor" stroke-width="3"/>
+                </svg>
+              </div>
+              <div class="signal-badge signal-badge--risk">!</div>
+              <div class="signal-badge signal-badge--agent">AI</div>
+            </div>
+            <div class="signal-annotation signal-annotation--two">
+              <strong>Behavior</strong>
+              The ring, badge, label, and motion all change when state changes.
+            </div>
+          </div>
+          <div class="canvas-footer">
+            <span>from icon file</span>
+            <span>to visual software object</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="evolution" class="band-dark">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>The evolution map.</h2>
+          <p>An icon can climb from a fixed picture into a portable piece of interface logic. Each level keeps the old value and adds a new power.</p>
+        </div>
+
+        <div class="ladder" aria-label="Icon evolution ladder">
+          <article class="ladder-card">
+            <span class="step-number">1</span>
+            <h3>Static icon</h3>
+            <p>A fixed symbol. Useful, but it has no memory, state, or built-in guidance.</p>
+            <div class="example-strip">Example: a plain database SVG.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">2</span>
+            <h3>Smart icon</h3>
+            <p>The icon carries plain meaning and usage notes that humans and AI can read.</p>
+            <div class="example-strip">Example: use for stored data, not analytics.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">3</span>
+            <h3>Stateful icon</h3>
+            <p>The icon changes by state: idle, syncing, blocked, failed, or complete.</p>
+            <div class="example-strip">Example: a syncing database pulses.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">4</span>
+            <h3>Composable icon</h3>
+            <p>Small visual parts combine into one clearer signal.</p>
+            <div class="example-strip">Example: database + lock + warning.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">5</span>
+            <h3>Interactive icon</h3>
+            <p>The icon becomes a tiny control surface with hover, click, and action states.</p>
+            <div class="example-strip">Example: click to open an audit trail.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">6</span>
+            <h3>Generative icon</h3>
+            <p>The meaning stays stable while AI redraws the form for any brand style.</p>
+            <div class="example-strip">Example: same signal in startup, enterprise, or game UI style.</div>
+          </article>
+          <article class="ladder-card">
+            <span class="step-number">7</span>
+            <h3>Protocol icon</h3>
+            <p>The icon meaning travels across apps, agents, frameworks, and devices.</p>
+            <div class="example-strip">Example: "needs approval" looks consistent everywhere.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="grammar">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>Icon grammar: visual sentences.</h2>
+          <p>Instead of picking one picture, Supericons can compose meaning from parts. Each part is simple. Together they say something precise.</p>
+        </div>
+
+        <div class="grammar-grid">
+          <div class="primitive-board">
+            <h3>Primitives</h3>
+            <p class="muted">A primitive is a basic visual building block. Like words in a sentence, these parts can combine in many ways.</p>
+            <div class="primitive-cloud">
+              <div class="primitive-group">
+                <h3>Base object</h3>
+                <div class="chips">
+                  <span class="chip">database</span><span class="chip">model</span><span class="chip">file</span><span class="chip">user</span><span class="chip">payment</span><span class="chip">server</span><span class="chip">tool</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>State</h3>
+                <div class="chips">
+                  <span class="chip">idle</span><span class="chip">working</span><span class="chip">blocked</span><span class="chip">failed</span><span class="chip">complete</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>Authority</h3>
+                <div class="chips">
+                  <span class="chip">human</span><span class="chip">AI agent</span><span class="chip">system</span><span class="chip">third-party service</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>Confidence</h3>
+                <div class="chips">
+                  <span class="chip">high</span><span class="chip">medium</span><span class="chip">low</span><span class="chip">unknown</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>Risk</h3>
+                <div class="chips">
+                  <span class="chip">safe</span><span class="chip">caution</span><span class="chip">dangerous</span><span class="chip">irreversible</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>Motion</h3>
+                <div class="chips">
+                  <span class="chip">pulse</span><span class="chip">trace</span><span class="chip">spin</span><span class="chip">breathe</span><span class="chip">shake</span><span class="chip">settle</span>
+                </div>
+              </div>
+              <div class="primitive-group">
+                <h3>Context</h3>
+                <div class="chips">
+                  <span class="chip">sidebar</span><span class="chip">dashboard</span><span class="chip">approval flow</span><span class="chip">audit log</span><span class="chip">mobile notification</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sentence-board">
+            <article class="sentence-card">
+              <div class="mini-signal" aria-hidden="true">
+                <span class="mini-ring"></span><span class="mini-risk"></span>
+                <svg class="icon" viewBox="0 0 48 48" fill="none">
+                  <ellipse cx="24" cy="13" rx="14" ry="6" stroke="currentColor" stroke-width="3"/>
+                  <path d="M10 13v19c0 3.3 6.3 6 14 6s14-2.7 14-6V13" stroke="currentColor" stroke-width="3"/>
+                  <path d="M10 23c0 3.3 6.3 6 14 6s14-2.7 14-6" stroke="currentColor" stroke-width="3"/>
+                </svg>
+              </div>
+              <div>
+                <h3>AI is changing data and needs attention.</h3>
+                <div class="formula">database + agent + warning + pulse</div>
+              </div>
+            </article>
+            <article class="sentence-card">
+              <div class="mini-signal" aria-hidden="true">
+                <span class="mini-ring"></span><span class="mini-risk"></span>
+                <svg class="icon" viewBox="0 0 48 48" fill="none">
+                  <rect x="9" y="15" width="30" height="22" rx="4" stroke="currentColor" stroke-width="3"/>
+                  <path d="M9 22h30M17 31h7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Payment action requires human review.</h3>
+                <div class="formula">payment + human approval + high risk</div>
+              </div>
+            </article>
+            <article class="sentence-card">
+              <div class="mini-signal" aria-hidden="true">
+                <span class="mini-ring"></span>
+                <svg class="icon" viewBox="0 0 48 48" fill="none">
+                  <path d="M15 18a9 9 0 0 1 18 0v12a9 9 0 0 1-18 0V18Z" stroke="currentColor" stroke-width="3"/>
+                  <path d="M24 9v30M15 22h18M15 30h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>AI answer may be uncertain.</h3>
+                <div class="formula">model + low confidence + explanation</div>
+              </div>
+            </article>
+            <article class="sentence-card">
+              <div class="mini-signal" aria-hidden="true">
+                <span class="mini-ring"></span><span class="mini-risk"></span>
+                <svg class="icon" viewBox="0 0 48 48" fill="none">
+                  <rect x="12" y="9" width="24" height="30" rx="4" stroke="currentColor" stroke-width="3"/>
+                  <path d="M18 17h12M18 24h12M18 31h6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Deployment is stuck but recoverable.</h3>
+                <div class="formula">server + blocked + retry</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="names" class="band-dark">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>A better name than AIPS.</h2>
+          <p>The idea needs a name that feels useful, not bureaucratic. The product name should be easy to say. The technical name should stay clean and precise.</p>
+        </div>
+
+        <div class="name-grid">
+          <article class="name-card recommended">
+            <span class="tag">Product name</span>
+            <h3>Icon Passport</h3>
+            <p>Best public name. It says the icon carries identity, meaning, and usage rules wherever it goes.</p>
+          </article>
+          <article class="name-card recommended">
+            <span class="tag">Technical name</span>
+            <h3>SI Profile</h3>
+            <p>Best technical name. Short, brand-linked, and flexible enough for schema, files, and MCP output.</p>
+          </article>
+          <article class="name-card">
+            <h3>Supericons Signal</h3>
+            <p>Strong for state, trust, alerts, and live behavior. Better for a product family than the whole format.</p>
+          </article>
+          <article class="name-card">
+            <h3>Icon Grammar</h3>
+            <p>Best for the composition system: base plus state plus risk plus confidence.</p>
+          </article>
+          <article class="name-card">
+            <h3>Visual Signal</h3>
+            <p>Good plain-language phrase for what a composed icon becomes in the interface.</p>
+          </article>
+          <article class="name-card">
+            <h3>Living Icon</h3>
+            <p>Memorable, but a little broad. Useful for storytelling, less precise for docs.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="passport">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>The Icon Passport.</h2>
+          <p>Every icon can carry a small profile that explains what it means, how it behaves, and how an AI coding agent should use it.</p>
+        </div>
+
+        <div class="passport-layout">
+          <div class="passport-board">
+            <h3>What travels with the icon</h3>
+            <p class="muted">This information can live beside the SVG or inside it. The important part is that the meaning travels with the asset.</p>
+            <div class="passport-fields">
+              <div class="field-pill">meaning</div>
+              <div class="field-pill">use cases</div>
+              <div class="field-pill">do-not-use rules</div>
+              <div class="field-pill">accessibility label</div>
+              <div class="field-pill">state variants</div>
+              <div class="field-pill">motion rules</div>
+              <div class="field-pill">related icons</div>
+              <div class="field-pill">agent guidance</div>
+              <div class="field-pill">source notes</div>
+              <div class="field-pill">license notes</div>
+            </div>
+          </div>
+
+          <pre aria-label="Sample Icon Passport JSON"><code>{
+  "si_profile": {
+    "id": "supericons:signal:database-agent-risk",
+    "product_name": "Icon Passport",
+    "meaning": "An AI agent is working with stored data.",
+    "use_when": [
+      "showing active database work",
+      "flagging agent-managed data changes"
+    ],
+    "do_not_use_when": [
+      "the data is only being viewed",
+      "the action is unrelated to storage"
+    ],
+    "states": {
+      "idle": { "motion": "none", "label": "Database idle" },
+      "working": { "motion": "pulse", "label": "AI is changing data" },
+      "blocked": { "motion": "shake", "label": "Data action is blocked" }
+    },
+    "pairs_with": ["risk-badge", "approval-ring", "audit-link"],
+    "agent_guidance": "Use this when a software agent affects database state.",
+    "accessibility_label": "AI-managed database action"
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="band-dark">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>Real products this can become.</h2>
+          <p>The dream can start as practical tools and packs. Each product should make modern software easier to explain, build, and trust.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <h3>AI Agent Status Icon Pack</h3>
+            <p>Idle, planning, working, waiting, blocked, failed, complete, monitoring, and learning.</p>
+          </article>
+          <article class="product-card">
+            <h3>Trust and Approval Icon System</h3>
+            <p>Visual rules for who started an action, who approved it, and whether it can proceed.</p>
+          </article>
+          <article class="product-card">
+            <h3>Risk and Consequence Grammar</h3>
+            <p>Reusable visual parts for danger, cost, privacy, rate limits, and irreversible actions.</p>
+          </article>
+          <article class="product-card">
+            <h3>Developer Stack Diagram Icons</h3>
+            <p>A system for architecture diagrams, tech stacks, workflows, and build pipelines.</p>
+          </article>
+          <article class="product-card">
+            <h3>Icon Passport Viewer</h3>
+            <p>A simple page that reads an icon and explains its meaning, states, and usage rules.</p>
+          </article>
+          <article class="product-card">
+            <h3>Motion Lab v2</h3>
+            <p>State-driven animation where motion means something, instead of decoration only.</p>
+          </article>
+          <article class="product-card">
+            <h3>MCP Composition Tool</h3>
+            <p>An AI coding agent asks by intent and receives a composed visual signal with code.</p>
+          </article>
+          <article class="product-card">
+            <h3>React or Web Component Renderer</h3>
+            <p>A small component that maps app state into accessible icon behavior.</p>
+          </article>
+          <article class="product-card">
+            <h3>Explain This Icon Choice</h3>
+            <p>An agent-facing feature that returns the icon, the reason, and safer alternatives.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="future" class="band-dark">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>Wild future possibilities.</h2>
+          <p>If SVG is visual code, an icon can become more like a tiny interface than a tiny picture.</p>
+        </div>
+
+        <div class="future-map">
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">1</div>
+            <h3>Tiny dashboards</h3>
+            <p>An icon expands into a compact view of state, progress, cost, and next action.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">2</div>
+            <h3>Agent explanations</h3>
+            <p>An icon explains what the AI is doing and why it chose the next step.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">3</div>
+            <h3>Audit trails</h3>
+            <p>Click the signal to see who acted, what changed, and what can be undone.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">4</div>
+            <h3>Many surfaces</h3>
+            <p>The same meaning adapts to web, watch, AR, LED lights, and haptic feedback.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">5</div>
+            <h3>Brand-aware generation</h3>
+            <p>AI redraws the same meaning in any brand style while keeping the rules intact.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">6</div>
+            <h3>Visual APIs</h3>
+            <p>Apps can ask an icon what it means, what states it supports, and how it should behave.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">7</div>
+            <h3>Trust traffic signals</h3>
+            <p>A shared visual system for approval, risk, authority, and confidence in AI products.</p>
+          </article>
+          <article class="future-tile">
+            <div class="future-icon" aria-hidden="true">8</div>
+            <h3>Sentence-like UI</h3>
+            <p>Agents compose visual meaning the way sentences compose words.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="demos">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>Demo gallery.</h2>
+          <p>These mockups are lightweight, but they show the shape of the product: visual meaning that can change, explain itself, and compose.</p>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <div>
+              <h3>Static database to stateful signal</h3>
+              <p>A normal database icon gains a warning badge, motion ring, and agent meaning.</p>
+            </div>
+            <div class="demo-stage">
+              <div class="database-demo" aria-label="Database signal with warning">
+                <span class="pulse-ring"></span>
+                <span class="warning-dot">!</span>
+                <svg width="86" height="86" viewBox="0 0 86 86" fill="none">
+                  <ellipse cx="43" cy="22" rx="24" ry="10" stroke="#151515" stroke-width="5"/>
+                  <path d="M19 22v37c0 5.5 10.7 10 24 10s24-4.5 24-10V22" stroke="#151515" stroke-width="5"/>
+                  <path d="M19 40c0 5.5 10.7 10 24 10s24-4.5 24-10" stroke="#151515" stroke-width="5"/>
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div>
+              <h3>AI agent working signal</h3>
+              <p>The icon does not only say "AI." It says the agent is actively working.</p>
+            </div>
+            <div class="demo-stage">
+              <div class="agent-signal" aria-label="AI agent working visual signal">
+                <span class="outer"></span>
+                <div class="inner">
+                  <svg width="58" height="58" viewBox="0 0 58 58" fill="none">
+                    <rect x="14" y="16" width="30" height="28" rx="8" stroke="#151515" stroke-width="4"/>
+                    <path d="M22 28h.01M36 28h.01M24 36h10" stroke="#151515" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M29 8v8M18 13l5 6M40 13l-5 6" stroke="#2f6feb" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div>
+              <h3>Icon Passport profile card</h3>
+              <p>The icon carries plain instructions that make it useful to humans and agents.</p>
+            </div>
+            <div class="demo-stage passport-card-demo">
+              <div class="passport-mini">
+                <h4>Icon Passport: approval-risk</h4>
+                <div class="passport-row"><span>Meaning</span><strong>High-risk action needs review</strong></div>
+                <div class="passport-row"><span>Use when</span><strong>payment, deletion, data sharing</strong></div>
+                <div class="passport-row"><span>Motion</span><strong>slow pulse</strong></div>
+                <div class="passport-row"><span>Label</span><strong>Action requires approval</strong></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div>
+              <h3>Compose signal panel</h3>
+              <p>Choose meaning parts and watch the resulting signal change.</p>
+            </div>
+            <div class="demo-stage">
+              <div class="composer">
+                <div class="controls">
+                  <label>Base
+                    <select id="baseSelect">
+                      <option value="database">database</option>
+                      <option value="payment">payment</option>
+                      <option value="server">server</option>
+                    </select>
+                  </label>
+                  <label>State
+                    <select id="stateSelect">
+                      <option value="working">working</option>
+                      <option value="blocked">blocked</option>
+                      <option value="complete">complete</option>
+                    </select>
+                  </label>
+                  <label>Risk
+                    <select id="riskSelect">
+                      <option value="caution">caution</option>
+                      <option value="dangerous">dangerous</option>
+                      <option value="safe">safe</option>
+                    </select>
+                  </label>
+                  <label>Confidence
+                    <select id="confidenceSelect">
+                      <option value="MID">medium</option>
+                      <option value="LOW">low</option>
+                      <option value="HIGH">high</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="composer-output">
+                  <div id="composedIcon" class="composed-icon" data-state="working" data-risk="caution" aria-label="Composed visual signal">
+                    <span class="state-ring"></span>
+                    <span class="risk-mark"></span>
+                    <span id="confidenceMark" class="confidence-mark">MID</span>
+                    <svg id="baseSvg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+                      <ellipse cx="30" cy="16" rx="18" ry="7" stroke="#151515" stroke-width="4"/>
+                      <path d="M12 16v26c0 4.2 8.1 8 18 8s18-3.8 18-8V16" stroke="#151515" stroke-width="4"/>
+                      <path d="M12 29c0 4.2 8.1 8 18 8s18-3.8 18-8" stroke="#151515" stroke-width="4"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div>
+              <h3>Before and after</h3>
+              <p>The old icon labels a thing. The new signal explains a situation.</p>
+            </div>
+            <div class="demo-stage">
+              <div class="before-after">
+                <div class="compare-panel">
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                    <ellipse cx="32" cy="17" rx="18" ry="7" stroke="#151515" stroke-width="4"/>
+                    <path d="M14 17v29c0 4.4 8.1 8 18 8s18-3.6 18-8V17" stroke="#151515" stroke-width="4"/>
+                  </svg>
+                  <strong>database</strong>
+                </div>
+                <div class="compare-arrow" aria-hidden="true">&rarr;</div>
+                <div class="compare-panel">
+                  <div class="mini-signal" aria-hidden="true">
+                    <span class="mini-ring"></span><span class="mini-risk"></span>
+                    <svg class="icon" viewBox="0 0 48 48" fill="none">
+                      <ellipse cx="24" cy="13" rx="14" ry="6" stroke="currentColor" stroke-width="3"/>
+                      <path d="M10 13v19c0 3.3 6.3 6 14 6s14-2.7 14-6V13" stroke="currentColor" stroke-width="3"/>
+                    </svg>
+                  </div>
+                  <strong>AI is changing data</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div>
+              <h3>Icon as tiny interface</h3>
+              <p>A future icon can expose the most important next action without opening a full page.</p>
+            </div>
+            <div class="demo-stage passport-card-demo">
+              <div class="passport-mini">
+                <h4>Agent action pending</h4>
+                <div class="passport-row"><span>Status</span><strong>Waiting for approval</strong></div>
+                <div class="passport-row"><span>Risk</span><strong>Data will be changed</strong></div>
+                <div class="passport-row"><span>Next</span><strong>Approve or inspect</strong></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>Why this matters.</h2>
+          <p>AI can generate visuals, but it still needs structure. Supericons can own the grammar, not just the drawings.</p>
+        </div>
+
+        <div class="strategy-board">
+          <div>
+            <h3>Strategic meaning</h3>
+            <p class="muted">
+              Raw icons are becoming easier to copy and generate. The harder problem is shared meaning: what a visual should represent, how it should behave, and how an agent should choose it. That is where Supericons can build a stronger foundation.
+            </p>
+          </div>
+          <div class="moat-list">
+            <div class="moat-item">
+              <span class="moat-dot">1</span>
+              <div><strong>Taste</strong><br><span class="muted">Human judgment decides what the signal should mean and when it is appropriate.</span></div>
+            </div>
+            <div class="moat-item">
+              <span class="moat-dot">2</span>
+              <div><strong>Structure</strong><br><span class="muted">Profiles and grammar rules make visual choices repeatable instead of random.</span></div>
+            </div>
+            <div class="moat-item">
+              <span class="moat-dot">3</span>
+              <div><strong>Workflow</strong><br><span class="muted">MCP, exports, examples, and demos make the idea useful inside real build flows.</span></div>
+            </div>
+            <div class="moat-item">
+              <span class="moat-dot">4</span>
+              <div><strong>Productized examples</strong><br><span class="muted">One useful grammar pack, one profile format, one demo, and one MCP composition tool can prove the path.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <blockquote>
+        Supericons is not trying to be the biggest icon library. It is trying to define how software sees, explains, and composes visual meaning.
+      </blockquote>
+      <p>
+        The future icon is not just drawn. It is described, composed, animated, explained, and understood.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    const baseSelect = document.getElementById('baseSelect');
+    const stateSelect = document.getElementById('stateSelect');
+    const riskSelect = document.getElementById('riskSelect');
+    const confidenceSelect = document.getElementById('confidenceSelect');
+    const composedIcon = document.getElementById('composedIcon');
+    const confidenceMark = document.getElementById('confidenceMark');
+    const baseSvg = document.getElementById('baseSvg');
+
+    const icons = {
+      database: '<ellipse cx="30" cy="16" rx="18" ry="7" stroke="#151515" stroke-width="4"/><path d="M12 16v26c0 4.2 8.1 8 18 8s18-3.8 18-8V16" stroke="#151515" stroke-width="4"/><path d="M12 29c0 4.2 8.1 8 18 8s18-3.8 18-8" stroke="#151515" stroke-width="4"/>',
+      payment: '<rect x="12" y="18" width="36" height="27" rx="5" stroke="#151515" stroke-width="4"/><path d="M12 26h36M22 37h10" stroke="#151515" stroke-width="4" stroke-linecap="round"/>',
+      server: '<rect x="14" y="10" width="32" height="40" rx="5" stroke="#151515" stroke-width="4"/><path d="M22 22h16M22 32h16M22 42h8" stroke="#151515" stroke-width="4" stroke-linecap="round"/>'
+    };
+
+    function updateSignal() {
+      composedIcon.dataset.state = stateSelect.value;
+      composedIcon.dataset.risk = riskSelect.value;
+      confidenceMark.textContent = confidenceSelect.value;
+      baseSvg.innerHTML = icons[baseSelect.value];
+      const label = baseSelect.value + ' signal, ' + stateSelect.value + ', ' + riskSelect.value + ' risk, ' + confidenceSelect.options[confidenceSelect.selectedIndex].text + ' confidence';
+      composedIcon.setAttribute('aria-label', label);
+    }
+
+    [baseSelect, stateSelect, riskSelect, confidenceSelect].forEach((control) => {
+      control.addEventListener('change', updateSignal);
+    });
+
+    updateSignal();
+  </script>
+</body>
+</html>

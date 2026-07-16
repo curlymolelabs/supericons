@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Icons: Supericons As A Programmable Visual Language</title>
+<style>
+  :root {
+    --bg: #0b0c10;
+    --bg-elevated: #13151b;
+    --bg-card: #1a1d26;
+    --bg-hover: #222633;
+    --text: #e8ecf1;
+    --text-muted: #8b95a5;
+    --accent: #7c5cfc;
+    --accent-glow: rgba(124,92,252,0.25);
+    --accent2: #00d4aa;
+    --accent2-glow: rgba(0,212,170,0.25);
+    --amber: #f5a623;
+    --amber-glow: rgba(245,166,35,0.25);
+    --rose: #f87171;
+    --rose-glow: rgba(248,113,113,0.25);
+    --cyan: #22d3ee;
+    --cyan-glow: rgba(34,211,238,0.25);
+    --border: rgba(255,255,255,0.08);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .container{max-width:1120px;margin:0 auto;padding:0 24px}
+  .section{padding:80px 0}
+  .section-alt{background:var(--bg-elevated)}
+  h1,h2,h3,h4{font-weight:700;line-height:1.25;letter-spacing:-0.02em}
+  h1{font-size:clamp(2.4rem,5vw,3.6rem)}
+  h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:12px}
+  h3{font-size:1.15rem;margin-bottom:8px}
+  p{color:var(--text-muted);max-width:680px}
+  .lead{font-size:1.15rem;color:var(--text-muted);max-width:640px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;background:var(--bg-hover);border:1px solid var(--border);color:var(--text-muted)}
+  .badge-accent{background:rgba(124,92,252,.12);border-color:rgba(124,92,252,.3);color:#a78bfa}
+  .badge-amber{background:rgba(245,166,35,.12);border-color:rgba(245,166,35,.3);color:#fbbf24}
+  .badge-rose{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:#fca5a5}
+  .badge-cyan{background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.3);color:#67e8f9}
+  .badge-green{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.3);color:#34d399}
+
+  .site-header{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .site-header .container{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:1.05rem;letter-spacing:-0.02em;color:var(--text);display:flex;align-items:center;gap:8px}
+  .logo svg{width:26px;height:26px}
+  .nav-links{display:flex;gap:24px;font-size:.85rem;font-weight:500}
+  .nav-links a{color:var(--text-muted);transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+
+  .hero{padding:110px 0 90px;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;pointer-events:none}
+  .hero-bg .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35}
+  .orb-1{width:500px;height:500px;background:var(--accent);top:-120px;left:-120px}
+  .orb-2{width:400px;height:400px;background:var(--accent2);bottom:-80px;right:-80px;opacity:.2}
+  .hero-content{position:relative;z-index:2}
+  .hero h1{margin-bottom:18px;background:linear-gradient(135deg,#fff 30%,#c4b5fd 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .lead{margin-bottom:36px}
+  .hero-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+  .shift-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .shift-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:transform .25s,box-shadow .25s}
+  .shift-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .shift-card .icon-wrap{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.2)}
+  .shift-card:nth-child(2) .icon-wrap{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.2)}
+  .shift-card:nth-child(3) .icon-wrap{background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.2)}
+  .shift-card h3{color:var(--text);font-size:1rem}
+  .shift-card p{font-size:.88rem;margin-top:6px}
+
+  .section-header{margin-bottom:48px}
+  .section-header h2{color:var(--text)}
+  .section-header p{margin-top:8px}
+
+  .ladder{display:flex;flex-direction:column;gap:16px;position:relative}
+  .ladder::before{content:"";position:absolute;left:23px;top:28px;bottom:28px;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2));opacity:.35;border-radius:2px}
+  .rung{display:flex;gap:18px;align-items:flex-start;position:relative;z-index:1}
+  .rung-num{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;background:var(--bg-card);border:2px solid var(--border);color:var(--text-muted);flex-shrink:0}
+  .rung.active .rung-num{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+  .rung-body{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px}
+  .rung-body h4{color:var(--text);font-size:1.05rem;margin-bottom:4px}
+  .rung-body p{font-size:.88rem}
+  .rung-example{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--bg-hover);font-size:.8rem;color:var(--text-muted);font-family:var(--font-mono)}
+
+  .grammar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:36px}
+  .grammar-cell{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+  .grammar-cell h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px}
+  .grammar-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .grammar-tag{font-size:.78rem;padding:3px 10px;border-radius:6px;background:var(--bg-hover);border:1px solid var(--border);color:var(--text);font-weight:500}
+  .grammar-tag.hl-accent{background:rgba(124,92,252,.12);border-color:rgba(124,92,252,.25)}
+  .grammar-tag.hl-amber{background:rgba(245,166,35,.12);border-color:rgba(245,166,35,.25)}
+  .grammar-tag.hl-rose{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.25)}
+  .grammar-tag.hl-cyan{background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.25)}
+  .grammar-tag.hl-green{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.25)}
+
+  .sentences{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .sentence-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+  .sentence-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.5}
+  .sentence-card h4{color:var(--text);font-size:.95rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .sentence-parts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .sentence-parts span{font-size:.78rem;padding:3px 10px;border-radius:6px;background:var(--bg-hover);border:1px solid var(--border)}
+  .sentence-visual{height:60px;display:flex;align-items:center;gap:10px;margin-top:12px}
+
+  .name-table{width:100%;border-collapse:collapse;margin-top:12px}
+  .name-table th,.name-table td{text-align:left;padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--border)}
+  .name-table th{font-weight:600;color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;background:var(--bg-hover)}
+  .name-table td{color:var(--text-muted)}
+  .name-table tr:hover td{background:var(--bg-hover)}
+  .name-table .rec{font-weight:700;color:var(--text)}
+  .name-table .winner{background:rgba(0,212,170,.08)}
+  .name-table .winner .rec{color:var(--accent2)}
+
+  .passport-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .passport-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:20px 0}
+  .passport-item{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text-muted)}
+  .passport-item svg{flex-shrink:0}
+  .code-block{background:#0d0f15;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-family:var(--font-mono);font-size:.78rem;line-height:1.6;overflow-x:auto;color:#c4b5fd}
+  .code-block .key{color:#67e8f9}
+  .code-block .str{color:#a3e635}
+  .code-block .num{color:#fbbf24}
+  .code-block .bool{color:#f87171}
+
+  .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:transform .2s,border-color .2s}
+  .product-card:hover{border-color:rgba(124,92,252,.3);transform:translateY(-2px)}
+  .product-card h4{color:var(--text);font-size:1rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .product-card p{font-size:.87rem}
+  .product-card .badge-wrap{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+
+  .future-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .future-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-elevated));border:1px solid var(--border);border-radius:var(--radius);padding:22px;position:relative;overflow:hidden}
+  .future-card::after{content:"";position:absolute;top:-40px;right:-40px;width:100px;height:100px;border-radius:50%;filter:blur(40px);opacity:.25}
+  .future-card:nth-child(odd)::after{background:var(--accent)}
+  .future-card:nth-child(even)::after{background:var(--accent2)}
+  .future-card h4{color:var(--text);font-size:1rem;margin-bottom:8px;position:relative;z-index:1}
+  .future-card p{font-size:.87rem;position:relative;z-index:1}
+
+  .demo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+  .demo-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .demo-box h4{color:var(--text);font-size:1rem;margin-bottom:16px}
+  .demo-stage{background:var(--bg);border:1px dashed var(--border);border-radius:var(--radius-sm);min-height:140px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:20px;position:relative;overflow:hidden}
+
+  .compose-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .compose-controls select{background:var(--bg-hover);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:var(--radius-sm);font-size:.82rem;font-family:var(--font)}
+  .compose-result{width:80px;height:80px;border-radius:50%;background:var(--bg-hover);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative}
+  .compose-result svg{width:36px;height:36px}
+
+  .passport-demo-card{width:100%;max-width:320px;background:linear-gradient(135deg,#1a1d26,#13151b);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+  .passport-demo-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .passport-demo-header .icon-box{width:44px;height:44px;border-radius:var(--radius-sm);background:rgba(124,92,252,.12);border:1px solid rgba(124,92,252,.25);display:flex;align-items:center;justify-content:center}
+  .passport-demo-header .title{font-weight:700;color:var(--text);font-size:.95rem}
+  .passport-demo-header .subtitle{font-size:.75rem;color:var(--text-muted)}
+  .passport-demo-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.8rem;border-bottom:1px solid var(--border)}
+  .passport-demo-row:last-child{border-bottom:none}
+  .passport-demo-row .label{color:var(--text-muted)}
+  .passport-demo-row .value{color:var(--text);font-weight:500}
+
+  .ba-wrap{display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .ba-item{text-align:center}
+  .ba-item .box{width:100px;height:100px;border-radius:var(--radius);background:var(--bg-hover);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+  .ba-item .box svg{width:40px;height:40px}
+  .ba-item .label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+  .ba-arrow{color:var(--text-muted);font-size:1.4rem}
+
+  .moat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px}
+  .moat-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;text-align:center}
+  .moat-item .moat-icon{width:40px;height:40px;margin:0 auto 10px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.2)}
+  .moat-item h4{color:var(--text);font-size:.9rem}
+  .moat-item p{font-size:.8rem;margin-top:4px}
+
+  .closing{text-align:center;padding:90px 0 110px;position:relative;overflow:hidden}
+  .closing .orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.25}
+  .closing .orb-1{width:500px;height:500px;background:var(--accent);top:50%;left:50%;transform:translate(-50%,-50%)}
+  .closing h2{font-size:clamp(1.4rem,3.5vw,2rem);max-width:720px;margin:0 auto 24px;color:var(--text);position:relative;z-index:1}
+  .closing .sig{font-size:.9rem;color:var(--text-muted);position:relative;z-index:1}
+
+  .site-footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;font-size:.8rem;color:var(--text-muted)}
+
+  @keyframes pulse-glow{0%,100%{opacity:1}50%{opacity:.55}}
+  @keyframes trace{0%{stroke-dashoffset:60}100%{stroke-dashoffset:0}}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  @keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes settle{0%{transform:translateY(-4px);opacity:.6}100%{transform:translateY(0);opacity:1}}
+  .anim-pulse{animation:pulse-glow 2s ease-in-out infinite}
+  .anim-trace{stroke-dasharray:60;animation:trace 2s linear infinite alternate}
+  .anim-breathe{animation:breathe 3s ease-in-out infinite}
+  .anim-spin{animation:spin-slow 8s linear infinite}
+  .anim-settle{animation:settle .6s ease-out}
+
+  @media(max-width:640px){
+    .section{padding:56px 0}
+    .hero{padding:70px 0 60px}
+    .rung{gap:12px}
+    .rung-num{width:38px;height:38px;font-size:.75rem}
+    .ladder::before{left:18px}
+    .ba-arrow{display:none}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="logo">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c5cfc" opacity=".15"/><path d="M10 16c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6" stroke="#7c5cfc" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="#7c5cfc"/></svg>
+      Supericons
+    </div>
+    <nav class="nav-links">
+      <a href="#vision">Vision</a>
+      <a href="#evolution">Evolution</a>
+      <a href="#grammar">Grammar</a>
+      <a href="#passport">Passport</a>
+      <a href="#products">Products</a>
+      <a href="#demos">Demos</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 1. Hero Vision -->
+<section class="hero" id="vision">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="badge badge-accent" style="margin-bottom:18px">Strategy Artifact</div>
+    <h1>Beyond Icons:<br>Supericons As A Programmable Visual Language</h1>
+    <p class="lead">Icons are no longer static pictures. They are programmable visual objects with meaning, state, motion, and behavior. SVG is structured visual code — and AI can read, edit, compose, animate, and regenerate it.</p>
+    <div class="hero-meta">
+      <span class="badge badge-accent">Vision 2026</span>
+      <span class="badge badge-cyan">Standalone HTML</span>
+      <span class="badge badge-amber">No External Dependencies</span>
+    </div>
+    <div class="shift-cards">
+      <div class="shift-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>From icon files</h3>
+        <p>To visual software objects that carry meaning, rules, and behavior.</p>
+      </div>
+      <div class="shift-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>From static SVGs</h3>
+        <p>To programmable meaning — code that describes what an icon means, not just how it looks.</p>
+      </div>
+      <div class="shift-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <h3>From icon library</h3>
+        <p>To a visual language — a grammar for composing meaning in software interfaces.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Evolution Map -->
+<section class="section section-alt" id="evolution">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-accent" style="margin-bottom:10px;display:inline-block">The Ladder</span>
+      <h2>Evolution Map</h2>
+      <p class="lead">Seven levels of icon maturity. Each step adds a new dimension of meaning and capability.</p>
+    </div>
+    <div class="ladder">
+      <div class="rung">
+        <div class="rung-num">1</div>
+        <div class="rung-body">
+          <h4>Static Icon</h4>
+          <p>A fixed image file. It looks the same everywhere, forever. The industry standard today.</p>
+          <span class="rung-example">Example: A generic "database" PNG on a dashboard.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-num">2</div>
+        <div class="rung-body">
+          <h4>Smart Icon</h4>
+          <p>An SVG with semantic layers. An AI or developer can change its color, size, or stroke by code without opening a design tool.</p>
+          <span class="rung-example">Example: A database icon that inherits the theme color automatically.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-num">3</div>
+        <div class="rung-body">
+          <h4>Stateful Icon</h4>
+          <p>Built-in variants for different conditions. The same icon can show idle, working, blocked, failed, or complete states.</p>
+          <span class="rung-example">Example: A database icon that glows green when connected, pulses amber when syncing, turns red on failure.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-num">4</div>
+        <div class="rung-body">
+          <h4>Composable Icon</h4>
+          <p>Icons assembled from smaller visual primitives. A base object plus state badges, authority rings, and risk indicators.</p>
+          <span class="rung-example">Example: Database base + AI agent badge + warning dot + pulse motion.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-num">5</div>
+        <div class="rung-body">
+          <h4>Interactive Icon</h4>
+          <p>Click, hover, or context-menu triggers. The icon is a tiny UI control, not just a label.</p>
+          <span class="rung-example">Example: Hover a server icon to see live CPU load. Click to open its audit trail.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-num">6</div>
+        <div class="rung-body">
+          <h4>Generative Icon</h4>
+          <p>AI composes or regenerates the icon on demand. Same meaning, different style, size, or context — generated in real time.</p>
+          <span class="rung-example">Example: "Render this payment icon as a line drawing for a watch face, then as a solid glyph for a mobile app."</span>
+        </div>
+      </div>
+      <div class="rung active">
+        <div class="rung-num">7</div>
+        <div class="rung-body">
+          <h4>Protocol Icon</h4>
+          <p>A standardized signal format that any AI agent or interface can read, compose, and act upon. Icons become a shared visual protocol for human-AI software.</p>
+          <span class="rung-example">Example: An AI agent publishes a "payment + human approval + high risk" signal. Every tool in the stack understands it instantly.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Icon Grammar -->
+<section class="section" id="grammar">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-cyan" style="margin-bottom:10px;display:inline-block">The Language</span>
+      <h2>Icon Grammar</h2>
+      <p class="lead">Icons as visual sentences. You combine primitives — just like words — to express complex meaning at a glance.</p>
+    </div>
+
+    <div class="grammar-grid">
+      <div class="grammar-cell">
+        <h4>Base Object</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-accent">database</span>
+          <span class="grammar-tag hl-accent">model</span>
+          <span class="grammar-tag hl-accent">file</span>
+          <span class="grammar-tag hl-accent">user</span>
+          <span class="grammar-tag hl-accent">payment</span>
+          <span class="grammar-tag hl-accent">server</span>
+          <span class="grammar-tag hl-accent">tool</span>
+        </div>
+      </div>
+      <div class="grammar-cell">
+        <h4>State</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-cyan">idle</span>
+          <span class="grammar-tag hl-cyan">working</span>
+          <span class="grammar-tag hl-cyan">blocked</span>
+          <span class="grammar-tag hl-cyan">failed</span>
+          <span class="grammar-tag hl-cyan">complete</span>
+        </div>
+      </div>
+      <div class="grammar-cell">
+        <h4>Authority</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-green">human</span>
+          <span class="grammar-tag hl-green">AI agent</span>
+          <span class="grammar-tag hl-green">system</span>
+          <span class="grammar-tag hl-green">third-party</span>
+        </div>
+      </div>
+      <div class="grammar-cell">
+        <h4>Confidence</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-accent">high</span>
+          <span class="grammar-tag hl-amber">medium</span>
+          <span class="grammar-tag hl-rose">low</span>
+          <span class="grammar-tag">unknown</span>
+        </div>
+      </div>
+      <div class="grammar-cell">
+        <h4>Risk</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-green">safe</span>
+          <span class="grammar-tag hl-amber">caution</span>
+          <span class="grammar-tag hl-rose">dangerous</span>
+          <span class="grammar-tag hl-rose">irreversible</span>
+        </div>
+      </div>
+      <div class="grammar-cell">
+        <h4>Motion</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag hl-cyan">pulse</span>
+          <span class="grammar-tag hl-cyan">trace</span>
+          <span class="grammar-tag hl-cyan">spin</span>
+          <span class="grammar-tag hl-cyan">breathe</span>
+          <span class="grammar-tag hl-cyan">shake</span>
+          <span class="grammar-tag hl-cyan">settle</span>
+        </div>
+      </div>
+      <div class="grammar-cell" style="grid-column:1/-1">
+        <h4>Context</h4>
+        <div class="grammar-tags">
+          <span class="grammar-tag">sidebar</span>
+          <span class="grammar-tag">dashboard</span>
+          <span class="grammar-tag">approval flow</span>
+          <span class="grammar-tag">audit log</span>
+          <span class="grammar-tag">mobile notification</span>
+          <span class="grammar-tag">AR overlay</span>
+          <span class="grammar-tag">watch face</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px;color:var(--text)">Example Visual Sentences</h3>
+    <div class="sentences">
+      <div class="sentence-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+          Database Warning
+        </h4>
+        <div class="sentence-parts">
+          <span style="color:#c4b5fd">database</span>
+          <span style="color:#34d399">+ agent</span>
+          <span style="color:#fbbf24">+ warning</span>
+          <span style="color:#67e8f9">+ pulse</span>
+        </div>
+        <p>An AI agent is interacting with a database that needs attention. The pulse draws the eye without screaming.</p>
+        <div class="sentence-visual">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <ellipse cx="24" cy="14" rx="16" ry="6" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            <path d="M8 14v16a16 6 0 0 0 32 0V14" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            <path d="M8 22a16 6 0 0 0 32 0" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            <circle cx="38" cy="38" r="8" fill="#1a1d26" stroke="#f5a623" stroke-width="2" class="anim-pulse"/>
+            <path d="M35 35l6 6M41 35l-6 6" stroke="#f5a623" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.7"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+      </div>
+
+      <div class="sentence-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          High-Risk Payment
+        </h4>
+        <div class="sentence-parts">
+          <span style="color:#c4b5fd">payment</span>
+          <span style="color:#f87171">+ human approval</span>
+          <span style="color:#f87171">+ high risk</span>
+        </div>
+        <p>A payment that requires human sign-off because the risk level is dangerous. The icon itself tells the story.</p>
+        <div class="sentence-visual">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <rect x="6" y="12" width="36" height="24" rx="4" fill="none" stroke="#f87171" stroke-width="2.5"/>
+            <line x1="6" y1="20" x2="42" y2="20" stroke="#f87171" stroke-width="2"/>
+            <circle cx="38" cy="38" r="8" fill="#1a1d26" stroke="#f87171" stroke-width="2"/>
+            <path d="M34 38h8M38 34v8" stroke="#f87171" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="14" cy="38" r="5" fill="none" stroke="#fbbf24" stroke-width="2"/>
+            <path d="M14 35v3l2 2" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="sentence-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Uncertain Model
+        </h4>
+        <div class="sentence-parts">
+          <span style="color:#c4b5fd">model</span>
+          <span style="color:#fbbf24">+ low confidence</span>
+          <span style="color:#67e8f9">+ explanation</span>
+        </div>
+        <p>An AI model output with low confidence, annotated with an explanation trigger. Hover to see why.</p>
+        <div class="sentence-visual">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <path d="M24 6L8 16v16l16 10 16-10V16L24 6z" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            <path d="M24 6v20" stroke="#a78bfa" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+            <circle cx="38" cy="38" r="8" fill="#1a1d26" stroke="#fbbf24" stroke-width="2"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">?</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="sentence-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          Blocked Server
+        </h4>
+        <div class="sentence-parts">
+          <span style="color:#c4b5fd">server</span>
+          <span style="color:#f87171">+ blocked</span>
+          <span style="color:#67e8f9">+ retry</span>
+        </div>
+        <p>A server that is blocked but has a retry path. The icon communicates both the problem and the next action.</p>
+        <div class="sentence-visual">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <rect x="8" y="6" width="32" height="14" rx="3" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            <rect x="8" y="24" width="32" height="14" rx="3" fill="none" stroke="#f87171" stroke-width="2.5"/>
+            <line x1="14" y1="12" x2="14" y2="12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="30" x2="14" y2="30" stroke="#f87171" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 38l4 4 4-4" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="anim-settle" style="animation-iteration-count:infinite;animation-duration:2s"/>
+            <path d="M36 36v6" stroke="#67e8f9" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 4. Better Name For AIPS -->
+<section class="section section-alt" id="naming">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-amber" style="margin-bottom:10px;display:inline-block">Naming</span>
+      <h2>Better Name For AIPS</h2>
+      <p class="lead">The Agentic Icon Profile Standard needs a name people remember. Here are the candidates, evaluated for clarity, product potential, and technical precision.</p>
+    </div>
+
+    <table class="name-table">
+      <thead>
+        <tr><th>Name</th><th>Product feel</th><th>Technical feel</th><th>Clarity</th><th>Memorable</th><th>Verdict</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rec">Icon Passport</td>
+          <td>★★★★★</td>
+          <td>★★★★☆</td>
+          <td>★★★★★</td>
+          <td>★★★★★</td>
+          <td><span class="badge badge-green">Top product name</span></td>
+        </tr>
+        <tr>
+          <td class="rec">SI Profile</td>
+          <td>★★★☆☆</td>
+          <td>★★★★★</td>
+          <td>★★★☆☆</td>
+          <td>★★★☆☆</td>
+          <td><span class="badge badge-cyan">Top technical name</span></td>
+        </tr>
+        <tr>
+          <td>Supericons Signal</td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td><span class="badge">Strong</span></td>
+        </tr>
+        <tr>
+          <td>Icon Grammar</td>
+          <td>★★★★☆</td>
+          <td>★★★★★</td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td><span class="badge">Strong</span></td>
+        </tr>
+        <tr>
+          <td>Visual Signal</td>
+          <td>★★★★☆</td>
+          <td>★★★☆☆</td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td><span class="badge">Good</span></td>
+        </tr>
+        <tr>
+          <td>Living Icon</td>
+          <td>★★★★★</td>
+          <td>★★☆☆☆</td>
+          <td>★★★☆☆</td>
+          <td>★★★★☆</td>
+          <td><span class="badge">Poetic</span></td>
+        </tr>
+        <tr>
+          <td>Programmable Icon</td>
+          <td>★★★★☆</td>
+          <td>★★★★★</td>
+          <td>★★★★★</td>
+          <td>★★★☆☆</td>
+          <td><span class="badge">Accurate</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="passport-card" style="border-color:rgba(0,212,170,.3)">
+        <h3 style="color:var(--accent2);margin-bottom:8px">Recommended Product Name</h3>
+        <p style="color:var(--text);font-size:1.1rem;font-weight:700;margin-bottom:8px">Icon Passport</p>
+        <p>It is intuitive, friendly, and immediately communicates value. Everyone understands what a passport does: it identifies, it grants access, it carries metadata, and it works across borders. That maps perfectly to an icon that carries meaning across tools and platforms.</p>
+      </div>
+      <div class="passport-card" style="border-color:rgba(34,211,238,.3)">
+        <h3 style="color:var(--cyan);margin-bottom:8px">Recommended Technical Name</h3>
+        <p style="color:var(--text);font-size:1.1rem;font-weight:700;margin-bottom:8px">SI Profile</p>
+        <p>Short, precise, and unambiguous in code and documentation. "SI" is the established namespace for Supericons. A profile is a well-understood concept in engineering: a structured descriptor of capabilities, states, and rules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Icon Passport Concept -->
+<section class="section" id="passport">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-green" style="margin-bottom:10px;display:inline-block">The Passport</span>
+      <h2>Icon Passport Concept</h2>
+      <p class="lead">Every icon deserves a passport — a structured identity that describes what it means, when to use it, and how it behaves across contexts.</p>
+    </div>
+
+    <div class="passport-card">
+      <h3 style="color:var(--text);margin-bottom:6px">What an Icon Passport carries</h3>
+      <p style="margin-bottom:18px">A passport is metadata that travels with the icon. It is readable by humans, parseable by machines, and portable across every tool in your stack.</p>
+
+      <div class="passport-list">
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M2 12h10"/><path d="M9 4v16"/><path d="m3 9 3 3-3 3"/></svg>
+          Meaning — what this icon represents
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Use cases — when this icon is the right choice
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Do-not-use rules — contexts where this icon should not appear
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Accessibility label — screen reader text and ARIA role
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+          State variants — idle, working, blocked, failed, complete
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Motion rules — which animation applies to which state
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Related icons — synonyms, alternatives, and composable neighbors
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Agent guidance — instructions for AI agents that compose or select this icon
+        </div>
+        <div class="passport-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Source and license notes — attribution, version, and legal metadata
+        </div>
+      </div>
+
+      <h4 style="color:var(--text);font-size:.9rem;margin-bottom:10px">Sample Passport (JSON)</h4>
+      <div class="code-block">
+{
+  <span class="key">"id"</span>: <span class="str">"si-database"</span>,
+  <span class="key">"name"</span>: <span class="str">"Database"</span>,
+  <span class="key">"meaning"</span>: <span class="str">"Represents a data store, storage system, or persistent database"</span>,
+  <span class="key">"useCases"</span>: [<span class="str">"sidebar nav"</span>, <span class="str">"architecture diagrams"</span>, <span class="str">"status indicators"</span>],
+  <span class="key">"doNotUse"</span>: [<span class="str">"Never use for in-memory cache"</span>, <span class="str">"Never use for file folders"</span>],
+  <span class="key">"accessibility"</span>: {
+    <span class="key">"label"</span>: <span class="str">"Database connection"</span>,
+    <span class="key">"role"</span>: <span class="str">"img"</span>
+  },
+  <span class="key">"states"</span>: [<span class="str">"idle"</span>, <span class="str">"working"</span>, <span class="str">"blocked"</span>, <span class="str">"failed"</span>, <span class="str">"complete"</span>],
+  <span class="key">"motion"</span>: {
+    <span class="key">"working"</span>: <span class="str">"pulse"</span>,
+    <span class="key">"blocked"</span>: <span class="str">"shake"</span>,
+    <span class="key">"failed"</span>: <span class="str">"breathe"</span>
+  },
+  <span class="key">"related"</span>: [<span class="str">"si-server"</span>, <span class="str">"si-cloud"</span>, <span class="str">"si-hard-drive"</span>],
+  <span class="key">"agentGuidance"</span>: <span class="str">"Use when referring to persistent structured data storage. Combine with state badges for live systems."</span>,
+  <span class="key">"license"</span>: <span class="str">"MIT"</span>,
+  <span class="key">"version"</span>: <span class="str">"3.2.0"</span>
+}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Realistic Supericons Products -->
+<section class="section section-alt" id="products">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-cyan" style="margin-bottom:10px;display:inline-block">Products</span>
+      <h2>Realistic Supericons Products</h2>
+      <p class="lead">Near-term product concepts that could ship this year or next. Each one builds on the programmable icon foundation.</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          AI Agent Status Icon Pack
+        </h4>
+        <p>A curated set of icons designed specifically for AI agent interfaces. Each icon communicates what the agent is doing, who authorized it, and how confident it is.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-accent">B2B</span>
+          <span class="badge badge-cyan">Pack</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Trust and Approval Icon System
+        </h4>
+        <p>Visual grammar for human-in-the-loop workflows. Icons that signal when a human must approve, when a system acted alone, and when an AI is requesting consent.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-green">Trust</span>
+          <span class="badge badge-accent">System</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Risk and Consequence Visual Grammar
+        </h4>
+        <p>A standardized set of risk indicators that any interface can adopt. Safe, caution, dangerous, irreversible — instantly recognizable across every product in a stack.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-rose">Safety</span>
+          <span class="badge badge-accent">Grammar</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Developer Stack Diagram Icons
+        </h4>
+        <p>Icons purpose-built for architecture diagrams and system maps. They include connection points, data-flow direction, and health-state overlays.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-cyan">DevTools</span>
+          <span class="badge badge-accent">Diagram</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Icon Passport Viewer
+        </h4>
+        <p>A web tool that opens any Supericons Passport and renders its meaning, states, motion rules, and agent guidance in a beautiful, explorable card.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-accent">Tool</span>
+          <span class="badge badge-cyan">Viewer</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          Motion Lab v2 — State-Driven Animation
+        </h4>
+        <p>The next version of Motion Lab where animations are triggered by data states, not just user hover. An icon pulses because the backend says "syncing," not because the mouse is nearby.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-amber">Motion</span>
+          <span class="badge badge-accent">v2</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          MCP Tool — Compose Icons by Intent
+        </h4>
+        <p>A Model Context Protocol tool that lets AI agents compose icons by describing intent. "I need a warning about a blocked payment requiring human approval" returns the exact composed signal.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-green">MCP</span>
+          <span class="badge badge-accent">Agent</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+          React / Web Component Renderer
+        </h4>
+        <p>A component library that accepts a Supericons Signal object and renders the correct composed icon, animation, and accessibility markup automatically.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-cyan">React</span>
+          <span class="badge badge-accent">Component</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          "Explain This Icon Choice"
+        </h4>
+        <p>An AI agent feature that, when asked, explains why a specific icon was selected, what it means in context, and what alternative icons were considered.</p>
+        <div class="badge-wrap">
+          <span class="badge badge-accent">AI</span>
+          <span class="badge badge-cyan">Explainability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Wild Future Possibilities -->
+<section class="section" id="future">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-rose" style="margin-bottom:10px;display:inline-block">What If</span>
+      <h2>Wild Future Possibilities</h2>
+      <p class="lead">If nothing were impossible, here is where programmable icons could go. Some of these are closer than they sound.</p>
+    </div>
+
+    <div class="future-grid">
+      <div class="future-card">
+        <h4>Icons as Tiny Dashboards</h4>
+        <p>A single icon that shows live data: a server icon with a real-time CPU sparkline, a payment icon with a rolling transaction count, a user icon with an activity dot that pulses faster when someone is typing.</p>
+      </div>
+      <div class="future-card">
+        <h4>Icons That Explain AI Actions</h4>
+        <p>When an AI agent performs a task, it emits a visual signal that a human can read instantly. No log diving. The icon itself becomes a status report: "I am reasoning," "I need permission," "I found a conflict."</p>
+      </div>
+      <div class="future-card">
+        <h4>Icons That Open Audit Trails</h4>
+        <p>Click any icon in an interface and see the full history of what it represents: who changed it, when, why, and what the previous state looked like. Icons become anchors for accountability.</p>
+      </div>
+      <div class="future-card">
+        <h4>Icons Across Every Surface</h4>
+        <p>The same semantic signal renders as an SVG on the web, a monochrome glyph on a smartwatch, a holographic badge in AR glasses, a colored LED pattern on a physical device, and a vibration rhythm on a haptic band.</p>
+      </div>
+      <div class="future-card">
+        <h4>Icons Regenerated in Any Brand Style</h4>
+        <p>An AI reads the meaning and metadata from an Icon Passport, then redraws the icon to match any brand guidelines — while preserving its semantic identity. One meaning, infinite visual expressions.</p>
+      </div>
+      <div class="future-card">
+        <h4>Icons as Visual APIs</h4>
+        <p>Software systems publish icon signals as part of their API responses. A webhook does not just say "payment_failed." It sends a structured visual signal that any client can render consistently.</p>
+      </div>
+      <div class="future-card">
+        <h4>A Shared Traffic Signal for Human-AI Trust</h4>
+        <p>The world agrees on a small set of visual signals for AI-human interaction: green for "AI acted autonomously and safely," amber for "AI requests confirmation," red for "human required." Like traffic lights, but for software cognition.</p>
+      </div>
+      <div class="future-card">
+        <h4>Agents Compose UI Meaning Like Sentences</h4>
+        <p>In the same way large language models compose words into sentences, AI agents compose icon primitives into interface meaning. The interface becomes a conversation in visual language.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 8. Demo Gallery -->
+<section class="section section-alt" id="demos">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-accent" style="margin-bottom:10px;display:inline-block">Live Demos</span>
+      <h2>Demo Gallery</h2>
+      <p class="lead">Lightweight, built-in demonstrations. No external dependencies. See the concepts in action.</p>
+    </div>
+
+    <div class="demo-grid">
+      <!-- Demo 1: Static to Stateful -->
+      <div class="demo-box">
+        <h4>Static → Stateful Database</h4>
+        <div class="demo-stage" id="demo-stateful">
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center">
+            <div style="text-align:center">
+              <div style="width:80px;height:80px;border-radius:var(--radius);background:var(--bg-hover);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b95a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+              </div>
+              <span style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Static</span>
+            </div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <div style="text-align:center">
+              <div style="width:80px;height:80px;border-radius:var(--radius);background:var(--bg-hover);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+                <span id="state-badge" style="position:absolute;bottom:6px;right:6px;width:14px;height:14px;border-radius:50%;background:#34d399;border:2px solid var(--bg-card);box-shadow:0 0 8px rgba(52,211,153,.6)"></span>
+              </div>
+              <span style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Stateful</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+            <button onclick="setDbState('idle')" style="padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg-hover);color:var(--text);font-size:.75rem;cursor:pointer;font-family:var(--font)">Idle</button>
+            <button onclick="setDbState('working')" style="padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg-hover);color:var(--text);font-size:.75rem;cursor:pointer;font-family:var(--font)">Working</button>
+            <button onclick="setDbState('blocked')" style="padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg-hover);color:var(--text);font-size:.75rem;cursor:pointer;font-family:var(--font)">Blocked</button>
+            <button onclick="setDbState('failed')" style="padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg-hover);color:var(--text);font-size:.75rem;cursor:pointer;font-family:var(--font)">Failed</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 2: Composed AI Signal -->
+      <div class="demo-box">
+        <h4>Composed "AI Agent Working" Signal</h4>
+        <div class="demo-stage">
+          <svg width="90" height="90" viewBox="0 0 90 90" id="composed-signal">
+            <!-- base: database -->
+            <g transform="translate(25,20)">
+              <ellipse cx="20" cy="10" rx="18" ry="7" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+              <path d="M2 10v20a18 7 0 0 0 36 0V10" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+              <path d="M2 20a18 7 0 0 0 36 0" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+            </g>
+            <!-- authority: agent ring -->
+            <circle cx="68" cy="68" r="16" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4 3" opacity=".7">
+              <animateTransform attributeName="transform" type="rotate" from="0 68 68" to="360 68 68" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="68" cy="68" r="12" fill="#13151b" stroke="#34d399" stroke-width="1.5"/>
+            <path d="M64 64h8M68 60v8" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- state: pulse dot -->
+            <circle cx="20" cy="70" r="6" fill="#22d3ee" opacity=".8">
+              <animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".9;.4;.9" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span class="badge badge-accent">database</span>
+            <span class="badge badge-green">agent</span>
+            <span class="badge badge-cyan">pulse</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 3: Icon Passport Card -->
+      <div class="demo-box">
+        <h4>Icon Passport Profile Card</h4>
+        <div class="demo-stage" style="background:transparent;border:none;min-height:auto;padding:0">
+          <div class="passport-demo-card">
+            <div class="passport-demo-header">
+              <div class="icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+              </div>
+              <div>
+                <div class="title">si-database</div>
+                <div class="subtitle">Database · Storage System</div>
+              </div>
+            </div>
+            <div class="passport-demo-row"><span class="label">States</span><span class="value">idle, working, blocked, failed, complete</span></div>
+            <div class="passport-demo-row"><span class="label">Motion</span><span class="value">pulse (working), shake (blocked)</span></div>
+            <div class="passport-demo-row"><span class="label">Related</span><span class="value">server, cloud, hard-drive</span></div>
+            <div class="passport-demo-row"><span class="label">License</span><span class="value">MIT v3.2.0</span></div>
+            <div class="passport-demo-row"><span class="label">Agent</span><span class="value">Use for persistent data only</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 4: Compose Signal Panel -->
+      <div class="demo-box">
+        <h4>Mini "Compose Signal" Panel</h4>
+        <div class="demo-stage" style="min-height:180px">
+          <div class="compose-controls">
+            <select id="sel-base" onchange="updateCompose()">
+              <option value="database">Base: Database</option>
+              <option value="payment">Base: Payment</option>
+              <option value="server">Base: Server</option>
+              <option value="user">Base: User</option>
+            </select>
+            <select id="sel-state" onchange="updateCompose()">
+              <option value="idle">State: Idle</option>
+              <option value="working">State: Working</option>
+              <option value="blocked">State: Blocked</option>
+              <option value="failed">State: Failed</option>
+              <option value="complete">State: Complete</option>
+            </select>
+            <select id="sel-risk" onchange="updateCompose()">
+              <option value="safe">Risk: Safe</option>
+              <option value="caution">Risk: Caution</option>
+              <option value="dangerous">Risk: Dangerous</option>
+            </select>
+            <select id="sel-confidence" onchange="updateCompose()">
+              <option value="high">Confidence: High</option>
+              <option value="medium">Confidence: Medium</option>
+              <option value="low">Confidence: Low</option>
+            </select>
+          </div>
+          <div class="compose-result" id="compose-result">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span id="compose-badge" style="position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;background:#34d399;border:2px solid var(--bg-card)"></span>
+          </div>
+          <span id="compose-desc" style="font-size:.75rem;color:var(--text-muted)">database + idle + safe + high confidence</span>
+        </div>
+      </div>
+
+      <!-- Demo 5: Before / After -->
+      <div class="demo-box">
+        <h4>Before vs. Programmable Signal</h4>
+        <div class="demo-stage">
+          <div class="ba-wrap">
+            <div class="ba-item">
+              <div class="box">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b95a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div class="label">Generic Icon</div>
+              <div style="font-size:.7rem;color:var(--text-muted);margin-top:4px">"It's a payment icon."</div>
+            </div>
+            <div class="ba-arrow">→</div>
+            <div class="ba-item">
+              <div class="box" style="border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.05)">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="20" cy="20" r="3" fill="#f87171" stroke="none"><animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/></circle></svg>
+              </div>
+              <div class="label">Programmable Signal</div>
+              <div style="font-size:.7rem;color:var(--text-muted);margin-top:4px">"Payment + human required + high risk + pulsing alert"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Strategic Meaning -->
+<section class="section" id="strategy">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-green" style="margin-bottom:10px;display:inline-block">Strategy</span>
+      <h2>Strategic Meaning</h2>
+      <p class="lead">Why this matters, why now, and why Supericons is positioned to lead it.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:40px">
+      <div class="passport-card">
+        <h4 style="color:var(--text);margin-bottom:8px">Raw icons are commoditized</h4>
+        <p>Anyone can generate thousands of icons with an AI image model. The value of a big static library is falling. What remains valuable is structure, meaning, and trust.</p>
+      </div>
+      <div class="passport-card">
+        <h4 style="color:var(--text);margin-bottom:8px">AI needs structured meaning</h4>
+        <p>AI can generate beautiful visuals, but it still needs structured metadata to know <em>which</em> icon to use, <em>when</em>, and <em>why</em>. Programmable icons give AI the grammar it lacks.</p>
+      </div>
+      <div class="passport-card">
+        <h4 style="color:var(--text);margin-bottom:8px">Own the grammar, not just the drawings</h4>
+        <p>The moat is not the number of icons. It is the taxonomy, the composability rules, the agent guidance, the accessibility metadata, and the workflow integrations.</p>
+      </div>
+      <div class="passport-card">
+        <h4 style="color:var(--text);margin-bottom:8px">The moat is multi-layered</h4>
+        <p>Taste in design. Structural metadata. Motion Lab animation system. MCP tool access. Icon Passport format. Useful productized examples like trust and risk packs. These compound.</p>
+      </div>
+    </div>
+
+    <div class="passport-card" style="border-color:rgba(124,92,252,.25)">
+      <h3 style="color:var(--accent);margin-bottom:10px">The Near-Term Path</h3>
+      <p style="margin-bottom:16px">You do not need to build everything at once. One useful grammar pack, one profile format, one convincing demo, and one MCP composition tool is enough to prove the concept and earn early adoption.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="badge badge-accent">1 grammar pack</span>
+        <span class="badge badge-cyan">1 profile format</span>
+        <span class="badge badge-amber">1 live demo</span>
+        <span class="badge badge-green">1 MCP tool</span>
+      </div>
+    </div>
+
+    <div class="moat-grid">
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h4>Taste</h4>
+        <p>Curated design judgment that AI alone cannot replicate.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <h4>Structure</h4>
+        <p>A rigorous taxonomy and composability framework.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h4>Metadata</h4>
+        <p>Passports with meaning, rules, and agent guidance.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Workflows</h4>
+        <p>Tooling that fits into real design and engineering flows.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h4>MCP Access</h4>
+        <p>Agent-native interfaces that compose icons by intent.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h4>Examples</h4>
+        <p>Productized packs that solve real problems out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Closing Statement -->
+<section class="closing">
+  <div class="orb orb-1"></div>
+  <div class="container">
+    <h2>"Supericons is not trying to be the biggest icon library.<br>It is trying to define how software sees, explains, and composes visual meaning."</h2>
+    <p class="sig">Strategy Artifact · May 2026 · Supericons</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Supericons · Programmable Visual Language · strategy/supericons-programmable-visual-language-vision.html</p>
+  </div>
+</footer>
+
+<script>
+  // Demo 1: Stateful database
+  function setDbState(state) {
+    const badge = document.getElementById('state-badge');
+    const colors = {
+      idle: '#8b95a5',
+      working: '#22d3ee',
+      blocked: '#f5a623',
+      failed: '#f87171'
+    };
+    const glows = {
+      idle: 'none',
+      working: '0 0 10px rgba(34,211,238,.6)',
+      blocked: '0 0 10px rgba(245,166,35,.6)',
+      failed: '0 0 10px rgba(248,113,113,.6)'
+    };
+    badge.style.background = colors[state] || '#8b95a5';
+    badge.style.boxShadow = glows[state] || 'none';
+    badge.style.transition = 'all .3s ease';
+    badge.style.transform = 'scale(1.3)';
+    setTimeout(() => badge.style.transform = 'scale(1)', 200);
+  }
+
+  // Demo 4: Compose signal
+  const composePaths = {
+    database: 'M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0M21 5a9 3 0 0 1-18 0',
+    payment: 'M2 10h20M2 10v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6M6 14h.01M6 6h12a2 2 0 0 1 2 2v2H4V8a2 2 0 0 1 2-2z',
+    server: 'M5 12h14M5 12a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2M5 12a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2m-2-4h.01M17 16h.01',
+    user: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'
+  };
+
+  const riskColors = { safe: '#34d399', caution: '#f5a623', dangerous: '#f87171' };
+  const confColors = { high: '#34d399', medium: '#f5a623', low: '#f87171' };
+
+  function updateCompose() {
+    const base = document.getElementById('sel-base').value;
+    const state = document.getElementById('sel-state').value;
+    const risk = document.getElementById('sel-risk').value;
+    const conf = document.getElementById('sel-confidence').value;
+
+    const result = document.getElementById('compose-result');
+    const desc = document.getElementById('compose-desc');
+    const strokeColor = confColors[conf];
+
+    let svgContent = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="' + strokeColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + composePaths[base] + '"/></svg>';
+
+    result.innerHTML = svgContent;
+
+    const badgeEl = document.createElement('span');
+    badgeEl.id = 'compose-badge';
+    badgeEl.style.cssText = 'position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;background:' + riskColors[risk] + ';border:2px solid var(--bg-card);box-shadow:0 0 6px ' + riskColors[risk] + '40';
+    if (state === 'working') {
+      badgeEl.innerHTML = '<animate attributeName="opacity" values="1;.3;1" dur="1.5s" repeatCount="indefinite"/>';
+    }
+    result.appendChild(badgeEl);
+
+    desc.textContent = base + ' + ' + state + ' + ' + risk + ' + ' + conf + ' confidence';
+  }
+
+  updateCompose();
+</script>
+
+</body>
+</html>
