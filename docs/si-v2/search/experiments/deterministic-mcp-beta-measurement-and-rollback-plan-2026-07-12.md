@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 Amended: 2026-07-16
-Status: local-first stdio route-parity correction implemented and locally verified; independent review and a rebuilt publication-only packet remain required; no publication is authorized by this document
+Status: local-first stdio route-parity correction independently approved; publication-only packet rebuilt and locally verified; packet audit and owner approval remain required; no publication is authorized by this document
 Authority: operational beta plan under `D-021`, `D-025`, `FR-26`, `FR-31`, `FR-32`, and `FR-40`
 
 ## Purpose
@@ -282,12 +282,12 @@ Record the trigger, time, affected version and endpoint, request volume, user im
 
 ## Current blockers before external beta
 
-- the clean-installed stdio route-parity correction still requires independent review
-- the withdrawn publication-only draft must be rebuilt from the corrected package after review
-- npm authentication is required only after a rebuilt packet receives owner approval
+- the rebuilt publication-only packet requires independent audit and owner approval
+- npm authentication is required only after that approval
 - acceptance telemetry remains too sparse for an automatic usefulness rate
-- the informational hosted comparison needs an explicit request limit in the publication approval
 - hosted attribution remains deferred evidence before a later hosted web or recommendation gate
+
+The rebuilt approval request limits the informational comparison to 50 sanitized fixed cases, run sequentially with no retries.
 
 ## Approval boundary
 
