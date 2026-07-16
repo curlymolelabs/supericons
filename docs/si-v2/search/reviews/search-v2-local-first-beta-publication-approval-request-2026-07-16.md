@@ -1,8 +1,8 @@
 # Search v2 local-first beta publication execution record
 
 Date: 2026-07-16
-Status: finalization replay correction locally verified, awaiting independent audit
-Manifest fingerprint: `48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3`
+Status: existing private-stage reconciliation locally verified, awaiting independent audit
+Manifest fingerprint: `9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5`
 
 ## Purpose
 
@@ -31,11 +31,11 @@ The first execution stopped before publication because PowerShell treated npm's 
 
 The corrected execution reached `npm publish`, which npm rejected with `EOTP` before creating the version. Read-only reconciliation again confirmed that the prerelease remained absent and `latest` remained `0.4.17`. The owner then confirmed that this npm account uses a browser security key rather than a six-digit authenticator code. The direct OTP path is therefore retired for this release.
 
-The replacement uses npm staged publishing. The executor uploads the exact archive to npm's private staging area with tag `beta`, downloads the staged archive again, verifies its SHA-256, and runs the installed-package smoke before the owner sees an approval step. The owner then approves that exact stage on npmjs.com with the normal browser password and security key.
+The replacement uses npm staged publishing. The one permitted staging command created private stage `c45e936a-4fc0-4857-981b-d88cfb3a025a` for the exact package and tag, but the runner stopped while parsing npm's success output before it could save the verified local stage record. It did not retry. Read-only npm stage list, view, and download commands then confirmed the exact stage, archive SHA-256, and installed-package smoke. The prerelease remains private until the owner approves that exact stage on npmjs.com with the normal browser password and security key.
 
 The staging runner uses npm CLI `11.18.0` through a pinned `npx` command because the installed npm CLI does not yet include staged publishing. A dry run against the exact archive reproduced its name, version, size, file count, npm shasum, and npm integrity. The staging command itself does not require 2FA. Browser approval remains the only owner access step.
 
-The runner creates an atomic, manifest-bound staging receipt in the current user's local application data immediately before the one allowed staging command. It survives process exit, contains no credentials, and blocks a second staging command under the same manifest. Failed preflight does not consume the allowance.
+The runner created an atomic, manifest-bound staging receipt in the current user's local application data immediately before the one allowed staging command. It survived the parse failure, contains no credentials, and blocks a second staging command. The reconciliation manifest permits zero further staging uploads. Its separate read-only reconciler must recheck the existing stage, download it, match the approved SHA-256, rerun the 150-case smoke, and atomically create the verified stage record for finalization.
 
 A separate manifest-bound finalizer runs immediately after browser approval. It requires the verified private stage record, atomically reserves finalization before any external request, checks that the exact prerelease is not already deprecated, verifies the public shasum, integrity, `beta` tag, and unchanged `latest` tag, then repeats the real installed-package smoke. Integrity mismatch, tag mismatch, and smoke failure tests each invoke one exact-version deprecation and zero `latest` mutations. The finalizer records either `published_and_verified` or `rolled_back`. A repeated finalizer run is rejected before any external request, including after an interrupted first run.
 
@@ -68,8 +68,8 @@ The shipped search index was generated at `2026-06-28T06:24:19.035Z`. A package 
 
 The recorded release decision permits only these actions:
 
-1. Stage the exact archive once in npm's private staging area with tag `beta`.
-2. Download the private staged archive, verify its exact SHA-256, and run the 150-case installed-package smoke plus Material outline and solid checks before browser approval.
+1. Reconcile the existing exact private stage without another staged upload.
+2. Download that private staged archive, verify its exact SHA-256, and run the 150-case installed-package smoke plus Material outline and solid checks before browser approval.
 3. The owner approves only the verified stage on npmjs.com with the account security key, publishing `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
 4. Keep npm `latest` at `0.4.17`.
 5. Verify the live prerelease shasum, integrity, and tags, then repeat the installed-package smoke. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
@@ -90,7 +90,7 @@ Immediately before publication, the guarded runner must confirm:
 
 The preflight must classify npm's expected version-absent response without terminating or publishing. Any other absence-check failure still stops before registry mutation.
 
-Immediately before `npm stage publish`, the runner must atomically consume the one remaining staging-command allowance. If npm rejects that command, the manifest cannot be rerun. A further attempt requires a new independently audited manifest.
+The one staging-command allowance is already consumed and its local receipt must remain in place. This reconciliation authorizes zero further `npm stage publish` commands. If the existing stage cannot be matched and verified, stop without browser approval.
 
 Immediately before post-approval verification can make any external request, the finalizer must atomically reserve the manifest-bound finalization outcome. An existing `in_progress`, `published_and_verified`, or `rolled_back` record blocks replay. A new independently audited manifest is required after an interrupted or terminal finalization.
 
@@ -133,12 +133,12 @@ This request does not authorize:
 
 ## Owner access step
 
-After the independent audit passes, the executor runs the bound staging command in the integration worktree:
+After the independent audit passes, the executor runs the bound read-only reconciliation command in the integration worktree:
 
 ```powershell
-& .\scripts\stage-search-v2-local-first-beta.ps1 `
-    -ExecuteApprovedStaging `
-    -ApprovedManifestSha256 48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3
+& .\scripts\reconcile-search-v2-staged-beta.ps1 `
+    -ExecuteApprovedReconciliation `
+    -ApprovedManifestSha256 9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5
 ```
 
 Only after the runner reports `staged_and_verified` does the owner open npmjs.com Staged Packages and approve the matching package, version, tag, and stage ID. This is an access step, not a new product approval.
@@ -148,5 +148,5 @@ Immediately after the owner confirms browser approval, the executor runs the bou
 ```powershell
 & .\scripts\finalize-search-v2-local-first-beta.ps1 `
     -ExecuteApprovedFinalization `
-    -ApprovedManifestSha256 48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3
+    -ApprovedManifestSha256 9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5
 ```

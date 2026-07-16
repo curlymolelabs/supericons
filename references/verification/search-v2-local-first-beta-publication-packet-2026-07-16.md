@@ -1,7 +1,7 @@
 # Search v2 local-first beta publication packet verification
 
 Date: 2026-07-16
-Status: finalization replay correction locally verified, awaiting independent audit
+Status: existing private-stage reconciliation locally verified, awaiting independent audit
 Implementation commit: `b06bba157a0f63ef435eadaa8f8797fefe0d8617`
 
 ## Outcome
@@ -14,9 +14,9 @@ The first execution stopped during the live version-absence check, before `npm p
 
 The next guarded execution reached the single npm publish command. npm rejected it with `EOTP` and did not create the version. Read-only reconciliation again confirmed npm `latest` at `0.4.17` and the target prerelease absent. The owner then confirmed that this account uses a browser security key rather than a six-digit authenticator code, so the direct OTP route is not usable for this release.
 
-The replacement uses npm staged publishing through pinned npm CLI `11.18.0`. A dry run against the exact archive reproduced the approved package name, version, size, file count, npm shasum, and npm integrity. The staging command does not require 2FA. It uploads the archive privately with tag `beta`, then the guarded runner must download that staged archive, match its SHA-256, and run the 150-case installed-package smoke before the owner approves it on npmjs.com with the account security key.
+The replacement uses npm staged publishing through pinned npm CLI `11.18.0`. The one permitted staging command created private stage `c45e936a-4fc0-4857-981b-d88cfb3a025a` with tag `beta`, then the runner stopped while parsing npm's success output before it could save its verified local record. The command was not retried. Read-only list, view, and download commands independently confirmed the stage identity, archive SHA-256, and 150-case installed-package smoke. The prerelease remains private pending browser approval.
 
-The staging runner creates an atomic, manifest-bound receipt in user-local application data immediately before the one allowed `npm stage publish` command. The receipt persists after failure, contains no credentials, and prevents a second staging command under the same manifest. A failed preflight does not consume the allowance.
+The staging runner created an atomic, manifest-bound receipt in user-local application data immediately before the one allowed `npm stage publish` command. The receipt persists, contains no credentials, and prevents a second staging command. The reconciliation manifest permits zero further staged uploads. Its bound reconciliation runner issues only read-only stage list, view, and download commands, repeats the exact archive and installed-package checks, then creates the finalizer's stage record atomically.
 
 ## Bound release
 
@@ -27,26 +27,41 @@ The staging runner creates an atomic, manifest-bound receipt in user-local appli
 | Archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Archive size | 6,108,415 bytes |
 | Files | 47 |
-| Manifest SHA-256 | `48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3` |
+| Manifest SHA-256 | `9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5` |
 | Helper fingerprint | `ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8` |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 
 The archive was generated with `npm pack --ignore-scripts` from a temporary clean worktree at the implementation commit. The verifier independently repacked that commit and reproduced the file count, sizes, npm shasum, npm integrity, and archive SHA-256.
 
-## Guarded staged publication
+## Observed private stage
 
-The staging runner fails before registry contact unless both conditions are supplied and valid:
+| item | verified value |
+| --- | --- |
+| Stage ID | `c45e936a-4fc0-4857-981b-d88cfb3a025a` |
+| Created at | `2026-07-16T18:20:57.136Z` |
+| Package and version | `@supericons/mcp@0.4.19-beta.0` |
+| Tag | `beta` |
+| Access after approval | `public` |
+| npm shasum | `8889bdf8ebdc94aa1ff06117c1b0e7586b90ff33` |
+| Downloaded archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
+| Downloaded archive smoke | 150 eligible cases, Material outline and solid, zero hosted calls |
 
-- `-ExecuteApprovedStaging`; and
+The stage is private and the public prerelease does not yet exist. The stage list contained exactly one matching stage when checked read-only.
+
+## Guarded private-stage reconciliation
+
+The reconciliation runner fails before registry contact unless both conditions are supplied and valid:
+
+- `-ExecuteApprovedReconciliation`; and
 - the exact independently audited manifest SHA-256.
 
-The manifest binds the staging runner, packet verifier, installed-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
+The manifest binds the consumed source-stage receipt, exact private stage ID, reconciliation runner, packet verifier, installed-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
 
-The staging runner checks npm authentication, `latest`, target-version absence, and staged-version absence before any upload. It invokes the pinned CLI with the exact archive, tag `beta`, public access, lifecycle scripts disabled, and JSON output. After upload it verifies the returned metadata and private stage record, downloads the staged tarball, matches the approved SHA-256, and runs the installed-package smoke. A failed check blocks browser approval, so no public version exists to roll back.
+The reconciliation runner checks the source attempt receipt, npm authentication, unchanged `latest`, public target-version absence, and the single pinned private stage. It downloads the staged tarball, matches the approved SHA-256, and runs the installed-package smoke. It has no stage-publish command and the manifest allows zero further staged uploads. A failed check blocks browser approval, so no public version exists to roll back.
 
 The manifest also binds a separate post-approval finalizer. It requires the verified stage record and creates an atomic, manifest-bound finalization reservation before the packet verifier, npm authentication check, registry reads, smoke, or comparison can make an external request. It rejects an already-deprecated exact prerelease, checks the public shasum, integrity, `beta` tag, and unchanged `latest`, and runs the installed-package smoke against the registry version. Any integrity, tag, or smoke failure routes through one exact-version deprecation handler and then confirms both the deprecation and unchanged `latest`. The finalizer records `published_and_verified` or `rolled_back`. An existing terminal or in-progress record blocks replay.
 
-A local attempt-budget test produced zero stage calls after failed preflight, one call on first use, and zero calls on second use. The receipt is bound to the manifest and package and contains no credential material.
+A local reconciliation test rejected a missing source receipt, accepted the exact stage metadata, wrote one verified-stage record, rejected the second write, and made zero stage-publish calls. The records are bound to the manifest, source manifest, package, and stage ID and contain no credential material.
 
 The finalization replay test recorded zero simulated external requests after verified success, confirmed rollback, and interrupted in-progress states. The already-deprecated rollback case made zero further deprecation calls. The comparison allowance test reserved 50 requests once, then allowed zero requests on both complete-run and partial-run replays. Both local record types were manifest-bound and contained no credential material.
 
@@ -82,9 +97,10 @@ The packet verifier confirmed:
 
 - the staging runner rejects a missing execution switch;
 - the staging runner rejects the wrong audited fingerprint before npm contact;
-- a failed preflight makes zero stage calls and creates no attempt receipt;
-- the first simulated execution invokes staging once and the second same-manifest execution invokes it zero times;
-- the persistent staging receipt is bound to the manifest and package and contains no credential material;
+- the consumed staging receipt is bound to the source manifest and package and contains no credential material;
+- the current manifest rejects another staging command before npm contact;
+- the reconciler contains no staging-publish command and permits zero staged uploads;
+- the reconciler rejects a missing source receipt, verifies the exact stage, writes one verified record, and rejects a second record;
 - the staged result must carry the approved package, version, size, shasum, integrity, tag, and stage ID;
 - the downloaded staged archive must match the approved SHA-256 before browser approval;
 - the downloaded staged archive must pass the real installed-package smoke before browser approval;
@@ -107,6 +123,7 @@ node --check scripts/smoke-search-v2-local-first-beta-published.mjs
 node --check scripts/run-search-v2-local-hosted-comparison.mjs
 node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
 & .\scripts\stage-search-v2-local-first-beta.ps1 -RunStageAttemptSelfTest
+& .\scripts\reconcile-search-v2-staged-beta.ps1 -RunReconciliationSelfTest
 & .\scripts\finalize-search-v2-local-first-beta.ps1 -RunStageRecordSelfTest
 & .\scripts\finalize-search-v2-local-first-beta.ps1 -RunFinalizationOutcomeSelfTest
 & .\scripts\finalize-search-v2-local-first-beta.ps1 -RunRollbackSelfTest -RollbackTestScenario integrity_mismatch
@@ -115,7 +132,7 @@ node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
 & .\scripts\finalize-search-v2-local-first-beta.ps1 -RunRollbackSelfTest -RollbackTestScenario already_deprecated
 node scripts/run-search-v2-local-hosted-comparison.mjs --run-attempt-budget-self-test
 npx --yes npm@11.18.0 stage publish tmp/search-v2-local-first-beta-release-b06bba157/supericons-mcp-0.4.19-beta.0.tgz --tag beta --ignore-scripts --dry-run --json
-node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3
+node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5
 ```
 
-The packet verifier, replay self-tests, exact archive repack, 150-case installed-route smoke, hosted-call negative probe, and npm staged-publication dry run passed. No staged upload, npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
+The packet verifier, reconciliation self-test, replay self-tests, exact archive repack, 150-case installed-route smoke, and hosted-call negative probe passed. One exact private staged upload occurred and was verified read-only. No npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.

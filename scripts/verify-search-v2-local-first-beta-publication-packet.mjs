@@ -136,8 +136,9 @@ assert.deepEqual(manifest.publication_flow.postapproval_terminal_outcomes, [
 assert.equal(manifest.publication_flow.postapproval_replay_behavior, 'reject_before_external_request');
 assert.equal(manifest.publication_flow.publish_tag_locked_at_staging, 'beta');
 assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
+assert.equal(manifest.publication_attempts.recorded_private_stage_commands, 1);
 assert.equal(manifest.publication_attempts.maximum_additional_direct_publish_commands, 0);
-assert.equal(manifest.publication_attempts.maximum_additional_stage_commands, 1);
+assert.equal(manifest.publication_attempts.maximum_additional_stage_commands, 0);
 assert.equal(manifest.publication_attempts.maximum_successful_publications, 1);
 assert.equal(manifest.publication_attempts.receipt_schema_version, 1);
 assert.equal(manifest.publication_attempts.receipt_scope, 'user_local_application_data');
@@ -146,6 +147,16 @@ assert.equal(manifest.publication_attempts.consumption_timing, 'immediately_befo
 assert.equal(manifest.publication_attempts.finalization_outcome_schema_version, 1);
 assert.equal(manifest.publication_attempts.finalization_outcome_scope, 'user_local_application_data');
 assert.equal(manifest.publication_attempts.finalization_outcome_contains_credentials, false);
+assert.equal(manifest.reconciliation.mode, 'existing_private_stage_read_only');
+assert.equal(
+  manifest.reconciliation.source_manifest_sha256,
+  '48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3',
+);
+assert.equal(manifest.reconciliation.existing_stage_id, 'c45e936a-4fc0-4857-981b-d88cfb3a025a');
+assert.equal(manifest.reconciliation.source_attempt_receipt_required, true);
+assert.equal(manifest.reconciliation.additional_stage_publish_calls, 0);
+assert.equal(manifest.reconciliation.read_only_stage_list_view_and_download, true);
+assert.equal(manifest.reconciliation.downloaded_archive_and_installed_smoke_required, true);
 
 const archivePath = join(repoRoot, manifest.package.archive_path);
 assert.equal(sha256File(archivePath), manifest.package.archive_sha256);
@@ -164,6 +175,7 @@ assert.equal(packed.archive_sha256, manifest.package.archive_sha256);
 
 for (const [pathKey, hashKey] of [
   ['stager', 'stager_sha256'],
+  ['stage_reconciler', 'stage_reconciler_sha256'],
   ['postapproval_finalizer', 'postapproval_finalizer_sha256'],
   ['published_smoke', 'published_smoke_sha256'],
   ['hosted_comparison_runner', 'hosted_comparison_runner_sha256'],
@@ -211,7 +223,7 @@ assert.equal(manifest.hosted_comparison.partial_run_consumes_allowance, true);
 assert.equal(manifest.hosted_comparison.gating, false);
 
 assert.equal(manifest.external_actions.maximum_npm_prerelease_publications, 1);
-assert.equal(manifest.external_actions.maximum_private_npm_staged_uploads, 1);
+assert.equal(manifest.external_actions.maximum_private_npm_staged_uploads, 0);
 assert.equal(manifest.external_actions.maximum_conditional_npm_deprecations, 1);
 assert.equal(manifest.external_actions.maximum_stable_hosted_comparison_requests, 50);
 assert.equal(manifest.external_actions.function_deployments, 0);
@@ -229,7 +241,7 @@ assert.equal(
 );
 
 assert.match(requestText, new RegExp(actualManifestHash));
-assert.match(requestText, /Stage the exact archive once in npm's private staging area/);
+assert.match(requestText, /Reconcile the existing exact private stage without another staged upload/);
 assert.match(requestText, /approves only the verified stage on npmjs\.com with the account security key/);
 assert.match(requestText, /Run at most 50 sequential, sanitized fixed-case requests against stable hosted search/);
 assert.match(requestText, /Concurrency is one and retries are zero/);
@@ -276,6 +288,16 @@ assert.equal(stageAttemptBudget.second_execution_stage_calls, 0);
 assert.equal(stageAttemptBudget.stage_id_captured, true);
 assert.equal(stageAttemptBudget.receipt_manifest_bound, true);
 assert.equal(stageAttemptBudget.receipt_contains_credentials, false);
+requireRejected(spawnSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  stagerPath,
+  '-ExecuteApprovedStaging',
+  '-ApprovedManifestSha256',
+  actualManifestHash,
+], { cwd: repoRoot, encoding: 'utf8' }), /supports exactly one manifest-bound staging command/);
 
 const stagerText = readFileSync(stagerPath, 'utf8');
 assert.match(stagerText, /npm@\$NpmStageCliVersion/);
@@ -283,6 +305,28 @@ assert.match(stagerText, /'stage',\s*'publish'/);
 assert.match(stagerText, /'stage',\s*'download'/);
 assert.doesNotMatch(stagerText, /@\('publish',\s*\$archivePath/);
 assert.match(stagerText, /downloaded staged archive does not match the approved SHA-256/);
+
+const stageReconcilerPath = join(repoRoot, manifest.artifacts.stage_reconciler);
+const stageReconciliation = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  stageReconcilerPath,
+  '-RunReconciliationSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(stageReconciliation.status, 'ok');
+assert.equal(stageReconciliation.missing_source_receipt_rejected, true);
+assert.equal(stageReconciliation.exact_stage_metadata_accepted, true);
+assert.equal(stageReconciliation.first_verified_record_writes, 1);
+assert.equal(stageReconciliation.second_verified_record_writes, 0);
+assert.equal(stageReconciliation.stage_publish_calls, 0);
+assert.equal(stageReconciliation.verified_record_manifest_bound, true);
+assert.equal(stageReconciliation.verified_record_contains_credentials, false);
+const stageReconcilerText = readFileSync(stageReconcilerPath, 'utf8');
+assert.doesNotMatch(stageReconcilerText, /'stage',\s*'publish'/);
+assert.doesNotMatch(stageReconcilerText, /npm\s+publish/);
+assert.match(stageReconcilerText, /'stage',\s*'download'/);
 
 const finalizerPath = join(repoRoot, manifest.artifacts.postapproval_finalizer);
 const stageRecordGuard = JSON.parse(execFileSync(powerShell, [
@@ -425,7 +469,9 @@ console.log(JSON.stringify({
   hosted_call_negative_probe: 'rejected',
   publication_flow: manifest.publication_flow.mode,
   staged_archive_verification: 'hash_and_installed_smoke_required',
-  stage_attempt_budget_probe: 'first_one_second_zero',
+  consumed_stage_attempt_probe: 'second_stage_command_rejected',
+  existing_private_stage_id: manifest.reconciliation.existing_stage_id,
+  stage_reconciliation_probe: 'read_only_first_record_one_second_record_zero',
   postapproval_stage_record_probe: 'missing_and_wrong_rejected',
   postapproval_terminal_replay_probe: 'success_rollback_and_in_progress_zero_external_requests',
   postapproval_rollback_self_tests: [

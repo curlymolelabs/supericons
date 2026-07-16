@@ -76,8 +76,9 @@
   },
   "publication_attempts": {
     "recorded_eotp_rejections": 1,
+    "recorded_private_stage_commands": 1,
     "maximum_additional_direct_publish_commands": 0,
-    "maximum_additional_stage_commands": 1,
+    "maximum_additional_stage_commands": 0,
     "maximum_successful_publications": 1,
     "receipt_schema_version": 1,
     "receipt_scope": "user_local_application_data",
@@ -86,6 +87,16 @@
     "finalization_outcome_schema_version": 1,
     "finalization_outcome_scope": "user_local_application_data",
     "finalization_outcome_contains_credentials": false
+  },
+  "reconciliation": {
+    "mode": "existing_private_stage_read_only",
+    "source_manifest_sha256": "48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3",
+    "existing_stage_id": "c45e936a-4fc0-4857-981b-d88cfb3a025a",
+    "existing_stage_created_at": "2026-07-16T18:20:57.136Z",
+    "source_attempt_receipt_required": true,
+    "additional_stage_publish_calls": 0,
+    "read_only_stage_list_view_and_download": true,
+    "downloaded_archive_and_installed_smoke_required": true
   },
   "hosted_comparison": {
     "purpose": "informational_local_versus_stable_hosted_divergence",
@@ -157,7 +168,7 @@
     ]
   },
   "external_actions": {
-    "maximum_private_npm_staged_uploads": 1,
+    "maximum_private_npm_staged_uploads": 0,
     "maximum_npm_prerelease_publications": 1,
     "maximum_conditional_npm_deprecations": 1,
     "maximum_stable_hosted_comparison_requests": 50,
@@ -185,6 +196,8 @@
   "artifacts": {
     "stager": "scripts/stage-search-v2-local-first-beta.ps1",
     "stager_sha256": "bb7a58d466907aa22e098eabdd83f08bdd19a37a76bccef9207bb955e52fd28e",
+    "stage_reconciler": "scripts/reconcile-search-v2-staged-beta.ps1",
+    "stage_reconciler_sha256": "afc69e91faa5f30d63c903dd394f14358119152bb5516c0284718003c0753a9b",
     "postapproval_finalizer": "scripts/finalize-search-v2-local-first-beta.ps1",
     "postapproval_finalizer_sha256": "5fe25d1d7736f242d181aafe7a1f89f408b6626e65682c8b6779d5c899b1c34f",
     "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
@@ -192,7 +205,7 @@
     "hosted_comparison_runner": "scripts/run-search-v2-local-hosted-comparison.mjs",
     "hosted_comparison_runner_sha256": "d25d277e025254a69aa7dfc0ee7cc6c91ef2e66e9956846c71ef804119fdabb6",
     "packet_verifier": "scripts/verify-search-v2-local-first-beta-publication-packet.mjs",
-    "packet_verifier_sha256": "027c30cac568772ad6b3be82b421ff06e211c28cefaf00a619fb755f87802feb",
+    "packet_verifier_sha256": "2978bd55de44cdfe2c23bead3081fd9285a054352628f8f15b43c3ff0c40e60e",
     "approval_request": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-approval-request-2026-07-16.md"
   },
   "monitoring": {
