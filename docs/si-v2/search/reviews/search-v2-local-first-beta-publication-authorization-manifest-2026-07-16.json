@@ -14,7 +14,8 @@
     "version": "0.4.19-beta.0",
     "publish_tag": "beta",
     "latest_must_remain": "0.4.17",
-    "requires_interactive_otp": true,
+    "requires_interactive_otp": false,
+    "browser_security_key_approval_required": true,
     "archive_path": "tmp/search-v2-local-first-beta-release-b06bba157/supericons-mcp-0.4.19-beta.0.tgz",
     "archive_sha256": "211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37",
     "archive_size_bytes": 6108415,
@@ -56,14 +57,23 @@
     "hosted_call_measurement": "outbound_fetch_interceptor",
     "negative_probe": "one_observed_call_must_fail"
   },
+  "publication_flow": {
+    "mode": "npm_staged_browser_security_key",
+    "staging_cli": "npm@11.18.0",
+    "staging_requires_2fa": false,
+    "staged_archive_download_and_smoke_required_before_browser_approval": true,
+    "browser_approval_requires_owner_access": true,
+    "publish_tag_locked_at_staging": "beta"
+  },
   "publication_attempts": {
     "recorded_eotp_rejections": 1,
-    "maximum_additional_publish_commands": 1,
+    "maximum_additional_direct_publish_commands": 0,
+    "maximum_additional_stage_commands": 1,
     "maximum_successful_publications": 1,
     "receipt_schema_version": 1,
     "receipt_scope": "user_local_application_data",
     "receipt_contains_credentials": false,
-    "consumption_timing": "immediately_before_npm_publish"
+    "consumption_timing": "immediately_before_npm_stage_publish"
   },
   "hosted_comparison": {
     "purpose": "informational_local_versus_stable_hosted_divergence",
@@ -129,6 +139,7 @@
     ]
   },
   "external_actions": {
+    "maximum_private_npm_staged_uploads": 1,
     "maximum_npm_prerelease_publications": 1,
     "maximum_conditional_npm_deprecations": 1,
     "maximum_stable_hosted_comparison_requests": 50,
@@ -154,14 +165,14 @@
     "internal_tests_excluded": true
   },
   "artifacts": {
-    "publisher": "scripts/publish-search-v2-local-first-beta.ps1",
-    "publisher_sha256": "8eb3c7d38e118d3000254a5520f6b7d453955ef29209c9f4af02e33269a53f00",
+    "stager": "scripts/stage-search-v2-local-first-beta.ps1",
+    "stager_sha256": "bb7a58d466907aa22e098eabdd83f08bdd19a37a76bccef9207bb955e52fd28e",
     "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
     "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
     "hosted_comparison_runner": "scripts/run-search-v2-local-hosted-comparison.mjs",
     "hosted_comparison_runner_sha256": "28cb79fcda54282b27da50c4662b7fbf628c175275a4904dc675502bcd32a8e9",
     "packet_verifier": "scripts/verify-search-v2-local-first-beta-publication-packet.mjs",
-    "packet_verifier_sha256": "d8d69f49b7153e36e62aa41acdeafd39fa1e854353f663b88dfa5fc063ecb63b",
+    "packet_verifier_sha256": "46d6d295aa3e3d25d4139edfd19efe1b5e59438dc3dd405b2466de7c3557855e",
     "approval_request": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-approval-request-2026-07-16.md"
   },
   "monitoring": {
@@ -171,6 +182,7 @@
   },
   "rollback": {
     "prepublication_failure": "stop_without_registry_mutation",
+    "staged_verification_failure": "do_not_approve_and_reject_exact_stage_with_owner_browser_access",
     "postpublication_verification_failure": "deprecate_exact_prerelease_and_keep_latest_unchanged",
     "beta_quality_failure": "deprecate_exact_prerelease_stop_invitations_and_keep_latest_unchanged",
     "stable_fallback_failure": "stop_beta_and_preserve_public_safe_evidence"

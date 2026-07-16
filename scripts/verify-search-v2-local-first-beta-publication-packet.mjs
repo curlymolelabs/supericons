@@ -115,14 +115,25 @@ assert.equal(manifest.implementation.commit, 'b06bba157a0f63ef435eadaa8f8797fefe
 assert.equal(manifest.implementation.release_type, 'npm_prerelease_only');
 assert.equal(manifest.implementation.hosted_function_deployment_required, false);
 assert.equal(manifest.implementation.database_migration_required, false);
-assert.equal(manifest.package.requires_interactive_otp, true);
+assert.equal(manifest.package.requires_interactive_otp, false);
+assert.equal(manifest.package.browser_security_key_approval_required, true);
+assert.equal(manifest.publication_flow.mode, 'npm_staged_browser_security_key');
+assert.equal(manifest.publication_flow.staging_cli, 'npm@11.18.0');
+assert.equal(manifest.publication_flow.staging_requires_2fa, false);
+assert.equal(
+  manifest.publication_flow.staged_archive_download_and_smoke_required_before_browser_approval,
+  true,
+);
+assert.equal(manifest.publication_flow.browser_approval_requires_owner_access, true);
+assert.equal(manifest.publication_flow.publish_tag_locked_at_staging, 'beta');
 assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
-assert.equal(manifest.publication_attempts.maximum_additional_publish_commands, 1);
+assert.equal(manifest.publication_attempts.maximum_additional_direct_publish_commands, 0);
+assert.equal(manifest.publication_attempts.maximum_additional_stage_commands, 1);
 assert.equal(manifest.publication_attempts.maximum_successful_publications, 1);
 assert.equal(manifest.publication_attempts.receipt_schema_version, 1);
 assert.equal(manifest.publication_attempts.receipt_scope, 'user_local_application_data');
 assert.equal(manifest.publication_attempts.receipt_contains_credentials, false);
-assert.equal(manifest.publication_attempts.consumption_timing, 'immediately_before_npm_publish');
+assert.equal(manifest.publication_attempts.consumption_timing, 'immediately_before_npm_stage_publish');
 
 const archivePath = join(repoRoot, manifest.package.archive_path);
 assert.equal(sha256File(archivePath), manifest.package.archive_sha256);
@@ -140,7 +151,7 @@ assert.equal(packed.integrity, manifest.package.npm_integrity);
 assert.equal(packed.archive_sha256, manifest.package.archive_sha256);
 
 for (const [pathKey, hashKey] of [
-  ['publisher', 'publisher_sha256'],
+  ['stager', 'stager_sha256'],
   ['published_smoke', 'published_smoke_sha256'],
   ['hosted_comparison_runner', 'hosted_comparison_runner_sha256'],
 ]) {
@@ -177,6 +188,7 @@ assert.equal(manifest.hosted_comparison.maximum_retries, 0);
 assert.equal(manifest.hosted_comparison.gating, false);
 
 assert.equal(manifest.external_actions.maximum_npm_prerelease_publications, 1);
+assert.equal(manifest.external_actions.maximum_private_npm_staged_uploads, 1);
 assert.equal(manifest.external_actions.maximum_conditional_npm_deprecations, 1);
 assert.equal(manifest.external_actions.maximum_stable_hosted_comparison_requests, 50);
 assert.equal(manifest.external_actions.function_deployments, 0);
@@ -194,7 +206,8 @@ assert.equal(
 );
 
 assert.match(requestText, new RegExp(actualManifestHash));
-assert.match(requestText, /Publish the exact archive once as `@supericons\/mcp@0\.4\.19-beta\.0`/);
+assert.match(requestText, /Stage the exact archive once in npm's private staging area/);
+assert.match(requestText, /approves only the verified stage on npmjs\.com with the account security key/);
 assert.match(requestText, /Run at most 50 sequential, sanitized fixed-case requests against stable hosted search/);
 assert.match(requestText, /Concurrency is one and retries are zero/);
 assert.match(requestText, /This request does not authorize:[\s\S]*a Supabase function deployment/);
@@ -204,90 +217,47 @@ for (const artifact of [manifestText, requestText]) {
   assert.doesNotMatch(artifact, /[\u2013\u2014]/);
 }
 
-const publisherPath = join(repoRoot, manifest.artifacts.publisher);
+const stagerPath = join(repoRoot, manifest.artifacts.stager);
 const powerShell = process.platform === 'win32' ? 'powershell.exe' : 'pwsh';
 requireRejected(spawnSync(powerShell, [
   '-NoProfile',
   '-ExecutionPolicy',
   'Bypass',
   '-File',
-  publisherPath,
-], { cwd: repoRoot, encoding: 'utf8' }), /Publication is disabled/);
+  stagerPath,
+], { cwd: repoRoot, encoding: 'utf8' }), /Staging is disabled/);
 requireRejected(spawnSync(powerShell, [
   '-NoProfile',
   '-ExecutionPolicy',
   'Bypass',
   '-File',
-  publisherPath,
-  '-ExecuteApprovedPublication',
+  stagerPath,
+  '-ExecuteApprovedStaging',
   '-ApprovedManifestSha256',
   '0'.repeat(64),
 ], { cwd: repoRoot, encoding: 'utf8' }), /does not match the audited release fingerprint/);
-requireRejected(spawnSync(powerShell, [
+const stageAttemptBudget = JSON.parse(execFileSync(powerShell, [
   '-NoProfile',
   '-ExecutionPolicy',
   'Bypass',
   '-File',
-  publisherPath,
-  '-ExecuteApprovedPublication',
-  '-ApprovedManifestSha256',
-  actualManifestHash,
-], { cwd: repoRoot, encoding: 'utf8' }), /requires -PromptForNpmOtp/);
+  stagerPath,
+  '-RunStageAttemptSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(stageAttemptBudget.status, 'ok');
+assert.equal(stageAttemptBudget.failed_preflight_stage_calls, 0);
+assert.equal(stageAttemptBudget.first_execution_stage_calls, 1);
+assert.equal(stageAttemptBudget.second_execution_stage_calls, 0);
+assert.equal(stageAttemptBudget.stage_id_captured, true);
+assert.equal(stageAttemptBudget.receipt_manifest_bound, true);
+assert.equal(stageAttemptBudget.receipt_contains_credentials, false);
 
-for (const scenario of ['integrity_mismatch', 'tag_mismatch']) {
-  const rollbackResult = JSON.parse(execFileSync(powerShell, [
-    '-NoProfile',
-    '-ExecutionPolicy',
-    'Bypass',
-    '-File',
-    publisherPath,
-    '-RunRollbackSelfTest',
-    '-RollbackTestScenario',
-    scenario,
-  ], { cwd: repoRoot, encoding: 'utf8' }));
-  assert.equal(rollbackResult.status, 'ok');
-  assert.equal(rollbackResult.scenario, scenario);
-  assert.equal(rollbackResult.publish_calls, 1);
-  assert.equal(rollbackResult.deprecation_calls, 1);
-  assert.equal(rollbackResult.latest_mutation_calls, 0);
-}
-const nativeCommandCapture = JSON.parse(execFileSync(powerShell, [
-  '-NoProfile',
-  '-ExecutionPolicy',
-  'Bypass',
-  '-File',
-  publisherPath,
-  '-RunNativeCommandCaptureSelfTest',
-], { cwd: repoRoot, encoding: 'utf8' }));
-assert.equal(nativeCommandCapture.status, 'ok');
-assert.equal(nativeCommandCapture.exit_code, 1);
-assert.equal(nativeCommandCapture.expected_absence_captured, true);
-const otpEnvironment = JSON.parse(execFileSync(powerShell, [
-  '-NoProfile',
-  '-ExecutionPolicy',
-  'Bypass',
-  '-File',
-  publisherPath,
-  '-RunOtpEnvironmentSelfTest',
-], { cwd: repoRoot, encoding: 'utf8' }));
-assert.equal(otpEnvironment.status, 'ok');
-assert.equal(otpEnvironment.otp_observed_by_child, true);
-assert.equal(otpEnvironment.prior_environment_restored, true);
-const attemptBudget = JSON.parse(execFileSync(powerShell, [
-  '-NoProfile',
-  '-ExecutionPolicy',
-  'Bypass',
-  '-File',
-  publisherPath,
-  '-RunAttemptBudgetSelfTest',
-], { cwd: repoRoot, encoding: 'utf8' }));
-assert.equal(attemptBudget.status, 'ok');
-assert.equal(attemptBudget.failed_preflight_publish_calls, 0);
-assert.equal(attemptBudget.invalid_otp_publish_calls, 0);
-assert.equal(attemptBudget.first_execution_publish_calls, 1);
-assert.equal(attemptBudget.second_execution_publish_calls, 0);
-assert.equal(attemptBudget.receipt_manifest_bound, true);
-assert.equal(attemptBudget.receipt_contains_credentials, false);
+const stagerText = readFileSync(stagerPath, 'utf8');
+assert.match(stagerText, /npm@\$NpmStageCliVersion/);
+assert.match(stagerText, /'stage',\s*'publish'/);
+assert.match(stagerText, /'stage',\s*'download'/);
+assert.doesNotMatch(stagerText, /@\('publish',\s*\$archivePath/);
+assert.match(stagerText, /downloaded staged archive does not match the approved SHA-256/);
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -349,10 +319,9 @@ console.log(JSON.stringify({
   hosted_comparison_plan_requests: comparisonPlan.maximum_requests,
   measured_hosted_calls: smokeOutput.hosted_calls,
   hosted_call_negative_probe: 'rejected',
-  rollback_self_tests: ['integrity_mismatch', 'tag_mismatch'],
-  native_command_absence_probe: 'captured',
-  otp_environment_probe: 'injected_and_restored',
-  publish_attempt_budget_probe: 'first_one_second_zero',
+  publication_flow: manifest.publication_flow.mode,
+  staged_archive_verification: 'hash_and_installed_smoke_required',
+  stage_attempt_budget_probe: 'first_one_second_zero',
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,

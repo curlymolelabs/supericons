@@ -1,8 +1,8 @@
 # Search v2 local-first beta publication execution record
 
 Date: 2026-07-16
-Status: awaiting independent audit and owner terminal access for npm OTP
-Manifest fingerprint: `a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663`
+Status: staged-browser flow under local verification
+Manifest fingerprint: `b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1`
 
 ## Purpose
 
@@ -29,11 +29,15 @@ The archive was built from a temporary clean worktree at the implementation comm
 
 The first execution stopped before publication because PowerShell treated npm's expected version-absent result as a fatal command error. Registry checks immediately afterward confirmed that `0.4.19-beta.0` remained absent and npm `latest` remained `0.4.17`. The runner now captures nonzero native-command results for explicit classification, with a regression test for the expected absence result.
 
-The corrected execution reached `npm publish`, which npm rejected with `EOTP` before creating the version. Read-only reconciliation again confirmed that the prerelease remained absent and `latest` remained `0.4.17`. The guarded runner now requires `-PromptForNpmOtp`, reads the six-digit code as a secure terminal value, exposes it to npm only through the child-process environment, and restores the previous environment immediately afterward.
+The corrected execution reached `npm publish`, which npm rejected with `EOTP` before creating the version. Read-only reconciliation again confirmed that the prerelease remained absent and `latest` remained `0.4.17`. The owner then confirmed that this npm account uses a browser security key rather than a six-digit authenticator code. The direct OTP path is therefore retired for this release.
 
-Independent audit then found that the one-additional-command limit existed only in the manifest. The runner now creates an atomic, manifest-bound receipt in the current user's local application data immediately before the npm publish child starts. The receipt contains the manifest hash, package, action, and timestamp only. It survives process exit and blocks a second publish command under the same manifest. Failed preflight and invalid OTP format stop before the allowance is consumed.
+The replacement uses npm staged publishing. The executor uploads the exact archive to npm's private staging area with tag `beta`, downloads the staged archive again, verifies its SHA-256, and runs the installed-package smoke before the owner sees an approval step. The owner then approves that exact stage on npmjs.com with the normal browser password and security key.
 
-These runner corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for these equivalent safety corrections does not require renewed product approval. The remaining owner step is physical access only: entering the npm OTP directly in the terminal.
+The staging runner uses npm CLI `11.18.0` through a pinned `npx` command because the installed npm CLI does not yet include staged publishing. A dry run against the exact archive reproduced its name, version, size, file count, npm shasum, and npm integrity. The staging command itself does not require 2FA. Browser approval remains the only owner access step.
+
+The runner creates an atomic, manifest-bound staging receipt in the current user's local application data immediately before the one allowed staging command. It survives process exit, contains no credentials, and blocks a second staging command under the same manifest. Failed preflight does not consume the allowance.
+
+These corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for this safer access path does not require renewed product approval.
 
 ## Route boundary
 
@@ -62,12 +66,14 @@ The shipped search index was generated at `2026-06-28T06:24:19.035Z`. A package 
 
 The recorded release decision permits only these actions:
 
-1. Publish the exact archive once as `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
-2. Keep npm `latest` at `0.4.17`.
-3. Clean-install the published prerelease and run 150 local stdio search cases plus Material outline and solid checks. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
-4. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero.
-5. If any check after publication fails, including archive identity, npm tags, or the published-package smoke, deprecate only `0.4.19-beta.0`, confirm the deprecation, and keep npm `latest` unchanged.
-6. Keep the beta open for seven days from the first verified eligible user request. It may extend to 14 days if fewer than 200 eligible attempts or 20 session hashes are available.
+1. Stage the exact archive once in npm's private staging area with tag `beta`.
+2. Download the private staged archive, verify its exact SHA-256, and run the 150-case installed-package smoke plus Material outline and solid checks before browser approval.
+3. The owner approves only the verified stage on npmjs.com with the account security key, publishing `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
+4. Keep npm `latest` at `0.4.17`.
+5. Verify the live prerelease shasum, integrity, and tags, then repeat the installed-package smoke. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
+6. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero.
+7. If a check fails before browser approval, do not approve the stage and reject only that staged package. If a check fails after publication, deprecate only `0.4.19-beta.0`, confirm the deprecation, and keep npm `latest` unchanged.
+8. Keep the beta open for seven days from the first verified eligible user request. It may extend to 14 days if fewer than 200 eligible attempts or 20 session hashes are available.
 
 The owner may manually share reviewed, plain-language invitations. No automated public message is authorized.
 
@@ -77,14 +83,14 @@ Immediately before publication, the guarded runner must confirm:
 
 - npm `latest` is still `0.4.17`;
 - `0.4.19-beta.0` is still absent;
-- the exact archive, publisher, smoke, comparison runner, and manifest hashes match; and
+- the exact archive, staging runner, smoke, comparison runner, and manifest hashes match; and
 - the local packet verifier still passes.
 
 The preflight must classify npm's expected version-absent response without terminating or publishing. Any other absence-check failure still stops before registry mutation.
 
-Immediately before `npm publish`, the runner must atomically consume the one remaining command allowance. If npm rejects that command, including an expired OTP, the manifest cannot be rerun. A further attempt requires a new independently audited manifest.
+Immediately before `npm stage publish`, the runner must atomically consume the one remaining staging-command allowance. If npm rejects that command, the manifest cannot be rerun. A further attempt requires a new independently audited manifest.
 
-npm login and an npm one-time code are required. The owner enters the code directly into the guarded runner's secure terminal prompt. No credential or code is placed in chat, the repository, or the evidence record.
+npm login is required for the private staging upload. Staging does not require 2FA. After the staged archive passes its checks, the owner opens npmjs.com and approves the exact stage with the account password and security key. No credential is placed in chat, the repository, or the evidence record.
 
 ## Informational comparison
 
@@ -122,13 +128,12 @@ This request does not authorize:
 
 ## Owner access step
 
-After the independent audit passes, the owner runs the bound publisher in the integration worktree:
+After the independent audit passes, the executor runs the bound staging command in the integration worktree:
 
 ```powershell
-& .\scripts\publish-search-v2-local-first-beta.ps1 `
-    -ExecuteApprovedPublication `
-    -PromptForNpmOtp `
-    -ApprovedManifestSha256 a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663
+& .\scripts\stage-search-v2-local-first-beta.ps1 `
+    -ExecuteApprovedStaging `
+    -ApprovedManifestSha256 b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1
 ```
 
-The owner enters the six-digit npm code at the hidden prompt. This is an access step, not a new product approval.
+Only after the runner reports `staged_and_verified` does the owner open npmjs.com Staged Packages and approve the matching package, version, tag, and stage ID. This is an access step, not a new product approval.

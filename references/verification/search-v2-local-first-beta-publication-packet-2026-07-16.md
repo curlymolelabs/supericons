@@ -1,7 +1,7 @@
 # Search v2 local-first beta publication packet verification
 
 Date: 2026-07-16
-Status: locally verified, awaiting independent packet audit and owner terminal access for npm OTP
+Status: staged-browser correction locally verified, awaiting independent audit
 Implementation commit: `b06bba157a0f63ef435eadaa8f8797fefe0d8617`
 
 ## Outcome
@@ -12,9 +12,11 @@ The release contains one opt-in npm prerelease. It requires no Supabase function
 
 The first execution stopped during the live version-absence check, before `npm publish`. PowerShell promoted npm's expected nonzero result to a terminating error before the runner could classify the `E404`. Read-only registry checks immediately afterward confirmed npm `latest` at `0.4.17` and the target prerelease absent. The runner now captures native exit code and output under a local non-terminating error preference, then applies the existing fail-closed classification. A direct regression self-test captures exit code 1 and the expected absence marker without terminating the publisher.
 
-The next guarded execution reached the single npm publish command. npm rejected it with `EOTP`, requiring the account owner's authenticator code, and did not create the version. Read-only reconciliation again confirmed npm `latest` at `0.4.17` and the target prerelease absent. The runner now requires an explicit secure terminal OTP prompt for this package. A local mock proves the six-digit value is visible to the npm child environment only during the publish call and that the prior environment is restored afterward.
+The next guarded execution reached the single npm publish command. npm rejected it with `EOTP` and did not create the version. Read-only reconciliation again confirmed npm `latest` at `0.4.17` and the target prerelease absent. The owner then confirmed that this account uses a browser security key rather than a six-digit authenticator code, so the direct OTP route is not usable for this release.
 
-The first OTP correction described the one-additional-command budget but did not enforce it. Independent audit reproduced two mocked publish calls under the same manifest, so publication remained blocked. The corrected runner now creates an atomic, manifest-bound receipt in user-local application data immediately before the publish child starts. The receipt persists after failure, contains no credentials, and prevents a second publish command under the same manifest. Behavioral tests also prove that failed preflight and invalid OTP format do not consume the allowance.
+The replacement uses npm staged publishing through pinned npm CLI `11.18.0`. A dry run against the exact archive reproduced the approved package name, version, size, file count, npm shasum, and npm integrity. The staging command does not require 2FA. It uploads the archive privately with tag `beta`, then the guarded runner must download that staged archive, match its SHA-256, and run the 150-case installed-package smoke before the owner approves it on npmjs.com with the account security key.
+
+The staging runner creates an atomic, manifest-bound receipt in user-local application data immediately before the one allowed `npm stage publish` command. The receipt persists after failure, contains no credentials, and prevents a second staging command under the same manifest. A failed preflight does not consume the allowance.
 
 ## Bound release
 
@@ -25,24 +27,24 @@ The first OTP correction described the one-additional-command budget but did not
 | Archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Archive size | 6,108,415 bytes |
 | Files | 47 |
-| Manifest SHA-256 | `a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663` |
+| Manifest SHA-256 | `b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1` |
 | Helper fingerprint | `ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8` |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 
 The archive was generated with `npm pack --ignore-scripts` from a temporary clean worktree at the implementation commit. The verifier independently repacked that commit and reproduced the file count, sizes, npm shasum, npm integrity, and archive SHA-256.
 
-## Guarded publication
+## Guarded staged publication
 
-The publisher fails before registry contact unless both conditions are supplied and valid:
+The staging runner fails before registry contact unless both conditions are supplied and valid:
 
-- `-ExecuteApprovedPublication`; and
+- `-ExecuteApprovedStaging`; and
 - the exact independently audited manifest SHA-256.
 
-The manifest binds the publisher, packet verifier, published-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
+The manifest binds the staging runner, packet verifier, installed-package smoke, hosted comparison runner, exact package archive, route fingerprints, external-action limits, and rollback behavior.
 
-The guarded publisher checks npm authentication and live registry state before publication. It publishes the exact archive with lifecycle scripts disabled, verifies the registry shasum and integrity, confirms `latest` remains `0.4.17`, then runs the clean-installed published-package smoke. Any failed check after publication uses one rollback handler that deprecates only the exact prerelease, confirms the deprecation, and confirms `latest` remains unchanged.
+The staging runner checks npm authentication, `latest`, target-version absence, and staged-version absence before any upload. It invokes the pinned CLI with the exact archive, tag `beta`, public access, lifecycle scripts disabled, and JSON output. After upload it verifies the returned metadata and private stage record, downloads the staged tarball, matches the approved SHA-256, and runs the installed-package smoke. A failed check blocks browser approval, so no public version exists to roll back.
 
-Mocked integrity-mismatch and tag-mismatch cases each produced exactly one publish call, one exact-version deprecation call, and zero `latest` mutation calls.
+A local attempt-budget test produced zero stage calls after failed preflight, one call on first use, and zero calls on second use. The receipt is bound to the manifest and package and contains no credential material.
 
 ## Published-package smoke
 
@@ -55,7 +57,7 @@ The smoke was run locally against the exact archive with telemetry disabled. It 
 - an outbound-call interceptor measures zero hosted calls; and
 - a controlled one-call negative probe is rejected.
 
-The same smoke script will install the registry version after publication.
+The same smoke script is required first against the downloaded private staged archive and again against the registry version after browser approval.
 
 ## Informational comparison plan
 
@@ -74,16 +76,14 @@ The report stores case IDs and result references, not private user queries. It i
 
 The packet verifier confirmed:
 
-- the publisher rejects a missing execution switch;
-- the publisher rejects the wrong audited fingerprint before npm contact;
-- the publisher captures the expected nonzero version-absence result for explicit classification;
-- the publisher refuses real execution without the explicit secure OTP prompt;
-- the OTP environment self-test injects the temporary value for the npm child and restores the prior environment;
-- the first simulated execution invokes publish once and the second same-manifest execution invokes it zero times;
-- failed preflight and invalid OTP format make zero publish calls and do not create an attempt receipt;
-- the persistent attempt receipt is bound to the manifest and package and contains no credential material;
-- integrity and tag mismatches after publication each invoke the exact-version rollback once;
-- those rollback cases never republish and never mutate npm `latest`;
+- the staging runner rejects a missing execution switch;
+- the staging runner rejects the wrong audited fingerprint before npm contact;
+- a failed preflight makes zero stage calls and creates no attempt receipt;
+- the first simulated execution invokes staging once and the second same-manifest execution invokes it zero times;
+- the persistent staging receipt is bound to the manifest and package and contains no credential material;
+- the staged result must carry the approved package, version, size, shasum, integrity, tag, and stage ID;
+- the downloaded staged archive must match the approved SHA-256 before browser approval;
+- the downloaded staged archive must pass the real installed-package smoke before browser approval;
 - the comparison runner rejects the wrong approval fingerprint before network contact;
 - the comparison runner's default mode reports zero network calls;
 - every critical executable hash matches the manifest; and
@@ -95,9 +95,9 @@ The packet verifier confirmed:
 node --check scripts/smoke-search-v2-local-first-beta-published.mjs
 node --check scripts/run-search-v2-local-hosted-comparison.mjs
 node --check scripts/verify-search-v2-local-first-beta-publication-packet.mjs
-& .\scripts\publish-search-v2-local-first-beta.ps1 -RunOtpEnvironmentSelfTest
-& .\scripts\publish-search-v2-local-first-beta.ps1 -RunAttemptBudgetSelfTest
-node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest a0fe25b1cd948c5c4112c81604daf8d9399e0bb7ef1b3a218794298277050663
+& .\scripts\stage-search-v2-local-first-beta.ps1 -RunStageAttemptSelfTest
+npx --yes npm@11.18.0 stage publish tmp/search-v2-local-first-beta-release-b06bba157/supericons-mcp-0.4.19-beta.0.tgz --tag beta --ignore-scripts --dry-run --json
+node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest b57c53eb716c7baa7d4b8a0ded141c52f59c9314865aed32771275dfc766c2f1
 ```
 
-The packet verifier passed. No npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
+The packet verifier and npm staged-publication dry run passed. No staged upload, npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
