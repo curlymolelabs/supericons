@@ -1,6 +1,6 @@
 # Search v2 monitoring activation
 
-Status: ready for read-only activation
+Status: read-only schedules active
 
 ## Purpose
 

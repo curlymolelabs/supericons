@@ -1,6 +1,6 @@
 # Daily Search v2 beta monitor
 
-Status: Ready for read-only activation during the published Search v2 beta.
+Status: Active during the published Search v2 beta.
 
 Schedule: Daily at 09:00, Asia/Singapore. Report `inactive` until the first eligible beta request starts the evidence window. End at beta closeout.
 

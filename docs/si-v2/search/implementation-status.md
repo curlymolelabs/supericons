@@ -134,7 +134,7 @@ The complete four-surface map and its evidence limits are recorded in `reference
 
 ## Immediate next gate
 
-1. Activate the reviewed read-only beta monitor and weekly maintenance audit without changing the request path.
+1. Run the active read-only beta monitor and weekly maintenance audit without changing the request path.
 2. Manually share the reviewed opt-in invitation. Do not automate public messages.
 3. Start the beta clock only from the first verified eligible user request, then require at least 3 complete days plus the minimum sample and green or resolved daily monitoring.
 4. Report relevance, zeros, errors, telemetry coverage, traffic concentration, and remaining deterministic gaps against the closeout scorecard.

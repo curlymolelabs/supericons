@@ -1,6 +1,6 @@
 # Weekly search maintenance audit
 
-Status: Ready for read-only activation after the Search v2 beta launch.
+Status: Active after the Search v2 beta launch.
 
 Schedule: Monday at 09:00, Asia/Singapore.
 
