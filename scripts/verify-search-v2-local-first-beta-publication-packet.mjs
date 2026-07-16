@@ -115,6 +115,10 @@ assert.equal(manifest.implementation.commit, 'b06bba157a0f63ef435eadaa8f8797fefe
 assert.equal(manifest.implementation.release_type, 'npm_prerelease_only');
 assert.equal(manifest.implementation.hosted_function_deployment_required, false);
 assert.equal(manifest.implementation.database_migration_required, false);
+assert.equal(manifest.package.requires_interactive_otp, true);
+assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
+assert.equal(manifest.publication_attempts.maximum_additional_publish_commands, 1);
+assert.equal(manifest.publication_attempts.maximum_successful_publications, 1);
 
 const archivePath = join(repoRoot, manifest.package.archive_path);
 assert.equal(sha256File(archivePath), manifest.package.archive_sha256);
@@ -186,9 +190,12 @@ assert.equal(
 );
 
 assert.match(requestText, new RegExp(actualManifestHash));
-assert.match(requestText, /Publish the exact `@supericons\/mcp@0\.4\.19-beta\.0` archive once/);
-assert.match(requestText, /at most 50 sequential sanitized stable-hosted comparison requests with no retries/);
-assert.match(requestText, /No function deployment, database action, production load test/);
+assert.match(requestText, /Publish the exact archive once as `@supericons\/mcp@0\.4\.19-beta\.0`/);
+assert.match(requestText, /Run at most 50 sequential, sanitized fixed-case requests against stable hosted search/);
+assert.match(requestText, /Concurrency is one and retries are zero/);
+assert.match(requestText, /This request does not authorize:[\s\S]*a Supabase function deployment/);
+assert.match(requestText, /a database migration, history repair, or normal database push/);
+assert.match(requestText, /a production load test/);
 for (const artifact of [manifestText, requestText]) {
   assert.doesNotMatch(artifact, /[\u2013\u2014]/);
 }
@@ -211,7 +218,17 @@ requireRejected(spawnSync(powerShell, [
   '-ExecuteApprovedPublication',
   '-ApprovedManifestSha256',
   '0'.repeat(64),
-], { cwd: repoRoot, encoding: 'utf8' }), /does not match the owner-approved fingerprint/);
+], { cwd: repoRoot, encoding: 'utf8' }), /does not match the audited release fingerprint/);
+requireRejected(spawnSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  publisherPath,
+  '-ExecuteApprovedPublication',
+  '-ApprovedManifestSha256',
+  actualManifestHash,
+], { cwd: repoRoot, encoding: 'utf8' }), /requires -PromptForNpmOtp/);
 
 for (const scenario of ['integrity_mismatch', 'tag_mismatch']) {
   const rollbackResult = JSON.parse(execFileSync(powerShell, [
@@ -241,6 +258,17 @@ const nativeCommandCapture = JSON.parse(execFileSync(powerShell, [
 assert.equal(nativeCommandCapture.status, 'ok');
 assert.equal(nativeCommandCapture.exit_code, 1);
 assert.equal(nativeCommandCapture.expected_absence_captured, true);
+const otpEnvironment = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  publisherPath,
+  '-RunOtpEnvironmentSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(otpEnvironment.status, 'ok');
+assert.equal(otpEnvironment.otp_observed_by_child, true);
+assert.equal(otpEnvironment.prior_environment_restored, true);
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -304,6 +332,7 @@ console.log(JSON.stringify({
   hosted_call_negative_probe: 'rejected',
   rollback_self_tests: ['integrity_mismatch', 'tag_mismatch'],
   native_command_absence_probe: 'captured',
+  otp_environment_probe: 'injected_and_restored',
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,

@@ -1,8 +1,8 @@
-# Search v2 local-first beta publication approval request
+# Search v2 local-first beta publication execution record
 
 Date: 2026-07-16
-Status: awaiting owner approval; this file does not authorize an external action
-Manifest fingerprint: `f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44`
+Status: awaiting independent audit and owner terminal access for npm OTP
+Manifest fingerprint: `f1b192a4ef75fa26d56e927b5ef17b07f9447762f3af9b9a63dcbf5a8e772754`
 
 ## Purpose
 
@@ -27,7 +27,11 @@ The beta does not call an AI agent, language model, or embedding provider. It do
 
 The archive was built from a temporary clean worktree at the implementation commit. Publication must use this exact hash-checked archive with lifecycle scripts disabled. It must not repack the active working folder.
 
-The first approved execution stopped before publication because PowerShell treated npm's expected version-absent result as a fatal command error. Registry checks immediately afterward confirmed that `0.4.19-beta.0` remained absent and npm `latest` remained `0.4.17`. The runner now captures nonzero native-command results for explicit classification, with a regression test for the expected absence result. This changed the manifest fingerprint and requires fresh approval.
+The first execution stopped before publication because PowerShell treated npm's expected version-absent result as a fatal command error. Registry checks immediately afterward confirmed that `0.4.19-beta.0` remained absent and npm `latest` remained `0.4.17`. The runner now captures nonzero native-command results for explicit classification, with a regression test for the expected absence result.
+
+The corrected execution reached `npm publish`, which npm rejected with `EOTP` before creating the version. Read-only reconciliation again confirmed that the prerelease remained absent and `latest` remained `0.4.17`. The guarded runner now requires `-PromptForNpmOtp`, reads the six-digit code as a secure terminal value, exposes it to npm only through the child-process environment, and restores the previous environment immediately afterward.
+
+These runner corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for these equivalent safety corrections does not require renewed product approval. The remaining owner step is physical access only: entering the npm OTP directly in the terminal.
 
 ## Route boundary
 
@@ -54,7 +58,7 @@ The shipped search index was generated at `2026-06-28T06:24:19.035Z`. A package 
 
 ## Requested external actions
 
-Approval authorizes only these actions:
+The recorded release decision permits only these actions:
 
 1. Publish the exact archive once as `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
 2. Keep npm `latest` at `0.4.17`.
@@ -76,7 +80,7 @@ Immediately before publication, the guarded runner must confirm:
 
 The preflight must classify npm's expected version-absent response without terminating or publishing. Any other absence-check failure still stops before registry mutation.
 
-npm login or an npm one-time code may be required. The owner enters it directly in the terminal. No credential or code is placed in chat or in the repository.
+npm login and an npm one-time code are required. The owner enters the code directly into the guarded runner's secure terminal prompt. No credential or code is placed in chat, the repository, or the evidence record.
 
 ## Informational comparison
 
@@ -86,7 +90,7 @@ This comparison does not gate the first beta. It shows where the packaged public
 
 ## Monitoring and closeout
 
-The daily beta monitor and weekly maintenance audit remain drafts. This approval does not activate either routine. Monitoring activation requires a separate owner decision.
+The daily beta monitor and weekly maintenance audit remain drafts. This release does not activate either routine. Monitoring activation requires a separate reviewed scope and cost decision under `FR-26`.
 
 The beta closeout follows the existing scorecard: relevance review, zero-result clusters, error rate, latency, telemetry coverage, traffic concentration, and remaining deterministic gaps. A broad rollout requires a separate decision.
 
@@ -95,7 +99,7 @@ The beta closeout follows the existing scorecard: relevance review, zero-result 
 - Before publication: any mismatch stops with no registry change.
 - Failed post-publication verification: deprecate only the exact prerelease, confirm the deprecation, and keep `latest` unchanged.
 - Beta quality or safety failure: stop invitations, deprecate the exact prerelease, preserve public-safe evidence, and keep stable production unchanged.
-- Stable fallback problem: stop the beta and investigate separately. Do not change the production function under this approval.
+- Stable fallback problem: stop the beta and investigate separately. Do not change the production function under this release plan.
 
 ## Excluded scope
 
@@ -112,8 +116,15 @@ This request does not authorize:
 - a model-provider call; or
 - a Netlify, Railway, or other site deployment.
 
-## Approval wording
+## Owner access step
 
-To authorize this exact release, reply:
+After the independent audit passes, the owner runs the bound publisher in the integration worktree:
 
-> Approve Search v2 local-first beta publication manifest `f0d846d18bfad91a12b4426736d67578c56d117da0fab0bd32d6da205e1cbe44`. Publish the exact `@supericons/mcp@0.4.19-beta.0` archive once under npm tag `beta`, keep npm `latest` at `0.4.17`, run the measured local published-package smoke, and run at most 50 sequential sanitized stable-hosted comparison requests with no retries. If any post-publication verification fails, deprecate only this prerelease and confirm that `latest` stayed unchanged. No function deployment, database action, production load test, npm `latest` change, monitoring activation, automated public message, scheduled warm ping, or model-provider call is authorized.
+```powershell
+& .\scripts\publish-search-v2-local-first-beta.ps1 `
+    -ExecuteApprovedPublication `
+    -PromptForNpmOtp `
+    -ApprovedManifestSha256 f1b192a4ef75fa26d56e927b5ef17b07f9447762f3af9b9a63dcbf5a8e772754
+```
+
+The owner enters the six-digit npm code at the hidden prompt. This is an access step, not a new product approval.

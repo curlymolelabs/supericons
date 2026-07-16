@@ -1,8 +1,10 @@
 param(
     [switch]$ExecuteApprovedPublication,
     [string]$ApprovedManifestSha256,
+    [switch]$PromptForNpmOtp,
     [switch]$RunRollbackSelfTest,
     [switch]$RunNativeCommandCaptureSelfTest,
+    [switch]$RunOtpEnvironmentSelfTest,
     [ValidateSet('integrity_mismatch', 'tag_mismatch')]
     [string]$RollbackTestScenario
 )
@@ -27,6 +29,29 @@ function Invoke-NpmCommand([scriptblock]$Invoker, [string[]]$Arguments) {
         throw 'The npm command adapter returned an invalid result.'
     }
     return $result
+}
+
+function Invoke-NpmPublishWithOtp(
+    [scriptblock]$NpmInvoker,
+    [string[]]$Arguments,
+    [System.Security.SecureString]$SecureOtp
+) {
+    $previousOtp = [Environment]::GetEnvironmentVariable('NPM_CONFIG_OTP', 'Process')
+    $plainOtp = $null
+    try {
+        if ($null -ne $SecureOtp) {
+            $plainOtp = [System.Net.NetworkCredential]::new('', $SecureOtp).Password
+            if ($plainOtp -notmatch '^\d{6}$') {
+                throw 'The npm one-time password must contain exactly six digits.'
+            }
+            [Environment]::SetEnvironmentVariable('NPM_CONFIG_OTP', $plainOtp, 'Process')
+        }
+        return Invoke-NpmCommand $NpmInvoker $Arguments
+    }
+    finally {
+        [Environment]::SetEnvironmentVariable('NPM_CONFIG_OTP', $previousOtp, 'Process')
+        $plainOtp = $null
+    }
 }
 
 function Invoke-NativeCommandResult([string]$Executable, [string[]]$Arguments) {
@@ -235,7 +260,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
 }
 
 if ($RunRollbackSelfTest) {
-    if ($ExecuteApprovedPublication -or $RunNativeCommandCaptureSelfTest) {
+    if ($ExecuteApprovedPublication -or $RunNativeCommandCaptureSelfTest -or $RunOtpEnvironmentSelfTest) {
         throw 'Rollback self-test and real publication cannot run together.'
     }
     Write-Output (Invoke-RollbackSelfTest $RollbackTestScenario | ConvertTo-Json -Depth 4)
@@ -243,7 +268,7 @@ if ($RunRollbackSelfTest) {
 }
 
 if ($RunNativeCommandCaptureSelfTest) {
-    if ($ExecuteApprovedPublication) {
+    if ($ExecuteApprovedPublication -or $RunOtpEnvironmentSelfTest) {
         throw 'Native command self-test and real publication cannot run together.'
     }
     $nodeExecutable = (Get-Command node -ErrorAction Stop).Source
@@ -262,8 +287,37 @@ if ($RunNativeCommandCaptureSelfTest) {
     exit 0
 }
 
+if ($RunOtpEnvironmentSelfTest) {
+    if ($ExecuteApprovedPublication) {
+        throw 'OTP environment self-test and real publication cannot run together.'
+    }
+    $script:OtpSelfTestObserved = $null
+    $mockInvoker = {
+        param([string[]]$NpmArguments)
+        $script:OtpSelfTestObserved = [Environment]::GetEnvironmentVariable('NPM_CONFIG_OTP', 'Process')
+        return [pscustomobject]@{
+            ExitCode = 0
+            Output = ($NpmArguments -join ' ')
+        }
+    }
+    $previousOtp = [Environment]::GetEnvironmentVariable('NPM_CONFIG_OTP', 'Process')
+    $secureOtp = ConvertTo-SecureString '123456' -AsPlainText -Force
+    $null = Invoke-NpmPublishWithOtp $mockInvoker @('publish', 'approved.tgz') $secureOtp
+    $restoredOtp = [Environment]::GetEnvironmentVariable('NPM_CONFIG_OTP', 'Process')
+    if ($script:OtpSelfTestObserved -ne '123456' -or $restoredOtp -ne $previousOtp) {
+        throw 'OTP environment self-test did not inject and restore the temporary value.'
+    }
+    Remove-Variable OtpSelfTestObserved -Scope Script -ErrorAction SilentlyContinue
+    Write-Output ([pscustomobject]@{
+        status = 'ok'
+        otp_observed_by_child = $true
+        prior_environment_restored = $true
+    } | ConvertTo-Json -Depth 3)
+    exit 0
+}
+
 if (-not $ExecuteApprovedPublication) {
-    throw 'Publication is disabled. Pass -ExecuteApprovedPublication only after owner approval.'
+    throw 'Publication is disabled. Pass -ExecuteApprovedPublication only for a bounded, independently audited release.'
 }
 
 if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
@@ -274,10 +328,13 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json'
 $actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
-    throw 'The current manifest does not match the owner-approved fingerprint.'
+    throw 'The current manifest does not match the audited release fingerprint.'
 }
 
 $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+if ($manifest.package.requires_interactive_otp -and -not $PromptForNpmOtp) {
+    throw 'This publication requires -PromptForNpmOtp so the owner can enter the npm code directly in the terminal.'
+}
 $publisherPath = Join-Path $repoRoot $manifest.artifacts.publisher
 if ((Get-NormalizedTextSha256 $publisherPath) -ne $manifest.artifacts.publisher_sha256) {
     throw 'The guarded publisher changed after the manifest was prepared.'
@@ -330,7 +387,17 @@ if ($probeResult.Output -notmatch 'E404|No match found') {
 }
 
 $publicationVisible = $false
-$publishResult = Invoke-NpmCommand $npmInvoker @('publish', $archivePath, '--tag', $manifest.package.publish_tag, '--ignore-scripts')
+$secureOtp = if ($PromptForNpmOtp) {
+    Read-Host 'npm one-time password' -AsSecureString
+}
+else {
+    $null
+}
+$publishResult = Invoke-NpmPublishWithOtp `
+    $npmInvoker `
+    @('publish', $archivePath, '--tag', $manifest.package.publish_tag, '--ignore-scripts') `
+    $secureOtp
+$secureOtp = $null
 if ($publishResult.ExitCode -eq 0) {
     $publicationVisible = $true
 }
@@ -343,6 +410,9 @@ else {
         }
     }
     if (-not $publicationVisible) {
+        if ($publishResult.Output -match 'EOTP|one-time password') {
+            throw 'npm rejected the one-time password and the target version is absent. Stop and obtain a fresh code before any new attempt.'
+        }
         throw 'npm publication returned an error and visibility is inconclusive. Do not rerun. Reconcile the exact version first.'
     }
 }

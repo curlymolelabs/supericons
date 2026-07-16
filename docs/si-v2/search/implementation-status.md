@@ -128,19 +128,19 @@ For the deterministic-first scope, the read-only hosted migration inventory and 
 | npm registry | Read-only registry verification reports `latest` at `0.4.17`. |
 | Supabase database and Storage | Saved Material release records report the two Material migrations, 8,524 private asset rows, and 8,524 Storage objects. Current live state was not queried in the integration. |
 | Supabase functions | Authenticated read-only verification reports snapshot version 49, stable search version 38, and web search version 35 active. |
-| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Hosted Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. The first local-first publication draft was stopped after a package-route parity gap was found. The correction and permanent stdio route gate are independently approved. A rebuilt publication-only manifest is locally verified and awaits independent packet audit and owner approval. The corrected beta requires no endpoint or migration. The earlier Gate C harness corrections remain useful only if a later hosted measurement is approved. |
+| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Hosted Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. The first local-first publication draft was stopped after a package-route parity gap was found. The correction and permanent stdio route gate are independently approved. A rebuilt publication-only manifest passed its packet audit. Two publication attempts stopped safely before creating the version, first on expected-absence handling and then on npm OTP. The current runner awaits audit of its secure terminal OTP correction, after which the owner is needed only to enter the one-time code. The corrected beta requires no endpoint or migration. The earlier Gate C harness corrections remain useful only if a later hosted measurement is reviewed. |
 
 The complete four-surface map and its evidence limits are recorded in `references/verification/search-v2-material-integration-2026-07-16.md`. The later main reconciliation and case-level fingerprint changes are recorded in `references/verification/search-v2-main-reintegration-2026-07-16.md`.
 
 ## Immediate next gate
 
-1. Independently audit the clean-installed 150-case stdio route correction and permanent route-level fingerprint gate.
-2. Independently audit the rebuilt exact tarball, publication-only manifest, guarded publisher, published-package smoke, and 50-case comparison runner.
-3. If the packet passes, request owner approval for one npm prerelease publication and at most 50 sequential sanitized stable-hosted comparison requests.
-4. Publish only the exact approved tarball under the npm `beta` tag. Keep npm `latest`, Supabase functions, database schema, Railway, and web search unchanged.
+1. Independently audit the secure terminal OTP correction and the refreshed bound manifest.
+2. Ask the owner only to enter the npm one-time code directly in the terminal.
+3. Publish only the exact audited tarball under the npm `beta` tag. Keep npm `latest`, Supabase functions, database schema, Railway, and web search unchanged.
+4. Run at most 50 sequential sanitized stable-hosted comparison requests with no retries, as already bounded by the audited release decision.
 5. Keep hosted attribution as required evidence before any later hosted web or recommendation gate.
-6. Keep the exact hosted slow stage unresolved until the saved platform timing logs are recovered or a future owner-approved hosted attribution run is combined with a web or recommendation gate.
-7. Leave both drafted monitoring routines inactive until the owner separately authorizes activation.
+6. Keep the exact hosted slow stage unresolved until the saved platform timing logs are recovered or a future independently reviewed hosted attribution run is combined with a web or recommendation gate.
+7. Leave both drafted monitoring routines inactive until their scope and cost are reviewed under `FR-26`.
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 
