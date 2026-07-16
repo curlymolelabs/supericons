@@ -18,6 +18,24 @@ $poolerPath = Join-Path $repoRoot 'supabase\.temp\pooler-url'
 $expectedMigrationHash = 'd482408f156320fbbf518d6d66ac51ba1c1660321bacff9485f4e32a408fc3b5'
 $postgresImage = 'public.ecr.aws/supabase/postgres:17.6.1.132'
 
+function Get-NormalizedTextSha256 {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    $text = [System.IO.File]::ReadAllText($Path).Replace("`r`n", "`n").Replace("`r", "`n")
+    $bytes = [System.Text.UTF8Encoding]::new($false).GetBytes($text)
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+
+    try {
+        return ([System.BitConverter]::ToString($sha256.ComputeHash($bytes))).Replace('-', '').ToLowerInvariant()
+    }
+    finally {
+        $sha256.Dispose()
+    }
+}
+
 function Invoke-PsqlFile {
     param(
         [Parameter(Mandatory = $true)]
@@ -64,7 +82,7 @@ if (-not (Test-Path $poolerPath)) {
     throw 'Linked Supabase pooler information is missing. Run supabase link before this runner.'
 }
 
-$actualMigrationHash = (Get-FileHash $migrationPath -Algorithm SHA256).Hash.ToLowerInvariant()
+$actualMigrationHash = Get-NormalizedTextSha256 $migrationPath
 if ($actualMigrationHash -ne $expectedMigrationHash) {
     throw "Migration hash changed. Expected $expectedMigrationHash but found $actualMigrationHash"
 }
