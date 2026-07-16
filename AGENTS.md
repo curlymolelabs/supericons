@@ -15,6 +15,14 @@ Scope:
 - Do not alter verbatim user input, quoted external source material, vendor files, or fidelity-sensitive fixtures solely to satisfy this style rule.
 - When delegating to subagents, pass this rule into every subagent prompt that produces text.
 
+## Branch and worktree discipline
+
+- Prefer a dedicated branch and a separate git worktree for any substantial workstream (as the Material and integration efforts did). This is the safest mode.
+- Sessions working in the shared main worktree must stage with scoped `git add <own paths>` only, never `git add -A` or `git add .`, and must leave the tree clean (work committed) before the session ends.
+- Uncommitted changes you did not make belong to another workstream: do not commit, stash, or move them; ask the owner to have the owning session secure them.
+- Never commit temporary, private, credential, or local platform files (for example `.tmp/`, `.netlify/`, `data/*/private/`, local logs, personal scratchpads). Review every untracked file before any broad commit.
+- Reviewed integration branches merge into main via merge commit or fast-forward after verification; do not bypass an in-flight reviewed integration by committing to main files that the integration also changes.
+
 ## Plain language
 
 - Use simple, easy-to-understand language in user-facing content: HTML pages, UI copy, help text, marketing copy, and public documentation.
