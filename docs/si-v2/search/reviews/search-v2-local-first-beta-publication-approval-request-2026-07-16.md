@@ -112,7 +112,7 @@ This comparison does not gate the first beta. It shows where the packaged public
 
 ## Monitoring and closeout
 
-The daily beta monitor and weekly maintenance audit remain drafts. This release does not activate either routine. Monitoring activation requires a separate reviewed scope and cost decision under `FR-26`.
+The publication action did not activate either routine. A later, separately reviewed scope activated the read-only daily beta monitor and weekly maintenance audit without changing the request path or the release manifest.
 
 The beta closeout follows the existing scorecard: relevance review, zero-result clusters, error rate, latency, telemetry coverage, traffic concentration, adoption against the best available stable-user denominator, and remaining deterministic gaps. The clock starts with the first verified eligible user request. A broad rollout requires a separate decision.
 
