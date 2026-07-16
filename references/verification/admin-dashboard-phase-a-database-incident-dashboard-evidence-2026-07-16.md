@@ -50,3 +50,17 @@
 - No additional `/stats` request should be sent while the database is degraded because that path performs a large historical read.
 - No function redeploy, database restart, migration, storage change, Railway change, or npm publication was performed as part of this inspection.
 - The next recovery action requires an explicit owner decision because both a database restart and a byte-identical `mcp-search` redeploy cross the existing mutation boundary.
+
+## Recovery observation
+
+- Recovery was observed at approximately 21:19 Asia/Singapore without a restart or redeploy.
+- The latest 15-minute `mcp-search` window, approximately 21:04 to 21:19, showed 84 invocations and a 0% 5xx rate.
+- Average execution time was 860 ms and maximum execution time was 8,358 ms.
+- The dashboard displayed a project warning that the Disk IO Budget was close to depletion and that throughput would return to a 5 MB/s baseline after depletion.
+- Because the service recovered on its own, a restart is no longer justified as an immediate recovery action. The incident diagnostics remain required before another Phase A deployment attempt.
+
+## Duration calibration
+
+- A real engine-path outage is verified by the independent failed search probe and the dashboard's 100% 5xx window.
+- The available evidence does not prove that the user-facing search outage lasted more than one hour.
+- Direct evidence places the failed search path at approximately 20:2x, continued failures at 20:41, and a healthy 15-minute window beginning around 21:04. This proves a material outage, but not an exact start or recovery time.
