@@ -12,8 +12,8 @@ Set-StrictMode -Version Latest
 $ProjectId = 'b53f5f48-607f-49ae-a71e-37cc766f6973'
 $EnvironmentId = '6345c75b-5ac2-40d6-b176-a4a783ce3eb3'
 $ServiceId = '352420e5-6a02-43a4-99f2-f6dbde522acb'
-$ImplementationRevision = '3ce3224205c4ef13f7eb3ad0d83556db4c08c708'
-$ImplementationTree = '12070a25c24225b11cd19b0987cf500a23de1218'
+$ImplementationRevision = 'dbec69dc768cd10d2978b2872be993a5c86de78b'
+$ImplementationTree = 'c985431c2988b8b02ae76ff785e54dd2c1db11cc'
 $RollbackRevision = '31ac66dfecc40e4549f08fc3d9dea99d583a3393'
 $RollbackTree = '0064918488fe4c37382d2b21da43c1a5ba0f372c'
 $ExpectedPreDeploymentId = '5ea2e0b8-201a-4be9-81b7-a450d7f85c61'
@@ -24,10 +24,10 @@ $ExpectedAssetCount = 8524
 
 $Root = Split-Path -Parent $PSScriptRoot
 $FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-fingerprint-2026-07-16.txt'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-rollback-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-railway-protection-rollback-2026-07-16.json'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-railway-release'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
@@ -172,7 +172,8 @@ function Start-RevisionDeployment {
 
 function Invoke-LiveHandshake {
   param(
-    [Parameter(Mandatory = $true)][string]$OutputPath
+    [Parameter(Mandatory = $true)][string]$OutputPath,
+    [Parameter(Mandatory = $true)][ValidateSet('enabled', 'disabled')][string]$ExpectedResilience
   )
 
   Invoke-CheckedCommand -FilePath 'node' -Arguments @(
@@ -180,6 +181,7 @@ function Invoke-LiveHandshake {
     '--mcp-url', $McpUrl,
     '--expect-version', $ExpectedVersion,
     '--expect-material-assets', "$ExpectedAssetCount",
+    '--expect-hosted-search-resilience', $ExpectedResilience,
     '--output', $OutputPath
   )
   $evidence = Get-Content -LiteralPath (Join-Path $Root $OutputPath) -Raw | ConvertFrom-Json
@@ -203,7 +205,7 @@ function Invoke-Rollback {
     -Message 'Restore pre-Phase-A hosted MCP source'
 
   $rollbackLivePath = 'tmp/admin-dashboard-phase-a-railway-release/rollback-live.json'
-  $rollbackLive = Invoke-LiveHandshake -OutputPath $rollbackLivePath
+  $rollbackLive = Invoke-LiveHandshake -OutputPath $rollbackLivePath -ExpectedResilience disabled
   Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
     artifact = 'admin_dashboard_phase_a_railway_rollback'
     approval_fingerprint = $ApprovalFingerprint
@@ -257,6 +259,7 @@ New-Item -ItemType Directory -Path $Workspace | Out-Null
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-mcp-phase-a-telemetry.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-server-contract.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-mcp-usage-dedupe.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-hosted-search-resilience.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-hydration.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-material-railway-asset-bundle.mjs')
 
@@ -273,7 +276,8 @@ if ($pre.meta.imageDigest -ne $ExpectedPreImageDigest) {
 }
 
 $preflight = Invoke-LiveHandshake `
-  -OutputPath 'references/verification/admin-dashboard-phase-a-railway-preflight-2026-07-16.json'
+  -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-preflight-2026-07-16.json' `
+  -ExpectedResilience disabled
 
 $script:CandidateDeploymentId = $null
 $script:CandidateWentLive = $false
@@ -283,11 +287,12 @@ try {
     -Revision $ImplementationRevision `
     -PreviousDeploymentId $ExpectedPreDeploymentId `
     -Kind 'candidate' `
-    -Message 'Release Admin dashboard Phase A telemetry'
+    -Message 'Release hosted search protection and Phase A telemetry'
   $script:CandidateWentLive = $true
 
   $live = Invoke-LiveHandshake `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-railway-live-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-railway-protection-live-2026-07-16.json' `
+    -ExpectedResilience enabled
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
     artifact = 'admin_dashboard_phase_a_railway_completion'

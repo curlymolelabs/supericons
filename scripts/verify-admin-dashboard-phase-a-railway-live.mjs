@@ -14,9 +14,11 @@ const mcpUrl = (readArg('mcp-url') || 'https://mcp.supericons.dev/mcp').replace(
 const outputPath = readArg('output');
 const expectedVersion = readArg('expect-version') || '0.4.18';
 const expectedAssetCount = Number(readArg('expect-material-assets') || 8524);
+const expectedResilience = readArg('expect-hosted-search-resilience') || 'any';
 
 assert.ok(outputPath, 'Provide --output for retained evidence.');
 assert.ok(Number.isInteger(expectedAssetCount) && expectedAssetCount > 0);
+assert.ok(['any', 'enabled', 'disabled'].includes(expectedResilience));
 
 const summary = {
   artifact: 'admin_dashboard_phase_a_railway_live_contract',
@@ -37,6 +39,15 @@ try {
   assert.equal(health.version, expectedVersion);
   assert.equal(health.material_assets?.available, true);
   assert.equal(health.material_assets?.asset_count, expectedAssetCount);
+  if (expectedResilience === 'enabled') {
+    assert.equal(health.hosted_search?.state, 'closed');
+    assert.equal(health.hosted_search?.max_concurrent, 2);
+    assert.equal(health.hosted_search?.max_queued, 8);
+    assert.equal(health.hosted_search?.active, 0);
+    assert.equal(health.hosted_search?.queued, 0);
+  } else if (expectedResilience === 'disabled') {
+    assert.equal(health.hosted_search, undefined);
+  }
 
   await client.connect(transport);
   const tools = await client.listTools();
@@ -50,6 +61,7 @@ try {
     version: health.version,
     material_assets_available: health.material_assets.available,
     material_asset_count: health.material_assets.asset_count,
+    hosted_search_resilience: health.hosted_search || null,
   };
   summary.mcp_handshake = {
     tool_count: toolNames.size,

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "artifact": "admin_dashboard_phase_a_railway_protection_local_verification",
+  "implementation_revision": "dbec69dc768cd10d2978b2872be993a5c86de78b",
+  "status": "passed",
+  "checks": {
+    "hosted_search_resilience": {
+      "status": "passed",
+      "cases": 10,
+      "max_concurrent_engine_requests": 2,
+      "internal_5xx_retries": 0,
+      "failure_threshold": 2,
+      "open_duration_ms": 30000
+    },
+    "phase_a_telemetry": "passed",
+    "usage_dedupe": "passed",
+    "material_server_contract": "passed",
+    "material_hydration": "passed_11_of_11",
+    "material_asset_bundle": "passed_8524_of_8524",
+    "material_mcp_package": "passed"
+  },
+  "package_surface": {
+    "name": "@supericons/mcp",
+    "version": "0.4.18",
+    "file_count": 46,
+    "hosted_search_resilience_included": true
+  },
+  "production_metadata_check": {
+    "contact": "read_only_railway_metadata",
+    "deployment_id": "5ea2e0b8-201a-4be9-81b7-a450d7f85c61",
+    "image_digest": "sha256:91288b2a0323f9af9341e8846768057968ff8bfb5af567bf644590c77a9a3b58",
+    "status": "SUCCESS"
+  },
+  "production_mutation": false
+}

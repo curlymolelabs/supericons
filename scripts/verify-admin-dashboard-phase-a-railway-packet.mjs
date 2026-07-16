@@ -40,14 +40,16 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_railway_release',
-  implementation_revision: '3ce3224205c4ef13f7eb3ad0d83556db4c08c708',
-  implementation_tree: '12070a25c24225b11cd19b0987cf500a23de1218',
+  packet: 'admin_dashboard_phase_a_railway_protection_release',
+  implementation_revision: 'dbec69dc768cd10d2978b2872be993a5c86de78b',
+  implementation_tree: 'c985431c2988b8b02ae76ff785e54dd2c1db11cc',
   rollback_revision: '31ac66dfecc40e4549f08fc3d9dea99d583a3393',
   rollback_tree: '0064918488fe4c37382d2b21da43c1a5ba0f372c',
   runner_sha256: fields.runner_sha256,
   verifier_sha256: fields.verifier_sha256,
   live_gate_sha256: fields.live_gate_sha256,
+  hosted_search_client_sha256: fields.hosted_search_client_sha256,
+  hosted_search_resilience_sha256: fields.hosted_search_resilience_sha256,
   remote_server_sha256: fields.remote_server_sha256,
   usage_attribution_sha256: fields.usage_attribution_sha256,
   mcp_package_sha256: fields.mcp_package_sha256,
@@ -55,6 +57,7 @@ assert.deepEqual(fields, {
   telemetry_gate_sha256: fields.telemetry_gate_sha256,
   server_contract_gate_sha256: fields.server_contract_gate_sha256,
   usage_dedupe_gate_sha256: fields.usage_dedupe_gate_sha256,
+  hosted_search_resilience_gate_sha256: fields.hosted_search_resilience_gate_sha256,
   hydration_gate_sha256: fields.hydration_gate_sha256,
   asset_bundle_gate_sha256: fields.asset_bundle_gate_sha256,
   local_verification_sha256: fields.local_verification_sha256,
@@ -69,6 +72,14 @@ assert.deepEqual(fields, {
   mcp_url: 'https://mcp.supericons.dev/mcp',
   expected_version: '0.4.18',
   expected_material_asset_count: '8524',
+  hosted_search_max_concurrent: '2',
+  hosted_search_max_queued: '8',
+  hosted_search_queue_timeout_ms: '5000',
+  hosted_search_request_timeout_ms: '20000',
+  hosted_search_failure_threshold: '2',
+  hosted_search_open_duration_ms: '30000',
+  hosted_search_internal_5xx_retries: '0',
+  release_order: 'before_admin_api_packet_2u',
   synthetic_live_tool_calls: '0',
   live_telemetry_policy: 'local_contract_then_real_traffic_24h',
   country_coverage_target: '90_percent_of_eligible_real_traffic',
@@ -85,6 +96,8 @@ const textHashes = [
   [runnerPath, 'runner_sha256'],
   [verifierPath, 'verifier_sha256'],
   [liveGatePath, 'live_gate_sha256'],
+  ['mcp/hosted-search-client.js', 'hosted_search_client_sha256'],
+  ['mcp/hosted-search-resilience.js', 'hosted_search_resilience_sha256'],
   ['mcp/remote-server.js', 'remote_server_sha256'],
   ['mcp/usage-attribution.js', 'usage_attribution_sha256'],
   ['mcp/package.json', 'mcp_package_sha256'],
@@ -92,9 +105,10 @@ const textHashes = [
   ['scripts/verify-mcp-phase-a-telemetry.mjs', 'telemetry_gate_sha256'],
   ['scripts/verify-material-railway-server-contract.mjs', 'server_contract_gate_sha256'],
   ['scripts/verify-mcp-usage-dedupe.mjs', 'usage_dedupe_gate_sha256'],
+  ['scripts/verify-hosted-search-resilience.mjs', 'hosted_search_resilience_gate_sha256'],
   ['scripts/verify-material-railway-hydration.mjs', 'hydration_gate_sha256'],
   ['scripts/verify-material-railway-asset-bundle.mjs', 'asset_bundle_gate_sha256'],
-  ['references/verification/admin-dashboard-phase-a-local-verification-2026-07-16.json', 'local_verification_sha256'],
+  ['references/verification/admin-dashboard-phase-a-railway-protection-local-verification-2026-07-16.json', 'local_verification_sha256'],
 ];
 for (const [path, field] of textHashes) {
   assert.match(fields[field], /^[0-9a-f]{64}$/, `${field} must be SHA-256.`);
@@ -119,11 +133,14 @@ assert.match(runner, /if \(\$script:CandidateWentLive -and \$script:CandidateDep
 assert.match(runner, /verify-mcp-phase-a-telemetry\.mjs/);
 assert.match(runner, /verify-material-railway-server-contract\.mjs/);
 assert.match(runner, /verify-mcp-usage-dedupe\.mjs/);
+assert.match(runner, /verify-hosted-search-resilience\.mjs/);
 assert.match(runner, /verify-material-railway-hydration\.mjs/);
 assert.match(runner, /verify-material-railway-asset-bundle\.mjs/);
 assert.match(runner, /synthetic_tool_calls -ne 0/);
 assert.match(runner, /Railway deployment drifted/);
 assert.match(runner, /Railway image digest drifted/);
+assert.match(runner, /-ExpectedResilience disabled/);
+assert.match(runner, /-ExpectedResilience enabled/);
 
 for (const prohibited of [
   /\bsupabase\s+(?:functions|db|migration|link|secrets?)/i,
@@ -138,6 +155,19 @@ assert.equal(liveGate.includes('.callTool('), false, 'Live gate must not make sy
 assert.match(liveGate, /await client\.listTools\(\)/);
 assert.match(liveGate, /summary\.synthetic_tool_calls = 0/);
 assert.match(liveGate, /health\.material_assets\?\.asset_count/);
+assert.match(liveGate, /health\.hosted_search\?\.max_concurrent, 2/);
+assert.match(liveGate, /health\.hosted_search\?\.max_queued, 8/);
+
+const resilienceSource = normalizedText(readFileSync('mcp/hosted-search-resilience.js', 'utf8'));
+assert.match(resilienceSource, /const DEFAULT_MAX_CONCURRENT = 2;/);
+assert.match(resilienceSource, /const DEFAULT_MAX_QUEUED = 8;/);
+assert.match(resilienceSource, /const DEFAULT_FAILURE_THRESHOLD = 2;/);
+assert.match(resilienceSource, /const DEFAULT_OPEN_DURATION_MS = 30_000;/);
+
+const hostedClient = normalizedText(readFileSync('mcp/hosted-search-client.js', 'utf8'));
+assert.equal(hostedClient.includes('attempt < 3'), false);
+assert.match(hostedClient, /const HOSTED_SEARCH_REQUEST_TIMEOUT_MS = 20_000;/);
+assert.match(hostedClient, /hostedSearchResilience\.execute/);
 
 const telemetryGate = normalizedText(readFileSync('scripts/verify-mcp-phase-a-telemetry.mjs', 'utf8'));
 assert.match(telemetryGate, /query_origin/);
@@ -165,6 +195,7 @@ console.log(JSON.stringify({
     synthetic_tool_calls: 0,
     telemetry_rows_expected: 0,
     country_coverage_after_hours: 24,
+    hosted_search_resilience_required: true,
   },
   mutations: {
     railway_candidate_deployments: 1,
