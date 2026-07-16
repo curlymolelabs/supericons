@@ -37,6 +37,14 @@ Scope:
 - Completion claims ("fixed", "done", "verified", "passed") must state their proof basis in the same deliverable. No proof, no claim.
 - For public-facing outputs, verify the final exported artifacts, not only the source that should generate them.
 
+## Owner involvement and delegated judgment
+
+- The agent owns the judgment about when to involve the owner. Do not make owner approval a routine workflow step.
+- Involve the owner only when work physically requires the owner's access, credentials, or money, or when a decision genuinely changes the default user experience or carries material risk the owner would clearly want to weigh.
+- A regenerated fingerprint, refreshed evidence file, or equivalent safety correction to an already-reviewed release does not automatically require renewed owner approval. Decide whether the underlying product and risk decision changed.
+- Keep independent audits, evidence records, bounded mutation plans, and rollback controls. These safeguards support autonomous action and do not create approval ceremonies.
+- If unsure whether an issue is important enough to involve the owner, reason through the impact and decide. A concise heads-up is acceptable, but do not block by default.
+
 ## Public-safe outputs
 
 - Write every file as if it may become public, unless it is explicitly marked private or internal-only.

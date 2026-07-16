@@ -37,6 +37,8 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-022` | Reduce deterministic hosted round trips while preserving query provenance, rate limits, audit rows, and public response parity | Accepted | Performance and controls |
 | `D-023` | Gate beta release by tool and reject measurement workloads that do not match legal public inputs | Accepted | Rollout and measurement |
 | `D-024` | Keep expressive related icons visible behind conventional symbols and approved identities unless the query directly names their meaning | Accepted | Retrieval and reranking |
+| `D-025` | Use packaged local search only for eligible English MCP beta queries while stable hosting serves localized, recommendation, and web requests | Accepted | Architecture and rollout |
+| `D-026` | Let agents execute audited release work autonomously and involve the owner only for access, money, default-user changes, or material risk | Accepted | Release governance |
 
 ## Decision records
 
@@ -330,6 +332,23 @@ Alternatives rejected or deferred: another hosted beta deployment before trying 
 Specification change: version 1.9 adds `FR-40` and the local-first prerelease boundary.
 
 Superseded decisions: the isolated-endpoint route in `D-023` is replaced for this search-only beta. Its tool independence, legal-workload, and evidence rules remain active. The hosted work in `D-022` and `D-023` remains required evidence before a later hosted surface gate.
+
+### D-026: Delegated release judgment with preserved safeguards
+
+Date: 2026-07-17
+Status: Accepted
+
+Decision: agents own the judgment about when to involve the owner. A bounded deployment or publication may proceed after independent audit without a repeated approval ceremony when it stays within an accepted product and risk decision. The owner is involved only when physical access, credentials, or money are required, or when a decision genuinely changes the default user experience or carries material risk the owner would clearly want to weigh. Agents decide whether regenerated fingerprints and equivalent safety corrections preserve the accepted decision.
+
+Independent audit, evidence records, mutation limits, and rollback controls remain mandatory. These safeguards enable autonomous action and do not create a substitute approval ceremony.
+
+Reason: repeated owner approval of equivalent, already-reviewed release packets adds delay without improving the product or risk decision. The owner should spend attention on access and consequential choices, while agents use the audit and evidence system to handle routine release judgment.
+
+Alternatives rejected or deferred: removing independent review or rollback controls; asking the owner to approve every refreshed fingerprint; treating all external actions as automatically owner-gated; letting agents make unreviewed default-user or material-risk changes.
+
+Specification change: version 1.10 revises `FR-26` and the deployment/publication constraints.
+
+Superseded decisions: the explicit-owner-approval portions of earlier rollout decisions and plans are replaced by this owner-involvement boundary. Their technical gates, evidence requirements, mutation limits, and rollback rules remain active.
 
 ## Adding or superseding a decision
 

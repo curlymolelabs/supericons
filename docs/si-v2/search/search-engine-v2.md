@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.9
+Version: 1.10
 Approved: 2026-07-11
-Amended: 2026-07-16
+Amended: 2026-07-17
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -390,7 +390,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-23` | Support localized search through locale dictionaries and evaluated multilingual retrieval without creating a new document type by default. | `G-01` | Localized fixtures meet approved usefulness thresholds. |
 | `FR-24` | Protect p95 latency, error rate, cost, candidate fan-out, and rate limits with measured guardrails. | Reliability/business risk | Shadow and beta gates report all guardrails. |
 | `FR-25` | Keep all public outputs free of gated terms, private evidence, credentials, and operational identifiers. | `NG-03` | Public-safety and sentinel leakage checks pass. |
-| `FR-26` | Require explicit owner approval before Supabase/Netlify deployment or npm publication. | Release risk | Status ledger links each external mutation to approval and verification evidence. |
+| `FR-26` | Require a bounded, independently audited mutation plan and rollback rule before Supabase/Netlify deployment or npm publication. The executor may proceed without repeated owner approval when the action stays within an accepted product and risk decision. Involve the owner only for physical access, credentials, money, or a genuine default-user-experience or material-risk choice. | Release risk | Status ledger links each external mutation to its manifest, audit, verification evidence, rollback result, and any owner involvement that was actually required. |
 | `FR-27` | Diversify ambiguous list-search results across approved interpretation families, while recommendation uses task context and asks for clarification when needed. | Human and agent jobs; ambiguity risk | Approved ambiguous cases cover at least three relevant families in the top eight when available; recommendation cases narrow correctly or return labeled clarification options. |
 | `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
 | `FR-29` | Proactively review the bounded SI brand-logo set while classifying external brand collisions reactively from approved evidence. | Brand-maintenance cost; `D-019` | The 50 SI brand records have an owner-review disposition; ambiguous approved terms have concept and explicit-identity fixtures; unclassified external exact matches keep the documented fallback. |
@@ -413,7 +413,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 - Hosted functions retain current CORS, authentication, rate-limit, and audit boundaries.
 - Query fan-out and semantic candidates are bounded.
 - No secrets, credentials, raw personal identifiers, private prompts, or internal process metadata enter public docs, packages, responses, or logs.
-- No Supabase or Netlify deployment and no npm publication occurs without explicit owner approval.
+- No Supabase or Netlify deployment and no npm publication occurs without a bounded mutation plan, independent audit, and rollback rule. Owner involvement follows `FR-26` and is not a routine gate.
 - Search v2 does not define the missing SI schema `live` section; that is a separate schema correction.
 
 ## Evaluation and success metrics
@@ -487,7 +487,7 @@ Phases `P3` through `P6` are conditional and paused. They may resume only after 
 - Exact, library, ambiguity, brand, clarification, and cross-surface fixtures pass.
 - Same query, catalog version, policy version, and options produce the same ordered results.
 - Hosted latency, error, zero-result, low-confidence, reformulation, and abuse evidence is captured with stable denominators.
-- Deployment or publication still requires the explicit approval in `FR-26`.
+- Deployment or publication follows the audited mutation and owner-involvement boundary in `FR-26`.
 
 ### Feature flags
 
