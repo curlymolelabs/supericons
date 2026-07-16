@@ -3,7 +3,9 @@ param(
   [ValidatePattern('^[0-9a-f]{64}$')]
   [string]$ApprovalFingerprint,
 
-  [switch]$Execute
+  [switch]$Execute,
+
+  [switch]$DiskIoWindowConfirmed
 )
 
 $ErrorActionPreference = 'Stop'
@@ -12,6 +14,7 @@ Set-StrictMode -Version Latest
 $ProjectRef = 'kcjmkakdhsqplvasgkjv'
 $FunctionName = 'admin-api'
 $AdminUrl = "https://$ProjectRef.supabase.co/functions/v1/$FunctionName"
+$PreflightMaxLatencyMs = 10000
 $PostgresImage = 'public.ecr.aws/supabase/postgres:17.6.1.132'
 $Root = Split-Path -Parent $PSScriptRoot
 $FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-fingerprint-2026-07-16.txt'
@@ -19,11 +22,13 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-backlog-2026-07-16.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-rollback-2026-07-16.json'
+$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-railway-protection-2026-07-16.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-backlog-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-rollback-2026-07-16.json'
+$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-rollback-failure-2026-07-16.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -266,6 +271,9 @@ function Invoke-AdminLiveGate {
   if ($Mode -eq 'candidate') {
     $arguments += @('--max-refresh-days', "$MaxRefreshDays")
   }
+  if ($Mode -eq 'preflight') {
+    $arguments += @('--preflight-max-latency-ms', "$PreflightMaxLatencyMs")
+  }
   Invoke-CheckedCommand -FilePath 'node' -Arguments $arguments
   $evidence = Get-Content -LiteralPath (Join-Path $Root $OutputPath) -Raw | ConvertFrom-Json
   $allowedStatuses = if ($Mode -eq 'preflight') { @('ok', 'degraded_proceed') } else { @('ok') }
@@ -288,7 +296,55 @@ function Invoke-Rollback {
     -ExpectedId "$($CandidateFunction.id)" `
     -PreviousVersion ([int]$CandidateFunction.version)
   $rollbackLivePath = 'tmp/admin-dashboard-phase-a-admin-api-release/rollback-live.json'
-  $rollbackLive = Invoke-AdminLiveGate -Mode legacy -OutputPath $rollbackLivePath
+  try {
+    $rollbackLive = Invoke-AdminLiveGate -Mode legacy -OutputPath $rollbackLivePath
+  }
+  catch {
+    $rollbackError = $_.Exception.Message
+    $rollbackLive = $null
+    $absoluteRollbackLivePath = Join-Path $Root $rollbackLivePath
+    if (Test-Path -LiteralPath $absoluteRollbackLivePath) {
+      try {
+        $rollbackLive = Get-Content -LiteralPath $absoluteRollbackLivePath -Raw | ConvertFrom-Json
+      }
+      catch {
+        $rollbackLive = [ordered]@{
+          status = 'unreadable'
+          error = $_.Exception.Message
+        }
+      }
+    }
+    $rollbackHttpStatus = if ($rollbackLive -and $rollbackLive.PSObject.Properties.Name -contains 'http_status') {
+      [int]$rollbackLive.http_status
+    } else {
+      $null
+    }
+    $hasEnvironmentalSignature = (
+      $rollbackError -match '(?i)timeout|timed out|aborted|HTTP\s+5\d\d' -or
+      ($null -ne $rollbackHttpStatus -and $rollbackHttpStatus -ge 500)
+    )
+    Write-JsonEvidence -Path $RollbackFailureEvidence -Value ([ordered]@{
+      artifact = 'admin_dashboard_phase_a_admin_api_rollback_verification_failure'
+      approval_fingerprint = $ApprovalFingerprint
+      outcome = 'rollback_source_active_but_legacy_contract_failed'
+      reason = $Reason
+      candidate_version = [int]$CandidateFunction.version
+      rollback_revision = $script:Packet.rollback_revision
+      rollback_tree = $script:Packet.rollback_tree
+      rollback_version = [int]$rollbackFunction.version
+      rollback_updated_at = $rollbackFunction.updated_at
+      rollback_live_contract = $rollbackLive
+      rollback_verification_error = $rollbackError
+      environmental_signature = if ($hasEnvironmentalSignature) { 'possible_shared_database_degradation' } else { 'not_identified' }
+      disk_io_banner_confirmed_absent_before_execution = [bool]$DiskIoWindowConfirmed
+      disk_io_banner_state_at_failure = 'not_rechecked'
+      code_restoration = 'exact_pinned_revision_deployed_and_active'
+      service_restoration = 'not_verified'
+      started_at = $rollbackStartedAt
+      finished_at = (Get-Date).ToUniversalTime().ToString('o')
+    })
+    throw "Rollback source is active at version $($rollbackFunction.version), but its strict legacy contract failed. $rollbackError"
+  }
   Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
     artifact = 'admin_dashboard_phase_a_admin_api_rollback'
     approval_fingerprint = $ApprovalFingerprint
@@ -304,7 +360,10 @@ function Invoke-Rollback {
 }
 
 if (-not $Execute) {
-  throw 'Pass -Execute only after the owner has approved the exact packet fingerprint.'
+  throw 'Pass -Execute only after independent audit has cleared the exact packet fingerprint.'
+}
+if (-not $DiskIoWindowConfirmed) {
+  throw 'Confirm that the Supabase dashboard shows no Disk IO Budget warning, then pass -DiskIoWindowConfirmed.'
 }
 
 Set-Location $Root
@@ -326,7 +385,7 @@ if ((git rev-parse "$($script:Packet.rollback_revision)`^{tree}") -ne $script:Pa
   throw 'The rollback tree does not match the packet.'
 }
 
-foreach ($path in @($BacklogEvidence, $PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence)) {
+foreach ($path in @($RailwayProtectionEvidence, $BacklogEvidence, $PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence, $RollbackFailureEvidence)) {
   if (Test-Path -LiteralPath $path) {
     throw "This packet is write-once and evidence already exists: $path"
   }
@@ -350,6 +409,16 @@ Invoke-CheckedCommand -FilePath 'deno' -Arguments @('check', 'supabase/functions
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-metrics.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-api.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @(
+  'scripts/verify-admin-dashboard-phase-a-railway-live.mjs',
+  '--mcp-url', 'https://mcp.supericons.dev/mcp',
+  '--expect-version', '0.4.18',
+  '--expect-material-assets', '8524',
+  '--expect-hosted-search-resilience', 'enabled',
+  '--allow-active',
+  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-railway-protection-2026-07-16.json'
+)
+$railwayProtection = Get-Content -LiteralPath $RailwayProtectionEvidence -Raw | ConvertFrom-Json
 
 $preFunction = Get-AdminFunction
 Assert-FunctionState `
@@ -391,12 +460,9 @@ try {
   Invoke-PsqlPostflight
   $backlog = Invoke-PsqlRollupBacklog
   $pendingDayCount = [int]$backlog.pending_day_count
-  $refreshDayLimit = [int]$script:Packet.rollup_refresh_days_max
-  if ($pendingDayCount -ne [int]$script:Packet.expected_pending_rollup_days) {
-    throw "Measured rollup backlog $pendingDayCount does not match the approved value $($script:Packet.expected_pending_rollup_days)."
-  }
-  if ($pendingDayCount -lt 0 -or $pendingDayCount -gt $refreshDayLimit) {
-    throw "Measured rollup backlog $pendingDayCount is outside the approved range 0 to $refreshDayLimit."
+  $refreshDayLimit = $pendingDayCount
+  if ($pendingDayCount -lt 0 -or $pendingDayCount -gt [int]$script:Packet.rollup_refresh_days_max) {
+    throw "Measured rollup backlog $pendingDayCount is outside the approved range 0 to $($script:Packet.rollup_refresh_days_max)."
   }
   if ([int]$backlog.pending_on_or_before_latest_complete_day -ne 0) {
     throw 'The rollup tables contain a historical gap that the sequential refresh API cannot safely repair.'
@@ -407,12 +473,13 @@ try {
     measurement = $backlog
     refresh_day_limit = $refreshDayLimit
     refresh_call_limit = $refreshDayLimit + 1
+    authorized_max_pending_days = [int]$script:Packet.rollup_refresh_days_max
     mutations = 0
     captured_at = (Get-Date).ToUniversalTime().ToString('o')
   })
   $preflight = Invoke-AdminLiveGate `
     -Mode preflight `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-preflight-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-preflight-2026-07-16.json'
 
   $candidate = Deploy-Revision `
     -Revision $script:Packet.implementation_revision `
@@ -424,7 +491,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-live-2026-07-16.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-live-2026-07-16.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
@@ -436,7 +503,9 @@ try {
     candidate_function_version = [int]$candidate.version
     candidate_updated_at = $candidate.updated_at
     rollup_backlog = $backlog
+    railway_protection = $railwayProtection
     preflight = $preflight
+    preflight_max_latency_ms = $PreflightMaxLatencyMs
     live_contract = $live
     rollback_used = $false
     started_at = $startedAt

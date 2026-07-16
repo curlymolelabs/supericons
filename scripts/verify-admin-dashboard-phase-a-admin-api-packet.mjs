@@ -32,7 +32,10 @@ const liveGatePath = 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs'
 const preflightClassifierPath = 'scripts/admin-dashboard-admin-api-preflight-classifier.mjs';
 const preflightClassifierTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-classifier.mjs';
 const preflightLiveTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-live.mjs';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-v45-inventory-2026-07-16.json';
+const railwayLiveGatePath = 'scripts/verify-admin-dashboard-phase-a-railway-live.mjs';
+const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-local-verification-2026-07-16.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-v47-inventory-2026-07-16.json';
+const railwayCompletionPath = 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-completion-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Approval fingerprint does not match the source.');
@@ -44,7 +47,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_preflight_recovery',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery_2u',
   implementation_revision: 'a342f51f185a7d168772fa7cf542eb7960ee8827',
   implementation_tree: 'f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83',
   rollback_revision: fields.rollback_revision,
@@ -55,6 +58,7 @@ assert.deepEqual(fields, {
   preflight_classifier_sha256: fields.preflight_classifier_sha256,
   preflight_classifier_test_sha256: fields.preflight_classifier_test_sha256,
   preflight_live_test_sha256: fields.preflight_live_test_sha256,
+  railway_live_gate_sha256: fields.railway_live_gate_sha256,
   rollup_gate_helper_sha256: fields.rollup_gate_helper_sha256,
   rollup_gate_test_sha256: fields.rollup_gate_test_sha256,
   backlog_sql_sha256: fields.backlog_sql_sha256,
@@ -67,9 +71,17 @@ assert.deepEqual(fields, {
   local_verification_sha256: fields.local_verification_sha256,
   inventory_sha256: fields.inventory_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
-  prior_attempt_commit: 'ad5b6396d69e05087061aa045dd55d97afb05827',
+  railway_protection_completion_commit: 'cf21f1675713bf0e6573ac6762fbb719f09a6361',
+  railway_protection_completion_sha256: fields.railway_protection_completion_sha256,
+  railway_protection_deployment_id: 'd02a8053-0683-4f59-a68f-2ef27b143be1',
+  railway_protection_version: '0.4.18',
+  railway_protection_max_concurrent: '2',
+  railway_protection_max_queued: '8',
+  prior_attempt_commit: 'cb1c6de2a4ff61d959bc885077b1489431300cf9',
   prior_backlog_evidence_sha256: fields.prior_backlog_evidence_sha256,
   prior_preflight_evidence_sha256: fields.prior_preflight_evidence_sha256,
+  prior_candidate_live_evidence_sha256: fields.prior_candidate_live_evidence_sha256,
+  prior_rollback_failure_evidence_sha256: fields.prior_rollback_failure_evidence_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -80,18 +92,23 @@ assert.deepEqual(fields, {
   pre_function_version: fields.pre_function_version,
   pre_function_updated_at: fields.pre_function_updated_at,
   pre_verify_jwt: 'false',
-  expected_pending_rollup_days: '0',
-  rollup_refresh_days_max: '0',
+  rollup_backlog_policy: 'measure_at_execution_no_holes_max_120',
+  rollup_refresh_days_max: '120',
   rollup_refresh_confirmation_calls: '1',
-  rollup_refresh_calls_max: '1',
+  rollup_refresh_calls_max: '121',
   rollup_refresh_elapsed_limit_minutes: '20',
   queue_24h_p95_limit_ms: '1500',
   queue_all_p95_limit_ms: '1000',
   queue_warm_samples: '20',
-  legacy_preflight_policy: 'block_auth_contract_and_network_allow_timeout_and_5xx',
+  legacy_preflight_max_latency_ms: '10000',
+  legacy_preflight_request_timeout_ms: '12000',
+  legacy_preflight_policy: 'block_timeout_slow_response_auth_contract_and_network_allow_fast_5xx',
+  disk_io_window_confirmation: 'required',
+  railway_protection_prerequisite: 'required_live_no_synthetic_calls',
+  rollback_environmental_failure_annotation: 'required',
   supabase_candidate_deployments_authorized: '1',
   conditional_rollback_deployments_authorized: '1',
-  rollup_refresh_writes_authorized: 'false',
+  rollup_refresh_writes_authorized: 'measured_pending_days_up_to_120',
   migration_changes_authorized: 'false',
   mcp_search_changes_authorized: 'false',
   railway_changes_authorized: 'false',
@@ -114,6 +131,7 @@ const textHashes = [
   [preflightClassifierPath, 'preflight_classifier_sha256'],
   [preflightClassifierTestPath, 'preflight_classifier_test_sha256'],
   [preflightLiveTestPath, 'preflight_live_test_sha256'],
+  [railwayLiveGatePath, 'railway_live_gate_sha256'],
   ['scripts/admin-dashboard-rollup-refresh-gate.mjs', 'rollup_gate_helper_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs', 'rollup_gate_test_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'backlog_sql_sha256'],
@@ -123,9 +141,10 @@ const textHashes = [
   ['data/admin/known-search-defects.json', 'defect_registry_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-api.mjs', 'api_contract_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-metrics.mjs', 'metrics_gate_sha256'],
-  ['references/verification/admin-dashboard-phase-a-local-verification-2026-07-16.json', 'local_verification_sha256'],
+  [localVerificationPath, 'local_verification_sha256'],
   [inventoryPath, 'inventory_sha256'],
   ['scripts/capture-admin-dashboard-phase-a-admin-api-inventory.ps1', 'inventory_capture_sha256'],
+  [railwayCompletionPath, 'railway_protection_completion_sha256'],
 ];
 for (const [path, field] of textHashes) {
   assert.match(fields[field], /^[0-9a-f]{64}$/, `${field} must be SHA-256.`);
@@ -157,13 +176,25 @@ assert.ok(
 );
 assert.equal(inventory.mutations, 0);
 
+const railwayCompletion = JSON.parse(readFileSync(railwayCompletionPath, 'utf8'));
+const railwayLive = railwayCompletion.live_contract.find((entry) => entry && typeof entry === 'object');
+assert.equal(railwayCompletion.candidate_deployment_id, fields.railway_protection_deployment_id);
+assert.equal(railwayLive?.health?.version, fields.railway_protection_version);
+assert.equal(railwayLive?.health?.hosted_search_resilience?.max_concurrent,
+  Number(fields.railway_protection_max_concurrent));
+assert.equal(railwayLive?.health?.hosted_search_resilience?.max_queued,
+  Number(fields.railway_protection_max_queued));
+assert.equal(railwayCompletion.rollback_used, false);
+
 assert.equal(
   execFileSync('git', ['rev-parse', fields.prior_attempt_commit], { encoding: 'utf8' }).trim(),
   fields.prior_attempt_commit,
 );
 for (const [path, field] of [
-  ['references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-live-2026-07-16.json', 'prior_candidate_live_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-rollback-failure-2026-07-16.json', 'prior_rollback_failure_evidence_sha256'],
 ]) {
   assert.equal(sha256TextFile(path), fields[field], `${path} recovery evidence hash does not match.`);
 }
@@ -179,10 +210,21 @@ assert.match(runner, /admin-dashboard-phase-a-recovery-postflight\.sql/);
 assert.match(runner, /admin-dashboard-phase-a-rollup-backlog\.sql/);
 assert.match(runner, /PGOPTIONS=-c default_transaction_read_only=on/);
 assert.match(runner, /pending_on_or_before_latest_complete_day/);
-assert.match(runner, /pendingDayCount -ne \[int\]\$script:Packet\.expected_pending_rollup_days/);
+assert.equal(runner.includes('expected_pending_rollup_days'), false,
+  'Runner must measure the pending rollup backlog at execution.');
+assert.match(runner, /\$refreshDayLimit = \$pendingDayCount/);
+assert.match(runner, /pendingDayCount -gt \[int\]\$script:Packet\.rollup_refresh_days_max/);
 assert.match(runner, /-MaxRefreshDays \$pendingDayCount/);
 assert.match(runner, /-Mode preflight/);
 assert.match(runner, /'degraded_proceed'/);
+assert.match(runner, /\$PreflightMaxLatencyMs = 10000/);
+assert.match(runner, /--preflight-max-latency-ms', "\$PreflightMaxLatencyMs"/);
+assert.match(runner, /\[switch\]\$DiskIoWindowConfirmed/);
+assert.match(runner, /--expect-hosted-search-resilience', 'enabled'/);
+assert.match(runner, /'--allow-active'/);
+assert.match(runner, /admin_dashboard_phase_a_admin_api_rollback_verification_failure/);
+assert.match(runner, /possible_shared_database_degradation/);
+assert.match(runner, /service_restoration = 'not_verified'/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
@@ -196,7 +238,7 @@ assert.equal(runner.includes('mcp-search'), false, 'Runner must not deploy mcp-s
 for (const prohibited of [
   /supabase\s+(?:db|migration|link|secrets?)\b/i,
   /npm\s+publish/i,
-  /\brailway\b/i,
+  /\brailway\s+(?:up|link|variables|service|environment)\b/i,
   /supabase\s+functions\s+delete/i,
 ]) {
   assert.equal(prohibited.test(runner), false, `Runner contains prohibited command: ${prohibited}`);
@@ -239,6 +281,13 @@ assert.match(liveGate, /classifyAdminApiPreflight/);
 assert.match(liveGate, /\['preflight', 'legacy', 'candidate'\]/);
 assert.match(liveGate, /summary\.status = classification\.outcome === 'healthy' \? 'ok' : 'degraded_proceed'/);
 assert.equal(liveGate.includes('mcp-search'), false);
+assert.match(liveGate, /AbortSignal\.timeout\(preflightMaxLatencyMs \+ 2_000\)/);
+
+const railwayLiveGate = normalizedText(readFileSync(railwayLiveGatePath, 'utf8'));
+assert.match(railwayLiveGate, /const allowActive = process\.argv\.includes\('--allow-active'\)/);
+assert.match(railwayLiveGate, /health\.hosted_search\.active >= 0 && health\.hosted_search\.active <= 2/);
+assert.match(railwayLiveGate, /health\.hosted_search\.queued >= 0 && health\.hosted_search\.queued <= 8/);
+assert.match(railwayLiveGate, /summary\.synthetic_tool_calls = 0/);
 
 execFileSync('node', [preflightClassifierTestPath], {
   encoding: 'utf8',
@@ -286,11 +335,12 @@ console.log(JSON.stringify({
     verify_jwt: false,
   },
   gates: {
-    expected_pending_rollup_days: 0,
-    rollup_refresh_days_max: 0,
+    rollup_backlog_policy: fields.rollup_backlog_policy,
+    rollup_refresh_days_max: 120,
     rollup_refresh_confirmation_calls: 1,
-    rollup_refresh_calls_max: 1,
+    rollup_refresh_calls_max: 121,
     rollup_refresh_elapsed_limit_minutes: 20,
+    legacy_preflight_max_latency_ms: 10000,
     queue_24h_p95_limit_ms: 1500,
     queue_all_p95_limit_ms: 1000,
     queue_warm_samples: 20,
@@ -298,7 +348,7 @@ console.log(JSON.stringify({
   mutations: {
     admin_api_candidate_deployments: 1,
     conditional_admin_api_rollback_deployments: 1,
-    rollup_refresh_writes: false,
+    rollup_refresh_writes: 'measured_pending_days_up_to_120',
     migration: 0,
     mcp_search: 0,
     railway: 0,

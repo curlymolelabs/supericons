@@ -15,6 +15,7 @@ const outputPath = readArg('output');
 const expectedVersion = readArg('expect-version') || '0.4.18';
 const expectedAssetCount = Number(readArg('expect-material-assets') || 8524);
 const expectedResilience = readArg('expect-hosted-search-resilience') || 'any';
+const allowActive = process.argv.includes('--allow-active');
 
 assert.ok(outputPath, 'Provide --output for retained evidence.');
 assert.ok(Number.isInteger(expectedAssetCount) && expectedAssetCount > 0);
@@ -43,8 +44,14 @@ try {
     assert.equal(health.hosted_search?.state, 'closed');
     assert.equal(health.hosted_search?.max_concurrent, 2);
     assert.equal(health.hosted_search?.max_queued, 8);
-    assert.equal(health.hosted_search?.active, 0);
-    assert.equal(health.hosted_search?.queued, 0);
+    assert.ok(Number.isInteger(health.hosted_search?.active));
+    assert.ok(Number.isInteger(health.hosted_search?.queued));
+    assert.ok(health.hosted_search.active >= 0 && health.hosted_search.active <= 2);
+    assert.ok(health.hosted_search.queued >= 0 && health.hosted_search.queued <= 8);
+    if (!allowActive) {
+      assert.equal(health.hosted_search.active, 0);
+      assert.equal(health.hosted_search.queued, 0);
+    }
   } else if (expectedResilience === 'disabled') {
     assert.equal(health.hosted_search, undefined);
   }
@@ -62,6 +69,7 @@ try {
     material_assets_available: health.material_assets.available,
     material_asset_count: health.material_assets.asset_count,
     hosted_search_resilience: health.hosted_search || null,
+    active_requests_allowed: allowActive,
   };
   summary.mcp_handshake = {
     tool_count: toolNames.size,
