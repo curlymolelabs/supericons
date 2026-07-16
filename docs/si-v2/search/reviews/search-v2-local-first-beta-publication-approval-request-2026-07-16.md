@@ -1,8 +1,8 @@
 # Search v2 local-first beta publication execution record
 
 Date: 2026-07-16
-Status: staged-browser flow under local verification
-Manifest fingerprint: `4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586`
+Status: finalization replay correction locally verified, awaiting independent audit
+Manifest fingerprint: `48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3`
 
 ## Purpose
 
@@ -37,7 +37,7 @@ The staging runner uses npm CLI `11.18.0` through a pinned `npx` command because
 
 The runner creates an atomic, manifest-bound staging receipt in the current user's local application data immediately before the one allowed staging command. It survives process exit, contains no credentials, and blocks a second staging command under the same manifest. Failed preflight does not consume the allowance.
 
-A separate manifest-bound finalizer runs immediately after browser approval. It requires the verified private stage record, checks the public shasum, integrity, `beta` tag, and unchanged `latest` tag, then repeats the real installed-package smoke. Integrity mismatch, tag mismatch, and smoke failure tests each invoke one exact-version deprecation and zero `latest` mutations.
+A separate manifest-bound finalizer runs immediately after browser approval. It requires the verified private stage record, atomically reserves finalization before any external request, checks that the exact prerelease is not already deprecated, verifies the public shasum, integrity, `beta` tag, and unchanged `latest` tag, then repeats the real installed-package smoke. Integrity mismatch, tag mismatch, and smoke failure tests each invoke one exact-version deprecation and zero `latest` mutations. The finalizer records either `published_and_verified` or `rolled_back`. A repeated finalizer run is rejected before any external request, including after an interrupted first run.
 
 These corrections do not change the package archive, user experience, release scope, or rollback decision. Under the owner's delegated-judgment rule, a regenerated manifest for this safer access path does not require renewed product approval.
 
@@ -73,7 +73,7 @@ The recorded release decision permits only these actions:
 3. The owner approves only the verified stage on npmjs.com with the account security key, publishing `@supericons/mcp@0.4.19-beta.0` under npm tag `beta`.
 4. Keep npm `latest` at `0.4.17`.
 5. Verify the live prerelease shasum, integrity, and tags, then repeat the installed-package smoke. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
-6. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero.
+6. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero. An atomic manifest-bound receipt consumes this total allowance immediately before the first hosted request. A partial comparison consumes the full manifest allowance, so a rerun makes zero additional hosted requests.
 7. If a check fails before browser approval, do not approve the stage and reject only that staged package. If a check fails after publication, deprecate only `0.4.19-beta.0`, confirm the deprecation, and keep npm `latest` unchanged.
 8. Keep the beta open for seven days from the first verified eligible user request. It may extend to 14 days if fewer than 200 eligible attempts or 20 session hashes are available.
 
@@ -92,11 +92,13 @@ The preflight must classify npm's expected version-absent response without termi
 
 Immediately before `npm stage publish`, the runner must atomically consume the one remaining staging-command allowance. If npm rejects that command, the manifest cannot be rerun. A further attempt requires a new independently audited manifest.
 
+Immediately before post-approval verification can make any external request, the finalizer must atomically reserve the manifest-bound finalization outcome. An existing `in_progress`, `published_and_verified`, or `rolled_back` record blocks replay. A new independently audited manifest is required after an interrupted or terminal finalization.
+
 npm login is required for the private staging upload. Staging does not require 2FA. After the staged archive passes its checks, the owner opens npmjs.com and approves the exact stage with the account password and security key. No credential is placed in chat, the repository, or the evidence record.
 
 ## Informational comparison
 
-The 50 stable hosted requests use fixed, reviewed cases from the evaluation set. The report stores case IDs and result references, not private user queries. It reports exact ordering, top-result agreement, and top-eight overlap.
+The 50 stable hosted requests use fixed, reviewed cases from the evaluation set. The report stores case IDs and result references, not private user queries. It reports exact ordering, top-result agreement, and top-eight overlap. The comparison allowance is one-use per manifest. Complete and partial runs both consume it before the first hosted request.
 
 This comparison does not gate the first beta. It shows where the packaged public index and stable hosted ranking differ. It does not authorize a production load test.
 
@@ -110,6 +112,7 @@ The beta closeout follows the existing scorecard: relevance review, zero-result 
 
 - Before publication: any mismatch stops with no registry change.
 - Failed post-publication verification: deprecate only the exact prerelease, confirm the deprecation, and keep `latest` unchanged.
+- Repeated or interrupted finalization: reject the same manifest before any external request. Do not convert a rollback into success and do not repeat the hosted comparison.
 - Beta quality or safety failure: stop invitations, deprecate the exact prerelease, preserve public-safe evidence, and keep stable production unchanged.
 - Stable fallback problem: stop the beta and investigate separately. Do not change the production function under this release plan.
 
@@ -135,7 +138,7 @@ After the independent audit passes, the executor runs the bound staging command 
 ```powershell
 & .\scripts\stage-search-v2-local-first-beta.ps1 `
     -ExecuteApprovedStaging `
-    -ApprovedManifestSha256 4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586
+    -ApprovedManifestSha256 48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3
 ```
 
 Only after the runner reports `staged_and_verified` does the owner open npmjs.com Staged Packages and approve the matching package, version, tag, and stage ID. This is an access step, not a new product approval.
@@ -145,5 +148,5 @@ Immediately after the owner confirms browser approval, the executor runs the bou
 ```powershell
 & .\scripts\finalize-search-v2-local-first-beta.ps1 `
     -ExecuteApprovedFinalization `
-    -ApprovedManifestSha256 4f520e59a7068992e38951146a923bc0161f0d865e0973225c5d87fc7558a586
+    -ApprovedManifestSha256 48c6fb3239e90ba7f3cfe118418e5c597de4840dea816901854870ec0af0a2d3
 ```

@@ -2,9 +2,10 @@ param(
     [switch]$ExecuteApprovedFinalization,
     [string]$ApprovedManifestSha256,
     [switch]$RunRollbackSelfTest,
-    [ValidateSet('integrity_mismatch', 'tag_mismatch', 'smoke_failure')]
+    [ValidateSet('integrity_mismatch', 'tag_mismatch', 'smoke_failure', 'already_deprecated')]
     [string]$RollbackTestScenario,
-    [switch]$RunStageRecordSelfTest
+    [switch]$RunStageRecordSelfTest,
+    [switch]$RunFinalizationOutcomeSelfTest
 )
 
 $ErrorActionPreference = 'Stop'
@@ -59,6 +60,114 @@ function Get-StagedReleaseRecordPath([string]$ManifestSha256) {
         "$ManifestSha256.json"
 }
 
+function Get-FinalizationOutcomePath([string]$ManifestSha256) {
+    $localStateRoot = [Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)
+    if ([string]::IsNullOrWhiteSpace($localStateRoot)) {
+        throw 'Local application data is unavailable, so finalization replay cannot be protected.'
+    }
+    return Join-Path `
+        (Join-Path $localStateRoot 'Supericons\release-finalization-outcomes') `
+        "$ManifestSha256.json"
+}
+
+function New-FinalizationReservation(
+    [string]$Path,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [string]$StageId
+) {
+    $directory = Split-Path -Parent $Path
+    $null = New-Item -ItemType Directory -Path $directory -Force
+    $payload = [pscustomobject]@{
+        schema_version = 1
+        manifest_sha256 = $ManifestSha256
+        package = $PackageSpec
+        stage_id = $StageId
+        action = 'postapproval_finalization'
+        status = 'in_progress'
+        reserved_at_utc = [DateTime]::UtcNow.ToString('o')
+    } | ConvertTo-Json -Compress
+    $bytes = [System.Text.UTF8Encoding]::new($false).GetBytes($payload)
+    $stream = $null
+    try {
+        $stream = [System.IO.File]::Open(
+            $Path,
+            [System.IO.FileMode]::CreateNew,
+            [System.IO.FileAccess]::Write,
+            [System.IO.FileShare]::None
+        )
+        $stream.Write($bytes, 0, $bytes.Length)
+        $stream.Flush($true)
+    }
+    catch {
+        if (Test-Path -LiteralPath $Path) {
+            $existing = $null
+            try {
+                $existing = Get-Content -Raw -LiteralPath $Path | ConvertFrom-Json
+            }
+            catch {
+                throw 'A prior finalization record exists but cannot be read. Refusing replay.'
+            }
+            throw "Finalization is already terminal or reserved with status $($existing.status). Refusing replay."
+        }
+        throw "Finalization could not be reserved safely. $($_.Exception.Message)"
+    }
+    finally {
+        if ($null -ne $stream) {
+            $stream.Dispose()
+        }
+    }
+}
+
+function Complete-FinalizationOutcome(
+    [string]$Path,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [string]$StageId,
+    [ValidateSet('published_and_verified', 'rolled_back')]
+    [string]$Status,
+    [string]$Reason
+) {
+    if (-not (Test-Path -LiteralPath $Path)) {
+        throw 'The finalization reservation is missing.'
+    }
+    $existing = Get-Content -Raw -LiteralPath $Path | ConvertFrom-Json
+    if (
+        $existing.schema_version -ne 1 -or
+        $existing.manifest_sha256 -ne $ManifestSha256 -or
+        $existing.package -ne $PackageSpec -or
+        $existing.stage_id -ne $StageId -or
+        $existing.status -ne 'in_progress'
+    ) {
+        throw 'The finalization reservation does not match the active release.'
+    }
+    $payload = [pscustomobject]@{
+        schema_version = 1
+        manifest_sha256 = $ManifestSha256
+        package = $PackageSpec
+        stage_id = $StageId
+        action = 'postapproval_finalization'
+        status = $Status
+        reason = $Reason
+        reserved_at_utc = $existing.reserved_at_utc
+        completed_at_utc = [DateTime]::UtcNow.ToString('o')
+    } | ConvertTo-Json -Compress
+    $temporaryPath = "$Path.$([guid]::NewGuid().ToString('N')).tmp"
+    $backupPath = "$Path.$([guid]::NewGuid().ToString('N')).bak"
+    try {
+        [System.IO.File]::WriteAllText(
+            $temporaryPath,
+            $payload,
+            [System.Text.UTF8Encoding]::new($false)
+        )
+        [System.IO.File]::Replace($temporaryPath, $Path, $backupPath)
+    }
+    finally {
+        Remove-Item -LiteralPath $temporaryPath -Force -ErrorAction SilentlyContinue
+        Remove-Item -LiteralPath $backupPath -Force -ErrorAction SilentlyContinue
+    }
+}
+
 function Assert-VerifiedStageRecord(
     [string]$Path,
     [object]$Manifest,
@@ -94,6 +203,13 @@ function Test-PostApprovalRegistryState(
     [object]$Manifest,
     [string]$PackageSpec
 ) {
+    $existingDeprecation = Convert-NpmJson `
+        (& $ReadInvoker @('view', $PackageSpec, 'deprecated', '--json')) `
+        'Existing exact prerelease deprecation check'
+    if (-not [string]::IsNullOrWhiteSpace([string]$existingDeprecation)) {
+        throw 'Exact prerelease is already deprecated.'
+    }
+
     $publishedDist = Convert-NpmJson `
         (& $ReadInvoker @('view', $PackageSpec, 'dist', '--json')) `
         'Published npm dist verification'
@@ -167,6 +283,9 @@ function Invoke-PostApprovalValidation(
     }
     catch {
         $verificationFailure = $_.Exception.Message
+        if ($verificationFailure -eq 'Exact prerelease is already deprecated.') {
+            throw $verificationFailure
+        }
         try {
             $null = Invoke-ExactPrereleaseRollback `
                 $ReadInvoker $DeprecateInvoker $Manifest $PackageSpec
@@ -194,6 +313,8 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     $packageSpec = '@supericons/mcp@0.4.19-beta.0'
     $events = [System.Collections.Generic.List[string]]::new()
     $tagReadCount = [pscustomobject]@{ Count = 0 }
+    $deprecationReadCount = [pscustomobject]@{ Count = 0 }
+    $comparisonCount = [pscustomobject]@{ Count = 0 }
     $readInvoker = {
         param([string[]]$NpmArguments)
         $events.Add($NpmArguments -join ' ')
@@ -218,9 +339,16 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
             }
         }
         if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'deprecated') {
+            $deprecationReadCount.Count += 1
+            $deprecation = if ($Scenario -eq 'already_deprecated' -or $deprecationReadCount.Count -gt 1) {
+                'Beta-verification-failed-do-not-install'
+            }
+            else {
+                $null
+            }
             return [pscustomobject]@{
                 ExitCode = 0
-                Output = ('Beta-verification-failed-do-not-install' | ConvertTo-Json -Compress)
+                Output = ($deprecation | ConvertTo-Json -Compress)
             }
         }
         return [pscustomobject]@{ ExitCode = 1; Output = 'unsupported read command' }
@@ -240,6 +368,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     try {
         $null = Invoke-PostApprovalValidation `
             $readInvoker $deprecateInvoker $manifest $packageSpec $smokeVerifier
+        $comparisonCount.Count += 1
     }
     catch {
         $verificationFailure = $_.Exception.Message
@@ -250,7 +379,8 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     $deprecationCount = @($events | Where-Object { $_ -match '^deprecate ' }).Count
     $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag ' }).Count
     $publishCount = @($events | Where-Object { $_ -match '^publish |^stage publish ' }).Count
-    if ($deprecationCount -ne 1 -or $latestMutationCount -ne 0 -or $publishCount -ne 0) {
+    $expectedDeprecationCount = if ($Scenario -eq 'already_deprecated') { 0 } else { 1 }
+    if ($deprecationCount -ne $expectedDeprecationCount -or $latestMutationCount -ne 0 -or $publishCount -ne 0) {
         throw 'Rollback self-test command counts do not match the safety contract.'
     }
     return [pscustomobject]@{
@@ -260,6 +390,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
         publish_calls = $publishCount
         deprecation_calls = $deprecationCount
         latest_mutation_calls = $latestMutationCount
+        comparison_calls = $comparisonCount.Count
     }
 }
 
@@ -316,18 +447,121 @@ function Invoke-StageRecordSelfTest {
     }
 }
 
+function Invoke-FinalizationOutcomeSelfTest {
+    $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-finalization-outcome-$([guid]::NewGuid().ToString('N'))"
+    $manifestSha256 = 'a' * 64
+    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $stageId = '11111111-1111-4111-8111-111111111111'
+    $rolledBackPath = Join-Path $temporaryRoot 'rolled-back.json'
+    $verifiedPath = Join-Path $temporaryRoot 'verified.json'
+    $inProgressPath = Join-Path $temporaryRoot 'in-progress.json'
+    $externalRequests = [pscustomobject]@{ Count = 0 }
+    try {
+        New-FinalizationReservation $rolledBackPath $manifestSha256 $packageSpec $stageId
+        $externalRequests.Count += 1
+        Complete-FinalizationOutcome `
+            $rolledBackPath $manifestSha256 $packageSpec $stageId 'rolled_back' 'test rollback'
+        $beforeRollbackReplay = $externalRequests.Count
+        $rollbackReplayRejected = $false
+        try {
+            New-FinalizationReservation $rolledBackPath $manifestSha256 $packageSpec $stageId
+            $externalRequests.Count += 1
+        }
+        catch {
+            $rollbackReplayRejected = $_.Exception.Message -match 'status rolled_back'
+        }
+        $rollbackReplayExternalRequests = $externalRequests.Count - $beforeRollbackReplay
+
+        New-FinalizationReservation $verifiedPath $manifestSha256 $packageSpec $stageId
+        $externalRequests.Count += 1
+        Complete-FinalizationOutcome `
+            $verifiedPath $manifestSha256 $packageSpec $stageId 'published_and_verified' 'test success'
+        $beforeSuccessReplay = $externalRequests.Count
+        $successReplayRejected = $false
+        try {
+            New-FinalizationReservation $verifiedPath $manifestSha256 $packageSpec $stageId
+            $externalRequests.Count += 1
+        }
+        catch {
+            $successReplayRejected = $_.Exception.Message -match 'status published_and_verified'
+        }
+        $successReplayExternalRequests = $externalRequests.Count - $beforeSuccessReplay
+
+        New-FinalizationReservation $inProgressPath $manifestSha256 $packageSpec $stageId
+        $externalRequests.Count += 1
+        $beforeInProgressReplay = $externalRequests.Count
+        $inProgressReplayRejected = $false
+        try {
+            New-FinalizationReservation $inProgressPath $manifestSha256 $packageSpec $stageId
+            $externalRequests.Count += 1
+        }
+        catch {
+            $inProgressReplayRejected = $_.Exception.Message -match 'status in_progress'
+        }
+        $inProgressReplayExternalRequests = $externalRequests.Count - $beforeInProgressReplay
+
+        $rolledBackText = Get-Content -Raw -LiteralPath $rolledBackPath
+        $verifiedText = Get-Content -Raw -LiteralPath $verifiedPath
+        $inProgressText = Get-Content -Raw -LiteralPath $inProgressPath
+        $rolledBack = $rolledBackText | ConvertFrom-Json
+        $verified = $verifiedText | ConvertFrom-Json
+        $inProgress = $inProgressText | ConvertFrom-Json
+        $records = @($rolledBack, $verified, $inProgress)
+        $recordBindingMismatch = @($records | Where-Object {
+            $_.schema_version -ne 1 -or
+            $_.manifest_sha256 -ne $manifestSha256 -or
+            $_.package -ne $packageSpec -or
+            $_.stage_id -ne $stageId -or
+            $_.action -ne 'postapproval_finalization'
+        }).Count -ne 0
+        if (
+            -not $rollbackReplayRejected -or
+            -not $successReplayRejected -or
+            -not $inProgressReplayRejected -or
+            $rollbackReplayExternalRequests -ne 0 -or
+            $successReplayExternalRequests -ne 0 -or
+            $inProgressReplayExternalRequests -ne 0 -or
+            $recordBindingMismatch -or
+            $rolledBack.status -ne 'rolled_back' -or
+            $verified.status -ne 'published_and_verified' -or
+            $inProgress.status -ne 'in_progress' -or
+            "$rolledBackText`n$verifiedText`n$inProgressText" -match 'password|credential|token|secret'
+        ) {
+            throw 'Finalization-outcome self-test did not enforce terminal replay protection.'
+        }
+        return [pscustomobject]@{
+            status = 'ok'
+            rolled_back_replay_external_requests = $rollbackReplayExternalRequests
+            verified_replay_external_requests = $successReplayExternalRequests
+            in_progress_replay_external_requests = $inProgressReplayExternalRequests
+            terminal_records_manifest_bound = $true
+            terminal_records_credential_free = $true
+        }
+    }
+    finally {
+        Remove-Item -LiteralPath $temporaryRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 if ($RunRollbackSelfTest) {
-    if ($ExecuteApprovedFinalization -or $RunStageRecordSelfTest) {
+    if ($ExecuteApprovedFinalization -or $RunStageRecordSelfTest -or $RunFinalizationOutcomeSelfTest) {
         throw 'Rollback self-test cannot run with another mode.'
     }
     Write-Output (Invoke-RollbackSelfTest $RollbackTestScenario | ConvertTo-Json -Depth 4)
     exit 0
 }
 if ($RunStageRecordSelfTest) {
-    if ($ExecuteApprovedFinalization) {
+    if ($ExecuteApprovedFinalization -or $RunFinalizationOutcomeSelfTest) {
         throw 'Stage-record self-test cannot run with real finalization.'
     }
     Write-Output (Invoke-StageRecordSelfTest | ConvertTo-Json -Depth 4)
+    exit 0
+}
+if ($RunFinalizationOutcomeSelfTest) {
+    if ($ExecuteApprovedFinalization) {
+        throw 'Finalization-outcome self-test cannot run with real finalization.'
+    }
+    Write-Output (Invoke-FinalizationOutcomeSelfTest | ConvertTo-Json -Depth 4)
     exit 0
 }
 if (-not $ExecuteApprovedFinalization) {
@@ -355,15 +589,19 @@ $packetVerifierPath = Join-Path $repoRoot $manifest.artifacts.packet_verifier
 if ((Get-NormalizedTextSha256 $packetVerifierPath) -ne $manifest.artifacts.packet_verifier_sha256) {
     throw 'The packet verifier changed after the manifest was prepared.'
 }
-& node $packetVerifierPath --expected-manifest $actualManifestSha256
-if ($LASTEXITCODE -ne 0) {
-    throw 'The publication packet verifier failed.'
-}
 
 $packageSpec = "$($manifest.package.name)@$($manifest.package.version)"
 $stageRecordPath = Get-StagedReleaseRecordPath $actualManifestSha256
 $stageRecord = Assert-VerifiedStageRecord `
     $stageRecordPath $manifest $actualManifestSha256 $packageSpec
+$finalizationOutcomePath = Get-FinalizationOutcomePath $actualManifestSha256
+New-FinalizationReservation `
+    $finalizationOutcomePath $actualManifestSha256 $packageSpec $stageRecord.stage_id
+
+& node $packetVerifierPath --expected-manifest $actualManifestSha256
+if ($LASTEXITCODE -ne 0) {
+    throw 'The publication packet verifier failed.'
+}
 
 $npmExecutable = (Get-Command npm.cmd -ErrorAction SilentlyContinue).Source
 if ([string]::IsNullOrWhiteSpace($npmExecutable)) {
@@ -400,8 +638,33 @@ $smokeVerifier = {
         throw 'The public registry package failed the installed-package smoke.'
     }
 }
-$registryState = Invoke-PostApprovalValidation `
-    $readInvoker $deprecateInvoker $manifest $packageSpec $smokeVerifier
+try {
+    $registryState = Invoke-PostApprovalValidation `
+        $readInvoker $deprecateInvoker $manifest $packageSpec $smokeVerifier
+}
+catch {
+    $failure = $_.Exception.Message
+    if (
+        $failure -match 'Exact prerelease is already deprecated' -or
+        $failure -match 'The exact prerelease was deprecated and npm latest was left unchanged'
+    ) {
+        Complete-FinalizationOutcome `
+            $finalizationOutcomePath `
+            $actualManifestSha256 `
+            $packageSpec `
+            $stageRecord.stage_id `
+            'rolled_back' `
+            $failure
+    }
+    throw
+}
+Complete-FinalizationOutcome `
+    $finalizationOutcomePath `
+    $actualManifestSha256 `
+    $packageSpec `
+    $stageRecord.stage_id `
+    'published_and_verified' `
+    'Public registry identity, tags, and installed-package smoke passed.'
 
 $comparisonPath = Join-Path $repoRoot $manifest.artifacts.hosted_comparison_runner
 & node $comparisonPath --execute-approved $actualManifestSha256

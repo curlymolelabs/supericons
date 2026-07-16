@@ -2,7 +2,9 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
+  closeSync,
   existsSync,
+  openSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -39,6 +41,93 @@ function sha256Text(value) {
   return createHash('sha256').update(normalizeText(value)).digest('hex');
 }
 
+function getComparisonAttemptPath(manifestSha256, rootOverride = null) {
+  const localRoot = rootOverride || process.env.LOCALAPPDATA;
+  assert.ok(localRoot, 'Local application data is required to protect the comparison allowance.');
+  return join(localRoot, 'Supericons', 'release-comparison-attempts', `${manifestSha256}.json`);
+}
+
+function reserveComparisonAttempt(path, manifestSha256, packageSpec, maximumRequests) {
+  mkdirSync(dirname(path), { recursive: true });
+  const payload = {
+    schema_version: 1,
+    manifest_sha256: manifestSha256,
+    package: packageSpec,
+    action: 'stable_hosted_comparison_reserved',
+    maximum_requests: maximumRequests,
+    reserved_at_utc: new Date().toISOString(),
+  };
+  let descriptor;
+  try {
+    descriptor = openSync(path, 'wx');
+    writeFileSync(descriptor, `${JSON.stringify(payload)}\n`, 'utf8');
+  } catch (error) {
+    if (existsSync(path)) {
+      throw new Error('The hosted-comparison allowance for this manifest is already consumed.');
+    }
+    throw error;
+  } finally {
+    if (descriptor !== undefined) closeSync(descriptor);
+  }
+  return payload;
+}
+
+function runAttemptBudgetSelfTest(manifestSha256, packageSpec, maximumRequests) {
+  const temporaryRoot = mkdtempSync(join(tmpdir(), 'search-v2-comparison-budget-'));
+  const completeAttemptPath = getComparisonAttemptPath(manifestSha256, join(temporaryRoot, 'complete'));
+  const partialAttemptPath = getComparisonAttemptPath(manifestSha256, join(temporaryRoot, 'partial'));
+  try {
+    const first = reserveComparisonAttempt(
+      completeAttemptPath,
+      manifestSha256,
+      packageSpec,
+      maximumRequests,
+    );
+    let secondRejected = false;
+    try {
+      reserveComparisonAttempt(completeAttemptPath, manifestSha256, packageSpec, maximumRequests);
+    } catch (error) {
+      secondRejected = /already consumed/.test(error.message);
+    }
+    assert.equal(secondRejected, true);
+
+    reserveComparisonAttempt(partialAttemptPath, manifestSha256, packageSpec, maximumRequests);
+    const simulatedPartialRequests = 7;
+    let partialRerunRejected = false;
+    try {
+      reserveComparisonAttempt(partialAttemptPath, manifestSha256, packageSpec, maximumRequests);
+    } catch (error) {
+      partialRerunRejected = /already consumed/.test(error.message);
+    }
+    assert.equal(partialRerunRejected, true);
+
+    const receiptText = readFileSync(completeAttemptPath, 'utf8');
+    const partialReceiptText = readFileSync(partialAttemptPath, 'utf8');
+    const receipt = JSON.parse(receiptText);
+    const partialReceipt = JSON.parse(partialReceiptText);
+    assert.equal(receipt.manifest_sha256, manifestSha256);
+    assert.equal(receipt.package, packageSpec);
+    assert.equal(receipt.maximum_requests, maximumRequests);
+    assert.equal(receipt.action, 'stable_hosted_comparison_reserved');
+    assert.equal(partialReceipt.manifest_sha256, manifestSha256);
+    assert.equal(partialReceipt.package, packageSpec);
+    assert.equal(partialReceipt.action, 'stable_hosted_comparison_reserved');
+    assert.equal(partialReceipt.maximum_requests, maximumRequests);
+    assert.doesNotMatch(`${receiptText}\n${partialReceiptText}`, /password|credential|token|secret/i);
+    return {
+      status: 'ok',
+      first_execution_maximum_requests: first.maximum_requests,
+      simulated_partial_requests: simulatedPartialRequests,
+      second_execution_requests: 0,
+      partial_then_rerun_requests: 0,
+      receipt_manifest_bound: true,
+      receipt_contains_credentials: false,
+    };
+  } finally {
+    rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+}
+
 function runNpm(npmArgs, cwd) {
   const npmExecPath = process.env.npm_execpath
     || join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
@@ -71,12 +160,22 @@ const manifestFingerprint = sha256Text(manifestText);
 const manifest = JSON.parse(manifestText);
 const approvedFingerprint = getArgument('--execute-approved');
 const caseIds = manifest.hosted_comparison.case_ids;
+const packageSpec = `${manifest.package.name}@${manifest.package.version}`;
 
 assert.equal(manifest.hosted_comparison.maximum_requests, 50);
 assert.equal(manifest.hosted_comparison.maximum_concurrency, 1);
 assert.equal(manifest.hosted_comparison.maximum_retries, 0);
 assert.equal(caseIds.length, 50);
 assert.equal(new Set(caseIds).size, 50);
+
+if (args.includes('--run-attempt-budget-self-test')) {
+  console.log(JSON.stringify(runAttemptBudgetSelfTest(
+    manifestFingerprint,
+    packageSpec,
+    manifest.hosted_comparison.maximum_requests,
+  ), null, 2));
+  process.exit(0);
+}
 
 if (!approvedFingerprint) {
   console.log(JSON.stringify({
@@ -163,6 +262,14 @@ try {
   });
   client = new Client({ name: 'search-v2-local-hosted-comparison', version: '1.0.0' });
   await client.connect(transport);
+
+  const comparisonAttemptPath = getComparisonAttemptPath(manifestFingerprint);
+  reserveComparisonAttempt(
+    comparisonAttemptPath,
+    manifestFingerprint,
+    packageSpec,
+    manifest.hosted_comparison.maximum_requests,
+  );
 
   const observations = [];
   for (const entry of selectedCases) {

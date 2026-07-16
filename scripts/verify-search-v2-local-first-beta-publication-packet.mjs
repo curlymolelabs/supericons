@@ -127,6 +127,13 @@ assert.equal(
 assert.equal(manifest.publication_flow.browser_approval_requires_owner_access, true);
 assert.equal(manifest.publication_flow.postapproval_registry_and_smoke_verification_required, true);
 assert.equal(manifest.publication_flow.postapproval_failure_requires_exact_prerelease_deprecation, true);
+assert.equal(manifest.publication_flow.postapproval_finalization_single_use, true);
+assert.equal(manifest.publication_flow.postapproval_deprecation_must_be_empty_before_success, true);
+assert.deepEqual(manifest.publication_flow.postapproval_terminal_outcomes, [
+  'published_and_verified',
+  'rolled_back',
+]);
+assert.equal(manifest.publication_flow.postapproval_replay_behavior, 'reject_before_external_request');
 assert.equal(manifest.publication_flow.publish_tag_locked_at_staging, 'beta');
 assert.equal(manifest.publication_attempts.recorded_eotp_rejections, 1);
 assert.equal(manifest.publication_attempts.maximum_additional_direct_publish_commands, 0);
@@ -136,6 +143,9 @@ assert.equal(manifest.publication_attempts.receipt_schema_version, 1);
 assert.equal(manifest.publication_attempts.receipt_scope, 'user_local_application_data');
 assert.equal(manifest.publication_attempts.receipt_contains_credentials, false);
 assert.equal(manifest.publication_attempts.consumption_timing, 'immediately_before_npm_stage_publish');
+assert.equal(manifest.publication_attempts.finalization_outcome_schema_version, 1);
+assert.equal(manifest.publication_attempts.finalization_outcome_scope, 'user_local_application_data');
+assert.equal(manifest.publication_attempts.finalization_outcome_contains_credentials, false);
 
 const archivePath = join(repoRoot, manifest.package.archive_path);
 assert.equal(sha256File(archivePath), manifest.package.archive_sha256);
@@ -157,6 +167,7 @@ for (const [pathKey, hashKey] of [
   ['postapproval_finalizer', 'postapproval_finalizer_sha256'],
   ['published_smoke', 'published_smoke_sha256'],
   ['hosted_comparison_runner', 'hosted_comparison_runner_sha256'],
+  ['packet_verifier', 'packet_verifier_sha256'],
 ]) {
   const artifactPath = join(repoRoot, manifest.artifacts[pathKey]);
   assert.equal(sha256Text(readFileSync(artifactPath, 'utf8')), manifest.artifacts[hashKey]);
@@ -188,6 +199,15 @@ assert.equal(new Set(manifest.hosted_comparison.case_ids).size, 50);
 assert.equal(manifest.hosted_comparison.maximum_requests, 50);
 assert.equal(manifest.hosted_comparison.maximum_concurrency, 1);
 assert.equal(manifest.hosted_comparison.maximum_retries, 0);
+assert.equal(manifest.hosted_comparison.allowance_scope, 'manifest_total');
+assert.equal(manifest.hosted_comparison.attempt_receipt_schema_version, 1);
+assert.equal(manifest.hosted_comparison.attempt_receipt_scope, 'user_local_application_data');
+assert.equal(manifest.hosted_comparison.attempt_receipt_contains_credentials, false);
+assert.equal(
+  manifest.hosted_comparison.attempt_receipt_timing,
+  'immediately_before_first_hosted_request',
+);
+assert.equal(manifest.hosted_comparison.partial_run_consumes_allowance, true);
 assert.equal(manifest.hosted_comparison.gating, false);
 
 assert.equal(manifest.external_actions.maximum_npm_prerelease_publications, 1);
@@ -213,6 +233,8 @@ assert.match(requestText, /Stage the exact archive once in npm's private staging
 assert.match(requestText, /approves only the verified stage on npmjs\.com with the account security key/);
 assert.match(requestText, /Run at most 50 sequential, sanitized fixed-case requests against stable hosted search/);
 assert.match(requestText, /Concurrency is one and retries are zero/);
+assert.match(requestText, /A partial comparison consumes the full manifest allowance/);
+assert.match(requestText, /A repeated finalizer run is rejected before any external request/);
 assert.match(requestText, /This request does not authorize:[\s\S]*a Supabase function deployment/);
 assert.match(requestText, /a database migration, history repair, or normal database push/);
 assert.match(requestText, /a production load test/);
@@ -276,7 +298,27 @@ assert.equal(stageRecordGuard.missing_record_rejected, true);
 assert.equal(stageRecordGuard.valid_record_accepted, true);
 assert.equal(stageRecordGuard.wrong_manifest_rejected, true);
 
-for (const scenario of ['integrity_mismatch', 'tag_mismatch', 'smoke_failure']) {
+const finalizationOutcome = JSON.parse(execFileSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  finalizerPath,
+  '-RunFinalizationOutcomeSelfTest',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(finalizationOutcome.status, 'ok');
+assert.equal(finalizationOutcome.rolled_back_replay_external_requests, 0);
+assert.equal(finalizationOutcome.verified_replay_external_requests, 0);
+assert.equal(finalizationOutcome.in_progress_replay_external_requests, 0);
+assert.equal(finalizationOutcome.terminal_records_manifest_bound, true);
+assert.equal(finalizationOutcome.terminal_records_credential_free, true);
+
+for (const scenario of [
+  'integrity_mismatch',
+  'tag_mismatch',
+  'smoke_failure',
+  'already_deprecated',
+]) {
   const rollbackResult = JSON.parse(execFileSync(powerShell, [
     '-NoProfile',
     '-ExecutionPolicy',
@@ -290,8 +332,9 @@ for (const scenario of ['integrity_mismatch', 'tag_mismatch', 'smoke_failure']) 
   assert.equal(rollbackResult.status, 'ok');
   assert.equal(rollbackResult.scenario, scenario);
   assert.equal(rollbackResult.publish_calls, 0);
-  assert.equal(rollbackResult.deprecation_calls, 1);
+  assert.equal(rollbackResult.deprecation_calls, scenario === 'already_deprecated' ? 0 : 1);
   assert.equal(rollbackResult.latest_mutation_calls, 0);
+  assert.equal(rollbackResult.comparison_calls, 0);
 }
 
 const finalizerText = readFileSync(finalizerPath, 'utf8');
@@ -299,6 +342,16 @@ assert.match(finalizerText, /Assert-VerifiedStageRecord/);
 assert.match(finalizerText, /Test-PostApprovalRegistryState/);
 assert.match(finalizerText, /Invoke-ExactPrereleaseRollback/);
 assert.match(finalizerText, /--package-spec \$packageSpec/);
+assert.ok(
+  finalizerText.indexOf('New-FinalizationReservation `')
+    < finalizerText.indexOf('& node $packetVerifierPath --expected-manifest'),
+  'Finalization must be reserved before the packet verifier can make external requests.',
+);
+assert.ok(
+  finalizerText.indexOf('New-FinalizationReservation `')
+    < finalizerText.indexOf("$npmUser = & $readInvoker @('whoami')"),
+  'Finalization must be reserved before npm authentication is checked.',
+);
 
 const comparisonPath = join(repoRoot, manifest.artifacts.hosted_comparison_runner);
 const comparisonPlan = JSON.parse(execFileSync(process.execPath, [comparisonPath], {
@@ -309,6 +362,16 @@ assert.equal(comparisonPlan.status, 'plan_only');
 assert.equal(comparisonPlan.manifest_sha256, actualManifestHash);
 assert.equal(comparisonPlan.sanitized_fixed_cases, 50);
 assert.equal(comparisonPlan.network_calls_made, 0);
+const comparisonAttemptBudget = JSON.parse(execFileSync(process.execPath, [
+  comparisonPath,
+  '--run-attempt-budget-self-test',
+], { cwd: repoRoot, encoding: 'utf8' }));
+assert.equal(comparisonAttemptBudget.status, 'ok');
+assert.equal(comparisonAttemptBudget.first_execution_maximum_requests, 50);
+assert.equal(comparisonAttemptBudget.second_execution_requests, 0);
+assert.equal(comparisonAttemptBudget.partial_then_rerun_requests, 0);
+assert.equal(comparisonAttemptBudget.receipt_manifest_bound, true);
+assert.equal(comparisonAttemptBudget.receipt_contains_credentials, false);
 requireRejected(spawnSync(process.execPath, [
   comparisonPath,
   '--execute-approved',
@@ -364,7 +427,14 @@ console.log(JSON.stringify({
   staged_archive_verification: 'hash_and_installed_smoke_required',
   stage_attempt_budget_probe: 'first_one_second_zero',
   postapproval_stage_record_probe: 'missing_and_wrong_rejected',
-  postapproval_rollback_self_tests: ['integrity_mismatch', 'tag_mismatch', 'smoke_failure'],
+  postapproval_terminal_replay_probe: 'success_rollback_and_in_progress_zero_external_requests',
+  postapproval_rollback_self_tests: [
+    'integrity_mismatch',
+    'tag_mismatch',
+    'smoke_failure',
+    'already_deprecated',
+  ],
+  hosted_comparison_attempt_probe: 'complete_and_partial_reruns_zero_requests',
   npm_publications_authorized_by_manifest: manifest.external_actions.maximum_npm_prerelease_publications,
   deployments_authorized_by_manifest: manifest.external_actions.function_deployments,
   database_mutations_authorized_by_manifest: manifest.external_actions.database_mutations,
