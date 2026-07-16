@@ -23,16 +23,16 @@
   to = "/docs/index.html"
   status = 200
 
-# Keep the x402 single-icon license as a real static page before the SPA fallback.
+# Keep the old x402 single-icon license URL working after the license moved into Terms.
 [[redirects]]
   from = "/legal/supericons-single-icon-license"
-  to = "/legal/supericons-single-icon-license/index.html"
-  status = 200
+  to = "/terms/#single-icon-license"
+  status = 301
 
 [[redirects]]
   from = "/legal/supericons-single-icon-license/"
-  to = "/legal/supericons-single-icon-license/index.html"
-  status = 200
+  to = "/terms/#single-icon-license"
+  status = 301
 
 # SPA routing: serve index.html for all paths
 [[redirects]]
