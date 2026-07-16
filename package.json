@@ -40,6 +40,7 @@
     "verify:material-incident-concurrency": "node scripts/analyze-material-incident-concurrency.mjs",
     "verify:material-incident-diagnostic-packet": "node scripts/verify-material-incident-diagnostic-packet.mjs",
     "verify:mcp-usage-dedupe": "node scripts/verify-mcp-usage-dedupe.mjs",
+    "verify:hosted-search-resilience": "node scripts/verify-hosted-search-resilience.mjs",
     "verify:admin-dashboard-phase-a-metrics": "node scripts/verify-admin-dashboard-phase-a-metrics.mjs",
     "verify:admin-dashboard-phase-a-migration": "node scripts/verify-admin-dashboard-phase-a-migration.mjs",
     "verify:admin-dashboard-phase-a-api": "node scripts/verify-admin-dashboard-phase-a-api.mjs",

@@ -12,6 +12,7 @@ import {
   getBetaCohortForTool,
   getHostedSearchFunctionNameForTool,
 } from './release-channel.js';
+import { hostedSearchResilience } from './hosted-search-resilience.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
@@ -117,17 +118,7 @@ function hasSearchResults(payload) {
   return Array.isArray(payload?.results) && payload.results.length > 0;
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function getRetryDelayMs(response, attempt) {
-  const retryAfter = Number(response.headers.get('retry-after'));
-  if (Number.isFinite(retryAfter) && retryAfter > 0) {
-    return Math.min(retryAfter * 1000, 5000);
-  }
-  return Math.min(500 * 2 ** attempt, 2500);
-}
+const HOSTED_SEARCH_REQUEST_TIMEOUT_MS = 20_000;
 
 function buildLocalizedRetryQueries(query, locale) {
   if (!locale || multilingualExpansionTerms.length === 0) return [];
@@ -150,58 +141,60 @@ function buildLocalizedRetryQueries(query, locale) {
   return retryQueries.slice(0, 8);
 }
 
-async function postHostedSearch(url, headers, body) {
-  let lastStatus = 0;
-  let lastPayload = null;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
-    });
-
-    if (response.ok) {
-      return response.json();
+async function postSearchRequest(url, headers, body, {
+  failureLabel,
+  failureCode,
+}) {
+  return hostedSearchResilience.execute(async () => {
+    let response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(HOSTED_SEARCH_REQUEST_TIMEOUT_MS),
+      });
+    } catch (cause) {
+      const error = new Error(`${failureLabel} dependency did not respond in time.`, { cause });
+      error.code = 'hosted_search_timeout';
+      error.status = 503;
+      error.retryable = true;
+      error.hosted_search_dependency_failure = true;
+      throw error;
     }
 
-    lastStatus = response.status;
-    lastPayload = await response.json().catch(() => null);
-    if (response.status !== 429 && response.status < 500) break;
-    await sleep(getRetryDelayMs(response, attempt));
-  }
+    if (response.ok) return response.json();
 
-  const error = new Error(lastPayload?.message || `hosted MCP search failed (${lastStatus})`);
-  error.code = lastPayload?.error || 'hosted_search_failed';
-  error.status = lastStatus;
-  error.retryable = Boolean(lastPayload?.retryable);
-  throw error;
+    const payload = await response.json().catch(() => null);
+    const error = new Error(payload?.message || `${failureLabel} failed (${response.status})`);
+    error.code = payload?.error || failureCode;
+    error.status = response.status;
+    error.retryable = Boolean(payload?.retryable) || response.status === 429 || response.status >= 500;
+    error.hosted_search_dependency_failure = response.status >= 500;
+    const retryAfter = Number(response.headers.get('retry-after'));
+    if (Number.isFinite(retryAfter) && retryAfter > 0) {
+      error.retry_after_seconds = Math.min(retryAfter, 30);
+    }
+    throw error;
+  });
+}
+
+async function postHostedSearch(url, headers, body) {
+  return postSearchRequest(url, headers, body, {
+    failureLabel: 'hosted MCP search',
+    failureCode: 'hosted_search_failed',
+  });
 }
 
 async function postPublicSearch(url, headers, body) {
-  let lastStatus = 0;
-  let lastPayload = null;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
-    });
+  return postSearchRequest(url, headers, body, {
+    failureLabel: 'public MCP search',
+    failureCode: 'public_search_failed',
+  });
+}
 
-    if (response.ok) {
-      return response.json();
-    }
-
-    lastStatus = response.status;
-    lastPayload = await response.json().catch(() => null);
-    if (response.status !== 429 && response.status < 500) break;
-    await sleep(getRetryDelayMs(response, attempt));
-  }
-
-  const error = new Error(lastPayload?.message || `public MCP search failed (${lastStatus})`);
-  error.code = lastPayload?.error || 'public_search_failed';
-  error.status = lastStatus;
-  error.retryable = Boolean(lastPayload?.retryable);
-  throw error;
+export function getHostedSearchResilienceStatus() {
+  return hostedSearchResilience.getStatus();
 }
 
 async function retryLocalizedHostedSearch({ postSearch, url, headers, body, locale }) {

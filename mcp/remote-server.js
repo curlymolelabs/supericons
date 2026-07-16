@@ -13,7 +13,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import { z } from 'zod';
-import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { getHostedSearchResilienceStatus, searchIconsHostedMcp } from './hosted-search-client.js';
 import { getMaterialBundleStatus, hydrateMaterialHostedRows } from './material-hydration.js';
 import { SUPABASE_URL } from './auth.js';
 import { searchIcons as searchLocalIcons } from './search.js';
@@ -1460,6 +1460,7 @@ app.use((req, res, next) => {
 
 app.get('/health', (_req, res) => {
   const materialAssets = getMaterialBundleStatus();
+  const hostedSearch = getHostedSearchResilienceStatus();
   sendJson(res, 200, {
     ok: true,
     service: 'supericons-remote-mcp',
@@ -1469,6 +1470,7 @@ app.get('/health', (_req, res) => {
       source_revision: materialAssets.sourceRevision,
       asset_count: materialAssets.assetCount,
     },
+    hosted_search: hostedSearch,
   });
 });
 
