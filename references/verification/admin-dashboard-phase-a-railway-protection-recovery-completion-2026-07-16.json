@@ -1,0 +1,75 @@
+{
+    "artifact":  "admin_dashboard_phase_a_railway_completion",
+    "approval_fingerprint":  "07abd6cafb65ae04d8e65291fd6b9450fe5d785944e33a6c9836114a364a9dac",
+    "implementation_revision":  "e071fe7966dac6e2316d228ecf82a966af8d3cd2",
+    "active_predeployment_id":  "5ea2e0b8-201a-4be9-81b7-a450d7f85c61",
+    "prior_failed_deployment_id":  "a62e67b8-be35-4e42-aefb-0a95a2efa714",
+    "candidate_deployment_id":  "d02a8053-0683-4f59-a68f-2ef27b143be1",
+    "candidate_image_digest":  "sha256:738cc21d5fe9014006c1356ad9fad8651308b7d3507bd31ffcd7bc971e72fb9f",
+    "preflight":  [
+                      "{\"status\":\"ok\",\"output\":\"references/verification/admin-dashboard-phase-a-railway-protection-recovery-preflight-2026-07-16.json\"}",
+                      {
+                          "artifact":  "admin_dashboard_phase_a_railway_live_contract",
+                          "mcp_url":  "https://mcp.supericons.dev/mcp",
+                          "started_at":  "2026-07-16T14:37:39.269Z",
+                          "status":  "ok",
+                          "health":  {
+                                         "version":  "0.4.18",
+                                         "material_assets_available":  true,
+                                         "material_asset_count":  8524,
+                                         "hosted_search_resilience":  null
+                                     },
+                          "mcp_handshake":  {
+                                                "tool_count":  5,
+                                                "required_tools":  [
+                                                                       "search_icons",
+                                                                       "recommend_icons",
+                                                                       "get_icon",
+                                                                       "preview_icons"
+                                                                   ]
+                                            },
+                          "synthetic_tool_calls":  0,
+                          "telemetry_rows_expected":  0,
+                          "finished_at":  "2026-07-16T14:37:40.409Z"
+                      }
+                  ],
+    "live_contract":  [
+                          "{\"status\":\"ok\",\"output\":\"references/verification/admin-dashboard-phase-a-railway-protection-recovery-live-2026-07-16.json\"}",
+                          {
+                              "artifact":  "admin_dashboard_phase_a_railway_live_contract",
+                              "mcp_url":  "https://mcp.supericons.dev/mcp",
+                              "started_at":  "2026-07-16T14:39:37.816Z",
+                              "status":  "ok",
+                              "health":  {
+                                             "version":  "0.4.18",
+                                             "material_assets_available":  true,
+                                             "material_asset_count":  8524,
+                                             "hosted_search_resilience":  {
+                                                                              "state":  "closed",
+                                                                              "active":  0,
+                                                                              "queued":  0,
+                                                                              "max_concurrent":  2,
+                                                                              "max_queued":  8,
+                                                                              "consecutive_failures":  0,
+                                                                              "retry_after_seconds":  0
+                                                                          }
+                                         },
+                              "mcp_handshake":  {
+                                                    "tool_count":  5,
+                                                    "required_tools":  [
+                                                                           "search_icons",
+                                                                           "recommend_icons",
+                                                                           "get_icon",
+                                                                           "preview_icons"
+                                                                       ]
+                                                },
+                              "synthetic_tool_calls":  0,
+                              "telemetry_rows_expected":  0,
+                              "finished_at":  "2026-07-16T14:39:38.963Z"
+                          }
+                      ],
+    "rollback_used":  false,
+    "country_coverage_gate":  "Measure after 24 hours of eligible real traffic.",
+    "started_at":  "2026-07-16T14:37:40.4516981Z",
+    "finished_at":  "2026-07-16T14:39:38.9877779Z"
+}

@@ -1,0 +1,24 @@
+{
+  "artifact": "admin_dashboard_phase_a_railway_live_contract",
+  "mcp_url": "https://mcp.supericons.dev/mcp",
+  "started_at": "2026-07-16T14:37:39.269Z",
+  "status": "ok",
+  "health": {
+    "version": "0.4.18",
+    "material_assets_available": true,
+    "material_asset_count": 8524,
+    "hosted_search_resilience": null
+  },
+  "mcp_handshake": {
+    "tool_count": 5,
+    "required_tools": [
+      "search_icons",
+      "recommend_icons",
+      "get_icon",
+      "preview_icons"
+    ]
+  },
+  "synthetic_tool_calls": 0,
+  "telemetry_rows_expected": 0,
+  "finished_at": "2026-07-16T14:37:40.409Z"
+}
