@@ -1,7 +1,7 @@
 # Search v2 local-first beta publication packet verification
 
 Date: 2026-07-16
-Status: existing private-stage reconciliation locally verified, awaiting independent audit
+Status: publication completed and public package verified
 Implementation commit: `b06bba157a0f63ef435eadaa8f8797fefe0d8617`
 
 ## Outcome
@@ -46,7 +46,7 @@ The archive was generated with `npm pack --ignore-scripts` from a temporary clea
 | Downloaded archive SHA-256 | `211df373b54629b14dfc0d0ab5f1063ad383b0139efec6cd6e0724f0f75dfe37` |
 | Downloaded archive smoke | 150 eligible cases, Material outline and solid, zero hosted calls |
 
-The stage is private and the public prerelease does not yet exist. The stage list contained exactly one matching stage when checked read-only.
+The stage list contained exactly one matching stage when checked read-only. The existing stage was later reconciled without another upload, approved through npm's browser security-key flow, and published under the `beta` tag.
 
 ## Guarded private-stage reconciliation
 
@@ -135,4 +135,6 @@ npx --yes npm@11.18.0 stage publish tmp/search-v2-local-first-beta-release-b06bb
 node scripts/verify-search-v2-local-first-beta-publication-packet.mjs --expected-manifest 9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5
 ```
 
-The packet verifier, reconciliation self-test, replay self-tests, exact archive repack, 150-case installed-route smoke, and hosted-call negative probe passed. One exact private staged upload occurred and was verified read-only. No npm publication, deployment, database action, hosted comparison, automated public message, monitoring activation, or model-provider call occurred.
+The packet verifier, reconciliation self-test, replay self-tests, exact archive repack, 150-case installed-route smoke, and hosted-call negative probe passed. One exact private staged upload occurred and was verified read-only. Browser approval published that exact archive as `@supericons/mcp@0.4.19-beta.0`. The post-approval finalizer verified the public registry identity, unchanged `latest` tag, and installed-package smoke, then recorded terminal status `published_and_verified`.
+
+The later informational stable-hosted comparison timed out on its first request. It made no retry, wrote no comparison report, and consumed its manifest-wide allowance. Because that comparison is explicitly non-gating, the verified prerelease remains published. No deployment, database action, automated public message, monitoring activation, or model-provider call occurred.

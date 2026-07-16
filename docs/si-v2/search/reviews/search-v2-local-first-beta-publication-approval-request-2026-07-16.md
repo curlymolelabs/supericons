@@ -1,7 +1,7 @@
 # Search v2 local-first beta publication execution record
 
 Date: 2026-07-16
-Status: existing private-stage reconciliation locally verified, awaiting independent audit
+Status: published and verified under npm tag `beta`
 Manifest fingerprint: `9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5`
 
 ## Purpose
@@ -24,6 +24,14 @@ The beta does not call an AI agent, language model, or embedding provider. It do
 | Eligible installed-package cases | 150 |
 | Installed stdio route fingerprint | `7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184` |
 | Packaged Material assets | 8,524 |
+
+## Publication outcome
+
+The existing private stage was reconciled without another upload, then approved through npm's browser security-key flow. The one-use finalizer verified the public package identity, shasum, integrity, `beta` tag, unchanged `latest` tag, and full installed-package smoke before recording terminal status `published_and_verified`.
+
+Read-only registry verification after finalization reported `beta` at `0.4.19-beta.0`, `latest` at `0.4.17`, and no deprecation message. The public installed package reproduced all 150 eligible ordered result sets, both Material styles, and zero hosted calls during the smoke.
+
+The non-gating stable-hosted comparison then timed out on its first fixed request at the 30-second limit. It made no retry and produced no ranking-comparison report. Its manifest-wide allowance is consumed, so it must not be rerun. This timeout does not invalidate the published local-first package because the manifest explicitly treats the comparison as informational.
 
 The archive was built from a temporary clean worktree at the implementation commit. Publication must use this exact hash-checked archive with lifecycle scripts disabled. It must not repack the active working folder.
 
@@ -75,7 +83,7 @@ The recorded release decision permits only these actions:
 5. Verify the live prerelease shasum, integrity, and tags, then repeat the installed-package smoke. Telemetry is disabled during this smoke. An outbound-call interceptor must measure zero hosted calls, and a controlled one-call probe must prove the smoke fails when any call is observed.
 6. Run at most 50 sequential, sanitized fixed-case requests against stable hosted search for an informational local-versus-hosted comparison. Concurrency is one and retries are zero. An atomic manifest-bound receipt consumes this total allowance immediately before the first hosted request. A partial comparison consumes the full manifest allowance, so a rerun makes zero additional hosted requests.
 7. If a check fails before browser approval, do not approve the stage and reject only that staged package. If a check fails after publication, deprecate only `0.4.19-beta.0`, confirm the deprecation, and keep npm `latest` unchanged.
-8. Keep the beta open for seven days from the first verified eligible user request. It may extend to 14 days if fewer than 200 eligible attempts or 20 session hashes are available.
+8. Start the beta clock with the first verified eligible user request. Close only after at least 200 eligible attempts, 20 session hashes, 3 complete days, and green or resolved daily monitoring. Continue for up to 14 days if either sample minimum is not reached.
 
 The owner may manually share reviewed, plain-language invitations. No automated public message is authorized.
 
@@ -106,7 +114,7 @@ This comparison does not gate the first beta. It shows where the packaged public
 
 The daily beta monitor and weekly maintenance audit remain drafts. This release does not activate either routine. Monitoring activation requires a separate reviewed scope and cost decision under `FR-26`.
 
-The beta closeout follows the existing scorecard: relevance review, zero-result clusters, error rate, latency, telemetry coverage, traffic concentration, and remaining deterministic gaps. A broad rollout requires a separate decision.
+The beta closeout follows the existing scorecard: relevance review, zero-result clusters, error rate, latency, telemetry coverage, traffic concentration, adoption against the best available stable-user denominator, and remaining deterministic gaps. The clock starts with the first verified eligible user request. A broad rollout requires a separate decision.
 
 ## Rollback
 

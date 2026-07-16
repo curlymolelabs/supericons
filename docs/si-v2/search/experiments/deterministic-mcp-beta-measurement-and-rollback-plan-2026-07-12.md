@@ -1,8 +1,8 @@
 # Deterministic MCP beta measurement and rollback plan
 
 Date: 2026-07-12
-Amended: 2026-07-16
-Status: local-first stdio route-parity correction independently approved; publication-only packet rebuilt and locally verified; packet audit and owner approval remain required; no publication is authorized by this document
+Amended: 2026-07-17
+Status: local-first npm beta published and verified; evidence window awaiting its first eligible user request
 Authority: operational beta plan under `D-021`, `D-025`, `FR-26`, `FR-31`, `FR-32`, and `FR-40`
 
 ## Purpose
@@ -115,9 +115,19 @@ Repeated user calls remain separate eligible attempts. The local tool-outcome RP
 
 ## Measurement period and minimum sample
 
-Run for 7 complete days after the first verified beta request.
+Start the measurement clock with the first verified eligible beta request, not with publication or an internal smoke test.
 
-Use at least 200 eligible attempts from at least 20 session hashes. If either minimum is not reached, extend the beta to 14 days. If the minimum is still not reached, report the beta as underpowered and do not make a broad quality claim.
+The beta may close when all three conditions are met:
+
+1. At least 200 eligible attempts are available from at least 20 session hashes.
+2. At least 3 complete days have elapsed since the first eligible request.
+3. Every completed daily monitor is green, or every non-green finding has been resolved and recorded without hiding failed intervals.
+
+If either sample minimum is not reached, continue for up to 14 days. If the minimum is still not reached, report the beta as underpowered and do not make a broad quality claim.
+
+Closeout must also report the observed beta adoption rate against the best available stable-user denominator. If the stable denominator is uncertain or disagrees across sources, report the range and the reason rather than choosing one figure silently.
+
+Any code, package, or safety correction that requires a new beta package version starts a new evidence window for that version. A resolved daily finding remains in the record and never converts its failed interval into a green interval.
 
 ## Scorecard
 
