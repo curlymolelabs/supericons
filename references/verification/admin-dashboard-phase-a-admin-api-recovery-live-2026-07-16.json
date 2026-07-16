@@ -1,0 +1,186 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "mode": "candidate",
+  "started_at": "2026-07-16T11:28:49.772Z",
+  "rollup_refreshes": [
+    {
+      "attempt": 1,
+      "latency_ms": 5224.8,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-25"
+      ]
+    },
+    {
+      "attempt": 2,
+      "latency_ms": 877,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-26"
+      ]
+    },
+    {
+      "attempt": 3,
+      "latency_ms": 1213.9,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-27"
+      ]
+    },
+    {
+      "attempt": 4,
+      "latency_ms": 1197.1,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-28"
+      ]
+    },
+    {
+      "attempt": 5,
+      "latency_ms": 1558.2,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-29"
+      ]
+    },
+    {
+      "attempt": 6,
+      "latency_ms": 1398.5,
+      "complete": false,
+      "refreshed_days": [
+        "2026-06-30"
+      ]
+    },
+    {
+      "attempt": 7,
+      "latency_ms": 1278.6,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-01"
+      ]
+    },
+    {
+      "attempt": 8,
+      "latency_ms": 822.5,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-02"
+      ]
+    },
+    {
+      "attempt": 9,
+      "latency_ms": 1503.4,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-03"
+      ]
+    },
+    {
+      "attempt": 10,
+      "latency_ms": 1532.5,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-04"
+      ]
+    },
+    {
+      "attempt": 11,
+      "latency_ms": 1197.1,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-05"
+      ]
+    },
+    {
+      "attempt": 12,
+      "latency_ms": 1186.6,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-06"
+      ]
+    },
+    {
+      "attempt": 13,
+      "latency_ms": 1504.4,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-07"
+      ]
+    },
+    {
+      "attempt": 14,
+      "latency_ms": 1491.5,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-08"
+      ]
+    },
+    {
+      "attempt": 15,
+      "latency_ms": 4514.9,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-09"
+      ]
+    },
+    {
+      "attempt": 16,
+      "latency_ms": 2449.5,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-10"
+      ]
+    },
+    {
+      "attempt": 17,
+      "latency_ms": 1897.3,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-11"
+      ]
+    },
+    {
+      "attempt": 18,
+      "latency_ms": 2291.6,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-12"
+      ]
+    },
+    {
+      "attempt": 19,
+      "latency_ms": 2044.4,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-13"
+      ]
+    },
+    {
+      "attempt": 20,
+      "latency_ms": 2716.3,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-14"
+      ]
+    },
+    {
+      "attempt": 21,
+      "latency_ms": 2046.8,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-15"
+      ]
+    },
+    {
+      "attempt": 22,
+      "latency_ms": 411.6,
+      "complete": true,
+      "refreshed_days": []
+    }
+  ],
+  "rollup_refresh_day_limit": 21,
+  "status": "failed",
+  "error": "24h queue p95 was 1757.5 ms.",
+  "finished_at": "2026-07-16T11:30:04.385Z"
+}
