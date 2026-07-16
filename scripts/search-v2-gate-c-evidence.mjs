@@ -12,8 +12,30 @@ function normalizedTextSha256(text) {
   return createHash('sha256').update(text.replace(/\r\n?/g, '\n'), 'utf8').digest('hex');
 }
 
+function requiredFiniteNumber(value, label, { minimum = 0, maximum = Infinity } = {}) {
+  assert.equal(typeof value, 'number', `${label} must be a number`);
+  assert.equal(Number.isFinite(value), true, `${label} must be finite`);
+  assert.equal(value >= minimum, true, `${label} is below the minimum`);
+  assert.equal(value <= maximum, true, `${label} exceeds the maximum`);
+  return value;
+}
+
+function requiredCount(value, label, { minimum = 0 } = {}) {
+  requiredFiniteNumber(value, label, { minimum });
+  assert.equal(Number.isInteger(value), true, `${label} must be an integer`);
+  return value;
+}
+
+function requiredTimestamp(value, label) {
+  assert.equal(typeof value, 'string', `${label} must be a string`);
+  assert.equal(value.trim().length > 0, true, `${label} is missing`);
+  const timestamp = Date.parse(value);
+  assert.equal(Number.isFinite(timestamp), true, `${label} is invalid`);
+  return timestamp;
+}
+
 function calculatedRate(count, total) {
-  return Number(((Number(count) / Math.max(1, Number(total))) * 100).toFixed(3));
+  return Number(((count / Math.max(1, total)) * 100).toFixed(3));
 }
 
 function requireWorkerSummary(artifact, label) {
@@ -28,9 +50,15 @@ function requireWorkerSummary(artifact, label) {
 }
 
 function requirePerformance(artifact, label, limits) {
-  assert.equal(artifact?.warm_summary?.p95_ms <= limits.p95, true, `${label} p95 exceeds the limit`);
+  const p95 = requiredFiniteNumber(artifact?.warm_summary?.p95_ms, `${label} p95`);
+  const errorRate = requiredFiniteNumber(
+    artifact?.warm_summary?.error_rate_percent,
+    `${label} error rate`,
+    { maximum: 100 },
+  );
+  assert.equal(p95 <= limits.p95, true, `${label} p95 exceeds the limit`);
   assert.equal(
-    artifact?.warm_summary?.error_rate_percent <= limits.errorRate,
+    errorRate <= limits.errorRate,
     true,
     `${label} error rate exceeds the limit`,
   );
@@ -60,9 +88,19 @@ function eligibleRequestCount(search, localized, smoke) {
 function requireUnchangedFunction(functions, key) {
   const entry = functions?.[key];
   assert.equal(typeof entry, 'object', `${key} function evidence is missing`);
-  assert.equal(Number.isInteger(Number(entry.before_version)), true, `${key} before version is missing`);
-  assert.equal(Number.isInteger(Number(entry.after_version)), true, `${key} after version is missing`);
-  assert.equal(Number(entry.after_version), Number(entry.before_version), `${key} version changed`);
+  const beforeVersion = requiredCount(entry?.before_version, `${key} before version`, { minimum: 1 });
+  const afterVersion = requiredCount(entry?.after_version, `${key} after version`, { minimum: 1 });
+  assert.equal(afterVersion, beforeVersion, `${key} version changed`);
+}
+
+function requireArtifactBinding({ artifact, label, manifestHash, manifest, workload, window }) {
+  assert.equal(artifact?.manifest_sha256, manifestHash, `${label} manifest binding changed`);
+  assert.equal(artifact?.mode, label, `${label} artifact mode changed`);
+  assert.equal(artifact?.endpoint, manifest?.implementation?.endpoint, `${label} endpoint changed`);
+  assert.equal(artifact?.variant, workload?.measurement_variant, `${label} variant changed`);
+  const measuredAt = requiredTimestamp(artifact?.measured_at, `${label} measured_at`);
+  assert.equal(measuredAt >= window.startedAt, true, `${label} predates the live evidence window`);
+  assert.equal(measuredAt <= window.endedAt, true, `${label} exceeds the live evidence window`);
 }
 
 export function evaluateGateC({
@@ -79,15 +117,33 @@ export function evaluateGateC({
   assert.equal(normalizedTextSha256(manifestText), manifestHash, 'Manifest hash does not match');
 
   const release = manifest?.release_gates || {};
-  const p95Limit = Number(release.search_warm_p95_ms_max);
-  const errorRateLimit = Number(release.error_rate_percent_max);
-  const captureLimit = Number(release.eligible_request_audit_capture_percent_min);
-  assert.equal(Number.isFinite(p95Limit), true, 'Search p95 limit is missing');
-  assert.equal(Number.isFinite(errorRateLimit), true, 'Error-rate limit is missing');
-  assert.equal(Number.isFinite(captureLimit), true, 'Audit-capture limit is missing');
+  const p95Limit = requiredFiniteNumber(release.search_warm_p95_ms_max, 'Search p95 limit');
+  const errorRateLimit = requiredFiniteNumber(
+    release.error_rate_percent_max,
+    'Error-rate limit',
+    { maximum: 100 },
+  );
+  const captureLimit = requiredFiniteNumber(
+    release.eligible_request_audit_capture_percent_min,
+    'Audit-capture limit',
+    { maximum: 100 },
+  );
 
-  for (const artifact of [search, localized, smoke]) {
-    assert.equal(artifact?.manifest_sha256, manifestHash, 'Artifact manifest binding changed');
+  assert.equal(liveEvidence?.manifest_sha256, manifestHash, 'Live evidence manifest binding changed');
+  const workload = liveEvidence?.workload;
+  assert.equal(typeof workload, 'object', 'Live workload identity is missing');
+  assert.equal(workload?.endpoint, manifest?.implementation?.endpoint, 'Live workload endpoint changed');
+  assert.equal(workload?.beta_cohort, manifest?.implementation?.beta_cohort, 'Live beta cohort changed');
+  assert.equal(workload?.client_family, 'latency_gate_a', 'Live client family changed');
+  assert.equal(workload?.measurement_variant, 'treatment', 'Live measurement variant changed');
+
+  const startedAt = requiredTimestamp(liveEvidence?.window?.started_at, 'Live evidence start time');
+  const endedAt = requiredTimestamp(liveEvidence?.window?.ended_at, 'Live evidence end time');
+  assert.equal(startedAt <= endedAt, true, 'Live evidence window is reversed');
+  const window = { startedAt, endedAt };
+
+  for (const [label, artifact] of Object.entries({ search, localized, smoke })) {
+    requireArtifactBinding({ artifact, label, manifestHash, manifest, workload, window });
   }
   requirePerformance(search, 'search', { p95: p95Limit, errorRate: errorRateLimit });
   requirePerformance(localized, 'localized', { p95: p95Limit, errorRate: errorRateLimit });
@@ -95,40 +151,55 @@ export function evaluateGateC({
   requireWorkerSummary(smoke, 'smoke');
   const expectedEligibleRequests = eligibleRequestCount(search, localized, smoke);
   assert.equal(expectedEligibleRequests > 0, true, 'Expected request count is missing');
+  assert.equal(
+    requiredCount(workload?.expected_eligible_requests, 'Live workload request count'),
+    expectedEligibleRequests,
+    'Live workload request count does not match the Gate C artifacts',
+  );
 
   assert.equal(localGates?.recommendation_response_byte_parity, true, 'Recommendation byte parity failed');
   assert.equal(localGates?.usage_dedupe, true, 'Usage dedupe verification failed');
 
   assert.equal(liveEvidence?.endpoint, manifest?.implementation?.endpoint, 'Live endpoint evidence changed');
-  assert.equal(typeof liveEvidence?.window?.started_at, 'string', 'Live evidence start time is missing');
-  assert.equal(typeof liveEvidence?.window?.ended_at, 'string', 'Live evidence end time is missing');
 
   const platform = liveEvidence?.platform_error_evidence;
   assert.equal(platform?.readable, true, 'Platform error evidence is unreadable');
+  const platformRequests = requiredCount(platform?.eligible_requests, 'Platform request count', {
+    minimum: 1,
+  });
+  const platformErrors = requiredCount(platform?.error_count, 'Platform error count');
   assert.equal(
-    Number(platform?.eligible_requests),
+    platformRequests,
     expectedEligibleRequests,
     'Platform request count does not match the Gate C workload',
   );
-  const platformRate = calculatedRate(platform?.error_count, platform?.eligible_requests);
+  assert.equal(platformErrors <= platformRequests, true, 'Platform errors exceed platform requests');
+  const platformRate = calculatedRate(platformErrors, platformRequests);
   assert.equal(platformRate <= errorRateLimit, true, 'Platform error rate exceeds the limit');
   assert.match(platform?.source_sha256 || '', /^[a-f0-9]{64}$/, 'Platform source hash is missing');
 
   const audit = liveEvidence?.search_audit_evidence;
   assert.equal(audit?.readable, true, 'Search audit evidence is unreadable');
+  const auditExpected = requiredCount(
+    audit?.expected_eligible_requests,
+    'Expected audit request count',
+    { minimum: 1 },
+  );
+  const auditCaptured = requiredCount(audit?.captured_rows, 'Captured audit row count');
+  const auditErrors = requiredCount(audit?.error_rows, 'Audit error row count');
   assert.equal(
-    Number(audit?.expected_eligible_requests),
+    auditExpected,
     expectedEligibleRequests,
     'Expected audit request count does not match the Gate C workload',
   );
-  assert.equal(Number(audit?.captured_rows) >= 0, true, 'Captured audit row count is missing');
   assert.equal(
-    Number(audit?.captured_rows) <= expectedEligibleRequests,
+    auditCaptured <= expectedEligibleRequests,
     true,
     'Captured audit row count exceeds the Gate C workload',
   );
-  const auditCapture = calculatedRate(audit?.captured_rows, audit?.expected_eligible_requests);
-  const auditErrorRate = calculatedRate(audit?.error_rows, audit?.captured_rows);
+  assert.equal(auditErrors <= auditCaptured, true, 'Audit errors exceed captured audit rows');
+  const auditCapture = calculatedRate(auditCaptured, auditExpected);
+  const auditErrorRate = calculatedRate(auditErrors, auditCaptured);
   assert.equal(auditCapture >= captureLimit, true, 'Audit capture is below the required minimum');
   assert.equal(auditErrorRate <= errorRateLimit, true, 'Audit error rate exceeds the limit');
   assert.match(audit?.source_sha256 || '', /^[a-f0-9]{64}$/, 'Audit source hash is missing');

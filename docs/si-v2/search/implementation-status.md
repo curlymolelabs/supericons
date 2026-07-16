@@ -128,13 +128,13 @@ For the deterministic-first scope, the read-only hosted migration inventory and 
 | npm registry | Read-only registry verification reports `latest` at `0.4.17`. |
 | Supabase database and Storage | Saved Material release records report the two Material migrations, 8,524 private asset rows, and 8,524 Storage objects. Current live state was not queried in the integration. |
 | Supabase functions | Authenticated read-only verification reports snapshot version 49, stable search version 38, and web search version 35 active. |
-| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. The later local Gate C correction now retains timed error evidence and makes final success depend on every manifest gate, but it does not authorize another live attempt. |
+| Search v2 beta | Manifest `bf59e6cf...1d734` was executed. Gate C failed, the endpoint was deleted, and `0.4.19-beta.0` was not published. npm `latest` remains `0.4.17`. The later local Gate C corrections retain timed error evidence and strictly bind finalization to typed manifest, workload, time-window, and release-gate evidence. They do not authorize another live attempt. |
 
 The complete four-surface map and its evidence limits are recorded in `references/verification/search-v2-material-integration-2026-07-16.md`. The later main reconciliation and case-level fingerprint changes are recorded in `references/verification/search-v2-main-reintegration-2026-07-16.md`.
 
 ## Immediate next gate
 
-1. Independently review the complete-evidence Gate C correction recorded in `references/verification/search-v2-gate-c-complete-evidence-correction-2026-07-16.md`.
+1. Independently review the strict evidence-binding correction recorded in `references/verification/search-v2-gate-c-strict-evidence-binding-correction-2026-07-16.md`.
 2. Keep the exact slow stage unresolved unless the existing platform timing logs can still be recovered safely.
 3. Do not redeploy the unchanged beta. Prepare an implementation expected to pass with margin before requesting a new live measurement.
 4. Include the deterministic two-request localized path and exact hosted-request count in every later latency and audit-capture budget.

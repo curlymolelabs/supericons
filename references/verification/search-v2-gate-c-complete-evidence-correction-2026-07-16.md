@@ -4,6 +4,8 @@ Date: 2026-07-16
 Starting revision: `7c8df946305e6c5e06dad2ce0e42366f6381bc58`
 Scope: local error evidence and release finalization only
 
+Status: timed error handling passed independent review. The first complete-evidence evaluator was superseded by `search-v2-gate-c-strict-evidence-binding-correction-2026-07-16.md` after independent probes showed JavaScript numeric coercion and unbound time windows could still admit malformed evidence.
+
 ## Verified defects
 
 Independent review found two remaining release-safety defects after the first harness correction:

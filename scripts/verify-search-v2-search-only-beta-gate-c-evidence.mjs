@@ -8,7 +8,10 @@ import { join, resolve } from 'node:path';
 import { evaluateGateC } from './search-v2-gate-c-evidence.mjs';
 
 const manifest = {
-  implementation: { endpoint: 'mcp-search-v2-beta' },
+  implementation: {
+    endpoint: 'mcp-search-v2-beta',
+    beta_cohort: 'deterministic-v2-beta',
+  },
   package: { latest_tag_must_remain: '0.4.17' },
   release_gates: {
     search_warm_p95_ms_max: 2000,
@@ -25,6 +28,10 @@ const workerSummary = {
 };
 const search = {
   manifest_sha256: manifestHash,
+  measured_at: '2026-07-16T00:01:00Z',
+  mode: 'search',
+  endpoint: 'mcp-search-v2-beta',
+  variant: 'treatment',
   warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
   worker_summary: workerSummary,
   first_request: { ok: true },
@@ -32,6 +39,10 @@ const search = {
 };
 const localized = {
   manifest_sha256: manifestHash,
+  measured_at: '2026-07-16T00:02:00Z',
+  mode: 'localized',
+  endpoint: 'mcp-search-v2-beta',
+  variant: 'treatment',
   warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
   worker_summary: workerSummary,
   first_request: { hosted_attempts: [{ ok: true }, { ok: true }] },
@@ -42,6 +53,10 @@ const localized = {
 };
 const smoke = {
   manifest_sha256: manifestHash,
+  measured_at: '2026-07-16T00:03:00Z',
+  mode: 'smoke',
+  endpoint: 'mcp-search-v2-beta',
+  variant: 'treatment',
   smoke_summary: { all_passed: true },
   worker_summary: workerSummary,
   material_outline: { ok: true },
@@ -50,7 +65,15 @@ const smoke = {
 };
 const expectedEligibleRequests = 21;
 const liveEvidence = {
+  manifest_sha256: manifestHash,
   endpoint: 'mcp-search-v2-beta',
+  workload: {
+    endpoint: 'mcp-search-v2-beta',
+    beta_cohort: 'deterministic-v2-beta',
+    client_family: 'latency_gate_a',
+    measurement_variant: 'treatment',
+    expected_eligible_requests: expectedEligibleRequests,
+  },
   window: {
     started_at: '2026-07-16T00:00:00Z',
     ended_at: '2026-07-16T00:05:00Z',
@@ -111,6 +134,21 @@ const failureCases = [
     value.platform_error_evidence.error_count = 1;
     evaluate({ liveEvidence: value });
   }],
+  ['null platform errors rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.platform_error_evidence.error_count = null;
+    evaluate({ liveEvidence: value });
+  }],
+  ['negative platform errors rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.platform_error_evidence.error_count = -1;
+    evaluate({ liveEvidence: value });
+  }],
+  ['impossible platform errors rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.platform_error_evidence.error_count = expectedEligibleRequests + 1;
+    evaluate({ liveEvidence: value });
+  }],
   ['platform request count enforced', () => {
     const value = structuredClone(liveEvidence);
     value.platform_error_evidence.eligible_requests -= 1;
@@ -136,12 +174,64 @@ const failureCases = [
     value.search_audit_evidence.error_rows = 1;
     evaluate({ liveEvidence: value });
   }],
+  ['null audit errors rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.search_audit_evidence.error_rows = null;
+    evaluate({ liveEvidence: value });
+  }],
+  ['impossible audit errors rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.search_audit_evidence.error_rows = value.search_audit_evidence.captured_rows + 1;
+    evaluate({ liveEvidence: value });
+  }],
+  ['null performance rejected', () => {
+    const value = structuredClone(search);
+    value.warm_summary.p95_ms = null;
+    evaluate({ search: value });
+  }],
+  ['empty performance rejected', () => {
+    const value = structuredClone(search);
+    value.warm_summary.error_rate_percent = '';
+    evaluate({ search: value });
+  }],
+  ['invalid live timestamp rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.window.started_at = 'not-a-time';
+    evaluate({ liveEvidence: value });
+  }],
+  ['reversed live window rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.window.started_at = '2026-07-16T00:04:00Z';
+    value.window.ended_at = '2026-07-16T00:00:00Z';
+    evaluate({ liveEvidence: value });
+  }],
+  ['out-of-window artifact rejected', () => {
+    const value = structuredClone(search);
+    value.measured_at = '2030-01-01T00:00:00Z';
+    evaluate({ search: value });
+  }],
+  ['live manifest binding enforced', () => {
+    const value = structuredClone(liveEvidence);
+    value.manifest_sha256 = 'f'.repeat(64);
+    evaluate({ liveEvidence: value });
+  }],
+  ['live workload binding enforced', () => {
+    const value = structuredClone(liveEvidence);
+    value.workload.beta_cohort = 'other-cohort';
+    evaluate({ liveEvidence: value });
+  }],
   ['recommendation parity enforced', () => {
     evaluate({ localGates: { ...localGates, recommendation_response_byte_parity: false } });
   }],
   ['production function state enforced', () => {
     const value = structuredClone(liveEvidence);
     value.production_functions.mcp_search.after_version = 39;
+    evaluate({ liveEvidence: value });
+  }],
+  ['null production version rejected', () => {
+    const value = structuredClone(liveEvidence);
+    value.production_functions.mcp_search.before_version = null;
+    value.production_functions.mcp_search.after_version = null;
     evaluate({ liveEvidence: value });
   }],
   ['npm latest enforced', () => {
@@ -172,6 +262,10 @@ try {
   };
   const integrationSearch = {
     manifest_sha256: actualManifestHash,
+    measured_at: '2026-07-16T00:01:00Z',
+    mode: 'search',
+    endpoint: actualManifest.implementation.endpoint,
+    variant: 'treatment',
     warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
     worker_summary: integrationWorkerSummary,
     first_request: { ok: true },
@@ -179,6 +273,10 @@ try {
   };
   const integrationLocalized = {
     manifest_sha256: actualManifestHash,
+    measured_at: '2026-07-16T00:02:00Z',
+    mode: 'localized',
+    endpoint: actualManifest.implementation.endpoint,
+    variant: 'treatment',
     warm_summary: { p95_ms: 1500, error_rate_percent: 0 },
     worker_summary: integrationWorkerSummary,
     first_request: { hosted_attempts: [{ ok: true }, { ok: true }] },
@@ -189,6 +287,10 @@ try {
   };
   const integrationSmoke = {
     manifest_sha256: actualManifestHash,
+    measured_at: '2026-07-16T00:03:00Z',
+    mode: 'smoke',
+    endpoint: actualManifest.implementation.endpoint,
+    variant: 'treatment',
     smoke_summary: { all_passed: true },
     worker_summary: integrationWorkerSummary,
     material_outline: { ok: true },
@@ -196,7 +298,15 @@ try {
     invalid_request: { ok: false },
   };
   const integrationLiveEvidence = {
+    manifest_sha256: actualManifestHash,
     endpoint: actualManifest.implementation.endpoint,
+    workload: {
+      endpoint: actualManifest.implementation.endpoint,
+      beta_cohort: actualManifest.implementation.beta_cohort,
+      client_family: 'latency_gate_a',
+      measurement_variant: 'treatment',
+      expected_eligible_requests: 41,
+    },
     window: {
       started_at: '2026-07-16T00:00:00Z',
       ended_at: '2026-07-16T00:05:00Z',
