@@ -1,0 +1,16 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "mode": "preflight",
+  "started_at": "2026-07-16T12:16:15.653Z",
+  "preflight": {
+    "http_status": 500,
+    "latency_ms": 43033.3,
+    "outcome": "http_5xx",
+    "reason": "legacy_service_degraded",
+    "proceed": true
+  },
+  "status": "degraded_proceed",
+  "rollup_writes": 0,
+  "finished_at": "2026-07-16T12:16:58.687Z"
+}

@@ -1,0 +1,38 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_rollback_verification_failure",
+  "approval_fingerprint": "585fbc0279f21f06c1c8c4d96d0e49ea575a7241547080f963d6827f20d914b0",
+  "outcome": "rollback_source_active_but_legacy_contract_failed",
+  "candidate_gate": {
+    "status": "failed",
+    "error": "The operation was aborted due to timeout",
+    "started_at": "2026-07-16T12:17:07.871Z",
+    "finished_at": "2026-07-16T12:19:07.883Z"
+  },
+  "rollback_function": {
+    "id": "1ca7655a-e504-416f-9173-750016e79b73",
+    "version": 47,
+    "updated_at": 1784204357587,
+    "status": "ACTIVE",
+    "verify_jwt": false,
+    "bundle_sha256": "566efafa715f23f56cf8686f281515d666d5e89472e1f3833de2c479a56b3b60",
+    "matches_preserved_legacy_bundle": true
+  },
+  "rollback_live_contract": {
+    "status": "failed",
+    "http_status": 500,
+    "error": "GET /stats failed with HTTP 500",
+    "started_at": "2026-07-16T12:19:16.091Z",
+    "finished_at": "2026-07-16T12:20:52.644Z"
+  },
+  "mutations": {
+    "admin_api_candidate_deployments": 1,
+    "admin_api_rollback_deployments": 1,
+    "migration": 0,
+    "rollup_writes": 0,
+    "mcp_search": 0,
+    "railway": 0,
+    "storage": 0,
+    "npm_publication": 0
+  },
+  "captured_at": "2026-07-16T12:22:26.9403115Z"
+}
