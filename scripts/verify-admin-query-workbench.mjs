@@ -77,6 +77,9 @@ const [
   "segments[2] === 'export'",
   'query_review_feature_available',
   'Content-Disposition',
+  'QUERY_REVIEW_LOOKUP_CHUNK_SIZE',
+  'fetchQueryReviewRows',
+  'formatAdminErrorMessage',
 ].forEach((needle) => assertIncludes(api, needle, files.api));
 
 [
@@ -193,6 +196,7 @@ const [
   'countries',
   'changeQueryExplorerPage',
   'changeIntelligenceEvidencePage',
+  'getVisiblePaginationPages',
   '/intelligence/search/queue',
   '/intelligence/search/query-detail',
   '/intelligence/search/export',
@@ -210,7 +214,15 @@ const [
   'MCP Events',
   'Review applies to this query, library, and purpose across all environments.',
   'Showing rows that match the active filters from the loaded API page.',
+  'formatApiErrorMessage',
+  'pagination__ellipsis',
 ].forEach((needle) => assertIncludes(app, needle, files.app));
+
+[
+  '.query-explorer__query span:last-child',
+  '-webkit-line-clamp: 3',
+  '.pagination__ellipsis',
+].forEach((needle) => assertIncludes(html, needle, `${files.html} query explorer layout`));
 
 [
   'Account data not captured',

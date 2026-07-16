@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   addRecentSearchEntry,
@@ -17,6 +18,13 @@ import {
   JOB_CATEGORY_DEFINITIONS,
   createIconTaxonomyMap,
 } from '../lib/icon-taxonomy-seed.js';
+import {
+  JOB_CATEGORY_DEFINITIONS as MCP_JOB_CATEGORY_DEFINITIONS,
+} from '../mcp/runtime/icon-taxonomy-seed.js';
+
+function readJson(path) {
+  return JSON.parse(readFileSync(path, 'utf8'));
+}
 
 function makeIcon(id, name, lib = 'heroicons') {
   return { id, name, lib };
@@ -285,6 +293,98 @@ assert.equal(
   taxonomyMap.get('simpleicons:github')?.jobCategory,
   'brands-social',
   'Simple Icons should default to Brands & Social'
+);
+
+const categoryIds = JOB_CATEGORY_DEFINITIONS.map((category) => category.id);
+const uniqueCategoryIds = new Set(categoryIds);
+assert.equal(
+  uniqueCategoryIds.size,
+  categoryIds.length,
+  'job category definitions should not contain duplicate IDs'
+);
+
+const mcpCategoryIds = MCP_JOB_CATEGORY_DEFINITIONS.map((category) => category.id).sort();
+assert.deepEqual(
+  mcpCategoryIds,
+  [...categoryIds].sort(),
+  'browser and MCP taxonomy category IDs should stay in sync'
+);
+
+for (const messagePath of [
+  'data/i18n/messages/en.json',
+  'public/i18n/messages/en.json',
+  'mcp/public/i18n/messages/en.json',
+]) {
+  const messages = readJson(messagePath);
+  const localizedCategories = messages.filters?.categories || {};
+  const missingLabels = categoryIds.filter((categoryId) => !localizedCategories[categoryId]);
+  assert.deepEqual(
+    missingLabels,
+    [],
+    `${messagePath} should include an English label for every tag category`
+  );
+}
+
+const iconIndex = readJson('public/icon-index.json');
+const siIcons = (iconIndex.icons || []).filter((icon) => icon.lib === 'si');
+assert.equal(siIcons.length, 106, 'Supericons library should contain 106 icons in the public index');
+
+const fullTaxonomyMap = createIconTaxonomyMap(iconIndex.icons || []);
+const siCategoryCounts = Object.fromEntries(categoryIds.map((categoryId) => [categoryId, 0]));
+const missingSiCategories = [];
+
+for (const icon of siIcons) {
+  const iconId = `${icon.lib}:${icon.id}`;
+  const entry = fullTaxonomyMap.get(iconId);
+  if (!entry?.jobCategory || siCategoryCounts[entry.jobCategory] === undefined) {
+    missingSiCategories.push(iconId);
+    continue;
+  }
+  siCategoryCounts[entry.jobCategory] += 1;
+}
+
+assert.deepEqual(
+  missingSiCategories,
+  [],
+  'every Supericons icon should resolve to a known tag category'
+);
+assert.equal(
+  Object.values(siCategoryCounts).reduce((total, count) => total + count, 0),
+  106,
+  'Supericons tag category counts should sum to the full 106-icon library'
+);
+
+const expectedSupericonsCategories = new Map([
+  ['si:browserbase', 'agent-infrastructure-runtime'],
+  ['si:lovable', 'ai-app-builders'],
+  ['si:openai-codex-app', 'coding-agents-dev-environments'],
+  ['si:agent-commit', 'coding-agent-tools'],
+  ['si:done-spark', 'agent-lifecycle-states'],
+  ['si:x402-pay', 'agentic-payments'],
+]);
+
+for (const [iconId, expectedCategory] of expectedSupericonsCategories) {
+  assert.equal(
+    fullTaxonomyMap.get(iconId)?.jobCategory,
+    expectedCategory,
+    `${iconId} should keep its explicit Supericons category`
+  );
+}
+
+const publicTaxonomy = readJson('public/icon-taxonomy.json');
+const publicSiEntries = (publicTaxonomy.entries || []).filter((entry) => String(entry.iconId || '').startsWith('si:'));
+assert.equal(
+  publicSiEntries.length,
+  106,
+  'public taxonomy snapshot should include all 106 Supericons entries'
+);
+const publicSiMissingCategories = publicSiEntries
+  .filter((entry) => !uniqueCategoryIds.has(entry.jobCategory))
+  .map((entry) => `${entry.iconId}->${entry.jobCategory}`);
+assert.deepEqual(
+  publicSiMissingCategories,
+  [],
+  'public Supericons taxonomy entries should use known category IDs'
 );
 
 console.log('verify-icon-grid-behavior: ok');

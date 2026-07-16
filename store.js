@@ -1013,6 +1013,9 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   window.dispatchEvent(new CustomEvent('supericons:view-change', { detail: { view } }));
   resetShellScroll();
   window.requestAnimationFrame(resetShellScroll);
+  if (window.location.hash && (view === 'terms' || view === 'privacy' || DOCS_PAGE_VIEWS.has(view))) {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(scrollDocsHashIntoView));
+  }
 }
 
 function updateSidebarActive(view) {
@@ -6035,15 +6038,26 @@ function renderTermsPage() {
         </div>
       </section>
 
+      <section class="terms-section" id="single-icon-license">
+        <h3 class="terms-section__title">5. Single Icon Purchases</h3>
+        <p><strong>Single Icon License v1.0, effective July 7, 2026.</strong> This section covers one paid animated icon bought through the Supericons single-icon purchase flow, including a purchase made by a person, by an agent helping a person, or by an agent approved by an organization.</p>
+        <p>The license belongs to the person or organization that controls the paying wallet or account at the time of purchase. If an agent buys on behalf of a person or organization, the license belongs to that person or organization, not to the agent.</p>
+        <p>Supericons grants the license holder a non-exclusive, worldwide, perpetual license to use the purchased icon, including the delivered SVG and any delivered animation CSS for that icon, in one end product, client project, website, app, presentation, internal tool, or software repository.</p>
+        <p>You may use, modify, and include the icon in source code, built application files, screenshots, demos, documentation, and marketing for that licensed project.</p>
+        <p>You may not resell, sublicense, or redistribute the icon as a standalone asset, publish it in an icon pack, template library, design kit, marketplace item, asset database, competing icon library, stock asset product, or training set, or share the raw source outside the licensed project.</p>
+        <p>Keep the x402 payment response, settlement reference, or receipt data when available. For delivery, duplicate charge, settlement, or license questions, email <a href="mailto:hello@supericons.dev">hello@supericons.dev</a> with receipt data and the icon name.</p>
+        <p>Translations are provided for convenience. If a translated version conflicts with the English version, the English version controls.</p>
+      </section>
+
       <section class="terms-section">
-        <h3 class="terms-section__title">5. Refund Policy</h3>
+        <h3 class="terms-section__title">6. Refund Policy</h3>
         <p><strong><a href="/?view=pricing" data-docs-view="pricing">Pro Subscription</a>:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Monthly claims stay in your library permanently. <a href="/?view=pricing" data-docs-view="pricing">Pro Annual</a> keeps the 8 included premium collections in your library permanently, while future premium drops and Pro tools end when the annual term ends unless renewed.</p>
         <p><strong>One-time Purchases:</strong> Due to the digital nature of our products, we do not offer refunds on individual collection purchases or the <a href="/?view=pricing" data-docs-view="pricing">Launch Edition</a> bundle once download access has been granted.</p>
         <p><strong>Exceptions:</strong> If you experience a technical issue that prevents you from accessing your purchased content, contact us within 14 days for a full refund or resolution.</p>
       </section>
 
       <section class="terms-section">
-        <h3 class="terms-section__title">6. Contact</h3>
+        <h3 class="terms-section__title">7. Contact</h3>
         <p>For questions about these terms, licensing, or refund requests:</p>
         <p>Email: <a href="mailto:hello@supericons.dev">hello@supericons.dev</a></p>
       </section>
@@ -12527,6 +12541,7 @@ async function traceWithConverterProofService(
       imageBase64,
       mimeType: 'image/png',
       qualityMode,
+      colorMode: requestedColorMode,
       requestedColorMode,
       traceClass,
       uiMode,
