@@ -8,7 +8,7 @@ Deploy only the Phase A admin API after Packet 1 completes. The function adds th
 
 ## Pinned release
 
-- Approval fingerprint: `ba68e3aa8f75ae8b099595e3b7fee880868ca9bfe2ab2977fbb1ce141886fed9`
+- Approval fingerprint: `67ceb559621a287e4b883e25db6b7b0e95da0ec347200065f5510c697d7877ad`
 - Implementation revision: `3ce3224205c4ef13f7eb3ad0d83556db4c08c708`
 - Implementation tree: `12070a25c24225b11cd19b0987cf500a23de1218`
 - Current function id: `1ca7655a-e504-416f-9173-750016e79b73`
@@ -22,7 +22,7 @@ The live version 41 source was downloaded read-only from Supabase. It did not ex
 
 ## Guarded sequence
 
-1. Reproduce the packet fingerprint, file hashes, implementation tree, rollback tree, and live source inventory.
+1. Reproduce the packet fingerprint, file hashes, implementation tree, rollback tree, and live source inventory. Require the linked Supabase project metadata and pooler URL to match project `kcjmkakdhsqplvasgkjv` exactly, and preserve existing database URL query parameters.
 2. Require `admin-api` to remain active at function id `1ca7655a-e504-416f-9173-750016e79b73`, version `41`, update value `1783417987672`, with JWT verification disabled.
 3. Run the Deno type check and the local metrics and API contract gates.
 4. Use a read-only database connection to require Packet 1's columns, constraints, indexes, private rollup tables, and empty initial rollups.
@@ -52,10 +52,10 @@ The runner asks locally for the Supabase database password and `ADMIN_SECRET` us
 
 ## Approval sentence
 
-Approve Admin dashboard Phase A Packet 2 for fingerprint `ba68e3aa8f75ae8b099595e3b7fee880868ca9bfe2ab2977fbb1ce141886fed9`: deploy only `admin-api` from implementation revision `3ce3224205c4ef13f7eb3ad0d83556db4c08c708` to Supabase project `kcjmkakdhsqplvasgkjv`, only if function id `1ca7655a-e504-416f-9173-750016e79b73` remains active at version `41`, update value `1783417987672`, with JWT verification disabled and the Packet 1 schema postflight passes. Refresh at most 60 completed-day rollups within 20 minutes, require the Phase A dashboard contract, 24-hour queue p95 below 1,500 ms, and all-time queue p95 below 1,000 ms. If the candidate becomes active but fails those checks, deploy exact production-v41 rollback revision `b0520d42f1b2cdd2a74e608495bf1e584e362e66` and verify `/stats`. No migration, `mcp-search`, Railway, storage, npm, beta, or other function change is authorized.
+Approve Admin dashboard Phase A Packet 2 for fingerprint `67ceb559621a287e4b883e25db6b7b0e95da0ec347200065f5510c697d7877ad`: deploy only `admin-api` from implementation revision `3ce3224205c4ef13f7eb3ad0d83556db4c08c708` to Supabase project `kcjmkakdhsqplvasgkjv`, only if the linked database target matches that project, function id `1ca7655a-e504-416f-9173-750016e79b73` remains active at version `41`, update value `1783417987672`, with JWT verification disabled and the Packet 1 schema postflight passes. Refresh at most 60 completed-day rollups within 20 minutes, require the Phase A dashboard contract, 24-hour queue p95 below 1,500 ms, and all-time queue p95 below 1,000 ms. If the candidate becomes active but fails those checks, deploy exact production-v41 rollback revision `b0520d42f1b2cdd2a74e608495bf1e584e362e66` and verify `/stats`. No migration, `mcp-search`, Railway, storage, npm, beta, or other function change is authorized.
 
 ## Execution command after approval
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint ba68e3aa8f75ae8b099595e3b7fee880868ca9bfe2ab2977fbb1ce141886fed9 -Execute
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 67ceb559621a287e4b883e25db6b7b0e95da0ec347200065f5510c697d7877ad -Execute
 ```

@@ -35,6 +35,10 @@ assert.equal(fields.packet, 'admin_dashboard_phase_a_migration');
 assert.equal(fields.implementation_revision, '3ce3224205c4ef13f7eb3ad0d83556db4c08c708');
 assert.equal(fields.project_ref, 'kcjmkakdhsqplvasgkjv');
 assert.equal(fields.migration_version, '20260716040000');
+assert.equal(fields.linked_project_ref_check, 'required');
+assert.equal(fields.migration_postflight_transaction, 'single');
+assert.equal(fields.supabase_cli_exit_code_handling, 'explicit');
+assert.equal(fields.database_url_query_parameters, 'preserved');
 assert.equal(fields.database_migrations_authorized, '1');
 assert.equal(fields.history_repairs_authorized, '1');
 assert.equal(fields.function_deployments_authorized, '0');
@@ -56,10 +60,26 @@ const tree = execFileSync('git', ['rev-parse', `${fields.implementation_revision
 assert.equal(tree, fields.implementation_tree);
 
 const runner = normalizedText('scripts/run-admin-dashboard-phase-a-migration.ps1');
-assert.equal((runner.match(/Invoke-PsqlFile -ContainerPath "\/migrations\/\$MigrationName" -SingleTransaction/g) || []).length, 1);
-assert.equal((runner.match(/supabase migration repair \$MigrationVersion --status applied --linked/g) || []).length, 1);
+assert.match(
+  runner,
+  /Invoke-PsqlFiles -ContainerPaths @\(\s*"\/migrations\/\$MigrationName",\s*'\/checks\/admin-dashboard-phase-a-hosted-postflight\.sql'\s*\) -SingleTransaction/,
+  'Migration and postflight must share one psql single transaction.',
+);
+assert.equal(
+  (runner.match(/Invoke-PsqlFiles -ContainerPaths @\('\/checks\/admin-dashboard-phase-a-hosted-postflight\.sql'\)/g) || []).length,
+  0,
+  'Postflight must not run in a separate psql invocation.',
+);
+assert.match(runner, /\$LinkedProjectPath = Join-Path \$Root 'supabase\\\.temp\\linked-project\.json'/);
+assert.match(runner, /if \("\$\(\$linkedProject\.ref\)" -ne \$ProjectRef\)/);
+assert.match(runner, /if \(-not \$poolerUrl\.Contains\(\$ProjectRef\)\)/);
+assert.match(runner, /\$querySeparator = if \(\$poolerUrl\.Contains\('\?'\)\) \{ '&' \} else \{ '\?' \}/);
+assert.match(runner, /Invoke-SupabaseTextCommand -Arguments @\('migration', 'list', '--linked'\)/);
+assert.match(runner, /'migration', 'repair', \$MigrationVersion, '--status', 'applied', '--linked'/);
+assert.match(runner, /\$exitCode = \$LASTEXITCODE/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
+assert.match(runner, /\[System\.IO\.File\]::WriteAllText/);
 assert.doesNotMatch(runner, /supabase db push/i);
 assert.doesNotMatch(runner, /functions deploy|railway up|npm publish/i);
 

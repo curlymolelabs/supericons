@@ -16,6 +16,7 @@ $PostgresImage = 'public.ecr.aws/supabase/postgres:17.6.1.132'
 $Root = Split-Path -Parent $PSScriptRoot
 $FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-fingerprint-2026-07-16.txt'
 $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
+$LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
 $PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-preflight-2026-07-16.json'
@@ -82,6 +83,21 @@ function Read-FingerprintFields {
     $fields[$line.Substring(0, $separator)] = $line.Substring($separator + 1)
   }
   return $fields
+}
+
+function Assert-LinkedProject {
+  if (-not (Test-Path -LiteralPath $LinkedProjectPath)) {
+    throw 'Linked Supabase project metadata is missing.'
+  }
+  try {
+    $linkedProject = Get-Content -LiteralPath $LinkedProjectPath -Raw | ConvertFrom-Json
+  }
+  catch {
+    throw "Linked Supabase project metadata is invalid. $($_.Exception.Message)"
+  }
+  if ("$($linkedProject.ref)" -ne $ProjectRef) {
+    throw "Linked Supabase project mismatch. Expected $ProjectRef, received $($linkedProject.ref)."
+  }
 }
 
 function Get-FunctionName {
@@ -276,6 +292,7 @@ foreach ($path in @($PreflightEvidence, $LiveEvidence, $CompletionEvidence, $Rol
     throw "This packet is write-once and evidence already exists: $path"
   }
 }
+Assert-LinkedProject
 if (-not (Test-Path -LiteralPath $PoolerPath)) {
   throw 'Linked Supabase pooler information is missing.'
 }
@@ -310,7 +327,11 @@ $poolerUrl = (Get-Content -LiteralPath $PoolerPath -Raw).Trim()
 if (-not $poolerUrl.StartsWith('postgresql://')) {
   throw 'Linked Supabase pooler URL is invalid.'
 }
-$script:DatabaseUrl = "${poolerUrl}?sslmode=require&application_name=supericons_admin_dashboard_phase_a_admin_api"
+if (-not $poolerUrl.Contains($ProjectRef)) {
+  throw 'Linked Supabase pooler URL does not match the approved project.'
+}
+$querySeparator = if ($poolerUrl.Contains('?')) { '&' } else { '?' }
+$script:DatabaseUrl = "${poolerUrl}${querySeparator}sslmode=require&application_name=supericons_admin_dashboard_phase_a_admin_api"
 $databasePassword = Read-Host 'Supabase database password' -AsSecureString
 $adminSecret = Read-Host 'Supabase ADMIN_SECRET' -AsSecureString
 $script:CandidateWentLive = $false

@@ -60,6 +60,8 @@ assert.deepEqual(fields, {
   inventory_capture_sha256: fields.inventory_capture_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
+  linked_project_ref_check: 'required',
+  database_url_query_parameters: 'preserved',
   function_name: 'admin-api',
   admin_url: 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api',
   pre_function_id: fields.pre_function_id,
@@ -145,6 +147,10 @@ assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
 assert.match(runner, /Remove-Item Env:PGPASSWORD/);
 assert.match(runner, /Remove-Item Env:PHASE_A_ADMIN_SECRET/);
+assert.match(runner, /\$LinkedProjectPath = Join-Path \$Root 'supabase\/\.temp\/linked-project\.json'/);
+assert.match(runner, /if \("\$\(\$linkedProject\.ref\)" -ne \$ProjectRef\)/);
+assert.match(runner, /if \(-not \$poolerUrl\.Contains\(\$ProjectRef\)\)/);
+assert.match(runner, /\$querySeparator = if \(\$poolerUrl\.Contains\('\?'\)\) \{ '&' \} else \{ '\?' \}/);
 assert.equal(runner.includes('mcp-search'), false, 'Runner must not deploy mcp-search.');
 
 for (const prohibited of [
