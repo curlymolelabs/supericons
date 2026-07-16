@@ -15,8 +15,10 @@ function readJson(path) {
 
 const fingerprintInputPaths = [
   'data/semantic-search-v2/evaluation-set.json',
+  'data/search-intent-graph/ranking-policy.json',
   'data/i18n/cjk-search-terms.json',
   'data/i18n/multilingual-search-aliases.json',
+  'lib/generated-search-ranking-policy.js',
   'mcp/search.js',
   'mcp/variant-support.js',
   'mcp/public/cjk-search-terms.json',
@@ -26,6 +28,7 @@ const fingerprintInputPaths = [
   'mcp/runtime/cjk-search-core.js',
   'mcp/runtime/icon-semantic-aliases.js',
   'mcp/runtime/icon-taxonomy-seed.js',
+  'mcp/runtime/generated-search-ranking-policy.js',
   'mcp/runtime/search-ranking-policy.js',
 ];
 

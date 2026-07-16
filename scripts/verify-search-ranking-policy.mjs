@@ -134,6 +134,10 @@ const swiftCase = evaluationSet.query_groups
 const swiftOrdering = swiftCase?.ordering_expectation;
 assert.ok(swiftOrdering, 'bare swift should declare its reviewed ordering expectation');
 const swiftRefs = swiftResults.map(iconRef);
+assert.ok(
+  !swiftRefs.includes('material:breakfast_dining'),
+  'bare swift should not match fast inside breakfast',
+);
 const personLaunchedIndex = swiftRefs.indexOf(swiftOrdering.included_icon_ref);
 assert.ok(personLaunchedIndex >= 0, 'bare swift should retain the related Person Launched icon');
 assert.ok(
@@ -153,6 +157,12 @@ assert.ok(
     return index >= 0 && index < personLaunchedIndex;
   }),
   'bare swift should rank a conventional speed icon before Person Launched',
+);
+
+const boltRefs = localSearch('bolt').map(iconRef);
+assert.ok(
+  !boltRefs.includes('material:breakfast_dining'),
+  'bare bolt should not match fast inside breakfast',
 );
 
 const expressiveCandidate = {

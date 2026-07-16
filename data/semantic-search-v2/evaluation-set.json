@@ -779,6 +779,7 @@
           "expected_outcome": "interpretation_diversity",
           "interpretation_family_ids": ["speed_motion", "brand_identity"],
           "acceptable_families": ["speed", "motion", "fast", "swift brand"],
+          "prohibited_top_icon_refs": ["material:breakfast_dining"],
           "ordering_expectation": {
             "included_icon_ref": "si:person-launched",
             "rank_min": 4,
@@ -857,7 +858,7 @@
         { "case_id": "si-brand-logo-z-ai", "query": "Z.ai logo", "intent_type": "brand_logo", "expected_top_icon_ids": ["si:z-ai"] },
 
         { "case_id": "si-brand-concept-artificial-analysis", "query": "artificial analysis", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:artificial-analysis"], "interpretation_family_ids": ["brand_identity", "data_analysis"], "required_interpretation_families_top_8": ["data_analysis"], "acceptable_families": ["analysis", "analytics", "chart", "brand"] },
-        { "case_id": "si-brand-concept-bolt", "query": "bolt", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:bolt"], "interpretation_family_ids": ["brand_identity", "electrical_power", "speed_motion"], "required_interpretation_families_top_8": ["electrical_power", "speed_motion"], "acceptable_families": ["lightning", "power", "speed", "brand"] },
+        { "case_id": "si-brand-concept-bolt", "query": "bolt", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:bolt"], "interpretation_family_ids": ["brand_identity", "electrical_power", "speed_motion"], "required_interpretation_families_top_8": ["electrical_power", "speed_motion"], "acceptable_families": ["lightning", "power", "speed", "brand"], "prohibited_top_icon_refs": ["material:breakfast_dining"] },
         { "case_id": "si-brand-concept-cohere", "query": "cohere", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:cohere"], "interpretation_family_ids": ["brand_identity", "cohesion_connection"], "required_interpretation_families_top_8": ["cohesion_connection"], "acceptable_families": ["join", "connect", "link", "brand"] },
         { "case_id": "si-brand-concept-goose", "query": "goose", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:goose"], "interpretation_family_ids": ["brand_identity", "bird_animal"], "required_interpretation_families_top_8": ["bird_animal"], "acceptable_families": ["bird", "animal", "brand"] },
         { "case_id": "si-brand-concept-opencode", "query": "opencode", "intent_type": "ambiguous_concept", "allowed_top_icon_ids": ["si:opencode"], "interpretation_family_ids": ["brand_identity", "source_code"], "required_interpretation_families_top_8": ["source_code"], "acceptable_families": ["source code", "code", "brand"] },
