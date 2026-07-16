@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pack 2 Shape Study: round 2</title>
+<style>
+  :root {
+    --accent: #FF4F00;
+    --accent-soft: #ff906c;
+    --bg: #0e0e0e;
+    --surface: #131313;
+    --surface-2: #1a1919;
+    --text: #ffffff;
+    --text-muted: #cccaca;
+    --text-dim: #767575;
+    --outline-ghost: rgba(72, 72, 71, 0.25);
+    --success: #4ade80;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); }
+  main { max-width: 1080px; margin: 0 auto; padding: 2.2rem 1.5rem 5rem; }
+  h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; }
+  .sub { color: var(--text-dim); font-size: 0.84rem; margin-top: 0.4rem; max-width: 680px; line-height: 1.6; }
+  .sub code { font-size: 0.76rem; color: var(--text-muted); }
+
+  .study { margin-top: 2.2rem; border: 1px solid var(--outline-ghost); border-radius: 14px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 215px 1fr 1fr 1fr; border-top: 1px solid var(--outline-ghost); }
+  .row:first-child { border-top: none; background: var(--surface); }
+  .row:first-child .cell { padding: 0.7rem 1rem; font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .cell { padding: 1.3rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
+  .cell.head { align-items: flex-start; justify-content: center; gap: 0.35rem; border-right: 1px solid var(--outline-ghost); }
+  .cell.head .nm { font-family: var(--font-head); font-size: 0.95rem; font-weight: 600; }
+  .cell.head .ds { color: var(--text-dim); font-size: 0.72rem; line-height: 1.5; }
+  .state { font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 5px; padding: 0.14rem 0.4rem; }
+  .state.ok { color: var(--success); background: rgba(74, 222, 128, 0.12); }
+  .state.prop { color: var(--accent-soft); background: rgba(255, 79, 0, 0.12); }
+  .sizes { display: flex; align-items: center; gap: 1.1rem; color: var(--text-muted); }
+  .sizes .s { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; }
+  .sizes .s span { font-size: 0.58rem; color: var(--text-dim); }
+  .tilewrap { display: grid; place-items: center; }
+
+  .r-stroke svg { color: #e9e6e2; }
+  .r-solid svg { color: #efece8; }
+
+  [class*="a-"] { transform-box: fill-box; transform-origin: center; }
+  @keyframes k-eq { 0%, 100% { transform: scaleY(0.45); } 50% { transform: scaleY(1); } }
+  @keyframes k-beat { 0%, 68%, 100% { transform: scale(1); } 76% { transform: scale(1.14); } 86% { transform: scale(0.97); } }
+  @keyframes k-seq { 0%, 60%, 100% { opacity: 0.3; } 14%, 44% { opacity: 1; } }
+  @keyframes k-flow { to { stroke-dashoffset: -24; } }
+  .a-eq { animation: k-eq 1.1s ease-in-out infinite; }
+  .a-beat { animation: k-beat 1.8s ease infinite; }
+  .a-seq { animation: k-seq 2.3s ease infinite; }
+  .a-flow { stroke-dasharray: 2.2 1.6; animation: k-flow 2.2s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { [class*="a-"] { animation: none !important; } }
+
+  .note { margin-top: 1.6rem; color: var(--text-dim); font-size: 0.76rem; line-height: 1.65; max-width: 760px; }
+  .note b { color: var(--accent-soft); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gTile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#272625"/><stop offset="100%" stop-color="#0f0f0f"/>
+    </linearGradient>
+    <linearGradient id="gRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/><stop offset="45%" stop-color="#ffffff" stop-opacity="0.02"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="gOrb" cx="38%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="#4a4846"/><stop offset="55%" stop-color="#242322"/><stop offset="100%" stop-color="#141313"/>
+    </radialGradient>
+    <radialGradient id="gAcc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4F00" stop-opacity="0.8"/><stop offset="100%" stop-color="#FF4F00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gAccS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8a4d"/><stop offset="100%" stop-color="#e03e00"/>
+    </linearGradient>
+    <linearGradient id="gInk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7f5f2"/><stop offset="100%" stop-color="#c4bfb9"/>
+    </linearGradient>
+    <linearGradient id="gGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<main>
+  <h1>Shape study, round 4</h1>
+  <p class="sub">Shapes are driven by the design records in <code>data/si-registry/source/design/agent-pulse-pilot.json</code> (validated by <code>scripts/verify-design-records.mjs</code>). Sound blast is shape approved (stroke as the reference render). Orb listening is the headphones metaphor with one small wave entering from outside each pad, per review; the signal-trail variant is removed.</p>
+
+  <div class="study" id="study"></div>
+
+  <div class="note">
+    <b>Round 6 notes.</b> Orb listening: one wave per side in stroke and solid, split into top and bottom segments with a gap at the pad midline (r3.4 arc, segments y 12.1-13.7 and 14.9-16.5, convex toward the orb, 1.8 weight). The split keeps the sides light while the break itself reads as sound. The layered render keeps one unsplit wave per side because its inward animation supplies the effect: detail scales by render when motion carries meaning. Sound blast is locked: orb r5 at center, arc pairs at radii 7.2 and 9.8 around each diagonal, stroke as the approved reference render. Territory map: listening owns inbound side waves, speaking will own outbound side ripples, blast owns the corners.
+  </div>
+</main>
+
+<script>
+  // Shapes transcribed from the construction recipes in the design records.
+  const ICONS = [
+    {
+      id: 'orb-thinking', name: 'orb thinking', cat: 'agent orb', state: 'shape_approved',
+      desc: 'The orb carrying the universal typing ellipsis. Reference standard.',
+      stroke: '<circle cx="12" cy="12" r="8.5"/><circle cx="8.2" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="15.8" cy="12" r="1.15" fill="currentColor" stroke="none"/>',
+      solid: '<path d="M12 2.5A9.5 9.5 0 1 1 12 21.5 9.5 9.5 0 0 1 12 2.5zM8.2 13.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8zm3.8 0a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8zm3.8 0a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8z" fill="currentColor" fill-rule="evenodd"/>',
+      elegance: '<circle cx="12" cy="12" r="8.5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.2)" stroke-width="0.35"/><ellipse cx="9.4" cy="8.6" rx="3.6" ry="2.1" fill="url(#gGlass)"/><circle class="a-seq" cx="8.2" cy="12" r="1.15" fill="url(#gInk)"/><circle class="a-seq" cx="12" cy="12" r="1.15" fill="url(#gAccS)" style="animation-delay:0.35s"/><circle class="a-seq" cx="15.8" cy="12" r="1.15" fill="url(#gInk)" style="animation-delay:0.7s"/>'
+    },
+    {
+      id: 'voice-wave', name: 'voice wave', cat: 'voice audio', state: 'shape_approved',
+      desc: 'Five bars, heights 5-10-15-10-5 on a 3.7 beat. Reference standard.',
+      stroke: '<path d="M4.6 9.5v5"/><path d="M8.3 7v10"/><path d="M12 4.5v15"/><path d="M15.7 7v10"/><path d="M19.4 9.5v5"/>',
+      solid: '<rect x="3.4" y="9.5" width="2.4" height="5" rx="1.2" fill="currentColor"/><rect x="7.1" y="7" width="2.4" height="10" rx="1.2" fill="currentColor"/><rect x="10.8" y="4.5" width="2.4" height="15" rx="1.2" fill="currentColor"/><rect x="14.5" y="7" width="2.4" height="10" rx="1.2" fill="currentColor"/><rect x="18.2" y="9.5" width="2.4" height="5" rx="1.2" fill="currentColor"/>',
+      elegance: '<rect x="10.3" y="3.5" width="3.4" height="17" rx="1.7" fill="url(#gAcc)" opacity="0.5"/><rect class="a-eq" x="3.4" y="9.5" width="2.4" height="5" rx="1.2" fill="url(#gInk)" opacity="0.65"/><rect class="a-eq" x="7.1" y="7" width="2.4" height="10" rx="1.2" fill="url(#gInk)" style="animation-delay:0.15s"/><rect class="a-eq" x="10.8" y="4.5" width="2.4" height="15" rx="1.2" fill="url(#gAccS)" style="animation-delay:0.3s"/><rect class="a-eq" x="14.5" y="7" width="2.4" height="10" rx="1.2" fill="url(#gInk)" style="animation-delay:0.45s"/><rect class="a-eq" x="18.2" y="9.5" width="2.4" height="5" rx="1.2" fill="url(#gInk)" opacity="0.65" style="animation-delay:0.6s"/>'
+    },
+    {
+      id: 'orb-listening', name: 'orb listening', cat: 'agent orb · headphones + incoming waves', state: 'shape_drawn',
+      desc: 'The orb wearing headphones; one wave per side split into top and bottom segments (stroke and solid); the layered render carries one animated wave per side.',
+      stroke: '<circle cx="12" cy="14.5" r="5"/><path d="M5.8 11.5a6.2 6.2 0 0 1 12.4 0"/><rect x="4.6" y="11.5" width="2.4" height="5.5" rx="1.2" fill="currentColor" stroke="none"/><rect x="17" y="11.5" width="2.4" height="5.5" rx="1.2" fill="currentColor" stroke="none"/><path d="M3.2 12.1A3.4 3.4 0 0 0 3.96 13.7M3.96 14.9A3.4 3.4 0 0 0 3.2 16.5" stroke-width="1.8"/><path d="M20.8 12.1A3.4 3.4 0 0 1 20.04 13.7M20.04 14.9A3.4 3.4 0 0 1 20.8 16.5" stroke-width="1.8"/>',
+      solid: '<circle cx="12" cy="14.5" r="5.5" fill="currentColor"/><path d="M5.8 11.5a6.2 6.2 0 0 1 12.4 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><rect x="4.3" y="11" width="3" height="6.5" rx="1.5" fill="currentColor"/><rect x="16.7" y="11" width="3" height="6.5" rx="1.5" fill="currentColor"/><path d="M3.2 12.1A3.4 3.4 0 0 0 3.96 13.7M3.96 14.9A3.4 3.4 0 0 0 3.2 16.5M20.8 12.1A3.4 3.4 0 0 1 20.04 13.7M20.04 14.9A3.4 3.4 0 0 1 20.8 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>',
+      elegance: '<circle cx="12" cy="14.5" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.4" cy="12.6" rx="2.1" ry="1.2" fill="url(#gGlass)"/><path d="M5.8 11.5a6.2 6.2 0 0 1 12.4 0" stroke="url(#gInk)" stroke-width="0.85" stroke-linecap="round" fill="none"/><rect x="4.6" y="11.5" width="2.4" height="5.5" rx="1.2" fill="url(#gInk)"/><rect x="17" y="11.5" width="2.4" height="5.5" rx="1.2" fill="url(#gInk)"/><path class="a-seq" d="M3.2 12.1a3.4 3.4 0 0 0 0 4.4" stroke="url(#gAccS)" stroke-width="0.72" stroke-linecap="round" fill="none"/><path class="a-seq" d="M20.8 12.1a3.4 3.4 0 0 1 0 4.4" stroke="url(#gAccS)" stroke-width="0.72" stroke-linecap="round" fill="none" style="animation-delay:0.4s"/>'
+    },
+    {
+      id: 'sound-blast', name: 'sound blast', cat: 'agent orb · corner waves', state: 'shape_approved',
+      desc: 'The orb at center with two nested waves at each diagonal corner. Eight waves: a lot of noise from the agent, in every direction.',
+      stroke: '<circle cx="12" cy="12" r="5"/><path d="M18.77 9.54A7.2 7.2 0 0 0 14.46 5.23"/><path d="M21.21 8.65A9.8 9.8 0 0 0 15.35 2.79"/><path d="M5.23 9.54A7.2 7.2 0 0 1 9.54 5.23"/><path d="M2.79 8.65A9.8 9.8 0 0 1 8.65 2.79"/><path d="M18.77 14.46A7.2 7.2 0 0 1 14.46 18.77"/><path d="M21.21 15.35A9.8 9.8 0 0 1 15.35 21.21"/><path d="M5.23 14.46A7.2 7.2 0 0 0 9.54 18.77"/><path d="M2.79 15.35A9.8 9.8 0 0 0 8.65 21.21"/>',
+      solid: '<circle cx="12" cy="12" r="5.5" fill="currentColor"/><path d="M18.77 9.54A7.2 7.2 0 0 0 14.46 5.23M21.21 8.65A9.8 9.8 0 0 0 15.35 2.79M5.23 9.54A7.2 7.2 0 0 1 9.54 5.23M2.79 8.65A9.8 9.8 0 0 1 8.65 2.79M18.77 14.46A7.2 7.2 0 0 1 14.46 18.77M21.21 15.35A9.8 9.8 0 0 1 15.35 21.21M5.23 14.46A7.2 7.2 0 0 0 9.54 18.77M2.79 15.35A9.8 9.8 0 0 0 8.65 21.21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      elegance: '<circle class="a-beat" cx="12" cy="12" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.4" cy="10" rx="2.1" ry="1.2" fill="url(#gGlass)"/><g class="a-seq"><path d="M18.77 9.54A7.2 7.2 0 0 0 14.46 5.23M5.23 9.54A7.2 7.2 0 0 1 9.54 5.23M18.77 14.46A7.2 7.2 0 0 1 14.46 18.77M5.23 14.46A7.2 7.2 0 0 0 9.54 18.77" stroke="rgba(255,255,255,0.9)" stroke-width="0.78" stroke-linecap="round" fill="none"/></g><g class="a-seq" style="animation-delay:0.35s"><path d="M21.21 8.65A9.8 9.8 0 0 0 15.35 2.79M2.79 8.65A9.8 9.8 0 0 1 8.65 2.79M21.21 15.35A9.8 9.8 0 0 1 15.35 21.21M2.79 15.35A9.8 9.8 0 0 0 8.65 21.21" stroke="url(#gAccS)" stroke-width="0.78" stroke-linecap="round" fill="none"/></g>'
+    }
+  ];
+
+  const TILE = '<rect x="6" y="6" width="84" height="84" rx="21" fill="url(#gTile)"/>'
+             + '<rect x="6.7" y="6.7" width="82.6" height="82.6" rx="20.3" fill="none" stroke="url(#gRim)" stroke-width="1.4"/>';
+
+  function strokeSvg(icon, size) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon.stroke}</svg>`;
+  }
+  function solidSvg(icon, size) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none">${icon.solid}</svg>`;
+  }
+  function eleganceSvg(icon, size) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 96 96" fill="none">${TILE}<g transform="translate(12 12) scale(3)">${icon.elegance}</g></svg>`;
+  }
+
+  const study = document.getElementById('study');
+  study.innerHTML = `
+    <div class="row">
+      <div class="cell">Icon</div>
+      <div class="cell">Stroke · 2px rounded</div>
+      <div class="cell">Solid</div>
+      <div class="cell">Elegance · layered tile</div>
+    </div>`;
+
+  ICONS.forEach(icon => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `
+      <div class="cell head">
+        <span class="nm">${icon.name}</span>
+        <span class="state ${icon.state === 'shape_approved' ? 'ok' : 'prop'}">${icon.state.replace('_', ' ')}</span>
+        <span class="ds">${icon.cat}</span>
+        <span class="ds">${icon.desc}</span>
+      </div>
+      <div class="cell r-stroke">
+        <div class="sizes">
+          <span class="s">${strokeSvg(icon, 48)}<span>48</span></span>
+          <span class="s">${strokeSvg(icon, 24)}<span>24</span></span>
+          <span class="s">${strokeSvg(icon, 16)}<span>16</span></span>
+        </div>
+      </div>
+      <div class="cell r-solid">
+        <div class="sizes">
+          <span class="s">${solidSvg(icon, 48)}<span>48</span></span>
+          <span class="s">${solidSvg(icon, 24)}<span>24</span></span>
+          <span class="s">${solidSvg(icon, 16)}<span>16</span></span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="tilewrap">${eleganceSvg(icon, 116)}</div>
+      </div>`;
+    study.appendChild(row);
+  });
+</script>
+</body>
+</html>

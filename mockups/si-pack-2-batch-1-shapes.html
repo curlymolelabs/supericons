@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Pulse | Batch 1 shapes: 10 orb states</title>
+<style>
+  :root {
+    --accent: #FF4F00;
+    --accent-soft: #ff906c;
+    --bg: #0e0e0e;
+    --surface: #131313;
+    --surface-2: #1a1919;
+    --text: #ffffff;
+    --text-muted: #cccaca;
+    --text-dim: #767575;
+    --outline-ghost: rgba(72, 72, 71, 0.25);
+    --success: #4ade80;
+    --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); }
+  main { max-width: 1080px; margin: 0 auto; padding: 2.2rem 1.5rem 5rem; }
+  h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; }
+  .sub { color: var(--text-dim); font-size: 0.84rem; margin-top: 0.4rem; max-width: 700px; line-height: 1.6; }
+  .sub code { font-size: 0.76rem; color: var(--text-muted); }
+
+  .study { margin-top: 2.2rem; border: 1px solid var(--outline-ghost); border-radius: 14px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 215px 1fr 1fr 1fr; border-top: 1px solid var(--outline-ghost); }
+  .row:first-child { border-top: none; background: var(--surface); }
+  .row:first-child .cell { padding: 0.7rem 1rem; font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .cell { padding: 1.3rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
+  .cell.head { align-items: flex-start; justify-content: center; gap: 0.35rem; border-right: 1px solid var(--outline-ghost); }
+  .cell.head .nm { font-family: var(--font-head); font-size: 0.95rem; font-weight: 600; }
+  .cell.head .ds { color: var(--text-dim); font-size: 0.72rem; line-height: 1.5; }
+  .state { font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 5px; padding: 0.14rem 0.4rem; color: var(--accent-soft); background: rgba(255, 79, 0, 0.12); }
+  .sizes { display: flex; align-items: center; gap: 1.1rem; color: var(--text-muted); }
+  .sizes .s { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; }
+  .sizes .s span { font-size: 0.58rem; color: var(--text-dim); }
+  .tilewrap { display: grid; place-items: center; }
+
+  .r-stroke svg { color: #e9e6e2; }
+  .r-solid svg { color: #efece8; }
+
+  [class*="a-"] { transform-box: fill-box; transform-origin: center; }
+  .a-orbit { transform-box: view-box; transform-origin: 48px 48px; }
+  @keyframes k-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @keyframes k-eq { 0%, 100% { transform: scaleY(0.45); } 50% { transform: scaleY(1); } }
+  @keyframes k-seq { 0%, 60%, 100% { opacity: 0.3; } 14%, 44% { opacity: 1; } }
+  @keyframes k-blink { 0%, 46% { opacity: 1; } 52%, 94% { opacity: 0.15; } 100% { opacity: 1; } }
+  @keyframes k-orbit { to { transform: rotate(360deg); } }
+  @keyframes k-orbit-rest { 0% { transform: rotate(0deg); } 66%, 100% { transform: rotate(360deg); } }
+  @keyframes k-draw14 { 0% { stroke-dashoffset: 14; opacity: 1; } 40%, 75% { stroke-dashoffset: 0; opacity: 1; } 92%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes k-shake { 0%, 86%, 100% { transform: translateX(0); } 89% { transform: translateX(-0.6px); } 93% { transform: translateX(0.6px); } 97% { transform: translateX(-0.4px); } }
+  @keyframes k-glitch { 0%, 84%, 100% { transform: translateX(0); opacity: 0; } 86% { transform: translateX(-1px); opacity: 1; } 90% { transform: translateX(0.8px); opacity: 1; } 95% { transform: translateX(-0.3px); opacity: 0; } }
+  @keyframes k-travel { 0% { transform: translateX(0); opacity: 0; } 14% { opacity: 1; } 78% { opacity: 1; } 100% { transform: translateX(var(--tx, 5px)); opacity: 0; } }
+  @keyframes k-rise { 0% { transform: translateY(2px); opacity: 0; } 35% { opacity: 1; } 72% { transform: translateY(-2px); opacity: 1; } 100% { transform: translateY(-3.4px); opacity: 0; } }
+  .a-breathe { animation: k-breathe 3.4s ease-in-out infinite; }
+  .a-eq { animation: k-eq 1.1s ease-in-out infinite; }
+  .a-seq { animation: k-seq 2.4s ease infinite; }
+  .a-blink { animation: k-blink 1.6s ease infinite; }
+  .a-orbit { animation: k-orbit var(--d, 2s) linear infinite; }
+  .a-orbit-rest { animation: k-orbit-rest 3.2s ease-in-out infinite; transform-box: view-box; transform-origin: 48px 48px; }
+  .a-draw14 { animation: k-draw14 3s ease infinite; }
+  .a-shakes { animation: k-shake 2.6s linear infinite; }
+  .a-glitch { animation: k-glitch 2.6s linear infinite; }
+  .a-travel { animation: k-travel 2.4s ease-in-out infinite; }
+  .a-rise { animation: k-rise 5.2s ease infinite; }
+  @media (prefers-reduced-motion: reduce) { [class*="a-"] { animation: none !important; } }
+
+  .note { margin-top: 1.6rem; color: var(--text-dim); font-size: 0.76rem; line-height: 1.65; max-width: 760px; }
+  .note b { color: var(--accent-soft); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gTile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#272625"/><stop offset="100%" stop-color="#0f0f0f"/>
+    </linearGradient>
+    <linearGradient id="gRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/><stop offset="45%" stop-color="#ffffff" stop-opacity="0.02"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="gOrb" cx="38%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="#4a4846"/><stop offset="55%" stop-color="#242322"/><stop offset="100%" stop-color="#141313"/>
+    </radialGradient>
+    <radialGradient id="gAcc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4F00" stop-opacity="0.8"/><stop offset="100%" stop-color="#FF4F00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gAccS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8a4d"/><stop offset="100%" stop-color="#e03e00"/>
+    </linearGradient>
+    <linearGradient id="gInk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7f5f2"/><stop offset="100%" stop-color="#c4bfb9"/>
+    </linearGradient>
+    <linearGradient id="gGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<main>
+  <h1>Batch 1 shapes: the 10 orb states</h1>
+  <p class="sub">Shape gate. All 10 metaphors were approved on paper 2026-07-06; these are the shapes drawn from the construction recipes in <code>agent-pulse-batch-1-orbs.json</code>, in the three pack renders. Approve or redirect per icon; approved ones advance to shape_approved and join the pilot four.</p>
+
+  <div class="study" id="study"></div>
+
+  <div class="note">
+    <b>Grammar in action.</b> Idle is the naked orb every other state builds on. Speaking's arcs curve away from the orb, the exact mirror of listening's inbound waves. Working's arc is headless and quick; retrying's carries an arrowhead and pauses between revolutions. Waiting's dot floats centered above (never a corner badge). Done and error wear their marks on the face; blocked stands a shield in front; handoff throws a glowing payload between two orbs; sleeping dims to half presence with exactly two z glyphs. Secondary elements draw at 1.8 against the 2px subject throughout (R2), and static frames stay clean while glitch, travel, and draw effects live only in the animated render (R8).
+  </div>
+</main>
+
+<script>
+  const ICONS = [
+    {
+      id: 'orb-idle', name: 'orb idle', ds: 'The bare orb, breathing. The pack zero-state.',
+      stroke: '<circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="9" stroke-width="1.8" opacity="0.4"/>',
+      solid: '<circle cx="12" cy="12" r="6.5" fill="currentColor"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>',
+      eleg: '<circle class="a-breathe" cx="12" cy="12" r="7.4" fill="url(#gAcc)" opacity="0.22" style="animation-duration:4s"/><g class="a-breathe" style="animation-duration:4s"><circle cx="12" cy="12" r="6" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.1" cy="9.7" rx="2.5" ry="1.45" fill="url(#gGlass)"/></g>'
+    },
+    {
+      id: 'orb-speaking', name: 'orb speaking', ds: 'Face bars plus outbound side ripples, convex away from the orb.',
+      stroke: '<circle cx="12" cy="12" r="5"/><path d="M10.4 10.6v2.8M12 9.9v4.2M13.6 10.6v2.8" stroke-width="1.8"/><path d="M17.6 9.6a3.4 3.4 0 0 1 0 4.8M20 8.2a5.4 5.4 0 0 1 0 7.6M6.4 9.6a3.4 3.4 0 0 0 0 4.8M4 8.2a5.4 5.4 0 0 0 0 7.6" stroke-width="1.8"/>',
+      solid: '<circle cx="12" cy="12" r="5.5" fill="currentColor"/><path d="M17.6 9.6a3.4 3.4 0 0 1 0 4.8M20 8.2a5.4 5.4 0 0 1 0 7.6M6.4 9.6a3.4 3.4 0 0 0 0 4.8M4 8.2a5.4 5.4 0 0 0 0 7.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>',
+      eleg: '<circle cx="12" cy="12" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.4" cy="10" rx="2.1" ry="1.2" fill="url(#gGlass)"/><rect class="a-eq" x="10.1" y="10.4" width="0.85" height="3.2" rx="0.42" fill="url(#gInk)"/><rect class="a-eq" x="11.6" y="9.8" width="0.85" height="4.4" rx="0.42" fill="#ffffff" style="animation-delay:0.15s"/><rect class="a-eq" x="13.1" y="10.4" width="0.85" height="3.2" rx="0.42" fill="url(#gInk)" style="animation-delay:0.3s"/><g class="a-seq"><path d="M17.6 9.6a3.4 3.4 0 0 1 0 4.8M6.4 9.6a3.4 3.4 0 0 0 0 4.8" stroke="rgba(255,255,255,0.9)" stroke-width="0.72" stroke-linecap="round" fill="none"/></g><g class="a-seq" style="animation-delay:0.45s"><path d="M20 8.2a5.4 5.4 0 0 1 0 7.6M4 8.2a5.4 5.4 0 0 0 0 7.6" stroke="url(#gAccS)" stroke-width="0.72" stroke-linecap="round" fill="none"/></g>'
+    },
+    {
+      id: 'orb-working', name: 'orb working', ds: 'One headless luminous arc orbiting the core. Working, not loading.',
+      stroke: '<circle cx="12" cy="12" r="5.5"/><path d="M20.47 11.26A8.5 8.5 0 0 0 11.26 3.53"/>',
+      solid: '<circle cx="12" cy="12" r="6" fill="currentColor"/><path d="M20.47 11.26A8.5 8.5 0 0 0 11.26 3.53" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      eleg: '<circle cx="12" cy="12" r="5.5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.2" cy="9.9" rx="2.3" ry="1.3" fill="url(#gGlass)"/><g class="a-orbit" style="--d:1.8s"><path d="M20.47 11.26A8.5 8.5 0 0 0 11.26 3.53" stroke="rgba(255,79,0,0.3)" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M20.47 11.26A8.5 8.5 0 0 0 11.26 3.53" stroke="url(#gAccS)" stroke-width="1.1" stroke-linecap="round" fill="none"/></g>'
+    },
+    {
+      id: 'orb-waiting-input', name: 'orb waiting for input', ds: 'A patient accent dot centered above the orb. Never a corner badge.',
+      stroke: '<circle cx="12" cy="13.5" r="5"/><circle cx="12" cy="4.6" r="1.8" fill="currentColor" stroke="none"/>',
+      solid: '<circle cx="12" cy="13.5" r="5.5" fill="currentColor"/><circle cx="12" cy="4.4" r="2" fill="currentColor"/>',
+      eleg: '<circle cx="12" cy="13.5" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.4" cy="11.6" rx="2.1" ry="1.2" fill="url(#gGlass)"/><g class="a-blink"><circle cx="12" cy="4.6" r="2.6" fill="url(#gAcc)"/><circle cx="12" cy="4.6" r="1.5" fill="url(#gAccS)"/></g>'
+    },
+    {
+      id: 'orb-done', name: 'orb done', ds: 'The check worn on the face, not a corner badge.',
+      stroke: '<circle cx="12" cy="12" r="6.5"/><path d="M8.6 12.2l2.4 2.4 4.6-5"/>',
+      solid: '<circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="2.6" fill="none"/><path d="M8.6 12.2l2.4 2.4 4.6-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+      eleg: '<circle cx="12" cy="12" r="6.5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="9.9" cy="9.4" rx="2.7" ry="1.55" fill="url(#gGlass)"/><circle cx="12" cy="12" r="4" fill="url(#gAcc)" opacity="0.4"/><path class="a-draw14" d="M8.6 12.2l2.4 2.4 4.6-5" stroke="url(#gAccS)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="14"/>'
+    },
+    {
+      id: 'orb-error', name: 'orb error', ds: 'Exclamation on the face; shake and glitch live only in the animated render.',
+      stroke: '<circle cx="12" cy="12" r="6"/><path d="M12 8.5v4.2" stroke-width="2.2"/><circle cx="12" cy="15.4" r="1.2" fill="currentColor" stroke="none"/>',
+      solid: '<circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="2.6" fill="none"/><path d="M12 8.4v4.4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="15.6" r="1.4" fill="currentColor"/>',
+      eleg: '<g class="a-shakes"><circle cx="12" cy="12" r="6" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.1" cy="9.6" rx="2.5" ry="1.45" fill="url(#gGlass)"/></g><rect class="a-glitch" x="6.6" y="10.6" width="10.8" height="1" rx="0.5" fill="url(#gAccS)" opacity="0"/><rect class="a-glitch" x="8" y="13.4" width="8" height="0.75" rx="0.38" fill="url(#gInk)" opacity="0" style="animation-delay:0.25s"/><rect x="11.45" y="8.5" width="1.1" height="4.2" rx="0.55" fill="#ffffff"/><circle cx="12" cy="15.4" r="0.75" fill="#ffffff"/>'
+    },
+    {
+      id: 'orb-blocked', name: 'orb blocked', ds: 'A shield standing in front of the orb. Policy, not punishment; the slash stays with muted.',
+      stroke: '<path d="M8.75 6.37A6.5 6.5 0 0 0 8.75 17.63M15.25 6.37A6.5 6.5 0 0 1 15.25 17.63"/><path d="M12 6l4.5 1.7v3c0 3-2 4.6-4.5 5.4-2.5-.8-4.5-2.4-4.5-5.4v-3z"/><path d="M9.8 11.2h4.4" stroke-width="2.2"/>',
+      solid: '<path d="M8.75 6.37A6.5 6.5 0 0 0 8.75 17.63M15.25 6.37A6.5 6.5 0 0 1 15.25 17.63" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M12 6l4.5 1.7v3c0 3-2 4.6-4.5 5.4-2.5-.8-4.5-2.4-4.5-5.4v-3z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" fill="none"/><rect x="9.6" y="10.2" width="4.8" height="2" rx="1" fill="currentColor"/>',
+      eleg: '<circle cx="12" cy="12" r="6.5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35" opacity="0.75"/><g class="a-breathe" style="animation-duration:4.5s"><path d="M12 6l4.5 1.7v3c0 3-2 4.6-4.5 5.4-2.5-.8-4.5-2.4-4.5-5.4v-3z" fill="url(#gInk)"/><path d="M12 6l4.5 1.7v2.1h-9V7.7z" fill="url(#gGlass)" opacity="0.7"/><rect x="9.8" y="10.7" width="4.4" height="1.5" rx="0.75" fill="url(#gAccS)"/></g>'
+    },
+    {
+      id: 'orb-retrying', name: 'orb retrying', ds: 'One arc, one arrowhead: a deliberate return. Pauses between revolutions.',
+      stroke: '<circle cx="12" cy="12" r="5"/><path d="M4.01 9.09A8.5 8.5 0 0 1 19.99 9.09"/><path d="M21.8 6.2l-1.4 4.6-3.4-2.6z" fill="currentColor" stroke="none"/>',
+      solid: '<circle cx="12" cy="12" r="5.5" fill="currentColor"/><path d="M4.01 9.09A8.5 8.5 0 0 1 19.99 9.09" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M21.8 6.2l-1.4 4.6-3.4-2.6z" fill="currentColor"/>',
+      eleg: '<circle cx="12" cy="12" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.4" cy="10" rx="2.1" ry="1.2" fill="url(#gGlass)"/><g class="a-orbit-rest"><path d="M4.01 9.09A8.5 8.5 0 0 1 19.99 9.09" stroke="url(#gAccS)" stroke-width="1.1" stroke-linecap="round" fill="none"/><path d="M21.8 6.2l-1.4 4.6-3.4-2.6z" fill="url(#gAccS)"/></g>'
+    },
+    {
+      id: 'orb-handoff', name: 'orb handoff', ds: 'The task in flight: a glowing payload thrown between two orbs on an arc.',
+      stroke: '<circle cx="7" cy="14.5" r="4"/><circle cx="17" cy="14.5" r="4"/><path d="M9.5 10.5q2.5-3.5 5 0" stroke-dasharray="1 2.5" stroke-width="1.8"/><circle cx="12" cy="8.2" r="1.5" fill="currentColor" stroke="none"/>',
+      solid: '<circle cx="7" cy="14.5" r="4.3" fill="currentColor"/><circle cx="17" cy="14.5" r="4.3" fill="currentColor"/><path d="M9.5 10.5q2.5-3.5 5 0" stroke="currentColor" stroke-dasharray="1 2.5" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="12" cy="8.2" r="1.7" fill="currentColor"/>',
+      eleg: '<circle cx="7" cy="14.5" r="4" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="5.8" cy="13" rx="1.7" ry="0.95" fill="url(#gGlass)"/><circle cx="17" cy="14.5" r="4" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="15.8" cy="13" rx="1.7" ry="0.95" fill="url(#gGlass)"/><path d="M9.5 10.5q2.5-3.5 5 0" stroke="rgba(255,255,255,0.25)" stroke-dasharray="0.4 1.6" stroke-width="0.7" stroke-linecap="round" fill="none"/><g class="a-travel" style="--tx:5px"><circle cx="9.5" cy="8.6" r="2.2" fill="url(#gAcc)"/><circle cx="9.5" cy="8.6" r="1.2" fill="url(#gAccS)"/></g>'
+    },
+    {
+      id: 'orb-sleeping', name: 'orb sleeping', ds: 'Half presence, exactly two z glyphs. Wakeable, not attending.',
+      stroke: '<g opacity="0.55"><circle cx="12" cy="13" r="5.5"/></g><path d="M16.5 5.5h3l-3 3h3" stroke-width="1.8"/><path d="M20.2 2.6h2.2l-2.2 2.2h2.2" stroke-width="1.5" opacity="0.55"/>',
+      solid: '<circle cx="12" cy="13" r="6" fill="currentColor" opacity="0.55"/><path d="M16.5 5.5h3l-3 3h3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M20.2 2.6h2.2l-2.2 2.2h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.55"/>',
+      eleg: '<g opacity="0.55"><circle cx="12" cy="13" r="5.5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/><ellipse cx="10.2" cy="10.9" rx="2.3" ry="1.3" fill="url(#gGlass)"/></g><path class="a-rise" d="M16.5 5.5h3l-3 3h3" stroke="url(#gInk)" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path class="a-rise" d="M20.2 2.6h2.2l-2.2 2.2h2.2" stroke="url(#gInk)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.6" style="animation-delay:2.6s"/>'
+    }
+  ];
+
+  const TILE = '<rect x="6" y="6" width="84" height="84" rx="21" fill="url(#gTile)"/>'
+             + '<rect x="6.7" y="6.7" width="82.6" height="82.6" rx="20.3" fill="none" stroke="url(#gRim)" stroke-width="1.4"/>';
+
+  const strokeSvg = (i, s) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.stroke}</svg>`;
+  const solidSvg = (i, s) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none">${i.solid}</svg>`;
+  const elegSvg = (i, s) => `<svg width="${s}" height="${s}" viewBox="0 0 96 96" fill="none">${TILE}<g transform="translate(12 12) scale(3)">${i.eleg}</g></svg>`;
+
+  const study = document.getElementById('study');
+  study.innerHTML = `
+    <div class="row">
+      <div class="cell">Icon</div>
+      <div class="cell">Stroke · 2px rounded</div>
+      <div class="cell">Solid</div>
+      <div class="cell">Elegance · layered tile</div>
+    </div>`;
+  ICONS.forEach(icon => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `
+      <div class="cell head">
+        <span class="nm">${icon.name}</span>
+        <span class="state">shape drawn</span>
+        <span class="ds">${icon.ds}</span>
+      </div>
+      <div class="cell r-stroke"><div class="sizes">
+        <span class="s">${strokeSvg(icon, 48)}<span>48</span></span>
+        <span class="s">${strokeSvg(icon, 24)}<span>24</span></span>
+        <span class="s">${strokeSvg(icon, 16)}<span>16</span></span>
+      </div></div>
+      <div class="cell r-solid"><div class="sizes">
+        <span class="s">${solidSvg(icon, 48)}<span>48</span></span>
+        <span class="s">${solidSvg(icon, 24)}<span>24</span></span>
+        <span class="s">${solidSvg(icon, 16)}<span>16</span></span>
+      </div></div>
+      <div class="cell"><div class="tilewrap">${elegSvg(icon, 116)}</div></div>`;
+    study.appendChild(row);
+  });
+</script>
+</body>
+</html>
