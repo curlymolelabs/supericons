@@ -19,11 +19,11 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-backlog-2026-07-16.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-rollback-2026-07-16.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-backlog-2026-07-16.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-live-2026-07-16.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-completion-2026-07-16.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-rollback-2026-07-16.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -391,6 +391,9 @@ try {
   $backlog = Invoke-PsqlRollupBacklog
   $pendingDayCount = [int]$backlog.pending_day_count
   $refreshDayLimit = [int]$script:Packet.rollup_refresh_days_max
+  if ($pendingDayCount -ne [int]$script:Packet.expected_pending_rollup_days) {
+    throw "Measured rollup backlog $pendingDayCount does not match the approved value $($script:Packet.expected_pending_rollup_days)."
+  }
   if ($pendingDayCount -lt 0 -or $pendingDayCount -gt $refreshDayLimit) {
     throw "Measured rollup backlog $pendingDayCount is outside the approved range 0 to $refreshDayLimit."
   }
@@ -408,7 +411,7 @@ try {
   })
   $preflight = Invoke-AdminLiveGate `
     -Mode legacy `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-preflight-2026-07-16.json'
 
   $candidate = Deploy-Revision `
     -Revision $script:Packet.implementation_revision `
@@ -420,7 +423,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-performance-recovery-live-2026-07-16.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{

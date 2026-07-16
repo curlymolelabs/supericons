@@ -29,7 +29,7 @@ const sourcePath = 'references/verification/admin-dashboard-phase-a-admin-api-fi
 const runnerPath = 'scripts/run-admin-dashboard-phase-a-admin-api-release.ps1';
 const verifierPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-packet.mjs';
 const liveGatePath = 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-inventory-2026-07-16.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-v45-inventory-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Approval fingerprint does not match the source.');
@@ -41,9 +41,9 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_recovery',
-  implementation_revision: '3ce3224205c4ef13f7eb3ad0d83556db4c08c708',
-  implementation_tree: '12070a25c24225b11cd19b0987cf500a23de1218',
+  packet: 'admin_dashboard_phase_a_admin_api_performance_recovery',
+  implementation_revision: 'a342f51f185a7d168772fa7cf542eb7960ee8827',
+  implementation_tree: 'f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83',
   rollback_revision: fields.rollback_revision,
   rollback_tree: fields.rollback_tree,
   runner_sha256: fields.runner_sha256,
@@ -61,10 +61,11 @@ assert.deepEqual(fields, {
   local_verification_sha256: fields.local_verification_sha256,
   inventory_sha256: fields.inventory_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
-  prior_attempt_commit: '332036dc62b350f138c604b97d0ffd7ef5893dc3',
-  prior_preflight_evidence_sha256: '14d794416b2e9437a30af1eea3c5d14f919d1cda46bf6481bacd070e2a52dd9c',
-  prior_live_evidence_sha256: '0aab5e428539579ee054b99b15b47245e68c395a6aaec518a2f8ca67ee3491bb',
-  prior_rollback_evidence_sha256: '0430db340222974562f1b80b6e39e20fdc691e26fb1d87110e17d09c22489524',
+  prior_attempt_commit: 'c79c11d0565b0496825b85829787bb8d7a1c497f',
+  prior_backlog_evidence_sha256: '4f75c43a51e3f7dfb897269e1699bc99b6ec2e90af967e841d310cf202c1221c',
+  prior_preflight_evidence_sha256: '27015218645418fed7e4c1db4407e6deda3759f42a3c244ad5f8174a453e636e',
+  prior_live_evidence_sha256: '370808a5c936f049908764e002652533d1c53d4e5211ca3050f800feeceae6f8',
+  prior_rollback_evidence_sha256: 'f841bafb3c14298db62f62b125e49b634232c0dd8efb5d0c8337f89f92738f7f',
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -75,16 +76,17 @@ assert.deepEqual(fields, {
   pre_function_version: fields.pre_function_version,
   pre_function_updated_at: fields.pre_function_updated_at,
   pre_verify_jwt: 'false',
-  rollup_refresh_days_max: '120',
+  expected_pending_rollup_days: '0',
+  rollup_refresh_days_max: '0',
   rollup_refresh_confirmation_calls: '1',
-  rollup_refresh_calls_max: '121',
+  rollup_refresh_calls_max: '1',
   rollup_refresh_elapsed_limit_minutes: '20',
   queue_24h_p95_limit_ms: '1500',
   queue_all_p95_limit_ms: '1000',
-  queue_warm_samples: '10',
+  queue_warm_samples: '20',
   supabase_candidate_deployments_authorized: '1',
   conditional_rollback_deployments_authorized: '1',
-  rollup_refresh_writes_authorized: 'true',
+  rollup_refresh_writes_authorized: 'false',
   migration_changes_authorized: 'false',
   mcp_search_changes_authorized: 'false',
   railway_changes_authorized: 'false',
@@ -152,9 +154,10 @@ assert.equal(
   fields.prior_attempt_commit,
 );
 for (const [path, field] of [
-  ['references/verification/admin-dashboard-phase-a-admin-api-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-live-2026-07-16.json', 'prior_live_evidence_sha256'],
-  ['references/verification/admin-dashboard-phase-a-admin-api-rollback-2026-07-16.json', 'prior_rollback_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-preflight-2026-07-16.json', 'prior_preflight_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-live-2026-07-16.json', 'prior_live_evidence_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-rollback-2026-07-16.json', 'prior_rollback_evidence_sha256'],
 ]) {
   assert.equal(sha256TextFile(path), fields[field], `${path} recovery evidence hash does not match.`);
 }
@@ -170,6 +173,7 @@ assert.match(runner, /admin-dashboard-phase-a-recovery-postflight\.sql/);
 assert.match(runner, /admin-dashboard-phase-a-rollup-backlog\.sql/);
 assert.match(runner, /PGOPTIONS=-c default_transaction_read_only=on/);
 assert.match(runner, /pending_on_or_before_latest_complete_day/);
+assert.match(runner, /pendingDayCount -ne \[int\]\$script:Packet\.expected_pending_rollup_days/);
 assert.match(runner, /-MaxRefreshDays \$pendingDayCount/);
 assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
 assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
@@ -209,7 +213,15 @@ assert.match(liveGate, /20 \* 60 \* 1000/);
 assert.match(liveGate, /refresh-rollups/);
 assert.match(liveGate, /--max-refresh-days/);
 assert.match(liveGate, /runBoundedRollupRefresh/);
-assert.match(liveGate, /measureQueue\([\s\S]*?count = 10/);
+assert.match(liveGate, /measureQueue\([\s\S]*?count = 20/);
+assert.ok(
+  liveGate.indexOf('summary.queue_24h = queue24h;') < liveGate.indexOf('queue24h.p95_ms < 1500'),
+  '24-hour timing samples must be retained before the performance assertion.',
+);
+assert.ok(
+  liveGate.indexOf('summary.queue_all = queueAll;') < liveGate.indexOf('queueAll.p95_ms < 1000'),
+  'All-time timing samples must be retained before the performance assertion.',
+);
 assert.match(liveGate, /queue24h\.p95_ms < 1500/);
 assert.match(liveGate, /queueAll\.p95_ms < 1000/);
 assert.match(liveGate, /window=1d/);
@@ -254,18 +266,19 @@ console.log(JSON.stringify({
     verify_jwt: false,
   },
   gates: {
-    rollup_refresh_days_max: 120,
+    expected_pending_rollup_days: 0,
+    rollup_refresh_days_max: 0,
     rollup_refresh_confirmation_calls: 1,
-    rollup_refresh_calls_max: 121,
+    rollup_refresh_calls_max: 1,
     rollup_refresh_elapsed_limit_minutes: 20,
     queue_24h_p95_limit_ms: 1500,
     queue_all_p95_limit_ms: 1000,
-    queue_warm_samples: 10,
+    queue_warm_samples: 20,
   },
   mutations: {
     admin_api_candidate_deployments: 1,
     conditional_admin_api_rollback_deployments: 1,
-    rollup_refresh_writes: true,
+    rollup_refresh_writes: false,
     migration: 0,
     mcp_search: 0,
     railway: 0,

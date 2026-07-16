@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-07-15T20:41:16.8442871Z",
+  "verified_at": "2026-07-16T11:39:12.9401804Z",
   "baseline_revision": "31ac66dfecc40e4549f08fc3d9dea99d583a3393",
-  "implementation_revision": "3ce3224205c4ef13f7eb3ad0d83556db4c08c708",
+  "implementation_revision": "a342f51f185a7d168772fa7cf542eb7960ee8827",
   "scope": "Admin dashboard Phase A local implementation",
   "hosted_systems_touched": false,
   "results": {
     "metric_contract": {
       "status": "pass",
-      "tests": 10
+      "tests": 11
     },
     "private_table_migration_policy": {
       "status": "pass",
@@ -30,10 +30,13 @@
     "admin_api": {
       "status": "pass",
       "deno_check": true,
-      "contract_checks": 19,
+      "contract_checks": 21,
       "default_query_origin": "agent_query",
       "bounded_one_day_rollup_refresh": true,
       "partial_rollup_write_replay": true,
+      "modern_origin_queue_skips_legacy_icon_evidence": true,
+      "queue_latency_samples_retained_on_failure": true,
+      "queue_latency_samples_per_window": 20,
       "mcp_search_changed": false
     },
     "hosted_mcp_telemetry": {
