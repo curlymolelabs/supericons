@@ -1,0 +1,136 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Supericons",
+    "subtitle": "Find the right icon faster",
+    "description": "Supericons helps users find SVG icons by meaning, UI role, library, style, or supported language. It can recommend matching icon sets for product screens and retrieve exact SVG markup when an icon ID and library are known.",
+    "category": "DESIGN"
+  },
+  "tools": {
+    "search_icons": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Searches public icon data and returns matching icons without modifying user-visible resources or external systems.",
+        "open_world_justification": "Does not publish content or change public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "recommend_icons": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Computes recommendations from public icon data and returns icon choices without modifying user-visible resources or external systems.",
+        "open_world_justification": "Does not publish content or change public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "get_icon": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Retrieves an exact public icon record and SVG markup without modifying user-visible resources or external systems.",
+        "open_world_justification": "Does not publish content or change public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "list_libraries": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only returns the list of supported icon libraries and public record count.",
+        "open_world_justification": "Does not publish content or change public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "List supported icon libraries before choosing a filter.",
+      "user_prompt": "Which icon libraries can Supericons search? Please list the library keys I can use in later icon requests.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_libraries",
+      "expected_output": "Returns the supported free icon libraries with stable library keys users can reference in later icon requests.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Search for icons matching a common product concept.",
+      "user_prompt": "Find 5 clean SVG icons for a database table view. For each result, show the icon ID, library, and a short reason it fits.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search_icons",
+      "expected_output": "Returns several relevant database or table-related icon choices with icon IDs, source libraries, brief fit reasons, and usable SVG results.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Recommend a coherent icon set for several UI slots.",
+      "user_prompt": "Recommend a coherent icon set for a SaaS admin sidebar with Home, Search, Notifications, Users, Billing, and Settings. Keep the set visually consistent and include one recommended icon per slot.",
+      "file_attachment_urls": null,
+      "tools_triggered": "recommend_icons",
+      "expected_output": "Returns one suitable icon recommendation for each requested slot with clear IDs, libraries, and short reasons that explain the visual fit.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Retrieve a known icon by library and ID.",
+      "user_prompt": "Get the SVG for lucide:sparkles. Show the exact SVG code and briefly explain when this icon is a good fit.",
+      "file_attachment_urls": null,
+      "tools_triggered": "get_icon",
+      "expected_output": "Returns the matching Lucide sparkles icon with exact SVG markup, source metadata, and concise usage guidance.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Search within a requested library and style.",
+      "user_prompt": "Find 3 solid notification icons from Tabler and show the icon ID for each.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search_icons",
+      "expected_output": "Returns Tabler notification-related icon results that prefer solid variants when available, with icon IDs and libraries.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Search using a supported non-English query.",
+      "user_prompt": "Busca iconos para inicio de sesion.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search_icons",
+      "expected_output": "Returns icon choices related to sign-in or login, using the supported multilingual search path.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not trigger for travel booking requests.",
+      "user_prompt": "Book me a flight to Tokyo tomorrow.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because booking travel is outside its supported icon search workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for original logo generation.",
+      "user_prompt": "Create a new logo for my startup from scratch.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because it searches and retrieves existing icon assets rather than generating new logos.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for billing or subscription management.",
+      "user_prompt": "Cancel my Supericons Pro subscription.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because it does not manage billing, subscriptions, refunds, or account access.",
+      "expected_output_url": null
+    }
+  ]
+}
