@@ -15,6 +15,14 @@ Scope:
 - Do not alter verbatim user input, quoted external source material, vendor files, or fidelity-sensitive fixtures solely to satisfy this style rule.
 - When delegating to subagents, pass this rule into every subagent prompt that produces text.
 
+## Branch and worktree discipline
+
+- Each concurrent workstream (session) must use its own branch and its own git worktree. Do not do feature work directly in the main worktree.
+- The main worktree stays clean. It is used only for reviewed integration of completed branches.
+- Never leave uncommitted changes in the main worktree between sessions. If you find them, they belong to another workstream: do not commit, stash, or move them; ask the owner to have the owning session secure them.
+- Never commit temporary, private, credential, or local platform files (for example `.tmp/`, `.netlify/`, `data/*/private/`, local logs). Review untracked files before any broad commit.
+- Integration into main happens by reviewed merge or fast-forward of a verified branch, never by committing loose changes on main.
+
 ## Plain language
 
 - Use simple, easy-to-understand language in user-facing content: HTML pages, UI copy, help text, marketing copy, and public documentation.
