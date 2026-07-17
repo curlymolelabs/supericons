@@ -1,0 +1,149 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "mode": "candidate",
+  "started_at": "2026-07-17T08:31:05.525Z",
+  "rollup_refreshes": [
+    {
+      "attempt": 1,
+      "latency_ms": 2575.8,
+      "complete": true,
+      "refreshed_days": []
+    }
+  ],
+  "rollup_refresh_day_limit": 0,
+  "dashboard_24h": {
+    "latency_ms": 4926.3,
+    "latest_activity_count": 50,
+    "filters": {
+      "window": "1d",
+      "environment": "production",
+      "channel": "all",
+      "query_origin": "agent_query"
+    }
+  },
+  "queue_24h": {
+    "cold": {
+      "cache_mode": "cold",
+      "samples_ms": [
+        1272.9,
+        1189.7,
+        1099.4,
+        1065.7,
+        1109.8,
+        1192.9,
+        1277.7,
+        995.5,
+        1166.6,
+        945.5,
+        1158.9,
+        1338.3,
+        1284.9,
+        1035.8,
+        1023,
+        892.3,
+        1183.8,
+        953.3,
+        1233.9,
+        938.8
+      ],
+      "p95_ms": 1284.9,
+      "max_ms": 1338.3
+    },
+    "warm": {
+      "cache_mode": "warm",
+      "samples_ms": [
+        986.2,
+        1062.1,
+        1076.3,
+        997.6,
+        824.3,
+        1109.4,
+        1253.4,
+        1034.9,
+        922.1,
+        1136.2,
+        1078.1,
+        1065.2,
+        1086.8,
+        940.7,
+        1070.2,
+        27,
+        959,
+        971.8,
+        946.3,
+        1276.1
+      ],
+      "p95_ms": 1253.4,
+      "max_ms": 1276.1
+    }
+  },
+  "queue_all": {
+    "cold": {
+      "cache_mode": "cold",
+      "samples_ms": [
+        649.3,
+        1070.3,
+        1163.9,
+        696.4,
+        788.2,
+        719.1,
+        644.2,
+        733.8,
+        639.5,
+        732.3,
+        659.9,
+        846.1,
+        702.6,
+        692.9,
+        765.1,
+        675.9,
+        672.6,
+        650.1,
+        636.1,
+        635.1
+      ],
+      "p95_ms": 1070.3,
+      "max_ms": 1163.9
+    },
+    "warm": {
+      "cache_mode": "warm",
+      "samples_ms": [
+        886.5,
+        691,
+        666.5,
+        658,
+        726.7,
+        43.5,
+        588.3,
+        713,
+        554.2,
+        858.5,
+        1039.7,
+        695.5,
+        686.2,
+        648.5,
+        731.5,
+        672.1,
+        722.6,
+        648.4,
+        747.9,
+        683.2
+      ],
+      "p95_ms": 886.5,
+      "max_ms": 1039.7
+    }
+  },
+  "performance_contract": {
+    "queue_24h_p95_limit_ms": 1500,
+    "queue_all_p95_limit_ms": 1000,
+    "cold_samples_each": 20,
+    "warm_samples_each": 20,
+    "rollup_refresh_elapsed_limit_minutes": 20,
+    "rollup_refresh_day_limit": 0,
+    "rollup_refresh_call_limit": 1
+  },
+  "status": "failed",
+  "error": "Cold all-time queue p95 was 1070.3 ms.",
+  "finished_at": "2026-07-17T08:32:25.589Z"
+}
