@@ -33,8 +33,13 @@ const preflightClassifierPath = 'scripts/admin-dashboard-admin-api-preflight-cla
 const preflightClassifierTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-classifier.mjs';
 const preflightLiveTestPath = 'scripts/verify-admin-dashboard-phase-a-admin-api-preflight-live.mjs';
 const railwayLiveGatePath = 'scripts/verify-admin-dashboard-phase-a-railway-live.mjs';
-const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-local-verification-2026-07-16.json';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-v47-inventory-2026-07-16.json';
+const databaseHealthSqlPath = 'scripts/sql/admin-dashboard-phase-a-measured-health.sql';
+const databaseHealthParserPath = 'scripts/admin-dashboard-phase-a-db-health-parser.mjs';
+const databaseHealthParserTestPath = 'scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs';
+const searchHealthPath = 'scripts/verify-admin-dashboard-phase-a-search-health.mjs';
+const searchHealthLocalTestPath = 'scripts/verify-admin-dashboard-phase-a-search-health-local.mjs';
+const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-local-verification-2026-07-17.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-inventory-2026-07-17.json';
 const railwayCompletionPath = 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-completion-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
@@ -47,7 +52,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_recovery_2u',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery_2v',
   implementation_revision: 'a342f51f185a7d168772fa7cf542eb7960ee8827',
   implementation_tree: 'f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83',
   rollback_revision: fields.rollback_revision,
@@ -59,6 +64,11 @@ assert.deepEqual(fields, {
   preflight_classifier_test_sha256: fields.preflight_classifier_test_sha256,
   preflight_live_test_sha256: fields.preflight_live_test_sha256,
   railway_live_gate_sha256: fields.railway_live_gate_sha256,
+  database_health_sql_sha256: fields.database_health_sql_sha256,
+  database_health_parser_sha256: fields.database_health_parser_sha256,
+  database_health_parser_test_sha256: fields.database_health_parser_test_sha256,
+  search_health_gate_sha256: fields.search_health_gate_sha256,
+  search_health_local_test_sha256: fields.search_health_local_test_sha256,
   rollup_gate_helper_sha256: fields.rollup_gate_helper_sha256,
   rollup_gate_test_sha256: fields.rollup_gate_test_sha256,
   backlog_sql_sha256: fields.backlog_sql_sha256,
@@ -69,6 +79,8 @@ assert.deepEqual(fields, {
   api_contract_gate_sha256: fields.api_contract_gate_sha256,
   metrics_gate_sha256: fields.metrics_gate_sha256,
   local_verification_sha256: fields.local_verification_sha256,
+  preparation_railway_live_sha256: fields.preparation_railway_live_sha256,
+  preparation_search_health_sha256: fields.preparation_search_health_sha256,
   inventory_sha256: fields.inventory_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
   railway_protection_completion_commit: 'cf21f1675713bf0e6573ac6762fbb719f09a6361',
@@ -102,9 +114,11 @@ assert.deepEqual(fields, {
   queue_warm_samples: '20',
   legacy_preflight_max_latency_ms: '10000',
   legacy_preflight_request_timeout_ms: '12000',
-  legacy_preflight_policy: 'block_timeout_slow_response_auth_contract_and_network_allow_fast_5xx',
-  disk_io_window_confirmation: 'required',
-  railway_protection_prerequisite: 'required_live_no_synthetic_calls',
+  legacy_preflight_policy: 'require_healthy_http_200_under_10000ms',
+  database_health_policy: 'read_only_three_indexed_1000ms_one_window_2000ms',
+  search_health_policy: 'one_warmup_two_measured_strict_lucide_under_2000ms',
+  disk_io_banner_policy: 'record_only',
+  railway_protection_prerequisite: 'required_live_closed_zero_failures_no_synthetic_calls',
   rollback_environmental_failure_annotation: 'required',
   supabase_candidate_deployments_authorized: '1',
   conditional_rollback_deployments_authorized: '1',
@@ -132,6 +146,11 @@ const textHashes = [
   [preflightClassifierTestPath, 'preflight_classifier_test_sha256'],
   [preflightLiveTestPath, 'preflight_live_test_sha256'],
   [railwayLiveGatePath, 'railway_live_gate_sha256'],
+  [databaseHealthSqlPath, 'database_health_sql_sha256'],
+  [databaseHealthParserPath, 'database_health_parser_sha256'],
+  [databaseHealthParserTestPath, 'database_health_parser_test_sha256'],
+  [searchHealthPath, 'search_health_gate_sha256'],
+  [searchHealthLocalTestPath, 'search_health_local_test_sha256'],
   ['scripts/admin-dashboard-rollup-refresh-gate.mjs', 'rollup_gate_helper_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs', 'rollup_gate_test_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'backlog_sql_sha256'],
@@ -142,6 +161,10 @@ const textHashes = [
   ['scripts/verify-admin-dashboard-phase-a-api.mjs', 'api_contract_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-metrics.mjs', 'metrics_gate_sha256'],
   [localVerificationPath, 'local_verification_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preparation-railway-live-2026-07-17.json',
+    'preparation_railway_live_sha256'],
+  ['references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preparation-search-health-2026-07-17.json',
+    'preparation_search_health_sha256'],
   [inventoryPath, 'inventory_sha256'],
   ['scripts/capture-admin-dashboard-phase-a-admin-api-inventory.ps1', 'inventory_capture_sha256'],
   [railwayCompletionPath, 'railway_protection_completion_sha256'],
@@ -184,6 +207,7 @@ assert.equal(railwayLive?.health?.hosted_search_resilience?.max_concurrent,
   Number(fields.railway_protection_max_concurrent));
 assert.equal(railwayLive?.health?.hosted_search_resilience?.max_queued,
   Number(fields.railway_protection_max_queued));
+assert.equal(railwayLive?.health?.hosted_search_resilience?.consecutive_failures, 0);
 assert.equal(railwayCompletion.rollback_used, false);
 
 assert.equal(
@@ -216,10 +240,17 @@ assert.match(runner, /\$refreshDayLimit = \$pendingDayCount/);
 assert.match(runner, /pendingDayCount -gt \[int\]\$script:Packet\.rollup_refresh_days_max/);
 assert.match(runner, /-MaxRefreshDays \$pendingDayCount/);
 assert.match(runner, /-Mode preflight/);
-assert.match(runner, /'degraded_proceed'/);
 assert.match(runner, /\$PreflightMaxLatencyMs = 10000/);
 assert.match(runner, /--preflight-max-latency-ms', "\$PreflightMaxLatencyMs"/);
-assert.match(runner, /\[switch\]\$DiskIoWindowConfirmed/);
+assert.match(runner, /\[ValidateSet\('visible', 'absent', 'unknown'\)\]/);
+assert.match(runner, /\[string\]\$DiskIoBannerObserved = 'unknown'/);
+assert.equal(runner.includes('DiskIoWindowConfirmed'), false);
+assert.match(runner, /disk_io_banner_is_gate = \$false/);
+assert.match(runner, /admin-dashboard-phase-a-measured-health\.sql/);
+assert.match(runner, /admin-dashboard-phase-a-db-health-parser\.mjs/);
+assert.match(runner, /verify-admin-dashboard-phase-a-search-health\.mjs/);
+assert.match(runner, /-Mode preflight[\s\S]*?Invoke-StrictSearchHealth[\s\S]*?Deploy-Revision/);
+assert.equal(runner.includes("'degraded_proceed'"), false);
 assert.match(runner, /--expect-hosted-search-resilience', 'enabled'/);
 assert.match(runner, /'--allow-active'/);
 assert.match(runner, /admin_dashboard_phase_a_admin_api_rollback_verification_failure/);
@@ -233,7 +264,8 @@ assert.match(runner, /\$LinkedProjectPath = Join-Path \$Root 'supabase\/\.temp\/
 assert.match(runner, /if \("\$\(\$linkedProject\.ref\)" -ne \$ProjectRef\)/);
 assert.match(runner, /if \(-not \$poolerUrl\.Contains\(\$ProjectRef\)\)/);
 assert.match(runner, /\$querySeparator = if \(\$poolerUrl\.Contains\('\?'\)\) \{ '&' \} else \{ '\?' \}/);
-assert.equal(runner.includes('mcp-search'), false, 'Runner must not deploy mcp-search.');
+assert.equal(/supabase\s+functions\s+deploy\s+mcp-search/i.test(runner), false,
+  'Runner must not deploy mcp-search.');
 
 for (const prohibited of [
   /supabase\s+(?:db|migration|link|secrets?)\b/i,
@@ -287,7 +319,52 @@ const railwayLiveGate = normalizedText(readFileSync(railwayLiveGatePath, 'utf8')
 assert.match(railwayLiveGate, /const allowActive = process\.argv\.includes\('--allow-active'\)/);
 assert.match(railwayLiveGate, /health\.hosted_search\.active >= 0 && health\.hosted_search\.active <= 2/);
 assert.match(railwayLiveGate, /health\.hosted_search\.queued >= 0 && health\.hosted_search\.queued <= 8/);
+assert.match(railwayLiveGate, /health\.hosted_search\?\.consecutive_failures, 0/);
 assert.match(railwayLiveGate, /summary\.synthetic_tool_calls = 0/);
+
+const databaseHealthSql = normalizedText(readFileSync(databaseHealthSqlPath, 'utf8'));
+assert.match(databaseHealthSql, /begin read only;/i);
+assert.match(databaseHealthSql, /set local statement_timeout = '3000ms';/i);
+for (const marker of [
+  'PHASE_A_HEALTH|recent_mcp_usage',
+  'PHASE_A_HEALTH|recent_search_audit',
+  'PHASE_A_HEALTH|latest_rollup_overview',
+  'PHASE_A_HEALTH|recent_telemetry_window',
+]) {
+  assert.ok(databaseHealthSql.includes(marker), `Missing database health marker: ${marker}`);
+}
+assert.match(databaseHealthSql, /rollback;/i);
+for (const prohibited of [
+  /\binsert\s+into\b/i,
+  /\bupdate\s+public\./i,
+  /\bdelete\s+from\b/i,
+  /\bdrop\s+(?:table|index|function)\b/i,
+  /\balter\s+table\b/i,
+  /\bcreate\s+(?:table|index|function)\b/i,
+]) {
+  assert.equal(prohibited.test(databaseHealthSql), false,
+    `Measured database health SQL is not read-only: ${prohibited}`);
+}
+
+const searchHealth = normalizedText(readFileSync(searchHealthPath, 'utf8'));
+assert.match(searchHealth, /query: 'calendar'/);
+assert.match(searchHealth, /library: 'lucide'/);
+assert.match(searchHealth, /library_mode: 'strict'/);
+assert.match(searchHealth, /limit: 3/);
+assert.match(searchHealth, /channel: 'internal_test'/);
+assert.match(searchHealth, /environment: 'production'/);
+assert.match(searchHealth, /readPositiveInteger\('measured-count', 2, 2, 5\)/);
+assert.match(searchHealth, /readPositiveInteger\('latency-limit-ms', 2000, 1, 10000\)/);
+assert.match(searchHealth, /measurement\.latency_ms < latencyLimitMs/);
+
+execFileSync('node', [databaseHealthParserTestPath], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
+execFileSync('node', [searchHealthLocalTestPath], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
 
 execFileSync('node', [preflightClassifierTestPath], {
   encoding: 'utf8',
@@ -341,6 +418,10 @@ console.log(JSON.stringify({
     rollup_refresh_calls_max: 121,
     rollup_refresh_elapsed_limit_minutes: 20,
     legacy_preflight_max_latency_ms: 10000,
+    database_health_indexed_limit_ms: 1000,
+    database_health_window_limit_ms: 2000,
+    strict_search_measured_count: 2,
+    strict_search_latency_limit_ms: 2000,
     queue_24h_p95_limit_ms: 1500,
     queue_all_p95_limit_ms: 1000,
     queue_warm_samples: 20,

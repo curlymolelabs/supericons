@@ -42,6 +42,7 @@ try {
   assert.equal(health.material_assets?.asset_count, expectedAssetCount);
   if (expectedResilience === 'enabled') {
     assert.equal(health.hosted_search?.state, 'closed');
+    assert.equal(health.hosted_search?.consecutive_failures, 0);
     assert.equal(health.hosted_search?.max_concurrent, 2);
     assert.equal(health.hosted_search?.max_queued, 8);
     assert.ok(Number.isInteger(health.hosted_search?.active));

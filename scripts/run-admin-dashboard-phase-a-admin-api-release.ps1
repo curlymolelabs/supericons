@@ -5,7 +5,8 @@ param(
 
   [switch]$Execute,
 
-  [switch]$DiskIoWindowConfirmed
+  [ValidateSet('visible', 'absent', 'unknown')]
+  [string]$DiskIoBannerObserved = 'unknown'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,6 +15,7 @@ Set-StrictMode -Version Latest
 $ProjectRef = 'kcjmkakdhsqplvasgkjv'
 $FunctionName = 'admin-api'
 $AdminUrl = "https://$ProjectRef.supabase.co/functions/v1/$FunctionName"
+$SearchUrl = "https://$ProjectRef.supabase.co/functions/v1/mcp-search"
 $PreflightMaxLatencyMs = 10000
 $PostgresImage = 'public.ecr.aws/supabase/postgres:17.6.1.132'
 $Root = Split-Path -Parent $PSScriptRoot
@@ -22,13 +24,15 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-railway-protection-2026-07-16.json'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-backlog-2026-07-16.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-preflight-2026-07-16.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-live-2026-07-16.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-completion-2026-07-16.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-rollback-2026-07-16.json'
-$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-rollback-failure-2026-07-16.json'
+$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-railway-protection-2026-07-17.json'
+$DatabaseHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-database-health-2026-07-17.json'
+$SearchHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-search-health-2026-07-17.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-backlog-2026-07-17.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preflight-2026-07-17.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-live-2026-07-17.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-completion-2026-07-17.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-rollback-2026-07-17.json'
+$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-rollback-failure-2026-07-17.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -255,6 +259,55 @@ function Invoke-PsqlRollupBacklog {
   }
 }
 
+function Invoke-PsqlMeasuredHealth {
+  $rawOutputPath = Join-Path $Workspace 'database-health-psql.txt'
+  $arguments = @(
+    'run', '--rm', '-i', '-e', 'PGPASSWORD',
+    '-e', 'PGOPTIONS=-c default_transaction_read_only=on',
+    '--mount', "type=bind,source=$SqlDirectory,target=/checks,readonly",
+    $PostgresImage,
+    'psql', $script:DatabaseUrl, '-X', '-v', 'ON_ERROR_STOP=1',
+    '-f', '/checks/admin-dashboard-phase-a-measured-health.sql'
+  )
+  $previousErrorActionPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  $output = @(& docker @arguments 2>&1)
+  $psqlExitCode = $LASTEXITCODE
+  $ErrorActionPreference = $previousErrorActionPreference
+  [System.IO.File]::WriteAllText($rawOutputPath, "$($output -join "`n")`n", $Utf8NoBom)
+
+  $previousErrorActionPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  $parserOutput = @(& node 'scripts/admin-dashboard-phase-a-db-health-parser.mjs' `
+    --input $rawOutputPath `
+    --output $DatabaseHealthEvidence `
+    --approval-fingerprint $ApprovalFingerprint `
+    --sql-exit-code "$psqlExitCode" 2>&1)
+  $parserExitCode = $LASTEXITCODE
+  $ErrorActionPreference = $previousErrorActionPreference
+  if ($parserExitCode -ne 0) {
+    throw "The measured read-only database health gate blocked. $($parserOutput -join ' ')"
+  }
+  return Get-Content -LiteralPath $DatabaseHealthEvidence -Raw | ConvertFrom-Json
+}
+
+function Invoke-StrictSearchHealth {
+  Invoke-CheckedCommand -FilePath 'node' -Arguments @(
+    'scripts/verify-admin-dashboard-phase-a-search-health.mjs',
+    '--search-url', $SearchUrl,
+    '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-search-health-2026-07-17.json',
+    '--warmup-count', '1',
+    '--measured-count', '2',
+    '--latency-limit-ms', '2000',
+    '--request-timeout-ms', '5000'
+  )
+  $evidence = Get-Content -LiteralPath $SearchHealthEvidence -Raw | ConvertFrom-Json
+  if ($evidence.status -ne 'ok') {
+    throw 'The strict production search health gate blocked.'
+  }
+  return $evidence
+}
+
 function Invoke-AdminLiveGate {
   param(
     [Parameter(Mandatory = $true)][ValidateSet('preflight', 'legacy', 'candidate')][string]$Mode,
@@ -276,7 +329,7 @@ function Invoke-AdminLiveGate {
   }
   Invoke-CheckedCommand -FilePath 'node' -Arguments $arguments
   $evidence = Get-Content -LiteralPath (Join-Path $Root $OutputPath) -Raw | ConvertFrom-Json
-  $allowedStatuses = if ($Mode -eq 'preflight') { @('ok', 'degraded_proceed') } else { @('ok') }
+  $allowedStatuses = @('ok')
   if ($allowedStatuses -notcontains $evidence.status) {
     throw "The $Mode admin API live contract failed."
   }
@@ -336,8 +389,8 @@ function Invoke-Rollback {
       rollback_live_contract = $rollbackLive
       rollback_verification_error = $rollbackError
       environmental_signature = if ($hasEnvironmentalSignature) { 'possible_shared_database_degradation' } else { 'not_identified' }
-      disk_io_banner_confirmed_absent_before_execution = [bool]$DiskIoWindowConfirmed
-      disk_io_banner_state_at_failure = 'not_rechecked'
+      disk_io_banner_observed_before_execution = $DiskIoBannerObserved
+      disk_io_banner_is_gate = $false
       code_restoration = 'exact_pinned_revision_deployed_and_active'
       service_restoration = 'not_verified'
       started_at = $rollbackStartedAt
@@ -362,9 +415,6 @@ function Invoke-Rollback {
 if (-not $Execute) {
   throw 'Pass -Execute only after independent audit has cleared the exact packet fingerprint.'
 }
-if (-not $DiskIoWindowConfirmed) {
-  throw 'Confirm that the Supabase dashboard shows no Disk IO Budget warning, then pass -DiskIoWindowConfirmed.'
-}
 
 Set-Location $Root
 $script:Packet = Read-FingerprintFields
@@ -385,7 +435,7 @@ if ((git rev-parse "$($script:Packet.rollback_revision)`^{tree}") -ne $script:Pa
   throw 'The rollback tree does not match the packet.'
 }
 
-foreach ($path in @($RailwayProtectionEvidence, $BacklogEvidence, $PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence, $RollbackFailureEvidence)) {
+foreach ($path in @($RailwayProtectionEvidence, $DatabaseHealthEvidence, $SearchHealthEvidence, $BacklogEvidence, $PreflightEvidence, $LiveEvidence, $CompletionEvidence, $RollbackEvidence, $RollbackFailureEvidence)) {
   if (Test-Path -LiteralPath $path) {
     throw "This packet is write-once and evidence already exists: $path"
   }
@@ -409,6 +459,8 @@ Invoke-CheckedCommand -FilePath 'deno' -Arguments @('check', 'supabase/functions
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-metrics.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-api.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs')
+Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-search-health-local.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @(
   'scripts/verify-admin-dashboard-phase-a-railway-live.mjs',
   '--mcp-url', 'https://mcp.supericons.dev/mcp',
@@ -416,7 +468,7 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @(
   '--expect-material-assets', '8524',
   '--expect-hosted-search-resilience', 'enabled',
   '--allow-active',
-  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-railway-protection-2026-07-16.json'
+  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-railway-protection-2026-07-17.json'
 )
 $railwayProtection = Get-Content -LiteralPath $RailwayProtectionEvidence -Raw | ConvertFrom-Json
 
@@ -458,6 +510,7 @@ try {
   docker info --format '{{.ServerVersion}}' | Out-Null
   if ($LASTEXITCODE -ne 0) { throw 'Docker is not available.' }
   Invoke-PsqlPostflight
+  $databaseHealth = Invoke-PsqlMeasuredHealth
   $backlog = Invoke-PsqlRollupBacklog
   $pendingDayCount = [int]$backlog.pending_day_count
   $refreshDayLimit = $pendingDayCount
@@ -479,7 +532,8 @@ try {
   })
   $preflight = Invoke-AdminLiveGate `
     -Mode preflight `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-preflight-2026-07-16.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preflight-2026-07-17.json'
+  $searchHealth = Invoke-StrictSearchHealth
 
   $candidate = Deploy-Revision `
     -Revision $script:Packet.implementation_revision `
@@ -491,7 +545,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2u-live-2026-07-16.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-live-2026-07-17.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
@@ -504,8 +558,12 @@ try {
     candidate_updated_at = $candidate.updated_at
     rollup_backlog = $backlog
     railway_protection = $railwayProtection
+    database_measured_health = $databaseHealth
+    strict_search_health = $searchHealth
     preflight = $preflight
     preflight_max_latency_ms = $PreflightMaxLatencyMs
+    disk_io_banner_observed_before_execution = $DiskIoBannerObserved
+    disk_io_banner_is_gate = $false
     live_contract = $live
     rollback_used = $false
     started_at = $startedAt
