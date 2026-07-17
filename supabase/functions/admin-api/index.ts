@@ -13,6 +13,7 @@ import {
   readMcpQueryOrigin,
   summarizeRawSearchAttempts,
 } from '../../../lib/admin-dashboard-metrics.js';
+import { createBoundedAsyncCache } from '../../../lib/bounded-async-cache.js';
 import knownSearchDefects from '../../../data/admin/known-search-defects.json' with { type: 'json' };
 
 type AuditOutcome = 'started' | 'succeeded' | 'failed';
@@ -83,6 +84,8 @@ const DELETE_CANCELABLE_STATUSES = new Set(['active', 'trialing', 'past_due', 'u
 const EVIDENCE_PAGE_SIZE = 1000;
 const QUERY_QUEUE_MAX_PAGE_SIZE = 100;
 const QUERY_EXPORT_MAX_ROWS = 2000;
+const QUERY_QUEUE_CACHE_TTL_MS = 30_000;
+const QUERY_QUEUE_CACHE_MAX_ENTRIES = 64;
 const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
@@ -111,6 +114,10 @@ const INTELLIGENCE_WINDOWS: Record<IntelligenceWindowKey, IntelligenceWindow> = 
   '1y': { key: '1y', shortLabel: '1y', longLabel: 'Last 12 months', days: 365 },
   all: { key: 'all', shortLabel: 'All time', longLabel: 'All recorded history', days: null },
 };
+const queryQueueCache = createBoundedAsyncCache({
+  ttlMs: QUERY_QUEUE_CACHE_TTL_MS,
+  maxEntries: QUERY_QUEUE_CACHE_MAX_ENTRIES,
+});
 
 function getAllowedOrigins() {
   const configured = (Deno.env.get('ADMIN_ALLOWED_ORIGINS') || '')
@@ -867,6 +874,14 @@ async function fetchMcpUsageEventRows(
   }
 }
 
+function buildQueryQueueCacheKey(url: URL) {
+  const params = [...url.searchParams.entries()]
+    .sort(([leftKey, leftValue], [rightKey, rightValue]) => (
+      leftKey.localeCompare(rightKey) || leftValue.localeCompare(rightValue)
+    ));
+  return `${url.pathname}?${new URLSearchParams(params).toString()}`;
+}
+
 async function fetchTelemetryEvidenceRows(
   adminClient: SupabaseClient,
   since: string | null,
@@ -1222,7 +1237,9 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 }
 
 async function handlePhaseARollupRefresh(req: Request, adminClient: SupabaseClient) {
-  return jsonResponse(req, await ensureCompletedDayRollups(adminClient));
+  const payload = await ensureCompletedDayRollups(adminClient);
+  queryQueueCache.clear();
+  return jsonResponse(req, payload);
 }
 
 function updateSeenRange(entry: Record<string, unknown>, createdAt: string | null) {
@@ -3262,7 +3279,11 @@ async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClien
 }
 
 async function handleIntelligenceSearchQueue(req: Request, adminClient: SupabaseClient, url: URL) {
-  const payload = await buildQueryQueuePayload(adminClient, url);
+  const cacheKey = buildQueryQueueCacheKey(url);
+  const payload = await queryQueueCache.getOrCreate(
+    cacheKey,
+    () => buildQueryQueuePayload(adminClient, url),
+  );
   return jsonResponse(req, payload);
 }
 
@@ -3443,6 +3464,7 @@ async function handleIntelligenceSearchExport(req: Request, adminClient: Supabas
 async function handleIntelligenceSearchReview(req: Request, adminClient: SupabaseClient, body: JsonRecord) {
   try {
     const review = await upsertQueryReview(adminClient, body);
+    queryQueueCache.clear();
     return jsonResponse(req, {
       success: true,
       review,

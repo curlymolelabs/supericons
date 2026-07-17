@@ -85,6 +85,22 @@ requirePattern(
   /approximate_low_results_excluded_from_headline_rate: true/,
   'The API must disclose that approximate low results are not headline data.',
 );
+requirePattern(
+  /createBoundedAsyncCache\(\{[\s\S]*?ttlMs: QUERY_QUEUE_CACHE_TTL_MS,[\s\S]*?maxEntries: QUERY_QUEUE_CACHE_MAX_ENTRIES/,
+  'Warm queue responses must use the bounded short-lived cache.',
+);
+requirePattern(
+  /handleIntelligenceSearchQueue[\s\S]*?queryQueueCache\.getOrCreate\([\s\S]*?buildQueryQueuePayload/,
+  'The queue route must coalesce and cache identical payload work.',
+);
+requirePattern(
+  /handlePhaseARollupRefresh[\s\S]*?queryQueueCache\.clear\(\)/,
+  'A rollup refresh must clear cached queue payloads.',
+);
+requirePattern(
+  /handleIntelligenceSearchReview[\s\S]*?queryQueueCache\.clear\(\)/,
+  'A query review write must clear cached queue payloads.',
+);
 
 const compactActivity = source.match(/function compactPhaseAActivityRow[\s\S]*?\n}\n/)?.[0] || '';
 assert.ok(compactActivity, 'The Phase A activity projection is missing.');
@@ -119,6 +135,7 @@ console.log(JSON.stringify({
   known_defect_registry: true,
   bounded_raw_and_rollup_paths: true,
   compact_activity_contract: true,
+  bounded_queue_cache: true,
   mcp_search_changed: false,
-  checks: 21,
+  checks: 25,
 }, null, 2));
