@@ -222,7 +222,15 @@
     .panel-body { padding: 16px 17px; }
     .panel.is-collapsed > :not(.panel-head) { display: none; }
     .panel.is-collapsed .panel-head { border-bottom: 0; }
-    .panel-toggle { min-width: 72px; }
+    .icon-button {
+      width: 34px;
+      min-width: 34px;
+      height: 34px;
+      padding: 0;
+      display: inline-grid;
+      place-items: center;
+    }
+    .icon-button svg { width: 17px; height: 17px; }
     .row-limit-control {
       display: inline-flex;
       align-items: center;
@@ -240,8 +248,8 @@
       padding: 0 8px;
       font-size: 12px;
     }
-    .chart { min-height: 224px; display: grid; place-items: center; color: var(--dim); }
-    .chart svg { width: 100%; height: 220px; overflow: visible; }
+    .chart { min-height: 244px; display: grid; place-items: center; color: var(--dim); }
+    .chart svg { width: 100%; height: 240px; overflow: visible; }
     .chart-empty { padding: 32px 16px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.6; }
     .table-wrap { width: 100%; overflow-x: auto; }
     .scroll-region {
@@ -259,6 +267,37 @@
       background: var(--panel);
       box-shadow: 0 1px 0 var(--line);
     }
+    .pagination {
+      min-height: 52px;
+      padding: 10px 14px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .pagination[hidden] { display: none; }
+    .pagination-summary { color: var(--dim); font-size: 11px; white-space: nowrap; }
+    .pagination-pages { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+    .pagination-button {
+      min-width: 32px;
+      height: 31px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--muted);
+      padding: 0 8px;
+      cursor: pointer;
+      font: 700 11px/1 ui-sans-serif, system-ui, sans-serif;
+    }
+    .pagination-button:hover:not(:disabled), .pagination-button.active {
+      border-color: var(--orange);
+      color: var(--text);
+    }
+    .pagination-button.active { background: var(--orange-soft); color: var(--orange); }
+    .pagination-button:disabled { cursor: default; opacity: 0.4; }
+    .pagination-step { min-width: 58px; }
+    .pagination-ellipsis { min-width: 22px; color: var(--dim); text-align: center; line-height: 31px; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
     th { padding: 10px 12px; color: var(--dim); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; white-space: nowrap; }
     td { padding: 11px 12px; border-top: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
@@ -562,7 +601,7 @@
             <div><h1>Audience</h1><div class="section-subtitle">Who they are, where they are, and the path from anonymous to Pro.</div></div>
           </div>
           <article class="panel" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Client activity follows the selected period. Registered users lists every account.</div></div></div>
+            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Search activity links to an account only when the request sends an API key. Registered users lists every account.</div></div></div>
             <div class="panel-body">
               <div class="funnel">
                 <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div></div>
@@ -575,7 +614,7 @@
           </article>
 
           <article class="panel" data-row-key="registeredUsers" data-row-label="Registered users" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Registered users</div><div class="panel-subtitle" id="registeredUsersSubtitle">All registered accounts; activity follows the selected period</div></div><button class="small-button" data-export="registered-users" type="button">CSV</button></div>
+            <div class="panel-head"><div><div class="panel-title">Registered users</div><div class="panel-subtitle" id="registeredUsersSubtitle">All registered accounts; activity follows the selected period</div></div><div class="panel-actions"><button class="small-button icon-button" id="toggleRegisteredEmails" type="button" aria-label="Show user emails" title="Show user emails"></button><button class="small-button" data-export="registered-users" type="button">CSV</button></div></div>
             <div class="table-wrap scroll-region" id="registeredUsers"><div class="empty">Loading registered users</div></div>
           </article>
 

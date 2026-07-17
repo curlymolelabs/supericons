@@ -9,6 +9,8 @@ const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
 const DEFAULT_ROW_LIMIT = 25;
 const ROW_LIMIT_OPTIONS = [25, 50, 100];
+const CHART_FONT_SIZE = 14;
+const SERVER_PAGINATED_LISTS = new Set(['queries', 'clients']);
 
 const WINDOW_LABELS = {
   '1d': 'Last 24 hours',
@@ -51,6 +53,7 @@ const state = {
   explorerQuery: '',
   explorerIssue: '',
   topList: 'searched',
+  showRegisteredEmails: false,
   rowLimits: {
     topList: DEFAULT_ROW_LIMIT,
     activity: DEFAULT_ROW_LIMIT,
@@ -61,11 +64,22 @@ const state = {
     registeredUsers: DEFAULT_ROW_LIMIT,
     clients: DEFAULT_ROW_LIMIT,
   },
+  pages: {
+    topList: 1,
+    activity: 1,
+    queries: 1,
+    worklist: 1,
+    iconRequests: 1,
+    contact: 1,
+    registeredUsers: 1,
+    clients: 1,
+  },
   data: {
     activity: null,
     overview: null,
     search: null,
     audience: null,
+    accounts: null,
   },
   errors: {},
   loading: new Set(),
@@ -146,8 +160,107 @@ function rowLimit(key) {
   return ROW_LIMIT_OPTIONS.includes(value) ? value : DEFAULT_ROW_LIMIT;
 }
 
-function visibleRows(key, rows) {
-  return normalizeList(rows).slice(0, rowLimit(key));
+function currentPage(key) {
+  return Math.max(1, Number(state.pages[key]) || 1);
+}
+
+function pageSequence(page, pageCount) {
+  if (pageCount <= 7) return Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pages = new Set([1, 2, 3, page - 1, page, page + 1, pageCount]);
+  const ordered = [...pages].filter((value) => value >= 1 && value <= pageCount).sort((a, b) => a - b);
+  const output = [];
+  for (const value of ordered) {
+    if (output.length && value - output[output.length - 1] > 1) output.push('ellipsis');
+    output.push(value);
+  }
+  return output;
+}
+
+function iconSvg(name) {
+  const paths = {
+    collapse: '<path d="m6 14 6-6 6 6"/>',
+    expand: '<path d="m6 10 6 6 6-6"/>',
+    eye: '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/>',
+    eyeOff: '<path d="m3 3 18 18"/><path d="M10.6 6.2A11.8 11.8 0 0 1 12 6c6.5 0 10 6 10 6a18.4 18.4 0 0 1-2.2 3"/><path d="M6.6 6.6C3.6 8.4 2 12 2 12s3.5 6 10 6a10.6 10.6 0 0 0 3.4-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+  };
+  return `<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
+}
+
+function renderPagination(key, total, pageCount, page = currentPage(key)) {
+  const element = document.querySelector(`[data-pagination="${key}"]`);
+  if (!element) return;
+  if (pageCount <= 1 || total <= rowLimit(key)) {
+    element.innerHTML = '';
+    element.hidden = true;
+    return;
+  }
+  const safePage = Math.min(Math.max(1, page), pageCount);
+  state.pages[key] = safePage;
+  const start = (safePage - 1) * rowLimit(key) + 1;
+  const end = Math.min(total, safePage * rowLimit(key));
+  const pages = pageSequence(safePage, pageCount).map((value) => (
+    value === 'ellipsis'
+      ? '<span class="pagination-ellipsis" aria-hidden="true">...</span>'
+      : `<button class="pagination-button${value === safePage ? ' active' : ''}" type="button" data-page-number="${value}"${value === safePage ? ' aria-current="page"' : ''}>${value}</button>`
+  )).join('');
+  element.hidden = false;
+  element.innerHTML = `
+    <span class="pagination-summary">${formatNumber(start)}-${formatNumber(end)} of ${formatNumber(total)}</span>
+    <div class="pagination-pages">
+      <button class="pagination-button pagination-step" type="button" data-page-prev aria-label="Previous page"${safePage === 1 ? ' disabled' : ''}>Previous</button>
+      ${pages}
+      <button class="pagination-button pagination-step" type="button" data-page-next aria-label="Next page"${safePage === pageCount ? ' disabled' : ''}>Next</button>
+    </div>
+  `;
+}
+
+function rowsForPage(key, rows, serverPagination = null) {
+  const values = normalizeList(rows);
+  if (serverPagination) {
+    const page = number(serverPagination.page) || currentPage(key);
+    const total = number(serverPagination.total) || values.length;
+    const pageCount = number(serverPagination.page_count) || Math.max(1, Math.ceil(total / rowLimit(key)));
+    renderPagination(key, total, pageCount, page);
+    return values.slice(0, rowLimit(key));
+  }
+  const total = values.length;
+  const pageCount = Math.max(1, Math.ceil(total / rowLimit(key)));
+  const page = Math.min(currentPage(key), pageCount);
+  state.pages[key] = page;
+  renderPagination(key, total, pageCount, page);
+  const start = (page - 1) * rowLimit(key);
+  return values.slice(start, start + rowLimit(key));
+}
+
+function resetPages() {
+  Object.keys(state.pages).forEach((key) => {
+    state.pages[key] = 1;
+  });
+}
+
+function maskIdentifier(value) {
+  const identifier = String(value || '').trim();
+  if (!identifier.includes('@')) return identifier ? `${identifier.slice(0, 8)}...` : 'Hidden';
+  const [local, domain] = identifier.split('@');
+  return `${local.slice(0, 1) || '*'}***@${domain}`;
+}
+
+function accountDirectoryRows() {
+  return normalizeList(state.data.accounts?.users);
+}
+
+function isActiveProAccount(user) {
+  return String(user?.plan || '').toLowerCase().includes('pro')
+    && String(user?.subscription_status || 'active').toLowerCase() === 'active';
+}
+
+function accountSummary() {
+  const rows = accountDirectoryRows();
+  return {
+    available: rows.length > 0,
+    registered: number(state.data.accounts?.pagination?.total) || rows.length,
+    pro: rows.filter(isActiveProAccount).length,
+  };
 }
 
 function showToast(message, isError = false) {
@@ -324,16 +437,17 @@ function sharedParams({ forSearch = false } = {}) {
 }
 
 function endpointPath(endpoint) {
+  if (endpoint === 'accounts') return '/users?page=all';
   const params = sharedParams({ forSearch: endpoint === 'search' });
   if (endpoint === 'activity') params.set('limit', '100');
   if (endpoint === 'search') {
-    params.set('page', '1');
-    params.set('page_size', '100');
+    params.set('page', String(currentPage('queries')));
+    params.set('page_size', String(rowLimit('queries')));
     if (state.explorerIssue) params.set('issue', state.explorerIssue);
   }
   if (endpoint === 'audience') {
-    params.set('page', '1');
-    params.set('page_size', '100');
+    params.set('page', String(currentPage('clients')));
+    params.set('page_size', String(rowLimit('clients')));
   }
   return `/v2/${endpoint}?${params}`;
 }
@@ -591,7 +705,7 @@ function axisLabels(points, xFor, width, height, left, bottom) {
   if (!points.length) return '';
   const indexes = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])];
   return indexes.map((index) => `
-    <text x="${xFor(index)}" y="${height - 6}" text-anchor="${index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}" fill="#aaa7a4" font-size="12">${escapeHtml(formatDate(`${points[index].day}T00:00:00Z`))}</text>
+    <text x="${xFor(index)}" y="${height - 7}" text-anchor="${index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(formatDate(`${points[index].day}T00:00:00Z`))}</text>
   `).join('') + `
     <line x1="${left}" x2="${width - 8}" y1="${bottom}" y2="${bottom}" stroke="#302f2f" />
   `;
@@ -604,19 +718,19 @@ function renderLineChart(element, series, lines, options = {}) {
     element.innerHTML = chartUnavailable(options.emptyReason || 'No chart data exists for this period.');
     return;
   }
-  const width = 760;
-  const height = 220;
-  const left = 38;
-  const right = 10;
-  const top = 20;
-  const bottom = 188;
+  const width = Math.max(520, Math.round(element.clientWidth || 520));
+  const height = 240;
+  const left = 54;
+  const right = 16;
+  const top = 28;
+  const bottom = 205;
   const maxValue = Math.max(1, ...points.flatMap((row) => lines.map((line) => number(row[line.field]))));
   const xFor = (index) => left + (index * (width - left - right) / Math.max(1, points.length - 1));
   const yFor = (value) => bottom - (number(value) / maxValue) * (bottom - top);
   const grid = [0, 0.5, 1].map((ratio) => {
     const y = yFor(maxValue * ratio);
     return `<line x1="${left}" x2="${width - right}" y1="${y}" y2="${y}" stroke="#302f2f" stroke-dasharray="3 5" />
-      <text x="${left - 7}" y="${y + 3}" text-anchor="end" fill="#aaa7a4" font-size="12">${escapeHtml(options.percent ? formatPercent(maxValue * ratio, 0) : formatNumber(maxValue * ratio))}</text>`;
+      <text x="${left - 9}" y="${y + 5}" text-anchor="end" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(options.percent ? formatPercent(maxValue * ratio, 0) : formatNumber(maxValue * ratio))}</text>`;
   }).join('');
   const outageSpans = normalizeList(options.outageSpans).map((span) => {
     const start = points.findIndex((row) => row.day >= String(span.from || span.start || '').slice(0, 10));
@@ -625,7 +739,7 @@ function renderLineChart(element, series, lines, options = {}) {
     const x1 = xFor(start);
     const x2 = xFor(Math.max(start, endIndex));
     return `<rect x="${x1}" y="${top}" width="${Math.max(7, x2 - x1 + 7)}" height="${bottom - top}" fill="rgba(255,124,115,0.08)" />
-      <text x="${x1 + 3}" y="${top + 12}" fill="#ff7c73" font-size="12">${escapeHtml(span.label || 'Outage')}</text>`;
+      <text x="${x1 + 4}" y="${top + 14}" fill="#ff7c73" font-size="${CHART_FONT_SIZE}">${escapeHtml(span.label || 'Outage')}</text>`;
   }).join('');
   const paths = lines.map((line, index) => {
     const color = line.color || CHART_COLORS[index % CHART_COLORS.length];
@@ -634,9 +748,10 @@ function renderLineChart(element, series, lines, options = {}) {
       ${points.map((row, pointIndex) => `<circle cx="${xFor(pointIndex)}" cy="${yFor(row[line.field])}" r="2.4" fill="${color}"><title>${escapeHtml(`${row.day}: ${line.label} ${options.percent ? formatPercent(row[line.field], 1) : formatNumber(row[line.field])}`)}</title></circle>`).join('')}
     `;
   }).join('');
+  const legendSlot = Math.max(150, (width - left - right) / Math.max(1, lines.length));
   const legend = lines.map((line, index) => {
     const color = line.color || CHART_COLORS[index % CHART_COLORS.length];
-    return `<g transform="translate(${left + index * 170},7)"><circle cx="4" cy="4" r="4" fill="${color}"/><text x="13" y="9" fill="#aaa7a4" font-size="12">${escapeHtml(line.label)}</text></g>`;
+    return `<g transform="translate(${left + index * legendSlot},7)"><circle cx="5" cy="6" r="4" fill="${color}"/><text x="15" y="11" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(line.label)}</text></g>`;
   }).join('');
   element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(options.label || 'Trend chart')}">${grid}${outageSpans}${paths}${legend}${axisLabels(points, xFor, width, height, left, bottom)}</svg>`;
 }
@@ -658,12 +773,12 @@ function renderSearchBars(element, series) {
   }
   const totals = days.map((day) => channels.reduce((sum, channel) => sum + number(byDay.get(day)[channel]), 0));
   const max = Math.max(1, ...totals);
-  const width = 760;
-  const height = 220;
-  const left = 38;
-  const right = 10;
-  const top = 25;
-  const bottom = 188;
+  const width = Math.max(520, Math.round(element.clientWidth || 520));
+  const height = 240;
+  const left = 54;
+  const right = 16;
+  const top = 30;
+  const bottom = 205;
   const slot = (width - left - right) / days.length;
   const barWidth = Math.max(2, Math.min(24, slot * 0.68));
   const bars = days.map((day, index) => {
@@ -676,8 +791,16 @@ function renderSearchBars(element, series) {
     }).join('');
   }).join('');
   const xFor = (index) => left + index * slot + slot / 2;
-  const legend = channels.slice(0, 5).map((channel, index) => `<g transform="translate(${left + index * 140},7)"><rect width="8" height="8" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="13" y="9" fill="#aaa7a4" font-size="12">${escapeHtml(channelLabel(channel))}</text></g>`).join('');
-  element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Searches over time">${legend}<line x1="${left}" x2="${width - right}" y1="${bottom}" y2="${bottom}" stroke="#302f2f"/>${bars}${axisLabels(days.map((day) => ({ day })), xFor, width, height, left, bottom)}</svg>`;
+  const visibleChannels = channels.slice(0, 5);
+  const legendSlot = Math.max(92, (width - left - right) / Math.max(1, visibleChannels.length));
+  const legend = visibleChannels.map((channel, index) => `<g transform="translate(${left + index * legendSlot},7)"><rect width="10" height="10" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="16" y="11" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(channelLabel(channel))}</text></g>`).join('');
+  const grid = [0, 0.5, 1].map((ratio) => {
+    const value = max * ratio;
+    const y = bottom - ratio * (bottom - top);
+    return `<line x1="${left}" x2="${width - right}" y1="${y}" y2="${y}" stroke="#302f2f" stroke-dasharray="3 5"/>
+      <text x="${left - 9}" y="${y + 5}" text-anchor="end" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${formatNumber(value)}</text>`;
+  }).join('');
+  element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Searches over time">${grid}${legend}${bars}${axisLabels(days.map((day) => ({ day })), xFor, width, height, left, bottom)}</svg>`;
 }
 
 function unwrapRows(value) {
@@ -732,7 +855,7 @@ function renderActivity() {
   const element = $('latestActivity');
   if (!element) return;
   if (state.loading.has('activity') && !state.data.activity) return;
-  const rows = visibleRows('activity', state.data.activity?.activity);
+  const rows = rowsForPage('activity', state.data.activity?.activity);
   if (!rows.length) {
     element.innerHTML = emptyState(state.errors.activity || 'No real user queries match these filters.');
     return;
@@ -780,9 +903,10 @@ function qualitySeries(series) {
 function renderKpis() {
   const kpis = state.data.overview?.kpis || {};
   if (!state.data.overview && state.loading.has('overview')) return;
+  const accounts = accountSummary();
   const clients = number(kpis.estimated_unique_clients ?? kpis.unique_clients);
-  const registered = number(kpis.registered_clients ?? kpis.registered);
-  const pro = number(kpis.pro_clients ?? kpis.pro);
+  const registered = accounts.available ? accounts.registered : number(kpis.registered_clients ?? kpis.registered);
+  const pro = accounts.available ? accounts.pro : number(kpis.pro_clients ?? kpis.pro);
   const anonymous = number(kpis.anonymous_clients ?? Math.max(0, clients - registered));
   const searches = number(kpis.attempts ?? kpis.searches);
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
@@ -794,7 +918,9 @@ function renderKpis() {
     $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
+    $('kpiClientsNote').textContent = accounts.available
+      ? `${formatNumber(registered)} registered accounts, ${formatNumber(pro)} Pro. ${formatNumber(anonymous)} observed clients are anonymous or not linked to an account.`
+      : `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
   $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'client'}, ${formatPercent(successRate)} successful`;
@@ -883,12 +1009,13 @@ function renderTopList() {
     ? `Top 50 for ${appliedWindowLabel().toLowerCase()}`
     : list.reason;
   if (!list.available) {
+    renderPagination('topList', 0, 1);
     element.innerHTML = emptyState(list.reason);
     return;
   }
   element.innerHTML = table(
     topListConfig(state.topList).headers,
-    visibleRows('topList', list.rows),
+    rowsForPage('topList', list.rows),
     `No ${state.topList} rows match these filters.`,
   );
 }
@@ -931,7 +1058,7 @@ function renderQueryExplorer() {
   const element = $('queryExplorer');
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) return;
-  const rows = visibleRows('queries', state.data.search?.queries);
+  const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   const headers = [
     {
       label: 'Query',
@@ -950,7 +1077,7 @@ function renderQueryExplorer() {
 function renderWorklist() {
   const element = $('gapWorklist');
   if (!element) return;
-  const rows = visibleRows('worklist', state.data.search?.worklist);
+  const rows = rowsForPage('worklist', state.data.search?.worklist);
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
@@ -966,6 +1093,7 @@ function renderIconRequests() {
   $('requestBadge').textContent = formatNumber(inbox.rows.length);
   $('requestBadge').hidden = inbox.rows.length === 0;
   if (!inbox.available) {
+    renderPagination('iconRequests', 0, 1);
     element.innerHTML = emptyState(inbox.reason);
     return;
   }
@@ -974,7 +1102,7 @@ function renderIconRequests() {
     { label: 'Submitter', render: (row) => visitorLabel(row) },
     { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
     { label: 'Submitted', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
-  ], visibleRows('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
+  ], rowsForPage('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
 }
 
 function renderContactInbox() {
@@ -982,6 +1110,7 @@ function renderContactInbox() {
   if (!element) return;
   const inbox = availability(state.data.search?.contact_submissions, 'Stored contact submissions are not available from the current data source.');
   if (!inbox.available) {
+    renderPagination('contact', 0, 1);
     element.innerHTML = emptyState(inbox.reason);
     return;
   }
@@ -990,7 +1119,7 @@ function renderContactInbox() {
     { label: 'Interest', render: (row) => pill(safeText(row.interest, 'General')) },
     { label: 'Message', render: (row) => escapeHtml(truncate(row.message, 90)) },
     { label: 'Received', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
-  ], visibleRows('contact', inbox.rows), 'No contact submissions have been stored yet.');
+  ], rowsForPage('contact', inbox.rows), 'No contact submissions have been stored yet.');
 }
 
 function renderDiagnostics() {
@@ -1012,30 +1141,63 @@ function renderSearch() {
   renderDiagnostics();
 }
 
+function registeredUserDisplayRows(audienceUsers) {
+  const accounts = accountDirectoryRows();
+  if (!accounts.length) return normalizeList(audienceUsers);
+  return accounts.map((user) => {
+    const email = String(user.email || '');
+    return {
+      identifier: state.showRegisteredEmails ? email || user.id : maskIdentifier(email || user.id),
+      email,
+      provider: user.provider,
+      plan: user.plan || 'Free',
+      signup_at: user.created_at,
+      last_active: user.last_sign_in_at || null,
+      last_active_source: user.last_sign_in_at ? 'Sign-in' : null,
+      searches: null,
+      venues: [],
+      country_code: null,
+    };
+  }).sort((left, right) => (
+    String(right.last_active || '').localeCompare(String(left.last_active || ''))
+    || String(right.signup_at || '').localeCompare(String(left.signup_at || ''))
+  ));
+}
+
+function renderEmailVisibilityControl() {
+  const button = $('toggleRegisteredEmails');
+  if (!button) return;
+  button.setAttribute('aria-pressed', String(state.showRegisteredEmails));
+  button.setAttribute('aria-label', state.showRegisteredEmails ? 'Hide user emails' : 'Show user emails');
+  button.title = state.showRegisteredEmails ? 'Hide user emails' : 'Show user emails';
+  button.innerHTML = iconSvg(state.showRegisteredEmails ? 'eyeOff' : 'eye');
+}
+
 function renderAudience() {
   const data = state.data.audience;
   if (!data && state.loading.has('audience')) return;
   const funnel = data?.funnel || {};
+  const accounts = accountSummary();
   const clients = number(funnel.unique_clients);
-  const registered = number(funnel.registered_clients);
-  const pro = number(funnel.pro_clients);
+  const registered = accounts.available ? accounts.registered : number(funnel.registered_clients);
+  const pro = accounts.available ? accounts.pro : number(funnel.pro_clients);
   if (funnel.identity_available === false) {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = funnel.client_measure === 'client_days'
       ? 'Client-days in the selected period'
       : funnel.identity_unavailable_reason || 'Exact unique clients are not available.';
-    setSkeleton($('funnelRegistered'), formatNumber(registered));
-    $('funnelRegisteredNote').textContent = 'All registered accounts';
-    setSkeleton($('funnelPro'), formatNumber(pro));
-    $('funnelProNote').textContent = 'All Pro accounts';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = appliedWindowLabel();
-    setSkeleton($('funnelRegistered'), formatNumber(registered));
-    $('funnelRegisteredNote').textContent = `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of clients`;
-    setSkeleton($('funnelPro'), formatNumber(pro));
-    $('funnelProNote').textContent = `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of clients`;
   }
+  setSkeleton($('funnelRegistered'), formatNumber(registered));
+  $('funnelRegisteredNote').textContent = accounts.available
+    ? 'All registered accounts'
+    : `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of clients`;
+  setSkeleton($('funnelPro'), formatNumber(pro));
+  $('funnelProNote').textContent = accounts.available
+    ? `${formatNumber(pro)} of ${formatNumber(registered)} registered accounts`
+    : `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of clients`;
   const mrr = funnel.mrr || {};
   $('funnelMrr').textContent = mrr.available ? safeText(mrr.display_value) : 'Unavailable';
   $('funnelMrrNote').textContent = mrr.reason || 'Exact billing price is not linked to every active subscription.';
@@ -1051,29 +1213,34 @@ function renderAudience() {
       $('audienceChart'),
       data?.series,
       [
-        { field: 'registered_clients', label: 'Registered', color: CHART_COLORS[1] },
-        { field: 'pro_clients', label: 'Pro', color: CHART_COLORS[2] },
+        { field: 'registered_clients', label: 'Linked registered', color: CHART_COLORS[1] },
+        { field: 'pro_clients', label: 'Linked Pro', color: CHART_COLORS[2] },
       ],
-      { label: 'Registered and Pro clients over time', emptyReason: 'Audience history will appear after the v2 summary endpoint is live.' },
+      { label: 'Account-linked search clients over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
     );
   }
 
   const users = availability(data?.registered_users, 'Registered-user enrichment is not available from the current data source.');
+  const registeredRows = registeredUserDisplayRows(users.rows);
   if ($('registeredUsersSubtitle')) {
-    const total = number(data?.registered_users?.total ?? users.rows.length);
-    $('registeredUsersSubtitle').textContent = `${formatNumber(total)} total users. Activity columns reflect ${appliedWindowLabel().toLowerCase()}.`;
+    const total = accounts.available ? accounts.registered : number(data?.registered_users?.total ?? users.rows.length);
+    $('registeredUsersSubtitle').textContent = accounts.available
+      ? `${formatNumber(total)} total users. Last active uses account sign-in. MCP searches appear only when linked by API key.`
+      : `${formatNumber(total)} total users. Activity columns reflect ${appliedWindowLabel().toLowerCase()}.`;
   }
-  $('registeredUsers').innerHTML = users.available
+  renderEmailVisibilityControl();
+  $('registeredUsers').innerHTML = users.available || accounts.available
     ? table([
       { label: 'User', render: (row) => `<strong>${escapeHtml(safeText(row.identifier, 'Hidden'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.provider, 'Unknown provider'))}</div>` },
       { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
-      { label: 'Signed up', render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at)) },
-      { label: 'Last active', render: (row) => row.last_active ? escapeHtml(formatDate(row.last_active, true)) : '<span class="muted-cell">No activity in period</span>' },
-      { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
-      { label: 'Venues', render: (row) => escapeHtml(normalizeList(row.venues).map(channelLabel).join(', ') || '-') },
-      { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not recorded in period</span>' },
-    ], visibleRows('registeredUsers', users.rows), 'No registered users match these filters.')
+      { label: 'Signed up', render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at, true)) },
+      { label: 'Last active', render: (row) => row.last_active ? `${escapeHtml(formatDate(row.last_active, true))}<div class="activity-meta">${escapeHtml(row.last_active_source || 'Search')}</div>` : '<span class="muted-cell">No sign-in recorded</span>' },
+      { label: 'Searches', number: true, render: (row) => row.searches == null ? '<span class="muted-cell">Not linked</span>' : formatNumber(row.searches) },
+      { label: 'Venues', render: (row) => normalizeList(row.venues).length ? escapeHtml(row.venues.map(channelLabel).join(', ')) : '<span class="muted-cell">Not linked</span>' },
+      { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not linked</span>' },
+    ], rowsForPage('registeredUsers', registeredRows), 'No registered users match these filters.')
     : emptyState(users.reason);
+  if (!users.available && !accounts.available) renderPagination('registeredUsers', 0, 1);
 
   const allClients = availability(data?.clients, 'Client profiles are not available from the current data source.');
   $('allClients').innerHTML = allClients.available
@@ -1085,8 +1252,9 @@ function renderAudience() {
       { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
       { label: 'Top query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
-    ], visibleRows('clients', allClients.rows), 'No clients match these filters.')
+    ], rowsForPage('clients', allClients.rows, data?.pagination), 'No clients match these filters.')
     : emptyState(allClients.reason);
+  if (!allClients.available) renderPagination('clients', 0, 1);
 }
 
 function renderAll() {
@@ -1296,7 +1464,32 @@ async function legacyEndpoint(endpoint) {
   throw new Error(`Unsupported dashboard endpoint: ${endpoint}`);
 }
 
+async function loadAccountDirectory() {
+  const first = await apiRequest('/users?page=1');
+  const pageCount = Math.max(1, number(first.pagination?.page_count) || 1);
+  const remaining = pageCount > 1
+    ? await Promise.all(
+      Array.from({ length: pageCount - 1 }, (_, index) => apiRequest(`/users?page=${index + 2}`)),
+    )
+    : [];
+  const users = [
+    ...normalizeList(first.users),
+    ...remaining.flatMap((payload) => normalizeList(payload.users)),
+  ];
+  return {
+    users,
+    pagination: {
+      ...(first.pagination || {}),
+      page: 1,
+      page_size: users.length,
+      total: number(first.pagination?.total) || users.length,
+      page_count: 1,
+    },
+  };
+}
+
 async function fetchEndpoint(endpoint) {
+  if (endpoint === 'accounts') return loadAccountDirectory();
   try {
     return await apiRequest(endpointPath(endpoint));
   } catch (error) {
@@ -1346,11 +1539,27 @@ async function refreshDashboard({ force = false } = {}) {
     loadEndpoint('overview', token, { force }),
     loadEndpoint('search', token, { force }),
     loadEndpoint('audience', token, { force }),
+    loadEndpoint('accounts', token, { force }),
   ]);
   if (token !== state.requestToken) return;
   state.refreshedAt = Date.now();
   setRefreshState();
   if (force && Object.keys(state.errors).length === 0) showToast('Production data refreshed.');
+}
+
+async function refreshListEndpoint(key) {
+  const endpoint = key === 'queries' ? 'search' : key === 'clients' ? 'audience' : null;
+  if (!endpoint) {
+    renderAll();
+    return;
+  }
+  const token = state.requestToken + 1;
+  state.requestToken = token;
+  state.refreshStartedAt = Date.now();
+  await loadEndpoint(endpoint, token, { force: true });
+  if (token !== state.requestToken) return;
+  state.refreshedAt = Date.now();
+  setRefreshState();
 }
 
 let filterTimer = null;
@@ -1377,7 +1586,11 @@ function exportData(key) {
     'gap-worklist-json': normalizeList(search.worklist),
     'icon-requests-csv': unwrapRows(search.icon_requests),
     'icon-requests-json': unwrapRows(search.icon_requests),
-    'registered-users': unwrapRows(audience.registered_users),
+    'registered-users': registeredUserDisplayRows(unwrapRows(audience.registered_users)).map((row) => {
+      const copy = { ...row };
+      if (!state.showRegisteredEmails) delete copy.email;
+      return copy;
+    }),
     clients: unwrapRows(audience.clients),
   };
   const rows = normalizeList(mapping[key]).map(plainExportRow);
@@ -1395,6 +1608,14 @@ function setSection(section) {
 }
 
 function initializePanelControls() {
+  document.querySelectorAll('.grid-2, .grid-main-side').forEach((grid, groupIndex) => {
+    const panels = [...grid.children].filter((child) => child.classList.contains('panel'));
+    if (panels.length < 2) return;
+    panels.forEach((panel) => {
+      panel.dataset.collapseGroup = `panel-row-${groupIndex + 1}`;
+    });
+  });
+
   document.querySelectorAll('.panel').forEach((panel, index) => {
     const head = panel.querySelector(':scope > .panel-head');
     if (!head) return;
@@ -1420,17 +1641,44 @@ function initializePanelControls() {
         </select>
       `;
       actions.prepend(label);
+      const pagination = document.createElement('div');
+      pagination.className = 'pagination';
+      pagination.dataset.pagination = key;
+      pagination.hidden = true;
+      panel.appendChild(pagination);
     }
 
     const toggle = document.createElement('button');
-    toggle.className = 'small-button panel-toggle';
+    toggle.className = 'small-button icon-button panel-toggle';
     toggle.type = 'button';
     toggle.dataset.panelToggle = '';
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', `Collapse ${title}`);
-    toggle.textContent = 'Collapse';
+    toggle.title = `Collapse ${title}`;
+    toggle.innerHTML = iconSvg('collapse');
     actions.appendChild(toggle);
   });
+}
+
+function setPanelCollapsed(panel, collapsed) {
+  panel.classList.toggle('is-collapsed', collapsed);
+  const title = safeText(panel.querySelector('.panel-title')?.textContent, 'panel');
+  const button = panel.querySelector('[data-panel-toggle]');
+  if (!button) return;
+  const action = collapsed ? 'Expand' : 'Collapse';
+  button.setAttribute('aria-expanded', String(!collapsed));
+  button.setAttribute('aria-label', `${action} ${title}`);
+  button.title = `${action} ${title}`;
+  button.innerHTML = iconSvg(collapsed ? 'expand' : 'collapse');
+}
+
+function setPage(key, page) {
+  state.pages[key] = Math.max(1, Number(page) || 1);
+  if (SERVER_PAGINATED_LISTS.has(key)) {
+    refreshListEndpoint(key);
+  } else {
+    renderAll();
+  }
 }
 
 function initializeEvents() {
@@ -1440,6 +1688,7 @@ function initializeEvents() {
   document.querySelectorAll('[data-top-list]').forEach((button) => {
     button.addEventListener('click', () => {
       state.topList = button.dataset.topList;
+      state.pages.topList = 1;
       renderTopList();
     });
   });
@@ -1448,25 +1697,44 @@ function initializeEvents() {
   });
   document.querySelectorAll('[data-row-limit]').forEach((select) => {
     select.addEventListener('change', () => {
-      state.rowLimits[select.dataset.rowLimit] = Number(select.value);
-      renderAll();
+      const key = select.dataset.rowLimit;
+      state.rowLimits[key] = Number(select.value);
+      state.pages[key] = 1;
+      if (SERVER_PAGINATED_LISTS.has(key)) refreshListEndpoint(key);
+      else renderAll();
     });
   });
   document.querySelectorAll('[data-panel-toggle]').forEach((button) => {
     button.addEventListener('click', () => {
       const panel = button.closest('.panel');
       if (!panel) return;
-      const collapsed = panel.classList.toggle('is-collapsed');
-      const title = safeText(panel.querySelector('.panel-title')?.textContent, 'panel');
-      button.setAttribute('aria-expanded', String(!collapsed));
-      button.setAttribute('aria-label', `${collapsed ? 'Expand' : 'Collapse'} ${title}`);
-      button.textContent = collapsed ? 'Expand' : 'Collapse';
+      const collapsed = !panel.classList.contains('is-collapsed');
+      const group = panel.dataset.collapseGroup;
+      const panels = group
+        ? [...document.querySelectorAll(`.panel[data-collapse-group="${group}"]`)]
+        : [panel];
+      panels.forEach((target) => setPanelCollapsed(target, collapsed));
     });
+  });
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-pagination] button');
+    if (!button) return;
+    const pagination = button.closest('[data-pagination]');
+    const key = pagination?.dataset.pagination;
+    if (!key) return;
+    if (button.dataset.pageNumber) setPage(key, Number(button.dataset.pageNumber));
+    else if (button.hasAttribute('data-page-prev')) setPage(key, currentPage(key) - 1);
+    else if (button.hasAttribute('data-page-next')) setPage(key, currentPage(key) + 1);
+  });
+  $('toggleRegisteredEmails')?.addEventListener('click', () => {
+    state.showRegisteredEmails = !state.showRegisteredEmails;
+    renderAudience();
   });
   $('periodButtons')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-window]');
     if (!button) return;
     state.filters.window = button.dataset.window;
+    resetPages();
     document.querySelectorAll('[data-window]').forEach((candidate) => {
       candidate.classList.toggle('active', candidate === button);
     });
@@ -1482,26 +1750,32 @@ function initializeEvents() {
     }
     state.filters.from = from;
     state.filters.to = to;
+    resetPages();
     scheduleRefresh(0);
   });
   $('channelFilter')?.addEventListener('change', (event) => {
     state.filters.channel = event.target.value;
+    resetPages();
     scheduleRefresh(0);
   });
   $('includeTestTraffic')?.addEventListener('change', (event) => {
     state.filters.includeTest = event.target.checked;
+    resetPages();
     scheduleRefresh(0);
   });
   $('globalSearch')?.addEventListener('input', (event) => {
     state.filters.q = String(event.target.value || '').trim();
+    resetPages();
     scheduleRefresh();
   });
   $('explorerSearch')?.addEventListener('input', (event) => {
     state.explorerQuery = String(event.target.value || '').trim();
+    state.pages.queries = 1;
     scheduleRefresh();
   });
   $('explorerIssue')?.addEventListener('change', (event) => {
     state.explorerIssue = event.target.value;
+    state.pages.queries = 1;
     scheduleRefresh(0);
   });
   $('refreshButton')?.addEventListener('click', () => refreshDashboard({ force: true }));

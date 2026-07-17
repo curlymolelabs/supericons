@@ -41,6 +41,7 @@ function excludes(source, value, label) {
   'audienceChart',
   'registeredUsers',
   'registeredUsersSubtitle',
+  'toggleRegisteredEmails',
   'allClients',
   'Top lists',
   'Returned',
@@ -62,6 +63,7 @@ function excludes(source, value, label) {
   "loadEndpoint('overview'",
   "loadEndpoint('search'",
   "loadEndpoint('audience'",
+  "loadEndpoint('accounts'",
   'loadLegacyActivity',
   'loadLegacyOverview',
   'loadLegacySearch',
@@ -80,7 +82,10 @@ function excludes(source, value, label) {
   'row.country_reason',
   'Lookup completed',
   'Client-days across the selected period',
-  'No activity in period',
+  'No sign-in recorded',
+  'Last active uses account sign-in',
+  'renderPagination',
+  'iconSvg',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [

@@ -14,10 +14,141 @@ const registeredRows = Array.from({ length: 23 }, (_, index) => ({
   provider: index % 2 === 0 ? 'Google' : 'Email',
   plan: index < 2 ? 'pro_monthly' : 'Free',
   signup_at: `2026-06-${String((index % 23) + 1).padStart(2, '0')}T00:00:00Z`,
-  last_active: index < 3 ? '2026-07-17T07:00:00Z' : null,
+  last_active: null,
   searches: index < 3 ? 10 - index : 0,
   venues: index < 3 ? ['web'] : [],
   country_code: index < 3 ? 'SG' : null,
+}));
+const accountRows = Array.from({ length: 23 }, (_, index) => ({
+  id: `user-${index + 1}`,
+  email: `user${index + 1}@example.test`,
+  provider: index % 2 === 0 ? 'Google' : 'Email',
+  plan: index < 2 ? 'pro_monthly' : null,
+  subscription_status: index < 2 ? 'active' : 'free',
+  created_at: `2026-06-${String((index % 23) + 1).padStart(2, '0')}T08:15:00Z`,
+  last_sign_in_at: `2026-07-${String((index % 17) + 1).padStart(2, '0')}T09:30:00Z`,
+  api_key_count: index < 2 ? 1 : 0,
+}));
+const queryRows = [
+  {
+    query: 'healthy aggregate',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: '3 clients',
+    country_code: null,
+    country_available: false,
+    country_reason: 'Not available for aggregate view',
+    channel: 'web',
+    result_count: null,
+    result_count_available: false,
+    result_count_reason: 'Not available for aggregate view',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 5,
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:40:00Z',
+  },
+  {
+    query: 'mixed aggregate',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: '4 clients',
+    country_code: null,
+    country_available: false,
+    country_reason: 'Not available for aggregate view',
+    channel: 'web',
+    result_count: null,
+    result_count_available: false,
+    result_count_reason: 'Not available for aggregate view',
+    issue_type: 'mixed_result',
+    outcome_label: 'Mixed: 1 of 5 zero',
+    attempt_count: 5,
+    zero_attempt_count: 1,
+    last_seen: '2026-07-17T07:35:00Z',
+  },
+  {
+    query: 'icon lookup',
+    library_filter: 'lucide',
+    query_origin: 'icon_lookup',
+    visitor_kind: 'anonymous',
+    client_label: '1 client',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'hosted_mcp',
+    result_count: 1,
+    result_count_available: true,
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 0,
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:32:00Z',
+  },
+  {
+    query: 'icon lookup pending',
+    library_filter: 'lucide',
+    query_origin: 'icon_lookup',
+    visitor_kind: 'anonymous',
+    client_label: '1 client',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'hosted_mcp',
+    result_count: null,
+    result_count_available: false,
+    result_count_reason: 'Not available for this view',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 0,
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:31:00Z',
+  },
+  {
+    query: 'missing brand',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: 'anon:def456',
+    country_code: 'DE',
+    country_available: true,
+    channel: 'hosted_mcp',
+    result_count: 0,
+    result_count_available: true,
+    issue_type: 'zero_result',
+    outcome_label: 'Zero',
+    attempt_count: 5,
+    zero_attempt_count: 5,
+    last_seen: '2026-07-17T07:30:00Z',
+  },
+  ...Array.from({ length: 55 }, (_, index) => ({
+    query: `healthy query ${index + 1}`,
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: `${index + 1} clients`,
+    country_code: null,
+    country_available: false,
+    country_reason: 'Not available for aggregate view',
+    channel: 'web',
+    result_count: null,
+    result_count_available: false,
+    result_count_reason: 'Not available for aggregate view',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: index + 1,
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:20:00Z',
+  })),
+];
+const clientRows = Array.from({ length: 55 }, (_, index) => ({
+  visitor_kind: 'anonymous',
+  client_label: `anon:client${index + 1}`,
+  plan: 'Free',
+  country_code: index % 2 ? 'SG' : 'US',
+  first_seen: '2026-07-15T00:00:00Z',
+  last_seen: '2026-07-17T07:58:00Z',
+  searches: index + 1,
+  top_query: `query ${index + 1}`,
 }));
 
 function ok(condition, message) {
@@ -49,9 +180,9 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     return {
       kpis: {
         estimated_unique_clients: allHistory ? 90 : 32,
-        registered_clients: 5,
-        pro_clients: 2,
-        anonymous_clients: 27,
+        registered_clients: 0,
+        pro_clients: 0,
+        anonymous_clients: 32,
         attempts: 128,
         success_count: 116,
         success_rate: 0.90625,
@@ -96,118 +227,18 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     };
   }
   if (path === '/v2/search') {
+    const page = Number(searchParams.get('page') || 1);
+    const pageSize = Number(searchParams.get('page_size') || 25);
+    const pageCount = Math.ceil(queryRows.length / pageSize);
+    const start = (page - 1) * pageSize;
     return {
-      queries: [
-        {
-          query: 'healthy aggregate',
-          library_filter: 'all',
-          query_origin: 'agent_query',
-          visitor_kind: 'anonymous',
-          client_label: '3 clients',
-          country_code: null,
-          country_available: false,
-          country_reason: 'Not available for aggregate view',
-          channel: 'web',
-          result_count: null,
-          result_count_available: false,
-          result_count_reason: 'Not available for aggregate view',
-          issue_type: 'successful',
-          outcome_label: 'Success',
-          attempt_count: 5,
-          zero_attempt_count: 0,
-          last_seen: '2026-07-17T07:40:00Z',
-        },
-        {
-          query: 'mixed aggregate',
-          library_filter: 'all',
-          query_origin: 'agent_query',
-          visitor_kind: 'anonymous',
-          client_label: '4 clients',
-          country_code: null,
-          country_available: false,
-          country_reason: 'Not available for aggregate view',
-          channel: 'web',
-          result_count: null,
-          result_count_available: false,
-          result_count_reason: 'Not available for aggregate view',
-          issue_type: 'mixed_result',
-          outcome_label: 'Mixed: 1 of 5 zero',
-          attempt_count: 5,
-          zero_attempt_count: 1,
-          last_seen: '2026-07-17T07:35:00Z',
-        },
-        {
-          query: 'icon lookup',
-          library_filter: 'lucide',
-          query_origin: 'icon_lookup',
-          visitor_kind: 'anonymous',
-          client_label: '1 client',
-          country_code: 'SG',
-          country_available: true,
-          channel: 'hosted_mcp',
-          result_count: 1,
-          result_count_available: true,
-          issue_type: 'successful',
-          outcome_label: 'Success',
-          attempt_count: 0,
-          zero_attempt_count: 0,
-          last_seen: '2026-07-17T07:32:00Z',
-        },
-        {
-          query: 'icon lookup pending',
-          library_filter: 'lucide',
-          query_origin: 'icon_lookup',
-          visitor_kind: 'anonymous',
-          client_label: '1 client',
-          country_code: 'SG',
-          country_available: true,
-          channel: 'hosted_mcp',
-          result_count: null,
-          result_count_available: false,
-          result_count_reason: 'Not available for this view',
-          issue_type: 'successful',
-          outcome_label: 'Success',
-          attempt_count: 0,
-          zero_attempt_count: 0,
-          last_seen: '2026-07-17T07:31:00Z',
-        },
-        {
-          query: 'missing brand',
-          library_filter: 'all',
-          query_origin: 'agent_query',
-          visitor_kind: 'anonymous',
-          client_label: 'anon:def456',
-          country_code: 'DE',
-          country_available: true,
-          channel: 'hosted_mcp',
-          result_count: 0,
-          result_count_available: true,
-          issue_type: 'zero_result',
-          outcome_label: 'Zero',
-          attempt_count: 5,
-          zero_attempt_count: 5,
-          last_seen: '2026-07-17T07:30:00Z',
-        },
-        ...Array.from({ length: 55 }, (_, index) => ({
-          query: `healthy query ${index + 1}`,
-          library_filter: 'all',
-          query_origin: 'agent_query',
-          visitor_kind: 'anonymous',
-          client_label: `${index + 1} clients`,
-          country_code: null,
-          country_available: false,
-          country_reason: 'Not available for aggregate view',
-          channel: 'web',
-          result_count: null,
-          result_count_available: false,
-          result_count_reason: 'Not available for aggregate view',
-          issue_type: 'successful',
-          outcome_label: 'Success',
-          attempt_count: index + 1,
-          zero_attempt_count: 0,
-          last_seen: '2026-07-17T07:20:00Z',
-        })),
-      ],
+      queries: queryRows.slice(start, start + pageSize),
+      pagination: {
+        page,
+        page_size: pageSize,
+        total: queryRows.length,
+        page_count: pageCount,
+      },
       worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
       icon_requests: {
         available: true,
@@ -234,13 +265,17 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     };
   }
   if (path === '/v2/audience') {
+    const page = Number(searchParams.get('page') || 1);
+    const pageSize = Number(searchParams.get('page_size') || 25);
+    const pageCount = Math.ceil(clientRows.length / pageSize);
+    const start = (page - 1) * pageSize;
     return {
       funnel: {
         unique_clients: allHistory ? 90 : 32,
-        registered_clients: allHistory ? 23 : 5,
-        registered_percentage: allHistory ? null : 0.15625,
-        pro_clients: 2,
-        pro_percentage: allHistory ? null : 0.0625,
+        registered_clients: 0,
+        registered_percentage: 0,
+        pro_clients: 0,
+        pro_percentage: 0,
         client_measure: allHistory ? 'client_days' : 'estimated_unique_clients',
         identity_available: !allHistory,
         identity_unavailable_reason: allHistory ? 'Exact client profiles are unavailable for all recorded history.' : null,
@@ -262,18 +297,26 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         rows: [],
       } : {
         available: true,
-        rows: [{
-          visitor_kind: 'anonymous',
-          client_label: 'anon:abc123',
-          plan: 'Free',
-          country_code: 'SG',
-          first_seen: '2026-07-15T00:00:00Z',
-          last_seen: '2026-07-17T07:58:00Z',
-          searches: 6,
-          top_query: 'database',
-        }],
+        rows: clientRows.slice(start, start + pageSize),
+      },
+      pagination: {
+        page,
+        page_size: pageSize,
+        total: clientRows.length,
+        page_count: pageCount,
       },
       meta,
+    };
+  }
+  if (path === '/users') {
+    return {
+      users: accountRows,
+      pagination: {
+        page: 1,
+        page_size: 25,
+        total: accountRows.length,
+        page_count: 1,
+      },
     };
   }
   return { error: `No mock for ${path}` };
@@ -308,6 +351,8 @@ try {
   ok(await page.locator('#kpiSearches').innerText() === '128', 'Real search KPI is incorrect.');
   ok(await page.locator('#kpiZero').innerText() === '6%', 'True zero KPI is incorrect.');
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
+  await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered accounts'));
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The client KPI did not use account-backed Pro totals.');
 
   const activity = await page.locator('#latestActivity').innerText();
   ok(activity.includes('database'), 'Latest Activity did not render the live query.');
@@ -319,11 +364,15 @@ try {
   ok(!channelOptions.some((value) => value.startsWith('CLI')), 'An empty venue was not hidden.');
   ok(await page.locator('#searchesChart svg').count() === 1, 'The search chart did not render inline SVG.');
   ok(await page.locator('#qualityChart').innerText().then((text) => !text.includes('No chart')), 'The quality chart did not render.');
-  const chartFontSizes = await page.locator('.chart svg text').evaluateAll(
-    (nodes) => nodes.map((node) => Number(node.getAttribute('font-size'))),
+  const chartFontSizes = await page.locator('#section-overview .chart svg text').evaluateAll(
+    (nodes) => nodes.map((node) => {
+      const svg = node.ownerSVGElement;
+      const scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+      return Number(node.getAttribute('font-size')) * scale;
+    }),
   );
   ok(chartFontSizes.length > 0, 'The charts did not render any readable labels.');
-  ok(chartFontSizes.every((size) => Number.isFinite(size) && size >= 12), 'A chart label is smaller than 12px.');
+  ok(chartFontSizes.every((size) => Number.isFinite(size) && size >= 12), 'A rendered chart label is smaller than 12px.');
 
   await page.click('[data-top-list="returned"]');
   ok((await page.locator('#topListTable').innerText()).includes('linkage is incomplete'), 'Returned-icon coverage was not explained.');
@@ -348,8 +397,18 @@ try {
     );
   }
   ok(await page.locator('#queryExplorer tbody tr').count() === 25, 'The query explorer did not apply the 25-row default.');
+  ok(await page.locator('[data-pagination="queries"] [data-page-number="1"]').count() === 1, 'Query page 1 is missing.');
+  ok(await page.locator('[data-pagination="queries"] [data-page-number="2"]').count() === 1, 'Query page 2 is missing.');
+  ok(await page.locator('[data-pagination="queries"] [data-page-number="3"]').count() === 1, 'Query page 3 is missing.');
+  ok(await page.locator('[data-pagination="queries"] [data-page-next]').count() === 1, 'The query Next button is missing.');
+  await page.click('[data-pagination="queries"] [data-page-number="2"]');
+  await page.waitForFunction(() => document.querySelector('[data-pagination="queries"] [aria-current="page"]')?.textContent === '2');
+  ok(requests.some((request) => request.path === '/v2/search' && request.search.includes('page=2') && request.search.includes('page_size=25')), 'Query page 2 was not requested from the API.');
+  await page.click('[data-pagination="queries"] [data-page-number="1"]');
+  await page.waitForFunction(() => document.querySelector('[data-pagination="queries"] [aria-current="page"]')?.textContent === '1');
   await page.selectOption('[data-row-limit="queries"]', '50');
-  ok(await page.locator('#queryExplorer tbody tr').count() === 50, 'The query explorer did not apply the 50-row choice.');
+  await page.waitForFunction(() => document.querySelectorAll('#queryExplorer tbody tr').length === 50);
+  ok(requests.some((request) => request.path === '/v2/search' && request.search.includes('page_size=50')), 'The 50-row query page was not requested from the API.');
   const scrollStyle = await page.locator('#queryExplorer').evaluate((element) => {
     const style = getComputedStyle(element);
     return {
@@ -367,6 +426,16 @@ try {
   ok(await queryPanel.locator('[data-panel-toggle]').getAttribute('aria-expanded') === 'false', 'The collapsed panel state is not announced.');
   await queryPanel.locator('[data-panel-toggle]').click();
   ok(await page.locator('#queryExplorer').isVisible(), 'Expanding the query explorer did not restore its content.');
+  ok(await page.locator('[data-panel-toggle] svg').count() === await page.locator('[data-panel-toggle]').count(), 'Collapse controls must use icons.');
+  const toggleLabels = await page.locator('[data-panel-toggle]').evaluateAll((buttons) => buttons.map((button) => button.textContent.trim()));
+  ok(toggleLabels.every((label) => label === ''), 'Collapse controls still waste space on text labels.');
+  const gapPanel = page.locator('.panel[data-row-key="worklist"]');
+  const requestPanel = page.locator('.panel[data-row-key="iconRequests"]');
+  await gapPanel.locator('[data-panel-toggle]').click();
+  ok(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed')), 'The gap worklist did not collapse.');
+  ok(await requestPanel.evaluate((panel) => panel.classList.contains('is-collapsed')), 'The paired icon request panel did not collapse with the gap worklist.');
+  await requestPanel.locator('[data-panel-toggle]').click();
+  ok(!(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed'))), 'The paired gap worklist did not expand with icon requests.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
@@ -400,11 +469,23 @@ try {
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');
-  ok(await page.locator('#funnelRegistered').innerText() === '5', 'Registered funnel count is incorrect.');
+  ok(await page.locator('#funnelRegistered').innerText() === '23', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
+  ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search clients over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
   ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
   ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The registered-user total is missing.');
-  ok((await page.locator('#registeredUsers').innerText()).includes('No activity in period'), 'Window-scoped inactive users were hidden.');
+  ok(await page.locator('#toggleRegisteredEmails svg').count() === 1, 'The email visibility icon is missing.');
+  ok(!(await page.locator('#registeredUsers').innerText()).includes('user1@example.test'), 'Full emails must start hidden.');
+  ok((await page.locator('#registeredUsers').innerText()).includes('u***@example.test'), 'Masked emails are missing.');
+  await page.click('#toggleRegisteredEmails');
+  ok((await page.locator('#registeredUsers').innerText()).includes('user1@example.test'), 'The email visibility control did not reveal emails.');
+  const firstRegisteredRow = page.locator('#registeredUsers tbody tr').first();
+  ok((await firstRegisteredRow.innerText()).includes('Sign-in'), 'Last active did not fall back to the account sign-in time.');
+  ok(/\d{1,2}:\d{2}/.test(await firstRegisteredRow.innerText()), 'Signup and activity timestamps are missing their time.');
+  ok(await page.locator('[data-pagination="clients"] [data-page-next]').count() === 1, 'The client list Next button is missing.');
+  await page.click('[data-pagination="clients"] [data-page-next]');
+  await page.waitForFunction(() => document.querySelector('[data-pagination="clients"] [aria-current="page"]')?.textContent === '2');
+  ok(requests.some((request) => request.path === '/v2/audience' && request.search.includes('page=2') && request.search.includes('page_size=25')), 'Client page 2 was not requested from the API.');
 
   await page.click('[data-window="all"]');
   await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '90');
