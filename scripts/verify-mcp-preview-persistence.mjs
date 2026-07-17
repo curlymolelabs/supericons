@@ -6,17 +6,33 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const artifactRootIndex = process.argv.indexOf('--artifact-root');
+const artifactRoot = artifactRootIndex >= 0
+  ? path.resolve(process.argv[artifactRootIndex + 1])
+  : repoRoot;
 const port = 4187;
 const baseUrl = `http://127.0.0.1:${port}/`;
 const viteBin = path.join(repoRoot, 'node_modules', 'vite', 'bin', 'vite.js');
-execFileSync(process.execPath, [viteBin, 'build'], {
-  cwd: repoRoot,
-  encoding: 'utf8',
-  stdio: ['ignore', 'pipe', 'pipe'],
-});
+const useExistingDist = process.argv.includes('--use-existing-dist');
+if (!useExistingDist) {
+  execFileSync(process.execPath, [viteBin, 'build'], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+}
 const server = spawn(
   process.execPath,
-  [viteBin, 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'],
+  [
+    viteBin,
+    'preview',
+    artifactRoot,
+    '--host',
+    '127.0.0.1',
+    '--port',
+    String(port),
+    '--strictPort',
+  ],
   {
     cwd: repoRoot,
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -293,6 +309,7 @@ try {
 
   console.log(JSON.stringify({
     status: 'ok',
+    tested_surface: useExistingDist ? 'existing_dist' : 'fresh_vite_build',
     explicit_preview_survives_popularity_locale_auth: true,
     query_preview_survives_popularity_locale_auth: true,
     unknown_refs_remain_zero_results: true,

@@ -225,6 +225,15 @@ try {
   verifyLicense(npmRoot, webRoot, expectedProvenanceHash);
   verifyMinification(repoRoot, npmRoot, webRoot, policy);
 
+  const finalWebRootArgument = getArgument('--web-root');
+  if (finalWebRootArgument) {
+    const finalWebRoot = resolve(finalWebRootArgument);
+    verifyProtectedClasses(finalWebRoot, policy);
+    verifyCanaries(repoRoot, npmRoot, finalWebRoot, privateRecord);
+    verifyLicense(npmRoot, finalWebRoot, expectedProvenanceHash);
+    verifyMinification(repoRoot, npmRoot, finalWebRoot, policy);
+  }
+
   const missingRecord = join(temporaryRoot, 'missing-private-record.json');
   requireRejected(spawnSync(process.execPath, [
     builderPath,
@@ -264,6 +273,7 @@ try {
     private_record_hash_mismatch_probe: 'rejected',
     source_canaries_absent: true,
     staged_modules_minified: policy.minified_generated_modules.length,
+    final_web_surface_checked: Boolean(getArgument('--web-root')),
   }, null, 2));
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
