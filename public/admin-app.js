@@ -718,7 +718,7 @@ function renderLineChart(element, series, lines, options = {}) {
     element.innerHTML = chartUnavailable(options.emptyReason || 'No chart data exists for this period.');
     return;
   }
-  const width = Math.max(520, Math.round(element.clientWidth || 520));
+  const width = Math.max(320, Math.round(element.clientWidth || 520));
   const height = 240;
   const left = 54;
   const right = 16;
@@ -773,7 +773,7 @@ function renderSearchBars(element, series) {
   }
   const totals = days.map((day) => channels.reduce((sum, channel) => sum + number(byDay.get(day)[channel]), 0));
   const max = Math.max(1, ...totals);
-  const width = Math.max(520, Math.round(element.clientWidth || 520));
+  const width = Math.max(320, Math.round(element.clientWidth || 520));
   const height = 240;
   const left = 54;
   const right = 16;

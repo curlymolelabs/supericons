@@ -32,6 +32,7 @@ The admin dashboard remains a local-only static page.
 ## Shared patterns
 
 - Existing buttons, badges, tables, drawers, colors, spacing tokens, and typography remain in use.
+- Panel header actions use compact shared controls and stay on one line at the 1024 px dashboard layout.
 - Panel skeletons are visible before the first response.
 - The latest Phase A dashboard response is cached in browser session storage by window, channel, and environment.
 - Cached content renders immediately while a fresh request runs in the background.

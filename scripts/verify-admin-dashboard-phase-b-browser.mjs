@@ -155,6 +155,29 @@ function ok(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+async function assertPanelActionsStayOnOneLine(page, sectionSelector) {
+  const issues = await page.locator(`${sectionSelector} .panel-head`).evaluateAll((heads) => heads.flatMap((head) => {
+    if (!(head instanceof HTMLElement) || head.offsetParent === null) return [];
+    const actions = head.querySelector(':scope > .panel-actions');
+    if (!(actions instanceof HTMLElement)) return [];
+    const children = Array.from(actions.children).filter((child) => child instanceof HTMLElement && child.offsetParent !== null);
+    if (children.length < 2) return [];
+    const rects = children.map((child) => child.getBoundingClientRect());
+    const top = Math.min(...rects.map((rect) => rect.top));
+    const bottom = Math.max(...rects.map((rect) => rect.bottom));
+    const tallest = Math.max(...rects.map((rect) => rect.height));
+    const wrapped = bottom - top > tallest + 2;
+    const overflowed = actions.scrollWidth > actions.clientWidth + 1 || head.scrollWidth > head.clientWidth + 1;
+    if (!wrapped && !overflowed) return [];
+    return [{
+      panel: head.querySelector('.panel-title')?.textContent?.trim() || 'Unknown panel',
+      wrapped,
+      overflowed,
+    }];
+  }));
+  ok(issues.length === 0, `Panel actions wrapped or overflowed at 1024px: ${JSON.stringify(issues)}`);
+}
+
 function responseFor(path, searchParams = new URLSearchParams()) {
   const windowKey = searchParams.get('window') || '30d';
   const allHistory = windowKey === 'all';
@@ -323,7 +346,7 @@ function responseFor(path, searchParams = new URLSearchParams()) {
 }
 
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+const page = await browser.newPage({ viewport: { width: 1024, height: 1000 } });
 
 await page.route(`${apiBase}/**`, async (route) => {
   const url = new URL(route.request().url());
@@ -353,6 +376,7 @@ try {
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
   await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered accounts'));
   ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The client KPI did not use account-backed Pro totals.');
+  await assertPanelActionsStayOnOneLine(page, '#section-overview:not([hidden])');
 
   const activity = await page.locator('#latestActivity').innerText();
   ok(activity.includes('database'), 'Latest Activity did not render the live query.');
@@ -381,6 +405,7 @@ try {
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
+  await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
   ok(await page.locator('[data-row-limit]').count() === 8, 'Every long list must have a row display control.');
   ok(
     await page.locator('[data-panel-toggle]').count() === await page.locator('.panel').count(),
@@ -469,6 +494,8 @@ try {
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');
+  await page.waitForSelector('#section-audience:not([hidden])');
+  await assertPanelActionsStayOnOneLine(page, '#section-audience:not([hidden])');
   ok(await page.locator('#funnelRegistered').innerText() === '23', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
   ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search clients over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
