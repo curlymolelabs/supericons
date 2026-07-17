@@ -7,8 +7,8 @@
     "default_user_change": "MCP preview links remain in preview mode until the visitor chooses Browse all icons."
   },
   "preparation": {
-    "source_commit": "c759c95eef60a23965966929c9b6665c0ead3dab",
-    "source_tree": "2f9b35fe576f0fc3b2a10cecd9cde2e03b31af4e",
+    "source_commit": "d4fdaa6cfbe69a45b10bd861388b160df3a5fe56",
+    "source_tree": "286c089a4d00638af5409805494c041c62f9e10e",
     "allowed_packet_paths": [
       "docs/si-v2/search/reviews/search-v2-web-preview-persistence-approval-request-2026-07-18.md",
       "docs/si-v2/search/reviews/search-v2-web-preview-persistence-authorization-manifest-2026-07-18.json"
@@ -21,8 +21,8 @@
       "scripts/verify-mcp-preview-persistence.mjs": "0187ec975016a93a3077c794eb95764d79839b343cc7262f095f7b7a40f4db8c",
       "scripts/build-web-preview-persistence-release.mjs": "1887f5194895ef302d10d0c78f997283f1704383642a45569b041ba020906d70",
       "scripts/verify-search-v2-protected-public-artifacts.mjs": "b92885c72996d95aaaf6d6175aca4ae76b826c82f5735de273cfd43fe1f6637d",
-      "scripts/run-web-preview-persistence-release.mjs": "716d8af923f044506d1cf210f2706a6b2b00365e741a2d4b27f5f2c2d67198d7",
-      "scripts/verify-web-preview-persistence-release-packet.mjs": "0e4fff7bd83e338dec694c2b1cc2a402f3ca56632da24933404a05160c2613ef",
+      "scripts/run-web-preview-persistence-release.mjs": "cb1eecff5a08a99979e3540a1cb8e9af743272390965273c5b9f3e2e796106e8",
+      "scripts/verify-web-preview-persistence-release-packet.mjs": "1e0b82898f82454371d311ae06d1341550015e8058af49ec8d740f969f14263a",
       "package.json": "ca6738ed9737800d3cd7a505c153b3ba69bae1e7e057d9e58fb8908ad610e604",
       "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
       "vite.config.js": "2204c6ccd15aeaeaac21e31b53cc9dee4c41f37672afdb1141f59bc03e76e513",
@@ -44,6 +44,14 @@
       "VC-4_license_and_canary"
     ],
     "private_record_rule": "The canary record remains outside the repository. Its exact hash is bound here, and verification fails if it is absent or changed."
+  },
+  "toolchain": {
+    "netlify_cli": {
+      "version": "23.15.1",
+      "entrypoint_sha256": "a77868a44c345ca3323c5367aeb508c6170d45f10e3234c58b194c8dac0e624f",
+      "package_json_sha256": "b67a3f109e1f33e70aad16a9427efc2c05c804bbd5680559d56ac0d932928cdf",
+      "enforcement": "The version and both file hashes must match before the one-use receipt is created."
+    }
   },
   "netlify": {
     "site_id": "dcccabac-ae47-4c69-80c4-aefc8c15e2e5",
@@ -124,9 +132,24 @@
       "evidence": "Any failed live verification restores only the pinned production deploy."
     },
     {
+      "id": "postdeploy_read_failure_exact_rollback",
+      "status": "enforced",
+      "evidence": "A failed site read after deployment still makes one exact restore call and verifies the restored state."
+    },
+    {
+      "id": "delayed_visibility_exact_rollback",
+      "status": "enforced",
+      "evidence": "A temporarily old published-deploy response still makes one exact restore call."
+    },
+    {
       "id": "rollback_failure_terminal_record",
       "status": "enforced",
       "evidence": "A failed restore leaves a terminal local record and cannot be replayed."
+    },
+    {
+      "id": "netlify_cli_binding",
+      "status": "enforced",
+      "evidence": "The Netlify CLI version, entry point, and package record match the manifest before reservation."
     }
   ],
   "postdeploy_checks": {
@@ -139,8 +162,8 @@
     "protection": "The public license, provenance, canaries, and protected-class boundary match the staged artifact."
   },
   "rollback": {
-    "trigger": "Any deploy response mismatch, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
-    "action": "Restore Netlify deploy 6a4c656b9a68bd1909b8ba2c once, verify it is current, record the failure, and stop.",
+    "trigger": "Any deploy response mismatch, site-read failure, delayed visibility, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
+    "action": "After any deployment attempt, restore Netlify deploy 6a4c656b9a68bd1909b8ba2c once without requiring a pre-restore site read, verify it is current, record the failure, and stop.",
     "replay": "Any in-progress, successful, rolled-back, or rollback-failed receipt blocks another execution. Reconciliation requires a new independently audited manifest."
   },
   "excluded_actions": [

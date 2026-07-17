@@ -41,6 +41,8 @@ This is a web-only release. It does not change the npm beta, Railway, Supabase, 
 
 The runner stops before deployment if the current published deploy is not the pinned rollback deploy. It writes a one-use local receipt immediately before the deploy. Any post-deploy failure restores only the pinned deploy and makes the manifest terminal.
 
+The rollback tests also cover a failed site read after deployment and delayed visibility of the new deploy. Both cases must call the exact restore once. The runner binds Netlify CLI version `23.15.1`, its entry point, and its package record before creating the receipt.
+
 ## Independent review requested
 
 Review the manifest, rebuild the exact artifact, run the packet verifier, and inspect the deploy and rollback command boundaries. The external action should proceed only after two independent reviewers return GO on the same manifest and source commit.
