@@ -1,0 +1,22 @@
+{
+    "artifact":  "admin_dashboard_phase_a_admin_api_rollup_backlog",
+    "approval_fingerprint":  "420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220",
+    "measurement":  {
+                        "telemetry_day_count":  82,
+                        "overview_day_count":  81,
+                        "query_day_count":  81,
+                        "complete_rollup_day_count":  81,
+                        "pending_day_count":  1,
+                        "earliest_pending_day":  "2026-07-16",
+                        "latest_pending_day":  "2026-07-16",
+                        "latest_complete_day":  "2026-07-15",
+                        "pending_on_or_before_latest_complete_day":  0,
+                        "overview_only_day_count":  0,
+                        "query_only_day_count":  0
+                    },
+    "refresh_day_limit":  1,
+    "refresh_call_limit":  2,
+    "authorized_max_pending_days":  120,
+    "mutations":  0,
+    "captured_at":  "2026-07-17T07:39:07.1295422Z"
+}

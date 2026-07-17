@@ -1,0 +1,96 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "mode": "candidate",
+  "started_at": "2026-07-17T07:39:22.215Z",
+  "rollup_refreshes": [
+    {
+      "attempt": 1,
+      "latency_ms": 5362.1,
+      "complete": false,
+      "refreshed_days": [
+        "2026-07-16"
+      ]
+    },
+    {
+      "attempt": 2,
+      "latency_ms": 3105.1,
+      "complete": true,
+      "refreshed_days": []
+    }
+  ],
+  "rollup_refresh_day_limit": 1,
+  "dashboard_24h": {
+    "latency_ms": 1942.9,
+    "latest_activity_count": 50,
+    "filters": {
+      "window": "1d",
+      "environment": "production",
+      "channel": "all",
+      "query_origin": "agent_query"
+    }
+  },
+  "queue_24h": {
+    "samples_ms": [
+      1165.3,
+      1710.5,
+      1348.1,
+      1106.5,
+      853.1,
+      1189.9,
+      1516.6,
+      1084.9,
+      833,
+      1430.2,
+      1073.5,
+      1284,
+      1112.5,
+      1517.5,
+      1635.7,
+      1038.7,
+      1151.7,
+      1326.2,
+      1124.7,
+      1147
+    ],
+    "p95_ms": 1635.7,
+    "max_ms": 1710.5
+  },
+  "queue_all": {
+    "samples_ms": [
+      1009.7,
+      1142.7,
+      1081.6,
+      851,
+      1160.1,
+      854.6,
+      809.3,
+      1699,
+      1056.9,
+      1019.9,
+      1067.4,
+      1052,
+      873.5,
+      1179.6,
+      822.3,
+      972.5,
+      865,
+      904.3,
+      898.1,
+      996.2
+    ],
+    "p95_ms": 1179.6,
+    "max_ms": 1699
+  },
+  "performance_contract": {
+    "queue_24h_p95_limit_ms": 1500,
+    "queue_all_p95_limit_ms": 1000,
+    "warm_samples_each": 20,
+    "rollup_refresh_elapsed_limit_minutes": 20,
+    "rollup_refresh_day_limit": 1,
+    "rollup_refresh_call_limit": 2
+  },
+  "status": "failed",
+  "error": "24h queue p95 was 1635.7 ms.",
+  "finished_at": "2026-07-17T07:40:20.236Z"
+}

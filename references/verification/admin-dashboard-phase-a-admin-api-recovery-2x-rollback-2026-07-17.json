@@ -1,0 +1,24 @@
+{
+    "artifact":  "admin_dashboard_phase_a_admin_api_rollback",
+    "approval_fingerprint":  "420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220",
+    "reason":  "node failed with exit code 1.",
+    "candidate_version":  48,
+    "rollback_revision":  "b0520d42f1b2cdd2a74e608495bf1e584e362e66",
+    "rollback_version":  49,
+    "rollback_updated_at":  1784274030013,
+    "legacy_contract":  [
+                            "{\"status\":\"ok\",\"output\":\"tmp/admin-dashboard-phase-a-admin-api-release/rollback-live.json\"}",
+                            {
+                                "artifact":  "admin_dashboard_phase_a_admin_api_live_contract",
+                                "admin_url":  "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+                                "mode":  "legacy",
+                                "started_at":  "2026-07-17T07:40:27.239Z",
+                                "status":  "ok",
+                                "legacy_stats_latency_ms":  2330.3,
+                                "rollup_writes":  0,
+                                "finished_at":  "2026-07-17T07:40:29.574Z"
+                            }
+                        ],
+    "started_at":  "2026-07-17T07:40:20.2451227Z",
+    "finished_at":  "2026-07-17T07:40:29.6053279Z"
+}
