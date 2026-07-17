@@ -1538,6 +1538,203 @@
       border-color: rgba(255,113,108,0.45);
       color: var(--si-error);
     }
+    .phase-b-dashboard {
+      display: grid;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    .phase-b-filter-bar {
+      display: grid;
+      grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(140px, 1fr));
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .phase-b-refresh-status {
+      min-height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      color: var(--si-text-dim);
+    }
+    .phase-b-refresh-status .material-symbols-outlined {
+      font-size: 14px;
+    }
+    .refresh-spinner {
+      animation: phase-b-spin 800ms linear infinite;
+    }
+    @keyframes phase-b-spin {
+      to { transform: rotate(360deg); }
+    }
+    .phase-b-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .phase-b-kpi {
+      min-width: 0;
+      padding: 1rem;
+      border: 1px solid rgba(72,72,71,0.2);
+      border-radius: var(--si-radius-xl);
+      background: var(--si-surface-container);
+    }
+    .phase-b-kpi__label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .phase-b-kpi__label .material-symbols-outlined { font-size: 16px; }
+    .phase-b-kpi__value {
+      margin-top: 0.55rem;
+      color: var(--si-text);
+      font-family: var(--si-font-headline);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    .phase-b-kpi__meta {
+      margin-top: 0.3rem;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      line-height: 1.45;
+    }
+    .phase-b-panel {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(72,72,71,0.2);
+      border-radius: var(--si-radius-xl);
+      background: var(--si-surface-container);
+    }
+    .phase-b-panel__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(72,72,71,0.16);
+    }
+    .phase-b-panel__title {
+      color: var(--si-text);
+      font-family: var(--si-font-headline);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .phase-b-panel__lead {
+      margin-top: 0.25rem;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.73rem;
+      line-height: 1.45;
+    }
+    .phase-b-activity-list {
+      display: grid;
+    }
+    .phase-b-activity-row {
+      display: grid;
+      grid-template-columns: minmax(170px, 1.6fr) minmax(140px, 1fr) minmax(120px, 0.85fr) minmax(110px, 0.8fr);
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(72,72,71,0.12);
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+    }
+    .phase-b-activity-row:last-child { border-bottom: 0; }
+    .phase-b-activity-query {
+      display: grid;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+    .phase-b-activity-query strong {
+      color: var(--si-text);
+      overflow-wrap: anywhere;
+    }
+    .phase-b-activity-query span {
+      color: var(--si-text-dim);
+      font-size: 0.68rem;
+    }
+    .phase-b-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+    }
+    .phase-b-chip {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid rgba(72,72,71,0.28);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.025);
+      color: var(--si-text-muted);
+      font-family: var(--si-font-label);
+      font-size: 0.66rem;
+      overflow-wrap: anywhere;
+    }
+    .phase-b-chip--origin {
+      border-color: rgba(255,79,0,0.28);
+      background: rgba(255,79,0,0.08);
+      color: var(--si-primary);
+    }
+    .phase-b-activity-time {
+      color: var(--si-text-dim);
+      font-size: 0.69rem;
+      line-height: 1.45;
+    }
+    .phase-b-help {
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      line-height: 1.5;
+    }
+    .phase-b-skeleton {
+      position: relative;
+      overflow: hidden;
+      min-height: 1em;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.055);
+      color: transparent;
+    }
+    .phase-b-skeleton::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      animation: phase-b-shimmer 1.3s infinite;
+    }
+    @keyframes phase-b-shimmer {
+      to { transform: translateX(100%); }
+    }
+    .phase-b-diagnostics {
+      margin: 0;
+    }
+    .phase-b-diagnostics > summary {
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.78rem;
+    }
+    .phase-b-diagnostics__body {
+      padding: 0 1rem 1rem;
+    }
+    .phase-b-gap-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .phase-b-gap-actions .btn {
+      min-height: 28px;
+    }
     @media (max-width: 1100px) {
       .decision-actions {
         grid-template-columns: 1fr;
@@ -1547,6 +1744,15 @@
       }
       .query-explorer__filters {
         grid-template-columns: 1fr 1fr;
+      }
+      .phase-b-filter-bar {
+        grid-template-columns: 1fr 1fr;
+      }
+      .phase-b-kpis {
+        grid-template-columns: 1fr 1fr;
+      }
+      .phase-b-activity-row {
+        grid-template-columns: minmax(160px, 1.5fr) minmax(130px, 1fr);
       }
     }
     @media (max-width: 640px) {
@@ -1559,6 +1765,17 @@
       .query-explorer__filters,
       .query-detail-metrics {
         grid-template-columns: 1fr;
+      }
+      .phase-b-dashboard {
+        padding: 1rem;
+      }
+      .phase-b-filter-bar,
+      .phase-b-kpis,
+      .phase-b-activity-row {
+        grid-template-columns: 1fr;
+      }
+      .phase-b-refresh-status {
+        justify-content: flex-start;
       }
     }
   </style>
@@ -1780,7 +1997,7 @@
         <div class="panel-header__row">
           <div>
             <div class="panel-header__title">Icon Intelligence</div>
-            <div class="panel-header__subtitle">Behavioral evidence, MCP convergence, and curation signals</div>
+            <div class="panel-header__subtitle">Real search activity, search quality, and work that needs attention</div>
           </div>
           <div class="panel-header__actions">
             <button class="btn btn-ghost btn-sm" id="intelligenceRefreshBtn" type="button">
@@ -1792,7 +2009,7 @@
         <div class="search-row audit-filters">
           <div class="search-input-wrap" style="max-width:280px">
             <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Filter latest activity..." id="intelligenceSearch" aria-label="Filter latest activity" />
+            <input class="search-input" placeholder="Search dashboard..." id="intelligenceSearch" aria-label="Search the dashboard" />
           </div>
           <select class="filter-select" id="intelligenceWindowFilter" aria-label="Intelligence time window">
             <option value="1d">Last 24 hours</option>
@@ -1801,19 +2018,6 @@
             <option value="90d">Last 90 days</option>
             <option value="1y">Last 12 months</option>
             <option value="all">All time</option>
-          </select>
-          <select class="filter-select" id="intelligenceSignalFilter" aria-label="Latest activity signal type">
-            <option value="">All signals</option>
-            <option value="search_attempt">search_attempt</option>
-            <option value="hosted_search_audit">hosted search audit</option>
-            <option value="copy">copy</option>
-            <option value="favorite">favorite</option>
-            <option value="replace">replace</option>
-            <option value="mcp_call">mcp_call</option>
-            <option value="editorial">editorial</option>
-            <option value="kit_download">kit_download</option>
-            <option value="collection">collection</option>
-            <option value="social_gallery">social_gallery</option>
           </select>
           <select class="filter-select" id="intelligenceChannelFilter" aria-label="Usage channel">
             <option value="all" selected>All channels</option>
@@ -1837,11 +2041,143 @@
       </div>
 
       <div style="flex:1;overflow-y:auto;">
-        <details class="intelligence-collapsible" id="intelligenceRawSignalsDetails">
+        <div class="phase-b-dashboard">
+          <div class="phase-b-refresh-status" id="phaseBRefreshStatus" role="status" aria-live="polite">
+            Showing saved data while the latest activity loads
+          </div>
+
+          <section class="phase-b-kpis" id="phaseBKpiStrip" aria-label="Search overview">
+            <article class="phase-b-kpi">
+              <div class="phase-b-kpi__label" id="phaseBClientsLabel"><span class="material-symbols-outlined">group</span>Estimated unique clients</div>
+              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBClientsValue">Loading</div>
+              <div class="phase-b-kpi__meta" id="phaseBClientsMeta">Anonymous client estimates reset each month.</div>
+            </article>
+            <article class="phase-b-kpi">
+              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">search</span>Real searches</div>
+              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBSearchesValue">Loading</div>
+              <div class="phase-b-kpi__meta" id="phaseBSearchesMeta">Direct agent and web searches only.</div>
+            </article>
+            <article class="phase-b-kpi">
+              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">report</span>True zero rate</div>
+              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBZeroRateValue">Loading</div>
+              <div class="phase-b-kpi__meta" id="phaseBZeroRateMeta">Known engine problems are left out.</div>
+            </article>
+            <article class="phase-b-kpi">
+              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">filter_alt</span>Low-result rate</div>
+              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBLowRateValue">Loading</div>
+              <div class="phase-b-kpi__meta" id="phaseBLowRateMeta">Only searches eligible for this check are counted.</div>
+            </article>
+          </section>
+
+          <section class="phase-b-panel" id="phaseBLatestActivityPanel">
+            <div class="phase-b-panel__header">
+              <div>
+                <div class="phase-b-panel__title">Latest Activity</div>
+                <div class="phase-b-panel__lead">The newest direct searches, loaded before the rest of the dashboard.</div>
+              </div>
+              <span class="phase-b-chip phase-b-chip--origin">Direct searches</span>
+            </div>
+            <div class="phase-b-activity-list" id="phaseBLatestActivity" aria-live="polite">
+              <div class="phase-b-activity-row">
+                <div class="phase-b-skeleton">Loading activity</div>
+                <div class="phase-b-skeleton">Loading visitor</div>
+                <div class="phase-b-skeleton">Loading outcome</div>
+                <div class="phase-b-skeleton">Loading time</div>
+              </div>
+              <div class="phase-b-activity-row">
+                <div class="phase-b-skeleton">Loading activity</div>
+                <div class="phase-b-skeleton">Loading visitor</div>
+                <div class="phase-b-skeleton">Loading outcome</div>
+                <div class="phase-b-skeleton">Loading time</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="phase-b-panel" id="phaseBGapPanel">
+            <div class="phase-b-panel__header">
+              <div>
+                <div class="phase-b-panel__title">Gap Worklist</div>
+                <div class="phase-b-panel__lead">Real searches that returned nothing or too little. Review the highest-volume gaps first.</div>
+              </div>
+              <div class="query-explorer__actions">
+                <button class="btn btn-ghost btn-sm" id="queryExplorerExportCsv" type="button">CSV</button>
+                <button class="btn btn-ghost btn-sm" id="queryExplorerExportJson" type="button">JSON</button>
+                <button class="btn btn-ghost btn-sm" id="queryExplorerExportAgentPack" type="button">Analysis pack</button>
+              </div>
+            </div>
+            <div style="padding:1rem;">
+              <div class="query-explorer">
+                <div class="query-explorer__filters">
+                  <select class="filter-select" id="queryExplorerIssueFilter" aria-label="Gap type">
+                    <option value="">Zero and low results</option>
+                    <option value="zero_result">Zero results</option>
+                    <option value="low_result">Low results</option>
+                  </select>
+                  <select class="filter-select" id="queryExplorerStatusFilter" aria-label="Review status">
+                    <option value="">Active work</option>
+                    <option value="untriaged">Untriaged</option>
+                    <option value="needs_alias">Needs alias</option>
+                    <option value="needs_icon">Needs icon</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="ignore">Ignore</option>
+                  </select>
+                  <input class="filter-select" id="queryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
+                  <select class="filter-select" id="queryExplorerPageSize" aria-label="Rows per page">
+                    <option value="25">25 rows</option>
+                    <option value="50">50 rows</option>
+                    <option value="100">100 rows</option>
+                  </select>
+                </div>
+                <div class="query-explorer__summary" id="queryExplorerSummary">Loading gap rows...</div>
+                <div class="query-explorer__table">
+                  <table class="data-table">
+                    <colgroup>
+                      <col style="width:34%" />
+                      <col style="width:22%" />
+                      <col style="width:16%" />
+                      <col style="width:14%" />
+                      <col style="width:14%" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>Query</th>
+                        <th>Results</th>
+                        <th>Clients</th>
+                        <th>Last seen</th>
+                        <th>Review</th>
+                      </tr>
+                    </thead>
+                    <tbody id="queryExplorerTableBody">
+                      <tr><td colspan="5"><div class="phase-b-skeleton" style="height:52px;">Loading gaps</div></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
+                  <span class="pagination__info" id="queryExplorerPaginationInfo">Loading gap rows...</span>
+                  <div class="pagination__controls" id="queryExplorerPaginationControls"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <details class="intelligence-collapsible phase-b-diagnostics" id="intelligenceRawSignalsDetails">
           <summary>
-            Raw Signals And Secondary Metrics
-            <span class="intelligence-collapsible__hint">Open only when debugging event capture</span>
+            Diagnostics
+            <span class="intelligence-collapsible__hint">Raw counts, secondary metrics, and detailed activity</span>
           </summary>
+          <div class="phase-b-diagnostics__body">
+            <div class="query-explorer__filters" style="padding-top:1rem;">
+              <select class="filter-select" id="intelligenceSignalFilter" aria-label="Detailed activity type">
+                <option value="">All activity types</option>
+                <option value="search_attempt">Search attempts</option>
+                <option value="hosted_search_audit">Hosted search checks</option>
+                <option value="copy">Copies</option>
+                <option value="favorite">Saves</option>
+                <option value="replace">Replacements</option>
+                <option value="mcp_call">MCP calls</option>
+                <option value="kit_download">Kit downloads</option>
+              </select>
+            </div>
 
         <div class="stats-grid">
           <div class="stat-card">
@@ -1911,13 +2247,10 @@
             <div id="intelligenceKeySignals"></div>
           </div>
         </div>
-        </details>
-
-        <details class="intelligence-collapsible" id="intelligenceSearchSummaryDetails">
-          <summary>
-            Search Demand Summary
-            <span class="intelligence-collapsible__hint">Open for totals and top query lists</span>
-          </summary>
+        <div class="stats-section__title" style="margin:0 1rem 0.75rem;">
+          <span class="material-symbols-outlined" style="font-size:14px">query_stats</span>
+          Search demand details
+        </div>
 
         <div class="stats-grid" style="padding-top:0;">
           <div class="stat-card">
@@ -1970,9 +2303,35 @@
             <div id="searchIntelTopMcpQueries"></div>
           </div>
         </div>
+        <div class="stats-section" style="margin:0 1rem 1rem;">
+          <div class="stats-section__title">
+            <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
+            Detailed activity
+          </div>
+          <div class="query-explorer__table">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Signal</th>
+                  <th>Visitor</th>
+                  <th>Query</th>
+                  <th>Surface</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="intelligenceEvidenceBody"></tbody>
+            </table>
+          </div>
+          <div class="pagination" style="padding:0.75rem 0 0;border-top:none;">
+            <span class="pagination__info" id="intelligenceEvidencePaginationInfo">Loading detailed activity...</span>
+            <div class="pagination__controls" id="intelligenceEvidencePaginationControls"></div>
+          </div>
+        </div>
+        </div>
         </details>
 
-        <div class="stats-recent" style="padding-top:0;grid-template-columns:1fr;">
+        <div class="stats-recent" style="display:none;" aria-hidden="true">
           <div class="stats-section">
             <div class="query-explorer">
               <div class="query-explorer__top">
@@ -1986,15 +2345,15 @@
                   </div>
                 </div>
                 <div class="query-explorer__actions">
-                  <button class="btn btn-ghost btn-sm" id="queryExplorerExportCsv" type="button">
+                  <button class="btn btn-ghost btn-sm" id="legacyQueryExplorerExportCsv" type="button">
                     <span class="material-symbols-outlined" style="font-size:14px">table_view</span>
                     CSV
                   </button>
-                  <button class="btn btn-ghost btn-sm" id="queryExplorerExportJson" type="button">
+                  <button class="btn btn-ghost btn-sm" id="legacyQueryExplorerExportJson" type="button">
                     <span class="material-symbols-outlined" style="font-size:14px">data_object</span>
                     JSON
                   </button>
-                  <button class="btn btn-primary btn-sm" id="queryExplorerExportAgentPack" type="button">
+                  <button class="btn btn-primary btn-sm" id="legacyQueryExplorerExportAgentPack" type="button">
                     <span class="material-symbols-outlined" style="font-size:14px">inventory_2</span>
                     Agent Pack
                   </button>
@@ -2004,9 +2363,9 @@
               <div class="query-explorer__filters">
                 <div class="search-input-wrap">
                   <span class="material-symbols-outlined">search</span>
-                  <input class="search-input" placeholder="Search queries..." id="queryExplorerSearch" />
+                  <input class="search-input" placeholder="Search queries..." id="legacyQueryExplorerSearch" />
                 </div>
-                <select class="filter-select" id="queryExplorerIssueFilter" aria-label="Query issue type">
+                <select class="filter-select" id="legacyQueryExplorerIssueFilter" aria-label="Query issue type">
                   <option value="">All issues</option>
                   <option value="zero_result">Zero results</option>
                   <option value="low_result">Low results</option>
@@ -2014,7 +2373,7 @@
                   <option value="successful">Successful</option>
                   <option value="mcp">MCP</option>
                 </select>
-                <select class="filter-select" id="queryExplorerStatusFilter" aria-label="Query review status">
+                <select class="filter-select" id="legacyQueryExplorerStatusFilter" aria-label="Query review status">
                   <option value="">All statuses</option>
                   <option value="untriaged">Untriaged</option>
                   <option value="needs_alias">Needs Alias</option>
@@ -2022,7 +2381,7 @@
                   <option value="resolved">Resolved</option>
                   <option value="ignore">Ignore</option>
                 </select>
-                <select class="filter-select" id="queryExplorerEnvironmentFilter" aria-label="Query environment">
+                <select class="filter-select" id="legacyQueryExplorerEnvironmentFilter" aria-label="Query environment">
                   <option value="live" selected>Production</option>
                   <option value="preview">Preview</option>
                   <option value="local">Local / dev</option>
@@ -2030,7 +2389,7 @@
                   <option value="legacy">Unclassified source</option>
                   <option value="all">All environments</option>
                 </select>
-                <select class="filter-select" id="queryExplorerChannelFilter" aria-label="Query channel">
+                <select class="filter-select" id="legacyQueryExplorerChannelFilter" aria-label="Query channel">
                   <option value="all" selected>All channels</option>
                   <option value="web">Web</option>
                   <option value="hosted_mcp">Hosted MCP</option>
@@ -2040,9 +2399,9 @@
                   <option value="internal_test">Internal / test</option>
                   <option value="unknown">Unclassified</option>
                 </select>
-                <input class="filter-select" id="queryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
-                <input class="filter-select" id="queryExplorerPurposeFilter" placeholder="Purpose" aria-label="Purpose filter" />
-                <select class="filter-select" id="queryExplorerSort" aria-label="Sort query rows">
+                <input class="filter-select" id="legacyQueryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
+                <input class="filter-select" id="legacyQueryExplorerPurposeFilter" placeholder="Purpose" aria-label="Purpose filter" />
+                <select class="filter-select" id="legacyQueryExplorerSort" aria-label="Sort query rows">
                   <option value="last_seen" selected>Latest activity</option>
                   <option value="zero_attempt_count">Zero attempts</option>
                   <option value="low_attempt_count">Low attempts</option>
@@ -2055,18 +2414,18 @@
                   <option value="status">Status</option>
                   <option value="query">Query</option>
                 </select>
-                <select class="filter-select" id="queryExplorerDirection" aria-label="Sort direction">
+                <select class="filter-select" id="legacyQueryExplorerDirection" aria-label="Sort direction">
                   <option value="desc">Newest first</option>
                   <option value="asc">Oldest first</option>
                 </select>
-                <select class="filter-select" id="queryExplorerPageSize" aria-label="Rows per page">
+                <select class="filter-select" id="legacyQueryExplorerPageSize" aria-label="Rows per page">
                   <option value="25">25 rows</option>
                   <option value="50">50 rows</option>
                   <option value="100">100 rows</option>
                 </select>
               </div>
 
-              <div class="query-explorer__summary" id="queryExplorerSummary">Loading query rows...</div>
+              <div class="query-explorer__summary" id="legacyQueryExplorerSummary">Loading query rows...</div>
 
               <div class="query-workbench-tabs" role="tablist" aria-label="Query workspace views">
                 <button class="query-workbench-tab active" id="queryWorkbenchTabQueries" type="button" data-query-workbench-view="queries" role="tab" aria-selected="true" aria-controls="queryWorkbenchPaneQueries">
@@ -2098,13 +2457,13 @@
                         <th>Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="queryExplorerTableBody"></tbody>
+                    <tbody id="legacyQueryExplorerTableBody"></tbody>
                   </table>
                 </div>
 
                 <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
-                  <span class="pagination__info" id="queryExplorerPaginationInfo">Loading query rows...</span>
-                  <div class="pagination__controls" id="queryExplorerPaginationControls"></div>
+                  <span class="pagination__info" id="legacyQueryExplorerPaginationInfo">Loading query rows...</span>
+                  <div class="pagination__controls" id="legacyQueryExplorerPaginationControls"></div>
                 </div>
               </div>
 
@@ -2132,18 +2491,19 @@
                         <th>Note</th>
                       </tr>
                     </thead>
-                    <tbody id="intelligenceEvidenceBody"></tbody>
+                    <tbody id="legacyIntelligenceEvidenceBody"></tbody>
                   </table>
                 </div>
                 <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
-                  <span class="pagination__info" id="intelligenceEvidencePaginationInfo">Loading evidence...</span>
-                  <div class="pagination__controls" id="intelligenceEvidencePaginationControls"></div>
+                  <span class="pagination__info" id="legacyIntelligenceEvidencePaginationInfo">Loading evidence...</span>
+                  <div class="pagination__controls" id="legacyIntelligenceEvidencePaginationControls"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        </div>
       </div>
     </section>
 

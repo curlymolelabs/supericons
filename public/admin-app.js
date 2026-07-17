@@ -1,6 +1,7 @@
 const ADMIN_API_BASE = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
 const ADMIN_SIDEBAR_COLLAPSED_KEY = 'si_admin_sidebar_collapsed';
+const ADMIN_PHASE_B_CACHE_PREFIX = 'si_admin_phase_b_cache_v1';
 const INTELLIGENCE_WINDOWS = [
   { key: '1d', shortLabel: '24h', longLabel: 'Last 24 hours' },
   { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days' },
@@ -66,6 +67,9 @@ const ACTIVE_QUERY_REVIEW_STATUSES = new Set(['needs_alias', 'needs_icon']);
 const state = {
   stats: null,
   intelligenceOverview: null,
+  phaseBDashboard: null,
+  phaseBDashboardUpdatedAt: null,
+  phaseBRefreshing: false,
   intelligenceEvidence: [],
   intelligenceEvidencePagination: { page: 1, page_count: 1, total: 0, page_size: 50 },
   intelligenceMetadataCoverage: 0,
@@ -894,6 +898,213 @@ function formatPercent(value) {
   return `${Math.round(value * 100)}%`;
 }
 
+function getPhaseBCacheKey() {
+  return [
+    ADMIN_PHASE_B_CACHE_PREFIX,
+    state.intelligenceWindow,
+    normalizeQueryEnvironment(state.queryQueueFilters.environment),
+    normalizeQueryChannel(state.queryQueueFilters.channel),
+  ].join(':');
+}
+
+function readPhaseBCache() {
+  try {
+    const cached = JSON.parse(window.sessionStorage.getItem(getPhaseBCacheKey()) || 'null');
+    if (!cached?.payload) return false;
+    state.phaseBDashboard = cached.payload;
+    state.phaseBDashboardUpdatedAt = cached.updated_at || null;
+    renderPhaseBDashboard();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function writePhaseBCache(payload) {
+  try {
+    window.sessionStorage.setItem(getPhaseBCacheKey(), JSON.stringify({
+      updated_at: new Date().toISOString(),
+      payload,
+    }));
+  } catch {
+    // The dashboard still works when browser storage is unavailable.
+  }
+}
+
+function setPhaseBRefreshState(refreshing, message = '') {
+  state.phaseBRefreshing = refreshing;
+  const button = $('intelligenceRefreshBtn');
+  const icon = button?.querySelector('.material-symbols-outlined');
+  const status = $('phaseBRefreshStatus');
+  if (button) {
+    button.disabled = refreshing;
+    button.setAttribute('aria-busy', refreshing ? 'true' : 'false');
+  }
+  icon?.classList.toggle('refresh-spinner', refreshing);
+  if (!status) return;
+  if (message) {
+    status.textContent = message;
+    return;
+  }
+  status.innerHTML = refreshing
+    ? '<span class="material-symbols-outlined refresh-spinner">progress_activity</span><span>Refreshing latest activity first</span>'
+    : '<span class="material-symbols-outlined">check_circle</span><span>Dashboard is up to date</span>';
+}
+
+function phaseBVisitorLabel(kind) {
+  const labels = {
+    registered: 'Registered',
+    api_key: 'API key',
+    anonymous: 'Anonymous',
+    session: 'Session',
+    ip: 'IP group',
+  };
+  return labels[String(kind || '')] || 'Visitor';
+}
+
+function phaseBOriginLabel(origin) {
+  const labels = {
+    agent_query: 'Direct search',
+    recommend_variant: 'Recommendation step',
+    icon_lookup: 'Icon lookup',
+    legacy_unknown: 'Older activity',
+  };
+  return labels[String(origin || '')] || 'Search';
+}
+
+function phaseBOutcomeLabel(entry) {
+  if (entry.error_code) return 'Error';
+  if (entry.known_defect_id) return 'Known engine issue';
+  if (entry.search_outcome === 'clarification') return 'Clarification';
+  if (entry.result_count === 0) return 'No results';
+  if (typeof entry.result_count === 'number') {
+    return `${formatNumber(entry.result_count)} result${entry.result_count === 1 ? '' : 's'}`;
+  }
+  return '';
+}
+
+function getVisiblePhaseBActivity() {
+  const rows = Array.isArray(state.phaseBDashboard?.latest_activity)
+    ? state.phaseBDashboard.latest_activity
+    : [];
+  const search = normalizeSearchContextValue(state.intelligenceFilters.q);
+  if (!search) return rows;
+  return rows.filter((entry) => [
+    entry.query,
+    entry.library_filter,
+    entry.tool_name,
+    entry.country_code,
+    entry.estimated_client_key,
+  ].some((value) => normalizeSearchContextValue(value).includes(search)));
+}
+
+function renderPhaseBDashboard() {
+  const payload = state.phaseBDashboard;
+  if (!payload) return;
+  const summary = payload.summary || {};
+  const usesClientDays = summary.client_measure === 'client_days';
+  const clientValue = usesClientDays
+    ? summary.client_days
+    : summary.estimated_unique_clients;
+  const clientLabel = $('phaseBClientsLabel');
+  if (clientLabel) {
+    clientLabel.innerHTML = `<span class="material-symbols-outlined">group</span>${usesClientDays ? 'Client-days' : 'Estimated unique clients'}`;
+  }
+  $('phaseBClientsValue').textContent = formatNumber(clientValue);
+  $('phaseBSearchesValue').textContent = formatNumber(summary.attempt_count);
+  $('phaseBZeroRateValue').textContent = typeof summary.true_zero_rate === 'number'
+    ? formatPercent(summary.true_zero_rate)
+    : 'No searches';
+  $('phaseBLowRateValue').textContent = typeof summary.low_result_rate === 'number'
+    ? formatPercent(summary.low_result_rate)
+    : 'No searches';
+  ['phaseBClientsValue', 'phaseBSearchesValue', 'phaseBZeroRateValue', 'phaseBLowRateValue'].forEach((id) => {
+    $(id)?.classList.remove('phase-b-skeleton');
+  });
+
+  $('phaseBClientsMeta').textContent = usesClientDays
+    ? 'Long windows use a daily client sum, not a unique-client estimate.'
+    : typeof summary.searches_per_client === 'number'
+      ? `${summary.searches_per_client.toFixed(1)} searches per client in this window.`
+      : 'Anonymous client estimates reset each month.';
+  $('phaseBSearchesMeta').textContent = `${formatNumber(summary.success_count)} successful direct searches in this window.`;
+  $('phaseBZeroRateMeta').textContent = `${formatNumber(summary.true_zero_count)} true zero searches, with known engine problems left out.`;
+  $('phaseBLowRateMeta').textContent = `${formatNumber(summary.low_result_count)} of ${formatNumber(summary.low_result_eligible_count)} eligible searches returned too little.`;
+
+  const activity = getVisiblePhaseBActivity();
+  const container = $('phaseBLatestActivity');
+  if (container) {
+    container.innerHTML = activity.length
+      ? activity.map((entry) => {
+        const visitorKey = String(entry.estimated_client_key || '').trim();
+        const visitor = visitorKey
+          ? `${phaseBVisitorLabel(entry.visitor_kind)} ${compactIdentifier(visitorKey.replace(/^[^:]+:/, ''))}`
+          : phaseBVisitorLabel(entry.visitor_kind);
+        const context = [
+          entry.library_filter && entry.library_filter !== 'all' ? entry.library_filter : '',
+          entry.tool_name || '',
+        ].filter(Boolean).join(' · ');
+        const outcome = phaseBOutcomeLabel(entry);
+        return `
+          <article class="phase-b-activity-row">
+            <div class="phase-b-activity-query">
+              <strong>${escapeHtml(entry.query || 'Search')}</strong>
+              ${context ? `<span>${escapeHtml(context)}</span>` : ''}
+            </div>
+            <div class="phase-b-chip-row">
+              <span class="phase-b-chip">${escapeHtml(visitor)}</span>
+              <span class="phase-b-chip phase-b-chip--origin">${escapeHtml(phaseBOriginLabel(entry.query_origin))}</span>
+            </div>
+            <div class="phase-b-chip-row">
+              ${outcome ? `<span>${escapeHtml(outcome)}</span>` : ''}
+              ${entry.country_code ? `<span class="phase-b-chip">${escapeHtml(entry.country_code)}</span>` : ''}
+            </div>
+            <time class="phase-b-activity-time" datetime="${escapeHtml(entry.created_at || '')}">${escapeHtml(formatDateTime(entry.created_at))}</time>
+          </article>
+        `;
+      }).join('')
+      : emptyState('search_off', 'No direct searches match these filters');
+  }
+
+  if (!state.phaseBRefreshing) {
+    const updated = state.phaseBDashboardUpdatedAt
+      ? `Saved ${formatRelativeDate(state.phaseBDashboardUpdatedAt)}. Refreshing keeps this view visible.`
+      : 'Dashboard is up to date';
+    setPhaseBRefreshState(false, updated);
+  }
+}
+
+async function loadPhaseBDashboard() {
+  setPhaseBRefreshState(true);
+  const params = new URLSearchParams();
+  params.set('window', state.intelligenceWindow);
+  params.set('environment', normalizeQueryEnvironment(state.queryQueueFilters.environment));
+  params.set('channel', normalizeQueryChannel(state.queryQueueFilters.channel));
+  params.set('query_origin', 'agent_query');
+  let refreshed = false;
+  try {
+    const payload = await apiRequest(`/intelligence/search/dashboard?${params.toString()}`);
+    state.phaseBDashboard = payload;
+    state.phaseBDashboardUpdatedAt = new Date().toISOString();
+    writePhaseBCache(payload);
+    renderPhaseBDashboard();
+    refreshed = true;
+  } catch (error) {
+    setPhaseBRefreshState(false, state.phaseBDashboard
+      ? 'Latest activity could not refresh. Saved data remains visible.'
+      : 'Latest activity could not load.');
+    if (!state.phaseBDashboard) {
+      const container = $('phaseBLatestActivity');
+      if (container) {
+        container.innerHTML = emptyState('error', 'Latest activity could not load');
+      }
+    }
+    throw error;
+  } finally {
+    if (refreshed) setPhaseBRefreshState(false);
+  }
+}
+
 function getCurrentIntelligenceWindow() {
   return INTELLIGENCE_WINDOWS.find((window) => window.key === state.intelligenceWindow)
     || INTELLIGENCE_WINDOWS.find((window) => window.key === '30d')
@@ -1046,14 +1257,17 @@ function syncQueryChannelControls() {
   });
 }
 
-function refreshEnvironmentScopedIntelligence() {
+async function refreshEnvironmentScopedIntelligence() {
   state.queryQueuePagination.page = 1;
   state.intelligenceEvidencePagination.page = 1;
   state.selectedQueryDetail = null;
   syncQueryEnvironmentControls();
   syncQueryChannelControls();
   renderQueryDetailDrawer();
-  return Promise.all([
+  state.phaseBDashboard = null;
+  readPhaseBCache();
+  await loadPhaseBDashboard();
+  return await Promise.all([
     loadIntelligenceOverview(),
     loadSearchIntelligence(),
     loadQueryQueue(),
@@ -1266,10 +1480,10 @@ function rowMatchesQueryChannel(row, filterValue = state.queryQueueFilters.chann
 
 function formatQueryContextText(row) {
   const parts = [
-    row.library_filter ? formatLibraryFilterLabel(row.library_filter) : 'All libraries',
-    row.job_category ? formatPurposeLabel(row.job_category) : 'No purpose filter',
+    row.library_filter ? formatLibraryFilterLabel(row.library_filter) : '',
+    row.job_category ? formatPurposeLabel(row.job_category) : '',
   ];
-  return parts.join(' - ');
+  return parts.filter(Boolean).join(' - ');
 }
 
 function compactIdentifier(value, prefix = '') {
@@ -1283,7 +1497,7 @@ function formatQueryDomains(row) {
   const domains = Array.isArray(row.domains) ? row.domains.filter(Boolean) : [];
   if (domains.length) return domains.slice(0, 2).join(', ');
   const urls = Array.isArray(row.context_urls) ? row.context_urls.filter(Boolean) : [];
-  if (!urls.length) return 'No source recorded';
+  if (!urls.length) return '';
   return urls.slice(0, 1).map((value) => {
     try {
       return new URL(value).hostname;
@@ -1308,9 +1522,8 @@ function formatQueryAudienceText(row) {
   if (ipHashCount > 0) parts.push(`${ipHashCount} IP group${ipHashCount === 1 ? '' : 's'}`);
   else if (sessionCount > 0) parts.push(`${sessionCount} visitor${sessionCount === 1 ? '' : 's'}`);
   if (countryCount > 0) parts.push(`${countryCount} countr${countryCount === 1 ? 'y' : 'ies'}`);
-  else if (ipHashCount > 0) parts.push('country not captured');
   if (clientFamilies.length > 0) parts.push(clientFamilies.slice(0, 2).join(', '));
-  return parts.length ? parts.join(' - ') : 'Visitor details not captured';
+  return parts.join(' - ');
 }
 
 function formatPlanText(plan) {
@@ -1339,10 +1552,10 @@ function formatQueryAccountText(row) {
   if (registeredCount > 0) {
     return details ? `Registered user activity - ${details}` : 'Registered user activity';
   }
-  if (apiKeyHashCount > 0) return 'API key used - account not resolved';
+  if (apiKeyHashCount > 0) return 'API key activity';
   if (clientFamilies.length > 0) return `Anonymous MCP usage - ${clientFamilies.slice(0, 2).join(', ')}`;
   if (sessionCount > 0 || ipHashCount > 0) return 'Anonymous usage';
-  return 'Audience not captured';
+  return '';
 }
 
 function formatEvidenceVisitor(entry) {
@@ -1355,7 +1568,6 @@ function formatEvidenceVisitor(entry) {
   const plan = entry.account_plan || entry.plan;
   if (plan) accountBits.push(plan === 'pro_annual' ? 'Pro Annual' : plan === 'pro_monthly' ? 'Pro Monthly' : plan);
   else if (entry.subscription_status) accountBits.push(entry.subscription_status);
-  else accountBits.push('Plan not captured');
 
   const contextBits = [];
   if (entry.country || entry.country_code) contextBits.push(entry.country || entry.country_code);
@@ -1364,7 +1576,7 @@ function formatEvidenceVisitor(entry) {
   if (entry.session_hash) contextBits.push(compactIdentifier(entry.session_hash, 'Session '));
   return {
     account: accountBits.filter(Boolean).join(' - '),
-    context: contextBits.filter(Boolean).join(' - ') || 'Location not captured',
+    context: contextBits.filter(Boolean).join(' - '),
   };
 }
 
@@ -1883,6 +2095,14 @@ function buildFallbackQueryQueueRows() {
 
 function queryQueueRowMatchesFilters(row) {
   const filters = state.queryQueueFilters;
+  const issueTypes = Array.isArray(row.issue_types) ? row.issue_types : [];
+  if (!issueTypes.includes('zero_result') && !issueTypes.includes('low_result')) {
+    return false;
+  }
+  const reviewStatus = normalizeSearchContextValue(row.review_status);
+  if (!filters.status && (reviewStatus === 'resolved' || reviewStatus === 'ignore')) {
+    return false;
+  }
   if (filters.q) {
     const haystack = [
       row.query,
@@ -1905,7 +2125,7 @@ function queryQueueRowMatchesFilters(row) {
     if (!haystack.includes(filters.q)) return false;
   }
 
-  if (filters.issue_type && !(row.issue_types || []).includes(filters.issue_type)) {
+  if (filters.issue_type && !issueTypes.includes(filters.issue_type)) {
     return false;
   }
 
@@ -2413,11 +2633,12 @@ function renderQueryExplorer() {
   } else {
     tbody.innerHTML = state.queryQueue.map((row) => {
       const key = buildQueryReviewContextKey(row.query, row.library_filter, row.job_category);
-      const surfaces = (row.surfaces || []).join(', ') || 'No surface recorded';
       const channels = collectClientRowChannels(row).map(queryChannelLabel).join(', ')
         || queryChannelLabel(classifyClientEvidenceChannel(row));
-      const environments = collectClientRowEnvironments(row).map(queryEnvironmentLabel).join(', ')
-        || queryEnvironmentLabel(state.queryQueueFilters.environment);
+      const audienceCount = row.estimated_unique_clients ?? row.client_days ?? row.session_count ?? row.ip_hash_count ?? 0;
+      const audienceLabel = row.client_measure === 'client_days' || row.estimated_unique_clients === null
+        ? 'client-days'
+        : 'estimated clients';
       return `
         <tr data-query-key="${escapeHtml(key)}">
           <td>
@@ -2426,49 +2647,39 @@ function renderQueryExplorer() {
               <span>${escapeHtml(row.query || '-')}</span>
             </button>
             <div class="query-explorer__context">
-              <span>${escapeHtml(formatQueryContextText(row))}</span>
-              <span>${escapeHtml(formatQueryDomains(row))}</span>
+              ${formatQueryContextText(row) ? `<span>${escapeHtml(formatQueryContextText(row))}</span>` : ''}
               <span>${escapeHtml(channels)}</span>
-              <span>${escapeHtml(environments)}</span>
             </div>
           </td>
           <td>
             <div style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.45rem;">
-              ${(row.issue_types || []).length ? row.issue_types.map(queryIssueBadge).join(' ') : '<span class="badge badge-free">No issue</span>'}
+              ${(row.issue_types || []).filter((issue) => issue === 'zero_result' || issue === 'low_result').map(queryIssueBadge).join(' ')}
               ${queryReviewBadge(row.review_status)}
             </div>
             <div class="query-explorer__metric-grid">
-              <span><strong>${escapeHtml(String(row.attempt_count || 0))}</strong> attempts</span>
               <span><strong>${escapeHtml(String(row.zero_attempt_count || 0))}</strong> zero</span>
               <span><strong>${escapeHtml(String(row.low_attempt_count || 0))}</strong> low</span>
-              <span><strong>${escapeHtml(formatAverageResultCount(row.average_result_count))}</strong> avg</span>
-              <span><strong>${escapeHtml(String(row.minimum_result_count ?? '-'))}</strong> min</span>
-              <span><strong>${escapeHtml(String(row.replacement_count || 0))}</strong> replaced</span>
+              <span><strong>${escapeHtml(String(row.attempt_count || 0))}</strong> total</span>
             </div>
           </td>
           <td>
             <div class="query-explorer__audience">
-              <span>${escapeHtml(formatQueryAudienceText(row))}</span>
-              <span>${escapeHtml(formatQueryAccountText(row))}</span>
+              <strong>${escapeHtml(formatNumber(audienceCount))}</strong>
+              <span>${escapeHtml(audienceLabel)}</span>
             </div>
           </td>
           <td>
             <div class="query-explorer__last-seen">
               <strong>${escapeHtml(formatDateTime(row.last_seen))}</strong>
-              <span>${escapeHtml(surfaces)}</span>
+              ${row.first_seen ? `<span>First seen ${escapeHtml(formatDate(row.first_seen))}</span>` : ''}
             </div>
           </td>
           <td>
-            <span class="query-explorer__row-actions">
-              <button class="btn btn-ghost btn-sm" type="button" data-query-action="detail" data-query-key="${escapeHtml(key)}">
-                <span class="material-symbols-outlined" style="font-size:14px">visibility</span>
-              </button>
-              <button class="btn btn-ghost btn-sm" type="button" data-query-action="review" data-query-key="${escapeHtml(key)}">
-                Review
-              </button>
-              <button class="btn btn-ghost btn-sm" type="button" data-query-action="copy" data-query-key="${escapeHtml(key)}">
-                <span class="material-symbols-outlined" style="font-size:14px">content_copy</span>
-              </button>
+            <span class="phase-b-gap-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-query-action="quick-review" data-review-status="needs_alias" data-query-key="${escapeHtml(key)}">Alias</button>
+              <button class="btn btn-primary btn-sm" type="button" data-query-action="quick-review" data-review-status="needs_icon" data-query-key="${escapeHtml(key)}">Icon</button>
+              <button class="btn btn-ghost btn-sm" type="button" data-query-action="quick-review" data-review-status="resolved" data-query-key="${escapeHtml(key)}">Resolve</button>
+              <button class="btn btn-ghost btn-sm" type="button" data-query-action="quick-review" data-review-status="ignore" data-query-key="${escapeHtml(key)}">Ignore</button>
             </span>
           </td>
         </tr>
@@ -2493,12 +2704,60 @@ function findQueryQueueRowByKey(key) {
 
 async function loadQueryQueue() {
   try {
-    const payload = await apiRequest(`/intelligence/search/queue?${buildQueryQueueParams().toString()}`);
+    let payload;
+    if (state.queryQueueFilters.issue_type) {
+      payload = await apiRequest(`/intelligence/search/queue?${buildQueryQueueParams().toString()}`);
+    } else {
+      const baseParams = buildQueryQueueParams({ includePage: false });
+      baseParams.set('page', '1');
+      baseParams.set('page_size', '100');
+      const zeroParams = new URLSearchParams(baseParams);
+      const lowParams = new URLSearchParams(baseParams);
+      zeroParams.set('issue_type', 'zero_result');
+      lowParams.set('issue_type', 'low_result');
+      const [zeroPayload, lowPayload] = await Promise.all([
+        apiRequest(`/intelligence/search/queue?${zeroParams.toString()}`),
+        apiRequest(`/intelligence/search/queue?${lowParams.toString()}`),
+      ]);
+      const merged = new Map();
+      [...(zeroPayload.queries || []), ...(lowPayload.queries || [])].forEach((row) => {
+        merged.set(buildQueryReviewContextKey(row.query, row.library_filter, row.job_category), row);
+      });
+      const queries = [...merged.values()];
+      payload = {
+        queries,
+        summary: summarizeClientQueryRows(queries),
+        pagination: {
+          page: 1,
+          page_size: queries.length || 1,
+          total: queries.length,
+          page_count: 1,
+        },
+        filters: zeroPayload.filters || lowPayload.filters || {},
+      };
+    }
     applyQueryQueuePayload(payload, { fallback: false, message: '' });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     applyFallbackQueryQueue(`Full query API unavailable: ${message}. Showing visible evidence and top lists.`);
   }
+}
+
+async function quickReviewQuery(row, status) {
+  const normalizedStatus = normalizeSearchContextValue(status);
+  if (!QUERY_REVIEW_STATUS_LABELS[normalizedStatus]) return;
+  await apiRequest('/intelligence/search/review', {
+    method: 'POST',
+    body: JSON.stringify({
+      query: row.query,
+      library_filter: normalizeReviewLibraryFilter(row.library_filter),
+      job_category: normalizeReviewJobCategory(row.job_category) || null,
+      status: normalizedStatus,
+      note: row.review_note || null,
+    }),
+  });
+  showToast(`${row.query} marked ${queryReviewStatusLabel(normalizedStatus).toLowerCase()}`);
+  await loadQueryQueue();
 }
 
 function renderQueryDetailDrawer() {
@@ -3553,8 +3812,12 @@ function bindSearchInputs() {
     clearTimeout(intelligenceSearchTimer);
     intelligenceSearchTimer = window.setTimeout(() => {
       state.intelligenceFilters.q = event.target.value.trim();
+      state.queryQueueFilters.q = normalizeSearchContextValue(event.target.value);
+      state.queryQueuePagination.page = 1;
       state.intelligenceEvidencePagination.page = 1;
-      loadIntelligenceEvidence().catch((error) => showToast(error.message, 'error'));
+      renderPhaseBDashboard();
+      Promise.all([loadQueryQueue(), loadIntelligenceEvidence()])
+        .catch((error) => showToast(error.message, 'error'));
     }, 200);
   });
 
@@ -3650,7 +3913,10 @@ function bindSearchInputs() {
     state.intelligenceWindow = event.target.value;
     state.queryQueuePagination.page = 1;
     state.intelligenceEvidencePagination.page = 1;
-    Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadQueryQueue(), loadIntelligenceEvidence()])
+    state.phaseBDashboard = null;
+    readPhaseBCache();
+    loadPhaseBDashboard()
+      .then(() => Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadQueryQueue(), loadIntelligenceEvidence()]))
       .catch((error) => showToast(error.message, 'error'));
   });
 
@@ -3673,6 +3939,7 @@ function bindSearchInputs() {
 }
 
 async function refreshAll() {
+  await loadPhaseBDashboard();
   await Promise.all([
     loadStats(),
     loadIntelligenceOverview(),
@@ -3698,6 +3965,11 @@ function bindGlobalEvents() {
     const row = findQueryQueueRowByKey(trigger.dataset.queryKey || '');
     if (!row) return;
     const action = trigger.dataset.queryAction;
+    if (action === 'quick-review') {
+      quickReviewQuery(row, trigger.dataset.reviewStatus || '')
+        .catch((error) => showToast(error.message, 'error'));
+      return;
+    }
     if (action === 'detail') {
       openQueryDetail(row).catch((error) => showToast(error.message, 'error'));
       return;
@@ -3732,7 +4004,8 @@ function bindGlobalEvents() {
     refreshAll().then(() => showToast('Admin data refreshed')).catch((error) => showToast(error.message, 'error'));
   });
   $('intelligenceRefreshBtn').addEventListener('click', () => {
-    Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadQueryQueue(), loadIntelligenceEvidence()])
+    loadPhaseBDashboard()
+      .then(() => Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadQueryQueue(), loadIntelligenceEvidence()]))
       .then(() => showToast('Icon intelligence refreshed'))
       .catch((error) => showToast(error.message, 'error'));
   });
@@ -3774,6 +4047,7 @@ async function init() {
   bindGlobalEvents();
   try {
     await ensureAdminSecret();
+    readPhaseBCache();
     await refreshAll();
   } catch (error) {
     showToast(error.message, 'error');
