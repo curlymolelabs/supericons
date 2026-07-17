@@ -5,7 +5,9 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  readdirSync,
   rmSync,
+  utimesSync,
   writeFileSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
@@ -111,6 +113,16 @@ function injectCanaries(path, record) {
   writeFileSync(path, JSON.stringify(synonyms), 'utf8');
 }
 
+function normalizeTimestamps(root) {
+  const fixedTime = new Date('2000-01-01T00:00:00.000Z');
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    const path = join(root, entry.name);
+    if (entry.isDirectory()) normalizeTimestamps(path);
+    utimesSync(path, fixedTime, fixedTime);
+  }
+  utimesSync(root, fixedTime, fixedTime);
+}
+
 async function minifyGeneratedModules(sourceRoot, packageRoot, webRoot, policy) {
   const reports = [];
   for (const relativePath of policy.minified_generated_modules) {
@@ -184,6 +196,8 @@ async function build() {
     webRoot,
     policy,
   );
+  normalizeTimestamps(packageRoot);
+  normalizeTimestamps(webRoot);
   const report = {
     schema_version: 1,
     status: 'ok',
