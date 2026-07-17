@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_beta1_existing_stage_reconciliation",
+  "date": "2026-07-17",
+  "hash_mode": "utf8_lf_normalized_text",
+  "mode": "existing_private_stage_read_only",
+  "source_release": {
+    "packet_commit": "6596ea9e3e95f871b41cada98354965c165bf4c4",
+    "implementation_commit": "78b16149da0d3b4648392a5b97e58caecf9ea81d",
+    "manifest_path": "docs/si-v2/search/reviews/search-v2-beta1-publication-authorization-manifest-2026-07-17.json",
+    "manifest_sha256": "79b497cadca0df5bdfb428aef9fa320b6f04322d58b99dc6f7b12a8adfe827d4",
+    "stage_attempt_receipt_required": true
+  },
+  "stage": {
+    "id": "efcd9a32-94aa-4a2d-a950-bca014b46c43",
+    "created_at": "2026-07-17T15:30:56.024Z",
+    "actor": "supericons",
+    "access": "public",
+    "list_view_and_download_only": true
+  },
+  "package": {
+    "name": "@supericons/mcp",
+    "version": "0.4.19-beta.1",
+    "tag": "beta",
+    "archive_sha256": "8742012a425646bc1f4b2f53122e64d58ed5a63afe585cafec7c7028e76eb082",
+    "archive_size_bytes": 6117020,
+    "npm_shasum": "56a195e6cda061171838278c18e131cce077d9b3",
+    "npm_integrity": "sha512-e4OtGDogjy119iG6B2H0308Nd4V/ziOhUcLui0vLkRymfNX2FYfZH1ow9g50mXOs3jS0zATtljb9fUdh764tIw=="
+  },
+  "registry_state": {
+    "public_prerelease_must_be_absent": true,
+    "latest_must_remain": "0.4.17",
+    "beta_must_remain_before_approval": "0.4.19-beta.0"
+  },
+  "required_verification": {
+    "source_publication_packet": true,
+    "source_attempt_receipt": true,
+    "exact_stage_list_record": true,
+    "exact_stage_view_record": true,
+    "downloaded_archive_sha256": true,
+    "downloaded_archive_metadata": true,
+    "installed_stdio_cases": 150,
+    "stdio_route_fingerprint": "7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184",
+    "eligible_hosted_calls": 0
+  },
+  "external_actions": {
+    "additional_stage_uploads": 0,
+    "publications": 0,
+    "deprecations": 0,
+    "tag_changes": 0,
+    "deployments": 0,
+    "database_mutations": 0,
+    "hosted_comparison_requests": 0,
+    "model_provider_calls": 0
+  },
+  "local_actions": {
+    "maximum_verified_stage_records": 1,
+    "record_scope": "source_release_manifest",
+    "atomic_create_new_required": true,
+    "record_contains_credentials": false
+  },
+  "artifacts": {
+    "reconciler": "scripts/reconcile-search-v2-beta1-existing-stage.mjs",
+    "reconciler_sha256": "e56ec4e5de9f2dd91d0ba867eacde01d618a46e353205f0483a429322c8bccd5",
+    "verifier": "scripts/verify-search-v2-beta1-stage-reconciliation.mjs",
+    "verifier_sha256": "6aaeb6b10a5c2fb979ff078c4fa60f6335504d3e3ced180a433a87ce156d1de6"
+  },
+  "failure_rule": "Any mismatch stops without browser approval. The existing stage remains private and no additional upload is allowed.",
+  "success_rule": "Create one source-manifest-bound verified stage record, then stop for owner browser security-key approval of the exact stage."
+}
