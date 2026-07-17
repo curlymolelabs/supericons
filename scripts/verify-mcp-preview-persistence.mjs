@@ -10,47 +10,58 @@ const artifactRootIndex = process.argv.indexOf('--artifact-root');
 const artifactRoot = artifactRootIndex >= 0
   ? path.resolve(process.argv[artifactRootIndex + 1])
   : repoRoot;
+const baseUrlIndex = process.argv.indexOf('--base-url');
+const suppliedBaseUrl = baseUrlIndex >= 0
+  ? new URL(process.argv[baseUrlIndex + 1]).toString()
+  : null;
 const port = 4187;
-const baseUrl = `http://127.0.0.1:${port}/`;
+const baseUrl = suppliedBaseUrl || `http://127.0.0.1:${port}/`;
 const viteBin = path.join(repoRoot, 'node_modules', 'vite', 'bin', 'vite.js');
 const useExistingDist = process.argv.includes('--use-existing-dist');
-if (!useExistingDist) {
+if (!suppliedBaseUrl && !useExistingDist) {
   execFileSync(process.execPath, [viteBin, 'build'], {
     cwd: repoRoot,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
 }
-const server = spawn(
-  process.execPath,
-  [
-    viteBin,
-    'preview',
-    artifactRoot,
-    '--host',
-    '127.0.0.1',
-    '--port',
-    String(port),
-    '--strictPort',
-  ],
-  {
-    cwd: repoRoot,
-    stdio: ['ignore', 'pipe', 'pipe'],
-    windowsHide: true,
-  },
-);
+const server = suppliedBaseUrl
+  ? null
+  : spawn(
+    process.execPath,
+    [
+      viteBin,
+      'preview',
+      artifactRoot,
+      '--host',
+      '127.0.0.1',
+      '--port',
+      String(port),
+      '--strictPort',
+    ],
+    {
+      cwd: repoRoot,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      windowsHide: true,
+    },
+  );
 
 let serverOutput = '';
-server.stdout.on('data', (chunk) => {
+server?.stdout.on('data', (chunk) => {
   serverOutput += String(chunk);
 });
-server.stderr.on('data', (chunk) => {
+server?.stderr.on('data', (chunk) => {
   serverOutput += String(chunk);
 });
 
 async function waitForServer() {
+  if (suppliedBaseUrl) {
+    const response = await fetch(baseUrl);
+    assert.equal(response.ok, true, `Remote web surface returned HTTP ${response.status}.`);
+    return;
+  }
   for (let attempt = 0; attempt < 60; attempt += 1) {
-    if (server.exitCode !== null) {
+    if (server?.exitCode !== null) {
       throw new Error(`Local Vite server exited early.\n${serverOutput}`);
     }
     try {
@@ -309,7 +320,11 @@ try {
 
   console.log(JSON.stringify({
     status: 'ok',
-    tested_surface: useExistingDist ? 'existing_dist' : 'fresh_vite_build',
+    tested_surface: suppliedBaseUrl
+      ? 'remote_web_surface'
+      : useExistingDist
+        ? 'existing_dist'
+        : 'fresh_vite_build',
     explicit_preview_survives_popularity_locale_auth: true,
     query_preview_survives_popularity_locale_auth: true,
     unknown_refs_remain_zero_results: true,
@@ -318,7 +333,7 @@ try {
   }, null, 2));
 } finally {
   await browser?.close();
-  if (server.exitCode === null) {
+  if (server?.exitCode === null) {
     server.kill();
   }
 }
