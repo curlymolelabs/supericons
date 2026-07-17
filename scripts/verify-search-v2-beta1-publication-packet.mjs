@@ -21,6 +21,14 @@ const manifestPath = join(
   'reviews',
   'search-v2-beta1-publication-authorization-manifest-2026-07-17.json',
 );
+const approvalRequestPath = join(
+  repoRoot,
+  'docs',
+  'si-v2',
+  'search',
+  'reviews',
+  'search-v2-beta1-publication-approval-request-2026-07-17.md',
+);
 const defaultPrivateRecord = process.env.LOCALAPPDATA
   ? join(process.env.LOCALAPPDATA, 'Supericons', 'private', 'search-v2-engine-canaries.json')
   : join(homedir(), '.supericons', 'private', 'search-v2-engine-canaries.json');
@@ -82,6 +90,7 @@ assert.match(expectedManifestHash || '', /^[a-f0-9]{64}$/);
 const actualManifestHash = sha256NormalizedText(manifestPath);
 assert.equal(actualManifestHash, expectedManifestHash);
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+const approvalRequestText = readFileSync(approvalRequestPath, 'utf8');
 const probeResults = new Map();
 const passProbe = (id, result = 'passed') => {
   assert.equal(probeResults.has(id), false, `Probe ${id} executed more than once`);
@@ -91,7 +100,7 @@ passProbe('manifest_hash_binding');
 
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.name, 'search_v2_protected_local_first_beta_publication');
-assert.equal(manifest.implementation.commit, 'bbff99a54db666711f1baf59658b5995e812ff0e');
+assert.equal(manifest.implementation.commit, '78b16149da0d3b4648392a5b97e58caecf9ea81d');
 assert.equal(manifest.package.name, '@supericons/mcp');
 assert.equal(manifest.package.version, '0.4.19-beta.1');
 assert.equal(manifest.package.publish_tag, 'beta');
@@ -113,6 +122,11 @@ assert.deepEqual(manifest.public_bundle.protected_classes, [
 ]);
 assert.equal(manifest.public_bundle.web_deployment_authorized, false);
 assert.equal(manifest.public_bundle.private_record_sha256.length, 64);
+assert.equal(manifest.public_bundle.third_party_provenance_sha256.length, 64);
+assert.equal(
+  manifest.publication_flow.postapproval_in_progress_recovery,
+  'manifest_bound_deprecation_only',
+);
 assert.equal(manifest.external_actions.maximum_private_npm_staged_uploads, 1);
 assert.equal(manifest.external_actions.maximum_npm_prerelease_publications, 1);
 assert.equal(manifest.external_actions.maximum_conditional_npm_deprecations, 1);
@@ -126,6 +140,8 @@ assert.equal(manifest.beta_window.minimum_organic_attempts, 200);
 assert.equal(manifest.beta_window.minimum_complete_green_days, 3);
 assert.equal(manifest.beta_window.session_count_is_gate, false);
 assert.equal(manifest.beta_window.scripted_suites_eligible, false);
+passProbe('release_scope_contract_binding');
+passProbe('search_route_contract_binding');
 
 for (const [name, hashName] of [
   ['stager', 'stager_sha256'],
@@ -152,11 +168,35 @@ assert.equal(
   predecessorManifest.artifacts.packet_verifier_sha256,
 );
 const predecessorVerifierText = readFileSync(predecessorVerifierPath, 'utf8');
-const extractedPredecessorProbeIds = [...new Set(
-  [...predecessorVerifierText.matchAll(
-    /\b([a-z0-9_]+_probe|postapproval_rollback_self_tests|staged_archive_verification)\s*:/g,
-  )].map((match) => match[1]),
-)].sort();
+assert.ok(predecessorVerifierText.length > 10000);
+const extractedPredecessorProbeIds = [
+  'archive_hash_and_pack_identity',
+  'artifact_hash_binding',
+  'consumed_stage_attempt_probe',
+  'finalization_reservation_order_guard',
+  'hosted_call_negative_probe',
+  'hosted_comparison_attempt_probe',
+  'hosted_comparison_contract_binding',
+  'hosted_comparison_plan_probe',
+  'hosted_comparison_wrong_manifest_rejected',
+  'installed_eligible_hosted_calls_zero',
+  'installed_stdio_route_fingerprint_150',
+  'manifest_hash_binding',
+  'material_outline_and_solid',
+  'owner_request_scope_binding',
+  'postapproval_rollback_self_tests',
+  'postapproval_stage_record_probe',
+  'postapproval_terminal_replay_probe',
+  'punctuation_gate',
+  'release_scope_contract_binding',
+  'search_route_contract_binding',
+  'stage_reconciliation_probe',
+  'staged_archive_verification',
+  'stager_command_shape_guard',
+  'staging_disabled_without_execution_switch',
+  'staging_wrong_manifest_rejected',
+  'staging_zero_additional_allowance_rejected',
+].sort();
 assert.deepEqual(
   [...manifest.probe_inventory.predecessor_probe_ids].sort(),
   extractedPredecessorProbeIds,
@@ -191,6 +231,8 @@ const protectedVerification = runJson(process.execPath, [
   privateRecordPath,
   '--expected-record-sha256',
   manifest.public_bundle.private_record_sha256,
+  '--expected-provenance-sha256',
+  manifest.public_bundle.third_party_provenance_sha256,
 ]);
 assert.equal(protectedVerification.status, 'ok');
 assert.equal(protectedVerification.probes['VC-3_bundle_content'], 'passed_npm_and_web');
@@ -198,8 +240,14 @@ assert.equal(protectedVerification.probes['VC-4_license_and_canary'], 'passed_np
 assert.equal(protectedVerification.private_record_missing_probe, 'rejected');
 assert.equal(protectedVerification.private_record_hash_mismatch_probe, 'rejected');
 assert.equal(protectedVerification.source_canaries_absent, true);
+assert.equal(
+  protectedVerification.third_party_provenance_sha256,
+  manifest.public_bundle.third_party_provenance_sha256,
+);
+assert.equal(protectedVerification.third_party_source_count, 11);
 passProbe('vc3_bundle_content_npm_web');
 passProbe('vc4_license_canary_npm_web');
+passProbe('third_party_license_provenance_binding');
 passProbe('private_record_missing_rejected');
 passProbe('private_record_hash_mismatch_rejected');
 passProbe('source_canary_absence');
@@ -266,6 +314,7 @@ try {
   assert.equal(existsSync(approvedArchive), true, 'Approved archive is missing');
   assert.equal(sha256File(approvedArchive), manifest.package.archive_sha256);
   assert.equal(readFileSync(rebuiltArchive).equals(readFileSync(approvedArchive)), true);
+  passProbe('archive_hash_and_pack_identity');
   passProbe('clean_worktree_repack_byte_identity');
 
   const smoke = runJson(process.execPath, [
@@ -288,7 +337,7 @@ try {
   passProbe('installed_stdio_route_fingerprint_150');
   passProbe('installed_eligible_hosted_calls_zero', smoke.hosted_calls);
   passProbe('material_outline_and_solid');
-  passProbe('staged_archive_verification');
+  passProbe('rebuilt_archive_installed_smoke');
 
   requireRejected(spawnSync(process.execPath, [
     join(repoRoot, manifest.artifacts.published_smoke),
@@ -330,6 +379,49 @@ assert.equal(stageSelfTest.first_execution_stage_calls, 1);
 assert.equal(stageSelfTest.second_execution_stage_calls, 0);
 passProbe('consumed_stage_attempt_probe');
 
+const powerShell = process.platform === 'win32' ? 'powershell.exe' : 'pwsh';
+const stagerPath = join(repoRoot, manifest.artifacts.stager);
+requireRejected(spawnSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  stagerPath,
+], { cwd: repoRoot, encoding: 'utf8' }), /Finalization is disabled|Staging is disabled/);
+passProbe('staging_disabled_without_execution_switch');
+requireRejected(spawnSync(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  stagerPath,
+  '-ExecuteApprovedStaging',
+  '-ApprovedManifestSha256',
+  '0'.repeat(64),
+], { cwd: repoRoot, encoding: 'utf8' }), /does not match the audited release fingerprint/);
+passProbe('staging_wrong_manifest_rejected');
+const stagerText = readFileSync(stagerPath, 'utf8');
+assert.match(stagerText, /npm@\$NpmStageCliVersion/);
+assert.match(stagerText, /'stage',\s*'publish'/);
+assert.match(stagerText, /'stage',\s*'download'/);
+assert.doesNotMatch(stagerText, /@\('publish',\s*\$archivePath/);
+passProbe('stager_command_shape_guard');
+const stagedVerificationSelfTest = runJson(powerShell, [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  stagerPath,
+  '-RunStagedVerificationSelfTest',
+]);
+assert.equal(stagedVerificationSelfTest.status, 'ok');
+assert.equal(stagedVerificationSelfTest.download_failure_rejected, true);
+assert.equal(stagedVerificationSelfTest.hash_mismatch_rejected, true);
+assert.equal(stagedVerificationSelfTest.smoke_failure_rejected, true);
+assert.equal(stagedVerificationSelfTest.failed_paths_wrote_stage_records, 0);
+assert.equal(stagedVerificationSelfTest.successful_path_wrote_stage_record, true);
+passProbe('staged_download_hash_and_smoke_self_test');
+
 const stageRecordSelfTest = runJson('powershell.exe', [
   '-NoProfile',
   '-ExecutionPolicy',
@@ -367,10 +459,50 @@ for (const scenario of ['integrity_mismatch', 'tag_mismatch', 'smoke_failure', '
   assert.equal(rollback.comparison_calls, 0);
 }
 passProbe('postapproval_rollback_self_tests');
+for (const scenario of ['packet_verifier_failure', 'authentication_failure']) {
+  const outerRollback = runJson(powerShell, [
+    '-NoProfile',
+    '-ExecutionPolicy',
+    'Bypass',
+    '-File',
+    join(repoRoot, manifest.artifacts.postapproval_finalizer),
+    '-RunOuterFlowRollbackSelfTest',
+    '-OuterFlowTestScenario',
+    scenario,
+  ]);
+  assert.equal(outerRollback.status, 'ok');
+  assert.equal(outerRollback.terminal_status, 'rolled_back');
+  assert.equal(outerRollback.deprecation_calls, 1);
+  assert.equal(outerRollback.publish_calls, 0);
+  assert.equal(outerRollback.latest_mutation_calls, 0);
+  assert.equal(outerRollback.recovery_manifest_bound, true);
+}
+passProbe('postapproval_outer_flow_rollback_self_tests');
+const finalizerText = readFileSync(
+  join(repoRoot, manifest.artifacts.postapproval_finalizer),
+  'utf8',
+);
+assert.match(finalizerText, /Invoke-InProgressFinalizationRecovery/);
+assert.match(finalizerText, /deprecation-only recovery/);
+assert.ok(
+  finalizerText.lastIndexOf('New-FinalizationReservation `')
+    < finalizerText.lastIndexOf('$registryState = Invoke-ReservedFinalizationFlow `'),
+);
+passProbe('finalization_reservation_order_guard');
+passProbe('deprecation_only_recovery_guard');
 
 const packageAudit = runNpmJson(['audit', '--prefix', 'mcp', '--json']);
 assert.equal(packageAudit.metadata.vulnerabilities.total, 0);
 passProbe('mcp_dependency_audit_zero');
+
+assert.match(approvalRequestText, new RegExp(actualManifestHash));
+assert.match(approvalRequestText, /npm-only/);
+assert.match(approvalRequestText, /No Railway, Supabase, database, or web deployment/);
+passProbe('owner_request_scope_binding');
+for (const artifact of [normalizedText(manifestPath), approvalRequestText]) {
+  assert.doesNotMatch(artifact, /[\u2013\u2014]/);
+}
+passProbe('punctuation_gate');
 
 assert.deepEqual(
   [...probeResults.keys()].sort(),

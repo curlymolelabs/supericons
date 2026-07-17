@@ -1,11 +1,15 @@
 param(
     [switch]$ExecuteApprovedFinalization,
+    [switch]$RecoverApprovedFinalization,
     [string]$ApprovedManifestSha256,
     [switch]$RunRollbackSelfTest,
     [ValidateSet('integrity_mismatch', 'tag_mismatch', 'smoke_failure', 'already_deprecated')]
     [string]$RollbackTestScenario,
     [switch]$RunStageRecordSelfTest,
-    [switch]$RunFinalizationOutcomeSelfTest
+    [switch]$RunFinalizationOutcomeSelfTest,
+    [switch]$RunOuterFlowRollbackSelfTest,
+    [ValidateSet('packet_verifier_failure', 'authentication_failure')]
+    [string]$OuterFlowTestScenario
 )
 
 $ErrorActionPreference = 'Stop'
@@ -168,6 +172,34 @@ function Complete-FinalizationOutcome(
     }
 }
 
+function Assert-InProgressFinalizationOutcome(
+    [string]$Path,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [string]$StageId
+) {
+    if (-not (Test-Path -LiteralPath $Path)) {
+        throw 'The manifest-bound in-progress finalization record is missing.'
+    }
+    try {
+        $existing = Get-Content -Raw -LiteralPath $Path | ConvertFrom-Json
+    }
+    catch {
+        throw 'The manifest-bound in-progress finalization record is invalid JSON.'
+    }
+    if (
+        $existing.schema_version -ne 1 -or
+        $existing.manifest_sha256 -ne $ManifestSha256 -or
+        $existing.package -ne $PackageSpec -or
+        $existing.stage_id -ne $StageId -or
+        $existing.action -ne 'postapproval_finalization' -or
+        $existing.status -ne 'in_progress'
+    ) {
+        throw 'The finalization record is not an exact manifest-bound in-progress release.'
+    }
+    return $existing
+}
+
 function Assert-VerifiedStageRecord(
     [string]$Path,
     [object]$Manifest,
@@ -269,6 +301,87 @@ function Invoke-ExactPrereleaseRollback(
     }
 }
 
+function Confirm-LatestUnchanged(
+    [scriptblock]$ReadInvoker,
+    [object]$Manifest,
+    [string]$Description
+) {
+    $tags = Convert-NpmJson `
+        (& $ReadInvoker @('view', $Manifest.package.name, 'dist-tags', '--json')) `
+        $Description
+    if ($tags.latest -ne $Manifest.package.latest_must_remain) {
+        throw 'npm latest changed during rollback recovery.'
+    }
+    return $tags
+}
+
+function Invoke-DeprecationOnlyRecovery(
+    [scriptblock]$ReadInvoker,
+    [scriptblock]$DeprecateInvoker,
+    [object]$Manifest,
+    [string]$PackageSpec
+) {
+    $versionResult = & $ReadInvoker @('view', $PackageSpec, 'version', '--json')
+    if ($versionResult.ExitCode -ne 0) {
+        if ($versionResult.Output -notmatch 'E404|No match found') {
+            throw 'Exact prerelease presence could not be determined during rollback recovery.'
+        }
+        $tags = Confirm-LatestUnchanged `
+            $ReadInvoker $Manifest 'Absent prerelease rollback tag verification'
+        return [pscustomobject]@{
+            exact_package = $PackageSpec
+            public_version_present = $false
+            deprecated = $false
+            latest_tag = $tags.latest
+        }
+    }
+    $publishedVersion = Convert-NpmJson $versionResult 'Exact prerelease presence verification'
+    if ([string]$publishedVersion -ne $Manifest.package.version) {
+        throw 'The public prerelease version does not match the manifest-bound release.'
+    }
+
+    $existingDeprecation = Convert-NpmJson `
+        (& $ReadInvoker @('view', $PackageSpec, 'deprecated', '--json')) `
+        'Existing exact prerelease deprecation recovery check'
+    if (-not [string]::IsNullOrWhiteSpace([string]$existingDeprecation)) {
+        $tags = Confirm-LatestUnchanged `
+            $ReadInvoker $Manifest 'Already-deprecated rollback tag verification'
+        return [pscustomobject]@{
+            exact_package = $PackageSpec
+            public_version_present = $true
+            deprecated = $true
+            latest_tag = $tags.latest
+        }
+    }
+
+    return Invoke-ExactPrereleaseRollback `
+        $ReadInvoker $DeprecateInvoker $Manifest $PackageSpec
+}
+
+function Invoke-InProgressFinalizationRecovery(
+    [scriptblock]$ReadInvoker,
+    [scriptblock]$DeprecateInvoker,
+    [object]$Manifest,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [string]$StageId,
+    [string]$FinalizationOutcomePath,
+    [string]$Reason
+) {
+    $null = Assert-InProgressFinalizationOutcome `
+        $FinalizationOutcomePath $ManifestSha256 $PackageSpec $StageId
+    $recovery = Invoke-DeprecationOnlyRecovery `
+        $ReadInvoker $DeprecateInvoker $Manifest $PackageSpec
+    Complete-FinalizationOutcome `
+        $FinalizationOutcomePath `
+        $ManifestSha256 `
+        $PackageSpec `
+        $StageId `
+        'rolled_back' `
+        $Reason
+    return $recovery
+}
+
 function Invoke-PostApprovalValidation(
     [scriptblock]$ReadInvoker,
     [scriptblock]$DeprecateInvoker,
@@ -294,6 +407,59 @@ function Invoke-PostApprovalValidation(
             throw "Post-publication verification failed: $verificationFailure Exact prerelease deprecation could not be confirmed. $($_.Exception.Message)"
         }
         throw "Post-publication verification failed: $verificationFailure The exact prerelease was deprecated and npm latest was left unchanged."
+    }
+}
+
+function Invoke-ReservedFinalizationFlow(
+    [scriptblock]$PacketVerifier,
+    [scriptblock]$AuthenticationVerifier,
+    [scriptblock]$ReadInvoker,
+    [scriptblock]$DeprecateInvoker,
+    [scriptblock]$SmokeVerifier,
+    [object]$Manifest,
+    [string]$ManifestSha256,
+    [string]$PackageSpec,
+    [string]$StageId,
+    [string]$FinalizationOutcomePath
+) {
+    try {
+        & $PacketVerifier
+        & $AuthenticationVerifier
+        $registryState = Invoke-PostApprovalValidation `
+            $ReadInvoker $DeprecateInvoker $Manifest $PackageSpec $SmokeVerifier
+        Complete-FinalizationOutcome `
+            $FinalizationOutcomePath `
+            $ManifestSha256 `
+            $PackageSpec `
+            $StageId `
+            'published_and_verified' `
+            'Public registry identity, tags, and installed-package smoke passed.'
+        return $registryState
+    }
+    catch {
+        $failure = $_.Exception.Message
+        if ($failure -match '^npm authentication is required') {
+            throw "Post-approval finalization failed: $failure The exact release remains reserved for deprecation-only recovery after npm login."
+        }
+        $recoveryFailure = $null
+        try {
+            $null = Invoke-InProgressFinalizationRecovery `
+                $ReadInvoker `
+                $DeprecateInvoker `
+                $Manifest `
+                $ManifestSha256 `
+                $PackageSpec `
+                $StageId `
+                $FinalizationOutcomePath `
+                "Finalization failed and rollback recovery completed: $failure"
+        }
+        catch {
+            $recoveryFailure = $_.Exception.Message
+        }
+        if ($null -ne $recoveryFailure) {
+            throw "Post-approval finalization failed: $failure The exact release remains reserved for deprecation-only recovery. $recoveryFailure"
+        }
+        throw "Post-approval finalization failed: $failure The exact prerelease was absent or deprecated, and npm latest remained unchanged."
     }
 }
 
@@ -543,29 +709,183 @@ function Invoke-FinalizationOutcomeSelfTest {
     }
 }
 
+function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
+    if ([string]::IsNullOrWhiteSpace($Scenario)) {
+        throw 'An outer-flow rollback self-test scenario is required.'
+    }
+    $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-outer-rollback-$([guid]::NewGuid().ToString('N'))"
+    $outcomePath = Join-Path $temporaryRoot 'outcome.json'
+    $manifestSha256 = 'a' * 64
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
+    $stageId = '11111111-1111-4111-8111-111111111111'
+    $manifest = [pscustomobject]@{
+        package = [pscustomobject]@{
+            name = '@supericons/mcp'
+            version = '0.4.19-beta.1'
+            npm_shasum = 'approved-shasum'
+            npm_integrity = 'approved-integrity'
+            latest_must_remain = '0.4.17'
+        }
+    }
+    $events = [System.Collections.Generic.List[string]]::new()
+    $deprecated = [pscustomobject]@{ Value = $false }
+    $readInvoker = {
+        param([string[]]$NpmArguments)
+        $events.Add($NpmArguments -join ' ')
+        if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'version') {
+            return [pscustomobject]@{
+                ExitCode = 0
+                Output = ('0.4.19-beta.1' | ConvertTo-Json -Compress)
+            }
+        }
+        if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'deprecated') {
+            $value = if ($deprecated.Value) { 'Beta-verification-failed-do-not-install' } else { $null }
+            return [pscustomobject]@{
+                ExitCode = 0
+                Output = ($value | ConvertTo-Json -Compress)
+            }
+        }
+        if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'dist') {
+            return [pscustomobject]@{
+                ExitCode = 0
+                Output = (@{ shasum = 'approved-shasum'; integrity = 'approved-integrity' } | ConvertTo-Json -Compress)
+            }
+        }
+        if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq '@supericons/mcp' -and $NpmArguments[2] -eq 'dist-tags') {
+            return [pscustomobject]@{
+                ExitCode = 0
+                Output = (@{ latest = '0.4.17'; beta = '0.4.19-beta.1' } | ConvertTo-Json -Compress)
+            }
+        }
+        return [pscustomobject]@{ ExitCode = 1; Output = 'unsupported read command' }
+    }.GetNewClosure()
+    $deprecateInvoker = {
+        param([string[]]$NpmArguments)
+        $events.Add($NpmArguments -join ' ')
+        $deprecated.Value = $true
+        return [pscustomobject]@{ ExitCode = 0; Output = 'deprecated' }
+    }.GetNewClosure()
+    $packetVerifier = {
+        if ($Scenario -eq 'packet_verifier_failure') {
+            throw 'The publication packet verifier failed.'
+        }
+    }.GetNewClosure()
+    $authenticationVerifier = {
+        if ($Scenario -eq 'authentication_failure') {
+            throw 'npm authentication is required. Run npm login directly in this terminal.'
+        }
+    }.GetNewClosure()
+    $smokeVerifier = {}
+
+    try {
+        New-FinalizationReservation $outcomePath $manifestSha256 $packageSpec $stageId
+        $flowFailure = $null
+        try {
+            $null = Invoke-ReservedFinalizationFlow `
+                $packetVerifier `
+                $authenticationVerifier `
+                $readInvoker `
+                $deprecateInvoker `
+                $smokeVerifier `
+                $manifest `
+                $manifestSha256 `
+                $packageSpec `
+                $stageId `
+                $outcomePath
+        }
+        catch {
+            $flowFailure = $_.Exception.Message
+        }
+        if ([string]::IsNullOrWhiteSpace($flowFailure)) {
+            throw 'The outer-flow rollback self-test did not produce the required failure.'
+        }
+
+        if ($Scenario -eq 'authentication_failure') {
+            $reserved = Assert-InProgressFinalizationOutcome `
+                $outcomePath $manifestSha256 $packageSpec $stageId
+            $null = Invoke-InProgressFinalizationRecovery `
+                $readInvoker `
+                $deprecateInvoker `
+                $manifest `
+                $manifestSha256 `
+                $packageSpec `
+                $stageId `
+                $outcomePath `
+                'Authentication was restored and deprecation-only recovery completed.'
+        }
+
+        $outcome = Get-Content -Raw -LiteralPath $outcomePath | ConvertFrom-Json
+        $deprecationCount = @($events | Where-Object { $_ -match '^deprecate ' }).Count
+        $publishCount = @($events | Where-Object { $_ -match '^publish |^stage publish ' }).Count
+        $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag ' }).Count
+        if (
+            $outcome.status -ne 'rolled_back' -or
+            $deprecationCount -ne 1 -or
+            $publishCount -ne 0 -or
+            $latestMutationCount -ne 0 -or
+            -not $deprecated.Value
+        ) {
+            throw 'Outer-flow rollback self-test did not preserve the exact recovery contract.'
+        }
+        return [pscustomobject]@{
+            status = 'ok'
+            scenario = $Scenario
+            terminal_status = $outcome.status
+            deprecation_calls = $deprecationCount
+            publish_calls = $publishCount
+            latest_mutation_calls = $latestMutationCount
+            recovery_manifest_bound = $true
+        }
+    }
+    finally {
+        Remove-Item -LiteralPath $temporaryRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 if ($RunRollbackSelfTest) {
-    if ($ExecuteApprovedFinalization -or $RunStageRecordSelfTest -or $RunFinalizationOutcomeSelfTest) {
+    if (
+        $ExecuteApprovedFinalization -or
+        $RecoverApprovedFinalization -or
+        $RunStageRecordSelfTest -or
+        $RunFinalizationOutcomeSelfTest -or
+        $RunOuterFlowRollbackSelfTest
+    ) {
         throw 'Rollback self-test cannot run with another mode.'
     }
     Write-Output (Invoke-RollbackSelfTest $RollbackTestScenario | ConvertTo-Json -Depth 4)
     exit 0
 }
 if ($RunStageRecordSelfTest) {
-    if ($ExecuteApprovedFinalization -or $RunFinalizationOutcomeSelfTest) {
+    if (
+        $ExecuteApprovedFinalization -or
+        $RecoverApprovedFinalization -or
+        $RunFinalizationOutcomeSelfTest -or
+        $RunOuterFlowRollbackSelfTest
+    ) {
         throw 'Stage-record self-test cannot run with real finalization.'
     }
     Write-Output (Invoke-StageRecordSelfTest | ConvertTo-Json -Depth 4)
     exit 0
 }
 if ($RunFinalizationOutcomeSelfTest) {
-    if ($ExecuteApprovedFinalization) {
+    if ($ExecuteApprovedFinalization -or $RecoverApprovedFinalization -or $RunOuterFlowRollbackSelfTest) {
         throw 'Finalization-outcome self-test cannot run with real finalization.'
     }
     Write-Output (Invoke-FinalizationOutcomeSelfTest | ConvertTo-Json -Depth 4)
     exit 0
 }
-if (-not $ExecuteApprovedFinalization) {
-    throw 'Finalization is disabled. Pass -ExecuteApprovedFinalization only after browser approval of the verified stage.'
+if ($RunOuterFlowRollbackSelfTest) {
+    if ($ExecuteApprovedFinalization -or $RecoverApprovedFinalization) {
+        throw 'Outer-flow rollback self-test cannot run with a real finalization mode.'
+    }
+    Write-Output (Invoke-OuterFlowRollbackSelfTest $OuterFlowTestScenario | ConvertTo-Json -Depth 4)
+    exit 0
+}
+if (-not $ExecuteApprovedFinalization -and -not $RecoverApprovedFinalization) {
+    throw 'Finalization is disabled. Pass an approved finalization or deprecation-only recovery mode after browser approval.'
+}
+if ($ExecuteApprovedFinalization -and $RecoverApprovedFinalization) {
+    throw 'Normal finalization and deprecation-only recovery cannot run together.'
 }
 if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
     throw 'A valid approved manifest SHA-256 is required.'
@@ -595,14 +915,6 @@ $stageRecordPath = Get-StagedReleaseRecordPath $actualManifestSha256
 $stageRecord = Assert-VerifiedStageRecord `
     $stageRecordPath $manifest $actualManifestSha256 $packageSpec
 $finalizationOutcomePath = Get-FinalizationOutcomePath $actualManifestSha256
-New-FinalizationReservation `
-    $finalizationOutcomePath $actualManifestSha256 $packageSpec $stageRecord.stage_id
-
-& node $packetVerifierPath --expected-manifest $actualManifestSha256
-if ($LASTEXITCODE -ne 0) {
-    throw 'The publication packet verifier failed.'
-}
-
 $npmExecutable = (Get-Command npm.cmd -ErrorAction SilentlyContinue).Source
 if ([string]::IsNullOrWhiteSpace($npmExecutable)) {
     $npmExecutable = (Get-Command npm -ErrorAction Stop).Source
@@ -624,10 +936,6 @@ $deprecateInvoker = {
         Output = 'Interactive deprecation command completed.'
     }
 }
-$npmUser = & $readInvoker @('whoami')
-if ($npmUser.ExitCode -ne 0 -or [string]::IsNullOrWhiteSpace($npmUser.Output)) {
-    throw 'npm authentication is required. Run npm login directly in this terminal.'
-}
 $smokeVerifier = {
     $smokePath = Join-Path $repoRoot $manifest.artifacts.published_smoke
     & node $smokePath `
@@ -638,33 +946,57 @@ $smokeVerifier = {
         throw 'The public registry package failed the installed-package smoke.'
     }
 }
-try {
-    $registryState = Invoke-PostApprovalValidation `
-        $readInvoker $deprecateInvoker $manifest $packageSpec $smokeVerifier
-}
-catch {
-    $failure = $_.Exception.Message
-    if (
-        $failure -match 'Exact prerelease is already deprecated' -or
-        $failure -match 'The exact prerelease was deprecated and npm latest was left unchanged'
-    ) {
-        Complete-FinalizationOutcome `
-            $finalizationOutcomePath `
-            $actualManifestSha256 `
-            $packageSpec `
-            $stageRecord.stage_id `
-            'rolled_back' `
-            $failure
+$authenticationVerifier = {
+    $npmUser = & $readInvoker @('whoami')
+    if ($npmUser.ExitCode -ne 0 -or [string]::IsNullOrWhiteSpace($npmUser.Output)) {
+        throw 'npm authentication is required. Run npm login directly in this terminal.'
     }
-    throw
 }
-Complete-FinalizationOutcome `
-    $finalizationOutcomePath `
+$packetVerifier = {
+    & node $packetVerifierPath --expected-manifest $actualManifestSha256
+    if ($LASTEXITCODE -ne 0) {
+        throw 'The publication packet verifier failed.'
+    }
+}
+
+if ($RecoverApprovedFinalization) {
+    & $authenticationVerifier
+    $recovery = Invoke-InProgressFinalizationRecovery `
+        $readInvoker `
+        $deprecateInvoker `
+        $manifest `
+        $actualManifestSha256 `
+        $packageSpec `
+        $stageRecord.stage_id `
+        $finalizationOutcomePath `
+        'Manifest-bound deprecation-only recovery completed.'
+    Write-Output ([pscustomobject]@{
+        status = 'rolled_back'
+        recovery_mode = 'deprecation_only'
+        package = $packageSpec
+        stage_id = $stageRecord.stage_id
+        public_version_present = $recovery.public_version_present
+        deprecated = $recovery.deprecated
+        latest_tag = $recovery.latest_tag
+        publish_calls = 0
+    } | ConvertTo-Json -Depth 4)
+    exit 0
+}
+
+New-FinalizationReservation `
+    $finalizationOutcomePath $actualManifestSha256 $packageSpec $stageRecord.stage_id
+
+$registryState = Invoke-ReservedFinalizationFlow `
+    $packetVerifier `
+    $authenticationVerifier `
+    $readInvoker `
+    $deprecateInvoker `
+    $smokeVerifier `
+    $manifest `
     $actualManifestSha256 `
     $packageSpec `
     $stageRecord.stage_id `
-    'published_and_verified' `
-    'Public registry identity, tags, and installed-package smoke passed.'
+    $finalizationOutcomePath
 
 Write-Output ([pscustomobject]@{
     status = 'published_and_verified'

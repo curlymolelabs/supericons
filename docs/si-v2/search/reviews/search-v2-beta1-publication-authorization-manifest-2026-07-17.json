@@ -4,7 +4,7 @@
   "date": "2026-07-17",
   "hash_mode": "utf8_lf_normalized_text",
   "implementation": {
-    "commit": "bbff99a54db666711f1baf59658b5995e812ff0e",
+    "commit": "78b16149da0d3b4648392a5b97e58caecf9ea81d",
     "release_type": "npm_prerelease_only",
     "hosted_function_deployment_required": false,
     "database_migration_required": false,
@@ -16,13 +16,13 @@
     "publish_tag": "beta",
     "latest_must_remain": "0.4.17",
     "browser_security_key_approval_required": true,
-    "archive_path": "tmp/search-v2-beta1-release-bbff99a54/archive/supericons-mcp-0.4.19-beta.1.tgz",
-    "archive_sha256": "07ec2cd059a52d1451704933c0b1b6477585949ddc7831307287987f5913137b",
-    "archive_size_bytes": 6107234,
-    "unpacked_size_bytes": 25289936,
-    "file_count": 49,
-    "npm_shasum": "4cd72d83be9d6547409f3c9b1f2e0aeb3c88c292",
-    "npm_integrity": "sha512-OSdVXJrZqjMtRWllKOecFnkOzdnOvTQ0Bads5TkcVNnz+o7BCrKYnT1U0c/6DyMjdq4cMiLLxvKeuMt1saCoog==",
+    "archive_path": "tmp/search-v2-beta1-release-78b16149-clean/archive/supericons-mcp-0.4.19-beta.1.tgz",
+    "archive_sha256": "8742012a425646bc1f4b2f53122e64d58ed5a63afe585cafec7c7028e76eb082",
+    "archive_size_bytes": 6117020,
+    "unpacked_size_bytes": 25337438,
+    "file_count": 61,
+    "npm_shasum": "56a195e6cda061171838278c18e131cce077d9b3",
+    "npm_integrity": "sha512-e4OtGDogjy119iG6B2H0308Nd4V/ziOhUcLui0vLkRymfNX2FYfZH1ow9g50mXOs3jS0zATtljb9fUdh764tIw==",
     "maximum_size_bytes": 7000000
   },
   "search_contract": {
@@ -60,6 +60,7 @@
       "paid_design_intelligence"
     ],
     "private_record_sha256": "abed31fb65d8ae606680ac55e862ef2f06a091617e3c266b79ecd12c2fd03963",
+    "third_party_provenance_sha256": "2595f8eb8721d817e255adef51c9531a2210c3ac8e362b32568c640c5b513469",
     "private_record_values_must_remain_out_of_git": true,
     "private_record_values_must_remain_out_of_public_verifiers": true,
     "staged_generated_modules_minified": 3,
@@ -84,14 +85,32 @@
     "predecessor_manifest_path": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json",
     "predecessor_manifest_sha256": "9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5",
     "predecessor_probe_ids": [
+      "archive_hash_and_pack_identity",
+      "artifact_hash_binding",
       "consumed_stage_attempt_probe",
+      "finalization_reservation_order_guard",
       "hosted_call_negative_probe",
       "hosted_comparison_attempt_probe",
+      "hosted_comparison_contract_binding",
+      "hosted_comparison_plan_probe",
+      "hosted_comparison_wrong_manifest_rejected",
+      "installed_eligible_hosted_calls_zero",
+      "installed_stdio_route_fingerprint_150",
+      "manifest_hash_binding",
+      "material_outline_and_solid",
+      "owner_request_scope_binding",
       "postapproval_rollback_self_tests",
       "postapproval_stage_record_probe",
       "postapproval_terminal_replay_probe",
+      "punctuation_gate",
+      "release_scope_contract_binding",
+      "search_route_contract_binding",
       "stage_reconciliation_probe",
-      "staged_archive_verification"
+      "staged_archive_verification",
+      "stager_command_shape_guard",
+      "staging_disabled_without_execution_switch",
+      "staging_wrong_manifest_rejected",
+      "staging_zero_additional_allowance_rejected"
     ],
     "active": [
       {
@@ -99,12 +118,20 @@
         "evidence": "The supplied manifest hash must match the normalized manifest bytes."
       },
       {
+        "id": "release_scope_contract_binding",
+        "evidence": "The package, route, beta-window, and external-action limits must match the npm-only release."
+      },
+      {
+        "id": "search_route_contract_binding",
+        "evidence": "Eligible local-first search, stable fallbacks, and the fixed route fingerprint must remain exact."
+      },
+      {
         "id": "artifact_hash_binding",
         "evidence": "Every executable release artifact must match its manifest-bound normalized hash."
       },
       {
         "id": "monotonic_probe_inventory",
-        "evidence": "Every predecessor probe must remain active or carry an explicit retirement reason."
+        "evidence": "Every predecessor behavioral probe has a stable ID and remains active or carries an explicit retirement reason."
       },
       {
         "id": "private_record_presence_and_hash",
@@ -116,7 +143,11 @@
       },
       {
         "id": "vc4_license_canary_npm_web",
-        "evidence": "Both staged surfaces must carry the required terms, notices, and canaries."
+        "evidence": "Both staged surfaces must carry the required terms, complete upstream licenses, provenance, and canaries."
+      },
+      {
+        "id": "third_party_license_provenance_binding",
+        "evidence": "All eleven bundled upstream sources must carry exact source versions, archive integrity where applicable, and hash-bound license files on npm and web surfaces."
       },
       {
         "id": "private_record_missing_rejected",
@@ -131,8 +162,16 @@
         "evidence": "Private canary values must remain absent from maintained source."
       },
       {
+        "id": "archive_hash_and_pack_identity",
+        "evidence": "The rebuilt package metadata and exact archive bytes must match the manifest."
+      },
+      {
         "id": "clean_worktree_repack_byte_identity",
         "evidence": "A clean pinned worktree must rebuild the exact approved archive bytes."
+      },
+      {
+        "id": "rebuilt_archive_installed_smoke",
+        "evidence": "The locally rebuilt archive must pass the installed-package smoke without being described as a private staged download."
       },
       {
         "id": "installed_stdio_route_fingerprint_150",
@@ -151,8 +190,24 @@
         "evidence": "The installed archive must return SVG results for both Material styles."
       },
       {
+        "id": "staging_disabled_without_execution_switch",
+        "evidence": "The stager must reject execution when its explicit release switch is absent."
+      },
+      {
+        "id": "staging_wrong_manifest_rejected",
+        "evidence": "The stager must reject a manifest fingerprint that does not match the release."
+      },
+      {
         "id": "consumed_stage_attempt_probe",
         "evidence": "One staging reservation may run once, and a second use must be rejected."
+      },
+      {
+        "id": "stager_command_shape_guard",
+        "evidence": "The stager must use the pinned npm stage commands and must not contain a direct npm publish path."
+      },
+      {
+        "id": "staged_download_hash_and_smoke_self_test",
+        "evidence": "Download failure, archive hash mismatch, and installed-smoke failure must write no verified stage record, while the valid path writes one."
       },
       {
         "id": "postapproval_stage_record_probe",
@@ -160,29 +215,65 @@
       },
       {
         "id": "postapproval_terminal_replay_probe",
-        "evidence": "Success, rollback, and in-progress finalization records must prevent replay."
+        "evidence": "Success, rollback, and in-progress finalization records must prevent ordinary replay."
       },
       {
         "id": "postapproval_rollback_self_tests",
         "evidence": "Integrity, tag, smoke, and already-deprecated paths must preserve exact rollback behavior."
       },
       {
-        "id": "staged_archive_verification",
-        "evidence": "The downloaded staged archive must match the approved hash and installed smoke before browser approval."
+        "id": "postapproval_outer_flow_rollback_self_tests",
+        "evidence": "Packet-verifier and npm-authentication failures after browser approval must end in one manifest-bound rollback, including the deprecation-only recovery path."
+      },
+      {
+        "id": "finalization_reservation_order_guard",
+        "evidence": "The finalization reservation must exist before packet, authentication, registry, or smoke work begins."
+      },
+      {
+        "id": "deprecation_only_recovery_guard",
+        "evidence": "An exact manifest-bound in-progress release may run only the deprecation-only recovery path, with no publish or latest-tag mutation."
       },
       {
         "id": "mcp_dependency_audit_zero",
         "evidence": "The public MCP dependency tree must report zero vulnerabilities."
+      },
+      {
+        "id": "owner_request_scope_binding",
+        "evidence": "The release request must name the exact manifest and preserve the npm-only external-action boundary."
+      },
+      {
+        "id": "punctuation_gate",
+        "evidence": "The manifest and release request must contain no em or en dashes."
       }
     ],
     "retired": [
       {
         "id": "stage_reconciliation_probe",
-        "reason": "Beta.0 reused an already-created private stage. Beta.1 starts a new single-use stage and therefore uses the consumed stage attempt probe instead."
+        "reason": "Beta.0 reused an already-created private stage. Beta.1 starts a new single-use stage and uses the consumed stage attempt probe instead."
+      },
+      {
+        "id": "staging_zero_additional_allowance_rejected",
+        "reason": "Beta.0 reconciliation allowed no additional stage command. Beta.1 intentionally authorizes one new manifest-bound stage and protects it with the single-use receipt."
+      },
+      {
+        "id": "staged_archive_verification",
+        "reason": "A local rebuilt-archive smoke may not claim that a private staged archive was verified. It is replaced by rebuilt_archive_installed_smoke locally and staged_download_hash_and_smoke_self_test before browser approval."
+      },
+      {
+        "id": "hosted_comparison_contract_binding",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests, so the comparison contract is outside this npm-only packet."
+      },
+      {
+        "id": "hosted_comparison_plan_probe",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests, so no comparison plan is part of this packet."
       },
       {
         "id": "hosted_comparison_attempt_probe",
         "reason": "Beta.1 authorizes zero stable-hosted comparison requests. The comparison runner is outside this npm-only publication packet."
+      },
+      {
+        "id": "hosted_comparison_wrong_manifest_rejected",
+        "reason": "Beta.1 carries no hosted comparison runner, so its wrong-manifest guard is outside this npm-only packet."
       }
     ]
   },
@@ -194,6 +285,7 @@
     "postapproval_registry_and_smoke_verification_required": true,
     "postapproval_failure_requires_exact_prerelease_deprecation": true,
     "postapproval_finalization_single_use": true,
+    "postapproval_in_progress_recovery": "manifest_bound_deprecation_only",
     "postapproval_deprecation_must_be_empty_before_success": true,
     "postapproval_terminal_outcomes": [
       "published_and_verified",
@@ -248,17 +340,17 @@
   },
   "artifacts": {
     "stager": "scripts/stage-search-v2-local-first-beta.ps1",
-    "stager_sha256": "0f767fef737f1e441028b9d187bc24764fa3dbe31744ca87eff6c60aa8c608be",
+    "stager_sha256": "04db00f08dd8b4eac1bb4e23a6b4f20ba934c7de0eb66ee9b0886eaa7486d64c",
     "postapproval_finalizer": "scripts/finalize-search-v2-local-first-beta.ps1",
-    "postapproval_finalizer_sha256": "c1f522c1b18f0ee37840463662ba793b4be4e35884809c6c0bb46caee9ccf97d",
+    "postapproval_finalizer_sha256": "5f4c66e4c4c22404c1634aeac7001fca4c57e705c2aa49b38f540f05cbe6491b",
     "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
     "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
     "protected_builder": "scripts/build-search-v2-protected-public-artifacts.mjs",
-    "protected_builder_sha256": "5c4f1763058420e6e5916f4be48f7e570c0f09fb1bb27d016e0c247984481169",
+    "protected_builder_sha256": "ca298cd114c9a0ffb1e583879a4430a4ab41fd70e9e62092acdf22f41ae315be",
     "protected_verifier": "scripts/verify-search-v2-protected-public-artifacts.mjs",
-    "protected_verifier_sha256": "9a72c7f34197958b346de3f445a5f541618417548c718551590c5aa25f0ff65b",
+    "protected_verifier_sha256": "7b533204230e6edabbf70aa2caccd4a78df39e3b763318ed03b4d42087d408cb",
     "packet_verifier": "scripts/verify-search-v2-beta1-publication-packet.mjs",
-    "packet_verifier_sha256": "5ec6675bbbdfa20dfb042145196cf88d42c6a53900f3f77e0dfe927eeb113362",
+    "packet_verifier_sha256": "daab755241edd4b7771f3add64bde002ee64d8dd00595952d7a43c5c9b188218",
     "approval_request": "docs/si-v2/search/reviews/search-v2-beta1-publication-approval-request-2026-07-17.md"
   },
   "monitoring": {

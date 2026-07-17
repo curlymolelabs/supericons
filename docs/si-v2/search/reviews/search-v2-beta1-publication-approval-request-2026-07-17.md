@@ -2,7 +2,7 @@
 
 Date: 2026-07-17
 
-Manifest SHA-256: `79623d33654f869a9960b536a1657a86f27058476c4177f2bd7fe5dd17602f73`
+Manifest SHA-256: `79b497cadca0df5bdfb428aef9fa320b6f04322d58b99dc6f7b12a8adfe827d4`
 
 Package: `@supericons/mcp@0.4.19-beta.1`
 
@@ -19,12 +19,14 @@ Tag: `beta`
 
 ## Public actions
 
+This is an npm-only prerelease boundary. No Railway, Supabase, database, or web deployment is authorized.
+
 The bounded flow may:
 
 1. Upload the exact package archive once as a private npm staged package.
 2. Ask the owner to approve that exact stage with the npm browser security key.
 3. Publish `@supericons/mcp@0.4.19-beta.1` once under the `beta` tag.
-4. Verify the public archive, integrity, tags, license, canaries, Material styles, and all 150 local-first cases.
+4. Verify the public archive, integrity, tags, complete upstream license texts, exact source provenance, canaries, Material styles, and all 150 local-first cases.
 5. Deprecate only `0.4.19-beta.1` if post-publication verification fails.
 
 The flow must keep npm `latest` at `0.4.17`.
@@ -52,6 +54,6 @@ Closeout requires at least 200 organic attempts and three complete green days. S
 
 ## Rollback
 
-Before publication, any failed check stops without a public registry mutation. After publication, a failed integrity, tag, license, canary, or installed-package check deprecates only `0.4.19-beta.1` and confirms that npm `latest` stayed unchanged.
+Before publication, any failed check stops without a public registry mutation. After publication, a failed integrity, tag, license, canary, or installed-package check deprecates only `0.4.19-beta.1` and confirms that npm `latest` stayed unchanged. If packet verification or npm authentication fails after browser approval, the exact manifest-bound release may use only the deprecation recovery path. That recovery cannot publish or change npm `latest`.
 
 The staging and finalization records are single-use and stored under the current Windows account. Do not delete or bypass them.
