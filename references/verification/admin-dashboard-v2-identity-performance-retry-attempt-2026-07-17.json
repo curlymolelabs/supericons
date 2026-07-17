@@ -1,0 +1,72 @@
+{
+  "artifact": "admin_dashboard_v2_identity_performance_retry_attempt",
+  "release_fingerprint": "20ae4f68b47de69ea983b18d76efc079bc954c58018a2ffd0ceee484c8d98dba",
+  "implementation_revision": "818d4a6feb92c4a958755a316ffd79404cb7281f",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 63,
+    "updated_at": "1784295174066",
+    "source_sha256": "4edc65e6b93c07eb25131bbc5605bff3d3d8a31056e1a440f33e00cba4994bbb"
+  },
+  "verified_before_failure": {
+    "v2_contract": true,
+    "identity_available": true,
+    "geography_available": true,
+    "identity_rows_truncated": false,
+    "raw_rows_truncated": false,
+    "completed_rollup_data_present": true,
+    "windows_checked": [
+      "1d",
+      "7d",
+      "30d",
+      "custom"
+    ],
+    "warm_latency_ms": {
+      "activity": 1487.3,
+      "overview": 3856.5,
+      "search": 539,
+      "audience": 3614.3
+    },
+    "warm_latency_limit_ms": 5000
+  },
+  "failure": {
+    "gate": "rollup_query_parity",
+    "classification": "backend_correctness",
+    "reason": "The API returned a lower count than the complete database rollup for an API-returned query. The single PostgREST rollup request was capped at 1,000 rows by the service, so the requested 10,000-row limit did not provide complete data."
+  },
+  "diagnosis": {
+    "production_query_rollup_rows_30d": 8737,
+    "single_request_service_row_cap": 1000,
+    "replacement": "deterministic_bounded_paging"
+  },
+  "rollback": {
+    "version": 64,
+    "updated_at": "1784295229758",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "legacy_stats_latency_ms": 3144,
+    "status": "ok"
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "186c55d0f1c603899e54a692f1caab2a4c54b5b7b754bd0ad8358be0d59afd54",
+    "database_preflight": "ac5f0872399edc488eb1e0a9af278fbc0ecbcbfe5e55805da3fa1da905693d01",
+    "live_gate": "6fa848dce7da47b8e123eb6a97a724b10ba49856ec1d9845365dcc2d5f671001",
+    "parity_gate": "e8d1010567b639593c086a01952cb18ff6f288a197c3c722d4582087f813403a",
+    "pre_inventory": "5c79f6eab966751325012053797bd1a74c351158cabece0c8ed83ce889b59b7c",
+    "legacy_preflight": "6b6532e5d4b9afb0db074f13ffe894111343b1b97ac5d124337c83ad4c582023",
+    "railway_health": "4939af092fcd904354ae7f169039e4d9d8836281e85a2f4af6857867676261d5",
+    "rollback": "cf24b24b9be875971afbf2194ed2973bc28029533c17c192ecfbe43ab8a0eeec",
+    "rollback_inventory": "ff3e21bffb47ea489a8ba6234879408d836daebbb28a388d7e27b7870723412e",
+    "search_health": "f12dcb71b04feb231e5ee613af1c632125a8d1490435d4f8d34295dcceb9c23f"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T13:32:56.019Z",
+  "finished_at": "2026-07-17T13:33:55.1430759Z"
+}

@@ -1292,6 +1292,7 @@ const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
 const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
 const V2_IDENTITY_PAGE_CONCURRENCY = 4;
 const V2_MAX_ROLLUP_ROWS = 10000;
+const V2_ROLLUP_PAGE_CONCURRENCY = 4;
 const V2_MAX_ICON_ROWS = 5000;
 
 function buildDashboardV2CacheKey(endpoint: string, url: URL) {
@@ -1492,36 +1493,95 @@ async function fetchDashboardV2OverviewRollups(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
 ) {
-  let query = adminClient
-    .from('admin_rollup_overview')
-    .select('day, channel, environment, query_origin, attempt_count, success_count, true_zero_count, low_result_count, low_result_eligible_count, approximate_low_result_count, error_count, clarification_count, partial_recommendation_count, defect_count, client_days')
-    .order('day', { ascending: true })
-    .limit(V2_MAX_ROLLUP_ROWS);
-  if (filters.from_day) query = query.gte('day', filters.from_day);
-  if (filters.to_day) query = query.lte('day', filters.to_day);
-  if (!filters.include_test) query = query.eq('environment', 'production');
-  if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
-  const { data, error } = await query;
-  if (error) throw error;
-  return (data || []) as Array<Record<string, unknown>>;
+  const overviewSelect = 'day, channel, environment, query_origin, attempt_count, success_count, true_zero_count, low_result_count, low_result_eligible_count, approximate_low_result_count, error_count, clarification_count, partial_recommendation_count, defect_count, client_days';
+  const result = await fetchBoundedDashboardV2Pages(async ({
+    from,
+    to,
+    includeCount,
+  }: {
+    from: number;
+    to: number;
+    includeCount: boolean;
+  }) => {
+    const source = adminClient.from('admin_rollup_overview');
+    let query = includeCount
+      ? source.select(overviewSelect, { count: 'exact' })
+      : source.select(overviewSelect);
+    query = query
+      .order('day', { ascending: true })
+      .order('channel', { ascending: true })
+      .order('environment', { ascending: true })
+      .order('query_origin', { ascending: true })
+      .range(from, to);
+    if (filters.from_day) query = query.gte('day', filters.from_day);
+    if (filters.to_day) query = query.lte('day', filters.to_day);
+    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
+    const { data, error, count } = await query;
+    if (error) throw error;
+    return {
+      rows: (data || []) as Array<Record<string, unknown>>,
+      total: includeCount ? count : null,
+    };
+  }, {
+    maxRows: V2_MAX_ROLLUP_ROWS,
+    pageSize: EVIDENCE_PAGE_SIZE,
+    concurrency: V2_ROLLUP_PAGE_CONCURRENCY,
+  });
+  return {
+    rows: result.rows,
+    total: result.total,
+    truncated: result.total > V2_MAX_ROLLUP_ROWS,
+  };
 }
 
 async function fetchDashboardV2QueryRollups(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
 ) {
-  let query = adminClient
-    .from('admin_rollup_queries')
-    .select('day, query_norm, library_filter, query_origin, channel, environment, tool_name, attempt_count, success_count, true_zero_count, low_result_count, low_result_eligible_count, approximate_low_result_count, error_count, clarification_count, partial_recommendation_count, defect_count, client_days, first_seen, last_seen')
-    .order('day', { ascending: true })
-    .limit(V2_MAX_ROLLUP_ROWS);
-  if (filters.from_day) query = query.gte('day', filters.from_day);
-  if (filters.to_day) query = query.lte('day', filters.to_day);
-  if (!filters.include_test) query = query.eq('environment', 'production');
-  if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
-  const { data, error } = await query;
-  if (error) throw error;
-  return (data || []) as Array<Record<string, unknown>>;
+  const querySelect = 'day, query_norm, library_filter, query_origin, channel, environment, tool_name, attempt_count, success_count, true_zero_count, low_result_count, low_result_eligible_count, approximate_low_result_count, error_count, clarification_count, partial_recommendation_count, defect_count, client_days, first_seen, last_seen';
+  const result = await fetchBoundedDashboardV2Pages(async ({
+    from,
+    to,
+    includeCount,
+  }: {
+    from: number;
+    to: number;
+    includeCount: boolean;
+  }) => {
+    const source = adminClient.from('admin_rollup_queries');
+    let query = includeCount
+      ? source.select(querySelect, { count: 'exact' })
+      : source.select(querySelect);
+    query = query
+      .order('day', { ascending: true })
+      .order('query_norm', { ascending: true })
+      .order('library_filter', { ascending: true })
+      .order('query_origin', { ascending: true })
+      .order('channel', { ascending: true })
+      .order('environment', { ascending: true })
+      .order('tool_name', { ascending: true })
+      .range(from, to);
+    if (filters.from_day) query = query.gte('day', filters.from_day);
+    if (filters.to_day) query = query.lte('day', filters.to_day);
+    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
+    const { data, error, count } = await query;
+    if (error) throw error;
+    return {
+      rows: (data || []) as Array<Record<string, unknown>>,
+      total: includeCount ? count : null,
+    };
+  }, {
+    maxRows: V2_MAX_ROLLUP_ROWS,
+    pageSize: EVIDENCE_PAGE_SIZE,
+    concurrency: V2_ROLLUP_PAGE_CONCURRENCY,
+  });
+  return {
+    rows: result.rows,
+    total: result.total,
+    truncated: result.total > V2_MAX_ROLLUP_ROWS,
+  };
 }
 
 async function buildDashboardV2DataRows(
@@ -1553,21 +1613,21 @@ async function buildDashboardV2DataRows(
       { applyQuery },
     )
     : Promise.resolve({ rows: [] as SearchEvidenceRow[], truncated: false });
-  const [overviewRows, queryRollupRows, reviews, telemetry] = await Promise.all([
+  const [overviewRollups, queryRollups, reviews, telemetry] = await Promise.all([
     completedRangeExists
       ? fetchDashboardV2OverviewRollups(adminClient, completedFilters)
-      : Promise.resolve([]),
+      : Promise.resolve({ rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false }),
     completedRangeExists
       ? fetchDashboardV2QueryRollups(adminClient, completedFilters)
-      : Promise.resolve([]),
+      : Promise.resolve({ rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false }),
     fetchAllQueryReviews(adminClient),
     telemetryPromise,
   ]);
   const telemetryRows = telemetry.rows;
-  let completedOverviewRows = overviewRows;
-  let completedQueryRows = queryRollupRows;
+  let completedOverviewRows = overviewRollups.rows;
+  let completedQueryRows = queryRollups.rows;
   if (filters.q) {
-    completedQueryRows = queryRollupRows.filter((row) => (
+    completedQueryRows = queryRollups.rows.filter((row: Record<string, unknown>) => (
       [
         row.query_norm,
         row.library_filter,
@@ -1591,7 +1651,7 @@ async function buildDashboardV2DataRows(
     ),
     query_review_available: reviews.available,
     raw_truncated: telemetry.truncated,
-    rollup_truncated: overviewRows.length >= V2_MAX_ROLLUP_ROWS || queryRollupRows.length >= V2_MAX_ROLLUP_ROWS,
+    rollup_truncated: overviewRollups.truncated || queryRollups.truncated,
   };
 }
 
@@ -1683,18 +1743,19 @@ async function buildDashboardV2ActivityPayload(
     overviewRows = buildAdminRollups(telemetryRows, knownSearchDefects).overview;
   } else if (filters.q) {
     const completedFilters = dashboardV2CompletedRollupFilters(filters);
-    const queryRows = dashboardV2RangeHasCompletedDays(completedFilters)
+    const queryRollups = dashboardV2RangeHasCompletedDays(completedFilters)
       ? await fetchDashboardV2QueryRollups(adminClient, completedFilters)
-      : [];
-    overviewRows = queryRows.filter((row) => (
+      : { rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false };
+    overviewRows = queryRollups.rows.filter((row: Record<string, unknown>) => (
       [row.query_norm, row.library_filter, row.channel, row.query_origin, row.tool_name]
         .filter(Boolean).join(' ').toLowerCase().includes(filters.q)
     ));
   } else {
     const completedFilters = dashboardV2CompletedRollupFilters(filters);
-    overviewRows = dashboardV2RangeHasCompletedDays(completedFilters)
+    const overviewRollups = dashboardV2RangeHasCompletedDays(completedFilters)
       ? await fetchDashboardV2OverviewRollups(adminClient, completedFilters)
-      : [];
+      : { rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false };
+    overviewRows = overviewRollups.rows;
   }
   if (!filters.use_raw && rangeIncludesCurrentDay(filters)) {
     const today = currentUtcDayStartIso().slice(0, 10);
