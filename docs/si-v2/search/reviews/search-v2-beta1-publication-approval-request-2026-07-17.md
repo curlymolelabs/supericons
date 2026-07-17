@@ -2,7 +2,7 @@
 
 Date: 2026-07-17
 
-Manifest SHA-256: `6e0a9b9efb4fbac303d17f670d375fdafc924a24615638fcdf63190f16b0f8c0`
+Manifest SHA-256: `79623d33654f869a9960b536a1657a86f27058476c4177f2bd7fe5dd17602f73`
 
 Package: `@supericons/mcp@0.4.19-beta.1`
 

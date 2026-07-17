@@ -79,6 +79,113 @@
     "hosted_call_measurement": "outbound_fetch_interceptor",
     "negative_probe": "one_observed_call_must_fail"
   },
+  "probe_inventory": {
+    "schema_version": 1,
+    "predecessor_manifest_path": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json",
+    "predecessor_manifest_sha256": "9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5",
+    "predecessor_probe_ids": [
+      "consumed_stage_attempt_probe",
+      "hosted_call_negative_probe",
+      "hosted_comparison_attempt_probe",
+      "postapproval_rollback_self_tests",
+      "postapproval_stage_record_probe",
+      "postapproval_terminal_replay_probe",
+      "stage_reconciliation_probe",
+      "staged_archive_verification"
+    ],
+    "active": [
+      {
+        "id": "manifest_hash_binding",
+        "evidence": "The supplied manifest hash must match the normalized manifest bytes."
+      },
+      {
+        "id": "artifact_hash_binding",
+        "evidence": "Every executable release artifact must match its manifest-bound normalized hash."
+      },
+      {
+        "id": "monotonic_probe_inventory",
+        "evidence": "Every predecessor probe must remain active or carry an explicit retirement reason."
+      },
+      {
+        "id": "private_record_presence_and_hash",
+        "evidence": "The private canary record must exist and match its manifest-bound hash."
+      },
+      {
+        "id": "vc3_bundle_content_npm_web",
+        "evidence": "Both staged surfaces must exclude all five protected intelligence classes."
+      },
+      {
+        "id": "vc4_license_canary_npm_web",
+        "evidence": "Both staged surfaces must carry the required terms, notices, and canaries."
+      },
+      {
+        "id": "private_record_missing_rejected",
+        "evidence": "A missing private canary record must fail closed."
+      },
+      {
+        "id": "private_record_hash_mismatch_rejected",
+        "evidence": "A private canary record with the wrong hash must fail closed."
+      },
+      {
+        "id": "source_canary_absence",
+        "evidence": "Private canary values must remain absent from maintained source."
+      },
+      {
+        "id": "clean_worktree_repack_byte_identity",
+        "evidence": "A clean pinned worktree must rebuild the exact approved archive bytes."
+      },
+      {
+        "id": "installed_stdio_route_fingerprint_150",
+        "evidence": "The installed archive must preserve all 150 ordered local-first result sets."
+      },
+      {
+        "id": "installed_eligible_hosted_calls_zero",
+        "evidence": "The installed archive must make zero hosted calls for eligible cases."
+      },
+      {
+        "id": "hosted_call_negative_probe",
+        "evidence": "One injected hosted call must be observed and must fail the smoke."
+      },
+      {
+        "id": "material_outline_and_solid",
+        "evidence": "The installed archive must return SVG results for both Material styles."
+      },
+      {
+        "id": "consumed_stage_attempt_probe",
+        "evidence": "One staging reservation may run once, and a second use must be rejected."
+      },
+      {
+        "id": "postapproval_stage_record_probe",
+        "evidence": "Missing and wrong-manifest stage records must be rejected."
+      },
+      {
+        "id": "postapproval_terminal_replay_probe",
+        "evidence": "Success, rollback, and in-progress finalization records must prevent replay."
+      },
+      {
+        "id": "postapproval_rollback_self_tests",
+        "evidence": "Integrity, tag, smoke, and already-deprecated paths must preserve exact rollback behavior."
+      },
+      {
+        "id": "staged_archive_verification",
+        "evidence": "The downloaded staged archive must match the approved hash and installed smoke before browser approval."
+      },
+      {
+        "id": "mcp_dependency_audit_zero",
+        "evidence": "The public MCP dependency tree must report zero vulnerabilities."
+      }
+    ],
+    "retired": [
+      {
+        "id": "stage_reconciliation_probe",
+        "reason": "Beta.0 reused an already-created private stage. Beta.1 starts a new single-use stage and therefore uses the consumed stage attempt probe instead."
+      },
+      {
+        "id": "hosted_comparison_attempt_probe",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests. The comparison runner is outside this npm-only publication packet."
+      }
+    ]
+  },
   "publication_flow": {
     "mode": "npm_staged_browser_security_key",
     "staging_cli": "11.18.0",
@@ -151,7 +258,7 @@
     "protected_verifier": "scripts/verify-search-v2-protected-public-artifacts.mjs",
     "protected_verifier_sha256": "9a72c7f34197958b346de3f445a5f541618417548c718551590c5aa25f0ff65b",
     "packet_verifier": "scripts/verify-search-v2-beta1-publication-packet.mjs",
-    "packet_verifier_sha256": "aa6846c4e98c3063160b66aed94a84356efd037eb59186f10299ea5ee48b7727",
+    "packet_verifier_sha256": "5ec6675bbbdfa20dfb042145196cf88d42c6a53900f3f77e0dfe927eeb113362",
     "approval_request": "docs/si-v2/search/reviews/search-v2-beta1-publication-approval-request-2026-07-17.md"
   },
   "monitoring": {
