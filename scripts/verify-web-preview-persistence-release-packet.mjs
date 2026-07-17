@@ -303,6 +303,18 @@ for (const probe of manifest.probe_inventory) {
 
 const local = runBoundCliVerification();
 const netlifyCli = verifyNetlifyCliBinding(manifest.toolchain.netlify_cli);
+assert.throws(
+  () => verifyNetlifyCliBinding({
+    ...manifest.toolchain.netlify_cli,
+    version: '0.0.0',
+  }),
+);
+assert.throws(
+  () => verifyNetlifyCliBinding({
+    ...manifest.toolchain.netlify_cli,
+    entrypoint_sha256: '0'.repeat(64),
+  }),
+);
 await runMutationSelfTests();
 console.log(JSON.stringify({
   status: 'ok',
@@ -320,4 +332,8 @@ console.log(JSON.stringify({
     delayed_visibility_one_exact_restore: true,
   },
   netlify_cli: netlifyCli,
+  netlify_cli_negative_probes: {
+    wrong_version_rejected: true,
+    wrong_entrypoint_hash_rejected: true,
+  },
 }, null, 2));
