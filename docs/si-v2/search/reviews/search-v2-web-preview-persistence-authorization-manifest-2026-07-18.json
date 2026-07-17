@@ -7,8 +7,8 @@
     "default_user_change": "MCP preview links remain in preview mode until the visitor chooses Browse all icons."
   },
   "preparation": {
-    "source_commit": "d4fdaa6cfbe69a45b10bd861388b160df3a5fe56",
-    "source_tree": "286c089a4d00638af5409805494c041c62f9e10e",
+    "source_commit": "6200fd495a63a58af6613d53bacda2374da32e51",
+    "source_tree": "d13fb2522997d5a8ca069476325922dcf0537b86",
     "allowed_packet_paths": [
       "docs/si-v2/search/reviews/search-v2-web-preview-persistence-approval-request-2026-07-18.md",
       "docs/si-v2/search/reviews/search-v2-web-preview-persistence-authorization-manifest-2026-07-18.json"
@@ -22,7 +22,7 @@
       "scripts/build-web-preview-persistence-release.mjs": "1887f5194895ef302d10d0c78f997283f1704383642a45569b041ba020906d70",
       "scripts/verify-search-v2-protected-public-artifacts.mjs": "b92885c72996d95aaaf6d6175aca4ae76b826c82f5735de273cfd43fe1f6637d",
       "scripts/run-web-preview-persistence-release.mjs": "cb1eecff5a08a99979e3540a1cb8e9af743272390965273c5b9f3e2e796106e8",
-      "scripts/verify-web-preview-persistence-release-packet.mjs": "1e0b82898f82454371d311ae06d1341550015e8058af49ec8d740f969f14263a",
+      "scripts/verify-web-preview-persistence-release-packet.mjs": "533a296134e4980a1bc8e9b990520930c332a68d6f6e1e45d288b5a34b9ce316",
       "package.json": "ca6738ed9737800d3cd7a505c153b3ba69bae1e7e057d9e58fb8908ad610e604",
       "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
       "vite.config.js": "2204c6ccd15aeaeaac21e31b53cc9dee4c41f37672afdb1141f59bc03e76e513",
