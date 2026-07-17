@@ -1,0 +1,70 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_correction_final_local_verification",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "implementation_revision": "7aff127f2a57d1116537cee6e466636655dc7cff",
+  "status": "ok",
+  "correction": {
+    "multi_day_aggregation": "completed_rollups_plus_current_day",
+    "identity_row_limit_per_source": 25000,
+    "identity_event_scope": "search_outcome_only",
+    "truncated_identity_values_withheld": true,
+    "completed_day_policy": "exact_database_to_api_parity",
+    "warm_route_policy": "immediate_second_request_inside_cache_ttl",
+    "production_rollup_days_in_30d_window": 27
+  },
+  "checks": {
+    "deno": "pass",
+    "v2_helpers": "pass",
+    "v2_api": "pass",
+    "phase_a_regression": "pass",
+    "phase_b_contract": "pass",
+    "phase_b_browser": "pass",
+    "rollup_parity_syntax": "pass",
+    "negative_control_v58": "rejected_as_expected",
+    "powershell_parser": "pass",
+    "credential_resolution": "pass",
+    "diff_check": "pass",
+    "text_policy": "pass",
+    "credential_value_scan": "pass"
+  },
+  "results": {
+    "v2_helper_cases": 11,
+    "v2_routes": 4,
+    "phase_a_metric_cases": 11,
+    "phase_a_api_checks": 27,
+    "phase_b_navigation_sections": 3,
+    "phase_b_inline_svg_charts": 4,
+    "phase_b_browser_requests": 12,
+    "credential_cases": 5
+  },
+  "database_preparation": {
+    "status": "ok",
+    "transaction_mode": "read_only",
+    "complete_rollup_day_count": 82,
+    "pending_rollup_days": 0,
+    "historical_holes": 0,
+    "latest_complete_day": "2026-07-16",
+    "mutations": 0
+  },
+  "production_inventory": {
+    "admin_api_id": "1ca7655a-e504-416f-9173-750016e79b73",
+    "admin_api_version": 58,
+    "admin_api_updated_at": "1784293524130",
+    "admin_api_source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "admin_api_active": true,
+    "admin_api_verify_jwt": false,
+    "mcp_search_version": 39,
+    "mcp_search_updated_at": "1784045797971"
+  },
+  "mutation_budget": {
+    "admin_api_candidate_deployments": 1,
+    "conditional_admin_api_rollback_deployments": 1,
+    "migration": 0,
+    "mcp_search": 0,
+    "railway": 0,
+    "storage": 0,
+    "npm_publication": 0
+  },
+  "mutations": 0,
+  "captured_at": "2026-07-17T13:08:04.9403273Z"
+}
