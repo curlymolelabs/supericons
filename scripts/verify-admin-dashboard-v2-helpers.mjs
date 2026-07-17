@@ -187,6 +187,8 @@ const queryRows = [
   assert.equal(filtered[0].query, 'missing brand');
   const compact = compactDashboardV2QueryRows(filtered);
   assert.equal(compact[0].issue_type, 'zero_result');
+  assert.equal(compact[0].zero_attempt_count, 5);
+  assert.equal(compact[0].low_attempt_count, 0);
   assert.equal(compact[0].channel, 'hosted_mcp');
 }
 
@@ -267,6 +269,8 @@ const queryRows = [
   const mixed = aggregateRows.find((row) => row.query === 'mixed aggregate');
   assert.equal(mixed.issue_type, 'mixed_result');
   assert.equal(mixed.outcome_label, 'Mixed: 1 of 5 zero');
+  assert.equal(mixed.zero_attempt_count, 1);
+  assert.equal(mixed.low_attempt_count, 0);
   assert.equal(mixed.result_count, null);
   assert.equal(mixed.result_count_available, false);
   assert.equal(mixed.country_code, null);

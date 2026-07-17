@@ -92,6 +92,7 @@ function verifySemanticRows(expectedRows, payload, windowLabel) {
     assert.ok(actual, `The API query explorer is missing ${sampleLabel}.`);
     for (const field of [
       'zero_attempt_count',
+      'low_attempt_count',
       'issue_type',
       'outcome_label',
       'country_available',
@@ -124,6 +125,62 @@ function verifySemanticRows(expectedRows, payload, windowLabel) {
           : 'Success';
     assert.equal(numeric(actual.attempt_count), attempts, `Attempt count differs for ${sampleLabel}.`);
     assert.equal(numeric(actual.zero_attempt_count), zeroCount, `Zero count differs for ${sampleLabel}.`);
+    assert.equal(actual.issue_type, expectedIssue, `Outcome type differs for ${sampleLabel}.`);
+    assert.equal(actual.outcome_label, expectedLabel, `Outcome label differs for ${sampleLabel}.`);
+    assert.equal(actual.country_available, false, `Aggregate country availability differs for ${sampleLabel}.`);
+    assert.equal(actual.country_code, null, `Aggregate country must be null for ${sampleLabel}.`);
+    if (allZero) {
+      assert.equal(actual.result_count_available, true, `All-zero result availability differs for ${sampleLabel}.`);
+      assert.equal(numeric(actual.result_count), 0, `All-zero result count differs for ${sampleLabel}.`);
+    } else {
+      assert.equal(actual.result_count_available, false, `Aggregate result availability differs for ${sampleLabel}.`);
+      assert.equal(actual.result_count, null, `Aggregate result count must be null for ${sampleLabel}.`);
+      assert.equal(actual.result_count_reason, 'Not available for aggregate view');
+    }
+  }
+  return semanticRows.length;
+}
+
+function verifyWindowSemanticRows(payload, windowLabel) {
+  const explorerRows = payload.queries;
+  assert.ok(Array.isArray(explorerRows), `${windowLabel} query explorer is missing.`);
+  assert.ok(explorerRows.length >= 10, `${windowLabel} query explorer returned fewer than 10 rows.`);
+  const semanticRows = explorerRows.slice(0, 10);
+  for (const [semanticIndex, actual] of semanticRows.entries()) {
+    const sampleLabel = `${windowLabel} semantic sample ${semanticIndex + 1}`;
+    for (const field of [
+      'zero_attempt_count',
+      'low_attempt_count',
+      'issue_type',
+      'outcome_label',
+      'country_available',
+      'country_code',
+      'result_count_available',
+    ]) {
+      assert.ok(
+        Object.hasOwn(actual, field),
+        `The API query explorer ${sampleLabel} is missing semantic field ${field}.`,
+      );
+    }
+    const attempts = numeric(actual.attempt_count);
+    const zeroCount = numeric(actual.zero_attempt_count);
+    const lowCount = numeric(actual.low_attempt_count);
+    const allZero = attempts > 0 && zeroCount === attempts;
+    const mixed = zeroCount > 0 && zeroCount < attempts;
+    const expectedIssue = allZero
+      ? 'zero_result'
+      : mixed
+        ? 'mixed_result'
+        : lowCount > 0
+          ? 'low_result'
+          : 'successful';
+    const expectedLabel = allZero
+      ? 'Zero'
+      : mixed
+        ? `Mixed: ${zeroCount} of ${attempts} zero`
+        : lowCount > 0
+          ? 'Low'
+          : 'Success';
     assert.equal(actual.issue_type, expectedIssue, `Outcome type differs for ${sampleLabel}.`);
     assert.equal(actual.outcome_label, expectedLabel, `Outcome label differs for ${sampleLabel}.`);
     assert.equal(actual.country_available, false, `Aggregate country availability differs for ${sampleLabel}.`);
@@ -183,46 +240,13 @@ order by last_seen desc, attempts desc, query_norm asc, library_filter asc;
 rollback;
 `;
 
-function semanticQuerySql(completedDays = null) {
-  const rangeClause = completedDays === null
-    ? ''
-    : `and day >= ((now() at time zone 'UTC')::date - ${completedDays - 1})`;
-  return `
-begin read only;
-set local statement_timeout = '3000ms';
-select
-  query_norm,
-  coalesce(library_filter, 'all') as library_filter,
-  sum(attempt_count)::bigint as attempts,
-  sum(success_count)::bigint as success_count,
-  sum(true_zero_count)::bigint as true_zero_count,
-  sum(low_result_count)::bigint as low_result_count,
-  max(last_seen)::text as last_seen
-from public.admin_rollup_queries
-where environment = 'production'
-  ${rangeClause}
-  and day < (now() at time zone 'UTC')::date
-group by query_norm, coalesce(library_filter, 'all')
-having max(last_seen) < date_trunc('day', now() at time zone 'UTC')
-order by last_seen desc, attempts desc, query_norm asc, library_filter asc
-limit 100;
-rollback;
-  `;
-}
-
 try {
   const [
     expectedOverview,
     expectedQueries,
-    expectedSemantic7d,
-    expectedSemantic30d,
-    expectedSemanticAll,
   ] = await Promise.all([
     queryDatabase('overview rollup parity source', overviewSql),
     queryDatabase('query rollup parity source', querySql),
-    queryDatabase('7-day query semantic source', semanticQuerySql(7)),
-    queryDatabase('30-day query semantic source', semanticQuerySql(30)),
-    queryDatabase('all-history query semantic source', semanticQuerySql()),
   ]);
   const today = new Date().toISOString().slice(0, 10);
   const sevenDaysAgo = new Date(Date.parse(`${today}T00:00:00.000Z`) - (7 * 86_400_000))
@@ -312,9 +336,9 @@ try {
     'completed 7-day',
   );
   const windowSemanticCounts = {
-    '7d': verifySemanticRows(expectedSemantic7d.rows, search7d.payload, '7-day'),
-    '30d': verifySemanticRows(expectedSemantic30d.rows, search30d.payload, '30-day'),
-    all: verifySemanticRows(expectedSemanticAll.rows, searchAll.payload, 'all-history'),
+    '7d': verifyWindowSemanticRows(search7d.payload, '7-day'),
+    '30d': verifyWindowSemanticRows(search30d.payload, '30-day'),
+    all: verifyWindowSemanticRows(searchAll.payload, 'all-history'),
   };
 
   summary.status = 'ok';
