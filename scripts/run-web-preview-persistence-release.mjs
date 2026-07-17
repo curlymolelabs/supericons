@@ -424,4 +424,3 @@ const directRun = process.argv[1] && resolve(process.argv[1]) === resolve(import
 if (directRun) {
   await main();
 }
-
