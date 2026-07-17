@@ -25,7 +25,7 @@ function sha256TextFile(path) {
 const expectedFingerprint = readArg('fingerprint');
 assert.match(expectedFingerprint, /^[0-9a-f]{64}$/, 'Provide --fingerprint.');
 
-const sourcePath = 'references/verification/admin-dashboard-v2-release-fingerprint-2026-07-17.txt';
+const sourcePath = 'references/verification/admin-dashboard-v2-rollup-correction-release-fingerprint-2026-07-17.txt';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Release fingerprint does not match the source.');
@@ -37,16 +37,17 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_v2_release',
-  implementation_revision: '4c700177d616eab4abbd78a6fbc5361f5360a52c',
+  packet: 'admin_dashboard_v2_rollup_correction_release',
+  implementation_revision: '7aff127f2a57d1116537cee6e466636655dc7cff',
   implementation_tree: fields.implementation_tree,
-  rollback_revision: 'f12fbb56807e9aec9a4bc02348de26c485467ad0',
+  rollback_revision: '4c700177d616eab4abbd78a6fbc5361f5360a52c',
   rollback_tree: fields.rollback_tree,
-  rollback_index_sha256: '70b7dd28d8ff6d3bc1da39a7cbd7bfa79380dd279e044fedab57bfa01d742c54',
+  rollback_index_sha256: '6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5',
   runner_sha256: fields.runner_sha256,
   verifier_sha256: fields.verifier_sha256,
   database_gate_sha256: fields.database_gate_sha256,
   v2_live_gate_sha256: fields.v2_live_gate_sha256,
+  rollup_parity_gate_sha256: fields.rollup_parity_gate_sha256,
   phase_a_live_gate_sha256: fields.phase_a_live_gate_sha256,
   inventory_capture_sha256: fields.inventory_capture_sha256,
   credential_helper_sha256: fields.credential_helper_sha256,
@@ -68,10 +69,10 @@ assert.deepEqual(fields, {
   linked_project_ref_check: 'required',
   function_name: 'admin-api',
   pre_function_id: '1ca7655a-e504-416f-9173-750016e79b73',
-  pre_function_version: '53',
-  pre_function_updated_at: '1784280647363',
+  pre_function_version: '54',
+  pre_function_updated_at: '1784291203090',
   pre_function_verify_jwt: 'false',
-  pre_function_ezbr_sha256: 'ba80ddb3b4c156f2aef9db1c67452fffa71a293c988d538b947f7e7c54026f38',
+  pre_function_ezbr_sha256: 'e5de472fec7869091c774686ad18535513640ab9d7cadb25852d9edf11a20aeb',
   pre_mcp_search_id: 'ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43',
   pre_mcp_search_version: '39',
   pre_mcp_search_updated_at: '1784045797971',
@@ -84,6 +85,10 @@ assert.deepEqual(fields, {
   v2_windows: '1d_7d_30d_custom',
   v2_cache_ttl_ms: '30000',
   v2_warm_request_limit_ms: '5000',
+  multi_day_aggregation: 'completed_rollups_plus_current_day',
+  identity_row_limit_per_source: '25000',
+  identity_event_scope: 'search_outcome_only',
+  rollup_parity_policy: 'read_only_database_to_api_exact',
   phase_a_queue_24h_p95_limit_ms: '1500',
   phase_a_queue_all_cold_p95_limit_ms: '1300',
   phase_a_queue_all_warm_p95_limit_ms: '1000',
@@ -104,6 +109,7 @@ for (const field of [
   'verifier_sha256',
   'database_gate_sha256',
   'v2_live_gate_sha256',
+  'rollup_parity_gate_sha256',
   'phase_a_live_gate_sha256',
   'inventory_capture_sha256',
   'credential_helper_sha256',
@@ -129,6 +135,7 @@ const textHashes = [
   ['scripts/verify-admin-dashboard-v2-release-packet.mjs', 'verifier_sha256'],
   ['scripts/verify-admin-dashboard-v2-database.mjs', 'database_gate_sha256'],
   ['scripts/verify-admin-dashboard-v2-live.mjs', 'v2_live_gate_sha256'],
+  ['scripts/verify-admin-dashboard-v2-rollup-parity.mjs', 'rollup_parity_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs', 'phase_a_live_gate_sha256'],
   ['scripts/capture-admin-dashboard-phase-a-admin-api-inventory.ps1', 'inventory_capture_sha256'],
   ['scripts/admin-dashboard-release-credentials.ps1', 'credential_helper_sha256'],
@@ -144,7 +151,7 @@ const textHashes = [
   ['scripts/verify-admin-dashboard-phase-b-browser.mjs', 'phase_b_browser_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-railway-live.mjs', 'railway_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-search-health.mjs', 'search_gate_sha256'],
-  ['references/verification/admin-dashboard-v2-release-local-verification-2026-07-17.json',
+  ['references/verification/admin-dashboard-v2-rollup-correction-release-local-verification-2026-07-17.json',
     'local_verification_sha256'],
 ];
 for (const [path, field] of textHashes) {
@@ -207,6 +214,8 @@ assert.match(runner, /if \(\$candidateToRollback\)/);
 assert.match(runner, /Assert-LinkedProject/);
 assert.match(runner, /-Name 'mcp-search'/);
 assert.match(runner, /mcp-search version changed during the admin-api release/);
+assert.match(runner, /verify-admin-dashboard-v2-rollup-parity\.mjs/);
+assert.match(runner, /admin-dashboard-v2-rollup-correction-release-parity-2026-07-17\.json/);
 assert.equal(runner.includes('Read-Host'), false, 'Release runner must not prompt.');
 assert.equal(runner.includes('ApprovalFingerprint'), false, 'Release runner must not export approval ceremony.');
 assert.equal(/supabase\s+functions\s+deploy\s+mcp-search/i.test(runner), false);
@@ -244,10 +253,31 @@ for (const window of ['window=1d', 'window=7d', 'window=30d', 'window=custom']) 
 }
 assert.match(v2LiveGate, /Warm \$\{name\} request took/);
 assert.match(v2LiveGate, /x-admin-secret/);
+assert.match(v2LiveGate, /The 30-day identity KPIs must be available/);
+assert.match(v2LiveGate, /The 30-day chart must include completed-day rollups/);
 assert.equal(/\bmethod:\s*['"]POST['"]/.test(v2LiveGate), false, 'V2 live gate must be read-only.');
 
+const rollupParityGate = normalizedText(
+  readFileSync('scripts/verify-admin-dashboard-v2-rollup-parity.mjs', 'utf8'),
+);
+assert.match(rollupParityGate, /begin read only;/i);
+assert.match(rollupParityGate, /admin_rollup_overview/);
+assert.match(rollupParityGate, /admin_rollup_queries/);
+assert.match(rollupParityGate, /identity_rows_truncated/);
+assert.match(rollupParityGate, /mutations:\s*0/);
+for (const prohibited of [
+  /\binsert\s+into\b/i,
+  /\bupdate\s+public\./i,
+  /\bdelete\s+from\b/i,
+  /\bdrop\s+(?:table|index|function)\b/i,
+  /\balter\s+table\b/i,
+  /\bcreate\s+(?:table|index|function)\b/i,
+]) {
+  assert.equal(prohibited.test(rollupParityGate), false, `Rollup parity gate is not read-only: ${prohibited}`);
+}
+
 const localVerification = JSON.parse(
-  readFileSync('references/verification/admin-dashboard-v2-release-local-verification-2026-07-17.json', 'utf8'),
+  readFileSync('references/verification/admin-dashboard-v2-rollup-correction-release-local-verification-2026-07-17.json', 'utf8'),
 );
 assert.equal(localVerification.status, 'ok');
 assert.equal(localVerification.project_ref, fields.project_ref);
@@ -261,6 +291,12 @@ assert.equal(localVerification.checks.phase_a_regression, 'pass');
 assert.equal(localVerification.checks.phase_b_browser, 'pass');
 assert.equal(localVerification.checks.powershell_parser, 'pass');
 assert.equal(localVerification.checks.credential_resolution, 'pass');
+assert.equal(localVerification.checks.negative_control_v54, 'rejected_as_expected');
+assert.equal(localVerification.correction.multi_day_aggregation, fields.multi_day_aggregation);
+assert.equal(
+  Number(localVerification.correction.identity_row_limit_per_source),
+  Number(fields.identity_row_limit_per_source),
+);
 
 console.log(JSON.stringify({
   status: 'ok',
