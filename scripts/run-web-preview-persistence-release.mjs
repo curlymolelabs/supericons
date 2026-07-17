@@ -267,6 +267,16 @@ function runLocalCommand(args) {
   return parseFirstJsonValue(result.stdout);
 }
 
+function runGit(args) {
+  const result = spawnSync('git', args, {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    windowsHide: true,
+  });
+  assert.equal(result.status, 0, result.stderr || `git ${args.join(' ')} failed.`);
+  return result.stdout.trim();
+}
+
 function assertRequiredHashes(manifest) {
   for (const [relativePath, expectedHash] of Object.entries(manifest.preparation.required_file_sha256)) {
     assert.equal(sha256File(join(repoRoot, relativePath)), expectedHash, `${relativePath} changed.`);
@@ -279,6 +289,29 @@ export function prepareAndVerifyArtifact({
   privateRecordPath = defaultPrivateRecord,
   outputRoot,
 }) {
+  assert.equal(
+    runGit(['rev-parse', `${manifest.preparation.source_commit}^{tree}`]),
+    manifest.preparation.source_tree,
+  );
+  const ancestry = spawnSync(
+    'git',
+    ['merge-base', '--is-ancestor', manifest.preparation.source_commit, 'HEAD'],
+    { cwd: repoRoot, encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(ancestry.status, 0, 'The pinned source commit is not an ancestor of HEAD.');
+  const packetChanges = runGit([
+    'diff',
+    '--name-only',
+    `${manifest.preparation.source_commit}..HEAD`,
+  ]).split(/\r?\n/).filter(Boolean);
+  const allowedPacketPaths = new Set(manifest.preparation.allowed_packet_paths);
+  for (const path of packetChanges) {
+    assert.equal(
+      allowedPacketPaths.has(path),
+      true,
+      `Unbound file changed after the source commit: ${path}`,
+    );
+  }
   assertRequiredHashes(manifest);
   assert.equal(sha256File(privateRecordPath), manifest.protection.private_record_sha256);
   assert.equal(
