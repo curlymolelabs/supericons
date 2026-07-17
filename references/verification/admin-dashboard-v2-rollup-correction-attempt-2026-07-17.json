@@ -1,0 +1,47 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_correction_attempt",
+  "release_fingerprint": "216f54f5d8f95c3b8db8e426ed6f0f6cb35525ede83ca5002d01e57e7d8a6226",
+  "implementation_revision": "7aff127f2a57d1116537cee6e466636655dc7cff",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 55,
+    "updated_at": "1784292925613",
+    "source_sha256": "52d7720047af33710aa386cb819dfc5fd4cf497c7368216d4d80dc936f7ab0ed"
+  },
+  "failure": {
+    "gate": "v2_live_completed_day_count",
+    "required_completed_days": 29,
+    "production_rollup_days_in_window": 27,
+    "classification": "gate_assumption",
+    "reason": "The database has complete rollups but two days in the selected window have no production rows. Exact database-to-API parity is the correct completeness check."
+  },
+  "rollback": {
+    "version": 56,
+    "updated_at": "1784292952103",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "legacy_stats_latency_ms": 2514,
+    "status": "ok"
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "b7fe99346122d80d5f946ac66e63ab78eb173340354eed7cbe8cd08fc388e6c2",
+    "database_preflight": "552b99b346a5bb8352aa4323c96ed24f30b610e7b29314a4464768c3d940326b",
+    "live_gate": "89ab807b5cfb445c971ab313cc07c120af0ed84af05e31c84570ec47092e3b7a",
+    "pre_inventory": "23ac7206c1f97b5a2594311421cc4ac43cab071328fd2e5e81daea5a3573a812",
+    "legacy_preflight": "5b638f98ade7dd85df1550792cbad2754c8ac5dd3fa6f27b0d392db38e42edb4",
+    "railway_health": "f5bdb2f3cc74c06e25b9c7020d8d098be4034bbed416565b64da9ea214fd381b",
+    "rollback": "cc3be819d5d6c8eb9b784e9f269bc0c56ca3eb6fc457e339b8b3f0b1e636c6ed",
+    "rollback_inventory": "703ad5ed6e075930f5fba62ec32cb0e3cbe3adb6bf7c597a7b4eaccd389bb083",
+    "search_health": "0983a79fbb27a49bc49cbf5a3b4fe910b73df0daef95c18d2d8fe6b09b980bc3"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T12:55:03.8828154Z",
+  "finished_at": "2026-07-17T12:55:56.4406828Z"
+}
