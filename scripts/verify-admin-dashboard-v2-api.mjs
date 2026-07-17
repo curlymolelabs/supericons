@@ -26,6 +26,8 @@ function includes(source, value, label) {
   'dashboardV2CompletedRollupFilters',
   'dashboardV2CurrentDayFilters',
   'fetchDashboardV2IdentityTelemetry',
+  'includeQueryRows = true',
+  '{ applyQuery: false, includeQueryRows: false }',
   "select(auditSelect, { count: 'exact' })",
   "select(usageSelect, { count: 'exact' })",
   "select(overviewSelect, { count: 'exact' })",

@@ -1587,18 +1587,27 @@ async function fetchDashboardV2QueryRollups(
 async function buildDashboardV2DataRows(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
-  { applyQuery = true } = {},
+  {
+    applyQuery = true,
+    includeQueryRows = true,
+  } = {},
 ) {
   if (filters.use_raw) {
-    const telemetry = await fetchDashboardV2Telemetry(adminClient, filters, { applyQuery });
+    const [telemetry, reviews] = await Promise.all([
+      fetchDashboardV2Telemetry(adminClient, filters, { applyQuery }),
+      includeQueryRows
+        ? fetchAllQueryReviews(adminClient)
+        : Promise.resolve({ reviews: new Map(), available: false }),
+    ]);
     const telemetryRows = telemetry.rows;
     const rollups = buildAdminRollups(telemetryRows, knownSearchDefects);
-    const reviews = await fetchAllQueryReviews(adminClient);
     return {
       telemetry_rows: telemetryRows,
       overview_rows: rollups.overview,
-      query_rows: buildQueryWorkbenchRows(telemetryRows, reviews.reviews),
-      query_review_available: reviews.available,
+      query_rows: includeQueryRows
+        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews)
+        : [],
+      query_review_available: includeQueryRows && reviews.available,
       raw_truncated: telemetry.truncated,
       rollup_truncated: false,
     };
@@ -1617,10 +1626,12 @@ async function buildDashboardV2DataRows(
     completedRangeExists
       ? fetchDashboardV2OverviewRollups(adminClient, completedFilters)
       : Promise.resolve({ rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false }),
-    completedRangeExists
+    completedRangeExists && includeQueryRows
       ? fetchDashboardV2QueryRollups(adminClient, completedFilters)
       : Promise.resolve({ rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false }),
-    fetchAllQueryReviews(adminClient),
+    includeQueryRows
+      ? fetchAllQueryReviews(adminClient)
+      : Promise.resolve({ reviews: new Map(), available: false }),
     telemetryPromise,
   ]);
   const telemetryRows = telemetry.rows;
@@ -1645,13 +1656,15 @@ async function buildDashboardV2DataRows(
   return {
     telemetry_rows: telemetryRows,
     overview_rows: [...completedOverviewRows, ...currentRollups.overview],
-    query_rows: buildQueryWorkbenchRowsFromRollups(
-      [...completedQueryRows, ...currentRollups.queries],
-      reviews.reviews,
-    ),
-    query_review_available: reviews.available,
+    query_rows: includeQueryRows
+      ? buildQueryWorkbenchRowsFromRollups(
+        [...completedQueryRows, ...currentRollups.queries],
+        reviews.reviews,
+      )
+      : [],
+    query_review_available: includeQueryRows && reviews.available,
     raw_truncated: telemetry.truncated,
-    rollup_truncated: overviewRollups.truncated || queryRollups.truncated,
+    rollup_truncated: overviewRollups.truncated || (includeQueryRows && queryRollups.truncated),
   };
 }
 
@@ -2054,15 +2067,20 @@ async function buildDashboardV2AudiencePayload(
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
   const identityFilters = { ...filters, q: '' };
-  const [dataRows, identityTelemetry] = await Promise.all([
-    buildDashboardV2DataRows(adminClient, identityFilters, { applyQuery: false }),
+  const [dataRows, identityTelemetry, authUsers] = await Promise.all([
+    buildDashboardV2DataRows(
+      adminClient,
+      identityFilters,
+      { applyQuery: false, includeQueryRows: false },
+    ),
     fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
+    listAllAuthUsers(adminClient),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
   const series = buildDashboardV2Series(dataRows.overview_rows, identityRows);
   const clientRows = buildDashboardV2Clients(identityRows) as Array<any>;
   const userTelemetry = buildDashboardV2UserTelemetry(identityRows);
-  const { users } = await listAllAuthUsers(adminClient);
+  const { users } = authUsers;
   const subscriptions = await fetchSubscriptions(adminClient, users.map((user) => user.id));
   const rangeStart = filters.from ? Date.parse(filters.from) : null;
   const rangeEnd = filters.to_exclusive ? Date.parse(filters.to_exclusive) : null;

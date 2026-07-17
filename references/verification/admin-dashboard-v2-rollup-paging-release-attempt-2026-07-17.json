@@ -1,0 +1,71 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_paging_release_attempt",
+  "release_fingerprint": "e2cc8a68dd8a0e278064913c1ca496242fa38ad17efcd06934a21a729f8b41a4",
+  "implementation_revision": "aa7f2254472fc21b9e1b5f4dc0b953809f56682d",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 65,
+    "updated_at": "1784295986436",
+    "source_sha256": "ca69d3bb63b2c8d4f91c79d69d7425b87fffb085b1c27d9210ec22134b43fc74"
+  },
+  "verified_before_failure": {
+    "v2_contract": true,
+    "windows_checked": [
+      "1d",
+      "7d",
+      "30d",
+      "custom"
+    ],
+    "identity_available": true,
+    "geography_available": true,
+    "raw_rows_truncated": false,
+    "identity_rows_truncated": false,
+    "warm_routes_completed_before_failure": [
+      "activity",
+      "overview",
+      "search"
+    ]
+  },
+  "failure": {
+    "gate": "v2_warm_audience_latency",
+    "classification": "backend_performance",
+    "measured_ms": 7595.6,
+    "limit_ms": 5000,
+    "reason": "The Audience route loaded overview series data but also fetched and built the complete query-rollup workbench, which that route does not use."
+  },
+  "correction": {
+    "skip_unused_query_rollups_for_audience": true,
+    "skip_unused_query_reviews_for_audience": true,
+    "load_auth_users_in_parallel_with_audience_data": true,
+    "contract_change": false
+  },
+  "rollback": {
+    "version": 66,
+    "updated_at": "1784296045662",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "legacy_stats_latency_ms": 2896.5,
+    "status": "ok"
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "d50674a073ea5a390ac609494fefd0efdbf8971764936daf8130e2dbb5f0c4de",
+    "database_preflight": "46d9bee172342a11960e4d34d95b3bd15346a01ad549758d9f9b7f176f6750e9",
+    "live_gate": "c81048e1698aa3eb5980538dbb2283c569331108c64e56e5defe8c3c00f839b7",
+    "pre_inventory": "cc3553ae86075bfba1ec187585fe9459ffc57922c78a0d210dc5469c7866430e",
+    "legacy_preflight": "a84cb7f8bd53afd0f1f65b96b6ae38f6ca73a5e3fac4db42c9b15e8465ff394c",
+    "railway_health": "f1f92f2e787b94679985e882e02ef4a54c8ebe3e3b98d7a4f67a3a521ad42687",
+    "rollback": "5b8d362ca5f44a35b29db8ebdfce14e3a00b965c2218310717fbfce5a273f4e0",
+    "rollback_inventory": "4421e8b40e8c6bb0bf0f6e8dd3cd3138e52a7d88786e55709237d917a79594c6",
+    "search_health": "6681105a96cc3c6b6878ddbcec5527608eb136d272be09d60cc06be5235a20c3"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T13:46:03.1287287Z",
+  "finished_at": "2026-07-17T13:47:31.0816700Z"
+}
