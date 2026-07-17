@@ -41,7 +41,7 @@ How the setting got enabled is unresolved. The repo has no `supabase/config.toml
 
 ### Impact
 
-- Affected: exactly one customer, the sole Pro subscriber (desoforgit@gmail.com, $15.00 monthly).
+- Affected: exactly one customer, the sole Pro subscriber ([customer email redacted], $15.00 monthly).
   - Their renewal payment on 2026-07-02 succeeded on Stripe's side (`invoice_payment.paid`, USD 15.00, 09:32:18 +08).
   - The corresponding `invoice.paid` and `customer.subscription.updated` events never reached Supabase, so the `si_subscriptions` row (notably `current_period_end` and status) was not refreshed and is stale. Depending on how the app gates Pro features on `current_period_end`, their Pro access may wrongly lapse mid-cycle.
   - Payment method question: the event sequence (`customer.updated` at 09:32:16, payment success at 09:32:18) suggests the customer paid manually through the hosted invoice page (customer records are typically updated when a customer pays interactively) rather than an automatic off-session charge. This is inference; the invoice's activity timeline in Stripe states it definitively. Context: the owner had emailed this customer about a failed payment with a payment link, so manual payment is plausible.

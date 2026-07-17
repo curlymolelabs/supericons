@@ -211,7 +211,7 @@ Evidence:
 - `ctx-pbc.org` resolves through Cloudflare IPs.
 - MX records point to Zoho mail.
 - SPF: `v=spf1 include:zohomail.com -all`.
-- DMARC: `v=DMARC1; p=reject; adkim=s; aspf=s; pct=100; rua=mailto:dmarc@ctx-pbc.org`.
+- DMARC: `v=DMARC1; p=reject; adkim=s; aspf=s; pct=100; rua=mailto:[third-party dmarc contact redacted]`.
 - `https://ctx-pbc.org/` returned HTTP `200`, title `ctx`, and `x-robots-tag: noindex, nofollow, noarchive, nosnippet, noimageindex`.
 - The page presents `ctx` as an Agentic Development Environment and links to `ctx.rs`.
 
