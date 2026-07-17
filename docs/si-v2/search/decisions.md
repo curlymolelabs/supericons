@@ -39,6 +39,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-024` | Keep expressive related icons visible behind conventional symbols and approved identities unless the query directly names their meaning | Accepted | Retrieval and reranking |
 | `D-025` | Use packaged local search only for eligible English MCP beta queries while stable hosting serves localized, recommendation, and web requests | Accepted | Architecture and rollout |
 | `D-026` | Let agents execute audited release work autonomously and involve the owner only for access, money, default-user changes, or material risk | Accepted | Release governance |
+| `D-027` | Keep living search intelligence private while licensing, marking, and minifying staged public engine artifacts | Accepted | Public bundle boundary |
 
 ## Decision records
 
@@ -347,6 +348,23 @@ Reason: repeated owner approval of equivalent, already-reviewed release packets 
 Alternatives rejected or deferred: removing independent review or rollback controls; asking the owner to approve every refreshed fingerprint; treating all external actions as automatically owner-gated; letting agents make unreviewed default-user or material-risk changes.
 
 Specification change: version 1.10 revises `FR-26` and the deployment/publication constraints.
+
+### D-027: Protected living intelligence and marked public artifacts
+
+Status: Accepted
+
+Decision: The deterministic engine data already distributed to clients remains public. Usage-derived ranking weights, query-behavior signals, community curation data, contributor reputation data, and paid design intelligence stay server-side. Public npm and web artifacts carry explicit terms and private-record-bound copying-detection markers. Generated modules are minified only in staged public artifacts so maintained sources remain readable.
+
+Reason: The free static library and deterministic engine support adoption, while learned ecosystem intelligence is the compounding asset. Client-delivered bytes cannot be made impossible to copy, so the practical controls are a deliberate public boundary, legal terms, detection evidence, and friction.
+
+Rejected alternatives:
+
+- Removing icon or SI data from the free package, because that conflicts with the distribution strategy.
+- Treating minification as secrecy, because a determined copier can reverse it.
+- Committing copying-detection identities or listing them in public verification code, because that would make them easy to remove.
+- Applying protection transforms directly to maintained source files, because that would reduce reviewability without improving the released boundary.
+
+Specification change: version 1.11 adds `FR-41` and `FR-42`.
 
 Superseded decisions: the explicit-owner-approval portions of earlier rollout decisions and plans are replaced by this owner-involvement boundary. Their technical gates, evidence requirements, mutation limits, and rollback rules remain active.
 

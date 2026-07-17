@@ -157,6 +157,7 @@
     "verify:search-v2-hosted-http-parity": "deno run --allow-read --allow-net=esm.sh scripts/verify-search-v2-hosted-http-parity.ts",
     "verify:search-v2-phase1-parity": "node scripts/verify-search-v2-phase1-parity.mjs",
     "verify:search-v2-local-first-beta": "node scripts/verify-search-v2-local-first-beta.mjs",
+    "verify:search-v2-protected-public-artifacts": "node scripts/verify-search-v2-protected-public-artifacts.mjs",
     "verify:search-v2-beta-migration-smoke": "node scripts/verify-search-v2-beta-migration-smoke.mjs",
     "measure:search-v2-beta-latency": "node scripts/measure-search-v2-beta-latency.mjs",
     "measure:search-v2-roundtrip-latency": "node scripts/run-search-v2-roundtrip-latency-measurement.mjs",
@@ -206,6 +207,7 @@
     "playwright": "^1.59.1",
     "simple-icons": "^16.12.0",
     "supabase": "^2.92.1",
+    "terser": "^5.49.0",
     "vite": "^6.2.0",
     "vite-plugin-wasm": "^3.6.0"
   },
