@@ -1,0 +1,80 @@
+{
+  "artifact": "admin_dashboard_v2_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "release_fingerprint": "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+  "status": "ok",
+  "started_at": "2026-07-17T14:02:37.484Z",
+  "routes": {
+    "activity": {
+      "latency_ms": 3211.2,
+      "rows": 50,
+      "nonempty_channels": 4
+    },
+    "overview_30d": {
+      "latency_ms": 5167.8,
+      "series_rows": 69,
+      "searched_rows": 50,
+      "returned_available": false,
+      "returned_rows": 0,
+      "copied_available": true,
+      "copied_rows": 50,
+      "zero_rows": 50,
+      "geography_available": true,
+      "geography_rows": 9,
+      "identity_available": true,
+      "series_days": 28,
+      "raw_rows_truncated": false,
+      "identity_rows_truncated": false
+    },
+    "search": {
+      "latency_ms": 1074.6,
+      "query_rows": 50,
+      "worklist_rows": 50,
+      "icon_requests_available": true,
+      "icon_request_rows": 5,
+      "contacts_available": true,
+      "contact_rows": 0
+    },
+    "audience": {
+      "latency_ms": 3313.1,
+      "identity_available": true,
+      "registered_users_available": true,
+      "registered_user_rows": 21,
+      "clients_available": true,
+      "client_rows": 50,
+      "mrr_available": false
+    }
+  },
+  "chart_windows": {
+    "1d": 4,
+    "7d": 15,
+    "30d": 69,
+    "custom": 15,
+    "custom_from": "2026-07-11",
+    "custom_to": "2026-07-17"
+  },
+  "warm_requests": [
+    {
+      "name": "activity",
+      "warmup_latency_ms": 1444.4,
+      "latency_ms": 1569.6
+    },
+    {
+      "name": "overview",
+      "warmup_latency_ms": 3480,
+      "latency_ms": 3270.5
+    },
+    {
+      "name": "search",
+      "warmup_latency_ms": 1322.8,
+      "latency_ms": 986.9
+    },
+    {
+      "name": "audience",
+      "warmup_latency_ms": 3496.5,
+      "latency_ms": 3514.8
+    }
+  ],
+  "warm_request_limit_ms": 5000,
+  "finished_at": "2026-07-17T14:03:15.505Z"
+}

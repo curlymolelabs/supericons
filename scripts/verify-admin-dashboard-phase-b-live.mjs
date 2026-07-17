@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
 import { chromium } from 'playwright';
 import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
 
@@ -12,7 +13,13 @@ function populated(value) {
   return text && !['000', '00%', 'Loading', 'Unavailable'].includes(text);
 }
 
+function readArg(name) {
+  const index = process.argv.indexOf(`--${name}`);
+  return index >= 0 ? process.argv[index + 1] : '';
+}
+
 const adminSecret = String(process.env.ADMIN_SECRET || '').trim();
+const outputPath = readArg('output');
 ok(adminSecret, 'ADMIN_SECRET must be present in the process environment.');
 
 const dashboard = await startAdminDashboardPhaseBLiveServer({
@@ -146,7 +153,15 @@ try {
   )).toISOString().slice(0, 10);
   await page.fill('#customFrom', from);
   await page.fill('#customTo', to);
+  const customOverviewRequest = page.waitForRequest((request) => {
+    const url = new URL(request.url());
+    return url.pathname === '/api/admin/v2/overview'
+      && url.searchParams.get('window') === 'custom'
+      && url.searchParams.get('from') === from
+      && url.searchParams.get('to') === to;
+  }, { timeout: 120_000 });
   await page.click('#applyCustomRange');
+  await customOverviewRequest;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
@@ -160,7 +175,14 @@ try {
     'Custom dates were not sent to the live API.',
   );
 
+  const overview30dResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return url.pathname === '/api/admin/v2/overview'
+      && url.searchParams.get('window') === '30d'
+      && response.status() === 200;
+  }, { timeout: 120_000 });
   await page.click('[data-window="30d"]');
+  await overview30dResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
@@ -190,7 +212,8 @@ try {
   await page.screenshot({ path: screenshotPath, fullPage: true });
   const screenshot = await readFile(screenshotPath);
 
-  console.log(JSON.stringify({
+  const result = {
+    artifact: 'admin_dashboard_v2_live_browser_walkthrough',
     status: 'ok',
     live_api_requests: apiRequests.length,
     latest_activity_rows: liveContract.activityRows,
@@ -200,9 +223,18 @@ try {
     warm_render_ms: warmRenderMs,
     horizontal_overflow: false,
     auth_prompt_shown: false,
-    screenshot: screenshotPath,
     screenshot_sha256: createHash('sha256').update(screenshot).digest('hex'),
     screenshot_bytes: screenshot.length,
+  };
+  if (outputPath) {
+    const absoluteOutput = resolve(outputPath);
+    await mkdir(dirname(absoluteOutput), { recursive: true });
+    await writeFile(absoluteOutput, `${JSON.stringify(result, null, 2)}\n`, 'utf8');
+  }
+  console.log(JSON.stringify({
+    ...result,
+    screenshot: screenshotPath,
+    output: outputPath || null,
   }, null, 2));
 } finally {
   await browser.close();

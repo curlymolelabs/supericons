@@ -1,0 +1,45 @@
+{
+  "artifact": "admin_dashboard_phase_a_strict_search_health",
+  "search_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search",
+  "status": "ok",
+  "contract": {
+    "query": "calendar",
+    "library": "lucide",
+    "library_mode": "strict",
+    "style": "any",
+    "limit": 3,
+    "warmup_count": 1,
+    "measured_count": 2,
+    "measured_latency_limit_ms": 2000,
+    "request_timeout_ms": 5000,
+    "source": "verify",
+    "channel": "internal_test",
+    "environment": "production"
+  },
+  "warmups": [
+    {
+      "sequence": 1,
+      "latency_ms": 1292,
+      "result_count": 3,
+      "valid_lucide_results": true
+    }
+  ],
+  "measurements": [
+    {
+      "sequence": 1,
+      "latency_ms": 818.6,
+      "result_count": 3,
+      "valid_lucide_results": true
+    },
+    {
+      "sequence": 2,
+      "latency_ms": 702.9,
+      "result_count": 3,
+      "valid_lucide_results": true
+    }
+  ],
+  "started_at": "2026-07-17T14:02:20.546Z",
+  "synthetic_internal_test_calls": 3,
+  "mutations": 0,
+  "finished_at": "2026-07-17T14:02:23.364Z"
+}

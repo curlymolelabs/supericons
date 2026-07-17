@@ -1,0 +1,35 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_parity",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "release_fingerprint": "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+  "transaction_mode": "read_only",
+  "mutations": 0,
+  "status": "ok",
+  "started_at": "2026-07-17T14:03:15.570Z",
+  "overview": {
+    "completed_days_compared": 27,
+    "first_day": "2026-06-18",
+    "last_day": "2026-07-16",
+    "database_latency_ms": 728.3,
+    "api_latency_ms": 3885.5,
+    "count_fields_compared": [
+      "attempts",
+      "success_count",
+      "true_zero_count",
+      "low_result_count",
+      "low_result_eligible_count",
+      "error_count",
+      "clarification_count",
+      "partial_recommendation_count",
+      "defect_count"
+    ]
+  },
+  "queries": {
+    "completed_days_compared": 7,
+    "top_rows_compared": 50,
+    "database_rows_available": 3887,
+    "database_latency_ms": 991.8,
+    "api_latency_ms": 4063.5
+  },
+  "finished_at": "2026-07-17T14:03:20.666Z"
+}

@@ -1,0 +1,397 @@
+{
+    "artifact":  "admin_dashboard_v2_final_release_completion",
+    "release_fingerprint":  "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+    "project_ref":  "kcjmkakdhsqplvasgkjv",
+    "implementation_revision":  "3759719bd2c0389a2e9fa193dbcf8befd26b805d",
+    "rollback_revision":  "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "pre_function":  {
+                         "id":  "1ca7655a-e504-416f-9173-750016e79b73",
+                         "version":  68,
+                         "updated_at":  "1784296565468",
+                         "verify_jwt":  false
+                     },
+    "candidate_function":  {
+                               "id":  "1ca7655a-e504-416f-9173-750016e79b73",
+                               "version":  69,
+                               "updated_at":  "1784296955486",
+                               "verify_jwt":  false,
+                               "source_sha256":  "b6000b27393fe737de5f7a2b04671c09999ffed80bbcffaf6325b8bbe4c16bae"
+                           },
+    "unchanged_mcp_search":  {
+                                 "id":  "ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43",
+                                 "version":  39,
+                                 "updated_at":  "1784045797971"
+                             },
+    "database":  {
+                     "artifact":  "admin_dashboard_v2_database_preflight",
+                     "project_ref":  "kcjmkakdhsqplvasgkjv",
+                     "release_fingerprint":  "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+                     "transaction_mode":  "read_only",
+                     "mutations":  0,
+                     "started_at":  "2026-07-17T14:02:14.565Z",
+                     "status":  "ok",
+                     "schema":  {
+                                    "status":  "ok",
+                                    "request_latency_ms":  807.3,
+                                    "phase_a_columns":  3,
+                                    "validated_constraints":  2,
+                                    "private_rollup_tables":  2,
+                                    "phase_a_indexes":  5,
+                                    "rls_enabled_tables":  2,
+                                    "public_roles_blocked":  true,
+                                    "service_role_ready":  true,
+                                    "migration_history_rows":  1,
+                                    "overview_rows":  178,
+                                    "query_rows":  15600
+                                },
+                     "backlog":  {
+                                     "telemetry_day_count":  82,
+                                     "overview_day_count":  82,
+                                     "query_day_count":  82,
+                                     "complete_rollup_day_count":  82,
+                                     "pending_day_count":  0,
+                                     "earliest_pending_day":  null,
+                                     "latest_pending_day":  null,
+                                     "latest_complete_day":  "2026-07-16",
+                                     "pending_on_or_before_latest_complete_day":  0,
+                                     "overview_only_day_count":  0,
+                                     "query_only_day_count":  0,
+                                     "request_latency_ms":  784.7,
+                                     "refresh_day_limit":  0,
+                                     "refresh_call_limit":  1
+                                 },
+                     "health":  [
+                                    {
+                                        "name":  "recent_mcp_usage",
+                                        "statement_timeout_ms":  1000,
+                                        "request_latency_ms":  745.9,
+                                        "matched_rows":  1
+                                    },
+                                    {
+                                        "name":  "recent_search_audit",
+                                        "statement_timeout_ms":  1000,
+                                        "request_latency_ms":  794.9,
+                                        "matched_rows":  1
+                                    },
+                                    {
+                                        "name":  "latest_rollup_overview",
+                                        "statement_timeout_ms":  1000,
+                                        "request_latency_ms":  646.6,
+                                        "matched_rows":  1
+                                    },
+                                    {
+                                        "name":  "recent_telemetry_window",
+                                        "statement_timeout_ms":  2000,
+                                        "request_latency_ms":  622.4,
+                                        "matched_rows":  0
+                                    }
+                                ],
+                     "finished_at":  "2026-07-17T14:02:19.008Z"
+                 },
+    "railway_protection":  {
+                               "version":  "0.4.18",
+                               "state":  "closed",
+                               "consecutive_failures":  0,
+                               "synthetic_tool_calls":  0
+                           },
+    "search_health":  {
+                          "measured_latency_limit_ms":  2000,
+                          "measured_latencies_ms":  [
+                                                        818.6,
+                                                        702.9
+                                                    ]
+                      },
+    "legacy_preflight":  {
+                             "http_status":  200,
+                             "latency_ms":  609,
+                             "max_latency_ms":  10000,
+                             "outcome":  "healthy",
+                             "reason":  "legacy_contract_verified",
+                             "proceed":  true
+                         },
+    "v2_live_contract":  {
+                             "artifact":  "admin_dashboard_v2_live_contract",
+                             "admin_url":  "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+                             "release_fingerprint":  "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+                             "status":  "ok",
+                             "started_at":  "2026-07-17T14:02:37.484Z",
+                             "routes":  {
+                                            "activity":  {
+                                                             "latency_ms":  3211.2,
+                                                             "rows":  50,
+                                                             "nonempty_channels":  4
+                                                         },
+                                            "overview_30d":  {
+                                                                 "latency_ms":  5167.8,
+                                                                 "series_rows":  69,
+                                                                 "searched_rows":  50,
+                                                                 "returned_available":  false,
+                                                                 "returned_rows":  0,
+                                                                 "copied_available":  true,
+                                                                 "copied_rows":  50,
+                                                                 "zero_rows":  50,
+                                                                 "geography_available":  true,
+                                                                 "geography_rows":  9,
+                                                                 "identity_available":  true,
+                                                                 "series_days":  28,
+                                                                 "raw_rows_truncated":  false,
+                                                                 "identity_rows_truncated":  false
+                                                             },
+                                            "search":  {
+                                                           "latency_ms":  1074.6,
+                                                           "query_rows":  50,
+                                                           "worklist_rows":  50,
+                                                           "icon_requests_available":  true,
+                                                           "icon_request_rows":  5,
+                                                           "contacts_available":  true,
+                                                           "contact_rows":  0
+                                                       },
+                                            "audience":  {
+                                                             "latency_ms":  3313.1,
+                                                             "identity_available":  true,
+                                                             "registered_users_available":  true,
+                                                             "registered_user_rows":  21,
+                                                             "clients_available":  true,
+                                                             "client_rows":  50,
+                                                             "mrr_available":  false
+                                                         }
+                                        },
+                             "chart_windows":  {
+                                                   "1d":  4,
+                                                   "7d":  15,
+                                                   "30d":  69,
+                                                   "custom":  15,
+                                                   "custom_from":  "2026-07-11",
+                                                   "custom_to":  "2026-07-17"
+                                               },
+                             "warm_requests":  [
+                                                   {
+                                                       "name":  "activity",
+                                                       "warmup_latency_ms":  1444.4,
+                                                       "latency_ms":  1569.6
+                                                   },
+                                                   {
+                                                       "name":  "overview",
+                                                       "warmup_latency_ms":  3480,
+                                                       "latency_ms":  3270.5
+                                                   },
+                                                   {
+                                                       "name":  "search",
+                                                       "warmup_latency_ms":  1322.8,
+                                                       "latency_ms":  986.9
+                                                   },
+                                                   {
+                                                       "name":  "audience",
+                                                       "warmup_latency_ms":  3496.5,
+                                                       "latency_ms":  3514.8
+                                                   }
+                                               ],
+                             "warm_request_limit_ms":  5000,
+                             "finished_at":  "2026-07-17T14:03:15.505Z"
+                         },
+    "rollup_parity":  {
+                          "artifact":  "admin_dashboard_v2_rollup_parity",
+                          "project_ref":  "kcjmkakdhsqplvasgkjv",
+                          "release_fingerprint":  "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+                          "transaction_mode":  "read_only",
+                          "mutations":  0,
+                          "status":  "ok",
+                          "started_at":  "2026-07-17T14:03:15.570Z",
+                          "overview":  {
+                                           "completed_days_compared":  27,
+                                           "first_day":  "2026-06-18",
+                                           "last_day":  "2026-07-16",
+                                           "database_latency_ms":  728.3,
+                                           "api_latency_ms":  3885.5,
+                                           "count_fields_compared":  [
+                                                                         "attempts",
+                                                                         "success_count",
+                                                                         "true_zero_count",
+                                                                         "low_result_count",
+                                                                         "low_result_eligible_count",
+                                                                         "error_count",
+                                                                         "clarification_count",
+                                                                         "partial_recommendation_count",
+                                                                         "defect_count"
+                                                                     ]
+                                       },
+                          "queries":  {
+                                          "completed_days_compared":  7,
+                                          "top_rows_compared":  50,
+                                          "database_rows_available":  3887,
+                                          "database_latency_ms":  991.8,
+                                          "api_latency_ms":  4063.5
+                                      },
+                          "finished_at":  "2026-07-17T14:03:20.666Z"
+                      },
+    "phase_a_regression":  {
+                               "artifact":  "admin_dashboard_phase_a_admin_api_live_contract",
+                               "admin_url":  "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+                               "mode":  "candidate",
+                               "started_at":  "2026-07-17T14:03:20.734Z",
+                               "rollup_refreshes":  [
+                                                        {
+                                                            "attempt":  1,
+                                                            "latency_ms":  526.3,
+                                                            "complete":  true,
+                                                            "refreshed_days":  [
+
+                                                                               ]
+                                                        }
+                                                    ],
+                               "rollup_refresh_day_limit":  0,
+                               "dashboard_24h":  {
+                                                     "latency_ms":  1128.8,
+                                                     "latest_activity_count":  50,
+                                                     "filters":  {
+                                                                     "window":  "1d",
+                                                                     "environment":  "production",
+                                                                     "channel":  "all",
+                                                                     "query_origin":  "agent_query"
+                                                                 }
+                                                 },
+                               "queue_24h":  {
+                                                 "cold":  {
+                                                              "cache_mode":  "cold",
+                                                              "samples_ms":  [
+                                                                                 761.4,
+                                                                                 783.3,
+                                                                                 678.3,
+                                                                                 793.6,
+                                                                                 922.5,
+                                                                                 715.3,
+                                                                                 642.9,
+                                                                                 718.3,
+                                                                                 740.5,
+                                                                                 667.6,
+                                                                                 641.7,
+                                                                                 637.7,
+                                                                                 746.1,
+                                                                                 800.7,
+                                                                                 639.6,
+                                                                                 668.6,
+                                                                                 739.5,
+                                                                                 674.9,
+                                                                                 784.7,
+                                                                                 788.1
+                                                                             ],
+                                                              "p95_ms":  800.7,
+                                                              "max_ms":  922.5
+                                                          },
+                                                 "warm":  {
+                                                              "cache_mode":  "warm",
+                                                              "samples_ms":  [
+                                                                                 830.1,
+                                                                                 715.4,
+                                                                                 723.3,
+                                                                                 706.3,
+                                                                                 707.4,
+                                                                                 712.4,
+                                                                                 722.4,
+                                                                                 667.2,
+                                                                                 652.9,
+                                                                                 708.9,
+                                                                                 744.2,
+                                                                                 727.3,
+                                                                                 772.8,
+                                                                                 746.5,
+                                                                                 767.3,
+                                                                                 726.2,
+                                                                                 747.8,
+                                                                                 753.4,
+                                                                                 667.9,
+                                                                                 646.4
+                                                                             ],
+                                                              "p95_ms":  772.8,
+                                                              "max_ms":  830.1
+                                                          }
+                                             },
+                               "queue_all":  {
+                                                 "cold":  {
+                                                              "cache_mode":  "cold",
+                                                              "samples_ms":  [
+                                                                                 527,
+                                                                                 648.5,
+                                                                                 904.9,
+                                                                                 718.5,
+                                                                                 752,
+                                                                                 732.1,
+                                                                                 781.4,
+                                                                                 668.4,
+                                                                                 632.3,
+                                                                                 712.2,
+                                                                                 752.5,
+                                                                                 579.9,
+                                                                                 920.6,
+                                                                                 785.6,
+                                                                                 714.1,
+                                                                                 824.7,
+                                                                                 847.8,
+                                                                                 755.1,
+                                                                                 676.1,
+                                                                                 624.6
+                                                                             ],
+                                                              "p95_ms":  904.9,
+                                                              "max_ms":  920.6
+                                                          },
+                                                 "warm":  {
+                                                              "cache_mode":  "warm",
+                                                              "samples_ms":  [
+                                                                                 669.8,
+                                                                                 522.2,
+                                                                                 670.3,
+                                                                                 766.1,
+                                                                                 725.8,
+                                                                                 812.2,
+                                                                                 711.7,
+                                                                                 699.6,
+                                                                                 611.8,
+                                                                                 612.4,
+                                                                                 702.9,
+                                                                                 711.6,
+                                                                                 713.4,
+                                                                                 816.9,
+                                                                                 645.4,
+                                                                                 631.6,
+                                                                                 683.8,
+                                                                                 678.9,
+                                                                                 715.2,
+                                                                                 599.1
+                                                                             ],
+                                                              "p95_ms":  812.2,
+                                                              "max_ms":  816.9
+                                                          }
+                                             },
+                               "performance_contract":  {
+                                                            "queue_24h_p95_limit_ms":  1500,
+                                                            "queue_all_cold_p95_limit_ms":  1300,
+                                                            "queue_all_warm_p95_limit_ms":  1000,
+                                                            "cold_samples_each":  20,
+                                                            "warm_samples_each":  20,
+                                                            "rollup_refresh_elapsed_limit_minutes":  20,
+                                                            "rollup_refresh_day_limit":  0,
+                                                            "rollup_refresh_call_limit":  1
+                                                        },
+                               "status":  "ok",
+                               "rollup_backfill_complete":  true,
+                               "rollup_refreshed_days":  [
+
+                                                         ],
+                               "rollup_refresh_call_count":  1,
+                               "finished_at":  "2026-07-17T14:04:21.139Z"
+                           },
+    "rollback_used":  false,
+    "mutations":  {
+                      "admin_api_candidate_deployments":  1,
+                      "admin_api_rollback_deployments":  0,
+                      "rollup_refresh_days":  0,
+                      "migration":  0,
+                      "mcp_search":  0,
+                      "railway":  0,
+                      "storage":  0,
+                      "npm_publication":  0
+                  },
+    "status":  "ok",
+    "started_at":  "2026-07-17T14:02:24.0973213Z",
+    "finished_at":  "2026-07-17T14:04:22.5050705Z"
+}

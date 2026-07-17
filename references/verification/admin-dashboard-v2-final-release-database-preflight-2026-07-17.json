@@ -1,0 +1,66 @@
+{
+  "artifact": "admin_dashboard_v2_database_preflight",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "release_fingerprint": "c3f664066d2ce0948201dd7e40e6d962b64b045894290a435ade00da85c73fab",
+  "transaction_mode": "read_only",
+  "mutations": 0,
+  "started_at": "2026-07-17T14:02:14.565Z",
+  "status": "ok",
+  "schema": {
+    "status": "ok",
+    "request_latency_ms": 807.3,
+    "phase_a_columns": 3,
+    "validated_constraints": 2,
+    "private_rollup_tables": 2,
+    "phase_a_indexes": 5,
+    "rls_enabled_tables": 2,
+    "public_roles_blocked": true,
+    "service_role_ready": true,
+    "migration_history_rows": 1,
+    "overview_rows": 178,
+    "query_rows": 15600
+  },
+  "backlog": {
+    "telemetry_day_count": 82,
+    "overview_day_count": 82,
+    "query_day_count": 82,
+    "complete_rollup_day_count": 82,
+    "pending_day_count": 0,
+    "earliest_pending_day": null,
+    "latest_pending_day": null,
+    "latest_complete_day": "2026-07-16",
+    "pending_on_or_before_latest_complete_day": 0,
+    "overview_only_day_count": 0,
+    "query_only_day_count": 0,
+    "request_latency_ms": 784.7,
+    "refresh_day_limit": 0,
+    "refresh_call_limit": 1
+  },
+  "health": [
+    {
+      "name": "recent_mcp_usage",
+      "statement_timeout_ms": 1000,
+      "request_latency_ms": 745.9,
+      "matched_rows": 1
+    },
+    {
+      "name": "recent_search_audit",
+      "statement_timeout_ms": 1000,
+      "request_latency_ms": 794.9,
+      "matched_rows": 1
+    },
+    {
+      "name": "latest_rollup_overview",
+      "statement_timeout_ms": 1000,
+      "request_latency_ms": 646.6,
+      "matched_rows": 1
+    },
+    {
+      "name": "recent_telemetry_window",
+      "statement_timeout_ms": 2000,
+      "request_latency_ms": 622.4,
+      "matched_rows": 0
+    }
+  ],
+  "finished_at": "2026-07-17T14:02:19.008Z"
+}
