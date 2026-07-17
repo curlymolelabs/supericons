@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Supericons bundles icon data from the open-source projects below. Each project remains governed by its own license and trademark rules.
+Supericons bundles icon data from the open-source projects below. Each project remains governed by its own license and trademark rules. Exact source versions, archive integrity values, and license-file hashes are recorded in `THIRD_PARTY_PROVENANCE.json`. Complete upstream license texts are included in `THIRD_PARTY_LICENSES`.
 
 - Material Symbols and Material Design Icons: Apache-2.0, https://github.com/google/material-design-icons
 - Lucide Static: ISC, https://github.com/lucide-icons/lucide

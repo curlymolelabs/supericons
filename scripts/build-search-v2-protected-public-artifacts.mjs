@@ -189,6 +189,15 @@ async function build() {
   injectCanaries(join(webRoot, 'synonyms.json'), record);
   cpSync(join(sourceRoot, 'public', 'search-engine-license.txt'), join(webRoot, 'search-engine-license.txt'));
   cpSync(join(sourceRoot, 'public', 'third-party-notices.md'), join(webRoot, 'third-party-notices.md'));
+  cpSync(
+    join(sourceRoot, 'mcp', 'THIRD_PARTY_PROVENANCE.json'),
+    join(webRoot, 'THIRD_PARTY_PROVENANCE.json'),
+  );
+  cpSync(
+    join(sourceRoot, 'mcp', 'THIRD_PARTY_LICENSES'),
+    join(webRoot, 'THIRD_PARTY_LICENSES'),
+    { recursive: true },
+  );
 
   const minification = await minifyGeneratedModules(
     sourceRoot,

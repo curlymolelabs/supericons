@@ -27,6 +27,20 @@ function sha256File(path) {
   return createHash('sha256').update(readFileSync(path)).digest('hex');
 }
 
+const requiredThirdPartyIds = [
+  'bootstrap-icons',
+  'feather',
+  'heroicons',
+  'iconoir',
+  'ionicons',
+  'lucide',
+  'material',
+  'mingcute',
+  'phosphor',
+  'simple-icons',
+  'tabler',
+];
+
 function walkFiles(root) {
   const output = [];
   for (const entry of readdirSync(root, { withFileTypes: true })) {
@@ -73,15 +87,67 @@ function verifyCanaries(sourceRoot, npmRoot, webRoot, privateRecord) {
   }
 }
 
-function verifyLicense(npmRoot, webRoot) {
+function verifyThirdPartySurface(surfaceRoot, expectedProvenanceHash) {
+  const provenancePath = join(surfaceRoot, 'THIRD_PARTY_PROVENANCE.json');
+  assert.equal(existsSync(provenancePath), true, 'VC-4 provenance file is missing');
+  assert.equal(sha256File(provenancePath), expectedProvenanceHash);
+  const provenance = JSON.parse(readFileSync(provenancePath, 'utf8'));
+  assert.equal(provenance.schema_version, 1);
+  assert.deepEqual(
+    provenance.entries.map((entry) => entry.id).sort(),
+    requiredThirdPartyIds,
+  );
+  for (const entry of provenance.entries) {
+    assert.match(entry.license_spdx, /^[A-Za-z0-9-.+ ]+(?:AND [A-Za-z0-9-.+ ]+)?$/);
+    assert.match(entry.license_sha256, /^[a-f0-9]{64}$/);
+    const licensePath = join(surfaceRoot, entry.license_file);
+    assert.equal(existsSync(licensePath), true, `VC-4 license file is missing for ${entry.id}`);
+    assert.equal(sha256File(licensePath), entry.license_sha256);
+    if (entry.source_kind === 'npm') {
+      assert.match(entry.source_version, /^\d+\.\d+\.\d+/);
+      assert.match(entry.source_archive_integrity, /^sha512-/);
+    } else {
+      assert.equal(entry.id, 'material');
+      assert.equal(entry.source_revision, '30f8fddd293b1f0189896dc4aaecdfaba1d37ae0');
+    }
+    if (entry.notice_file) {
+      assert.match(entry.notice_sha256, /^[a-f0-9]{64}$/);
+      const noticePath = join(surfaceRoot, entry.notice_file);
+      assert.equal(existsSync(noticePath), true, `VC-4 notice file is missing for ${entry.id}`);
+      assert.equal(sha256File(noticePath), entry.notice_sha256);
+    } else {
+      assert.equal(entry.notice_sha256, null);
+      assert.match(entry.notice_status, /not_present|contains_no_notice/);
+    }
+  }
+  return provenance;
+}
+
+function verifyLicense(npmRoot, webRoot, expectedProvenanceHash) {
   const packageJson = JSON.parse(readFileSync(join(npmRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.license, 'SEE LICENSE IN LICENSE');
   assert.equal(packageJson.files.includes('LICENSE'), true);
+  assert.equal(packageJson.files.includes('THIRD_PARTY_LICENSES/'), true);
   assert.equal(packageJson.files.includes('THIRD_PARTY_NOTICES.md'), true);
+  assert.equal(packageJson.files.includes('THIRD_PARTY_PROVENANCE.json'), true);
   assert.match(readFileSync(join(npmRoot, 'LICENSE'), 'utf8'), /Supericons MCP Engine License 1\.0/);
-  assert.match(readFileSync(join(npmRoot, 'THIRD_PARTY_NOTICES.md'), 'utf8'), /Material Symbols/);
+  const npmNotices = readFileSync(join(npmRoot, 'THIRD_PARTY_NOTICES.md'), 'utf8');
+  const webNotices = readFileSync(join(webRoot, 'third-party-notices.md'), 'utf8');
+  const npmProvenance = verifyThirdPartySurface(npmRoot, expectedProvenanceHash);
+  const webProvenance = verifyThirdPartySurface(webRoot, expectedProvenanceHash);
+  assert.deepEqual(webProvenance, npmProvenance);
+  for (const entry of npmProvenance.entries) {
+    assert.equal(
+      readFileSync(join(npmRoot, entry.license_file)).equals(
+        readFileSync(join(webRoot, entry.license_file)),
+      ),
+      true,
+    );
+    assert.match(npmNotices, new RegExp(entry.display_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+  assert.match(webNotices, /THIRD_PARTY_PROVENANCE\.json/);
   assert.match(readFileSync(join(webRoot, 'search-engine-license.txt'), 'utf8'), /may not extract/);
-  assert.match(readFileSync(join(webRoot, 'third-party-notices.md'), 'utf8'), /Third-Party Icon Notices/);
+  assert.match(webNotices, /Third-Party Icon Notices/);
 }
 
 function verifyMinification(sourceRoot, npmRoot, webRoot, policy) {
@@ -110,6 +176,13 @@ if (!existsSync(privateRecordPath)) {
 const expectedPrivateRecordHash = getArgument('--expected-record-sha256', sha256File(privateRecordPath));
 assert.match(expectedPrivateRecordHash, /^[a-f0-9]{64}$/);
 assert.equal(sha256File(privateRecordPath), expectedPrivateRecordHash);
+const sourceProvenancePath = join(repoRoot, 'mcp', 'THIRD_PARTY_PROVENANCE.json');
+const expectedProvenanceHash = getArgument(
+  '--expected-provenance-sha256',
+  sha256File(sourceProvenancePath),
+);
+assert.match(expectedProvenanceHash, /^[a-f0-9]{64}$/);
+assert.equal(sha256File(sourceProvenancePath), expectedProvenanceHash);
 const privateRecord = JSON.parse(readFileSync(privateRecordPath, 'utf8'));
 const policy = JSON.parse(readFileSync(
   join(repoRoot, 'data', 'search-intent-graph', 'public-bundle-policy.json'),
@@ -144,7 +217,7 @@ try {
   verifyProtectedClasses(npmRoot, policy);
   verifyProtectedClasses(webRoot, policy);
   verifyCanaries(repoRoot, npmRoot, webRoot, privateRecord);
-  verifyLicense(npmRoot, webRoot);
+  verifyLicense(npmRoot, webRoot, expectedProvenanceHash);
   verifyMinification(repoRoot, npmRoot, webRoot, policy);
 
   const missingRecord = join(temporaryRoot, 'missing-private-record.json');
@@ -179,6 +252,8 @@ try {
       'VC-4_license_and_canary': 'passed_npm_and_web',
     },
     private_record_sha256: expectedPrivateRecordHash,
+    third_party_provenance_sha256: expectedProvenanceHash,
+    third_party_source_count: requiredThirdPartyIds.length,
     canary_count: privateRecord.entries.length,
     private_record_missing_probe: 'rejected',
     private_record_hash_mismatch_probe: 'rejected',
