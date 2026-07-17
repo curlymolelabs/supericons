@@ -1,0 +1,86 @@
+{
+  "artifact": "admin_dashboard_v2_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "release_fingerprint": "8a6a7b2b8b68938e4dacbca25e0626667658de99f9fdaca6bbd7f53336975c67",
+  "status": "ok",
+  "started_at": "2026-07-17T16:51:19.795Z",
+  "routes": {
+    "activity": {
+      "latency_ms": 1602.5,
+      "rows": 50,
+      "nonempty_channels": 4
+    },
+    "overview_30d": {
+      "latency_ms": 5212.1,
+      "series_rows": 69,
+      "searched_rows": 50,
+      "returned_available": false,
+      "returned_rows": 0,
+      "copied_available": true,
+      "copied_rows": 50,
+      "zero_rows": 50,
+      "geography_available": true,
+      "geography_rows": 9,
+      "identity_available": true,
+      "client_measure": "estimated_unique_clients",
+      "estimated_unique_clients": 833,
+      "attempts": 13373,
+      "true_zero_count": 3115,
+      "true_zero_rate": 0.2329320272190234,
+      "series_days": 28,
+      "raw_rows_truncated": false,
+      "identity_rows_truncated": false
+    },
+    "search": {
+      "latency_ms": 1150,
+      "query_rows": 50,
+      "worklist_rows": 50,
+      "icon_requests_available": true,
+      "icon_request_rows": 9,
+      "contacts_available": true,
+      "contact_rows": 0
+    },
+    "audience": {
+      "latency_ms": 3406.1,
+      "identity_available": true,
+      "registered_users_available": true,
+      "registered_user_rows": 24,
+      "clients_available": true,
+      "client_rows": 50,
+      "mrr_available": false
+    }
+  },
+  "chart_windows": {
+    "1d": 4,
+    "7d": 15,
+    "30d": 69,
+    "custom": 15,
+    "all": 197,
+    "custom_from": "2026-07-11",
+    "custom_to": "2026-07-17"
+  },
+  "warm_requests": [
+    {
+      "name": "activity",
+      "warmup_latency_ms": 1554.2,
+      "latency_ms": 1372.5
+    },
+    {
+      "name": "overview",
+      "warmup_latency_ms": 3411.3,
+      "latency_ms": 3490.4
+    },
+    {
+      "name": "search",
+      "warmup_latency_ms": 1127.8,
+      "latency_ms": 1119.7
+    },
+    {
+      "name": "audience",
+      "warmup_latency_ms": 3505.1,
+      "latency_ms": 3106.5
+    }
+  ],
+  "warm_request_limit_ms": 5000,
+  "finished_at": "2026-07-17T16:51:56.563Z"
+}

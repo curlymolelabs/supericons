@@ -1,0 +1,152 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "mode": "candidate",
+  "started_at": "2026-07-17T16:52:18.921Z",
+  "rollup_refreshes": [
+    {
+      "attempt": 1,
+      "latency_ms": 465.1,
+      "complete": true,
+      "refreshed_days": []
+    }
+  ],
+  "rollup_refresh_day_limit": 0,
+  "dashboard_24h": {
+    "latency_ms": 880.4,
+    "latest_activity_count": 50,
+    "filters": {
+      "window": "1d",
+      "environment": "production",
+      "channel": "all",
+      "query_origin": "agent_query"
+    }
+  },
+  "queue_24h": {
+    "cold": {
+      "cache_mode": "cold",
+      "samples_ms": [
+        484.5,
+        499.8,
+        581.4,
+        493.9,
+        606.8,
+        491.4,
+        500.8,
+        536.1,
+        603.4,
+        538.5,
+        513.2,
+        496.8,
+        702.4,
+        475.5,
+        482.5,
+        531.7,
+        546.6,
+        479.7,
+        490.3,
+        452.5
+      ],
+      "p95_ms": 606.8,
+      "max_ms": 702.4
+    },
+    "warm": {
+      "cache_mode": "warm",
+      "samples_ms": [
+        475.6,
+        518.2,
+        548.6,
+        528.1,
+        535.7,
+        402.1,
+        541.5,
+        501.3,
+        507.8,
+        463.5,
+        545,
+        488.1,
+        450.7,
+        510.3,
+        728.3,
+        505.6,
+        469,
+        451.5,
+        510.2,
+        551.4
+      ],
+      "p95_ms": 551.4,
+      "max_ms": 728.3
+    }
+  },
+  "queue_all": {
+    "cold": {
+      "cache_mode": "cold",
+      "samples_ms": [
+        599.3,
+        704.8,
+        654,
+        1037.2,
+        714.3,
+        642,
+        643.2,
+        579.2,
+        803.7,
+        676.7,
+        782.5,
+        715.6,
+        540.1,
+        600.1,
+        522.8,
+        724.6,
+        604.7,
+        613.8,
+        701.7,
+        778.4
+      ],
+      "p95_ms": 803.7,
+      "max_ms": 1037.2
+    },
+    "warm": {
+      "cache_mode": "warm",
+      "samples_ms": [
+        691,
+        671.8,
+        609,
+        582.7,
+        687.3,
+        680.8,
+        761.2,
+        671.6,
+        743.7,
+        693,
+        683.8,
+        638.3,
+        1052.4,
+        692.9,
+        603.3,
+        716.4,
+        627.1,
+        628.5,
+        609.1,
+        671
+      ],
+      "p95_ms": 761.2,
+      "max_ms": 1052.4
+    }
+  },
+  "performance_contract": {
+    "queue_24h_p95_limit_ms": 1500,
+    "queue_all_cold_p95_limit_ms": 1300,
+    "queue_all_warm_p95_limit_ms": 1000,
+    "cold_samples_each": 20,
+    "warm_samples_each": 20,
+    "rollup_refresh_elapsed_limit_minutes": 20,
+    "rollup_refresh_day_limit": 0,
+    "rollup_refresh_call_limit": 1
+  },
+  "status": "ok",
+  "rollup_backfill_complete": true,
+  "rollup_refreshed_days": [],
+  "rollup_refresh_call_count": 1,
+  "finished_at": "2026-07-17T16:53:09.734Z"
+}
