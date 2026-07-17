@@ -31,9 +31,10 @@ Rendered as dependency-free inline SVG (no chart library; match the existing van
 4. Funnel mini-trend: registered and pro counts over time as a small sparkline pair in the Audience funnel strip (see 5.1).
 
 ### 3.3 Top lists (new)
-One panel with three tabs, each top-50, venue-sortable, CSV/JSON export:
+One panel with four tabs, each top-50, venue-sortable, CSV/JSON export:
 - Top searched queries: searches, distinct clients, hit rate.
-- Top copied or downloaded icons via web: depends on web copy/download event discovery (see 7.3); if events are absent, the tab shows an honest "not instrumented yet" state, never fake numbers.
+- Top returned icons: the icons most often present in result sets, from the existing search-to-icon evidence linkage; confirm coverage during V2.2 endpoint design and use the unavailable-data state if the linkage proves partial.
+- Top copied or downloaded icons via web: depends on web copy/download event discovery (see 7.3); if events are absent, the tab shows the unavailable-data state, never fake numbers.
 - Top zero-result queries: count, distinct clients, last seen, link into the gap worklist row.
 
 ### 3.4 Geography panel (new)
@@ -70,6 +71,7 @@ Per-client profiles from identity precedence: visitor key chip, kind pill, count
 ## 6. Non-functional requirements
 
 - First contentful section under 500 ms warm; every panel has a skeleton state; stale-while-revalidate everywhere; visible refresh state.
+- Empty-state rules, classified: FORBIDDEN are placeholders that fake or noise-fill data ("not captured", invented values, mock rows). SUPPORTED are labeled unavailable-data states that tell the truth about why a panel is empty ("not instrumented yet", "no submissions stored; contact form currently delivers to email only", "no data in this window"). Every supported empty state names its reason.
 - All aggregates from rollups or bounded windows; no full-history raw scans in any default path; new aggregate endpoints reuse the Phase A cache pattern (30s TTL, cleared on writes).
 - Speed bars for the API remain as shipped (24h p95 1500 cold and warm; all-time 1300 cold, 1000 warm); new endpoints must not regress them.
 - No AI or process metadata in any output; public-safe copy throughout; no U+2013 or U+2014 characters.
