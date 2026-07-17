@@ -1,0 +1,73 @@
+{
+  "artifact": "admin_dashboard_v2_live_contract",
+  "admin_url": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api",
+  "release_fingerprint": "a303f98520476fa8c872562d12db47123989c1dee8a6f8cdce84c36f041f9664",
+  "status": "ok",
+  "started_at": "2026-07-17T12:26:45.338Z",
+  "routes": {
+    "activity": {
+      "latency_ms": 4703.1,
+      "rows": 50,
+      "nonempty_channels": 2
+    },
+    "overview_30d": {
+      "latency_ms": 3913.3,
+      "series_rows": 6,
+      "searched_rows": 50,
+      "returned_available": false,
+      "returned_rows": 0,
+      "copied_available": true,
+      "copied_rows": 50,
+      "zero_rows": 50,
+      "geography_available": false,
+      "geography_rows": 0,
+      "raw_rows_truncated": true
+    },
+    "search": {
+      "latency_ms": 1630.5,
+      "query_rows": 50,
+      "worklist_rows": 50,
+      "icon_requests_available": true,
+      "icon_request_rows": 4,
+      "contacts_available": true,
+      "contact_rows": 0
+    },
+    "audience": {
+      "latency_ms": 1990.9,
+      "identity_available": false,
+      "registered_users_available": false,
+      "registered_user_rows": 0,
+      "clients_available": false,
+      "client_rows": 0,
+      "mrr_available": false
+    }
+  },
+  "chart_windows": {
+    "1d": 4,
+    "7d": 6,
+    "30d": 6,
+    "custom": 6,
+    "custom_from": "2026-07-11",
+    "custom_to": "2026-07-17"
+  },
+  "warm_requests": [
+    {
+      "name": "activity",
+      "latency_ms": 1146.3
+    },
+    {
+      "name": "overview",
+      "latency_ms": 1838.6
+    },
+    {
+      "name": "search",
+      "latency_ms": 1334.6
+    },
+    {
+      "name": "audience",
+      "latency_ms": 1477.5
+    }
+  ],
+  "warm_request_limit_ms": 5000,
+  "finished_at": "2026-07-17T12:27:07.304Z"
+}
