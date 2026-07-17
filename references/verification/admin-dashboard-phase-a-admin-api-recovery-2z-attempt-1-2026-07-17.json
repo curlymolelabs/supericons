@@ -1,0 +1,36 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_recovery_2z_attempt",
+  "approval_fingerprint": "040c93e5c6f0d5e6c1c1c273618e9cbba54f74dd1b5bc10d450ca8d10a4a73c0",
+  "outcome": "pre_mutation_stop",
+  "observations": {
+    "runner_process_exited": true,
+    "stop_reason": "runner_prompted_unconditionally_instead_of_reading_existing_user_environment_credentials",
+    "required_user_environment_variables_present": true,
+    "railway_protection_evidence_written": true,
+    "railway_protection_evidence_sha256": "a2a9e974b00e4b8ba8ee1ae45186c05cb4d36d09d329739c5a11a2ddd28825fb",
+    "database_health_evidence_written": false,
+    "backlog_evidence_written": false,
+    "legacy_preflight_evidence_written": false,
+    "strict_search_evidence_written": false,
+    "candidate_live_evidence_written": false,
+    "completion_evidence_written": false,
+    "rollback_evidence_written": false
+  },
+  "structural_boundary": {
+    "last_completed_step": "railway_protection_read_only_gate",
+    "next_runner_step": "credential_loading",
+    "docker_and_database_checks_after_credentials": true,
+    "candidate_deploy_after_database_and_search_gates": true
+  },
+  "mutations": {
+    "admin_api_candidate_deployments": 0,
+    "admin_api_rollback_deployments": 0,
+    "rollup_refresh_writes": 0,
+    "migration": 0,
+    "mcp_search": 0,
+    "railway": 0,
+    "storage": 0,
+    "npm_publication": 0
+  },
+  "recorded_at": "2026-07-17T09:19:05.8360739Z"
+}
