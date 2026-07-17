@@ -149,9 +149,14 @@ try {
   ];
   const warm = [];
   for (const [path, name] of warmRoutes) {
+    const warmup = await requestJson(path);
     const result = await requestJson(path);
     assert.ok(result.latency_ms < 5000, `Warm ${name} request took ${result.latency_ms} ms.`);
-    warm.push({ name, latency_ms: result.latency_ms });
+    warm.push({
+      name,
+      warmup_latency_ms: warmup.latency_ms,
+      latency_ms: result.latency_ms,
+    });
   }
 
   summary.routes = {

@@ -1,0 +1,62 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_correction_retry_attempt",
+  "release_fingerprint": "50749fe24e652898abcb3d21cea3276fa67c98cad770eda01f0eedd71971eea8",
+  "implementation_revision": "7aff127f2a57d1116537cee6e466636655dc7cff",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 57,
+    "updated_at": "1784293471346",
+    "source_sha256": "52d7720047af33710aa386cb819dfc5fd4cf497c7368216d4d80dc936f7ab0ed"
+  },
+  "failure": {
+    "gate": "v2_live_warm_route_latency",
+    "route": "overview",
+    "measured_latency_ms": 6797.3,
+    "limit_ms": 5000,
+    "classification": "gate_measurement",
+    "reason": "The sample was labeled warm after more than the 30-second cache lifetime had elapsed. Each route must be warmed and immediately remeasured."
+  },
+  "verified_before_failure": {
+    "v2_contract": true,
+    "identity_available": true,
+    "geography_available": true,
+    "identity_rows_truncated": false,
+    "raw_rows_truncated": false,
+    "completed_rollup_data_present": true,
+    "windows_checked": [
+      "1d",
+      "7d",
+      "30d",
+      "custom"
+    ]
+  },
+  "rollback": {
+    "version": 58,
+    "updated_at": "1784293524130",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "legacy_stats_latency_ms": 2542.5,
+    "status": "ok"
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "6355d4dd75e246946d761a5034495164b4a4caa7c83ae3e2ee01da1e2c647204",
+    "database_preflight": "48e771936ca32afdfd1ab1216209a40d77bee3fa3b7c6a8321c012198b1035d0",
+    "live_gate": "a9f8139434c4c6c798c46f036bca551579efa550ec87c4b45bbd30d79e93876e",
+    "pre_inventory": "1061deae157d3b98290572cd6dccac17cb3c7d0e616d70e8f449142e969363f5",
+    "legacy_preflight": "2a469a7b065cad57949de5c53fa685bd6eb74b8cb6275a99ec5822f6e5ecfcc8",
+    "railway_health": "10452cbef6a3a03adede48d0d8384cc84a25be35cd05d5b690592518a637a175",
+    "rollback": "e6c2f27017338fd4b82c8d59d0ff15fc6502a588d3fd6454c303c45b69f0c63e",
+    "rollback_inventory": "f9a5c2d5186d250e48d5f367d70185b4dfddb5ffaa8a54473d3113c21135cea8",
+    "search_health": "807ef40105cd68401ded8d60d9c3954ef5b2f446bbcef6e167af162cf4449630"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T13:04:33.4067541Z",
+  "finished_at": "2026-07-17T13:05:28.7882782Z"
+}
