@@ -110,8 +110,7 @@ where environment = 'production'
   and day >= ((now() at time zone 'UTC')::date - 7)
   and day < (now() at time zone 'UTC')::date
 group by query_norm, coalesce(library_filter, 'all')
-order by searches desc, query_norm asc, library_filter asc
-limit 20;
+order by searches desc, query_norm asc, library_filter asc;
 rollback;
 `;
 
@@ -167,17 +166,27 @@ try {
 
   const searchedRows = completed7d.payload.top_lists?.searched?.rows;
   assert.ok(Array.isArray(searchedRows), 'The completed-range searched list is missing.');
-  const actualQueries = new Map(searchedRows.map((row) => [
-    `${row.query}|${row.library_filter || 'all'}`,
+  assert.ok(searchedRows.length >= 20, 'The completed-range searched list is unexpectedly short.');
+  const expectedQueriesByKey = new Map(expectedQueries.rows.map((row) => [
+    `${row.query_norm}|${row.library_filter || 'all'}`,
     numeric(row.searches),
   ]));
-  for (const expected of expectedQueries.rows) {
-    const key = `${expected.query_norm}|${expected.library_filter || 'all'}`;
+  const actualQueriesToCompare = searchedRows.slice(0, 50);
+  for (const [index, actual] of actualQueriesToCompare.entries()) {
+    const key = `${actual.query}|${actual.library_filter || 'all'}`;
+    const expectedSearches = expectedQueriesByKey.get(key);
+    assert.notEqual(expectedSearches, undefined, `The database rollup is missing API query ${key}.`);
     assert.equal(
-      actualQueries.get(key),
-      numeric(expected.searches),
+      numeric(actual.searches),
+      expectedSearches,
       `Search count differs for ${key}.`,
     );
+    if (index > 0) {
+      assert.ok(
+        numeric(actualQueriesToCompare[index - 1].searches) >= numeric(actual.searches),
+        'The searched list is not ordered by search count.',
+      );
+    }
   }
 
   summary.status = 'ok';
@@ -191,7 +200,8 @@ try {
   };
   summary.queries = {
     completed_days_compared: 7,
-    top_rows_compared: expectedQueries.rows.length,
+    top_rows_compared: actualQueriesToCompare.length,
+    database_rows_available: expectedQueries.rows.length,
     database_latency_ms: expectedQueries.latency_ms,
     api_latency_ms: completed7d.latency_ms,
   };
