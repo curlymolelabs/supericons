@@ -1,0 +1,51 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_correction_local_verification",
+  "base_revision": "eced75c0208019c973ab16ff86bc31562f678780",
+  "verified_at": "2026-07-17T12:40:53.608Z",
+  "status": "ok",
+  "scope": {
+    "admin_api_only": true,
+    "database_migration": false,
+    "mcp_search": false,
+    "railway": false,
+    "storage": false,
+    "npm_publication": false
+  },
+  "correction": {
+    "one_day_uses_bounded_raw_rows": true,
+    "multi_day_uses_completed_rollups_plus_current_day": true,
+    "preset_ranges_use_calendar_days": true,
+    "identity_rows_use_compact_bounded_reads": true,
+    "identity_row_limit_per_source": 25000,
+    "identity_excludes_non_search_tool_events": true,
+    "truncated_identity_is_not_reported_as_exact": true
+  },
+  "database_read_only_check": {
+    "complete_rollup_day_count": 82,
+    "pending_day_count": 0,
+    "latest_complete_day": "2026-07-16",
+    "overview_only_day_count": 0,
+    "query_only_day_count": 0,
+    "mutations": 0
+  },
+  "local_gates": {
+    "deno_admin_api_check": "pass",
+    "v2_helper_cases": 11,
+    "v2_api_contract": "pass",
+    "phase_a_metric_tests": 11,
+    "phase_a_api_checks": 27,
+    "bounded_cache_contract": "pass",
+    "v2_1_ui_contract": "pass",
+    "browser_requests": 12,
+    "browser_navigation_sections": 3,
+    "browser_inline_svg_charts": 4,
+    "diff_check": "pass",
+    "text_policy_scan": "pass"
+  },
+  "negative_control": {
+    "target": "production_admin_api_v54",
+    "status": "rejected_as_expected",
+    "reason": "The old implementation reports the 30-day raw source as truncated, so it cannot pass the new rollup parity gate.",
+    "production_mutations": 0
+  }
+}

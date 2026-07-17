@@ -1288,6 +1288,7 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 }
 
 const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
+const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
 const V2_MAX_ROLLUP_ROWS = 10000;
 const V2_MAX_ICON_ROWS = 5000;
 
@@ -1307,6 +1308,35 @@ function dashboardV2EnvironmentFilter(filters: ReturnType<typeof parseDashboardV
 function rangeIncludesCurrentDay(filters: ReturnType<typeof parseDashboardV2Filters>) {
   const today = currentUtcDayStartIso().slice(0, 10);
   return (!filters.from_day || filters.from_day <= today) && filters.to_day >= today;
+}
+
+function dashboardV2CompletedRollupFilters(
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const todayStart = currentUtcDayStartIso();
+  const today = todayStart.slice(0, 10);
+  const yesterday = new Date(Date.parse(todayStart) - 86_400_000).toISOString().slice(0, 10);
+  return {
+    ...filters,
+    to_day: filters.to_day < today ? filters.to_day : yesterday,
+  };
+}
+
+function dashboardV2RangeHasCompletedDays(
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  return !filters.from_day || filters.from_day <= filters.to_day;
+}
+
+function dashboardV2CurrentDayFilters(
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const todayStart = currentUtcDayStartIso();
+  return {
+    ...filters,
+    from: todayStart,
+    from_day: todayStart.slice(0, 10),
+  };
 }
 
 async function fetchDashboardV2Telemetry(
@@ -1344,6 +1374,74 @@ async function fetchDashboardV2Telemetry(
   const filterValues = applyQuery ? filters : { ...filters, q: '' };
   return {
     rows: filterDashboardV2Rows(rows, filterValues) as SearchEvidenceRow[],
+    truncated,
+  };
+}
+
+async function fetchDashboardV2IdentityTelemetry(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const auditSelect = 'id, query_norm, source, session_hash, ip_hash, country_code, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, anonymous_client_hash, user_agent_hash, api_key_hash, request_id, dedupe_key, created_at';
+  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, query_origin, session_hash, ip_hash, country_code, user_id, is_registered, is_pro, account_plan, subscription_status, anonymous_client_hash, user_agent_hash, api_key_hash, search_request_audit_id, created_at';
+
+  const loadAuditRows = async () => {
+    try {
+      return await fetchAllRows<Record<string, unknown>>((from, to) => {
+        let query = adminClient
+          .from('search_request_audit')
+          .select(auditSelect)
+          .neq('source', 'trap')
+          .order('created_at', { ascending: false })
+          .range(from, to);
+        if (filters.from) query = query.gte('created_at', filters.from);
+        if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
+        return query;
+      }, V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1);
+    } catch (error) {
+      if (isMissingRelationError(error) || isMissingColumnError(error)) return [];
+      throw error;
+    }
+  };
+
+  const loadUsageRows = async () => {
+    try {
+      return await fetchAllRows<Record<string, unknown>>((from, to) => {
+        let query = adminClient
+          .from('mcp_usage_events')
+          .select(usageSelect)
+          .eq('event_type', 'search_outcome')
+          .order('created_at', { ascending: false })
+          .range(from, to);
+        if (filters.from) query = query.gte('created_at', filters.from);
+        if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
+        return query;
+      }, V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1);
+    } catch (error) {
+      if (isMissingRelationError(error) || isMissingColumnError(error)) return [];
+      throw error;
+    }
+  };
+
+  const [auditRows, usageRows] = await Promise.all([loadAuditRows(), loadUsageRows()]);
+  const truncated = (
+    auditRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+    || usageRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+  );
+  const rows = mergeTelemetryEvidenceRows([
+    ...auditRows
+      .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
+      .map((row) => mapAuditRowToEvidenceRow(row, [])),
+    ...usageRows
+      .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
+      .map(mapMcpUsageEventToEvidenceRow),
+  ]).map((row): SearchEvidenceRow => ({
+    ...row,
+    environment: classifySearchEvidenceEnvironment(row),
+    channel: classifySearchEvidenceChannel(row),
+  })).filter((row) => String(row.signal_type || '') === 'search_attempt');
+  return {
+    rows: filterDashboardV2Rows(rows, filters) as SearchEvidenceRow[],
     truncated,
   };
 }
@@ -1389,9 +1487,9 @@ async function buildDashboardV2DataRows(
   filters: ReturnType<typeof parseDashboardV2Filters>,
   { applyQuery = true } = {},
 ) {
-  const telemetry = await fetchDashboardV2Telemetry(adminClient, filters, { applyQuery });
-  const telemetryRows = telemetry.rows;
   if (filters.use_raw) {
+    const telemetry = await fetchDashboardV2Telemetry(adminClient, filters, { applyQuery });
+    const telemetryRows = telemetry.rows;
     const rollups = buildAdminRollups(telemetryRows, knownSearchDefects);
     const reviews = await fetchAllQueryReviews(adminClient);
     return {
@@ -1404,11 +1502,26 @@ async function buildDashboardV2DataRows(
     };
   }
 
-  const [overviewRows, queryRollupRows, reviews] = await Promise.all([
-    fetchDashboardV2OverviewRollups(adminClient, filters),
-    fetchDashboardV2QueryRollups(adminClient, filters),
+  const completedFilters = dashboardV2CompletedRollupFilters(filters);
+  const completedRangeExists = dashboardV2RangeHasCompletedDays(completedFilters);
+  const telemetryPromise = rangeIncludesCurrentDay(filters)
+    ? fetchDashboardV2Telemetry(
+      adminClient,
+      dashboardV2CurrentDayFilters(filters),
+      { applyQuery },
+    )
+    : Promise.resolve({ rows: [] as SearchEvidenceRow[], truncated: false });
+  const [overviewRows, queryRollupRows, reviews, telemetry] = await Promise.all([
+    completedRangeExists
+      ? fetchDashboardV2OverviewRollups(adminClient, completedFilters)
+      : Promise.resolve([]),
+    completedRangeExists
+      ? fetchDashboardV2QueryRollups(adminClient, completedFilters)
+      : Promise.resolve([]),
     fetchAllQueryReviews(adminClient),
+    telemetryPromise,
   ]);
+  const telemetryRows = telemetry.rows;
   let completedOverviewRows = overviewRows;
   let completedQueryRows = queryRollupRows;
   if (filters.q) {
@@ -1527,13 +1640,19 @@ async function buildDashboardV2ActivityPayload(
   if (filters.use_raw) {
     overviewRows = buildAdminRollups(telemetryRows, knownSearchDefects).overview;
   } else if (filters.q) {
-    const queryRows = await fetchDashboardV2QueryRollups(adminClient, filters);
+    const completedFilters = dashboardV2CompletedRollupFilters(filters);
+    const queryRows = dashboardV2RangeHasCompletedDays(completedFilters)
+      ? await fetchDashboardV2QueryRollups(adminClient, completedFilters)
+      : [];
     overviewRows = queryRows.filter((row) => (
       [row.query_norm, row.library_filter, row.channel, row.query_origin, row.tool_name]
         .filter(Boolean).join(' ').toLowerCase().includes(filters.q)
     ));
   } else {
-    overviewRows = await fetchDashboardV2OverviewRollups(adminClient, filters);
+    const completedFilters = dashboardV2CompletedRollupFilters(filters);
+    overviewRows = dashboardV2RangeHasCompletedDays(completedFilters)
+      ? await fetchDashboardV2OverviewRollups(adminClient, completedFilters)
+      : [];
   }
   if (!filters.use_raw && rangeIncludesCurrentDay(filters)) {
     const today = currentUtcDayStartIso().slice(0, 10);
@@ -1564,8 +1683,9 @@ async function buildDashboardV2OverviewPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
-  const [dataRows, copySource, returnedSource] = await Promise.all([
+  const [dataRows, identityTelemetry, copySource, returnedSource] = await Promise.all([
     buildDashboardV2DataRows(adminClient, filters),
+    fetchDashboardV2IdentityTelemetry(adminClient, filters),
     filters.channel === 'all' || filters.channel === 'web'
       ? fetchDashboardV2IconRows(adminClient, filters, 'copy')
       : Promise.resolve({ rows: [], available: true, reason: '', truncated: false }),
@@ -1573,17 +1693,18 @@ async function buildDashboardV2OverviewPayload(
       ? fetchDashboardV2IconRows(adminClient, filters, 'mcp_call')
       : Promise.resolve({ rows: [], available: false, reason: 'Returned-icon coverage is complete only for Hosted MCP. Web searches do not yet record every returned icon.', truncated: false }),
   ]);
-  const series = buildDashboardV2Series(dataRows.overview_rows, dataRows.telemetry_rows);
-  const kpis = buildDashboardV2Kpis(series, dataRows.telemetry_rows);
+  const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
+  const series = buildDashboardV2Series(dataRows.overview_rows, identityRows);
+  const kpis = buildDashboardV2Kpis(series, identityRows);
   const topLists = buildDashboardV2TopLists(dataRows.query_rows);
-  const geography = dataRows.raw_truncated
+  const geography = identityTelemetry.truncated
     ? {
       available: false,
-      reason: 'Exact country totals exceed the bounded raw-row sample for this period. Choose a shorter date range.',
+      reason: 'Exact country totals exceed the bounded identity-row limit for this period. Choose a shorter date range.',
       coverage_rate: 0,
       rows: [],
     }
-    : buildDashboardV2Geography(dataRows.telemetry_rows);
+    : buildDashboardV2Geography(identityRows);
   const copied = copySource.available
     ? {
       available: true,
@@ -1621,9 +1742,9 @@ async function buildDashboardV2OverviewPayload(
   return {
     kpis: {
       ...kpis,
-      identity_available: !dataRows.raw_truncated,
-      identity_unavailable_reason: dataRows.raw_truncated
-        ? 'Exact client identities exceed the bounded raw-row sample for this period. Choose a shorter date range.'
+      identity_available: !identityTelemetry.truncated,
+      identity_unavailable_reason: identityTelemetry.truncated
+        ? 'Exact client identities exceed the bounded identity-row limit for this period. Choose a shorter date range.'
         : null,
     },
     series,
@@ -1638,6 +1759,8 @@ async function buildDashboardV2OverviewPayload(
     meta: dashboardV2Meta(filters, startedAt, {
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
+      identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
+      identity_rows_truncated: identityTelemetry.truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       client_measure: kpis.client_measure,
       query_review_available: dataRows.query_review_available,
@@ -1827,10 +1950,15 @@ async function buildDashboardV2AudiencePayload(
   const filters = parseDashboardV2Filters(url);
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const dataRows = await buildDashboardV2DataRows(adminClient, { ...filters, q: '' }, { applyQuery: false });
-  const series = buildDashboardV2Series(dataRows.overview_rows, dataRows.telemetry_rows);
-  const clientRows = buildDashboardV2Clients(dataRows.telemetry_rows) as Array<any>;
-  const userTelemetry = buildDashboardV2UserTelemetry(dataRows.telemetry_rows);
+  const identityFilters = { ...filters, q: '' };
+  const [dataRows, identityTelemetry] = await Promise.all([
+    buildDashboardV2DataRows(adminClient, identityFilters, { applyQuery: false }),
+    fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
+  ]);
+  const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
+  const series = buildDashboardV2Series(dataRows.overview_rows, identityRows);
+  const clientRows = buildDashboardV2Clients(identityRows) as Array<any>;
+  const userTelemetry = buildDashboardV2UserTelemetry(identityRows);
   const { users } = await listAllAuthUsers(adminClient);
   const subscriptions = await fetchSubscriptions(adminClient, users.map((user) => user.id));
   const rangeStart = filters.from ? Date.parse(filters.from) : null;
@@ -1884,8 +2012,8 @@ async function buildDashboardV2AudiencePayload(
   const pageCount = Math.max(1, Math.ceil(filteredClients.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * pageSize;
-  const dataUnavailable = dataRows.raw_truncated;
-  const unavailableReason = 'Exact client profiles exceed the bounded raw-row sample for this period. Choose a shorter date range.';
+  const dataUnavailable = identityTelemetry.truncated;
+  const unavailableReason = 'Exact client profiles exceed the bounded identity-row limit for this period. Choose a shorter date range.';
 
   return {
     funnel: {
@@ -1917,6 +2045,8 @@ async function buildDashboardV2AudiencePayload(
     meta: dashboardV2Meta(filters, startedAt, {
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
+      identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
+      identity_rows_truncated: identityTelemetry.truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       anonymous_identity_rotates_monthly: true,
       mrr_available: false,

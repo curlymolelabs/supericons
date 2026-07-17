@@ -79,7 +79,14 @@ async function verifyOverview(path, expectedWindow) {
     zero_rows: payload.top_lists.zero.rows.length,
     geography_available: payload.geography.available,
     geography_rows: payload.geography.rows.length,
+    identity_available: payload.kpis.identity_available !== false,
+    series_days: new Set(
+      payload.series
+        .filter((row) => row.channel === 'all')
+        .map((row) => row.day),
+    ).size,
     raw_rows_truncated: payload.meta.raw_rows_truncated === true,
+    identity_rows_truncated: payload.meta.identity_rows_truncated === true,
   };
 }
 
@@ -91,6 +98,11 @@ try {
   assertMeta(activity.payload, '30d');
 
   const overview30d = await verifyOverview(`/v2/overview?window=30d&${common}`, '30d');
+  assert.equal(overview30d.raw_rows_truncated, false, 'The bounded current-day source must cover the 30-day aggregate.');
+  assert.equal(overview30d.identity_rows_truncated, false, 'The bounded identity source must cover the 30-day view.');
+  assert.equal(overview30d.identity_available, true, 'The 30-day identity KPIs must be available.');
+  assert.equal(overview30d.geography_available, true, 'The 30-day geography view must be available.');
+  assert.ok(overview30d.series_days >= 29, 'The 30-day chart must include completed-day rollups.');
   const search = await requestJson(`/v2/search?window=30d&${common}&page=1&page_size=50`);
   assert.ok(Array.isArray(search.payload.queries), 'Search explorer rows are missing.');
   assert.ok(Array.isArray(search.payload.worklist), 'Gap worklist rows are missing.');
@@ -101,9 +113,12 @@ try {
 
   const audience = await requestJson(`/v2/audience?window=30d&${common}&page=1&page_size=50`);
   assert.ok(audience.payload.funnel && typeof audience.payload.funnel === 'object', 'Audience funnel is missing.');
+  assert.equal(audience.payload.funnel.identity_available, true, 'The 30-day audience identity must be available.');
   assert.ok(Array.isArray(audience.payload.series), 'Audience series are missing.');
   requireAvailability(audience.payload.registered_users, 'Registered users');
   requireAvailability(audience.payload.clients, 'Client profiles');
+  assert.equal(audience.payload.registered_users.available, true, 'The 30-day registered-user table must be available.');
+  assert.equal(audience.payload.clients.available, true, 'The 30-day client table must be available.');
   assert.ok(audience.payload.funnel.mrr && typeof audience.payload.funnel.mrr === 'object', 'MRR state is missing.');
   if (!audience.payload.funnel.mrr.available) {
     assert.ok(String(audience.payload.funnel.mrr.reason || '').trim(), 'Unavailable MRR must include a reason.');
@@ -112,6 +127,7 @@ try {
 
   const overview1d = await verifyOverview(`/v2/overview?window=1d&${common}`, '1d');
   const overview7d = await verifyOverview(`/v2/overview?window=7d&${common}`, '7d');
+  assert.ok(overview7d.series_days >= 6, 'The 7-day chart must include completed-day rollups.');
   const today = new Date();
   const to = today.toISOString().slice(0, 10);
   const fromDate = new Date(Date.UTC(

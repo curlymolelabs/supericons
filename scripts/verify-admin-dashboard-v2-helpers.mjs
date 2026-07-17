@@ -20,7 +20,25 @@ const now = new Date('2026-07-17T12:00:00.000Z');
   const range = parseDashboardV2Range(new URL('https://example.test/v2/overview?window=30d'), now);
   assert.equal(range.key, '30d');
   assert.equal(range.duration_days, 30);
+  assert.equal(range.from, '2026-06-18T00:00:00.000Z');
+  assert.equal(range.use_raw, false);
+}
+
+{
+  const range = parseDashboardV2Range(new URL('https://example.test/v2/overview?window=1d'), now);
+  assert.equal(range.duration_days, 1);
+  assert.equal(range.from, '2026-07-16T12:00:00.000Z');
   assert.equal(range.use_raw, true);
+}
+
+{
+  const range = parseDashboardV2Range(
+    new URL('https://example.test/v2/overview?window=30d'),
+    new Date('2026-07-17T00:00:00.000Z'),
+  );
+  assert.equal(range.duration_days, 30);
+  assert.equal(range.from, '2026-06-18T00:00:00.000Z');
+  assert.equal(range.use_raw, false);
 }
 
 {
@@ -148,7 +166,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 9,
+  cases: 11,
   series_rows: series.length,
   query_filters: true,
   privacy_safe_identifiers: true,
