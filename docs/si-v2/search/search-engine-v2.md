@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.10
+Version: 1.11
 Approved: 2026-07-11
 Amended: 2026-07-17
 Status: canonical product and technical specification
@@ -11,6 +11,7 @@ This document is the official specification for SI Search Engine v2 across the w
 
 Related authority is deliberately separated:
 
+- [`../vision-charter.md`](../vision-charter.md) defines the project commitments that every canonical and public release must satisfy.
 - [`decisions.md`](decisions.md) records why accepted decisions were made. A decision is active only when this specification is updated in the same change.
 - [`implementation-status.md`](implementation-status.md) records what is implemented, verified, packaged, deployed, and observed live. It does not define intended behavior.
 - [`consolidation-traceability.md`](consolidation-traceability.md) is frozen evidence showing how the four earlier planning generations were handled. It is not normative.
@@ -405,6 +406,8 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-38` | Beta evidence must record end-to-end MCP tool latency separately from individual hosted-search latency. Search audit evidence must persist public-safe worker state, worker request order, and module age so cold and reused-worker results can be compared without function-log access. | `G-08`, `FR-20`, `FR-24`, `D-023` | Sanitized exports report tool p50/p95 and worker-state cohorts without raw queries, SVG content, credentials, or personal identifiers. |
 | `FR-39` | Keep an expressive result eligible for a broadly related query, but rank conventional symbols and approved identities ahead of it. Remove this fallback penalty when the query directly matches the icon's name or an approved synonym. | `G-02`, `D-013`, `D-024` | A generic metadata-driven ranking rule and reviewed ordering fixtures prove inclusion, lower broad-query rank, and direct-query priority without query-specific ranking code. |
 | `FR-40` | An opt-in MCP prerelease may use its packaged deterministic index and public synonym map for `search_icons` only when the query has no locale and contains ASCII text. Localized and non-ASCII search, `recommend_icons`, and web search keep their stable hosted paths. Material SVGs needed by the local route ship in the package. The response reports local runtime and index generation date, and one non-blocking tool-outcome telemetry attempt is made per eligible call. | `G-03`, `G-07`, `G-09`, `FR-24`, `FR-26`, `D-025` | Route, clean-install fingerprint, Material bundle, response, telemetry-failure, package-size, memory, latency, and fixed-suite checks pass. Local-versus-hosted divergence is reported for information, and hosted attribution remains required before a later hosted surface gate. |
+| `FR-41` | Public npm and web bundles must exclude every VC-3 protected class: usage-derived ranking weights, query-behavior signals, community curation data, contributor reputation data, and paid design intelligence. The existing hand-maintained deterministic ranking policy, intent graph, synonyms, taxonomy, and icon indexes remain intentionally public. | `VC-3`, `NG-03`, `FR-25`, `D-027` | A named VC-3 bundle-content probe checks both staged public surfaces against the maintained protected-class identifiers and fails on any match. |
+| `FR-42` | Every public npm and web release must include the applicable license terms and private-record-bound copying-detection markers. The private record never enters the repository or public verifier, and release verification fails if the record is missing or does not match its manifest-bound commitment. | `VC-2`, `VC-4`, `FR-25`, `D-027` | A named VC-4 license-and-canary probe checks both staged surfaces, verifies the private record commitment, and confirms that source artifacts remain free of private canary values. |
 
 ## Constraints
 

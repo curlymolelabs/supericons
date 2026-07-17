@@ -1,6 +1,6 @@
 {
   "name": "@supericons/mcp",
-  "version": "0.4.19-beta.0",
+  "version": "0.4.19-beta.1",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
@@ -8,6 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/curlymolelabs/supericons.git"
   },
+  "license": "SEE LICENSE IN LICENSE",
   "publishConfig": {
     "access": "public"
   },
@@ -17,6 +18,10 @@
   "main": "index.js",
   "files": [
     "CHANGELOG.md",
+    "LICENSE",
+    "THIRD_PARTY_LICENSES/",
+    "THIRD_PARTY_NOTICES.md",
+    "THIRD_PARTY_PROVENANCE.json",
     "auth.js",
     "converter.js",
     "generated/motion-lab-baseline.json",

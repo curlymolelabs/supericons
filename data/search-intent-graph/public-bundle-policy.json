@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "charter_requirements": ["VC-3", "VC-4"],
+  "protected_classes": [
+    {
+      "id": "usage_derived_ranking_weights",
+      "public_forbidden_identifiers": ["usage_derived_ranking", "learned_ranking_weight"]
+    },
+    {
+      "id": "query_behavior_signals",
+      "public_forbidden_identifiers": ["query_behavior_signal", "query_behavior_profile"]
+    },
+    {
+      "id": "community_curation_data",
+      "public_forbidden_identifiers": ["community_curation_private", "community_vote_profile"]
+    },
+    {
+      "id": "contributor_reputation_data",
+      "public_forbidden_identifiers": ["contributor_reputation", "contributor_trust_score"]
+    },
+    {
+      "id": "paid_design_intelligence",
+      "public_forbidden_identifiers": ["paid_design_intelligence", "premium_design_signal"]
+    }
+  ],
+  "public_forbidden_path_segments": [
+    "/private/",
+    "/internal-learning/",
+    "/community-curation/",
+    "/contributor-reputation/",
+    "/paid-intelligence/"
+  ],
+  "intentionally_public_classes": [
+    "hand_maintained_ranking_policy",
+    "intent_graph",
+    "synonym_map",
+    "taxonomy",
+    "icon_indexes"
+  ],
+  "minified_generated_modules": [
+    "runtime/generated-search-intent-graph.js",
+    "runtime/generated-search-intent-rules.js",
+    "runtime/generated-search-ranking-policy.js"
+  ]
+}

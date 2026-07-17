@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_protected_local_first_beta_publication",
+  "date": "2026-07-17",
+  "hash_mode": "utf8_lf_normalized_text",
+  "implementation": {
+    "commit": "78b16149da0d3b4648392a5b97e58caecf9ea81d",
+    "release_type": "npm_prerelease_only",
+    "hosted_function_deployment_required": false,
+    "database_migration_required": false,
+    "web_deployment_required": false
+  },
+  "package": {
+    "name": "@supericons/mcp",
+    "version": "0.4.19-beta.1",
+    "publish_tag": "beta",
+    "latest_must_remain": "0.4.17",
+    "browser_security_key_approval_required": true,
+    "archive_path": "tmp/search-v2-beta1-release-78b16149-clean/archive/supericons-mcp-0.4.19-beta.1.tgz",
+    "archive_sha256": "8742012a425646bc1f4b2f53122e64d58ed5a63afe585cafec7c7028e76eb082",
+    "archive_size_bytes": 6117020,
+    "unpacked_size_bytes": 25337438,
+    "file_count": 61,
+    "npm_shasum": "56a195e6cda061171838278c18e131cce077d9b3",
+    "npm_integrity": "sha512-e4OtGDogjy119iG6B2H0308Nd4V/ziOhUcLui0vLkRymfNX2FYfZH1ow9g50mXOs3jS0zATtljb9fUdh764tIw==",
+    "maximum_size_bytes": 7000000
+  },
+  "search_contract": {
+    "fixed_cases": 225,
+    "eligible_stdio_cases": 150,
+    "helper_fingerprint": "ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8",
+    "stdio_route_fingerprint": "7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184",
+    "index_generated_at": "2026-06-28T06:24:19.035Z",
+    "local_p95_ms_maximum": 500,
+    "combined_rss_bytes_maximum": 75000000,
+    "material_assets": 8524,
+    "model_provider_calls": 0
+  },
+  "routes": {
+    "eligible_search_icons": "packaged_local_index",
+    "eligible_rule": "search_icons with no locale and ASCII query text",
+    "localized_search_icons": "stable_mcp_search",
+    "non_ascii_search_icons": "stable_mcp_search",
+    "recommend_icons": "stable_mcp_search",
+    "hosted_mcp": "unchanged",
+    "web_search": "unchanged",
+    "eligible_beta_cohort": "deterministic-v2-beta",
+    "stable_fallback_beta_cohort": null
+  },
+  "public_bundle": {
+    "charter_probes": {
+      "VC-3_bundle_content": "required",
+      "VC-4_license_and_canary": "required"
+    },
+    "protected_classes": [
+      "usage_derived_ranking_weights",
+      "query_behavior_signals",
+      "community_curation_data",
+      "contributor_reputation_data",
+      "paid_design_intelligence"
+    ],
+    "private_record_sha256": "abed31fb65d8ae606680ac55e862ef2f06a091617e3c266b79ecd12c2fd03963",
+    "third_party_provenance_sha256": "2595f8eb8721d817e255adef51c9531a2210c3ac8e362b32568c640c5b513469",
+    "private_record_values_must_remain_out_of_git": true,
+    "private_record_values_must_remain_out_of_public_verifiers": true,
+    "staged_generated_modules_minified": 3,
+    "source_modules_minified": false,
+    "npm_artifact_licensed_and_canaried": true,
+    "web_artifact_boundary_verified": true,
+    "web_deployment_authorized": false
+  },
+  "published_smoke": {
+    "eligible_stdio_cases": 150,
+    "material_styles": [
+      "outline",
+      "solid"
+    ],
+    "telemetry_disabled": true,
+    "hosted_calls": 0,
+    "hosted_call_measurement": "outbound_fetch_interceptor",
+    "negative_probe": "one_observed_call_must_fail"
+  },
+  "probe_inventory": {
+    "schema_version": 1,
+    "predecessor_manifest_path": "docs/si-v2/search/reviews/search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json",
+    "predecessor_manifest_sha256": "9a321c8cc7fd522197efc98c11d21fd3c1440a8f18b472467c5d3de65d151db5",
+    "predecessor_probe_ids": [
+      "archive_hash_and_pack_identity",
+      "artifact_hash_binding",
+      "consumed_stage_attempt_probe",
+      "finalization_reservation_order_guard",
+      "hosted_call_negative_probe",
+      "hosted_comparison_attempt_probe",
+      "hosted_comparison_contract_binding",
+      "hosted_comparison_plan_probe",
+      "hosted_comparison_wrong_manifest_rejected",
+      "installed_eligible_hosted_calls_zero",
+      "installed_stdio_route_fingerprint_150",
+      "manifest_hash_binding",
+      "material_outline_and_solid",
+      "owner_request_scope_binding",
+      "postapproval_rollback_self_tests",
+      "postapproval_stage_record_probe",
+      "postapproval_terminal_replay_probe",
+      "punctuation_gate",
+      "release_scope_contract_binding",
+      "search_route_contract_binding",
+      "stage_reconciliation_probe",
+      "staged_archive_verification",
+      "stager_command_shape_guard",
+      "staging_disabled_without_execution_switch",
+      "staging_wrong_manifest_rejected",
+      "staging_zero_additional_allowance_rejected"
+    ],
+    "active": [
+      {
+        "id": "manifest_hash_binding",
+        "evidence": "The supplied manifest hash must match the normalized manifest bytes."
+      },
+      {
+        "id": "release_scope_contract_binding",
+        "evidence": "The package, route, beta-window, and external-action limits must match the npm-only release."
+      },
+      {
+        "id": "search_route_contract_binding",
+        "evidence": "Eligible local-first search, stable fallbacks, and the fixed route fingerprint must remain exact."
+      },
+      {
+        "id": "artifact_hash_binding",
+        "evidence": "Every executable release artifact must match its manifest-bound normalized hash."
+      },
+      {
+        "id": "monotonic_probe_inventory",
+        "evidence": "Every predecessor behavioral probe has a stable ID and remains active or carries an explicit retirement reason."
+      },
+      {
+        "id": "private_record_presence_and_hash",
+        "evidence": "The private canary record must exist and match its manifest-bound hash."
+      },
+      {
+        "id": "vc3_bundle_content_npm_web",
+        "evidence": "Both staged surfaces must exclude all five protected intelligence classes."
+      },
+      {
+        "id": "vc4_license_canary_npm_web",
+        "evidence": "Both staged surfaces must carry the required terms, complete upstream licenses, provenance, and canaries."
+      },
+      {
+        "id": "third_party_license_provenance_binding",
+        "evidence": "All eleven bundled upstream sources must carry exact source versions, archive integrity where applicable, and hash-bound license files on npm and web surfaces."
+      },
+      {
+        "id": "private_record_missing_rejected",
+        "evidence": "A missing private canary record must fail closed."
+      },
+      {
+        "id": "private_record_hash_mismatch_rejected",
+        "evidence": "A private canary record with the wrong hash must fail closed."
+      },
+      {
+        "id": "source_canary_absence",
+        "evidence": "Private canary values must remain absent from maintained source."
+      },
+      {
+        "id": "archive_hash_and_pack_identity",
+        "evidence": "The rebuilt package metadata and exact archive bytes must match the manifest."
+      },
+      {
+        "id": "clean_worktree_repack_byte_identity",
+        "evidence": "A clean pinned worktree must rebuild the exact approved archive bytes."
+      },
+      {
+        "id": "rebuilt_archive_installed_smoke",
+        "evidence": "The locally rebuilt archive must pass the installed-package smoke without being described as a private staged download."
+      },
+      {
+        "id": "installed_stdio_route_fingerprint_150",
+        "evidence": "The installed archive must preserve all 150 ordered local-first result sets."
+      },
+      {
+        "id": "installed_eligible_hosted_calls_zero",
+        "evidence": "The installed archive must make zero hosted calls for eligible cases."
+      },
+      {
+        "id": "hosted_call_negative_probe",
+        "evidence": "One injected hosted call must be observed and must fail the smoke."
+      },
+      {
+        "id": "material_outline_and_solid",
+        "evidence": "The installed archive must return SVG results for both Material styles."
+      },
+      {
+        "id": "staging_disabled_without_execution_switch",
+        "evidence": "The stager must reject execution when its explicit release switch is absent."
+      },
+      {
+        "id": "staging_wrong_manifest_rejected",
+        "evidence": "The stager must reject a manifest fingerprint that does not match the release."
+      },
+      {
+        "id": "consumed_stage_attempt_probe",
+        "evidence": "One staging reservation may run once, and a second use must be rejected."
+      },
+      {
+        "id": "stager_command_shape_guard",
+        "evidence": "The stager must use the pinned npm stage commands and must not contain a direct npm publish path."
+      },
+      {
+        "id": "staged_download_hash_and_smoke_self_test",
+        "evidence": "Download failure, archive hash mismatch, and installed-smoke failure must write no verified stage record, while the valid path writes one."
+      },
+      {
+        "id": "postapproval_stage_record_probe",
+        "evidence": "Missing and wrong-manifest stage records must be rejected."
+      },
+      {
+        "id": "postapproval_terminal_replay_probe",
+        "evidence": "Success, rollback, and in-progress finalization records must prevent ordinary replay."
+      },
+      {
+        "id": "postapproval_rollback_self_tests",
+        "evidence": "Integrity, tag, smoke, and already-deprecated paths must preserve exact rollback behavior."
+      },
+      {
+        "id": "postapproval_outer_flow_rollback_self_tests",
+        "evidence": "Packet-verifier and npm-authentication failures after browser approval must end in one manifest-bound rollback, including the deprecation-only recovery path."
+      },
+      {
+        "id": "finalization_reservation_order_guard",
+        "evidence": "The finalization reservation must exist before packet, authentication, registry, or smoke work begins."
+      },
+      {
+        "id": "deprecation_only_recovery_guard",
+        "evidence": "An exact manifest-bound in-progress release may run only the deprecation-only recovery path, with no publish or latest-tag mutation."
+      },
+      {
+        "id": "mcp_dependency_audit_zero",
+        "evidence": "The public MCP dependency tree must report zero vulnerabilities."
+      },
+      {
+        "id": "owner_request_scope_binding",
+        "evidence": "The release request must name the exact manifest and preserve the npm-only external-action boundary."
+      },
+      {
+        "id": "punctuation_gate",
+        "evidence": "The manifest and release request must contain no em or en dashes."
+      }
+    ],
+    "retired": [
+      {
+        "id": "stage_reconciliation_probe",
+        "reason": "Beta.0 reused an already-created private stage. Beta.1 starts a new single-use stage and uses the consumed stage attempt probe instead."
+      },
+      {
+        "id": "staging_zero_additional_allowance_rejected",
+        "reason": "Beta.0 reconciliation allowed no additional stage command. Beta.1 intentionally authorizes one new manifest-bound stage and protects it with the single-use receipt."
+      },
+      {
+        "id": "staged_archive_verification",
+        "reason": "A local rebuilt-archive smoke may not claim that a private staged archive was verified. It is replaced by rebuilt_archive_installed_smoke locally and staged_download_hash_and_smoke_self_test before browser approval."
+      },
+      {
+        "id": "hosted_comparison_contract_binding",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests, so the comparison contract is outside this npm-only packet."
+      },
+      {
+        "id": "hosted_comparison_plan_probe",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests, so no comparison plan is part of this packet."
+      },
+      {
+        "id": "hosted_comparison_attempt_probe",
+        "reason": "Beta.1 authorizes zero stable-hosted comparison requests. The comparison runner is outside this npm-only publication packet."
+      },
+      {
+        "id": "hosted_comparison_wrong_manifest_rejected",
+        "reason": "Beta.1 carries no hosted comparison runner, so its wrong-manifest guard is outside this npm-only packet."
+      }
+    ]
+  },
+  "publication_flow": {
+    "mode": "npm_staged_browser_security_key",
+    "staging_cli": "11.18.0",
+    "staged_archive_download_and_smoke_required_before_browser_approval": true,
+    "browser_approval_requires_owner_access": true,
+    "postapproval_registry_and_smoke_verification_required": true,
+    "postapproval_failure_requires_exact_prerelease_deprecation": true,
+    "postapproval_finalization_single_use": true,
+    "postapproval_in_progress_recovery": "manifest_bound_deprecation_only",
+    "postapproval_deprecation_must_be_empty_before_success": true,
+    "postapproval_terminal_outcomes": [
+      "published_and_verified",
+      "rolled_back"
+    ],
+    "postapproval_replay_behavior": "reject_before_external_request",
+    "publish_tag_locked_at_staging": "beta"
+  },
+  "publication_attempts": {
+    "maximum_additional_stage_commands": 1,
+    "maximum_successful_publications": 1,
+    "receipt_schema_version": 1,
+    "receipt_scope": "user_local_application_data",
+    "receipt_contains_credentials": false,
+    "consumption_timing": "immediately_before_npm_stage_publish",
+    "finalization_outcome_schema_version": 1,
+    "finalization_outcome_scope": "user_local_application_data",
+    "finalization_outcome_contains_credentials": false
+  },
+  "external_actions": {
+    "maximum_private_npm_staged_uploads": 1,
+    "maximum_npm_prerelease_publications": 1,
+    "maximum_conditional_npm_deprecations": 1,
+    "maximum_stable_hosted_comparison_requests": 0,
+    "function_deployments": 0,
+    "database_mutations": 0,
+    "migration_history_repairs": 0,
+    "normal_database_pushes": 0,
+    "production_load_tests": 0,
+    "npm_latest_changes": 0,
+    "web_deployments": 0,
+    "model_provider_calls": 0,
+    "monitoring_activations": 0,
+    "automated_public_messages": 0,
+    "scheduled_warm_pings": 0
+  },
+  "beta_window": {
+    "starts_at": "first_verified_eligible_organic_request_on_beta_1",
+    "minimum_organic_attempts": 200,
+    "minimum_complete_green_days": 3,
+    "eligible_sources": [
+      "owner_organic_agent_use",
+      "executor_organic_agent_use",
+      "auditor_organic_agent_use",
+      "external_beta_user_use"
+    ],
+    "scripted_suites_eligible": false,
+    "session_count_is_gate": false,
+    "session_count_reported": true,
+    "new_release_starts_new_evidence_window": true,
+    "failed_intervals_remain_in_history": true
+  },
+  "artifacts": {
+    "stager": "scripts/stage-search-v2-local-first-beta.ps1",
+    "stager_sha256": "04db00f08dd8b4eac1bb4e23a6b4f20ba934c7de0eb66ee9b0886eaa7486d64c",
+    "postapproval_finalizer": "scripts/finalize-search-v2-local-first-beta.ps1",
+    "postapproval_finalizer_sha256": "5f4c66e4c4c22404c1634aeac7001fca4c57e705c2aa49b38f540f05cbe6491b",
+    "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
+    "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
+    "protected_builder": "scripts/build-search-v2-protected-public-artifacts.mjs",
+    "protected_builder_sha256": "ca298cd114c9a0ffb1e583879a4430a4ab41fd70e9e62092acdf22f41ae315be",
+    "protected_verifier": "scripts/verify-search-v2-protected-public-artifacts.mjs",
+    "protected_verifier_sha256": "7b533204230e6edabbf70aa2caccd4a78df39e3b763318ed03b4d42087d408cb",
+    "packet_verifier": "scripts/verify-search-v2-beta1-publication-packet.mjs",
+    "packet_verifier_sha256": "daab755241edd4b7771f3add64bde002ee64d8dd00595952d7a43c5c9b188218",
+    "approval_request": "docs/si-v2/search/reviews/search-v2-beta1-publication-approval-request-2026-07-17.md"
+  },
+  "monitoring": {
+    "weekly_definition": "docs/si-v2/search/automation/weekly-search-maintenance-audit.md",
+    "daily_beta_only_definition": "docs/si-v2/search/automation/daily-search-beta-monitor.md",
+    "activation_authorized_by_this_manifest": false
+  },
+  "rollback": {
+    "prepublication_failure": "stop_without_registry_mutation",
+    "staged_verification_failure": "do_not_approve_and_reject_exact_stage_with_owner_browser_access",
+    "postpublication_verification_failure": "deprecate_exact_prerelease_and_keep_latest_unchanged",
+    "beta_quality_failure": "deprecate_exact_prerelease_stop_invitations_and_keep_latest_unchanged",
+    "stable_fallback_failure": "stop_beta_and_preserve_public_safe_evidence"
+  },
+  "excluded_scope": [
+    "supabase_function_deployment",
+    "database_migration",
+    "normal_database_push",
+    "older_migration_repair",
+    "production_load_test",
+    "npm_latest_change",
+    "hosted_mcp_change",
+    "localized_local_first_search",
+    "non_ascii_local_first_search",
+    "local_first_recommendation",
+    "web_search_change",
+    "web_deployment",
+    "monitoring_activation",
+    "automated_public_invitation",
+    "scheduled_warm_ping",
+    "model_provider_call",
+    "stable_hosted_comparison"
+  ]
+}

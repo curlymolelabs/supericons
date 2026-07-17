@@ -38,7 +38,7 @@ const fullValidation = readJson(join(
 const outlineCounts = countIconsByLibrary(outlineIndex.icons);
 const solidCounts = countIconsByLibrary(solidIndex.icons);
 
-assert.equal(packageJson.version, '0.4.19-beta.0');
+assert.equal(packageJson.version, '0.4.19-beta.1');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
 assert.equal(

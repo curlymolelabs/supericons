@@ -1,7 +1,8 @@
 param(
     [switch]$ExecuteApprovedStaging,
     [string]$ApprovedManifestSha256,
-    [switch]$RunStageAttemptSelfTest
+    [switch]$RunStageAttemptSelfTest,
+    [switch]$RunStagedVerificationSelfTest
 )
 
 $ErrorActionPreference = 'Stop'
@@ -149,7 +150,7 @@ function Invoke-StageAttemptSelfTest {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-stage-budget-$([guid]::NewGuid().ToString('N'))"
     $receiptPath = Join-Path $temporaryRoot 'attempt.json'
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
     $stageAttemptCounter = [pscustomobject]@{ Count = 0 }
     $stageId = '11111111-1111-4111-8111-111111111111'
     $mockInvoker = {
@@ -161,7 +162,7 @@ function Invoke-StageAttemptSelfTest {
                 '@supericons/mcp' = @{
                     id = $packageSpec
                     name = '@supericons/mcp'
-                    version = '0.4.19-beta.0'
+                    version = '0.4.19-beta.1'
                     stageId = $stageId
                 }
             } | ConvertTo-Json -Compress)
@@ -226,11 +227,175 @@ function Invoke-StageAttemptSelfTest {
     }
 }
 
+function Complete-StagedArchiveVerification(
+    [object]$DownloadResult,
+    [string]$DownloadRoot,
+    [string]$ExpectedArchiveSha256,
+    [scriptblock]$SmokeInvoker,
+    [string]$StageRecordPath,
+    [object]$StageRecord
+) {
+    if ($null -eq $DownloadResult -or $DownloadResult.ExitCode -ne 0) {
+        throw 'The private staged archive could not be downloaded for verification. Do not approve it in the browser.'
+    }
+    $downloadedArchives = @(Get-ChildItem -LiteralPath $DownloadRoot -Filter '*.tgz' -File)
+    if ($downloadedArchives.Count -ne 1) {
+        throw 'The staged archive download did not produce exactly one package file.'
+    }
+    $downloadedArchive = $downloadedArchives[0]
+    $downloadedHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $downloadedArchive.FullName).Hash.ToLowerInvariant()
+    if ($downloadedHash -ne $ExpectedArchiveSha256) {
+        throw 'The downloaded staged archive does not match the approved SHA-256. Do not approve it in the browser.'
+    }
+
+    & $SmokeInvoker $downloadedArchive.FullName
+
+    $recordDirectory = Split-Path -Parent $StageRecordPath
+    $null = New-Item -ItemType Directory -Path $recordDirectory -Force
+    [System.IO.File]::WriteAllText(
+        $StageRecordPath,
+        (($StageRecord | ConvertTo-Json) + "`n"),
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    return $downloadedArchive
+}
+
+function Invoke-StagedVerificationSelfTest {
+    $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-staged-verification-$([guid]::NewGuid().ToString('N'))"
+    $expectedBytes = [System.Text.UTF8Encoding]::new($false).GetBytes('approved archive')
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $expectedHash = ([System.BitConverter]::ToString($sha.ComputeHash($expectedBytes))).Replace('-', '').ToLowerInvariant()
+    }
+    finally {
+        $sha.Dispose()
+    }
+    $record = [pscustomobject]@{
+        schema_version = 1
+        manifest_sha256 = 'a' * 64
+        package = '@supericons/mcp@0.4.19-beta.1'
+        tag = 'beta'
+        stage_id = '11111111-1111-4111-8111-111111111111'
+        archive_sha256 = $expectedHash
+        downloaded_archive_sha256_verified = $true
+        installed_smoke_verified = $true
+    }
+    try {
+        $downloadFailureRoot = Join-Path $temporaryRoot 'download-failure'
+        $null = New-Item -ItemType Directory -Path $downloadFailureRoot -Force
+        $downloadFailureRecord = Join-Path $downloadFailureRoot 'record.json'
+        $downloadFailureRejected = $false
+        try {
+            $null = Complete-StagedArchiveVerification `
+                ([pscustomobject]@{ ExitCode = 1; Output = 'mock download failure' }) `
+                $downloadFailureRoot `
+                $expectedHash `
+                { param([string]$ArchivePath) } `
+                $downloadFailureRecord `
+                $record
+        }
+        catch {
+            $downloadFailureRejected = $_.Exception.Message -match 'could not be downloaded'
+        }
+
+        $hashFailureRoot = Join-Path $temporaryRoot 'hash-failure'
+        $null = New-Item -ItemType Directory -Path $hashFailureRoot -Force
+        [System.IO.File]::WriteAllText(
+            (Join-Path $hashFailureRoot 'package.tgz'),
+            'wrong archive',
+            [System.Text.UTF8Encoding]::new($false)
+        )
+        $hashFailureRecord = Join-Path $hashFailureRoot 'record.json'
+        $hashFailureRejected = $false
+        try {
+            $null = Complete-StagedArchiveVerification `
+                ([pscustomobject]@{ ExitCode = 0; Output = 'ok' }) `
+                $hashFailureRoot `
+                $expectedHash `
+                { param([string]$ArchivePath) } `
+                $hashFailureRecord `
+                $record
+        }
+        catch {
+            $hashFailureRejected = $_.Exception.Message -match 'does not match the approved SHA-256'
+        }
+
+        $smokeFailureRoot = Join-Path $temporaryRoot 'smoke-failure'
+        $null = New-Item -ItemType Directory -Path $smokeFailureRoot -Force
+        [System.IO.File]::WriteAllBytes(
+            (Join-Path $smokeFailureRoot 'package.tgz'),
+            $expectedBytes
+        )
+        $smokeFailureRecord = Join-Path $smokeFailureRoot 'record.json'
+        $smokeFailureRejected = $false
+        try {
+            $null = Complete-StagedArchiveVerification `
+                ([pscustomobject]@{ ExitCode = 0; Output = 'ok' }) `
+                $smokeFailureRoot `
+                $expectedHash `
+                { param([string]$ArchivePath) throw 'mock installed smoke failure' } `
+                $smokeFailureRecord `
+                $record
+        }
+        catch {
+            $smokeFailureRejected = $_.Exception.Message -match 'mock installed smoke failure'
+        }
+
+        $successRoot = Join-Path $temporaryRoot 'success'
+        $null = New-Item -ItemType Directory -Path $successRoot -Force
+        [System.IO.File]::WriteAllBytes(
+            (Join-Path $successRoot 'package.tgz'),
+            $expectedBytes
+        )
+        $successRecord = Join-Path $successRoot 'record.json'
+        $smokeCalls = [pscustomobject]@{ Count = 0 }
+        $null = Complete-StagedArchiveVerification `
+            ([pscustomobject]@{ ExitCode = 0; Output = 'ok' }) `
+            $successRoot `
+            $expectedHash `
+            { param([string]$ArchivePath) $smokeCalls.Count += 1 }.GetNewClosure() `
+            $successRecord `
+            $record
+
+        if (
+            -not $downloadFailureRejected -or
+            -not $hashFailureRejected -or
+            -not $smokeFailureRejected -or
+            (Test-Path -LiteralPath $downloadFailureRecord) -or
+            (Test-Path -LiteralPath $hashFailureRecord) -or
+            (Test-Path -LiteralPath $smokeFailureRecord) -or
+            -not (Test-Path -LiteralPath $successRecord) -or
+            $smokeCalls.Count -ne 1
+        ) {
+            throw 'Staged-verification self-test did not enforce fail-closed download, hash, and smoke behavior.'
+        }
+
+        return [pscustomobject]@{
+            status = 'ok'
+            download_failure_rejected = $true
+            hash_mismatch_rejected = $true
+            smoke_failure_rejected = $true
+            failed_paths_wrote_stage_records = 0
+            successful_path_wrote_stage_record = $true
+        }
+    }
+    finally {
+        Remove-Item -LiteralPath $temporaryRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 if ($RunStageAttemptSelfTest) {
-    if ($ExecuteApprovedStaging) {
-        throw 'Stage-attempt self-test and real staging cannot run together.'
+    if ($ExecuteApprovedStaging -or $RunStagedVerificationSelfTest) {
+        throw 'Stage-attempt self-test cannot run with another mode.'
     }
     Write-Output (Invoke-StageAttemptSelfTest | ConvertTo-Json -Depth 4)
+    exit 0
+}
+if ($RunStagedVerificationSelfTest) {
+    if ($ExecuteApprovedStaging) {
+        throw 'Staged-verification self-test cannot run with real staging.'
+    }
+    Write-Output (Invoke-StagedVerificationSelfTest | ConvertTo-Json -Depth 4)
     exit 0
 }
 
@@ -242,7 +407,7 @@ if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json'
+$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
 $actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
     throw 'The current manifest does not match the audited release fingerprint.'
@@ -383,29 +548,11 @@ $downloadResult = Invoke-NativeCommandResult `
 if ($downloadResult.ExitCode -ne 0) {
     throw 'The private staged archive could not be downloaded for verification. Do not approve it in the browser.'
 }
-$downloadedArchives = @(Get-ChildItem -LiteralPath $downloadRoot -Filter '*.tgz' -File)
-if ($downloadedArchives.Count -ne 1) {
-    throw 'The staged archive download did not produce exactly one package file.'
-}
-$downloadedArchive = $downloadedArchives[0]
-if ((Get-FileHash -Algorithm SHA256 -LiteralPath $downloadedArchive.FullName).Hash.ToLowerInvariant() -ne $manifest.package.archive_sha256) {
-    throw 'The downloaded staged archive does not match the approved SHA-256. Do not approve it in the browser.'
-}
-
 $smokePath = Join-Path $repoRoot $manifest.artifacts.published_smoke
-& node $smokePath `
-    --package-spec $downloadedArchive.FullName `
-    --expected-version $manifest.package.version `
-    --expected-route-fingerprint $manifest.search_contract.stdio_route_fingerprint
-if ($LASTEXITCODE -ne 0) {
-    throw 'The downloaded staged archive failed the installed-package smoke. Do not approve it in the browser.'
-}
-
 $localStateRoot = [Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)
 $stageRecordRoot = Join-Path $localStateRoot 'Supericons\staged-releases'
-$null = New-Item -ItemType Directory -Path $stageRecordRoot -Force
 $stageRecordPath = Join-Path $stageRecordRoot "$actualManifestSha256.json"
-[pscustomobject]@{
+$stageRecord = [pscustomobject]@{
     schema_version = 1
     manifest_sha256 = $actualManifestSha256
     package = $packageSpec
@@ -415,7 +562,24 @@ $stageRecordPath = Join-Path $stageRecordRoot "$actualManifestSha256.json"
     downloaded_archive_sha256_verified = $true
     installed_smoke_verified = $true
     staged_at_utc = [DateTime]::UtcNow.ToString('o')
-} | ConvertTo-Json | Set-Content -LiteralPath $stageRecordPath -Encoding utf8
+}
+$smokeInvoker = {
+    param([string]$ArchivePath)
+    & node $smokePath `
+        --package-spec $ArchivePath `
+        --expected-version $manifest.package.version `
+        --expected-route-fingerprint $manifest.search_contract.stdio_route_fingerprint
+    if ($LASTEXITCODE -ne 0) {
+        throw 'The downloaded staged archive failed the installed-package smoke. Do not approve it in the browser.'
+    }
+}.GetNewClosure()
+$downloadedArchive = Complete-StagedArchiveVerification `
+    $downloadResult `
+    $downloadRoot `
+    $manifest.package.archive_sha256 `
+    $smokeInvoker `
+    $stageRecordPath `
+    $stageRecord
 
 Write-Output ([pscustomobject]@{
     status = 'staged_and_verified'

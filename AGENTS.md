@@ -2,6 +2,11 @@
 
 These rules apply to every AI agent and automated tool that generates or edits content in this repository. This file is the controlling discoverable source for these policies; do not assume an agent has access to any private preference store.
 
+## Required project authority
+
+- Read `docs/si-v2/vision-charter.md` before changing or releasing any canonical SI v2 or Search v2 artifact.
+- The charter binds public and canonical shipping boundaries. It does not restrict drafts, prototypes, experiments, or mockups.
+
 ## Writing style
 
 - Never use em dashes (U+2014) or en dashes (U+2013) in any prose, code comments, commit messages, documentation, or generated content. Restructure the sentence with commas, colons, periods, or parentheses instead.

@@ -1,7 +1,7 @@
 # Search v2 local-first beta closeout scorecard
 
 Status: active template, awaiting the first eligible user request
-Package: `@supericons/mcp@0.4.19-beta.0`
+Package: `@supericons/mcp@0.4.19-beta.1`
 Route: eligible English-like `search_icons` calls only
 
 ## Window state
@@ -11,12 +11,11 @@ Route: eligible English-like `search_icons` calls only
 | Published | 2026-07-17 |
 | First eligible request | Not observed |
 | Earliest evidence-based close | Not available until the first eligible request plus 3 complete days |
-| Maximum close | Not available until the first eligible request plus 14 days |
-| Minimum eligible attempts | 200 |
-| Minimum session groups | 20 |
+| Required organic eligible attempts | 200 |
+| Session groups | Reported fact, not a closure gate |
 | Daily monitors required | All completed monitors green, or every finding resolved and retained |
 
-Internal smoke tests do not start the clock and do not count toward the sample.
+Organic task-driven use by the owner, executor, auditor, and external adopters counts when cohort-labeled. Scripted fixed-suite runs, smoke tests, monitors, and verification probes do not start the clock and do not count toward the sample.
 
 A new beta package version starts a new evidence window. Fixing a finding does not remove or relabel the interval in which it occurred.
 
@@ -39,8 +38,11 @@ First-process and reused-process latency must be reported separately when the av
 
 | measure | result |
 | --- | --- |
-| Eligible attempts | Awaiting user traffic |
+| Organic eligible attempts | Awaiting user traffic |
 | Distinct session groups | Awaiting user traffic |
+| Founder share | Awaiting user traffic |
+| Agent share | Awaiting user traffic |
+| External-adopter share | Awaiting user traffic |
 | Completed days | 0 |
 | Largest-session share | Awaiting user traffic |
 | Largest anonymous-client share | Awaiting user traffic |
@@ -94,6 +96,8 @@ Select one only after the evidence window is complete:
 2. Promote the deterministic path in a separately reviewed release.
 3. Reconsider semantic retrieval only if the material-gap requirements are met.
 4. Report the beta as underpowered and make no broad quality claim.
+
+The closeout must state plainly that the evidence came from founder plus agent dogfooding and must describe external-user coverage without implying more adoption than was observed.
 
 ## Evidence still required
 

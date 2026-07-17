@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.19-beta.1 - 2026-07-17
+
+### Added
+
+- added clear package terms and third-party icon notices
+- added private-record-bound copying-detection markers to staged public engine data
+- added release checks that keep learned usage and community intelligence out of public bundles
+
+### Changed
+
+- minified generated engine modules only in staged public artifacts while keeping repository sources readable
+- updated the beta evidence window to count organic owner, agent, and external usage
+
 ## 0.4.19-beta.0 - 2026-07-16
 
 ### Added

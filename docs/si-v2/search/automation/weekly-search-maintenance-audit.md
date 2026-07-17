@@ -17,6 +17,8 @@ Run a weekly read-only review of deterministic search quality and prepare a shor
 5. Review icons added since the previous run. Draft meaning-strength and collision advice where a new icon could displace a more conventional symbol or brand identity.
 6. Review dependency findings, stale approvals, unresolved questions, and beta guardrails when a beta is active.
 7. Return a concise digest with: passed checks, new risks, suggested data or fixture changes, and owner decisions phrased for a short answer.
+8. Report charter compliance in two sections. For the evergreen layer, report VC-2, VC-3, VC-5, VC-6, VC-7, VC-8, and VC-9. For the adaptable layer, report VC-1 plus the current VC-3 protected classes, VC-4 license and canary controls, VC-7 payment rails, and other active enforcement methods. Mark each item green, finding, not applicable, or evidence unavailable.
+9. Recheck the public npm and web surfaces for the VC-3 protected classes and confirm the VC-4 license and private canaries through the approved private verification path. Never print canary identities in the report.
 
 ## Boundaries
 
