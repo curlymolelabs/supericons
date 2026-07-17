@@ -1,0 +1,54 @@
+{
+  "artifact": "admin_dashboard_v2_release_local_verification",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "implementation_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "status": "ok",
+  "checks": {
+    "deno": "pass",
+    "v2_helpers": "pass",
+    "v2_api": "pass",
+    "phase_a_regression": "pass",
+    "phase_b_contract": "pass",
+    "phase_b_browser": "pass",
+    "powershell_parser": "pass",
+    "credential_resolution": "pass",
+    "diff_check": "pass",
+    "text_policy": "pass"
+  },
+  "results": {
+    "v2_helper_cases": 9,
+    "v2_routes": 4,
+    "phase_a_metric_cases": 11,
+    "phase_a_api_checks": 27,
+    "phase_b_navigation_sections": 3,
+    "phase_b_inline_svg_charts": 4,
+    "phase_b_warm_render_ms": 49,
+    "credential_cases": 5
+  },
+  "database_preparation": {
+    "status": "ok",
+    "transaction_mode": "read_only",
+    "phase_a_columns": 3,
+    "validated_constraints": 2,
+    "private_rollup_tables": 2,
+    "phase_a_indexes": 5,
+    "rls_enabled_tables": 2,
+    "migration_history_rows": 1,
+    "overview_rows": 178,
+    "query_rows": 15600,
+    "pending_rollup_days": 0,
+    "historical_holes": 0,
+    "mutations": 0
+  },
+  "production_inventory": {
+    "admin_api_id": "1ca7655a-e504-416f-9173-750016e79b73",
+    "admin_api_version": 53,
+    "admin_api_updated_at": "1784280647363",
+    "admin_api_active": true,
+    "admin_api_verify_jwt": false,
+    "mcp_search_version": 39,
+    "mcp_search_updated_at": "1784045797971"
+  },
+  "mutations": 0,
+  "captured_at": "2026-07-17T12:23:41.4407973Z"
+}
