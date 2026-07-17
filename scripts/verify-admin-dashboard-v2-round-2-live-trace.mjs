@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
@@ -31,6 +32,7 @@ const outputPath = resolve(readArg('output') || '');
 const telemetryOnly = process.argv.includes('--telemetry-only');
 const accessToken = String(process.env.SUPABASE_ACCESS_TOKEN || '').trim();
 const adminSecret = String(process.env.PHASE_A_ADMIN_SECRET || '').trim();
+const traceSessionId = `admin-dashboard-round-2-${randomUUID()}`;
 
 assert.match(projectRef, /^[a-z]{20}$/, 'Project reference is malformed.');
 assert.ok(readArg('output'), 'Provide --output with a write-once JSON path.');
@@ -66,6 +68,7 @@ const evidence = {
     lookup_calls: lookupProbes.length,
     environment: 'production',
     synthetic: true,
+    unique_session: true,
   },
 };
 
@@ -157,7 +160,13 @@ function findQueryRow(payload, probe, origin) {
   return row;
 }
 
-const transport = new StreamableHTTPClientTransport(new URL(mcpUrl));
+const transport = new StreamableHTTPClientTransport(new URL(mcpUrl), {
+  requestInit: {
+    headers: {
+      'x-session-id': traceSessionId,
+    },
+  },
+});
 const client = new Client({ name: 'admin-dashboard-round-2-trace', version: '1.0.0' });
 
 try {

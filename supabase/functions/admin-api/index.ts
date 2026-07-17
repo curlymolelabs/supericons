@@ -277,6 +277,23 @@ function buildQueryReviewContextKey({
   ].join('|');
 }
 
+function buildQueryWorkbenchGroupKey({
+  query,
+  libraryFilter,
+  jobCategory,
+  queryOrigin,
+}: {
+  query: unknown;
+  libraryFilter?: unknown;
+  jobCategory?: unknown;
+  queryOrigin?: unknown;
+}) {
+  return JSON.stringify([
+    buildQueryReviewContextKey({ query, libraryFilter, jobCategory }),
+    normalizeSearchQuery(queryOrigin) || 'legacy_unknown',
+  ]);
+}
+
 function parseIntelligenceWindow(url: URL): IntelligenceWindow {
   const raw = String(url.searchParams.get('window') || '30d').trim().toLowerCase() as IntelligenceWindowKey;
   return INTELLIGENCE_WINDOWS[raw] || INTELLIGENCE_WINDOWS['30d'];
@@ -2286,14 +2303,17 @@ function getQueryWorkbenchEntry(
   query: string,
   libraryFilter: unknown,
   jobCategory: unknown,
+  queryOrigin: unknown,
 ) {
   const normalizedQuery = normalizeSearchQuery(query);
   const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
   const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
-  const key = buildQueryReviewContextKey({
+  const normalizedQueryOrigin = normalizeSearchQuery(queryOrigin) || 'legacy_unknown';
+  const key = buildQueryWorkbenchGroupKey({
     query: normalizedQuery,
     libraryFilter: normalizedLibrary,
     jobCategory: normalizedJobCategory,
+    queryOrigin: normalizedQueryOrigin,
   });
   const existing = map.get(key);
   if (existing) return existing;
@@ -2348,7 +2368,7 @@ function getQueryWorkbenchEntry(
     search_outcomes: new Set<string>(),
     confidence_labels: new Set<string>(),
     beta_cohorts: new Set<string>(),
-    query_origins: new Set<string>(),
+    query_origins: new Set<string>([normalizedQueryOrigin]),
     locale_attempt_counts: {} as Record<string, number>,
     first_seen: null,
     last_seen: null,
@@ -2371,7 +2391,13 @@ function buildQueryWorkbenchRows(
     const createdAt = typeof row.created_at === 'string' ? row.created_at : null;
     const libraryFilter = row.library_filter;
     const jobCategory = row.job_category;
-    const entry = getQueryWorkbenchEntry(map, normalizedQuery, libraryFilter, jobCategory);
+    const entry = getQueryWorkbenchEntry(
+      map,
+      normalizedQuery,
+      libraryFilter,
+      jobCategory,
+      row.query_origin,
+    );
     updateSeenRange(entry, createdAt);
     (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
     (entry.channels as Set<string>).add(classifySearchEvidenceChannel(row));
@@ -2789,7 +2815,12 @@ function buildQueryWorkbenchRowsFromRollups(
     const query = normalizeSearchQuery(row.query_norm);
     if (!query) continue;
     const library = normalizeReviewLibraryFilter(row.library_filter);
-    const key = buildQueryReviewContextKey({ query, libraryFilter: library, jobCategory: '' });
+    const key = buildQueryWorkbenchGroupKey({
+      query,
+      libraryFilter: library,
+      jobCategory: '',
+      queryOrigin: row.query_origin,
+    });
     const entry = grouped.get(key) || {
       query,
       library_filter: library,
