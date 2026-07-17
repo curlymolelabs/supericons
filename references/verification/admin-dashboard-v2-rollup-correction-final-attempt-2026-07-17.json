@@ -1,0 +1,62 @@
+{
+  "artifact": "admin_dashboard_v2_rollup_correction_final_attempt",
+  "release_fingerprint": "2b76622d3467e4f52ecea3dbfd093adca1ef61e9ae8791fecb0a1df9fe76313d",
+  "implementation_revision": "7aff127f2a57d1116537cee6e466636655dc7cff",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 59,
+    "updated_at": "1784293856029",
+    "source_sha256": "52d7720047af33710aa386cb819dfc5fd4cf497c7368216d4d80dc936f7ab0ed"
+  },
+  "failure": {
+    "gate": "v2_live_warm_route_latency",
+    "route": "overview",
+    "measured_latency_ms": 6698.3,
+    "limit_ms": 5000,
+    "classification": "backend_performance",
+    "reason": "An immediate second request still exceeded the limit. Process-local caching is not a reliable performance control across edge isolates, so the exact identity read must be optimized."
+  },
+  "verified_before_failure": {
+    "v2_contract": true,
+    "identity_available": true,
+    "geography_available": true,
+    "identity_rows_truncated": false,
+    "raw_rows_truncated": false,
+    "completed_rollup_data_present": true,
+    "windows_checked": [
+      "1d",
+      "7d",
+      "30d",
+      "custom"
+    ]
+  },
+  "rollback": {
+    "version": 60,
+    "updated_at": "1784293920162",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "legacy_stats_latency_ms": 2401.3,
+    "status": "ok"
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "0e9eb8c54940008afbe5df4d9ec25a51e5fa0a9b9790f08d64a8a885e604e1df",
+    "database_preflight": "5c0e2683701e60ab779bd4340ede57953cc53f9fe3e8e423ce5bfce4355d2cf4",
+    "live_gate": "77178657f970b8ba5c7f5b294d16034ebe6740f079deed4ea4501c3e39f9ee0a",
+    "pre_inventory": "e83f990e2bf41b5c37f3c9859b74364deb7deffeed68a813980768e295858ee8",
+    "legacy_preflight": "de6486bb1798bad572f0372536b71b0c366c87ee1b59b93233f57f24705b8abf",
+    "railway_health": "f3a4bf76668cd05f776c2ca8165f713643f2555410751c6223559cd758fe7f83",
+    "rollback": "031a40161887d753e04ea877ef4d660601521d118acb3a33f465d54df53ee437",
+    "rollback_inventory": "2ee6d382699851b7c0a0210aedcd41e5b80dad7dd8efeb4b677a1d4b80124194",
+    "search_health": "f943be1b7c6df074fceae0463e25e2465f63f0196cce3a50a22fcced558a1d64"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T13:10:58.0239838Z",
+  "finished_at": "2026-07-17T13:12:04.6447600Z"
+}

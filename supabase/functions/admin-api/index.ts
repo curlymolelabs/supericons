@@ -22,6 +22,7 @@ import {
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
+  fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
@@ -1289,6 +1290,7 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 
 const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
 const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
+const V2_IDENTITY_PAGE_CONCURRENCY = 4;
 const V2_MAX_ROLLUP_ROWS = 10000;
 const V2_MAX_ICON_ROWS = 5000;
 
@@ -1387,17 +1389,37 @@ async function fetchDashboardV2IdentityTelemetry(
 
   const loadAuditRows = async () => {
     try {
-      return await fetchAllRows<Record<string, unknown>>((from, to) => {
-        let query = adminClient
-          .from('search_request_audit')
-          .select(auditSelect)
+      const result = await fetchBoundedDashboardV2Pages(async ({
+        from,
+        to,
+        includeCount,
+      }: {
+        from: number;
+        to: number;
+        includeCount: boolean;
+      }) => {
+        const source = adminClient.from('search_request_audit');
+        let query = includeCount
+          ? source.select(auditSelect, { count: 'exact' })
+          : source.select(auditSelect);
+        query = query
           .neq('source', 'trap')
           .order('created_at', { ascending: false })
           .range(from, to);
         if (filters.from) query = query.gte('created_at', filters.from);
         if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-        return query;
-      }, V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1);
+        const { data, error, count } = await query;
+        if (error) throw error;
+        return {
+          rows: (data || []) as Array<Record<string, unknown>>,
+          total: includeCount ? count : null,
+        };
+      }, {
+        maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+        pageSize: EVIDENCE_PAGE_SIZE,
+        concurrency: V2_IDENTITY_PAGE_CONCURRENCY,
+      });
+      return result.rows;
     } catch (error) {
       if (isMissingRelationError(error) || isMissingColumnError(error)) return [];
       throw error;
@@ -1406,17 +1428,37 @@ async function fetchDashboardV2IdentityTelemetry(
 
   const loadUsageRows = async () => {
     try {
-      return await fetchAllRows<Record<string, unknown>>((from, to) => {
-        let query = adminClient
-          .from('mcp_usage_events')
-          .select(usageSelect)
+      const result = await fetchBoundedDashboardV2Pages(async ({
+        from,
+        to,
+        includeCount,
+      }: {
+        from: number;
+        to: number;
+        includeCount: boolean;
+      }) => {
+        const source = adminClient.from('mcp_usage_events');
+        let query = includeCount
+          ? source.select(usageSelect, { count: 'exact' })
+          : source.select(usageSelect);
+        query = query
           .eq('event_type', 'search_outcome')
           .order('created_at', { ascending: false })
           .range(from, to);
         if (filters.from) query = query.gte('created_at', filters.from);
         if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-        return query;
-      }, V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1);
+        const { data, error, count } = await query;
+        if (error) throw error;
+        return {
+          rows: (data || []) as Array<Record<string, unknown>>,
+          total: includeCount ? count : null,
+        };
+      }, {
+        maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+        pageSize: EVIDENCE_PAGE_SIZE,
+        concurrency: V2_IDENTITY_PAGE_CONCURRENCY,
+      });
+      return result.rows;
     } catch (error) {
       if (isMissingRelationError(error) || isMissingColumnError(error)) return [];
       throw error;
@@ -1431,7 +1473,7 @@ async function fetchDashboardV2IdentityTelemetry(
   const rows = mergeTelemetryEvidenceRows([
     ...auditRows
       .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
-      .map((row) => mapAuditRowToEvidenceRow(row, [])),
+      .map((row: Record<string, unknown>) => mapAuditRowToEvidenceRow(row, [])),
     ...usageRows
       .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
       .map(mapMcpUsageEventToEvidenceRow),

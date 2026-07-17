@@ -7,6 +7,7 @@ import {
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
+  fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
@@ -53,6 +54,56 @@ assert.throws(
   () => parseDashboardV2Range(new URL('https://example.test/v2/overview?window=custom&from=2025-01-01&to=2026-07-17'), now),
   /cannot exceed 366 days/,
 );
+
+{
+  const source = Array.from({ length: 3500 }, (_, index) => ({ index }));
+  let active = 0;
+  let maximumActive = 0;
+  let countRequests = 0;
+  const result = await fetchBoundedDashboardV2Pages(async ({
+    from,
+    to,
+    includeCount,
+  }) => {
+    active += 1;
+    maximumActive = Math.max(maximumActive, active);
+    if (includeCount) countRequests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    active -= 1;
+    return {
+      rows: source.slice(from, to + 1),
+      total: includeCount ? source.length : null,
+    };
+  }, {
+    maxRows: 5000,
+    pageSize: 1000,
+    concurrency: 3,
+  });
+  assert.equal(result.rows.length, 3500);
+  assert.equal(result.rows[0].index, 0);
+  assert.equal(result.rows.at(-1).index, 3499);
+  assert.equal(result.total, 3500);
+  assert.equal(maximumActive, 3);
+  assert.equal(countRequests, 1);
+}
+
+{
+  const source = Array.from({ length: 5000 }, (_, index) => ({ index }));
+  const result = await fetchBoundedDashboardV2Pages(async ({
+    from,
+    to,
+    includeCount,
+  }) => ({
+    rows: source.slice(from, to + 1),
+    total: includeCount ? source.length : null,
+  }), {
+    maxRows: 2501,
+    pageSize: 1000,
+    concurrency: 4,
+  });
+  assert.equal(result.rows.length, 2501);
+  assert.equal(result.total, 5000);
+}
 
 {
   const filters = parseDashboardV2Filters(new URL('https://example.test/v2/overview?window=7d&channel=web&include_test=true&q=database'), now);
@@ -166,7 +217,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 11,
+  cases: 13,
   series_rows: series.length,
   query_filters: true,
   privacy_safe_identifiers: true,

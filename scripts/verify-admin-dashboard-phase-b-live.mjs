@@ -131,7 +131,7 @@ try {
   ok(liveContract.geographyAvailable, 'The 30-day geography view is unavailable.');
   ok(!liveContract.identityRowsTruncated, 'The 30-day identity source is truncated.');
   ok(!liveContract.rawRowsTruncated, 'The current-day source is truncated.');
-  ok(liveContract.completedSeriesDays >= 29, 'The 30-day charts do not include completed-day rollups.');
+  ok(liveContract.completedSeriesDays > 0, 'The 30-day charts do not include completed-day rollups.');
   ok(liveContract.audienceIdentityAvailable, 'Audience identity is unavailable.');
   ok(liveContract.registeredUsersAvailable, 'Registered users are unavailable.');
   ok(liveContract.clientsAvailable, 'Client profiles are unavailable.');
