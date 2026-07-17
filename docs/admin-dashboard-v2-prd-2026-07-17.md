@@ -81,7 +81,7 @@ Per-client profiles from identity precedence: visitor key chip, kind pill, count
 
 ### 7.1 New admin-api endpoints (production deploy, internal gates apply)
 - Time-series: daily overview series by venue and origin (rollup-backed).
-- Top lists: searched, zero (rollup-backed via admin_rollup_queries); copied (pending 7.3).
+- Top lists: searched, zero (rollup-backed via admin_rollup_queries); returned (from the search-to-icon evidence linkage, coverage confirmed during endpoint design); copied (pending 7.3).
 - Geography aggregate: clients and searches by country for the window.
 - Audience: per-client profile list with kind, plan, first/last seen (bounded windows); registered enrichment joining auth read-only.
 - Icon requests: read icon_evidence; status writes.
@@ -98,7 +98,7 @@ No new tables expected; icon-request status may reuse the existing review-write 
 ## 8. Phasing
 
 - V2.1 UI on existing API: IA restructure (three sections, nav merge, deletions), explorer consolidation, activity CSV, custom date range, venue counts, test-traffic toggle, wording pass. No production deploy needed.
-- V2.2 API extensions: time-series, top lists (searched and zero), geography, audience endpoints; one admin-api deploy under the zero-touch internal gates; charts and new panels go live on real data.
+- V2.2 API extensions: time-series, top lists (searched, returned, and zero), geography, audience endpoints; one admin-api deploy under the zero-touch internal gates; charts and new panels go live on real data.
 - V2.3 Discovery-dependent: copied/downloaded top list, contact-form panel, MRR figure, each landing when its discovery item resolves (with owner input only where flagged).
 
 ## 9. Acceptance
