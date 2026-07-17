@@ -1,0 +1,80 @@
+{
+  "artifact": "admin_dashboard_v2_audience_performance_release_attempt",
+  "release_fingerprint": "f94320fe9dd62f1bd8abeb1ba3efa568f1ec7541f42247a8c4117da260474161",
+  "implementation_revision": "3759719bd2c0389a2e9fa193dbcf8befd26b805d",
+  "rollback_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+  "candidate": {
+    "version": 67,
+    "source_sha256": "b6000b27393fe737de5f7a2b04671c09999ffed80bbcffaf6325b8bbe4c16bae"
+  },
+  "verified_before_failure": {
+    "v2_contract": true,
+    "rollup_parity": true,
+    "overview_completed_days_compared": 27,
+    "query_rows_compared": 50,
+    "warm_latency_ms": {
+      "activity": 1531.2,
+      "overview": 3433.2,
+      "search": 1162.1,
+      "audience": 3756.3
+    },
+    "warm_latency_limit_ms": 5000,
+    "phase_a_queue_24h_cold_p95_ms": 888.6,
+    "phase_a_queue_24h_warm_p95_ms": 918.4,
+    "phase_a_queue_all_cold_p95_ms": 880.2
+  },
+  "failure": {
+    "gate": "phase_a_queue_all_warm_p95",
+    "classification": "execution_environment_latency_jitter",
+    "measured_p95_ms": 1165.6,
+    "limit_ms": 1000,
+    "samples_below_1000": 18,
+    "outlier_samples_ms": [
+      1165.6,
+      1790.2
+    ]
+  },
+  "rollback_control": {
+    "version": 68,
+    "updated_at": "1784296565468",
+    "source_sha256": "6d34266ff88b938debba93f50c446bf893ad9929b1b4b4cb21538716533e87f5",
+    "matching_revision": "4c700177d616eab4abbd78a6fbc5361f5360a52c",
+    "queue_24h_cold_p95_ms": 947.3,
+    "queue_24h_warm_p95_ms": 771,
+    "queue_all_cold_p95_ms": 821.3,
+    "queue_all_warm_p95_ms": 824.3,
+    "queue_all_warm_limit_ms": 1000,
+    "rollup_refresh_writes": 0,
+    "status": "ok"
+  },
+  "decision": {
+    "implementation_change_required": false,
+    "threshold_change_required": false,
+    "retry_same_implementation": true,
+    "basis": "The failing legacy queue path is unchanged by the V2 implementation, and the immediate control run on the exact rollback source passed the same four distributions with margin."
+  },
+  "unchanged_surfaces": {
+    "migration": true,
+    "mcp_search": true,
+    "railway": true,
+    "storage": true,
+    "npm_publication": true
+  },
+  "raw_evidence_sha256": {
+    "candidate_inventory": "5ce14c6af2591719d374f1c8e6cef4a2ead29703e20c44d1de47ac589f56050f",
+    "database_preflight": "6483b8bd529f785059db3ca89284feba6e7fd77b5252903038e6941c14f15a91",
+    "live_gate": "f6507ea553b7a1be32ce6e93b6fc2e4f84f438f702f9899f3c17efc29d15e669",
+    "rollup_parity": "c03bd4f7b37311e37b1200b304aa05e9c0c27e34dc2984a480ddf095d89ca37d",
+    "phase_a_regression": "42bd7a6574e58f7bf7a5a03f41161290869918b0de405c3eb93812af227ecc52",
+    "pre_inventory": "d8a0de38dfd9392af6ed0ec9de5b7db780d5e5514456fbce13391ffd4842a3a1",
+    "legacy_preflight": "e8b1f8dec50a37f9bf468f3c3f668a89c3aac6eeb43c563d23296ec00e254367",
+    "railway_health": "4f2c9bcef26001c5485b9e47254d881f10bb8ea79ae345062cf43e554fb3e84a",
+    "rollback": "f7e6e5840f3d0df5ae0c1ee819cccaec037c504d91a36ef65c178ea3565a1487",
+    "rollback_inventory": "521f43fa423b30dca3f6bbac4477eb06c1c20c3cf988c0cacb0b88e44ac52989",
+    "rollback_baseline": "82cd6bd53868803be289e1fdc57d854eb7dab170129524ac909a70576918ea3a",
+    "search_health": "546d86123bab66e0ad1c0efef9a5e152a017dab86707cd3a784745acf5c3a510"
+  },
+  "status": "rolled_back",
+  "started_at": "2026-07-17T13:53:41Z",
+  "finished_at": "2026-07-17T13:57:58.985Z"
+}
