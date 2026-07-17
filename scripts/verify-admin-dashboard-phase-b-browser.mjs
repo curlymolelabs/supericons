@@ -188,6 +188,25 @@ function responseFor(path, searchParams = new URLSearchParams()) {
           zero_attempt_count: 5,
           last_seen: '2026-07-17T07:30:00Z',
         },
+        ...Array.from({ length: 55 }, (_, index) => ({
+          query: `healthy query ${index + 1}`,
+          library_filter: 'all',
+          query_origin: 'agent_query',
+          visitor_kind: 'anonymous',
+          client_label: `${index + 1} clients`,
+          country_code: null,
+          country_available: false,
+          country_reason: 'Not available for aggregate view',
+          channel: 'web',
+          result_count: null,
+          result_count_available: false,
+          result_count_reason: 'Not available for aggregate view',
+          issue_type: 'successful',
+          outcome_label: 'Success',
+          attempt_count: index + 1,
+          zero_attempt_count: 0,
+          last_seen: '2026-07-17T07:20:00Z',
+        })),
       ],
       worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
       icon_requests: {
@@ -313,6 +332,41 @@ try {
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
+  ok(await page.locator('[data-row-limit]').count() === 8, 'Every long list must have a row display control.');
+  ok(
+    await page.locator('[data-panel-toggle]').count() === await page.locator('.panel').count(),
+    'Every dashboard panel must have a collapse control.',
+  );
+  const initialRowLimits = await page.locator('[data-row-limit]').evaluateAll(
+    (selects) => selects.map((select) => select.value),
+  );
+  ok(initialRowLimits.every((value) => value === '25'), 'Long lists must show 25 rows by default.');
+  for (const key of ['topList', 'activity', 'queries', 'worklist', 'iconRequests', 'contact', 'registeredUsers', 'clients']) {
+    ok(
+      await page.locator(`.panel[data-row-key="${key}"] [data-row-limit="${key}"]`).count() === 1,
+      `The ${key} row control is attached to the wrong panel.`,
+    );
+  }
+  ok(await page.locator('#queryExplorer tbody tr').count() === 25, 'The query explorer did not apply the 25-row default.');
+  await page.selectOption('[data-row-limit="queries"]', '50');
+  ok(await page.locator('#queryExplorer tbody tr').count() === 50, 'The query explorer did not apply the 50-row choice.');
+  const scrollStyle = await page.locator('#queryExplorer').evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      maxHeight: style.maxHeight,
+      overflowY: style.overflowY,
+      scrollbarWidth: style.scrollbarWidth,
+    };
+  });
+  ok(scrollStyle.maxHeight !== 'none', 'The query explorer height is not bounded.');
+  ok(scrollStyle.overflowY === 'auto', 'The query explorer does not scroll vertically.');
+  ok(scrollStyle.scrollbarWidth === 'none', 'The query explorer shows a vertical scrollbar.');
+  const queryPanel = page.locator('.panel[data-row-key="queries"]');
+  await queryPanel.locator('[data-panel-toggle]').click();
+  ok(!(await page.locator('#queryExplorer').isVisible()), 'Collapsing the query explorer did not hide its content.');
+  ok(await queryPanel.locator('[data-panel-toggle]').getAttribute('aria-expanded') === 'false', 'The collapsed panel state is not announced.');
+  await queryPanel.locator('[data-panel-toggle]').click();
+  ok(await page.locator('#queryExplorer').isVisible(), 'Expanding the query explorer did not restore its content.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
@@ -334,6 +388,15 @@ try {
   ok((await pendingLookupRow.innerText()).includes('Lookup completed'), 'The unavailable icon lookup result state was not explained.');
   ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
   ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
+  for (const key of ['gap-worklist-csv', 'gap-worklist-json', 'icon-requests-csv', 'icon-requests-json']) {
+    ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
+  }
+  const gapDownload = page.waitForEvent('download');
+  await page.click('[data-export="gap-worklist-csv"]');
+  ok((await gapDownload).suggestedFilename().endsWith('.csv'), 'The gap worklist CSV export failed.');
+  const requestDownload = page.waitForEvent('download');
+  await page.click('[data-export="icon-requests-json"]');
+  ok((await requestDownload).suggestedFilename().endsWith('.json'), 'The icon request JSON export failed.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');

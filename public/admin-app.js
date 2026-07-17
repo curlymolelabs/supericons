@@ -7,6 +7,8 @@ const ADMIN_API_MANAGED_AUTH = ADMIN_RUNTIME_CONFIG.managedAuth === true;
 const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
 const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
+const DEFAULT_ROW_LIMIT = 25;
+const ROW_LIMIT_OPTIONS = [25, 50, 100];
 
 const WINDOW_LABELS = {
   '1d': 'Last 24 hours',
@@ -49,6 +51,16 @@ const state = {
   explorerQuery: '',
   explorerIssue: '',
   topList: 'searched',
+  rowLimits: {
+    topList: DEFAULT_ROW_LIMIT,
+    activity: DEFAULT_ROW_LIMIT,
+    queries: DEFAULT_ROW_LIMIT,
+    worklist: DEFAULT_ROW_LIMIT,
+    iconRequests: DEFAULT_ROW_LIMIT,
+    contact: DEFAULT_ROW_LIMIT,
+    registeredUsers: DEFAULT_ROW_LIMIT,
+    clients: DEFAULT_ROW_LIMIT,
+  },
   data: {
     activity: null,
     overview: null,
@@ -127,6 +139,15 @@ function normalizeList(value) {
 function safeText(value, fallback = '-') {
   const text = String(value ?? '').trim();
   return text || fallback;
+}
+
+function rowLimit(key) {
+  const value = Number(state.rowLimits[key]);
+  return ROW_LIMIT_OPTIONS.includes(value) ? value : DEFAULT_ROW_LIMIT;
+}
+
+function visibleRows(key, rows) {
+  return normalizeList(rows).slice(0, rowLimit(key));
 }
 
 function showToast(message, isError = false) {
@@ -304,7 +325,7 @@ function sharedParams({ forSearch = false } = {}) {
 
 function endpointPath(endpoint) {
   const params = sharedParams({ forSearch: endpoint === 'search' });
-  if (endpoint === 'activity') params.set('limit', '50');
+  if (endpoint === 'activity') params.set('limit', '100');
   if (endpoint === 'search') {
     params.set('page', '1');
     params.set('page_size', '100');
@@ -711,7 +732,7 @@ function renderActivity() {
   const element = $('latestActivity');
   if (!element) return;
   if (state.loading.has('activity') && !state.data.activity) return;
-  const rows = normalizeList(state.data.activity?.activity);
+  const rows = visibleRows('activity', state.data.activity?.activity);
   if (!rows.length) {
     element.innerHTML = emptyState(state.errors.activity || 'No real user queries match these filters.');
     return;
@@ -867,7 +888,7 @@ function renderTopList() {
   }
   element.innerHTML = table(
     topListConfig(state.topList).headers,
-    list.rows,
+    visibleRows('topList', list.rows),
     `No ${state.topList} rows match these filters.`,
   );
 }
@@ -910,7 +931,7 @@ function renderQueryExplorer() {
   const element = $('queryExplorer');
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) return;
-  const rows = normalizeList(state.data.search?.queries);
+  const rows = visibleRows('queries', state.data.search?.queries);
   const headers = [
     {
       label: 'Query',
@@ -929,7 +950,7 @@ function renderQueryExplorer() {
 function renderWorklist() {
   const element = $('gapWorklist');
   if (!element) return;
-  const rows = normalizeList(state.data.search?.worklist);
+  const rows = visibleRows('worklist', state.data.search?.worklist);
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
@@ -953,7 +974,7 @@ function renderIconRequests() {
     { label: 'Submitter', render: (row) => visitorLabel(row) },
     { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
     { label: 'Submitted', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
-  ], inbox.rows, 'No icon requests have been submitted in this period.');
+  ], visibleRows('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
 }
 
 function renderContactInbox() {
@@ -969,7 +990,7 @@ function renderContactInbox() {
     { label: 'Interest', render: (row) => pill(safeText(row.interest, 'General')) },
     { label: 'Message', render: (row) => escapeHtml(truncate(row.message, 90)) },
     { label: 'Received', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
-  ], inbox.rows, 'No contact submissions have been stored yet.');
+  ], visibleRows('contact', inbox.rows), 'No contact submissions have been stored yet.');
 }
 
 function renderDiagnostics() {
@@ -1051,7 +1072,7 @@ function renderAudience() {
       { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
       { label: 'Venues', render: (row) => escapeHtml(normalizeList(row.venues).map(channelLabel).join(', ') || '-') },
       { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not recorded in period</span>' },
-    ], users.rows, 'No registered users match these filters.')
+    ], visibleRows('registeredUsers', users.rows), 'No registered users match these filters.')
     : emptyState(users.reason);
 
   const allClients = availability(data?.clients, 'Client profiles are not available from the current data source.');
@@ -1064,7 +1085,7 @@ function renderAudience() {
       { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
       { label: 'Top query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
-    ], allClients.rows, 'No clients match these filters.')
+    ], visibleRows('clients', allClients.rows), 'No clients match these filters.')
     : emptyState(allClients.reason);
 }
 
@@ -1352,6 +1373,10 @@ function exportData(key) {
     activity: normalizeList(state.data.activity?.activity),
     'queries-csv': normalizeList(search.queries),
     'queries-json': normalizeList(search.queries),
+    'gap-worklist-csv': normalizeList(search.worklist),
+    'gap-worklist-json': normalizeList(search.worklist),
+    'icon-requests-csv': unwrapRows(search.icon_requests),
+    'icon-requests-json': unwrapRows(search.icon_requests),
     'registered-users': unwrapRows(audience.registered_users),
     clients: unwrapRows(audience.clients),
   };
@@ -1369,6 +1394,45 @@ function setSection(section) {
   renderNavigation();
 }
 
+function initializePanelControls() {
+  document.querySelectorAll('.panel').forEach((panel, index) => {
+    const head = panel.querySelector(':scope > .panel-head');
+    if (!head) return;
+    const title = safeText(head.querySelector('.panel-title')?.textContent, `Panel ${index + 1}`);
+    let actions = head.querySelector(':scope > .panel-actions');
+    if (!actions) {
+      actions = document.createElement('div');
+      actions.className = 'panel-actions';
+      [...head.children]
+        .filter((child) => child.matches('button, label, select'))
+        .forEach((child) => actions.appendChild(child));
+      head.appendChild(actions);
+    }
+
+    const key = panel.dataset.rowKey;
+    if (key) {
+      const label = document.createElement('label');
+      label.className = 'row-limit-control';
+      label.innerHTML = `
+        <span>Rows</span>
+        <select data-row-limit="${escapeHtml(key)}" aria-label="Rows shown in ${escapeHtml(panel.dataset.rowLabel || title)}">
+          ${ROW_LIMIT_OPTIONS.map((value) => `<option value="${value}"${value === rowLimit(key) ? ' selected' : ''}>${value}</option>`).join('')}
+        </select>
+      `;
+      actions.prepend(label);
+    }
+
+    const toggle = document.createElement('button');
+    toggle.className = 'small-button panel-toggle';
+    toggle.type = 'button';
+    toggle.dataset.panelToggle = '';
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', `Collapse ${title}`);
+    toggle.textContent = 'Collapse';
+    actions.appendChild(toggle);
+  });
+}
+
 function initializeEvents() {
   document.querySelectorAll('.nav-button').forEach((button) => {
     button.addEventListener('click', () => setSection(button.dataset.section));
@@ -1381,6 +1445,23 @@ function initializeEvents() {
   });
   document.querySelectorAll('[data-export]').forEach((button) => {
     button.addEventListener('click', () => exportData(button.dataset.export));
+  });
+  document.querySelectorAll('[data-row-limit]').forEach((select) => {
+    select.addEventListener('change', () => {
+      state.rowLimits[select.dataset.rowLimit] = Number(select.value);
+      renderAll();
+    });
+  });
+  document.querySelectorAll('[data-panel-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const panel = button.closest('.panel');
+      if (!panel) return;
+      const collapsed = panel.classList.toggle('is-collapsed');
+      const title = safeText(panel.querySelector('.panel-title')?.textContent, 'panel');
+      button.setAttribute('aria-expanded', String(!collapsed));
+      button.setAttribute('aria-label', `${collapsed ? 'Expand' : 'Collapse'} ${title}`);
+      button.textContent = collapsed ? 'Expand' : 'Collapse';
+    });
   });
   $('periodButtons')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-window]');
@@ -1429,6 +1510,7 @@ function initializeEvents() {
 }
 
 async function initializeDashboard() {
+  initializePanelControls();
   initializeEvents();
   renderAll();
   try {

@@ -21,6 +21,10 @@ The admin dashboard remains a local-only static page.
 | Gap Worklist | `#phaseBGapPanel` | `GET /intelligence/search/queue` | Shows true zero and low-result searches with review actions |
 | Diagnostics | `#intelligenceRawSignalsDetails` | Existing overview, search, and evidence endpoints | Keeps raw counts, secondary metrics, and detailed activity available without crowding the default view |
 | Query detail drawer | `#queryDetailDrawer` | Existing query detail endpoint | Preserves detailed evidence and notes for a selected gap |
+| Row display control | `[data-row-limit]` | Local display state | Shows 25 rows by default, with 50 and 100 row choices for long lists |
+| Collapsible panel control | `[data-panel-toggle]` | Local display state | Collapses or expands each dashboard panel without changing its data |
+| Scroll region | `.scroll-region` | Rendered list or table rows | Keeps long panels within the viewport while allowing vertical scrolling without a visible scrollbar |
+| Gap and request exports | Gap worklist and Icon requests panel actions | Current filtered search response | Downloads the complete filtered rows as CSV or JSON |
 
 ## Shared patterns
 
