@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_protected_local_first_beta_publication",
+  "date": "2026-07-17",
+  "hash_mode": "utf8_lf_normalized_text",
+  "implementation": {
+    "commit": "bbff99a54db666711f1baf59658b5995e812ff0e",
+    "release_type": "npm_prerelease_only",
+    "hosted_function_deployment_required": false,
+    "database_migration_required": false,
+    "web_deployment_required": false
+  },
+  "package": {
+    "name": "@supericons/mcp",
+    "version": "0.4.19-beta.1",
+    "publish_tag": "beta",
+    "latest_must_remain": "0.4.17",
+    "browser_security_key_approval_required": true,
+    "archive_path": "tmp/search-v2-beta1-release-bbff99a54/archive/supericons-mcp-0.4.19-beta.1.tgz",
+    "archive_sha256": "07ec2cd059a52d1451704933c0b1b6477585949ddc7831307287987f5913137b",
+    "archive_size_bytes": 6107234,
+    "unpacked_size_bytes": 25289936,
+    "file_count": 49,
+    "npm_shasum": "4cd72d83be9d6547409f3c9b1f2e0aeb3c88c292",
+    "npm_integrity": "sha512-OSdVXJrZqjMtRWllKOecFnkOzdnOvTQ0Bads5TkcVNnz+o7BCrKYnT1U0c/6DyMjdq4cMiLLxvKeuMt1saCoog==",
+    "maximum_size_bytes": 7000000
+  },
+  "search_contract": {
+    "fixed_cases": 225,
+    "eligible_stdio_cases": 150,
+    "helper_fingerprint": "ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8",
+    "stdio_route_fingerprint": "7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184",
+    "index_generated_at": "2026-06-28T06:24:19.035Z",
+    "local_p95_ms_maximum": 500,
+    "combined_rss_bytes_maximum": 75000000,
+    "material_assets": 8524,
+    "model_provider_calls": 0
+  },
+  "routes": {
+    "eligible_search_icons": "packaged_local_index",
+    "eligible_rule": "search_icons with no locale and ASCII query text",
+    "localized_search_icons": "stable_mcp_search",
+    "non_ascii_search_icons": "stable_mcp_search",
+    "recommend_icons": "stable_mcp_search",
+    "hosted_mcp": "unchanged",
+    "web_search": "unchanged",
+    "eligible_beta_cohort": "deterministic-v2-beta",
+    "stable_fallback_beta_cohort": null
+  },
+  "public_bundle": {
+    "charter_probes": {
+      "VC-3_bundle_content": "required",
+      "VC-4_license_and_canary": "required"
+    },
+    "protected_classes": [
+      "usage_derived_ranking_weights",
+      "query_behavior_signals",
+      "community_curation_data",
+      "contributor_reputation_data",
+      "paid_design_intelligence"
+    ],
+    "private_record_sha256": "abed31fb65d8ae606680ac55e862ef2f06a091617e3c266b79ecd12c2fd03963",
+    "private_record_values_must_remain_out_of_git": true,
+    "private_record_values_must_remain_out_of_public_verifiers": true,
+    "staged_generated_modules_minified": 3,
+    "source_modules_minified": false,
+    "npm_artifact_licensed_and_canaried": true,
+    "web_artifact_boundary_verified": true,
+    "web_deployment_authorized": false
+  },
+  "published_smoke": {
+    "eligible_stdio_cases": 150,
+    "material_styles": [
+      "outline",
+      "solid"
+    ],
+    "telemetry_disabled": true,
+    "hosted_calls": 0,
+    "hosted_call_measurement": "outbound_fetch_interceptor",
+    "negative_probe": "one_observed_call_must_fail"
+  },
+  "publication_flow": {
+    "mode": "npm_staged_browser_security_key",
+    "staging_cli": "11.18.0",
+    "staged_archive_download_and_smoke_required_before_browser_approval": true,
+    "browser_approval_requires_owner_access": true,
+    "postapproval_registry_and_smoke_verification_required": true,
+    "postapproval_failure_requires_exact_prerelease_deprecation": true,
+    "postapproval_finalization_single_use": true,
+    "postapproval_deprecation_must_be_empty_before_success": true,
+    "postapproval_terminal_outcomes": [
+      "published_and_verified",
+      "rolled_back"
+    ],
+    "postapproval_replay_behavior": "reject_before_external_request",
+    "publish_tag_locked_at_staging": "beta"
+  },
+  "publication_attempts": {
+    "maximum_additional_stage_commands": 1,
+    "maximum_successful_publications": 1,
+    "receipt_schema_version": 1,
+    "receipt_scope": "user_local_application_data",
+    "receipt_contains_credentials": false,
+    "consumption_timing": "immediately_before_npm_stage_publish",
+    "finalization_outcome_schema_version": 1,
+    "finalization_outcome_scope": "user_local_application_data",
+    "finalization_outcome_contains_credentials": false
+  },
+  "external_actions": {
+    "maximum_private_npm_staged_uploads": 1,
+    "maximum_npm_prerelease_publications": 1,
+    "maximum_conditional_npm_deprecations": 1,
+    "maximum_stable_hosted_comparison_requests": 0,
+    "function_deployments": 0,
+    "database_mutations": 0,
+    "migration_history_repairs": 0,
+    "normal_database_pushes": 0,
+    "production_load_tests": 0,
+    "npm_latest_changes": 0,
+    "web_deployments": 0,
+    "model_provider_calls": 0,
+    "monitoring_activations": 0,
+    "automated_public_messages": 0,
+    "scheduled_warm_pings": 0
+  },
+  "beta_window": {
+    "starts_at": "first_verified_eligible_organic_request_on_beta_1",
+    "minimum_organic_attempts": 200,
+    "minimum_complete_green_days": 3,
+    "eligible_sources": [
+      "owner_organic_agent_use",
+      "executor_organic_agent_use",
+      "auditor_organic_agent_use",
+      "external_beta_user_use"
+    ],
+    "scripted_suites_eligible": false,
+    "session_count_is_gate": false,
+    "session_count_reported": true,
+    "new_release_starts_new_evidence_window": true,
+    "failed_intervals_remain_in_history": true
+  },
+  "artifacts": {
+    "stager": "scripts/stage-search-v2-local-first-beta.ps1",
+    "stager_sha256": "0f767fef737f1e441028b9d187bc24764fa3dbe31744ca87eff6c60aa8c608be",
+    "postapproval_finalizer": "scripts/finalize-search-v2-local-first-beta.ps1",
+    "postapproval_finalizer_sha256": "c1f522c1b18f0ee37840463662ba793b4be4e35884809c6c0bb46caee9ccf97d",
+    "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
+    "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
+    "protected_builder": "scripts/build-search-v2-protected-public-artifacts.mjs",
+    "protected_builder_sha256": "5c4f1763058420e6e5916f4be48f7e570c0f09fb1bb27d016e0c247984481169",
+    "protected_verifier": "scripts/verify-search-v2-protected-public-artifacts.mjs",
+    "protected_verifier_sha256": "9a72c7f34197958b346de3f445a5f541618417548c718551590c5aa25f0ff65b",
+    "packet_verifier": "scripts/verify-search-v2-beta1-publication-packet.mjs",
+    "packet_verifier_sha256": "aa6846c4e98c3063160b66aed94a84356efd037eb59186f10299ea5ee48b7727",
+    "approval_request": "docs/si-v2/search/reviews/search-v2-beta1-publication-approval-request-2026-07-17.md"
+  },
+  "monitoring": {
+    "weekly_definition": "docs/si-v2/search/automation/weekly-search-maintenance-audit.md",
+    "daily_beta_only_definition": "docs/si-v2/search/automation/daily-search-beta-monitor.md",
+    "activation_authorized_by_this_manifest": false
+  },
+  "rollback": {
+    "prepublication_failure": "stop_without_registry_mutation",
+    "staged_verification_failure": "do_not_approve_and_reject_exact_stage_with_owner_browser_access",
+    "postpublication_verification_failure": "deprecate_exact_prerelease_and_keep_latest_unchanged",
+    "beta_quality_failure": "deprecate_exact_prerelease_stop_invitations_and_keep_latest_unchanged",
+    "stable_fallback_failure": "stop_beta_and_preserve_public_safe_evidence"
+  },
+  "excluded_scope": [
+    "supabase_function_deployment",
+    "database_migration",
+    "normal_database_push",
+    "older_migration_repair",
+    "production_load_test",
+    "npm_latest_change",
+    "hosted_mcp_change",
+    "localized_local_first_search",
+    "non_ascii_local_first_search",
+    "local_first_recommendation",
+    "web_search_change",
+    "web_deployment",
+    "monitoring_activation",
+    "automated_public_invitation",
+    "scheduled_warm_ping",
+    "model_provider_call",
+    "stable_hosted_comparison"
+  ]
+}

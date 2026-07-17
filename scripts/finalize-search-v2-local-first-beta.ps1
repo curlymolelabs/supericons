@@ -304,13 +304,13 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     $manifest = [pscustomobject]@{
         package = [pscustomobject]@{
             name = '@supericons/mcp'
-            version = '0.4.19-beta.0'
+            version = '0.4.19-beta.1'
             npm_shasum = 'approved-shasum'
             npm_integrity = 'approved-integrity'
             latest_must_remain = '0.4.17'
         }
     }
-    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
     $events = [System.Collections.Generic.List[string]]::new()
     $tagReadCount = [pscustomobject]@{ Count = 0 }
     $deprecationReadCount = [pscustomobject]@{ Count = 0 }
@@ -331,7 +331,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
                 '0.4.18-beta.0'
             }
             else {
-                '0.4.19-beta.0'
+                '0.4.19-beta.1'
             }
             return [pscustomobject]@{
                 ExitCode = 0
@@ -398,7 +398,7 @@ function Invoke-StageRecordSelfTest {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-stage-record-$([guid]::NewGuid().ToString('N'))"
     $recordPath = Join-Path $temporaryRoot 'record.json'
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
     $manifest = [pscustomobject]@{
         package = [pscustomobject]@{
             publish_tag = 'beta'
@@ -450,7 +450,7 @@ function Invoke-StageRecordSelfTest {
 function Invoke-FinalizationOutcomeSelfTest {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-finalization-outcome-$([guid]::NewGuid().ToString('N'))"
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
     $stageId = '11111111-1111-4111-8111-111111111111'
     $rolledBackPath = Join-Path $temporaryRoot 'rolled-back.json'
     $verifiedPath = Join-Path $temporaryRoot 'verified.json'
@@ -572,7 +572,7 @@ if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json'
+$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
 $actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
     throw 'The current manifest does not match the audited release fingerprint.'
@@ -666,12 +666,6 @@ Complete-FinalizationOutcome `
     'published_and_verified' `
     'Public registry identity, tags, and installed-package smoke passed.'
 
-$comparisonPath = Join-Path $repoRoot $manifest.artifacts.hosted_comparison_runner
-& node $comparisonPath --execute-approved $actualManifestSha256
-if ($LASTEXITCODE -ne 0) {
-    throw 'The informational stable-hosted comparison failed after publication verification.'
-}
-
 Write-Output ([pscustomobject]@{
     status = 'published_and_verified'
     package = $packageSpec
@@ -681,5 +675,5 @@ Write-Output ([pscustomobject]@{
     beta_tag = $registryState.dist_tags.beta
     latest_tag = $registryState.dist_tags.latest
     installed_smoke_verified = $true
-    hosted_comparison_maximum_requests = $manifest.hosted_comparison.maximum_requests
+    hosted_comparison_requests = 0
 } | ConvertTo-Json -Depth 4)

@@ -149,7 +149,7 @@ function Invoke-StageAttemptSelfTest {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-stage-budget-$([guid]::NewGuid().ToString('N'))"
     $receiptPath = Join-Path $temporaryRoot 'attempt.json'
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.0'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
     $stageAttemptCounter = [pscustomobject]@{ Count = 0 }
     $stageId = '11111111-1111-4111-8111-111111111111'
     $mockInvoker = {
@@ -161,7 +161,7 @@ function Invoke-StageAttemptSelfTest {
                 '@supericons/mcp' = @{
                     id = $packageSpec
                     name = '@supericons/mcp'
-                    version = '0.4.19-beta.0'
+                    version = '0.4.19-beta.1'
                     stageId = $stageId
                 }
             } | ConvertTo-Json -Compress)
@@ -242,7 +242,7 @@ if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-local-first-beta-publication-authorization-manifest-2026-07-16.json'
+$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
 $actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
     throw 'The current manifest does not match the audited release fingerprint.'
