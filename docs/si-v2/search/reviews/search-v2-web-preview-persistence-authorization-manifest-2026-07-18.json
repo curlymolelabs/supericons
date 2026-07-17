@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "release": {
+    "id": "search_v2_web_preview_persistence",
+    "title": "Preserve MCP preview results on the Supericons web grid",
+    "date": "2026-07-18",
+    "default_user_change": "MCP preview links remain in preview mode until the visitor chooses Browse all icons."
+  },
+  "preparation": {
+    "source_commit": "c759c95eef60a23965966929c9b6665c0ead3dab",
+    "source_tree": "2f9b35fe576f0fc3b2a10cecd9cde2e03b31af4e",
+    "allowed_packet_paths": [
+      "docs/si-v2/search/reviews/search-v2-web-preview-persistence-approval-request-2026-07-18.md",
+      "docs/si-v2/search/reviews/search-v2-web-preview-persistence-authorization-manifest-2026-07-18.json"
+    ],
+    "required_file_sha256": {
+      "main.js": "76428efc37f3dc782297c5a3c0bc6ec4dc89fdc4412c99a563862a51099b4047",
+      "index.html": "63533906335fe2ab1e6065704012c0abd94d6943b5bb7cc2543be07393c84bad",
+      "style.css": "0390a4739aa044b21ae79ab95994ef9d7e3e96cdea474ec713acdf29ba573be1",
+      "lib/view-route-policy.js": "c47d39ec61ac7af76172c1dff6fbc0621101346b611452b7d376b491099a6aae",
+      "scripts/verify-mcp-preview-persistence.mjs": "0187ec975016a93a3077c794eb95764d79839b343cc7262f095f7b7a40f4db8c",
+      "scripts/build-web-preview-persistence-release.mjs": "1887f5194895ef302d10d0c78f997283f1704383642a45569b041ba020906d70",
+      "scripts/verify-search-v2-protected-public-artifacts.mjs": "b92885c72996d95aaaf6d6175aca4ae76b826c82f5735de273cfd43fe1f6637d",
+      "scripts/run-web-preview-persistence-release.mjs": "716d8af923f044506d1cf210f2706a6b2b00365e741a2d4b27f5f2c2d67198d7",
+      "scripts/verify-web-preview-persistence-release-packet.mjs": "0e4fff7bd83e338dec694c2b1cc2a402f3ca56632da24933404a05160c2613ef",
+      "package.json": "ca6738ed9737800d3cd7a505c153b3ba69bae1e7e057d9e58fb8908ad610e604",
+      "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
+      "vite.config.js": "2204c6ccd15aeaeaac21e31b53cc9dee4c41f37672afdb1141f59bc03e76e513",
+      "netlify.toml": "bd9db6a35309d96be812c22ed329c691ffe67770eeccc99b1610742dd6e0c43b"
+    }
+  },
+  "artifact": {
+    "directory": "dist",
+    "file_count": 188,
+    "total_bytes": 40904711,
+    "tree_sha256": "8a65c6719102494e67eb83cd2f3ab28e2b522f787cfb585f536a1d9874be3359",
+    "build_rule": "Build once from the pinned source, apply the protected web overlays, verify those exact bytes, then deploy with no additional build."
+  },
+  "protection": {
+    "private_record_sha256": "abed31fb65d8ae606680ac55e862ef2f06a091617e3c266b79ecd12c2fd03963",
+    "third_party_provenance_sha256": "25d924a36fc274cf4818ad1fc016c5092937be3b3b53190536b144e25ae8c816",
+    "required_checks": [
+      "VC-3_bundle_content",
+      "VC-4_license_and_canary"
+    ],
+    "private_record_rule": "The canary record remains outside the repository. Its exact hash is bound here, and verification fails if it is absent or changed."
+  },
+  "netlify": {
+    "site_id": "dcccabac-ae47-4c69-80c4-aefc8c15e2e5",
+    "site_name": "lucky-faun-ce5f50",
+    "hostname": "supericons.dev",
+    "rollback_deploy_id": "6a4c656b9a68bd1909b8ba2c",
+    "rollback_deploy_published_at": "2026-07-07T02:33:16.562Z",
+    "rollback_deploy_title": "Publish single icon license route",
+    "preflight_rule": "Stop before reservation or deployment if the current published deploy is not the pinned rollback deploy."
+  },
+  "mutation_budget": {
+    "netlify_production_deployments": 1,
+    "netlify_restore_operations": 1,
+    "netlify_site_creations": 0,
+    "npm_publications": 0,
+    "npm_tag_changes": 0,
+    "supabase_actions": 0,
+    "railway_deployments": 0,
+    "database_actions": 0,
+    "hosted_search_measurement_requests": 0,
+    "model_provider_calls": 0,
+    "automated_invitations": 0
+  },
+  "probe_inventory": [
+    {
+      "id": "exact_artifact_rebuild",
+      "status": "enforced",
+      "evidence": "Two builds must have the same file count, byte count, and tree hash."
+    },
+    {
+      "id": "explicit_preview_persistence",
+      "status": "enforced",
+      "evidence": "An explicit icon list survives delayed popularity, locale, and authentication events."
+    },
+    {
+      "id": "query_preview_persistence",
+      "status": "enforced",
+      "evidence": "A query preview survives delayed popularity, locale, and authentication events."
+    },
+    {
+      "id": "unknown_refs_zero_results",
+      "status": "enforced",
+      "evidence": "Unknown explicit references show zero results and never expose the full grid."
+    },
+    {
+      "id": "late_hosted_response_invalidation",
+      "status": "enforced",
+      "evidence": "A late hosted result cannot restore preview mode after Browse all icons."
+    },
+    {
+      "id": "view_icons_route_persistence",
+      "status": "enforced",
+      "evidence": "The view=icons parameter remains in the preview URL and after deliberate preview exit."
+    },
+    {
+      "id": "VC-3_bundle_content",
+      "status": "enforced",
+      "evidence": "The final web bytes exclude all five protected intelligence classes."
+    },
+    {
+      "id": "VC-4_license_and_canary",
+      "status": "enforced",
+      "evidence": "The final web bytes include license evidence and the privately bound canaries."
+    },
+    {
+      "id": "wrong_production_preflight_rejection",
+      "status": "enforced",
+      "evidence": "A changed production baseline makes zero deploy and restore calls."
+    },
+    {
+      "id": "single_use_release_receipt",
+      "status": "enforced",
+      "evidence": "The same manifest cannot make a second external call after reservation."
+    },
+    {
+      "id": "postdeploy_exact_rollback",
+      "status": "enforced",
+      "evidence": "Any failed live verification restores only the pinned production deploy."
+    },
+    {
+      "id": "rollback_failure_terminal_record",
+      "status": "enforced",
+      "evidence": "A failed restore leaves a terminal local record and cannot be replayed."
+    }
+  ],
+  "postdeploy_checks": {
+    "homepage": "The live home page contains the preview banner markup.",
+    "explicit_preview": "Five fixed icons remain after delayed popularity and re-render events.",
+    "query_preview": "The fixed query remains filtered after delayed popularity and re-render events.",
+    "unknown_refs": "Unknown references remain at zero results.",
+    "browse_all": "Browse all icons removes preview state while preserving view=icons.",
+    "late_response": "A late hosted response cannot re-enter preview mode.",
+    "protection": "The public license, provenance, canaries, and protected-class boundary match the staged artifact."
+  },
+  "rollback": {
+    "trigger": "Any deploy response mismatch, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
+    "action": "Restore Netlify deploy 6a4c656b9a68bd1909b8ba2c once, verify it is current, record the failure, and stop.",
+    "replay": "Any in-progress, successful, rolled-back, or rollback-failed receipt blocks another execution. Reconciliation requires a new independently audited manifest."
+  },
+  "excluded_actions": [
+    "No npm publication or tag change.",
+    "No Supabase function, schema, data, or configuration change.",
+    "No Railway deployment.",
+    "No production load test or hosted search comparison.",
+    "No invitation is sent automatically.",
+    "No model provider is called."
+  ]
+}
