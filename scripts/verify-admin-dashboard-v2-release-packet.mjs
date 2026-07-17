@@ -25,7 +25,7 @@ function sha256TextFile(path) {
 const expectedFingerprint = readArg('fingerprint');
 assert.match(expectedFingerprint, /^[0-9a-f]{64}$/, 'Provide --fingerprint.');
 
-const sourcePath = 'references/verification/admin-dashboard-v2-identity-performance-retry-fingerprint-2026-07-17.txt';
+const sourcePath = 'references/verification/admin-dashboard-v2-rollup-paging-release-fingerprint-2026-07-17.txt';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Release fingerprint does not match the source.');
@@ -37,8 +37,8 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_v2_identity_performance_retry',
-  implementation_revision: '818d4a6feb92c4a958755a316ffd79404cb7281f',
+  packet: 'admin_dashboard_v2_rollup_paging_release',
+  implementation_revision: 'aa7f2254472fc21b9e1b5f4dc0b953809f56682d',
   implementation_tree: fields.implementation_tree,
   rollback_revision: '4c700177d616eab4abbd78a6fbc5361f5360a52c',
   rollback_tree: fields.rollback_tree,
@@ -67,16 +67,17 @@ assert.deepEqual(fields, {
   retry_attempt_evidence_sha256: fields.retry_attempt_evidence_sha256,
   final_attempt_evidence_sha256: fields.final_attempt_evidence_sha256,
   performance_attempt_evidence_sha256: fields.performance_attempt_evidence_sha256,
+  performance_retry_attempt_evidence_sha256: fields.performance_retry_attempt_evidence_sha256,
   local_verification_sha256: fields.local_verification_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
   function_name: 'admin-api',
   pre_function_id: '1ca7655a-e504-416f-9173-750016e79b73',
-  pre_function_version: '62',
-  pre_function_updated_at: '1784294728770',
+  pre_function_version: '64',
+  pre_function_updated_at: '1784295229758',
   pre_function_verify_jwt: 'false',
-  pre_function_ezbr_sha256: '537d0c134f30271a7784fc0a001e1073290c51e6133a55e8627afa3a54e428cc',
+  pre_function_ezbr_sha256: '37535447d20e30b39bed48024de867e280cdfa706e0283c696dbccdab719a394',
   pre_mcp_search_id: 'ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43',
   pre_mcp_search_version: '39',
   pre_mcp_search_updated_at: '1784045797971',
@@ -92,6 +93,7 @@ assert.deepEqual(fields, {
   multi_day_aggregation: 'completed_rollups_plus_current_day',
   identity_row_limit_per_source: '25000',
   identity_page_concurrency: '4',
+  rollup_page_concurrency: '4',
   identity_event_scope: 'search_outcome_only',
   rollup_parity_policy: 'read_only_database_to_api_exact',
   phase_a_queue_24h_p95_limit_ms: '1500',
@@ -134,6 +136,7 @@ for (const field of [
   'retry_attempt_evidence_sha256',
   'final_attempt_evidence_sha256',
   'performance_attempt_evidence_sha256',
+  'performance_retry_attempt_evidence_sha256',
   'local_verification_sha256',
 ]) {
   assert.match(fields[field], /^[0-9a-f]{40,64}$/, `${field} is malformed.`);
@@ -168,7 +171,9 @@ const textHashes = [
     'final_attempt_evidence_sha256'],
   ['references/verification/admin-dashboard-v2-identity-performance-attempt-2026-07-17.json',
     'performance_attempt_evidence_sha256'],
-  ['references/verification/admin-dashboard-v2-identity-performance-retry-local-verification-2026-07-17.json',
+  ['references/verification/admin-dashboard-v2-identity-performance-retry-attempt-2026-07-17.json',
+    'performance_retry_attempt_evidence_sha256'],
+  ['references/verification/admin-dashboard-v2-rollup-paging-release-local-verification-2026-07-17.json',
     'local_verification_sha256'],
 ];
 for (const [path, field] of textHashes) {
@@ -205,8 +210,11 @@ const implementationHelper = normalizedText(execFileSync(
 ));
 assert.equal(sha256(implementationHelper), fields.v2_helper_sha256);
 assert.match(implementationSource, /V2_IDENTITY_PAGE_CONCURRENCY = 4/);
+assert.match(implementationSource, /V2_ROLLUP_PAGE_CONCURRENCY = 4/);
 assert.match(implementationSource, /select\(auditSelect, \{ count: 'exact' \}\)/);
 assert.match(implementationSource, /select\(usageSelect, \{ count: 'exact' \}\)/);
+assert.match(implementationSource, /select\(overviewSelect, \{ count: 'exact' \}\)/);
+assert.match(implementationSource, /select\(querySelect, \{ count: 'exact' \}\)/);
 assert.match(implementationSource, /fetchBoundedDashboardV2Pages/);
 assert.match(implementationHelper, /export async function fetchBoundedDashboardV2Pages/);
 
@@ -237,7 +245,7 @@ assert.match(runner, /Assert-LinkedProject/);
 assert.match(runner, /-Name 'mcp-search'/);
 assert.match(runner, /mcp-search version changed during the admin-api release/);
 assert.match(runner, /verify-admin-dashboard-v2-rollup-parity\.mjs/);
-assert.match(runner, /admin-dashboard-v2-identity-performance-retry-parity-2026-07-17\.json/);
+assert.match(runner, /admin-dashboard-v2-rollup-paging-release-parity-2026-07-17\.json/);
 assert.equal(runner.includes('Read-Host'), false, 'Release runner must not prompt.');
 assert.equal(runner.includes('ApprovalFingerprint'), false, 'Release runner must not export approval ceremony.');
 assert.equal(/supabase\s+functions\s+deploy\s+mcp-search/i.test(runner), false);
@@ -302,7 +310,7 @@ for (const prohibited of [
 }
 
 const localVerification = JSON.parse(
-  readFileSync('references/verification/admin-dashboard-v2-identity-performance-retry-local-verification-2026-07-17.json', 'utf8'),
+  readFileSync('references/verification/admin-dashboard-v2-rollup-paging-release-local-verification-2026-07-17.json', 'utf8'),
 );
 assert.equal(localVerification.status, 'ok');
 assert.equal(localVerification.project_ref, fields.project_ref);
@@ -326,8 +334,17 @@ assert.equal(
   Number(fields.identity_page_concurrency),
 );
 assert.equal(
+  Number(localVerification.correction.rollup_page_concurrency),
+  Number(fields.rollup_page_concurrency),
+);
+assert.equal(localVerification.correction.rollup_first_page_exact_count, true);
+assert.equal(
   localVerification.correction.query_parity_policy,
   'compare_api_rows_to_complete_database_map',
+);
+assert.ok(
+  localVerification.database_preparation.production_query_rollup_rows_30d > 1000,
+  'The production rollup count must prove that one service-capped response is incomplete.',
 );
 assert.equal(localVerification.results.v2_helper_cases, 13);
 
