@@ -25,7 +25,7 @@ function sha256TextFile(path) {
 const expectedFingerprint = readArg('fingerprint');
 assert.match(expectedFingerprint, /^[0-9a-f]{64}$/, 'Provide --fingerprint.');
 
-const sourcePath = 'references/verification/admin-dashboard-v2-rollup-correction-release-fingerprint-2026-07-17.txt';
+const sourcePath = 'references/verification/admin-dashboard-v2-rollup-correction-retry-fingerprint-2026-07-17.txt';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Release fingerprint does not match the source.');
@@ -37,7 +37,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_v2_rollup_correction_release',
+  packet: 'admin_dashboard_v2_rollup_correction_retry',
   implementation_revision: '7aff127f2a57d1116537cee6e466636655dc7cff',
   implementation_tree: fields.implementation_tree,
   rollback_revision: '4c700177d616eab4abbd78a6fbc5361f5360a52c',
@@ -63,16 +63,17 @@ assert.deepEqual(fields, {
   phase_b_browser_gate_sha256: fields.phase_b_browser_gate_sha256,
   railway_gate_sha256: fields.railway_gate_sha256,
   search_gate_sha256: fields.search_gate_sha256,
+  prior_attempt_evidence_sha256: fields.prior_attempt_evidence_sha256,
   local_verification_sha256: fields.local_verification_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
   function_name: 'admin-api',
   pre_function_id: '1ca7655a-e504-416f-9173-750016e79b73',
-  pre_function_version: '54',
-  pre_function_updated_at: '1784291203090',
+  pre_function_version: '56',
+  pre_function_updated_at: '1784292952103',
   pre_function_verify_jwt: 'false',
-  pre_function_ezbr_sha256: 'e5de472fec7869091c774686ad18535513640ab9d7cadb25852d9edf11a20aeb',
+  pre_function_ezbr_sha256: 'c59e00336c9701d92afe849ef154de5ebfef282c407369e1c17f4aed1b87363f',
   pre_mcp_search_id: 'ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43',
   pre_mcp_search_version: '39',
   pre_mcp_search_updated_at: '1784045797971',
@@ -125,6 +126,7 @@ for (const field of [
   'phase_b_browser_gate_sha256',
   'railway_gate_sha256',
   'search_gate_sha256',
+  'prior_attempt_evidence_sha256',
   'local_verification_sha256',
 ]) {
   assert.match(fields[field], /^[0-9a-f]{40,64}$/, `${field} is malformed.`);
@@ -151,7 +153,9 @@ const textHashes = [
   ['scripts/verify-admin-dashboard-phase-b-browser.mjs', 'phase_b_browser_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-railway-live.mjs', 'railway_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-search-health.mjs', 'search_gate_sha256'],
-  ['references/verification/admin-dashboard-v2-rollup-correction-release-local-verification-2026-07-17.json',
+  ['references/verification/admin-dashboard-v2-rollup-correction-attempt-2026-07-17.json',
+    'prior_attempt_evidence_sha256'],
+  ['references/verification/admin-dashboard-v2-rollup-correction-retry-local-verification-2026-07-17.json',
     'local_verification_sha256'],
 ];
 for (const [path, field] of textHashes) {
@@ -215,7 +219,7 @@ assert.match(runner, /Assert-LinkedProject/);
 assert.match(runner, /-Name 'mcp-search'/);
 assert.match(runner, /mcp-search version changed during the admin-api release/);
 assert.match(runner, /verify-admin-dashboard-v2-rollup-parity\.mjs/);
-assert.match(runner, /admin-dashboard-v2-rollup-correction-release-parity-2026-07-17\.json/);
+assert.match(runner, /admin-dashboard-v2-rollup-correction-retry-parity-2026-07-17\.json/);
 assert.equal(runner.includes('Read-Host'), false, 'Release runner must not prompt.');
 assert.equal(runner.includes('ApprovalFingerprint'), false, 'Release runner must not export approval ceremony.');
 assert.equal(/supabase\s+functions\s+deploy\s+mcp-search/i.test(runner), false);
@@ -254,7 +258,7 @@ for (const window of ['window=1d', 'window=7d', 'window=30d', 'window=custom']) 
 assert.match(v2LiveGate, /Warm \$\{name\} request took/);
 assert.match(v2LiveGate, /x-admin-secret/);
 assert.match(v2LiveGate, /The 30-day identity KPIs must be available/);
-assert.match(v2LiveGate, /The 30-day chart must include completed-day rollups/);
+assert.match(v2LiveGate, /The 30-day chart must include completed-day rollup data/);
 assert.equal(/\bmethod:\s*['"]POST['"]/.test(v2LiveGate), false, 'V2 live gate must be read-only.');
 
 const rollupParityGate = normalizedText(
@@ -277,7 +281,7 @@ for (const prohibited of [
 }
 
 const localVerification = JSON.parse(
-  readFileSync('references/verification/admin-dashboard-v2-rollup-correction-release-local-verification-2026-07-17.json', 'utf8'),
+  readFileSync('references/verification/admin-dashboard-v2-rollup-correction-retry-local-verification-2026-07-17.json', 'utf8'),
 );
 assert.equal(localVerification.status, 'ok');
 assert.equal(localVerification.project_ref, fields.project_ref);
@@ -291,7 +295,7 @@ assert.equal(localVerification.checks.phase_a_regression, 'pass');
 assert.equal(localVerification.checks.phase_b_browser, 'pass');
 assert.equal(localVerification.checks.powershell_parser, 'pass');
 assert.equal(localVerification.checks.credential_resolution, 'pass');
-assert.equal(localVerification.checks.negative_control_v54, 'rejected_as_expected');
+assert.equal(localVerification.checks.negative_control_v56, 'rejected_as_expected');
 assert.equal(localVerification.correction.multi_day_aggregation, fields.multi_day_aggregation);
 assert.equal(
   Number(localVerification.correction.identity_row_limit_per_source),
