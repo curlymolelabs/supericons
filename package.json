@@ -49,6 +49,8 @@
     "verify:admin-dashboard-phase-b": "node scripts/verify-admin-dashboard-phase-b.mjs",
     "verify:admin-dashboard-phase-b-browser": "node scripts/verify-admin-dashboard-phase-b-browser.mjs",
     "verify:admin-dashboard-phase-b-live": "node scripts/verify-admin-dashboard-phase-b-live.mjs",
+    "verify:admin-dashboard-v2-helpers": "node scripts/verify-admin-dashboard-v2-helpers.mjs",
+    "verify:admin-dashboard-v2-api": "node scripts/verify-admin-dashboard-v2-api.mjs",
     "verify:mcp-phase-a-telemetry": "node scripts/verify-mcp-phase-a-telemetry.mjs",
     "verify:material-production-baseline-runner": "node scripts/verify-material-production-baseline-runner.mjs",
     "verify:material-production-treatment-artifacts": "node scripts/verify-material-production-treatment-artifacts.mjs",

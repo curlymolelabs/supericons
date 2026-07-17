@@ -709,8 +709,13 @@ function renderKpis() {
   const anonymous = number(kpis.anonymous_clients ?? Math.max(0, clients - registered));
   const searches = number(kpis.attempts ?? kpis.searches);
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
-  setSkeleton($('kpiClients'), formatNumber(clients));
-  $('kpiClientsNote').textContent = `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
+  if (kpis.identity_available === false) {
+    setSkeleton($('kpiClients'), 'Unavailable');
+    $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
+  } else {
+    setSkeleton($('kpiClients'), formatNumber(clients));
+    $('kpiClientsNote').textContent = `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
+  }
   setSkeleton($('kpiSearches'), formatNumber(searches));
   $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per client, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
@@ -934,12 +939,22 @@ function renderAudience() {
   const clients = number(funnel.unique_clients);
   const registered = number(funnel.registered_clients);
   const pro = number(funnel.pro_clients);
-  setSkeleton($('funnelClients'), formatNumber(clients));
-  $('funnelClientsNote').textContent = appliedWindowLabel();
-  setSkeleton($('funnelRegistered'), formatNumber(registered));
-  $('funnelRegisteredNote').textContent = `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of clients`;
-  setSkeleton($('funnelPro'), formatNumber(pro));
-  $('funnelProNote').textContent = `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of clients`;
+  if (funnel.identity_available === false) {
+    const reason = funnel.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
+    setSkeleton($('funnelClients'), 'Unavailable');
+    $('funnelClientsNote').textContent = reason;
+    setSkeleton($('funnelRegistered'), 'Unavailable');
+    $('funnelRegisteredNote').textContent = reason;
+    setSkeleton($('funnelPro'), 'Unavailable');
+    $('funnelProNote').textContent = reason;
+  } else {
+    setSkeleton($('funnelClients'), formatNumber(clients));
+    $('funnelClientsNote').textContent = appliedWindowLabel();
+    setSkeleton($('funnelRegistered'), formatNumber(registered));
+    $('funnelRegisteredNote').textContent = `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of clients`;
+    setSkeleton($('funnelPro'), formatNumber(pro));
+    $('funnelProNote').textContent = `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of clients`;
+  }
   const mrr = funnel.mrr || {};
   $('funnelMrr').textContent = mrr.available ? safeText(mrr.display_value) : 'Unavailable';
   $('funnelMrrNote').textContent = mrr.reason || 'Exact billing price is not linked to every active subscription.';
