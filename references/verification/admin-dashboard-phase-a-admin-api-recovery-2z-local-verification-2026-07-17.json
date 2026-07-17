@@ -1,0 +1,76 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_recovery_2z_local_verification",
+  "status": "ok",
+  "checks": {
+    "deno_admin_api": "pass",
+    "metric_contract_tests": 11,
+    "admin_api_contract_checks": 27,
+    "admin_query_workbench_contract": "pass",
+    "bounded_cache": {
+      "status": "pass",
+      "ttl_ms": 30000,
+      "max_entries": 64,
+      "warm_reuse": true,
+      "concurrent_coalescing": true,
+      "failed_load_recovery": true,
+      "bounded_eviction": true
+    },
+    "cold_path_parallel_reads": {
+      "status": "pass",
+      "raw_evidence_and_reviews": "concurrent",
+      "completed_rollups_today_and_reviews": "concurrent"
+    },
+    "live_latency_gate": {
+      "status": "pass",
+      "cold_and_warm_reported_separately": true,
+      "cold_cache_busting": true,
+      "cold_and_warm_checks_blocking": true,
+      "cold_24h_p95_limit_ms": 1500,
+      "warm_24h_p95_limit_ms": 1500,
+      "cold_all_time_p95_limit_ms": 1300,
+      "warm_all_time_p95_limit_ms": 1000,
+      "cold_samples_each": 20,
+      "warm_samples_each": 20
+    },
+    "rollup_refresh_cases": [
+      "zero_days",
+      "one_day",
+      "sixty_days_plus_confirmation",
+      "one_hundred_twenty_days_plus_confirmation",
+      "duplicate_day_rejected",
+      "deadline_rejected"
+    ],
+    "preflight_classifier_checks": 14,
+    "preflight_http_cases": [
+      "healthy",
+      "fast_legacy_5xx",
+      "slow_healthy_blocked",
+      "slow_legacy_5xx_blocked",
+      "auth_rejected"
+    ],
+    "database_health_parser_cases": 4,
+    "strict_search_local_mock": {
+      "status": "pass",
+      "requests": 3
+    },
+    "powershell_parser": "pass",
+    "node_syntax": "pass",
+    "git_diff_check": "pass",
+    "text_policy_scan": "pass"
+  },
+  "owner_latency_decision": {
+    "commit": "56866d654abadf614b77d664d3c152a347dd0f4b",
+    "cold_all_time_p95_limit_ms": 1300,
+    "warm_all_time_p95_limit_ms": 1000,
+    "other_limits_changed": false
+  },
+  "prior_attempt": {
+    "evidence_commit": "8c8cd10edccec44972fa15fd19c3c0e88a312ee2",
+    "candidate_version": 50,
+    "rollback_version": 51,
+    "rollback_contract": "pass",
+    "cold_all_time_p95_ms": 1070.3
+  },
+  "mutations": 0,
+  "verified_at": "2026-07-17T08:45:15.5433387Z"
+}

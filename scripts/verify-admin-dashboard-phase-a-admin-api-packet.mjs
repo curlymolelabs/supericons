@@ -38,12 +38,14 @@ const databaseHealthParserPath = 'scripts/admin-dashboard-phase-a-db-health-pars
 const databaseHealthParserTestPath = 'scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs';
 const searchHealthPath = 'scripts/verify-admin-dashboard-phase-a-search-health.mjs';
 const searchHealthLocalTestPath = 'scripts/verify-admin-dashboard-phase-a-search-health-local.mjs';
-const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-local-verification-2026-07-17.json';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-inventory-2026-07-17.json';
+const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-local-verification-2026-07-17.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-inventory-2026-07-17.json';
 const priorAttempt2vPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-attempt-1-2026-07-17.json';
 const priorAttempt2wPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-attempt-1-2026-07-17.json';
 const priorLive2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-live-2026-07-17.json';
 const priorRollback2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-rollback-2026-07-17.json';
+const priorLive2yPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-live-2026-07-17.json';
+const priorRollback2yPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-rollback-2026-07-17.json';
 const railwayCompletionPath = 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-completion-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
@@ -56,7 +58,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_recovery_2y',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery_2z',
   implementation_revision: 'f12fbb56807e9aec9a4bc02348de26c485467ad0',
   implementation_tree: 'ec786e919c7a42ce641f6d1853832b156fafba6a',
   rollback_revision: fields.rollback_revision,
@@ -106,6 +108,11 @@ assert.deepEqual(fields, {
   prior_evidence_2x_commit: '6671eeaeb577d63b60ad8a8535b2e0adfbb97ca6',
   prior_live_2x_sha256: fields.prior_live_2x_sha256,
   prior_rollback_2x_sha256: fields.prior_rollback_2x_sha256,
+  prior_evidence_2y_commit: '8c8cd10edccec44972fa15fd19c3c0e88a312ee2',
+  prior_live_2y_sha256: fields.prior_live_2y_sha256,
+  prior_rollback_2y_sha256: fields.prior_rollback_2y_sha256,
+  owner_latency_decision_commit: '56866d654abadf614b77d664d3c152a347dd0f4b',
+  owner_latency_spec_sha256: fields.owner_latency_spec_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -122,7 +129,8 @@ assert.deepEqual(fields, {
   rollup_refresh_calls_max: '121',
   rollup_refresh_elapsed_limit_minutes: '20',
   queue_24h_p95_limit_ms: '1500',
-  queue_all_p95_limit_ms: '1000',
+  queue_all_cold_p95_limit_ms: '1300',
+  queue_all_warm_p95_limit_ms: '1000',
   queue_cold_samples: '20',
   queue_warm_samples: '20',
   queue_cache_ttl_ms: '30000',
@@ -187,6 +195,8 @@ const textHashes = [
   [priorAttempt2wPath, 'prior_attempt_2w_sha256'],
   [priorLive2xPath, 'prior_live_2x_sha256'],
   [priorRollback2xPath, 'prior_rollback_2x_sha256'],
+  [priorLive2yPath, 'prior_live_2y_sha256'],
+  [priorRollback2yPath, 'prior_rollback_2y_sha256'],
   ['scripts/capture-admin-dashboard-phase-a-admin-api-inventory.ps1', 'inventory_capture_sha256'],
   [railwayCompletionPath, 'railway_protection_completion_sha256'],
 ];
@@ -218,10 +228,21 @@ assert.ok(
   inventory.source_download.matching_git_revisions.includes(fields.rollback_revision),
   'Rollback revision must match the downloaded live admin API source.',
 );
-assert.equal(inventory.derived_from.rollback_version, 49);
+assert.equal(inventory.derived_from.candidate_version, 50);
+assert.equal(inventory.derived_from.rollback_version, 51);
+assert.equal(inventory.derived_from.evidence, priorRollback2yPath);
 assert.equal(inventory.derived_from.rollback_updated_at, fields.pre_function_updated_at);
 assert.equal(inventory.derived_from.strict_legacy_contract, 'pass');
 assert.equal(inventory.mutations, 0);
+
+const ownerDecisionSpec = normalizedText(execFileSync(
+  'git',
+  ['show', `${fields.owner_latency_decision_commit}:docs/admin-dashboard-refactor-spec-2026-07-16.md`],
+  { encoding: 'utf8' },
+));
+assert.equal(sha256(ownerDecisionSpec), fields.owner_latency_spec_sha256);
+assert.match(ownerDecisionSpec, /under 1\.3 seconds cold from rollups/);
+assert.match(ownerDecisionSpec, /under 1 second warm/);
 
 const railwayCompletion = JSON.parse(readFileSync(railwayCompletionPath, 'utf8'));
 const railwayLive = railwayCompletion.live_contract.find((entry) => entry && typeof entry === 'object');
@@ -331,12 +352,12 @@ assert.ok(
   'Cold and warm 24-hour samples must be retained before the performance assertion.',
 );
 assert.ok(
-  liveGate.indexOf('summary.queue_all = {') < liveGate.indexOf('queueAllCold.p95_ms < 1000'),
+  liveGate.indexOf('summary.queue_all = {') < liveGate.indexOf('queueAllCold.p95_ms < 1300'),
   'Cold and warm all-time samples must be retained before the performance assertion.',
 );
 assert.match(liveGate, /queue24hCold\.p95_ms < 1500/);
 assert.match(liveGate, /queue24hWarm\.p95_ms < 1500/);
-assert.match(liveGate, /queueAllCold\.p95_ms < 1000/);
+assert.match(liveGate, /queueAllCold\.p95_ms < 1300/);
 assert.match(liveGate, /queueAllWarm\.p95_ms < 1000/);
 assert.match(liveGate, /window=1d/);
 assert.match(liveGate, /window=all/);
@@ -464,7 +485,8 @@ console.log(JSON.stringify({
     strict_search_measured_count: 2,
     strict_search_latency_limit_ms: 2000,
     queue_24h_p95_limit_ms: 1500,
-    queue_all_p95_limit_ms: 1000,
+    queue_all_cold_p95_limit_ms: 1300,
+    queue_all_warm_p95_limit_ms: 1000,
     queue_cold_samples: 20,
     queue_warm_samples: 20,
     queue_cache_ttl_ms: 30000,

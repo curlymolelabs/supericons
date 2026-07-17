@@ -180,7 +180,8 @@ try {
     };
     summary.performance_contract = {
       queue_24h_p95_limit_ms: 1500,
-      queue_all_p95_limit_ms: 1000,
+      queue_all_cold_p95_limit_ms: 1300,
+      queue_all_warm_p95_limit_ms: 1000,
       cold_samples_each: 20,
       warm_samples_each: 20,
       rollup_refresh_elapsed_limit_minutes: 20,
@@ -189,7 +190,7 @@ try {
     };
     assert.ok(queue24hCold.p95_ms < 1500, `Cold 24h queue p95 was ${queue24hCold.p95_ms} ms.`);
     assert.ok(queue24hWarm.p95_ms < 1500, `Warm 24h queue p95 was ${queue24hWarm.p95_ms} ms.`);
-    assert.ok(queueAllCold.p95_ms < 1000, `Cold all-time queue p95 was ${queueAllCold.p95_ms} ms.`);
+    assert.ok(queueAllCold.p95_ms < 1300, `Cold all-time queue p95 was ${queueAllCold.p95_ms} ms.`);
     assert.ok(queueAllWarm.p95_ms < 1000, `Warm all-time queue p95 was ${queueAllWarm.p95_ms} ms.`);
 
     summary.status = 'ok';
