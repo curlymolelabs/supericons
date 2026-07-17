@@ -1,300 +1,263 @@
-import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
 
-const localServer = process.env.ADMIN_PHASE_B_URL
-  ? null
-  : await startAdminDashboardPhaseBLiveServer({
-    adminSecret: 'local-browser-contract-only',
-    managedAuth: false,
-    port: 0,
-  });
-const adminUrl = process.env.ADMIN_PHASE_B_URL || localServer.url;
+const server = await startAdminDashboardPhaseBLiveServer({
+  adminSecret: 'browser-contract-only',
+  managedAuth: false,
+  port: 0,
+});
 const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
-let dashboardRequestCount = 0;
-let reviewedStatus = null;
+const requests = [];
+let requestRound = 0;
 
 function ok(condition, message) {
   if (!condition) throw new Error(message);
+}
+
+function responseFor(path) {
+  const meta = { window: '30d', generated_at: '2026-07-17T08:00:00Z' };
+  if (path === '/v2/activity') {
+    return {
+      activity: [{
+        query: 'database',
+        library_filter: 'lucide',
+        query_origin: 'agent_query',
+        visitor_kind: 'anonymous',
+        client_label: 'anon:abc123',
+        result_count: 3,
+        country_code: 'SG',
+        channel: 'web',
+        created_at: '2026-07-17T07:58:00Z',
+      }],
+      channel_counts: { all: 17, web: 10, hosted_mcp: 7, cli: 0 },
+      meta,
+    };
+  }
+  if (path === '/v2/overview') {
+    return {
+      kpis: {
+        estimated_unique_clients: 32,
+        registered_clients: 5,
+        pro_clients: 2,
+        anonymous_clients: 27,
+        attempts: 128,
+        success_count: 116,
+        success_rate: 0.90625,
+        searches_per_client: 4,
+        true_zero_count: 8,
+        true_zero_rate: 0.0625,
+        low_result_count: 4,
+        low_result_eligible_count: 80,
+        low_result_rate: 0.05,
+      },
+      series: [
+        { day: '2026-07-15', channel: 'all', attempts: 40, client_days: 12, true_zero_count: 2, low_result_count: 1, low_result_eligible_count: 30, registered_clients: 3, pro_clients: 1 },
+        { day: '2026-07-15', channel: 'web', attempts: 25 },
+        { day: '2026-07-15', channel: 'hosted_mcp', attempts: 15 },
+        { day: '2026-07-16', channel: 'all', attempts: 45, client_days: 14, true_zero_count: 4, low_result_count: 2, low_result_eligible_count: 25, registered_clients: 4, pro_clients: 1 },
+        { day: '2026-07-16', channel: 'web', attempts: 30 },
+        { day: '2026-07-16', channel: 'hosted_mcp', attempts: 15 },
+        { day: '2026-07-17', channel: 'all', attempts: 43, client_days: 13, true_zero_count: 2, low_result_count: 1, low_result_eligible_count: 25, registered_clients: 5, pro_clients: 2 },
+        { day: '2026-07-17', channel: 'web', attempts: 28 },
+        { day: '2026-07-17', channel: 'hosted_mcp', attempts: 15 },
+      ],
+      outage_spans: [{ from: '2026-07-16T11:30:00Z', to: '2026-07-16T13:20:00Z', label: 'Outage Jul 16' }],
+      top_lists: {
+        searched: { available: true, rows: [{ query: 'database', searches: 18, distinct_clients: 9, hit_rate: 1 }] },
+        returned: { available: false, reason: 'Web result-set linkage is incomplete.', rows: [] },
+        copied: { available: true, rows: [{ icon_id: 'lucide:database', action: 'copy', actions: 7, distinct_clients: 4 }] },
+        zero: { available: true, rows: [{ query: 'missing brand', count: 5, distinct_clients: 4, last_seen: '2026-07-17T07:30:00Z' }] },
+      },
+      geography: {
+        available: true,
+        coverage_rate: 0.75,
+        rows: [
+          { country_code: 'SG', searches: 60, distinct_clients: 14, percentage: 0.46875 },
+          { country_code: 'US', searches: 36, distinct_clients: 9, percentage: 0.28125 },
+          { country_code: 'Unknown', searches: 32, distinct_clients: 9, percentage: 0.25 },
+        ],
+      },
+      meta,
+    };
+  }
+  if (path === '/v2/search') {
+    return {
+      queries: [{
+        query: 'missing brand',
+        library_filter: 'all',
+        query_origin: 'agent_query',
+        visitor_kind: 'anonymous',
+        client_label: 'anon:def456',
+        country_code: 'DE',
+        channel: 'hosted_mcp',
+        result_count: 0,
+        issue_type: 'zero_result',
+        last_seen: '2026-07-17T07:30:00Z',
+      }],
+      worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
+      icon_requests: {
+        available: true,
+        rows: [{
+          request_text: 'A better database migration icon',
+          visitor_kind: 'anonymous',
+          client_label: 'anon:req123',
+          country_code: 'SG',
+          created_at: '2026-07-17T06:00:00Z',
+        }],
+      },
+      contact_submissions: {
+        available: true,
+        rows: [{
+          name: 'Product team',
+          email: 'team@example.test',
+          interest: 'Licensing',
+          message: 'Need an icon license for an app.',
+          created_at: '2026-07-17T05:00:00Z',
+        }],
+      },
+      diagnostics: { known_defects: 2, raw_access: 'available through API export' },
+      meta,
+    };
+  }
+  if (path === '/v2/audience') {
+    return {
+      funnel: {
+        unique_clients: 32,
+        registered_clients: 5,
+        registered_percentage: 0.15625,
+        pro_clients: 2,
+        pro_percentage: 0.0625,
+        mrr: { available: false, reason: 'Exact billing price is not linked to every active subscription.' },
+      },
+      series: [
+        { day: '2026-07-15', channel: 'all', registered_clients: 3, pro_clients: 1 },
+        { day: '2026-07-16', channel: 'all', registered_clients: 4, pro_clients: 1 },
+        { day: '2026-07-17', channel: 'all', registered_clients: 5, pro_clients: 2 },
+      ],
+      registered_users: {
+        available: true,
+        rows: [{
+          identifier: 'u***@example.test',
+          provider: 'Google',
+          plan: 'pro_monthly',
+          signup_at: '2026-07-01T00:00:00Z',
+          last_active: '2026-07-17T07:00:00Z',
+          searches: 10,
+          venues: ['web'],
+          country_code: 'SG',
+        }],
+      },
+      clients: {
+        available: true,
+        rows: [{
+          visitor_kind: 'anonymous',
+          client_label: 'anon:abc123',
+          plan: 'Free',
+          country_code: 'SG',
+          first_seen: '2026-07-15T00:00:00Z',
+          last_seen: '2026-07-17T07:58:00Z',
+          searches: 6,
+          top_query: 'database',
+        }],
+      },
+      meta,
+    };
+  }
+  return { error: `No mock for ${path}` };
 }
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 
 await page.route(`${apiBase}/**`, async (route) => {
-  const request = route.request();
-  const url = new URL(request.url());
+  const url = new URL(route.request().url());
   const path = url.pathname.replace('/functions/v1/admin-api', '');
-  const headers = { 'access-control-allow-origin': '*' };
-
-  if (path === '/intelligence/search/dashboard') {
-    dashboardRequestCount += 1;
-    if (dashboardRequestCount > 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        summary: {
-          attempt_count: 128,
-          success_count: 116,
-          true_zero_count: 8,
-          low_result_count: 4,
-          low_result_eligible_count: 80,
-          estimated_unique_clients: 32,
-          searches_per_client: 4,
-          returning_clients_within_month: 7,
-          client_measure: 'estimated_unique_clients',
-          true_zero_rate: 0.0625,
-          low_result_rate: 0.05,
-        },
-        latest_activity: [
-          {
-            id: 'activity-1',
-            query: 'database',
-            library_filter: 'lucide',
-            result_count: 3,
-            requested_limit: 3,
-            search_outcome: 'success',
-            query_origin: 'agent_query',
-            tool_name: 'search_icons',
-            channel: 'hosted_mcp',
-            environment: 'production',
-            country_code: 'SG',
-            estimated_client_key: 'anonymous:abc123def456',
-            visitor_kind: 'anonymous',
-            created_at: '2026-07-17T08:00:00Z',
-          },
-        ],
-        filters: {
-          window: url.searchParams.get('window'),
-          channel: url.searchParams.get('channel'),
-          environment: url.searchParams.get('environment'),
-          query_origin: url.searchParams.get('query_origin'),
-        },
-        limitations: {
-          anonymous_identity_rotates_monthly: true,
-        },
-      },
-    });
-    return;
-  }
-
-  if (path === '/intelligence/search/queue') {
-    const issueType = url.searchParams.get('issue_type') || 'zero_result';
-    const status = reviewedStatus;
-    const active = status !== 'resolved' && status !== 'ignore';
-    const queries = active ? [{
-      query: issueType === 'low_result' ? 'rare upload' : 'missing brand',
-      library_filter: 'all',
-      job_category: '',
-      issue_types: [issueType],
-      attempt_count: issueType === 'low_result' ? 3 : 5,
-      zero_attempt_count: issueType === 'zero_result' ? 5 : 0,
-      low_attempt_count: issueType === 'low_result' ? 3 : 0,
-      estimated_unique_clients: issueType === 'low_result' ? 2 : 4,
-      client_measure: 'estimated_unique_clients',
-      first_seen: '2026-07-16T01:00:00Z',
-      last_seen: '2026-07-17T07:30:00Z',
-      review_status: status,
-      channels: ['hosted_mcp'],
-      environments: ['production'],
-    }] : [];
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        queries,
-        summary: { total_queries: queries.length },
-        pagination: { page: 1, page_size: 100, total: queries.length, page_count: 1 },
-        filters: {
-          environment: url.searchParams.get('environment') || 'live',
-          channel: url.searchParams.get('channel') || 'all',
-        },
-      },
-    });
-    return;
-  }
-
-  if (path === '/intelligence/search/review') {
-    reviewedStatus = JSON.parse(request.postData() || '{}').status || null;
-    await route.fulfill({ status: 200, headers, json: { success: true } });
-    return;
-  }
-
-  if (path === '/stats') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        stats: {
-          total_users: 2,
-          active_pro: 1,
-          total_purchases: 1,
-          new_users_30d: 1,
-          hosted_search: { total_requests_24h: 12, p95_latency_ms: 250, trap_hits_30d: 0, top_sources: [] },
-          recent_signups: [],
-          recent_audit: [],
-        },
-      },
-    });
-    return;
-  }
-
-  if (path === '/intelligence/overview') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        overview: {
-          total_evidence_rows: 128,
-          copy_events: 0,
-          favorite_events: 0,
-          kit_downloads: 0,
-          mcp_batches: 20,
-          top_icons: [],
-          top_job_categories: [],
-          top_replaced_icons: [],
-        },
-        metadata_coverage: { classified_icons: 0 },
-      },
-    });
-    return;
-  }
-
-  if (path === '/intelligence/search') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        search_intelligence: {
-          summary: {
-            unique_queries: 20,
-            search_attempts: 128,
-            zero_result_queries: 8,
-            low_result_queries: 4,
-            query_review_feature_available: true,
-          },
-          top_queries: [],
-          top_mcp_queries: [],
-        },
-      },
-    });
-    return;
-  }
-
-  if (path === '/intelligence/evidence') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: {
-        evidence: [],
-        pagination: { page: 1, page_size: 50, total: 0, page_count: 1 },
-      },
-    });
-    return;
-  }
-
-  if (path === '/users') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: { users: [], pagination: { page: 1, page_size: 25, total: 0, page_count: 1 } },
-    });
-    return;
-  }
-
-  if (path === '/audit-log') {
-    await route.fulfill({
-      status: 200,
-      headers,
-      json: { audit_log: [], pagination: { page: 1, page_size: 25, total: 0, page_count: 1 } },
-    });
-    return;
-  }
-
-  await route.fulfill({ status: 404, headers, json: { error: `No mock for ${path}` } });
+  requests.push({ path, search: url.search });
+  requestRound += 1;
+  if (requestRound > 4) await new Promise((resolve) => setTimeout(resolve, 450));
+  const payload = responseFor(path);
+  await route.fulfill({
+    status: payload.error ? 404 : 200,
+    headers: { 'access-control-allow-origin': '*' },
+    json: payload,
+  });
 });
 
-await page.goto(adminUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
-await page.fill('#adminSecretInput', 'mock-secret');
-await page.click('#adminSecretSubmitBtn');
-await page.click('#nav-intelligence');
-await page.waitForSelector('#phaseBLatestActivity .phase-b-activity-row', { timeout: 30000 });
-
-ok(await page.locator('#intelligenceSearch').getAttribute('placeholder') === 'Search dashboard...', 'Global search copy is incorrect.');
-ok(await page.locator('#queryExplorerEnvironmentFilter').count() === 0, 'A duplicate environment filter remains.');
-ok(await page.locator('#queryExplorerChannelFilter').count() === 0, 'A duplicate channel filter remains.');
-ok(await page.locator('#intelligenceRawSignalsDetails:not([open])').count() === 1, 'Diagnostics should start collapsed.');
-ok(await page.locator('#phaseBClientsValue').innerText() === '32', 'Estimated client KPI is incorrect.');
-ok(await page.locator('#phaseBSearchesValue').innerText() === '128', 'Real searches KPI is incorrect.');
-ok(await page.locator('#phaseBZeroRateValue').innerText() === '6%', 'True zero KPI is incorrect.');
-ok(await page.locator('#phaseBLowRateValue').innerText() === '5%', 'Low-result KPI is incorrect.');
-
-const activityText = await page.locator('#phaseBLatestActivity').innerText();
-ok(activityText.includes('database'), 'Latest Activity did not render the query.');
-ok(activityText.includes('Anonymous'), 'Latest Activity did not render the visitor kind.');
-ok(activityText.includes('Direct search'), 'Latest Activity did not render the origin badge.');
-ok(activityText.includes('SG'), 'Latest Activity did not render an available country.');
-
-const defaultText = await page.locator('#panel-intelligence').innerText();
-ok(!defaultText.toLowerCase().includes('not captured'), 'Default dashboard includes missing-data placeholder copy.');
-ok(defaultText.includes('missing brand') && defaultText.includes('rare upload'), 'Gap Worklist did not merge zero and low-result rows.');
-
-await page.click('#intelligenceRefreshBtn');
-ok(await page.locator('#intelligenceRefreshBtn').getAttribute('aria-busy') === 'true', 'Refresh state was not visible.');
-ok(await page.locator('#phaseBLatestActivity').innerText().then((text) => text.includes('database')), 'Stale content disappeared during refresh.');
-await page.waitForFunction(() => document.querySelector('#intelligenceRefreshBtn')?.getAttribute('aria-busy') === 'false');
-
-await page.reload({ waitUntil: 'domcontentloaded' });
-if (await page.locator('#adminSecretModal.open').count()) {
+try {
+  await page.goto(server.url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
   await page.fill('#adminSecretInput', 'mock-secret');
   await page.click('#adminSecretSubmitBtn');
+  await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '32');
+
+  ok(await page.locator('.nav-button').count() === 3, 'The dashboard must have exactly three navigation sections.');
+  ok(await page.getByText('Stats', { exact: true }).count() === 0, 'The Stats section still exists.');
+  ok(await page.getByText('Audit Log', { exact: true }).count() === 0, 'The Audit Log section still exists.');
+  ok(await page.locator('#kpiSearches').innerText() === '128', 'Real search KPI is incorrect.');
+  ok(await page.locator('#kpiZero').innerText() === '6%', 'True zero KPI is incorrect.');
+  ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
+
+  const activity = await page.locator('#latestActivity').innerText();
+  ok(activity.includes('database'), 'Latest Activity did not render the live query.');
+  ok(activity.includes('User query'), 'Latest Activity did not use the approved origin wording.');
+  ok(activity.includes('SG'), 'Latest Activity did not render the country.');
+
+  const channelOptions = await page.locator('#channelFilter option').allTextContents();
+  ok(channelOptions.some((value) => value.includes('Web (10)')), 'The venue selector does not show live counts.');
+  ok(!channelOptions.some((value) => value.startsWith('CLI')), 'An empty venue was not hidden.');
+  ok(await page.locator('#searchesChart svg').count() === 1, 'The search chart did not render inline SVG.');
+  ok(await page.locator('#qualityChart').innerText().then((text) => !text.includes('No chart')), 'The quality chart did not render.');
+
+  await page.click('[data-top-list="returned"]');
+  ok((await page.locator('#topListTable').innerText()).includes('linkage is incomplete'), 'Returned-icon coverage was not explained.');
+  await page.click('[data-top-list="copied"]');
+  ok((await page.locator('#topListTable').innerText()).includes('lucide:database'), 'Copied icons did not render.');
+
+  await page.click('#nav-intelligence');
+  await page.waitForSelector('#section-intelligence:not([hidden])');
+  ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
+  ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
+  ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
+  ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
+
+  await page.click('#nav-audience');
+  ok(await page.locator('#funnelRegistered').innerText() === '5', 'Registered funnel count is incorrect.');
+  ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
+  ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
+
+  await page.click('[data-window="custom"]');
+  await page.fill('#customFrom', '2026-07-15');
+  await page.fill('#customTo', '2026-07-17');
+  await page.click('#applyCustomRange');
+  await page.waitForTimeout(700);
+  ok(requests.some((request) => request.search.includes('window=custom') && request.search.includes('from=2026-07-15') && request.search.includes('to=2026-07-17')), 'Custom date filters were not sent to the API.');
+
+  const download = page.waitForEvent('download');
+  await page.click('[data-export="registered-users"]');
+  const downloaded = await download;
+  ok(downloaded.suggestedFilename().endsWith('.csv'), 'The list export did not create a CSV file.');
+
+  await page.click('[data-window="30d"]');
+  await page.waitForFunction(() => (
+    document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+  ), null, { timeout: 5000 });
+  const warmStarted = Date.now();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '32');
+  const warmMs = Date.now() - warmStarted;
+  ok(warmMs < 500, `Warm cached content took ${warmMs} ms to appear.`);
+
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  ok(overflow <= 1, `The dashboard has ${overflow}px of horizontal overflow.`);
+
+  console.log(JSON.stringify({
+    status: 'ok',
+    requests: requests.length,
+    warm_render_ms: warmMs,
+    navigation_sections: 3,
+    inline_svg_charts: await page.locator('.chart svg').count(),
+  }, null, 2));
+} finally {
+  await browser.close();
+  await server.close();
 }
-await page.click('#nav-intelligence');
-const warmStart = Date.now();
-await page.waitForFunction(() => document.querySelector('#phaseBLatestActivity')?.textContent?.includes('database'));
-const warmRenderMs = Date.now() - warmStart;
-ok(warmRenderMs < 500, `Warm cached content took ${warmRenderMs} ms to appear.`);
-
-await page.fill('#intelligenceSearch', 'database');
-await page.waitForTimeout(250);
-ok((await page.locator('#phaseBLatestActivity').innerText()).includes('database'), 'Global search did not keep a matching activity row.');
-await page.fill('#intelligenceSearch', 'no match');
-await page.waitForTimeout(250);
-ok((await page.locator('#phaseBLatestActivity').innerText()).includes('No direct searches match'), 'Global search did not filter Latest Activity.');
-await page.fill('#intelligenceSearch', '');
-await page.waitForTimeout(250);
-
-await page.evaluate(() => {
-  window.scrollTo(0, 0);
-  const panelScroller = document.querySelector('#panel-intelligence > div[style*="overflow-y"]');
-  if (panelScroller) panelScroller.scrollTop = 0;
-});
-await mkdir('.tmp', { recursive: true });
-await page.screenshot({ path: '.tmp/admin-dashboard-phase-b.png', fullPage: true });
-
-await page.locator('#queryExplorerTableBody [data-review-status="resolved"]').first().click();
-await page.waitForTimeout(300);
-ok(reviewedStatus === 'resolved', 'Gap review action did not call the review endpoint.');
-
-const overflow = await page.evaluate(() => ({
-  document: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 2,
-  panel: document.querySelector('#panel-intelligence > div[style*="overflow-y"]')?.scrollWidth
-    <= document.querySelector('#panel-intelligence > div[style*="overflow-y"]')?.clientWidth + 2,
-}));
-ok(overflow.document, 'The admin page has horizontal overflow.');
-ok(overflow.panel, 'The intelligence panel has horizontal overflow.');
-
-await browser.close();
-await localServer?.close();
-
-const screenshot = await readFile('.tmp/admin-dashboard-phase-b.png');
-console.log(JSON.stringify({
-  ok: true,
-  adminUrl,
-  warm_render_ms: warmRenderMs,
-  screenshot: '.tmp/admin-dashboard-phase-b.png',
-  screenshot_bytes: screenshot.length,
-}, null, 2));

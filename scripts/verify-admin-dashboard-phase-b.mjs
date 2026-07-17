@@ -2,84 +2,116 @@ import { readFile } from 'node:fs/promises';
 
 const html = await readFile('admin.html', 'utf8');
 const app = await readFile('public/admin-app.js', 'utf8');
-const inventory = await readFile('docs/admin-dashboard-phase-b-component-inventory.md', 'utf8');
+const prd = await readFile('docs/admin-dashboard-v2-prd-2026-07-17.md', 'utf8');
+const mockup = await readFile('mockups/admin-dashboard-v2-mockup-2026-07-17.html', 'utf8');
 
-function expectIncludes(source, value, label) {
-  if (!source.includes(value)) {
-    throw new Error(`${label} is missing: ${value}`);
-  }
+function includes(source, value, label) {
+  if (!source.includes(value)) throw new Error(`${label} is missing: ${value}`);
 }
 
-function expectExcludes(source, value, label) {
-  if (source.includes(value)) {
-    throw new Error(`${label} still contains: ${value}`);
-  }
+function excludes(source, value, label) {
+  if (source.includes(value)) throw new Error(`${label} still contains: ${value}`);
 }
 
 [
-  'phaseBKpiStrip',
-  'phaseBLatestActivity',
-  'phaseBGapPanel',
-  'phaseBRefreshStatus',
-  'intelligenceRawSignalsDetails',
-  'Estimated unique clients',
-  'Real searches',
-  'True zero rate',
-  'Low-result rate',
-  'Gap Worklist',
-  'Diagnostics',
-  'Search dashboard...',
-].forEach((value) => expectIncludes(html, value, 'admin.html'));
+  'nav-overview',
+  'nav-intelligence',
+  'nav-audience',
+  'section-overview',
+  'section-intelligence',
+  'section-audience',
+  'globalSearch',
+  'customFrom',
+  'customTo',
+  'channelFilter',
+  'includeTestTraffic',
+  'kpiClients',
+  'kpiSearches',
+  'kpiZero',
+  'kpiLow',
+  'searchesChart',
+  'clientsChart',
+  'qualityChart',
+  'latestActivity',
+  'queryExplorer',
+  'gapWorklist',
+  'iconRequests',
+  'contactInbox',
+  'diagnosticsDrawer',
+  'audienceChart',
+  'registeredUsers',
+  'allClients',
+  'Top lists',
+  'Returned',
+  'Copied',
+  'Latest Activity',
+].forEach((value) => includes(html, value, 'admin.html'));
 
 [
-  'queryExplorerEnvironmentFilter',
-  'queryExplorerChannelFilter',
-  'queryExplorerSearch',
-  'queryExplorerPurposeFilter',
-].forEach((value) => expectExcludes(html, `id="${value}"`, 'admin.html duplicate filters'));
+  '>Stats<',
+  '>Audit Log<',
+  'intelligenceRawSignalsTable',
+  'queryEvidenceTable',
+  'raw evidence table',
+].forEach((value) => excludes(html, value, 'admin.html'));
 
 [
-  'loadPhaseBDashboard',
-  'renderPhaseBDashboard',
-  'readPhaseBCache',
-  'writePhaseBCache',
-  "params.set('query_origin', 'agent_query')",
-  'quickReviewQuery',
-  'phaseBVisitorLabel',
-  'phaseBOriginLabel',
-  'refresh-spinner',
-].forEach((value) => expectIncludes(app, value, 'public/admin-app.js'));
+  'return `/v2/${endpoint}?${params}`',
+  "loadEndpoint('activity'",
+  "loadEndpoint('overview'",
+  "loadEndpoint('search'",
+  "loadEndpoint('audience'",
+  'loadLegacyActivity',
+  'loadLegacyOverview',
+  'loadLegacySearch',
+  'loadLegacyAudience',
+  'CACHE_TTL_MS = 30_000',
+  'renderSearchBars',
+  'renderLineChart',
+  'exportRows',
+  "state.topList = button.dataset.topList",
+  "state.filters.window = button.dataset.window",
+  'include_test',
+  'User query',
+  'Known defects and errors are excluded',
+].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [
+  'Direct search',
   'Plan not captured',
   'Location not captured',
   'Visitor details not captured',
-  'Audience not captured',
-  'country not captured',
-].forEach((value) => expectExcludes(app, value, 'public/admin-app.js default copy'));
+  'No data available',
+].forEach((value) => excludes(app, value, 'public/admin-app.js'));
 
 [
-  'Global filter bar',
-  'KPI strip',
-  'Latest Activity',
-  'Gap Worklist',
-  'Diagnostics',
-].forEach((value) => expectIncludes(inventory, value, 'component inventory'));
+  'Top returned icons',
+  'SUPPORTED are labeled unavailable-data states',
+  'V2.1 UI on existing API',
+  'V2.2 API extensions',
+  'V2.3 Discovery-dependent',
+].forEach((value) => includes(prd, value, 'v2 PRD'));
+
+[
+  '>Searched<',
+  '>Returned<',
+  '>Copied<',
+  '>Zero<',
+].forEach((value) => includes(mockup, value, 'v2 mockup'));
 
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
-const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
-if (duplicates.length) {
-  throw new Error(`admin.html has duplicate ids: ${duplicates.join(', ')}`);
-}
+const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
+if (duplicateIds.length) throw new Error(`admin.html has duplicate ids: ${duplicateIds.join(', ')}`);
+
+const navButtons = [...html.matchAll(/class="nav-button[^"]*"/g)];
+if (navButtons.length !== 3) throw new Error(`Expected exactly three navigation buttons, found ${navButtons.length}.`);
 
 for (const [path, source] of [
   ['admin.html', html],
   ['public/admin-app.js', app],
-  ['docs/admin-dashboard-phase-b-component-inventory.md', inventory],
+  ['docs/admin-dashboard-v2-prd-2026-07-17.md', prd],
 ]) {
-  if (/[\u2013\u2014]/u.test(source)) {
-    throw new Error(`${path} contains a forbidden dash character.`);
-  }
+  if (/[\u2013\u2014]/u.test(source)) throw new Error(`${path} contains a forbidden dash character.`);
 }
 
-console.log('Admin dashboard Phase B contract checks passed.');
+console.log('Admin dashboard V2.1 contract checks passed.');

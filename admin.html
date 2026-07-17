@@ -3,2833 +3,570 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supericons Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Nunito:ital,wght@1,900&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <title>Supericons Admin Dashboard</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { box-sizing: border-box; }
     :root {
-      --si-bg: #0e0e0e;
-      --si-surface: #131313;
-      --si-surface-container: #1a1919;
-      --si-surface-container-high: #201f1f;
-      --si-surface-container-highest: #262626;
-      --si-surface-bright: #2c2c2c;
-      --si-primary: #FF4F00;
-      --si-primary-soft: #ff906c;
-      --si-text: #ffffff;
-      --si-text-muted: #cccaca;
-      --si-text-dim: #767575;
-      --si-text-on-primary: #000000;
-      --si-error: #ff716c;
-      --si-success: #4ade80;
-      --si-info: #60a5fa;
-      --si-warning: #fbbf24;
-      --si-outline: #767575;
-      --si-outline-variant: #484847;
-      --si-font-headline: 'Space Grotesk', system-ui, sans-serif;
-      --si-font-body: 'Manrope', system-ui, sans-serif;
-      --si-font-label: 'Inter', system-ui, sans-serif;
-      --si-radius-sm: 0.25rem;
-      --si-radius-md: 0.5rem;
-      --si-radius-lg: 0.75rem;
-      --si-radius-xl: 1rem;
-      --si-radius-full: 9999px;
-      --si-transition-fast: 150ms ease;
-      --si-transition-base: 250ms ease;
-      --si-shadow-md: 0 8px 24px rgba(0,0,0,0.35);
-      --si-shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
-      --sidebar-w: 220px;
-      --sidebar-collapsed-w: 68px;
-      --drawer-w: 420px;
-      --header-h: 52px;
+      --bg: #0d0d0d;
+      --sidebar: #111111;
+      --panel: #151515;
+      --panel-2: #1b1a1a;
+      --panel-3: #222121;
+      --line: #302f2f;
+      --text: #f8f7f6;
+      --muted: #aaa7a4;
+      --dim: #73706d;
+      --orange: #ff5a1f;
+      --orange-soft: rgba(255, 90, 31, 0.14);
+      --green: #6dd6a0;
+      --green-soft: rgba(109, 214, 160, 0.12);
+      --yellow: #f6c75b;
+      --red: #ff7c73;
+      --blue: #76a9ff;
+      --radius: 14px;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+      --sidebar-width: 224px;
     }
-
-    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    html { color-scheme: dark; background: var(--bg); }
     body {
-      font-family: var(--si-font-body);
-      background: var(--si-bg);
-      color: var(--si-text);
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--si-outline-variant); border-radius: var(--si-radius-full); }
-    ::-webkit-scrollbar-thumb:hover { background: var(--si-outline); }
-
-    /* ---- TOPBAR ---- */
-    .topbar {
-      height: var(--header-h);
-      display: flex;
-      align-items: center;
-      padding: 0 1.25rem;
-      background: var(--si-surface);
-      border-bottom: 1px solid rgba(72,72,71,0.2);
-      gap: 1rem;
-      flex-shrink: 0;
-      z-index: 200;
-    }
-    .topbar__logo {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--si-primary);
-      white-space: nowrap;
-      margin-right: 0.5rem;
-    }
-    .topbar__badge {
-      font-family: var(--si-font-label);
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      background: rgba(255,79,0,0.12);
-      border: 1px solid rgba(255,79,0,0.25);
-      border-radius: var(--si-radius-full);
-      color: var(--si-primary);
-    }
-    .topbar__spacer { flex: 1; }
-    .topbar__meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      color: var(--si-text-dim);
-    }
-    .topbar__dot {
-      width: 8px; height: 8px;
-      background: var(--si-success);
-      border-radius: 50%;
-      box-shadow: 0 0 6px rgba(74,222,128,0.5);
-    }
-
-    /* ---- SHELL ---- */
-    .shell {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-      min-width: 0;
-    }
-
-    /* ---- SIDEBAR ---- */
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+    .app { min-height: 100vh; display: grid; grid-template-columns: var(--sidebar-width) minmax(0, 1fr); }
     .sidebar {
-      width: var(--sidebar-w);
-      flex-shrink: 0;
-      background: var(--si-surface);
-      border-right: 1px solid rgba(72,72,71,0.2);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 16px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--line);
       display: flex;
       flex-direction: column;
-      padding: 1rem 0;
-      overflow-y: auto;
-      transition: width var(--si-transition-base), padding var(--si-transition-base);
+      gap: 28px;
     }
-    body.sidebar-collapsed .sidebar {
-      width: var(--sidebar-collapsed-w);
-      padding-left: 0.35rem;
-      padding-right: 0.35rem;
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 8px; }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--orange);
+      display: grid;
+      place-items: center;
+      color: #111;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 800;
     }
-    body.sidebar-collapsed .nav-section { padding: 0; }
-    body.sidebar-collapsed .nav-section__label,
-    body.sidebar-collapsed .nav-item__label,
-    body.sidebar-collapsed .sidebar__divider {
-      display: none;
-    }
-    body.sidebar-collapsed .nav-item {
-      justify-content: center;
-      padding: 0.6rem 0;
-    }
-    body.sidebar-collapsed .nav-item__badge {
-      position: absolute;
-      top: 0.2rem;
-      right: 0.1rem;
-      margin-left: 0;
-      padding: 0 4px;
-    }
-    .nav-section {
-      padding: 0 0.75rem;
-      margin-bottom: 0.25rem;
-    }
-    .nav-section__label {
-      font-family: var(--si-font-label);
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--si-text-dim);
-      padding: 0.5rem 0.5rem 0.35rem;
-    }
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 0.75rem;
-      border-radius: var(--si-radius-md);
-      cursor: pointer;
-      font-family: var(--si-font-label);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--si-text-dim);
-      transition: background var(--si-transition-fast), color var(--si-transition-fast);
-      position: relative;
-      user-select: none;
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--si-text-muted); }
-    .nav-item.active {
-      background: rgba(255,79,0,0.1);
-      color: var(--si-primary);
-    }
-    .nav-item.active .nav-item__icon { color: var(--si-primary); }
-    .nav-item__icon {
-      font-size: 18px;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
-    }
-    .nav-item.active .nav-item__icon {
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
-    }
-    .nav-item__badge {
-      margin-left: auto;
-      font-size: 0.6rem;
-      font-weight: 700;
-      padding: 1px 6px;
-      background: rgba(255,79,0,0.15);
-      color: var(--si-primary);
-      border-radius: var(--si-radius-full);
-    }
-    .sidebar__divider {
-      height: 1px;
-      background: rgba(72,72,71,0.2);
-      margin: 0.5rem 0.75rem;
-    }
-
-    /* ---- MAIN CONTENT ---- */
-    .main {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
-      position: relative;
-      min-width: 0;
-    }
-
-    /* ---- PANELS ---- */
-    .panel {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      min-width: 0;
-    }
-    .panel.active { display: flex; }
-
-    .panel-header {
-      padding: 1.25rem 1.5rem 1rem;
-      border-bottom: 1px solid rgba(72,72,71,0.15);
-      flex-shrink: 0;
-    }
-    .panel-header__row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 0.75rem;
-    }
-    .panel-header__title {
-      font-family: var(--si-font-headline);
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .panel-header__subtitle {
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      color: var(--si-text-dim);
-      margin-top: 0.15rem;
-    }
-    .panel-header__actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-left: auto;
-    }
-
-    /* ---- SEARCH ---- */
-    .search-row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .search-input-wrap {
-      position: relative;
-      flex: 1;
-      max-width: 400px;
-    }
-    .search-input-wrap .material-symbols-outlined {
-      position: absolute;
-      left: 0.6rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: var(--si-text-dim);
-      pointer-events: none;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
-    }
-    .search-input {
+    .brand-name { font-family: inherit; font-weight: 700; letter-spacing: -0.03em; }
+    .brand-kicker { color: var(--dim); font-size: 11px; margin-top: 2px; }
+    .nav { display: grid; gap: 7px; }
+    .nav-button {
       width: 100%;
-      height: 34px;
-      padding: 0 0.75rem 0 2.2rem;
-      background: var(--si-surface-container);
-      border: 1px solid rgba(72,72,71,0.3);
-      border-radius: var(--si-radius-lg);
-      color: var(--si-text);
-      font-family: var(--si-font-label);
-      font-size: 0.8rem;
-      outline: none;
-      transition: border-color var(--si-transition-fast), box-shadow var(--si-transition-fast);
+      border: 0;
+      border-radius: 11px;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
     }
-    .search-input::placeholder { color: var(--si-text-dim); }
-    .search-input:focus {
-      border-color: rgba(255,79,0,0.4);
-      box-shadow: 0 0 0 3px rgba(255,79,0,0.08);
+    .nav-button:hover { background: var(--panel-2); color: var(--text); }
+    .nav-button.active { background: var(--orange-soft); color: var(--orange); font-weight: 800; }
+    .nav-icon { width: 22px; font-size: 17px; text-align: center; }
+    .nav-badge {
+      margin-left: auto;
+      min-width: 24px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--panel-3);
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
     }
-    .filter-select {
-      height: 34px;
-      padding: 0 0.65rem;
-      background: var(--si-surface-container);
-      border: 1px solid rgba(72,72,71,0.3);
-      border-radius: var(--si-radius-lg);
-      color: var(--si-text-muted);
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      outline: none;
+    .nav-button.active .nav-badge { background: var(--orange); color: #111; }
+    .sidebar-foot {
+      margin-top: auto;
+      padding: 14px 10px 2px;
+      border-top: 1px solid var(--line);
+      color: var(--dim);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .main { min-width: 0; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 62px;
+      padding: 10px clamp(18px, 3vw, 40px);
+      background: rgba(13, 13, 13, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .global-search {
+      min-width: 220px;
+      max-width: 520px;
+      flex: 1;
+      position: relative;
+    }
+    .global-search input {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--panel);
+      color: var(--text);
+      padding: 0 14px 0 38px;
+      outline: 0;
+    }
+    .global-search input:focus { border-color: var(--orange); }
+    .global-search span { position: absolute; left: 13px; top: 10px; color: var(--dim); }
+    .top-status { color: var(--dim); font-size: 12px; white-space: nowrap; }
+    .refresh-button {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--panel);
+      padding: 0 14px;
       cursor: pointer;
     }
-
-    /* ---- BUTTONS ---- */
-    .btn {
+    .refresh-button:hover { border-color: #494746; }
+    .refresh-button[aria-busy="true"] { color: var(--orange); }
+    .content { padding: 30px clamp(18px, 3vw, 40px) 60px; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+    h1 { margin: 0; font: 700 clamp(25px, 3vw, 34px)/1.1 "Space Grotesk", sans-serif; letter-spacing: -0.035em; }
+    .section-subtitle { margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .filter-bar {
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      align-items: center;
+    }
+    .periods { display: flex; flex-wrap: wrap; gap: 5px; }
+    .period-button, .small-button, .tab-button {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: transparent;
+      padding: 7px 10px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .period-button:hover, .small-button:hover, .tab-button:hover { color: var(--text); background: var(--panel-3); }
+    .period-button.active, .tab-button.active { border-color: transparent; color: var(--orange); background: var(--orange-soft); }
+    .filter-select, .date-input {
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 0 10px;
+      font-size: 12px;
+    }
+    .date-range { display: flex; align-items: center; gap: 6px; }
+    .filter-spacer { flex: 1; }
+    .switch { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; cursor: pointer; }
+    .switch input { accent-color: var(--orange); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .kpi {
+      min-height: 126px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(150deg, var(--panel-2), var(--panel));
+      box-shadow: var(--shadow);
+    }
+    .kpi-label { color: var(--dim); font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+    .kpi-value { margin-top: 12px; font: 700 29px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.04em; }
+    .kpi-note { margin-top: 10px; min-height: 32px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
+    .grid-main-side { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.72fr); gap: 14px; margin-bottom: 14px; }
+    .panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-head {
+      min-height: 62px;
+      padding: 15px 17px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .panel-title { font: 700 15px/1.2 ui-sans-serif, system-ui, sans-serif; }
+    .panel-subtitle { margin-top: 4px; color: var(--dim); font-size: 11px; }
+    .panel-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .panel-body { padding: 16px 17px; }
+    .chart { min-height: 224px; display: grid; place-items: center; color: var(--dim); }
+    .chart svg { width: 100%; height: 220px; overflow: visible; }
+    .chart-empty { padding: 32px 16px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .table-wrap { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { padding: 10px 12px; color: var(--dim); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; white-space: nowrap; }
+    td { padding: 11px 12px; border-top: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
+    tbody tr:hover td { background: rgba(255,255,255,0.015); }
+    td strong { color: var(--text); }
+    .number { text-align: right; font-variant-numeric: tabular-nums; }
+    .pill, .chip {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 0 0.85rem;
-      height: 34px;
-      border-radius: var(--si-radius-lg);
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all var(--si-transition-fast);
-      white-space: nowrap;
-    }
-    .btn .material-symbols-outlined { font-size: 15px; }
-    .btn-primary {
-      background: var(--si-primary);
-      color: #000;
-    }
-    .btn-primary:hover { filter: brightness(1.1); }
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      filter: none;
-    }
-    .btn-ghost {
-      background: rgba(255,255,255,0.04);
-      color: var(--si-text-muted);
-      border: 1px solid rgba(72,72,71,0.3);
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,0.07); color: var(--si-text); }
-    .btn-danger {
-      background: rgba(255,113,108,0.12);
-      color: var(--si-error);
-      border: 1px solid rgba(255,113,108,0.2);
-    }
-    .btn-danger:hover { background: rgba(255,113,108,0.2); }
-    .btn-sm { height: 28px; font-size: 0.72rem; padding: 0 0.65rem; }
-
-    /* ---- TABLE ---- */
-    .table-wrap {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0 1.5rem 1rem;
-    }
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.75rem;
-    }
-    .data-table th {
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--si-text-dim);
-      text-align: left;
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid rgba(72,72,71,0.2);
-      white-space: nowrap;
-    }
-    .data-table td {
-      padding: 0.65rem 0.75rem;
-      font-family: var(--si-font-label);
-      font-size: 0.8rem;
-      color: var(--si-text-muted);
-      border-bottom: 1px solid rgba(72,72,71,0.1);
-      vertical-align: middle;
-    }
-    .data-table tr:hover td { background: rgba(255,255,255,0.018); cursor: pointer; }
-    .data-table tr.selected td { background: rgba(255,79,0,0.06); }
-
-    .user-cell {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--si-surface-container-highest);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--si-font-label);
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--si-text-dim);
-      flex-shrink: 0;
-    }
-    .avatar.google { background: rgba(66,133,244,0.15); color: #4285f4; }
-    .avatar.stripe { background: rgba(99,91,255,0.15); color: #635bff; }
-    .user-cell__email {
-      color: var(--si-text);
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-    .user-cell__name {
-      font-size: 0.7rem;
-      color: var(--si-text-dim);
-    }
-
-    /* ---- BADGES ---- */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 2px 8px;
-      border-radius: var(--si-radius-full);
-      font-family: var(--si-font-label);
-      font-size: 0.65rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .badge-pro { background: rgba(255,79,0,0.12); color: var(--si-primary); border: 1px solid rgba(255,79,0,0.2); }
-    .badge-active { background: rgba(74,222,128,0.1); color: var(--si-success); border: 1px solid rgba(74,222,128,0.2); }
-    .badge-canceled { background: rgba(255,113,108,0.1); color: var(--si-error); border: 1px solid rgba(255,113,108,0.18); }
-    .badge-free { background: rgba(118,117,117,0.1); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.3); }
-    .badge-google { background: rgba(66,133,244,0.1); color: #4285f4; border: 1px solid rgba(66,133,244,0.2); }
-    .badge-email { background: rgba(118,117,117,0.08); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.25); }
-    .badge-warning { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
-    .badge-review-resolved { background: rgba(74,222,128,0.1); color: var(--si-success); border: 1px solid rgba(74,222,128,0.2); }
-    .badge-review-needs-alias { background: rgba(96,165,250,0.1); color: var(--si-info); border: 1px solid rgba(96,165,250,0.2); }
-    .badge-review-needs-icon { background: rgba(255,79,0,0.12); color: var(--si-primary); border: 1px solid rgba(255,79,0,0.2); }
-    .badge-review-ignore { background: rgba(118,117,117,0.1); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.3); }
-    .badge-review-untriaged { background: rgba(255,255,255,0.04); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.25); }
-
-    /* ---- PAGINATION ---- */
-    .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1.5rem;
-      border-top: 1px solid rgba(72,72,71,0.15);
-      flex-shrink: 0;
-    }
-    .pagination__info {
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-    }
-    .pagination__controls {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .page-btn {
-      width: 28px; height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--si-radius-md);
-      border: 1px solid rgba(72,72,71,0.25);
-      background: none;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all var(--si-transition-fast);
-    }
-    .page-btn:hover { background: rgba(255,255,255,0.05); color: var(--si-text); }
-    .page-btn.active {
-      background: rgba(255,79,0,0.12);
-      border-color: rgba(255,79,0,0.3);
-      color: var(--si-primary);
-      font-weight: 700;
-    }
-    .page-btn .material-symbols-outlined { font-size: 14px; }
-
-    /* ---- STATS PANEL ---- */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-    .stat-card {
-      background: var(--si-surface-container);
-      border: 1px solid rgba(72,72,71,0.2);
-      border-radius: var(--si-radius-xl);
-      padding: 1.25rem;
-      transition: border-color var(--si-transition-fast);
-    }
-    .stat-card:hover { border-color: rgba(255,79,0,0.2); }
-    .stat-card__label {
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--si-text-dim);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .stat-card__label .material-symbols-outlined {
-      font-size: 15px;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
-    }
-    .stat-card__value {
-      font-family: var(--si-font-headline);
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: var(--si-text);
-    }
-    .stat-card__delta {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      color: var(--si-success);
-      margin-top: 0.3rem;
-    }
-    .stat-card__delta .material-symbols-outlined { font-size: 13px; }
-    .stats-recent {
-      padding: 0 1.5rem 1.5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      min-width: 0;
-    }
-    .stats-recent--wide {
-      grid-template-columns: 1fr 1fr;
-    }
-    .stats-section {
-      background: var(--si-surface-container);
-      border: 1px solid rgba(72,72,71,0.2);
-      border-radius: var(--si-radius-xl);
-      padding: 1rem;
-      min-width: 0;
-    }
-    .intelligence-collapsible {
-      margin: 1rem 1.5rem 0;
-      border: 1px solid rgba(72,72,71,0.22);
-      border-radius: var(--si-radius-xl);
-      background: rgba(255,255,255,0.015);
-      overflow: hidden;
-    }
-    .intelligence-collapsible:first-child { margin-top: 1.5rem; }
-    .intelligence-collapsible > summary {
-      min-height: 3rem;
-      padding: 0.85rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      cursor: pointer;
-      color: var(--si-text);
-      font-family: var(--si-font-label);
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      list-style: none;
-      user-select: none;
-    }
-    .intelligence-collapsible > summary::-webkit-details-marker { display: none; }
-    .intelligence-collapsible > summary::after {
-      content: 'expand_more';
-      font-family: 'Material Symbols Outlined';
-      font-size: 18px;
-      font-weight: 300;
-      color: var(--si-text-dim);
-      transition: transform var(--si-transition-fast);
-    }
-    .intelligence-collapsible[open] > summary {
-      border-bottom: 1px solid rgba(72,72,71,0.22);
-    }
-    .intelligence-collapsible[open] > summary::after {
-      transform: rotate(180deg);
-    }
-    .intelligence-collapsible__hint {
-      margin-left: auto;
-      color: var(--si-text-dim);
-      font-weight: 500;
-      letter-spacing: 0;
-      text-transform: none;
-    }
-    .intelligence-collapsible .stats-grid {
-      padding: 1rem;
-    }
-    .intelligence-collapsible .stats-recent {
-      padding: 0 1rem 1rem;
-    }
-    .decision-cockpit {
-      margin: 1.5rem 1.5rem 0;
-      padding: 1rem;
-      border: 1px solid rgba(255,79,0,0.22);
-      border-radius: var(--si-radius-xl);
-      background: linear-gradient(135deg, rgba(255,79,0,0.08), rgba(255,255,255,0.025));
-      display: grid;
-      gap: 1rem;
-    }
-    .decision-cockpit__top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .decision-cockpit__title {
-      font-family: var(--si-font-headline);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--si-text);
-      letter-spacing: -0.02em;
-    }
-    .decision-cockpit__subtitle {
-      margin-top: 0.25rem;
-      font-family: var(--si-font-label);
-      font-size: 0.76rem;
-      color: var(--si-text-dim);
-      line-height: 1.5;
-    }
-    .decision-cockpit__stamp {
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      color: var(--si-text-dim);
-      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 999px;
-      padding: 0.28rem 0.55rem;
-      white-space: nowrap;
-      background: rgba(0,0,0,0.16);
-    }
-    .decision-actions {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-    .decision-action {
-      border: 1px solid rgba(72,72,71,0.22);
-      border-radius: var(--si-radius-lg);
-      background: rgba(18,18,18,0.62);
-      padding: 0.85rem;
-      min-width: 0;
-      display: grid;
-      gap: 0.55rem;
-    }
-    .decision-action--hot {
-      border-color: rgba(255,79,0,0.34);
-      background: rgba(255,79,0,0.08);
-    }
-    .decision-action__label {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--si-text-dim);
-    }
-    .decision-action__label .material-symbols-outlined { font-size: 14px; }
-    .decision-action__title {
-      font-family: var(--si-font-label);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--si-text);
-      line-height: 1.35;
-    }
-    .decision-action__body {
-      font-family: var(--si-font-label);
-      font-size: 0.73rem;
-      color: var(--si-text-dim);
-      line-height: 1.5;
-    }
-    .decision-action__meta {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      flex-wrap: wrap;
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      color: var(--si-text-muted);
-    }
-    .decision-metric-strip {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 0.55rem;
-    }
-    .decision-metric {
-      border: 1px solid rgba(72,72,71,0.18);
-      border-radius: var(--si-radius-lg);
-      background: rgba(0,0,0,0.16);
-      padding: 0.7rem;
-      min-width: 0;
-    }
-    .decision-metric__label {
-      font-family: var(--si-font-label);
-      font-size: 0.64rem;
-      color: var(--si-text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .decision-metric__value {
-      margin-top: 0.25rem;
-      font-family: var(--si-font-headline);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--si-text);
-      letter-spacing: -0.03em;
-    }
-    .decision-metric__meta {
-      margin-top: 0.2rem;
-      font-family: var(--si-font-label);
-      font-size: 0.66rem;
-      color: var(--si-text-dim);
-      line-height: 1.35;
-    }
-    .umami-import {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.75rem;
-    }
-    .umami-status {
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      color: var(--si-text-dim);
-      line-height: 1.45;
-    }
-    .summary-list {
-      display: grid;
-      gap: 0.45rem;
-    }
-    .summary-list__row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.75rem;
-      padding: 0.45rem 0;
-      border-bottom: 1px solid rgba(72,72,71,0.16);
-      font-family: var(--si-font-label);
-      font-size: 0.74rem;
-      color: var(--si-text-dim);
-    }
-    .summary-list__row:last-child { border-bottom: 0; }
-    .summary-list__label {
-      min-width: 0;
-      color: var(--si-text-muted);
-      overflow-wrap: anywhere;
-    }
-    .summary-list__value {
-      color: var(--si-text);
-      font-weight: 700;
+      padding: 4px 8px;
+      background: var(--panel-3);
+      color: var(--muted);
+      font-size: 10px;
       white-space: nowrap;
     }
-    .stats-section__title {
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--si-text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .stats-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.45rem 0;
-      border-bottom: 1px solid rgba(72,72,71,0.1);
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      color: var(--si-text-muted);
-    }
-    .stats-row:last-child { border-bottom: none; }
-    .stats-row__val { color: var(--si-text); font-weight: 600; }
-    .stats-row__label-group {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      min-width: 0;
-    }
-    .stats-row--reviewable {
-      width: 100%;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      transition: color var(--si-transition-fast), background var(--si-transition-fast);
-    }
-    .stats-row--reviewable:hover {
-      color: var(--si-text);
-      background: rgba(255,255,255,0.02);
-    }
-    .stats-row--reviewable:focus-visible {
-      outline: 2px solid rgba(255,79,0,0.4);
-      outline-offset: 2px;
-      border-radius: var(--si-radius-md);
-    }
-    .query-review-panel {
+    .pill.zero { color: var(--red); background: rgba(255,124,115,0.12); }
+    .pill.low { color: var(--yellow); background: rgba(246,199,91,0.11); }
+    .pill.ok, .pill.pro { color: var(--green); background: var(--green-soft); }
+    .pill.info { color: var(--blue); background: rgba(118,169,255,0.11); }
+    .activity-list { display: grid; }
+    .activity-row {
       display: grid;
-      gap: 0.85rem;
-    }
-    .query-review-toolbar {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.85rem;
-    }
-    .query-review-toolbar__copy {
-      display: grid;
-      gap: 0.35rem;
-      min-width: 0;
-    }
-    .query-review-toolbar__lead {
-      font-family: var(--si-font-label);
-      font-size: 0.76rem;
-      line-height: 1.55;
-      color: var(--si-text-dim);
-      max-width: 42rem;
-    }
-    .query-review-summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem 0.75rem;
-    }
-    .query-review-summary__item {
-      display: inline-flex;
+      grid-template-columns: minmax(150px, 1fr) auto auto auto auto;
+      gap: 12px;
       align-items: center;
-      gap: 0.4rem;
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      color: var(--si-text-dim);
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
     }
-    .query-review-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.55rem 0.8rem;
-      border-radius: var(--si-radius-full);
-      border: 1px solid rgba(72,72,71,0.28);
-      background: var(--si-surface-container-high);
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--si-text-muted);
-      cursor: pointer;
-      user-select: none;
-    }
-    .query-review-toggle:hover {
-      color: var(--si-text);
-      border-color: rgba(255,79,0,0.28);
-    }
-    .query-review-toggle input {
-      margin: 0;
-      accent-color: var(--si-primary);
-    }
-    .query-review-lead {
-      font-family: var(--si-font-label);
-      font-size: 0.76rem;
+    .activity-row:last-child { border-bottom: 0; }
+    .activity-query { min-width: 0; }
+    .activity-query strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .activity-meta { margin-top: 3px; color: var(--dim); font-size: 10px; }
+    .geo-list { display: grid; gap: 12px; }
+    .geo-row { display: grid; grid-template-columns: 42px 1fr 78px; gap: 9px; align-items: center; font-size: 11px; }
+    .geo-bar { height: 7px; border-radius: 99px; background: var(--panel-3); overflow: hidden; }
+    .geo-bar span { display: block; height: 100%; border-radius: inherit; background: var(--orange); }
+    .empty {
+      padding: 28px 18px;
+      color: var(--muted);
+      font-size: 12px;
       line-height: 1.6;
-      color: var(--si-text-dim);
-    }
-    .query-review-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem 1rem;
-    }
-    .query-review-form {
-      display: grid;
-      gap: 0.75rem;
-    }
-    .query-review-textarea {
-      width: 100%;
-      min-height: 88px;
-      resize: vertical;
-      padding: 0.75rem;
-      background: var(--si-surface-container-high);
-      border: 1px solid rgba(72,72,71,0.35);
-      border-radius: var(--si-radius-lg);
-      color: var(--si-text);
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      outline: none;
-      transition: border-color var(--si-transition-fast), box-shadow var(--si-transition-fast);
-    }
-    .query-review-textarea:focus {
-      border-color: rgba(255,79,0,0.4);
-      box-shadow: 0 0 0 3px rgba(255,79,0,0.08);
-    }
-    .query-review-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.5rem;
-    }
-    .query-explorer {
-      display: grid;
-      gap: 1rem;
-      min-width: 0;
-    }
-    .query-explorer__top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .query-explorer__lead {
-      font-family: var(--si-font-label);
-      font-size: 0.76rem;
-      line-height: 1.55;
-      color: var(--si-text-dim);
-      max-width: 42rem;
-    }
-    .query-explorer__actions {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .query-explorer__filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .query-explorer__filters > * {
-      flex: 1 1 108px;
-      min-width: 0;
-    }
-    .query-explorer__filters .search-input-wrap {
-      max-width: none;
-      width: 100%;
-      flex: 2 1 220px;
-    }
-    #queryExplorerPageSize {
-      flex: 0 0 112px;
-    }
-    .query-explorer__table {
-      overflow: visible;
-      border: 1px solid rgba(72,72,71,0.16);
-      border-radius: var(--si-radius-lg);
-    }
-    .query-explorer__table .data-table {
-      table-layout: fixed;
-      min-width: 0;
-    }
-    .query-explorer__query {
-      max-width: 100%;
-      white-space: normal;
-      line-height: 1.35;
-    }
-    .query-explorer__context {
-      display: grid;
-      gap: 0.18rem;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-    }
-    .query-explorer__metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.25rem;
-      font-family: var(--si-font-label);
-      font-size: 0.69rem;
-      color: var(--si-text-dim);
-    }
-    .query-explorer__metric-grid strong {
-      display: block;
-      color: var(--si-text);
-      font-size: 0.78rem;
-    }
-    .query-explorer__audience {
-      display: grid;
-      gap: 0.25rem;
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      color: var(--si-text-dim);
-    }
-    .query-explorer__last-seen {
-      display: grid;
-      gap: 0.25rem;
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-    }
-    .query-explorer__last-seen strong {
-      color: var(--si-text-muted);
-      font-weight: 600;
-    }
-    .query-explorer__row-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      white-space: normal;
-    }
-    .query-explorer__summary {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-    }
-    .query-workbench-tabs {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem;
-      width: fit-content;
-      max-width: 100%;
-      border: 1px solid rgba(72,72,71,0.22);
-      border-radius: var(--si-radius-lg);
-      background: var(--si-surface-container-high);
-    }
-    .query-workbench-tab {
-      height: 28px;
-      border: 0;
-      border-radius: var(--si-radius-md);
-      background: transparent;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0 0.65rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      white-space: nowrap;
-    }
-    .query-workbench-tab.active {
-      color: var(--si-primary);
-      background: rgba(255,79,0,0.1);
-    }
-    .query-workbench-pane { display: none; min-width: 0; }
-    .query-workbench-pane.active { display: grid; gap: 0.75rem; }
-    .query-activity-cell {
-      display: grid;
-      gap: 0.2rem;
-      min-width: 0;
-    }
-    .query-activity-cell strong {
-      color: var(--si-text);
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
-    .query-activity-cell span {
-      color: var(--si-text-dim);
-      font-size: 0.7rem;
-      overflow-wrap: anywhere;
-    }
-    .query-detail-metrics {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-    }
-    .query-detail-metric {
-      border: 1px solid rgba(72,72,71,0.18);
-      border-radius: var(--si-radius-lg);
-      background: var(--si-surface-container);
-      padding: 0.75rem;
-    }
-    .query-detail-metric__label {
-      font-family: var(--si-font-label);
-      font-size: 0.65rem;
-      color: var(--si-text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .query-detail-metric__value {
-      margin-top: 0.25rem;
-      font-family: var(--si-font-headline);
-      font-size: 1.25rem;
-      color: var(--si-text);
-      font-weight: 700;
-    }
-    .query-detail-list {
-      display: grid;
-      gap: 0.45rem;
-    }
-    .query-detail-list__item {
-      border-bottom: 1px solid rgba(72,72,71,0.12);
-      padding-bottom: 0.45rem;
-      font-family: var(--si-font-label);
-      font-size: 0.74rem;
-      color: var(--si-text-muted);
-      line-height: 1.45;
-    }
-    .query-detail-list__item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-    .query-detail-actions {
-      display: flex;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-      margin-top: 0.75rem;
-    }
-
-    /* ---- AUDIT LOG PANEL ---- */
-    .audit-filters {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .action-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: var(--si-radius-full);
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.65rem;
-      font-weight: 600;
-    }
-    .action-chip.delete { background: rgba(255,113,108,0.1); color: var(--si-error); border: 1px solid rgba(255,113,108,0.18); }
-    .action-chip.cancel { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
-    .action-chip.revoke { background: rgba(96,165,250,0.1); color: var(--si-info); border: 1px solid rgba(96,165,250,0.2); }
-    .action-chip.search { background: rgba(45,212,191,0.1); color: var(--si-success); border: 1px solid rgba(45,212,191,0.18); }
-    .action-chip.ban { background: rgba(99,91,255,0.1); color: #a48dff; border: 1px solid rgba(99,91,255,0.2); }
-
-    .payload-toggle {
-      background: none;
-      border: none;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      padding: 0;
-    }
-    .payload-toggle:hover { color: var(--si-primary); }
-    .payload-toggle .material-symbols-outlined { font-size: 13px; }
-
-    /* ---- DRAWER ---- */
-    .drawer-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 300;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity var(--si-transition-base);
-    }
-    .drawer-overlay.open { opacity: 1; pointer-events: all; }
-    .drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: var(--drawer-w);
-      height: 100%;
-      background: var(--si-surface);
-      border-left: 1px solid rgba(72,72,71,0.2);
-      z-index: 301;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 350ms cubic-bezier(0.22, 0.61, 0.36, 1);
-      box-shadow: var(--si-shadow-lg);
-    }
-    .drawer.open { transform: translateX(0); }
-
-    .drawer-header {
-      padding: 1.25rem;
-      border-bottom: 1px solid rgba(72,72,71,0.2);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      flex-shrink: 0;
-    }
-    .drawer-avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: var(--si-surface-container-highest);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--si-font-headline);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--si-primary);
-      flex-shrink: 0;
-      border: 1px solid rgba(255,79,0,0.2);
-    }
-    .drawer-user-info { flex: 1; min-width: 0; }
-    .drawer-user-info__name {
-      font-family: var(--si-font-headline);
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .drawer-user-info__email {
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-      margin-top: 0.1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .drawer-user-info__badges {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      margin-top: 0.4rem;
-    }
-    .drawer-close {
-      background: none;
-      border: none;
-      color: var(--si-text-dim);
-      cursor: pointer;
-      padding: 4px;
-      border-radius: var(--si-radius-md);
-      transition: all var(--si-transition-fast);
-      display: flex;
-    }
-    .drawer-close:hover { background: rgba(255,255,255,0.06); color: var(--si-text); }
-
-    .drawer-tabs {
-      display: flex;
-      border-bottom: 1px solid rgba(72,72,71,0.2);
-      flex-shrink: 0;
-      overflow-x: auto;
-    }
-    .drawer-tab {
-      padding: 0.65rem 1rem;
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--si-text-dim);
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all var(--si-transition-fast);
-    }
-    .drawer-tab:hover { color: var(--si-text-muted); }
-    .drawer-tab.active {
-      color: var(--si-primary);
-      border-bottom-color: var(--si-primary);
-    }
-
-    .drawer-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.25rem;
-    }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(72,72,71,0.1);
-    }
-    .detail-row:last-child { border-bottom: none; }
-    .detail-row__label {
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-    }
-    .detail-row__value {
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      color: var(--si-text-muted);
-      text-align: right;
-      max-width: 60%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .detail-row__value.mono {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.68rem;
-    }
-
-    .drawer-section-title {
-      font-family: var(--si-font-label);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--si-text-dim);
-      margin: 1rem 0 0.5rem;
-    }
-
-    /* ---- DANGER ZONE ---- */
-    .danger-zone {
-      border-top: 1px solid rgba(255,113,108,0.15);
-      padding-top: 1rem;
-      margin-top: 1rem;
-    }
-    .danger-zone__label {
-      font-family: var(--si-font-label);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--si-error);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .danger-zone__label .material-symbols-outlined { font-size: 14px; }
-    .danger-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    /* ---- MODAL ---- */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity var(--si-transition-base);
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--si-surface-container);
-      border: 1px solid rgba(72,72,71,0.3);
-      border-radius: var(--si-radius-xl);
-      padding: 1.75rem;
-      width: 420px;
-      max-width: 90vw;
-      box-shadow: var(--si-shadow-lg);
-      transform: scale(0.96) translateY(8px);
-      transition: transform 250ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
-    .modal__icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: rgba(255,113,108,0.1);
-      border: 1px solid rgba(255,113,108,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      color: var(--si-error);
-    }
-    .modal__icon .material-symbols-outlined { font-size: 22px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .modal__title {
-      font-family: var(--si-font-headline);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-    }
-    .modal__desc {
-      font-family: var(--si-font-label);
-      font-size: 0.8rem;
-      color: var(--si-text-dim);
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
-    }
-    .modal__email-target {
-      font-family: 'SF Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--si-error);
-      background: rgba(255,113,108,0.08);
-      border: 1px solid rgba(255,113,108,0.15);
-      border-radius: var(--si-radius-md);
-      padding: 0.4rem 0.65rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .modal__confirm-label {
-      font-family: var(--si-font-label);
-      font-size: 0.72rem;
-      color: var(--si-text-dim);
-      margin-bottom: 0.4rem;
-    }
-    .modal__confirm-input {
-      width: 100%;
-      height: 36px;
-      padding: 0 0.75rem;
-      background: var(--si-surface-container-high);
-      border: 1px solid rgba(72,72,71,0.4);
-      border-radius: var(--si-radius-md);
-      color: var(--si-text);
-      font-family: 'SF Mono', monospace;
-      font-size: 0.78rem;
-      outline: none;
-      margin-bottom: 1.25rem;
-      transition: border-color var(--si-transition-fast);
-    }
-    .modal__confirm-input:focus { border-color: rgba(255,113,108,0.5); }
-    .modal__actions {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: flex-end;
-    }
-    .modal__error {
-      display: none;
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-      color: var(--si-error);
-      margin: -0.5rem 0 1rem;
-    }
-    .modal__note {
-      font-family: var(--si-font-label);
-      font-size: 0.74rem;
-      color: var(--si-text-dim);
-      line-height: 1.6;
-      margin-top: 0.85rem;
-    }
-    .modal__note strong {
-      color: var(--si-text-muted);
-      font-weight: 600;
-    }
-    .modal--auth .modal__icon {
-      background: rgba(96,165,250,0.1);
-      border-color: rgba(96,165,250,0.2);
-      color: var(--si-info);
-    }
-    .modal--auth .modal__confirm-input {
-      margin-bottom: 0.75rem;
-    }
-
-    /* ---- EMPTY STATE ---- */
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 200px;
-      color: var(--si-text-dim);
-      gap: 0.5rem;
-    }
-    .empty-state .material-symbols-outlined {
-      font-size: 36px;
-      opacity: 0.3;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 36;
-    }
-    .empty-state__label {
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-    }
-
-    /* ---- PURCHASE ROW ---- */
-    .purchase-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 0.75rem;
-      border-radius: var(--si-radius-md);
-      border: 1px solid rgba(72,72,71,0.15);
-      background: var(--si-surface-container);
-      margin-bottom: 0.4rem;
-    }
-    .purchase-row__pack {
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--si-text);
-    }
-    .purchase-row__date {
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      color: var(--si-text-dim);
-      margin-top: 1px;
-    }
-
-    /* ---- TOOLTIP ---- */
-    .truncate-mono {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.65rem;
-      color: var(--si-text-dim);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 160px;
-    }
-    .toast {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      max-width: 360px;
-      padding: 0.85rem 1rem;
-      border-radius: var(--si-radius-lg);
-      border: 1px solid rgba(72,72,71,0.45);
-      background: rgba(19,19,19,0.96);
-      box-shadow: var(--si-shadow-md);
-      font-family: var(--si-font-label);
-      font-size: 0.78rem;
-      color: var(--si-text);
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity var(--si-transition-base), transform var(--si-transition-base);
-      z-index: 1200;
-    }
-    .toast.open {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .toast.error {
-      border-color: rgba(255,113,108,0.45);
-      color: var(--si-error);
-    }
-    .phase-b-dashboard {
-      display: grid;
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-    .phase-b-filter-bar {
-      display: grid;
-      grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(140px, 1fr));
-      gap: 0.65rem;
-      align-items: center;
-    }
-    .phase-b-refresh-status {
-      min-height: 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.35rem;
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      color: var(--si-text-dim);
-    }
-    .phase-b-refresh-status .material-symbols-outlined {
-      font-size: 14px;
-    }
-    .refresh-spinner {
-      animation: phase-b-spin 800ms linear infinite;
-    }
-    @keyframes phase-b-spin {
-      to { transform: rotate(360deg); }
-    }
-    .phase-b-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-    .phase-b-kpi {
-      min-width: 0;
-      padding: 1rem;
-      border: 1px solid rgba(72,72,71,0.2);
-      border-radius: var(--si-radius-xl);
-      background: var(--si-surface-container);
-    }
-    .phase-b-kpi__label {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .phase-b-kpi__label .material-symbols-outlined { font-size: 16px; }
-    .phase-b-kpi__value {
-      margin-top: 0.55rem;
-      color: var(--si-text);
-      font-family: var(--si-font-headline);
-      font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-    .phase-b-kpi__meta {
-      margin-top: 0.3rem;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.7rem;
-      line-height: 1.45;
-    }
-    .phase-b-panel {
-      min-width: 0;
-      overflow: hidden;
-      border: 1px solid rgba(72,72,71,0.2);
-      border-radius: var(--si-radius-xl);
-      background: var(--si-surface-container);
-    }
-    .phase-b-panel__header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem;
-      border-bottom: 1px solid rgba(72,72,71,0.16);
-    }
-    .phase-b-panel__title {
-      color: var(--si-text);
-      font-family: var(--si-font-headline);
-      font-size: 1rem;
-      font-weight: 700;
-    }
-    .phase-b-panel__lead {
-      margin-top: 0.25rem;
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.73rem;
-      line-height: 1.45;
-    }
-    .phase-b-activity-list {
-      display: grid;
-    }
-    .phase-b-activity-row {
-      display: grid;
-      grid-template-columns: minmax(170px, 1.6fr) minmax(140px, 1fr) minmax(120px, 0.85fr) minmax(110px, 0.8fr);
-      gap: 0.85rem;
-      align-items: center;
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid rgba(72,72,71,0.12);
-      font-family: var(--si-font-label);
-      font-size: 0.75rem;
-    }
-    .phase-b-activity-row:last-child { border-bottom: 0; }
-    .phase-b-activity-query {
-      display: grid;
-      gap: 0.2rem;
-      min-width: 0;
-    }
-    .phase-b-activity-query strong {
-      color: var(--si-text);
-      overflow-wrap: anywhere;
-    }
-    .phase-b-activity-query span {
-      color: var(--si-text-dim);
-      font-size: 0.68rem;
-    }
-    .phase-b-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      align-items: center;
-    }
-    .phase-b-chip {
-      display: inline-flex;
-      align-items: center;
-      max-width: 100%;
-      padding: 0.25rem 0.5rem;
-      border: 1px solid rgba(72,72,71,0.28);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.025);
-      color: var(--si-text-muted);
-      font-family: var(--si-font-label);
-      font-size: 0.66rem;
-      overflow-wrap: anywhere;
-    }
-    .phase-b-chip--origin {
-      border-color: rgba(255,79,0,0.28);
-      background: rgba(255,79,0,0.08);
-      color: var(--si-primary);
-    }
-    .phase-b-activity-time {
-      color: var(--si-text-dim);
-      font-size: 0.69rem;
-      line-height: 1.45;
-    }
-    .phase-b-help {
-      color: var(--si-text-dim);
-      font-family: var(--si-font-label);
-      font-size: 0.68rem;
-      line-height: 1.5;
-    }
-    .phase-b-skeleton {
-      position: relative;
-      overflow: hidden;
-      min-height: 1em;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.055);
-      color: transparent;
-    }
-    .phase-b-skeleton::after {
-      content: '';
+      text-align: center;
+    }
+    .skeleton { position: relative; overflow: hidden; color: transparent !important; background: var(--panel-3); border-radius: 7px; min-height: 16px; }
+    .skeleton::after {
+      content: "";
       position: absolute;
       inset: 0;
       transform: translateX(-100%);
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      animation: phase-b-shimmer 1.3s infinite;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+      animation: shimmer 1.2s infinite;
     }
-    @keyframes phase-b-shimmer {
-      to { transform: translateX(100%); }
+    @keyframes shimmer { to { transform: translateX(100%); } }
+    .explorer-tools { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    .explorer-tools input {
+      min-width: 220px;
+      flex: 1;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 0 11px;
     }
-    .phase-b-diagnostics {
-      margin: 0;
+    details { border-top: 1px solid var(--line); }
+    summary { padding: 14px 17px; cursor: pointer; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .funnel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .funnel-card { padding: 15px; border-radius: 12px; background: var(--panel-2); }
+    .funnel-value { margin-top: 8px; font: 700 23px/1 ui-sans-serif, system-ui, sans-serif; }
+    .funnel-note { margin-top: 7px; color: var(--dim); font-size: 10px; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.76);
+      padding: 20px;
     }
-    .phase-b-diagnostics > summary {
-      text-transform: none;
-      letter-spacing: 0;
-      font-size: 0.78rem;
+    .modal-overlay.open { display: grid; }
+    .modal {
+      width: min(430px, 100%);
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-2);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
     }
-    .phase-b-diagnostics__body {
-      padding: 0 1rem 1rem;
+    .modal h2 { margin: 0; font: 700 22px/1.2 ui-sans-serif, system-ui, sans-serif; }
+    .modal p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .modal input { width: 100%; height: 42px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 0 12px; color: var(--text); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+    .primary-button { border: 0; border-radius: 9px; background: var(--orange); color: #111; padding: 9px 14px; font-weight: 800; cursor: pointer; }
+    .form-error { min-height: 18px; margin-top: 8px; color: var(--red); font-size: 11px; }
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 120;
+      max-width: min(380px, calc(100vw - 40px));
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--panel-3);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: 160ms ease;
+      font-size: 12px;
     }
-    .phase-b-gap-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-    }
-    .phase-b-gap-actions .btn {
-      min-height: 28px;
-    }
+    .toast.show { opacity: 1; transform: translateY(0); }
     @media (max-width: 1100px) {
-      .decision-actions {
-        grid-template-columns: 1fr;
-      }
-      .decision-metric-strip {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      .query-explorer__filters {
-        grid-template-columns: 1fr 1fr;
-      }
-      .phase-b-filter-bar {
-        grid-template-columns: 1fr 1fr;
-      }
-      .phase-b-kpis {
-        grid-template-columns: 1fr 1fr;
-      }
-      .phase-b-activity-row {
-        grid-template-columns: minmax(160px, 1.5fr) minmax(130px, 1fr);
-      }
+      :root { --sidebar-width: 76px; }
+      .brand-copy, .nav-label, .sidebar-foot { display: none; }
+      .brand { justify-content: center; padding: 0; }
+      .nav-button { justify-content: center; padding: 11px 7px; }
+      .nav-badge { position: absolute; margin: -27px 0 0 28px; min-width: 18px; padding: 1px 5px; }
+      .grid-main-side { grid-template-columns: 1fr; }
     }
-    @media (max-width: 640px) {
-      .decision-cockpit {
-        margin: 1rem 1rem 0;
-      }
-      .decision-metric-strip {
-        grid-template-columns: 1fr;
-      }
-      .query-explorer__filters,
-      .query-detail-metrics {
-        grid-template-columns: 1fr;
-      }
-      .phase-b-dashboard {
-        padding: 1rem;
-      }
-      .phase-b-filter-bar,
-      .phase-b-kpis,
-      .phase-b-activity-row {
-        grid-template-columns: 1fr;
-      }
-      .phase-b-refresh-status {
-        justify-content: flex-start;
-      }
+    @media (max-width: 820px) {
+      .app { display: block; }
+      .sidebar { position: fixed; top: auto; bottom: 0; z-index: 40; width: 100%; height: 66px; padding: 8px 14px; border: 0; border-top: 1px solid var(--line); flex-direction: row; }
+      .brand, .sidebar-foot { display: none; }
+      .nav { width: 100%; grid-template-columns: repeat(3, 1fr); }
+      .nav-button { min-height: 48px; }
+      .nav-label { display: inline; font-size: 11px; }
+      .main { padding-bottom: 70px; }
+      .topbar { flex-wrap: wrap; }
+      .top-status { display: none; }
+      .kpi-grid, .grid-2, .funnel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .activity-row { grid-template-columns: minmax(120px, 1fr) auto auto; }
+      .activity-row > :nth-child(3), .activity-row > :nth-child(4) { display: none; }
+    }
+    @media (max-width: 540px) {
+      .content { padding-left: 13px; padding-right: 13px; }
+      .kpi-grid, .grid-2, .funnel { grid-template-columns: 1fr; }
+      .date-range { width: 100%; }
+      .date-input { min-width: 0; flex: 1; }
     }
   </style>
 </head>
 <body>
-
-<!-- ===== TOPBAR ===== -->
-<header class="topbar">
-  <span class="topbar__logo">Supericons</span>
-  <span class="topbar__badge">Admin</span>
-  <button class="btn btn-ghost btn-sm" id="sidebarToggleBtn" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
-    <span class="material-symbols-outlined" style="font-size:14px">menu_open</span>
-  </button>
-  <span class="topbar__spacer"></span>
-  <button class="btn btn-ghost btn-sm" id="adminReconnectBtn" type="button">
-    <span class="material-symbols-outlined" style="font-size:14px">vpn_key</span>
-    Reconnect API
-  </button>
-  <div class="topbar__meta">
-    <span class="topbar__dot"></span>
-    <span id="topbarEnvironment">Production</span>
-    <span style="color:var(--si-outline-variant)">|</span>
-    <span id="topbarHost">supericons.dev</span>
-  </div>
-</header>
-
-<!-- ===== SHELL ===== -->
-<div class="shell">
-
-  <!-- ===== SIDEBAR ===== -->
-  <nav class="sidebar">
-    <div class="nav-section">
-      <div class="nav-section__label">Overview</div>
-      <div class="nav-item active" id="nav-stats" onclick="switchPanel('stats')">
-        <span class="material-symbols-outlined nav-item__icon">bar_chart</span>
-        <span class="nav-item__label">Stats</span>
-      </div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-section__label">Management</div>
-      <div class="nav-item" id="nav-intelligence" onclick="switchPanel('intelligence')">
-        <span class="material-symbols-outlined nav-item__icon">insights</span>
-        <span class="nav-item__label">Icon Intelligence</span>
-      </div>
-      <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
-        <span class="material-symbols-outlined nav-item__icon">group</span>
-        <span class="nav-item__label">Users</span>
-        <span class="nav-item__badge" id="navUsersCount">0</span>
-      </div>
-      <div class="nav-item" id="nav-audit" onclick="switchPanel('audit')">
-        <span class="material-symbols-outlined nav-item__icon">history</span>
-        <span class="nav-item__label">Audit Log</span>
-      </div>
-    </div>
-    <div class="sidebar__divider"></div>
-    <div class="nav-section">
-      <a class="nav-item" id="docsLink" href="/docs" target="_blank" rel="noreferrer">
-        <span class="material-symbols-outlined nav-item__icon">help_outline</span>
-        <span class="nav-item__label">Documentation</span>
-      </a>
-    </div>
-  </nav>
-
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-
-    <!-- ======= STATS PANEL ======= -->
-    <section class="panel active" id="panel-stats">
-      <div class="panel-header">
-        <div class="panel-header__row">
-          <div>
-            <div class="panel-header__title">Overview</div>
-            <div class="panel-header__subtitle">Platform health at a glance</div>
-          </div>
-          <div class="panel-header__actions">
-            <button class="btn btn-ghost btn-sm" id="statsRefreshBtn" type="button">
-              <span class="material-symbols-outlined">refresh</span>
-              Refresh
-            </button>
-          </div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div class="brand-copy">
+          <div class="brand-name">Supericons</div>
+          <div class="brand-kicker">Admin dashboard</div>
         </div>
       </div>
+      <nav class="nav" aria-label="Dashboard sections">
+        <button class="nav-button active" id="nav-overview" data-section="overview" type="button">
+          <span class="nav-icon">O</span><span class="nav-label">Overview</span>
+        </button>
+        <button class="nav-button" id="nav-intelligence" data-section="intelligence" type="button">
+          <span class="nav-icon">S</span><span class="nav-label">Search Intelligence</span>
+          <span class="nav-badge" id="requestBadge">0</span>
+        </button>
+        <button class="nav-button" id="nav-audience" data-section="audience" type="button">
+          <span class="nav-icon">A</span><span class="nav-label">Audience</span>
+        </button>
+      </nav>
+      <div class="sidebar-foot">Anonymous visitors use monthly-stable privacy-safe identifiers.</div>
+    </aside>
 
-      <div style="flex:1;overflow-y:auto;">
-        <div class="decision-cockpit" aria-live="polite">
-          <div class="decision-cockpit__top">
+    <main class="main">
+      <header class="topbar">
+        <label class="global-search">
+          <span>?</span>
+          <input id="globalSearch" type="search" placeholder="Search queries, icons, clients, or countries" autocomplete="off" />
+        </label>
+        <div class="top-status" id="freshnessLine">Loading production data</div>
+        <button class="refresh-button" id="refreshButton" type="button" aria-busy="false">Refresh</button>
+      </header>
+
+      <div class="content">
+        <div class="filter-bar" aria-label="Global dashboard filters">
+          <div class="periods" id="periodButtons">
+            <button class="period-button" data-window="1d" type="button">24h</button>
+            <button class="period-button" data-window="7d" type="button">7d</button>
+            <button class="period-button active" data-window="30d" type="button">30d</button>
+            <button class="period-button" data-window="90d" type="button">90d</button>
+            <button class="period-button" data-window="1y" type="button">12m</button>
+            <button class="period-button" data-window="all" type="button">All</button>
+            <button class="period-button" data-window="custom" type="button">Custom</button>
+          </div>
+          <div class="date-range" id="customRange" hidden>
+            <input class="date-input" id="customFrom" type="date" aria-label="Custom range start" />
+            <span style="color:var(--dim)">to</span>
+            <input class="date-input" id="customTo" type="date" aria-label="Custom range end" />
+            <button class="small-button" id="applyCustomRange" type="button">Apply</button>
+          </div>
+          <select class="filter-select" id="channelFilter" aria-label="Search venue">
+            <option value="all">All venues</option>
+          </select>
+          <div class="filter-spacer"></div>
+          <label class="switch"><input id="includeTestTraffic" type="checkbox" /> Include test and preview traffic</label>
+        </div>
+
+        <section id="section-overview">
+          <div class="section-head">
             <div>
-              <div class="decision-cockpit__title">Needs attention</div>
-              <div class="decision-cockpit__subtitle">The fastest product decisions from users, searches, channels, and weak results.</div>
-            </div>
-            <div class="decision-cockpit__stamp" id="decisionCockpitStamp">Waiting for data</div>
-          </div>
-          <div class="decision-actions" id="decisionActions">
-            <div class="decision-action">
-              <div class="decision-action__label">
-                <span class="material-symbols-outlined">hourglass_empty</span>
-                Loading
-              </div>
-              <div class="decision-action__title">Checking admin signals</div>
-              <div class="decision-action__body">Connect the admin API to see what needs work first.</div>
+              <h1>Overview</h1>
+              <div class="section-subtitle">Who is searching, where they are, and how search is going.</div>
             </div>
           </div>
-          <div class="decision-metric-strip" id="decisionMetricStrip"></div>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">group</span>
-              Total Users
-            </div>
-            <div class="stat-card__value" id="statsTotalUsersValue">0</div>
-            <div class="stat-card__delta" id="statsTotalUsersDelta">Waiting for live data</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">workspace_premium</span>
-              Active Pro
-            </div>
-            <div class="stat-card__value" id="statsActiveProValue">0</div>
-            <div class="stat-card__delta" id="statsActiveProDelta">Active paid subscriptions</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">shopping_bag</span>
-              Total Purchases
-            </div>
-            <div class="stat-card__value" id="statsTotalPurchasesValue">0</div>
-            <div class="stat-card__delta" id="statsTotalPurchasesDelta">All recorded purchases</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">person_add</span>
-              New (30d)
-            </div>
-            <div class="stat-card__value" id="statsNewUsersValue">0</div>
-            <div class="stat-card__delta" style="color:var(--si-info)" id="statsNewUsersDelta">
-              <span class="material-symbols-outlined">schedule</span>
-              Last 30 days
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">travel_explore</span>
-              Hosted Search (24h)
-            </div>
-            <div class="stat-card__value" id="statsHostedSearchValue">0</div>
-            <div class="stat-card__delta" id="statsHostedSearchDelta">Waiting for hosted search data</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">speed</span>
-              Search P95
-            </div>
-            <div class="stat-card__value" id="statsHostedSearchP95Value">0ms</div>
-            <div class="stat-card__delta" id="statsHostedSearchP95Delta">Last 24 hours</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">shield</span>
-              Trap Hits (30d)
-            </div>
-            <div class="stat-card__value" id="statsHostedSearchTrapValue">0</div>
-            <div class="stat-card__delta" id="statsHostedSearchTrapDelta">Honeypot endpoint activity</div>
-          </div>
-        </div>
-
-        <div class="stats-recent stats-recent--wide">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">public</span>
-              Web Audience (Umami)
-            </div>
-            <div class="umami-import">
-              <input id="umamiCsvInput" type="file" accept=".csv,text/csv" multiple hidden />
-              <button class="btn btn-ghost btn-sm" id="umamiCsvButton" type="button">
-                <span class="material-symbols-outlined" style="font-size:14px">upload_file</span>
-                Import CSVs
-              </button>
-              <button class="btn btn-ghost btn-sm" id="umamiCsvClearButton" type="button">
-                <span class="material-symbols-outlined" style="font-size:14px">backspace</span>
-                Clear
-              </button>
-              <span class="umami-status" id="umamiImportStatus">No Umami files loaded</span>
-            </div>
-            <div id="umamiAudienceSummary"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">route</span>
-              Channels and Paths
-            </div>
-            <div id="umamiChannelSummary"></div>
-          </div>
-        </div>
-
-        <div class="stats-recent">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">person_add</span>
-              Recent Signups
-            </div>
-            <div id="statsRecentSignups"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">history</span>
-              Recent Actions
-            </div>
-            <div id="statsRecentActions"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= INTELLIGENCE PANEL ======= -->
-    <section class="panel" id="panel-intelligence">
-      <div class="panel-header">
-        <div class="panel-header__row">
-          <div>
-            <div class="panel-header__title">Icon Intelligence</div>
-            <div class="panel-header__subtitle">Real search activity, search quality, and work that needs attention</div>
-          </div>
-          <div class="panel-header__actions">
-            <button class="btn btn-ghost btn-sm" id="intelligenceRefreshBtn" type="button">
-              <span class="material-symbols-outlined">refresh</span>
-              Refresh
-            </button>
-          </div>
-        </div>
-        <div class="search-row audit-filters">
-          <div class="search-input-wrap" style="max-width:280px">
-            <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Search dashboard..." id="intelligenceSearch" aria-label="Search the dashboard" />
-          </div>
-          <select class="filter-select" id="intelligenceWindowFilter" aria-label="Intelligence time window">
-            <option value="1d">Last 24 hours</option>
-            <option value="7d">Last 7 days</option>
-            <option value="30d" selected>Last 30 days</option>
-            <option value="90d">Last 90 days</option>
-            <option value="1y">Last 12 months</option>
-            <option value="all">All time</option>
-          </select>
-          <select class="filter-select" id="intelligenceChannelFilter" aria-label="Usage channel">
-            <option value="all" selected>All channels</option>
-            <option value="web">Web</option>
-            <option value="hosted_mcp">Hosted MCP</option>
-            <option value="local_mcp">Local MCP / npm</option>
-            <option value="cli">CLI</option>
-            <option value="api">API</option>
-            <option value="internal_test">Internal / test</option>
-            <option value="unknown">Unclassified</option>
-          </select>
-          <select class="filter-select" id="intelligenceEnvironmentFilter" aria-label="Usage environment">
-            <option value="live" selected>Production</option>
-            <option value="preview">Preview</option>
-            <option value="local">Local / dev</option>
-            <option value="test">Automated test</option>
-            <option value="legacy">Unclassified source</option>
-            <option value="all">All environments</option>
-          </select>
-        </div>
-      </div>
-
-      <div style="flex:1;overflow-y:auto;">
-        <div class="phase-b-dashboard">
-          <div class="phase-b-refresh-status" id="phaseBRefreshStatus" role="status" aria-live="polite">
-            Showing saved data while the latest activity loads
+          <div class="kpi-grid" id="overviewKpis">
+            <article class="kpi"><div class="kpi-label">Estimated unique clients</div><div class="kpi-value skeleton" id="kpiClients">000</div><div class="kpi-note" id="kpiClientsNote">Loading audience mix</div></article>
+            <article class="kpi"><div class="kpi-label">Real searches</div><div class="kpi-value skeleton" id="kpiSearches">000</div><div class="kpi-note" id="kpiSearchesNote">Loading search volume</div></article>
+            <article class="kpi"><div class="kpi-label">True zero rate</div><div class="kpi-value skeleton" id="kpiZero">00%</div><div class="kpi-note" id="kpiZeroNote">Known defects are excluded</div></article>
+            <article class="kpi"><div class="kpi-label">Low-result rate</div><div class="kpi-value skeleton" id="kpiLow">00%</div><div class="kpi-note" id="kpiLowNote">Only eligible searches count</div></article>
           </div>
 
-          <section class="phase-b-kpis" id="phaseBKpiStrip" aria-label="Search overview">
-            <article class="phase-b-kpi">
-              <div class="phase-b-kpi__label" id="phaseBClientsLabel"><span class="material-symbols-outlined">group</span>Estimated unique clients</div>
-              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBClientsValue">Loading</div>
-              <div class="phase-b-kpi__meta" id="phaseBClientsMeta">Anonymous client estimates reset each month.</div>
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head"><div><div class="panel-title">Searches over time</div><div class="panel-subtitle">Daily search volume split by venue</div></div><button class="small-button" data-export="series-searches" type="button">CSV</button></div>
+              <div class="panel-body"><div class="chart" id="searchesChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
             </article>
-            <article class="phase-b-kpi">
-              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">search</span>Real searches</div>
-              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBSearchesValue">Loading</div>
-              <div class="phase-b-kpi__meta" id="phaseBSearchesMeta">Direct agent and web searches only.</div>
+            <article class="panel">
+              <div class="panel-head"><div><div class="panel-title">Unique clients over time</div><div class="panel-subtitle">Monthly-stable clients, or client-days for long ranges</div></div><button class="small-button" data-export="series-clients" type="button">CSV</button></div>
+              <div class="panel-body"><div class="chart" id="clientsChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
             </article>
-            <article class="phase-b-kpi">
-              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">report</span>True zero rate</div>
-              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBZeroRateValue">Loading</div>
-              <div class="phase-b-kpi__meta" id="phaseBZeroRateMeta">Known engine problems are left out.</div>
+          </div>
+
+          <article class="panel" style="margin-bottom:14px">
+            <div class="panel-head"><div><div class="panel-title">Search quality trend</div><div class="panel-subtitle">True zero and low-result rates, with outage windows labeled</div></div><button class="small-button" data-export="series-quality" type="button">CSV</button></div>
+            <div class="panel-body"><div class="chart" id="qualityChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
+          </article>
+
+          <div class="grid-main-side">
+            <article class="panel">
+              <div class="panel-head">
+                <div><div class="panel-title">Top lists</div><div class="panel-subtitle" id="topListSubtitle">Top 50 for the selected period</div></div>
+                <div class="panel-actions">
+                  <button class="small-button" data-export="top-list-csv" type="button">CSV</button>
+                  <button class="small-button" data-export="top-list-json" type="button">JSON</button>
+                </div>
+              </div>
+              <div class="panel-body" style="padding-bottom:0">
+                <div class="panel-actions" id="topListTabs">
+                  <button class="tab-button active" data-top-list="searched" type="button">Searched</button>
+                  <button class="tab-button" data-top-list="returned" type="button">Returned</button>
+                  <button class="tab-button" data-top-list="copied" type="button">Copied</button>
+                  <button class="tab-button" data-top-list="zero" type="button">Zero</button>
+                </div>
+              </div>
+              <div class="table-wrap" id="topListTable"><div class="empty">Loading top lists</div></div>
             </article>
-            <article class="phase-b-kpi">
-              <div class="phase-b-kpi__label"><span class="material-symbols-outlined">filter_alt</span>Low-result rate</div>
-              <div class="phase-b-kpi__value phase-b-skeleton" id="phaseBLowRateValue">Loading</div>
-              <div class="phase-b-kpi__meta" id="phaseBLowRateMeta">Only searches eligible for this check are counted.</div>
+            <article class="panel">
+              <div class="panel-head"><div><div class="panel-title">Geography</div><div class="panel-subtitle" id="geographySubtitle">Country coverage</div></div><button class="small-button" data-export="geography" type="button">CSV</button></div>
+              <div class="panel-body"><div class="geo-list" id="geographyList"><div class="skeleton" style="height:170px"></div></div></div>
             </article>
-          </section>
+          </div>
 
-          <section class="phase-b-panel" id="phaseBLatestActivityPanel">
-            <div class="phase-b-panel__header">
-              <div>
-                <div class="phase-b-panel__title">Latest Activity</div>
-                <div class="phase-b-panel__lead">The newest direct searches, loaded before the rest of the dashboard.</div>
+          <article class="panel">
+            <div class="panel-head"><div><div class="panel-title">Latest Activity</div><div class="panel-subtitle">Newest real user queries load first</div></div><button class="small-button" data-export="activity" type="button">CSV</button></div>
+            <div class="panel-body"><div class="activity-list" id="latestActivity"><div class="skeleton" style="height:190px"></div></div></div>
+          </article>
+        </section>
+
+        <section id="section-intelligence" hidden>
+          <div class="section-head">
+            <div><h1>Search Intelligence</h1><div class="section-subtitle">One explorer for every query, plus the work worth doing.</div></div>
+          </div>
+          <article class="panel" style="margin-bottom:14px">
+            <div class="panel-head"><div><div class="panel-title">Query explorer</div><div class="panel-subtitle">Use plain text or filters such as zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" type="button">CSV</button><button class="small-button" data-export="queries-json" type="button">JSON</button></div></div>
+            <div class="explorer-tools"><input id="explorerSearch" type="search" placeholder="Search every query" /><select class="filter-select" id="explorerIssue"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
+            <div class="table-wrap" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
+          </article>
+
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head"><div><div class="panel-title">Gap worklist</div><div class="panel-subtitle">Repeated true zero and low-result queries first</div></div></div>
+              <div class="table-wrap" id="gapWorklist"><div class="empty">Loading worklist</div></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><div class="panel-title">Icon requests</div><div class="panel-subtitle">Requests submitted from the no-results form</div></div></div>
+              <div class="table-wrap" id="iconRequests"><div class="empty">Loading icon requests</div></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head"><div><div class="panel-title">Contact inbox</div><div class="panel-subtitle">Stored website contact-form messages</div></div></div>
+            <div class="table-wrap" id="contactInbox"><div class="empty">Loading contact submissions</div></div>
+            <details id="diagnosticsDrawer">
+              <summary>Diagnostics and raw data access</summary>
+              <div class="panel-body" id="diagnosticsContent">Loading diagnostics</div>
+            </details>
+          </article>
+        </section>
+
+        <section id="section-audience" hidden>
+          <div class="section-head">
+            <div><h1>Audience</h1><div class="section-subtitle">Who they are, where they are, and the path from anonymous to Pro.</div></div>
+          </div>
+          <article class="panel" style="margin-bottom:14px">
+            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Counts obey the selected period and venue</div></div></div>
+            <div class="panel-body">
+              <div class="funnel">
+                <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div></div>
+                <div class="funnel-card"><div class="kpi-label">Registered</div><div class="funnel-value skeleton" id="funnelRegistered">000</div><div class="funnel-note" id="funnelRegisteredNote">Loading</div></div>
+                <div class="funnel-card"><div class="kpi-label">Pro</div><div class="funnel-value skeleton" id="funnelPro">000</div><div class="funnel-note" id="funnelProNote">Loading</div></div>
+                <div class="funnel-card"><div class="kpi-label">MRR</div><div class="funnel-value" id="funnelMrr">Unavailable</div><div class="funnel-note" id="funnelMrrNote">Waiting for an exact billing price source</div></div>
               </div>
-              <span class="phase-b-chip phase-b-chip--origin">Direct searches</span>
+              <div class="chart" id="audienceChart" style="min-height:170px;margin-top:14px"><span class="skeleton" style="width:100%;height:150px"></span></div>
             </div>
-            <div class="phase-b-activity-list" id="phaseBLatestActivity" aria-live="polite">
-              <div class="phase-b-activity-row">
-                <div class="phase-b-skeleton">Loading activity</div>
-                <div class="phase-b-skeleton">Loading visitor</div>
-                <div class="phase-b-skeleton">Loading outcome</div>
-                <div class="phase-b-skeleton">Loading time</div>
-              </div>
-              <div class="phase-b-activity-row">
-                <div class="phase-b-skeleton">Loading activity</div>
-                <div class="phase-b-skeleton">Loading visitor</div>
-                <div class="phase-b-skeleton">Loading outcome</div>
-                <div class="phase-b-skeleton">Loading time</div>
-              </div>
-            </div>
-          </section>
+          </article>
 
-          <section class="phase-b-panel" id="phaseBGapPanel">
-            <div class="phase-b-panel__header">
-              <div>
-                <div class="phase-b-panel__title">Gap Worklist</div>
-                <div class="phase-b-panel__lead">Real searches that returned nothing or too little. Review the highest-volume gaps first.</div>
-              </div>
-              <div class="query-explorer__actions">
-                <button class="btn btn-ghost btn-sm" id="queryExplorerExportCsv" type="button">CSV</button>
-                <button class="btn btn-ghost btn-sm" id="queryExplorerExportJson" type="button">JSON</button>
-                <button class="btn btn-ghost btn-sm" id="queryExplorerExportAgentPack" type="button">Analysis pack</button>
-              </div>
-            </div>
-            <div style="padding:1rem;">
-              <div class="query-explorer">
-                <div class="query-explorer__filters">
-                  <select class="filter-select" id="queryExplorerIssueFilter" aria-label="Gap type">
-                    <option value="">Zero and low results</option>
-                    <option value="zero_result">Zero results</option>
-                    <option value="low_result">Low results</option>
-                  </select>
-                  <select class="filter-select" id="queryExplorerStatusFilter" aria-label="Review status">
-                    <option value="">Active work</option>
-                    <option value="untriaged">Untriaged</option>
-                    <option value="needs_alias">Needs alias</option>
-                    <option value="needs_icon">Needs icon</option>
-                    <option value="resolved">Resolved</option>
-                    <option value="ignore">Ignore</option>
-                  </select>
-                  <input class="filter-select" id="queryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
-                  <select class="filter-select" id="queryExplorerPageSize" aria-label="Rows per page">
-                    <option value="25">25 rows</option>
-                    <option value="50">50 rows</option>
-                    <option value="100">100 rows</option>
-                  </select>
-                </div>
-                <div class="query-explorer__summary" id="queryExplorerSummary">Loading gap rows...</div>
-                <div class="query-explorer__table">
-                  <table class="data-table">
-                    <colgroup>
-                      <col style="width:34%" />
-                      <col style="width:22%" />
-                      <col style="width:16%" />
-                      <col style="width:14%" />
-                      <col style="width:14%" />
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th>Query</th>
-                        <th>Results</th>
-                        <th>Clients</th>
-                        <th>Last seen</th>
-                        <th>Review</th>
-                      </tr>
-                    </thead>
-                    <tbody id="queryExplorerTableBody">
-                      <tr><td colspan="5"><div class="phase-b-skeleton" style="height:52px;">Loading gaps</div></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
-                  <span class="pagination__info" id="queryExplorerPaginationInfo">Loading gap rows...</span>
-                  <div class="pagination__controls" id="queryExplorerPaginationControls"></div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <article class="panel" style="margin-bottom:14px">
+            <div class="panel-head"><div><div class="panel-title">Registered users</div><div class="panel-subtitle">Signup and recent search activity in one view</div></div><button class="small-button" data-export="registered-users" type="button">CSV</button></div>
+            <div class="table-wrap" id="registeredUsers"><div class="empty">Loading registered users</div></div>
+          </article>
 
-          <details class="intelligence-collapsible phase-b-diagnostics" id="intelligenceRawSignalsDetails">
-          <summary>
-            Diagnostics
-            <span class="intelligence-collapsible__hint">Raw counts, secondary metrics, and detailed activity</span>
-          </summary>
-          <div class="phase-b-diagnostics__body">
-            <div class="query-explorer__filters" style="padding-top:1rem;">
-              <select class="filter-select" id="intelligenceSignalFilter" aria-label="Detailed activity type">
-                <option value="">All activity types</option>
-                <option value="search_attempt">Search attempts</option>
-                <option value="hosted_search_audit">Hosted search checks</option>
-                <option value="copy">Copies</option>
-                <option value="favorite">Saves</option>
-                <option value="replace">Replacements</option>
-                <option value="mcp_call">MCP calls</option>
-                <option value="kit_download">Kit downloads</option>
-              </select>
-            </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">database</span>
-              <span id="intelligenceTotalEvidenceLabel">Evidence Rows (30d)</span>
-            </div>
-            <div class="stat-card__value" id="intelligenceTotalEvidenceValue">0</div>
-            <div class="stat-card__delta" id="intelligenceTotalEvidenceDelta">Raw signals captured in the current window</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">content_copy</span>
-              <span id="intelligenceCopyEventsLabel">Icon Copy Events (30d)</span>
-            </div>
-            <div class="stat-card__value" id="intelligenceCopyEventsValue">0</div>
-            <div class="stat-card__delta" id="intelligenceCopyEventsDelta">Selection pressure in the current window</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">neurology</span>
-              <span id="intelligenceMcpBatchesLabel">MCP Events (30d)</span>
-            </div>
-            <div class="stat-card__value" id="intelligenceMcpBatchesValue">0</div>
-            <div class="stat-card__delta" id="intelligenceMcpBatchesDelta">Agent search sessions logged in the current window</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">download</span>
-              <span id="intelligenceKitDownloadsLabel">Kit Downloads (30d)</span>
-            </div>
-            <div class="stat-card__value" id="intelligenceKitDownloadsValue">0</div>
-            <div class="stat-card__delta" id="intelligenceKitDownloadsDelta">Collection pulls routed through Supericons in the current window</div>
-          </div>
-        </div>
-
-        <div class="stats-recent">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">bolt</span>
-              Top Actioned Icons
-            </div>
-            <div id="intelligenceTopIcons"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">category</span>
-              Top Recorded Purposes
-            </div>
-            <div id="intelligenceTopCategories"></div>
-          </div>
-        </div>
-
-        <div class="stats-recent" style="padding-top:0;">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">swap_horiz</span>
-              Top Replaced Icons
-            </div>
-            <div id="intelligenceTopReplaced"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">insights</span>
-              Key Signals
-            </div>
-            <div id="intelligenceKeySignals"></div>
-          </div>
-        </div>
-        <div class="stats-section__title" style="margin:0 1rem 0.75rem;">
-          <span class="material-symbols-outlined" style="font-size:14px">query_stats</span>
-          Search demand details
-        </div>
-
-        <div class="stats-grid" style="padding-top:0;">
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">manage_search</span>
-              <span id="searchIntelUniqueQueriesLabel">Unique Queries (30d)</span>
-            </div>
-            <div class="stat-card__value" id="searchIntelUniqueQueriesValue">0</div>
-            <div class="stat-card__delta" id="searchIntelUniqueQueriesDelta">Distinct search queries with captured evidence</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">travel_explore</span>
-              <span id="searchIntelSearchAttemptsLabel">Search Attempts (30d)</span>
-            </div>
-            <div class="stat-card__value" id="searchIntelSearchAttemptsValue">0</div>
-            <div class="stat-card__delta" id="searchIntelSearchAttemptsDelta">Settled searches captured in the current window</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">warning</span>
-              <span id="searchIntelZeroResultQueriesLabel">Zero-Result Queries (30d)</span>
-            </div>
-            <div class="stat-card__value" id="searchIntelZeroResultQueriesValue">0</div>
-            <div class="stat-card__delta" id="searchIntelZeroResultQueriesDelta">Distinct queries that returned no results</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__label">
-              <span class="material-symbols-outlined">filter_alt</span>
-              <span id="searchIntelLowResultQueriesLabel">Low-Result Queries (30d)</span>
-            </div>
-            <div class="stat-card__value" id="searchIntelLowResultQueriesValue">0</div>
-            <div class="stat-card__delta" id="searchIntelLowResultQueriesDelta">Distinct queries with 1-3 results</div>
-          </div>
-        </div>
-
-        <div class="stats-recent" style="padding-top:0;">
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">query_stats</span>
-              Top Successful Queries
-            </div>
-            <div id="searchIntelTopQueries"></div>
-          </div>
-          <div class="stats-section">
-            <div class="stats-section__title">
-              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">psychology</span>
-              Top MCP Queries
-            </div>
-            <div id="searchIntelTopMcpQueries"></div>
-          </div>
-        </div>
-        <div class="stats-section" style="margin:0 1rem 1rem;">
-          <div class="stats-section__title">
-            <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
-            Detailed activity
-          </div>
-          <div class="query-explorer__table">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Timestamp</th>
-                  <th>Signal</th>
-                  <th>Visitor</th>
-                  <th>Query</th>
-                  <th>Surface</th>
-                  <th>Note</th>
-                </tr>
-              </thead>
-              <tbody id="intelligenceEvidenceBody"></tbody>
-            </table>
-          </div>
-          <div class="pagination" style="padding:0.75rem 0 0;border-top:none;">
-            <span class="pagination__info" id="intelligenceEvidencePaginationInfo">Loading detailed activity...</span>
-            <div class="pagination__controls" id="intelligenceEvidencePaginationControls"></div>
-          </div>
-        </div>
-        </div>
-        </details>
-
-        <div class="stats-recent" style="display:none;" aria-hidden="true">
-          <div class="stats-section">
-            <div class="query-explorer">
-              <div class="query-explorer__top">
-                <div>
-                  <div class="stats-section__title" style="margin-bottom:0.35rem;">
-                    <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">manage_search</span>
-                    Query Explorer
-                  </div>
-                  <div class="query-explorer__lead">
-                    Filter, sort, review, and export query evidence from one place.
-                  </div>
-                </div>
-                <div class="query-explorer__actions">
-                  <button class="btn btn-ghost btn-sm" id="legacyQueryExplorerExportCsv" type="button">
-                    <span class="material-symbols-outlined" style="font-size:14px">table_view</span>
-                    CSV
-                  </button>
-                  <button class="btn btn-ghost btn-sm" id="legacyQueryExplorerExportJson" type="button">
-                    <span class="material-symbols-outlined" style="font-size:14px">data_object</span>
-                    JSON
-                  </button>
-                  <button class="btn btn-primary btn-sm" id="legacyQueryExplorerExportAgentPack" type="button">
-                    <span class="material-symbols-outlined" style="font-size:14px">inventory_2</span>
-                    Agent Pack
-                  </button>
-                </div>
-              </div>
-
-              <div class="query-explorer__filters">
-                <div class="search-input-wrap">
-                  <span class="material-symbols-outlined">search</span>
-                  <input class="search-input" placeholder="Search queries..." id="legacyQueryExplorerSearch" />
-                </div>
-                <select class="filter-select" id="legacyQueryExplorerIssueFilter" aria-label="Query issue type">
-                  <option value="">All issues</option>
-                  <option value="zero_result">Zero results</option>
-                  <option value="low_result">Low results</option>
-                  <option value="replacement_heavy">Replaced often</option>
-                  <option value="successful">Successful</option>
-                  <option value="mcp">MCP</option>
-                </select>
-                <select class="filter-select" id="legacyQueryExplorerStatusFilter" aria-label="Query review status">
-                  <option value="">All statuses</option>
-                  <option value="untriaged">Untriaged</option>
-                  <option value="needs_alias">Needs Alias</option>
-                  <option value="needs_icon">Needs Icon</option>
-                  <option value="resolved">Resolved</option>
-                  <option value="ignore">Ignore</option>
-                </select>
-                <select class="filter-select" id="legacyQueryExplorerEnvironmentFilter" aria-label="Query environment">
-                  <option value="live" selected>Production</option>
-                  <option value="preview">Preview</option>
-                  <option value="local">Local / dev</option>
-                  <option value="test">Automated test</option>
-                  <option value="legacy">Unclassified source</option>
-                  <option value="all">All environments</option>
-                </select>
-                <select class="filter-select" id="legacyQueryExplorerChannelFilter" aria-label="Query channel">
-                  <option value="all" selected>All channels</option>
-                  <option value="web">Web</option>
-                  <option value="hosted_mcp">Hosted MCP</option>
-                  <option value="local_mcp">Local MCP / npm</option>
-                  <option value="cli">CLI</option>
-                  <option value="api">API</option>
-                  <option value="internal_test">Internal / test</option>
-                  <option value="unknown">Unclassified</option>
-                </select>
-                <input class="filter-select" id="legacyQueryExplorerLibraryFilter" placeholder="Library" aria-label="Library filter" />
-                <input class="filter-select" id="legacyQueryExplorerPurposeFilter" placeholder="Purpose" aria-label="Purpose filter" />
-                <select class="filter-select" id="legacyQueryExplorerSort" aria-label="Sort query rows">
-                  <option value="last_seen" selected>Latest activity</option>
-                  <option value="zero_attempt_count">Zero attempts</option>
-                  <option value="low_attempt_count">Low attempts</option>
-                  <option value="attempt_count">All attempts</option>
-                  <option value="average_result_count">Average results</option>
-                  <option value="minimum_result_count">Minimum results</option>
-                  <option value="replacement_count">Replacements</option>
-                  <option value="mcp_batch_count">MCP events</option>
-                  <option value="first_seen">First seen</option>
-                  <option value="status">Status</option>
-                  <option value="query">Query</option>
-                </select>
-                <select class="filter-select" id="legacyQueryExplorerDirection" aria-label="Sort direction">
-                  <option value="desc">Newest first</option>
-                  <option value="asc">Oldest first</option>
-                </select>
-                <select class="filter-select" id="legacyQueryExplorerPageSize" aria-label="Rows per page">
-                  <option value="25">25 rows</option>
-                  <option value="50">50 rows</option>
-                  <option value="100">100 rows</option>
-                </select>
-              </div>
-
-              <div class="query-explorer__summary" id="legacyQueryExplorerSummary">Loading query rows...</div>
-
-              <div class="query-workbench-tabs" role="tablist" aria-label="Query workspace views">
-                <button class="query-workbench-tab active" id="queryWorkbenchTabQueries" type="button" data-query-workbench-view="queries" role="tab" aria-selected="true" aria-controls="queryWorkbenchPaneQueries">
-                  <span class="material-symbols-outlined" style="font-size:14px">fact_check</span>
-                  Query Issues
-                </button>
-                <button class="query-workbench-tab" id="queryWorkbenchTabActivity" type="button" data-query-workbench-view="activity" role="tab" aria-selected="false" aria-controls="queryWorkbenchPaneActivity">
-                  <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
-                  Latest Activity
-                </button>
-              </div>
-
-              <div class="query-workbench-pane active" id="queryWorkbenchPaneQueries" role="tabpanel" aria-labelledby="queryWorkbenchTabQueries">
-                <div class="query-explorer__table">
-                  <table class="data-table">
-                    <colgroup>
-                      <col style="width:34%" />
-                      <col style="width:24%" />
-                      <col style="width:18%" />
-                      <col style="width:14%" />
-                      <col style="width:10%" />
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th>Query</th>
-                        <th>Health</th>
-                        <th>Audience</th>
-                        <th>Last Activity</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="legacyQueryExplorerTableBody"></tbody>
-                  </table>
-                </div>
-
-                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
-                  <span class="pagination__info" id="legacyQueryExplorerPaginationInfo">Loading query rows...</span>
-                  <div class="pagination__controls" id="legacyQueryExplorerPaginationControls"></div>
-                </div>
-              </div>
-
-              <div class="query-workbench-pane" id="queryWorkbenchPaneActivity" role="tabpanel" aria-labelledby="queryWorkbenchTabActivity">
-                <div class="query-explorer__lead">
-                  Latest timestamped search and usage signals. Filter this feed with the page search, signal, and time-window controls above.
-                </div>
-                <div class="query-explorer__table">
-                  <table class="data-table">
-                    <colgroup>
-                      <col style="width:13%" />
-                      <col style="width:12%" />
-                      <col style="width:15%" />
-                      <col style="width:20%" />
-                      <col style="width:15%" />
-                      <col style="width:25%" />
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th>Timestamp</th>
-                        <th>Signal</th>
-                        <th>Visitor</th>
-                        <th>Query</th>
-                        <th>Surface</th>
-                        <th>Note</th>
-                      </tr>
-                    </thead>
-                    <tbody id="legacyIntelligenceEvidenceBody"></tbody>
-                  </table>
-                </div>
-                <div class="pagination" style="padding:0.25rem 0 0;border-top:none;">
-                  <span class="pagination__info" id="legacyIntelligenceEvidencePaginationInfo">Loading evidence...</span>
-                  <div class="pagination__controls" id="legacyIntelligenceEvidencePaginationControls"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        </div>
+          <article class="panel">
+            <div class="panel-head"><div><div class="panel-title">All clients</div><div class="panel-subtitle">Anonymous identity is monthly-stable, so cross-month totals are estimates</div></div><button class="small-button" data-export="clients" type="button">CSV</button></div>
+            <div class="table-wrap" id="allClients"><div class="empty">Loading clients</div></div>
+          </article>
+        </section>
       </div>
-    </section>
-
-    <!-- ======= USERS PANEL ======= -->
-    <section class="panel" id="panel-users">
-      <div class="panel-header">
-        <div class="panel-header__row">
-          <div>
-            <div class="panel-header__title">Users</div>
-            <div class="panel-header__subtitle" id="usersPanelSubtitle">0 total accounts</div>
-          </div>
-        </div>
-        <div class="search-row">
-          <div class="search-input-wrap">
-            <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Search by email or name..." id="user-search" />
-          </div>
-          <select class="filter-select" id="userPlanFilter">
-            <option value="">All plans</option>
-            <option value="pro_annual">Pro Annual</option>
-            <option value="pro_monthly">Pro Monthly</option>
-            <option value="free">Free</option>
-          </select>
-          <select class="filter-select" id="userStatusFilter">
-            <option value="">All statuses</option>
-            <option value="active">Active</option>
-            <option value="trialing">Trialing</option>
-            <option value="free">Free</option>
-            <option value="canceled">Canceled</option>
-          </select>
-          <select class="filter-select" id="userProviderFilter">
-            <option value="">All providers</option>
-            <option value="google">Google</option>
-            <option value="email">Email</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Provider</th>
-              <th>Plan</th>
-              <th>Status</th>
-              <th>Purchases</th>
-              <th>Joined</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody"></tbody>
-        </table>
-      </div>
-
-      <div class="pagination">
-        <span class="pagination__info" id="usersPaginationInfo">Loading users...</span>
-        <div class="pagination__controls" id="usersPaginationControls"></div>
-      </div>
-    </section>
-
-    <!-- ======= AUDIT LOG PANEL ======= -->
-    <section class="panel" id="panel-audit">
-      <div class="panel-header">
-        <div class="panel-header__row">
-          <div>
-            <div class="panel-header__title">Audit Log</div>
-            <div class="panel-header__subtitle">All admin actions, tamper-resistant</div>
-          </div>
-        </div>
-        <div class="search-row audit-filters">
-          <div class="search-input-wrap" style="max-width:280px">
-            <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Filter by user ID or email..." id="auditSearch" />
-          </div>
-          <select class="filter-select" id="auditActionFilter">
-            <option value="">All actions</option>
-            <option value="user.delete">user.delete</option>
-            <option value="subscription.cancel">subscription.cancel</option>
-            <option value="purchase.revoke">purchase.revoke</option>
-            <option value="api_key.revoke">api_key.revoke</option>
-            <option value="user.ban">user.ban</option>
-            <option value="user.unban">user.unban</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Action</th>
-              <th>Target</th>
-              <th>Actor</th>
-              <th>Note</th>
-              <th>Payload</th>
-            </tr>
-          </thead>
-          <tbody id="auditTableBody"></tbody>
-        </table>
-      </div>
-
-      <div class="pagination">
-        <span class="pagination__info" id="auditPaginationInfo">Loading audit log...</span>
-        <div class="pagination__controls" id="auditPaginationControls"></div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<!-- ===== DRAWER OVERLAY ===== -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-
-<!-- ===== USER DETAIL DRAWER ===== -->
-<div class="drawer" id="userDrawer">
-  <div class="drawer-header">
-    <div class="drawer-avatar" id="drawerAvatar">VN</div>
-    <div class="drawer-user-info">
-      <div class="drawer-user-info__name" id="drawerName">Vinicius Nakamura</div>
-      <div class="drawer-user-info__email" id="drawerEmail">vinicius@earth.io</div>
-      <div class="drawer-user-info__badges">
-        <span class="badge badge-google" id="drawerProvider">Google</span>
-        <span class="badge badge-pro" id="drawerPlan">Pro Annual</span>
-        <span class="badge badge-active" id="drawerStatus">Active</span>
-      </div>
-    </div>
-    <button class="drawer-close" onclick="closeDrawer()">
-      <span class="material-symbols-outlined" style="font-size:20px">close</span>
-    </button>
+    </main>
   </div>
 
-  <div class="drawer-tabs">
-    <div class="drawer-tab active" onclick="switchTab(this,'tab-account')">Account</div>
-    <div class="drawer-tab" onclick="switchTab(this,'tab-subscription')">Subscription</div>
-    <div class="drawer-tab" onclick="switchTab(this,'tab-purchases')">Purchases</div>
-    <div class="drawer-tab" onclick="switchTab(this,'tab-keys')">API Keys</div>
-    <div class="drawer-tab" onclick="switchTab(this,'tab-log')">Audit Log</div>
-  </div>
-
-  <!-- Account Tab -->
-  <div class="drawer-body" id="tab-account">
-    <div class="drawer-section-title">Identity</div>
-    <div class="detail-row">
-      <span class="detail-row__label">Supabase User ID</span>
-      <span class="detail-row__value mono" id="drawerUserId">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Email</span>
-      <span class="detail-row__value" id="drawerEmailValue">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Email Verified</span>
-      <span class="detail-row__value" style="color:var(--si-success)" id="drawerEmailVerified">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Auth Provider</span>
-      <span class="detail-row__value" id="drawerAuthProvider">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Last Sign-in</span>
-      <span class="detail-row__value" id="drawerLastSignIn">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Joined</span>
-      <span class="detail-row__value" id="drawerJoined">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Ban Status</span>
-      <span class="detail-row__value" style="color:var(--si-success)" id="drawerBanStatus">-</span>
-    </div>
-
-    <div class="drawer-section-title" style="margin-top:1.25rem">Actions</div>
-    <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
-      <button class="btn btn-ghost btn-sm" id="drawerBanButton" type="button">
-        <span class="material-symbols-outlined" style="font-size:14px">block</span>
-        Ban User
-      </button>
-    </div>
-
-    <div class="danger-zone">
-      <div class="danger-zone__label">
-        <span class="material-symbols-outlined">warning</span>
-        Danger Zone
-      </div>
-      <div class="danger-actions">
-        <button class="btn btn-danger" id="deleteAccountButton" onclick="openModal()" type="button">
-          <span class="material-symbols-outlined" style="font-size:15px">delete_forever</span>
-          Delete Account
-        </button>
-      </div>
+  <div class="modal-overlay open" id="adminSecretModal" aria-hidden="false">
+    <div class="modal">
+      <h2>Connect the admin API</h2>
+      <p id="adminSecretLead">Enter the current admin secret for this browser tab. The local managed gateway skips this step.</p>
+      <form id="adminSecretForm">
+        <input id="adminSecretInput" type="password" autocomplete="off" placeholder="Admin secret" />
+        <div class="form-error" id="adminSecretError"></div>
+        <div class="modal-actions">
+          <button class="small-button" id="adminSecretCancelBtn" type="button" hidden>Cancel</button>
+          <button class="primary-button" id="adminSecretSubmitBtn" type="submit">Connect</button>
+        </div>
+      </form>
     </div>
   </div>
-
-  <!-- Subscription Tab -->
-  <div class="drawer-body" id="tab-subscription" style="display:none">
-    <div class="drawer-section-title">Current Plan</div>
-    <div class="detail-row">
-      <span class="detail-row__label">Plan</span>
-      <span class="detail-row__value" id="drawerSubscriptionPlan">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Status</span>
-      <span class="detail-row__value" id="drawerSubscriptionStatus">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Period End</span>
-      <span class="detail-row__value" id="drawerSubscriptionPeriodEnd">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Stripe Subscription ID</span>
-      <span class="detail-row__value mono" id="drawerStripeSubscriptionId">-</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-row__label">Stripe Customer ID</span>
-      <span class="detail-row__value mono" id="drawerStripeCustomerId">-</span>
-    </div>
-
-    <div style="margin-top:1.25rem">
-      <button class="btn btn-danger btn-sm" id="drawerCancelSubscriptionButton" type="button">
-        <span class="material-symbols-outlined" style="font-size:14px">cancel</span>
-        Cancel Subscription
-      </button>
-    </div>
-  </div>
-
-  <!-- Purchases Tab -->
-  <div class="drawer-body" id="tab-purchases" style="display:none">
-    <div class="drawer-section-title" id="drawerPurchasesTitle">0 Purchases</div>
-    <div id="drawerPurchasesList"></div>
-  </div>
-
-  <!-- API Keys Tab -->
-  <div class="drawer-body" id="tab-keys" style="display:none">
-    <div id="drawerKeysContent"></div>
-  </div>
-
-  <!-- Audit Log Tab -->
-  <div class="drawer-body" id="tab-log" style="display:none">
-    <div class="drawer-section-title">Audit History</div>
-    <div id="drawerAuditContent"></div>
-  </div>
-</div>
-
-<!-- ===== QUERY DETAIL DRAWER ===== -->
-<div class="drawer-overlay" id="queryDrawerOverlay" onclick="closeQueryDetailDrawer()"></div>
-<div class="drawer query-drawer" id="queryDetailDrawer" aria-hidden="true">
-  <div class="drawer-header">
-    <div class="drawer-avatar">
-      <span class="material-symbols-outlined">manage_search</span>
-    </div>
-    <div class="drawer-user-info">
-      <div class="drawer-user-info__name" id="queryDetailTitle">Query detail</div>
-      <div class="drawer-user-info__email" id="queryDetailContext">Select a query to inspect it.</div>
-      <div class="drawer-user-info__badges" id="queryDetailBadges"></div>
-    </div>
-    <button class="drawer-close" onclick="closeQueryDetailDrawer()" type="button" aria-label="Close query detail">
-      <span class="material-symbols-outlined" style="font-size:20px">close</span>
-    </button>
-  </div>
-  <div class="drawer-body">
-    <div id="queryDetailContent">
-      <div class="empty-state">
-        <span class="material-symbols-outlined">manage_search</span>
-        <span class="empty-state__label">Select a query to inspect it.</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ADMIN API AUTH MODAL ===== -->
-<div class="modal-overlay open" id="adminSecretModal" aria-hidden="false">
-  <div class="modal modal--auth">
-    <div class="modal__icon">
-      <span class="material-symbols-outlined">admin_panel_settings</span>
-    </div>
-    <div class="modal__title">Connect Admin API</div>
-    <div class="modal__desc" id="adminSecretLead">
-      Enter the Supabase <code>ADMIN_SECRET</code> to unlock the Supericons admin API for this browser tab.
-    </div>
-    <form id="adminSecretForm">
-      <div class="modal__confirm-label">Admin API secret</div>
-      <input class="modal__confirm-input" id="adminSecretInput" type="password" autocomplete="off" placeholder="Paste ADMIN_SECRET" />
-      <div class="modal__error" id="adminSecretError"></div>
-      <div class="modal__actions">
-        <button class="btn btn-ghost" id="adminSecretCancelBtn" type="button" style="display:none;">Cancel</button>
-        <button class="btn" id="adminSecretSubmitBtn" type="submit">
-          <span class="material-symbols-outlined" style="font-size:15px">lock_open</span>
-          Connect
-        </button>
-      </div>
-    </form>
-    <div class="modal__note">
-      This secret is stored only in <strong>this browser tab</strong>. It is separate from the Netlify Basic Auth gate in front of <code>/admin</code>.
-    </div>
-  </div>
-</div>
-
-<!-- ===== DELETE CONFIRM MODAL ===== -->
-<div class="modal-overlay" id="deleteModal">
-  <div class="modal">
-    <div class="modal__icon">
-      <span class="material-symbols-outlined">delete_forever</span>
-    </div>
-    <div class="modal__title">Delete this account?</div>
-    <div class="modal__desc">
-      This will permanently delete the account and cancel any active Stripe subscription immediately. All purchases and subscription history will be removed. This cannot be undone.
-    </div>
-    <code class="modal__email-target" id="modalEmailTarget">vinicius@earth.io</code>
-    <label class="detail-row" style="margin-bottom:1rem;gap:0.75rem;align-items:flex-start;">
-      <input type="checkbox" id="deleteStripeCustomerToggle" style="margin-top:2px" />
-      <span class="detail-row__label" style="line-height:1.5;">Also delete the Stripe customer after canceling the subscription. Use this for disposable test data only.</span>
-    </label>
-    <div class="modal__confirm-label">Type the user's email to confirm</div>
-    <input class="modal__confirm-input" id="confirmInput" placeholder="vinicius@earth.io" oninput="checkConfirm()" />
-    <div class="modal__actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-danger" id="confirmDeleteBtn" disabled style="opacity:0.4;cursor:not-allowed">
-        <span class="material-symbols-outlined" style="font-size:15px">delete_forever</span>
-        Delete Account
-      </button>
-    </div>
-  </div>
-</div>
-<div class="toast" id="adminToast" role="status" aria-live="polite"></div>
-<script src="/admin-app.js"></script>
+  <div class="toast" id="adminToast" role="status" aria-live="polite"></div>
+  <script src="/admin-app.js"></script>
 </body>
 </html>
