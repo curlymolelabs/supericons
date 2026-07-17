@@ -1,16 +1,16 @@
-# Admin dashboard Phase A Packet 2V: measured-health recovery
+# Admin dashboard Phase A Packet 2W: auth-first measured-health recovery
 
 Status: Ready for independent audit. Not executed.
 
 ## Purpose
 
-Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
+Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2W first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
 
 The candidate replaces full-history dashboard scans with bounded rollup reads. It must meet the existing dashboard contract, a 24-hour queue p95 below 1,500 ms, and an all-time queue p95 below 1,000 ms.
 
 ## Pinned recovery
 
-- Approval fingerprint: `d811ce54054e74918f081572d85a3db5e0d8c9c135fe032966bc4220cbd479b7`
+- Approval fingerprint: `37e7994efb447e307a1f8053f68747c551cfb89576be15941ca90c22351232fa`
 - Implementation revision: `a342f51f185a7d168772fa7cf542eb7960ee8827`
 - Implementation tree: `f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83`
 - Current function id, version, update value, and JWT setting: pinned by the fresh read-only inventory in the fingerprint
@@ -20,14 +20,15 @@ The candidate replaces full-history dashboard scans with bounded rollup reads. I
 
 ## Measured pre-deploy health rules
 
-1. The live Railway service must report version 0.4.18, 8,524 Material assets, a closed hosted-search circuit, zero consecutive failures, at most two active calls, and at most eight queued calls. This check makes no synthetic MCP tool call.
-2. The Packet 1 schema postflight must pass through a read-only database connection.
-3. Three cheap indexed reads must each finish within 1,000 ms.
-4. One query over a bounded 15-minute telemetry window must finish within 2,000 ms.
-5. The legacy `/stats` response must be healthy and complete within 10,000 ms. Fast legacy failures no longer proceed under Packet 2V.
-6. One strict Lucide search warms the production path. The next two strict searches must each return three valid Lucide results within 2,000 ms.
-7. The strict search calls use `channel=internal_test` and `source=verify`, so the dashboard excludes them from real usage metrics.
-8. The observed Disk IO Budget banner value is written to evidence as `visible`, `absent`, or `unknown`. It cannot block or permit the deploy.
+1. Supabase CLI authentication and the exact live `admin-api` id, version, update value, active status, and JWT setting must match before any write-once live-check evidence is created.
+2. The live Railway service must report version 0.4.18, 8,524 Material assets, a closed hosted-search circuit, zero consecutive failures, at most two active calls, and at most eight queued calls. This check makes no synthetic MCP tool call.
+3. The Packet 1 schema postflight must pass through a read-only database connection.
+4. Three cheap indexed reads must each finish within 1,000 ms.
+5. One query over a bounded 15-minute telemetry window must finish within 2,000 ms.
+6. The legacy `/stats` response must be healthy and complete within 10,000 ms. Fast legacy failures do not proceed.
+7. One strict Lucide search warms the production path. The next two strict searches must each return three valid Lucide results within 2,000 ms.
+8. The strict search calls use `channel=internal_test` and `source=verify`, so the dashboard excludes them from real usage metrics.
+9. The observed Disk IO Budget banner value is written to evidence as `visible`, `absent`, or `unknown`. It cannot block or permit the deploy.
 
 ## Measured rollup budget
 
@@ -76,5 +77,5 @@ The standing owner delegation applies. An independent auditor GO for the final e
 ## Execution command after audit GO
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint d811ce54054e74918f081572d85a3db5e0d8c9c135fe032966bc4220cbd479b7 -Execute -DiskIoBannerObserved visible
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 37e7994efb447e307a1f8053f68747c551cfb89576be15941ca90c22351232fa -Execute -DiskIoBannerObserved visible
 ```

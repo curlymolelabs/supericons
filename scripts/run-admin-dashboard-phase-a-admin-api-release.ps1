@@ -24,15 +24,15 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-railway-protection-2026-07-17.json'
-$DatabaseHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-database-health-2026-07-17.json'
-$SearchHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-search-health-2026-07-17.json'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-backlog-2026-07-17.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preflight-2026-07-17.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-live-2026-07-17.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-completion-2026-07-17.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-rollback-2026-07-17.json'
-$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-rollback-failure-2026-07-17.json'
+$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-railway-protection-2026-07-17.json'
+$DatabaseHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-database-health-2026-07-17.json'
+$SearchHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-search-health-2026-07-17.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-backlog-2026-07-17.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-preflight-2026-07-17.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-live-2026-07-17.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-completion-2026-07-17.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-rollback-2026-07-17.json'
+$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-rollback-failure-2026-07-17.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -295,7 +295,7 @@ function Invoke-StrictSearchHealth {
   Invoke-CheckedCommand -FilePath 'node' -Arguments @(
     'scripts/verify-admin-dashboard-phase-a-search-health.mjs',
     '--search-url', $SearchUrl,
-    '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-search-health-2026-07-17.json',
+    '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-search-health-2026-07-17.json',
     '--warmup-count', '1',
     '--measured-count', '2',
     '--latency-limit-ms', '2000',
@@ -461,16 +461,6 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashbo
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-search-health-local.mjs')
-Invoke-CheckedCommand -FilePath 'node' -Arguments @(
-  'scripts/verify-admin-dashboard-phase-a-railway-live.mjs',
-  '--mcp-url', 'https://mcp.supericons.dev/mcp',
-  '--expect-version', '0.4.18',
-  '--expect-material-assets', '8524',
-  '--expect-hosted-search-resilience', 'enabled',
-  '--allow-active',
-  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-railway-protection-2026-07-17.json'
-)
-$railwayProtection = Get-Content -LiteralPath $RailwayProtectionEvidence -Raw | ConvertFrom-Json
 
 $preFunction = Get-AdminFunction
 Assert-FunctionState `
@@ -483,6 +473,17 @@ if ([int]$preFunction.version -ne [int]$script:Packet.pre_function_version) {
 if ("$($preFunction.updated_at)" -ne $script:Packet.pre_function_updated_at) {
   throw 'Function update timestamp drifted from the approved packet.'
 }
+
+Invoke-CheckedCommand -FilePath 'node' -Arguments @(
+  'scripts/verify-admin-dashboard-phase-a-railway-live.mjs',
+  '--mcp-url', 'https://mcp.supericons.dev/mcp',
+  '--expect-version', '0.4.18',
+  '--expect-material-assets', '8524',
+  '--expect-hosted-search-resilience', 'enabled',
+  '--allow-active',
+  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-railway-protection-2026-07-17.json'
+)
+$railwayProtection = Get-Content -LiteralPath $RailwayProtectionEvidence -Raw | ConvertFrom-Json
 
 $poolerUrl = (Get-Content -LiteralPath $PoolerPath -Raw).Trim()
 if (-not $poolerUrl.StartsWith('postgresql://')) {
@@ -532,7 +533,7 @@ try {
   })
   $preflight = Invoke-AdminLiveGate `
     -Mode preflight `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preflight-2026-07-17.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-preflight-2026-07-17.json'
   $searchHealth = Invoke-StrictSearchHealth
 
   $candidate = Deploy-Revision `
@@ -545,7 +546,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-live-2026-07-17.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-live-2026-07-17.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{

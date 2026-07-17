@@ -1,0 +1,36 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_recovery_2v_attempt",
+  "approval_fingerprint": "d811ce54054e74918f081572d85a3db5e0d8c9c135fe032966bc4220cbd479b7",
+  "outcome": "pre_mutation_stop",
+  "observations": {
+    "runner_process_exited": true,
+    "railway_protection_evidence_written": true,
+    "database_health_evidence_written": false,
+    "backlog_evidence_written": false,
+    "legacy_preflight_evidence_written": false,
+    "strict_search_evidence_written": false,
+    "candidate_live_evidence_written": false,
+    "completion_evidence_written": false,
+    "rollback_evidence_written": false,
+    "candidate_workspace_created": false,
+    "supabase_cli_after_stop": "http_401_unauthorized",
+    "exact_visible_runner_error": "not_captured"
+  },
+  "structural_boundary": {
+    "last_completed_step": "railway_protection_read_only_gate",
+    "next_runner_step": "pinned_admin_api_function_inventory",
+    "credential_prompts_after_next_step": true,
+    "candidate_deploy_after_database_and_search_gates": true
+  },
+  "mutations": {
+    "admin_api_candidate_deployments": 0,
+    "admin_api_rollback_deployments": 0,
+    "rollup_refresh_writes": 0,
+    "migration": 0,
+    "mcp_search": 0,
+    "railway": 0,
+    "storage": 0,
+    "npm_publication": 0
+  },
+  "recorded_at": "2026-07-17T07:06:45.000Z"
+}
