@@ -1837,7 +1837,9 @@ async function buildDashboardV2OverviewPayload(
   const filters = parseDashboardV2Filters(url);
   const [dataRows, identityTelemetry, copySource, returnedSource] = await Promise.all([
     buildDashboardV2DataRows(adminClient, filters),
-    fetchDashboardV2IdentityTelemetry(adminClient, filters),
+    filters.key === 'all'
+      ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
+      : fetchDashboardV2IdentityTelemetry(adminClient, filters),
     filters.channel === 'all' || filters.channel === 'web'
       ? fetchDashboardV2IconRows(adminClient, filters, 'copy')
       : Promise.resolve({ rows: [], available: true, reason: '', truncated: false }),
@@ -1852,7 +1854,9 @@ async function buildDashboardV2OverviewPayload(
   const geography = identityTelemetry.truncated
     ? {
       available: false,
-      reason: 'Exact country totals exceed the bounded identity-row limit for this period. Choose a shorter date range.',
+      reason: filters.key === 'all'
+        ? 'Country totals are not available for all recorded history because anonymous identities rotate over time.'
+        : 'Exact country totals exceed the bounded identity-row limit for this period. Choose a shorter date range.',
       coverage_rate: 0,
       rows: [],
     }
@@ -1896,7 +1900,9 @@ async function buildDashboardV2OverviewPayload(
       ...kpis,
       identity_available: !identityTelemetry.truncated,
       identity_unavailable_reason: identityTelemetry.truncated
-        ? 'Exact client identities exceed the bounded identity-row limit for this period. Choose a shorter date range.'
+        ? filters.key === 'all'
+          ? 'All-history client totals use client-days because anonymous identities rotate over time.'
+          : 'Exact client identities exceed the bounded identity-row limit for this period. Choose a shorter date range.'
         : null,
     },
     series,
@@ -1913,6 +1919,7 @@ async function buildDashboardV2OverviewPayload(
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       identity_rows_truncated: identityTelemetry.truncated,
+      identity_rows_skipped_unbounded: filters.key === 'all',
       rollup_rows_truncated: dataRows.rollup_truncated,
       client_measure: kpis.client_measure,
       query_review_available: dataRows.query_review_available,
@@ -2109,7 +2116,9 @@ async function buildDashboardV2AudiencePayload(
       identityFilters,
       { applyQuery: false, includeQueryRows: false },
     ),
-    fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
+    filters.key === 'all'
+      ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
+      : fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
     listAllAuthUsers(adminClient),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
@@ -2118,18 +2127,7 @@ async function buildDashboardV2AudiencePayload(
   const userTelemetry = buildDashboardV2UserTelemetry(identityRows);
   const { users } = authUsers;
   const subscriptions = await fetchSubscriptions(adminClient, users.map((user) => user.id));
-  const rangeStart = filters.from ? Date.parse(filters.from) : null;
-  const rangeEnd = filters.to_exclusive ? Date.parse(filters.to_exclusive) : null;
   const registeredUsers = users
-    .filter((user) => {
-      const signup = Date.parse(String(user.created_at || ''));
-      const activity = userTelemetry.get(user.id);
-      if (activity) return true;
-      if (!Number.isFinite(signup)) return false;
-      if (rangeStart !== null && signup < rangeStart) return false;
-      if (rangeEnd !== null && signup >= rangeEnd) return false;
-      return true;
-    })
     .map((user) => {
       const subscription = (subscriptions.get(user.id) || {}) as Record<string, unknown>;
       const telemetry = userTelemetry.get(user.id);
@@ -2141,10 +2139,10 @@ async function buildDashboardV2AudiencePayload(
         provider: formatProviderLabel(user),
         plan: subscription.plan || 'Free',
         signup_at: user.created_at || null,
-        last_active: telemetry?.last_active || user.last_sign_in_at || null,
+        last_active: telemetry?.last_active || null,
         searches: telemetry?.searches || 0,
         venues: telemetry ? [...telemetry.channels].sort() : [],
-        country_code: countries[0]?.[0] || 'Unknown',
+        country_code: countries[0]?.[0] || null,
       };
     })
     .filter((row) => {
@@ -2152,7 +2150,10 @@ async function buildDashboardV2AudiencePayload(
       return [row.identifier, row.provider, row.plan, row.country_code, ...row.venues]
         .filter(Boolean).join(' ').toLowerCase().includes(filters.q);
     })
-    .sort((left, right) => String(right.last_active || '').localeCompare(String(left.last_active || '')));
+    .sort((left, right) => (
+      String(right.last_active || '').localeCompare(String(left.last_active || ''))
+      || String(right.signup_at || '').localeCompare(String(left.signup_at || ''))
+    ));
   const filteredClients = clientRows.filter((row) => {
     if (!filters.q) return true;
     return [
@@ -2163,22 +2164,38 @@ async function buildDashboardV2AudiencePayload(
       row.top_query,
     ].filter(Boolean).join(' ').toLowerCase().includes(filters.q);
   });
-  const uniqueClients = clientRows.length;
-  const registeredClients = clientRows.filter((row) => row.is_registered).length;
-  const proClients = clientRows.filter((row) => row.is_pro).length;
+  const dataUnavailable = identityTelemetry.truncated;
+  const fallbackKpis = buildDashboardV2Kpis(series, identityRows);
+  const uniqueClients = dataUnavailable
+    ? Number(fallbackKpis.estimated_unique_clients || 0)
+    : clientRows.length;
+  const registeredClients = dataUnavailable
+    ? users.length
+    : clientRows.filter((row) => row.is_registered).length;
+  const proClients = dataUnavailable
+    ? users.filter((user) => String(
+      (subscriptions.get(user.id) as Record<string, unknown> | undefined)?.plan || '',
+    ).toLowerCase().includes('pro')).length
+    : clientRows.filter((row) => row.is_pro).length;
   const pageCount = Math.max(1, Math.ceil(filteredClients.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * pageSize;
-  const dataUnavailable = identityTelemetry.truncated;
   const unavailableReason = 'Exact client profiles exceed the bounded identity-row limit for this period. Choose a shorter date range.';
 
   return {
     funnel: {
       unique_clients: uniqueClients,
       registered_clients: registeredClients,
-      registered_percentage: uniqueClients ? registeredClients / uniqueClients : 0,
+      registered_percentage: dataUnavailable
+        ? null
+        : uniqueClients ? registeredClients / uniqueClients : 0,
       pro_clients: proClients,
-      pro_percentage: uniqueClients ? proClients / uniqueClients : 0,
+      pro_percentage: dataUnavailable
+        ? null
+        : uniqueClients ? proClients / uniqueClients : 0,
+      client_measure: dataUnavailable ? 'client_days' : 'estimated_unique_clients',
+      registered_measure: dataUnavailable ? 'all_registered_accounts' : 'active_registered_clients',
+      pro_measure: dataUnavailable ? 'all_pro_accounts' : 'active_pro_clients',
       identity_available: !dataUnavailable,
       identity_unavailable_reason: dataUnavailable ? unavailableReason : null,
       mrr: {
@@ -2186,9 +2203,12 @@ async function buildDashboardV2AudiencePayload(
         reason: 'Exact billing price is not linked to every active subscription.',
       },
     },
-    registered_users: dataUnavailable
-      ? { available: false, reason: unavailableReason, rows: [] }
-      : { available: true, rows: registeredUsers.slice(0, 100) },
+    registered_users: {
+      available: true,
+      total: users.length,
+      rows: registeredUsers.slice(0, 100),
+      activity_window: filters.key,
+    },
     clients: dataUnavailable
       ? { available: false, reason: unavailableReason, rows: [] }
       : { available: true, rows: filteredClients.slice(pageStart, pageStart + pageSize) },
@@ -2204,7 +2224,9 @@ async function buildDashboardV2AudiencePayload(
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       identity_rows_truncated: identityTelemetry.truncated,
+      identity_rows_skipped_unbounded: filters.key === 'all',
       rollup_rows_truncated: dataRows.rollup_truncated,
+      audience_series_measure: dataUnavailable ? 'client_days' : 'registered_and_pro_clients',
       anonymous_identity_rotates_monthly: true,
       mrr_available: false,
     }),
@@ -2487,6 +2509,22 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'mcp_call') {
       entry.mcp_result_rows = Number(entry.mcp_result_rows || 0) + 1;
+      if (String(row.query_origin || '') === 'icon_lookup') {
+        const resultCount = Number(row.result_count);
+        if (Number.isFinite(resultCount)) {
+          entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
+          entry.result_samples = Number(entry.result_samples || 0) + 1;
+          const currentMinimum = typeof entry.minimum_result_count === 'number'
+            ? entry.minimum_result_count
+            : null;
+          if (currentMinimum === null || resultCount < currentMinimum) {
+            entry.minimum_result_count = resultCount;
+          }
+          if (resultCount > 0) {
+            entry.successful_signal_count = Number(entry.successful_signal_count || 0) + 1;
+          }
+        }
+      }
       if (typeof row.batch_id === 'string' && row.batch_id.trim()) {
         (entry.mcp_batch_ids as Set<string>).add(row.batch_id.trim());
         if (row.agent_converged === true) {

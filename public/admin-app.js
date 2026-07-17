@@ -419,12 +419,50 @@ function visitorLabel(row = {}) {
 }
 
 function outcomeFor(row = {}) {
-  const resultCount = number(row.result_count ?? row.results);
+  const rawResultCount = row.result_count ?? row.results;
+  const hasResultCount = rawResultCount !== null
+    && rawResultCount !== undefined
+    && Number.isFinite(Number(rawResultCount));
+  const resultCount = hasResultCount ? Number(rawResultCount) : null;
   const outcome = String(row.issue_type || row.outcome || row.search_outcome || '').toLowerCase();
+  const origin = String(row.query_origin || row.origin || '').toLowerCase();
   if (outcome.includes('error')) return { label: 'Error', tone: 'zero' };
-  if (outcome.includes('zero') || row.true_zero || resultCount === 0) return { label: 'Zero', tone: 'zero' };
+  if (origin === 'icon_lookup') {
+    if (!hasResultCount) return { label: 'Lookup', tone: 'info' };
+    return resultCount > 0
+      ? { label: 'Success', tone: 'ok' }
+      : { label: 'Not found', tone: 'low' };
+  }
+  if (outcome.includes('mixed')) {
+    return {
+      label: safeText(row.outcome_label, `Mixed: ${formatNumber(row.zero_attempt_count)} of ${formatNumber(row.attempt_count)} zero`),
+      tone: 'low',
+    };
+  }
+  if (outcome.includes('zero') || row.true_zero || (hasResultCount && resultCount === 0)) {
+    return { label: safeText(row.outcome_label, 'Zero'), tone: 'zero' };
+  }
   if (outcome.includes('low') || row.low_result) return { label: 'Low', tone: 'low' };
-  return { label: 'Success', tone: 'ok' };
+  return { label: safeText(row.outcome_label, 'Success'), tone: 'ok' };
+}
+
+function queryResultCell(row = {}) {
+  if (String(row.query_origin || row.origin || '').toLowerCase() === 'icon_lookup'
+    && row.result_count_available === false) {
+    return '<span class="muted-cell">Lookup completed</span>';
+  }
+  if (row.result_count_available === false) {
+    return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not available for this view')}</span>`;
+  }
+  return formatNumber(row.result_count ?? row.results);
+}
+
+function queryCountryCell(row = {}) {
+  const country = row.country_code || row.country;
+  if (row.country_available === false || !country) {
+    return `<span class="muted-cell">${escapeHtml(row.country_reason || 'Country not recorded')}</span>`;
+  }
+  return pill(country);
 }
 
 function table(headers, rows, emptyReason) {
@@ -532,7 +570,7 @@ function axisLabels(points, xFor, width, height, left, bottom) {
   if (!points.length) return '';
   const indexes = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])];
   return indexes.map((index) => `
-    <text x="${xFor(index)}" y="${height - 6}" text-anchor="${index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}" fill="#73706d" font-size="10">${escapeHtml(formatDate(`${points[index].day}T00:00:00Z`))}</text>
+    <text x="${xFor(index)}" y="${height - 6}" text-anchor="${index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}" fill="#aaa7a4" font-size="12">${escapeHtml(formatDate(`${points[index].day}T00:00:00Z`))}</text>
   `).join('') + `
     <line x1="${left}" x2="${width - 8}" y1="${bottom}" y2="${bottom}" stroke="#302f2f" />
   `;
@@ -557,7 +595,7 @@ function renderLineChart(element, series, lines, options = {}) {
   const grid = [0, 0.5, 1].map((ratio) => {
     const y = yFor(maxValue * ratio);
     return `<line x1="${left}" x2="${width - right}" y1="${y}" y2="${y}" stroke="#302f2f" stroke-dasharray="3 5" />
-      <text x="${left - 7}" y="${y + 3}" text-anchor="end" fill="#73706d" font-size="9">${escapeHtml(options.percent ? formatPercent(maxValue * ratio, 0) : formatNumber(maxValue * ratio))}</text>`;
+      <text x="${left - 7}" y="${y + 3}" text-anchor="end" fill="#aaa7a4" font-size="12">${escapeHtml(options.percent ? formatPercent(maxValue * ratio, 0) : formatNumber(maxValue * ratio))}</text>`;
   }).join('');
   const outageSpans = normalizeList(options.outageSpans).map((span) => {
     const start = points.findIndex((row) => row.day >= String(span.from || span.start || '').slice(0, 10));
@@ -566,7 +604,7 @@ function renderLineChart(element, series, lines, options = {}) {
     const x1 = xFor(start);
     const x2 = xFor(Math.max(start, endIndex));
     return `<rect x="${x1}" y="${top}" width="${Math.max(7, x2 - x1 + 7)}" height="${bottom - top}" fill="rgba(255,124,115,0.08)" />
-      <text x="${x1 + 3}" y="${top + 10}" fill="#ff7c73" font-size="8">${escapeHtml(span.label || 'Outage')}</text>`;
+      <text x="${x1 + 3}" y="${top + 12}" fill="#ff7c73" font-size="12">${escapeHtml(span.label || 'Outage')}</text>`;
   }).join('');
   const paths = lines.map((line, index) => {
     const color = line.color || CHART_COLORS[index % CHART_COLORS.length];
@@ -577,7 +615,7 @@ function renderLineChart(element, series, lines, options = {}) {
   }).join('');
   const legend = lines.map((line, index) => {
     const color = line.color || CHART_COLORS[index % CHART_COLORS.length];
-    return `<g transform="translate(${left + index * 145},7)"><circle cx="4" cy="4" r="4" fill="${color}"/><text x="13" y="8" fill="#aaa7a4" font-size="10">${escapeHtml(line.label)}</text></g>`;
+    return `<g transform="translate(${left + index * 170},7)"><circle cx="4" cy="4" r="4" fill="${color}"/><text x="13" y="9" fill="#aaa7a4" font-size="12">${escapeHtml(line.label)}</text></g>`;
   }).join('');
   element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(options.label || 'Trend chart')}">${grid}${outageSpans}${paths}${legend}${axisLabels(points, xFor, width, height, left, bottom)}</svg>`;
 }
@@ -617,7 +655,7 @@ function renderSearchBars(element, series) {
     }).join('');
   }).join('');
   const xFor = (index) => left + index * slot + slot / 2;
-  const legend = channels.slice(0, 5).map((channel, index) => `<g transform="translate(${left + index * 126},7)"><rect width="8" height="8" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="13" y="8" fill="#aaa7a4" font-size="9">${escapeHtml(channelLabel(channel))}</text></g>`).join('');
+  const legend = channels.slice(0, 5).map((channel, index) => `<g transform="translate(${left + index * 140},7)"><rect width="8" height="8" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="13" y="9" fill="#aaa7a4" font-size="12">${escapeHtml(channelLabel(channel))}</text></g>`).join('');
   element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Searches over time">${legend}<line x1="${left}" x2="${width - right}" y1="${bottom}" y2="${bottom}" stroke="#302f2f"/>${bars}${axisLabels(days.map((day) => ({ day })), xFor, width, height, left, bottom)}</svg>`;
 }
 
@@ -727,7 +765,10 @@ function renderKpis() {
   const anonymous = number(kpis.anonymous_clients ?? Math.max(0, clients - registered));
   const searches = number(kpis.attempts ?? kpis.searches);
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
-  if (kpis.identity_available === false) {
+  if (kpis.identity_available === false && kpis.client_measure === 'client_days') {
+    setSkeleton($('kpiClients'), formatNumber(clients));
+    $('kpiClientsNote').textContent = 'Client-days across the selected period; exact unique clients are not available.';
+  } else if (kpis.identity_available === false) {
     setSkeleton($('kpiClients'), 'Unavailable');
     $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
   } else {
@@ -735,7 +776,7 @@ function renderKpis() {
     $('kpiClientsNote').textContent = `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
-  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per client, ${formatPercent(successRate)} successful`;
+  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'client'}, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
   $('kpiZeroNote').textContent = `${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
   setSkeleton($('kpiLow'), formatPercent(kpis.low_result_rate));
@@ -877,9 +918,9 @@ function renderQueryExplorer() {
     },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: 'Client', render: (row) => visitorLabel(row) },
-    { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
+    { label: 'Country', render: (row) => queryCountryCell(row) },
     { label: 'Venue', render: (row) => pill(channelLabel(row.channel || row.venue), 'info') },
-    { label: 'Results', number: true, render: (row) => formatNumber(row.result_count ?? row.results) },
+    { label: 'Results', number: true, render: (row) => queryResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
   element.innerHTML = table(headers, rows, state.errors.search || 'No queries match these filters.');
@@ -958,13 +999,14 @@ function renderAudience() {
   const registered = number(funnel.registered_clients);
   const pro = number(funnel.pro_clients);
   if (funnel.identity_available === false) {
-    const reason = funnel.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
-    setSkeleton($('funnelClients'), 'Unavailable');
-    $('funnelClientsNote').textContent = reason;
-    setSkeleton($('funnelRegistered'), 'Unavailable');
-    $('funnelRegisteredNote').textContent = reason;
-    setSkeleton($('funnelPro'), 'Unavailable');
-    $('funnelProNote').textContent = reason;
+    setSkeleton($('funnelClients'), formatNumber(clients));
+    $('funnelClientsNote').textContent = funnel.client_measure === 'client_days'
+      ? 'Client-days in the selected period'
+      : funnel.identity_unavailable_reason || 'Exact unique clients are not available.';
+    setSkeleton($('funnelRegistered'), formatNumber(registered));
+    $('funnelRegisteredNote').textContent = 'All registered accounts';
+    setSkeleton($('funnelPro'), formatNumber(pro));
+    $('funnelProNote').textContent = 'All Pro accounts';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = appliedWindowLabel();
@@ -976,26 +1018,39 @@ function renderAudience() {
   const mrr = funnel.mrr || {};
   $('funnelMrr').textContent = mrr.available ? safeText(mrr.display_value) : 'Unavailable';
   $('funnelMrrNote').textContent = mrr.reason || 'Exact billing price is not linked to every active subscription.';
-  renderLineChart(
-    $('audienceChart'),
-    data?.series,
-    [
-      { field: 'registered_clients', label: 'Registered', color: CHART_COLORS[1] },
-      { field: 'pro_clients', label: 'Pro', color: CHART_COLORS[2] },
-    ],
-    { label: 'Registered and Pro clients over time', emptyReason: 'Audience history will appear after the v2 summary endpoint is live.' },
-  );
+  if (funnel.identity_available === false) {
+    renderLineChart(
+      $('audienceChart'),
+      data?.series,
+      [{ field: 'client_days', label: 'Client-days', color: CHART_COLORS[1] }],
+      { label: 'Client-days over time', emptyReason: 'Client-day history is not available for this period.' },
+    );
+  } else {
+    renderLineChart(
+      $('audienceChart'),
+      data?.series,
+      [
+        { field: 'registered_clients', label: 'Registered', color: CHART_COLORS[1] },
+        { field: 'pro_clients', label: 'Pro', color: CHART_COLORS[2] },
+      ],
+      { label: 'Registered and Pro clients over time', emptyReason: 'Audience history will appear after the v2 summary endpoint is live.' },
+    );
+  }
 
   const users = availability(data?.registered_users, 'Registered-user enrichment is not available from the current data source.');
+  if ($('registeredUsersSubtitle')) {
+    const total = number(data?.registered_users?.total ?? users.rows.length);
+    $('registeredUsersSubtitle').textContent = `${formatNumber(total)} total users. Activity columns reflect ${appliedWindowLabel().toLowerCase()}.`;
+  }
   $('registeredUsers').innerHTML = users.available
     ? table([
       { label: 'User', render: (row) => `<strong>${escapeHtml(safeText(row.identifier, 'Hidden'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.provider, 'Unknown provider'))}</div>` },
       { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
       { label: 'Signed up', render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at)) },
-      { label: 'Last active', render: (row) => escapeHtml(formatDate(row.last_active || row.last_sign_in_at, true)) },
+      { label: 'Last active', render: (row) => row.last_active ? escapeHtml(formatDate(row.last_active, true)) : '<span class="muted-cell">No activity in period</span>' },
       { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
       { label: 'Venues', render: (row) => escapeHtml(normalizeList(row.venues).map(channelLabel).join(', ') || '-') },
-      { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
+      { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not recorded in period</span>' },
     ], users.rows, 'No registered users match these filters.')
     : emptyState(users.reason);
 

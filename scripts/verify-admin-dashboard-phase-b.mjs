@@ -40,6 +40,7 @@ function excludes(source, value, label) {
   'diagnosticsDrawer',
   'audienceChart',
   'registeredUsers',
+  'registeredUsersSubtitle',
   'allClients',
   'Top lists',
   'Returned',
@@ -74,6 +75,12 @@ function excludes(source, value, label) {
   'include_test',
   'User query',
   'Known defects and errors are excluded',
+  'Mixed: ${formatNumber(row.zero_attempt_count)} of ${formatNumber(row.attempt_count)} zero',
+  'row.result_count_reason',
+  'row.country_reason',
+  'Lookup completed',
+  'Client-days across the selected period',
+  'No activity in period',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [
@@ -105,6 +112,20 @@ if (duplicateIds.length) throw new Error(`admin.html has duplicate ids: ${duplic
 
 const navButtons = [...html.matchAll(/class="nav-button[^"]*"/g)];
 if (navButtons.length !== 3) throw new Error(`Expected exactly three navigation buttons, found ${navButtons.length}.`);
+
+for (const match of html.matchAll(/font-size:\s*([0-9.]+)px/g)) {
+  const size = Number(match[1]);
+  if (Number.isFinite(size) && size < 11) {
+    throw new Error(`admin.html contains dashboard text smaller than 11px: ${size}px.`);
+  }
+}
+
+for (const match of app.matchAll(/font-size="([0-9.]+)"/g)) {
+  const size = Number(match[1]);
+  if (Number.isFinite(size) && size < 12) {
+    throw new Error(`public/admin-app.js contains a chart label smaller than 12px: ${size}px.`);
+  }
+}
 
 for (const [path, source] of [
   ['admin.html', html],

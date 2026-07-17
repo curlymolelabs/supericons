@@ -11,6 +11,7 @@ import {
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
+  normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
   parseDashboardV2Range,
 } from '../lib/admin-dashboard-v2.js';
@@ -190,6 +191,113 @@ const queryRows = [
 }
 
 {
+  const aggregateRows = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([
+    {
+      query: 'healthy aggregate',
+      library_filter: 'all',
+      attempt_count: 5,
+      successful_attempt_count: 5,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      client_days: 3,
+      channels: ['web'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'all zero aggregate',
+      library_filter: 'all',
+      attempt_count: 3,
+      successful_attempt_count: 0,
+      zero_attempt_count: 3,
+      low_attempt_count: 0,
+      client_days: 2,
+      channels: ['hosted_mcp'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'mixed aggregate',
+      library_filter: 'all',
+      attempt_count: 5,
+      successful_attempt_count: 4,
+      zero_attempt_count: 1,
+      low_attempt_count: 0,
+      client_days: 4,
+      channels: ['web'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'database',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      estimated_unique_clients: 1,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      minimum_result_count: 1,
+    },
+  ]));
+  const healthy = aggregateRows.find((row) => row.query === 'healthy aggregate');
+  assert.equal(healthy.issue_type, 'successful');
+  assert.equal(healthy.outcome_label, 'Success');
+  assert.equal(healthy.result_count, null);
+  assert.equal(healthy.result_count_available, false);
+  assert.equal(healthy.result_count_reason, 'Not available for aggregate view');
+  assert.equal(healthy.country_code, null);
+  assert.equal(healthy.country_available, false);
+
+  const allZero = aggregateRows.find((row) => row.query === 'all zero aggregate');
+  assert.equal(allZero.issue_type, 'zero_result');
+  assert.equal(allZero.outcome_label, 'Zero');
+  assert.equal(allZero.result_count, 0);
+  assert.equal(allZero.result_count_available, true);
+
+  const mixed = aggregateRows.find((row) => row.query === 'mixed aggregate');
+  assert.equal(mixed.issue_type, 'mixed_result');
+  assert.equal(mixed.outcome_label, 'Mixed: 1 of 5 zero');
+  assert.equal(mixed.result_count, null);
+  assert.equal(mixed.result_count_available, false);
+  assert.equal(mixed.country_code, null);
+  assert.equal(mixed.country_available, false);
+
+  const lookup = aggregateRows.find((row) => row.query_origin === 'icon_lookup');
+  assert.equal(lookup.issue_type, 'successful');
+  assert.equal(lookup.outcome_label, 'Success');
+  assert.equal(lookup.result_count, 1);
+  assert.equal(lookup.result_count_available, true);
+}
+
+{
+  const kpis = buildDashboardV2Kpis([
+    {
+      day: '2026-07-17',
+      channel: 'all',
+      attempts: 10,
+      success_count: 9,
+      true_zero_count: 1,
+      low_result_count: 0,
+      low_result_eligible_count: 9,
+      client_days: 4,
+    },
+  ], []);
+  assert.equal(kpis.true_zero_count, 1);
+  assert.equal(kpis.attempts, 10);
+  assert.equal(kpis.true_zero_rate, 0.1);
+}
+
+{
   const geography = buildDashboardV2Geography(identityRows);
   assert.equal(geography.rows[0].country_code, 'SG');
   assert.equal(geography.rows.find((row) => row.country_code === 'Unknown').searches, 1);
@@ -217,8 +325,10 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 13,
+  cases: 15,
   series_rows: series.length,
   query_filters: true,
+  aggregate_query_semantics: true,
+  true_zero_rate_uses_attempt_counts: true,
   privacy_safe_identifiers: true,
 }, null, 2));

@@ -44,6 +44,10 @@ function includes(source, value, label) {
   'identity_unavailable_reason',
   'Returned-icon coverage is complete only for Hosted MCP',
   'Exact billing price is not linked to every active subscription',
+  'total: users.length',
+  'activity_window: filters.key',
+  "client_measure: dataUnavailable ? 'client_days' : 'estimated_unique_clients'",
+  "audience_series_measure: dataUnavailable ? 'client_days' : 'registered_and_pro_clients'",
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
 
@@ -61,6 +65,10 @@ function includes(source, value, label) {
   'parseDashboardV2QuerySearch',
   "['zero', 'low', 'venue', 'country', 'origin', 'registered']",
   'maskDashboardV2Identifier',
+  'result_count_available',
+  'country_available',
+  'outcome_label',
+  'Mixed: ${zeroCount} of ${attempts} zero',
 ].forEach((value) => includes(helpers, value, 'v2 helpers'));
 
 [
@@ -68,7 +76,14 @@ function includes(source, value, label) {
   'identity_unavailable_reason',
   'Returned-icon coverage is partial',
   'Exact billing price is not linked to every active subscription',
+  'Lookup completed',
+  'Client-days across the selected period',
+  'registeredUsersSubtitle',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
+
+if (api.includes('if (rangeStart !== null && signup < rangeStart)')) {
+  throw new Error('Registered users are still filtered by the selected date range.');
+}
 
 for (const [path, source] of [
   ['supabase/functions/admin-api/index.ts', api],

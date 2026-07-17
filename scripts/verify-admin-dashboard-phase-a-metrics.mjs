@@ -160,6 +160,25 @@ test('builds stable completed-day rollup keys', () => {
   assert.equal(rollups.queries.find((row) => row.query_norm === 'settings').library_filter, 'all');
 });
 
+test('keeps icon lookups out of search zero-rate rollups', () => {
+  const lookup = attempt({
+    signal_type: 'mcp_call',
+    search_query: 'snowflake',
+    query_origin: 'icon_lookup',
+    tool_name: 'get_icon',
+    result_count: 1,
+    requested_limit: 1,
+    search_outcome: null,
+  });
+  const rollups = buildAdminRollups([
+    attempt({ result_count: 0, search_outcome: 'zero' }),
+    lookup,
+  ], defectRegistry);
+  assert.equal(rollups.overview[0].attempt_count, 1);
+  assert.equal(rollups.overview[0].true_zero_count, 1);
+  assert.equal(rollups.queries.some((row) => row.query_origin === 'icon_lookup'), false);
+});
+
 test('keeps the current UTC day out of completed-day refresh input', () => {
   const rows = [
     attempt({ created_at: '2026-07-15T23:59:59Z' }),

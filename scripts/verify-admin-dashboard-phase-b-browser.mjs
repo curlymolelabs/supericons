@@ -9,13 +9,25 @@ const server = await startAdminDashboardPhaseBLiveServer({
 const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 const requests = [];
 let requestRound = 0;
+const registeredRows = Array.from({ length: 23 }, (_, index) => ({
+  identifier: `u***${index + 1}@example.test`,
+  provider: index % 2 === 0 ? 'Google' : 'Email',
+  plan: index < 2 ? 'pro_monthly' : 'Free',
+  signup_at: `2026-06-${String((index % 23) + 1).padStart(2, '0')}T00:00:00Z`,
+  last_active: index < 3 ? '2026-07-17T07:00:00Z' : null,
+  searches: index < 3 ? 10 - index : 0,
+  venues: index < 3 ? ['web'] : [],
+  country_code: index < 3 ? 'SG' : null,
+}));
 
 function ok(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-function responseFor(path) {
-  const meta = { window: '30d', generated_at: '2026-07-17T08:00:00Z' };
+function responseFor(path, searchParams = new URLSearchParams()) {
+  const windowKey = searchParams.get('window') || '30d';
+  const allHistory = windowKey === 'all';
+  const meta = { window: windowKey, generated_at: '2026-07-17T08:00:00Z' };
   if (path === '/v2/activity') {
     return {
       activity: [{
@@ -36,7 +48,7 @@ function responseFor(path) {
   if (path === '/v2/overview') {
     return {
       kpis: {
-        estimated_unique_clients: 32,
+        estimated_unique_clients: allHistory ? 90 : 32,
         registered_clients: 5,
         pro_clients: 2,
         anonymous_clients: 27,
@@ -49,6 +61,9 @@ function responseFor(path) {
         low_result_count: 4,
         low_result_eligible_count: 80,
         low_result_rate: 0.05,
+        client_measure: allHistory ? 'client_days' : 'estimated_unique_clients',
+        identity_available: !allHistory,
+        identity_unavailable_reason: allHistory ? 'Exact client profiles are unavailable for all recorded history.' : null,
       },
       series: [
         { day: '2026-07-15', channel: 'all', attempts: 40, client_days: 12, true_zero_count: 2, low_result_count: 1, low_result_eligible_count: 30, registered_clients: 3, pro_clients: 1 },
@@ -82,18 +97,98 @@ function responseFor(path) {
   }
   if (path === '/v2/search') {
     return {
-      queries: [{
-        query: 'missing brand',
-        library_filter: 'all',
-        query_origin: 'agent_query',
-        visitor_kind: 'anonymous',
-        client_label: 'anon:def456',
-        country_code: 'DE',
-        channel: 'hosted_mcp',
-        result_count: 0,
-        issue_type: 'zero_result',
-        last_seen: '2026-07-17T07:30:00Z',
-      }],
+      queries: [
+        {
+          query: 'healthy aggregate',
+          library_filter: 'all',
+          query_origin: 'agent_query',
+          visitor_kind: 'anonymous',
+          client_label: '3 clients',
+          country_code: null,
+          country_available: false,
+          country_reason: 'Not available for aggregate view',
+          channel: 'web',
+          result_count: null,
+          result_count_available: false,
+          result_count_reason: 'Not available for aggregate view',
+          issue_type: 'successful',
+          outcome_label: 'Success',
+          attempt_count: 5,
+          zero_attempt_count: 0,
+          last_seen: '2026-07-17T07:40:00Z',
+        },
+        {
+          query: 'mixed aggregate',
+          library_filter: 'all',
+          query_origin: 'agent_query',
+          visitor_kind: 'anonymous',
+          client_label: '4 clients',
+          country_code: null,
+          country_available: false,
+          country_reason: 'Not available for aggregate view',
+          channel: 'web',
+          result_count: null,
+          result_count_available: false,
+          result_count_reason: 'Not available for aggregate view',
+          issue_type: 'mixed_result',
+          outcome_label: 'Mixed: 1 of 5 zero',
+          attempt_count: 5,
+          zero_attempt_count: 1,
+          last_seen: '2026-07-17T07:35:00Z',
+        },
+        {
+          query: 'icon lookup',
+          library_filter: 'lucide',
+          query_origin: 'icon_lookup',
+          visitor_kind: 'anonymous',
+          client_label: '1 client',
+          country_code: 'SG',
+          country_available: true,
+          channel: 'hosted_mcp',
+          result_count: 1,
+          result_count_available: true,
+          issue_type: 'successful',
+          outcome_label: 'Success',
+          attempt_count: 0,
+          zero_attempt_count: 0,
+          last_seen: '2026-07-17T07:32:00Z',
+        },
+        {
+          query: 'icon lookup pending',
+          library_filter: 'lucide',
+          query_origin: 'icon_lookup',
+          visitor_kind: 'anonymous',
+          client_label: '1 client',
+          country_code: 'SG',
+          country_available: true,
+          channel: 'hosted_mcp',
+          result_count: null,
+          result_count_available: false,
+          result_count_reason: 'Not available for this view',
+          issue_type: 'successful',
+          outcome_label: 'Success',
+          attempt_count: 0,
+          zero_attempt_count: 0,
+          last_seen: '2026-07-17T07:31:00Z',
+        },
+        {
+          query: 'missing brand',
+          library_filter: 'all',
+          query_origin: 'agent_query',
+          visitor_kind: 'anonymous',
+          client_label: 'anon:def456',
+          country_code: 'DE',
+          country_available: true,
+          channel: 'hosted_mcp',
+          result_count: 0,
+          result_count_available: true,
+          issue_type: 'zero_result',
+          outcome_label: 'Zero',
+          attempt_count: 5,
+          zero_attempt_count: 5,
+          last_seen: '2026-07-17T07:30:00Z',
+        },
+      ],
       worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
       icon_requests: {
         available: true,
@@ -122,11 +217,14 @@ function responseFor(path) {
   if (path === '/v2/audience') {
     return {
       funnel: {
-        unique_clients: 32,
-        registered_clients: 5,
-        registered_percentage: 0.15625,
+        unique_clients: allHistory ? 90 : 32,
+        registered_clients: allHistory ? 23 : 5,
+        registered_percentage: allHistory ? null : 0.15625,
         pro_clients: 2,
-        pro_percentage: 0.0625,
+        pro_percentage: allHistory ? null : 0.0625,
+        client_measure: allHistory ? 'client_days' : 'estimated_unique_clients',
+        identity_available: !allHistory,
+        identity_unavailable_reason: allHistory ? 'Exact client profiles are unavailable for all recorded history.' : null,
         mrr: { available: false, reason: 'Exact billing price is not linked to every active subscription.' },
       },
       series: [
@@ -136,18 +234,14 @@ function responseFor(path) {
       ],
       registered_users: {
         available: true,
-        rows: [{
-          identifier: 'u***@example.test',
-          provider: 'Google',
-          plan: 'pro_monthly',
-          signup_at: '2026-07-01T00:00:00Z',
-          last_active: '2026-07-17T07:00:00Z',
-          searches: 10,
-          venues: ['web'],
-          country_code: 'SG',
-        }],
+        total: 23,
+        rows: registeredRows,
       },
-      clients: {
+      clients: allHistory ? {
+        available: false,
+        reason: 'Exact client profiles exceed the bounded identity-row limit for this period. Choose a shorter date range.',
+        rows: [],
+      } : {
         available: true,
         rows: [{
           visitor_kind: 'anonymous',
@@ -175,7 +269,7 @@ await page.route(`${apiBase}/**`, async (route) => {
   requests.push({ path, search: url.search });
   requestRound += 1;
   if (requestRound > 4) await new Promise((resolve) => setTimeout(resolve, 450));
-  const payload = responseFor(path);
+  const payload = responseFor(path, url.searchParams);
   await route.fulfill({
     status: payload.error ? 404 : 200,
     headers: { 'access-control-allow-origin': '*' },
@@ -206,6 +300,11 @@ try {
   ok(!channelOptions.some((value) => value.startsWith('CLI')), 'An empty venue was not hidden.');
   ok(await page.locator('#searchesChart svg').count() === 1, 'The search chart did not render inline SVG.');
   ok(await page.locator('#qualityChart').innerText().then((text) => !text.includes('No chart')), 'The quality chart did not render.');
+  const chartFontSizes = await page.locator('.chart svg text').evaluateAll(
+    (nodes) => nodes.map((node) => Number(node.getAttribute('font-size'))),
+  );
+  ok(chartFontSizes.length > 0, 'The charts did not render any readable labels.');
+  ok(chartFontSizes.every((size) => Number.isFinite(size) && size >= 12), 'A chart label is smaller than 12px.');
 
   await page.click('[data-top-list="returned"]');
   ok((await page.locator('#topListTable').innerText()).includes('linkage is incomplete'), 'Returned-icon coverage was not explained.');
@@ -215,6 +314,24 @@ try {
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
+  const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
+  ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
+  ok((await healthyRow.innerText()).includes('Not available for aggregate view'), 'Aggregate result and country gaps were not explained.');
+  ok(!(await healthyRow.innerText()).includes('Unknown'), 'An aggregate query still shows a false Unknown country pill.');
+  const mixedRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'mixed aggregate' });
+  ok((await mixedRow.innerText()).includes('Mixed: 1 of 5 zero'), 'A mixed aggregate query was mislabelled.');
+  const iconLookupRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('icon lookup', { exact: true }),
+  });
+  ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
+  ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
+  ok((await iconLookupRow.innerText()).includes('1'), 'A successful icon lookup did not render one result.');
+  const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('icon lookup pending', { exact: true }),
+  });
+  ok((await pendingLookupRow.innerText()).includes('Lookup'), 'An unavailable icon lookup did not render an honest lookup state.');
+  ok(!(await pendingLookupRow.innerText()).includes('Zero'), 'An unavailable icon lookup rendered a false Zero pill.');
+  ok((await pendingLookupRow.innerText()).includes('Lookup completed'), 'The unavailable icon lookup result state was not explained.');
   ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
   ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
@@ -223,6 +340,17 @@ try {
   ok(await page.locator('#funnelRegistered').innerText() === '5', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
   ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
+  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The registered-user total is missing.');
+  ok((await page.locator('#registeredUsers').innerText()).includes('No activity in period'), 'Window-scoped inactive users were hidden.');
+
+  await page.click('[data-window="all"]');
+  await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '90');
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('Client-days'), 'The All view did not label its client-day estimate.');
+  ok(await page.locator('#funnelClients').innerText() === '90', 'The All-view funnel did not render client-days.');
+  ok((await page.locator('#funnelClientsNote').innerText()).includes('Client-days'), 'The All-view funnel estimate is not labelled.');
+  ok((await page.locator('#audienceChart').innerText()).includes('Client-days'), 'The All-view audience chart did not use the honest client-day fallback.');
+  ok((await page.locator('#allClients').innerText()).includes('Choose a shorter date range'), 'The All-view client list did not show its bounded notice.');
+  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The All view hid registered users.');
 
   await page.click('[data-window="custom"]');
   await page.fill('#customFrom', '2026-07-15');

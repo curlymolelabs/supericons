@@ -194,7 +194,7 @@
       background: linear-gradient(150deg, var(--panel-2), var(--panel));
       box-shadow: var(--shadow);
     }
-    .kpi-label { color: var(--dim); font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+    .kpi-label { color: var(--dim); font-size: 11px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
     .kpi-value { margin-top: 12px; font: 700 29px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.04em; }
     .kpi-note { margin-top: 10px; min-height: 32px; color: var(--muted); font-size: 11px; line-height: 1.45; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
@@ -225,7 +225,7 @@
     .chart-empty { padding: 32px 16px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.6; }
     .table-wrap { width: 100%; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th { padding: 10px 12px; color: var(--dim); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; white-space: nowrap; }
+    th { padding: 10px 12px; color: var(--dim); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; white-space: nowrap; }
     td { padding: 11px 12px; border-top: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
     tbody tr:hover td { background: rgba(255,255,255,0.015); }
     td strong { color: var(--text); }
@@ -238,7 +238,7 @@
       padding: 4px 8px;
       background: var(--panel-3);
       color: var(--muted);
-      font-size: 10px;
+      font-size: 11px;
       white-space: nowrap;
     }
     .pill.zero { color: var(--red); background: rgba(255,124,115,0.12); }
@@ -258,7 +258,8 @@
     .activity-row:last-child { border-bottom: 0; }
     .activity-query { min-width: 0; }
     .activity-query strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .activity-meta { margin-top: 3px; color: var(--dim); font-size: 10px; }
+    .activity-meta { margin-top: 3px; color: var(--dim); font-size: 11px; }
+    .muted-cell { color: var(--dim); font-size: 11px; line-height: 1.35; }
     .geo-list { display: grid; gap: 12px; }
     .geo-row { display: grid; grid-template-columns: 42px 1fr 78px; gap: 9px; align-items: center; font-size: 11px; }
     .geo-bar { height: 7px; border-radius: 99px; background: var(--panel-3); overflow: hidden; }
@@ -296,7 +297,7 @@
     .funnel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
     .funnel-card { padding: 15px; border-radius: 12px; background: var(--panel-2); }
     .funnel-value { margin-top: 8px; font: 700 23px/1 ui-sans-serif, system-ui, sans-serif; }
-    .funnel-note { margin-top: 7px; color: var(--dim); font-size: 10px; }
+    .funnel-note { margin-top: 7px; color: var(--dim); font-size: 11px; }
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -526,7 +527,7 @@
             <div><h1>Audience</h1><div class="section-subtitle">Who they are, where they are, and the path from anonymous to Pro.</div></div>
           </div>
           <article class="panel" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Counts obey the selected period and venue</div></div></div>
+            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Client activity follows the selected period. Registered users lists every account.</div></div></div>
             <div class="panel-body">
               <div class="funnel">
                 <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div></div>
@@ -539,7 +540,7 @@
           </article>
 
           <article class="panel" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Registered users</div><div class="panel-subtitle">Signup and recent search activity in one view</div></div><button class="small-button" data-export="registered-users" type="button">CSV</button></div>
+            <div class="panel-head"><div><div class="panel-title">Registered users</div><div class="panel-subtitle" id="registeredUsersSubtitle">All registered accounts; activity follows the selected period</div></div><button class="small-button" data-export="registered-users" type="button">CSV</button></div>
             <div class="table-wrap" id="registeredUsers"><div class="empty">Loading registered users</div></div>
           </article>
 
