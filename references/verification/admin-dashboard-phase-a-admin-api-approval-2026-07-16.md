@@ -1,19 +1,19 @@
-# Admin dashboard Phase A Packet 2X: interactive auth-first recovery
+# Admin dashboard Phase A Packet 2Y: cold and warm performance recovery
 
 Status: Ready for independent audit. Not executed.
 
 ## Purpose
 
-Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2X first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. It must run in the owner's visible, authenticated terminal so the two hidden credential prompts remain available. Background console launch is not allowed. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
+Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2Y first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. It must run in the owner's visible, authenticated terminal so the two hidden credential prompts remain available. Background console launch is not allowed. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
 
-The candidate replaces full-history dashboard scans with bounded rollup reads. It must meet the existing dashboard contract, a 24-hour queue p95 below 1,500 ms, and an all-time queue p95 below 1,000 ms.
+The candidate replaces full-history dashboard scans with bounded rollup reads. It also loads independent queue sources concurrently and keeps identical queue payloads for 30 seconds in a cache capped at 64 entries. It must meet the existing dashboard contract, a 24-hour queue p95 below 1,500 ms, and an all-time queue p95 below 1,000 ms. Cold and warm measurements are retained and enforced separately so cache speed cannot hide an uncached regression.
 
 ## Pinned recovery
 
-- Approval fingerprint: `420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220`
-- Implementation revision: `a342f51f185a7d168772fa7cf542eb7960ee8827`
-- Implementation tree: `f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83`
-- Current function id, version, update value, and JWT setting: pinned by the fresh read-only inventory in the fingerprint
+- Approval fingerprint: `625177154e440865093758c53a68c72ec6ebd4983ffd5059ddf44d0629148777`
+- Implementation revision: `f12fbb56807e9aec9a4bc02348de26c485467ad0`
+- Implementation tree: `ec786e919c7a42ce641f6d1853832b156fafba6a`
+- Current function id, version, update value, and JWT setting: pinned by the verified Packet 2X rollback evidence and rechecked live before any new evidence or mutation
 - Exact rollback revision: `b0520d42f1b2cdd2a74e608495bf1e584e362e66`
 - Exact rollback tree: `fc6f2e39c77638036ab1f73cab03bad5d6ab243a`
 - Required Railway protection deployment: `d02a8053-0683-4f59-a68f-2ef27b143be1`
@@ -49,7 +49,7 @@ The candidate replaces full-history dashboard scans with bounded rollup reads. I
 7. Require a healthy legacy `/stats` response and two measured strict production searches under their pinned thresholds.
 8. Deploy only `admin-api` from the pinned implementation revision.
 9. Refresh exactly the measured pending rollup days and require the no-write completion call.
-10. Require the Phase A dashboard response, 20 warm 24-hour queue samples with p95 below 1,500 ms, and 20 warm all-time queue samples with p95 below 1,000 ms.
+10. Require the Phase A dashboard response. For each queue window, retain 20 cache-busted cold samples and 20 same-URL warm samples. Require both 24-hour distributions below 1,500 ms p95 and both all-time distributions below 1,000 ms p95.
 11. If the candidate becomes active and then fails, deploy the exact legacy rollback revision and verify `/stats` strictly.
 12. If the exact rollback source becomes active but strict verification fails, retain separate code-restoration and service-restoration states.
 
@@ -77,5 +77,5 @@ The standing owner delegation applies. An independent auditor GO for the final e
 ## Execution command after audit GO
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220 -Execute -DiskIoBannerObserved visible
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 625177154e440865093758c53a68c72ec6ebd4983ffd5059ddf44d0629148777 -Execute -DiskIoBannerObserved visible
 ```

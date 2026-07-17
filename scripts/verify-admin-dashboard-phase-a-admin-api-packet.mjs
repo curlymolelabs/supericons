@@ -38,10 +38,12 @@ const databaseHealthParserPath = 'scripts/admin-dashboard-phase-a-db-health-pars
 const databaseHealthParserTestPath = 'scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs';
 const searchHealthPath = 'scripts/verify-admin-dashboard-phase-a-search-health.mjs';
 const searchHealthLocalTestPath = 'scripts/verify-admin-dashboard-phase-a-search-health-local.mjs';
-const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-local-verification-2026-07-17.json';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-inventory-2026-07-17.json';
+const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-local-verification-2026-07-17.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-inventory-2026-07-17.json';
 const priorAttempt2vPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-attempt-1-2026-07-17.json';
 const priorAttempt2wPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-attempt-1-2026-07-17.json';
+const priorLive2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-live-2026-07-17.json';
+const priorRollback2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-rollback-2026-07-17.json';
 const railwayCompletionPath = 'references/verification/admin-dashboard-phase-a-railway-protection-recovery-completion-2026-07-16.json';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
@@ -54,9 +56,9 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_recovery_2x',
-  implementation_revision: 'a342f51f185a7d168772fa7cf542eb7960ee8827',
-  implementation_tree: 'f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery_2y',
+  implementation_revision: 'f12fbb56807e9aec9a4bc02348de26c485467ad0',
+  implementation_tree: 'ec786e919c7a42ce641f6d1853832b156fafba6a',
   rollback_revision: fields.rollback_revision,
   rollback_tree: fields.rollback_tree,
   runner_sha256: fields.runner_sha256,
@@ -80,6 +82,8 @@ assert.deepEqual(fields, {
   defect_registry_sha256: fields.defect_registry_sha256,
   api_contract_gate_sha256: fields.api_contract_gate_sha256,
   metrics_gate_sha256: fields.metrics_gate_sha256,
+  cache_helper_sha256: fields.cache_helper_sha256,
+  cache_gate_sha256: fields.cache_gate_sha256,
   local_verification_sha256: fields.local_verification_sha256,
   preparation_railway_live_sha256: fields.preparation_railway_live_sha256,
   preparation_search_health_sha256: fields.preparation_search_health_sha256,
@@ -99,6 +103,9 @@ assert.deepEqual(fields, {
   prior_packet_revision: '00d9e8221584f9ec43111ed92e5341735851bfc5',
   prior_attempt_2v_sha256: fields.prior_attempt_2v_sha256,
   prior_attempt_2w_sha256: fields.prior_attempt_2w_sha256,
+  prior_evidence_2x_commit: '6671eeaeb577d63b60ad8a8535b2e0adfbb97ca6',
+  prior_live_2x_sha256: fields.prior_live_2x_sha256,
+  prior_rollback_2x_sha256: fields.prior_rollback_2x_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
@@ -116,7 +123,10 @@ assert.deepEqual(fields, {
   rollup_refresh_elapsed_limit_minutes: '20',
   queue_24h_p95_limit_ms: '1500',
   queue_all_p95_limit_ms: '1000',
+  queue_cold_samples: '20',
   queue_warm_samples: '20',
+  queue_cache_ttl_ms: '30000',
+  queue_cache_max_entries: '64',
   legacy_preflight_max_latency_ms: '10000',
   legacy_preflight_request_timeout_ms: '12000',
   legacy_preflight_policy: 'require_healthy_http_200_under_10000ms',
@@ -165,6 +175,8 @@ const textHashes = [
   ['data/admin/known-search-defects.json', 'defect_registry_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-api.mjs', 'api_contract_gate_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-metrics.mjs', 'metrics_gate_sha256'],
+  ['lib/bounded-async-cache.js', 'cache_helper_sha256'],
+  ['scripts/verify-admin-dashboard-phase-a-cache.mjs', 'cache_gate_sha256'],
   [localVerificationPath, 'local_verification_sha256'],
   ['references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-preparation-railway-live-2026-07-17.json',
     'preparation_railway_live_sha256'],
@@ -173,6 +185,8 @@ const textHashes = [
   [inventoryPath, 'inventory_sha256'],
   [priorAttempt2vPath, 'prior_attempt_2v_sha256'],
   [priorAttempt2wPath, 'prior_attempt_2w_sha256'],
+  [priorLive2xPath, 'prior_live_2x_sha256'],
+  [priorRollback2xPath, 'prior_rollback_2x_sha256'],
   ['scripts/capture-admin-dashboard-phase-a-admin-api-inventory.ps1', 'inventory_capture_sha256'],
   [railwayCompletionPath, 'railway_protection_completion_sha256'],
 ];
@@ -204,6 +218,9 @@ assert.ok(
   inventory.source_download.matching_git_revisions.includes(fields.rollback_revision),
   'Rollback revision must match the downloaded live admin API source.',
 );
+assert.equal(inventory.derived_from.rollback_version, 49);
+assert.equal(inventory.derived_from.rollback_updated_at, fields.pre_function_updated_at);
+assert.equal(inventory.derived_from.strict_legacy_contract, 'pass');
 assert.equal(inventory.mutations, 0);
 
 const railwayCompletion = JSON.parse(readFileSync(railwayCompletionPath, 'utf8'));
@@ -307,17 +324,20 @@ assert.match(liveGate, /20 \* 60 \* 1000/);
 assert.match(liveGate, /refresh-rollups/);
 assert.match(liveGate, /--max-refresh-days/);
 assert.match(liveGate, /runBoundedRollupRefresh/);
-assert.match(liveGate, /measureQueue\([\s\S]*?count = 20/);
+assert.match(liveGate, /measureQueue\([\s\S]*?count = 20[\s\S]*?cacheMode = 'warm'/);
+assert.match(liveGate, /withCacheProbe\([\s\S]*?cache_probe=/);
 assert.ok(
-  liveGate.indexOf('summary.queue_24h = queue24h;') < liveGate.indexOf('queue24h.p95_ms < 1500'),
-  '24-hour timing samples must be retained before the performance assertion.',
+  liveGate.indexOf('summary.queue_24h = {') < liveGate.indexOf('queue24hCold.p95_ms < 1500'),
+  'Cold and warm 24-hour samples must be retained before the performance assertion.',
 );
 assert.ok(
-  liveGate.indexOf('summary.queue_all = queueAll;') < liveGate.indexOf('queueAll.p95_ms < 1000'),
-  'All-time timing samples must be retained before the performance assertion.',
+  liveGate.indexOf('summary.queue_all = {') < liveGate.indexOf('queueAllCold.p95_ms < 1000'),
+  'Cold and warm all-time samples must be retained before the performance assertion.',
 );
-assert.match(liveGate, /queue24h\.p95_ms < 1500/);
-assert.match(liveGate, /queueAll\.p95_ms < 1000/);
+assert.match(liveGate, /queue24hCold\.p95_ms < 1500/);
+assert.match(liveGate, /queue24hWarm\.p95_ms < 1500/);
+assert.match(liveGate, /queueAllCold\.p95_ms < 1000/);
+assert.match(liveGate, /queueAllWarm\.p95_ms < 1000/);
 assert.match(liveGate, /window=1d/);
 assert.match(liveGate, /window=all/);
 assert.match(liveGate, /x-admin-secret/);
@@ -411,6 +431,15 @@ const adminApi = normalizedText(readFileSync('supabase/functions/admin-api/index
 assert.match(adminApi, /segments\[2\] === 'refresh-rollups'/);
 assert.match(adminApi, /segments\[2\] === 'dashboard'/);
 assert.match(adminApi, /query_origin, requested_limit[\s\S]*?client_ip_public/);
+assert.match(adminApi, /QUERY_QUEUE_CACHE_TTL_MS = 30_000/);
+assert.match(adminApi, /QUERY_QUEUE_CACHE_MAX_ENTRIES = 64/);
+assert.match(adminApi, /queryQueueCache\.getOrCreate/);
+assert.match(adminApi, /fetchSearchEvidenceRows\([\s\S]*?fetchAllQueryReviews/);
+
+execFileSync('node', ['scripts/verify-admin-dashboard-phase-a-cache.mjs'], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -436,7 +465,10 @@ console.log(JSON.stringify({
     strict_search_latency_limit_ms: 2000,
     queue_24h_p95_limit_ms: 1500,
     queue_all_p95_limit_ms: 1000,
+    queue_cold_samples: 20,
     queue_warm_samples: 20,
+    queue_cache_ttl_ms: 30000,
+    queue_cache_max_entries: 64,
   },
   mutations: {
     admin_api_candidate_deployments: 1,

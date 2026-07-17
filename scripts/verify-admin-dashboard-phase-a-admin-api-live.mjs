@@ -103,15 +103,26 @@ async function runLegacyPreflight() {
   summary.rollup_writes = 0;
 }
 
-async function measureQueue(path, count = 20) {
-  await requestJson(path);
+function withCacheProbe(path, probe) {
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}cache_probe=${encodeURIComponent(probe)}`;
+}
+
+async function measureQueue(path, { count = 20, cacheMode = 'warm' } = {}) {
+  assert.ok(['cold', 'warm'].includes(cacheMode), 'Cache mode must be cold or warm.');
+  if (cacheMode === 'warm') await requestJson(path);
+  const runId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   const samples = [];
   for (let index = 0; index < count; index += 1) {
-    const sample = await requestJson(path);
+    const samplePath = cacheMode === 'cold'
+      ? withCacheProbe(path, `${runId}-${index}`)
+      : path;
+    const sample = await requestJson(samplePath);
     assert.ok(Array.isArray(sample.payload.queries), 'Queue response must include queries.');
     samples.push(sample.latency_ms);
   }
   return {
+    cache_mode: cacheMode,
     samples_ms: samples,
     p95_ms: percentile(samples, 0.95),
     max_ms: Math.max(...samples),
@@ -148,25 +159,38 @@ try {
     assert.equal(dashboard.payload.limitations?.approximate_low_results_excluded_from_headline_rate, true);
 
     const commonFilters = 'environment=production&channel=all&query_origin=agent_query';
-    const queue24h = await measureQueue(`/intelligence/search/queue?window=1d&${commonFilters}`);
-    const queueAll = await measureQueue(`/intelligence/search/queue?window=all&${commonFilters}`);
+    const queue24hPath = `/intelligence/search/queue?window=1d&${commonFilters}`;
+    const queueAllPath = `/intelligence/search/queue?window=all&${commonFilters}`;
+    const queue24hCold = await measureQueue(queue24hPath, { cacheMode: 'cold' });
+    const queue24hWarm = await measureQueue(queue24hPath, { cacheMode: 'warm' });
+    const queueAllCold = await measureQueue(queueAllPath, { cacheMode: 'cold' });
+    const queueAllWarm = await measureQueue(queueAllPath, { cacheMode: 'warm' });
     summary.dashboard_24h = {
       latency_ms: dashboard.latency_ms,
       latest_activity_count: dashboard.payload.latest_activity.length,
       filters: dashboard.payload.filters,
     };
-    summary.queue_24h = queue24h;
-    summary.queue_all = queueAll;
+    summary.queue_24h = {
+      cold: queue24hCold,
+      warm: queue24hWarm,
+    };
+    summary.queue_all = {
+      cold: queueAllCold,
+      warm: queueAllWarm,
+    };
     summary.performance_contract = {
       queue_24h_p95_limit_ms: 1500,
       queue_all_p95_limit_ms: 1000,
+      cold_samples_each: 20,
       warm_samples_each: 20,
       rollup_refresh_elapsed_limit_minutes: 20,
       rollup_refresh_day_limit: maxRefreshDays,
       rollup_refresh_call_limit: maxRefreshDays + 1,
     };
-    assert.ok(queue24h.p95_ms < 1500, `24h queue p95 was ${queue24h.p95_ms} ms.`);
-    assert.ok(queueAll.p95_ms < 1000, `All-time queue p95 was ${queueAll.p95_ms} ms.`);
+    assert.ok(queue24hCold.p95_ms < 1500, `Cold 24h queue p95 was ${queue24hCold.p95_ms} ms.`);
+    assert.ok(queue24hWarm.p95_ms < 1500, `Warm 24h queue p95 was ${queue24hWarm.p95_ms} ms.`);
+    assert.ok(queueAllCold.p95_ms < 1000, `Cold all-time queue p95 was ${queueAllCold.p95_ms} ms.`);
+    assert.ok(queueAllWarm.p95_ms < 1000, `Warm all-time queue p95 was ${queueAllWarm.p95_ms} ms.`);
 
     summary.status = 'ok';
     summary.rollup_backfill_complete = true;
