@@ -1,0 +1,38 @@
+{
+  "artifact": "admin_dashboard_phase_a_database_measured_health",
+  "approval_fingerprint": "1fdf1d13a1a229d52b7497c111b9fa238bd00ce4915e6142b847d9538d26fe4e",
+  "status": "ok",
+  "transaction_mode": "read_only",
+  "connection_read_only": true,
+  "statement_timeout_ms": 3000,
+  "metrics": [
+    {
+      "name": "recent_mcp_usage",
+      "latency_ms": 7.3,
+      "matched_rows": 1,
+      "limit_ms": 1000
+    },
+    {
+      "name": "recent_search_audit",
+      "latency_ms": 2,
+      "matched_rows": 1,
+      "limit_ms": 1000
+    },
+    {
+      "name": "latest_rollup_overview",
+      "latency_ms": 2,
+      "matched_rows": 1,
+      "limit_ms": 1000
+    },
+    {
+      "name": "recent_telemetry_window",
+      "latency_ms": 1,
+      "matched_rows": 0,
+      "limit_ms": 2000
+    }
+  ],
+  "failures": [],
+  "sql_exit_code": 0,
+  "mutations": 0,
+  "captured_at": "2026-07-17T09:30:25.409Z"
+}
