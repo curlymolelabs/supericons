@@ -1,16 +1,16 @@
-# Admin dashboard Phase A Packet 2W: auth-first measured-health recovery
+# Admin dashboard Phase A Packet 2X: interactive auth-first recovery
 
 Status: Ready for independent audit. Not executed.
 
 ## Purpose
 
-Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2W first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
+Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2X first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. It must run in the owner's visible, authenticated terminal so the two hidden credential prompts remain available. Background console launch is not allowed. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
 
 The candidate replaces full-history dashboard scans with bounded rollup reads. It must meet the existing dashboard contract, a 24-hour queue p95 below 1,500 ms, and an all-time queue p95 below 1,000 ms.
 
 ## Pinned recovery
 
-- Approval fingerprint: `37e7994efb447e307a1f8053f68747c551cfb89576be15941ca90c22351232fa`
+- Approval fingerprint: `420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220`
 - Implementation revision: `a342f51f185a7d168772fa7cf542eb7960ee8827`
 - Implementation tree: `f03b8d0e3b7d9aaea050d6f4b522c86dcbce5e83`
 - Current function id, version, update value, and JWT setting: pinned by the fresh read-only inventory in the fingerprint
@@ -72,10 +72,10 @@ The runner asks locally for the Supabase database password and the separate `ADM
 
 ## Execution authority
 
-The standing owner delegation applies. An independent auditor GO for the final exact fingerprint is the execution trigger. The owner only enters the two hidden secrets and performs final acceptance.
+The standing owner delegation applies. An independent auditor GO for the final exact fingerprint is the execution trigger. The owner runs the command in the same visible terminal where `supabase login` succeeded, enters the two hidden secrets, and performs final acceptance.
 
 ## Execution command after audit GO
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 37e7994efb447e307a1f8053f68747c551cfb89576be15941ca90c22351232fa -Execute -DiskIoBannerObserved visible
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 420b236f7054d0b171352265c65f0875afb821e83459480b26b1f4f9fae63220 -Execute -DiskIoBannerObserved visible
 ```

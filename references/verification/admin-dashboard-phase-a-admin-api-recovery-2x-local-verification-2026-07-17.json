@@ -1,0 +1,51 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_recovery_2x_local_verification",
+  "status": "ok",
+  "checks": {
+    "deno_admin_api": "pass",
+    "metric_contract_tests": 11,
+    "admin_api_contract_checks": 21,
+    "rollup_refresh_cases": [
+      "zero_days",
+      "one_day",
+      "sixty_days_plus_confirmation",
+      "one_hundred_twenty_days_plus_confirmation",
+      "duplicate_day_rejected",
+      "deadline_rejected"
+    ],
+    "preflight_classifier_checks": 14,
+    "preflight_http_cases": [
+      "healthy",
+      "fast_legacy_5xx",
+      "slow_healthy_blocked",
+      "slow_legacy_5xx_blocked",
+      "auth_rejected"
+    ],
+    "database_health_parser_cases": 4,
+    "strict_search_local_mock": {
+      "status": "pass",
+      "requests": 3
+    },
+    "auth_first_ordering": {
+      "status": "pass",
+      "function_inventory_before_railway_evidence": true,
+      "function_inventory_before_credential_prompts": true,
+      "function_inventory_before_candidate_deploy": true
+    },
+    "interactive_execution": {
+      "status": "pass",
+      "owner_terminal_required": true,
+      "background_console_launch_forbidden": true
+    },
+    "powershell_parser": "pass",
+    "node_syntax": "pass",
+    "git_diff_check": "pass",
+    "text_policy_scan": "pass"
+  },
+  "prior_attempts": [
+    "references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-attempt-1-2026-07-17.json",
+    "references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-attempt-1-2026-07-17.json"
+  ],
+  "mutations": 0,
+  "verified_at": "2026-07-17T07:27:00.000Z"
+}

@@ -1,0 +1,35 @@
+{
+  "artifact": "admin_dashboard_phase_a_admin_api_recovery_2w_attempt",
+  "approval_fingerprint": "37e7994efb447e307a1f8053f68747c551cfb89576be15941ca90c22351232fa",
+  "outcome": "pre_mutation_stop",
+  "observations": {
+    "runner_process_stopped": true,
+    "stop_reason": "credential_prompts_attached_to_noninteractive_console",
+    "railway_protection_evidence_written": true,
+    "database_health_evidence_written": false,
+    "backlog_evidence_written": false,
+    "legacy_preflight_evidence_written": false,
+    "strict_search_evidence_written": false,
+    "candidate_live_evidence_written": false,
+    "completion_evidence_written": false,
+    "rollback_evidence_written": false,
+    "candidate_workspace_created": false
+  },
+  "structural_boundary": {
+    "last_completed_step": "railway_protection_read_only_gate",
+    "next_runner_step": "hidden_database_password_prompt",
+    "docker_and_database_checks_after_prompts": true,
+    "candidate_deploy_after_database_and_search_gates": true
+  },
+  "mutations": {
+    "admin_api_candidate_deployments": 0,
+    "admin_api_rollback_deployments": 0,
+    "rollup_refresh_writes": 0,
+    "migration": 0,
+    "mcp_search": 0,
+    "railway": 0,
+    "storage": 0,
+    "npm_publication": 0
+  },
+  "recorded_at": "2026-07-17T07:25:30.000Z"
+}
