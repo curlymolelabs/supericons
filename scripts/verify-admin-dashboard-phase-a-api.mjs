@@ -101,6 +101,14 @@ requirePattern(
   /handleIntelligenceSearchReview[\s\S]*?queryQueueCache\.clear\(\)/,
   'A query review write must clear cached queue payloads.',
 );
+requirePattern(
+  /buildQueryQueuePayload[\s\S]*?Promise\.all\(\[[\s\S]*?fetchSearchEvidenceRows\([\s\S]*?fetchAllQueryReviews\(/,
+  'The raw queue must load evidence and reviews concurrently.',
+);
+requirePattern(
+  /buildRollupQueryQueuePayload[\s\S]*?Promise\.all\(\[[\s\S]*?fetchQueryRollups\([\s\S]*?fetchTelemetryEvidenceRows\([\s\S]*?queryReviewsPromise/,
+  'The rollup queue must load completed rollups, current-day rows, and reviews concurrently.',
+);
 
 const compactActivity = source.match(/function compactPhaseAActivityRow[\s\S]*?\n}\n/)?.[0] || '';
 assert.ok(compactActivity, 'The Phase A activity projection is missing.');
@@ -137,5 +145,5 @@ console.log(JSON.stringify({
   compact_activity_contract: true,
   bounded_queue_cache: true,
   mcp_search_changed: false,
-  checks: 25,
+  checks: 27,
 }, null, 2));

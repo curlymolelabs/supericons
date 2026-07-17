@@ -520,6 +520,32 @@ async function fetchQueryReviews(
   return { available: true, reviews };
 }
 
+async function fetchAllQueryReviews(adminClient: SupabaseClient) {
+  const reviews = new Map<string, QueryReviewRow>();
+  try {
+    const rows = await fetchAllRows<QueryReviewRow>((from, to) => (
+      adminClient
+        .from('icon_query_reviews')
+        .select('normalized_query, library_filter, job_category, status, note, updated_at')
+        .order('updated_at', { ascending: false })
+        .range(from, to)
+    ));
+    for (const row of rows) {
+      reviews.set(buildQueryReviewContextKey({
+        query: row.normalized_query,
+        libraryFilter: row.library_filter,
+        jobCategory: row.job_category,
+      }), row);
+    }
+    return { available: true, reviews };
+  } catch (error) {
+    if (isMissingRelationError(error)) {
+      return { available: false, reviews };
+    }
+    throw error;
+  }
+}
+
 function mergeQueryReview<T extends {
   query: string;
   library_filter?: string | null;
@@ -1853,17 +1879,22 @@ async function buildRollupQueryQueuePayload(
   const params = parseQueryQueueParams(url, { exportMode });
   const rollupState = await ensureCompletedDayRollups(adminClient);
   if (rollupState.available !== true) return null;
-  const completedRows = await fetchQueryRollups(
-    adminClient,
-    since,
-    params.environment,
-    params.channel,
-    params.query_origin,
-  );
+  const queryReviewsPromise = fetchAllQueryReviews(adminClient);
+  const [completedRows, rawTodayRows, queryReviews] = await Promise.all([
+    fetchQueryRollups(
+      adminClient,
+      since,
+      params.environment,
+      params.channel,
+      params.query_origin,
+    ),
+    fetchTelemetryEvidenceRows(adminClient, currentUtcDayStartIso()),
+    queryReviewsPromise,
+  ]);
   const todayRows = filterEvidenceRowsByQueryOrigin(
     filterEvidenceRowsByChannel(
       filterEvidenceRowsByEnvironment(
-        await fetchTelemetryEvidenceRows(adminClient, currentUtcDayStartIso()),
+        rawTodayRows,
         params.environment,
       ),
       params.channel,
@@ -1871,12 +1902,6 @@ async function buildRollupQueryQueuePayload(
     params.query_origin,
   );
   const currentRollups = buildAdminRollups(todayRows, knownSearchDefects).queries;
-  const contexts = [...completedRows, ...currentRollups].map((row) => ({
-    query: normalizeSearchQuery(row.query_norm),
-    library_filter: normalizeReviewLibraryFilter(row.library_filter),
-    job_category: '',
-  }));
-  const queryReviews = await fetchQueryReviews(adminClient, contexts);
   const rows = buildQueryWorkbenchRowsFromRollups([...completedRows, ...currentRollups], queryReviews.reviews);
   const filteredRows = filterQueryWorkbenchRows(
     rows as unknown as ReturnType<typeof buildQueryWorkbenchRows>,
@@ -1932,7 +1957,10 @@ async function buildQueryQueuePayload(
   }
   const since = getWindowSinceIso(window);
   const params = parseQueryQueueParams(url, { exportMode });
-  const rawEvidenceRows = await fetchSearchEvidenceRows(adminClient, since, params.query_origin);
+  const [rawEvidenceRows, queryReviews] = await Promise.all([
+    fetchSearchEvidenceRows(adminClient, since, params.query_origin),
+    fetchAllQueryReviews(adminClient),
+  ]);
   const evidenceRows = filterEvidenceRowsByQueryOrigin(
     filterEvidenceRowsByChannel(
       filterEvidenceRowsByEnvironment(rawEvidenceRows, params.environment),
@@ -1940,14 +1968,6 @@ async function buildQueryQueuePayload(
     ),
     params.query_origin,
   );
-  const contexts = evidenceRows
-    .map((row) => ({
-      query: normalizeSearchQuery(row.search_query),
-      library_filter: normalizeReviewLibraryFilter(row.library_filter),
-      job_category: normalizeReviewJobCategory(row.job_category),
-    }))
-    .filter((context) => context.query);
-  const queryReviews = await fetchQueryReviews(adminClient, contexts);
   const rows = buildQueryWorkbenchRows(evidenceRows, queryReviews.reviews);
   const filteredRows = filterQueryWorkbenchRows(rows, params);
   const sortedRows = sortQueryWorkbenchRows(filteredRows, params);
