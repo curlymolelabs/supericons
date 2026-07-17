@@ -349,6 +349,7 @@ export function searchIcons(query, icons, synonyms, options = {}) {
         libraryMode,
         limit: Math.max(limit * 2, 20),
         style,
+        applyExpressiveFallback: false,
       });
 
       for (const icon of results) {
@@ -384,6 +385,7 @@ function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options
       retrievalBatches.push(searchIconsForSingleQuery(retrievalQuery, icons, synonyms, {
         ...options,
         limit: perQueryLimit,
+        applyExpressiveFallback: false,
       }));
     }
     for (let index = 0; index < perQueryLimit; index += 1) {
@@ -402,6 +404,7 @@ function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options
   const originalResults = searchIconsForSingleQuery(query, icons, synonyms, {
     ...options,
     limit: perQueryLimit,
+    applyExpressiveFallback: false,
   });
   const selected = [];
   const selectedKeys = new Set();
@@ -500,6 +503,7 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
     return rerankSearchCandidatesAtFusion(query, merged, {
       libraryMode,
       requestedLibrary: library,
+      applyExpressiveFallback: options.applyExpressiveFallback,
     }).slice(0, limit);
   }
 
@@ -524,6 +528,10 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
   return rerankSearchCandidatesAtFusion(
     query,
     orderedKeys.map((key) => selected.get(key)),
-    { libraryMode, requestedLibrary: library },
+    {
+      libraryMode,
+      requestedLibrary: library,
+      applyExpressiveFallback: options.applyExpressiveFallback,
+    },
   ).slice(0, limit);
 }

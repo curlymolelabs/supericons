@@ -523,7 +523,7 @@ export function inspectConverterInput({ imageBase64, mimeType }) {
   };
 }
 
-export async function convertPngToSvg({ imageBase64, mimeType, qualityMode = 'exact', colorMode = 'color', traceClass = 'general-color', uiMode = 'logo' }) {
+export async function convertPngToSvg({ imageBase64, mimeType, qualityMode = 'exact', colorMode, requestedColorMode, traceClass = 'general-color', uiMode = 'logo' }) {
   const { mimeType: parsedMimeType, buffer } = parseBase64Payload(imageBase64);
   validateInputBuffer(buffer, 'PNG input');
   const effectiveMimeType = (mimeType || parsedMimeType || 'image/png').toLowerCase();
@@ -532,7 +532,8 @@ export async function convertPngToSvg({ imageBase64, mimeType, qualityMode = 'ex
     throw new Error(`Unsupported image type "${effectiveMimeType}". Converter MCP currently accepts PNG only.`);
   }
 
-  const { resolvedMode, resolvedTraceClass, config } = getTraceConfig(qualityMode, colorMode, traceClass, uiMode);
+  const effectiveColorMode = colorMode || requestedColorMode || 'color';
+  const { resolvedMode, resolvedTraceClass, config } = getTraceConfig(qualityMode, effectiveColorMode, traceClass, uiMode);
   const startedAt = Date.now();
   const svg = sanitizeSvgExportMarkup(await vectorize(buffer, config), { preserveBranding: false });
   const elapsedMs = Date.now() - startedAt;
@@ -551,7 +552,7 @@ export async function convertPngToSvg({ imageBase64, mimeType, qualityMode = 'ex
     },
     request: {
       qualityMode: resolvedMode,
-      colorMode,
+      colorMode: effectiveColorMode,
       traceClass: resolvedTraceClass,
       uiMode,
     },

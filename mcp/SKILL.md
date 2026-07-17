@@ -9,7 +9,7 @@ Gives AI agents access to 20,000+ SVG icons from 11 libraries via the Model Cont
 ## Available Tools
 
 ### search_icons
-Search icons using AI-powered synonym expansion.
+Search icons using built-in meaning and synonym matching.
 - `query` (required): Search term, e.g. "heart", "login", "download"
 - `library` (optional): Filter by library. Use `si` for Supericons AI and developer tool logos. Use `simpleicons` for Simple Icons brand logos.
 - `limit` (optional): Max results, 1-50, default 10

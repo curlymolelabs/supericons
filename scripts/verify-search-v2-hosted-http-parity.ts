@@ -146,8 +146,14 @@ function makeRequest(body: Record<string, unknown>) {
   });
 }
 
-async function runPath(mode: CandidateMode, body: Record<string, unknown>, scenario: Scenario) {
+async function runPath(
+  mode: CandidateMode,
+  body: Record<string, unknown>,
+  scenario: Scenario,
+  includeTimingInResponse = false,
+) {
   const adminClient = createAdminClient(mode, scenario);
+  const timingRecords: Array<Record<string, unknown>> = [];
   const response = await handleSearchRequest(makeRequest(body), {
     defaultSource: 'internal_test',
     defaultEnvironment: 'test',
@@ -156,6 +162,10 @@ async function runPath(mode: CandidateMode, body: Record<string, unknown>, scena
       : 'si_search_icon_candidates_v2',
     candidateBatchRpcName: mode === 'batched' ? 'si_search_icon_candidates_v3' : null,
     hydrateFinalSvg: mode !== 'control',
+    includeTimingInResponse,
+    timingSink: includeTimingInResponse
+      ? (record) => timingRecords.push(record as unknown as Record<string, unknown>)
+      : null,
     adminClientFactory: () => adminClient,
     rateLimitEnforcer: async () => identity,
   });
@@ -164,6 +174,7 @@ async function runPath(mode: CandidateMode, body: Record<string, unknown>, scena
     headers: [...response.headers.entries()].sort(([left], [right]) => left.localeCompare(right)),
     body: await response.text(),
     calls: adminClient.calls,
+    timingRecords,
   };
 }
 
@@ -217,6 +228,23 @@ assert.deepEqual(Object.keys(svgResponse.results[0].semantic), [
   'rights',
 ]);
 
+const timedErrorResponse = await runPath(
+  'treatment',
+  { query: 'settings' },
+  'candidate_error',
+  true,
+);
+const timedErrorPayload = JSON.parse(timedErrorResponse.body);
+assert.equal(timedErrorResponse.status, 500);
+assert.equal(timedErrorPayload.error, 'search_service_unavailable');
+assert.equal(timedErrorPayload.measurement_timing?.event, 'search_stage_timing');
+assert.equal(timedErrorPayload.measurement_timing?.outcome, 'error');
+assert.equal(timedErrorPayload.measurement_timing?.measurement_variant, 'unspecified');
+assert.equal(timedErrorPayload.measurement_timing?.counts?.query_variants > 0, true);
+assert.equal(timedErrorPayload.measurement_timing?.stages_ms?.candidate_search >= 0, true);
+assert.equal(timedErrorResponse.timingRecords.length, 1);
+assert.deepEqual(timedErrorPayload.measurement_timing, timedErrorResponse.timingRecords[0]);
+
 console.log(JSON.stringify({
   status: 'ok',
   full_http_parity_cases: cases.length,
@@ -227,4 +255,5 @@ console.log(JSON.stringify({
   material_svg_hydrated: true,
   semantic_field_order_preserved: true,
   error_response_preserved: true,
+  timed_error_response_includes_stage_evidence: true,
 }, null, 2));

@@ -303,6 +303,19 @@ function assertEvaluationSet(evaluationSet) {
       }
     }
 
+    if (query.ordering_expectation) {
+      const expectation = query.ordering_expectation;
+      assert.match(expectation.included_icon_ref, /^[a-z0-9-]+:[a-z0-9._-]+$/i, `${query.case_id}: invalid ordered icon ref`);
+      assert.ok(expectation.rank_min >= 1, `${query.case_id}: ordered minimum rank should be positive`);
+      assert.ok(expectation.rank_max >= expectation.rank_min, `${query.case_id}: ordered rank range should be valid`);
+      for (const field of ['any_brand_ref_before', 'any_conventional_ref_before']) {
+        assert.ok(Array.isArray(expectation[field]) && expectation[field].length > 0, `${query.case_id}: ${field} should be non-empty`);
+        for (const iconRef of expectation[field]) {
+          assert.match(iconRef, /^[a-z0-9-]+:[a-z0-9._-]+$/i, `${query.case_id}: invalid ordering reference`);
+        }
+      }
+    }
+
     if (query.library_mode) {
       assert.ok(ALLOWED_LIBRARY_MODES.has(query.library_mode), `${query.case_id}: unsupported library mode`);
       assert.equal(

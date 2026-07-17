@@ -4,25 +4,11 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
+import { SEARCH_CASES, SEARCH_WARM_REPETITIONS } from './search-v2-gate-c-workload.mjs';
+
 const PROJECT_REF = 'kcjmkakdhsqplvasgkjv';
 const ENDPOINT_NAME = process.env.SUPERICONS_SEARCH_V2_MEASUREMENT_ENDPOINT || 'mcp-search-v2-beta';
 const ENDPOINT = `https://${PROJECT_REF}.supabase.co/functions/v1/${ENDPOINT_NAME}`;
-
-const SEARCH_CASES = [
-  { id: 'settings-all', query: 'settings', library_mode: 'all', limit: 5, locale: 'en' },
-  { id: 'hello-all', query: 'hello', library_mode: 'all', limit: 8, locale: 'en' },
-  { id: 'cog-bootstrap-strict', query: 'cog', library: 'bootstrap', library_mode: 'strict', limit: 8, locale: 'en' },
-  { id: 'combobox-bootstrap-prefer', query: 'combobox', library: 'bootstrap', library_mode: 'prefer', limit: 8, locale: 'en' },
-  {
-    id: 'settings-zh-hans-expanded',
-    query: 'settings',
-    library_mode: 'all',
-    limit: 5,
-    locale: null,
-    localized_query: '设置',
-    localized_locale: 'zh-Hans',
-  },
-];
 
 function readArg(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -54,6 +40,98 @@ function summaryFor(samples) {
   };
 }
 
+function publicMeasurementTiming(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const allowedStages = [
+    'request_parse',
+    'rate_limit',
+    'account_resolution',
+    'candidate_search',
+    'material_eligibility',
+    'private_metadata',
+    'reranking',
+    'public_semantic',
+    'final_svg',
+    'material_svg',
+    'audit_write',
+  ];
+  const stages = {};
+  for (const stage of allowedStages) {
+    const duration = Number(value?.stages_ms?.[stage]);
+    if (Number.isFinite(duration) && duration >= 0) stages[stage] = duration;
+  }
+  return {
+    schema_version: Number(value.schema_version) || null,
+    event: value.event === 'search_stage_timing' ? value.event : null,
+    measurement_variant: typeof value.measurement_variant === 'string'
+      ? value.measurement_variant
+      : null,
+    worker_state: typeof value.worker_state === 'string' ? value.worker_state : null,
+    worker_request_ordinal: Number(value.worker_request_ordinal) || null,
+    module_age_ms_at_handler_entry: Number(value.module_age_ms_at_handler_entry) || 0,
+    outcome: typeof value.outcome === 'string' ? value.outcome : null,
+    total_ms: Number(value.total_ms) || 0,
+    stages_ms: stages,
+    counts: {
+      query_variants: Number(value?.counts?.query_variants) || 0,
+      candidate_rows: Number(value?.counts?.candidate_rows) || 0,
+      unique_candidates: Number(value?.counts?.unique_candidates) || 0,
+      final_results: Number(value?.counts?.final_results) || 0,
+    },
+    approximate_sizes: {
+      candidate_svg_characters: Number(value?.approximate_sizes?.candidate_svg_characters) || 0,
+      candidate_payload_characters: Number(value?.approximate_sizes?.candidate_payload_characters) || 0,
+      response_json_characters: Number(value?.approximate_sizes?.response_json_characters) || 0,
+    },
+  };
+}
+
+function publicResponseEvidence(response, payload, durationMs) {
+  return {
+    status: response?.status || 0,
+    duration_ms: Number(durationMs.toFixed(3)),
+    error_code: typeof payload?.error === 'string' ? payload.error : null,
+    retryable: payload?.retryable === true,
+    measurement_timing: publicMeasurementTiming(payload?.measurement_timing),
+  };
+}
+
+function workerStateSummaryFor(samples) {
+  const groups = {
+    first_request: [],
+    reused_worker: [],
+    unknown: [],
+  };
+
+  for (const sample of samples) {
+    const attempts = Array.isArray(sample?.hosted_attempts) ? sample.hosted_attempts : [sample];
+    for (const attempt of attempts) {
+      const timing = attempt?.measurement_timing;
+      const state = timing?.worker_state === 'first_request'
+        ? 'first_request'
+        : timing?.worker_state === 'reused_worker'
+          ? 'reused_worker'
+          : 'unknown';
+      const handlerDuration = Number(timing?.total_ms);
+      const observedDuration = Number(attempt?.duration_ms);
+      groups[state].push({
+        duration_ms: Number.isFinite(handlerDuration) && handlerDuration >= 0
+          ? handlerDuration
+          : Number.isFinite(observedDuration) && observedDuration >= 0
+            ? observedDuration
+            : 0,
+        ok: typeof attempt?.ok === 'boolean'
+          ? attempt.ok
+          : Number(attempt?.status) >= 200 && Number(attempt?.status) < 400,
+      });
+    }
+  }
+
+  return Object.fromEntries(
+    Object.entries(groups).map(([state, entries]) => [state, summaryFor(entries)]),
+  );
+}
+
 async function postSearch(searchCase) {
   const startedAt = performance.now();
   let response;
@@ -69,6 +147,7 @@ async function postSearch(searchCase) {
         query: searchCase.query,
         library: searchCase.library || null,
         library_mode: searchCase.library_mode,
+        style: searchCase.style || 'any',
         limit: searchCase.limit,
         locale: searchCase.locale,
         localized_query: searchCase.localized_query || null,
@@ -107,6 +186,15 @@ async function postSearch(searchCase) {
     svg_result_count: Array.isArray(parsed?.results)
       ? parsed.results.filter((row) => typeof row?.svg === 'string' && row.svg.length > 0).length
       : 0,
+    result_libraries: Array.isArray(parsed?.results)
+      ? parsed.results.map((row) => String(row?.source_library || row?.library || '')).filter(Boolean)
+      : [],
+    result_styles: Array.isArray(parsed?.results)
+      ? parsed.results.map((row) => String(row?.style || '')).filter(Boolean)
+      : [],
+    response_error_code: typeof parsed?.error === 'string' ? parsed.error : null,
+    response_retryable: parsed?.retryable === true,
+    measurement_timing: publicMeasurementTiming(parsed?.measurement_timing),
     error,
   };
 }
@@ -114,7 +202,7 @@ async function postSearch(searchCase) {
 async function runSearch(variant) {
   const firstRequest = await postSearch(SEARCH_CASES[0]);
   const warmSamples = [];
-  for (let repetition = 0; repetition < 5; repetition += 1) {
+  for (let repetition = 0; repetition < SEARCH_WARM_REPETITIONS; repetition += 1) {
     for (const searchCase of SEARCH_CASES) {
       warmSamples.push(await postSearch(searchCase));
     }
@@ -126,6 +214,7 @@ async function runSearch(variant) {
     endpoint: ENDPOINT_NAME,
     first_request: firstRequest,
     warm_summary: summaryFor(warmSamples),
+    worker_summary: workerStateSummaryFor([firstRequest, ...warmSamples]),
     warm_samples: warmSamples,
   };
 }
@@ -175,10 +264,28 @@ async function runParity(variant) {
 
 async function runLocalizedOnce(searchIconsHostedMcp) {
   const originalFetch = globalThis.fetch;
-  let hostedRequests = 0;
+  const hostedAttempts = [];
   globalThis.fetch = async (...args) => {
-    hostedRequests += 1;
-    return originalFetch(...args);
+    const attemptStartedAt = performance.now();
+    try {
+      const response = await originalFetch(...args);
+      const payload = await response.clone().json().catch(() => null);
+      hostedAttempts.push(publicResponseEvidence(
+        response,
+        payload,
+        performance.now() - attemptStartedAt,
+      ));
+      return response;
+    } catch (error) {
+      hostedAttempts.push({
+        status: 0,
+        duration_ms: Number((performance.now() - attemptStartedAt).toFixed(3)),
+        error_code: error instanceof Error ? error.name : 'request_failed',
+        retryable: false,
+        measurement_timing: null,
+      });
+      throw error;
+    }
   };
 
   const startedAt = performance.now();
@@ -216,10 +323,66 @@ async function runLocalizedOnce(searchIconsHostedMcp) {
   return {
     ok: Boolean(payload && !error),
     duration_ms: Number((performance.now() - startedAt).toFixed(3)),
-    hosted_requests: hostedRequests,
+    hosted_requests: hostedAttempts.length,
+    hosted_attempts: hostedAttempts,
     response_sha256: publicSummary ? sha256(JSON.stringify(publicSummary)) : null,
     ...publicSummary,
     error,
+  };
+}
+
+async function runSmoke(variant) {
+  const outline = await postSearch({
+    id: 'material-settings-outline',
+    query: 'settings',
+    library: 'material',
+    library_mode: 'strict',
+    limit: 3,
+    locale: 'en',
+    style: 'outline',
+  });
+  const solid = await postSearch({
+    id: 'material-settings-solid',
+    query: 'settings',
+    library: 'material',
+    library_mode: 'strict',
+    limit: 3,
+    locale: 'en',
+    style: 'solid',
+  });
+  const invalid = await postSearch({
+    id: 'invalid-library-mode',
+    query: 'settings',
+    library_mode: 'unsupported',
+    limit: 3,
+    locale: 'en',
+  });
+  const materialPassed = [outline, solid].every((sample) => (
+    sample.ok
+    && sample.result_count > 0
+    && sample.svg_result_count === sample.result_count
+    && sample.result_libraries.every((library) => library === 'material')
+  ));
+  const stylePassed = outline.result_styles.every((style) => style === 'outline')
+    && solid.result_styles.every((style) => style === 'solid');
+  const invalidPassed = invalid.status === 400
+    && invalid.response_error_code === 'invalid_library_mode';
+
+  return {
+    mode: 'smoke',
+    variant,
+    endpoint: ENDPOINT_NAME,
+    first_request: outline,
+    material_outline: outline,
+    material_solid: solid,
+    invalid_request: invalid,
+    smoke_summary: {
+      material_passed: materialPassed,
+      style_passed: stylePassed,
+      invalid_request_passed: invalidPassed,
+      all_passed: materialPassed && stylePassed && invalidPassed,
+    },
+    worker_summary: workerStateSummaryFor([outline, solid, invalid]),
   };
 }
 
@@ -245,6 +408,7 @@ async function runLocalized(variant) {
       hosted_requests: warmSamples.reduce((total, sample) => total + sample.hosted_requests, 0),
       hosted_requests_per_search: warmSamples.map((sample) => sample.hosted_requests),
     },
+    worker_summary: workerStateSummaryFor([firstRequest, ...warmSamples]),
     warm_samples: warmSamples,
   };
 }
@@ -400,8 +564,8 @@ const variant = readArg('variant');
 const output = readArg('output');
 const manifestHash = readArg('manifest-hash');
 assert.ok(
-  ['parity', 'search', 'localized', 'recommendation'].includes(mode),
-  'Use --mode parity, search, localized, or recommendation.',
+  ['parity', 'search', 'localized', 'recommendation', 'smoke'].includes(mode),
+  'Use --mode parity, search, localized, recommendation, or smoke.',
 );
 assert.ok(['control', 'treatment'].includes(variant), 'Use --variant control or --variant treatment.');
 assert.ok(output, 'Provide --output with a local JSON path.');
@@ -412,6 +576,7 @@ const runners = {
   search: runSearch,
   localized: runLocalized,
   recommendation: runRecommendation,
+  smoke: runSmoke,
 };
 const result = await runners[mode](variant);
 const artifact = {
@@ -430,7 +595,7 @@ console.log(JSON.stringify({
   mode: artifact.mode,
   variant: artifact.variant,
   first_request_ms: artifact.first_request.duration_ms,
-  summary: artifact.warm_summary || artifact.parity_summary,
+  summary: artifact.warm_summary || artifact.parity_summary || artifact.smoke_summary,
 }, null, 2));
 
 if (
@@ -440,6 +605,7 @@ if (
     !artifact.parity_summary.all_requests_successful
     || !artifact.parity_summary.all_cases_stable_within_variant
   ))
+  || (artifact.smoke_summary && !artifact.smoke_summary.all_passed)
 ) {
   process.exitCode = 1;
 }

@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.7
+Version: 1.10
 Approved: 2026-07-11
-Amended: 2026-07-14
+Amended: 2026-07-17
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -390,7 +390,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-23` | Support localized search through locale dictionaries and evaluated multilingual retrieval without creating a new document type by default. | `G-01` | Localized fixtures meet approved usefulness thresholds. |
 | `FR-24` | Protect p95 latency, error rate, cost, candidate fan-out, and rate limits with measured guardrails. | Reliability/business risk | Shadow and beta gates report all guardrails. |
 | `FR-25` | Keep all public outputs free of gated terms, private evidence, credentials, and operational identifiers. | `NG-03` | Public-safety and sentinel leakage checks pass. |
-| `FR-26` | Require explicit owner approval before Supabase/Netlify deployment or npm publication. | Release risk | Status ledger links each external mutation to approval and verification evidence. |
+| `FR-26` | Require a bounded, independently audited mutation plan and rollback rule before Supabase/Netlify deployment or npm publication. The executor may proceed without repeated owner approval when the action stays within an accepted product and risk decision. Involve the owner only for physical access, credentials, money, or a genuine default-user-experience or material-risk choice. | Release risk | Status ledger links each external mutation to its manifest, audit, verification evidence, rollback result, and any owner involvement that was actually required. |
 | `FR-27` | Diversify ambiguous list-search results across approved interpretation families, while recommendation uses task context and asks for clarification when needed. | Human and agent jobs; ambiguity risk | Approved ambiguous cases cover at least three relevant families in the top eight when available; recommendation cases narrow correctly or return labeled clarification options. |
 | `FR-28` | Gate brand rank priority by distinctive exact, ambiguous exact, and prefix/substring match classes. | `G-02`; brand-collision risk | Generic concept fixtures suppress accidental brand dominance while explicit brand/logo canaries remain rank 1. |
 | `FR-29` | Proactively review the bounded SI brand-logo set while classifying external brand collisions reactively from approved evidence. | Brand-maintenance cost; `D-019` | The 50 SI brand records have an owner-review disposition; ambiguous approved terms have concept and explicit-identity fixtures; unclassified external exact matches keep the documented fallback. |
@@ -403,6 +403,8 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-36` | `search_icons` and `recommend_icons` may enter an opt-in prerelease beta independently. A tool that is not approved for the beta must keep the stable endpoint, cohort, and public response behavior. | `G-03`, `G-07`, `FR-24`, `FR-26`, `D-023` | Tool-specific route tests, exact recommendation response parity, package clean-install checks, and separate rollback checks pass before publication. |
 | `FR-37` | Measurement workloads must use legal public inputs and must match the approved generated-query count before deployment. English recommendation omits locale and uses at most four reviewed query variants. Only supported non-English locales may use the localized limit of eight. | `G-03`, `G-08`, `FR-24`, `D-023` | Schema-valid workload fixtures fail closed on unsupported locale values and on planned-versus-generated count differences. |
 | `FR-38` | Beta evidence must record end-to-end MCP tool latency separately from individual hosted-search latency. Search audit evidence must persist public-safe worker state, worker request order, and module age so cold and reused-worker results can be compared without function-log access. | `G-08`, `FR-20`, `FR-24`, `D-023` | Sanitized exports report tool p50/p95 and worker-state cohorts without raw queries, SVG content, credentials, or personal identifiers. |
+| `FR-39` | Keep an expressive result eligible for a broadly related query, but rank conventional symbols and approved identities ahead of it. Remove this fallback penalty when the query directly matches the icon's name or an approved synonym. | `G-02`, `D-013`, `D-024` | A generic metadata-driven ranking rule and reviewed ordering fixtures prove inclusion, lower broad-query rank, and direct-query priority without query-specific ranking code. |
+| `FR-40` | An opt-in MCP prerelease may use its packaged deterministic index and public synonym map for `search_icons` only when the query has no locale and contains ASCII text. Localized and non-ASCII search, `recommend_icons`, and web search keep their stable hosted paths. Material SVGs needed by the local route ship in the package. The response reports local runtime and index generation date, and one non-blocking tool-outcome telemetry attempt is made per eligible call. | `G-03`, `G-07`, `G-09`, `FR-24`, `FR-26`, `D-025` | Route, clean-install fingerprint, Material bundle, response, telemetry-failure, package-size, memory, latency, and fixed-suite checks pass. Local-versus-hosted divergence is reported for information, and hosted attribution remains required before a later hosted surface gate. |
 
 ## Constraints
 
@@ -411,7 +413,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 - Hosted functions retain current CORS, authentication, rate-limit, and audit boundaries.
 - Query fan-out and semantic candidates are bounded.
 - No secrets, credentials, raw personal identifiers, private prompts, or internal process metadata enter public docs, packages, responses, or logs.
-- No Supabase or Netlify deployment and no npm publication occurs without explicit owner approval.
+- No Supabase or Netlify deployment and no npm publication occurs without a bounded mutation plan, independent audit, and rollback rule. Owner involvement follows `FR-26` and is not a routine gate.
 - Search v2 does not define the missing SI schema `live` section; that is a separate schema correction.
 
 ## Evaluation and success metrics
@@ -485,7 +487,7 @@ Phases `P3` through `P6` are conditional and paused. They may resume only after 
 - Exact, library, ambiguity, brand, clarification, and cross-surface fixtures pass.
 - Same query, catalog version, policy version, and options produce the same ordered results.
 - Hosted latency, error, zero-result, low-confidence, reformulation, and abuse evidence is captured with stable denominators.
-- Deployment or publication still requires the explicit approval in `FR-26`.
+- Deployment or publication follows the audited mutation and owner-involvement boundary in `FR-26`.
 
 ### Feature flags
 

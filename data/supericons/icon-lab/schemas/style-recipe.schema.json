@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/style-recipe.schema.json",
+  "title": "Icons Lab Style Recipe",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "canvas",
+    "stroke",
+    "fill",
+    "density",
+    "variants",
+    "allowedElements",
+    "exportRules"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "canvas": {
+      "type": "object",
+      "required": [
+        "viewBox",
+        "width",
+        "height",
+        "safeArea"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "viewBox": {
+          "type": "string"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "safeArea": {
+          "type": "number"
+        }
+      }
+    },
+    "stroke": {
+      "type": "object",
+      "required": [
+        "width",
+        "color",
+        "linecap",
+        "linejoin"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "linecap": {
+          "type": "string"
+        },
+        "linejoin": {
+          "type": "string"
+        }
+      }
+    },
+    "fill": {
+      "type": "object",
+      "required": [
+        "default",
+        "allowedValues"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "type": "string"
+        },
+        "allowedValues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "density": {
+      "type": "object",
+      "required": [
+        "target",
+        "maxShapeElements"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "maxShapeElements": {
+          "type": "integer"
+        }
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowedElements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exportRules": {
+      "type": "object"
+    }
+  }
+}

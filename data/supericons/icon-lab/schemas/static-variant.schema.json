@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supericons.dev/schemas/icon-lab/static-variant.schema.json",
+  "title": "Icons Lab Static Variant",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "conceptId",
+    "variantType",
+    "styleRecipeId",
+    "svgPath",
+    "targetSizes",
+    "qualityLevel",
+    "reviewState"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "conceptId": {
+      "type": "string"
+    },
+    "variantType": {
+      "enum": [
+        "outline",
+        "filled",
+        "duotone",
+        "mono"
+      ]
+    },
+    "styleRecipeId": {
+      "type": "string"
+    },
+    "svgPath": {
+      "type": "string"
+    },
+    "targetSizes": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "strokeEditable": {
+      "type": "boolean"
+    },
+    "qualityLevel": {
+      "enum": [
+        "L1 usable",
+        "L2 benchmark",
+        "L3 Supericons grade",
+        "L4 signature"
+      ]
+    },
+    "reviewState": {
+      "enum": [
+        "owner_review_required",
+        "approved",
+        "changes_requested"
+      ]
+    }
+  }
+}

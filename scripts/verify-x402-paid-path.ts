@@ -290,6 +290,9 @@ async function main() {
   if (!paidBody?.svg?.includes("<svg") || !paidBody?.css || paidBody?.icon !== "x402-pay") {
     fail("Paid response did not include the expected single-icon SVG/CSS payload.");
   }
+  if (paidBody?.license_url !== "/terms/#single-icon-license") {
+    fail(`Paid response returned the wrong license_url: ${paidBody?.license_url}`);
+  }
   record("paid-delivery", "PASS", "Settlement returned one icon payload and PAYMENT-RESPONSE.");
 
   const replay = await paidRequest(header);

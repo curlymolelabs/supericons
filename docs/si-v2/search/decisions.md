@@ -34,6 +34,11 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-019` | Proactively classify the bounded SI brand set; classify external brands when collision evidence appears | Accepted | Retrieval governance |
 | `D-020` | Separate multilingual meaning approval, language assurance, and native review; use hard, locale, and aggregate embedding gates | Accepted | Evaluation governance |
 | `D-021` | Ship and measure deterministic MCP search before reconsidering semantic retrieval; no paid model call in the default free request path | Accepted | Architecture and rollout |
+| `D-022` | Reduce deterministic hosted round trips while preserving query provenance, rate limits, audit rows, and public response parity | Accepted | Performance and controls |
+| `D-023` | Gate beta release by tool and reject measurement workloads that do not match legal public inputs | Accepted | Rollout and measurement |
+| `D-024` | Keep expressive related icons visible behind conventional symbols and approved identities unless the query directly names their meaning | Accepted | Retrieval and reranking |
+| `D-025` | Use packaged local search only for eligible English MCP beta queries while stable hosting serves localized, recommendation, and web requests | Accepted | Architecture and rollout |
+| `D-026` | Let agents execute audited release work autonomously and involve the owner only for access, money, default-user changes, or material risk | Accepted | Release governance |
 
 ## Decision records
 
@@ -295,6 +300,55 @@ Alternatives rejected or deferred: publishing both tools behind one package-wide
 Specification change: version 1.7 adds `FR-36`, `FR-37`, and `FR-38`.
 
 Superseded decisions: none. `D-022` remains active for the deterministic round-trip controls.
+
+### D-024: Expressive icons as related fallback results
+
+Date: 2026-07-16
+Status: Accepted
+
+Decision: use approved icon metadata to identify expressive results such as meme, humor, or trending-culture concepts. When an expressive icon is only broadly related to the query, keep it eligible but rank conventional symbols and approved identities first. When the query directly matches the expressive icon's name or an approved synonym, do not apply the fallback penalty. The rule is data-driven and generic. Fixtures may name a reviewed collision, but ranking code must not contain a query-specific exception.
+
+Reason: original and playful Supericons should broaden useful results without displacing the symbols or identities most users expect first. `si:person-launched` is genuinely related to speed and momentum, so excluding it from `swift` would contradict its approved record. Ranking it below conventional speed symbols and Swift identities preserves both relevance and the library's character.
+
+Alternatives rejected or deferred: excluding expressive icons from broad related searches; allowing a newly added expressive result to displace conventional symbols by default; adding a `swift`-specific ranking patch.
+
+Specification change: version 1.8 adds `FR-39` and the expressive-fallback ordering rule.
+
+Superseded decisions: none.
+
+### D-025: English local-first MCP search beta
+
+Date: 2026-07-16
+Status: Accepted
+
+Decision: the opt-in MCP prerelease may run `search_icons` from its packaged deterministic index and public synonym map only when the request has no locale and contains ASCII text. A request with a locale or non-ASCII text keeps the stable hosted search path. `recommend_icons` and web search also remain on their stable paths. Material outline and solid SVGs are included in the package so eligible Material searches need no asset request. The public beta response identifies the local runtime and the packaged index generation date.
+
+The local beta records one non-blocking tool-outcome telemetry attempt for each eligible call. This tool-level outcome insert does not use the hosted request deduplication key, so beta checks must verify the one-call, one-outcome behavior directly. A telemetry failure must not delay or fail a local search. Local-versus-hosted result differences are reported for information during the beta. Before any later hosted web or recommendation gate, a bounded live attribution check must identify the remaining hosted cost.
+
+Reason: the fixed 225-case suite kept its approved fingerprint on the packaged local path, with local p95 below 500 ms, combined measured memory below 75 MB, and a package below 7 MB. The same local index returned zero for 62 of 75 multilingual cases, so a full local switch would regress localized search. Keeping localized search and recommendation on stable hosting captures the measured English search advantage without claiming unsupported multilingual or recommendation quality.
+
+Alternatives rejected or deferred: another hosted beta deployment before trying the already-packaged local path; routing localized or non-ASCII queries locally; moving recommendation or web search locally without their own gates; dropping the hosted attribution question; treating the earlier hosted request dedupe fix as proof of local tool-outcome completeness.
+
+Specification change: version 1.9 adds `FR-40` and the local-first prerelease boundary.
+
+Superseded decisions: the isolated-endpoint route in `D-023` is replaced for this search-only beta. Its tool independence, legal-workload, and evidence rules remain active. The hosted work in `D-022` and `D-023` remains required evidence before a later hosted surface gate.
+
+### D-026: Delegated release judgment with preserved safeguards
+
+Date: 2026-07-17
+Status: Accepted
+
+Decision: agents own the judgment about when to involve the owner. A bounded deployment or publication may proceed after independent audit without a repeated approval ceremony when it stays within an accepted product and risk decision. The owner is involved only when physical access, credentials, or money are required, or when a decision genuinely changes the default user experience or carries material risk the owner would clearly want to weigh. Agents decide whether regenerated fingerprints and equivalent safety corrections preserve the accepted decision.
+
+Independent audit, evidence records, mutation limits, and rollback controls remain mandatory. These safeguards enable autonomous action and do not create a substitute approval ceremony.
+
+Reason: repeated owner approval of equivalent, already-reviewed release packets adds delay without improving the product or risk decision. The owner should spend attention on access and consequential choices, while agents use the audit and evidence system to handle routine release judgment.
+
+Alternatives rejected or deferred: removing independent review or rollback controls; asking the owner to approve every refreshed fingerprint; treating all external actions as automatically owner-gated; letting agents make unreviewed default-user or material-risk changes.
+
+Specification change: version 1.10 revises `FR-26` and the deployment/publication constraints.
+
+Superseded decisions: the explicit-owner-approval portions of earlier rollout decisions and plans are replaced by this owner-involvement boundary. Their technical gates, evidence requirements, mutation limits, and rollback rules remain active.
 
 ## Adding or superseding a decision
 

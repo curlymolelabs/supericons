@@ -62,7 +62,9 @@ try {
   browser = await chromium.launch();
   const page = await browser.newPage();
 
-  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+  // The application imports large local icon data before DOMContentLoaded fires.
+  // Start interacting as soon as the response commits, then wait for the actual control.
+  await page.goto(baseUrl, { waitUntil: 'commit' });
   const searchInput = page.getByRole('textbox', { name: 'Search icons' });
   try {
     await searchInput.waitFor({ state: 'visible', timeout: 3000 });
@@ -75,6 +77,11 @@ try {
   }
   await searchInput.fill('claude');
   await page.locator('[data-icon-id="claude"][data-icon-lib="simpleicons"]').click();
+  assert.equal(
+    await page.locator('.panel__commerce-cta').count(),
+    0,
+    'web affiliate CTA must not appear for non-Base44 icons'
+  );
   await page.locator('#colorHex').fill(targetHex);
 
   await page.waitForFunction(
@@ -119,6 +126,57 @@ try {
     lightState.unselectedCellBackgroundColor,
     lightState.sharedSurfaceColor,
     'light mode icon grid cells should use the shared icon grid surface color'
+  );
+
+  await searchInput.fill('base44');
+  const base44Cell = page.locator('[data-icon-id="base44"][data-icon-lib="si"]');
+  await base44Cell.waitFor({ state: 'visible' });
+  await base44Cell.click();
+
+  const commerceCta = page.locator('.panel__commerce-cta');
+  assert.equal(await commerceCta.count(), 1, 'Base44 should show one web-only affiliate CTA');
+  assert.equal(
+    await commerceCta.getAttribute('href'),
+    'https://base44.pxf.io/c/7419860/2049275/25619?trafcat=base',
+    'Base44 CTA should use the approved affiliate link'
+  );
+  assert.equal(await commerceCta.getAttribute('target'), '_blank', 'affiliate CTA should open separately');
+  assert.match(
+    await commerceCta.getAttribute('rel') || '',
+    /\bsponsored\b/,
+    'affiliate CTA should be labeled as sponsored for browsers and crawlers'
+  );
+  assert.equal(
+    await page.locator('.panel__commerce-disclosure').count(),
+    0,
+    'Base44 preview should not show affiliate disclosure copy'
+  );
+
+  await searchInput.fill('railway');
+  const railwayCell = page.locator('[data-icon-id="railway"][data-icon-lib="simpleicons"]');
+  await railwayCell.waitFor({ state: 'visible' });
+  await railwayCell.click();
+
+  assert.equal(await commerceCta.count(), 1, 'Railway should show one web-only referral CTA');
+  assert.equal(
+    await commerceCta.getAttribute('href'),
+    'https://railway.com?referralCode=H0klSF',
+    'Railway CTA should use the supplied referral link'
+  );
+  assert.equal(
+    await commerceCta.locator('span').first().textContent(),
+    'Deploy with Railway',
+    'Railway CTA should use the Railway-specific label'
+  );
+  assert.match(
+    await commerceCta.getAttribute('rel') || '',
+    /\bsponsored\b/,
+    'Railway referral CTA should be labeled as sponsored for browsers and crawlers'
+  );
+  assert.equal(
+    await page.locator('.panel__commerce-disclosure').count(),
+    0,
+    'Railway preview should not show affiliate disclosure copy'
   );
 
   console.log('verify-customize-preview: ok');

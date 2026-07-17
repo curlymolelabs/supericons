@@ -49,12 +49,17 @@ try {
     join(installedPackageDir, 'package.json'),
     'utf8',
   ));
-  assert.equal(installedPackage.version, '0.4.18');
+  assert.equal(installedPackage.version, '0.4.19-beta.0');
   const installedIndex = JSON.parse(readFileSync(
     join(installedPackageDir, 'public', 'icon-index.json'),
     'utf8',
   ));
   assert.equal(installedIndex.icons.filter((icon) => icon.lib === 'material').length, 4262);
+  assert.ok(readFileSync(join(installedPackageDir, 'material-mcp-assets.json.gz')).length > 0);
+  assert.equal(JSON.parse(readFileSync(
+    join(installedPackageDir, 'material-mcp-assets-manifest.json'),
+    'utf8',
+  )).asset_count, 8524);
 
   const sdkBase = join(
     installDir,
@@ -74,6 +79,7 @@ try {
     env: {
       ...process.env,
       SUPERICONS_API_KEY: '',
+      SUPERICONS_DISABLE_TELEMETRY: '1',
       SUPERICONS_MCP_LOG_STARTUP: '0',
     },
     stderr: 'pipe',
@@ -91,6 +97,22 @@ try {
   assert.equal(materialLibrary.outlineCount, 4262);
   assert.equal(materialLibrary.solidCount, 4262);
 
+  const localSearch = parseToolPayload(await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'settings',
+      library_mode: 'all',
+      style: 'outline',
+      limit: 8,
+    },
+  }), 'search_icons local-first');
+  assert.ok(Array.isArray(localSearch.results) && localSearch.results.length > 0);
+  assert.equal(localSearch.search_runtime?.mode, 'local_first');
+  assert.equal(
+    localSearch.search_runtime?.index_generated_at,
+    installedIndex.generatedAt,
+  );
+
   const outline = parseToolPayload(await client.callTool({
     name: 'get_icon',
     arguments: { id: 'settings', library: 'material', style: 'outline' },
@@ -104,6 +126,7 @@ try {
     assert.equal(icon.style, variant);
     assert.match(icon.svg, /^<svg\b/);
     assert.equal(icon.type, 'svg');
+    assert.equal(icon.svgSource, 'owned-material-cache:bundle');
   }
 
   console.log(JSON.stringify({
@@ -113,7 +136,8 @@ try {
     list_libraries_truthful: true,
     exact_outline_svg: true,
     exact_solid_svg: true,
-    snapshot_source: outline.source,
+    local_first_search: true,
+    snapshot_source: outline.svgSource,
   }, null, 2));
 } finally {
   if (transport) await transport.close().catch(() => {});

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "conceptId": "si:policy-guardrail",
+  "variantId": "variant-policy-guardrail-outline-001",
+  "status": "pass",
+  "checks": {
+    "viewBox": "pass",
+    "currentColor": "pass",
+    "strokeWidth": "pass",
+    "strokeLinecap": "pass",
+    "strokeLinejoin": "pass",
+    "fill": "pass",
+    "rasterEmbeds": "pass",
+    "foreignObject": "pass",
+    "hiddenText": "pass",
+    "accessibleTitle": "fail",
+    "shapeElementCount": "pass",
+    "safeArea": "pass",
+    "fixedColors": "pass"
+  },
+  "metrics": {
+    "shapeElementCount": 3,
+    "coordinateMin": 5,
+    "coordinateMax": 20
+  },
+  "issues": [],
+  "warnings": [
+    "SVG should include title and desc elements."
+  ]
+}

@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons Thematic Set System Blueprint</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070a;
+      --panel: rgba(12, 18, 27, 0.72);
+      --panel-strong: rgba(14, 22, 34, 0.92);
+      --line: rgba(142, 229, 255, 0.18);
+      --line-strong: rgba(142, 229, 255, 0.36);
+      --text: #f5f8ff;
+      --muted: #9db0c3;
+      --soft: #d8ebf8;
+      --accent: #7cf6ff;
+      --green: #76ffc0;
+      --amber: #ffd166;
+      --red: #ff7185;
+      --radius: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(124, 246, 255, 0.14), transparent 32rem),
+        radial-gradient(circle at 78% 8%, rgba(118, 255, 192, 0.08), transparent 28rem),
+        linear-gradient(180deg, #08121b, #030407 58%, #05070a);
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(124, 246, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 246, 255, 0.028) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, #000, transparent 80%);
+    }
+
+    main {
+      position: relative;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 68px;
+    }
+
+    .topbar,
+    .brand,
+    .flow,
+    .chips,
+    .set-grid,
+    .adapter-grid {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .brand {
+      gap: 12px;
+      color: var(--soft);
+      font-weight: 760;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: rgba(124, 246, 255, 0.08);
+    }
+
+    .badge,
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-copy,
+    .panel,
+    .card,
+    .schema-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
+      box-shadow: 0 24px 80px rgba(0,0,0,.36), inset 0 0 0 1px rgba(255,255,255,.025);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-copy {
+      padding: clamp(28px, 5vw, 58px);
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin-top: 0; }
+
+    h1 {
+      max-width: 840px;
+      margin-bottom: 20px;
+      font-size: clamp(40px, 6vw, 82px);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.08;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: var(--soft);
+      font-size: 18px;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .lead {
+      max-width: 740px;
+      font-size: 18px;
+    }
+
+    .mission-card {
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(124,246,255,.13), transparent 18rem),
+        rgba(6, 12, 20, .72);
+    }
+
+    .mission-card strong {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mission-card p {
+      margin-bottom: 0;
+      color: var(--soft);
+      font-size: 21px;
+      line-height: 1.35;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .two-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 20px;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .flow {
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .flow span {
+      flex: 1 1 130px;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--soft);
+      background: rgba(255,255,255,.03);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 720;
+    }
+
+    .flow span:nth-child(3) {
+      border-color: var(--line-strong);
+      color: #041018;
+      background: var(--accent);
+    }
+
+    .schema-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .schema-card {
+      min-width: 0;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    pre {
+      margin: 0;
+      overflow: auto;
+      max-height: 390px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      background: rgba(0,0,0,.42);
+      white-space: pre-wrap;
+    }
+
+    code {
+      color: #dcfbff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .chips,
+    .set-grid,
+    .adapter-grid {
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chips li,
+    .set-grid li,
+    .adapter-grid li {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--soft);
+      background: rgba(255,255,255,.035);
+      font-size: 13px;
+    }
+
+    .roadmap {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .roadmap article {
+      position: relative;
+      padding: 18px 18px 18px 62px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.026);
+    }
+
+    .roadmap article::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tier {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+    }
+
+    .tier.paid {
+      border-color: rgba(118,255,192,.32);
+      box-shadow: inset 0 0 48px rgba(118,255,192,.045);
+    }
+
+    .tier ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .callout {
+      border-color: rgba(255, 209, 102, .35);
+      background: rgba(255, 209, 102, .055);
+    }
+
+    .callout h2 {
+      color: var(--amber);
+    }
+
+    @media (max-width: 940px) {
+      .hero,
+      .grid,
+      .two-grid,
+      .schema-wrap,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        width: min(100% - 22px, 520px);
+        padding-top: 22px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-copy,
+      .panel {
+        padding: 18px;
+      }
+
+      .mission-card p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">SI</span>
+        <span>Supericons Blueprint</span>
+      </div>
+      <span class="badge">Thematic Set System</span>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Product Vision</p>
+        <h1>Supericons as a human-and-agent icon creation system.</h1>
+        <p class="lead">The goal is to help humans and AI agents create better themed icon sets faster, with meaning, style, motion, accessibility, and implementation guidance built in.</p>
+      </div>
+      <aside class="mission-card">
+        <strong>Core Positioning</strong>
+        <p>Supericons is the visual meaning layer for agent-assisted software.</p>
+      </aside>
+    </section>
+
+    <section class="section panel">
+      <p class="eyebrow">The System</p>
+      <h2>Meaning first. Style second. Export third.</h2>
+      <div class="flow" aria-label="System flow">
+        <span>User Brief</span>
+        <span>Theme Set</span>
+        <span>Icon Meaning</span>
+        <span>Style Adapter</span>
+        <span>State Behavior</span>
+        <span>Export</span>
+      </div>
+    </section>
+
+    <section class="section grid">
+      <article class="card">
+        <span class="number">01</span>
+        <h3>Theme Set</h3>
+        <p>A practical product package for one use case, such as AI agent status, dating safety, or DevOps incidents.</p>
+      </article>
+      <article class="card">
+        <span class="number">02</span>
+        <h3>Supericon Profile</h3>
+        <p>The meaning contract. It says what the icon means, when to use it, when to avoid it, and how to describe it accessibly.</p>
+      </article>
+      <article class="card">
+        <span class="number">03</span>
+        <h3>Visual DNA</h3>
+        <p>The guardrails that keep an icon recognizable across styles. Short rules, not a giant design theory.</p>
+      </article>
+      <article class="card">
+        <span class="number">04</span>
+        <h3>Behavior</h3>
+        <p>The state and motion layer: static, active, hover, transition, and reduced-motion behavior.</p>
+      </article>
+      <article class="card">
+        <span class="number">05</span>
+        <h3>Style Adapter</h3>
+        <p>The visual treatment that adapts the same meaning to styles like Minimal Glass, Shadcn Minimal, or Terminal Mono.</p>
+      </article>
+      <article class="card">
+        <span class="number">06</span>
+        <h3>Export</h3>
+        <p>The practical output: SVG, animated SVG, React snippet, Web Component snippet, and JSON profiles.</p>
+      </article>
+    </section>
+
+    <section class="section panel">
+      <p class="eyebrow">Human Journey</p>
+      <h2>Supericons Studio for browser users.</h2>
+      <div class="flow">
+        <span>Choose Use Case</span>
+        <span>Choose Style</span>
+        <span>Pick States</span>
+        <span>Preview Set</span>
+        <span>Adjust</span>
+        <span>Export</span>
+      </div>
+    </section>
+
+    <section class="section panel">
+      <p class="eyebrow">Agent Journey</p>
+      <h2>Supericons MCP for coding agents.</h2>
+      <div class="flow">
+        <span>Read User Brief</span>
+        <span>Extract Icon Needs</span>
+        <span>Recommend Set</span>
+        <span>Get Profiles</span>
+        <span>Compose Snippets</span>
+        <span>Validate Usage</span>
+      </div>
+    </section>
+
+    <section class="section two-grid">
+      <article class="panel">
+        <p class="eyebrow">First Theme Sets</p>
+        <h2>Build practical sets people immediately understand.</h2>
+        <ul class="set-grid">
+          <li>AI Agent Status</li>
+          <li>Coding Agent Workflow</li>
+          <li>DevOps Incident States</li>
+          <li>SaaS Approval Workflow</li>
+          <li>Finance Risk Actions</li>
+          <li>News Trust Signals</li>
+          <li>Dating Safety Signals</li>
+          <li>Cybersecurity Alerts</li>
+          <li>Creator Publishing States</li>
+          <li>Healthcare Review States</li>
+        </ul>
+      </article>
+      <article class="panel">
+        <p class="eyebrow">First Style Adapters</p>
+        <h2>Start with styles users already ask agents to build.</h2>
+        <ul class="adapter-grid">
+          <li>Minimal Glass</li>
+          <li>Shadcn Minimal</li>
+          <li>Dark Neon Grid</li>
+          <li>Terminal Mono</li>
+          <li>Enterprise Flat</li>
+          <li>Soft Consumer</li>
+          <li>Liquid Glass</li>
+          <li>Pixel Retro</li>
+          <li>Editorial Minimal</li>
+          <li>Premium Black</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section panel">
+      <p class="eyebrow">MCP Tools</p>
+      <h2>Expose the system to agents through clear tools.</h2>
+      <div class="grid">
+        <article class="card"><h3>list_theme_sets</h3><p>Shows available practical icon systems.</p></article>
+        <article class="card"><h3>recommend_theme_set</h3><p>Matches a user brief to a set and adapter.</p></article>
+        <article class="card"><h3>get_supericon_profile</h3><p>Returns meaning, usage rules, accessibility, and files.</p></article>
+        <article class="card"><h3>list_style_adapters</h3><p>Shows available visual treatments.</p></article>
+        <article class="card"><h3>compose_supericon</h3><p>Combines meaning and style into a snippet or asset.</p></article>
+        <article class="card"><h3>validate_supericon_usage</h3><p>Checks whether the chosen icon fits the intended UI state.</p></article>
+      </div>
+    </section>
+
+    <section class="section schema-wrap">
+      <article class="schema-card">
+        <p class="eyebrow">Theme Set Format</p>
+        <pre><code>{
+  "id": "ai-agent-status",
+  "name": "AI Agent Status",
+  "target_apps": ["AI dashboard", "coding agent"],
+  "default_adapter": "minimal-glass",
+  "supported_adapters": ["minimal-glass", "shadcn-minimal"],
+  "free_icons": ["ai-thinking", "ai-working", "pending-approval"],
+  "paid_icons": ["blocked", "retrying", "low-confidence", "risk-high"]
+}</code></pre>
+      </article>
+      <article class="schema-card">
+        <p class="eyebrow">Profile Format</p>
+        <pre><code>{
+  "id": "pending-approval",
+  "meaning": "Progress is paused until a human decides.",
+  "use_when": "Use when a human decision is required.",
+  "avoid_when": "Do not use for errors, loading, or active work.",
+  "not_instead_of": ["blocked", "ai-thinking", "ai-working"],
+  "accessibility": {
+    "role": "status",
+    "label": "Pending approval",
+    "live": "polite"
+  }
+}</code></pre>
+      </article>
+    </section>
+
+    <section class="section pricing">
+      <article class="tier">
+        <p class="eyebrow">Free</p>
+        <h2>Give users the aha moment.</h2>
+        <ul>
+          <li>Semantic icon search</li>
+          <li>Small practical theme sets</li>
+          <li>3 to 5 free icons per set</li>
+          <li>Basic profiles and adapters</li>
+          <li>MCP recommendations</li>
+          <li>Codex skill/plugin workflow</li>
+        </ul>
+      </article>
+      <article class="tier paid">
+        <p class="eyebrow">Paid</p>
+        <h2>Save serious production time.</h2>
+        <ul>
+          <li>Full themed icon sets</li>
+          <li>Advanced state variants</li>
+          <li>Animated and reduced-motion SVGs</li>
+          <li>Premium style adapters</li>
+          <li>Brand customization</li>
+          <li>Team/private icon registries</li>
+          <li>Hosted validation and batch export</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section panel">
+      <p class="eyebrow">Roadmap</p>
+      <h2>Build from one real vertical slice.</h2>
+      <div class="roadmap">
+        <article><h3>Format And Seed Data</h3><p>Create theme set, profile, adapter, and behavior data for AI Agent Status.</p></article>
+        <article><h3>Browser Showcase</h3><p>Add a site page for humans with preview, before/after, MCP setup, and free set call to action.</p></article>
+        <article><h3>MCP Tools</h3><p>Add read-only tools for theme set discovery, profile lookup, adapter lookup, recommendation, and validation.</p></article>
+        <article><h3>Export Tools</h3><p>Add snippet and asset composition for React, Web Components, SVG, and reduced motion.</p></article>
+        <article><h3>Studio Builder</h3><p>Let users choose a use case, style, states, and export a themed set.</p></article>
+        <article><h3>Paid Expansion</h3><p>Add full sets, premium adapters, brand adaptation, private registries, and batch workflows.</p></article>
+      </div>
+    </section>
+
+    <section class="section panel callout">
+      <p class="eyebrow">Recommended Next Action</p>
+      <h2>Ship one real slice in three places.</h2>
+      <p>Finalize the format, then implement <strong>AI Agent Status + Minimal Glass + Shadcn Minimal</strong> as a browser showcase, MCP workflow, and Codex skill/plugin path.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -233,6 +233,24 @@ function cancelAdminSecret() {
   pending?.reject(new Error('Admin sign-in canceled.'));
 }
 
+function formatApiErrorMessage(payload, status) {
+  const fallback = `Request failed (${status}).`;
+  const raw = payload?.error || payload?.message;
+  if (!raw) return fallback;
+  if (typeof raw === 'string') return raw;
+  if (typeof raw !== 'object') return String(raw);
+  const parts = [
+    raw.message,
+    raw.details,
+    raw.hint,
+    raw.code ? `code ${raw.code}` : '',
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).trim())
+    .filter(Boolean);
+  return parts.length > 0 ? parts.join(' - ') : fallback;
+}
+
 async function apiRequest(path, options = {}, retry = true) {
   const secret = await ensureAdminSecret();
   const method = String(options.method || 'GET').toUpperCase();
@@ -261,7 +279,7 @@ async function apiRequest(path, options = {}, retry = true) {
     return apiRequest(path, options, false);
   }
   if (!response.ok) {
-    const error = new Error(payload.error || `Request failed (${response.status}).`);
+    const error = new Error(formatApiErrorMessage(payload, response.status));
     error.status = response.status;
     throw error;
   }

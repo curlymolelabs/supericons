@@ -69,7 +69,69 @@ export const SUPERICONS_AI_CATEGORY_DEFINITIONS = Object.freeze([
   },
 ]);
 
-const CATEGORY_LABEL_BY_ID = new Map(SUPERICONS_AI_CATEGORY_DEFINITIONS.map((category) => [category.id, category.label]));
+export const SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS = Object.freeze([
+  {
+    id: 'coding-agent-tools',
+    label: 'Coding Agent Tools',
+    description: 'Agent-authored code, patches, pull requests, terminals, sandboxes, and developer workflows.',
+    sidebarGlyph: 'terminal',
+  },
+  {
+    id: 'agent-lifecycle-states',
+    label: 'Agent Lifecycle States',
+    description: 'Agent progress, handoffs, approval gates, completion, retries, thinking, loading, and error states.',
+    sidebarGlyph: 'progress_activity',
+  },
+  {
+    id: 'agent-trust-safety',
+    label: 'Agent Trust and Safety',
+    description: 'Identity, guardrails, oversight, prompt attacks, policy boundaries, and safe autonomy controls.',
+    sidebarGlyph: 'verified_user',
+  },
+  {
+    id: 'agent-workflow-mcp',
+    label: 'Agent Workflow and MCP',
+    description: 'Tool calls, MCP connectors, memory, orchestration, planning, context, and multi-agent workflows.',
+    sidebarGlyph: 'account_tree',
+  },
+  {
+    id: 'agentic-payments',
+    label: 'Agentic Payments',
+    description: 'Agent wallets, autonomous payments, spending limits, stablecoins, and x402-style payment flows.',
+    sidebarGlyph: 'payments',
+  },
+  {
+    id: 'frontier-compute',
+    label: 'Frontier Compute',
+    description: 'Edge AI, quantum concepts, chips, sensors, voice interfaces, wearables, and emerging compute surfaces.',
+    sidebarGlyph: 'memory',
+  },
+  {
+    id: 'physical-automation',
+    label: 'Physical Automation',
+    description: 'Robots, drones, delivery automation, sensors, robotic arms, and embodied agent systems.',
+    sidebarGlyph: 'precision_manufacturing',
+  },
+  {
+    id: 'cars-vehicles',
+    label: 'Cars & Vehicles',
+    description: 'Cars, trucks, EVs, and vehicle silhouettes from daily life and current culture.',
+    sidebarGlyph: 'directions_car',
+  },
+  {
+    id: 'trending-culture',
+    label: 'Trending & Culture',
+    description: 'Viral moments, memes, and internet culture: of-the-moment icons that are instantly relatable.',
+    sidebarGlyph: 'local_fire_department',
+  },
+]);
+
+export const SUPERICONS_SPECIALIZED_CATEGORY_DEFINITIONS = Object.freeze([
+  ...SUPERICONS_AI_CATEGORY_DEFINITIONS,
+  ...SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS,
+]);
+
+const CATEGORY_LABEL_BY_ID = new Map(SUPERICONS_SPECIALIZED_CATEGORY_DEFINITIONS.map((category) => [category.id, category.label]));
 
 function taxonomy(jobCategory, secondaryCategories, aiFilterTags = []) {
   return Object.freeze({
@@ -332,6 +394,289 @@ export const SUPERICONS_AI_ICON_TAXONOMY = Object.freeze({
   ),
 });
 
+export const SUPERICONS_CONCEPT_ICON_TAXONOMY = Object.freeze({
+  'si:agent-commit': taxonomy(
+    'coding-agent-tools',
+    ['developer-tools', 'version-control'],
+    ['git', 'save']
+  ),
+  'si:agent-diff': taxonomy(
+    'coding-agent-tools',
+    ['developer-tools', 'version-control'],
+    ['patch', 'change']
+  ),
+  'si:agent-face': taxonomy(
+    'agent-lifecycle-states',
+    ['status-feedback', 'communication'],
+    ['bot', 'avatar', 'assistant']
+  ),
+  'si:agent-handoff': taxonomy(
+    'agent-lifecycle-states',
+    ['multi-agent', 'agent-state'],
+    ['delegate', 'transfer']
+  ),
+  'si:agent-id-badge': taxonomy(
+    'agent-trust-safety',
+    ['governance', 'developer-tools'],
+    ['identity', 'scope']
+  ),
+  'si:agent-pr': taxonomy(
+    'coding-agent-tools',
+    ['developer-tools', 'version-control'],
+    ['git', 'review']
+  ),
+  'si:agent-swarm': taxonomy(
+    'agent-workflow-mcp',
+    ['multi-agent', 'architecture'],
+    ['mesh', 'cluster']
+  ),
+  'si:agent-wallet': taxonomy(
+    'agentic-payments',
+    ['crypto', 'governance'],
+    ['funds', 'account']
+  ),
+  'si:approval-gate': taxonomy(
+    'agent-lifecycle-states',
+    ['security', 'agent-state'],
+    ['consent', 'pause']
+  ),
+  'si:ar-glasses': taxonomy(
+    'frontier-compute',
+    ['hardware-devices'],
+    ['wearable', 'xr']
+  ),
+  'si:autonomy-dial': taxonomy(
+    'agent-trust-safety',
+    ['governance', 'ui-controls'],
+    ['delegation', 'level']
+  ),
+  'si:bison-yeet': taxonomy(
+    'trending-culture',
+    ['humor', 'meme'],
+    ['surprise', 'yeet']
+  ),
+  'si:context-gauge': taxonomy(
+    'agent-workflow-mcp',
+    ['analytics', 'developer-tools'],
+    ['window', 'capacity']
+  ),
+  'si:cybertruck': taxonomy(
+    'cars-vehicles',
+    ['trending-culture', 'ev'],
+    ['tesla', 'truck']
+  ),
+  'si:cybertruck-low': taxonomy(
+    'cars-vehicles',
+    ['trending-culture', 'ev'],
+    ['tesla', 'truck']
+  ),
+  'si:cybertruck-solid': taxonomy(
+    'cars-vehicles',
+    ['trending-culture', 'ev'],
+    ['tesla', 'truck']
+  ),
+  'si:delivery-robot': taxonomy(
+    'physical-automation',
+    ['hardware-devices', 'commerce'],
+    ['sidewalk', 'parcel']
+  ),
+  'si:done-spark': taxonomy(
+    'agent-lifecycle-states',
+    ['agent-state'],
+    ['complete', 'success']
+  ),
+  'si:drone-delivery': taxonomy(
+    'physical-automation',
+    ['hardware-devices', 'commerce'],
+    ['parcel', 'drop']
+  ),
+  'si:drone-quad': taxonomy(
+    'physical-automation',
+    ['hardware-devices'],
+    ['uav', 'fpv']
+  ),
+  'si:edge-ai-chip': taxonomy(
+    'frontier-compute',
+    ['hardware-devices', 'developer-tools'],
+    ['edge-ai', 'chip', 'hardware']
+  ),
+  'si:entangled-pair': taxonomy(
+    'frontier-compute',
+    ['science'],
+    ['linked', 'correlated']
+  ),
+  'si:error-glitch': taxonomy(
+    'agent-lifecycle-states',
+    ['agent-state'],
+    ['fault', 'alert']
+  ),
+  'si:guardrail-path': taxonomy(
+    'agent-trust-safety',
+    ['agent-state', 'governance'],
+    ['bounds', 'policy']
+  ),
+  'si:hallucination-warn': taxonomy(
+    'agent-trust-safety',
+    ['status-feedback', 'governance'],
+    ['distortion', 'verify']
+  ),
+  'si:human-in-loop': taxonomy(
+    'agent-trust-safety',
+    ['governance', 'agent-state'],
+    ['oversight', 'review']
+  ),
+  'si:humanoid-robot': taxonomy(
+    'physical-automation',
+    ['robotics', 'hardware-devices'],
+    ['robotics', 'humanoid', 'hardware']
+  ),
+  'si:lidar-sensor': taxonomy(
+    'physical-automation',
+    ['hardware-devices'],
+    ['scan', 'range']
+  ),
+  'si:loader-orbit': taxonomy(
+    'agent-lifecycle-states',
+    ['loading-states', 'agent-state'],
+    ['loading', 'spinner']
+  ),
+  'si:machine-pay': taxonomy(
+    'agentic-payments',
+    ['crypto', 'multi-agent'],
+    ['m2m', 'autonomous']
+  ),
+  'si:mcp-connector': taxonomy(
+    'agent-workflow-mcp',
+    ['mcp', 'developer-tools'],
+    ['plug', 'server']
+  ),
+  'si:memory-store': taxonomy(
+    'agent-workflow-mcp',
+    ['data', 'agent-state'],
+    ['context', 'recall']
+  ),
+  'si:orchestrator': taxonomy(
+    'agent-workflow-mcp',
+    ['multi-agent', 'architecture'],
+    ['supervisor', 'multi-agent']
+  ),
+  'si:person-airborne': taxonomy(
+    'trending-culture',
+    ['humor', 'meme'],
+    ['fail', 'yeet']
+  ),
+  'si:person-launched': taxonomy(
+    'trending-culture',
+    ['humor', 'meme'],
+    ['launch', 'speed']
+  ),
+  'si:pipeline-run': taxonomy(
+    'agent-workflow-mcp',
+    ['architecture', 'developer-tools'],
+    ['workflow', 'chain']
+  ),
+  'si:plan-branches': taxonomy(
+    'agent-workflow-mcp',
+    ['agent-state', 'developer-tools'],
+    ['tasks', 'decompose']
+  ),
+  'si:progress-ring': taxonomy(
+    'agent-lifecycle-states',
+    ['loading-states', 'analytics'],
+    ['progress', 'task']
+  ),
+  'si:prompt-field': taxonomy(
+    'agent-workflow-mcp',
+    ['ui-controls', 'communication'],
+    ['input', 'ask']
+  ),
+  'si:prompt-injection': taxonomy(
+    'agent-trust-safety',
+    ['developer-tools', 'governance'],
+    ['attack', 'input']
+  ),
+  'si:quantum-chip': taxonomy(
+    'frontier-compute',
+    ['hardware-devices', 'science'],
+    ['qpu', 'processor']
+  ),
+  'si:qubit-sphere': taxonomy(
+    'frontier-compute',
+    ['hardware-devices', 'science'],
+    ['bloch', 'state']
+  ),
+  'si:retry-route': taxonomy(
+    'agent-lifecycle-states',
+    ['agent-state', 'status-feedback'],
+    ['recover', 'reroute']
+  ),
+  'si:robot-arm': taxonomy(
+    'physical-automation',
+    ['hardware-devices'],
+    ['manipulator', 'industrial']
+  ),
+  'si:robot-dog': taxonomy(
+    'physical-automation',
+    ['hardware-devices'],
+    ['quadruped', 'patrol']
+  ),
+  'si:sandbox-run': taxonomy(
+    'coding-agent-tools',
+    ['security', 'developer-tools'],
+    ['isolated', 'safe']
+  ),
+  'si:skill-module': taxonomy(
+    'agent-workflow-mcp',
+    ['developer-tools', 'mcp'],
+    ['plugin', 'capability']
+  ),
+  'si:spend-limit': taxonomy(
+    'agentic-payments',
+    ['crypto', 'governance'],
+    ['cap', 'policy']
+  ),
+  'si:stablecoin': taxonomy(
+    'agentic-payments',
+    ['crypto'],
+    ['peg', 'currency']
+  ),
+  'si:streaming-caret': taxonomy(
+    'agent-lifecycle-states',
+    ['status-feedback', 'loading-states'],
+    ['typing', 'response']
+  ),
+  'si:terminal-agent': taxonomy(
+    'coding-agent-tools',
+    ['developer-tools'],
+    ['cli', 'shell']
+  ),
+  'si:thinking-pulse': taxonomy(
+    'agent-lifecycle-states',
+    ['status-feedback', 'loading-states'],
+    ['agent-state', 'thinking', 'reasoning', 'loading-state']
+  ),
+  'si:token-meter': taxonomy(
+    'agent-workflow-mcp',
+    ['analytics', 'developer-tools'],
+    ['usage', 'budget']
+  ),
+  'si:tool-call': taxonomy(
+    'agent-workflow-mcp',
+    ['mcp', 'developer-tools'],
+    ['function', 'invoke']
+  ),
+  'si:voice-agent': taxonomy(
+    'frontier-compute',
+    ['communication', 'hardware-devices'],
+    ['speech', 'waveform']
+  ),
+  'si:x402-pay': taxonomy(
+    'agentic-payments',
+    ['crypto', 'developer-tools'],
+    ['protocol', 'http']
+  ),
+});
+
 function uniqueStrings(values) {
   const seen = new Set();
   const normalized = [];
@@ -399,5 +744,15 @@ export function buildSupericonsAiTaxonomyEntries() {
     jobCategory: entry.jobCategory,
     secondaryCategories: uniqueStrings([...entry.secondaryCategories, ...entry.aiFilterTags]),
     rank: 1000 + index,
+  }));
+}
+
+export function buildSupericonsConceptTaxonomyEntries() {
+  return Object.entries(SUPERICONS_CONCEPT_ICON_TAXONOMY).map(([iconId, entry], index) => ({
+    iconId,
+    sourceLibrary: 'si',
+    jobCategory: entry.jobCategory,
+    secondaryCategories: uniqueStrings([...entry.secondaryCategories, ...entry.aiFilterTags]),
+    rank: 2000 + index,
   }));
 }

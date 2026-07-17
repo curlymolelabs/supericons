@@ -37,7 +37,7 @@ Everything the UI will display must first be true and fast. Additive migrations 
 - Add supporting indexes for the windowed aggregation paths (created_at plus the grouping columns actually used by the queue endpoint) on both telemetry tables.
 - Two additive rollup tables, split by purpose: `admin_rollup_overview` keyed by (day, channel, environment, query_origin) for KPI totals, and `admin_rollup_queries` keyed by (day, query_norm, library_filter, query_origin, channel, environment, tool_name) storing searches, zero, low, and errors, so the all-time worklist obeys every global filter and per-tool outcome semantics. Days are UTC; only completed UTC days are rolled up; the current day always combines raw rows with completed-day rollups. Maintained by on-demand refresh when a completed day is missing.
 - Distinct-client counts are computed only from raw rows within bounded windows (24h, 7d, calendar month). Longer windows display per-day client-day sums labeled exactly that ("client-days"), never as unique clients.
-- Acceptance: queue endpoint p95 under 1.5 seconds for the 24h window at current volume; "all time" responds under 1 second from rollups; no full-history raw scans remain in any default path.
+- Acceptance: queue endpoint p95 under 1.5 seconds for the 24h window at current volume, measured cold (cache-bypassed) and warm separately; "all time" responds under 1 second warm and under 1.3 seconds cold from rollups (cold bound relaxed from 1.0s by owner decision 2026-07-17 after measured evidence: cold p95 1.07s network-inclusive with 0.7s median; every other bound unchanged); no full-history raw scans remain in any default path.
 
 ### A5. Honest field exposure
 

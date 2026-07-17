@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildRouteUrl,
   getRouteMeta,
+  getRouteViewFromPath,
   normalizeRouteView,
   shouldPersistRouteView,
 } from '../lib/view-route-policy.js';
@@ -19,6 +20,9 @@ assert.equal(shouldPersistRouteView('collection-detail'), false);
 assert.equal(getRouteMeta('converter').panelSuppressed, true);
 assert.equal(getRouteMeta('packs').storeShell, true);
 assert.equal(getRouteMeta('icons').storeShell, false);
+assert.equal(getRouteViewFromPath('/terms/'), 'terms');
+assert.equal(getRouteViewFromPath('/privacy/'), 'privacy');
+assert.equal(getRouteViewFromPath('/legal/supericons-single-icon-license'), null);
 
 assert.equal(
   buildRouteUrl({ pathname: '/', view: 'pricing', hash: '' }),
@@ -43,6 +47,16 @@ assert.equal(
 assert.equal(
   buildRouteUrl({ pathname: '/', view: 'docs-mcp-tools', hash: '#icon-tools-search' }),
   '/?view=docs-mcp-tools#icon-tools-search',
+);
+
+assert.equal(
+  buildRouteUrl({ pathname: '/', view: 'terms', hash: '#single-icon-license' }),
+  '/terms/#single-icon-license',
+);
+
+assert.equal(
+  buildRouteUrl({ pathname: '/terms/', view: 'privacy', search: '?locale=ja', hash: '' }),
+  '/privacy/?locale=ja',
 );
 
 console.log('verify-view-route-policy: ok');

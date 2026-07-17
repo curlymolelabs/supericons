@@ -233,6 +233,8 @@ failingClient.rpc = async (name: string, params: Record<string, unknown>) => {
 };
 const failedResponse = await handleSharedRecommendationSearchRequest(buildRequest(), {
   adminClientFactory: () => failingClient,
+  includeTimingInResponse: true,
+  timingSink: () => {},
   rateLimitEnforcer: async () => ({
     sessionHash: null,
     ipHash: null,
@@ -241,6 +243,10 @@ const failedResponse = await handleSharedRecommendationSearchRequest(buildReques
   }),
 });
 assert.equal(failedResponse.status, 500);
+const failedPayload = await failedResponse.json();
+assert.equal(failedPayload.error, 'search_service_unavailable');
+assert.equal(failedPayload.measurement_timing.outcome, 'error');
+assert.equal(typeof failedPayload.measurement_timing.stages_ms.candidate_search, 'number');
 assert.equal(failingClient.counters.auditInsertCalls, 1);
 assert.equal(failingClient.counters.auditRows, 4);
 
@@ -258,5 +264,6 @@ console.log(JSON.stringify({
   reserved_rate_limit_units: sharedRateLimitCosts[0],
   mixed_contract_rejected: true,
   failure_audit_rows: failingClient.counters.auditRows,
+  timed_failure_includes_stage_evidence: true,
   in_band_stage_timing: true,
 }, null, 2));

@@ -17,6 +17,7 @@ import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { getBundledMaterialSvg } from './material-hydration.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import { validateApiKey } from './auth.js';
 import {
@@ -76,7 +77,11 @@ import {
   hasProWorkflowAccess,
 } from './workflow-access.js';
 import { logMcpSearchAttempt, logMcpSearchBatch } from './telemetry.js';
-import { getBetaCohortForTool } from './release-channel.js';
+import {
+  getBetaCohortForRequest,
+  getBetaCohortForTool,
+  shouldUseLocalFirstBetaSearch,
+} from './release-channel.js';
 import {
   attachSemanticPayload,
   createSemanticRegistryMap,
@@ -123,7 +128,13 @@ const semanticRegistryMap = createSemanticRegistryMap(loadSemanticRegistryRecord
 function loadData() {
   const iconIndexPath = join(dataDir, 'icon-index.json');
   if (!existsSync(iconIndexPath)) {
-    return { freeIcons: [], outlineIcons: [], solidIcons: [], synonyms: {} };
+    return {
+      freeIcons: [],
+      outlineIcons: [],
+      solidIcons: [],
+      synonyms: {},
+      indexGeneratedAt: null,
+    };
   }
 
   const raw = JSON.parse(readFileSync(iconIndexPath, 'utf8'));
@@ -146,7 +157,13 @@ function loadData() {
     .map(icon => ({ ...icon, premium: false }));
   const freeIcons = [...outlineIcons, ...solidIcons];
 
-  return { freeIcons, outlineIcons, solidIcons, synonyms };
+  return {
+    freeIcons,
+    outlineIcons,
+    solidIcons,
+    synonyms,
+    indexGeneratedAt: raw.generatedAt || null,
+  };
 }
 
 function loadPremiumPacks() {
@@ -323,25 +340,42 @@ async function resolveMaterialSnapshotSvg(icon, style = VARIANT_STYLES.OUTLINE) 
   const cacheKey = buildMaterialCacheKey(icon.id, axes);
 
   if (materialExportState.svgCache.has(cacheKey)) {
+    const cached = materialExportState.svgCache.get(cacheKey);
     return {
-      svg: materialExportState.svgCache.get(cacheKey),
+      svg: cached.svg,
       axes,
-      source: 'material-snapshot',
+      source: cached.source,
     };
   }
 
   if (materialExportState.failedKeys.has(cacheKey)) return null;
+
+  const bundleVariant = normalizeRequestedStyle(style) === VARIANT_STYLES.SOLID
+    ? VARIANT_STYLES.SOLID
+    : VARIANT_STYLES.OUTLINE;
+  const bundledSvg = getBundledMaterialSvg(icon.id, bundleVariant);
+  if (bundledSvg) {
+    const svg = normalizeMaterialSnapshotSvg(bundledSvg);
+    const source = 'owned-material-cache:bundle';
+    materialExportState.svgCache.set(cacheKey, { svg, source });
+    return {
+      svg,
+      axes,
+      source,
+    };
+  }
 
   const entry = getMaterialManifestEntry(manifest, icon.id, axes);
   if (entry?.path) {
     const localPath = join(materialExportDir, entry.path);
     if (existsSync(localPath)) {
       const svg = normalizeMaterialSnapshotSvg(readFileSync(localPath, 'utf8'));
-      materialExportState.svgCache.set(cacheKey, svg);
+      const source = 'owned-material-cache:local';
+      materialExportState.svgCache.set(cacheKey, { svg, source });
       return {
         svg,
         axes,
-        source: 'owned-material-cache:local',
+        source,
       };
     }
   }
@@ -360,13 +394,14 @@ async function resolveMaterialSnapshotSvg(icon, style = VARIANT_STYLES.OUTLINE) 
   }
 
   const svg = normalizeMaterialSnapshotSvg(await response.text());
-  materialExportState.svgCache.set(cacheKey, svg);
+  const source = response.headers.get('X-Cache-Status')
+    ? `owned-material-cache:${response.headers.get('X-Cache-Status')}`
+    : 'owned-material-cache';
+  materialExportState.svgCache.set(cacheKey, { svg, source });
   return {
     svg,
     axes,
-    source: response.headers.get('X-Cache-Status')
-      ? `owned-material-cache:${response.headers.get('X-Cache-Status')}`
-      : 'owned-material-cache',
+    source,
   };
 }
 
@@ -419,7 +454,13 @@ async function buildToolIconResult(icon, options = {}) {
   );
 }
 
-const { freeIcons, outlineIcons, solidIcons, synonyms } = loadData();
+const {
+  freeIcons,
+  outlineIcons,
+  solidIcons,
+  synonyms,
+  indexGeneratedAt,
+} = loadData();
 const premiumIcons = loadPremiumPacks();
 
 // Combined icon set (auth determines which subset is searchable)
@@ -724,6 +765,26 @@ async function searchAccessibleIcons({
     ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
     : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
+  const useLocalFirst = shouldUseLocalFirstBetaSearch(mcpPackage.version, {
+    toolName,
+    query,
+    locale,
+  });
+
+  if (useLocalFirst) {
+    const { searchIcons } = await import('./search.js');
+    const contractIcons = requestedStyle === VARIANT_STYLES.ANY
+      ? searchableIcons.filter((icon) => icon.style !== VARIANT_STYLES.SOLID)
+      : searchableIcons;
+    return searchIcons(query, contractIcons, synonyms, {
+      library,
+      libraryMode: normalizedLibraryMode,
+      limit: Math.max(1, limit),
+      style: requestedStyle,
+      locale,
+    });
+  }
+
   let hostedResults = [];
   try {
     const hostedPayload = await searchIconsHostedMcp({
@@ -735,7 +796,7 @@ async function searchAccessibleIcons({
       locale,
       includeQueryFrame,
       routeToolName: toolName,
-      usageContext: buildLocalMcpUsageContext(toolName),
+      usageContext: buildLocalMcpUsageContext(toolName, { locale, query }),
     });
     hostedResults = (hostedPayload.results || [])
       .map(buildHostedIcon)
@@ -834,7 +895,10 @@ const mcpLocaleSchema = z.enum(SUPPORTED_MCP_OUTPUT_LOCALES);
 const mcpLocaleDescription = `Optional locale for multilingual output. Supported values: ${SUPPORTED_MCP_OUTPUT_LOCALES.join(', ')}.`;
 
 function buildLocalMcpUsageContext(toolName, context = {}) {
-  const betaCohort = getBetaCohortForTool(mcpPackage.version, toolName);
+  const betaCohort = getBetaCohortForRequest(mcpPackage.version, toolName, {
+    locale: context.locale,
+    query: context.query,
+  });
   return {
     source: 'mcp',
     channel: betaCohort ? 'hosted_mcp' : 'local_mcp',
@@ -887,6 +951,15 @@ server.tool(
     let results;
     const auditQueryFrame = buildSearchQueryFrame(query, { locale });
     const queryFrame = include_query_frame ? auditQueryFrame : null;
+    const localFirstSearch = shouldUseLocalFirstBetaSearch(mcpPackage.version, {
+      toolName: 'search_icons',
+      query,
+      locale,
+    });
+    const betaCohort = getBetaCohortForRequest(mcpPackage.version, 'search_icons', {
+      locale,
+      query,
+    });
     try {
       results = await searchAccessibleIcons({
         query,
@@ -907,7 +980,7 @@ server.tool(
         toolName: 'search_icons',
         locale: locale || null,
         confidenceLabel: auditQueryFrame.confidence_floor,
-        betaCohort: getBetaCohortForTool(mcpPackage.version, 'search_icons'),
+        betaCohort,
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
@@ -924,7 +997,7 @@ server.tool(
         toolName: 'search_icons',
         locale: locale || null,
         confidenceLabel: auditQueryFrame.confidence_floor,
-        betaCohort: getBetaCohortForTool(mcpPackage.version, 'search_icons'),
+        betaCohort,
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
@@ -947,6 +1020,12 @@ server.tool(
             }
           : {}),
         ...(queryFrame ? { query_frame: queryFrame } : {}),
+        ...(localFirstSearch ? {
+          search_runtime: {
+            mode: 'local_first',
+            index_generated_at: indexGeneratedAt,
+          },
+        } : {}),
         retryable: true,
       });
     }
@@ -967,11 +1046,23 @@ server.tool(
         toolName: 'search_icons',
         locale: locale || null,
         confidenceLabel: auditQueryFrame.confidence_floor,
-        betaCohort: getBetaCohortForTool(mcpPackage.version, 'search_icons'),
+        betaCohort,
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
-      return buildTextResponse(`Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
+      return buildTextResponse(localFirstSearch
+        ? {
+            error: 'Icon SVGs are unavailable',
+            code: 'icon_svg_unavailable',
+            query,
+            library: library || null,
+            search_runtime: {
+              mode: 'local_first',
+              index_generated_at: indexGeneratedAt,
+            },
+            retryable: true,
+          }
+        : `Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
     }
     void logMcpSearchAttempt({
       query,
@@ -982,7 +1073,7 @@ server.tool(
       toolName: 'search_icons',
       locale: locale || null,
       confidenceLabel: auditQueryFrame.confidence_floor,
-      betaCohort: getBetaCohortForTool(mcpPackage.version, 'search_icons'),
+      betaCohort,
       mcpServerVersion: mcpPackage.version,
       latencyMs: performance.now() - toolStartedAt,
     });
@@ -997,6 +1088,12 @@ server.tool(
       requested_library: library || null,
       preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
       ...(queryFrame ? { query_frame: queryFrame } : {}),
+      ...(localFirstSearch ? {
+        search_runtime: {
+          mode: 'local_first',
+          index_generated_at: indexGeneratedAt,
+        },
+      } : {}),
       source: 'Powered by SuperIcons (https://supericons.dev)',
     });
   }

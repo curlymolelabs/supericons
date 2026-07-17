@@ -30,7 +30,14 @@ assert.deepEqual(
 assert.match(review, /Status: approved with one correction/);
 assert.match(review, /Exact single-token `supericons` is `distinctive_exact`/);
 assert.match(decisions, /D-019: Bounded brand-classification scope/);
-assert.match(specification, /Version: 1\.4/);
+const specificationVersionMatch = specification.match(/Version: (\d+)\.(\d+)/);
+assert.ok(specificationVersionMatch, 'specification should declare a version');
+const specificationVersion = {
+  major: Number(specificationVersionMatch[1]),
+  minor: Number(specificationVersionMatch[2]),
+};
+assert.equal(specificationVersion.major, 1, 'brand policy verifier expects specification major version 1');
+assert.ok(specificationVersion.minor >= 4, 'brand policy requires specification version 1.4 or later');
 assert.match(specification, /FR-29/);
 
 const lovable = policy.brand_terms.find((entry) => entry.term === 'lovable');
@@ -88,4 +95,5 @@ console.log(JSON.stringify({
   approved_ambiguous: rows.filter((row) => row.matchClass === 'ambiguous_exact').length,
   active_brand_terms: policy.brand_terms.length,
   active_si_brand_records: activeSiRefs.size,
+  specification_version: `${specificationVersion.major}.${specificationVersion.minor}`,
 }, null, 2));

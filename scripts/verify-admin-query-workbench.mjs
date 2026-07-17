@@ -66,6 +66,9 @@ const [
   load(files.migration),
 ]);
 
+const isDashboardV2 = html.includes('id="queryExplorer"')
+  && app.includes('function sharedParams');
+
 [
   'handleIntelligenceSearchQueue',
   'handleIntelligenceSearchDetail',
@@ -77,6 +80,9 @@ const [
   "segments[2] === 'export'",
   'query_review_feature_available',
   'Content-Disposition',
+  'QUERY_REVIEW_LOOKUP_CHUNK_SIZE',
+  'fetchQueryReviewRows',
+  'formatAdminErrorMessage',
 ].forEach((needle) => assertIncludes(api, needle, files.api));
 
 [
@@ -131,7 +137,18 @@ const [
   'queryDetailContent',
   'intelligenceEvidencePaginationControls',
   'value="hosted_search_audit"',
-].forEach((needle) => assertIncludes(html, needle, files.html));
+]
+  .filter(() => !isDashboardV2)
+  .forEach((needle) => assertIncludes(html, needle, files.html));
+
+[
+  'id="queryExplorer"',
+  'id="explorerIssue"',
+  'id="explorerSearch"',
+  'id="gapWorklist"',
+  'id="diagnosticsDrawer"',
+  'Search Intelligence',
+].forEach((needle) => assertIncludes(html, needle, `${files.html} V2 explorer`));
 
 [
   'Review Queue',
@@ -191,6 +208,7 @@ const [
   'countries',
   'changeQueryExplorerPage',
   'changeIntelligenceEvidencePage',
+  'getVisiblePaginationPages',
   '/intelligence/search/queue',
   '/intelligence/search/query-detail',
   '/intelligence/search/export',
@@ -208,7 +226,29 @@ const [
   'MCP Events',
   'Review applies to this query, library, and purpose across all environments.',
   'Showing rows that match the active filters from the loaded API page.',
-].forEach((needle) => assertIncludes(app, needle, files.app));
+  'formatApiErrorMessage',
+  'pagination__ellipsis',
+]
+  .filter(() => !isDashboardV2)
+  .forEach((needle) => assertIncludes(app, needle, files.app));
+
+[
+  'renderQueryExplorer',
+  'renderWorklist',
+  'function sharedParams',
+  "params.set('issue', state.explorerIssue)",
+  "params.set('page_size', '100')",
+  'return `/v2/${endpoint}?${params}`',
+  'formatApiErrorMessage',
+].forEach((needle) => assertIncludes(app, needle, `${files.app} V2 explorer`));
+
+[
+  '.query-explorer__query span:last-child',
+  '-webkit-line-clamp: 3',
+  '.pagination__ellipsis',
+]
+  .filter(() => !isDashboardV2)
+  .forEach((needle) => assertIncludes(html, needle, `${files.html} query explorer layout`));
 
 [
   'Account data not captured',

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si-outline-rounded-24",
+  "name": "Supericons Outline Rounded 24",
+  "purpose": "Default static-core recipe for agentic AI outline icons.",
+  "canvas": {
+    "viewBox": "0 0 24 24",
+    "width": 24,
+    "height": 24,
+    "safeArea": 2
+  },
+  "stroke": {
+    "width": 1.5,
+    "color": "currentColor",
+    "linecap": "round",
+    "linejoin": "round"
+  },
+  "fill": {
+    "default": "none",
+    "allowedValues": [
+      "none"
+    ]
+  },
+  "density": {
+    "target": "medium",
+    "maxShapeElements": 10
+  },
+  "variants": [
+    "outline"
+  ],
+  "allowedElements": [
+    "svg",
+    "title",
+    "desc",
+    "g",
+    "path",
+    "line",
+    "rect",
+    "circle",
+    "polyline",
+    "polygon",
+    "ellipse"
+  ],
+  "exportRules": {
+    "requireCurrentColor": true,
+    "requireAccessibleTitle": true,
+    "disallowRasterEmbeds": true,
+    "disallowForeignObject": true,
+    "disallowTextElements": true
+  }
+}

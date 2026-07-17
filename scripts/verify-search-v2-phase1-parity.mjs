@@ -15,8 +15,10 @@ function readJson(path) {
 
 const fingerprintInputPaths = [
   'data/semantic-search-v2/evaluation-set.json',
+  'data/search-intent-graph/ranking-policy.json',
   'data/i18n/cjk-search-terms.json',
   'data/i18n/multilingual-search-aliases.json',
+  'lib/generated-search-ranking-policy.js',
   'mcp/search.js',
   'mcp/variant-support.js',
   'mcp/public/cjk-search-terms.json',
@@ -26,6 +28,7 @@ const fingerprintInputPaths = [
   'mcp/runtime/cjk-search-core.js',
   'mcp/runtime/icon-semantic-aliases.js',
   'mcp/runtime/icon-taxonomy-seed.js',
+  'mcp/runtime/generated-search-ranking-policy.js',
   'mcp/runtime/search-ranking-policy.js',
 ];
 
@@ -51,7 +54,9 @@ const stableMcpEndpoint = read('supabase/functions/mcp-search/index.ts');
 
 assert.match(handler, /candidateRpcName = 'si_search_icon_candidates'/);
 assert.match(handler, /hydrateFinalSvg = false/);
-assert.match(handler, /\.from\('icon_catalog'\)\s*\.select\('icon_id, svg'\)\s*\.in\('icon_id', resultIconIds\)/s);
+assert.match(handler, /\.from\('icon_catalog'\)\s*\.select\('icon_id, svg'\)\s*\.in\('icon_id', catalogResultIds\)/s);
+assert.match(handler, /\.from\('material_icon_assets'\)\s*\.select\('icon_id, variant, svg'\)\s*\.eq\('variant', materialVariant\)\s*\.in\('icon_id', materialResultIds\)/s);
+assert.match(handler, /finalRankedResults = hydrateServingSvgRows\(rankedResults,/);
 assert.match(handler, /const results = finalRankedResults\.map\(\(row\) =>/);
 assert.match(handler, /\.\.\.row,\s*semantic: buildPublicSemanticPayload\(publicRecord\)/s);
 const betaVariant = betaEndpoint.includes("measurementVariant: 'control'") ? 'control' : 'treatment';
@@ -100,5 +105,6 @@ console.log(JSON.stringify({
   beta_measurement_variant: betaVariant,
   beta_endpoint_uses_lightweight_rpc: betaVariant === 'treatment',
   beta_final_svg_hydration_enabled: betaVariant === 'treatment',
+  material_svg_hydration_enabled: true,
   public_semantic_mapping_preserved: true,
 }, null, 2));

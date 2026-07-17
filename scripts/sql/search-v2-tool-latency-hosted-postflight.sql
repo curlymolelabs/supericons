@@ -61,7 +61,7 @@ select public.si_log_mcp_search_outcome_v2(
   null,
   'high',
   'deterministic-v2-beta',
-  '0.4.18-beta.0',
+  '0.4.19-beta.0',
   125,
   timezone('utc', now())
 );

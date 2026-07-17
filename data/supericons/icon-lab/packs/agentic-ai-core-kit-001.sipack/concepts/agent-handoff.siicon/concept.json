@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:agent-handoff",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "agent-handoff",
+  "name": "Agent Handoff",
+  "depicts": "One agent passing work to another agent or human.",
+  "useCase": "Use for handoffs, delegation, human escalation, specialist agent routing, and workflow transfer.",
+  "category": "agentic-ai",
+  "assetType": "workflow-icon",
+  "primaryMetaphor": "Two participants connected by a small transfer channel.",
+  "avoidMetaphors": [
+    "handshake",
+    "people-only icon",
+    "arrow-only transfer"
+  ],
+  "siblingConcepts": [
+    "approval-gate",
+    "context-compaction",
+    "memory-checkpoint"
+  ],
+  "searchTerms": [
+    "agent handoff",
+    "handoff",
+    "delegation",
+    "human escalation",
+    "agent routing",
+    "workflow transfer"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

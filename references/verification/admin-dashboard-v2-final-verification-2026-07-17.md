@@ -21,11 +21,11 @@ The managed local dashboard was exercised against the live production API in hea
 - Custom dates reached the live API with the selected start and end dates.
 - All four top-list tabs showed either real rows or a truthful reason for unavailable data.
 - The query explorer, diagnostics, icon requests, contact inbox, registered users, and client list rendered truthful production states.
-- Warm cached content appeared in 128 ms.
+- Warm cached content appeared in 95 ms.
 - No horizontal overflow was detected at 1440 by 1000.
 - No browser credential prompt appeared, and the admin secret was not stored in the browser.
 
-The browser screenshot was retained only in the private local temporary folder. Its SHA-256 is `1d1e5e8478daaa8bb8e54661bcd2fd4939ff42747dda026880cf01b0e0e26fb7`.
+The browser screenshot was retained only in the private local temporary folder. Its SHA-256 is `a226b800de57623f91aa7262033f0b6bac75e574f2f454933a36e9b2069575a8`.
 
 ## Data accuracy
 

@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 258" role="img" aria-label="Searching icons">
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    .float {
+      animation: mascot-float 1.72s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: 56% 58%;
+    }
+
+    .body {
+      animation: body-breathe 1.72s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: 54% 56%;
+    }
+
+    .tail {
+      fill: none;
+      stroke: #ff4f00;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform-box: fill-box;
+      transform-origin: 100% 50%;
+    }
+
+    .tail-top {
+      animation: top-tail 1.72s ease-in-out infinite;
+      stroke-width: 22;
+    }
+
+    .tail-mid {
+      animation: mid-tail 1.72s ease-in-out infinite;
+      stroke-width: 24;
+    }
+
+    .tail-low {
+      animation: low-tail 1.72s ease-in-out infinite;
+      stroke-width: 23;
+    }
+
+    .face {
+      animation: face-settle 1.72s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    @keyframes mascot-float {
+      0%, 100% {
+        transform: translate3d(-1px, 3px, 0) rotate(-0.8deg);
+      }
+
+      28% {
+        transform: translate3d(3px, -3px, 0) rotate(0.9deg);
+      }
+
+      57% {
+        transform: translate3d(1px, -6px, 0) rotate(0.3deg);
+      }
+
+      82% {
+        transform: translate3d(-3px, -1px, 0) rotate(-0.7deg);
+      }
+    }
+
+    @keyframes body-breathe {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      32% {
+        transform: scale(1.018, 0.986);
+      }
+
+      62% {
+        transform: scale(0.992, 1.014);
+      }
+    }
+
+    @keyframes top-tail {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scaleX(1);
+      }
+
+      34% {
+        transform: translate3d(-4px, 3px, 0) rotate(-2.5deg) scaleX(1.035);
+      }
+
+      68% {
+        transform: translate3d(2px, -2px, 0) rotate(1.4deg) scaleX(0.982);
+      }
+    }
+
+    @keyframes mid-tail {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scaleX(1);
+      }
+
+      30% {
+        transform: translate3d(-5px, 2px, 0) rotate(-2deg) scaleX(1.045);
+      }
+
+      64% {
+        transform: translate3d(2px, -1px, 0) rotate(1.2deg) scaleX(0.988);
+      }
+    }
+
+    @keyframes low-tail {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scaleX(1);
+      }
+
+      26% {
+        transform: translate3d(-3px, 1px, 0) rotate(-1.4deg) scaleX(1.03);
+      }
+
+      60% {
+        transform: translate3d(3px, -2px, 0) rotate(1.7deg) scaleX(0.976);
+      }
+    }
+
+    @keyframes face-settle {
+      0%, 100% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      48% {
+        transform: translate3d(1px, -1px, 0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .float,
+      .body,
+      .tail,
+      .face {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <g class="float">
+    <g class="tails">
+      <path class="tail tail-top" d="M37 86 C63 78 91 61 124 54">
+        <animate attributeName="d" dur="1.72s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.34;0.68;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" values="M37 86 C63 78 91 61 124 54;M34 91 C63 83 92 69 126 60;M39 82 C65 74 90 58 122 53;M37 86 C63 78 91 61 124 54"/>
+      </path>
+      <path class="tail tail-mid" d="M29 123 C65 116 100 103 142 96">
+        <animate attributeName="d" dur="1.72s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.3;0.64;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" values="M29 123 C65 116 100 103 142 96;M26 129 C66 122 101 111 145 104;M34 117 C68 110 101 98 139 92;M29 123 C65 116 100 103 142 96"/>
+      </path>
+      <path class="tail tail-low" d="M72 159 C99 154 123 146 158 139">
+        <animate attributeName="d" dur="1.72s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.26;0.6;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" values="M72 159 C99 154 123 146 158 139;M68 164 C98 160 126 153 160 146;M78 154 C102 150 124 141 156 136;M72 159 C99 154 123 146 158 139"/>
+      </path>
+    </g>
+
+    <g class="body">
+      <path d="M116 54 C144 32 184 31 212 51 C241 72 252 111 241 146 C232 175 205 199 174 204 C141 209 112 192 97 164 C82 137 83 87 116 54 Z" fill="#ff4f00"/>
+    </g>
+
+    <g class="face" fill="none" stroke="#090909" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="174" cy="119" rx="6" ry="8" fill="#090909" stroke="none"/>
+      <ellipse cx="211" cy="112" rx="6" ry="8" fill="#090909" stroke="none"/>
+      <path d="M187 133 C193 141 204 139 210 128" stroke-width="6"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:agent-core",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "agent-core",
+  "name": "Agent Core",
+  "depicts": "The central reasoning loop of an AI agent.",
+  "useCase": "Use for agent runtimes, orchestration centers, autonomous workers, and AI core settings.",
+  "category": "agentic-ai",
+  "assetType": "workflow-icon",
+  "primaryMetaphor": "A center node with four balanced orbit points.",
+  "avoidMetaphors": [
+    "robot face",
+    "sparkles",
+    "generic brain"
+  ],
+  "siblingConcepts": [
+    "tool-call",
+    "memory-checkpoint",
+    "trace-span"
+  ],
+  "searchTerms": [
+    "agent",
+    "ai agent",
+    "agent core",
+    "orchestration",
+    "autonomous worker",
+    "reasoning loop"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

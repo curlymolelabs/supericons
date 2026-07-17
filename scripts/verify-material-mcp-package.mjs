@@ -12,6 +12,7 @@ import { MATERIAL_EXPORT_SOURCE } from '../mcp/material-export.js';
 import {
   STABLE_HOSTED_SEARCH_FUNCTION,
   getHostedSearchFunctionNameForTool,
+  shouldUseLocalFirstBetaSearch,
 } from '../mcp/release-channel.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -37,10 +38,23 @@ const fullValidation = readJson(join(
 const outlineCounts = countIconsByLibrary(outlineIndex.icons);
 const solidCounts = countIconsByLibrary(solidIndex.icons);
 
-assert.equal(packageJson.version, '0.4.18');
+assert.equal(packageJson.version, '0.4.19-beta.0');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
-for (const toolName of ['search_icons', 'recommend_icons', 'get_icon', 'preview_icons']) {
+assert.equal(
+  getHostedSearchFunctionNameForTool(packageJson.version, 'search_icons'),
+  STABLE_HOSTED_SEARCH_FUNCTION,
+  'hosted search fallback must use the stable function',
+);
+assert.equal(shouldUseLocalFirstBetaSearch(packageJson.version, {
+  toolName: 'search_icons',
+  query: 'settings',
+}), true);
+assert.equal(shouldUseLocalFirstBetaSearch(packageJson.version, {
+  toolName: 'search_icons',
+  query: '设置',
+}), false);
+for (const toolName of ['recommend_icons', 'get_icon', 'preview_icons']) {
   assert.equal(
     getHostedSearchFunctionNameForTool(packageJson.version, toolName),
     STABLE_HOSTED_SEARCH_FUNCTION,
@@ -109,6 +123,8 @@ for (const requiredPath of [
   'public/icon-index.json',
   'public/icon-index-solid.json',
   'public/material-export-manifest.json',
+  'material-mcp-assets.json.gz',
+  'material-mcp-assets-manifest.json',
 ]) {
   assert.ok(packedFiles.get(requiredPath) > 0, `Packed MCP is missing ${requiredPath}`);
 }
@@ -119,9 +135,10 @@ console.log(JSON.stringify({
   material_styles: localMaterial.supportedStyles,
   hosted_non_material_solid_advertising: false,
   package_version: packageJson.version,
-  material_tool_route: STABLE_HOSTED_SEARCH_FUNCTION,
-  required_package_files: 4,
-  packaged_local_cache_entries: 0,
+  material_tool_route: 'local_first',
+  hosted_fallback_route: STABLE_HOSTED_SEARCH_FUNCTION,
+  required_package_files: 6,
+  packaged_local_cache_entries: 8524,
   packed_size_bytes: pack.size,
   packed_uncompressed_size_bytes: pack.unpackedSize,
   source_revision: MATERIAL_EXPORT_SOURCE.ref,

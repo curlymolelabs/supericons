@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons — The Manifesto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Instrument+Sans:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a08;
+  --dark: #141410;
+  --dark2: #1c1c18;
+  --mid: #2e2e28;
+  --rule: #3a3a32;
+  --muted: #6b6b5e;
+  --faint: #9a9a8a;
+  --light: #c8c8b4;
+  --paper: #f5f4ee;
+  --cream: #fffef8;
+  --gold: #c8a84b;
+  --gold2: #e8c96a;
+  --gold-dim: rgba(200,168,75,0.12);
+  --red: #c0392b;
+  --red-dim: rgba(192,57,43,0.1);
+  --green: #1a6b4a;
+  --green-dim: rgba(26,107,74,0.1);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Instrument Sans', system-ui, sans-serif;
+  --mono: 'Fira Code', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--black);
+  color: var(--light);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ── COVER ── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 72px;
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(200,168,75,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cover-stamp {
+  position: absolute;
+  top: 64px;
+  right: 72px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .06em;
+  line-height: 1.8;
+}
+
+.cover-index {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cover-index::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.cover h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.cover h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cover-sub {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 24px;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.cover-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+  margin: 48px 0 36px;
+}
+
+.cover-thesis {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--paper);
+  max-width: 680px;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+.cover-thesis strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* ── NAVIGATION ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,8,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 72px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 52px;
+  overflow-x: auto;
+}
+
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cream);
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.nav a {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color .2s;
+}
+.nav a:hover { color: var(--gold); }
+
+/* ── PAGE ── */
+.page { max-width: 900px; margin: 0 auto; padding: 0 72px; }
+
+/* ── SECTIONS ── */
+.chapter {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+
+.chapter-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.chapter-num::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 48px;
+  background: var(--gold);
+  opacity: .4;
+}
+
+.chapter h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--cream);
+  margin-bottom: 36px;
+}
+
+.chapter h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* ── BODY TEXT ── */
+p {
+  color: var(--light);
+  margin-bottom: 18px;
+  max-width: 660px;
+  font-size: 15.5px;
+}
+p:last-child { margin-bottom: 0; }
+p strong { color: var(--cream); font-weight: 600; }
+p em { color: var(--faint); font-style: italic; }
+
+/* ── PULLQUOTE ── */
+.pullquote {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 32px;
+  margin: 40px 0;
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-style: italic;
+  color: var(--paper);
+  line-height: 1.5;
+  max-width: 640px;
+}
+
+/* ── DEFINITION BOX ── */
+.definition {
+  background: var(--dark2);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--gold);
+  border-radius: 0 0 4px 4px;
+  padding: 32px 36px;
+  margin: 40px 0;
+}
+.definition-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.definition p {
+  font-size: 1.05rem;
+  color: var(--paper);
+  max-width: 100%;
+  line-height: 1.8;
+}
+.definition p strong { color: var(--cream); }
+
+/* ── GRID BLOCKS ── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 36px 0;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 36px 0;
+}
+.block {
+  background: var(--dark);
+  padding: 28px 28px;
+}
+.block-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.block-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.block p {
+  font-size: 13.5px;
+  color: var(--faint);
+  max-width: 100%;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── CONTRAST BLOCK ── */
+.contrast {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  margin: 36px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.contrast-old {
+  background: var(--dark);
+  padding: 28px 28px;
+}
+.contrast-new {
+  background: var(--dark2);
+  padding: 28px 28px;
+  border-left: 2px solid var(--gold);
+}
+.contrast-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.contrast-new .contrast-label { color: var(--gold); }
+.contrast-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13.5px;
+  color: var(--faint);
+  line-height: 1.5;
+  align-items: flex-start;
+}
+.contrast-item::before {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.contrast-old .contrast-item::before { content: '—'; color: var(--rule); }
+.contrast-new .contrast-item::before { content: '+'; color: var(--gold); }
+
+/* ── CHAIN ── */
+.chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 36px 0;
+  max-width: 640px;
+}
+.chain-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.chain-item:last-child { border-bottom: none; }
+.chain-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 20px;
+  margin-top: 2px;
+}
+.chain-content {}
+.chain-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+.chain-text {
+  font-size: 13px;
+  color: var(--faint);
+  line-height: 1.6;
+}
+
+/* ── CANVAS (Lean Canvas) ── */
+.canvas {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 36px 0;
+}
+.canvas-cell {
+  background: var(--dark);
+  padding: 22px 20px;
+  min-height: 160px;
+}
+.canvas-cell.span2 { grid-column: span 2; }
+.canvas-cell.gold-top { border-top: 2px solid var(--gold); }
+.canvas-cell.red-top { border-top: 2px solid var(--red); }
+.canvas-cell.green-top { border-top: 2px solid var(--green); }
+.canvas-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.canvas-cell.gold-top .canvas-label { color: var(--gold); }
+.canvas-cell.red-top .canvas-label { color: #e05a4e; }
+.canvas-cell.green-top .canvas-label { color: #3ab07a; }
+.canvas-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.canvas-cell ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.canvas-cell li {
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1.55;
+  margin-bottom: 5px;
+  padding-left: 12px;
+  position: relative;
+}
+.canvas-cell li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+/* ── MANIFESTO STATEMENTS ── */
+.statements {
+  margin: 40px 0;
+  max-width: 700px;
+}
+.statement {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 20px;
+  align-items: baseline;
+}
+.statement:first-child { border-top: 1px solid var(--rule); }
+.statement-n {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+.statement-text {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--paper);
+  line-height: 1.5;
+}
+.statement-text em { color: var(--gold); font-style: italic; }
+
+/* ── CODE BLOCK ── */
+.code-block {
+  background: var(--dark2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 24px 28px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--faint);
+  margin: 24px 0;
+  overflow-x: auto;
+}
+.code-block .k { color: #fb923c; }
+.code-block .s { color: #86c89a; }
+.code-block .v { color: #7fb3d3; }
+.code-block .c { color: var(--muted); }
+.code-block .hi { color: var(--cream); }
+
+/* ── PHASE TIMELINE ── */
+.phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 36px 0;
+}
+.phase {
+  background: var(--dark);
+  padding: 24px 22px;
+}
+.phase-n {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.phase-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.phase-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.phase ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.phase li {
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1.55;
+  margin-bottom: 5px;
+  padding-left: 12px;
+  position: relative;
+}
+.phase li::before { content: '—'; position: absolute; left: 0; color: var(--rule); }
+
+/* ── CLOSING ── */
+.closing {
+  padding: 96px 0 120px;
+  text-align: center;
+}
+.closing h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 24px;
+}
+.closing h2 em { color: var(--gold); font-style: italic; }
+.closing p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 48px;
+}
+.closing-rule {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  margin: 0 auto 32px;
+}
+.colophon {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--muted);
+  text-align: center;
+  padding: 32px 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .cover, .page, .nav { padding-left: 28px; padding-right: 28px; }
+  .cover-stamp { right: 28px; }
+  .grid-2, .grid-3, .contrast, .phases { grid-template-columns: 1fr; }
+  .canvas { grid-template-columns: 1fr 1fr; }
+  .canvas-cell.span2 { grid-column: span 1; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cover h1 { animation: fadeUp .9s ease both; }
+.cover-sub { animation: fadeUp .9s ease .15s both; }
+.cover-thesis { animation: fadeUp .9s ease .25s both; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-stamp">
+    Supericons<br>
+    The Manifesto<br>
+    May 2026<br>
+    v1.0
+  </div>
+  <div class="cover-index">The Visual Judgment Layer</div>
+  <h1>Super<em>icons.</em></h1>
+  <p class="cover-sub">A manifesto for the visual vocabulary of the agentic era.</p>
+  <div class="cover-rule"></div>
+  <p class="cover-thesis">
+    Icons have always been the externalization of human thought into visual form — from cave paintings to floppy disks to spinning rings. For the first time in history, software is being built not only by humans but by AI agents. Those agents can generate visuals. What they cannot generate is <strong>visual judgment</strong>. Supericons is where that judgment lives.
+  </p>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-brand">Supericons</span>
+  <a href="#origin">Origin</a>
+  <a href="#what">What</a>
+  <a href="#problem">Problem</a>
+  <a href="#definition">Definition</a>
+  <a href="#for-whom">For whom</a>
+  <a href="#how">How</a>
+  <a href="#canvas">Canvas</a>
+  <a href="#manifesto">Manifesto</a>
+  <a href="#build">Build</a>
+</nav>
+
+<div class="page">
+
+<!-- CHAPTER I: ORIGIN -->
+<div class="chapter" id="origin">
+  <div class="chapter-num">Chapter I — Origin</div>
+  <h2>Icons have always been<br><em>human thought made visible.</em></h2>
+
+  <p>Thirty thousand years ago, a human pressed pigment into a cave wall and drew a bison. That was the first icon. Not decoration — communication. A thought externalized into a form that another human could see and understand.</p>
+
+  <p>That impulse never stopped. Egyptian hieroglyphs began as drawings of things — a mouth, an eye, a bird — and slowly became symbols for sounds. The drawing abstracted into convention. The picture of a mouth stopped meaning "mouth" and started meaning something agreed upon by a community of users.</p>
+
+  <p>This is the first principle that all of icon history proves: <strong>icons do not have inherent meaning. They have agreed meaning.</strong> Proposed by someone. Adopted by the many. Eventually forgotten as a proposal and accepted as fact.</p>
+
+  <div class="pullquote">
+    The floppy disk is no longer manufactured. It is still the universal symbol for save. The object died. The agreement survived.
+  </div>
+
+  <p>Susan Kare designed the Mac's icons in 1984. Nobody voted on them. She proposed. Apple shipped. A billion users learned. The proposals became invisible — which is the highest form of design success. The meaning felt inevitable, not invented.</p>
+
+  <p>This is how visual conventions have always been set. <strong>A designer proposes. The masses adopt. The convention calcifies.</strong> Not democracy — authority. The authority of taste combined with distribution.</p>
+
+  <p>Now something unprecedented is happening. Software is being built not only by humans but by AI agents. Those agents need a visual vocabulary. Nobody has proposed one yet. The gap is open. The convention is unset. And whoever sets it carefully will define how the agentic era looks and feels to the humans who live in it.</p>
+</div>
+
+<!-- CHAPTER II: WHAT IS AN ICON TODAY -->
+<div class="chapter" id="what">
+  <div class="chapter-num">Chapter II — The Problem with Icons Today</div>
+  <h2>A drawing that knows<br><em>nothing about itself.</em></h2>
+
+  <p>Today, an icon is an inert file. An SVG. A PNG. A glyph in a font. It carries a shape and a name. That is all. Everything else — what it means, when to use it, how it should move, what it communicates to a screen reader, whether it is appropriate for a high-risk context or a casual one — exists nowhere in the file. It lives in the designer's head, in a PDF style guide nobody reads, or not at all.</p>
+
+  <div class="contrast">
+    <div class="contrast-old">
+      <div class="contrast-label">A typical icon today</div>
+      <div class="contrast-item">A drawing. A shape. A name.</div>
+      <div class="contrast-item">Silent about its own meaning.</div>
+      <div class="contrast-item">Cannot be reasoned about.</div>
+      <div class="contrast-item">No guidance on when to use it.</div>
+      <div class="contrast-item">No accessibility metadata built in.</div>
+      <div class="contrast-item">Static. Dead. A file.</div>
+      <div class="contrast-item">Chosen by human hunt and instinct.</div>
+      <div class="contrast-item">An agent guesses at best.</div>
+    </div>
+    <div class="contrast-new">
+      <div class="contrast-label">A supericon</div>
+      <div class="contrast-item">A drawing that knows what it means.</div>
+      <div class="contrast-item">Carries its own semantic profile.</div>
+      <div class="contrast-item">Can be queried and reasoned about.</div>
+      <div class="contrast-item">Defines when to use it and when not to.</div>
+      <div class="contrast-item">Accessibility built into the structure.</div>
+      <div class="contrast-item">Alive to context and state.</div>
+      <div class="contrast-item">Chosen by intent, not instinct.</div>
+      <div class="contrast-item">An agent executes correctly.</div>
+    </div>
+  </div>
+
+  <p>The problem is not that icons are poorly drawn. Most are fine. The problem is that <strong>visual meaning is locked in human heads and design documents</strong> — inaccessible to the systems that now build software.</p>
+
+  <p>An AI agent can generate a spinner. It can draw a checkmark. It has absorbed every icon ever published on the internet through its training. It has, in that sense, a minimum viable taste profile — the statistical average of human visual decisions, weighted by what got published and indexed.</p>
+
+  <div class="pullquote">
+    The agent has pattern-based visual competence. It does not have contextual visual judgment. Those are very different things.
+  </div>
+
+  <p>It cannot know that a pulsing spinner is wrong for an operation the agent is retrying after failure — because that state needs a different visual object with a different semantic meaning. It cannot know that a red pulsing icon at medium risk creates alarm where calm attention is what the user needs. It picks from patterns. It cannot reason from principles.</p>
+</div>
+
+<!-- CHAPTER III: DEFINITION -->
+<div class="chapter" id="problem">
+  <div class="chapter-num">Chapter III — The Core Problem</div>
+  <h2>The bottleneck is no longer<br><em>generation. It is judgment.</em></h2>
+
+  <p>GPT Image 2.0 can generate a coherent set of fifty icons from a design reference file, without being told how to draw them. The visual grammar is recognizable. The stroke weights are consistent. The icons look like icons.</p>
+
+  <p>This proves something critical: <strong>visual generation is solved. Visual judgment is not.</strong></p>
+
+  <div class="grid-3">
+    <div class="block">
+      <div class="block-label">Problem 01</div>
+      <div class="block-title">Agents build without visual reasoning</div>
+      <p>An agent builds a UI correctly but visually wrong. The logic works. The icons communicate the wrong thing. The user is confused. The agent had no way to know better.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Problem 02</div>
+      <div class="block-title">Meaning is not in the file</div>
+      <p>Every icon carries a shape. None carry their meaning, their context of use, their accessibility requirements, or their behavioral guidance. The meaning lives in human memory and gets lost in translation.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Problem 03</div>
+      <div class="block-title">New concepts have no conventions</div>
+      <p>The agentic era has created visual concepts that did not exist before — ai-thinking, risk-high, pending-approval, agent-working. Nobody has defined what these look like. The gap is open and filling with noise.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Problem 04</div>
+      <div class="block-title">Inconsistency compounds at scale</div>
+      <p>When agents build thousands of products, each making arbitrary visual decisions independently, the result is visual cacophony. Users cannot read the signals. Trust erodes. The promise of agentic software fails at the surface.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Problem 05</div>
+      <div class="block-title">Accessibility is always an afterthought</div>
+      <p>ARIA labels, reduced-motion behavior, contrast requirements, screen reader descriptions — these are added manually if at all. There is no structure that makes them automatic.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Problem 06</div>
+      <div class="block-title">Taste cannot be prompted</div>
+      <p>You can tell an agent to "use appropriate icons." You cannot prompt it into knowing what appropriate means for a high-risk financial transaction viewed by a user with vestibular disorders. Judgment cannot be improvised — it must be encoded.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER IV: DEFINITION -->
+<div class="chapter" id="definition">
+  <div class="chapter-num">Chapter IV — Definition</div>
+  <h2>What is<br><em>a Supericon?</em></h2>
+
+  <div class="definition">
+    <div class="definition-label">The definition</div>
+    <p>
+      A <strong>Supericon</strong> is a programmatic visual object — shaped by human judgment, readable by AI agents — that carries its own meaning, context of use, motion behavior, and accessibility metadata, so that any system that needs to make a visual decision can make it correctly, consistently, and with taste it did not develop itself.
+    </p>
+  </div>
+
+  <p>The key word is <em>programmatic</em>. A supericon is not a file you download. It is a structured object you query. It knows what it is, what it communicates, when it belongs, and when it does not. It can answer questions. It can be reasoned about. It participates in a system.</p>
+
+  <p>The second key word is <em>human judgment</em>. A supericon is not generated by an agent. It is shaped — proposed, reviewed, and approved — by a human with taste and authority. The agent executes. The human decides. The supericon is the vessel that carries the decision forward, into every product built by every agent that queries it.</p>
+
+  <div class="chain">
+    <div class="chain-item">
+      <div class="chain-num">01</div>
+      <div class="chain-content">
+        <div class="chain-title">A drawing</div>
+        <div class="chain-text">The visual form — animated SVG with static and reduced-motion variants. Beautiful, coherent, belonging to a visual family.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">02</div>
+      <div class="chain-content">
+        <div class="chain-title">A semantic profile</div>
+        <div class="chain-text">Structured JSON that declares the meaning: state, risk level, confidence, urgency, reversibility, motion behavior. Machine-readable. Agent-queryable.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">03</div>
+      <div class="chain-content">
+        <div class="chain-title">Behavioral guidance</div>
+        <div class="chain-text">Use-when. Avoid-when. Each avoid-when names the correct alternative. Not generic — specific. A profile that could apply to any icon is not done.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">04</div>
+      <div class="chain-content">
+        <div class="chain-title">Accessibility built in</div>
+        <div class="chain-text">ARIA label, aria-live, role, reduced-motion behavior — present in the structure, not added later. Correct by default, not by effort.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">05</div>
+      <div class="chain-content">
+        <div class="chain-title">Human authority</div>
+        <div class="chain-text">Every profile approved by a human with taste. The agent generates candidates. The human judges. The approved judgment propagates to every agent that queries the system.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    A regular icon is a drawing. A supericon is a drawing that knows what it means — and can say so to a developer, an agent, an accessibility tool, or any system that needs to make a visual decision correctly.
+  </div>
+</div>
+
+<!-- CHAPTER V: FOR WHOM -->
+<div class="chapter" id="for-whom">
+  <div class="chapter-num">Chapter V — For Whom</div>
+  <h2>Supericons is built<br><em>for four users.</em></h2>
+
+  <p>In order of strategic priority.</p>
+
+  <div class="grid-2">
+    <div class="block">
+      <div class="block-label">Primary — The AI Agent</div>
+      <div class="block-title">Building UI without visual judgment</div>
+      <p>The agent can generate. It cannot judge. Supericons gives it a visual vocabulary it can reason about correctly — so the software it builds communicates meaning, not just shape. This user is new. No one has solved for it. It grows exponentially. This is the wedge.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Secondary — The Developer</div>
+      <div class="block-title">Shipping faster with correct visuals</div>
+      <p>Today: search, download, resize, add hover states, write ARIA labels, argue about which icon to use. Tomorrow: describe intent, get the right icon with everything included. The developer stops thinking about icons and starts thinking about products.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Tertiary — The Designer</div>
+      <div class="block-title">Scaling visual language, not individual icons</div>
+      <p>Design the visual system once. Define the meaning once. Watch it propagate into every product built by every agent that uses Supericons. Design the language, not the individual words. That is the work worth doing at scale.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Ultimate — The End User</div>
+      <div class="block-title">Software that communicates clearly</div>
+      <p>They do not know what Supericons is. They notice that software feels clearer. Icons tell them when to wait, when to act, when something is dangerous. The visual language is legible in the way road signs are legible — consistent enough that recognition is instant.</p>
+    </div>
+  </div>
+
+  <p>The chain matters. Solve for the agent first — and the developer, designer, and end user benefit automatically. The agent is the leverage point. Every other user is downstream of it.</p>
+</div>
+
+<!-- CHAPTER VI: HOW IT WORKS -->
+<div class="chapter" id="how">
+  <div class="chapter-num">Chapter VI — How</div>
+  <h2>The judgment loop that<br><em>makes it work.</em></h2>
+
+  <p>The mechanism is simple. The execution is careful.</p>
+
+  <div class="chain">
+    <div class="chain-item">
+      <div class="chain-num">①</div>
+      <div class="chain-content">
+        <div class="chain-title">Human creates icons exist on the internet</div>
+        <div class="chain-text">Decades of human-designed icons — Lucide, Phosphor, Material, thousands of Dribbble shots — are the raw foundation. This collective human taste is the corpus agents were trained on. The baseline is already set by human history.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">②</div>
+      <div class="chain-content">
+        <div class="chain-title">Agent generates candidates</div>
+        <div class="chain-text">Using that training, an agent produces visual candidates. It has pattern-based competence. It draws things that look like icons. This is generation without judgment — competent but context-blind.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">③</div>
+      <div class="chain-content">
+        <div class="chain-title">Human judges and approves</div>
+        <div class="chain-text">A human with taste reviews the candidates. Does this look right? Does the motion communicate the state? Is the animation calm or alarming? Does it belong in this visual family? The human does not draw — the human decides. That is the authority.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">④</div>
+      <div class="chain-content">
+        <div class="chain-title">Human writes the semantic profile</div>
+        <div class="chain-text">The judgment gets encoded. State, risk, confidence, use-when, avoid-when, accessibility metadata. This is the hardest part. A profile that passes review can tell any agent, in any context, exactly when this icon is correct and what alternatives exist when it is not.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">⑤</div>
+      <div class="chain-content">
+        <div class="chain-title">Future agents query, not guess</div>
+        <div class="chain-text">Any agent building any product queries Supericons by intent. "Icon for: process running, high-stakes, user waiting, no action required." It gets back the right icon, the right code, the right ARIA label, and the reasoning. It executes with taste it did not develop. The human judgment propagates at scale.</div>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-num">⑥</div>
+      <div class="chain-content">
+        <div class="chain-title">Conventions form and evolve</div>
+        <div class="chain-text">As adoption grows, the Supericons definitions become the agreed conventions of the agentic era — like the floppy disk, but deliberately chosen, structured, and updatable. Unlike the floppy disk: the meaning can evolve when the world changes, because it is structured data, not a frozen image.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block">
+<span class="c">// An agent building a payment confirmation screen queries:</span>
+
+search_supericons({
+  <span class="k">intent</span>: <span class="s">"payment processing, user waiting"</span>,
+  <span class="k">context</span>: <span class="s">"high-stakes, irreversible, fintech"</span>,
+  <span class="k">format</span>: <span class="s">"react"</span>
+})
+
+<span class="c">// Returns:</span>
+{
+  <span class="hi">icon</span>: <span class="s">"loading-ring"</span>,
+  <span class="hi">reason</span>: <span class="s">"Calm indeterminate wait. No user action needed."</span>,
+  <span class="hi">aria_label</span>: <span class="s">"Processing your payment"</span>,
+  <span class="hi">avoid</span>: <span class="s">"Do not use error-critical — operation has not failed"</span>,
+  <span class="hi">snippet</span>: <span class="s">"&lt;LoadingRing label='Processing your payment' /&gt;"</span>
+}
+
+<span class="c">// The agent did not guess. It reasoned. The human judgment was upstream.</span>
+  </div>
+</div>
+
+<!-- CHAPTER VII: LEAN CANVAS -->
+<div class="chapter" id="canvas">
+  <div class="chapter-num">Chapter VII — Lean Canvas</div>
+  <h2>The business of<br><em>visual judgment.</em></h2>
+
+  <div class="canvas">
+    <div class="canvas-cell red-top">
+      <div class="canvas-label">Problem</div>
+      <div class="canvas-title">Agents build without visual judgment</div>
+      <ul>
+        <li>Icons carry no meaning in their file format</li>
+        <li>Agents interpolate; they do not reason about visuals</li>
+        <li>New agentic-era concepts have no visual conventions</li>
+        <li>Accessibility is manual and usually missing</li>
+        <li>Taste cannot be prompted — it must be encoded</li>
+      </ul>
+    </div>
+    <div class="canvas-cell gold-top span2">
+      <div class="canvas-label">Solution</div>
+      <div class="canvas-title">The visual judgment layer</div>
+      <ul>
+        <li>Supericons: programmatic visual objects with semantic profiles</li>
+        <li>Human taste encoded into machine-readable structure</li>
+        <li>MCP tool: agents query by intent, get correct icons with reasoning</li>
+        <li>Accessibility built into the structure — correct by default</li>
+        <li>Convention-setting for visual meaning in the agentic era</li>
+      </ul>
+    </div>
+    <div class="canvas-cell red-top span2">
+      <div class="canvas-label">Unique Value Proposition</div>
+      <div class="canvas-title">Icons that know what they mean — and can say so to any agent, any developer, any accessibility tool.</div>
+    </div>
+    <div class="canvas-cell gold-top">
+      <div class="canvas-label">Unfair Advantage</div>
+      <div class="canvas-title">Human authority over visual meaning</div>
+      <ul>
+        <li>Curated taste cannot be mass-produced</li>
+        <li>Semantic profiles are a moat — they compound</li>
+        <li>First-mover on agentic-era visual conventions</li>
+        <li>Network effect: more agents → more adoption → more standard</li>
+      </ul>
+    </div>
+    <div class="canvas-cell green-top">
+      <div class="canvas-label">Customer Segments</div>
+      <div class="canvas-title">Who needs this now</div>
+      <ul>
+        <li>AI coding agents (Cursor, Copilot, Claude Code)</li>
+        <li>Developers building AI-native products</li>
+        <li>Design systems teams at scale</li>
+        <li>No-code / AI app builders</li>
+        <li>Designers who think in systems</li>
+      </ul>
+    </div>
+    <div class="canvas-cell green-top span2">
+      <div class="canvas-label">Key Metrics</div>
+      <div class="canvas-title">What we measure</div>
+      <ul>
+        <li>MCP tool calls per week — agent adoption</li>
+        <li>Paying customers — revenue as signal not scale</li>
+        <li>Unprompted mentions — word of mouth</li>
+        <li>Profile quality score — are avoid-whens specific?</li>
+        <li>Zero accessibility defects — floor for shipping</li>
+      </ul>
+    </div>
+    <div class="canvas-cell green-top span2">
+      <div class="canvas-label">Channels</div>
+      <div class="canvas-title">How we reach them</div>
+      <ul>
+        <li>MCP tool in agent workflows — discovery by use</li>
+        <li>Demo page — the product demonstrates itself</li>
+        <li>Developer communities — X, HN, dev newsletters</li>
+        <li>Video — one demo beats ten articles</li>
+        <li>Early adopter word of mouth</li>
+      </ul>
+    </div>
+    <div class="canvas-cell red-top">
+      <div class="canvas-label">Cost Structure</div>
+      <ul>
+        <li>Human time: profile writing and curation</li>
+        <li>Agent compute: icon generation candidates</li>
+        <li>Infrastructure: MCP server, registry</li>
+        <li>Designed to stay low-overhead</li>
+      </ul>
+    </div>
+    <div class="canvas-cell green-top span2">
+      <div class="canvas-label">Revenue Streams</div>
+      <ul>
+        <li>State Kit v1 — one-time purchase ($49 / $149 / $349)</li>
+        <li>Future: niche packs (AI agents, fintech, healthcare)</li>
+        <li>Future: Pro tier with parametric customization</li>
+        <li>Future: Enterprise — private registry, brand encoding</li>
+        <li>Future: Forge API — pay-per-generation</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER VIII: MANIFESTO -->
+<div class="chapter" id="manifesto">
+  <div class="chapter-num">Chapter VIII — The Manifesto</div>
+  <h2>What we<br><em>believe.</em></h2>
+
+  <div class="statements">
+    <div class="statement">
+      <div class="statement-n">I</div>
+      <div class="statement-text">Icons are not decorations. They are the <em>externalization of human thought into visual form</em> — and they have been since the first drawing on a cave wall.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">II</div>
+      <div class="statement-text">Icons do not have inherent meaning. They have <em>agreed meaning</em> — proposed by someone with authority, adopted by the many, and eventually forgotten as a proposal.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">III</div>
+      <div class="statement-text">The agentic era has created a gap. New visual concepts — <em>ai-thinking, risk-high, pending-approval</em> — have no established convention. Someone will fill that gap. It should be filled carefully.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">IV</div>
+      <div class="statement-text">AI agents can generate visuals. What they cannot generate is <em>visual judgment</em> — the contextual knowledge of what is correct, what is wrong, and why it matters to the human experiencing it.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">V</div>
+      <div class="statement-text">The bottleneck is no longer generation. It is <em>judgment</em>. And judgment must be encoded by humans — not improvised by agents at runtime.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">VI</div>
+      <div class="statement-text">Humans are not removed from Supericons. They are <em>concentrated into it</em>. One person's carefully considered taste, encoded once, propagates through every agent that queries the system — into every product, experienced by every user.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">VII</div>
+      <div class="statement-text">A Supericon is not a file. It is a <em>declaration</em>: this is what this visual object means, this is when it belongs, this is what it communicates to a human, and here is what to use instead when it does not fit.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">VIII</div>
+      <div class="statement-text">Accessibility is not a feature. It is <em>built into the structure</em> — present by default, not added by effort. Visual meaning that cannot reach every human is incomplete meaning.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">IX</div>
+      <div class="statement-text">We do not ship icons. We propose <em>visual conventions for the agentic era</em> — knowing that the conventions we set today will shape the visual experience of software for a generation.</div>
+    </div>
+    <div class="statement">
+      <div class="statement-n">X</div>
+      <div class="statement-text">Unlike the floppy disk — meaning encoded in Supericons can <em>evolve without losing continuity</em>. Because it is structured data, not a frozen image. That is the most important thing we do that no icon system before us could.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER IX: HOW WE BUILD -->
+<div class="chapter" id="build">
+  <div class="chapter-num">Chapter IX — How We Build</div>
+  <h2>Four phases.<br><em>One direction.</em></h2>
+
+  <p>We do not build everything at once. Each phase funds and validates the next. The direction is fixed. The pace is disciplined.</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-n">Phase 1</div>
+      <div class="phase-time">Now → Month 3</div>
+      <div class="phase-title">The Wedge — State Kit v1</div>
+      <ul>
+        <li>50 animated SVG icons for software states</li>
+        <li>Semantic profile for every icon</li>
+        <li>MCP search tool — one, reliable, correct</li>
+        <li>Demo page — 30 seconds to value</li>
+        <li>First paid offer — prove the market</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-n">Phase 2</div>
+      <div class="phase-time">Month 3–6</div>
+      <div class="phase-title">The Hook — Parameters + Packs</div>
+      <ul>
+        <li>Parametric props — describe, not hunt</li>
+        <li>Niche packs — AI, fintech, healthcare</li>
+        <li>MCP recommendation tool</li>
+        <li>Icon profiles as queryable API</li>
+        <li>Mental model shift: intent over asset</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-n">Phase 3</div>
+      <div class="phase-time">Month 7–12</div>
+      <div class="phase-title">The Expansion — Forge + Pro</div>
+      <ul>
+        <li>Forge: describe → parametric schema</li>
+        <li>Motion Lab: visual animation editor</li>
+        <li>Pro tier subscription</li>
+        <li>Agent workflow demos — the new pitch</li>
+        <li>Revenue funds the platform</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-n">Phase 4</div>
+      <div class="phase-time">Year 2+</div>
+      <div class="phase-title">The Platform — Registry + Protocol</div>
+      <ul>
+        <li>Open registry — versioned semantic tokens</li>
+        <li>Bridge protocol — the HTTP of visual meaning</li>
+        <li>Studio — visual IDE for supericon design</li>
+        <li>Enterprise — private registry, brand encoding</li>
+        <li>Infrastructure, not product</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The principles that govern every build decision:</p>
+
+  <div class="grid-2">
+    <div class="block">
+      <div class="block-label">Build principle 01</div>
+      <div class="block-title">Agent first, always</div>
+      <p>Every feature is evaluated through the question: does this make it easier for an agent to make a correct visual decision? If not, it is decoration.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Build principle 02</div>
+      <div class="block-title">Profiles before pixels</div>
+      <p>The semantic profile is the product. The visual is the expression of it. A beautiful icon with a vague profile is a failure. An imperfect icon with a precise profile is shippable.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Build principle 03</div>
+      <div class="block-title">Judgment is human, execution is agent</div>
+      <p>We do not automate taste. The agent generates candidates. The human approves. That division is permanent and intentional. The moment we skip the human review, we stop building Supericons and start building just another icon generator.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Build principle 04</div>
+      <div class="block-title">Revenue is signal, not scale</div>
+      <p>A paying customer is evidence that the product solves a real problem. We treat early revenue as learning, not as a business. The business comes from doing the learning correctly.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Build principle 05</div>
+      <div class="block-title">Accessibility is in the protocol</div>
+      <p>ARIA labels, reduced-motion behavior, contrast compliance — these are present in the structure from day one. Not added later. Not optional. A supericon without accessibility is not a supericon.</p>
+    </div>
+    <div class="block">
+      <div class="block-label">Build principle 06</div>
+      <div class="block-title">Meaning can evolve</div>
+      <p>We set conventions deliberately, knowing we may need to revise them. The structure allows this. We track what we defined, when, and why — so future revision is principled, not arbitrary.</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-rule"></div>
+  <h2>The visual vocabulary<br>of the <em>agentic era</em><br>has not been written yet.</h2>
+  <p>We are writing it. Carefully. With taste. With authority. With the understanding that the conventions we propose today will shape how software feels to humans for a generation.</p>
+</div>
+
+<div class="colophon">
+  Supericons · The Manifesto · May 2026 · Curly Mole Labs · v1.0
+</div>
+
+</body>
+</html>

@@ -13,14 +13,22 @@ const expectedFiles = [
   'generated/motion-lab-baseline.json',
   'hosted-search-client.js',
   'index.js',
+  'library-capabilities.js',
   'material-export.js',
+  'material-hydration.js',
+  'material-mcp-assets-manifest.json',
+  'material-mcp-assets.json.gz',
   'mcp-output-localization.js',
   'motion-lab-client.js',
   'motion-lab.js',
   'package.json',
   'public/cjk-search-terms.json',
+  'public/icon-index-solid.json',
+  'public/icon-index.json',
+  'public/material-export-manifest.json',
   'public/multilingual-search-aliases.json',
   'public/product-facts.json',
+  'public/synonyms.json',
   'public-icon-preview.js',
   'preview-icons.js',
   'recommend-icons.js',
@@ -42,16 +50,14 @@ const expectedFiles = [
   'search.js',
   'server.json',
   'telemetry.js',
+  'usage-dedupe.js',
   'variant-support.js',
   'workflow-access.js',
 ];
 
 const blockedFiles = [
-  'public/icon-index.json',
-  'public/icon-index-solid.json',
   'public/registry-records.json',
   'public/registry-summary.json',
-  'public/synonyms.json',
 ];
 
 function fail(message) {
@@ -109,7 +115,11 @@ if (blocked.length) {
   fail(`protected package includes bulk registry files: ${blocked.join(', ')}`);
 }
 
-if (Number(packInfo.unpackedSize || 0) > 2_500_000) {
+if (Number(packInfo.size || 0) > 7_000_000) {
+  fail(`protected package is too large: ${packInfo.size} bytes packed`);
+}
+
+if (Number(packInfo.unpackedSize || 0) > 27_000_000) {
   fail(`protected package is too large: ${packInfo.unpackedSize} bytes unpacked`);
 }
 

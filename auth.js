@@ -96,7 +96,6 @@ const AUTH_MODAL_COPY = {
     signin: {
       title: 'Sign in to continue your purchase',
       desc: 'Keep collection purchases tied to one account so downloads and updates stay in sync.',
-      note: 'We\'ll bring you back so you can continue where you left off.',
       submit: 'Sign in to continue',
       toggle: 'Need an account first?',
       toggleAction: 'Sign up',
@@ -104,7 +103,6 @@ const AUTH_MODAL_COPY = {
     signup: {
       title: 'Create your account to buy collections',
       desc: 'Your purchases, downloads, and future updates will stay connected to this account.',
-      note: 'We\'ll bring you back so you can continue where you left off.',
       submit: 'Create account',
       toggle: 'Already have an account?',
       toggleAction: 'Sign in',
@@ -114,7 +112,6 @@ const AUTH_MODAL_COPY = {
     signin: {
       title: 'Sign in to go Pro',
       desc: 'Continue to Pro checkout for MCP access, workflow tools, and premium collections.',
-      note: 'We\'ll bring you back so you can continue to checkout.',
       submit: 'Sign in to continue',
       toggle: 'Need an account first?',
       toggleAction: 'Sign up',
@@ -122,7 +119,6 @@ const AUTH_MODAL_COPY = {
     signup: {
       title: 'Create your account to go Pro',
       desc: 'Set up your account first, then continue to Pro checkout when you\'re ready.',
-      note: 'We\'ll bring you back so you can continue to checkout.',
       submit: 'Create account',
       toggle: 'Already have an account?',
       toggleAction: 'Sign in',
@@ -1479,19 +1475,22 @@ function renderAuthModal() {
     }
   }
   if (modalNote) {
+    let noteText = '';
     if (isVerifyStage) {
-      modalNote.textContent = verifyConfig.modalNote;
+      noteText = verifyConfig.modalNote;
     } else if (isForgotStage) {
-      modalNote.textContent = tr('auth.forgot.note', {}, 'The recovery link will bring you back here to choose a new password.');
+      noteText = tr('auth.forgot.note', {}, 'The recovery link will bring you back here to choose a new password.');
     } else if (isResetStage) {
-      modalNote.textContent = isAddPasswordReset
+      noteText = isAddPasswordReset
         ? tr('auth.reset.addNote', {}, 'Google sign-in will keep working after you add password access.')
         : tr('auth.reset.note', {}, 'Use at least 8 characters. Strong passwords are recommended.');
     } else if (isCompletionStage) {
-      modalNote.textContent = completionConfig.modalNote;
+      noteText = completionConfig.modalNote;
     } else {
-      modalNote.textContent = copy.note;
+      noteText = copy.note || '';
     }
+    modalNote.textContent = noteText;
+    modalNote.hidden = !noteText;
   }
   if (submitText) submitText.textContent = copy.submit;
   if (form) form.dataset.mode = authModalState.mode;

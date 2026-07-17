@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons: The Visual Computation Blueprint | Future Vision 2026</title>
+<meta name="description" content="A bold exploration of what Supericons could become when icons stop being static assets and start being dynamic, programmable, AI-native visual primitives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050608;--bg2:#0a0c10;--bg3:#11131a;--bg4:#181b24;
+  --surface:#1e212c;--surface2:#272b38;
+  --text:#f0f1f4;--text2:#a0a6b8;--text3:#686f80;
+  --accent:#6366f1;--accent2:#818cf8;--accent-glow:rgba(99,102,241,.22);
+  --teal:#14b8a6;--teal-glow:rgba(20,184,166,.18);
+  --rose:#f43f5e;--rose-glow:rgba(244,63,94,.15);
+  --amber:#f59e0b;--amber-glow:rgba(245,158,11,.18);
+  --cyan:#06b6d4;--cyan-glow:rgba(6,182,212,.15);
+  --radius:14px;--radius-lg:22px;--radius-xl:32px;
+  --font:'Inter',system-ui,sans-serif;
+  --font-display:'Space Grotesk','Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --max-w:1080px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 28px}
+
+/* ── Hero ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:140px 28px 100px}
+.hero::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 55% 45% at 20% 30%,var(--accent-glow),transparent 65%),
+  radial-gradient(ellipse 45% 40% at 80% 70%,var(--teal-glow),transparent 60%),
+  radial-gradient(ellipse 35% 35% at 50% 50%,rgba(245,158,11,.08),transparent 55%);
+  pointer-events:none}
+.hero__content{position:relative;z-index:2;max-width:780px}
+.hero__badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.07);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:32px}
+.hero__title{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,5.2rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:28px}
+.hero__title .line1{color:var(--text)}
+.hero__title .line2{background:linear-gradient(135deg,var(--accent2) 0%,var(--teal) 50%,var(--amber) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero__sub{font-size:clamp(1.05rem,2.2vw,1.35rem);color:var(--text2);max-width:620px;line-height:1.85;margin-bottom:44px}
+.hero__sub em{color:var(--text);font-style:normal;font-weight:500}
+.hero__meta{display:flex;gap:32px;flex-wrap:wrap;font-size:13px;color:var(--text3)}
+.hero__meta span{display:flex;align-items:center;gap:6px}
+
+/* ── Animated particle mesh (hero bg) ── */
+.mesh{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:.35}
+.mesh__node{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--accent2);animation:meshFloat 20s ease-in-out infinite;will-change:transform}
+@keyframes meshFloat{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-40px)}50%{transform:translate(-20px,30px)}75%{transform:translate(40px,20px)}}
+
+/* ── Section base ── */
+.section{padding:110px 0;position:relative}
+.section--alt{background:var(--bg2)}
+.section__eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px}
+.section__title{font-family:var(--font-display);font-size:clamp(1.9rem,4.5vw,3rem);font-weight:700;line-height:1.15;letter-spacing:-.8px;margin-bottom:18px}
+.section__desc{font-size:1.08rem;color:var(--text2);max-width:640px;line-height:1.85;margin-bottom:56px}
+
+/* ── Thesis Cards ── */
+.thesis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-bottom:48px}
+.thesis-card{background:linear-gradient(160deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);padding:32px;transition:all .35s;position:relative;overflow:hidden}
+.thesis-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--teal));opacity:0;transition:opacity .3s}
+.thesis-card:hover{border-color:rgba(255,255,255,.1);transform:translateY(-3px)}
+.thesis-card:hover::after{opacity:1}
+.thesis-card__num{font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:12px}
+.thesis-card__title{font-family:var(--font-display);font-size:1.15rem;font-weight:700;margin-bottom:10px}
+.thesis-card__text{font-size:.92rem;color:var(--text2);line-height:1.75}
+
+/* ── Concept Blocks ── */
+.concept{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:64px}
+@media(max-width:780px){.concept{grid-template-columns:1fr}}
+.concept__body{order:1}
+.concept--reverse .concept__body{order:2}
+.concept--reverse .concept__visual{order:1}
+.concept__label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.concept__title{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;margin-bottom:14px;line-height:1.25}
+.concept__text{color:var(--text2);line-height:1.85;margin-bottom:18px;font-size:.98rem}
+.concept__text strong{color:var(--text);font-weight:600}
+.concept__visual{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);padding:36px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;position:relative;overflow:hidden}
+
+/* ── Visual Demos ── */
+.demo-parametric{display:flex;flex-direction:column;align-items:center;gap:14px}
+.demo-parametric svg{width:120px;height:120px}
+.demo-parametric__label{font-size:11px;color:var(--text3);font-family:var(--font-mono)}
+.demo-parametric__slider{width:160px;height:3px;-webkit-appearance:none;appearance:none;background:var(--surface2);border-radius:3px;outline:none}
+.demo-parametric__slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer}
+
+.demo-composition{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.demo-composition__item{width:52px;height:52px;border-radius:var(--radius);background:var(--surface);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .3s;cursor:default}
+.demo-composition__item:hover{background:var(--accent-glow);border-color:var(--accent);transform:scale(1.1) rotate(5deg)}
+
+.demo-runtime{width:100%;max-width:300px;background:var(--surface);border-radius:var(--radius);padding:16px;font-family:var(--font-mono);font-size:11px;color:var(--text3);line-height:1.8}
+.demo-runtime .kw{color:var(--rose)}
+.demo-runtime .fn{color:var(--teal)}
+.demo-runtime .str{color:var(--amber)}
+.demo-runtime .num{color:var(--accent2)}
+
+/* ── Pillar Cards ── */
+.pillars{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:48px}
+.pillar{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);padding:36px;transition:all .35s;position:relative}
+.pillar:hover{border-color:rgba(255,255,255,.1);transform:translateY(-4px)}
+.pillar__icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;font-size:26px}
+.pillar__title{font-family:var(--font-display);font-size:1.25rem;font-weight:700;margin-bottom:10px}
+.pillar__text{font-size:.92rem;color:var(--text2);line-height:1.75;margin-bottom:18px}
+.pillar__tag{display:inline-block;padding:4px 10px;border-radius:6px;background:var(--surface);font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-right:6px;margin-bottom:6px}
+
+.pillar--proto .pillar__icon{background:var(--accent-glow);color:var(--accent2)}
+.pillar--runtime .pillar__icon{background:var(--teal-glow);color:var(--teal)}
+.pillar--forge .pillar__icon{background:var(--rose-glow);color:var(--rose)}
+.pillar--registry .pillar__icon{background:var(--amber-glow);color:var(--amber)}
+.pillar--bridge .pillar__icon{background:var(--cyan-glow);color:var(--cyan)}
+
+/* ── Experience Cards ── */
+.exp-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:48px}
+@media(max-width:860px){.exp-row{grid-template-columns:1fr}}
+.exp-card{background:linear-gradient(180deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);padding:28px;position:relative}
+.exp-card__avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px}
+.exp-card__name{font-weight:700;margin-bottom:4px;font-size:1rem}
+.exp-card__role{font-size:11px;color:var(--text3);margin-bottom:14px;text-transform:uppercase;letter-spacing:.8px}
+.exp-card__quote{font-size:.92rem;color:var(--text2);line-height:1.75;font-style:italic}
+.exp-card__quote::before{content:'"';color:var(--accent);font-size:1.4rem;font-weight:800;line-height:.5}
+
+/* ── Wedge Timeline ── */
+.wedge{display:flex;gap:20px;margin-bottom:20px;align-items:flex-start}
+.wedge__dot{flex-shrink:0;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:4px}
+.wedge__body{flex:1}
+.wedge__title{font-weight:700;margin-bottom:4px;font-size:1.05rem}
+.wedge__text{color:var(--text2);font-size:.92rem;line-height:1.7}
+.wedge__meta{font-size:11px;color:var(--text3);margin-top:6px;font-family:var(--font-mono)}
+
+/* ── Avoid List ── */
+.avoid-list{display:flex;flex-direction:column;gap:12px;max-width:680px}
+.avoid-item{display:flex;gap:14px;align-items:flex-start;background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius);padding:20px 22px}
+.avoid-item__x{width:28px;height:28px;border-radius:50%;background:var(--rose-glow);color:var(--rose);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.avoid-item__title{font-weight:600;margin-bottom:2px}
+.avoid-item__text{color:var(--text2);font-size:.9rem;line-height:1.65}
+
+/* ── CTA ── */
+.cta{padding:120px 0;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 50% 80%,var(--accent-glow),transparent 70%);pointer-events:none}
+.cta__title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin-bottom:18px;position:relative;z-index:2}
+.cta__text{font-size:1.1rem;color:var(--text2);max-width:560px;margin:0 auto 40px;position:relative;z-index:2;line-height:1.85}
+.cta__btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:all .3s;position:relative;z-index:2;text-decoration:none}
+.cta__btn:hover{transform:translateY(-2px);box-shadow:0 10px 40px var(--accent-glow);text-decoration:none}
+
+/* ── Footer ── */
+.footer{padding:48px 0;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:13px;color:var(--text3)}
+
+/* ── Scroll reveal ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .container{padding:0 18px}
+  .section{padding:70px 0}
+  .hero{padding:110px 18px 70px}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="mesh" id="mesh"></div>
+  <div class="container">
+    <div class="hero__content">
+      <div class="hero__badge">Supericons Future Vision &mdash; May 2026</div>
+      <h1 class="hero__title">
+        <span class="line1">Icons Are Not</span><br>
+        <span class="line2">Decorations.</span>
+      </h1>
+      <p class="hero__sub">
+        They are <em>visual programs</em> that carry meaning, motion, state, and intent. 
+        What if the boundary between "design asset" and "software" dissolved entirely? 
+        What if AI did not just <em>use</em> icons, but <em>thought</em> in them?
+      </p>
+      <div class="hero__meta">
+        <span style="color:var(--teal)">&#9679;</span> A Concept Blueprint
+        <span style="color:var(--accent2)">&#9679;</span> Challenge Assumptions
+        <span style="color:var(--amber)">&#9679;</span> Build What Is Next
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== THESIS ========== -->
+<section class="section" id="thesis">
+  <div class="container">
+    <div class="section__eyebrow">The Thesis</div>
+    <h2 class="section__title">Five Principles That Change Everything</h2>
+    <p class="section__desc">
+      Start from first principles. SVG is structured code, not pixels. AI can read, mutate, compose, and reason about code. 
+      Therefore, AI can read, mutate, compose, and reason about icons. The implications cascade.
+    </p>
+
+    <div class="thesis-grid">
+      <div class="thesis-card">
+        <div class="thesis-card__num">01</div>
+        <div class="thesis-card__title">Icons Are Functions, Not Files</div>
+        <div class="thesis-card__text">
+          An icon is not an SVG file you download. It is a function: <code style="font-family:var(--font-mono);font-size:12px;background:var(--surface);padding:2px 6px;border-radius:4px">f(context, state, intent) &rarr; svg</code>. 
+          The same "upload" glyph morphs, pulses, or changes color based on whether the system is idle, encrypting, failing, or awaiting human approval. One semantic identity, infinite expressions.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">02</div>
+        <div class="thesis-card__title">Visual Meaning Needs a Protocol</div>
+        <div class="thesis-card__text">
+          Text has Unicode. Math has LaTeX. Code has ASTs. Visual meaning has&hellip; nothing. 
+          Supericons could become the <strong>semantic protocol layer</strong> for visual communication between humans, software, and AI agents. A universal grammar for what things <em>mean</em> visually.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">03</div>
+        <div class="thesis-card__title">Composition Beats Generation</div>
+        <div class="thesis-card__text">
+          Generating a pretty picture is cheap. Generating the <em>right</em> visual that communicates precisely, adapts to context, and maintains brand consistency is hard. 
+          The moat is not pixels. It is <strong>compositional rules, semantic correctness, and runtime behavior</strong>.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">04</div>
+        <div class="thesis-card__title">Every Surface Is a Canvas</div>
+        <div class="thesis-card__text">
+          One semantic token. Multiple physical expressions. The same "alert-critical" concept renders as a pulsing red SVG on web, a haptic vibration pattern on a watch, an LED sequence on a robot, and a spatial glow in AR. 
+          The icon is not the pixels. It is the <strong>intent</strong>.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">05</div>
+        <div class="thesis-card__title">Design Systems Should Be Executable</div>
+        <div class="thesis-card__text">
+          Your brand's visual language should be code that runs. "Our buttons should feel urgent but friendly" becomes a parametric adjustment, not a Figma comment thread. 
+          The design system becomes a <strong>living runtime</strong> that enforces consistency while allowing infinite variation.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONCEPT 1: PARAMETRIC ========== -->
+<section class="section section--alt" id="parametric">
+  <div class="container">
+    <div class="concept">
+      <div class="concept__body">
+        <div class="concept__label">Concept I</div>
+        <h3 class="concept__title">Parametric Icons: <br>One Identity, Infinite Expressions</h3>
+        <p class="concept__text">
+          Static icons are photographs. Parametric icons are <strong>3D models</strong>. You do not download "save-icon.svg." 
+          You instantiate a SaveIcon with parameters: urgency, state, confidence, brand personality, cultural context. 
+          The runtime generates the correct visual in real-time.
+        </p>
+        <p class="concept__text">
+          <strong>The magic:</strong> A developer writes <code style="font-family:var(--font-mono);font-size:12px;background:var(--surface);padding:2px 6px;border-radius:4px">&lt;Icon intent="save" state="syncing" confidence={0.4} /&gt;</code> 
+          and gets an icon that subtly pulses amber, indicating low confidence in the save operation. 
+          No design handoff. No asset hunting. Just intent.
+        </p>
+      </div>
+      <div class="concept__visual">
+        <div class="demo-parametric">
+          <svg viewBox="0 0 120 120" id="paramSvg">
+            <defs>
+              <linearGradient id="paramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#6366f1"/>
+                <stop offset="100%" style="stop-color:#14b8a6"/>
+              </linearGradient>
+            </defs>
+            <rect x="25" y="20" width="70" height="80" rx="12" fill="none" stroke="url(#paramGrad)" stroke-width="3" id="paramRect"/>
+            <path d="M40 55 L55 70 L80 45" fill="none" stroke="url(#paramGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" id="paramCheck"/>
+            <circle cx="85" cy="35" r="8" fill="var(--rose)" opacity="0" id="paramBadge"/>
+          </svg>
+          <div class="demo-parametric__label">State: <span id="paramStateLabel">idle</span></div>
+          <input type="range" class="demo-parametric__slider" min="0" max="3" value="0" id="paramSlider">
+          <div style="display:flex;gap:8px;font-size:10px;color:var(--text3);font-family:var(--font-mono)">
+            <span>idle</span><span>syncing</span><span>success</span><span>error</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONCEPT 2: COMPOSITION ========== -->
+<section class="section" id="composition">
+  <div class="container">
+    <div class="concept concept--reverse">
+      <div class="concept__body">
+        <div class="concept__label">Concept II</div>
+        <h3 class="concept__title">Visual Grammar: <br>Icons That Combine Like Words</h3>
+        <p class="concept__text">
+          Language has grammar: subjects, verbs, modifiers. Visual communication has&hellip; folders full of PNGs. 
+          What if icons had a <strong>compositional algebra</strong>? Primitives (shapes, strokes) combine into semantics (actions, objects), 
+          which combine with modifiers (secure, urgent, pending, AI-assisted) into complete visual utterances.
+        </p>
+        <p class="concept__text">
+          <strong>Example:</strong> "Upload to cloud, encrypted, in progress" = Cloud(base) + UpArrow(action) + Lock(modifier) + Spinner(state). 
+          The system composes these automatically, ensuring visual consistency, correct layering, and accessible labeling. 
+          Designers define the primitives. AI assembles them. Humans review and refine.
+        </p>
+      </div>
+      <div class="concept__visual">
+        <div class="demo-composition">
+          <div class="demo-composition__item" style="font-size:28px">&#9729;</div>
+          <div class="demo-composition__item" style="font-size:20px">+</div>
+          <div class="demo-composition__item" style="font-size:28px">&#8593;</div>
+          <div class="demo-composition__item" style="font-size:20px">+</div>
+          <div class="demo-composition__item" style="font-size:28px">&#128274;</div>
+          <div class="demo-composition__item" style="font-size:20px">+</div>
+          <div class="demo-composition__item" style="font-size:28px">&#8635;</div>
+          <div class="demo-composition__item" style="font-size:20px">=</div>
+          <div class="demo-composition__item" style="background:var(--accent-glow);border-color:var(--accent);font-size:28px">&#9729;&#8593;</div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px;font-family:var(--font-mono)">
+          cloud + upload + lock + spinner = composed icon
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONCEPT 3: RUNTIME ========== -->
+<section class="section section--alt" id="runtime">
+  <div class="container">
+    <div class="concept">
+      <div class="concept__body">
+        <div class="concept__label">Concept III</div>
+        <h3 class="concept__title">The Icon Runtime: <br>Software That Renders Meaning</h3>
+        <p class="concept__text">
+          Icons should not be assets you import at build time. They should be a <strong>runtime service</strong> you call at render time. 
+          Like a game engine translates scene graphs into pixels, the Icon Runtime translates semantic intent into visuals.
+        </p>
+        <p class="concept__text">
+          It handles: animation interpolation, accessibility metadata, responsive scaling, dark mode adaptation, 
+          brand consistency enforcement, performance optimization (SVG vs Canvas vs WebGL), and cross-platform rendering. 
+          The developer thinks in <em>meaning</em>. The runtime thinks in <em>pixels</em>.
+        </p>
+      </div>
+      <div class="concept__visual">
+        <div class="demo-runtime">
+          <span class="kw">import</span> { IconRuntime } <span class="kw">from</span> <span class="str">'@supericons/runtime'</span>;<br><br>
+          <span class="kw">const</span> runtime = <span class="kw">new</span> <span class="fn">IconRuntime</span>({<br>
+          &nbsp;&nbsp;theme: <span class="str">'corporate'</span>,<br>
+          &nbsp;&nbsp;motion: <span class="str">'subtle'</span>,<br>
+          &nbsp;&nbsp;accessibility: <span class="str">'strict'</span><br>
+          });<br><br>
+          runtime.<span class="fn">render</span>({<br>
+          &nbsp;&nbsp;intent: <span class="str">'upload'</span>,<br>
+          &nbsp;&nbsp;state: <span class="str">'encrypting'</span>,<br>
+          &nbsp;&nbsp;confidence: <span class="num">0.87</span>,<br>
+          &nbsp;&nbsp;surface: <span class="str">'svg'</span><br>
+          });
+        </div>
+        <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">
+          One API. Any surface. Correct semantics. Beautiful output.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRODUCT PILLARS ========== -->
+<section class="section" id="pillars">
+  <div class="container">
+    <div class="section__eyebrow">Product Architecture</div>
+    <h2 class="section__title">Five Pillars of a New Category</h2>
+    <p class="section__desc">
+      Supericons does not evolve into a feature. It evolves into a <strong>platform</strong>. 
+      Each pillar is a standalone product. Together, they create an ecosystem no single competitor can replicate.
+    </p>
+
+    <div class="pillars">
+      <div class="pillar pillar--proto">
+        <div class="pillar__icon">&#9670;</div>
+        <div class="pillar__title">Supericons Studio</div>
+        <div class="pillar__text">
+          A web-based visual IDE for designing parametric icons. Think Figma meets ShaderToy meets Logic Pro. 
+          Designers create visual primitives, define composition rules, and preview how icons behave across states and contexts. 
+          The output is not an SVG file. It is a <strong>parametric schema</strong> that the runtime interprets.
+        </div>
+        <div>
+          <span class="pillar__tag">Visual Editor</span>
+          <span class="pillar__tag">Parametric Design</span>
+          <span class="pillar__tag">Real-time Preview</span>
+        </div>
+      </div>
+
+      <div class="pillar pillar--runtime">
+        <div class="pillar__icon">&#9670;</div>
+        <div class="pillar__title">Supericons Runtime</div>
+        <div class="pillar__text">
+          The lightweight engine that lives in your app. It receives semantic tokens and renders the correct visual, 
+          handling animation, accessibility, theming, and responsive scaling automatically. Framework-agnostic. 
+          Tree-shakeable. Sub-10KB for core. Plugin architecture for custom renderers (Canvas, WebGL, native).
+        </div>
+        <div>
+          <span class="pillar__tag">npm Package</span>
+          <span class="pillar__tag">Framework Agnostic</span>
+          <span class="pillar__tag">Plugin System</span>
+        </div>
+      </div>
+
+      <div class="pillar pillar--forge">
+        <div class="pillar__icon">&#9670;</div>
+        <div class="pillar__title">Supericons Forge</div>
+        <div class="pillar__text">
+          An AI-native generation service that does not output raw SVGs. It outputs <strong>parametric schemas</strong>. 
+          "I need an icon for quantum-encrypted file sharing that feels trustworthy but futuristic." 
+          Forge generates the semantic description, composition rules, and animation behavior. You iterate with words, not vectors.
+        </div>
+        <div>
+          <span class="pillar__tag">AI Generation</span>
+          <span class="pillar__tag">Semantic Output</span>
+          <span class="pillar__tag">Iterative Prompting</span>
+        </div>
+      </div>
+
+      <div class="pillar pillar--registry">
+        <div class="pillar__icon">&#9670;</div>
+        <div class="pillar__title">Supericons Registry</div>
+        <div class="pillar__text">
+          The npm of visual semantics. A decentralized registry where anyone can publish visual primitives, 
+          composition rules, and animation presets. Semantic tokens are namespaced and versioned: 
+          <code style="font-family:var(--font-mono);font-size:11px">@acme/brand/upload/v2.1</code>. 
+          The registry resolves tokens to the correct parametric schemas, enabling shareable, forkable visual languages.
+        </div>
+        <div>
+          <span class="pillar__tag">Open Registry</span>
+          <span class="pillar__tag">Versioned Tokens</span>
+          <span class="pillar__tag">Namespace Support</span>
+        </div>
+      </div>
+
+      <div class="pillar pillar--bridge">
+        <div class="pillar__icon">&#9670;</div>
+        <div class="pillar__title">Supericons Bridge</div>
+        <div class="pillar__text">
+          The protocol layer for AI agents. When an agent builds a UI, it does not paste SVG strings. 
+          It requests visual tokens via MCP: <em>"Render a trust indicator for a high-risk financial transaction."</em> 
+          Bridge returns the token, metadata, and accessibility description. The agent and the human speak the same visual language.
+        </div>
+        <div>
+          <span class="pillar__tag">MCP Protocol</span>
+          <span class="pillar__tag">Agent-Native</span>
+          <span class="pillar__tag">Semantic API</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== USER EXPERIENCES ========== -->
+<section class="section section--alt" id="experiences">
+  <div class="container">
+    <div class="section__eyebrow">User Experiences</div>
+    <h2 class="section__title">What Does It Feel Like?</h2>
+    <p class="section__desc">
+      The best products feel magical to their users. Here is how Supericons feels to the people who matter most.
+    </p>
+
+    <div class="exp-row">
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:var(--accent-glow);color:var(--accent2)">&#128187;</div>
+        <div class="exp-card__name">The Developer</div>
+        <div class="exp-card__role">Building Fast</div>
+        <div class="exp-card__quote">
+          I used to spend 20 minutes searching for the right icon, downloading it, adjusting colors, adding hover states. 
+          Now I type &lt;Icon intent=&quot;deploy&quot; state=&quot;in-progress&quot; /&gt; and it just works. 
+          It even animates correctly and handles dark mode. I never think about icons anymore. I think about intent.
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:var(--rose-glow);color:var(--rose)">&#127912;</div>
+        <div class="exp-card__name">The Designer</div>
+        <div class="exp-card__role">Scaling Systems</div>
+        <div class="exp-card__quote">
+          I design the primitives and rules once. The system generates thousands of correct variations automatically. 
+          When the brand updates, I change one variable and every icon across every product updates instantly. 
+          I finally get to design the <em>language</em>, not just the individual words.
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:var(--teal-glow);color:var(--teal)">&#129302;</div>
+        <div class="exp-card__name">The AI Agent</div>
+        <div class="exp-card__role">Building UIs Autonomously</div>
+        <div class="exp-card__quote">
+          I do not need to understand SVG paths or color theory. I request visual tokens by meaning. 
+          The system ensures the output is consistent, accessible, and on-brand. I build interfaces faster, 
+          and the humans who use them trust what they see because the visual language is coherent.
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-row">
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:var(--amber-glow);color:var(--amber)">&#128200;</div>
+        <div class="exp-card__name">The Founder</div>
+        <div class="exp-card__role">Moving Fast</div>
+        <div class="exp-card__quote">
+          We shipped a design system in a day, not a quarter. Our product looks premium because the icons adapt to context 
+          instead of looking like stock assets. And when we raised our Series A, the investor asked about our visual consistency. 
+          I showed them our parametric schema. They got it immediately.
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:var(--cyan-glow);color:var(--cyan)">&#9855;</div>
+        <div class="exp-card__name">The Accessibility Lead</div>
+        <div class="exp-card__role">Including Everyone</div>
+        <div class="exp-card__quote">
+          Every icon ships with correct ARIA labels, motion preferences respect, and high-contrast variants. 
+          The semantic layer means screen readers get meaningful descriptions, not filenames. 
+          Accessibility is not an afterthought. It is built into the protocol.
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-card__avatar" style="background:rgba(255,255,255,.06);color:var(--text)">&#127760;</div>
+        <div class="exp-card__name">The End User</div>
+        <div class="exp-card__role">Just Using Software</div>
+        <div class="exp-card__quote">
+          I do not know what Supericons is. But I notice that every app I use feels clearer. 
+          Icons tell me when something is important, when to wait, when to act. They feel alive, not dead. 
+          I trust what I see. That is the point.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WEDGE STRATEGY ========== -->
+<section class="section" id="wedge">
+  <div class="container">
+    <div class="section__eyebrow">Go-to-Market</div>
+    <h2 class="section__title">The First Wedge: Animated State Icons</h2>
+    <p class="section__desc">
+      The boldest vision starts with the tiniest, most practical step. Do not build everything at once. 
+      Build one thing that is 10x better than the alternative, then expand.
+    </p>
+
+    <div style="max-width:700px">
+      <div class="wedge">
+        <div class="wedge__dot" style="background:var(--accent-glow);color:var(--accent2)">1</div>
+        <div class="wedge__body">
+          <div class="wedge__title">The Spark: Stateful Animated Icons as a Service</div>
+          <div class="wedge__text">
+            Launch a library of 200 animated state icons (loading, success, error, warning, thinking, etc.) 
+            that developers can drop in with one line. No Lottie. No Rive. No heavy dependencies. 
+            Pure, lightweight, declarative animated SVG. This solves a real pain point today.
+          </div>
+          <div class="wedge__meta">Timeline: Month 1-3 | Investment: Low | Risk: Low</div>
+        </div>
+      </div>
+
+      <div class="wedge">
+        <div class="wedge__dot" style="background:var(--teal-glow);color:var(--teal)">2</div>
+        <div class="wedge__body">
+          <div class="wedge__title">The Hook: Parametric Customization</div>
+          <div class="wedge__text">
+            Allow developers to customize via parameters: color, speed, easing, size. Then introduce theming: 
+            pass a brand config and all icons adapt. Developers start thinking in intent, not assets. 
+            The mental model shifts from "find icon" to "describe icon."
+          </div>
+          <div class="wedge__meta">Timeline: Month 4-6 | Investment: Medium | Risk: Low</div>
+        </div>
+      </div>
+
+      <div class="wedge">
+        <div class="wedge__dot" style="background:var(--amber-glow);color:var(--amber)">3</div>
+        <div class="wedge__body">
+          <div class="wedge__title">The Expansion: AI-Assisted Generation</div>
+          <div class="wedge__text">
+            Introduce Forge: describe what you need in plain English, get a parametric icon schema back. 
+            "I need a download icon that feels urgent for a healthcare app." The AI generates the schema. 
+            You tweak parameters. The runtime renders it. Now designers and developers collaborate with AI.
+          </div>
+          <div class="wedge__meta">Timeline: Month 7-12 | Investment: High | Risk: Medium</div>
+        </div>
+      </div>
+
+      <div class="wedge">
+        <div class="wedge__dot" style="background:var(--rose-glow);color:var(--rose)">4</div>
+        <div class="wedge__body">
+          <div class="wedge__title">The Platform: Registry + Runtime + Protocol</div>
+          <div class="wedge__text">
+            Open the registry. Launch the runtime SDK. Define the MCP protocol. 
+            Now Supericons is not a product. It is <strong>infrastructure</strong>. 
+            Other companies build on top. AI agents use it by default. The ecosystem compounds.
+          </div>
+          <div class="wedge__meta">Timeline: Year 2+ | Investment: High | Risk: High / High Reward</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DEFENSIBILITY ========== -->
+<section class="section section--alt" id="defensibility">
+  <div class="container">
+    <div class="section__eyebrow">Competitive Moat</div>
+    <h2 class="section__title">Why This Survives Cheap Generation</h2>
+    <p class="section__desc">
+      When DALL-E can generate 10,000 icons for $0.01, what is left? 
+      The answer: everything that matters for software. Cheap generation is an accelerant, not a threat.
+    </p>
+
+    <div class="thesis-grid">
+      <div class="thesis-card">
+        <div class="thesis-card__num">&#9670;</div>
+        <div class="thesis-card__title">The Semantic Layer</div>
+        <div class="thesis-card__text">
+          Anyone can generate pixels. No one else owns the mapping between <em>meaning</em> and <em>visual</em>. 
+          The registry of semantic tokens, compositional rules, and cultural mappings becomes a network effect. 
+          More users &rarr; better semantics &rarr; more users.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">&#9670;</div>
+        <div class="thesis-card__title">The Runtime Integration</div>
+        <div class="thesis-card__text">
+          Generated images are dead assets. Supericons are living, runtime-integrated components. 
+          They respond to state, adapt to theme, respect motion preferences, and render correctly on any surface. 
+          That integration depth is a moat.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">&#9670;</div>
+        <div class="thesis-card__title">The Protocol Standard</div>
+        <div class="thesis-card__text">
+          If Supericons becomes the standard visual protocol for AI agents (the "HTTP of visual semantics"), 
+          switching costs become astronomical. Agents, IDEs, and design tools will speak Supericons by default. 
+          The protocol itself is the ultimate moat.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">&#9670;</div>
+        <div class="thesis-card__title">Design System Gravity</div>
+        <div class="thesis-card__text">
+          Once a company encodes its brand into a Supericons parametric schema, migrating away means rebuilding 
+          their entire visual language. The schema becomes the source of truth. The gravity well deepens with every icon, 
+          every theme variant, every team that adopts it.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHAT TO AVOID ========== -->
+<section class="section" id="avoid">
+  <div class="container">
+    <div class="section__eyebrow">Strategic Discipline</div>
+    <h2 class="section__title">What Supericons Must Avoid</h2>
+    <p class="section__desc">
+      Vision without discipline is hallucination. Here are the traps that could kill the idea.
+    </p>
+
+    <div class="avoid-list">
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Becoming Just Another Icon Library</div>
+          <div class="avoid-item__text">
+            If the pitch is "we have more icons than FontAwesome," you have already lost. 
+            Quantity is not differentiation. The semantic layer, runtime, and protocol are.
+          </div>
+        </div>
+      </div>
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Competing with Image Generators on Art</div>
+          <div class="avoid-item__text">
+            Do not try to out-beautify Midjourney. Beauty is subjective and commoditized. 
+            Correctness, consistency, accessibility, and semantic precision are objective and valuable.
+          </div>
+        </div>
+      </div>
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Getting Too Abstract Too Fast</div>
+          <div class="avoid-item__text">
+            "Visual computation platform" means nothing to a developer who needs a loading spinner by Friday. 
+            Lead with concrete value. Let the abstraction emerge from repeated use.
+          </div>
+        </div>
+      </div>
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Ignoring Performance</div>
+          <div class="avoid-item__text">
+            A runtime that adds 200KB to bundle size will be rejected. A parametric system that stutters at 60fps will fail. 
+            Performance is not a feature. It is table stakes. Optimize ruthlessly.
+          </div>
+        </div>
+      </div>
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Neglecting Accessibility</div>
+          <div class="avoid-item__text">
+            Animated icons that trigger vestibular disorders, lack alt text, or fail contrast checks are hostile design. 
+            Accessibility must be in the protocol from day one, not bolted on later.
+          </div>
+        </div>
+      </div>
+      <div class="avoid-item">
+        <div class="avoid-item__x">&times;</div>
+        <div>
+          <div class="avoid-item__title">Building for AI Instead of Humans</div>
+          <div class="avoid-item__text">
+            AI agents are a critical user, but the end consumer is always human. 
+            If the visual output confuses, alienates, or overwhelms a human, the system has failed regardless of how elegant the protocol is.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MONETIZATION ========== -->
+<section class="section section--alt" id="monetization">
+  <div class="container">
+    <div class="section__eyebrow">Business Model</div>
+    <h2 class="section__title">How This Becomes a Business</h2>
+    <p class="section__desc">
+      The best visions are worthless without a viable economic engine. Here is how Supericons could monetize without compromising its open core.
+    </p>
+
+    <div class="thesis-grid">
+      <div class="thesis-card">
+        <div class="thesis-card__num">Free</div>
+        <div class="thesis-card__title">Open Core</div>
+        <div class="thesis-card__text">
+          Basic runtime, standard icon set, and public registry access are free and open-source. 
+          This drives adoption, community contribution, and protocol standardization. 
+          The free tier is generous enough that developers choose Supericons by default.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">$29/mo</div>
+        <div class="thesis-card__title">Pro: Studio + Advanced Animation</div>
+        <div class="thesis-card__text">
+          Access to Studio (visual parametric editor), advanced animation presets, custom theming engine, 
+          and premium icon packs. Target: freelance designers, indie developers, and startups. 
+          The value proposition: ship faster, look better.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">$199/mo</div>
+        <div class="thesis-card__title">Team: Collaboration + Governance</div>
+        <div class="thesis-card__text">
+          Shared workspaces, design system governance tools, version control for visual schemas, 
+          team-wide brand enforcement, and analytics. Target: design teams at growing companies. 
+          The value proposition: scale consistency.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">Custom</div>
+        <div class="thesis-card__title">Enterprise: Private + Protocol</div>
+        <div class="thesis-card__text">
+          Private registry, custom AI model training on brand assets, SLA, dedicated support, 
+          on-premise runtime, and protocol licensing. Target: Fortune 500, design tool companies, and AI platforms. 
+          The value proposition: own your visual infrastructure.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">Usage</div>
+        <div class="thesis-card__title">Forge API: Pay Per Generation</div>
+        <div class="thesis-card__text">
+          AI-assisted icon generation via API. Charged per generation or per token. 
+          Target: AI agents, no-code tools, and design automation platforms. 
+          The value proposition: generate correct, consistent visuals at scale without a design team.
+        </div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card__num">Rev Share</div>
+        <div class="thesis-card__title">Registry Marketplace</div>
+        <div class="thesis-card__text">
+          Premium icon packs and visual primitives sold on the registry. 
+          Supericons takes a 20% cut. Creates a marketplace incentive for designers to build and sell 
+          high-quality parametric icon sets, similar to Figma Community or Unity Asset Store.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TECHNICAL DIRECTION ========== -->
+<section class="section" id="technical">
+  <div class="container">
+    <div class="section__eyebrow">Architecture</div>
+    <h2 class="section__title">Technical Direction</h2>
+    <p class="section__desc">
+      A vision needs an engine. Here is the high-level technical architecture that could make this real.
+    </p>
+
+    <div class="concept">
+      <div class="concept__body">
+        <div class="concept__label">Stack</div>
+        <h3 class="concept__title">The Layer Cake</h3>
+        <p class="concept__text">
+          <strong>SVG as Intermediate Representation (IR):</strong> All visuals compile to optimized SVG as the common format. 
+          From SVG, renderers target DOM, Canvas, WebGL, or native surfaces. SVG is human-readable, AI-parseable, and universally supported.
+        </p>
+        <p class="concept__text">
+          <strong>Parametric Schema (JSON):</strong> Icons are described as structured data, not binary files. 
+          The schema defines primitives, composition rules, animation keyframes, state mappings, and accessibility metadata. 
+          Version-controlled, diffable, and machine-readable.
+        </p>
+        <p class="concept__text">
+          <strong>Runtime Engine (TypeScript/WebAssembly):</strong> Core runtime in TypeScript for broad compatibility. 
+          Performance-critical paths (morphing, complex animation interpolation) in WASM. 
+          Tree-shakeable modules: import only what you need.
+        </p>
+        <p class="concept__text">
+          <strong>Web Components:</strong> Framework-agnostic custom elements (<code style="font-family:var(--font-mono);font-size:12px">&lt;super-icon&gt;</code>) 
+          that work in React, Vue, Svelte, vanilla HTML, and even server-side rendering contexts.
+        </p>
+      </div>
+      <div class="concept__visual">
+        <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px">
+          <div style="background:var(--surface);border-radius:8px;padding:14px 18px;font-size:12px;font-family:var(--font-mono);color:var(--text3);border-left:3px solid var(--accent)">
+            <span style="color:var(--accent2);font-weight:600">Layer 5</span> &mdash; Surfaces (DOM, Canvas, WebGL, AR, LED)
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:14px 18px;font-size:12px;font-family:var(--font-mono);color:var(--text3);border-left:3px solid var(--teal)">
+            <span style="color:var(--teal);font-weight:600">Layer 4</span> &mdash; Renderers (SVG Compiler, Canvas API, Native Bridges)
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:14px 18px;font-size:12px;font-family:var(--font-mono);color:var(--text3);border-left:3px solid var(--amber)">
+            <span style="color:var(--amber);font-weight:600">Layer 3</span> &mdash; Runtime (Animation Engine, State Manager, Theme Resolver)
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:14px 18px;font-size:12px;font-family:var(--font-mono);color:var(--text3);border-left:3px solid var(--rose)">
+            <span style="color:var(--rose);font-weight:600">Layer 2</span> &mdash; Schema (Parametric IR, Composition Rules, Semantics)
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:14px 18px;font-size:12px;font-family:var(--font-mono);color:var(--text3);border-left:3px solid var(--cyan)">
+            <span style="color:var(--cyan);font-weight:600">Layer 1</span> &mdash; Registry (Tokens, Namespaces, Versions, Protocol)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta">
+  <div class="container">
+    <h2 class="cta__title">The Question Is Not Whether.<br>It Is How Fast.</h2>
+    <p class="cta__text">
+      The era of static visual assets is ending. The era of <strong>visual computation</strong> is beginning. 
+      Supericons can be the platform that defines this new category&mdash;or someone else will. 
+      The primitives are here. The AI is ready. The developers are hungry. 
+      What gets built in the next 12 months will shape the next 10 years.
+    </p>
+    <a href="https://supericons.dev" class="cta__btn">
+      Start Building the Future &rarr;
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    Supericons Future Vision Blueprint &mdash; May 2026<br>
+    Curly Mole Labs. Challenge assumptions. Build what is next.
+  </div>
+</footer>
+
+<script>
+// Animated mesh background
+(function(){
+  const mesh = document.getElementById('mesh');
+  if(!mesh) return;
+  for(let i=0;i<25;i++){
+    const node = document.createElement('div');
+    node.className = 'mesh__node';
+    node.style.left = (5+Math.random()*90)+'%';
+    node.style.top = (5+Math.random()*90)+'%';
+    node.style.animationDelay = (Math.random()*20)+'s';
+    node.style.animationDuration = (15+Math.random()*15)+'s';
+    node.style.opacity = 0.3+Math.random()*0.5;
+    mesh.appendChild(node);
+  }
+})();
+
+// Parametric icon demo
+(function(){
+  const slider = document.getElementById('paramSlider');
+  const rect = document.getElementById('paramRect');
+  const check = document.getElementById('paramCheck');
+  const badge = document.getElementById('paramBadge');
+  const label = document.getElementById('paramStateLabel');
+  if(!slider) return;
+  const states = ['idle','syncing','success','error'];
+  const colors = ['url(#paramGrad)','#f59e0b','#14b8a6','#f43f5e'];
+  slider.addEventListener('input',function(){
+    const idx = parseInt(this.value);
+    label.textContent = states[idx];
+    rect.setAttribute('stroke',colors[idx]);
+    check.setAttribute('stroke',colors[idx]);
+    if(idx===0){badge.setAttribute('opacity','0');check.setAttribute('d','M40 55 L55 70 L80 45');}
+    if(idx===1){badge.setAttribute('opacity','0');check.setAttribute('d','M40 55 L55 70 L80 45');}
+    if(idx===2){badge.setAttribute('opacity','0');check.setAttribute('d','M40 55 L55 70 L80 45');}
+    if(idx===3){badge.setAttribute('opacity','1');check.setAttribute('d','M45 45 L75 75 M75 45 L45 75');}
+  });
+})();
+
+// Scroll reveal
+(function(){
+  const els = document.querySelectorAll('.thesis-card,.pillar,.exp-card,.wedge,.avoid-item,.concept');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+  els.forEach(el=>{el.classList.add('reveal');obs.observe(el);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Find likely logo assets from official homepages for human source review before ingestion.",
+  "summary": {
+    "total_candidates": 1,
+    "skipped_simpleicons": 0,
+    "source_review_items": 1
+  },
+  "skipped": [],
+  "discovered": [
+    {
+      "label": "Cartesia",
+      "source_name": "cartesia",
+      "homepage": "https://www.cartesia.ai/",
+      "status": "needs_source_review",
+      "source_candidates": [
+        {
+          "url": "https://www.cartesia.ai/_astro/favicon.DG7xgxb2.ico",
+          "asset_kind": "ico",
+          "confidence": "medium",
+          "reason": "homepage link rel=\"shortcut icon\""
+        },
+        {
+          "url": "https://www.cartesia.ai/_astro/apple-touch-icon.BuSsVlKl.png",
+          "asset_kind": "png",
+          "confidence": "medium",
+          "reason": "homepage link rel=\"apple-touch-icon\""
+        },
+        {
+          "url": "https://cartesia.ai/site/og-default.jpg",
+          "asset_kind": "jpg",
+          "confidence": "low",
+          "reason": "homepage meta og:image"
+        },
+        {
+          "url": "https://www.cartesia.ai/site/research-mark.svg",
+          "asset_kind": "svg",
+          "confidence": "low",
+          "reason": "homepage image references logo, brand, mark, or icon"
+        },
+        {
+          "url": "https://www.cartesia.ai/favicon.svg",
+          "asset_kind": "svg",
+          "confidence": "low",
+          "reason": "well-known path /favicon.svg"
+        },
+        {
+          "url": "https://www.cartesia.ai/favicon.png",
+          "asset_kind": "png",
+          "confidence": "low",
+          "reason": "well-known path /favicon.png"
+        },
+        {
+          "url": "https://www.cartesia.ai/apple-touch-icon.png",
+          "asset_kind": "png",
+          "confidence": "low",
+          "reason": "well-known path /apple-touch-icon.png"
+        },
+        {
+          "url": "https://www.cartesia.ai/logo.svg",
+          "asset_kind": "svg",
+          "confidence": "medium",
+          "reason": "well-known path /logo.svg"
+        },
+        {
+          "url": "https://www.cartesia.ai/logo.png",
+          "asset_kind": "png",
+          "confidence": "medium",
+          "reason": "well-known path /logo.png"
+        }
+      ]
+    }
+  ]
+}

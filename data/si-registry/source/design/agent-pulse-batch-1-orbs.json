@@ -1,0 +1,1445 @@
+{
+  "schema": "si-design-record@0.1.0",
+  "pack_id": "agent-pulse",
+  "notes": "Ring 1 batch 1: the remaining 10 agent-orb states. Metaphors owner-approved 2026-07-06 (all as recommended); shapes drawn per construction recipes; at shape_drawn awaiting the shape gate. Review page: mockups/si-pack-2-batch-1-shapes.html (generated view of these records).",
+  "records": [
+    {
+      "icon_id": "si:orb-idle",
+      "label": "Orb Idle",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The bare orb, nothing else, breathing slowly with a faint halo. Presence without activity.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is present and ready, with nothing happening.",
+        "semantic_tags": [
+          "idle",
+          "ready",
+          "ambient",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "none, presence only",
+          "direction": "none",
+          "intensity": "minimal"
+        },
+        "mindmap": {
+          "synonyms": [
+            "idle",
+            "ready",
+            "standby",
+            "available",
+            "at rest"
+          ],
+          "associations": [
+            "breathing",
+            "heartbeat",
+            "status light",
+            "calm water"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "standby LED dot next to the orb",
+              "verdict": "rejected",
+              "reason": "Adds a second element to the one state whose meaning is the absence of elements; also collides with status-ambient."
+            },
+            {
+              "kind": "human_convention",
+              "idea": "relaxed posture cue (slumped orb)",
+              "verdict": "rejected",
+              "reason": "Deforming the orb breaks the shared silhouette every other state depends on."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "the unadorned orb itself, breathing",
+              "verdict": "chosen",
+              "reason": "Grammar: adornment means activity, so no adornment IS idle. The pack's zero-state; every other icon is idle plus one idea."
+            }
+          ],
+          "anti_associations": [
+            "record button (avoid solid red-ish fill)",
+            "radio button",
+            "generic dot bullet"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-sleeping",
+            "differentiator": "sleeping is dimmed with z glyphs; idle is full presence, no glyphs"
+          },
+          {
+            "icon_id": "si:status-ambient",
+            "differentiator": "status-ambient is a small accent badge, not the agent orb"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "slow breathe with a faint halo swell",
+          "spec": {
+            "pattern": "breathe",
+            "cycle_ms": 4000,
+            "rest": "built into ease",
+            "reduced_motion": "static orb"
+          }
+        }
+      },
+      "evidence": [
+        "pack_record_grammar",
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r6 at 12,12; halo circle r9 at 1.8 weight, 40 percent opacity. Solid: filled orb r6.5 + halo ring. Elegance: gOrb r6 + glass cap, gAcc halo r7.4 breathing on a 4s cycle.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 6,
+              "anim": {
+                "name": "breathe",
+                "dur": 4
+              }
+            },
+            {
+              "type": "halo",
+              "cx": 12,
+              "cy": 12,
+              "r": 9,
+              "w": 1.8,
+              "opacity": 0.4,
+              "anim": {
+                "name": "breathe",
+                "dur": 4
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-speaking",
+      "label": "Orb Speaking",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with small equalizer bars on its face and symmetric ripples emanating outward from both sides. The agent producing audio.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is producing speech or audio output.",
+        "semantic_tags": [
+          "speaking",
+          "voice output",
+          "talking",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "emitting audio",
+          "direction": "outbound",
+          "intensity": "conversational (1-2 ripples per side)"
+        },
+        "mindmap": {
+          "synonyms": [
+            "speaking",
+            "talking",
+            "voice output",
+            "responding aloud",
+            "tts"
+          ],
+          "associations": [
+            "mouth",
+            "speaker",
+            "megaphone",
+            "ripples",
+            "sound emanating"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "mouth or speech lines from a face",
+              "verdict": "rejected",
+              "reason": "Body parts stay off agent icons (pack precedent from listening's ear rejection)."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "loudspeaker with arcs",
+              "verdict": "rejected",
+              "reason": "Device grammar reserved for actual device icons; also reads as volume control."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "orb with face bars + outbound side ripples",
+              "verdict": "chosen",
+              "reason": "Owner endorsed this exact composition in the round-1 pack review (one of three keepers). It owns the outbound-side-ripple territory, the mirror of listening's inbound waves."
+            }
+          ],
+          "anti_associations": [
+            "volume control",
+            "wifi",
+            "alarm ring",
+            "steering wheel (ripples must not wrap the orb)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-listening",
+            "differentiator": "listening wears headphones with inbound waves; speaking ripples outward"
+          },
+          {
+            "icon_id": "si:sound-blast",
+            "differentiator": "blast fires 2 waves from all four corners; speaking is calm side ripples"
+          },
+          {
+            "icon_id": "si:voice-wave",
+            "differentiator": "voice-wave has no orb"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "face bars dance while ripples expand outward in sequence",
+          "spec": {
+            "pattern": "eq + ripple",
+            "cycle_ms": 2600,
+            "stagger_ms": 1300,
+            "rest": "ripple cycle carries fade-out rest",
+            "reduced_motion": "static bars + one ripple pair"
+          }
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Round-1 pack review: orb speaking was one of the three keepers.",
+          "status": "promoted"
+        },
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ],
+      "evidence": [
+        "owner_review_2026-07-06_round1",
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5 at 12,12; three face bars 1.8w at x 10.4/12/13.6, heights 2.8/4.2/2.8 centered on y12; two outbound arcs per side, convex away from the orb: right M17.6 9.6 a3.4 3.4 0 0 1 0 4.8 and M20 8.2 a5.4 5.4 0 0 1 0 7.6, left mirrored with sweep 0. Solid render drops the face bars (detail scales by render). Systematic mirror of listening: speaking convex-away, listening convex-toward.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 5
+            },
+            {
+              "type": "bars",
+              "cy": 12,
+              "w": 1.8,
+              "onFace": true,
+              "anim": {
+                "name": "eq"
+              },
+              "items": [
+                {
+                  "x": 10.4,
+                  "h": 2.8
+                },
+                {
+                  "x": 12,
+                  "h": 4.2
+                },
+                {
+                  "x": 13.6,
+                  "h": 2.8
+                }
+              ]
+            },
+            {
+              "type": "path",
+              "d": "M17.6 9.6a3.4 3.4 0 0 1 0 4.8M6.4 9.6a3.4 3.4 0 0 0 0 4.8",
+              "w": 1.8,
+              "anim": {
+                "name": "seq"
+              }
+            },
+            {
+              "type": "path",
+              "d": "M20 8.2a5.4 5.4 0 0 1 0 7.6M4 8.2a5.4 5.4 0 0 0 0 7.6",
+              "w": 1.8,
+              "role": "accent",
+              "anim": {
+                "name": "seq",
+                "delay": 0.45
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "icon_id": "si:orb-working",
+      "label": "Orb Working",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with a single luminous arc segment sweeping around it. Work orbiting the core, not a full spinner ring.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is actively executing a task.",
+        "semantic_tags": [
+          "working",
+          "busy",
+          "running",
+          "executing",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "executing",
+          "direction": "circular (self-contained effort)",
+          "intensity": "steady"
+        },
+        "mindmap": {
+          "synonyms": [
+            "working",
+            "busy",
+            "processing task",
+            "running",
+            "in progress"
+          ],
+          "associations": [
+            "orbit",
+            "gears",
+            "spinner",
+            "progress ring",
+            "satellite"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "hourglass",
+              "verdict": "rejected",
+              "reason": "Means waiting, not working; also claimed by rate-limited in the states category."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "full spinner ring",
+              "verdict": "rejected",
+              "reason": "The generic spinner is exactly what this pack exists to replace."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "one accent arc segment orbiting the orb",
+              "verdict": "chosen",
+              "reason": "A single luminous arc reads as energy moving around a stable core: working, not loading. Partial segment + orb center keeps it out of spinner territory (craft rule R6 check)."
+            }
+          ],
+          "anti_associations": [
+            "loading spinner",
+            "progress ring with percentage",
+            "radar",
+            "clock"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-retrying",
+            "differentiator": "retrying's arc carries an arrowhead; working's arc is headless"
+          },
+          {
+            "icon_id": "si:orb-idle",
+            "differentiator": "idle has no adornment at all"
+          },
+          {
+            "icon_id": "si:task-background",
+            "differentiator": "background task is a satellite dot on a dim ring, not an accent arc"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "arc sweeps continuously at working pace",
+          "spec": {
+            "pattern": "orbit",
+            "cycle_ms": 1800,
+            "rest": "none while working (the one honest continuous loop)",
+            "reduced_motion": "static arc at 2 o'clock"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5.5 at 12,12; one headless arc segment r8.5 spanning 90 degrees upper-right: M20.47 11.26 A8.5 8.5 0 0 0 11.26 3.53. Elegance: accent arc with soft under-glow orbits at 1.8s.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 5.5
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 8.5,
+              "a1": 5,
+              "a2": 95,
+              "w": 2,
+              "role": "accent",
+              "anim": {
+                "name": "orbit",
+                "d": 1.8
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-waiting-input",
+      "label": "Orb Waiting for Input",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with a single accent dot hovering centered above it, pulsing gently. The agent holding up the question.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is paused and needs the human to respond.",
+        "semantic_tags": [
+          "waiting",
+          "needs input",
+          "your turn",
+          "prompt",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "paused, requesting",
+          "direction": "toward the human (above)",
+          "intensity": "gentle but persistent"
+        },
+        "mindmap": {
+          "synonyms": [
+            "waiting for input",
+            "needs you",
+            "your turn",
+            "awaiting reply",
+            "blocked on human"
+          ],
+          "associations": [
+            "raised hand",
+            "question mark",
+            "notification dot",
+            "doorbell",
+            "held breath"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "question mark on the orb",
+              "verdict": "rejected",
+              "reason": "Question mark reads as help/support, not as a turn-taking request."
+            },
+            {
+              "kind": "human_convention",
+              "idea": "raised hand",
+              "verdict": "rejected",
+              "reason": "Body parts stay off agent icons."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "one accent dot hovering centered above the orb",
+              "verdict": "chosen",
+              "reason": "Grammar: above the orb = needs human attention. Centered (not corner) so it cannot read as a notification badge. The dot is the held question."
+            }
+          ],
+          "anti_associations": [
+            "notification badge (corner dot)",
+            "record indicator",
+            "i/info icon"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-error",
+            "differentiator": "error is an exclamation on the face with glitch; waiting is a calm dot above"
+          },
+          {
+            "icon_id": "si:attention-interrupt",
+            "differentiator": "interrupt is a bell demanding attention; waiting is patient"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "the dot blinks on a patient cycle; orb stays still",
+          "spec": {
+            "pattern": "blink",
+            "cycle_ms": 1600,
+            "rest": "half the cycle",
+            "reduced_motion": "static dot"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5 at 12,13.5; accent dot r1.8 at 12,4.6, centered above with 2.2 clearance. Dot blinks on a patient 1.6s cycle; orb stays still.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 13.5,
+              "r": 5
+            },
+            {
+              "type": "dot",
+              "cx": 12,
+              "cy": 4.6,
+              "r": 1.8,
+              "role": "accent",
+              "anim": {
+                "name": "blink"
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-done",
+      "label": "Orb Done",
+      "pack_id": "agent-pulse",
+      "version": "0.2.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with an accent checkmark drawn across its face. The agent wearing its result.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent finished the task successfully.",
+        "semantic_tags": [
+          "done",
+          "complete",
+          "success",
+          "finished",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "completed",
+          "direction": "none (settled)",
+          "intensity": "calm confidence"
+        },
+        "mindmap": {
+          "synonyms": [
+            "done",
+            "complete",
+            "success",
+            "finished",
+            "task complete"
+          ],
+          "associations": [
+            "checkmark",
+            "trophy",
+            "flag",
+            "settled dust"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "thumbs up",
+              "verdict": "rejected",
+              "reason": "Body part, and culturally uneven."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "corner check badge on the orb",
+              "verdict": "rejected",
+              "reason": "Corner badges read as verification/approval status, not task completion."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "checkmark drawn across the orb face",
+              "verdict": "chosen",
+              "reason": "The check is the one universal completion mark; placing it on the face (not a badge corner) makes it the agent's own state, and the draw-on animation gives the completion beat."
+            }
+          ],
+          "anti_associations": [
+            "verified badge",
+            "approval seal",
+            "checkbox form control"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:burst-check",
+            "differentiator": "burst-check is the celebration effect with no orb; orb-done is the settled state"
+          },
+          {
+            "icon_id": "si:done-spark",
+            "differentiator": "pack-1 done-spark is a 24px nav glyph, not an orb state"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "check draws on once, then rests; no loop while displayed",
+          "spec": {
+            "pattern": "draw",
+            "cycle_ms": 3000,
+            "rest": "60 percent of cycle",
+            "reduced_motion": "static check"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r6.5 at 12,12; check M8.6 12.2 l2.4 2.4 4.6-5 at 2w round caps. Solid render uses the heavy-stroke variant (2.6) so the face mark stays legible without knockout. Elegance: check draws on once (dasharray 14) over a soft accent glow, then rests.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 6.5
+            },
+            {
+              "type": "path",
+              "d": "M8.6 12.2l2.4 2.4 4.6-5",
+              "w": 2,
+              "role": "accent",
+              "onFace": true,
+              "dash": "14",
+              "anim": {
+                "name": "draw14"
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-error",
+      "label": "Orb Error",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with an exclamation mark on its face, shivering with occasional horizontal glitch slices. Something is wrong with the agent itself.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent hit a fault and needs attention.",
+        "semantic_tags": [
+          "error",
+          "fault",
+          "failed",
+          "attention",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "faulted",
+          "direction": "none (internal)",
+          "intensity": "urgent"
+        },
+        "mindmap": {
+          "synonyms": [
+            "error",
+            "fault",
+            "failure",
+            "crashed",
+            "something went wrong"
+          ],
+          "associations": [
+            "exclamation",
+            "warning triangle",
+            "X",
+            "glitch",
+            "static"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "X on the orb",
+              "verdict": "rejected",
+              "reason": "X means close or delete, not fault."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "warning triangle",
+              "verdict": "rejected",
+              "reason": "System-level signage; the fault belongs to the agent, so it should live on the orb."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "exclamation on the face + glitch slices",
+              "verdict": "chosen",
+              "reason": "Exclamation is the universal fault mark; the glitch offsets are the agent-native tell (a digital being showing corruption) and give error its motion identity."
+            }
+          ],
+          "anti_associations": [
+            "close button",
+            "road warning sign",
+            "notification badge"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-blocked",
+            "differentiator": "blocked is external policy (shield); error is internal fault (exclamation + glitch)"
+          },
+          {
+            "icon_id": "si:orb-waiting-input",
+            "differentiator": "waiting is a calm dot above; error is on the face and urgent"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "subtle shake with 2 glitch slices per cycle, mostly at rest",
+          "spec": {
+            "pattern": "shake + glitch",
+            "cycle_ms": 2600,
+            "rest": "84 percent of cycle",
+            "reduced_motion": "static exclamation"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06",
+        "round2_mockup_precedent"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r6 at 12,12; exclamation bar M12 8.5 v4.2 at 2.2w plus dot r1.2 at 12,15.4. Static renders stay clean (R8); shake and two glitch slices exist only in the animated render, 84 percent rest.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 6,
+              "anim": {
+                "name": "shakes"
+              }
+            },
+            {
+              "type": "path",
+              "d": "M12 8.5v4.2",
+              "w": 2.2,
+              "role": "white",
+              "onFace": true
+            },
+            {
+              "type": "dot",
+              "cx": 12,
+              "cy": 15.4,
+              "r": 1.2,
+              "role": "white",
+              "onFace": true
+            },
+            {
+              "type": "pill",
+              "x": 6.6,
+              "y": 10.6,
+              "w": 10.8,
+              "h": 1,
+              "rx": 0.5,
+              "role": "accent",
+              "renders": [
+                "elegance"
+              ],
+              "anim": {
+                "name": "glitch"
+              }
+            },
+            {
+              "type": "pill",
+              "x": 8,
+              "y": 13.4,
+              "w": 8,
+              "h": 0.75,
+              "rx": 0.38,
+              "renders": [
+                "elegance"
+              ],
+              "anim": {
+                "name": "glitch",
+                "delay": 0.25
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-blocked",
+      "label": "Orb Blocked",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "A shield standing in front of the orb, carrying a horizontal accent bar. Policy standing between the agent and the action.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show an action was denied by a guardrail or policy.",
+        "semantic_tags": [
+          "blocked",
+          "denied",
+          "guardrail",
+          "policy",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present, behind the shield)",
+          "action": "denied by policy",
+          "direction": "frontal (something in the way)",
+          "intensity": "firm, not alarming"
+        },
+        "mindmap": {
+          "synonyms": [
+            "blocked",
+            "denied",
+            "not permitted",
+            "guardrail hit",
+            "policy stop"
+          ],
+          "associations": [
+            "shield",
+            "barrier",
+            "stop hand",
+            "padlock",
+            "no-entry sign"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "circle-slash over the orb",
+              "verdict": "rejected",
+              "reason": "The diagonal slash is claimed by muted/off in the pack grammar; reusing it here would collide."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "padlock",
+              "verdict": "reserved",
+              "reason": "Lock is reserved for auth/private semantics elsewhere in the catalog."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "shield in front of the orb with an accent bar",
+              "verdict": "chosen",
+              "reason": "Guardrail semantics are protective, not punitive: a shield standing in front reads as policy doing its job. Grammar: front overlay = policy. The bar is the firm no."
+            }
+          ],
+          "anti_associations": [
+            "mute slash",
+            "security/antivirus branding",
+            "no-entry road sign"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-error",
+            "differentiator": "error is internal fault; blocked is external policy, calm and intentional"
+          },
+          {
+            "icon_id": "si:guardrail-path",
+            "differentiator": "pack-1 guardrail-path is the policy lane glyph, not an orb state"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "one slow firm breathe of the shield; deliberately calm",
+          "spec": {
+            "pattern": "breathe",
+            "cycle_ms": 4500,
+            "rest": "built into ease",
+            "reduced_motion": "static"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06",
+        "pack_grammar_slash_rule"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb drawn as two side arcs r6.5 broken behind the shield: M8.75 6.37 A6.5 6.5 0 0 0 8.75 17.63 and mirror with sweep 1. Shield M12 6 l4.5 1.7 v3 c0 3-2 4.6-4.5 5.4 c-2.5-.8-4.5-2.4-4.5-5.4 v-3 z with accent bar M9.8 11.2 h4.4 (2.2w). Elegance fills the shield gInk with a glass band and gAccS bar over a dimmed orb.",
+        "params": {
+          "parts": [
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 6.5,
+              "a1": 120,
+              "a2": 240,
+              "w": 2
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 6.5,
+              "a1": 60,
+              "a2": -60,
+              "w": 2
+            },
+            {
+              "type": "path",
+              "d": "M12 6l4.5 1.7v3c0 3-2 4.6-4.5 5.4-2.5-.8-4.5-2.4-4.5-5.4v-3z",
+              "w": 2,
+              "anim": {
+                "name": "breathe",
+                "dur": 4.5
+              }
+            },
+            {
+              "type": "pill",
+              "x": 9.8,
+              "y": 10.7,
+              "w": 4.4,
+              "h": 1.5,
+              "rx": 0.75,
+              "role": "accent",
+              "anim": {
+                "name": "breathe",
+                "dur": 4.5
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-retrying",
+      "label": "Orb Retrying",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb with an accent arc circling it, ending in a filled arrowhead. Trying again, deliberately.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is recovering and attempting the action again.",
+        "semantic_tags": [
+          "retrying",
+          "recover",
+          "again",
+          "attempt",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "repeating an attempt",
+          "direction": "circular with a head (intentional return)",
+          "intensity": "determined"
+        },
+        "mindmap": {
+          "synonyms": [
+            "retrying",
+            "trying again",
+            "recovering",
+            "reattempting",
+            "auto-retry"
+          ],
+          "associations": [
+            "circular arrow",
+            "refresh",
+            "boomerang",
+            "loop"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "double circular arrows (refresh)",
+              "verdict": "rejected",
+              "reason": "Two arrows read as sync/refresh content, not as a recovery attempt."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "single arc with one arrowhead around the orb",
+              "verdict": "chosen",
+              "reason": "One arc, one head: a single deliberate return. The arrowhead is the differentiator from working's headless arc, and single (not double) keeps it out of sync territory."
+            }
+          ],
+          "anti_associations": [
+            "sync icon (two arrows)",
+            "refresh page",
+            "recycle symbol (three arrows)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-working",
+            "differentiator": "working's arc is headless and fast; retrying's arc carries an arrowhead and moves slower"
+          },
+          {
+            "icon_id": "si:state-reconnecting",
+            "differentiator": "reconnecting is two nodes with a flowing line, no orbit"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "arc completes one revolution, pauses, repeats: the retry rhythm itself",
+          "spec": {
+            "pattern": "orbit with rest",
+            "cycle_ms": 2400,
+            "rest": "0.8s pause between revolutions",
+            "reduced_motion": "static arc with head"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5 at 12,12; arc r8.5 over the top M4.01 9.09 A8.5 8.5 0 0 1 19.99 9.09 ending in a filled arrowhead M21.8 6.2 l-1.4 4.6 -3.4-2.6 z. One revolution then a 0.8s rest; arrowhead differentiates from working.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 12,
+              "r": 5
+            },
+            {
+              "type": "arc",
+              "cx": 12,
+              "cy": 12,
+              "r": 8.5,
+              "a1": 160,
+              "a2": 20,
+              "w": 2,
+              "head": true,
+              "role": "accent",
+              "anim": {
+                "name": "orbitRest"
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-handoff",
+      "label": "Orb Handoff",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "Two smaller orbs side by side with an accent payload dot traveling a dashed arc from one to the other. The task changing hands.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show a task being delegated from one agent to another.",
+        "semantic_tags": [
+          "handoff",
+          "delegate",
+          "transfer",
+          "multi-agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "two agents (two orbs)",
+          "action": "transferring a task",
+          "direction": "left to right along an arc",
+          "intensity": "smooth"
+        },
+        "mindmap": {
+          "synonyms": [
+            "handoff",
+            "delegation",
+            "transfer",
+            "pass to agent",
+            "sub-agent"
+          ],
+          "associations": [
+            "baton pass",
+            "handshake",
+            "relay",
+            "bridge",
+            "courier"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "human_convention",
+              "idea": "handshake",
+              "verdict": "rejected",
+              "reason": "Body parts; also reads as agreement, not transfer."
+            },
+            {
+              "kind": "device_convention",
+              "idea": "arrow between two nodes",
+              "verdict": "rejected",
+              "reason": "Reads as data flow or link, and collides with reconnecting's straight-line territory."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "payload dot traveling a dashed arc between two orbs",
+              "verdict": "chosen",
+              "reason": "The arc (not a straight line) is the throw; the glowing payload is the task itself in flight. Two orbs make delegation unambiguous. Straight-line territory stays with reconnecting."
+            }
+          ],
+          "anti_associations": [
+            "link/connection icon",
+            "data sync",
+            "bluetooth pairing"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:state-reconnecting",
+            "differentiator": "reconnecting is a straight flowing line between nodes; handoff is an arc with a discrete payload"
+          },
+          {
+            "icon_id": "si:agent-handoff",
+            "differentiator": "pack-1 agent-handoff is the 24px nav glyph; this is the living state"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "payload travels the arc, lands, receiving orb glows briefly, rest, repeat",
+          "spec": {
+            "pattern": "travel",
+            "cycle_ms": 2400,
+            "rest": "18 percent tail fade",
+            "reduced_motion": "static payload at mid-arc"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06",
+        "round2_mockup_precedent"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Two orbs r4 at 7,14.5 and 17,14.5 (2.0 gap); dashed arc M9.5 10.5 q2.5-3.5 5 0 (dash 1 2.5, 1.8w); accent payload dot r1.5 at 12,8.2 above the arc apex, traveling left to right in the animated render.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 7,
+              "cy": 14.5,
+              "r": 4
+            },
+            {
+              "type": "orb",
+              "cx": 17,
+              "cy": 14.5,
+              "r": 4
+            },
+            {
+              "type": "path",
+              "d": "M9.5 10.5q2.5-3.5 5 0",
+              "w": 1.8,
+              "role": "dim",
+              "dash": "1 2.5"
+            },
+            {
+              "type": "dot",
+              "cx": 9.8,
+              "cy": 8.6,
+              "r": 1.5,
+              "role": "accent",
+              "anim": {
+                "name": "travel",
+                "tx": 5
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    },
+    {
+      "icon_id": "si:orb-sleeping",
+      "label": "Orb Sleeping",
+      "pack_id": "agent-pulse",
+      "version": "0.3.0",
+      "design_state": "shape_drawn",
+      "face": {
+        "depicts": "The orb dimmed to about half presence with two small z glyphs rising off its shoulder. Dormant but wakeable.",
+        "style_renders": [
+          "stroke",
+          "solid",
+          "elegance"
+        ]
+      },
+      "soul": {
+        "purpose": "Show the agent is dormant on standby, wakeable but not attending.",
+        "semantic_tags": [
+          "sleeping",
+          "standby",
+          "dormant",
+          "hibernate",
+          "agent",
+          "orb"
+        ],
+        "must_communicate": {
+          "actor": "agent (orb present)",
+          "action": "dormant",
+          "direction": "none",
+          "intensity": "near zero (dimmed)"
+        },
+        "mindmap": {
+          "synonyms": [
+            "sleeping",
+            "standby",
+            "dormant",
+            "hibernating",
+            "suspended"
+          ],
+          "associations": [
+            "z glyphs",
+            "moon",
+            "closed eyes",
+            "power nap",
+            "low power"
+          ],
+          "metaphor_candidates": [
+            {
+              "kind": "device_convention",
+              "idea": "crescent moon on the orb",
+              "verdict": "reserved",
+              "reason": "Moon is the OS convention for dark mode and do-not-disturb; reserving it avoids a settings-icon collision."
+            },
+            {
+              "kind": "human_convention",
+              "idea": "closed eyes on the orb",
+              "verdict": "rejected",
+              "reason": "Facial features turn the orb into a mascot; the pack keeps the orb faceless."
+            },
+            {
+              "kind": "agent_native",
+              "idea": "dimmed orb with rising z glyphs",
+              "verdict": "chosen",
+              "reason": "The z is the one sleep mark with no competing UI meaning, and dimming the orb itself makes the state legible even at 16px where the z's soften."
+            }
+          ],
+          "anti_associations": [
+            "dark mode moon",
+            "do not disturb",
+            "zzz text emoji clutter (max two z glyphs)"
+          ]
+        },
+        "distinct_from": [
+          {
+            "icon_id": "si:orb-idle",
+            "differentiator": "idle is full-presence and adornment-free; sleeping is dimmed with z glyphs"
+          }
+        ]
+      },
+      "pulse": {
+        "motion": {
+          "has_motion": true,
+          "behavior": "z glyphs rise and fade on a slow cycle; orb breathes extra slowly",
+          "spec": {
+            "pattern": "rise + breathe",
+            "cycle_ms": 5200,
+            "rest": "long gaps between z's",
+            "reduced_motion": "static dim orb with one z"
+          }
+        }
+      },
+      "evidence": [
+        "mindmap_2026-07-06",
+        "round2_mockup_precedent"
+      ],
+      "construction": {
+        "grid": 24,
+        "recipe": "Orb r5.5 at 12,13 at 55 percent opacity; z glyphs M16.5 5.5 h3 l-3 3 h3 (1.8w) and M20.2 2.6 h2.2 l-2.2 2.2 h2.2 (1.5w, dimmed). Exactly two z glyphs per the anti-association rule.",
+        "params": {
+          "parts": [
+            {
+              "type": "orb",
+              "cx": 12,
+              "cy": 13,
+              "r": 5.5,
+              "opacity": 0.55
+            },
+            {
+              "type": "path",
+              "d": "M16.5 5.5h3l-3 3h3",
+              "w": 1.8,
+              "anim": {
+                "name": "rise"
+              }
+            },
+            {
+              "type": "path",
+              "d": "M20.2 2.6h2.2l-2.2 2.2h2.2",
+              "w": 1.5,
+              "role": "dim",
+              "anim": {
+                "name": "rise",
+                "delay": 2.6
+              }
+            }
+          ]
+        }
+      },
+      "external_comments": [
+        {
+          "author": "owner",
+          "date": "2026-07-06",
+          "body": "Batch 1 paper review: all 10 recommended metaphors approved as recommended.",
+          "status": "promoted"
+        }
+      ]
+    }
+  ]
+}

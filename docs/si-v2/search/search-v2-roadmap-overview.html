@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons Search v2 Roadmap</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #090c12;
+      --panel: #111722;
+      --panel-soft: #151d2a;
+      --line: #293447;
+      --text: #f6f7fb;
+      --muted: #aab5c7;
+      --cyan: #68e1fd;
+      --green: #76e6a6;
+      --purple: #b49aff;
+      --amber: #ffd479;
+      --red: #ff8f93;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 5%, rgba(104, 225, 253, 0.1), transparent 28rem),
+        radial-gradient(circle at 90% 15%, rgba(180, 154, 255, 0.11), transparent 26rem),
+        var(--page);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--cyan);
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 52px 0 80px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 5vw, 60px);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(21, 29, 42, 0.98), rgba(12, 17, 26, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -120px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: rgba(104, 225, 253, 0.08);
+      filter: blur(4px);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.15;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(2.3rem, 6vw, 5rem);
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+
+    .north-star {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 30px 0 0;
+      padding: 20px 22px;
+      border-left: 4px solid var(--green);
+      border-radius: 0 14px 14px 0;
+      background: rgba(118, 230, 166, 0.08);
+      font-size: 1.06rem;
+      font-weight: 700;
+    }
+
+    .quick-status {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(9, 12, 18, 0.58);
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .pill.done {
+      border-color: rgba(118, 230, 166, 0.45);
+      color: var(--green);
+    }
+
+    .pill.next {
+      border-color: rgba(255, 212, 121, 0.45);
+      color: var(--amber);
+    }
+
+    section {
+      margin-top: 64px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.52fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.75rem, 3.5vw, 2.65rem);
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .architecture {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(17, 23, 34, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .doors,
+    .outputs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .node {
+      min-height: 112px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-soft);
+    }
+
+    .node strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.02rem;
+    }
+
+    .node span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .node.live {
+      border-color: rgba(118, 230, 166, 0.5);
+    }
+
+    .node.pending {
+      border-color: rgba(255, 212, 121, 0.5);
+    }
+
+    .flow-arrow {
+      display: grid;
+      place-items: center;
+      min-height: 58px;
+      color: var(--cyan);
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+
+    .engine {
+      padding: 26px;
+      border: 1px solid rgba(180, 154, 255, 0.65);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(180, 154, 255, 0.14), rgba(104, 225, 253, 0.08));
+      text-align: center;
+    }
+
+    .engine strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.3rem;
+    }
+
+    .engine span {
+      color: var(--muted);
+    }
+
+    .diagram-note {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 820px;
+    }
+
+    th,
+    td {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    td:first-child {
+      width: 18%;
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .status {
+      display: inline-block;
+      margin-bottom: 7px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .status.live {
+      background: rgba(118, 230, 166, 0.12);
+      color: var(--green);
+    }
+
+    .status.pending {
+      background: rgba(255, 212, 121, 0.12);
+      color: var(--amber);
+    }
+
+    .status.stable {
+      background: rgba(104, 225, 253, 0.12);
+      color: var(--cyan);
+    }
+
+    .roadmap {
+      display: grid;
+      gap: 14px;
+      counter-reset: roadmap;
+    }
+
+    .roadmap-card {
+      counter-increment: roadmap;
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+    }
+
+    .roadmap-card::before {
+      content: counter(roadmap, decimal-leading-zero);
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: rgba(180, 154, 255, 0.13);
+      color: var(--purple);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .roadmap-card h3 {
+      margin: 2px 0 7px;
+      font-size: 1.15rem;
+    }
+
+    .roadmap-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .roadmap-card.current {
+      border-color: rgba(255, 212, 121, 0.55);
+    }
+
+    .roadmap-card.current::before {
+      background: rgba(255, 212, 121, 0.13);
+      color: var(--amber);
+    }
+
+    .blueprints {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .blueprint {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    .blueprint:hover,
+    .blueprint:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
+      outline: none;
+    }
+
+    .blueprint strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--text);
+    }
+
+    .blueprint span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .callout {
+      padding: 26px;
+      border: 1px solid rgba(104, 225, 253, 0.48);
+      border-radius: 20px;
+      background: rgba(104, 225, 253, 0.07);
+    }
+
+    .callout h2 {
+      margin-bottom: 12px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    footer {
+      margin-top: 54px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .architecture {
+        border-radius: 20px;
+      }
+
+      .section-heading,
+      .doors,
+      .outputs,
+      .blueprints {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap-card {
+        grid-template-columns: 48px minmax(0, 1fr);
+        padding: 18px;
+      }
+
+      .roadmap-card::before {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+      }
+    }
+
+    @media print {
+      :root {
+        color-scheme: light;
+        --page: #ffffff;
+        --panel: #ffffff;
+        --panel-soft: #f5f7fa;
+        --line: #d9dee8;
+        --text: #111827;
+        --muted: #4b5563;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .hero,
+      .architecture {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Supericons Search v2</p>
+      <h1>One fast search system, shared everywhere</h1>
+      <p class="hero-copy">
+        Search v2 is bigger than the npm beta. The goal is one deterministic search engine
+        for local MCP, hosted MCP on Railway, the website, and recommendations.
+      </p>
+      <p class="north-star">
+        The same query should produce the same sensible results everywhere, quickly,
+        without paying an AI provider for every search.
+      </p>
+      <div class="quick-status" aria-label="Current summary">
+        <span class="pill done">Local npm beta published</span>
+        <span class="pill next">Railway v2 not deployed</span>
+        <span class="pill next">Web v2 not deployed</span>
+        <span class="pill next">Recommendation v2 not released</span>
+      </div>
+    </header>
+
+    <section aria-labelledby="architecture-title">
+      <div class="section-heading">
+        <h2 id="architecture-title">The destination</h2>
+        <p>
+          Users keep their existing entry point. V2 changes how the answer is found,
+          not where the user connects.
+        </p>
+      </div>
+
+      <div class="architecture" role="img" aria-label="Local MCP, hosted MCP, and the website flow into one shared deterministic v2 engine">
+        <div class="doors">
+          <div class="node live">
+            <strong>Local MCP package</strong>
+            <span>The first v2 slice is available through the npm beta tag.</span>
+          </div>
+          <div class="node pending">
+            <strong>Hosted MCP on Railway</strong>
+            <span>The majority route. It still uses the hosted search service today.</span>
+          </div>
+          <div class="node pending">
+            <strong>Website on Netlify</strong>
+            <span>The npm local-first route has not been deployed to the website.</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+
+        <div class="engine">
+          <strong>Shared deterministic v2 engine</strong>
+          <span>
+            One query meaning, ranking policy, library policy, brand policy,
+            clarification rule, and result contract.
+          </span>
+        </div>
+
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+
+        <div class="outputs">
+          <div class="node">
+            <strong>Built-in search index</strong>
+            <span>Answers common eligible searches without a database round trip.</span>
+          </div>
+          <div class="node">
+            <strong>Supabase</strong>
+            <span>Source data, telemetry, fallbacks, special searches, and current recommendations.</span>
+          </div>
+          <div class="node">
+            <strong>Reviewed learning loop</strong>
+            <span>Usage evidence leads to reviewed data fixes, not uncontrolled live AI decisions.</span>
+          </div>
+        </div>
+
+        <p class="diagram-note">
+          This picture is the destination. Only the local npm search slice has shipped so far.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="status-title">
+      <div class="section-heading">
+        <h2 id="status-title">Where each surface stands</h2>
+        <p>
+          The npm beta proves the built-in search idea. It does not automatically upgrade
+          Railway or the website.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Surface</th>
+              <th>Current reality</th>
+              <th>V2 destination</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Local npm MCP</td>
+              <td>
+                <span class="status live">Beta published</span><br>
+                <code>0.4.19-beta.0</code> uses the built-in index for eligible English
+                <code>search_icons</code> requests.
+              </td>
+              <td>
+                Finish beta hardening, collect organic evidence, and decide whether to
+                promote it.
+              </td>
+            </tr>
+            <tr>
+              <td>Railway hosted MCP</td>
+              <td>
+                <span class="status pending">Not upgraded</span><br>
+                Ordinary hosted searches still use the remote server and hosted search service.
+              </td>
+              <td>
+                Wire the Railway entry path into the built-in index, verify it under load,
+                and deploy it with rollback protection.
+              </td>
+            </tr>
+            <tr>
+              <td>Website search</td>
+              <td>
+                <span class="status pending">V2 rollout not run</span><br>
+                The website uses its current browser ranking and Supabase reranking or fallback.
+              </td>
+              <td>
+                Reuse the shared v2 rules in a default-off web beta, then compare quality
+                and speed before promotion.
+              </td>
+            </tr>
+            <tr>
+              <td>Recommendations</td>
+              <td>
+                <span class="status stable">Stable hosted path</span><br>
+                The grouped shared pipeline exists in development but has not been released.
+              </td>
+              <td>
+                Measure the corrected pipeline on the upgraded database. Use the hosted
+                design if it passes, otherwise evaluate a broader local index.
+              </td>
+            </tr>
+            <tr>
+              <td>Localized search</td>
+              <td>
+                <span class="status stable">Hosted fallback</span><br>
+                Most non-English searches continue through the hosted path.
+              </td>
+              <td>
+                Improve deterministic multilingual coverage first. Reconsider semantic
+                models only if important gaps remain.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="roadmap-title">
+      <div class="section-heading">
+        <h2 id="roadmap-title">The practical roadmap</h2>
+        <p>
+          Protection work is a release requirement. The product payoff comes from bringing
+          the proven engine to Railway, recommendations, and the website.
+        </p>
+      </div>
+
+      <div class="roadmap">
+        <article class="roadmap-card current">
+          <div>
+            <h3>Finish beta.1 release hardening</h3>
+            <p>
+              Complete upstream licenses, repair the probe inventory, and close the
+              post-approval rollback gap. Preserve staged-only minification, private
+              canaries, and package-boundary checks.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Run the npm beta evidence window</h3>
+            <p>
+              Gather 200 organic attempts and three complete green days. Owner and agent
+              use may count when correctly labelled. Scripted test suites do not count.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Remeasure hosted search on Supabase Micro</h3>
+            <p>
+              Measure only after disk and service health are green. Separate database
+              capacity problems from query, network, and recommendation design problems.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Build and deploy the Railway hosted v2 route</h3>
+            <p>
+              Make the hosted entry use the built-in index for eligible searches. Verify
+              result equality, Material support, cold and warm speed, memory, concurrency,
+              fallbacks, and rollback.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Finish recommendations</h3>
+            <p>
+              Measure the shared recommendation pipeline using the corrected workload.
+              Ship the hosted design if it passes. If it does not, stop repeating the same
+              tuning loop and evaluate the local-index path.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Bring shared v2 behavior to the website</h3>
+            <p>
+              Run a separate, default-off web beta with the same query rules and ranking
+              policy. Compare quality, speed, fallback behavior, and payload size before
+              changing the public default.
+            </p>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Operate the reviewed learning loop</h3>
+            <p>
+              Detect ranking drift, repeated weak searches, new-icon collisions, and
+              capability gaps. Prepare generic data fixes for review. Keep live searches
+              deterministic and free from per-request model costs.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="blueprint-title">
+      <div class="section-heading">
+        <h2 id="blueprint-title">The blueprint and records</h2>
+        <p>
+          The blueprint explains the destination. The status ledger explains what is
+          actually built and released.
+        </p>
+      </div>
+
+      <div class="blueprints">
+        <a class="blueprint" href="search-engine-v2.md">
+          <strong>Search v2 blueprint</strong>
+          <span>The product goal, architecture, requirements, quality rules, and original phases.</span>
+        </a>
+        <a class="blueprint" href="implementation-status.md">
+          <strong>Implementation status</strong>
+          <span>The reality ledger for completed, active, paused, and unreleased work.</span>
+        </a>
+        <a class="blueprint" href="decisions.md">
+          <strong>Decision history</strong>
+          <span>Why the program chose deterministic-first search and paused paid semantic requests.</span>
+        </a>
+        <div class="blueprint">
+          <strong>Vision charter, staged with beta.1</strong>
+          <span>
+            The product principles, public package boundary, and protected intelligence
+            classes. This file is not in the main branch yet.
+          </span>
+        </div>
+        <a class="blueprint" href="reviews/search-v2-local-first-beta-closeout-scorecard-2026-07-17.md">
+          <strong>Beta evidence scorecard</strong>
+          <span>The evidence-window rules and the conditions for a reliable beta result.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="callout" aria-labelledby="takeaway-title">
+      <h2 id="takeaway-title">The one-sentence takeaway</h2>
+      <p>
+        Prove the built-in deterministic engine locally, bring it to the Railway route used
+        by most MCP users, finish recommendations, then give the website the same search
+        behavior. Add semantic models only if measured user failures justify their cost and
+        unpredictability.
+      </p>
+    </section>
+
+    <footer>
+      Status overview prepared on 17 July 2026 from the Search v2 blueprint,
+      implementation ledger, decision log, vision charter, and beta evidence records.
+    </footer>
+  </main>
+</body>
+</html>

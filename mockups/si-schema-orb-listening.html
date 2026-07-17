@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons | SI Schema: Orb Listening (mockup)</title>
+<!--
+  MOCKUP ONLY: clones the production site shell (header, sidebar, grid, panel)
+  using the same tokens and class conventions as style.css, fully self-contained.
+  Demonstrates the SI Schema v1 record surface for si:orb-listening with the
+  community layer (vote, comment, contribute) and the free/gated tier split.
+  No production code is touched or imported.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --si-bg: #0e0e0e;
+    --si-surface: #131313;
+    --si-surface-container: #1a1919;
+    --si-surface-container-high: #201f1f;
+    --si-surface-container-highest: #262626;
+    --si-icon-grid-surface: #131313;
+    --si-icon-grid-surface-hover: #1a1919;
+    --si-icon-grid-surface-selected: #201f1f;
+    --si-primary: #FF4F00;
+    --si-primary-soft: #ff906c;
+    --si-primary-dim: #ff7345;
+    --si-text: #ffffff;
+    --si-text-muted: #cccaca;
+    --si-text-dim: #767575;
+    --si-success: #4ade80;
+    --si-outline-variant: #484847;
+    --si-ghost-border: rgba(72, 72, 71, 0.15);
+    --si-font-headline: 'Space Grotesk', system-ui, sans-serif;
+    --si-font-body: 'Manrope', system-ui, sans-serif;
+    --si-font-label: 'Inter', system-ui, sans-serif;
+    --si-radius-md: 0.5rem;
+    --si-radius-lg: 0.75rem;
+    --si-radius-full: 9999px;
+    --si-sidebar-width: 240px;
+    --si-panel-width: 380px;
+    --si-header-height: 56px;
+    --si-transition-fast: 150ms ease;
+    --si-stroke-width: 2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--si-font-body); background: var(--si-bg); color: var(--si-text); line-height: 1.6; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  ::selection { background: rgba(255, 79, 0, 0.3); color: var(--si-primary); }
+  button { font-family: inherit; }
+  .material-symbols-outlined { font-variation-settings: 'opsz' 20; }
+
+  /* --- Header (site shell) --- */
+  .header {
+    height: var(--si-header-height); flex: 0 0 auto;
+    display: flex; align-items: center; gap: 0.75rem; padding: 0 1rem;
+    background: var(--si-bg); border-bottom: 1px solid var(--si-ghost-border);
+  }
+  .header__btn {
+    width: 36px; height: 36px; border-radius: var(--si-radius-md);
+    background: none; border: none; color: var(--si-text-muted);
+    display: grid; place-items: center; cursor: pointer; transition: all var(--si-transition-fast);
+  }
+  .header__btn:hover { background: var(--si-surface-container); color: var(--si-text); }
+  .header__logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--si-text); }
+  .header__logo-mark { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg, var(--si-primary), var(--si-primary-dim)); display: grid; place-items: center; font-family: var(--si-font-headline); font-weight: 700; font-size: 0.95rem; color: #fff; }
+  .header__logo-text { font-family: var(--si-font-headline); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .header__search { flex: 1; max-width: 520px; position: relative; display: flex; align-items: center; }
+  .header__search-icon { position: absolute; left: 10px; font-size: 18px; color: var(--si-text-dim); }
+  .header__search-input {
+    width: 100%; height: 38px; padding: 0 2.4rem; border-radius: var(--si-radius-full);
+    background: var(--si-surface-container); border: 1px solid transparent; color: var(--si-text);
+    font-family: var(--si-font-label); font-size: 0.82rem; outline: none;
+  }
+  .header__search-input:focus { border-color: var(--si-outline-variant); }
+  .header__search-shortcut { position: absolute; right: 12px; font-size: 0.7rem; color: var(--si-text-dim); border: 1px solid var(--si-outline-variant); border-radius: 4px; padding: 0 5px; }
+  .header__actions { margin-left: auto; display: flex; align-items: center; gap: 0.3rem; }
+  .auth-signin-btn {
+    display: flex; align-items: center; gap: 0.4rem; height: 34px; padding: 0 0.9rem;
+    border-radius: var(--si-radius-full); border: 1px solid var(--si-outline-variant);
+    background: none; color: var(--si-text-muted); font-size: 0.78rem; cursor: pointer;
+  }
+  .auth-signin-btn:hover { border-color: var(--si-primary); color: var(--si-primary-soft); }
+
+  /* --- Main layout --- */
+  .main-layout { flex: 1; display: flex; min-height: 0; }
+
+  .sidebar {
+    width: var(--si-sidebar-width); flex: 0 0 auto; overflow-y: auto;
+    border-right: 1px solid var(--si-ghost-border); padding: 1rem 0.6rem 2rem;
+  }
+  .sidebar__section-title {
+    font-family: var(--si-font-label); font-size: 0.64rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--si-text-dim);
+    padding: 0.6rem 0.6rem 0.35rem;
+  }
+  .sidebar__item {
+    display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0.6rem;
+    border-radius: var(--si-radius-md); color: var(--si-text-muted); font-size: 0.82rem;
+    cursor: pointer; transition: all var(--si-transition-fast);
+  }
+  .sidebar__item:hover { background: var(--si-surface-container); color: var(--si-text); }
+  .sidebar__item.active { background: var(--si-surface-container-high); color: var(--si-primary-soft); }
+  .sidebar__item-icon { font-size: 18px; }
+  .sidebar__item-count { margin-left: auto; font-size: 0.68rem; color: var(--si-text-dim); font-family: var(--si-font-label); }
+  .sidebar__divider { height: 1px; background: var(--si-ghost-border); margin: 0.7rem 0.4rem; }
+  .sidebar__badge-new { font-size: 0.55rem; letter-spacing: 0.08em; color: var(--si-primary-soft); background: rgba(255, 79, 0, 0.14); border-radius: 4px; padding: 0.05rem 0.3rem; margin-left: 0.4rem; }
+
+  /* --- Grid area --- */
+  .grid-area { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem 3rem; min-width: 0; }
+  .grid-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1rem; gap: 1rem; }
+  .grid-header__title { font-family: var(--si-font-headline); font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; }
+  .grid-header__meta { font-family: var(--si-font-label); font-size: 0.72rem; color: var(--si-text-dim); }
+  .grid-header__actions { display: flex; gap: 0.4rem; align-items: center; }
+  .grid-header__view-btn {
+    height: 32px; padding: 0 0.7rem; border-radius: var(--si-radius-md);
+    background: none; border: 1px solid var(--si-ghost-border); color: var(--si-text-dim);
+    font-family: var(--si-font-label); font-size: 0.72rem; cursor: pointer; transition: all var(--si-transition-fast);
+  }
+  .grid-header__view-btn:hover { color: var(--si-text); border-color: var(--si-outline-variant); }
+  .grid-header__view-btn.active { color: var(--si-primary-soft); border-color: var(--si-primary); background: rgba(255, 79, 0, 0.08); }
+
+  .icon-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 1px; background: rgba(72, 72, 71, 0.08);
+    border-radius: var(--si-radius-lg); overflow: hidden;
+  }
+  .tier-divider {
+    grid-column: 1 / -1; display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1.25rem; background: var(--si-surface);
+    border-top: 1px solid var(--si-ghost-border); border-bottom: 1px solid var(--si-ghost-border);
+  }
+  .tier-divider__label { font-family: var(--si-font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--si-text-dim); }
+  .tier-divider__count { font-family: var(--si-font-label); font-size: 0.625rem; color: var(--si-text-muted); margin-left: auto; }
+  .icon-cell {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    padding: 0.9rem 0.25rem 0.9rem; background: var(--si-icon-grid-surface);
+    cursor: pointer; transition: all var(--si-transition-fast); position: relative; min-height: 86px;
+  }
+  .icon-cell:hover { background: var(--si-icon-grid-surface-hover); }
+  .icon-cell:hover::before { content: ''; position: absolute; inset: 0; background: rgba(255, 79, 0, 0.04); pointer-events: none; }
+  .icon-cell.selected { background: var(--si-icon-grid-surface-selected); }
+  .icon-cell.selected::after {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 24px; background: var(--si-primary); border-radius: 0 1px 1px 0;
+  }
+  .icon-cell__icon { color: var(--si-text-muted); transition: color var(--si-transition-fast); display: grid; place-items: center; }
+  .icon-cell:hover .icon-cell__icon { color: var(--si-primary-soft); }
+  .icon-cell.selected .icon-cell__icon { color: var(--si-primary); }
+  .icon-cell__icon svg { width: 30px; height: 30px; }
+  .icon-cell__name {
+    font-family: var(--si-font-label); font-size: 0.5625rem; color: var(--si-text-muted);
+    text-transform: uppercase; letter-spacing: -0.01em; text-align: center;
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 0.25rem;
+  }
+  .icon-cell__state {
+    position: absolute; top: 5px; right: 6px; font-family: var(--si-font-label);
+    font-size: 0.48rem; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 3px; padding: 0.05rem 0.25rem;
+  }
+  .icon-cell__state.ok { color: var(--si-success); background: rgba(74, 222, 128, 0.1); }
+  .icon-cell__state.wip { color: var(--si-primary-soft); background: rgba(255, 79, 0, 0.1); }
+
+  /* --- SI Schema panel --- */
+  .panel {
+    width: var(--si-panel-width); flex: 0 0 auto; overflow-y: auto;
+    border-left: 1px solid var(--si-ghost-border); background: var(--si-bg);
+  }
+  .panel__header {
+    position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1rem; background: rgba(14, 14, 14, 0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--si-ghost-border);
+  }
+  .panel__title { font-family: var(--si-font-headline); font-weight: 600; font-size: 0.9rem; }
+  .panel__record-badge { font-family: var(--si-font-label); font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--si-primary-soft); border: 1px solid rgba(255, 79, 0, 0.4); border-radius: var(--si-radius-full); padding: 0.1rem 0.5rem; }
+  .panel__body { padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .schema-preview {
+    border: 1px solid var(--si-ghost-border); border-radius: var(--si-radius-lg);
+    background: var(--si-surface); padding: 1.2rem; display: grid; place-items: center; position: relative;
+  }
+  .schema-preview svg { max-width: 100%; }
+  .paused [class*="a-"] { animation: none !important; }
+
+  /* edit controls */
+  .edit-row { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+  .customize-slider__range { flex: 1; accent-color: var(--si-primary); min-width: 120px; }
+  .customize-slider__value { font-family: var(--si-font-label); font-size: 0.66rem; color: var(--si-text-dim); min-width: 42px; }
+  .seg { display: inline-flex; border: 1px solid var(--si-ghost-border); border-radius: var(--si-radius-md); overflow: hidden; }
+  .seg button { background: none; border: none; padding: 0.28rem 0.6rem; color: var(--si-text-dim); font-family: var(--si-font-label); font-size: 0.66rem; cursor: pointer; }
+  .seg button.active { background: rgba(255, 79, 0, 0.12); color: var(--si-primary-soft); }
+  .swatch { width: 20px; height: 20px; border-radius: 6px; border: 1px solid var(--si-ghost-border); cursor: pointer; padding: 0; }
+  .swatch.active { outline: 2px solid var(--si-primary); outline-offset: 1px; }
+  .hint { font-family: var(--si-font-label); font-size: 0.6rem; color: var(--si-text-dim); }
+  .schema-preview__renders { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 0.25rem; }
+  .schema-preview__renders button {
+    font-family: var(--si-font-label); font-size: 0.6rem; padding: 0.15rem 0.45rem;
+    border-radius: 5px; border: 1px solid var(--si-ghost-border); background: var(--si-bg);
+    color: var(--si-text-dim); cursor: pointer;
+  }
+  .schema-preview__renders button.active { color: var(--si-primary-soft); border-color: var(--si-primary); }
+  .schema-preview__state { position: absolute; top: 8px; left: 8px; }
+
+  .state-chip { font-family: var(--si-font-label); font-size: 0.56rem; letter-spacing: 0.07em; text-transform: uppercase; border-radius: 4px; padding: 0.12rem 0.4rem; }
+  .state-chip.ok { color: var(--si-success); background: rgba(74, 222, 128, 0.1); }
+  .state-chip.wip { color: var(--si-primary-soft); background: rgba(255, 79, 0, 0.1); }
+
+  .schema-idrow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-family: var(--si-font-label); font-size: 0.68rem; color: var(--si-text-dim); }
+  .schema-idrow code { background: var(--si-surface-container); border-radius: 4px; padding: 0.1rem 0.4rem; font-size: 0.66rem; color: var(--si-text-muted); }
+
+  .schema-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .schema-actions button {
+    display: flex; align-items: center; gap: 0.35rem; height: 32px; padding: 0 0.75rem;
+    border-radius: var(--si-radius-md); border: 1px solid var(--si-ghost-border); background: var(--si-surface-container);
+    color: var(--si-text-muted); font-family: var(--si-font-label); font-size: 0.72rem; cursor: pointer;
+    transition: all var(--si-transition-fast);
+  }
+  .schema-actions button:hover { border-color: var(--si-outline-variant); color: var(--si-text); }
+  .schema-actions button.voted { color: var(--si-primary); border-color: var(--si-primary); }
+  .schema-actions .material-symbols-outlined { font-size: 15px; }
+
+  .schema-section { border: 1px solid var(--si-ghost-border); border-radius: var(--si-radius-lg); overflow: hidden; }
+  .schema-section__head {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.85rem;
+    background: var(--si-surface); cursor: pointer; user-select: none;
+  }
+  .schema-section__head .material-symbols-outlined { font-size: 16px; color: var(--si-text-dim); }
+  .schema-section__title { font-family: var(--si-font-label); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--si-text-muted); }
+  .schema-section__tier { margin-left: auto; font-family: var(--si-font-label); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 4px; padding: 0.1rem 0.35rem; }
+  .schema-section__tier.free { color: var(--si-success); background: rgba(74, 222, 128, 0.1); }
+  .schema-section__tier.gated { color: var(--si-primary-soft); background: rgba(255, 79, 0, 0.12); }
+  .schema-section__body { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.65rem; }
+  .schema-section.collapsed .schema-section__body { display: none; }
+
+  .schema-field { font-size: 0.78rem; color: var(--si-text-muted); line-height: 1.55; }
+  .schema-field b { display: block; font-family: var(--si-font-label); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--si-text-dim); margin-bottom: 0.15rem; }
+  .schema-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .schema-chips span { font-family: var(--si-font-label); font-size: 0.64rem; color: var(--si-text-dim); background: var(--si-surface-container); border-radius: 4px; padding: 0.12rem 0.45rem; }
+
+  .gated-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .gated-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.76rem; color: var(--si-text-muted); }
+  .gated-list .material-symbols-outlined { font-size: 14px; color: var(--si-primary-soft); }
+  .gated-list .g-blur { filter: blur(3px); user-select: none; }
+  .gated-cta {
+    display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+    height: 38px; border-radius: var(--si-radius-md); border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--si-primary), var(--si-primary-dim));
+    color: #fff; font-family: var(--si-font-label); font-size: 0.78rem; font-weight: 600;
+  }
+  .gated-note { font-family: var(--si-font-label); font-size: 0.62rem; color: var(--si-text-dim); text-align: center; }
+
+  .mcp-strip { background: var(--si-surface-container); border-radius: var(--si-radius-md); padding: 0.6rem 0.75rem; font-family: Consolas, monospace; font-size: 0.64rem; color: var(--si-text-muted); overflow-x: auto; white-space: pre; }
+  .mcp-strip .c { color: var(--si-text-dim); }
+  .mcp-strip .a { color: var(--si-primary-soft); }
+
+  .comment { border-top: 1px solid var(--si-ghost-border); padding-top: 0.6rem; }
+  .comment:first-child { border-top: none; padding-top: 0; }
+  .comment__meta { display: flex; align-items: center; gap: 0.45rem; font-family: var(--si-font-label); font-size: 0.62rem; color: var(--si-text-dim); margin-bottom: 0.2rem; }
+  .comment__author { color: var(--si-text-muted); font-weight: 600; }
+  .comment__status { font-size: 0.52rem; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 3px; padding: 0.06rem 0.3rem; }
+  .comment__status.promoted { color: var(--si-success); background: rgba(74, 222, 128, 0.1); }
+  .comment__status.distilled { color: #60a5fa; background: rgba(96, 165, 250, 0.12); }
+  .comment__status.raw { color: var(--si-text-dim); background: var(--si-surface-container); }
+  .comment__body { font-size: 0.75rem; color: var(--si-text-muted); line-height: 1.5; }
+
+  .contribute-form { display: flex; flex-direction: column; gap: 0.45rem; }
+  .contribute-form select, .contribute-form textarea {
+    width: 100%; background: var(--si-surface-container); border: 1px solid var(--si-ghost-border);
+    border-radius: var(--si-radius-md); color: var(--si-text); font-family: var(--si-font-label);
+    font-size: 0.74rem; padding: 0.5rem 0.6rem; outline: none; resize: vertical;
+  }
+  .contribute-form select:focus, .contribute-form textarea:focus { border-color: var(--si-outline-variant); }
+  .contribute-form button {
+    align-self: flex-start; display: flex; align-items: center; gap: 0.35rem;
+    height: 32px; padding: 0 0.85rem; border-radius: var(--si-radius-md); border: 1px solid var(--si-outline-variant);
+    background: none; color: var(--si-text-muted); font-family: var(--si-font-label); font-size: 0.72rem; cursor: pointer;
+  }
+  .contribute-form button:hover { border-color: var(--si-primary); color: var(--si-primary-soft); }
+  .contribute-form .hint { font-family: var(--si-font-label); font-size: 0.6rem; color: var(--si-text-dim); }
+
+  .credits { display: flex; flex-direction: column; gap: 0.3rem; font-family: var(--si-font-label); font-size: 0.66rem; color: var(--si-text-dim); }
+  .credits b { color: var(--si-text-muted); font-weight: 600; }
+
+  /* --- Footer --- */
+  .footer {
+    flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center;
+    padding: 0.55rem 1.25rem; border-top: 1px solid var(--si-ghost-border);
+    font-family: var(--si-font-label); font-size: 0.68rem; color: var(--si-text-dim);
+  }
+  .footer a { color: var(--si-text-dim); text-decoration: none; margin-left: 1rem; }
+  .footer a:hover { color: var(--si-text-muted); }
+
+  .toast {
+    position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%) translateY(90px);
+    background: var(--si-surface-container-highest); border: 1px solid var(--si-outline-variant);
+    border-radius: 10px; padding: 0.55rem 1.05rem; font-size: 0.76rem; z-index: 60;
+    transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* elegance preview animation */
+  [class*="a-"] { transform-box: fill-box; transform-origin: center; }
+  @keyframes k-seq { 0%, 60%, 100% { opacity: 0.3; } 14%, 44% { opacity: 1; } }
+  .a-seq { animation: k-seq 2.3s ease infinite; }
+  @media (prefers-reduced-motion: reduce) { [class*="a-"] { animation: none !important; } }
+
+  @media (max-width: 1100px) { .panel { display: none; } }
+  @media (max-width: 820px) { .sidebar { display: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gOrb" cx="38%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="#4a4846"/><stop offset="55%" stop-color="#242322"/><stop offset="100%" stop-color="#141313"/>
+    </radialGradient>
+    <linearGradient id="gAccS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8a4d"/><stop offset="100%" stop-color="#e03e00"/>
+    </linearGradient>
+    <linearGradient id="gInk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7f5f2"/><stop offset="100%" stop-color="#c4bfb9"/>
+    </linearGradient>
+    <linearGradient id="gGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- Header -->
+<header class="header">
+  <button class="header__btn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+  <a class="header__logo" href="#"><span class="header__logo-mark">S</span><span class="header__logo-text">Supericons</span></a>
+  <div class="header__search">
+    <span class="material-symbols-outlined header__search-icon">search</span>
+    <input type="text" class="header__search-input" placeholder="Search 20,000+ icons..." autocomplete="off" spellcheck="false">
+    <span class="header__search-shortcut">/</span>
+  </div>
+  <div class="header__actions">
+    <button class="header__btn" aria-label="Multi-select"><span class="material-symbols-outlined">select_all</span></button>
+    <button class="header__btn" aria-label="Customize"><span class="material-symbols-outlined">tune</span></button>
+    <button class="header__btn" aria-label="Light Mode"><span class="material-symbols-outlined">light_mode</span></button>
+    <button class="auth-signin-btn"><span class="material-symbols-outlined" style="font-size:16px">account_circle</span><span>Sign in</span></button>
+  </div>
+</header>
+
+<!-- Main layout -->
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__section-title">Browse</div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">apps</span><span>All Icons</span><span class="sidebar__item-count">20,412</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">favorite</span><span>Favorites</span><span class="sidebar__item-count">12</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">schedule</span><span>Recent</span><span class="sidebar__item-count">31</span></div>
+    <div class="sidebar__divider"></div>
+    <div class="sidebar__section-title">Libraries</div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">category</span><span>Material Symbols</span><span class="sidebar__item-count">3,340</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">timeline</span><span>Lucide</span><span class="sidebar__item-count">1,640</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">token</span><span>si</span><span class="sidebar__item-count">100</span></div>
+    <div class="sidebar__divider"></div>
+    <div class="sidebar__section-title">Premium Collections</div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">collections_bookmark</span><span>Collections</span><span class="sidebar__item-count">8</span></div>
+    <div class="sidebar__item active"><span class="material-symbols-outlined sidebar__item-icon">blur_on</span><span>Agent Pulse</span><span class="sidebar__badge-new">PACK 2</span></div>
+    <div class="sidebar__divider"></div>
+    <div class="sidebar__section-title">Tools</div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">animation</span><span>Motion Lab</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">swap_horiz</span><span>Converter</span></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">storefront</span><span>Creator Studio</span><span class="sidebar__badge-new">NEW</span></div>
+    <div class="sidebar__divider"></div>
+    <div class="sidebar__item"><span class="material-symbols-outlined sidebar__item-icon">payments</span><span>Pricing</span></div>
+  </aside>
+
+  <!-- Icon Grid -->
+  <main class="grid-area">
+    <div class="grid-header">
+      <div>
+        <h1 class="grid-header__title">Agent Pulse</h1>
+        <span class="grid-header__meta">Pack 2 preview · 10 of 50 icons · every icon carries an SI Schema record · click an icon to open its record</span>
+      </div>
+      <div class="grid-header__actions">
+        <button class="grid-header__view-btn active">Stroke</button>
+        <button class="grid-header__view-btn">Solid</button>
+        <button class="grid-header__view-btn">Elegance</button>
+      </div>
+    </div>
+    <div class="icon-grid" id="iconGrid"></div>
+  </main>
+
+  <!-- SI Schema Panel -->
+  <aside class="panel" id="panel">
+    <div class="panel__header">
+      <span class="panel__title" id="panelTitle">Orb Listening</span>
+      <span class="panel__record-badge">SI SCHEMA</span>
+    </div>
+    <div class="panel__body" id="panelBody"></div>
+  </aside>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <span><a href="#" style="margin-left:0">Curly Mole Labs</a></span>
+  <span><a href="#">GitHub</a><a href="#">Pricing</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Docs</a><a href="#">Contact</a></span>
+</footer>
+
+<div class="toast" id="toast">demo</div>
+
+<script>
+  /* ---------- pack icons: 2 per category, 24 grid stroke shapes ---------- */
+  const S = (body) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  const ICONS = [
+    { cat: 'Agent orbs', items: [
+      { id: 'si:orb-thinking', name: 'orb thinking', state: 'ok',
+        svg: S('<circle cx="12" cy="12" r="8.5"/><circle cx="8.2" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="15.8" cy="12" r="1.15" fill="currentColor" stroke="none"/>') },
+      { id: 'si:orb-listening', name: 'orb listening', state: 'wip',
+        svg: S('<circle cx="12" cy="14.5" r="5"/><path d="M5.8 11.5a6.2 6.2 0 0 1 12.4 0"/><rect x="4.6" y="11.5" width="2.4" height="5.5" rx="1.2" fill="currentColor" stroke="none"/><rect x="17" y="11.5" width="2.4" height="5.5" rx="1.2" fill="currentColor" stroke="none"/><path d="M3.2 12.1A3.4 3.4 0 0 0 3.96 13.7M3.96 14.9A3.4 3.4 0 0 0 3.2 16.5" stroke-width="1.8"/><path d="M20.8 12.1A3.4 3.4 0 0 1 20.04 13.7M20.04 14.9A3.4 3.4 0 0 1 20.8 16.5" stroke-width="1.8"/>') }
+    ]},
+    { cat: 'Voice waves and sound blasts', items: [
+      { id: 'si:voice-wave', name: 'voice wave', state: 'ok',
+        svg: S('<path d="M4.6 9.5v5"/><path d="M8.3 7v10"/><path d="M12 4.5v15"/><path d="M15.7 7v10"/><path d="M19.4 9.5v5"/>') },
+      { id: 'si:sound-blast', name: 'sound blast', state: 'ok',
+        svg: S('<circle cx="12" cy="12" r="5"/><path d="M18.77 9.54A7.2 7.2 0 0 0 14.46 5.23"/><path d="M21.21 8.65A9.8 9.8 0 0 0 15.35 2.79"/><path d="M5.23 9.54A7.2 7.2 0 0 1 9.54 5.23"/><path d="M2.79 8.65A9.8 9.8 0 0 1 8.65 2.79"/><path d="M18.77 14.46A7.2 7.2 0 0 1 14.46 18.77"/><path d="M21.21 15.35A9.8 9.8 0 0 1 15.35 21.21"/><path d="M5.23 14.46A7.2 7.2 0 0 0 9.54 18.77"/><path d="M2.79 15.35A9.8 9.8 0 0 0 8.65 21.21"/>') }
+    ]},
+    { cat: 'Thinking and streaming', items: [
+      { id: 'si:stream-cursor', name: 'streaming cursor', state: 'wip',
+        svg: S('<path d="M4 7h10M4 12h12M4 17h7"/><rect x="15" y="14.2" width="2.2" height="5.6" rx="0.8" fill="currentColor" stroke="none"/>') },
+      { id: 'si:token-flow', name: 'token flow', state: 'wip',
+        svg: S('<path d="M3 12h18" stroke-dasharray="1.5 3.5"/><circle cx="7" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="12.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="17" cy="12" r="1.1" fill="currentColor" stroke="none"/>') }
+    ]},
+    { cat: 'Empty, loading, and error states', items: [
+      { id: 'si:state-skeleton', name: 'skeleton pulse', state: 'wip',
+        svg: S('<rect x="4" y="5.5" width="16" height="3.6" rx="1.8" fill="currentColor" stroke="none" opacity="0.85"/><rect x="4" y="10.7" width="11" height="3.6" rx="1.8" fill="currentColor" stroke="none" opacity="0.55"/><rect x="4" y="15.9" width="14" height="3.6" rx="1.8" fill="currentColor" stroke="none" opacity="0.3"/>') },
+      { id: 'si:state-tool-failed', name: 'tool call failed', state: 'wip',
+        svg: S('<rect x="2.5" y="8" width="6.5" height="8" rx="2"/><rect x="15" y="8" width="6.5" height="8" rx="2"/><path d="M11 8.5l1.6 2.2-2.1 1.6 2.1 2.2-1.6 2.2" stroke-width="1.8"/>') }
+    ]},
+    { cat: 'Reaction and celebration bursts', items: [
+      { id: 'si:burst-check', name: 'checkmark burst', state: 'wip',
+        svg: S('<circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.5 9"/>') },
+      { id: 'si:burst-streak', name: 'streak flame', state: 'wip',
+        svg: S('<path d="M12 3c4 5 7 8 7 12a7 7 0 0 1-14 0c0-4 3-7 7-12z"/><path d="M12 12.5c1.8 2.2 3 3.6 3 5.4a3 3 0 0 1-6 0c0-1.8 1.2-3.2 3-5.4z" fill="currentColor" stroke="none"/>') }
+    ]}
+  ];
+
+  /* ---------- SI Schema records (public projections + demo community) ---------- */
+  const FULL_RECORD = {
+    'si:orb-listening': {
+      label: 'Orb Listening', version: '0.6.0', state: 'shape_drawn', stateCls: 'wip',
+      publisher: 'first party', kind: 'concept_icon', pack: 'agent-pulse',
+      purpose: 'Show the agent is actively receiving audio input.',
+      depicts: 'The orb wearing headphones, one sound wave per side split into top and bottom segments entering from outside each pad.',
+      tags: ['listening', 'voice input', 'receiving', 'agent', 'orb'],
+      synonyms: ['hearing', 'capturing', 'sound input', 'attentive'],
+      useWhen: 'Voice or audio capture states in agent UIs.',
+      avoidWhen: 'Do not use for muted states or device-level microphone toggles.',
+      motion: 'Side waves pulse inward toward the orb; orb glass brightens on arrival.',
+      votes: 128,
+      gated: [
+        'must_communicate: actor, action, direction, intensity',
+        'mind map: 7 metaphor candidates with verdicts and reasons (5 rejected)',
+        'anti_associations: 7 must-never-read-as constraints',
+        'distinct_from: 3 pack collision rules',
+        'construction recipe: exact geometry, arc math, clearances',
+        'motion spec: pattern, timings, rest, reduced motion',
+        'render overrides: per-render detail scaling',
+        'revision history: 6 review rounds, verdicts, what each taught'
+      ],
+      comments: [
+        { author: 'owner', type: 'human', date: '2026-07-06', status: 'promoted', body: 'Round-one shape read as a steering wheel or drone; arcs too thick to read as sound waves.' },
+        { author: 'owner', type: 'human', date: '2026-07-06', status: 'promoted', body: 'Two waves per side is too much, too thick. One line per side split into top and bottom segments.' },
+        { author: 'claude-code (agent via MCP)', type: 'agent', date: '2026-07-06', status: 'distilled', body: 'Searched "voice input" and "mic listening" before selecting this icon for a voice-agent settings screen.' }
+      ],
+      credits: [
+        'anti_association "steering wheel" · contributed by owner · promoted 2026-07-06',
+        'split-wave geometry · owner review round 5 · promoted 2026-07-06',
+        'synonym "voice input" · agent usage signal · promoted 2026-07-06'
+      ],
+      contributions: { total: 9, promoted: 3 }
+    }
+  };
+
+  const STUB_NOTE = {
+    ok: 'Record approved. Full public projection ships with the pack launch.',
+    wip: 'Record in design review. Public projection available at shape approval.'
+  };
+
+  /* ---------- grid render ---------- */
+  const grid = document.getElementById('iconGrid');
+  let selectedId = 'si:orb-listening';
+  function renderGrid() {
+    grid.innerHTML = '';
+    ICONS.forEach(group => {
+      const div = document.createElement('div');
+      div.className = 'tier-divider';
+      div.innerHTML = `<span class="tier-divider__label">${group.cat}</span><span class="tier-divider__count">${group.items.length} of 10 shown</span>`;
+      grid.appendChild(div);
+      group.items.forEach(icon => {
+        const cell = document.createElement('div');
+        cell.className = 'icon-cell' + (icon.id === selectedId ? ' selected' : '');
+        cell.innerHTML = `
+          <span class="icon-cell__state ${icon.state}">${icon.state === 'ok' ? 'approved' : 'review'}</span>
+          <span class="icon-cell__icon">${icon.svg}</span>
+          <span class="icon-cell__name">${icon.name}</span>`;
+        cell.addEventListener('click', () => { selectedId = icon.id; renderGrid(); renderPanel(icon); });
+        grid.appendChild(cell);
+      });
+    });
+  }
+
+  /* ---------- panel render ---------- */
+  const panelBody = document.getElementById('panelBody');
+  const panelTitle = document.getElementById('panelTitle');
+  let voted = false;
+  let followed = false;
+  let currentRender = 'elegance';
+  const edit = { size: 128, stroke: 2, color: '#dfdcd8', motion: true };
+  const SWATCHES = ['#dfdcd8', '#FF4F00', '#4ade80', '#60a5fa', '#f2afff'];
+
+  const ELEGANCE_PREVIEW = `<svg viewBox="0 0 96 96" fill="none">
+    <rect x="6" y="6" width="84" height="84" rx="21" fill="url(#gOrb)"/>
+    <g transform="translate(12 12) scale(3)">
+      <circle cx="12" cy="14.5" r="5" fill="url(#gOrb)" stroke="rgba(255,255,255,0.22)" stroke-width="0.35"/>
+      <ellipse cx="10.4" cy="12.6" rx="2.1" ry="1.2" fill="url(#gGlass)"/>
+      <path d="M5.8 11.5a6.2 6.2 0 0 1 12.4 0" stroke="url(#gInk)" stroke-width="0.85" stroke-linecap="round" fill="none"/>
+      <rect x="4.6" y="11.5" width="2.4" height="5.5" rx="1.2" fill="url(#gInk)"/>
+      <rect x="17" y="11.5" width="2.4" height="5.5" rx="1.2" fill="url(#gInk)"/>
+      <path class="a-seq" d="M3.2 12.1a3.4 3.4 0 0 0 0 4.4" stroke="url(#gAccS)" stroke-width="0.72" stroke-linecap="round" fill="none"/>
+      <path class="a-seq" d="M20.8 12.1a3.4 3.4 0 0 1 0 4.4" stroke="url(#gAccS)" stroke-width="0.72" stroke-linecap="round" fill="none" style="animation-delay:0.4s"/>
+    </g></svg>`;
+
+  function previewFor(icon, render) {
+    if (icon.id === 'si:orb-listening' && render === 'elegance') {
+      return `<span class="${edit.motion ? '' : 'paused'}" style="display:grid">${ELEGANCE_PREVIEW.replace('<svg ', `<svg width="${edit.size}" height="${edit.size}" `)}</span>`;
+    }
+    let svg = icon.svg.replace('<svg ', `<svg width="${edit.size}" height="${edit.size}" style="color:${edit.color}" `);
+    svg = svg.replace('stroke-width="2"', `stroke-width="${edit.stroke}"`);
+    return svg;
+  }
+
+  function section(title, tier, bodyHtml, collapsed) {
+    return `
+      <div class="schema-section${collapsed ? ' collapsed' : ''}">
+        <div class="schema-section__head" data-toggle>
+          <span class="material-symbols-outlined">expand_more</span>
+          <span class="schema-section__title">${title}</span>
+          <span class="schema-section__tier ${tier}">${tier === 'free' ? 'public · free' : 'gated · paid'}</span>
+        </div>
+        <div class="schema-section__body">${bodyHtml}</div>
+      </div>`;
+  }
+
+  function renderPanel(icon) {
+    panelTitle.textContent = icon.name.replace(/\b\w/g, c => c.toUpperCase());
+    const r = FULL_RECORD[icon.id];
+    if (!r) {
+      panelBody.innerHTML = `
+        <div class="schema-preview">${previewFor(icon, 'stroke')}
+          <span class="schema-preview__state"><span class="state-chip ${icon.state}">${icon.state === 'ok' ? 'shape approved' : 'in review'}</span></span>
+        </div>
+        <div class="schema-idrow"><code>${icon.id}</code><span>agent-pulse</span></div>
+        <div class="schema-field">${STUB_NOTE[icon.state]}</div>
+        <div class="mcp-strip"><span class="c">// agent parity</span>\nsi.get_record(<span class="a">"${icon.id}"</span>)</div>`;
+      return;
+    }
+    panelBody.innerHTML = `
+      <div class="schema-preview">
+        <span id="previewHolder">${previewFor(icon, currentRender)}</span>
+        <span class="schema-preview__state"><span class="state-chip ${r.stateCls}">${r.state.replace('_', ' ')}</span></span>
+        <span class="schema-preview__renders">
+          ${['stroke', 'solid', 'elegance'].map(x => `<button data-render="${x}" class="${x === currentRender ? 'active' : ''}">${x}</button>`).join('')}
+        </span>
+      </div>
+      <div class="schema-idrow">
+        <code>${icon.id}</code><span>v${r.version}</span><span>·</span><span>${r.kind}</span><span>·</span><span>${r.publisher}</span>
+      </div>
+      <div class="schema-actions">
+        <button id="voteBtn" class="${voted ? 'voted' : ''}"><span class="material-symbols-outlined">arrow_upward</span><span id="voteCount">${r.votes + (voted ? 1 : 0)}</span></button>
+        <button id="followBtn" class="${followed ? 'voted' : ''}"><span class="material-symbols-outlined">notifications</span>${followed ? 'Following' : 'Follow'} · ${followed ? '1.3k' : '1.2k'}</button>
+        <button data-demo><span class="material-symbols-outlined">fork_right</span>Remix · 4</button>
+        <button data-demo><span class="material-symbols-outlined">share</span>Share</button>
+      </div>
+
+      ${section('Edit', 'free', `
+        <div class="schema-field"><b>size</b>
+          <div class="seg" data-seg="size">${[24, 48, 96, 128].map(s => `<button data-s="${s}" class="${edit.size === s ? 'active' : ''}">${s}</button>`).join('')}</div>
+        </div>
+        <div class="schema-field"><b>stroke width · stroke and solid renders</b>
+          <div class="edit-row">
+            <input type="range" id="strokeSlider" class="customize-slider__range" min="1" max="3" step="0.1" value="${edit.stroke}">
+            <span class="customize-slider__value" id="strokeVal">${edit.stroke}px</span>
+          </div>
+        </div>
+        <div class="schema-field"><b>color</b>
+          <div class="edit-row">
+            ${SWATCHES.map(c => `<button class="swatch ${edit.color === c ? 'active' : ''}" data-color="${c}" style="background:${c}"></button>`).join('')}
+            <input type="color" id="colorPicker" value="${edit.color}" style="width:26px;height:22px;background:none;border:none;cursor:pointer">
+          </div>
+          <span class="hint">Pack rule: Ignition Orange only ever means active.</span>
+        </div>
+        <div class="schema-field"><b>motion</b>
+          <div class="seg" data-seg="motion">
+            <button data-m="1" class="${edit.motion ? 'active' : ''}">on</button>
+            <button data-m="0" class="${edit.motion ? '' : 'active'}">off</button>
+          </div>
+        </div>
+        <div class="schema-field"><b>export</b>
+          <div class="schema-actions">
+            <button id="copySvgBtn"><span class="material-symbols-outlined">content_copy</span>SVG</button>
+            <button data-demo>PNG 512</button>
+            <button data-demo>JSX</button>
+            <button data-demo>Lottie</button>
+          </div>
+        </div>
+        <div class="schema-field"><b>agent editing</b>
+          <div class="schema-actions">
+            <button data-unlock><span class="material-symbols-outlined">auto_awesome</span>Remix with agent</button>
+            <button data-unlock><span class="material-symbols-outlined">palette</span>Port to my brand</button>
+          </div>
+          <span class="hint">Gated: uses the construction recipe and pack style tokens to generate faithful variants.</span>
+        </div>`)}
+
+      ${section('Soul · core record', 'free', `
+        <div class="schema-field"><b>purpose</b>${r.purpose}</div>
+        <div class="schema-field"><b>depicts</b>${r.depicts}</div>
+        <div class="schema-field"><b>semantic tags</b><div class="schema-chips">${r.tags.map(t => `<span>${t}</span>`).join('')}</div></div>
+        <div class="schema-field"><b>synonyms</b><div class="schema-chips">${r.synonyms.map(t => `<span>${t}</span>`).join('')}</div></div>
+        <div class="schema-field"><b>use when</b>${r.useWhen}</div>
+        <div class="schema-field"><b>avoid when</b>${r.avoidWhen}</div>
+        <div class="schema-field"><b>motion</b>${r.motion}</div>`)}
+
+      ${section('Design intelligence', 'gated', `
+        <ul class="gated-list">
+          ${r.gated.map(g => `<li><span class="material-symbols-outlined">lock</span><span class="g-blur">${g}</span></li>`).join('')}
+        </ul>
+        <button class="gated-cta" data-unlock><span class="material-symbols-outlined" style="font-size:16px">bolt</span>Unlock design intelligence · $0.90</button>
+        <div class="gated-note">agents pay per call via x402 · humans get every record with Pro</div>`)}
+
+      ${section('Agent parity', 'free', `
+        <div class="mcp-strip"><span class="c">// same record, agent-side</span>\nsi.get_record(<span class="a">"${icon.id}"</span>)          <span class="c">→ public core</span>\nsi.get_design_intel(<span class="a">"${icon.id}"</span>)    <span class="c">→ 402 → pay → full record</span>\nsi.submit_feedback(<span class="a">"${icon.id}"</span>, ...)  <span class="c">→ earns x402 discount</span></div>`)}
+
+      ${section(`Community · ${r.contributions.total} contributions, ${r.contributions.promoted} promoted`, 'free', `
+        <div class="hint" style="margin-bottom:0.2rem">1,214 watchers · 4 remixes · used in 1,930 projects · 62 agent installs this week</div>
+        <div id="commentList">
+          ${r.comments.map(c => `
+            <div class="comment">
+              <div class="comment__meta"><span class="comment__author">${c.author}</span><span>${c.date}</span><span class="comment__status ${c.status}">${c.status}</span></div>
+              <div class="comment__body">${c.body}</div>
+            </div>`).join('')}
+        </div>
+        <div class="credits"><b>Promoted to record</b>${r.credits.map(c => `<span>· ${c}</span>`).join('')}</div>`)}
+
+      ${section('Contribute', 'free', `
+        <form class="contribute-form" id="contribForm">
+          <select id="contribKind">
+            <option value="">What are you telling us? (pick one)</option>
+            <option>What did this icon look like at first glance?</option>
+            <option>What did you search for before finding it?</option>
+            <option>Which icon did you almost confuse it with?</option>
+            <option>At what size did it stop being legible?</option>
+            <option>Something else</option>
+          </select>
+          <textarea id="contribBody" rows="2" placeholder="Your observation. Specific beats general."></textarea>
+          <button type="submit"><span class="material-symbols-outlined" style="font-size:14px">send</span>Submit to staging pool</button>
+          <span class="hint">Accepted contributions earn gated-record credits and a named credit in the record changelog.</span>
+        </form>`, true)}
+    `;
+
+    // wire interactions
+    panelBody.querySelectorAll('[data-toggle]').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('collapsed')));
+    panelBody.querySelectorAll('[data-demo]').forEach(b => b.addEventListener('click', () => toast('Demo action')));
+    panelBody.querySelectorAll('[data-render]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      currentRender = b.dataset.render;
+      renderPanel(icon);
+    }));
+    panelBody.querySelectorAll('[data-unlock]').forEach(b => b.addEventListener('click', () => toast('x402 checkout: 402 Payment Required → pay $0.90 → full record (demo)')));
+    const voteBtn = panelBody.querySelector('#voteBtn');
+    if (voteBtn) voteBtn.addEventListener('click', () => {
+      voted = !voted;
+      renderPanel(icon);
+      toast(voted ? 'Vote recorded' : 'Vote removed');
+    });
+    const followBtn = panelBody.querySelector('#followBtn');
+    if (followBtn) followBtn.addEventListener('click', () => {
+      followed = !followed;
+      renderPanel(icon);
+      toast(followed ? 'Following: record updates, state changes, and pack news' : 'Unfollowed');
+    });
+
+    // edit controls
+    const holder = panelBody.querySelector('#previewHolder');
+    const refreshPreview = () => { if (holder) holder.innerHTML = previewFor(icon, currentRender); };
+    panelBody.querySelectorAll('[data-seg="size"] button').forEach(b => b.addEventListener('click', () => {
+      edit.size = parseInt(b.dataset.s, 10); renderPanel(icon);
+    }));
+    panelBody.querySelectorAll('[data-seg="motion"] button').forEach(b => b.addEventListener('click', () => {
+      edit.motion = b.dataset.m === '1'; renderPanel(icon);
+    }));
+    const strokeSlider = panelBody.querySelector('#strokeSlider');
+    if (strokeSlider) strokeSlider.addEventListener('input', e => {
+      edit.stroke = parseFloat(e.target.value);
+      const v = panelBody.querySelector('#strokeVal');
+      if (v) v.textContent = edit.stroke.toFixed(1) + 'px';
+      refreshPreview();
+    });
+    panelBody.querySelectorAll('.swatch').forEach(b => b.addEventListener('click', () => {
+      edit.color = b.dataset.color; renderPanel(icon);
+    }));
+    const colorPicker = panelBody.querySelector('#colorPicker');
+    if (colorPicker) colorPicker.addEventListener('input', e => { edit.color = e.target.value; refreshPreview(); });
+    const copySvgBtn = panelBody.querySelector('#copySvgBtn');
+    if (copySvgBtn) copySvgBtn.addEventListener('click', () => {
+      if (navigator.clipboard) navigator.clipboard.writeText(previewFor(icon, currentRender)).catch(() => {});
+      toast('Copied SVG with your edits applied');
+    });
+    const form = panelBody.querySelector('#contribForm');
+    if (form) form.addEventListener('submit', e => {
+      e.preventDefault();
+      const kind = panelBody.querySelector('#contribKind').value;
+      const body = panelBody.querySelector('#contribBody').value.trim();
+      if (!kind || !body) { toast('Pick a prompt and write your observation'); return; }
+      const list = panelBody.querySelector('#commentList');
+      const div = document.createElement('div');
+      div.className = 'comment';
+      div.innerHTML = `<div class="comment__meta"><span class="comment__author">you</span><span>now</span><span class="comment__status raw">raw</span></div><div class="comment__body">${kind} ${body}</div>`;
+      list.appendChild(div);
+      panelBody.querySelector('#contribBody').value = '';
+      toast('Submitted to the staging pool. Distillation runs in batches.');
+    });
+  }
+
+  /* ---------- toast ---------- */
+  const toastEl = document.getElementById('toast');
+  let tt;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(tt);
+    tt = setTimeout(() => toastEl.classList.remove('show'), 2200);
+  }
+
+  renderGrid();
+  renderPanel(ICONS[0].items[1]); // orb-listening selected by default
+</script>
+</body>
+</html>

@@ -83,6 +83,24 @@
     "tags": "Tags",
     "tagsWithCount": "Tags ({count})",
     "categories": {
+      "ai-app-builders": "AI App Builders",
+      "coding-agents-dev-environments": "Coding Agents & Dev Environments",
+      "model-platforms-ai-labs": "Model Platforms & AI Labs",
+      "ai-search-research-evaluation": "AI Search, Research & Evaluation",
+      "generative-media-creative-ai": "Generative Media & Creative AI",
+      "voice-audio-ai": "Voice & Audio AI",
+      "agent-infrastructure-runtime": "Agent Infrastructure & Runtime",
+      "mcp-tooling-protocols": "MCP, Tooling & Protocols",
+      "general-agents-assistants": "General Agents & Assistants",
+      "design-ui-intelligence": "Design & UI Intelligence",
+      "agent-business-monetization": "Agent Business & Monetization",
+      "coding-agent-tools": "Coding Agent Tools",
+      "agent-lifecycle-states": "Agent Lifecycle States",
+      "agent-trust-safety": "Agent Trust and Safety",
+      "agent-workflow-mcp": "Agent Workflow and MCP",
+      "agentic-payments": "Agentic Payments",
+      "frontier-compute": "Frontier Compute",
+      "physical-automation": "Physical Automation",
       "ai-agent-workflows": "AI & Automation",
       "navigation-wayfinding": "Navigation & Wayfinding",
       "actions-controls": "Actions & Controls",
@@ -100,7 +118,9 @@
       "maps-places-travel": "Maps, Places & Travel",
       "time-calendar": "Time & Calendar",
       "nature-weather-lifestyle": "Nature, Weather & Lifestyle",
-      "brands-social": "Brands & Social"
+      "brands-social": "Brands & Social",
+      "trending-culture": "Trending & Culture",
+      "cars-vehicles": "Cars & Vehicles"
     }
   },
   "tools": {
@@ -475,7 +495,6 @@
         "signin": {
           "title": "Sign in to continue your purchase",
           "desc": "Keep collection purchases tied to one account so downloads and updates stay in sync.",
-          "note": "We will bring you back so you can continue where you left off.",
           "submit": "Sign in to continue",
           "toggle": "Need an account first?",
           "toggleAction": "Sign up"
@@ -483,7 +502,6 @@
         "signup": {
           "title": "Create your account to buy collections",
           "desc": "Your purchases, downloads, and future updates will stay connected to this account.",
-          "note": "We will bring you back so you can continue where you left off.",
           "submit": "Create account",
           "toggle": "Already have an account.",
           "toggleAction": "Sign in"
@@ -493,7 +511,6 @@
         "signin": {
           "title": "Sign in to go Pro",
           "desc": "Continue to Pro checkout for MCP access, workflow tools, and premium collections.",
-          "note": "We will bring you back so you can continue to checkout.",
           "submit": "Sign in to continue",
           "toggle": "Need an account first?",
           "toggleAction": "Sign up"
@@ -501,7 +518,6 @@
         "signup": {
           "title": "Create your account to go Pro",
           "desc": "Set up your account first, then continue to Pro checkout when you are ready.",
-          "note": "We will bring you back so you can continue to checkout.",
           "submit": "Create account",
           "toggle": "Already have an account.",
           "toggleAction": "Sign in"
@@ -636,7 +652,7 @@
   "legal": {
     "terms": {
       "pageTitle": "Terms of Service",
-      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Last updated: April 8, 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Usage Rights</h3><p>Supericons provides free and premium icon assets for digital products. Free icons keep their original open-source licenses.</p><p>Premium animated collections are owned by Curly Mole Labs. Your usage rights depend on your license tier.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI Output Rights</h3><p>Icons retrieved through the Supericons MCP server may be used in AI-generated code output.</p><p>The underlying SVG and CSS animation source files remain Curly Mole Labs assets and may not be extracted, reverse-engineered, or bulk-exported.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Redistribution Policy</h3><p>You may not redistribute raw SVG or CSS animation source files, include premium icons as open bundled assets, resell access, sublicense access, or build a competing icon library.</p><p>You may use icons in finished websites, apps, client work, and compiled output where raw source files are not directly exposed.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Licensing Tiers</h3><p>Single Project License applies to a-la-carte purchases and Pro Monthly collection claims.</p><p>Unlimited Project License applies to active Pro subscribers, Pro Annual included collections, and Launch Edition purchasers.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">5. Refund Policy</h3><p>Pro subscriptions may be canceled at any time. No partial refunds are issued for the current billing period.</p><p>One-time digital purchases are not refundable after download access is granted, unless a technical issue prevents access and you contact us within 14 days.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Contact</h3><p>For terms, licensing, or refund questions, email hello@supericons.dev.</p></section></div>"
+      "bodyHtml": "<div class=\"terms-content\"><p class=\"terms-content__updated\">Last updated: April 8, 2026</p><section class=\"terms-section\"><h3 class=\"terms-section__title\">1. Usage Rights</h3><p>Supericons provides free and premium icon assets for digital products. Free icons keep their original open-source licenses.</p><p>Premium animated collections are owned by Curly Mole Labs. Your usage rights depend on your license tier.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">2. AI Output Rights</h3><p>Icons retrieved through the Supericons MCP server may be used in AI-generated code output.</p><p>The underlying SVG and CSS animation source files remain Curly Mole Labs assets and may not be extracted, reverse-engineered, or bulk-exported.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">3. Redistribution Policy</h3><p>You may not redistribute raw SVG or CSS animation source files, include premium icons as open bundled assets, resell access, sublicense access, or build a competing icon library.</p><p>You may use icons in finished websites, apps, client work, and compiled output where raw source files are not directly exposed.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">4. Licensing Tiers</h3><p>Single Project License applies to a-la-carte purchases and Pro Monthly collection claims.</p><p>Unlimited Project License applies to active Pro subscribers, Pro Annual included collections, and Launch Edition purchasers.</p></section><section class=\"terms-section\" id=\"single-icon-license\"><h3 class=\"terms-section__title\">5. Single Icon Purchases</h3><p><strong>Single Icon License v1.0, effective July 7, 2026.</strong> This section covers one paid animated icon bought through the Supericons single-icon purchase flow, including a purchase made by a person, by an agent helping a person, or by an agent approved by an organization.</p><p>The license belongs to the person or organization that controls the paying wallet or account at the time of purchase. If an agent buys on behalf of a person or organization, the license belongs to that person or organization, not to the agent.</p><p>Supericons grants the license holder a non-exclusive, worldwide, perpetual license to use the purchased icon, including the delivered SVG and any delivered animation CSS for that icon, in one end product, client project, website, app, presentation, internal tool, or software repository.</p><p>You may use, modify, and include the icon in source code, built application files, screenshots, demos, documentation, and marketing for that licensed project.</p><p>You may not resell, sublicense, or redistribute the icon as a standalone asset, publish it in an icon pack, template library, design kit, marketplace item, asset database, competing icon library, stock asset product, or training set, or share the raw source outside the licensed project.</p><p>Keep the x402 payment response, settlement reference, or receipt data when available. For delivery, duplicate charge, settlement, or license questions, email hello@supericons.dev with receipt data and the icon name.</p><p>Translations are provided for convenience. If a translated version conflicts with the English version, the English version controls.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">6. Refund Policy</h3><p>Pro subscriptions may be canceled at any time. No partial refunds are issued for the current billing period.</p><p>One-time digital purchases are not refundable after download access is granted, unless a technical issue prevents access and you contact us within 14 days.</p></section><section class=\"terms-section\"><h3 class=\"terms-section__title\">7. Contact</h3><p>For terms, licensing, or refund questions, email hello@supericons.dev.</p></section></div>"
     },
     "privacy": {
       "pageTitle": "Privacy Policy",

@@ -64,6 +64,7 @@ import {
 } from './lib/icon-taxonomy-seed.js';
 import { createIconSemanticAliasMap } from './lib/icon-semantic-aliases.js';
 import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
+import { getIconPreviewCommerceProfile } from './lib/icon-preview-commerce.js';
 import { createStoreShellContract } from './lib/store-shell-contract.js';
 import {
   DEFAULT_LOCALE,
@@ -2354,6 +2355,27 @@ function renderAlsoInRow(icon) {
     </div>
   `;
 }
+
+function renderPanelCommerceCta(icon) {
+  const profile = getIconPreviewCommerceProfile(icon);
+  if (!profile) return '';
+
+  return `
+    <div class="panel__commerce">
+      <a
+        class="panel__commerce-cta"
+        href="${escapeHtml(profile.url)}"
+        target="_blank"
+        rel="${escapeHtml(profile.rel)}"
+        aria-label="${escapeHtml(profile.ariaLabel)}"
+      >
+        <span>${escapeHtml(profile.ctaLabel)}</span>
+        <span class="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+      </a>
+    </div>
+  `;
+}
+
 function renderPanelForIcon(icon) {
   const c = state.customize;
   const iconName = escapeHtml(icon.name);
@@ -2407,6 +2429,7 @@ function renderPanelForIcon(icon) {
         </div>
         <p class="panel__meta-subtitle">${libraryName} &middot; ${assetType} &middot; <code>${iconId}</code></p>
         ${renderAlsoInRow(icon)}
+        ${renderPanelCommerceCta(icon)}
       </div>
     </div>
 

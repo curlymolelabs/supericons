@@ -517,7 +517,9 @@ export async function handleSharedRecommendationSearchRequest(
         // Ignore secondary audit failures while returning the primary error.
       }
     }
-    timing.finish('error');
-    return buildErrorResponse(error);
+    const timingRecord = timing.finish('error');
+    return buildErrorResponse(error, {
+      measurementTiming: includeTimingInResponse ? timingRecord : null,
+    });
   }
 }

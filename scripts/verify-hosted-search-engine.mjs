@@ -78,8 +78,8 @@ const registryRows = buildHostedSearchPublicRegistryRows([
 assert.equal(registryRows.length, 1, 'registry row builder should create one row');
 assert.deepEqual(
   registryRows[0].synonyms,
-  ['self hosted', 'server cluster'],
-  'registry row builder should normalize synonyms',
+  ['self hosted', 'server cluster', 'server stack'],
+  'registry row builder should normalize synonyms and include the public label',
 );
 assert.equal(
   registryRows[0].job_category,

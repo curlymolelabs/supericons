@@ -1,3 +1,4 @@
+import { convertPngToSvg as convertProofPngToSvg } from '../lib/converter-workflow.js';
 import { convertPngToSvg, convertSvgToPng, inspectConverterInput } from '../mcp/runtime/converter-workflow.js';
 
 const FIXTURES = [
@@ -112,6 +113,24 @@ for (const fixture of FIXTURES) {
     request: svgResult.request,
   });
 }
+
+const aliasFixture = FIXTURES.find((fixture) => fixture.id === 'tiny-interface-icon');
+const aliasPngResult = convertSvgToPng({
+  svg: aliasFixture.svg,
+  targetWidth: aliasFixture.render.targetWidth,
+  background: aliasFixture.render.background,
+});
+const aliasTrace = {
+  imageBase64: aliasPngResult.pngBase64,
+  qualityMode: 'exact',
+  requestedColorMode: 'mono',
+  traceClass: 'tiny-line-icon',
+  uiMode: 'icon',
+};
+const runtimeAliasResult = await convertPngToSvg(aliasTrace);
+const proofAliasResult = await convertProofPngToSvg(aliasTrace);
+assert(runtimeAliasResult?.request?.colorMode === 'mono', 'runtime converter did not honor requestedColorMode alias.');
+assert(proofAliasResult?.request?.colorMode === 'mono', 'proof service converter did not honor requestedColorMode alias.');
 
 for (const fixture of FIXTURES) {
   if (!fixture.expect.compareHeavierThan) continue;

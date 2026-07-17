@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:approval-gate",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "approval-gate",
+  "name": "Approval Gate",
+  "depicts": "A human or policy decision point before an agent continues.",
+  "useCase": "Use for permission prompts, review gates, confirmation steps, and guarded automation.",
+  "category": "agentic-ai",
+  "assetType": "state-icon",
+  "primaryMetaphor": "A gate panel with a check path inside.",
+  "avoidMetaphors": [
+    "padlock only",
+    "security shield only",
+    "generic check circle"
+  ],
+  "siblingConcepts": [
+    "policy-guardrail",
+    "agent-handoff",
+    "tool-call"
+  ],
+  "searchTerms": [
+    "approval gate",
+    "permission",
+    "human approval",
+    "review gate",
+    "confirmation",
+    "guarded action"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

@@ -1768,7 +1768,7 @@
       "injection attack",
       "malicious prompt",
       "input attack",
-      "jailbreak attempt"
+      "prompt bypass attempt"
     ],
     "ai_category": "agent-trust-safety",
     "ai_category_label": "Agent Trust and Safety",
@@ -2624,6 +2624,340 @@
     "secondary_categories": [
       "crypto",
       "developer-tools"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:person-airborne",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "person-airborne",
+    "label": "Person Airborne",
+    "purpose": "Represent a spectacular failure, ejection, or wipeout state with a light touch.",
+    "category": "trending_culture",
+    "semantic_tags": [
+      "yeet",
+      "wipeout",
+      "fail",
+      "airborne",
+      "flip",
+      "meme",
+      "trending"
+    ],
+    "use_when": "Use for playful failure states, crash screens, or yeeted moments in changelogs and empty states.",
+    "avoid_when": "Do not use for serious error reporting or anywhere real-world injury is the subject.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A person tumbling upside down in mid-air with limbs flailing.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "yeeted",
+      "thrown",
+      "tumbling",
+      "wipeout",
+      "ragdoll"
+    ],
+    "ai_category": "trending-culture",
+    "ai_category_label": "Trending & Culture",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "trending-culture",
+      "meme",
+      "fail",
+      "yeet"
+    ],
+    "job_category": "trending-culture",
+    "secondary_categories": [
+      "humor",
+      "meme"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:bison-yeet",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "bison-yeet",
+    "label": "Bison Yeet",
+    "purpose": "Represent being blindsided or launched by an unexpected external force, meme-style.",
+    "category": "trending_culture",
+    "semantic_tags": [
+      "bison",
+      "yeet",
+      "surprise",
+      "incident",
+      "launch",
+      "meme",
+      "trending"
+    ],
+    "use_when": "Use for humorous incident callouts, surprise breaking-change notes, or viral-moment content.",
+    "avoid_when": "Do not use where real-world injury is the subject or in serious incident tooling.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A bison silhouette launching a person spinning into the air.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "bison toss",
+      "launched",
+      "blindsided",
+      "wildlife encounter"
+    ],
+    "ai_category": "trending-culture",
+    "ai_category_label": "Trending & Culture",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "trending-culture",
+      "meme",
+      "surprise",
+      "yeet"
+    ],
+    "job_category": "trending-culture",
+    "secondary_categories": [
+      "humor",
+      "meme"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:person-launched",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "person-launched",
+    "label": "Person Launched",
+    "purpose": "Represent a sudden launch or takeoff with momentum and personality.",
+    "category": "trending_culture",
+    "semantic_tags": [
+      "launch",
+      "momentum",
+      "speed",
+      "airborne",
+      "takeoff",
+      "meme",
+      "trending"
+    ],
+    "use_when": "Use for launch moments, fast kickoffs, or velocity-themed states that want personality.",
+    "avoid_when": "Do not use for standard product launch imagery where a rocket icon is expected.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A person tumbling through the air with speed lines trailing behind.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "flung",
+      "catapulted",
+      "takeoff",
+      "yeeted fast"
+    ],
+    "ai_category": "trending-culture",
+    "ai_category_label": "Trending & Culture",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "trending-culture",
+      "meme",
+      "launch",
+      "speed"
+    ],
+    "job_category": "trending-culture",
+    "secondary_categories": [
+      "humor",
+      "meme"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cybertruck",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cybertruck",
+    "label": "Cybertruck",
+    "purpose": "Represent the Tesla Cybertruck and angular electric pickup aesthetics.",
+    "category": "cars_vehicles",
+    "semantic_tags": [
+      "cybertruck",
+      "tesla",
+      "ev",
+      "truck",
+      "electric",
+      "pickup",
+      "trending"
+    ],
+    "use_when": "Use for EV content, Tesla-adjacent features, or angular futuristic vehicle themes.",
+    "avoid_when": "Do not use as the official Tesla brand logo; it depicts the vehicle shape only.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A wedge-shaped pickup truck side profile with a single roof peak and two wheels.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tesla truck",
+      "electric pickup",
+      "angular truck",
+      "ev truck"
+    ],
+    "ai_category": "cars-vehicles",
+    "ai_category_label": "Cars & Vehicles",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "cars-vehicles",
+      "tesla",
+      "ev"
+    ],
+    "job_category": "cars-vehicles",
+    "secondary_categories": [
+      "trending-culture",
+      "ev"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cybertruck-solid",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cybertruck-solid",
+    "label": "Cybertruck Solid",
+    "purpose": "Represent the Tesla Cybertruck as a bold solid silhouette with a cutout window.",
+    "category": "cars_vehicles",
+    "semantic_tags": [
+      "cybertruck",
+      "tesla",
+      "ev",
+      "truck",
+      "electric",
+      "pickup",
+      "solid",
+      "silhouette"
+    ],
+    "use_when": "Use where a filled, high-contrast vehicle mark reads best, such as badges, avatars, and dense UI.",
+    "avoid_when": "Do not use as the official Tesla brand logo; it depicts the vehicle shape only.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A solid wedge pickup silhouette with a cutout window, wheel arch notches, and bed notch.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tesla truck silhouette",
+      "filled cybertruck",
+      "electric pickup solid"
+    ],
+    "ai_category": "cars-vehicles",
+    "ai_category_label": "Cars & Vehicles",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "cars-vehicles",
+      "tesla",
+      "ev"
+    ],
+    "job_category": "cars-vehicles",
+    "secondary_categories": [
+      "trending-culture",
+      "ev"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cybertruck-low",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cybertruck-low",
+    "label": "Cybertruck Low",
+    "purpose": "Represent the Tesla Cybertruck as a long, low solid profile close to real proportions.",
+    "category": "cars_vehicles",
+    "semantic_tags": [
+      "cybertruck",
+      "tesla",
+      "ev",
+      "truck",
+      "electric",
+      "pickup",
+      "solid",
+      "profile"
+    ],
+    "use_when": "Use in wide layouts, marketing strips, and hero rows where a realistic low profile fits.",
+    "avoid_when": "Do not use as the official Tesla brand logo; it depicts the vehicle shape only.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A long low solid wedge silhouette with fully ringed wheels and a cutout window.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tesla truck profile",
+      "low cybertruck",
+      "electric pickup silhouette"
+    ],
+    "ai_category": "cars-vehicles",
+    "ai_category_label": "Cars & Vehicles",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "cars-vehicles",
+      "tesla",
+      "ev"
+    ],
+    "job_category": "cars-vehicles",
+    "secondary_categories": [
+      "trending-culture",
+      "ev"
     ],
     "evidence": [
       "editorial_judgment",

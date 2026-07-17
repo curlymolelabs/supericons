@@ -1,0 +1,98 @@
+{
+  "schema": "si-pack-record@0.1.0",
+  "pack": {
+    "pack_id": "agent-pulse",
+    "name": "Agent Pulse",
+    "tagline": "The expressive states an AI product IS, not the buttons it has.",
+    "version": "0.1.0",
+    "status": "draft",
+    "member_ids": [
+      "si:orb-idle", "si:orb-listening", "si:orb-thinking", "si:orb-speaking",
+      "si:orb-working", "si:orb-waiting-input", "si:orb-done", "si:orb-error",
+      "si:orb-blocked", "si:orb-retrying", "si:orb-handoff", "si:orb-sleeping",
+      "si:voice-wave", "si:sound-blast"
+    ],
+    "design_language": {
+      "grammar": {
+        "tokens": [
+          { "rule": "orb present", "meaning": "the agent is involved; no orb means the sound or signal itself", "examples": ["orb-listening vs voice-wave"] },
+          { "rule": "wave direction", "meaning": "who acts: waves leaving the orb = emitting, waves arriving = receiving", "examples": ["orb-speaking outbound", "orb-listening inbound"] },
+          { "rule": "element count", "meaning": "intensity: 1-2 elements quiet, 3 or more loud", "examples": ["listening 1 split wave/side", "sound-blast 2 waves x 4 corners"] },
+          { "rule": "position semantics", "meaning": "above the orb = needs human attention; sides = communication; corners = burst energy; front overlay = policy", "examples": ["waiting-input dot above", "blocked shield in front"] },
+          { "rule": "diagonal slash", "meaning": "off or muted, and nothing else", "examples": ["wave-muted"] },
+          { "rule": "accent color", "meaning": "Ignition Orange only ever means active or hot; never decoration", "examples": ["wave-active center bar"] }
+        ]
+      },
+      "territory_map": {
+        "claims": [
+          { "zone": "the unadorned breathing orb", "owner_si_id": "si:orb-idle", "notes": "no other icon may ship a bare orb" },
+          { "zone": "typing ellipsis dots on the orb", "owner_si_id": "si:orb-thinking" },
+          { "zone": "inbound split side waves + headphones", "owner_si_id": "si:orb-listening" },
+          { "zone": "outbound symmetric side ripples", "owner_si_id": "si:orb-speaking" },
+          { "zone": "corner arc pairs radiating", "owner_si_id": "si:sound-blast" },
+          { "zone": "orbital arc segment around the orb", "owner_si_id": "si:orb-working" },
+          { "zone": "circular arc with arrowhead", "owner_si_id": "si:orb-retrying" },
+          { "zone": "single dot hovering above the orb", "owner_si_id": "si:orb-waiting-input" },
+          { "zone": "checkmark across the orb face", "owner_si_id": "si:orb-done" },
+          { "zone": "exclamation on the orb + glitch offsets", "owner_si_id": "si:orb-error" },
+          { "zone": "shield in front of the orb", "owner_si_id": "si:orb-blocked" },
+          { "zone": "two orbs with a payload traveling an arc", "owner_si_id": "si:orb-handoff" },
+          { "zone": "rising z glyphs + dimmed orb", "owner_si_id": "si:orb-sleeping" },
+          { "zone": "center-aligned equalizer bars, no orb", "owner_si_id": "si:voice-wave" }
+        ]
+      },
+      "style_tokens": {
+        "grid": 24,
+        "safety_margin": 1.5,
+        "keylines": {
+          "note": "Optical parity per Material keyline logic (docs/si-v2/research-icon-fundamentals-2026-07-14.md): different shapes draw at different dimensions to read as the same size.",
+          "circle_diameter": 20,
+          "square": 18,
+          "rect_horizontal": "20 wide x 16 high",
+          "rect_vertical": "16 wide x 20 high",
+          "compositions": "total extent calibrated to the same optical weight: round compositions max span 19-21, boxy compositions 17-19; never fill the grid by default"
+        },
+        "stroke": { "primary": 2, "secondary": 1.8, "caps": "round", "joins": "round" },
+        "solid": { "primary_weight": 2.4, "secondary_weight": 2, "min_gap": "never thinner than the stroke" },
+        "palette": {
+          "ink": "#dfdcd8", "ink_dim": "rgba(223,220,216,0.38)", "accent": "#FF4F00",
+          "accent_rule": "accent only ever means active or hot"
+        },
+        "layered_render": {
+          "canvas": 96, "tile": "rx 21, gTile vertical gradient, gRim top rim light",
+          "orb": "gOrb radial (38%/30% light origin) + gGlass specular cap upper-left",
+          "scale": "24-grid paths placed at translate(12 12) scale(3)"
+        }
+      },
+      "motion_language": {
+        "patterns": ["seq", "eq", "beat", "ripple", "ripplein", "flow", "draw", "orbit", "breathe", "blink", "rise", "glitch", "shake"],
+        "timing_law": {
+          "click_max_ms": 500,
+          "hover_ms": [1500, 3000],
+          "ambient_rest": "every loop carries a 2-5s rest or a rest beat inside the cycle",
+          "reduced_motion": "static first frame must read complete on its own"
+        },
+        "render_scaling": "detail scales down in static renders and up in animated ones; motion carries meaning static geometry must otherwise spell out"
+      },
+      "craft_rules": [
+        { "id": "R1", "rule": "One idea per icon, at most one secondary element.", "origin": "owner review 2026-07-06, round 1 (busy compositions rejected)" },
+        { "id": "R2", "rule": "Secondary elements draw lighter than the subject (1.8 vs 2 at 24 grid).", "origin": "orb-listening rounds 4-5 (waves lighter than headphones)" },
+        { "id": "R3", "rule": "Sound is wave language (curves), never ray language (straight ticks).", "origin": "sound-blast round 1 (read as sun)" },
+        { "id": "R4", "rule": "Symmetric outward arcs around the orb belong exclusively to speaking; anything else wrapping the orb risks wheel/drone reads.", "origin": "orb-listening round 1 (read as steering wheel)" },
+        { "id": "R5", "rule": "When a side element feels heavy, split it into segments rather than shrinking or doubling it.", "origin": "orb-listening round 5 (split waves)" },
+        { "id": "R6", "rule": "Run the anti-association check before drawing: name what the shape must never read as.", "origin": "rounds 1-2 (sun, wheel, drone all preventable on paper)" },
+        { "id": "R7", "rule": "Keep at least 0.5 optical clearance between distinct elements; 1.5 canvas safety margin.", "origin": "pilot construction recipes" },
+        { "id": "R8", "rule": "Decoration that tells a story the purpose does not need gets cut.", "origin": "sound-blast round 2 (dashed clipping arc removed)" },
+        { "id": "R9", "rule": "Metaphor approval on paper precedes geometry; geometry precedes rendering.", "origin": "pilot workflow, 6 rounds to 1-2 target" },
+        { "id": "R10", "rule": "In a shared-silhouette family (the orb states), the interior mark is the whole signal: differentiate siblings through strong positive/negative contrast that survives 16px, never through subtle stroke variation.", "origin": "six-source research 2026-07-14 (silhouette monotony risk; Dribbble small-size testing; Hugeicons detail rule)" },
+        { "id": "R11", "rule": "Orb interiors stay rounded and friendly by default; sharp angular interior marks are reserved for negative states (error, blocked), where sharp reads as danger and reinforces meaning.", "origin": "six-source research 2026-07-14 (Skillshare shape psychology)" },
+        { "id": "R12", "rule": "Full-frame subjects follow the keyline table (circle 20, square 18, rect 20x16); compositions calibrate total extent to equal optical weight instead of filling the grid. Never distort a keyline shape; reduce stroke toward 1.5 when space is tight.", "origin": "six-source research 2026-07-14 (Material keyline system)" }
+      ],
+      "render_styles": {
+        "public_names": ["stroke", "solid", "elegance"],
+        "recipes_tier": "gated"
+      }
+    },
+    "provenance": { "created": "2026-07-06", "review_rounds_total": 6, "source": "agent-pulse pilot, owner reviews 2026-07-06" }
+  }
+}

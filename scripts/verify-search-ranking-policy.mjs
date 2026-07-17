@@ -7,6 +7,7 @@ import {
   buildSearchRankingQueryVariants,
   getBrandRankAdjustment,
   getCandidateInterpretationFamilyIds,
+  getExpressiveFallbackPenalty,
   getSearchInterpretationPlan,
   getSearchRankingPolicy,
 } from '../lib/search-ranking-policy.js';
@@ -29,6 +30,15 @@ function resultFamilyIds(query, results) {
 }
 
 const policy = getSearchRankingPolicy();
+assert.ok(
+  Array.isArray(policy.candidate_strength_policy?.expressive_fallback_tags)
+    && policy.candidate_strength_policy.expressive_fallback_tags.length > 0,
+  'candidate strength policy should define expressive fallback tags',
+);
+assert.ok(
+  Number(policy.candidate_strength_policy?.broad_match_penalty) > 0,
+  'candidate strength policy should define a positive broad-match penalty',
+);
 const familyIds = new Set();
 for (const family of policy.interpretation_families || []) {
   assert.match(family.id, /^[a-z0-9_]+$/, `${family.id}: family id must be snake_case`);
@@ -118,6 +128,71 @@ const swiftResults = localSearch('swift');
 const swiftFamilies = resultFamilyIds('swift', swiftResults);
 assert.ok(swiftFamilies.has('speed_motion'), 'bare swift should include speed or motion');
 assert.ok(swiftFamilies.has('brand_identity'), 'bare swift should retain the brand interpretation');
+const swiftCase = evaluationSet.query_groups
+  .flatMap((group) => group.queries || [])
+  .find((entry) => entry.case_id === 'brand-gate-swift');
+const swiftOrdering = swiftCase?.ordering_expectation;
+assert.ok(swiftOrdering, 'bare swift should declare its reviewed ordering expectation');
+const swiftRefs = swiftResults.map(iconRef);
+assert.ok(
+  !swiftRefs.includes('material:breakfast_dining'),
+  'bare swift should not match fast inside breakfast',
+);
+const personLaunchedIndex = swiftRefs.indexOf(swiftOrdering.included_icon_ref);
+assert.ok(personLaunchedIndex >= 0, 'bare swift should retain the related Person Launched icon');
+assert.ok(
+  personLaunchedIndex + 1 >= swiftOrdering.rank_min && personLaunchedIndex + 1 <= swiftOrdering.rank_max,
+  'Person Launched should stay in the reviewed lower-rank range for bare swift',
+);
+assert.ok(
+  swiftOrdering.any_brand_ref_before.some((ref) => {
+    const index = swiftRefs.indexOf(ref);
+    return index >= 0 && index < personLaunchedIndex;
+  }),
+  'bare swift should rank an approved Swift identity before Person Launched',
+);
+assert.ok(
+  swiftOrdering.any_conventional_ref_before.some((ref) => {
+    const index = swiftRefs.indexOf(ref);
+    return index >= 0 && index < personLaunchedIndex;
+  }),
+  'bare swift should rank a conventional speed icon before Person Launched',
+);
+
+const boltRefs = localSearch('bolt').map(iconRef);
+assert.ok(
+  !boltRefs.includes('material:breakfast_dining'),
+  'bare bolt should not match fast inside breakfast',
+);
+
+const expressiveCandidate = {
+  name: 'Person Launched',
+  id: 'person-launched',
+  aiFilterTags: ['trending-culture', 'meme', 'speed'],
+  secondaryCategories: ['humor', 'meme'],
+  synonyms: ['flung', 'catapulted', 'takeoff', 'yeeted fast'],
+};
+assert.equal(
+  getExpressiveFallbackPenalty('swift', expressiveCandidate),
+  25,
+  'an expressive related match should receive the generic fallback penalty',
+);
+assert.equal(
+  getExpressiveFallbackPenalty('person launched', expressiveCandidate),
+  0,
+  'an expressive icon should keep full priority for its own name',
+);
+assert.equal(
+  getExpressiveFallbackPenalty('takeoff', expressiveCandidate),
+  0,
+  'an expressive icon should keep full priority for an approved direct synonym',
+);
+assert.equal(iconRef(localSearch('person launched')[0]), 'si:person-launched', 'Person Launched should rank first for its own name');
+assert.equal(iconRef(localSearch('takeoff')[0]), 'si:person-launched', 'Person Launched should rank first for its approved takeoff meaning');
+assert.ok(
+  localSearch('yeet').slice(0, 3).some((icon) => iconRef(icon) === 'si:person-launched'),
+  'Person Launched should remain visible for the related yeet meaning',
+);
 
 const lovableResults = localSearch('lovable');
 const lovableFamilies = resultFamilyIds('lovable', lovableResults);
@@ -230,6 +305,30 @@ assert.ok(
 const hostedBrand = rerankHostedSearchCandidates('hellofresh', hostedHelloCandidates);
 assert.equal(hostedBrand[0]?.icon_id, 'simpleicons:hellofresh', 'hosted exact brand search should keep identity priority');
 
+const hostedExpressiveOrdering = rerankHostedSearchCandidates('swift', [
+  { icon_id: 'material:speed', name: 'Speed', source_library: 'material', lexical_rank: 1, query_variant: 'speed' },
+  { icon_id: 'iconoir:apple-swift', name: 'Apple Swift', source_library: 'iconoir', lexical_rank: 0.95, query_variant: 'swift' },
+  {
+    icon_id: 'si:person-launched',
+    name: 'Person Launched',
+    source_library: 'si',
+    lexical_rank: 0.98,
+    query_variant: 'speed',
+    aiFilterTags: ['trending-culture', 'meme', 'speed'],
+    secondaryCategories: ['humor', 'meme'],
+  },
+]);
+assert.deepEqual(
+  hostedExpressiveOrdering.map((entry) => entry.icon_id),
+  ['material:speed', 'iconoir:apple-swift', 'si:person-launched'],
+  'hosted ranking should keep conventional and identity results before an expressive broad match',
+);
+assert.equal(
+  'expressive_fallback_penalty' in hostedExpressiveOrdering[2].match_signals,
+  false,
+  'hosted ranking should not add the internal expressive penalty to public match signals',
+);
+
 assert.ok(getSearchInterpretationPlan('hello'), 'hello should have a maintained interpretation plan');
 assert.equal(getSearchInterpretationPlan('unrelated query'), null, 'unmaintained queries should not receive hidden policy behavior');
 
@@ -241,6 +340,8 @@ console.log(JSON.stringify({
   hello_top_8: helloResults.map(iconRef),
   hello_family_count_top_8: resultFamilyIds('hello', helloResults).size,
   picker_family_count_top_8: resultFamilyIds('picker', pickerResults).size,
+  swift_top_8: swiftRefs,
+  person_launched_rank_for_swift: personLaunchedIndex + 1,
   lovable_top_8: lovableResults.map(iconRef),
   lovable_family_count_top_8: lovableFamilies.size,
 }, null, 2));

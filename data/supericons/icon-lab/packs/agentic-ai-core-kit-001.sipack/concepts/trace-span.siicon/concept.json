@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:trace-span",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "trace-span",
+  "name": "Trace Span",
+  "depicts": "A timed operation inside an agent trace.",
+  "useCase": "Use for logs, spans, traces, observability, debugging, and execution timelines.",
+  "category": "agentic-ai",
+  "assetType": "system-icon",
+  "primaryMetaphor": "Offset timeline rows with marked span endpoints.",
+  "avoidMetaphors": [
+    "clock only",
+    "terminal only",
+    "analytics chart"
+  ],
+  "siblingConcepts": [
+    "tool-call",
+    "tool-result",
+    "eval-run"
+  ],
+  "searchTerms": [
+    "trace span",
+    "trace",
+    "observability",
+    "execution timeline",
+    "agent logs",
+    "debug span"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

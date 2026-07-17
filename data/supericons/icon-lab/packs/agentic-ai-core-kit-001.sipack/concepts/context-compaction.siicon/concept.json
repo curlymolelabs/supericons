@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:context-compaction",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "context-compaction",
+  "name": "Context Compaction",
+  "depicts": "A long context being summarized into a smaller usable state.",
+  "useCase": "Use for summarization, context compression, session handoff, and memory reduction.",
+  "category": "agentic-ai",
+  "assetType": "workflow-icon",
+  "primaryMetaphor": "Three full rows converging into a compact capsule.",
+  "avoidMetaphors": [
+    "trash",
+    "zip file",
+    "collapse chevron only"
+  ],
+  "siblingConcepts": [
+    "context-window",
+    "memory-checkpoint",
+    "agent-handoff"
+  ],
+  "searchTerms": [
+    "context compaction",
+    "summarization",
+    "context compression",
+    "memory reduction",
+    "compact context",
+    "session summary"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}

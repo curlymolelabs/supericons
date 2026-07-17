@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zorb Blast Icons: 40 custom glyphs to replace the emoji</title>
+<!--
+  Proposal mockup: one hand-drawn SVG glyph per premium sound blast (40 total),
+  replacing the emoji currently used in docs/sound-blast-effects-gallery.html
+  and the in-app cards/quiet badges. Icon ids match the zorb sound IDs in
+  src/lib/soundPacks.ts exactly, so the glyph field can swap from an emoji
+  string to an SVG reference with no other changes.
+
+  House rules for the set: 48 viewBox, 2.5px ink stroke, round caps and joins,
+  one accent color per pack (matchday green, creature amber, gibberish purple,
+  sneaky toot-green), accent used for the comedic "payload" of each glyph.
+  Nothing here touches app code. Built by Curly Mole Labs / supericons.
+-->
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #06130e;
+    --line: rgba(104, 255, 180, 0.26);
+    --text: #f3fff8;
+    --muted: #b7d7c9;
+    --ink: #f3fff8;
+    --green: #36f495;
+    --amber: #ffb057;
+    --purple: #bd92ff;
+    --toot: #b6ff7a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(54, 244, 149, 0.14), transparent 46rem),
+      var(--bg);
+    color: var(--text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+  main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 90px; }
+  .eyebrow { color: var(--green); font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.8rem; }
+  h1 { margin: 6px 0 10px; font-size: clamp(1.8rem, 4.6vw, 3rem); line-height: 1.08; }
+  h2 { margin: 40px 0 4px; font-size: clamp(1.25rem, 3vw, 1.8rem); }
+  .lede, .packsub { color: var(--muted); max-width: 840px; }
+  .packsub { margin-top: 0; font-size: 0.92rem; }
+
+  .grid { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .card {
+    border: 1px solid var(--line); border-radius: 16px; padding: 16px 14px 14px;
+    background: linear-gradient(180deg, rgba(17, 49, 37, 0.92), rgba(5, 23, 17, 0.92));
+    display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: rgba(104, 255, 180, 0.5); }
+  .stage { display: flex; align-items: center; gap: 14px; }
+  .stage .big { flex: 0 0 auto; }
+  .stage .smalls { display: flex; align-items: center; gap: 8px; opacity: 0.9; }
+  .stage .smalls .chip {
+    display: grid; place-items: center; width: 34px; height: 34px;
+    background: rgba(0, 0, 0, 0.3); border: 1px solid var(--line); border-radius: 9px;
+  }
+  .card h3 { margin: 0; font-size: 1rem; }
+  .card .idtag { color: var(--muted); font-size: 0.66rem; font-family: Consolas, monospace; overflow-wrap: anywhere; }
+  .card .was { color: var(--muted); font-size: 0.72rem; }
+  .card .was span { font-size: 1rem; vertical-align: -2px; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(90px);
+    background: rgba(9, 28, 21, 0.96); border: 1px solid var(--line);
+    border-radius: 10px; padding: 10px 18px; font-size: 0.82rem; z-index: 40;
+    transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .guide {
+    margin-top: 26px; border: 1px solid var(--line); border-radius: 16px;
+    background: rgba(9, 28, 21, 0.84); padding: 18px 20px; font-size: 0.9rem; color: var(--muted);
+  }
+  .guide b { color: var(--text); }
+  .guide code { background: rgba(255, 255, 255, 0.08); border-radius: 5px; padding: 1px 5px; font-size: 0.9em; color: #dcfff0; }
+
+  footer { margin-top: 50px; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.06em; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Zorb blast icons &middot; supericons proposal</div>
+  <h1>40 custom glyphs, one per premium blast, no more borrowed emoji</h1>
+  <p class="lede">
+    Every premium sound currently fronts an emoji (✋ 👓 🐴 💨). This set replaces them with original glyphs drawn in one
+    house style: 48 grid, 2.5px ink stroke, round caps, and a single accent per pack carrying the joke. IDs match
+    <code>src/lib/soundPacks.ts</code> so the <code>glyph</code> field swaps straight over: cards, focal props, and
+    reduced-motion quiet badges all inherit them. Click any card to copy its SVG.
+  </p>
+
+  <div class="guide">
+    <b>Fit with the effects gallery:</b> these glyphs are the identity layer; the existing CSS recipe effects stay as they are.
+    The focal-prop primitive can render the SVG at 24vmin instead of an emoji, and the quiet badge uses the same glyph at 3rem.
+    Emoji stays as a legacy fallback for unmapped sounds.
+  </div>
+
+  <div id="packs"></div>
+</main>
+
+<div class="toast" id="toast">Copied</div>
+
+<footer>
+  <span>CURLY MOLE LABS &middot; SUPERICONS COMMISSION FOR ZORB</span>
+  <span>48 GRID &middot; 2.5PX INK &middot; ONE ACCENT PER PACK &middot; PENDING OWNER REVIEW</span>
+</footer>
+
+<script>
+  const INK = '#f3fff8';
+  const PACKS = [
+  {
+    id: 'matchday-meltdown', name: 'Matchday Meltdown', accent: '#36f495',
+    sub: 'Stadium drama: flashes, slams, whistles, and review chaos.',
+    icons: [
+      { sound: 'matchday-handball-havoc', label: 'Handball Havoc', was: '✋',
+        svg: `<rect x="13" y="9" width="15" height="21" rx="7.5" stroke="INK"/><path d="M18 9.5v7M23 9.5v7" stroke="INK"/><path d="M13 23c-4.5 0-5.5-5.5-2-6.5" stroke="INK"/><path d="M34 12l4-4M36 21h5.5M34 30l4 4" stroke="ACC"/><circle cx="20" cy="39" r="4" stroke="ACC"/>` },
+      { sound: 'matchday-grandma-foul', label: 'Grandma Saw It', was: '👓',
+        svg: `<circle cx="15" cy="28" r="7" stroke="INK"/><circle cx="33" cy="28" r="7" stroke="INK"/><path d="M22 28h4" stroke="INK"/><path d="M8 28H4.5M43.5 28H40" stroke="INK"/><path d="M33 23l-2.6 4.4h4l-2.6 4.4" stroke="ACC"/><path d="M22 10l2 4M28 9l0.5 4.4" stroke="ACC"/>` },
+      { sound: 'matchday-fookup', label: 'Fookup', was: '💢',
+        svg: `<path d="M24 7l3.6 6.4 7.2-2.6-2.6 7.2L38.5 21 32 24.5l2.6 7.2-7.2-2.6L24 36l-3.6-6.9-7.2 2.6 2.6-7.2L9.5 21l6.3-2.9-2.6-7.2 7.2 2.6z" stroke="INK"/><path d="M19.5 17.5l-1 8M23.5 17.5l-1 8M17.5 20h7.5M17 23h7.5" stroke="ACC" stroke-width="1.8"/><path d="M29 17v5.5" stroke="ACC" stroke-width="1.8"/><circle cx="29" cy="25.6" r="0.6" fill="ACC" stroke="none"/>` },
+      { sound: 'matchday-nincompoopy', label: 'Nincompoopy', was: '🌀',
+        svg: `<path d="M26 24a2 2 0 1 0-4 0 4 4 0 0 0 8 0 6.5 6.5 0 0 0-13 0 9 9 0 0 0 18 0 11.5 11.5 0 0 0-23 0" stroke="INK"/><path d="M37 9l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" stroke="ACC" stroke-width="1.8"/><path d="M8 12l0.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'matchday-nutmegged', label: 'Nutmegged', was: '🥜',
+        svg: `<path d="M15 8v14a6 6 0 0 0 6 6M33 8v14a6 6 0 0 1-6 6" stroke="INK"/><circle cx="24" cy="38" r="4.5" stroke="ACC"/><path d="M5 38h6M37 38h6" stroke="ACC" stroke-dasharray="3 3"/>` },
+      { sound: 'matchday-oh-snapcakes', label: 'Oh Snapcakes', was: '🥞',
+        svg: `<ellipse cx="24" cy="35" rx="12" ry="3.5" stroke="INK"/><ellipse cx="24" cy="29.5" rx="12" ry="3.5" stroke="INK"/><path d="M12 24a12 3.5 0 0 1 24 0" stroke="INK"/><ellipse cx="30" cy="10.5" rx="8" ry="2.6" transform="rotate(-14 30 10.5)" stroke="ACC"/><path d="M14 14q2-4 6-5" stroke="ACC" stroke-dasharray="3 3"/>` },
+      { sound: 'matchday-penalty-pancakes', label: 'Penalty Pancakes', was: '🎯',
+        svg: `<circle cx="24" cy="24" r="14.5" stroke="INK"/><circle cx="24" cy="24" r="7.5" stroke="INK"/><circle cx="24" cy="24" r="2" fill="ACC" stroke="none"/><path d="M24 6v-3M24 45v-3M6 24H3M45 24h-3" stroke="ACC"/>` },
+      { sound: 'matchday-ref-spaghetti', label: 'Ref Spaghetti', was: '🍝',
+        svg: `<circle cx="19" cy="30" r="7" stroke="INK"/><path d="M25 26h13v5h-6" stroke="INK"/><circle cx="19" cy="30" r="1.4" fill="INK" stroke="none"/><path d="M8 12q6 6 12 0t12 0t8 4" stroke="ACC"/><path d="M12 18q5 4 10 0" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'matchday-shittake', label: 'Shittake', was: '🍄',
+        svg: `<path d="M10 24c0-8.5 7-14 14-14s14 5.5 14 14z" stroke="INK"/><path d="M19 24v7a5 5 0 0 0 10 0v-7" stroke="INK"/><circle cx="18" cy="17.5" r="1.3" fill="INK" stroke="none"/><circle cx="28" cy="15.5" r="1.3" fill="INK" stroke="none"/><path d="M24 6V3M12 9l-2-2.5M36 9l2-2.5" stroke="ACC"/>` },
+      { sound: 'matchday-varnado', label: 'VAR-nado', was: '🌀',
+        svg: `<path d="M9 11h30M14 19h20M19 27h11M22.5 35h5" stroke="INK"/><circle cx="33" cy="40" r="3.6" stroke="ACC"/><path d="M29 42q-4 2-7-1" stroke="ACC" stroke-dasharray="3 3"/>` }
+    ]
+  },
+  {
+    id: 'creature-chaos', name: 'Creature Chaos', accent: '#ffb057',
+    sub: 'Animal comedy: swings, flaps, rears, and cackles.',
+    icons: [
+      { sound: 'creature-angry-fat-cat', label: 'Angry Fat Cat', was: '😾',
+        svg: `<circle cx="24" cy="27" r="13" stroke="INK"/><path d="M13.5 19l-2.5-8 8.5 3.5M34.5 19l2.5-8-8.5 3.5" stroke="INK"/><path d="M17.5 24.5l5.5 2M30.5 24.5l-5.5 2" stroke="ACC"/><path d="M21 33q3 2.4 6 0" stroke="INK"/><path d="M5 29h6M37 29h6M5.5 33.5l5.5-1M42.5 33.5l-5.5-1" stroke="INK" stroke-width="1.8"/>` },
+      { sound: 'creature-angry-parrot', label: 'Angry Parrot', was: '🦜',
+        svg: `<circle cx="21" cy="25" r="12" stroke="INK"/><path d="M32 21c5.5 0.5 7 6 2.5 8.5L29 32" stroke="ACC"/><path d="M15 14c0-4.5 3-7 6.5-7M20 12.5c0-3.5 2.5-5.5 5.5-5.5" stroke="INK"/><circle cx="20" cy="22" r="1.6" fill="INK" stroke="none"/><path d="M13 20l4 2.5" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'creature-laughing-donkey', label: 'Laughing Donkey', was: '🐴',
+        svg: `<path d="M16 16.5V6M25 15.5V5" stroke="INK"/><ellipse cx="24" cy="28" rx="12" ry="13" stroke="INK"/><path d="M17.5 23q2-2.4 4.5 0M27 23q2-2.4 4.5 0" stroke="INK"/><rect x="18" y="31" width="12" height="5.5" rx="2.75" stroke="ACC"/><path d="M22 31v5.5M26 31v5.5" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'creature-angry-chicken', label: 'Angry Chicken', was: '🐔',
+        svg: `<path d="M15 12l3.5-5 3 4.5 3-4.5 3.5 5" stroke="ACC"/><circle cx="23" cy="24" r="12" stroke="INK"/><path d="M35 22l7 2.5-7 3.5z" stroke="INK"/><circle cx="27" cy="20" r="1.6" fill="INK" stroke="none"/><path d="M22 17l6 2" stroke="ACC" stroke-width="1.8"/><path d="M20 36v5M26 36v5" stroke="INK" stroke-width="1.8"/>` },
+      { sound: 'creature-goblin-offside', label: 'Goblin Offside', was: '🚩',
+        svg: `<circle cx="20" cy="27" r="10" stroke="INK"/><path d="M11 23l-7.5-4.5L10 28M29 23l7.5-4.5L30 28" stroke="INK"/><path d="M15.5 30q4.5 4 9 0" stroke="INK"/><circle cx="16.5" cy="24.5" r="1.3" fill="INK" stroke="none"/><circle cx="23.5" cy="24.5" r="1.3" fill="INK" stroke="none"/><path d="M36 7v16M36 7l8 3-8 3.5" stroke="ACC"/>` },
+      { sound: 'creature-choke-laugh', label: 'Choke Laugh', was: '😵',
+        svg: `<circle cx="24" cy="25" r="13.5" stroke="INK"/><path d="M16.5 19.5l4.5 4.5M21 19.5l-4.5 4.5" stroke="INK"/><path d="M27 22q3-2.5 5.5 0" stroke="INK"/><path d="M18 30.5q6 5 12 0" stroke="INK"/><path d="M40 9c2.2 3.4 2.2 5.6 0 7-2.2-1.4-2.2-3.6 0-7z" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'creature-evil-monkey', label: 'Evil Monkey', was: '🐵',
+        svg: `<circle cx="8.5" cy="24" r="4.5" stroke="INK"/><circle cx="39.5" cy="24" r="4.5" stroke="INK"/><circle cx="24" cy="24" r="12.5" stroke="INK"/><path d="M16.5 18.5l6 1.6M31.5 18.5l-6 1.6" stroke="ACC"/><path d="M17 28q7 6.5 14 0" stroke="INK"/><path d="M20 30.5v2.5M24 31.5v2.5M28 30.5v2.5" stroke="INK" stroke-width="1.8"/><circle cx="19.5" cy="22.5" r="1.3" fill="INK" stroke="none"/><circle cx="28.5" cy="22.5" r="1.3" fill="INK" stroke="none"/>` },
+      { sound: 'creature-horse-neigh', label: 'Horse Neigh', was: '🐴',
+        svg: `<path d="M14 40c0-11 2-17 8-21l-2.5-9 8.5 6.5c6.5 1 11 5.5 11 12" stroke="INK"/><path d="M33 34l4 2" stroke="INK" stroke-width="1.8"/><circle cx="33" cy="26" r="1.4" fill="INK" stroke="none"/><path d="M22 11l3.5-3M26 14.5l4.5-3M29 19l4.5-2" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'creature-kookaburra', label: 'Kookaburra Laugh', was: '🐦',
+        svg: `<ellipse cx="20" cy="24" rx="10" ry="11" stroke="INK"/><path d="M29 21.5h13l-13 5.5" stroke="INK"/><circle cx="23" cy="19" r="1.5" fill="INK" stroke="none"/><path d="M7 42h34" stroke="INK" stroke-width="1.8"/><path d="M17 35v7M24 35v7" stroke="INK" stroke-width="1.8"/><path d="M36 8a9 9 0 0 1 5 6.5M33 12a5 5 0 0 1 3 4" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'creature-weird-ahhh', label: 'Weird Ahhh', was: '😱',
+        svg: `<circle cx="24" cy="23" r="13.5" stroke="INK"/><circle cx="19" cy="19" r="1.7" fill="INK" stroke="none"/><circle cx="29" cy="19" r="1.7" fill="INK" stroke="none"/><ellipse cx="24" cy="29.5" rx="5" ry="6.5" stroke="ACC"/><path d="M5 8l4.5 3.5M43 8l-4.5 3.5M4 18l5 1M44 18l-5 1" stroke="ACC" stroke-width="1.8"/>` }
+    ]
+  },
+  {
+    id: 'gibberish', name: 'Touchline Gibberish', accent: '#bd92ff',
+    sub: 'Speech chaos: scribbles, blurts, rants, and sputters.',
+    icons: [
+      { sound: 'gibberish-salty-blurt', label: 'Salty Blurt', was: '🧂',
+        svg: `<path d="M17 17h14l2.5 19a3 3 0 0 1-3 3.4h-13a3 3 0 0 1-3-3.4z" stroke="INK"/><path d="M18.5 17l1-6.5h9l1 6.5" stroke="INK"/><circle cx="22" cy="24" r="0.7" fill="INK" stroke="none"/><circle cx="26" cy="24" r="0.7" fill="INK" stroke="none"/><circle cx="24" cy="27.5" r="0.7" fill="INK" stroke="none"/><path d="M38 12l2-3M41 20h4M38 27l3 2.5" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'gibberish-touchline-mutter', label: 'Touchline Mutter', was: '💭',
+        svg: `<ellipse cx="27" cy="19" rx="14.5" ry="10.5" stroke="INK"/><circle cx="13" cy="34" r="3.2" stroke="INK"/><circle cx="8" cy="41" r="1.8" stroke="INK"/><circle cx="21" cy="19" r="1.4" fill="ACC" stroke="none"/><circle cx="27" cy="19" r="1.4" fill="ACC" stroke="none"/><circle cx="33" cy="19" r="1.4" fill="ACC" stroke="none"/>` },
+      { sound: 'gibberish-angry-babble', label: 'Angry Babble', was: '🗯️',
+        svg: `<path d="M8 9h32v21H25l-8.5 8.5V30H8z" stroke="INK"/><path d="M14 16.5l-1 7M18 16.5l-1 7M12.5 19h7.5M12 21.5h7.5" stroke="ACC" stroke-width="1.8"/><circle cx="26.5" cy="20" r="2.8" stroke="ACC" stroke-width="1.8"/><path d="M29.3 20a5.2 5.2 0 1 0-1.6 3.8" stroke="ACC" stroke-width="1.8"/><path d="M35 15v5.5" stroke="ACC" stroke-width="1.8"/><circle cx="35" cy="23.6" r="0.6" fill="ACC" stroke="none"/>` },
+      { sound: 'gibberish-ref-rant', label: 'Ref Rant', was: '📣',
+        svg: `<path d="M8 21v8h6l14 9V12l-14 9z" stroke="INK"/><path d="M11 29v6" stroke="INK" stroke-width="1.8"/><path d="M33 14l6.5-4.5M35 24.5h8.5M33 35l6.5 4.5" stroke="ACC"/>` },
+      { sound: 'gibberish-chaos-mumbo', label: 'Chaos Mumbo', was: '🌀',
+        svg: `<path d="M9 9h30v23H26l-7.5 7.5V32H9z" stroke="INK"/><path d="M25.6 20.5a1.6 1.6 0 1 0-3.2 0 3.4 3.4 0 0 0 6.8 0 5.6 5.6 0 0 0-11.2 0 7.8 7.8 0 0 0 15.6 0" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'gibberish-foul-gibber', label: 'Foul Gibber', was: '🚩',
+        svg: `<path d="M12 43V7" stroke="INK"/><path d="M12 8.5c8-4 12 4 20 0v14c-8 4-12-4-20 0" stroke="INK"/><path d="M27 34q3-4.5 6.5 0t6.5 0" stroke="ACC" stroke-width="1.8"/><path d="M29 40q2.5-3.5 5.5 0" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'gibberish-sideline-sputter', label: 'Sideline Sputter', was: '💦',
+        svg: `<path d="M6 26q8-6.5 17 0q-9 6.5-17 0z" stroke="INK"/><path d="M10 26h9" stroke="INK" stroke-width="1.8"/><circle cx="30" cy="18" r="1.5" fill="ACC" stroke="none"/><circle cx="35" cy="23" r="1.8" fill="ACC" stroke="none"/><circle cx="31" cy="29" r="1.4" fill="ACC" stroke="none"/><circle cx="38" cy="31" r="1.2" fill="ACC" stroke="none"/><circle cx="40" cy="15" r="1.3" fill="ACC" stroke="none"/>` },
+      { sound: 'gibberish-meltdown-babble', label: 'Meltdown Babble', was: '♨️',
+        svg: `<path d="M10 16h28v18H26l-7.5 7.5V34H10z" stroke="INK"/><path d="M17 12q2.2-3.2 0-6.5M25 12q2.2-3.2 0-6.5M33 12q2.2-3.2 0-6.5" stroke="ACC" stroke-width="1.8"/><path d="M16 25q4-3.5 8 0t8 0" stroke="INK" stroke-width="1.8"/>` },
+      { sound: 'gibberish-bluster-burst', label: 'Bluster Burst', was: '📊',
+        svg: `<path d="M13 31V19M20 35V13M27 33V15M34 36V12M41 30V18" stroke="INK"/><path d="M7 10L4 7M7 38l-3 3" stroke="ACC" stroke-width="1.8"/><path d="M44 7l2 2" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'gibberish-wild-blurt', label: 'Wild Blurt', was: '✴️',
+        svg: `<path d="M24 5v9M24 34v9M5 24h9M34 24h9M10.5 10.5l6.4 6.4M31.1 31.1l6.4 6.4M37.5 10.5l-6.4 6.4M17 31l-6.5 6.5" stroke="INK"/><path d="M26.5 17.5l-5 7h6l-5 7" stroke="ACC"/>` }
+    ]
+  },
+  {
+    id: 'sneaky-toots', name: 'Sneaky Toots', accent: '#b6ff7a',
+    sub: 'Low comedy physics: puffs, ripples, honks, and splashes.',
+    icons: [
+      { sound: 'sneaky-tiny-pop', label: 'Tiny Pop', was: '☁️',
+        svg: `<path d="M18 27a5 5 0 0 1 1-9.9 6.5 6.5 0 0 1 12.6 1.2A4.8 4.8 0 0 1 30 27z" stroke="INK"/><path d="M20 34q4 3 8 0" stroke="ACC" stroke-width="1.8"/><circle cx="24" cy="40" r="1" fill="ACC" stroke="none"/>` },
+      { sound: 'sneaky-low-burst', label: 'Low Burst', was: '💨',
+        svg: `<path d="M7 37h34" stroke="INK"/><path d="M13 37a5.5 5.5 0 0 1 11 0M27 37a4.5 4.5 0 0 1 9 0" stroke="INK"/><path d="M17 27v-4.5M28 25.5V21M22.5 20v-4.5" stroke="ACC" stroke-width="1.8" stroke-dasharray="3 3"/>` },
+      { sound: 'sneaky-long-honk', label: 'Long Honk', was: '📯',
+        svg: `<rect x="6" y="20" width="10" height="8" rx="2.5" stroke="INK"/><path d="M16 17.5L30 11v26l-14-6.5" stroke="INK"/><path d="M34 19q4 5 0 10" stroke="ACC"/><path d="M39 15q6 9 0 18" stroke="ACC"/>` },
+      { sound: 'sneaky-long-rumble', label: 'Long Rumble', was: '🌊',
+        svg: `<path d="M8 16q8-6 16 0t16 0" stroke="INK"/><path d="M8 25q8-6 16 0t16 0" stroke="ACC"/><path d="M8 34q8-6 16 0t16 0" stroke="INK"/>` },
+      { sound: 'sneaky-long-rip', label: 'Long Rip', was: '⚡',
+        svg: `<path d="M5 26l7-6 5.5 9 7.5-11.5 5.5 9 4.5-4.5 3.5 3" stroke="INK"/><path d="M12 12l2-2.5M34 38l2.5 2" stroke="ACC" stroke-width="1.8"/><path d="M40 10l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'sneaky-loud-pop', label: 'Loud Pop', was: '🫧',
+        svg: `<circle cx="24" cy="24" r="9" stroke="ACC"/><path d="M24 9V4M24 44v-5M9 24H4M44 24h-5M13.4 13.4l-3.5-3.5M34.6 34.6l3.5 3.5M34.6 13.4l3.5-3.5M13.4 34.6l-3.5 3.5" stroke="INK"/>` },
+      { sound: 'sneaky-loud-squeal', label: 'Loud Squeal', was: '🔔',
+        svg: `<path d="M6 32l4.5-15L15 32l4.5-15L24 32l4.5-15L33 32l4.5-15" stroke="INK"/><path d="M40 10a7 7 0 0 1 3 5M37 13a4 4 0 0 1 2 3" stroke="ACC" stroke-width="1.8"/>` },
+      { sound: 'sneaky-sloppy-splash', label: 'Sloppy Splash', was: '💦',
+        svg: `<path d="M24 12c4.5 6.5 7.5 9.5 7.5 14a7.5 7.5 0 0 1-15 0c0-4.5 3-7.5 7.5-14z" stroke="INK"/><path d="M8 38q2-4.5 6.5-4.5M40 38q-2-4.5-6.5-4.5" stroke="ACC" stroke-width="1.8"/><circle cx="10" cy="28" r="1.3" fill="ACC" stroke="none"/><circle cx="38" cy="28" r="1.3" fill="ACC" stroke="none"/>` },
+      { sound: 'sneaky-wet-rumble', label: 'Wet Rumble', was: '☔',
+        svg: `<path d="M14 21a6 6 0 0 1 2-11.6 8 8 0 0 1 15.6 1.6A5.5 5.5 0 0 1 33 21z" stroke="INK"/><path d="M17 26l-2 5M24 26l-2 5M31 26l-2 5" stroke="ACC" stroke-width="1.8"/><path d="M8 40q8-5 16 0t16 0" stroke="INK"/>` },
+      { sound: 'sneaky-muffled-rumble', label: 'Muffled Rumble', was: '🛋️',
+        svg: `<rect x="9" y="14" width="30" height="19" rx="6.5" stroke="INK"/><circle cx="24" cy="23.5" r="1.4" fill="INK" stroke="none"/><path d="M17 23.5h3M28 23.5h3" stroke="INK" stroke-width="1.8"/><path d="M13 40q3 2.4 6 0M29 40q3 2.4 6 0" stroke="ACC" stroke-width="1.8"/>` }
+    ]
+  }
+  ];
+
+  function svgFor(icon, accent, size) {
+    const body = icon.svg.replace(/INK/g, INK).replace(/ACC/g, accent);
+    return `<svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${icon.label}">${body}</svg>`;
+  }
+  function fullSource(icon, accent) {
+    const body = icon.svg.replace(/INK/g, INK).replace(/ACC/g, accent);
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  }
+
+  const packsEl = document.getElementById('packs');
+  PACKS.forEach(pack => {
+    const h2 = document.createElement('h2');
+    h2.textContent = pack.name;
+    const sub = document.createElement('p');
+    sub.className = 'packsub';
+    sub.textContent = pack.sub + ' Accent ' + pack.accent + '.';
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    pack.icons.forEach(icon => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="stage">
+          <span class="big">${svgFor(icon, pack.accent, 84)}</span>
+          <span class="smalls">
+            <span class="chip">${svgFor(icon, pack.accent, 24)}</span>
+            <span class="chip">${svgFor(icon, pack.accent, 16)}</span>
+          </span>
+        </div>
+        <h3>${icon.label}</h3>
+        <span class="idtag">${icon.sound}</span>
+        <span class="was">replaces <span>${icon.was}</span></span>`;
+      card.addEventListener('click', () => {
+        const src = fullSource(icon, pack.accent);
+        if (navigator.clipboard) navigator.clipboard.writeText(src).catch(() => {});
+        const toast = document.getElementById('toast');
+        toast.textContent = 'Copied ' + icon.sound + ' SVG';
+        toast.classList.add('show');
+        clearTimeout(window.__tt);
+        window.__tt = setTimeout(() => toast.classList.remove('show'), 1500);
+      });
+      grid.appendChild(card);
+    });
+    packsEl.appendChild(h2);
+    packsEl.appendChild(sub);
+    packsEl.appendChild(grid);
+  });
+
+  // machine-readable manifest for the integrating agent
+  window.ZORB_BLAST_ICON_MANIFEST = PACKS.flatMap(p => p.icons.map(i => ({
+    soundId: i.sound, packId: p.id, label: i.label, replacesEmoji: i.was, accent: p.accent
+  })));
+</script>
+</body>
+</html>

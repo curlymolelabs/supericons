@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "si:tool-call",
+  "packId": "agentic-ai-core-kit-001",
+  "slug": "tool-call",
+  "name": "Tool Call",
+  "depicts": "An agent invoking an external tool.",
+  "useCase": "Use for function calls, API actions, MCP tools, browser actions, and agent tool execution.",
+  "category": "agentic-ai",
+  "assetType": "action-icon",
+  "primaryMetaphor": "A connector line from an intent point into a tool module.",
+  "avoidMetaphors": [
+    "phone call",
+    "hammer",
+    "wrench"
+  ],
+  "siblingConcepts": [
+    "tool-result",
+    "approval-gate",
+    "trace-span"
+  ],
+  "searchTerms": [
+    "tool call",
+    "function call",
+    "mcp tool",
+    "api action",
+    "agent action",
+    "external tool"
+  ],
+  "targetSizes": [
+    16,
+    20,
+    24,
+    32,
+    48,
+    128
+  ],
+  "status": "owner_review"
+}
