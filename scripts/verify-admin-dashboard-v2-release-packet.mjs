@@ -25,7 +25,7 @@ function sha256TextFile(path) {
 const expectedFingerprint = readArg('fingerprint');
 assert.match(expectedFingerprint, /^[0-9a-f]{64}$/, 'Provide --fingerprint.');
 
-const sourcePath = 'references/verification/admin-dashboard-v2-rollup-paging-release-fingerprint-2026-07-17.txt';
+const sourcePath = 'references/verification/admin-dashboard-v2-audience-performance-release-fingerprint-2026-07-17.txt';
 const source = normalizedText(readFileSync(sourcePath, 'utf8'));
 assert.equal(source.endsWith('\n'), true, 'Fingerprint source must end with one LF.');
 assert.equal(sha256(source), expectedFingerprint, 'Release fingerprint does not match the source.');
@@ -37,8 +37,8 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_v2_rollup_paging_release',
-  implementation_revision: 'aa7f2254472fc21b9e1b5f4dc0b953809f56682d',
+  packet: 'admin_dashboard_v2_audience_performance_release',
+  implementation_revision: '3759719bd2c0389a2e9fa193dbcf8befd26b805d',
   implementation_tree: fields.implementation_tree,
   rollback_revision: '4c700177d616eab4abbd78a6fbc5361f5360a52c',
   rollback_tree: fields.rollback_tree,
@@ -68,16 +68,17 @@ assert.deepEqual(fields, {
   final_attempt_evidence_sha256: fields.final_attempt_evidence_sha256,
   performance_attempt_evidence_sha256: fields.performance_attempt_evidence_sha256,
   performance_retry_attempt_evidence_sha256: fields.performance_retry_attempt_evidence_sha256,
+  rollup_paging_attempt_evidence_sha256: fields.rollup_paging_attempt_evidence_sha256,
   local_verification_sha256: fields.local_verification_sha256,
   hash_mode: 'lf_normalized_utf8',
   project_ref: 'kcjmkakdhsqplvasgkjv',
   linked_project_ref_check: 'required',
   function_name: 'admin-api',
   pre_function_id: '1ca7655a-e504-416f-9173-750016e79b73',
-  pre_function_version: '64',
-  pre_function_updated_at: '1784295229758',
+  pre_function_version: '66',
+  pre_function_updated_at: '1784296045662',
   pre_function_verify_jwt: 'false',
-  pre_function_ezbr_sha256: '37535447d20e30b39bed48024de867e280cdfa706e0283c696dbccdab719a394',
+  pre_function_ezbr_sha256: '6e75ed715ed9bebe24c9b29823b2cae5eff245807d78e3161646abe39ecffdc5',
   pre_mcp_search_id: 'ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43',
   pre_mcp_search_version: '39',
   pre_mcp_search_updated_at: '1784045797971',
@@ -137,6 +138,7 @@ for (const field of [
   'final_attempt_evidence_sha256',
   'performance_attempt_evidence_sha256',
   'performance_retry_attempt_evidence_sha256',
+  'rollup_paging_attempt_evidence_sha256',
   'local_verification_sha256',
 ]) {
   assert.match(fields[field], /^[0-9a-f]{40,64}$/, `${field} is malformed.`);
@@ -173,7 +175,9 @@ const textHashes = [
     'performance_attempt_evidence_sha256'],
   ['references/verification/admin-dashboard-v2-identity-performance-retry-attempt-2026-07-17.json',
     'performance_retry_attempt_evidence_sha256'],
-  ['references/verification/admin-dashboard-v2-rollup-paging-release-local-verification-2026-07-17.json',
+  ['references/verification/admin-dashboard-v2-rollup-paging-release-attempt-2026-07-17.json',
+    'rollup_paging_attempt_evidence_sha256'],
+  ['references/verification/admin-dashboard-v2-audience-performance-release-local-verification-2026-07-17.json',
     'local_verification_sha256'],
 ];
 for (const [path, field] of textHashes) {
@@ -215,6 +219,8 @@ assert.match(implementationSource, /select\(auditSelect, \{ count: 'exact' \}\)/
 assert.match(implementationSource, /select\(usageSelect, \{ count: 'exact' \}\)/);
 assert.match(implementationSource, /select\(overviewSelect, \{ count: 'exact' \}\)/);
 assert.match(implementationSource, /select\(querySelect, \{ count: 'exact' \}\)/);
+assert.match(implementationSource, /\{ applyQuery: false, includeQueryRows: false \}/);
+assert.match(implementationSource, /const \[dataRows, identityTelemetry, authUsers\] = await Promise\.all/);
 assert.match(implementationSource, /fetchBoundedDashboardV2Pages/);
 assert.match(implementationHelper, /export async function fetchBoundedDashboardV2Pages/);
 
@@ -245,7 +251,7 @@ assert.match(runner, /Assert-LinkedProject/);
 assert.match(runner, /-Name 'mcp-search'/);
 assert.match(runner, /mcp-search version changed during the admin-api release/);
 assert.match(runner, /verify-admin-dashboard-v2-rollup-parity\.mjs/);
-assert.match(runner, /admin-dashboard-v2-rollup-paging-release-parity-2026-07-17\.json/);
+assert.match(runner, /admin-dashboard-v2-audience-performance-release-parity-2026-07-17\.json/);
 assert.equal(runner.includes('Read-Host'), false, 'Release runner must not prompt.');
 assert.equal(runner.includes('ApprovalFingerprint'), false, 'Release runner must not export approval ceremony.');
 assert.equal(/supabase\s+functions\s+deploy\s+mcp-search/i.test(runner), false);
@@ -310,7 +316,7 @@ for (const prohibited of [
 }
 
 const localVerification = JSON.parse(
-  readFileSync('references/verification/admin-dashboard-v2-rollup-paging-release-local-verification-2026-07-17.json', 'utf8'),
+  readFileSync('references/verification/admin-dashboard-v2-audience-performance-release-local-verification-2026-07-17.json', 'utf8'),
 );
 assert.equal(localVerification.status, 'ok');
 assert.equal(localVerification.project_ref, fields.project_ref);
@@ -338,6 +344,8 @@ assert.equal(
   Number(fields.rollup_page_concurrency),
 );
 assert.equal(localVerification.correction.rollup_first_page_exact_count, true);
+assert.equal(localVerification.correction.audience_skips_query_rollups, true);
+assert.equal(localVerification.correction.audience_auth_load_is_parallel, true);
 assert.equal(
   localVerification.correction.query_parity_policy,
   'compare_api_rows_to_complete_database_map',

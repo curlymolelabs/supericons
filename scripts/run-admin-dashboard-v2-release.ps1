@@ -10,22 +10,22 @@ $FunctionName = 'admin-api'
 $AdminUrl = "https://$ProjectRef.supabase.co/functions/v1/$FunctionName"
 $SearchUrl = "https://$ProjectRef.supabase.co/functions/v1/mcp-search"
 $Root = Split-Path -Parent $PSScriptRoot
-$FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-fingerprint-2026-07-17.txt'
+$FingerprintSource = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-fingerprint-2026-07-17.txt'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
-$Workspace = Join-Path $Root 'tmp/admin-dashboard-v2-rollup-paging-release'
-$PreInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-pre-inventory-2026-07-17.json'
-$DatabaseEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-database-preflight-2026-07-17.json'
-$RailwayEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-railway-health-2026-07-17.json'
-$SearchEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-search-health-2026-07-17.json'
-$LegacyPreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-preflight-2026-07-17.json'
-$CandidateInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-candidate-inventory-2026-07-17.json'
-$V2LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-live-2026-07-17.json'
-$RollupParityEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-parity-2026-07-17.json'
-$PhaseALiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-phase-a-regression-2026-07-17.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-completion-2026-07-17.json'
-$RollbackInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-rollback-inventory-2026-07-17.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-rollback-2026-07-17.json'
-$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-rollup-paging-release-rollback-failure-2026-07-17.json'
+$Workspace = Join-Path $Root 'tmp/admin-dashboard-v2-audience-performance-release'
+$PreInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-pre-inventory-2026-07-17.json'
+$DatabaseEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-database-preflight-2026-07-17.json'
+$RailwayEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-railway-health-2026-07-17.json'
+$SearchEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-search-health-2026-07-17.json'
+$LegacyPreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-preflight-2026-07-17.json'
+$CandidateInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-candidate-inventory-2026-07-17.json'
+$V2LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-live-2026-07-17.json'
+$RollupParityEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-parity-2026-07-17.json'
+$PhaseALiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-phase-a-regression-2026-07-17.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-completion-2026-07-17.json'
+$RollbackInventoryEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-rollback-inventory-2026-07-17.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-rollback-2026-07-17.json'
+$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-v2-audience-performance-release-rollback-failure-2026-07-17.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 . (Join-Path $PSScriptRoot 'admin-dashboard-release-credentials.ps1')
 
@@ -288,18 +288,18 @@ function Invoke-Rollback {
       -ExpectedId "$($CandidateFunction.id)" `
       -PreviousVersion ([int]$CandidateFunction.version)
     $rollbackInventory = Invoke-Inventory `
-      -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-rollback-inventory-2026-07-17.json'
+      -Output 'references/verification/admin-dashboard-v2-audience-performance-release-rollback-inventory-2026-07-17.json'
     Assert-InventoryRevision -Inventory $rollbackInventory -ExpectedRevision $script:Packet.rollback_revision
     $rollbackLive = Invoke-NodeEvidenceGate `
       -Script 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs' `
       -Arguments @(
         '--admin-url', $AdminUrl,
         '--mode', 'legacy',
-        '--output', 'tmp/admin-dashboard-v2-rollup-paging-release/rollback-live.json'
+        '--output', 'tmp/admin-dashboard-v2-audience-performance-release/rollback-live.json'
       ) `
-      -Output 'tmp/admin-dashboard-v2-rollup-paging-release/rollback-live.json'
+      -Output 'tmp/admin-dashboard-v2-audience-performance-release/rollback-live.json'
     Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
-      artifact = 'admin_dashboard_v2_rollup_paging_release_rollback'
+      artifact = 'admin_dashboard_v2_audience_performance_release_rollback'
       release_fingerprint = $script:ReleaseFingerprint
       reason = $Reason.Replace($Root, '[workspace]')
       candidate_version = [int]$CandidateFunction.version
@@ -316,7 +316,7 @@ function Invoke-Rollback {
   catch {
     $rollbackFailure = $_.Exception.Message.Replace($Root, '[workspace]')
     Write-JsonEvidence -Path $RollbackFailureEvidence -Value ([ordered]@{
-      artifact = 'admin_dashboard_v2_rollup_paging_release_rollback_failure'
+      artifact = 'admin_dashboard_v2_audience_performance_release_rollback_failure'
       release_fingerprint = $script:ReleaseFingerprint
       original_reason = $Reason.Replace($Root, '[workspace]')
       rollback_error = $rollbackFailure
@@ -436,7 +436,7 @@ try {
   }
 
   $preInventory = Invoke-Inventory `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-pre-inventory-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-pre-inventory-2026-07-17.json'
   Assert-InventoryRevision -Inventory $preInventory -ExpectedRevision $script:Packet.rollback_revision
 
   $database = Invoke-NodeEvidenceGate `
@@ -444,9 +444,9 @@ try {
     -Arguments @(
       '--project-ref', $ProjectRef,
       '--release-fingerprint', $script:ReleaseFingerprint,
-      '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-database-preflight-2026-07-17.json'
+      '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-database-preflight-2026-07-17.json'
     ) `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-database-preflight-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-database-preflight-2026-07-17.json'
   $pendingDays = [int]$database.backlog.pending_day_count
 
   $null = Invoke-QuietCheckedCommand -FilePath 'node' -Arguments @(
@@ -456,7 +456,7 @@ try {
     '--expect-material-assets', '8524',
     '--expect-hosted-search-resilience', 'enabled',
     '--allow-active',
-    '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-railway-health-2026-07-17.json'
+    '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-railway-health-2026-07-17.json'
   )
   $railway = Get-Content -LiteralPath $RailwayEvidence -Raw | ConvertFrom-Json
   if ($railway.status -ne 'ok') { throw 'Railway protection health did not pass.' }
@@ -464,7 +464,7 @@ try {
   $null = Invoke-QuietCheckedCommand -FilePath 'node' -Arguments @(
     'scripts/verify-admin-dashboard-phase-a-search-health.mjs',
     '--search-url', $SearchUrl,
-    '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-search-health-2026-07-17.json',
+    '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-search-health-2026-07-17.json',
     '--warmup-count', '1',
     '--measured-count', '2',
     '--latency-limit-ms', '2000',
@@ -479,9 +479,9 @@ try {
       '--admin-url', $AdminUrl,
       '--mode', 'preflight',
       '--preflight-max-latency-ms', '10000',
-      '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-preflight-2026-07-17.json'
+      '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-preflight-2026-07-17.json'
     ) `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-preflight-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-preflight-2026-07-17.json'
 
   $startedAt = (Get-Date).ToUniversalTime().ToString('o')
   $candidate = Deploy-Revision `
@@ -492,7 +492,7 @@ try {
   $script:CandidateFunction = $candidate
 
   $candidateInventory = Invoke-Inventory `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-candidate-inventory-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-candidate-inventory-2026-07-17.json'
   Assert-InventoryRevision -Inventory $candidateInventory -ExpectedRevision $script:Packet.implementation_revision
 
   $v2Live = Invoke-NodeEvidenceGate `
@@ -500,9 +500,9 @@ try {
     -Arguments @(
       '--admin-url', $AdminUrl,
       '--release-fingerprint', $script:ReleaseFingerprint,
-      '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-live-2026-07-17.json'
+      '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-live-2026-07-17.json'
     ) `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-live-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-live-2026-07-17.json'
 
   $rollupParity = Invoke-NodeEvidenceGate `
     -Script 'scripts/verify-admin-dashboard-v2-rollup-parity.mjs' `
@@ -510,9 +510,9 @@ try {
       '--project-ref', $ProjectRef,
       '--admin-url', $AdminUrl,
       '--release-fingerprint', $script:ReleaseFingerprint,
-      '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-parity-2026-07-17.json'
+      '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-parity-2026-07-17.json'
     ) `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-parity-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-parity-2026-07-17.json'
 
   $phaseALive = Invoke-NodeEvidenceGate `
     -Script 'scripts/verify-admin-dashboard-phase-a-admin-api-live.mjs' `
@@ -520,9 +520,9 @@ try {
       '--admin-url', $AdminUrl,
       '--mode', 'candidate',
       '--max-refresh-days', "$pendingDays",
-      '--output', 'references/verification/admin-dashboard-v2-rollup-paging-release-phase-a-regression-2026-07-17.json'
+      '--output', 'references/verification/admin-dashboard-v2-audience-performance-release-phase-a-regression-2026-07-17.json'
     ) `
-    -Output 'references/verification/admin-dashboard-v2-rollup-paging-release-phase-a-regression-2026-07-17.json'
+    -Output 'references/verification/admin-dashboard-v2-audience-performance-release-phase-a-regression-2026-07-17.json'
 
   $functionsAfter = Get-Functions
   $postFunction = Get-NamedFunction -Functions $functionsAfter -Name $FunctionName
@@ -539,7 +539,7 @@ try {
   }
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
-    artifact = 'admin_dashboard_v2_rollup_paging_release_completion'
+    artifact = 'admin_dashboard_v2_audience_performance_release_completion'
     release_fingerprint = $script:ReleaseFingerprint
     project_ref = $ProjectRef
     implementation_revision = $script:Packet.implementation_revision
