@@ -29,6 +29,8 @@ function includes(source, value, label) {
   'buildQueryWorkbenchGroupKey',
   'queryOrigin: normalizedQueryOrigin',
   'queryOrigin: row.query_origin',
+  'separateQueryOrigins = false',
+  '{ applyQuery: false, separateQueryOrigins: true }',
   'includeQueryRows = true',
   '{ applyQuery: false, includeQueryRows: false }',
   "select(auditSelect, { count: 'exact' })",

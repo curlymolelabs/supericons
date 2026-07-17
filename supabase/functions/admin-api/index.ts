@@ -1643,6 +1643,7 @@ async function buildDashboardV2DataRows(
   {
     applyQuery = true,
     includeQueryRows = true,
+    separateQueryOrigins = false,
   } = {},
 ) {
   if (filters.use_raw) {
@@ -1658,7 +1659,7 @@ async function buildDashboardV2DataRows(
       telemetry_rows: telemetryRows,
       overview_rows: rollups.overview,
       query_rows: includeQueryRows
-        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews)
+        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews, { separateQueryOrigins })
         : [],
       query_review_available: includeQueryRows && reviews.available,
       raw_truncated: telemetry.truncated,
@@ -1713,6 +1714,7 @@ async function buildDashboardV2DataRows(
       ? buildQueryWorkbenchRowsFromRollups(
         [...completedQueryRows, ...currentRollups.queries],
         reviews.reviews,
+        { separateQueryOrigins },
       )
       : [],
     query_review_available: includeQueryRows && reviews.available,
@@ -2023,7 +2025,11 @@ async function buildDashboardV2SearchPayload(
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
   const [dataRows, iconRequests, contacts] = await Promise.all([
-    buildDashboardV2DataRows(adminClient, { ...filters, q: '' }, { applyQuery: false }),
+    buildDashboardV2DataRows(
+      adminClient,
+      { ...filters, q: '' },
+      { applyQuery: false, separateQueryOrigins: true },
+    ),
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
   ]);
@@ -2304,17 +2310,24 @@ function getQueryWorkbenchEntry(
   libraryFilter: unknown,
   jobCategory: unknown,
   queryOrigin: unknown,
+  separateQueryOrigins = false,
 ) {
   const normalizedQuery = normalizeSearchQuery(query);
   const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
   const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
   const normalizedQueryOrigin = normalizeSearchQuery(queryOrigin) || 'legacy_unknown';
-  const key = buildQueryWorkbenchGroupKey({
-    query: normalizedQuery,
-    libraryFilter: normalizedLibrary,
-    jobCategory: normalizedJobCategory,
-    queryOrigin: normalizedQueryOrigin,
-  });
+  const key = separateQueryOrigins
+    ? buildQueryWorkbenchGroupKey({
+      query: normalizedQuery,
+      libraryFilter: normalizedLibrary,
+      jobCategory: normalizedJobCategory,
+      queryOrigin: normalizedQueryOrigin,
+    })
+    : buildQueryReviewContextKey({
+      query: normalizedQuery,
+      libraryFilter: normalizedLibrary,
+      jobCategory: normalizedJobCategory,
+    });
   const existing = map.get(key);
   if (existing) return existing;
 
@@ -2380,6 +2393,7 @@ function getQueryWorkbenchEntry(
 function buildQueryWorkbenchRows(
   evidenceRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
+  { separateQueryOrigins = false } = {},
 ) {
   const map = new Map<string, Record<string, unknown>>();
 
@@ -2397,6 +2411,7 @@ function buildQueryWorkbenchRows(
       libraryFilter,
       jobCategory,
       row.query_origin,
+      separateQueryOrigins,
     );
     updateSeenRange(entry, createdAt);
     (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
@@ -2795,6 +2810,7 @@ async function fetchQueryRollups(
 function buildQueryWorkbenchRowsFromRollups(
   rollupRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
+  { separateQueryOrigins = false } = {},
 ) {
   const grouped = new Map<string, Record<string, unknown>>();
   const countFields = [
@@ -2815,12 +2831,14 @@ function buildQueryWorkbenchRowsFromRollups(
     const query = normalizeSearchQuery(row.query_norm);
     if (!query) continue;
     const library = normalizeReviewLibraryFilter(row.library_filter);
-    const key = buildQueryWorkbenchGroupKey({
-      query,
-      libraryFilter: library,
-      jobCategory: '',
-      queryOrigin: row.query_origin,
-    });
+    const key = separateQueryOrigins
+      ? buildQueryWorkbenchGroupKey({
+        query,
+        libraryFilter: library,
+        jobCategory: '',
+        queryOrigin: row.query_origin,
+      })
+      : buildQueryReviewContextKey({ query, libraryFilter: library, jobCategory: '' });
     const entry = grouped.get(key) || {
       query,
       library_filter: library,
