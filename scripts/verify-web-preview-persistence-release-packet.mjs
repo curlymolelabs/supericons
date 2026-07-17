@@ -7,6 +7,7 @@ import { join, resolve } from 'node:path';
 import {
   executeBoundedNetlifyRelease,
   sha256NormalizedText,
+  verifyNetlifyCliBinding,
 } from './run-web-preview-persistence-release.mjs';
 
 const repoRoot = resolve(import.meta.dirname, '..');
@@ -46,12 +47,21 @@ function runBoundCliVerification() {
   return report;
 }
 
-function createMockNetlify({ rollbackDeployId, failRestore = false } = {}) {
+function createMockNetlify({
+  rollbackDeployId,
+  failRestore = false,
+  postDeployReadFailures = 0,
+  delayedVisibilityReads = 0,
+} = {}) {
   const calls = [];
   let currentDeployId = rollbackDeployId;
+  let deploymentOccurred = false;
+  let remainingReadFailures = postDeployReadFailures;
+  let remainingDelayedReads = delayedVisibilityReads;
   const netlify = async (command) => {
     calls.push([...command]);
     if (command[0] === 'deploy') {
+      deploymentOccurred = true;
       currentDeployId = 'a'.repeat(24);
       return {
         deploy_id: currentDeployId,
@@ -60,18 +70,34 @@ function createMockNetlify({ rollbackDeployId, failRestore = false } = {}) {
     }
     assert.equal(command[0], 'api');
     if (command[1] === 'getSite') {
+      if (deploymentOccurred && remainingReadFailures > 0) {
+        remainingReadFailures -= 1;
+        throw new Error('controlled post-deploy site-read failure');
+      }
+      const visibleDeployId = deploymentOccurred && remainingDelayedReads > 0
+        ? rollbackDeployId
+        : currentDeployId;
+      if (deploymentOccurred && remainingDelayedReads > 0) {
+        remainingDelayedReads -= 1;
+      }
       return {
         id: manifest.netlify.site_id,
         published_deploy: {
-          id: currentDeployId,
+          id: visibleDeployId,
           state: 'ready',
           ssl_url: `https://${manifest.netlify.hostname}`,
         },
       };
     }
     if (command[1] === 'restoreSiteDeploy') {
+      const dataIndex = command.indexOf('--data');
+      assert.ok(dataIndex >= 0);
+      const data = JSON.parse(command[dataIndex + 1]);
+      assert.equal(data.site_id, manifest.netlify.site_id);
+      assert.equal(data.deploy_id, rollbackDeployId);
       if (failRestore) throw new Error('controlled restore failure');
       currentDeployId = rollbackDeployId;
+      deploymentOccurred = false;
       return { id: rollbackDeployId };
     }
     throw new Error(`Unexpected mock command: ${command.join(' ')}`);
@@ -201,6 +227,54 @@ async function runMutationSelfTests() {
       assert.equal(commandCount(mock.calls, 'deploy'), 1);
       assert.equal(commandCount(mock.calls, 'api', 'restoreSiteDeploy'), 1);
     }
+
+    {
+      const receiptRoot = join(temporaryRoot, 'post-deploy-read-failure');
+      const mock = createMockNetlify({
+        rollbackDeployId: manifest.netlify.rollback_deploy_id,
+        postDeployReadFailures: 1,
+      });
+      await expectRejected(() => executeBoundedNetlifyRelease({
+        manifest,
+        manifestHash: expectedManifestHash,
+        artifactRoot: join(temporaryRoot, 'dist'),
+        receiptRoot,
+        netlify: mock.netlify,
+        verifyLive: async () => ({ status: 'ok' }),
+      }), /production was restored/);
+      assert.equal(commandCount(mock.calls, 'deploy'), 1);
+      assert.equal(commandCount(mock.calls, 'api', 'restoreSiteDeploy'), 1);
+      const receipt = JSON.parse(readFileSync(
+        join(receiptRoot, `${expectedManifestHash}.json`),
+        'utf8',
+      ));
+      assert.equal(receipt.status, 'rolled_back');
+      assert.equal(receipt.rollback_used, true);
+    }
+
+    {
+      const receiptRoot = join(temporaryRoot, 'delayed-visibility');
+      const mock = createMockNetlify({
+        rollbackDeployId: manifest.netlify.rollback_deploy_id,
+        delayedVisibilityReads: 1,
+      });
+      await expectRejected(() => executeBoundedNetlifyRelease({
+        manifest,
+        manifestHash: expectedManifestHash,
+        artifactRoot: join(temporaryRoot, 'dist'),
+        receiptRoot,
+        netlify: mock.netlify,
+        verifyLive: async () => ({ status: 'ok' }),
+      }), /production was restored/);
+      assert.equal(commandCount(mock.calls, 'deploy'), 1);
+      assert.equal(commandCount(mock.calls, 'api', 'restoreSiteDeploy'), 1);
+      const receipt = JSON.parse(readFileSync(
+        join(receiptRoot, `${expectedManifestHash}.json`),
+        'utf8',
+      ));
+      assert.equal(receipt.status, 'rolled_back');
+      assert.equal(receipt.rollback_used, true);
+    }
   } finally {
     rmSync(temporaryRoot, { recursive: true, force: true });
   }
@@ -218,13 +292,17 @@ assert.deepEqual(manifest.probe_inventory.map((probe) => probe.id), [
   'wrong_production_preflight_rejection',
   'single_use_release_receipt',
   'postdeploy_exact_rollback',
+  'postdeploy_read_failure_exact_rollback',
+  'delayed_visibility_exact_rollback',
   'rollback_failure_terminal_record',
+  'netlify_cli_binding',
 ]);
 for (const probe of manifest.probe_inventory) {
   assert.equal(probe.status, 'enforced');
 }
 
 const local = runBoundCliVerification();
+const netlifyCli = verifyNetlifyCliBinding(manifest.toolchain.netlify_cli);
 await runMutationSelfTests();
 console.log(JSON.stringify({
   status: 'ok',
@@ -238,5 +316,8 @@ console.log(JSON.stringify({
     smoke_failure_one_exact_restore: true,
     wrong_production_zero_deploy: true,
     rollback_failure_terminal: true,
+    postdeploy_read_failure_one_exact_restore: true,
+    delayed_visibility_one_exact_restore: true,
   },
+  netlify_cli: netlifyCli,
 }, null, 2));

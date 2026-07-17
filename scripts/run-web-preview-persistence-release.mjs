@@ -80,23 +80,39 @@ function sanitizeFailure(value) {
     .slice(0, 500);
 }
 
-function netlifyCliPath() {
+function netlifyCliPaths() {
   if (process.platform === 'win32' && process.env.APPDATA) {
-    const path = join(
+    const packageRoot = join(
       process.env.APPDATA,
       'npm',
       'node_modules',
       'netlify-cli',
-      'bin',
-      'run.js',
     );
-    if (existsSync(path)) return path;
+    const entrypoint = join(packageRoot, 'bin', 'run.js');
+    const packageJson = join(packageRoot, 'package.json');
+    if (existsSync(entrypoint) && existsSync(packageJson)) {
+      return { entrypoint, packageJson };
+    }
   }
   throw new Error('The local Netlify CLI entry point is unavailable.');
 }
 
-export function createNetlifyInvoker() {
-  const cliPath = netlifyCliPath();
+export function verifyNetlifyCliBinding(binding) {
+  const paths = netlifyCliPaths();
+  const packageRecord = JSON.parse(readFileSync(paths.packageJson, 'utf8'));
+  assert.equal(packageRecord.version, binding.version);
+  assert.equal(sha256File(paths.entrypoint), binding.entrypoint_sha256);
+  assert.equal(sha256File(paths.packageJson), binding.package_json_sha256);
+  return {
+    version: packageRecord.version,
+    entrypoint_sha256: binding.entrypoint_sha256,
+    package_json_sha256: binding.package_json_sha256,
+  };
+}
+
+export function createNetlifyInvoker(binding) {
+  const cliPath = netlifyCliPaths().entrypoint;
+  verifyNetlifyCliBinding(binding);
   return (args) => {
     const result = spawnSync(process.execPath, [cliPath, ...args], {
       cwd: repoRoot,
@@ -219,11 +235,9 @@ export async function executeBoundedNetlifyRelease({
     return completed;
   } catch (error) {
     const failure = sanitizeFailure(error?.message || error);
-    let current = null;
     let rollbackUsed = false;
     try {
-      current = await currentPublishedDeploy(netlify, siteId);
-      if (current.id !== rollbackDeployId) {
+      if (deploymentAttempted) {
         await restoreExactDeploy(netlify, siteId, rollbackDeployId);
         rollbackUsed = true;
       }
@@ -418,6 +432,7 @@ async function main() {
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   assert.equal(manifest.schema_version, 1);
   assert.equal(manifest.release.id, 'search_v2_web_preview_persistence');
+  verifyNetlifyCliBinding(manifest.toolchain.netlify_cli);
   assert.equal(manifest.mutation_budget.netlify_production_deployments, 1);
   assert.equal(manifest.mutation_budget.netlify_restore_operations, 1);
   for (const [key, value] of Object.entries(manifest.mutation_budget)) {
@@ -447,7 +462,7 @@ async function main() {
     manifest,
     manifestHash: expectedManifestHash,
     artifactRoot: join(outputRoot, 'dist'),
-    netlify: createNetlifyInvoker(),
+    netlify: createNetlifyInvoker(manifest.toolchain.netlify_cli),
     verifyLive: (baseUrl) => verifyRemoteWebSurface(baseUrl, manifest, defaultPrivateRecord),
   });
   console.log(JSON.stringify(result, null, 2));
