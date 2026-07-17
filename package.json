@@ -91,6 +91,7 @@
     "evaluate:agent-first-mcp-ux": "node scripts/evaluate-agent-first-mcp-ux.mjs",
     "verify:store-shell-contract": "node scripts/verify-store-shell-contract.mjs",
     "verify:view-route-policy": "node scripts/verify-view-route-policy.mjs",
+    "verify:mcp-preview-persistence": "node scripts/verify-mcp-preview-persistence.mjs",
     "verify:i18n-catalogs": "node scripts/verify-i18n-catalogs.mjs",
     "verify:i18n-audit-findings": "node scripts/verify-i18n-audit-findings.mjs",
     "verify:i18n-localization-audit": "node scripts/verify-i18n-localization-audit-2026-05-10.mjs",

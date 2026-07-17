@@ -161,6 +161,7 @@ const state = {
   jobCategoryScopeCount: 0,
   searchContextStartedAt: typeof performance !== 'undefined' ? performance.now() : 0,
   hostedSearchPending: false,
+  mcpPreview: getMcpPreviewUrlState(),
 };
 
 const SEARCH_ATTEMPT_IDLE_MS = 2500;
@@ -759,6 +760,8 @@ const els = {
   gridActions: $('.grid-header__actions'),
   gridFilterBar: $('.grid-filter-bar'),
   gridClearCollectionBtn: $('#gridClearCollectionBtn'),
+  mcpPreviewBanner: $('#mcpPreviewBanner'),
+  mcpPreviewBrowseAll: $('#mcpPreviewBrowseAll'),
   useCaseFilterText: $('#useCaseFilterText'),
   useCaseFilterMenu: $('#useCaseFilterMenu'),
 
@@ -1079,13 +1082,16 @@ function getMcpPreviewUrlState() {
     .split(',')
     .map((ref) => ref.trim())
     .filter(Boolean);
+  const explicitRefs = [iconRef, ...icons].filter(Boolean);
   const isPreview = params.get('preview') === 'mcp' || Boolean(query || library || iconRef || icons.length);
   if (!isPreview) return null;
   return {
+    mode: query ? 'query' : (explicitRefs.length > 0 ? 'explicit' : 'query'),
     query,
     library,
     iconRef,
     icons,
+    explicitRefs,
   };
 }
 
@@ -1095,52 +1101,99 @@ function syncSidebarActiveLibrary() {
   });
 }
 
-function applyMcpPreviewUrlState() {
-  const preview = getMcpPreviewUrlState();
-  if (!preview) return false;
+function syncMcpPreviewBanner() {
+  if (!els.mcpPreviewBanner) return;
+  els.mcpPreviewBanner.hidden = !state.mcpPreview;
+}
 
-  dismissHero();
+function syncMcpPreviewFilterState() {
+  const preview = state.mcpPreview;
+  if (!preview) return;
 
   if (preview.library && (preview.library === 'all' || libraryMeta[preview.library])) {
     state.activeLibrary = preview.library;
-    state.activeJobCategoryFilter = 'all';
-    syncSidebarActiveLibrary();
+  } else if (preview.mode === 'explicit') {
+    state.activeLibrary = 'all';
   }
+  state.activeJobCategoryFilter = 'all';
 
-  if (preview.query && els.searchInput) {
-    els.searchInput.value = preview.query;
-    syncSearchStateFromInput({ resetSearchContext: true });
+  const previewQuery = preview.mode === 'query' ? preview.query : '';
+  state.searchQuery = previewQuery;
+  if (els.searchInput && els.searchInput.value !== previewQuery) {
+    els.searchInput.value = previewQuery;
   }
+}
 
-  applyFilters();
-
-  const explicitRefs = [...preview.icons];
-  if (preview.iconRef) explicitRefs.unshift(preview.iconRef);
-  const explicitIcons = explicitRefs
+function getMcpExplicitPreviewIcons() {
+  if (state.mcpPreview?.mode !== 'explicit') return [];
+  const seen = new Set();
+  return state.mcpPreview.explicitRefs
     .map(findIconByRef)
-    .filter(Boolean);
-
-  if (explicitIcons.length > 0 && !preview.query) {
-    const seen = new Set();
-    state.filteredIcons = explicitIcons.filter((icon) => {
+    .filter((icon) => {
+      if (!icon) return false;
       const key = iconKey(icon);
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
-    state.tierDividerIndex = -1;
-    state.visibleRange.end = Math.max(state.batchSize, state.filteredIcons.length);
-    updateCounts();
-    renderGrid();
-  }
+}
 
-  const selectedRef = preview.iconRef || explicitRefs[0];
+function applyMcpPreviewUrlState() {
+  const preview = state.mcpPreview;
+  if (!preview) return false;
+
+  dismissHero();
+  syncMcpPreviewFilterState();
+  syncSidebarActiveLibrary();
+  syncMcpPreviewBanner();
+  applyFilters();
+
+  const selectedRef = preview.iconRef || preview.explicitRefs[0];
   const selected = selectedRef ? findIconByRef(selectedRef) : null;
   if (selected) {
     selectIcon(selected.id, selected.lib);
   }
 
   return true;
+}
+
+function clearMcpPreviewUrlState() {
+  const url = new URL(window.location.href);
+  for (const param of [
+    'preview',
+    'q',
+    'query',
+    'search',
+    'library',
+    'lib',
+    'icon',
+    'icon_ref',
+    'icons',
+    'style',
+    'limit',
+  ]) {
+    url.searchParams.delete(param);
+  }
+  url.searchParams.set('view', 'icons');
+  window.history.replaceState({}, '', `${url.pathname}?${url.searchParams.toString()}${url.hash}`);
+}
+
+function exitMcpPreview() {
+  if (!state.mcpPreview) return;
+
+  state.mcpPreview = null;
+  state.searchQuery = '';
+  state.activeLibrary = 'all';
+  state.activeJobCategoryFilter = 'all';
+  state.selectedIcon = null;
+  if (els.searchInput) els.searchInput.value = '';
+  clearPendingSearchAttempt();
+  clearMcpPreviewUrlState();
+  syncMcpPreviewBanner();
+  syncSidebarActiveLibrary();
+  renderUseCaseFilters();
+  resetPanelToPlaceholder();
+  applyFilters();
 }
 
 // ============================================================
@@ -1531,15 +1584,20 @@ function renderGrid() {
     const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
     const isRecentView = state.activeLibrary === 'recent' && !state.searchQuery;
     const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
-    const emptyCopy = resolveGridEmptyCopy({
-      searchQuery: state.searchQuery,
-      hostedSearchPending: state.hostedSearchPending,
-      isFavoritesView,
-      isRecentView,
-      activeJobCategoryLabel: activeJobCategoryMeta?.label,
-      activeJobCategoryDescription: activeJobCategoryMeta?.description,
-      defaultText: `${PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel} including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.`,
-    });
+    const emptyCopy = state.mcpPreview?.mode === 'explicit'
+      ? {
+          title: 'No shared icons found',
+          text: 'These shared icon references are not available. Browse all icons to continue.',
+        }
+      : resolveGridEmptyCopy({
+          searchQuery: state.searchQuery,
+          hostedSearchPending: state.hostedSearchPending,
+          isFavoritesView,
+          isRecentView,
+          activeJobCategoryLabel: activeJobCategoryMeta?.label,
+          activeJobCategoryDescription: activeJobCategoryMeta?.description,
+          defaultText: `${PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel} including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.`,
+        });
     if (emptyTitle) {
       emptyTitle.textContent = emptyCopy.title;
     }
@@ -1946,6 +2004,8 @@ async function refreshHostedSearchResults({
 }
 
 function applyFilters() {
+  syncMcpPreviewFilterState();
+
   // Choose icon set based on active style
   const isSolid = state.iconStyle === 'solid';
   const activeJobCategoryId = getActiveJobCategoryId();
@@ -1969,6 +2029,17 @@ function applyFilters() {
     icons = [...icons, ...outlineFallback];
   } else {
     icons = state.icons;
+  }
+
+  const searchRequestId = ++hostedSearchRequestSeq;
+  if (state.mcpPreview?.mode === 'explicit') {
+    state.hostedSearchPending = false;
+    state.tierDividerIndex = -1;
+    state.filteredIcons = getMcpExplicitPreviewIcons();
+    state.visibleRange.end = Math.max(state.batchSize, state.filteredIcons.length);
+    updateCounts();
+    renderGrid();
+    return;
   }
 
   // Library filter
@@ -1996,7 +2067,6 @@ function applyFilters() {
   }
 
   const searchPool = icons.slice();
-  const searchRequestId = ++hostedSearchRequestSeq;
 
   // Search filter: tiered results (direct matches first, then synonym matches)
   if (state.searchQuery) {
@@ -4138,6 +4208,7 @@ els.searchToggle?.addEventListener('click', () => {
   const willOpen = !isHeaderSearchOpen();
   setFloatingHeaderSearchOpen(willOpen, { focus: willOpen });
 });
+els.mcpPreviewBrowseAll?.addEventListener('click', exitMcpPreview);
 FLOATING_SEARCH_MEDIA.addEventListener('change', syncFloatingHeaderSearchForViewport);
 document.addEventListener('pointerdown', (e) => {
   if (!isFloatingHeaderSearchMode() || !isHeaderSearchOpen()) return;

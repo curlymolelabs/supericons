@@ -41,7 +41,12 @@ assert.equal(
 
 assert.equal(
   buildRouteUrl({ pathname: '/', view: 'icons', search: '?view=icons&preview=mcp&q=xai&library=si&limit=3', hash: '' }),
-  '/?preview=mcp&q=xai&library=si&limit=3',
+  '/?view=icons&preview=mcp&q=xai&library=si&limit=3',
+);
+
+assert.equal(
+  buildRouteUrl({ pathname: '/', view: 'icons', search: '?view=pricing&preview=mcp&q=xai', hash: '' }),
+  '/?preview=mcp&q=xai',
 );
 
 assert.equal(
