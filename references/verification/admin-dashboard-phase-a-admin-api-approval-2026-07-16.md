@@ -1,16 +1,16 @@
-# Admin dashboard Phase A Packet 2Z: owner-approved cold all-time bound
+# Admin dashboard Phase A Packet 2AA: silent credential loading
 
 Status: Ready for independent audit. Not executed.
 
 ## Purpose
 
-Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2Z first checks Supabase CLI authentication and the exact live function pins, before it writes any live-check evidence. It must run in the owner's visible, authenticated terminal so the two hidden credential prompts remain available. Background console launch is not allowed. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
+Deploy the verified Phase A `admin-api` only when direct measurements show that its shared dependencies are healthy. Packet 2AA first loads the three required credentials from the current process or the Windows user environment, then checks Supabase CLI authentication and the exact live function pins before it writes any live-check evidence. It has no interactive credential prompts. A missing value stops the run before live evidence or mutation. The Supabase Disk IO Budget banner is retained as observed context, but it is not a release gate because it can remain visible after query performance has recovered.
 
 The candidate replaces full-history dashboard scans with bounded rollup reads. It also loads independent queue sources concurrently and keeps identical queue payloads for 30 seconds in a cache capped at 64 entries. It must meet the existing dashboard contract, both 24-hour queue p95 measurements below 1,500 ms, the cold all-time p95 below 1,300 ms, and the warm all-time p95 below 1,000 ms. Cold and warm measurements are retained and enforced separately so cache speed cannot hide an uncached regression. The cold all-time limit is the only changed product bound. It is pinned to the owner-approved spec revision `56866d654abadf614b77d664d3c152a347dd0f4b`.
 
 ## Pinned recovery
 
-- Approval fingerprint: `040c93e5c6f0d5e6c1c1c273618e9cbba54f74dd1b5bc10d450ca8d10a4a73c0`
+- Approval fingerprint: `1fdf1d13a1a229d52b7497c111b9fa238bd00ce4915e6142b847d9538d26fe4e`
 - Implementation revision: `f12fbb56807e9aec9a4bc02348de26c485467ad0`
 - Implementation tree: `ec786e919c7a42ce641f6d1853832b156fafba6a`
 - Current function id, version, update value, and JWT setting: pinned by the verified Packet 2Y rollback evidence and rechecked live before any new evidence or mutation
@@ -45,7 +45,7 @@ The candidate replaces full-history dashboard scans with bounded rollup reads. I
 3. Require `admin-api` to remain active at the fresh inventory's exact id, version, update value, and disabled JWT setting.
 4. Run the local Deno, metric, API, parser, search mock, preflight, and rollup boundary checks.
 5. Require the live Railway protection contract before collecting secrets.
-6. Use the database password only in process memory. Require the schema postflight, measured database health gate, and measured rollup backlog with transaction-level and connection-level read-only enforcement.
+6. Copy the stored database password and `ADMIN_SECRET` into process-only variables. Require the schema postflight, measured database health gate, and measured rollup backlog with transaction-level and connection-level read-only enforcement.
 7. Require a healthy legacy `/stats` response and two measured strict production searches under their pinned thresholds.
 8. Deploy only `admin-api` from the pinned implementation revision.
 9. Refresh exactly the measured pending rollup days and require the no-write completion call.
@@ -55,7 +55,7 @@ The candidate replaces full-history dashboard scans with bounded rollup reads. I
 
 ## Secrets
 
-The runner asks locally for the Supabase database password and the separate `ADMIN_SECRET` through hidden prompts. Both remain only in process environment variables and are removed in `finally`. They are not written to evidence or logs. `ADMIN_SECRET` is not the Supabase service-role key.
+The runner reads `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, and `ADMIN_SECRET` from the current process first, then from the Windows user environment. It copies them only into the process variables required by the Supabase CLI, PostgreSQL client, and admin API verifier. Prior process values are restored in `finally`. Values are not written to evidence or logs. `ADMIN_SECRET` is not the Supabase service-role key.
 
 ## Mutation budget
 
@@ -72,10 +72,10 @@ The runner asks locally for the Supabase database password and the separate `ADM
 
 ## Execution authority
 
-The standing owner delegation applies. An independent auditor GO for the final exact fingerprint is the execution trigger. The owner runs the command in the same visible terminal where `supabase login` succeeded, enters the two hidden secrets, and performs final acceptance.
+The standing owner delegation applies. Independent audit and exact packet verification remain internal release controls. The executor runs the packet autonomously and the owner performs final acceptance.
 
 ## Execution command after audit GO
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 040c93e5c6f0d5e6c1c1c273618e9cbba54f74dd1b5bc10d450ca8d10a4a73c0 -Execute -DiskIoBannerObserved visible
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-admin-dashboard-phase-a-admin-api-release.ps1 -ApprovalFingerprint 1fdf1d13a1a229d52b7497c111b9fa238bd00ce4915e6142b847d9538d26fe4e -Execute -DiskIoBannerObserved visible
 ```

@@ -24,16 +24,17 @@ $PoolerPath = Join-Path $Root 'supabase/.temp/pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase/.temp/linked-project.json'
 $SqlDirectory = Join-Path $PSScriptRoot 'sql'
 $Workspace = Join-Path $Root 'tmp/admin-dashboard-phase-a-admin-api-release'
-$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-railway-protection-2026-07-17.json'
-$DatabaseHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-database-health-2026-07-17.json'
-$SearchHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-search-health-2026-07-17.json'
-$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-backlog-2026-07-17.json'
-$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-preflight-2026-07-17.json'
-$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-live-2026-07-17.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-completion-2026-07-17.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-rollback-2026-07-17.json'
-$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-rollback-failure-2026-07-17.json'
+$RailwayProtectionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-railway-protection-2026-07-17.json'
+$DatabaseHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-database-health-2026-07-17.json'
+$SearchHealthEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-search-health-2026-07-17.json'
+$BacklogEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-backlog-2026-07-17.json'
+$PreflightEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-preflight-2026-07-17.json'
+$LiveEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-live-2026-07-17.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-completion-2026-07-17.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-rollback-2026-07-17.json'
+$RollbackFailureEvidence = Join-Path $Root 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-rollback-failure-2026-07-17.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+. (Join-Path $PSScriptRoot 'admin-dashboard-release-credentials.ps1')
 
 function Invoke-CheckedCommand {
   param(
@@ -295,7 +296,7 @@ function Invoke-StrictSearchHealth {
   Invoke-CheckedCommand -FilePath 'node' -Arguments @(
     'scripts/verify-admin-dashboard-phase-a-search-health.mjs',
     '--search-url', $SearchUrl,
-    '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-search-health-2026-07-17.json',
+    '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-search-health-2026-07-17.json',
     '--warmup-count', '1',
     '--measured-count', '2',
     '--latency-limit-ms', '2000',
@@ -462,7 +463,25 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashbo
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs')
 Invoke-CheckedCommand -FilePath 'node' -Arguments @('scripts/verify-admin-dashboard-phase-a-search-health-local.mjs')
 
-$preFunction = Get-AdminFunction
+$authCredentialStates = @()
+try {
+  $authCredentialStates += Set-AdminDashboardReleaseProcessCredential `
+    -SourceName SUPABASE_ACCESS_TOKEN `
+    -TargetName SUPABASE_ACCESS_TOKEN
+  $databaseCredential = Resolve-AdminDashboardReleaseCredential -Name SUPABASE_DB_PASSWORD
+  $databaseCredential.value = $null
+  $adminCredential = Resolve-AdminDashboardReleaseCredential -Name ADMIN_SECRET
+  $adminCredential.value = $null
+  $preFunction = Get-AdminFunction
+}
+finally {
+  Remove-Variable databaseCredential -ErrorAction SilentlyContinue
+  Remove-Variable adminCredential -ErrorAction SilentlyContinue
+  for ($index = $authCredentialStates.Count - 1; $index -ge 0; $index -= 1) {
+    Restore-AdminDashboardReleaseProcessCredential -State $authCredentialStates[$index]
+  }
+  $authCredentialStates = @()
+}
 Assert-FunctionState `
   -Function $preFunction `
   -ExpectedId $script:Packet.pre_function_id `
@@ -481,7 +500,7 @@ Invoke-CheckedCommand -FilePath 'node' -Arguments @(
   '--expect-material-assets', '8524',
   '--expect-hosted-search-resilience', 'enabled',
   '--allow-active',
-  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-railway-protection-2026-07-17.json'
+  '--output', 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-railway-protection-2026-07-17.json'
 )
 $railwayProtection = Get-Content -LiteralPath $RailwayProtectionEvidence -Raw | ConvertFrom-Json
 
@@ -494,19 +513,21 @@ if (-not $poolerUrl.Contains($ProjectRef)) {
 }
 $querySeparator = if ($poolerUrl.Contains('?')) { '&' } else { '?' }
 $script:DatabaseUrl = "${poolerUrl}${querySeparator}sslmode=require&application_name=supericons_admin_dashboard_phase_a_admin_api"
-$databasePassword = Read-Host 'Supabase database password' -AsSecureString
-$adminSecret = Read-Host 'Supabase ADMIN_SECRET' -AsSecureString
 $script:CandidateWentLive = $false
 $script:CandidateFunction = $null
 $startedAt = (Get-Date).ToUniversalTime().ToString('o')
 
+$credentialStates = @()
 try {
-  $plainDatabasePassword = [System.Net.NetworkCredential]::new('', $databasePassword).Password
-  $plainAdminSecret = [System.Net.NetworkCredential]::new('', $adminSecret).Password
-  $env:PGPASSWORD = $plainDatabasePassword
-  $env:PHASE_A_ADMIN_SECRET = $plainAdminSecret
-  $plainDatabasePassword = $null
-  $plainAdminSecret = $null
+  $credentialStates += Set-AdminDashboardReleaseProcessCredential `
+    -SourceName SUPABASE_ACCESS_TOKEN `
+    -TargetName SUPABASE_ACCESS_TOKEN
+  $credentialStates += Set-AdminDashboardReleaseProcessCredential `
+    -SourceName SUPABASE_DB_PASSWORD `
+    -TargetName PGPASSWORD
+  $credentialStates += Set-AdminDashboardReleaseProcessCredential `
+    -SourceName ADMIN_SECRET `
+    -TargetName PHASE_A_ADMIN_SECRET
 
   docker info --format '{{.ServerVersion}}' | Out-Null
   if ($LASTEXITCODE -ne 0) { throw 'Docker is not available.' }
@@ -533,7 +554,7 @@ try {
   })
   $preflight = Invoke-AdminLiveGate `
     -Mode preflight `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-preflight-2026-07-17.json'
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-preflight-2026-07-17.json'
   $searchHealth = Invoke-StrictSearchHealth
 
   $candidate = Deploy-Revision `
@@ -546,7 +567,7 @@ try {
 
   $live = Invoke-AdminLiveGate `
     -Mode candidate `
-    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-live-2026-07-17.json' `
+    -OutputPath 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-live-2026-07-17.json' `
     -MaxRefreshDays $pendingDayCount
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
@@ -583,10 +604,8 @@ try {
   }
   throw
 } finally {
-  $plainDatabasePassword = $null
-  $plainAdminSecret = $null
-  Remove-Item Env:PGPASSWORD -ErrorAction SilentlyContinue
-  Remove-Item Env:PHASE_A_ADMIN_SECRET -ErrorAction SilentlyContinue
-  Remove-Variable databasePassword -ErrorAction SilentlyContinue
-  Remove-Variable adminSecret -ErrorAction SilentlyContinue
+  for ($index = $credentialStates.Count - 1; $index -ge 0; $index -= 1) {
+    Restore-AdminDashboardReleaseProcessCredential -State $credentialStates[$index]
+  }
+  $credentialStates = @()
 }

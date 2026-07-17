@@ -38,10 +38,14 @@ const databaseHealthParserPath = 'scripts/admin-dashboard-phase-a-db-health-pars
 const databaseHealthParserTestPath = 'scripts/verify-admin-dashboard-phase-a-db-health-parser.mjs';
 const searchHealthPath = 'scripts/verify-admin-dashboard-phase-a-search-health.mjs';
 const searchHealthLocalTestPath = 'scripts/verify-admin-dashboard-phase-a-search-health-local.mjs';
-const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-local-verification-2026-07-17.json';
-const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-inventory-2026-07-17.json';
+const credentialHelperPath = 'scripts/admin-dashboard-release-credentials.ps1';
+const credentialTestPath = 'scripts/verify-admin-dashboard-release-credentials.ps1';
+const localVerificationPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-local-verification-2026-07-17.json';
+const inventoryPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2aa-inventory-2026-07-17.json';
 const priorAttempt2vPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2v-attempt-1-2026-07-17.json';
 const priorAttempt2wPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2w-attempt-1-2026-07-17.json';
+const priorAttempt2zPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-attempt-1-2026-07-17.json';
+const priorRailway2zPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2z-railway-protection-2026-07-17.json';
 const priorLive2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-live-2026-07-17.json';
 const priorRollback2xPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2x-rollback-2026-07-17.json';
 const priorLive2yPath = 'references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-live-2026-07-17.json';
@@ -58,7 +62,7 @@ const fields = Object.fromEntries(source.trimEnd().split('\n').map((line) => {
 }));
 
 assert.deepEqual(fields, {
-  packet: 'admin_dashboard_phase_a_admin_api_recovery_2z',
+  packet: 'admin_dashboard_phase_a_admin_api_recovery_2aa',
   implementation_revision: 'f12fbb56807e9aec9a4bc02348de26c485467ad0',
   implementation_tree: 'ec786e919c7a42ce641f6d1853832b156fafba6a',
   rollback_revision: fields.rollback_revision,
@@ -75,6 +79,8 @@ assert.deepEqual(fields, {
   database_health_parser_test_sha256: fields.database_health_parser_test_sha256,
   search_health_gate_sha256: fields.search_health_gate_sha256,
   search_health_local_test_sha256: fields.search_health_local_test_sha256,
+  credential_helper_sha256: fields.credential_helper_sha256,
+  credential_test_sha256: fields.credential_test_sha256,
   rollup_gate_helper_sha256: fields.rollup_gate_helper_sha256,
   rollup_gate_test_sha256: fields.rollup_gate_test_sha256,
   backlog_sql_sha256: fields.backlog_sql_sha256,
@@ -105,6 +111,9 @@ assert.deepEqual(fields, {
   prior_packet_revision: '00d9e8221584f9ec43111ed92e5341735851bfc5',
   prior_attempt_2v_sha256: fields.prior_attempt_2v_sha256,
   prior_attempt_2w_sha256: fields.prior_attempt_2w_sha256,
+  prior_evidence_2z_commit: 'ce1d97ecd3b10d1b44a4d87591e045bd92cbaac1',
+  prior_attempt_2z_sha256: fields.prior_attempt_2z_sha256,
+  prior_railway_2z_sha256: fields.prior_railway_2z_sha256,
   prior_evidence_2x_commit: '6671eeaeb577d63b60ad8a8535b2e0adfbb97ca6',
   prior_live_2x_sha256: fields.prior_live_2x_sha256,
   prior_rollback_2x_sha256: fields.prior_rollback_2x_sha256,
@@ -174,6 +183,8 @@ const textHashes = [
   [databaseHealthParserTestPath, 'database_health_parser_test_sha256'],
   [searchHealthPath, 'search_health_gate_sha256'],
   [searchHealthLocalTestPath, 'search_health_local_test_sha256'],
+  [credentialHelperPath, 'credential_helper_sha256'],
+  [credentialTestPath, 'credential_test_sha256'],
   ['scripts/admin-dashboard-rollup-refresh-gate.mjs', 'rollup_gate_helper_sha256'],
   ['scripts/verify-admin-dashboard-phase-a-rollup-refresh-gate.mjs', 'rollup_gate_test_sha256'],
   ['scripts/sql/admin-dashboard-phase-a-rollup-backlog.sql', 'backlog_sql_sha256'],
@@ -193,6 +204,8 @@ const textHashes = [
   [inventoryPath, 'inventory_sha256'],
   [priorAttempt2vPath, 'prior_attempt_2v_sha256'],
   [priorAttempt2wPath, 'prior_attempt_2w_sha256'],
+  [priorAttempt2zPath, 'prior_attempt_2z_sha256'],
+  [priorRailway2zPath, 'prior_railway_2z_sha256'],
   [priorLive2xPath, 'prior_live_2x_sha256'],
   [priorRollback2xPath, 'prior_rollback_2x_sha256'],
   [priorLive2yPath, 'prior_live_2y_sha256'],
@@ -229,7 +242,8 @@ assert.ok(
   'Rollback revision must match the downloaded live admin API source.',
 );
 assert.equal(inventory.derived_from.candidate_version, 50);
-assert.equal(inventory.derived_from.rollback_version, 51);
+assert.equal(inventory.derived_from.rollback_evidence_version, 51);
+assert.equal(inventory.derived_from.current_cli_reported_version, Number(fields.pre_function_version));
 assert.equal(inventory.derived_from.evidence, priorRollback2yPath);
 assert.equal(inventory.derived_from.rollback_updated_at, fields.pre_function_updated_at);
 assert.equal(inventory.derived_from.strict_legacy_contract, 'pass');
@@ -258,6 +272,10 @@ assert.equal(railwayCompletion.rollback_used, false);
 assert.equal(
   execFileSync('git', ['rev-parse', fields.prior_attempt_commit], { encoding: 'utf8' }).trim(),
   fields.prior_attempt_commit,
+);
+assert.equal(
+  execFileSync('git', ['rev-parse', fields.prior_evidence_2z_commit], { encoding: 'utf8' }).trim(),
+  fields.prior_evidence_2z_commit,
 );
 for (const [path, field] of [
   ['references/verification/admin-dashboard-phase-a-admin-api-preflight-recovery-backlog-2026-07-16.json', 'prior_backlog_evidence_sha256'],
@@ -306,10 +324,15 @@ assert.match(runner, /'--allow-active'/);
 assert.match(runner, /admin_dashboard_phase_a_admin_api_rollback_verification_failure/);
 assert.match(runner, /possible_shared_database_degradation/);
 assert.match(runner, /service_restoration = 'not_verified'/);
-assert.match(runner, /Read-Host 'Supabase database password' -AsSecureString/);
-assert.match(runner, /Read-Host 'Supabase ADMIN_SECRET' -AsSecureString/);
-assert.match(runner, /Remove-Item Env:PGPASSWORD/);
-assert.match(runner, /Remove-Item Env:PHASE_A_ADMIN_SECRET/);
+assert.equal(runner.includes('Read-Host'), false, 'Runner must not prompt for stored credentials.');
+assert.match(runner, /admin-dashboard-release-credentials\.ps1/);
+assert.match(runner, /Resolve-AdminDashboardReleaseCredential -Name SUPABASE_DB_PASSWORD/);
+assert.match(runner, /Resolve-AdminDashboardReleaseCredential -Name ADMIN_SECRET/);
+assert.match(runner, /-SourceName SUPABASE_ACCESS_TOKEN[\s\S]*?-TargetName SUPABASE_ACCESS_TOKEN/);
+assert.match(runner, /-SourceName SUPABASE_DB_PASSWORD[\s\S]*?-TargetName PGPASSWORD/);
+assert.match(runner, /-SourceName ADMIN_SECRET[\s\S]*?-TargetName PHASE_A_ADMIN_SECRET/);
+assert.match(runner, /Restore-AdminDashboardReleaseProcessCredential/);
+assert.equal(runner.includes('recovery-2z-'), false, 'Runner must use fresh Packet 2AA evidence paths.');
 assert.match(runner, /\$LinkedProjectPath = Join-Path \$Root 'supabase\/\.temp\/linked-project\.json'/);
 assert.match(runner, /if \("\$\(\$linkedProject\.ref\)" -ne \$ProjectRef\)/);
 assert.match(runner, /if \(-not \$poolerUrl\.Contains\(\$ProjectRef\)\)/);
@@ -415,6 +438,16 @@ execFileSync('node', [databaseHealthParserTestPath], {
   stdio: ['ignore', 'pipe', 'inherit'],
 });
 execFileSync('node', [searchHealthLocalTestPath], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
+execFileSync('powershell', [
+  '-NoProfile',
+  '-ExecutionPolicy',
+  'Bypass',
+  '-File',
+  credentialTestPath,
+], {
   encoding: 'utf8',
   stdio: ['ignore', 'pipe', 'inherit'],
 });

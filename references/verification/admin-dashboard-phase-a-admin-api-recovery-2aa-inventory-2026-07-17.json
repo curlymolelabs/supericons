@@ -1,0 +1,31 @@
+{
+    "artifact":  "admin_dashboard_phase_a_admin_api_inventory",
+    "project_ref":  "kcjmkakdhsqplvasgkjv",
+    "function_name":  "admin-api",
+    "function":  {
+                     "id":  "1ca7655a-e504-416f-9173-750016e79b73",
+                     "name":  "admin-api",
+                     "version":  52,
+                     "status":  "ACTIVE",
+                     "verify_jwt":  false,
+                     "updated_at":  "1784277155727",
+                     "updated_at_iso":  "2026-07-17T08:32:35.7270000Z"
+                 },
+    "source_download":  {
+                            "succeeded":  true,
+                            "index_sha256":  "63fc27f93507c5e6f09d62043ff468599523c3d6998241715c1d5972e6baa981",
+                            "matching_git_revisions":  [
+                                                           "b0520d42f1b2cdd2a74e608495bf1e584e362e66"
+                                                       ]
+                        },
+    "derived_from":  {
+                          "evidence":  "references/verification/admin-dashboard-phase-a-admin-api-recovery-2y-rollback-2026-07-17.json",
+                          "candidate_version":  50,
+                          "rollback_evidence_version":  51,
+                          "current_cli_reported_version":  52,
+                          "rollback_updated_at":  "1784277155727",
+                          "strict_legacy_contract":  "pass"
+                      },
+    "captured_at":  "2026-07-17T09:20:57.9708211Z",
+    "mutations":  0
+}
