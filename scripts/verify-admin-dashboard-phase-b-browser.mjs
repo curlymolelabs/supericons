@@ -1,7 +1,15 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
 
-const adminUrl = process.env.ADMIN_PHASE_B_URL || 'http://127.0.0.1:5173/admin.html';
+const localServer = process.env.ADMIN_PHASE_B_URL
+  ? null
+  : await startAdminDashboardPhaseBLiveServer({
+    adminSecret: 'local-browser-contract-only',
+    managedAuth: false,
+    port: 0,
+  });
+const adminUrl = process.env.ADMIN_PHASE_B_URL || localServer.url;
 const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 let dashboardRequestCount = 0;
 let reviewedStatus = null;
@@ -280,6 +288,7 @@ ok(overflow.document, 'The admin page has horizontal overflow.');
 ok(overflow.panel, 'The intelligence panel has horizontal overflow.');
 
 await browser.close();
+await localServer?.close();
 
 const screenshot = await readFile('.tmp/admin-dashboard-phase-b.png');
 console.log(JSON.stringify({

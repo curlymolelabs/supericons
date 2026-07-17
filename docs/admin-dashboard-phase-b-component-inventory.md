@@ -8,6 +8,7 @@ The admin dashboard remains a local-only static page.
 
 - `admin.html` owns the page structure and embedded dashboard styles.
 - `public/admin-app.js` owns state, API calls, rendering, filters, review actions, and browser storage.
+- `scripts/serve-admin-dashboard-phase-b-live.mjs` serves the local walkthrough and forwards API requests without exposing the stored admin secret to the browser.
 - `supabase/functions/admin-api/index.ts` defines the Phase A API contract consumed by the page. Phase B does not change this function.
 
 ## Phase B components
@@ -30,3 +31,4 @@ The admin dashboard remains a local-only static page.
 - Refresh state is visible in the button and in `#phaseBRefreshStatus`.
 - Latest Activity loads before the secondary intelligence requests.
 - Fields that do not exist for a channel are omitted instead of replaced with missing-data text.
+- The local live walkthrough uses managed authentication through a loopback-only gateway, so it does not show a password prompt or store the admin secret in browser code.

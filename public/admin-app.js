@@ -1,4 +1,9 @@
-const ADMIN_API_BASE = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
+const ADMIN_RUNTIME_CONFIG = window.__SI_ADMIN_RUNTIME__ || {};
+const ADMIN_API_BASE = String(
+  ADMIN_RUNTIME_CONFIG.apiBase
+    || 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api',
+).replace(/\/+$/, '');
+const ADMIN_API_MANAGED_AUTH = ADMIN_RUNTIME_CONFIG.managedAuth === true;
 const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
 const ADMIN_SIDEBAR_COLLAPSED_KEY = 'si_admin_sidebar_collapsed';
 const ADMIN_PHASE_B_CACHE_PREFIX = 'si_admin_phase_b_cache_v1';
@@ -239,10 +244,12 @@ function formatRelativeDate(value) {
 }
 
 function getAdminSecret() {
+  if (ADMIN_API_MANAGED_AUTH) return '';
   return window.sessionStorage.getItem(ADMIN_SECRET_STORAGE_KEY) || '';
 }
 
 function setAdminSecret(secret) {
+  if (ADMIN_API_MANAGED_AUTH) return;
   const value = String(secret || '').trim();
   if (!value) {
     window.sessionStorage.removeItem(ADMIN_SECRET_STORAGE_KEY);
@@ -259,11 +266,17 @@ function setAdminSecretError(message = '') {
 }
 
 function closeAdminSecretModal() {
-  $('adminSecretModal')?.classList.remove('open');
-  $('adminSecretModal')?.setAttribute('aria-hidden', 'true');
+  const modal = $('adminSecretModal');
+  modal?.classList.remove('open');
+  modal?.setAttribute('aria-hidden', 'true');
+  if (modal && ADMIN_API_MANAGED_AUTH) modal.style.display = 'none';
 }
 
 function openAdminSecretModal({ force = false, error = '' } = {}) {
+  if (ADMIN_API_MANAGED_AUTH) {
+    closeAdminSecretModal();
+    return Promise.resolve('');
+  }
   const existing = getAdminSecret();
   if (existing && !force) return Promise.resolve(existing);
   if (state.adminSecretPrompt?.promise) {
@@ -303,6 +316,10 @@ function openAdminSecretModal({ force = false, error = '' } = {}) {
 }
 
 async function ensureAdminSecret(force = false, error = '') {
+  if (ADMIN_API_MANAGED_AUTH) {
+    closeAdminSecretModal();
+    return '';
+  }
   const existing = getAdminSecret();
   if (existing && !force) return existing;
   return openAdminSecretModal({ force, error });
@@ -343,7 +360,7 @@ function cancelAdminSecretPrompt() {
 
 async function apiRequest(path, options = {}, retry = true) {
   const secret = await ensureAdminSecret();
-  if (!secret) {
+  if (!ADMIN_API_MANAGED_AUTH && !secret) {
     throw new Error('Admin secret is required.');
   }
 
@@ -358,7 +375,7 @@ async function apiRequest(path, options = {}, retry = true) {
     cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
-      'x-admin-secret': secret,
+      ...(secret ? { 'x-admin-secret': secret } : {}),
       ...(options.headers || {}),
     },
   });
@@ -370,7 +387,7 @@ async function apiRequest(path, options = {}, retry = true) {
     payload = {};
   }
 
-  if (response.status === 403 && retry) {
+  if (response.status === 403 && retry && !ADMIN_API_MANAGED_AUTH) {
     setAdminSecret('');
     await ensureAdminSecret(true, 'That ADMIN_SECRET was rejected. Enter the current secret and try again.');
     return apiRequest(path, options, false);
@@ -385,7 +402,7 @@ async function apiRequest(path, options = {}, retry = true) {
 
 async function apiRawRequest(path, options = {}, retry = true) {
   const secret = await ensureAdminSecret();
-  if (!secret) {
+  if (!ADMIN_API_MANAGED_AUTH && !secret) {
     throw new Error('Admin secret is required.');
   }
 
@@ -399,12 +416,12 @@ async function apiRawRequest(path, options = {}, retry = true) {
     method,
     cache: 'no-store',
     headers: {
-      'x-admin-secret': secret,
+      ...(secret ? { 'x-admin-secret': secret } : {}),
       ...(options.headers || {}),
     },
   });
 
-  if (response.status === 403 && retry) {
+  if (response.status === 403 && retry && !ADMIN_API_MANAGED_AUTH) {
     setAdminSecret('');
     await ensureAdminSecret(true, 'That ADMIN_SECRET was rejected. Enter the current secret and try again.');
     return apiRawRequest(path, options, false);
@@ -4045,6 +4062,11 @@ async function init() {
   restoreSidebarState();
   bindSearchInputs();
   bindGlobalEvents();
+  if (ADMIN_API_MANAGED_AUTH) {
+    closeAdminSecretModal();
+    const reconnectButton = $('adminReconnectBtn');
+    if (reconnectButton) reconnectButton.style.display = 'none';
+  }
   try {
     await ensureAdminSecret();
     readPhaseBCache();
