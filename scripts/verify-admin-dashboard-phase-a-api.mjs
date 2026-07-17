@@ -110,7 +110,7 @@ requirePattern(
   'The rollup queue must load completed rollups, current-day rows, and reviews concurrently.',
 );
 
-const compactActivity = source.match(/function compactPhaseAActivityRow[\s\S]*?\n}\n/)?.[0] || '';
+const compactActivity = source.match(/function compactPhaseAActivityRow[\s\S]*?\r?\n}\r?\n/)?.[0] || '';
 assert.ok(compactActivity, 'The Phase A activity projection is missing.');
 for (const forbidden of ['account_plan', 'purpose', 'domain', 'replaced_with', '_estimated_client_key']) {
   assert.ok(!compactActivity.includes(forbidden), `Latest activity must not expose ${forbidden}.`);

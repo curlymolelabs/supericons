@@ -19,6 +19,25 @@
       "starts_at": null,
       "ends_at_inclusive": "2026-07-15T18:06:17.8324190Z",
       "production_reference": "railway:5ea2e0b8-201a-4be9-81b7-a450d7f85c61"
+    },
+    {
+      "id": "database_io_outage_2026_07_16",
+      "name": "Database IO outage on July 16",
+      "classification": "availability_defect",
+      "library_filters": [],
+      "search_outcomes": [
+        "error"
+      ],
+      "statuses": [
+        "error"
+      ],
+      "error_codes": [
+        "search_service_unavailable"
+      ],
+      "match_null_error_code": true,
+      "starts_at": "2026-07-16T11:30:00.000Z",
+      "ends_at_inclusive": "2026-07-16T13:20:00.000Z",
+      "production_reference": "db-incident-root-cause-report-2026-07-16"
     }
   ]
 }
