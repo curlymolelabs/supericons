@@ -119,6 +119,20 @@ assert.throws(
   assert.equal(filtered.length, 2);
 }
 
+{
+  const filters = parseDashboardV2Filters(new URL('https://example.test/v2/overview?window=1d&channel=all&include_test=false'), now);
+  const filtered = filterDashboardV2Rows([
+    { environment: 'production', channel: 'web', search_query: 'real user query' },
+    { environment: 'production', channel: 'internal_test', search_query: 'synthetic production probe' },
+    { environment: 'preview', channel: 'web', search_query: 'preview query' },
+  ], filters);
+  assert.deepEqual(
+    filtered.map((row) => row.search_query),
+    ['real user query'],
+    'The default dashboard leaked internal test or preview traffic.',
+  );
+}
+
 const identityRows = [
   { created_at: '2026-07-16T01:00:00Z', channel: 'web', _estimated_client_key: 'a', estimated_client_key: 'anon:a', is_registered: false, is_pro: false, country_code: 'SG', search_query: 'database' },
   { created_at: '2026-07-16T02:00:00Z', channel: 'hosted_mcp', _estimated_client_key: 'b', estimated_client_key: 'user:b', user_id: 'b', is_registered: true, is_pro: true, country_code: 'US', search_query: 'calendar', account_plan: 'pro_monthly' },
@@ -259,6 +273,8 @@ const queryRows = [
   assert.equal(healthy.result_count_reason, 'Not available for aggregate view');
   assert.equal(healthy.country_code, null);
   assert.equal(healthy.country_available, false);
+  assert.equal(healthy.client_measure, 'client_days');
+  assert.equal(healthy.client_label, '3 client-days');
 
   const allZero = aggregateRows.find((row) => row.query === 'all zero aggregate');
   assert.equal(allZero.issue_type, 'zero_result');
@@ -299,6 +315,24 @@ const queryRows = [
   assert.equal(kpis.true_zero_count, 1);
   assert.equal(kpis.attempts, 10);
   assert.equal(kpis.true_zero_rate, 0.1);
+}
+
+{
+  const kpis = buildDashboardV2Kpis([
+    {
+      day: '2026-07-17',
+      channel: 'all',
+      attempts: 100,
+      success_count: 100,
+      true_zero_count: 0,
+      low_result_count: 0,
+      low_result_eligible_count: 0,
+      client_days: 10,
+    },
+  ], []);
+  assert.equal(kpis.low_result_rate, null);
+  assert.equal(kpis.low_result_rate_available, false);
+  assert.equal(kpis.low_result_coverage_rate, 0);
 }
 
 {

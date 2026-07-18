@@ -10,6 +10,7 @@ const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api
 const requests = [];
 let requestRound = 0;
 const registeredRows = Array.from({ length: 23 }, (_, index) => ({
+  user_id: `user-${index + 1}`,
   identifier: `u***${index + 1}@example.test`,
   provider: index % 2 === 0 ? 'Google' : 'Email',
   plan: index < 2 ? 'pro_monthly' : 'Free',
@@ -18,6 +19,7 @@ const registeredRows = Array.from({ length: 23 }, (_, index) => ({
   searches: index < 3 ? 10 - index : 0,
   venues: index < 3 ? ['web'] : [],
   country_code: index < 3 ? 'SG' : null,
+  activity_linked: index < 3,
 }));
 const accountRows = Array.from({ length: 23 }, (_, index) => ({
   id: `user-${index + 1}`,
@@ -305,9 +307,9 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         mrr: { available: false, reason: 'Exact billing price is not linked to every active subscription.' },
       },
       series: [
-        { day: '2026-07-15', channel: 'all', registered_clients: 3, pro_clients: 1 },
-        { day: '2026-07-16', channel: 'all', registered_clients: 4, pro_clients: 1 },
-        { day: '2026-07-17', channel: 'all', registered_clients: 5, pro_clients: 2 },
+        { day: '2026-07-15', channel: 'all', client_days: 12, registered_clients: 3, pro_clients: 1 },
+        { day: '2026-07-16', channel: 'all', client_days: 14, registered_clients: 4, pro_clients: 1 },
+        { day: '2026-07-17', channel: 'all', client_days: 13, registered_clients: 5, pro_clients: 2 },
       ],
       registered_users: {
         available: true,
@@ -506,6 +508,9 @@ try {
   ok((await page.locator('#registeredUsers').innerText()).includes('u***@example.test'), 'Masked emails are missing.');
   await page.click('#toggleRegisteredEmails');
   ok((await page.locator('#registeredUsers').innerText()).includes('user1@example.test'), 'The email visibility control did not reveal emails.');
+  const enrichedRegisteredRow = page.locator('#registeredUsers tbody tr').filter({ hasText: 'user1@example.test' });
+  ok((await enrichedRegisteredRow.innerText()).includes('10'), 'Registered-user search activity was discarded.');
+  ok((await enrichedRegisteredRow.innerText()).includes('Web'), 'Registered-user venue enrichment was discarded.');
   const firstRegisteredRow = page.locator('#registeredUsers tbody tr').first();
   ok((await firstRegisteredRow.innerText()).includes('Sign-in'), 'Last active did not fall back to the account sign-in time.');
   ok(/\d{1,2}:\d{2}/.test(await firstRegisteredRow.innerText()), 'Signup and activity timestamps are missing their time.');

@@ -712,7 +712,10 @@ function aggregateDays(series, fields) {
     const day = String(row.day || row.date || '').slice(0, 10);
     if (!day) continue;
     const current = days.get(day) || { day };
-    for (const field of fields) current[field] = number(current[field]) + number(row[field]);
+    for (const field of fields) {
+      if (row[field] === null || row[field] === undefined) continue;
+      current[field] = number(current[field]) + number(row[field]);
+    }
     days.set(day, current);
   }
   return [...days.values()].sort((a, b) => a.day.localeCompare(b.day));
@@ -723,9 +726,16 @@ function chartUnavailable(reason) {
 }
 
 function linePath(points, xFor, yFor, field) {
-  return points
-    .map((row, index) => `${index ? 'L' : 'M'} ${xFor(index).toFixed(2)} ${yFor(number(row[field])).toFixed(2)}`)
-    .join(' ');
+  let drawing = false;
+  return points.map((row, index) => {
+    if (row[field] === null || row[field] === undefined || !Number.isFinite(Number(row[field]))) {
+      drawing = false;
+      return '';
+    }
+    const command = drawing ? 'L' : 'M';
+    drawing = true;
+    return `${command} ${xFor(index).toFixed(2)} ${yFor(number(row[field])).toFixed(2)}`;
+  }).filter(Boolean).join(' ');
 }
 
 function axisLabels(points, xFor, width, height, left, bottom) {
@@ -751,7 +761,14 @@ function renderLineChart(element, series, lines, options = {}) {
   const right = 16;
   const top = 28;
   const bottom = 205;
-  const maxValue = Math.max(1, ...points.flatMap((row) => lines.map((line) => number(row[line.field]))));
+  const plottedValues = points.flatMap((row) => lines.map((line) => row[line.field]))
+    .filter((value) => value !== null && value !== undefined && Number.isFinite(Number(value)))
+    .map(number);
+  if (!plottedValues.length) {
+    element.innerHTML = chartUnavailable(options.emptyReason || 'No eligible chart data exists for this period.');
+    return;
+  }
+  const maxValue = Math.max(1, ...plottedValues);
   const xFor = (index) => left + (index * (width - left - right) / Math.max(1, points.length - 1));
   const yFor = (value) => bottom - (number(value) / maxValue) * (bottom - top);
   const grid = [0, 0.5, 1].map((ratio) => {
@@ -772,7 +789,11 @@ function renderLineChart(element, series, lines, options = {}) {
     const color = line.color || CHART_COLORS[index % CHART_COLORS.length];
     return `
       <path d="${linePath(points, xFor, yFor, line.field)}" fill="none" stroke="${color}" stroke-width="2.5" />
-      ${points.map((row, pointIndex) => `<circle cx="${xFor(pointIndex)}" cy="${yFor(row[line.field])}" r="2.4" fill="${color}"><title>${escapeHtml(`${row.day}: ${line.label} ${options.percent ? formatPercent(row[line.field], 1) : formatNumber(row[line.field])}`)}</title></circle>`).join('')}
+      ${points.map((row, pointIndex) => (
+        row[line.field] === null || row[line.field] === undefined || !Number.isFinite(Number(row[line.field]))
+          ? ''
+          : `<circle cx="${xFor(pointIndex)}" cy="${yFor(row[line.field])}" r="2.4" fill="${color}"><title>${escapeHtml(`${row.day}: ${line.label} ${options.percent ? formatPercent(row[line.field], 1) : formatNumber(row[line.field])}`)}</title></circle>`
+      )).join('')}
     `;
   }).join('');
   const legendSlot = Math.max(150, (width - left - right) / Math.max(1, lines.length));
@@ -921,12 +942,13 @@ function qualitySeries(series) {
     'low_results',
     'low_result_count',
   ]).map((row) => {
-    const attempts = number(row.eligible_attempts || row.attempts);
-    const lowEligible = number(row.low_result_eligible_count || row.eligible_attempts || row.attempts);
+    const attempts = number(row.eligible_attempts ?? row.attempts);
+    const lowEligible = number(row.low_result_eligible_count ?? row.eligible_attempts);
     return {
       ...row,
-      true_zero_rate: attempts ? number(row.true_zeros || row.true_zero_count) / attempts : 0,
-      low_result_rate: lowEligible ? number(row.low_results || row.low_result_count) / lowEligible : 0,
+      true_zero_rate: attempts ? number(row.true_zeros ?? row.true_zero_count) / attempts : null,
+      low_result_rate: lowEligible ? number(row.low_results ?? row.low_result_count) / lowEligible : null,
+      low_result_coverage_rate: attempts ? lowEligible / attempts : 0,
     };
   });
 }
@@ -984,8 +1006,13 @@ function renderKpis() {
   $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'client'}, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
   $('kpiZeroNote').textContent = `${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
-  setSkeleton($('kpiLow'), formatPercent(kpis.low_result_rate));
-  $('kpiLowNote').textContent = `${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches`;
+  if (kpis.low_result_rate_available === false) {
+    setSkeleton($('kpiLow'), 'Unavailable');
+    $('kpiLowNote').textContent = 'No searches in this view have exact low-result eligibility.';
+  } else {
+    setSkeleton($('kpiLow'), formatPercent(kpis.low_result_rate));
+    $('kpiLowNote').textContent = `${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches. ${formatPercent(kpis.low_result_coverage_rate)} coverage.`;
+  }
 }
 
 function renderCharts() {
@@ -1026,7 +1053,8 @@ function renderCharts() {
   );
 }
 
-function topListConfig(key) {
+function topListConfig(key, rows = []) {
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Clients';
   if (key === 'returned') {
     return {
       headers: [
@@ -1050,7 +1078,7 @@ function topListConfig(key) {
       headers: [
         { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
         { label: 'Zeros', number: true, render: (row) => formatNumber(row.count ?? row.attempt_count ?? row.zero_attempt_count) },
-        { label: 'Clients', number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+        { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
         { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       ],
     };
@@ -1059,7 +1087,7 @@ function topListConfig(key) {
     headers: [
       { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
       { label: 'Searches', number: true, render: (row) => formatNumber(row.count ?? row.searches ?? row.attempt_count) },
-      { label: 'Clients', number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+      { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
       { label: 'Hit rate', number: true, render: (row) => formatPercent(row.hit_rate ?? row.success_rate) },
     ],
   };
@@ -1093,7 +1121,7 @@ function renderTopList() {
     return;
   }
   element.innerHTML = table(
-    topListConfig(state.topList).headers,
+    topListConfig(state.topList, list.rows).headers,
     rowsForPage('topList', list.rows),
     `No ${state.topList} rows match these filters.`,
   );
@@ -1150,6 +1178,11 @@ function renderQueryExplorer() {
     element.innerHTML = loadingState('Loading query explorer');
     return;
   }
+  if (state.data.search?.queries_available === false) {
+    renderPagination('queries', 0, 1);
+    element.innerHTML = emptyState(state.data.search.queries_unavailable_reason || 'Complete query history is not available for this period.');
+    return;
+  }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   const headers = [
     {
@@ -1179,11 +1212,17 @@ function renderWorklist() {
     element.innerHTML = emptyState(state.errors.search);
     return;
   }
+  if (state.data.search?.worklist_available === false) {
+    renderPagination('worklist', 0, 1);
+    element.innerHTML = emptyState(state.data.search.worklist_unavailable_reason || 'The complete worklist is not available for this period.');
+    return;
+  }
   const rows = rowsForPage('worklist', state.data.search?.worklist);
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Clients';
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: 'Clients', number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+    { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
     { label: 'Attempts', number: true, render: (row) => formatNumber(row.attempt_count) },
   ], rows, 'No unresolved search gaps match these filters.');
 }
@@ -1274,19 +1313,30 @@ function renderSearch() {
 function registeredUserDisplayRows(audienceUsers) {
   const accounts = accountDirectoryRows();
   if (!accounts.length) return normalizeList(audienceUsers);
+  const telemetryByUserId = new Map(normalizeList(audienceUsers)
+    .filter((row) => row.user_id)
+    .map((row) => [String(row.user_id), row]));
+  const telemetryByMaskedIdentifier = new Map(normalizeList(audienceUsers)
+    .filter((row) => row.identifier)
+    .map((row) => [String(row.identifier), row]));
   return accounts.map((user) => {
     const email = String(user.email || '');
+    const telemetry = telemetryByUserId.get(String(user.id || ''))
+      || telemetryByMaskedIdentifier.get(maskIdentifier(email || user.id));
+    const hasLinkedActivity = telemetry?.activity_linked === true
+      || number(telemetry?.searches) > 0
+      || Boolean(telemetry?.last_active);
     return {
       identifier: state.showRegisteredEmails ? email || user.id : maskIdentifier(email || user.id),
       email,
       provider: user.provider,
       plan: user.plan || 'Free',
       signup_at: user.created_at,
-      last_active: user.last_sign_in_at || null,
-      last_active_source: user.last_sign_in_at ? 'Sign-in' : null,
-      searches: null,
-      venues: [],
-      country_code: null,
+      last_active: telemetry?.last_active || user.last_sign_in_at || null,
+      last_active_source: telemetry?.last_active ? 'Search' : user.last_sign_in_at ? 'Sign-in' : null,
+      searches: hasLinkedActivity ? number(telemetry?.searches) : null,
+      venues: hasLinkedActivity ? normalizeList(telemetry?.venues) : [],
+      country_code: hasLinkedActivity ? telemetry?.country_code || null : null,
     };
   }).sort((left, right) => (
     String(right.last_active || '').localeCompare(String(left.last_active || ''))

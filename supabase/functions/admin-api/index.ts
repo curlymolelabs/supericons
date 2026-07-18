@@ -1344,7 +1344,7 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
 const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
 const V2_IDENTITY_PAGE_CONCURRENCY = 4;
-const V2_MAX_ROLLUP_ROWS = 10000;
+const V2_MAX_ROLLUP_ROWS = 50000;
 const V2_ROLLUP_PAGE_CONCURRENCY = 4;
 const V2_MAX_ICON_ROWS = 5000;
 
@@ -1568,7 +1568,11 @@ async function fetchDashboardV2OverviewRollups(
       .range(from, to);
     if (filters.from_day) query = query.gte('day', filters.from_day);
     if (filters.to_day) query = query.lte('day', filters.to_day);
-    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (!filters.include_test) {
+      query = query
+        .eq('environment', 'production')
+        .neq('channel', 'internal_test');
+    }
     if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
     const { data, error, count } = await query;
     if (error) throw error;
@@ -1617,7 +1621,11 @@ async function fetchDashboardV2QueryRollups(
       .range(from, to);
     if (filters.from_day) query = query.gte('day', filters.from_day);
     if (filters.to_day) query = query.lte('day', filters.to_day);
-    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (!filters.include_test) {
+      query = query
+        .eq('environment', 'production')
+        .neq('channel', 'internal_test');
+    }
     if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
     const { data, error, count } = await query;
     if (error) throw error;
@@ -1927,10 +1935,22 @@ async function buildDashboardV2OverviewPayload(
     series,
     outage_spans: outageSpans,
     top_lists: {
-      searched: { available: true, rows: topLists.searched },
+      searched: dataRows.rollup_truncated
+        ? {
+          available: false,
+          reason: 'Complete query rankings exceed the bounded rollup limit for this period. Choose a shorter date range.',
+          rows: [],
+        }
+        : { available: true, rows: topLists.searched },
       returned,
       copied,
-      zero: { available: true, rows: topLists.zero },
+      zero: dataRows.rollup_truncated
+        ? {
+          available: false,
+          reason: 'Complete zero-result rankings exceed the bounded rollup limit for this period. Choose a shorter date range.',
+          rows: [],
+        }
+        : { available: true, rows: topLists.zero },
     },
     geography,
     meta: dashboardV2Meta(filters, startedAt, {
@@ -1940,6 +1960,7 @@ async function buildDashboardV2OverviewPayload(
       identity_rows_truncated: identityTelemetry.truncated,
       identity_rows_skipped_unbounded: filters.key === 'all',
       rollup_rows_truncated: dataRows.rollup_truncated,
+      rollup_data_complete: !dataRows.rollup_truncated,
       client_measure: kpis.client_measure,
       query_review_available: dataRows.query_review_available,
       copy_rows_truncated: copySource.truncated,
@@ -2061,16 +2082,23 @@ async function buildDashboardV2SearchPayload(
       ))
       .slice(0, 50),
   );
+  const rollupUnavailableReason = dataRows.rollup_truncated
+    ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
+    : null;
 
   return {
-    queries,
+    queries: rollupUnavailableReason ? [] : queries,
+    queries_available: !rollupUnavailableReason,
+    queries_unavailable_reason: rollupUnavailableReason,
     pagination: {
       page: currentPage,
       page_size: pageSize,
       total: sortedRows.length,
       page_count: pageCount,
     },
-    worklist,
+    worklist: rollupUnavailableReason ? [] : worklist,
+    worklist_available: !rollupUnavailableReason,
+    worklist_unavailable_reason: rollupUnavailableReason,
     icon_requests: iconRequests,
     contact_submissions: contacts,
     diagnostics: {
@@ -2090,6 +2118,7 @@ async function buildDashboardV2SearchPayload(
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
+      rollup_data_complete: !dataRows.rollup_truncated,
       query_review_available: dataRows.query_review_available,
     }),
   };
@@ -2158,6 +2187,7 @@ async function buildDashboardV2AudiencePayload(
         ? [...telemetry.countries.entries()].sort((left, right) => right[1] - left[1])
         : [];
       return {
+        user_id: user.id,
         identifier: maskDashboardV2Identifier(user.email || user.id),
         provider: formatProviderLabel(user),
         plan: subscription.plan || 'Free',
@@ -2166,6 +2196,7 @@ async function buildDashboardV2AudiencePayload(
         searches: telemetry?.searches || 0,
         venues: telemetry ? [...telemetry.channels].sort() : [],
         country_code: countries[0]?.[0] || null,
+        activity_linked: Boolean(telemetry),
       };
     })
     .filter((row) => {
