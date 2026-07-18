@@ -32,6 +32,8 @@ session identifier as the tool-level event.
 6. Label privacy-safe distinct identities as client IDs, not clients or users.
 7. Reuse the local MCP session hash for hosted-fallback variants.
 8. Fill missing MCP query origin from the recorded tool name.
+9. Raise the bounded 30-day identity source from 25,000 to 30,000 rows after
+   live traffic exceeded the previous bound by 113 rows.
 
 ## Acceptance
 
@@ -45,6 +47,8 @@ session identifier as the tool-level event.
 - Its generated searches are labeled as recommendation subqueries.
 - Grouped result counts cannot be mistaken for elapsed time.
 - Existing raw event records are preserved.
+- The 30-day overview remains complete at the measured live volume and stays
+  within a fixed source bound.
 
 ## Release boundaries
 

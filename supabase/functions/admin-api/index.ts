@@ -1343,7 +1343,7 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 }
 
 const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
-const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
+const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 30000;
 const V2_IDENTITY_PAGE_CONCURRENCY = 4;
 const V2_MAX_ROLLUP_ROWS = 50000;
 const V2_ROLLUP_PAGE_CONCURRENCY = 4;
