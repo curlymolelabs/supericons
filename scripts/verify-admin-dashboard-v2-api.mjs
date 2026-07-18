@@ -34,7 +34,7 @@ function includes(source, value, label) {
   'separateChannels = false',
   '{ applyQuery: false, separateQueryOrigins: true, separateChannels: true }',
   'includeQueryRows = true',
-  '{ applyQuery: false, includeQueryRows: false }',
+  '{ includeQueryRows: false }',
   "select(auditSelect, { count: 'exact' })",
   "select(usageSelect, { count: 'exact' })",
   "select(overviewSelect, { count: 'exact' })",
@@ -61,6 +61,11 @@ function includes(source, value, label) {
   'activity_window: filters.key',
   "client_measure: dataUnavailable ? 'client_days' : 'estimated_unique_clients'",
   "audience_series_measure: dataUnavailable ? 'client_days' : 'registered_and_pro_clients'",
+  'view_id: filters.view_id',
+  'data_cutoff: filters.data_cutoff',
+  'filter_key: filters.filter_key',
+  'last_search: telemetry?.last_active || null',
+  'attempts: filteredRows.reduce',
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
 
@@ -90,7 +95,9 @@ function includes(source, value, label) {
   'Returned-icon coverage is partial',
   'Exact billing price is not linked to every active subscription',
   'Lookup completed',
-  'Client-days across the selected period',
+  'Daily reach across the selected period',
+  'Searcher details',
+  'Searchers seen in the selected period',
   'registeredUsersSubtitle',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
 

@@ -94,6 +94,7 @@ const queryRows = [
     attempt_count: 0,
     activity_count: 1,
     activity_kind: 'lookup',
+    estimated_client_id_count: 1,
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:32:00Z',
   },
@@ -179,6 +180,30 @@ const queryRows = [
     attempt_count: 4,
     activity_count: 4,
     activity_kind: 'search',
+    estimated_client_id_count: 2,
+    searcher_details_available: true,
+    searchers: [
+      {
+        label: 'Anonymous a1b2c3',
+        kind: 'anonymous',
+        account_linked: false,
+        searches: 3,
+        channels: ['local_mcp'],
+        countries: ['SG'],
+        first_seen: '2026-07-17T07:10:00Z',
+        last_seen: '2026-07-17T07:22:00Z',
+      },
+      {
+        label: 'Registered d4e5f6',
+        kind: 'registered',
+        account_linked: true,
+        searches: 1,
+        channels: ['local_mcp'],
+        countries: ['SG'],
+        first_seen: '2026-07-17T07:21:00Z',
+        last_seen: '2026-07-17T07:21:00Z',
+      },
+    ],
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:22:00Z',
   },
@@ -437,6 +462,14 @@ await page.route(`${apiBase}/**`, async (route) => {
   requestRound += 1;
   if (requestRound > 4) await new Promise((resolve) => setTimeout(resolve, 450));
   const payload = responseFor(path, url.searchParams);
+  if (payload?.meta) {
+    payload.meta = {
+      ...payload.meta,
+      view_id: url.searchParams.get('view_id'),
+      data_cutoff: url.searchParams.get('data_cutoff'),
+      filter_key: url.searchParams.get('filter_key'),
+    };
+  }
   await route.fulfill({
     status: payload.error ? 404 : 200,
     headers: { 'access-control-allow-origin': '*' },
@@ -455,6 +488,11 @@ try {
   await page.fill('#adminSecretInput', 'mock-secret');
   await page.click('#adminSecretSubmitBtn');
   await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '32');
+  const initialV2Requests = requests.filter((request) => request.path.startsWith('/v2/')).slice(0, 4);
+  for (const field of ['view_id', 'data_cutoff', 'filter_key']) {
+    const values = new Set(initialV2Requests.map((request) => new URLSearchParams(request.search).get(field)));
+    ok(values.size === 1 && !values.has(null), `Initial v2 requests do not share one ${field}.`);
+  }
 
   ok(await page.locator('.nav-button').count() === 3, 'The dashboard must have exactly three navigation sections.');
   const unnamedControls = await page.locator('button, input, select').evaluateAll((elements) => elements.flatMap((element) => {
@@ -481,7 +519,7 @@ try {
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
   await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered'));
   ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The reach KPI note did not use account-backed Pro totals.');
-  ok((await page.locator('#kpiClientsNote').innerText()).includes('privacy-safe identifiers'), 'Estimated reach is not distinguished from a people count.');
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('32 searchers'), 'Estimated reach does not identify the selected-period searcher count.');
   await assertPanelActionsStayOnOneLine(page, '#section-overview:not([hidden])');
 
   const activity = await page.locator('#latestActivity').innerText();
@@ -608,7 +646,14 @@ try {
   ok(!queryHeaders.includes('Client'), 'The query summary still presents privacy-safe identifiers as people.');
   const varyingRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
   ok((await varyingRow.innerText()).includes('4 searches'), 'Grouped activity is not shown as a search count.');
+  ok((await varyingRow.innerText()).includes('2 searchers'), 'Grouped activity does not show its searcher count.');
   ok((await varyingRow.innerText()).includes('2 to 8 icons'), 'Varying grouped results are not shown as a range.');
+  await varyingRow.locator('[data-searcher-details]').click();
+  ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'false', 'Searcher details did not open.');
+  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Anonymous a1b2c3'), 'Searcher details omitted the masked searcher label.');
+  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Account linked'), 'Searcher details omitted the account-link status.');
+  await page.click('#closeSearcherDetails');
+  ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'true', 'Searcher details did not close.');
   ok(!(await varyingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
@@ -622,6 +667,7 @@ try {
   ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
   ok((await iconLookupRow.innerText()).includes('1 lookup'), 'A successful icon lookup did not render its activity count.');
+  ok((await iconLookupRow.innerText()).includes('1 searcher'), 'A singular searcher label is incorrect.');
   ok((await iconLookupRow.innerText()).includes('1 match'), 'A successful icon lookup did not render one match.');
   const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup pending', { exact: true }),
@@ -666,11 +712,15 @@ try {
   ok(!(await page.locator('#section-audience').innerText()).includes('Audience funnel'), 'The audience section still claims separate populations form a funnel.');
   ok(await page.locator('#funnelRegistered').innerText() === '23', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
+  ok(
+    await page.locator('#funnelClients').innerText() === await page.locator('#kpiClients').innerText(),
+    'Overview and Audience estimated reach disagree for the same view.',
+  );
   ok(await page.locator('#funnelRegisteredSpark svg').count() === 1, 'The registered funnel sparkline is missing.');
   ok(await page.locator('#funnelProSpark svg').count() === 1, 'The Pro funnel sparkline is missing.');
-  ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search IDs over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
+  ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked searchers over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
   ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
-  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The registered-user total is missing.');
+  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 accounts in all recorded history'), 'The registered-account scope is missing.');
   ok(await page.locator('#toggleRegisteredEmails svg').count() === 1, 'The email visibility icon is missing.');
   ok(!(await page.locator('#registeredUsers').innerText()).includes('user1@example.test'), 'Full emails must start hidden.');
   ok((await page.locator('#registeredUsers').innerText()).includes('u***@example.test'), 'Masked emails are missing.');
@@ -680,7 +730,9 @@ try {
   ok((await enrichedRegisteredRow.innerText()).includes('10'), 'Registered-user search activity was discarded.');
   ok((await enrichedRegisteredRow.innerText()).includes('Web'), 'Registered-user venue enrichment was discarded.');
   const firstRegisteredRow = page.locator('#registeredUsers tbody tr').first();
-  ok((await firstRegisteredRow.innerText()).includes('Sign-in'), 'Last active did not fall back to the account sign-in time.');
+  const registeredHeaders = await page.locator('#registeredUsers th').allTextContents();
+  ok(registeredHeaders.includes('Last sign-in'), 'The account sign-in time is not separate.');
+  ok(registeredHeaders.includes('Last search'), 'The linked search time is not separate.');
   ok(/\d{1,2}:\d{2}/.test(await firstRegisteredRow.innerText()), 'Signup and activity timestamps are missing their time.');
   ok(await page.locator('[data-pagination="clients"] [data-page-next]').count() === 1, 'The client list Next button is missing.');
   await page.click('[data-pagination="clients"] [data-page-next]');
@@ -689,12 +741,12 @@ try {
 
   await page.click('[data-window="all"]');
   await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '90');
-  ok((await page.locator('#kpiClientsNote').innerText()).includes('Client-days'), 'The All view did not label its client-day estimate.');
-  ok(await page.locator('#funnelClients').innerText() === '90', 'The All-view funnel did not render client-days.');
-  ok((await page.locator('#funnelClientsNote').innerText()).includes('Client-days'), 'The All-view funnel estimate is not labelled.');
-  ok((await page.locator('#audienceChart').innerText()).includes('Client-days'), 'The All-view audience chart did not use the honest client-day fallback.');
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('Daily reach'), 'The All view did not label its daily reach estimate.');
+  ok(await page.locator('#funnelClients').innerText() === '90', 'The All-view funnel did not render daily reach.');
+  ok((await page.locator('#funnelClientsNote').innerText()).includes('Daily reach'), 'The All-view funnel estimate is not labelled.');
+  ok((await page.locator('#audienceChart').innerText()).includes('Daily reach'), 'The All-view audience chart did not use the honest daily reach fallback.');
   ok((await page.locator('#allClients').innerText()).includes('Choose a shorter date range'), 'The All-view client list did not show its bounded notice.');
-  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The All view hid registered users.');
+  ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 accounts in all recorded history'), 'The All view hid registered accounts.');
 
   await page.click('[data-window="custom"]');
   await page.fill('#customFrom', '2026-07-15');

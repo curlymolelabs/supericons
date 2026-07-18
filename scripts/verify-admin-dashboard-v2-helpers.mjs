@@ -277,7 +277,7 @@ const queryRows = [
   assert.equal(healthy.country_code, null);
   assert.equal(healthy.country_available, false);
   assert.equal(healthy.estimated_client_id_count, 3);
-  assert.equal(healthy.estimated_client_id_count_reason, 'Client-days are a trend estimate, not a people count.');
+  assert.equal(healthy.estimated_client_id_count_reason, 'Daily reach is available for this grouped period.');
   assert.equal('client_label' in healthy, false);
 
   const allZero = aggregateRows.find((row) => row.query === 'all zero aggregate');
@@ -443,5 +443,5 @@ console.log(JSON.stringify({
   query_filters: true,
   aggregate_query_semantics: true,
   true_zero_rate_uses_attempt_counts: true,
-  privacy_safe_identifiers: true,
+  searcher_semantics: true,
 }, null, 2));

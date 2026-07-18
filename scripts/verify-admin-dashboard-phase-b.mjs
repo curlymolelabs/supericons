@@ -81,9 +81,10 @@ function excludes(source, value, label) {
   'row.result_count_reason',
   'row.country_reason',
   'Lookup completed',
-  'Client-days across the selected period',
+  'Daily reach across the selected period',
   'No sign-in recorded',
-  'Last active uses account sign-in',
+  'Last sign-in',
+  'Last search',
   'renderPagination',
   'iconSvg',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));

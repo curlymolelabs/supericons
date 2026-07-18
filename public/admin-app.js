@@ -98,6 +98,9 @@ const state = {
   savingRows: new Set(),
   requestToken: 0,
   endpointTokens: {},
+  view: null,
+  visibleQueryRows: [],
+  searcherDetailsReturnFocus: null,
 };
 
 function $(id) {
@@ -192,6 +195,7 @@ function iconSvg(name) {
     expand: '<path d="m6 10 6 6 6-6"/>',
     eye: '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/>',
     eyeOff: '<path d="m3 3 18 18"/><path d="M10.6 6.2A11.8 11.8 0 0 1 12 6c6.5 0 10 6 10 6a18.4 18.4 0 0 1-2.2 3"/><path d="M6.6 6.6C3.6 8.4 2 12 2 12s3.5 6 10 6a10.6 10.6 0 0 0 3.4-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
   };
   return `<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
 }
@@ -448,7 +452,7 @@ async function apiRequest(path, options = {}, retry = true) {
   return payload;
 }
 
-function sharedParams({ forSearch = false } = {}) {
+function baseFilterParams({ forSearch = false } = {}) {
   const params = new URLSearchParams();
   params.set('window', state.filters.window);
   if (state.filters.window === 'custom') {
@@ -464,9 +468,34 @@ function sharedParams({ forSearch = false } = {}) {
   return params;
 }
 
-function endpointPath(endpoint) {
+function activeFilterKey() {
+  return baseFilterParams().toString();
+}
+
+function beginDashboardView() {
+  const id = window.crypto?.randomUUID
+    ? window.crypto.randomUUID().replaceAll('-', '')
+    : `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  state.view = {
+    id,
+    cutoff: new Date().toISOString(),
+    filterKey: activeFilterKey(),
+  };
+}
+
+function sharedParams({ forSearch = false, includeView = true } = {}) {
+  const params = baseFilterParams({ forSearch });
+  if (includeView && state.view) {
+    params.set('view_id', state.view.id);
+    params.set('data_cutoff', state.view.cutoff);
+    params.set('filter_key', state.view.filterKey);
+  }
+  return params;
+}
+
+function endpointPath(endpoint, { includeView = true } = {}) {
   if (endpoint === 'accounts') return '/users?page=all';
-  const params = sharedParams({ forSearch: endpoint === 'search' });
+  const params = sharedParams({ forSearch: endpoint === 'search', includeView });
   if (endpoint === 'activity') {
     params.set('page', String(currentPage('activity')));
     params.set('page_size', String(rowLimit('activity')));
@@ -484,11 +513,17 @@ function endpointPath(endpoint) {
 }
 
 function endpointDataKey(endpoint) {
-  return endpoint === 'accounts' ? 'accounts' : endpointPath(endpoint);
+  return endpoint === 'accounts' ? 'accounts' : endpointPath(endpoint, { includeView: false });
 }
 
-function activeFilterKey() {
-  return sharedParams().toString();
+function acceptsDashboardView(endpoint, payload) {
+  if (endpoint === 'accounts') return true;
+  return Boolean(
+    state.view
+    && payload?.meta?.view_id === state.view.id
+    && payload?.meta?.data_cutoff === state.view.cutoff
+    && payload?.meta?.filter_key === state.view.filterKey
+  );
 }
 
 function cacheKey(endpoint) {
@@ -674,11 +709,58 @@ function countWithUnit(value, unit = 'icon') {
   return `${formatNumber(count)} ${count === 1 ? singular : plural}`;
 }
 
-function queryActivityCell(row = {}) {
+function searcherCountLabel(value) {
+  const count = number(value);
+  return `${formatNumber(count)} ${count === 1 ? 'searcher' : 'searchers'}`;
+}
+
+function queryActivityCell(row = {}, rowIndex = -1) {
   const count = number(row.activity_count ?? row.attempt_count);
   const kind = String(row.activity_kind || '').toLowerCase() === 'lookup' ? 'lookup' : 'search';
   const label = count === 1 ? kind : kind === 'search' ? 'searches' : 'lookups';
-  return `<span title="Recorded ${escapeHtml(kind)} activity in this grouped row">${formatNumber(count)} ${escapeHtml(label)}</span>`;
+  const searcherCount = number(row.estimated_client_id_count ?? row.distinct_clients);
+  const detailsAvailable = row.searcher_details_available === true && normalizeList(row.searchers).length > 0;
+  return `
+    <span title="Recorded ${escapeHtml(kind)} activity in this grouped row">${formatNumber(count)} ${escapeHtml(label)}</span>
+    <div class="activity-meta">
+      ${escapeHtml(searcherCountLabel(searcherCount))}
+      ${detailsAvailable ? `<button class="icon-button inline-icon-button" type="button" data-searcher-details="${rowIndex}" aria-label="Open Searcher details" title="Searcher details">${iconSvg('info')}</button>` : ''}
+    </div>
+  `;
+}
+
+function closeSearcherDetails() {
+  const modal = $('searcherDetailsModal');
+  modal?.classList.remove('open');
+  modal?.setAttribute('aria-hidden', 'true');
+  if (state.searcherDetailsReturnFocus instanceof HTMLElement) {
+    state.searcherDetailsReturnFocus.focus();
+  }
+  state.searcherDetailsReturnFocus = null;
+}
+
+function openSearcherDetails(rowIndex, trigger) {
+  const row = state.visibleQueryRows[Number(rowIndex)];
+  const modal = $('searcherDetailsModal');
+  const content = $('searcherDetailsContent');
+  const lead = $('searcherDetailsLead');
+  if (!row || !modal || !content) return;
+  const searchers = normalizeList(row.searchers);
+  if (lead) {
+    lead.textContent = `${safeText(row.query, 'Selected query')}: ${searcherCountLabel(row.estimated_client_id_count ?? searchers.length)}.`;
+  }
+  content.innerHTML = table([
+    { label: 'Searcher', render: (item) => `<strong>${escapeHtml(safeText(item.label, 'Anonymous'))}</strong><div class="activity-meta">${escapeHtml(safeText(item.kind, 'anonymous'))}${item.account_linked ? ' | Account linked' : ''}</div>` },
+    { label: 'Searches', number: true, render: (item) => formatNumber(item.searches) },
+    { label: 'Venues', render: (item) => normalizeList(item.channels).length ? escapeHtml(item.channels.map(channelLabel).join(', ')) : '<span class="muted-cell">Not recorded</span>' },
+    { label: 'Country', render: (item) => normalizeList(item.countries).length ? escapeHtml(item.countries.join(', ')) : '<span class="muted-cell">Not recorded</span>' },
+    { label: 'First seen', render: (item) => escapeHtml(formatDate(item.first_seen, true)) },
+    { label: 'Last seen', render: (item) => escapeHtml(formatDate(item.last_seen, true)) },
+  ], searchers, row.searcher_details_reason || 'Searcher details are not available for this grouped view.');
+  state.searcherDetailsReturnFocus = trigger instanceof HTMLElement ? trigger : null;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  requestAnimationFrame(() => $('closeSearcherDetails')?.focus());
 }
 
 function queryResultCell(row = {}) {
@@ -719,8 +801,8 @@ function table(headers, rows, emptyReason) {
   return `
     <table>
       <thead><tr>${headers.map((header) => `<th class="${header.number ? 'number' : ''}">${escapeHtml(header.label)}</th>`).join('')}</tr></thead>
-      <tbody>${rows.map((row) => `
-        <tr>${headers.map((header) => `<td class="${header.number ? 'number' : ''}">${header.render(row)}</td>`).join('')}</tr>
+      <tbody>${rows.map((row, rowIndex) => `
+        <tr>${headers.map((header) => `<td class="${header.number ? 'number' : ''}">${header.render(row, rowIndex)}</td>`).join('')}</tr>
       `).join('')}</tbody>
     </table>
   `;
@@ -1115,26 +1197,26 @@ function renderKpis() {
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
   if (kpis.identity_available === false && kpis.client_measure === 'client_days') {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = 'Client-days across the selected period; exact unique clients are not available.';
+    $('kpiClientsNote').textContent = 'Daily reach across the selected period; exact searcher totals are not available.';
   } else if (kpis.identity_available === false) {
     setSkeleton($('kpiClients'), 'Unavailable');
-    $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact client counts.';
+    $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact searcher totals.';
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
     $('kpiClientsNote').textContent = accounts.available
-      ? `${formatNumber(anonymous)} privacy-safe identifiers are anonymous or not linked to an account. Accounts are counted separately: ${formatNumber(registered)} registered, ${formatNumber(pro)} Pro.`
-      : `Estimated from privacy-safe identifiers, not people. ${formatNumber(registered)} linked to registered accounts, ${formatNumber(pro)} linked to Pro.`;
+      ? `${searcherCountLabel(clients)} seen in the selected period. All time accounts: ${formatNumber(registered)} registered, ${formatNumber(pro)} Pro.`
+      : `${searcherCountLabel(clients)} seen in the selected period. ${formatNumber(registered)} linked to registered accounts, ${formatNumber(pro)} linked to Pro.`;
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
-  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'observed identifier'}, ${formatPercent(successRate)} successful`;
+  $('kpiSearchesNote').textContent = `Selected period: ${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'daily reach unit' : 'searcher'}, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
-  $('kpiZeroNote').textContent = `${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
+  $('kpiZeroNote').textContent = `Selected period: ${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
   if (kpis.low_result_rate_available === false) {
     setSkeleton($('kpiLow'), 'Unavailable');
     $('kpiLowNote').textContent = 'No searches in this view have exact low-result eligibility.';
   } else {
     setSkeleton($('kpiLow'), formatPercent(kpis.low_result_rate));
-    $('kpiLowNote').textContent = `${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches. ${formatPercent(kpis.low_result_coverage_rate)} coverage.`;
+    $('kpiLowNote').textContent = `Selected period: ${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches. ${formatPercent(kpis.low_result_coverage_rate)} coverage.`;
   }
 }
 
@@ -1157,7 +1239,7 @@ function renderCharts() {
   renderLineChart(
     $('clientsChart'),
     series,
-    [{ field: 'client_days', label: 'Client-days', color: CHART_COLORS[1] }],
+    [{ field: 'client_days', label: 'Daily reach', color: CHART_COLORS[1] }],
     { label: 'Estimated reach over time', emptyReason: 'Estimated reach history will appear after the v2 summary endpoint is live.' },
   );
   renderLineChart(
@@ -1177,7 +1259,7 @@ function renderCharts() {
 }
 
 function topListConfig(key, rows = []) {
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Est. reach';
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
   if (key === 'returned') {
     return {
       headers: [
@@ -1236,7 +1318,7 @@ function renderTopList() {
   const value = state.data.overview?.top_lists?.[state.topList];
   const list = availability(value, 'This list is not available from the current data source.');
   $('topListSubtitle').textContent = list.available
-    ? `Top ${formatNumber(list.rows.length)} available for ${appliedWindowLabel().toLowerCase()}. Estimated reach uses privacy-safe identifiers, not people.`
+    ? `Top ${formatNumber(list.rows.length)} available for ${appliedWindowLabel().toLowerCase()}.`
     : list.reason;
   if (!list.available) {
     renderPagination('topList', 0, 1);
@@ -1307,13 +1389,14 @@ function renderQueryExplorer() {
     return;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
+  state.visibleQueryRows = rows;
   const headers = [
     {
       label: 'Query',
       render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter || row.library, 'All libraries'))} | ${escapeHtml(originLabel(row.query_origin || row.origin))}</div>`,
     },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: 'Activity', render: (row) => queryActivityCell(row) },
+    { label: 'Activity', render: (row, rowIndex) => queryActivityCell(row, rowIndex) },
     { label: 'Country', render: (row) => queryCountryCell(row) },
     { label: 'Venue', render: (row) => queryChannelCell(row) },
     { label: 'Returned', number: true, render: (row) => queryResultCell(row) },
@@ -1341,7 +1424,7 @@ function renderWorklist() {
     return;
   }
   const rows = rowsForPage('worklist', state.data.search?.worklist);
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Est. reach';
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
@@ -1476,21 +1559,22 @@ function registeredUserDisplayRows(audienceUsers) {
       || telemetryByMaskedIdentifier.get(maskIdentifier(email || user.id));
     const hasLinkedActivity = telemetry?.activity_linked === true
       || number(telemetry?.searches) > 0
-      || Boolean(telemetry?.last_active);
+      || Boolean(telemetry?.last_search || telemetry?.last_active);
     return {
       identifier: state.showRegisteredEmails ? email || user.id : maskIdentifier(email || user.id),
       email,
       provider: user.provider,
       plan: user.plan || 'Free',
       signup_at: user.created_at,
-      last_active: telemetry?.last_active || user.last_sign_in_at || null,
-      last_active_source: telemetry?.last_active ? 'Search' : user.last_sign_in_at ? 'Sign-in' : null,
+      last_sign_in: user.last_sign_in_at || null,
+      last_search: telemetry?.last_search || telemetry?.last_active || null,
       searches: hasLinkedActivity ? number(telemetry?.searches) : null,
       venues: hasLinkedActivity ? normalizeList(telemetry?.venues) : [],
       country_code: hasLinkedActivity ? telemetry?.country_code || null : null,
     };
   }).sort((left, right) => (
-    String(right.last_active || '').localeCompare(String(left.last_active || ''))
+    String(right.last_search || '').localeCompare(String(left.last_search || ''))
+    || String(right.last_sign_in || '').localeCompare(String(left.last_sign_in || ''))
     || String(right.signup_at || '').localeCompare(String(left.signup_at || ''))
   ));
 }
@@ -1546,20 +1630,20 @@ function renderAudience() {
   if (funnel.identity_available === false) {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = funnel.client_measure === 'client_days'
-      ? 'Client-days in the selected period'
-      : funnel.identity_unavailable_reason || 'Exact unique clients are not available.';
+      ? 'Daily reach in the selected period'
+      : funnel.identity_unavailable_reason || 'Exact searcher totals are not available.';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
-    $('funnelClientsNote').textContent = `${appliedWindowLabel()}. Privacy-safe identifiers, not people.`;
+    $('funnelClientsNote').textContent = 'Searchers seen in the selected period';
   }
   setSkeleton($('funnelRegistered'), formatNumber(registered));
   $('funnelRegisteredNote').textContent = accounts.available
-    ? 'All registered accounts'
-    : `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of clients`;
+    ? 'All time: registered accounts'
+    : `${formatPercent(funnel.registered_percentage ?? (clients ? registered / clients : 0))} of searchers`;
   setSkeleton($('funnelPro'), formatNumber(pro));
   $('funnelProNote').textContent = accounts.available
-    ? `${formatNumber(pro)} of ${formatNumber(registered)} registered accounts`
-    : `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of clients`;
+    ? `All time: ${formatNumber(pro)} of ${formatNumber(registered)} registered accounts`
+    : `${formatPercent(funnel.pro_percentage ?? (clients ? pro / clients : 0))} of searchers`;
   const mrr = funnel.mrr || {};
   $('funnelMrr').textContent = mrr.available ? safeText(mrr.display_value) : 'Unavailable';
   $('funnelMrrNote').textContent = mrr.reason || 'Exact billing price is not linked to every active subscription.';
@@ -1576,8 +1660,8 @@ function renderAudience() {
     renderLineChart(
       $('audienceChart'),
       data?.series,
-      [{ field: 'client_days', label: 'Client-days', color: CHART_COLORS[1] }],
-      { label: 'Client-days over time', emptyReason: 'Client-day history is not available for this period.' },
+      [{ field: 'client_days', label: 'Daily reach', color: CHART_COLORS[1] }],
+      { label: 'Daily reach over time', emptyReason: 'Daily reach history is not available for this period.' },
     );
   } else {
     renderLineChart(
@@ -1587,7 +1671,7 @@ function renderAudience() {
         { field: 'registered_clients', label: 'Linked registered', color: CHART_COLORS[1] },
         { field: 'pro_clients', label: 'Linked Pro', color: CHART_COLORS[2] },
       ],
-      { label: 'Account-linked search IDs over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
+      { label: 'Account-linked searchers over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
     );
   }
 
@@ -1596,7 +1680,7 @@ function renderAudience() {
   if ($('registeredUsersSubtitle')) {
     const total = accounts.available ? accounts.registered : number(data?.registered_users?.total ?? users.rows.length);
     $('registeredUsersSubtitle').textContent = accounts.available
-      ? `${formatNumber(total)} total users. Last active uses account sign-in. MCP searches appear only when linked by API key.`
+      ? `${formatNumber(total)} accounts in all recorded history. Search activity follows ${appliedWindowLabel().toLowerCase()}.`
       : `${formatNumber(total)} total users. Activity columns reflect ${appliedWindowLabel().toLowerCase()}.`;
   }
   renderEmailVisibilityControl();
@@ -1605,7 +1689,8 @@ function renderAudience() {
       { label: 'User', render: (row) => `<strong>${escapeHtml(safeText(row.identifier, 'Hidden'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.provider, 'Unknown provider'))}</div>` },
       { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
       { label: 'Signed up', render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at, true)) },
-      { label: 'Last active', render: (row) => row.last_active ? `${escapeHtml(formatDate(row.last_active, true))}<div class="activity-meta">${escapeHtml(row.last_active_source || 'Search')}</div>` : '<span class="muted-cell">No sign-in recorded</span>' },
+      { label: 'Last sign-in', render: (row) => row.last_sign_in ? escapeHtml(formatDate(row.last_sign_in, true)) : '<span class="muted-cell">No sign-in recorded</span>' },
+      { label: 'Last search', render: (row) => row.last_search ? escapeHtml(formatDate(row.last_search, true)) : '<span class="muted-cell">No linked search</span>' },
       { label: 'Searches', number: true, render: (row) => row.searches == null ? '<span class="muted-cell">Not linked</span>' : formatNumber(row.searches) },
       { label: 'Venues', render: (row) => normalizeList(row.venues).length ? escapeHtml(row.venues.map(channelLabel).join(', ')) : '<span class="muted-cell">Not linked</span>' },
       { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not linked</span>' },
@@ -1613,17 +1698,17 @@ function renderAudience() {
     : emptyState(users.reason);
   if (!users.available && !accounts.available) renderPagination('registeredUsers', 0, 1);
 
-  const allClients = availability(data?.clients, 'Observed identifier profiles are not available from the current data source.');
+  const allClients = availability(data?.clients, 'Searcher details are not available from the current data source.');
   $('allClients').innerHTML = allClients.available
     ? table([
-      { label: 'Observed ID', render: (row) => visitorLabel(row) },
+      { label: 'Searcher', render: (row) => visitorLabel(row) },
       { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
       { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
       { label: 'First seen', render: (row) => escapeHtml(formatDate(row.first_seen, true)) },
       { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
       { label: 'Top query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
-    ], rowsForPage('clients', allClients.rows, data?.pagination), 'No clients match these filters.')
+    ], rowsForPage('clients', allClients.rows, data?.pagination), 'No searchers match these filters.')
     : emptyState(allClients.reason);
   if (!allClients.available) renderPagination('clients', 0, 1);
 }
@@ -1878,7 +1963,11 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
     state.data[endpoint] = cached.payload;
     state.dataKeys[endpoint] = dataKey;
     renderAll();
-    if (Date.now() - cached.savedAt < CACHE_TTL_MS && cached.payload.__partial !== true) {
+    if (
+      acceptsDashboardView(endpoint, cached.payload)
+      && Date.now() - cached.savedAt < CACHE_TTL_MS
+      && cached.payload.__partial !== true
+    ) {
       return cached.payload;
     }
   }
@@ -1893,6 +1982,9 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
   try {
     const payload = await fetchEndpoint(endpoint);
     if (state.endpointTokens[endpoint] !== token) return null;
+    if (!acceptsDashboardView(endpoint, payload)) {
+      throw new Error(`The ${endpoint} response belongs to an older dashboard view.`);
+    }
     state.data[endpoint] = payload;
     state.dataKeys[endpoint] = dataKey;
     writeCache(endpoint, payload);
@@ -1915,6 +2007,7 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
 }
 
 async function refreshDashboard({ force = false, includeAccounts = true } = {}) {
+  beginDashboardView();
   const token = state.requestToken + 1;
   state.requestToken = token;
   state.refreshStartedAt = Date.now();
@@ -1952,6 +2045,7 @@ async function refreshListEndpoint(key) {
     renderAll();
     return;
   }
+  if (!state.view || state.view.filterKey !== activeFilterKey()) beginDashboardView();
   const token = state.requestToken + 1;
   state.requestToken = token;
   state.refreshStartedAt = Date.now();
@@ -2256,6 +2350,11 @@ function initializeEvents() {
     });
   });
   document.addEventListener('click', (event) => {
+    const searcherDetailsButton = event.target.closest('[data-searcher-details]');
+    if (searcherDetailsButton) {
+      openSearcherDetails(searcherDetailsButton.dataset.searcherDetails, searcherDetailsButton);
+      return;
+    }
     const worklistButton = event.target.closest('[data-open-worklist]');
     if (worklistButton) {
       openWorklist(worklistButton.dataset.openWorklist);
@@ -2364,6 +2463,13 @@ function initializeEvents() {
       event.preventDefault();
       first.focus();
     }
+  });
+  $('closeSearcherDetails')?.addEventListener('click', closeSearcherDetails);
+  $('searcherDetailsModal')?.addEventListener('click', (event) => {
+    if (event.target === event.currentTarget) closeSearcherDetails();
+  });
+  $('searcherDetailsModal')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSearcherDetails();
   });
 }
 

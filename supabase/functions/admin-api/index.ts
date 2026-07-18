@@ -1748,6 +1748,9 @@ function dashboardV2Meta(
     channel: filters.channel,
     include_test: filters.include_test,
     q: filters.q,
+    view_id: filters.view_id,
+    data_cutoff: filters.data_cutoff,
+    filter_key: filters.filter_key,
     generated_at: new Date().toISOString(),
     generation_ms: Date.now() - startedAt,
     ...extras,
@@ -1869,6 +1872,8 @@ async function buildDashboardV2ActivityPayload(
       page_count: pageCount,
     },
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity',
+      completeness: { raw_rows_complete: !telemetry.truncated },
       row_limit: pageSize,
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: telemetry.truncated,
@@ -1948,8 +1953,8 @@ async function buildDashboardV2OverviewPayload(
       identity_available: !identityTelemetry.truncated,
       identity_unavailable_reason: identityTelemetry.truncated
         ? filters.key === 'all'
-          ? 'All-history client totals use client-days because anonymous identities rotate over time.'
-          : 'Exact client identities exceed the bounded identity-row limit for this period. Choose a shorter date range.'
+          ? 'All-history reach uses daily totals because anonymous searcher counting resets over time.'
+          : 'Exact searcher totals exceed the safe row limit for this period. Choose a shorter date range.'
         : null,
     },
     series,
@@ -1974,6 +1979,12 @@ async function buildDashboardV2OverviewPayload(
     },
     geography,
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        identity_rows_complete: !identityTelemetry.truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
@@ -2188,6 +2199,10 @@ async function buildDashboardV2SearchPayload(
     : null;
 
   return {
+    summary: {
+      attempts: filteredRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
+      query_groups: filteredRows.length,
+    },
     queries: rollupUnavailableReason ? [] : queries,
     queries_available: !rollupUnavailableReason,
     queries_unavailable_reason: rollupUnavailableReason,
@@ -2217,9 +2232,14 @@ async function buildDashboardV2SearchPayload(
       query_row_grain: ['query', 'library_filter', 'query_origin', 'channel'],
       activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
       result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
-      estimated_client_id_measure: 'A privacy-safe reach estimate for analysis. It is not a people or account count.',
+      estimated_client_id_measure: 'Searchers seen in the selected period.',
     },
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
@@ -2266,16 +2286,15 @@ async function buildDashboardV2AudiencePayload(
   const filters = parseDashboardV2Filters(url);
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const identityFilters = { ...filters, q: '' };
   const [dataRows, identityTelemetry, authUsers] = await Promise.all([
     buildDashboardV2DataRows(
       adminClient,
-      identityFilters,
-      { applyQuery: false, includeQueryRows: false },
+      filters,
+      { includeQueryRows: false },
     ),
     filters.key === 'all'
       ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
-      : fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
+      : fetchDashboardV2IdentityTelemetry(adminClient, filters),
     listAllAuthUsers(adminClient),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
@@ -2297,20 +2316,22 @@ async function buildDashboardV2AudiencePayload(
         provider: formatProviderLabel(user),
         plan: subscription.plan || 'Free',
         signup_at: user.created_at || null,
+        last_search: telemetry?.last_active || null,
         last_active: telemetry?.last_active || null,
         searches: telemetry?.searches || 0,
         venues: telemetry ? [...telemetry.channels].sort() : [],
         country_code: countries[0]?.[0] || null,
         activity_linked: Boolean(telemetry),
+        activity_matches_filter: Boolean(telemetry),
       };
     })
     .filter((row) => {
       if (!filters.q) return true;
-      return [row.identifier, row.provider, row.plan, row.country_code, ...row.venues]
+      return row.activity_matches_filter || [row.identifier, row.provider, row.plan, row.country_code, ...row.venues]
         .filter(Boolean).join(' ').toLowerCase().includes(filters.q);
     })
     .sort((left, right) => (
-      String(right.last_active || '').localeCompare(String(left.last_active || ''))
+      String(right.last_search || '').localeCompare(String(left.last_search || ''))
       || String(right.signup_at || '').localeCompare(String(left.signup_at || ''))
     ));
   const filteredClients = clientRows.filter((row) => {
@@ -2339,7 +2360,7 @@ async function buildDashboardV2AudiencePayload(
   const pageCount = Math.max(1, Math.ceil(filteredClients.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * pageSize;
-  const unavailableReason = 'Exact client profiles exceed the bounded identity-row limit for this period. Choose a shorter date range.';
+  const unavailableReason = 'Searcher details exceed the safe row limit for this period. Choose a shorter date range.';
 
   return {
     funnel: {
@@ -2379,6 +2400,13 @@ async function buildDashboardV2AudiencePayload(
       page_count: pageCount,
     },
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity_and_all_time_accounts',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        identity_rows_complete: !identityTelemetry.truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+        account_inventory_complete: true,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
@@ -2398,6 +2426,9 @@ function isDashboardV2ValidationError(error: unknown) {
     message.startsWith('Choose both custom dates')
     || message.startsWith('The custom start date')
     || message.startsWith('Custom date ranges cannot exceed')
+    || message.startsWith('The dashboard data cutoff')
+    || message.startsWith('The dashboard view marker')
+    || message.startsWith('The dashboard filter marker')
   );
 }
 
@@ -2504,6 +2535,7 @@ function getQueryWorkbenchEntry(
     ip_hash_prefixes: new Set<string>(),
     api_key_hash_prefixes: new Set<string>(),
     estimated_client_keys: new Set<string>(),
+    searcher_details: new Map<string, Record<string, unknown>>(),
     visitor_kinds: new Set<string>(),
     countries: new Set<string>(),
     registered_user_ids: new Set<string>(),
@@ -2562,7 +2594,27 @@ function buildQueryWorkbenchRows(
     (entry.query_origins as Set<string>).add(String(row.query_origin || 'legacy_unknown'));
 
     if (typeof row._estimated_client_key === 'string' && row._estimated_client_key.trim()) {
-      (entry.estimated_client_keys as Set<string>).add(row._estimated_client_key.trim());
+      const searcherKey = row._estimated_client_key.trim();
+      (entry.estimated_client_keys as Set<string>).add(searcherKey);
+      const details = entry.searcher_details as Map<string, Record<string, unknown>>;
+      const searcher = details.get(searcherKey) || {
+        label: typeof row.estimated_client_key === 'string' && row.estimated_client_key.trim()
+          ? row.estimated_client_key.trim()
+          : `Searcher ${searcherKey.slice(0, 8)}`,
+        kind: typeof row.visitor_kind === 'string' ? row.visitor_kind : 'anonymous',
+        account_linked: Boolean(row.user_id),
+        searches: 0,
+        channels: new Set<string>(),
+        countries: new Set<string>(),
+        first_seen: createdAt,
+        last_seen: createdAt,
+      };
+      (searcher.channels as Set<string>).add(rowChannel);
+      const searcherCountry = normalizeAuditCountry(row.country_code);
+      if (searcherCountry) (searcher.countries as Set<string>).add(searcherCountry);
+      if (!searcher.first_seen || (createdAt && createdAt < String(searcher.first_seen))) searcher.first_seen = createdAt;
+      if (!searcher.last_seen || (createdAt && createdAt > String(searcher.last_seen))) searcher.last_seen = createdAt;
+      details.set(searcherKey, searcher);
     }
     if (typeof row.visitor_kind === 'string' && row.visitor_kind.trim()) {
       (entry.visitor_kinds as Set<string>).add(row.visitor_kind.trim());
@@ -2632,6 +2684,11 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'search_attempt') {
       entry.attempt_count = Number(entry.attempt_count || 0) + 1;
+      if (typeof row._estimated_client_key === 'string') {
+        const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+          .get(row._estimated_client_key.trim());
+        if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
+      }
       const localeKey = typeof row.locale === 'string' && row.locale.trim()
         ? row.locale.trim()
         : '(missing)';
@@ -2698,6 +2755,11 @@ function buildQueryWorkbenchRows(
     if (signalType === 'mcp_call') {
       entry.mcp_result_rows = Number(entry.mcp_result_rows || 0) + 1;
       if (String(row.query_origin || '') === 'icon_lookup') {
+        if (typeof row._estimated_client_key === 'string') {
+          const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+            .get(row._estimated_client_key.trim());
+          if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
+        }
         const resultCount = Number(row.result_count);
         if (Number.isFinite(resultCount)) {
           entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
@@ -2786,6 +2848,22 @@ function buildQueryWorkbenchRows(
       api_key_hash_count: (entry.api_key_hash_prefixes as Set<string>).size,
       api_key_hash_prefixes: [...(entry.api_key_hash_prefixes as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
       estimated_unique_clients: (entry.estimated_client_keys as Set<string>).size,
+      searcher_details: [...(entry.searcher_details as Map<string, Record<string, unknown>>).values()]
+        .map((searcher) => ({
+          label: searcher.label,
+          kind: searcher.kind,
+          account_linked: searcher.account_linked,
+          searches: searcher.searches,
+          channels: [...(searcher.channels as Set<string>)].sort(),
+          countries: [...(searcher.countries as Set<string>)].sort(),
+          first_seen: searcher.first_seen,
+          last_seen: searcher.last_seen,
+        }))
+        .sort((left, right) => (
+          String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
+          || String(left.label || '').localeCompare(String(right.label || ''))
+        ))
+        .slice(0, 100),
       visitor_kinds: [...(entry.visitor_kinds as Set<string>)].sort((a, b) => a.localeCompare(b)),
       countries: [...(entry.countries as Set<string>)].sort((a, b) => a.localeCompare(b)),
       registered_user_count: (entry.registered_user_ids as Set<string>).size,
@@ -3069,6 +3147,7 @@ function buildQueryWorkbenchRowsFromRollups(
       api_key_hash_prefixes: [],
       estimated_unique_clients: null,
       client_days: Number(entry.client_days || 0),
+      searcher_details: [],
       visitor_kinds: [],
       countries: [],
       registered_user_count: 0,

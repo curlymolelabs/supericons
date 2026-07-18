@@ -91,6 +91,17 @@ function successPayload(path, windowKey) {
   return null;
 }
 
+function attachViewMeta(payload, url) {
+  if (!payload?.meta) return payload;
+  payload.meta = {
+    ...payload.meta,
+    view_id: url.searchParams.get('view_id'),
+    data_cutoff: url.searchParams.get('data_cutoff'),
+    filter_key: url.searchParams.get('filter_key'),
+  };
+  return payload;
+}
+
 async function openDashboard(page) {
   await page.goto(server.url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
   await page.fill('#adminSecretInput', 'mock-secret');
@@ -137,7 +148,7 @@ try {
       });
       return;
     }
-    const payload = successPayload(path, windowKey);
+    const payload = attachViewMeta(successPayload(path, windowKey), url);
     await route.fulfill({
       status: payload ? 200 : 404,
       headers: { 'access-control-allow-origin': '*' },
@@ -172,7 +183,7 @@ try {
     if (path === '/v2/activity') {
       await new Promise((resolve) => setTimeout(resolve, 1500));
     }
-    const payload = successPayload(path, url.searchParams.get('window') || '30d');
+    const payload = attachViewMeta(successPayload(path, url.searchParams.get('window') || '30d'), url);
     await route.fulfill({
       status: payload ? 200 : 404,
       headers: { 'access-control-allow-origin': '*' },

@@ -55,6 +55,7 @@
     "verify:admin-dashboard-v2-api": "node scripts/verify-admin-dashboard-v2-api.mjs",
     "verify:admin-dashboard-v2-error-states": "node scripts/verify-admin-dashboard-v2-error-states.mjs",
     "verify:admin-dashboard-v2-operator-contract": "node scripts/verify-admin-dashboard-v2-operator-contract.mjs",
+    "verify:admin-dashboard-v2-searcher-sync": "node scripts/verify-admin-dashboard-v2-searcher-sync.mjs",
     "verify:admin-icon-request-review-migration": "node scripts/verify-admin-icon-request-review-migration.mjs",
     "verify:mcp-phase-a-telemetry": "node scripts/verify-mcp-phase-a-telemetry.mjs",
     "verify:material-production-baseline-runner": "node scripts/verify-material-production-baseline-runner.mjs",

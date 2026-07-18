@@ -1,7 +1,7 @@
-# Admin dashboard Search IDs and page sync fix plan
+# Admin dashboard searchers and page sync fix plan
 
 - Date: 2026-07-18
-- Status: revised for audit
+- Status: implemented and verified locally
 - Branch: `codex/admin-dashboard-v2-gap-repair`
 - Product authority: `docs/admin-dashboard-v2-prd-2026-07-17.md`
 - Design authority: `mockups/admin-dashboard-v2-mockup-2026-07-17.html`
@@ -13,19 +13,19 @@ Make identity and activity figures understandable without help, and make Overvie
 
 The dashboard must separate these concepts:
 
-- a Search ID attached to search activity
+- a searcher attached to search activity
 - a registered account
 - an active Pro account
 - a search attempt
 
-A Search ID is not automatically a person. It is a code attached to a search source, such as an app setup, API key, signed-in account, or shared service. One person can use more than one Search ID, and a shared service can represent more than one person.
+A searcher is one distinct app setup, key, or account seen in search activity. One person can appear as more than one searcher, and a shared service can represent more than one person. This explanation belongs behind an info icon, not in the default card.
 
 ## 2. Verified problems
 
 The current code and screenshot confirm these issues:
 
 1. The UI uses the phrase "privacy-safe identifiers," which does not explain the number in normal language.
-2. Query summary no longer shows the Search ID count, even though that count can help distinguish concentrated repeat demand from broader demand.
+2. Query summary no longer shows the searcher count, even though that count can help distinguish concentrated repeat demand from broader demand.
 3. Overview and Audience use the same date, venue, and test-traffic filters for search telemetry, but registered and Pro headline totals come from the all-time account directory.
 4. Audience clears the text query before calculating its headline search figures, while some Audience lists still use the text query.
 5. Search telemetry and account sign-in timestamps can appear in the same Last active column even though they follow different filter rules.
@@ -39,57 +39,57 @@ Keep the clear existing term `Estimated reach`. Replace only the jargon around i
 | Current label | Replacement |
 | --- | --- |
 | Estimated reach | Estimated reach |
-| Privacy-safe identifiers | Search IDs |
-| Observed identifiers | Search IDs |
+| Privacy-safe identifiers | Searchers |
+| Observed identifiers | Searchers |
 | Estimated reach over time | Estimated reach over time |
 | Client-days in visible UI copy | Daily reach |
-| Clients, when the value is not a confirmed account count | Search IDs |
+| Clients, when the value is not a confirmed account count | Searchers |
 
 ### Default card copy
 
 Keep the main card short:
 
 - label: `Estimated reach`
-- note for an exact view: `Search IDs seen in the selected period`
+- note for an exact view: `Searchers seen in the selected period`
 - note for a long-range daily total: `Daily reach for the selected period`
 
 Put any deeper explanation behind the info icon. Do not place a long definition in the default card.
 
-For registered and Pro figures, use the word "accounts," never "clients" or "Search IDs."
+For registered and Pro figures, use the word "accounts," never "clients" or "searchers."
 
-## 4. Search ID display
+## 4. Searcher display
 
 ### 4.1 Overview
 
 Keep the Estimated reach card:
 
 - label: Estimated reach
-- value: distinct Search IDs for the selected filters when exact identity rows are available
-- note: `Search IDs seen in the selected period`
-- info icon: states whether the number uses exact Search IDs or daily reach totals
+- value: distinct searchers for the selected filters when exact rows are available
+- note: `Searchers seen in the selected period`
+- info icon: states whether the number uses exact searchers or daily reach totals
 
 Do not place all-time registered or Pro totals in this card's note. If linked-account activity is useful here, show filtered values explicitly:
 
-- Search IDs linked to registered accounts in this period
-- Search IDs linked to Pro accounts in this period
+- Searchers linked to registered accounts in this period
+- Searchers linked to Pro accounts in this period
 
 ### 4.2 Query summary
 
-Restore the Search ID count as supporting information without presenting it as a people count.
+Restore the searcher count as supporting information without presenting it as a confirmed people count.
 
 The Activity cell should show:
 
 - primary: `20 searches`
-- secondary: `3 Search IDs`
-- details icon: opens the Search ID detail drawer for that row
+- secondary: `3 searchers`
+- details icon: opens the Searcher details drawer for that row
 
 Keep interpretation and deeper explanation inside the details view, not in the default table.
 
-### 4.3 Search ID details
+### 4.3 Searcher details
 
 The details drawer should show only data that already belongs to the selected query group and filters:
 
-- masked Search ID
+- masked searcher label
 - source type when known: signed-in account, API key, Local MCP, Hosted MCP, web, or unknown
 - linked account status
 - venue
@@ -104,14 +104,14 @@ Full internal values should not appear by default. The masked value must be stab
 
 ### 4.4 Audience
 
-Keep the chart title `Estimated reach over time`. Rename the `Observed identifiers` list to `Search IDs`.
+Keep the chart title `Estimated reach over time`. Rename the `Observed identifiers` list to `Searchers`.
 
 Keep two clearly separate groups:
 
 1. Search activity:
    - Estimated reach
-   - Search IDs linked to registered accounts in the selected period
-   - Search IDs linked to Pro accounts in the selected period
+   - Searchers linked to registered accounts in the selected period
+   - Searchers linked to Pro accounts in the selected period
 2. Account inventory:
    - All registered accounts
    - All active Pro accounts
@@ -183,13 +183,14 @@ Add tests that fail against the current build:
 6. A text query cannot filter an Audience list while leaving a related headline search figure unfiltered.
 7. Last sign-in and Last search remain separate.
 8. Responses from a previous filter key cannot replace the active view.
-9. Search ID wording contains no unexplained "privacy-safe identifier" or "client" label. `Estimated reach` remains allowed.
+9. Visible wording contains no "Search ID," "identifier," bare "client," or "privacy-safe identifier" label. `Estimated reach` remains allowed.
+10. Singular and plural labels render as `1 searcher` and `2 searchers`.
 
 ### Phase 2: API contract repair
 
 1. Add the shared filter key, data cutoff time, metric scope, and completeness fields.
 2. Use one cutoff time across the v2 requests in a refresh.
-3. Return Search ID counts and masked Search ID details at the correct query grain.
+3. Return searcher counts and masked Searcher details at the correct query grain.
 4. Keep account inventory totals separate from filtered account-linked activity.
 5. Make Audience text filtering follow the contract in section 5.3.
 6. Keep all raw scans bounded. No database migration is expected.
@@ -197,8 +198,8 @@ Add tests that fail against the current build:
 ### Phase 3: UI repair
 
 1. Apply the naming contract from section 3 without renaming Estimated reach.
-2. Restore Search IDs as secondary information in Query summary.
-3. Add the Search ID details icon and drawer.
+2. Restore searchers as secondary information in Query summary.
+3. Add the Searcher details icon and drawer.
 4. Split Last sign-in and Last search.
 5. Add visible scope labels: selected period or All time.
 6. Show partial, stale, failed, and unavailable states without replacing missing data with zero.
@@ -210,7 +211,7 @@ Add tests that fail against the current build:
 3. Test a text query across all three sections.
 4. Create one Local MCP search and one Hosted MCP search, then trace each through Overview, Search Intelligence, and Audience.
 5. Confirm account totals match the complete account directory.
-6. Confirm Search ID details contain no secret, email, raw API key, or network address.
+6. Confirm Searcher details contain no secret, email, raw API key, or network address.
 7. Run a real-data walkthrough with screenshots.
 8. Deploy only `admin-api` if the API contract changed.
 9. Do not deploy `mcp-search`, publish npm, migrate storage, or push a Git remote as part of this fix.
@@ -230,18 +231,18 @@ Every affected panel must define:
 
 1. Changing a global filter refreshes filtered search activity on all three sections.
 2. Changing a global filter does not alter all-time account totals.
-3. Opening Search ID details does not reset filters, pagination, or scroll position.
-4. Closing Search ID details returns focus to the icon that opened it.
+3. Opening Searcher details does not reset filters, pagination, or scroll position.
+4. Closing Searcher details returns focus to the icon that opened it.
 5. A response from an older filter key never replaces the active view.
 
 ## 10. Done criteria
 
 This fix is complete only when:
 
-1. The dashboard keeps Estimated reach and uses Search IDs and account language consistently.
-2. The default cards and tables contain no long Search ID explanation; deeper meaning is available through the info or details icon.
+1. The dashboard keeps Estimated reach and uses searcher and account language consistently.
+2. The default cards and tables contain no long searcher explanation; deeper meaning is available through the info or details icon.
 3. The same filtered search measure agrees across Overview, Search Intelligence, and Audience.
 4. All-time account totals are visibly separate from filtered search activity.
-5. Query summary provides Search ID context and an inspectable details view.
+5. Query summary provides searcher context and an inspectable details view.
 6. Cross-page reconciliation tests fail against the current behavior and pass after the repair.
 7. The live walkthrough produces no unexplained mismatch between pages.

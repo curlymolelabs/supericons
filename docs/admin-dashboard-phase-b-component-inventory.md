@@ -17,18 +17,19 @@ The admin dashboard is a local operator tool backed by the protected production 
 | Component | Main element | Data source | Purpose |
 |---|---|---|---|
 | Global filter bar | `.filter-bar` | Local state shared by v2 requests | Applies time, venue, environment, and free-text filters |
-| KPI strip | `.kpi-grid` | `GET /v2/overview` plus the complete account directory | Shows clients or client-days, real searches, true zero rate, and low-result rate |
-| Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, client history, and quality history |
+| KPI strip | `.kpi-grid` | `GET /v2/overview` plus the complete account directory | Shows estimated reach or daily reach, real searches, true zero rate, and low-result rate |
+| Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
 | Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
 | Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
-| Query explorer | `#queryExplorer` | `GET /v2/search` | Shows grouped search outcomes with server paging and complete filtered export |
+| Query summary | `#queryExplorer` | `GET /v2/search` | Shows grouped search outcomes, searcher counts, Searcher details, server paging, and complete filtered export |
+| Searcher details | `#searcherDetailsModal` | Bounded masked rows in `GET /v2/search` | Shows the search sources behind one grouped query without exposing raw keys or emails |
 | Gap worklist | `#gapWorklist` | `GET /v2/search` plus `POST /intelligence/search/review` | Shows repeated zero and low-result work with triage actions |
 | Icon requests | `#iconRequests` | `GET /v2/search` plus `POST /v2/icon-requests/review` | Shows stored requests with New, Planned, Added, and Declined states |
 | Contact inbox | `#contactInbox` | `GET /v2/search` | Shows stored contact messages with CSV and JSON exports |
 | Diagnostics | `#diagnosticsContent` | `GET /v2/search` | Shows bounded source and completeness details with CSV and JSON exports |
-| Audience funnel | `.funnel-grid` | `GET /v2/audience` plus the complete account directory | Shows client or client-day totals, registered accounts, active Pro accounts, and truthful MRR availability |
-| Registered users | `#registeredUsers` | Protected paged `GET /users` plus `GET /v2/audience` telemetry | Shows every account with signup time, linked activity, venue, country, and masked email by default |
-| All clients | `#allClients` | `GET /v2/audience` | Shows privacy-safe client profiles with server paging |
+| Reach and accounts | `.funnel` | `GET /v2/audience` plus the complete account directory | Shows estimated or daily reach, all-time registered accounts, all-time active Pro accounts, and truthful MRR availability |
+| Registered users | `#registeredUsers` | Protected paged `GET /users` plus `GET /v2/audience` telemetry | Shows every account with separate signup, last sign-in, and last-search times, plus linked venue and country |
+| Searchers | `#allClients` | `GET /v2/audience` | Shows masked searcher profiles with server paging |
 
 ## Shared behavior
 
@@ -39,6 +40,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 - CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
 - CSV text beginning with a spreadsheet formula character is made inert before download.
 - Activity, overview, search, audience, and account requests start independently. A slow panel does not block the others.
+- Every filtered endpoint in one refresh uses the same view marker, data cutoff, and filter marker. Older responses are rejected.
 - Search explorer changes refresh only Search Intelligence. Account rows are not reloaded for unrelated filter changes.
 - The browser may keep a sanitized aggregate Overview payload for up to 30 seconds. Secrets, emails, account rows, query rows, request rows, contact rows, and client rows are never stored in browser storage.
 - Direct development mode keeps the entered admin secret in memory only and asks again after a reload.

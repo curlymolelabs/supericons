@@ -70,7 +70,7 @@ Every route:
 - is read-only unless the route explicitly says it writes a review;
 - accepts only bounded filters;
 - uses a 30-second bounded cache for aggregate reads;
-- returns a `meta` object with the applied window, filters, coverage notes, and generation time;
+- returns a `meta` object with the shared view marker, data cutoff, applied filter marker, metric scope, completeness notes, and generation time;
 - never returns raw IP addresses or full anonymous, API-key, session, or user-agent hashes.
 
 ### `GET /v2/activity`
@@ -84,6 +84,7 @@ Query:
 - `channel`: supported venue or `all`
 - `include_test`: `true` or `false`, default `false`
 - `q`: optional plain-text query filter
+- `view_id`, `data_cutoff`, and `filter_key`: shared values sent by one dashboard refresh
 - `limit`: 1 to 100, default 50
 
 Response:
@@ -100,7 +101,7 @@ Query: the shared window, channel, include-test, and text filters.
 
 Response:
 
-- `kpis`: estimated clients, registered, Pro, attempts, success rate, searches per client, true-zero rate, and low-result rate
+- `kpis`: estimated reach, attempts, success rate, searches per searcher, true-zero rate, and low-result rate
 - `series`: daily rows by venue with attempts, client-days, registered clients, Pro clients, true zeros, low results, and eligible attempts
 - `outage_spans`: labeled operational windows for chart shading
 - `top_lists.searched`
@@ -123,6 +124,8 @@ Query:
 Response:
 
 - `queries`: paged explorer rows
+- `summary`: complete attempt and grouped-query totals for reconciliation
+- query rows include a searcher count and bounded masked Searcher details when exact rows are available
 - `pagination`
 - `worklist`: ranked zero and low-result rows with existing query-review state
 - `icon_requests`: the verified `grid_empty_feedback` rows
@@ -134,7 +137,7 @@ The existing `POST /intelligence/search/review` route remains the write path for
 
 ### `GET /v2/audience`
 
-Purpose: load the funnel, registered-user list, and all-client list.
+Purpose: load estimated reach, the registered-account list, and the Searchers list.
 
 Query:
 
@@ -143,9 +146,9 @@ Query:
 
 Response:
 
-- `funnel`: unique clients, registered clients and percentage, Pro clients and percentage, plus an explicit MRR availability reason
-- `registered_users`: truncated identifier, provider, plan, signup, last activity, searches, venues, and country
-- `clients`: truncated visitor key, kind, plan, country, first and last seen, searches, and top query
+- `funnel`: estimated reach, registered account totals, Pro account totals, plus an explicit MRR availability reason
+- `registered_users`: masked account label, provider, plan, signup, last search, searches, venues, and country
+- `clients`: masked searcher label, kind, plan, country, first and last seen, searches, and top query
 - `series`: daily registered and Pro client counts
 - `pagination`
 - `meta`
