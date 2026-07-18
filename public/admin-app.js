@@ -81,9 +81,11 @@ const state = {
     audience: null,
     accounts: null,
   },
+  dataKeys: {},
   errors: {},
   loading: new Set(),
   refreshedAt: null,
+  refreshedFilterKey: '',
   refreshStartedAt: null,
   toastTimer: null,
   adminSecretPrompt: null,
@@ -452,8 +454,16 @@ function endpointPath(endpoint) {
   return `/v2/${endpoint}?${params}`;
 }
 
+function endpointDataKey(endpoint) {
+  return endpoint === 'accounts' ? 'accounts' : endpointPath(endpoint);
+}
+
+function activeFilterKey() {
+  return sharedParams().toString();
+}
+
 function cacheKey(endpoint) {
-  return `${CACHE_PREFIX}:${endpoint}:${endpointPath(endpoint)}`;
+  return `${CACHE_PREFIX}:${endpoint}:${endpointDataKey(endpoint)}`;
 }
 
 function readCache(endpoint) {
@@ -501,10 +511,23 @@ function setFreshness() {
     line.textContent = state.refreshedAt ? 'Refreshing production data' : 'Loading production data';
     return;
   }
+  const failedEndpoints = Object.keys(state.errors);
+  if (failedEndpoints.length) {
+    const hasCurrentStaleData = failedEndpoints.some((endpoint) => (
+      Boolean(state.data[endpoint])
+      && state.dataKeys[endpoint] === endpointDataKey(endpoint)
+    ));
+    if (hasCurrentStaleData) {
+      line.textContent = 'Some panels could not be updated; showing stale data';
+    } else if (failedEndpoints.length === Object.keys(state.data).length) {
+      line.textContent = 'Production data could not be loaded';
+    } else {
+      line.textContent = 'Some production data could not be loaded';
+    }
+    return;
+  }
   if (!state.refreshedAt) {
-    line.textContent = Object.keys(state.errors).length
-      ? 'Some production data could not be loaded'
-      : 'Waiting for production data';
+    line.textContent = 'Waiting for production data';
     return;
   }
   const elapsed = Math.max(0, Date.now() - state.refreshStartedAt);
@@ -523,6 +546,10 @@ function setRefreshState() {
 
 function emptyState(reason) {
   return `<div class="empty">${escapeHtml(reason)}</div>`;
+}
+
+function loadingState(label = 'Loading production data') {
+  return `<div class="skeleton" role="status" aria-label="${escapeHtml(label)}" style="height:150px"></div>`;
 }
 
 function pill(label, tone = '') {
@@ -854,7 +881,11 @@ function renderChannelFilter() {
 function renderActivity() {
   const element = $('latestActivity');
   if (!element) return;
-  if (state.loading.has('activity') && !state.data.activity) return;
+  if (state.loading.has('activity') && !state.data.activity) {
+    renderPagination('activity', 0, 1);
+    element.innerHTML = loadingState('Loading latest activity');
+    return;
+  }
   const rows = rowsForPage('activity', state.data.activity?.activity);
   if (!rows.length) {
     element.innerHTML = emptyState(state.errors.activity || 'No real user queries match these filters.');
@@ -902,7 +933,34 @@ function qualitySeries(series) {
 
 function renderKpis() {
   const kpis = state.data.overview?.kpis || {};
-  if (!state.data.overview && state.loading.has('overview')) return;
+  if (!state.data.overview && state.loading.has('overview')) {
+    [
+      ['kpiClients', 'kpiClientsNote', 'Loading client activity'],
+      ['kpiSearches', 'kpiSearchesNote', 'Loading search volume'],
+      ['kpiZero', 'kpiZeroNote', 'Loading true zero rate'],
+      ['kpiLow', 'kpiLowNote', 'Loading low-result rate'],
+    ].forEach(([valueId, noteId, note]) => {
+      const value = $(valueId);
+      if (value) {
+        value.textContent = '000';
+        value.classList.add('skeleton');
+      }
+      if ($(noteId)) $(noteId).textContent = note;
+    });
+    return;
+  }
+  if (!state.data.overview && state.errors.overview) {
+    [
+      ['kpiClients', 'kpiClientsNote'],
+      ['kpiSearches', 'kpiSearchesNote'],
+      ['kpiZero', 'kpiZeroNote'],
+      ['kpiLow', 'kpiLowNote'],
+    ].forEach(([valueId, noteId]) => {
+      setSkeleton($(valueId), 'Unavailable');
+      if ($(noteId)) $(noteId).textContent = state.errors.overview;
+    });
+    return;
+  }
   const accounts = accountSummary();
   const clients = number(kpis.estimated_unique_clients ?? kpis.unique_clients);
   const registered = accounts.available ? accounts.registered : number(kpis.registered_clients ?? kpis.registered);
@@ -932,7 +990,18 @@ function renderKpis() {
 
 function renderCharts() {
   const overview = state.data.overview;
-  if (!overview && state.loading.has('overview')) return;
+  if (!overview && state.loading.has('overview')) {
+    ['searchesChart', 'clientsChart', 'qualityChart'].forEach((id) => {
+      if ($(id)) $(id).innerHTML = loadingState(`Loading ${id}`);
+    });
+    return;
+  }
+  if (!overview && state.errors.overview) {
+    ['searchesChart', 'clientsChart', 'qualityChart'].forEach((id) => {
+      if ($(id)) $(id).innerHTML = chartUnavailable(state.errors.overview);
+    });
+    return;
+  }
   const series = overview?.series;
   renderSearchBars($('searchesChart'), series);
   renderLineChart(
@@ -999,7 +1068,17 @@ function topListConfig(key) {
 function renderTopList() {
   const element = $('topListTable');
   if (!element) return;
-  if (!state.data.overview && state.loading.has('overview')) return;
+  if (!state.data.overview && state.loading.has('overview')) {
+    renderPagination('topList', 0, 1);
+    element.innerHTML = loadingState('Loading top lists');
+    return;
+  }
+  if (!state.data.overview && state.errors.overview) {
+    renderPagination('topList', 0, 1);
+    element.innerHTML = emptyState(state.errors.overview);
+    $('topListSubtitle').textContent = state.errors.overview;
+    return;
+  }
   document.querySelectorAll('[data-top-list]').forEach((button) => {
     button.classList.toggle('active', button.dataset.topList === state.topList);
   });
@@ -1023,7 +1102,16 @@ function renderTopList() {
 function renderGeography() {
   const element = $('geographyList');
   if (!element) return;
-  if (!state.data.overview && state.loading.has('overview')) return;
+  if (!state.data.overview && state.loading.has('overview')) {
+    element.innerHTML = loadingState('Loading country coverage');
+    $('geographySubtitle').textContent = 'Loading country coverage';
+    return;
+  }
+  if (!state.data.overview && state.errors.overview) {
+    element.innerHTML = emptyState(state.errors.overview);
+    $('geographySubtitle').textContent = state.errors.overview;
+    return;
+  }
   const geography = availability(
     state.data.overview?.geography,
     'Country history is not available from the current data source.',
@@ -1057,7 +1145,11 @@ function renderOverview() {
 function renderQueryExplorer() {
   const element = $('queryExplorer');
   if (!element) return;
-  if (!state.data.search && state.loading.has('search')) return;
+  if (!state.data.search && state.loading.has('search')) {
+    renderPagination('queries', 0, 1);
+    element.innerHTML = loadingState('Loading query explorer');
+    return;
+  }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   const headers = [
     {
@@ -1077,6 +1169,16 @@ function renderQueryExplorer() {
 function renderWorklist() {
   const element = $('gapWorklist');
   if (!element) return;
+  if (!state.data.search && state.loading.has('search')) {
+    renderPagination('worklist', 0, 1);
+    element.innerHTML = loadingState('Loading gap worklist');
+    return;
+  }
+  if (!state.data.search && state.errors.search) {
+    renderPagination('worklist', 0, 1);
+    element.innerHTML = emptyState(state.errors.search);
+    return;
+  }
   const rows = rowsForPage('worklist', state.data.search?.worklist);
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
@@ -1089,6 +1191,16 @@ function renderWorklist() {
 function renderIconRequests() {
   const element = $('iconRequests');
   if (!element) return;
+  if (!state.data.search && state.loading.has('search')) {
+    renderPagination('iconRequests', 0, 1);
+    element.innerHTML = loadingState('Loading icon requests');
+    return;
+  }
+  if (!state.data.search && state.errors.search) {
+    renderPagination('iconRequests', 0, 1);
+    element.innerHTML = emptyState(state.errors.search);
+    return;
+  }
   const inbox = availability(state.data.search?.icon_requests, 'Icon requests are not available from the current data source.');
   $('requestBadge').textContent = formatNumber(inbox.rows.length);
   $('requestBadge').hidden = inbox.rows.length === 0;
@@ -1108,6 +1220,16 @@ function renderIconRequests() {
 function renderContactInbox() {
   const element = $('contactInbox');
   if (!element) return;
+  if (!state.data.search && state.loading.has('search')) {
+    renderPagination('contact', 0, 1);
+    element.innerHTML = loadingState('Loading contact inbox');
+    return;
+  }
+  if (!state.data.search && state.errors.search) {
+    renderPagination('contact', 0, 1);
+    element.innerHTML = emptyState(state.errors.search);
+    return;
+  }
   const inbox = availability(state.data.search?.contact_submissions, 'Stored contact submissions are not available from the current data source.');
   if (!inbox.available) {
     renderPagination('contact', 0, 1);
@@ -1125,6 +1247,14 @@ function renderContactInbox() {
 function renderDiagnostics() {
   const element = $('diagnosticsContent');
   if (!element) return;
+  if (!state.data.search && state.loading.has('search')) {
+    element.innerHTML = loadingState('Loading diagnostics');
+    return;
+  }
+  if (!state.data.search && state.errors.search) {
+    element.innerHTML = emptyState(state.errors.search);
+    return;
+  }
   const diagnostics = state.data.search?.diagnostics;
   if (!diagnostics || !Object.keys(diagnostics).length) {
     element.innerHTML = emptyState('No diagnostics are available for this period.');
@@ -1175,7 +1305,38 @@ function renderEmailVisibilityControl() {
 
 function renderAudience() {
   const data = state.data.audience;
-  if (!data && state.loading.has('audience')) return;
+  if (!data && state.loading.has('audience')) {
+    [
+      ['funnelClients', 'funnelClientsNote', 'Loading clients'],
+      ['funnelRegistered', 'funnelRegisteredNote', 'Loading registered accounts'],
+      ['funnelPro', 'funnelProNote', 'Loading Pro accounts'],
+    ].forEach(([valueId, noteId, note]) => {
+      const value = $(valueId);
+      if (value) {
+        value.textContent = '000';
+        value.classList.add('skeleton');
+      }
+      if ($(noteId)) $(noteId).textContent = note;
+    });
+    if ($('funnelMrr')) $('funnelMrr').textContent = 'Loading';
+    if ($('funnelMrrNote')) $('funnelMrrNote').textContent = 'Loading billing availability';
+    if ($('audienceChart')) $('audienceChart').innerHTML = loadingState('Loading audience history');
+    if ($('registeredUsers')) $('registeredUsers').innerHTML = loadingState('Loading registered users');
+    if ($('allClients')) $('allClients').innerHTML = loadingState('Loading client profiles');
+    return;
+  }
+  if (!data && state.errors.audience) {
+    ['funnelClients', 'funnelRegistered', 'funnelPro', 'funnelMrr'].forEach((id) => setSkeleton($(id), 'Unavailable'));
+    ['funnelClientsNote', 'funnelRegisteredNote', 'funnelProNote', 'funnelMrrNote'].forEach((id) => {
+      if ($(id)) $(id).textContent = state.errors.audience;
+    });
+    if ($('audienceChart')) $('audienceChart').innerHTML = chartUnavailable(state.errors.audience);
+    if ($('registeredUsers')) $('registeredUsers').innerHTML = emptyState(state.errors.audience);
+    if ($('allClients')) $('allClients').innerHTML = emptyState(state.errors.audience);
+    renderPagination('registeredUsers', 0, 1);
+    renderPagination('clients', 0, 1);
+    return;
+  }
   const funnel = data?.funnel || {};
   const accounts = accountSummary();
   const clients = number(funnel.unique_clients);
@@ -1499,26 +1660,37 @@ async function fetchEndpoint(endpoint) {
 }
 
 async function loadEndpoint(endpoint, token, { force = false } = {}) {
+  const dataKey = endpointDataKey(endpoint);
+  const existingMatches = state.dataKeys[endpoint] === dataKey;
   const cached = force ? null : readCache(endpoint);
   if (cached?.payload) {
     state.data[endpoint] = cached.payload;
+    state.dataKeys[endpoint] = dataKey;
     renderAll();
     if (Date.now() - cached.savedAt < CACHE_TTL_MS) return cached.payload;
   }
 
   state.loading.add(endpoint);
   delete state.errors[endpoint];
-  setRefreshState();
+  if (!existingMatches && !cached?.payload) {
+    state.data[endpoint] = null;
+    delete state.dataKeys[endpoint];
+  }
+  renderAll();
   try {
     const payload = await fetchEndpoint(endpoint);
     if (token !== state.requestToken) return null;
     state.data[endpoint] = payload;
+    state.dataKeys[endpoint] = dataKey;
     writeCache(endpoint, payload);
     return payload;
   } catch (error) {
     if (token === state.requestToken) {
       state.errors[endpoint] = error.message || `Could not load ${endpoint}.`;
-      if (!state.data[endpoint]) state.data[endpoint] = null;
+      if (!existingMatches || state.dataKeys[endpoint] !== dataKey) {
+        state.data[endpoint] = null;
+        delete state.dataKeys[endpoint];
+      }
     }
     return null;
   } finally {
@@ -1534,15 +1706,20 @@ async function refreshDashboard({ force = false } = {}) {
   state.requestToken = token;
   state.refreshStartedAt = Date.now();
   if (force) clearDashboardCache();
-  await loadEndpoint('activity', token, { force });
   await Promise.all([
+    loadEndpoint('activity', token, { force }),
     loadEndpoint('overview', token, { force }),
     loadEndpoint('search', token, { force }),
     loadEndpoint('audience', token, { force }),
     loadEndpoint('accounts', token, { force }),
   ]);
   if (token !== state.requestToken) return;
-  state.refreshedAt = Date.now();
+  if (Object.keys(state.errors).length === 0) {
+    state.refreshedAt = Date.now();
+    state.refreshedFilterKey = activeFilterKey();
+  } else if (state.refreshedFilterKey !== activeFilterKey()) {
+    state.refreshedAt = null;
+  }
   setRefreshState();
   if (force && Object.keys(state.errors).length === 0) showToast('Production data refreshed.');
 }
@@ -1558,7 +1735,10 @@ async function refreshListEndpoint(key) {
   state.refreshStartedAt = Date.now();
   await loadEndpoint(endpoint, token, { force: true });
   if (token !== state.requestToken) return;
-  state.refreshedAt = Date.now();
+  if (!state.errors[endpoint]) {
+    state.refreshedAt = Date.now();
+    state.refreshedFilterKey = activeFilterKey();
+  }
   setRefreshState();
 }
 

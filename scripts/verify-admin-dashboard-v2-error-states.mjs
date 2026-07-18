@@ -146,7 +146,12 @@ try {
   });
   await openDashboard(staleWindowPage);
   await staleWindowPage.waitForFunction(() => document.querySelector('#kpiSearches')?.textContent === '300');
+  const failedSevenDayResponse = staleWindowPage.waitForResponse((response) => (
+    response.url().includes('/functions/v1/admin-api/')
+    && response.url().includes('window=7d')
+  ));
   await staleWindowPage.click('[data-window="7d"]');
+  await failedSevenDayResponse;
   await staleWindowPage.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   ok(
     await staleWindowPage.locator('#kpiSearches').innerText() !== '300',
