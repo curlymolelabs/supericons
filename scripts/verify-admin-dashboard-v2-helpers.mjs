@@ -319,7 +319,7 @@ const queryRows = [
       minimum_result_count: null,
       maximum_result_count: null,
       result_sample_count: 0,
-      last_seen: '2026-07-18T10:18:00Z',
+      last_seen: '2026-07-18T10:18:00.123Z',
     }],
     [{
       query: 'current detail',
@@ -335,7 +335,7 @@ const queryRows = [
       maximum_result_count: 3,
       result_sample_count: 1,
       first_seen: '2026-07-18T10:18:00Z',
-      last_seen: '2026-07-18T10:18:00Z',
+      last_seen: '2026-07-18T10:18:00.123456+00:00',
     }],
   );
   const [compact] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([merged]));
