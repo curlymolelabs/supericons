@@ -27,9 +27,9 @@ The public setup continues to use `@supericons/mcp@latest`. It does not advertis
 - The exact protected web artifact contains 188 files and 41,234,684 bytes.
 - Its content-tree SHA-256 is `81b320dc3f101cd4f9431f17e3876a91c16d689f1d4e51d01a2ffbb01fcca5c4`.
 - Browser checks pass for all seven tabs, exact setup text, file locations, clipboard behavior, keyboard navigation, and narrow-screen access.
-- English and localized keyless MCP claims pass the maintained-source checks.
+- The browser test verifies the English keyless statement and a German localized spot check.
 - Website and MCP locale catalogs match their maintained source files.
-- The old claim that all MCP usage requires a key is absent.
+- Human review owns the meaning and truthfulness of the wording across all 12 maintained locales. The packet does not claim a mechanical truth check.
 - The earlier MCP preview persistence behavior remains green.
 - VC-3 and VC-4 pass against the exact protected web directory.
 - The dependency audit reports zero known vulnerabilities.

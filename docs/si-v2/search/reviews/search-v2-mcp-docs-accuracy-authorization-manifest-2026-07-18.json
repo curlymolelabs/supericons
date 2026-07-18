@@ -7,8 +7,8 @@
     "default_user_change": "The website explains that free MCP tools work without an API key and shows a working setup for each advertised client."
   },
   "preparation": {
-    "source_commit": "7a54c78ec54183b48152d5cd54c24497b7da1484",
-    "source_tree": "239739331257d76009089bc784535e8fb99284b9",
+    "source_commit": "5d3f29e97c322142eea9d2d40f4fda55558e471e",
+    "source_tree": "b348f3617897e56cd600b7a0e67ba599c6e35eb7",
     "allowed_packet_paths": [
       "docs/si-v2/search/reviews/search-v2-mcp-docs-accuracy-approval-request-2026-07-18.md",
       "docs/si-v2/search/reviews/search-v2-mcp-docs-accuracy-authorization-manifest-2026-07-18.json",
@@ -22,17 +22,16 @@
       "style.css": "6235b56dbb09ecee8f6f297648d4c946750b48a22642b1221164eab12a1012d1",
       "docs-pages.js": "97ecec1c1e9f8161d13e48a71d463ebff6a0ba601393d9c6d72649a687928164",
       "lib/docs-search-index.js": "79b037b967762f3a40e7be00197bde6a621deedef5c25f04ef0f22b15b932e3b",
-      "scripts/sync-english-docs-catalog.mjs": "fca7567ef14f8920078097843a12f5a18bd7810234e787b7e8eecd0b460c7d5a",
-      "scripts/verify-mcp-access-claims.mjs": "133357df220bf08d908deb3e9532d11482093f5f563033cafd05189161b8e3aa",
       "scripts/verify-mcp-client-tabs-browser.mjs": "7906d5fa1a748a9e8ee7ff41c783c0969d1270bdbd0ebd64c272bb14e07be9f6",
+      "scripts/verify-i18n-catalogs.mjs": "eaa1a7d97eafbacbe515876c813f4e6df100f4544643499c14c06a19aad11847",
       "scripts/verify-mcp-preview-persistence.mjs": "4670ae90baf0cf7143aac4464ddb8f19a70975e200d88384a709cf8a60497229",
       "scripts/build-web-preview-persistence-release.mjs": "a5f067088530759cdcb5efbd52cfdbb960e5fa7d7676d519dcbfb9e44a614a47",
       "scripts/build-search-v2-protected-public-artifacts.mjs": "1fb59abab29ff6ed2222fee9a906dfefa3cf1a1b160bc68aa49dd784b101723d",
       "scripts/verify-search-v2-protected-public-artifacts.mjs": "894207a7a16288ca92d5c3e7f7f47189824371b129ae5eb40473c873ccae06ea",
-      "scripts/run-mcp-docs-accuracy-web-release.mjs": "9566c4c2564d34866018a94ef8557798b50cba1c44c818ec4a298472df51b22e",
-      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "6ca2fe5d45055890c07dd3373bd9073cb29696e4c2c97f183365992f9d6daeaa",
+      "scripts/run-mcp-docs-accuracy-web-release.mjs": "b74ed70fdf3a7c68e155302fc88fcf13f067293e1b948e586ffc7abad42510a5",
+      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "c8df141bf4fba197d82f6a19b55b161a347f85baf11fa5793d9affc1643849ac",
       "mcp/THIRD_PARTY_PROVENANCE.json": "e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94",
-      "package.json": "4a1e9c8d350f1cc1f8d8fe8661115ad18ed0964a5c4c75fbac7fa694b22a0d6c",
+      "package.json": "8dad89b98a04f0a7a75468f9f62f97b9453ec54c1e34f113905e740fcc485f48",
       "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
       "vite.config.js": "2204c6ccd15aeaeaac21e31b53cc9dee4c41f37672afdb1141f59bc03e76e513",
       "netlify.toml": "bd9db6a35309d96be812c22ed329c691ffe67770eeccc99b1610742dd6e0c43b"
@@ -186,26 +185,20 @@
       "evidence": "The English API key page states that free local and hosted MCP tools need no key."
     },
     {
-      "id": "free_mcp_keyless_claim_localized",
+      "id": "free_mcp_keyless_claim_german_spot_check",
       "status": "enforced",
-      "evidence": "Each maintained locale carries a reviewed keyless MCP statement."
-    },
-    {
-      "id": "stale_api_key_claim_absent",
-      "status": "enforced",
-      "evidence": "Old claims that all MCP usage requires a key are absent from the maintained docs."
+      "evidence": "The browser check verifies the German keyless MCP statement as a localized spot check."
     },
     {
       "id": "generated_catalog_parity",
       "status": "enforced",
-      "evidence": "The website and MCP locale catalogs exactly match their maintained source files."
+      "evidence": "The release runner invokes the existing localization consistency check, and the packet verifier requires its successful result."
     }
   ],
   "postdeploy_checks": {
     "client_tabs": "All seven client tabs select a valid setup, show the correct file location, and copy the active text.",
     "keyboard_and_mobile": "Keyboard navigation and narrow-screen tab access work.",
-    "api_key_docs": "English and localized docs state today's free keyless MCP behavior and current paid-access key availability.",
-    "stale_claims": "The old all-MCP-requires-a-key wording is absent.",
+    "api_key_docs": "The browser check verifies today's English guidance and a German localized spot check. Human review owns the meaning of the wording across all 12 maintained locales.",
     "preview_regression": "Explicit and query preview links keep their results, unknown references stay empty, and late hosted responses stay invalidated.",
     "protection": "The public license, provenance, canaries, and protected-class boundary match the staged artifact."
   },
