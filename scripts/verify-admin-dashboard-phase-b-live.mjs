@@ -55,8 +55,9 @@ try {
       && !document.querySelector('#kpiClients')?.classList.contains('skeleton')
   ), null, { timeout: 120_000 });
   await page.waitForFunction(() => (
-    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered accounts')
-      && !document.querySelector('#kpiClientsNote')?.textContent?.startsWith('0 registered')
+    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered')
+      && document.querySelector('#kpiClientsNote')?.textContent?.includes('privacy-safe identifiers')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.includes('0 registered')
   ), null, { timeout: 120_000 });
 
   ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
