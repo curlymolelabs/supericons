@@ -279,6 +279,16 @@ try {
       && entry?.environment === 'production'
       && entry?.client_family === 'mcp_stdio'
     )),
+    hosted_fallback_reuses_local_session_identity: [
+      localizedHostedCall,
+      untaggedNonAsciiCall,
+      ...recommendationHostedCalls,
+    ].every((entry) => (
+      /^[a-f0-9]{64}$/.test(String(entry?.session_hash || ''))
+      && telemetryCalls
+        .filter((call) => call.url.endsWith('/rpc/si_log_mcp_search_outcome_v2'))
+        .some((call) => call.body.p_session_hash === entry.session_hash)
+    )),
     returned_icon_evidence_uses_local_venue: telemetryCalls
       .filter((entry) => entry.url.endsWith('/rpc/si_log_icon_evidence'))
       .every((entry) => entry.body.p_ui_surface === 'local_mcp'),

@@ -29,15 +29,16 @@ const CHANNEL_LABELS = {
   web: 'Web',
   hosted_mcp: 'Hosted MCP',
   local_mcp: 'Local MCP',
-  api: 'API',
-  cli: 'CLI',
   internal_test: 'Test',
   unknown: 'Unclassified',
 };
-const STANDARD_CHANNELS = ['web', 'hosted_mcp', 'local_mcp', 'api', 'cli'];
+const STANDARD_CHANNELS = ['web', 'hosted_mcp', 'local_mcp'];
 
 const ORIGIN_LABELS = {
   agent_query: 'User query',
+  recommend_variant: 'Recommendation subquery',
+  icon_lookup: 'Exact icon lookup',
+  legacy_unknown: 'Older telemetry',
   page_load: 'Page load',
   internal_test: 'Test',
   unknown: 'Unclassified',
@@ -671,7 +672,7 @@ function queryResultCell(row = {}) {
     return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not available for this view')}</span>`;
   }
   if (row.result_count_kind === 'minimum_across_attempts') {
-    return `<span title="${escapeHtml(row.result_count_reason || 'Minimum result count across grouped attempts')}">${formatNumber(row.result_count ?? row.results)} min</span>`;
+    return `<span title="${escapeHtml(row.result_count_reason || 'Lowest result count across grouped attempts')}">${formatNumber(row.result_count ?? row.results)}+</span>`;
   }
   return formatNumber(row.result_count ?? row.results);
 }
@@ -682,6 +683,13 @@ function queryCountryCell(row = {}) {
     return `<span class="muted-cell">${escapeHtml(row.country_reason || 'Country not recorded')}</span>`;
   }
   return pill(country);
+}
+
+function queryChannelCell(row = {}) {
+  if (row.channel_available === false) {
+    return `<span class="muted-cell">${escapeHtml(row.channel_reason || 'Venue not recorded')}</span>`;
+  }
+  return pill(channelLabel(row.channel || row.venue), 'info');
 }
 
 function table(headers, rows, emptyReason) {
@@ -1285,7 +1293,7 @@ function renderQueryExplorer() {
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: 'Client', render: (row) => visitorLabel(row) },
     { label: 'Country', render: (row) => queryCountryCell(row) },
-    { label: 'Venue', render: (row) => pill(channelLabel(row.channel || row.venue), 'info') },
+    { label: 'Venue', render: (row) => queryChannelCell(row) },
     { label: 'Results', number: true, render: (row) => queryResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];

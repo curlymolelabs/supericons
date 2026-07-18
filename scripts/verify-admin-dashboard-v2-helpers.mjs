@@ -320,6 +320,27 @@ const queryRows = [
 }
 
 {
+  const [grouped] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'shield lock',
+    library_filter: 'lucide',
+    attempt_count: 3,
+    successful_attempt_count: 3,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    estimated_unique_clients: 3,
+    channels: ['hosted_mcp'],
+    countries: ['BR', 'SG'],
+    query_origins: ['recommend_variant'],
+    audit_sources: ['search_request_audit'],
+    minimum_result_count: 10,
+  }]));
+  assert.equal(grouped.country_code, null);
+  assert.equal(grouped.country_count, 2);
+  assert.equal(grouped.country_available, false);
+  assert.equal(grouped.country_reason, '2 countries across grouped attempts');
+}
+
+{
   const kpis = buildDashboardV2Kpis([
     {
       day: '2026-07-17',

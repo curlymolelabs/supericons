@@ -39,7 +39,7 @@ type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
 type QueryIssueType = 'zero_result' | 'low_result' | 'replacement_heavy' | 'successful' | 'mcp';
 type QueryEnvironment = 'production' | 'preview' | 'local' | 'test' | 'legacy';
 type QueryEnvironmentFilter = QueryEnvironment | 'live' | 'all';
-type QueryChannel = 'web' | 'hosted_mcp' | 'local_mcp' | 'cli' | 'api' | 'internal_test' | 'unknown';
+type QueryChannel = 'web' | 'hosted_mcp' | 'local_mcp' | 'internal_test' | 'unknown';
 type QueryChannelFilter = QueryChannel | 'all';
 type QueryOrigin = 'agent_query' | 'recommend_variant' | 'icon_lookup' | 'legacy_unknown';
 type QueryOriginFilter = QueryOrigin | 'all';
@@ -106,7 +106,7 @@ const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
 const QUERY_ENVIRONMENT_FILTERS = new Set<QueryEnvironmentFilter>(['live', 'production', 'preview', 'local', 'test', 'legacy', 'all']);
-const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'cli', 'api', 'internal_test', 'unknown']);
+const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'internal_test', 'unknown']);
 const QUERY_ORIGIN_FILTERS = new Set<QueryOriginFilter>(['agent_query', 'recommend_variant', 'icon_lookup', 'legacy_unknown', 'all']);
 const PRODUCTION_ANALYTICS_HOSTS = new Set(['supericons.dev', 'www.supericons.dev']);
 const QUERY_SORT_FIELDS = new Set<QuerySortField>([
@@ -282,15 +282,18 @@ function buildQueryWorkbenchGroupKey({
   libraryFilter,
   jobCategory,
   queryOrigin,
+  channel,
 }: {
   query: unknown;
   libraryFilter?: unknown;
   jobCategory?: unknown;
   queryOrigin?: unknown;
+  channel?: unknown;
 }) {
   return JSON.stringify([
     buildQueryReviewContextKey({ query, libraryFilter, jobCategory }),
     normalizeSearchQuery(queryOrigin) || 'legacy_unknown',
+    normalizeSearchQuery(channel) || 'unknown',
   ]);
 }
 
@@ -364,8 +367,6 @@ function classifyAnalyticsChannel(value: unknown): QueryChannel | null {
   if (isUnclassifiedAnalyticsToken(source)) return null;
   if (source.includes('local_mcp') || source === 'npm' || source === 'npx') return 'local_mcp';
   if (source === 'mcp' || source === 'hosted_mcp' || source === 'mcp_search' || source.includes('mcp')) return 'hosted_mcp';
-  if (source === 'cli' || source.includes('cli')) return 'cli';
-  if (source === 'api' || source.includes('api')) return 'api';
   if (source === 'verify' || source === 'internal_test' || source === 'test' || source.includes('test') || source.includes('verify') || source.includes('trap')) return 'internal_test';
   if (
     source === 'web'
@@ -1652,6 +1653,7 @@ async function buildDashboardV2DataRows(
     applyQuery = true,
     includeQueryRows = true,
     separateQueryOrigins = false,
+    separateChannels = false,
   } = {},
 ) {
   if (filters.use_raw) {
@@ -1667,7 +1669,10 @@ async function buildDashboardV2DataRows(
       telemetry_rows: telemetryRows,
       overview_rows: rollups.overview,
       query_rows: includeQueryRows
-        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews, { separateQueryOrigins })
+        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews, {
+          separateQueryOrigins,
+          separateChannels,
+        })
         : [],
       query_review_available: includeQueryRows && reviews.available,
       raw_truncated: telemetry.truncated,
@@ -1722,7 +1727,7 @@ async function buildDashboardV2DataRows(
       ? buildQueryWorkbenchRowsFromRollups(
         [...completedQueryRows, ...currentRollups.queries],
         reviews.reviews,
-        { separateQueryOrigins },
+        { separateQueryOrigins, separateChannels },
       )
       : [],
     query_review_available: includeQueryRows && reviews.available,
@@ -2145,7 +2150,7 @@ async function buildDashboardV2SearchPayload(
     buildDashboardV2DataRows(
       adminClient,
       { ...filters, q: '' },
-      { applyQuery: false, separateQueryOrigins: true },
+      { applyQuery: false, separateQueryOrigins: true, separateChannels: true },
     ),
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
@@ -2438,17 +2443,20 @@ function getQueryWorkbenchEntry(
   jobCategory: unknown,
   queryOrigin: unknown,
   separateQueryOrigins = false,
+  channel: unknown = null,
+  separateChannels = false,
 ) {
   const normalizedQuery = normalizeSearchQuery(query);
   const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
   const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
   const normalizedQueryOrigin = normalizeSearchQuery(queryOrigin) || 'legacy_unknown';
-  const key = separateQueryOrigins
+  const key = separateQueryOrigins || separateChannels
     ? buildQueryWorkbenchGroupKey({
       query: normalizedQuery,
       libraryFilter: normalizedLibrary,
       jobCategory: normalizedJobCategory,
-      queryOrigin: normalizedQueryOrigin,
+      queryOrigin: separateQueryOrigins ? normalizedQueryOrigin : 'all',
+      channel: separateChannels ? channel : 'all',
     })
     : buildQueryReviewContextKey({
       query: normalizedQuery,
@@ -2520,7 +2528,7 @@ function getQueryWorkbenchEntry(
 function buildQueryWorkbenchRows(
   evidenceRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
-  { separateQueryOrigins = false } = {},
+  { separateQueryOrigins = false, separateChannels = false } = {},
 ) {
   const map = new Map<string, Record<string, unknown>>();
 
@@ -2532,6 +2540,7 @@ function buildQueryWorkbenchRows(
     const createdAt = typeof row.created_at === 'string' ? row.created_at : null;
     const libraryFilter = row.library_filter;
     const jobCategory = row.job_category;
+    const rowChannel = classifySearchEvidenceChannel(row);
     const entry = getQueryWorkbenchEntry(
       map,
       normalizedQuery,
@@ -2539,10 +2548,12 @@ function buildQueryWorkbenchRows(
       jobCategory,
       row.query_origin,
       separateQueryOrigins,
+      rowChannel,
+      separateChannels,
     );
     updateSeenRange(entry, createdAt);
     (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
-    (entry.channels as Set<string>).add(classifySearchEvidenceChannel(row));
+    (entry.channels as Set<string>).add(rowChannel);
     (entry.query_origins as Set<string>).add(String(row.query_origin || 'legacy_unknown'));
 
     if (typeof row._estimated_client_key === 'string' && row._estimated_client_key.trim()) {
@@ -2937,7 +2948,7 @@ async function fetchQueryRollups(
 function buildQueryWorkbenchRowsFromRollups(
   rollupRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
-  { separateQueryOrigins = false } = {},
+  { separateQueryOrigins = false, separateChannels = false } = {},
 ) {
   const grouped = new Map<string, Record<string, unknown>>();
   const countFields = [
@@ -2958,12 +2969,13 @@ function buildQueryWorkbenchRowsFromRollups(
     const query = normalizeSearchQuery(row.query_norm);
     if (!query) continue;
     const library = normalizeReviewLibraryFilter(row.library_filter);
-    const key = separateQueryOrigins
+    const key = separateQueryOrigins || separateChannels
       ? buildQueryWorkbenchGroupKey({
         query,
         libraryFilter: library,
         jobCategory: '',
-        queryOrigin: row.query_origin,
+        queryOrigin: separateQueryOrigins ? row.query_origin : 'all',
+        channel: separateChannels ? row.channel : 'all',
       })
       : buildQueryReviewContextKey({ query, libraryFilter: library, jobCategory: '' });
     const entry = grouped.get(key) || {

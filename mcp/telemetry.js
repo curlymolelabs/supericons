@@ -26,6 +26,10 @@ function getSessionHash() {
     .digest('hex');
 }
 
+export function getMcpTelemetrySessionHash() {
+  return getSessionHash();
+}
+
 async function callRpc(name, payload) {
   if (isTelemetryDisabled()) return;
 

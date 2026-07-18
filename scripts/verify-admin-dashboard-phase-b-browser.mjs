@@ -216,7 +216,7 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         channel: 'web',
         created_at: '2026-07-17T07:58:00Z',
       }],
-      channel_counts: { all: 17, web: 10, hosted_mcp: 7, cli: 0 },
+      channel_counts: { all: 17, web: 10, hosted_mcp: 7 },
       meta,
     };
   }
@@ -448,7 +448,8 @@ try {
   const channelOptions = await page.locator('#channelFilter option').allTextContents();
   ok(channelOptions.some((value) => value.includes('Web (10)')), 'The venue selector does not show live counts.');
   ok(channelOptions.some((value) => value === 'Local MCP (0)'), 'The stable venue selector hides Local MCP when its count is zero.');
-  ok(channelOptions.some((value) => value === 'CLI (0)'), 'The stable venue selector hides CLI when its count is zero.');
+  ok(channelOptions.every((value) => !value.startsWith('CLI')), 'The venue selector advertises an unused CLI venue.');
+  ok(channelOptions.every((value) => !value.startsWith('API')), 'The venue selector advertises an unused API venue.');
   ok(await page.locator('#searchesChart svg').count() === 1, 'The search chart did not render inline SVG.');
   await page.click('[data-search-chart-mode="total"]');
   ok(await page.locator('[data-search-chart-mode="total"]').getAttribute('aria-pressed') === 'true', 'The total search chart mode was not selected.');

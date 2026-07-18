@@ -1,0 +1,78 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+
+const [app, api, helper, telemetry, localServer, migration] = await Promise.all([
+  readFile('public/admin-app.js', 'utf8'),
+  readFile('supabase/functions/admin-api/index.ts', 'utf8'),
+  readFile('lib/admin-dashboard-v2.js', 'utf8'),
+  readFile('mcp/telemetry.js', 'utf8'),
+  readFile('mcp/index.js', 'utf8'),
+  readFile('supabase/migrations/20260718190000_mcp_usage_query_origin_attribution.sql', 'utf8'),
+]);
+
+assert.doesNotMatch(
+  app,
+  /const STANDARD_CHANNELS = \[[^\]]*['"]api['"][^\]]*\]/,
+  'The venue menu must not advertise an API venue without an active producer.',
+);
+assert.doesNotMatch(
+  app,
+  /const STANDARD_CHANNELS = \[[^\]]*['"]cli['"][^\]]*\]/,
+  'The venue menu must not advertise a CLI venue without an active producer.',
+);
+assert.doesNotMatch(
+  api,
+  /QUERY_CHANNEL_FILTERS[^\n]*['"](?:api|cli)['"]/,
+  'The API must not accept venue filters that have no active producer.',
+);
+assert.doesNotMatch(
+  app,
+  /\}\s*min<\/span>/,
+  'Grouped result counts must not use the ambiguous abbreviation "min".',
+);
+assert.match(
+  api,
+  /\{\s*applyQuery:\s*false,\s*separateQueryOrigins:\s*true,\s*separateChannels:\s*true\s*\}/,
+  'The query explorer must keep venues separate when All venues is selected.',
+);
+assert.match(
+  api,
+  /separateChannels\s*=\s*false/,
+  'Raw and rollup query grouping must expose an explicit venue-separation option.',
+);
+assert.match(
+  helper,
+  /country_count:/,
+  'Compact query rows must state how many countries were grouped.',
+);
+assert.match(
+  telemetry,
+  /export function getMcpTelemetrySessionHash\(\)/,
+  'Local hosted-fallback searches must reuse the local telemetry session identity.',
+);
+assert.match(
+  localServer,
+  /session_hash:\s*getMcpTelemetrySessionHash\(\)/,
+  'Local MCP hosted-fallback requests must send the privacy-safe session hash.',
+);
+assert.match(
+  migration,
+  /when 'recommend_icons' then 'agent_query'/,
+  'Local recommendation tool events must be attributed as user queries.',
+);
+assert.match(
+  migration,
+  /create trigger normalize_mcp_usage_query_origin/,
+  'Future local MCP tool events must receive query-origin attribution.',
+);
+assert.match(
+  migration,
+  /update public\.mcp_usage_events[\s\S]*where query_origin is null/,
+  'Existing local MCP tool events with missing attribution must be corrected.',
+);
+
+console.log(JSON.stringify({
+  status: 'ok',
+  checks: 12,
+  contract: 'admin_dashboard_v2_telemetry_integrity',
+}));
