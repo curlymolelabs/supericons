@@ -81,7 +81,7 @@ function excludes(source, value, label) {
   'row.result_count_reason',
   'row.country_reason',
   'Lookup completed',
-  'Daily reach across the selected period',
+  'Daily reach; exact searcher total unavailable.',
   'No sign-in recorded',
   'Last sign-in',
   'Last search',

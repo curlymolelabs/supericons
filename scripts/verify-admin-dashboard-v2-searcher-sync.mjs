@@ -30,7 +30,8 @@ for (const [label, source] of [['dashboard HTML', html], ['dashboard UI code', a
   }
 }
 
-assert.match(html, /Searchers seen in the selected period/);
+assert.doesNotMatch(html, /Searchers seen in the selected period/);
+assert.doesNotMatch(app, /Selected period:/);
 assert.match(html, />Searchers</);
 assert.match(app, /function searcherCountLabel\(/);
 assert.match(app, /Searcher details/);
@@ -63,6 +64,6 @@ assert.match(plan, /^# Admin dashboard searchers and page sync fix plan/m);
 
 console.log(JSON.stringify({
   status: 'ok',
-  checks: 35,
+  checks: 36,
   contract: 'admin_dashboard_v2_searcher_sync',
 }, null, 2));

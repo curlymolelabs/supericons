@@ -201,6 +201,7 @@
     .kpi-label { color: var(--dim); font-size: 11px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
     .kpi-value { margin-top: 12px; font: 700 29px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.04em; }
     .kpi-note { margin-top: 10px; min-height: 32px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .kpi-note:empty, .funnel-note:empty { display: none; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
     .grid-main-side { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.72fr); gap: 14px; margin-bottom: 14px; }
     .panel {
@@ -605,7 +606,7 @@
             </div>
           </div>
           <div class="kpi-grid" id="overviewKpis">
-            <article class="kpi"><div class="kpi-label">Estimated reach <button class="inline-icon-button" type="button" aria-label="Explain estimated reach" title="A searcher is one app setup, key, or account. One person can appear more than once. Anonymous counting resets monthly."><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></button></div><div class="kpi-value skeleton" id="kpiClients">000</div><div class="kpi-note" id="kpiClientsNote">Searchers seen in the selected period</div></article>
+            <article class="kpi"><div class="kpi-label">Estimated reach <button class="inline-icon-button" type="button" aria-label="Explain estimated reach" title="A searcher is one app setup, key, or account. One person can appear more than once. Anonymous counting resets monthly."><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></button></div><div class="kpi-value skeleton" id="kpiClients">000</div><div class="kpi-note" id="kpiClientsNote"></div></article>
             <article class="kpi"><div class="kpi-label">Real searches</div><div class="kpi-value skeleton" id="kpiSearches">000</div><div class="kpi-note" id="kpiSearchesNote">Loading search volume</div></article>
             <article class="kpi"><div class="kpi-label">True zero rate</div><div class="kpi-value skeleton" id="kpiZero">00%</div><div class="kpi-note" id="kpiZeroNote">Known defects are excluded</div></article>
             <article class="kpi"><div class="kpi-label">Low-result rate</div><div class="kpi-value skeleton" id="kpiLow">00%</div><div class="kpi-note" id="kpiLowNote">Only eligible searches count</div></article>
@@ -697,7 +698,7 @@
             <div class="panel-head"><div><div class="panel-title">Reach and accounts</div><div class="panel-subtitle">Reach follows the selected filters. Registered and Pro are all-time account totals.</div></div></div>
             <div class="panel-body">
               <div class="funnel">
-                <div class="funnel-card"><div class="kpi-label">Estimated reach <button class="inline-icon-button" type="button" aria-label="Explain estimated reach" title="A searcher is one app setup, key, or account. One person can appear more than once. Anonymous counting resets monthly."><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></button></div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Searchers seen in the selected period</div><div class="funnel-spark" id="funnelClientsSpark"></div></div>
+                <div class="funnel-card"><div class="kpi-label">Estimated reach <button class="inline-icon-button" type="button" aria-label="Explain estimated reach" title="A searcher is one app setup, key, or account. One person can appear more than once. Anonymous counting resets monthly."><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></button></div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote"></div><div class="funnel-spark" id="funnelClientsSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">Registered</div><div class="funnel-value skeleton" id="funnelRegistered">000</div><div class="funnel-note" id="funnelRegisteredNote">Loading</div><div class="funnel-spark" id="funnelRegisteredSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">Pro</div><div class="funnel-value skeleton" id="funnelPro">000</div><div class="funnel-note" id="funnelProNote">Loading</div><div class="funnel-spark" id="funnelProSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">MRR</div><div class="funnel-value" id="funnelMrr">Unavailable</div><div class="funnel-note" id="funnelMrrNote">Waiting for an exact billing price source</div></div>

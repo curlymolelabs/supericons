@@ -557,7 +557,7 @@ try {
   ok(await page.locator('#kpiZero').innerText() === '6%', 'True zero KPI is incorrect.');
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
   const reachNote = await page.locator('#kpiClientsNote').innerText();
-  ok(reachNote.includes('32 searchers'), 'Estimated reach does not identify the selected-period searcher count.');
+  ok(reachNote === '', 'Estimated reach repeats its visible scope in a note.');
   ok(!reachNote.includes('registered'), 'The filtered reach card mixes in all-time registered-account totals.');
   ok(!reachNote.includes('Pro'), 'The filtered reach card mixes in all-time Pro-account totals.');
   await assertPanelActionsStayOnOneLine(page, '#section-overview:not([hidden])');

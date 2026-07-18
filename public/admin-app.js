@@ -1213,24 +1213,24 @@ function renderKpis() {
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
   if (kpis.identity_available === false && kpis.client_measure === 'client_days') {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = 'Daily reach across the selected period; exact searcher totals are not available.';
+    $('kpiClientsNote').textContent = 'Daily reach; exact searcher total unavailable.';
   } else if (kpis.identity_available === false) {
     setSkeleton($('kpiClients'), 'Unavailable');
     $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact searcher totals.';
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = `${searcherCountLabel(clients)} seen in the selected period`;
+    $('kpiClientsNote').textContent = '';
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
-  $('kpiSearchesNote').textContent = `Selected period: ${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'daily reach unit' : 'searcher'}, ${formatPercent(successRate)} successful`;
+  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'daily reach unit' : 'searcher'}, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
-  $('kpiZeroNote').textContent = `Selected period: ${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
+  $('kpiZeroNote').textContent = `${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
   if (kpis.low_result_rate_available === false) {
     setSkeleton($('kpiLow'), 'Unavailable');
     $('kpiLowNote').textContent = 'No searches in this view have exact low-result eligibility.';
   } else {
     setSkeleton($('kpiLow'), formatPercent(kpis.low_result_rate));
-    $('kpiLowNote').textContent = `Selected period: ${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches. ${formatPercent(kpis.low_result_coverage_rate)} coverage.`;
+    $('kpiLowNote').textContent = `${formatNumber(kpis.low_result_count)} of ${formatNumber(kpis.low_result_eligible_count)} eligible searches. ${formatPercent(kpis.low_result_coverage_rate)} coverage.`;
   }
 }
 
@@ -1645,11 +1645,11 @@ function renderAudience() {
   if (funnel.identity_available === false) {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = funnel.client_measure === 'client_days'
-      ? 'Daily reach in the selected period'
+      ? 'Daily reach; exact searcher total unavailable.'
       : funnel.identity_unavailable_reason || 'Exact searcher totals are not available.';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
-    $('funnelClientsNote').textContent = 'Searchers seen in the selected period';
+    $('funnelClientsNote').textContent = '';
   }
   setSkeleton($('funnelRegistered'), formatNumber(registered));
   $('funnelRegisteredNote').textContent = accounts.available
