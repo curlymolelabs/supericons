@@ -2214,6 +2214,10 @@ async function buildDashboardV2SearchPayload(
       raw_rows_truncated: dataRows.raw_truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
+      query_row_grain: ['query', 'library_filter', 'query_origin', 'channel'],
+      activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
+      result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
+      estimated_client_id_measure: 'A privacy-safe reach estimate for analysis. It is not a people or account count.',
     },
     meta: dashboardV2Meta(filters, startedAt, {
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
@@ -2482,6 +2486,7 @@ function getQueryWorkbenchEntry(
     total_result_count: 0,
     result_samples: 0,
     minimum_result_count: null,
+    maximum_result_count: null,
     replacement_count: 0,
     unique_replacements: new Set<string>(),
     successful_attempt_count: 0,
@@ -2658,6 +2663,10 @@ function buildQueryWorkbenchRows(
         if (currentMinimum === null || resultCount < currentMinimum) {
           entry.minimum_result_count = resultCount;
         }
+        const currentMaximum = typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null;
+        if (currentMaximum === null || resultCount > currentMaximum) {
+          entry.maximum_result_count = resultCount;
+        }
         if (classification.is_true_zero) {
           entry.zero_attempt_count = Number(entry.zero_attempt_count || 0) + 1;
         } else if (classification.is_exact_low) {
@@ -2698,6 +2707,12 @@ function buildQueryWorkbenchRows(
             : null;
           if (currentMinimum === null || resultCount < currentMinimum) {
             entry.minimum_result_count = resultCount;
+          }
+          const currentMaximum = typeof entry.maximum_result_count === 'number'
+            ? entry.maximum_result_count
+            : null;
+          if (currentMaximum === null || resultCount > currentMaximum) {
+            entry.maximum_result_count = resultCount;
           }
           if (resultCount > 0) {
             entry.successful_signal_count = Number(entry.successful_signal_count || 0) + 1;
@@ -2750,6 +2765,8 @@ function buildQueryWorkbenchRows(
         ? Number((totalResultCount / resultSamples).toFixed(2))
         : null,
       minimum_result_count: typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null,
+      maximum_result_count: typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null,
+      result_sample_count: resultSamples,
       replacement_count: Number(entry.replacement_count || 0),
       unique_replacements: (entry.unique_replacements as Set<string>).size,
       successful_attempt_count: Number(entry.successful_attempt_count || 0),
@@ -3032,6 +3049,8 @@ function buildQueryWorkbenchRowsFromRollups(
       successful_signal_count: 0,
       average_result_count: null,
       minimum_result_count: null,
+      maximum_result_count: null,
+      result_sample_count: 0,
       replacement_count: 0,
       unique_replacements: 0,
       copy_count: 0,

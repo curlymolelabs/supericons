@@ -557,7 +557,7 @@
             </div>
           </div>
           <div class="kpi-grid" id="overviewKpis">
-            <article class="kpi"><div class="kpi-label">Estimated unique clients</div><div class="kpi-value skeleton" id="kpiClients">000</div><div class="kpi-note" id="kpiClientsNote">Loading audience mix</div></article>
+            <article class="kpi"><div class="kpi-label">Estimated reach</div><div class="kpi-value skeleton" id="kpiClients">000</div><div class="kpi-note" id="kpiClientsNote">Distinct privacy-safe identifiers, not people</div></article>
             <article class="kpi"><div class="kpi-label">Real searches</div><div class="kpi-value skeleton" id="kpiSearches">000</div><div class="kpi-note" id="kpiSearchesNote">Loading search volume</div></article>
             <article class="kpi"><div class="kpi-label">True zero rate</div><div class="kpi-value skeleton" id="kpiZero">00%</div><div class="kpi-note" id="kpiZeroNote">Known defects are excluded</div></article>
             <article class="kpi"><div class="kpi-label">Low-result rate</div><div class="kpi-value skeleton" id="kpiLow">00%</div><div class="kpi-note" id="kpiLowNote">Only eligible searches count</div></article>
@@ -569,7 +569,7 @@
               <div class="panel-body"><div class="chart" id="searchesChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
             </article>
             <article class="panel">
-              <div class="panel-head"><div><div class="panel-title">Unique clients over time</div><div class="panel-subtitle">Monthly-stable clients, or client-days for long ranges</div></div><button class="small-button" data-export="series-clients" type="button">CSV</button></div>
+              <div class="panel-head"><div><div class="panel-title">Estimated reach over time</div><div class="panel-subtitle">Monthly-stable identifiers, or client-days for long ranges. This is not a people count.</div></div><button class="small-button" data-export="series-clients" type="button">CSV</button></div>
               <div class="panel-body"><div class="chart" id="clientsChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
             </article>
           </div>
@@ -614,8 +614,8 @@
           <div class="section-head">
             <div><h1>Search Intelligence</h1><div class="section-subtitle">One explorer for every query, plus the work worth doing.</div></div>
           </div>
-          <article class="panel" data-row-key="queries" data-row-label="Query explorer" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Query explorer</div><div class="panel-subtitle">Use plain text or filters such as zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" type="button">CSV</button><button class="small-button" data-export="queries-json" type="button">JSON</button></div></div>
+          <article class="panel" data-row-key="queries" data-row-label="Query summary" style="margin-bottom:14px">
+            <div class="panel-head"><div><div class="panel-title">Query summary</div><div class="panel-subtitle">One row per query, venue, library, and origin. Repeated searches are combined. Use filters such as zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" type="button">CSV</button><button class="small-button" data-export="queries-json" type="button">JSON</button></div></div>
             <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query explorer" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
             <div class="table-wrap scroll-region" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
           </article>
@@ -646,13 +646,13 @@
 
         <section id="section-audience" hidden>
           <div class="section-head">
-            <div><h1>Audience</h1><div class="section-subtitle">Who they are, where they are, and the path from anonymous to Pro.</div></div>
+            <div><h1>Audience</h1><div class="section-subtitle">Estimated search reach, account totals, and account-linked activity.</div></div>
           </div>
           <article class="panel" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Search activity links to an account only when the request sends an API key. Registered users lists every account.</div></div></div>
+            <div class="panel-head"><div><div class="panel-title">Reach and accounts</div><div class="panel-subtitle">Reach measures observed search activity. Registered and Pro are account totals, so these are separate measures, not funnel stages.</div></div></div>
             <div class="panel-body">
               <div class="funnel">
-                <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div><div class="funnel-spark" id="funnelClientsSpark"></div></div>
+                <div class="funnel-card"><div class="kpi-label">Estimated reach</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Privacy-safe identifiers, not people</div><div class="funnel-spark" id="funnelClientsSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">Registered</div><div class="funnel-value skeleton" id="funnelRegistered">000</div><div class="funnel-note" id="funnelRegisteredNote">Loading</div><div class="funnel-spark" id="funnelRegisteredSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">Pro</div><div class="funnel-value skeleton" id="funnelPro">000</div><div class="funnel-note" id="funnelProNote">Loading</div><div class="funnel-spark" id="funnelProSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">MRR</div><div class="funnel-value" id="funnelMrr">Unavailable</div><div class="funnel-note" id="funnelMrrNote">Waiting for an exact billing price source</div></div>
@@ -666,9 +666,9 @@
             <div class="table-wrap scroll-region" id="registeredUsers"><div class="empty">Loading registered users</div></div>
           </article>
 
-          <article class="panel" data-row-key="clients" data-row-label="All clients">
-            <div class="panel-head"><div><div class="panel-title">All clients</div><div class="panel-subtitle">Anonymous identity is monthly-stable, so cross-month totals are estimates</div></div><button class="small-button" data-export="clients" type="button">CSV</button></div>
-            <div class="table-wrap scroll-region" id="allClients"><div class="empty">Loading clients</div></div>
+          <article class="panel" data-row-key="clients" data-row-label="Observed identifiers">
+            <div class="panel-head"><div><div class="panel-title">Observed identifiers</div><div class="panel-subtitle">Privacy-safe identifiers help compare reach and repeat activity. They do not identify people, devices, or accounts.</div></div><button class="small-button" data-export="clients" type="button">CSV</button></div>
+            <div class="table-wrap scroll-region" id="allClients"><div class="empty">Loading observed identifiers</div></div>
           </article>
         </section>
       </div>

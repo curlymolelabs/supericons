@@ -50,6 +50,8 @@ const queryRows = [
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 5,
+    activity_count: 5,
+    activity_kind: 'search',
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:40:00Z',
   },
@@ -69,6 +71,8 @@ const queryRows = [
     issue_type: 'mixed_result',
     outcome_label: 'Mixed: 1 of 5 zero',
     attempt_count: 5,
+    activity_count: 5,
+    activity_kind: 'search',
     zero_attempt_count: 1,
     last_seen: '2026-07-17T07:35:00Z',
   },
@@ -83,9 +87,13 @@ const queryRows = [
     channel: 'hosted_mcp',
     result_count: 1,
     result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'match',
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 0,
+    activity_count: 1,
+    activity_kind: 'lookup',
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:32:00Z',
   },
@@ -104,6 +112,8 @@ const queryRows = [
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 0,
+    activity_count: 1,
+    activity_kind: 'lookup',
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:31:00Z',
   },
@@ -118,9 +128,13 @@ const queryRows = [
     channel: 'hosted_mcp',
     result_count: 0,
     result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'icon',
     issue_type: 'zero_result',
     outcome_label: 'Zero',
     attempt_count: 5,
+    activity_count: 5,
+    activity_kind: 'search',
     zero_attempt_count: 5,
     last_seen: '2026-07-17T07:30:00Z',
   },
@@ -135,11 +149,38 @@ const queryRows = [
     channel: 'web',
     result_count: 1,
     result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'icon',
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 1,
+    activity_count: 1,
+    activity_kind: 'search',
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:25:00Z',
+  },
+  {
+    query: 'varying results',
+    library_filter: 'lucide',
+    query_origin: 'recommend_variant',
+    visitor_kind: 'anonymous',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'local_mcp',
+    result_count: null,
+    result_count_min: 2,
+    result_count_max: 8,
+    result_count_available: true,
+    result_count_kind: 'range_across_attempts',
+    result_count_reason: 'Results ranged from 2 to 8 across 4 searches',
+    result_unit: 'icon',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 4,
+    activity_count: 4,
+    activity_kind: 'search',
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:22:00Z',
   },
   ...Array.from({ length: 55 }, (_, index) => ({
     query: `healthy query ${index + 1}`,
@@ -157,6 +198,8 @@ const queryRows = [
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: index + 1,
+    activity_count: index + 1,
+    activity_kind: 'search',
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:20:00Z',
   })),
@@ -436,8 +479,9 @@ try {
   ok(await page.locator('#kpiSearches').innerText() === '128', 'Real search KPI is incorrect.');
   ok(await page.locator('#kpiZero').innerText() === '6%', 'True zero KPI is incorrect.');
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
-  await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered accounts'));
-  ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The client KPI did not use account-backed Pro totals.');
+  await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered'));
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The reach KPI note did not use account-backed Pro totals.');
+  ok((await page.locator('#kpiClientsNote').innerText()).includes('privacy-safe identifiers'), 'Estimated reach is not distinguished from a people count.');
   await assertPanelActionsStayOnOneLine(page, '#section-overview:not([hidden])');
 
   const activity = await page.locator('#latestActivity').innerText();
@@ -557,6 +601,15 @@ try {
   await requestPanel.locator('[data-panel-toggle]').click();
   ok(!(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed'))), 'The paired gap worklist did not expand with icon requests.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
+  ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Query summary', 'The grouped table is still labelled like an event explorer.');
+  const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
+  ok(queryHeaders.includes('Activity'), 'The query summary does not show recorded activity.');
+  ok(queryHeaders.includes('Returned'), 'The query summary does not label returned values.');
+  ok(!queryHeaders.includes('Client'), 'The query summary still presents privacy-safe identifiers as people.');
+  const varyingRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
+  ok((await varyingRow.innerText()).includes('4 searches'), 'Grouped activity is not shown as a search count.');
+  ok((await varyingRow.innerText()).includes('2 to 8 icons'), 'Varying grouped results are not shown as a range.');
+  ok(!(await varyingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
   ok((await healthyRow.innerText()).includes('Not available for aggregate view'), 'Aggregate result and country gaps were not explained.');
@@ -568,7 +621,8 @@ try {
   });
   ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
-  ok((await iconLookupRow.innerText()).includes('1'), 'A successful icon lookup did not render one result.');
+  ok((await iconLookupRow.innerText()).includes('1 lookup'), 'A successful icon lookup did not render its activity count.');
+  ok((await iconLookupRow.innerText()).includes('1 match'), 'A successful icon lookup did not render one match.');
   const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup pending', { exact: true }),
   });
@@ -608,11 +662,13 @@ try {
   await page.click('#nav-audience');
   await page.waitForSelector('#section-audience:not([hidden])');
   await assertPanelActionsStayOnOneLine(page, '#section-audience:not([hidden])');
+  ok((await page.locator('#section-audience').innerText()).includes('Reach and accounts'), 'Separate reach and account totals are still presented as one funnel.');
+  ok(!(await page.locator('#section-audience').innerText()).includes('Audience funnel'), 'The audience section still claims separate populations form a funnel.');
   ok(await page.locator('#funnelRegistered').innerText() === '23', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
   ok(await page.locator('#funnelRegisteredSpark svg').count() === 1, 'The registered funnel sparkline is missing.');
   ok(await page.locator('#funnelProSpark svg').count() === 1, 'The Pro funnel sparkline is missing.');
-  ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search clients over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
+  ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search IDs over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
   ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
   ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The registered-user total is missing.');
   ok(await page.locator('#toggleRegisteredEmails svg').count() === 1, 'The email visibility icon is missing.');

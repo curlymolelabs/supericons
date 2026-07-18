@@ -9,6 +9,10 @@ const [app, api, helper, telemetry, localServer, migration] = await Promise.all(
   readFile('mcp/index.js', 'utf8'),
   readFile('supabase/migrations/20260718190000_mcp_usage_query_origin_attribution.sql', 'utf8'),
 ]);
+const queryExplorerRenderer = app.slice(
+  app.indexOf('function renderQueryExplorer()'),
+  app.indexOf('function renderWorklist()'),
+);
 
 assert.doesNotMatch(
   app,
@@ -27,8 +31,28 @@ assert.doesNotMatch(
 );
 assert.doesNotMatch(
   app,
-  /\}\s*min<\/span>/,
-  'Grouped result counts must not use the ambiguous abbreviation "min".',
+  /minimum_across_attempts/,
+  'The browser must not present a minimum as if it were an exact result count.',
+);
+assert.match(
+  queryExplorerRenderer,
+  /\{\s*label:\s*'Activity'/,
+  'The query summary must show recorded activity rather than privacy-safe identity keys.',
+);
+assert.doesNotMatch(
+  queryExplorerRenderer,
+  /\{\s*label:\s*'Client',\s*render:\s*\(row\)\s*=>\s*visitorLabel\(row\)\s*\}/,
+  'The query summary must not present privacy-safe identity keys as clients.',
+);
+assert.match(
+  api,
+  /maximum_result_count/,
+  'The API must retain both ends of a grouped result-count range.',
+);
+assert.match(
+  helper,
+  /range_across_attempts/,
+  'Compact query rows must label varying result counts as a range.',
 );
 assert.match(
   api,
@@ -73,6 +97,6 @@ assert.match(
 
 console.log(JSON.stringify({
   status: 'ok',
-  checks: 12,
+  checks: 16,
   contract: 'admin_dashboard_v2_telemetry_integrity',
 }));

@@ -263,6 +263,9 @@ const queryRows = [
       query_origins: ['icon_lookup'],
       audit_sources: ['mcp_usage_events'],
       minimum_result_count: 1,
+      maximum_result_count: 1,
+      result_sample_count: 1,
+      mcp_result_rows: 1,
     },
   ]));
   const healthy = aggregateRows.find((row) => row.query === 'healthy aggregate');
@@ -273,8 +276,9 @@ const queryRows = [
   assert.equal(healthy.result_count_reason, 'Not available for aggregate view');
   assert.equal(healthy.country_code, null);
   assert.equal(healthy.country_available, false);
-  assert.equal(healthy.client_measure, 'client_days');
-  assert.equal(healthy.client_label, '3 client-days');
+  assert.equal(healthy.estimated_client_id_count, 3);
+  assert.equal(healthy.estimated_client_id_count_reason, 'Client-days are a trend estimate, not a people count.');
+  assert.equal('client_label' in healthy, false);
 
   const allZero = aggregateRows.find((row) => row.query === 'all zero aggregate');
   assert.equal(allZero.issue_type, 'zero_result');
@@ -313,10 +317,16 @@ const queryRows = [
     query_origins: ['agent_query'],
     audit_sources: ['mcp_usage_events'],
     minimum_result_count: 2,
+    maximum_result_count: 8,
   }]));
-  assert.equal(grouped.result_count, 2);
-  assert.equal(grouped.result_count_kind, 'minimum_across_attempts');
-  assert.equal(grouped.result_count_reason, 'Minimum result count across grouped attempts');
+  assert.equal(grouped.result_count, null);
+  assert.equal(grouped.result_count_min, 2);
+  assert.equal(grouped.result_count_max, 8);
+  assert.equal(grouped.result_count_kind, 'range_across_attempts');
+  assert.equal(grouped.result_count_reason, 'Results ranged from 2 to 8 across 4 searches');
+  assert.equal(grouped.activity_label, '4 searches');
+  assert.equal(grouped.estimated_client_id_count, 2);
+  assert.equal('client_label' in grouped, false);
 }
 
 {
@@ -333,11 +343,35 @@ const queryRows = [
     query_origins: ['recommend_variant'],
     audit_sources: ['search_request_audit'],
     minimum_result_count: 10,
+    maximum_result_count: 10,
   }]));
   assert.equal(grouped.country_code, null);
   assert.equal(grouped.country_count, 2);
   assert.equal(grouped.country_available, false);
   assert.equal(grouped.country_reason, '2 countries across grouped attempts');
+  assert.equal(grouped.result_count, 10);
+  assert.equal(grouped.result_count_kind, 'exact');
+}
+
+{
+  const [recommendation] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'choose a gatekeeper icon',
+    library_filter: 'lucide',
+    attempt_count: 1,
+    successful_attempt_count: 1,
+    estimated_unique_clients: 1,
+    channels: ['local_mcp'],
+    countries: [],
+    query_origins: ['agent_query'],
+    tools: ['recommend_icons'],
+    audit_sources: ['mcp_usage_events'],
+    minimum_result_count: 1,
+    maximum_result_count: 1,
+    result_sample_count: 1,
+  }]));
+  assert.equal(recommendation.activity_label, '1 search');
+  assert.equal(recommendation.result_count, 1);
+  assert.equal(recommendation.result_unit, 'primary_pick');
 }
 
 {

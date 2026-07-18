@@ -663,6 +663,24 @@ function outcomeFor(row = {}) {
   return { label: safeText(row.outcome_label, 'Success'), tone: 'ok' };
 }
 
+function countWithUnit(value, unit = 'icon') {
+  const count = number(value);
+  const labels = {
+    icon: ['icon', 'icons'],
+    match: ['match', 'matches'],
+    primary_pick: ['primary pick', 'primary picks'],
+  };
+  const [singular, plural] = labels[unit] || labels.icon;
+  return `${formatNumber(count)} ${count === 1 ? singular : plural}`;
+}
+
+function queryActivityCell(row = {}) {
+  const count = number(row.activity_count ?? row.attempt_count);
+  const kind = String(row.activity_kind || '').toLowerCase() === 'lookup' ? 'lookup' : 'search';
+  const label = count === 1 ? kind : kind === 'search' ? 'searches' : 'lookups';
+  return `<span title="Recorded ${escapeHtml(kind)} activity in this grouped row">${formatNumber(count)} ${escapeHtml(label)}</span>`;
+}
+
 function queryResultCell(row = {}) {
   if (String(row.query_origin || row.origin || '').toLowerCase() === 'icon_lookup'
     && row.result_count_available === false) {
@@ -671,15 +689,19 @@ function queryResultCell(row = {}) {
   if (row.result_count_available === false) {
     return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not available for this view')}</span>`;
   }
-  if (row.result_count_kind === 'minimum_across_attempts') {
-    return `<span title="${escapeHtml(row.result_count_reason || 'Lowest result count across grouped attempts')}">${formatNumber(row.result_count ?? row.results)}+</span>`;
+  if (row.result_count_kind === 'range_across_attempts') {
+    const range = `${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)}`;
+    return `<span title="${escapeHtml(row.result_count_reason || 'Result range across grouped activity')}">${escapeHtml(range)} ${escapeHtml(countWithUnit(2, row.result_unit).replace(/^2 /, ''))}</span>`;
   }
-  return formatNumber(row.result_count ?? row.results);
+  return countWithUnit(row.result_count ?? row.results, row.result_unit);
 }
 
 function queryCountryCell(row = {}) {
   const country = row.country_code || row.country;
   if (row.country_available === false || !country) {
+    if (number(row.country_count) > 1) {
+      return `<span title="${escapeHtml(row.country_reason || 'Multiple countries across grouped activity')}">${pill(`${formatNumber(row.country_count)} countries`)}</span>`;
+    }
     return `<span class="muted-cell">${escapeHtml(row.country_reason || 'Country not recorded')}</span>`;
   }
   return pill(country);
@@ -1100,11 +1122,11 @@ function renderKpis() {
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
     $('kpiClientsNote').textContent = accounts.available
-      ? `${formatNumber(registered)} registered accounts, ${formatNumber(pro)} Pro. ${formatNumber(anonymous)} observed clients are anonymous or not linked to an account.`
-      : `${formatNumber(registered)} registered, ${formatNumber(pro)} Pro, ${formatNumber(anonymous)} anonymous`;
+      ? `${formatNumber(anonymous)} privacy-safe identifiers are anonymous or not linked to an account. Accounts are counted separately: ${formatNumber(registered)} registered, ${formatNumber(pro)} Pro.`
+      : `Estimated from privacy-safe identifiers, not people. ${formatNumber(registered)} linked to registered accounts, ${formatNumber(pro)} linked to Pro.`;
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
-  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'client'}, ${formatPercent(successRate)} successful`;
+  $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'client-day' : 'observed identifier'}, ${formatPercent(successRate)} successful`;
   setSkeleton($('kpiZero'), formatPercent(kpis.true_zero_rate));
   $('kpiZeroNote').textContent = `${formatNumber(kpis.true_zero_count)} true zeros. Known defects and errors are excluded.`;
   if (kpis.low_result_rate_available === false) {
@@ -1136,7 +1158,7 @@ function renderCharts() {
     $('clientsChart'),
     series,
     [{ field: 'client_days', label: 'Client-days', color: CHART_COLORS[1] }],
-    { label: 'Unique clients over time', emptyReason: 'Client history will appear after the v2 summary endpoint is live.' },
+    { label: 'Estimated reach over time', emptyReason: 'Estimated reach history will appear after the v2 summary endpoint is live.' },
   );
   renderLineChart(
     $('qualityChart'),
@@ -1155,7 +1177,7 @@ function renderCharts() {
 }
 
 function topListConfig(key, rows = []) {
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Clients';
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Est. reach';
   if (key === 'returned') {
     return {
       headers: [
@@ -1170,7 +1192,7 @@ function topListConfig(key, rows = []) {
       headers: [
         { label: 'Icon', render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.action, 'Copy or download'))}</div>` },
         { label: 'Actions', number: true, render: (row) => formatNumber(row.count ?? row.actions) },
-        { label: 'Clients', number: true, render: (row) => formatNumber(row.distinct_clients) },
+        { label: 'Est. reach', number: true, render: (row) => formatNumber(row.distinct_clients) },
       ],
     };
   }
@@ -1214,7 +1236,7 @@ function renderTopList() {
   const value = state.data.overview?.top_lists?.[state.topList];
   const list = availability(value, 'This list is not available from the current data source.');
   $('topListSubtitle').textContent = list.available
-    ? `Top ${formatNumber(list.rows.length)} available for ${appliedWindowLabel().toLowerCase()}`
+    ? `Top ${formatNumber(list.rows.length)} available for ${appliedWindowLabel().toLowerCase()}. Estimated reach uses privacy-safe identifiers, not people.`
     : list.reason;
   if (!list.available) {
     renderPagination('topList', 0, 1);
@@ -1291,10 +1313,10 @@ function renderQueryExplorer() {
       render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter || row.library, 'All libraries'))} | ${escapeHtml(originLabel(row.query_origin || row.origin))}</div>`,
     },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: 'Client', render: (row) => visitorLabel(row) },
+    { label: 'Activity', render: (row) => queryActivityCell(row) },
     { label: 'Country', render: (row) => queryCountryCell(row) },
     { label: 'Venue', render: (row) => queryChannelCell(row) },
-    { label: 'Results', number: true, render: (row) => queryResultCell(row) },
+    { label: 'Returned', number: true, render: (row) => queryResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
   element.innerHTML = table(headers, rows, state.errors.search || 'No queries match these filters.');
@@ -1319,7 +1341,7 @@ function renderWorklist() {
     return;
   }
   const rows = rowsForPage('worklist', state.data.search?.worklist);
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Clients';
+  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Client-days' : 'Est. reach';
   element.innerHTML = table([
     { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
@@ -1501,7 +1523,7 @@ function renderAudience() {
     if ($('funnelMrrNote')) $('funnelMrrNote').textContent = 'Loading billing availability';
     if ($('audienceChart')) $('audienceChart').innerHTML = loadingState('Loading audience history');
     if ($('registeredUsers')) $('registeredUsers').innerHTML = loadingState('Loading registered users');
-    if ($('allClients')) $('allClients').innerHTML = loadingState('Loading client profiles');
+    if ($('allClients')) $('allClients').innerHTML = loadingState('Loading observed identifier profiles');
     return;
   }
   if (!data && state.errors.audience) {
@@ -1528,7 +1550,7 @@ function renderAudience() {
       : funnel.identity_unavailable_reason || 'Exact unique clients are not available.';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
-    $('funnelClientsNote').textContent = appliedWindowLabel();
+    $('funnelClientsNote').textContent = `${appliedWindowLabel()}. Privacy-safe identifiers, not people.`;
   }
   setSkeleton($('funnelRegistered'), formatNumber(registered));
   $('funnelRegisteredNote').textContent = accounts.available
@@ -1545,7 +1567,7 @@ function renderAudience() {
     $('funnelClientsSpark'),
     data?.series,
     'client_days',
-    'Client-days over time',
+    'Estimated reach over time',
     CHART_COLORS[0],
   );
   renderSparkline($('funnelRegisteredSpark'), data?.series, 'registered_clients', 'Registered clients over time', CHART_COLORS[1]);
@@ -1565,7 +1587,7 @@ function renderAudience() {
         { field: 'registered_clients', label: 'Linked registered', color: CHART_COLORS[1] },
         { field: 'pro_clients', label: 'Linked Pro', color: CHART_COLORS[2] },
       ],
-      { label: 'Account-linked search clients over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
+      { label: 'Account-linked search IDs over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
     );
   }
 
@@ -1591,10 +1613,10 @@ function renderAudience() {
     : emptyState(users.reason);
   if (!users.available && !accounts.available) renderPagination('registeredUsers', 0, 1);
 
-  const allClients = availability(data?.clients, 'Client profiles are not available from the current data source.');
+  const allClients = availability(data?.clients, 'Observed identifier profiles are not available from the current data source.');
   $('allClients').innerHTML = allClients.available
     ? table([
-      { label: 'Client', render: (row) => visitorLabel(row) },
+      { label: 'Observed ID', render: (row) => visitorLabel(row) },
       { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
       { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
       { label: 'First seen', render: (row) => escapeHtml(formatDate(row.first_seen, true)) },
