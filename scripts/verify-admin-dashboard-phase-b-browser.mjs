@@ -570,12 +570,11 @@ try {
     const box = (selector) => document.querySelector(selector)?.getBoundingClientRect();
     const topbar = box('.topbar');
     const filter = box('.filter-bar');
-    const heading = box('#section-intelligence .section-head');
     const pagination = box('[data-pagination="queries"]');
     return {
       topbarHeight: topbar?.height,
       filterHeight: filter?.height,
-      headingHeight: heading?.height,
+      redundantHeadingCount: document.querySelectorAll('#section-intelligence .section-head').length,
       paginationBottom: pagination?.bottom,
       paginationTop: pagination?.top,
       viewportHeight: window.innerHeight,
@@ -583,7 +582,7 @@ try {
   });
   ok(compactLayout.topbarHeight <= 54, `The top navigation is still too tall at ${compactLayout.topbarHeight}px.`);
   ok(compactLayout.filterHeight <= 50, `The filter bar is still too tall at ${compactLayout.filterHeight}px.`);
-  ok(compactLayout.headingHeight <= 48, `The Search Intelligence heading is still too tall at ${compactLayout.headingHeight}px.`);
+  ok(compactLayout.redundantHeadingCount === 0, 'The redundant Search Intelligence heading still exists.');
   ok(
     compactLayout.paginationTop >= 0 && compactLayout.paginationBottom <= compactLayout.viewportHeight,
     `Query pagination is outside the initial viewport: ${JSON.stringify(compactLayout)}`,

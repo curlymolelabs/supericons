@@ -422,7 +422,7 @@
       padding: 0 11px;
     }
     #section-intelligence > .panel[data-row-key="queries"] {
-      height: calc(100dvh - 190px);
+      height: calc(100dvh - 133px);
       min-height: 520px;
       display: flex;
       flex-direction: column;
@@ -651,9 +651,6 @@
         </section>
 
         <section id="section-intelligence" hidden>
-          <div class="section-head">
-            <div><h1>Search Intelligence</h1><div class="section-subtitle">One explorer for every query, plus the work worth doing.</div></div>
-          </div>
           <article class="panel" data-row-key="queries" data-row-label="Query summary" style="margin-bottom:14px">
             <div class="panel-head"><div><div class="panel-title">Query summary</div><div class="panel-subtitle">Grouped by query, venue, library, and origin. Filters: zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" type="button">CSV</button><button class="small-button" data-export="queries-json" type="button">JSON</button></div></div>
             <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query explorer" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
