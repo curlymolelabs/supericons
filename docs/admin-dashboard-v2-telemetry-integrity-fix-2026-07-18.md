@@ -55,3 +55,23 @@ session identifier as the tool-level event.
 The dashboard API and additive database migration are in scope. Deploying
 `mcp-search`, publishing an npm package, changing storage, and changing Railway
 are outside this fix.
+
+## Verification result
+
+Production verification completed successfully on 2026-07-18:
+
+- Database migration `20260718190000` is applied.
+- Missing MCP query-origin rows fell from 2,267 to zero.
+- The reported top-level local recommendation is now an `agent_query`.
+- The reported local variant is a separate Local MCP row with one client ID and
+  15 results.
+- Older Hosted MCP variants remain separate and state when they include more
+  than one country.
+- Admin API version 77 is active. `mcp-search` remained on version 39.
+- The 30-day source contained 25,113 audit rows, so the 30,000-row bound now
+  covers the measured live volume without truncation.
+- The live API contract passed all routes and supported time windows.
+- The live browser walkthrough made 18 API requests, rendered four charts,
+  showed 27 completed chart days, and had no horizontal overflow.
+- The full production build passed.
+- No `mcp-search`, Railway, storage, or npm mutation occurred.
