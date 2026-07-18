@@ -629,7 +629,12 @@ function setFreshness() {
     return;
   }
   const elapsed = Math.max(0, Date.now() - state.refreshStartedAt);
-  line.textContent = `Up to date, loaded in ${formatNumber(elapsed)} ms`;
+  const refreshedAt = new Date(state.refreshedAt);
+  const stamp = Number.isFinite(refreshedAt.getTime())
+    ? new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' }).format(refreshedAt)
+    : '';
+  line.textContent = stamp ? `Updated ${stamp}` : 'Up to date';
+  line.title = `Loaded in ${formatNumber(elapsed)} ms`;
 }
 
 function setRefreshState() {
@@ -675,7 +680,19 @@ function visitorLabel(row = {}) {
   if (kind === 'pro' || row.is_pro) return `${pill('PRO', 'pro')} ${escapeHtml(truncate(key, 18))}`;
   if (kind === 'registered' || row.is_registered) return `${pill('Registered', 'info')} ${escapeHtml(truncate(key, 18))}`;
   if (kind === 'api_key') return `${pill('API key', 'info')} ${escapeHtml(truncate(key, 18))}`;
-  return `${pill('Anonymous')} ${escapeHtml(truncate(key, 18))}`;
+  return `<span class="chip" title="Anonymous searcher">${escapeHtml(truncate(key, 18))}</span>`;
+}
+
+function activityDayLabel(value) {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return '';
+  const now = new Date();
+  const dayText = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(date).toUpperCase();
+  if (date.toDateString() === now.toDateString()) return `TODAY · ${dayText}`;
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (date.toDateString() === yesterday.toDateString()) return `YESTERDAY · ${dayText}`;
+  return dayText;
 }
 
 function outcomeFor(row = {}) {
@@ -815,6 +832,10 @@ function queryCountryCell(row = {}) {
 function queryChannelCell(row = {}) {
   if (row.channel_available === false) {
     return `<span class="muted-cell">${escapeHtml(row.channel_reason || 'Venue not recorded')}</span>`;
+  }
+  const channel = String(row.channel || row.venue || '').toLowerCase();
+  if (channel === 'hosted_mcp') {
+    return `<span class="muted-cell">${escapeHtml(channelLabel(channel))}</span>`;
   }
   return pill(channelLabel(row.channel || row.venue), 'info');
 }
@@ -1140,12 +1161,22 @@ function renderActivity() {
     element.innerHTML = emptyState(state.errors.activity || 'No real user queries match these filters.');
     return;
   }
+  let previousDayLabel = '';
   element.innerHTML = rows.map((row) => {
     const outcome = outcomeFor(row);
     const library = safeText(row.library_filter || row.library, 'All libraries');
     const origin = originLabel(row.query_origin || row.origin);
-    const country = safeText(row.country_code || row.country, 'Unknown');
+    const country = safeText(row.country_code || row.country, '');
+    const channel = String(row.channel || row.venue || '').toLowerCase();
+    const channelPill = channel && channel !== 'hosted_mcp' ? ` ${pill(channelLabel(channel), 'info')}` : '';
+    const countryPill = country && country.toLowerCase() !== 'unknown' ? pill(country) : '';
+    const dayLabel = activityDayLabel(row.created_at || row.timestamp);
+    const separator = dayLabel && dayLabel !== previousDayLabel
+      ? `<div class="activity-day">${escapeHtml(dayLabel)}</div>`
+      : '';
+    if (dayLabel) previousDayLabel = dayLabel;
     return `
+      ${separator}
       <div class="activity-row">
         <div class="activity-query">
           <strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong>
@@ -1153,7 +1184,7 @@ function renderActivity() {
         </div>
         <div>${visitorLabel(row)}</div>
         <div>${pill(`${formatNumber(row.result_count ?? row.results)} results`, outcome.tone)}</div>
-        <div>${pill(country)} ${pill(channelLabel(row.channel || row.venue), 'info')}</div>
+        <div>${countryPill}${channelPill}</div>
         <div class="activity-meta" title="${escapeHtml(String(row.created_at || row.timestamp || ''))}">${escapeHtml(formatRelativeDate(row.created_at || row.timestamp))}</div>
       </div>
     `;
@@ -1216,13 +1247,14 @@ function renderKpis() {
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
   if (kpis.identity_available === false && kpis.client_measure === 'client_days') {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = 'Daily reach; exact searcher total unavailable.';
+    $('kpiClientsNote').textContent = 'Daily reach across the selected period';
   } else if (kpis.identity_available === false) {
     setSkeleton($('kpiClients'), 'Unavailable');
     $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact searcher totals.';
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
     $('kpiClientsNote').textContent = '';
+    $('kpiClientsNote').title = 'Searchers seen in the selected period';
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
   $('kpiSearchesNote').textContent = `${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'daily reach unit' : 'searcher'}, ${formatPercent(successRate)} successful`;
@@ -1648,11 +1680,12 @@ function renderAudience() {
   if (funnel.identity_available === false) {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = funnel.client_measure === 'client_days'
-      ? 'Daily reach; exact searcher total unavailable.'
+      ? 'Daily reach across the selected period'
       : funnel.identity_unavailable_reason || 'Exact searcher totals are not available.';
   } else {
     setSkeleton($('funnelClients'), formatNumber(clients));
     $('funnelClientsNote').textContent = '';
+    $('funnelClientsNote').title = 'Searchers seen in the selected period';
   }
   setSkeleton($('funnelRegistered'), formatNumber(registered));
   $('funnelRegisteredNote').textContent = accounts.available
@@ -1682,15 +1715,25 @@ function renderAudience() {
       { label: 'Daily reach over time', emptyReason: 'Daily reach history is not available for this period.' },
     );
   } else {
-    renderLineChart(
-      $('audienceChart'),
-      data?.series,
-      [
-        { field: 'registered_clients', label: 'Linked registered', color: CHART_COLORS[1] },
-        { field: 'pro_clients', label: 'Linked Pro', color: CHART_COLORS[2] },
-      ],
-      { label: 'Account-linked searchers over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
-    );
+    const linkedFields = ['registered_clients', 'pro_clients'];
+    const hasLinkedSignal = normalizeList(data?.series)
+      .some((point) => linkedFields.some((field) => number(point?.[field]) > 0));
+    const audienceChart = $('audienceChart');
+    if (!hasLinkedSignal && audienceChart) {
+      audienceChart.style.minHeight = '0';
+      audienceChart.innerHTML = '<div class="chart-empty">No account-linked search activity in this period yet. The trend chart appears when registered or Pro searches occur.</div>';
+    } else {
+      if (audienceChart) audienceChart.style.minHeight = '170px';
+      renderLineChart(
+        audienceChart,
+        data?.series,
+        [
+          { field: 'registered_clients', label: 'Linked registered', color: CHART_COLORS[1] },
+          { field: 'pro_clients', label: 'Linked Pro', color: CHART_COLORS[2] },
+        ],
+        { label: 'Account-linked searchers over time', emptyReason: 'Account-linked search history will appear when requests send an API key.' },
+      );
+    }
   }
 
   const users = availability(data?.registered_users, 'Registered-user enrichment is not available from the current data source.');

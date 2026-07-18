@@ -83,7 +83,7 @@ function excludes(source, value, label) {
   'Lookup completed',
   'Icon not found',
   'recommendations',
-  'Daily reach; exact searcher total unavailable.',
+  'Daily reach across the selected period',
   'No sign-in recorded',
   'Last sign-in',
   'Last search',

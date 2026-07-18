@@ -51,7 +51,7 @@ try {
   await page.goto(dashboard.url, { waitUntil: 'domcontentloaded', timeout: 120_000 });
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
       && !document.querySelector('#kpiClients')?.classList.contains('skeleton')
   ), null, { timeout: 120_000 });
   await page.waitForFunction(() => (
@@ -204,7 +204,7 @@ try {
   await customOverviewRequest;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
   ), null, { timeout: 120_000 });
   ok(
     apiRequests.some((request) => (
@@ -225,7 +225,7 @@ try {
   await overview30dResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
   ), null, { timeout: 120_000 });
   const warmStart = Date.now();
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 120_000 });
@@ -240,7 +240,7 @@ try {
   ), null, { timeout: 120_000 });
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
       && document.querySelectorAll('#latestActivity .activity-row').length > 0
   ), null, { timeout: 120_000 });
 

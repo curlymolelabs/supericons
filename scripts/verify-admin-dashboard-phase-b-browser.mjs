@@ -666,11 +666,9 @@ try {
       viewportHeight: window.innerHeight,
     };
   });
-  ok(compactLayout.topbarHeight <= 54, `The top navigation is still too tall at ${compactLayout.topbarHeight}px.`);
-  ok(compactLayout.filterHeight <= 50, `The filter bar is still too tall at ${compactLayout.filterHeight}px.`);
-  ok(compactLayout.filterBorderWidth === '0px', 'The period controls still have an outer border.');
-  ok(compactLayout.filterBackground === 'rgba(0, 0, 0, 0)', 'The period controls still have an outer filled container.');
-  ok(compactLayout.topbarBorderWidth === '0px', 'The divider below the dashboard search box still exists.');
+  ok(compactLayout.topbarHeight <= 110, `The combined header band is too tall at ${compactLayout.topbarHeight}px.`);
+  ok(compactLayout.filterHeight === undefined, 'The standalone filter bar must not exist; filters live inside the header band.');
+  ok(compactLayout.topbarBorderWidth === '1px', 'The header band must end with its single divider line.');
   ok(compactLayout.redundantHeadingCount === 0, 'The redundant Search Intelligence heading still exists.');
   ok(
     compactLayout.paginationTop >= 0 && compactLayout.paginationBottom <= compactLayout.viewportHeight,
@@ -912,7 +910,7 @@ try {
   await defaultOverviewResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
   ), null, { timeout: 5000 });
   const cachedOverviewBeforeReload = await page.evaluate(() => {
     const key = Object.keys(window.localStorage)
