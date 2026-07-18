@@ -277,6 +277,23 @@ function runLocalCommand(args) {
   return parseFirstJsonValue(result.stdout);
 }
 
+function runLocalSuccess(args, testedSurface) {
+  const result = spawnSync(process.execPath, args, {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    windowsHide: true,
+    maxBuffer: 60 * 1024 * 1024,
+  });
+  if (result.status !== 0) {
+    throw new Error(sanitizeFailure(`${result.stdout || ''}\n${result.stderr || ''}`));
+  }
+  return {
+    status: 'ok',
+    tested_surface: testedSurface,
+    command_output: String(result.stdout || '').trim(),
+  };
+}
+
 function runGit(args) {
   const result = spawnSync('git', args, {
     cwd: repoRoot,
@@ -348,12 +365,12 @@ export function prepareAndVerifyArtifact({
   assert.equal(builder.artifact.file_count, manifest.artifact.file_count);
   assert.equal(builder.artifact.total_bytes, manifest.artifact.total_bytes);
 
-  const clientAndDocs = runLocalCommand([
+  const clientAndDocs = runLocalSuccess([
     join(repoRoot, 'scripts', 'verify-mcp-client-tabs-browser.mjs'),
     '--use-existing-dist',
     '--artifact-root',
     outputRoot,
-  ]);
+  ], 'existing_dist');
   const previewRegression = runLocalCommand([
     join(repoRoot, 'scripts', 'verify-mcp-preview-persistence.mjs'),
     '--use-existing-dist',
@@ -406,11 +423,11 @@ async function verifyRemoteWebSurface(baseUrl, manifest, privateRecordPath) {
     assert.equal(synonyms[entry.target]?.includes(entry.alias), true);
   }
 
-  const clientAndDocs = runLocalCommand([
+  const clientAndDocs = runLocalSuccess([
     join(repoRoot, 'scripts', 'verify-mcp-client-tabs-browser.mjs'),
     '--base-url',
     root.toString(),
-  ]);
+  ], 'remote_web_surface');
   const previewRegression = runLocalCommand([
     join(repoRoot, 'scripts', 'verify-mcp-preview-persistence.mjs'),
     '--base-url',
