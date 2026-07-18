@@ -350,6 +350,21 @@ Specification change: version 1.10 revises `FR-26` and the deployment/publicatio
 
 Superseded decisions: the explicit-owner-approval portions of earlier rollout decisions and plans are replaced by this owner-involvement boundary. Their technical gates, evidence requirements, mutation limits, and rollback rules remain active.
 
+### D-028: MCP telemetry venue follows the client entry point
+
+Date: 2026-07-18
+Status: Accepted
+
+Decision: classify calls from the installed npm MCP server as `local_mcp`, including calls that use hosted search as a fallback. Classify calls to the remote MCP service as `hosted_mcp`. Record genuine user activity as `production` even when it belongs to a beta cohort. Keep beta cohort, package version, client family, and execution route as separate evidence instead of overloading venue or environment.
+
+Reason: the local-first prerelease used `hosted_mcp` and `preview` as beta labels. This hid genuine local npm user searches from the dashboard default view and made the venue selector describe an experiment rather than the client surface. The corrected fields answer separate questions: where the user connected, whether the call was real user activity, which package and cohort ran, and whether the search used a local or hosted execution path.
+
+Alternatives rejected or deferred: keeping beta traffic under Hosted MCP; requiring the dashboard to include preview traffic to find real user calls; treating a hosted fallback as a hosted client; inferring the local client product from unvalidated free-form identifiers.
+
+Specification change: version 1.12 adds `FR-43`.
+
+Superseded decisions: the channel rule in the deterministic MCP beta measurement plan is replaced by this decision. The beta eligibility, cohort, privacy, and one-call outcome rules remain active.
+
 ## Adding or superseding a decision
 
 Every new entry must include:

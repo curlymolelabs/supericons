@@ -85,6 +85,11 @@ create table public.search_request_audit (
   latency_ms integer,
   session_hash text,
   ip_hash text,
+  channel text,
+  environment text,
+  client_family text,
+  tool_name text,
+  mcp_server_version text,
   created_at timestamptz not null default timezone('utc', now())
 );
 
@@ -120,6 +125,13 @@ create table public.mcp_usage_events (
   search_request_audit_id bigint,
   created_at timestamptz not null default timezone('utc', now()),
   metadata jsonb not null default '{}'::jsonb
+);
+
+create table public.icon_evidence (
+  id uuid primary key default gen_random_uuid(),
+  signal_type text not null,
+  ui_surface text,
+  created_at timestamptz not null default timezone('utc', now())
 );
 `;
 
@@ -211,15 +223,124 @@ try {
     ) values ('worker-invalid', 'mcp_beta', 0, 'unknown', 0, -1);
   `, { expectFailure: true });
 
+  runSql(`
+    insert into public.mcp_usage_events (
+      event_type, channel, environment, client_family, tool_name, query_norm,
+      library_filter, library_mode, result_count, search_outcome, beta_cohort,
+      status, session_hash, mcp_server_version
+    ) values (
+      'search_outcome', 'hosted_mcp', 'preview', 'mcp_stdio', 'search_icons',
+      'historical-local-search', 'all', 'strict', 5, 'results',
+      'deterministic-v2-beta', 'ok', repeat('d', 64), '0.4.19-beta.1'
+    );
+    insert into public.search_request_audit (
+      query_norm, source, result_count, channel, environment, client_family,
+      tool_name, session_hash, mcp_server_version
+    ) values (
+      'historical-hosted-fallback', 'mcp', 4, 'local_mcp', 'local',
+      'mcp_stdio', 'search_icons', repeat('e', 64), '0.4.19-beta.1'
+    );
+    insert into public.icon_evidence (signal_type, ui_surface)
+    values ('mcp_call', 'mcp');
+  `);
+
+  const attributionMigration = readFileSync(
+    'supabase/migrations/20260718100000_local_mcp_telemetry_attribution.sql',
+    'utf8',
+  );
+  runSql(attributionMigration);
+  runSql(attributionMigration);
+
+  const correctedRows = runSql(`
+    select concat_ws('|', channel, environment)
+    from public.mcp_usage_events
+    where query_norm = 'historical-local-search';
+    select concat_ws('|', channel, environment)
+    from public.search_request_audit
+    where query_norm = 'historical-hosted-fallback';
+    select concat_ws('|', signal_type, ui_surface)
+    from public.icon_evidence
+    order by created_at desc
+    limit 1;
+  `);
+  assert.ok(correctedRows.includes('local_mcp|production'));
+  assert.ok(correctedRows.includes('mcp_call|local_mcp'));
+
+  const correctedRuntime = runSql(`
+    begin;
+    select public.si_log_mcp_search_outcome_v2(
+      'runtime-local-first', 5, 'si', 'strict', 'results', 'search_icons',
+      repeat('f', 64), null, 'high', 'deterministic-v2-beta',
+      '0.4.19-beta.1', 42
+    );
+    select concat_ws('|', channel, environment, result_count, client_family)
+    from public.mcp_usage_events
+    where query_norm = 'runtime-local-first';
+
+    select public.si_log_mcp_search_outcome_v2(
+      'runtime-hosted-fallback', 4, 'all', 'strict', 'results', 'search_icons',
+      repeat('1', 64), null, 'high', null, '0.4.19-beta.1', 51
+    ) is null;
+    select count(*) from public.mcp_usage_events
+    where query_norm = 'runtime-hosted-fallback';
+
+    insert into public.search_request_audit (
+      query_norm, source, result_count, channel, environment, client_family,
+      tool_name, session_hash, mcp_server_version
+    ) values (
+      'runtime-hosted-fallback', 'mcp', 4, 'local_mcp', 'local',
+      'mcp_stdio', 'search_icons', repeat('1', 64), '0.4.19-beta.1'
+    );
+    select concat_ws('|', channel, environment)
+    from public.search_request_audit
+    where query_norm = 'runtime-hosted-fallback';
+
+    insert into public.icon_evidence (signal_type, ui_surface)
+    values ('mcp_call', 'mcp');
+    select concat_ws('|', signal_type, ui_surface)
+    from public.icon_evidence
+    order by created_at desc, id desc
+    limit 1;
+    rollback;
+  `);
+  assert.ok(correctedRuntime.includes('local_mcp|production|5|mcp_stdio'));
+  assert.ok(correctedRuntime.includes('t'));
+  assert.ok(correctedRuntime.includes('0'));
+  assert.ok(correctedRuntime.includes('local_mcp|production'));
+  assert.ok(correctedRuntime.includes('mcp_call|local_mcp'));
+
+  const correctionSchema = runSql(`
+    select concat_ws('|',
+      (select count(*) from pg_trigger
+        where tgname in (
+          'normalize_local_mcp_search_audit_attribution',
+          'normalize_local_mcp_icon_evidence_attribution'
+        ) and not tgisinternal),
+      (select count(*) from pg_proc
+        where pronamespace = 'public'::regnamespace
+          and proname in (
+            'si_normalize_local_mcp_search_audit_attribution',
+            'si_normalize_local_mcp_icon_evidence_attribution'
+          ))
+    );
+  `);
+  assert.ok(correctionSchema.includes('2|2'));
+
   console.log(JSON.stringify({
     status: 'ok',
     database: 'disposable_postgresql_17',
-    migration: '20260714180000_search_v2_tool_latency_evidence.sql',
+    migrations: [
+      '20260714180000_search_v2_tool_latency_evidence.sql',
+      '20260718100000_local_mcp_telemetry_attribution.sql',
+    ],
     idempotent_apply: true,
     worker_columns: 3,
     validated_constraints: 3,
     indexes: 2,
     latency_rpc: 'si_log_mcp_search_outcome_v2',
+    local_mcp_attribution_triggers: 2,
+    historical_attribution_corrected: true,
+    hosted_fallback_duplicate_suppressed: true,
     valid_rows: 'inserted_and_rolled_back',
     invalid_latency_rejected: true,
     invalid_worker_context_rejected: true,

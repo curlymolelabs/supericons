@@ -268,7 +268,20 @@ try {
     local_search_writes_one_outcome_attempt: englishOutcomeCalls.length === 1
       && englishOutcomeCalls[0].body.p_beta_cohort === 'deterministic-v2-beta'
       && englishOutcomeCalls[0].body.p_tool_name === 'search_icons'
-      && englishOutcomeCalls[0].body.p_search_outcome === 'results',
+      && englishOutcomeCalls[0].body.p_search_outcome === 'results'
+      && englishOutcomeCalls[0].body.p_result_count === english.results.length,
+    hosted_fallback_keeps_local_client_attribution: [
+      localizedHostedCall,
+      untaggedNonAsciiCall,
+      ...recommendationHostedCalls,
+    ].every((entry) => (
+      entry?.channel === 'local_mcp'
+      && entry?.environment === 'production'
+      && entry?.client_family === 'mcp_stdio'
+    )),
+    returned_icon_evidence_uses_local_venue: telemetryCalls
+      .filter((entry) => entry.url.endsWith('/rpc/si_log_icon_evidence'))
+      .every((entry) => entry.body.p_ui_surface === 'local_mcp'),
     telemetry_failure_does_not_fail_local_search: Array.isArray(telemetryFailureSearch.results)
       && telemetryFailureSearch.results.length > 0
       && callsAfterTelemetryFailure === callsBeforeTelemetryFailure,
