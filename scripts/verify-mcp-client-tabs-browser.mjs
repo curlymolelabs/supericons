@@ -145,6 +145,27 @@ try {
   assert.equal(await desktop.page.locator('[data-mcp-client="windsurf"]').getAttribute('aria-selected'), 'true');
   await desktop.page.locator('[data-mcp-client="windsurf"]').press('Home');
   assert.equal(await firstTab.getAttribute('aria-selected'), 'true');
+
+  const englishDocsUrl = new URL(baseUrl);
+  englishDocsUrl.searchParams.set('view', 'docs-access-api-keys');
+  await desktop.page.goto(englishDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await desktop.page.getByRole('heading', { name: 'Start free without a key' }).waitFor();
+  await desktop.page.getByText(
+    'You do not need an API key to search, preview, retrieve, or list free icons through local or hosted MCP.',
+    { exact: false },
+  ).waitFor();
+  await desktop.page.getByText(
+    'Today, API keys are available to accounts with an active Pro subscription or at least one pack purchase.',
+    { exact: true },
+  ).waitFor();
+
+  const germanDocsUrl = new URL(englishDocsUrl);
+  germanDocsUrl.searchParams.set('locale', 'de');
+  await desktop.page.goto(germanDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await desktop.page.getByText(
+    'Sie benötigen keinen API-Schlüssel, um kostenlose Symbole über lokales oder gehostetes MCP zu suchen',
+    { exact: false },
+  ).waitFor();
   await desktop.context.close();
 
   const mobile = await createPage(browser, { width: 390, height: 844 });
