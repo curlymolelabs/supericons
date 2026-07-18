@@ -81,6 +81,8 @@ function excludes(source, value, label) {
   'row.result_count_reason',
   'row.country_reason',
   'Lookup completed',
+  'Icon not found',
+  'recommendations',
   'Daily reach; exact searcher total unavailable.',
   'No sign-in recorded',
   'Last sign-in',
@@ -95,6 +97,7 @@ function excludes(source, value, label) {
   'Location not captured',
   'Visitor details not captured',
   'No data available',
+  'primary pick',
 ].forEach((value) => excludes(app, value, 'public/admin-app.js'));
 
 [

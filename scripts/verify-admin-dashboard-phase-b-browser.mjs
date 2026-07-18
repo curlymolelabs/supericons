@@ -121,6 +121,48 @@ const queryRows = [
     last_seen: '2026-07-17T07:31:00Z',
   },
   {
+    query: 'icon lookup missing',
+    library_filter: 'lucide',
+    query_origin: 'icon_lookup',
+    visitor_kind: 'anonymous',
+    client_label: '1 client',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'hosted_mcp',
+    result_count: 0,
+    result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'match',
+    issue_type: 'zero_result',
+    outcome_label: 'Not found',
+    attempt_count: 0,
+    activity_count: 1,
+    activity_kind: 'lookup',
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:30:30Z',
+  },
+  {
+    query: 'recommendation request',
+    library_filter: 'lucide',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: '1 client',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'local_mcp',
+    result_count: 8,
+    result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'primary_pick',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 1,
+    activity_count: 1,
+    activity_kind: 'search',
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:30:15Z',
+  },
+  {
     query: 'missing brand',
     library_filter: 'all',
     query_origin: 'agent_query',
@@ -748,7 +790,15 @@ try {
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
   ok((await iconLookupRow.innerText()).includes('1 lookup'), 'A successful icon lookup did not render its activity count.');
   ok((await iconLookupRow.innerText()).includes('Unknown searcher'), 'A lookup without an identity did not show an honest searcher state.');
-  ok((await iconLookupRow.innerText()).includes('1 match'), 'A successful icon lookup did not render one match.');
+  ok((await iconLookupRow.innerText()).includes('1 icon found'), 'A successful icon lookup did not identify the found icon.');
+  const missingLookupRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('icon lookup missing', { exact: true }),
+  });
+  ok((await missingLookupRow.innerText()).includes('Icon not found'), 'A failed icon lookup did not explain that the icon was not found.');
+  const recommendationRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('recommendation request', { exact: true }),
+  });
+  ok((await recommendationRow.innerText()).includes('8 recommendations'), 'A recommendation request did not use the approved returned-result wording.');
   const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup pending', { exact: true }),
   });

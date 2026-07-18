@@ -710,8 +710,8 @@ function countWithUnit(value, unit = 'icon') {
   const count = number(value);
   const labels = {
     icon: ['icon', 'icons'],
-    match: ['match', 'matches'],
-    primary_pick: ['primary pick', 'primary picks'],
+    match: ['icon found', 'icons found'],
+    primary_pick: ['recommendation', 'recommendations'],
   };
   const [singular, plural] = labels[unit] || labels.icon;
   return `${formatNumber(count)} ${count === 1 ? singular : plural}`;
@@ -791,6 +791,9 @@ function queryResultCell(row = {}) {
       ? 'Exact results recorded today within this grouped period'
       : row.result_count_reason || 'Result range across grouped activity';
     return `<span title="${escapeHtml(scope)}">${escapeHtml(range)} ${escapeHtml(countWithUnit(2, row.result_unit).replace(/^2 /, ''))}</span>`;
+  }
+  if (row.result_unit === 'match' && number(row.result_count ?? row.results) === 0) {
+    return 'Icon not found';
   }
   const value = countWithUnit(row.result_count ?? row.results, row.result_unit);
   if (row.result_count_scope !== 'current_day') return value;
