@@ -165,9 +165,47 @@ try {
   );
   await staleWindowPage.close();
 
+  const slowActivityPage = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await slowActivityPage.route(`${apiBase}/**`, async (route) => {
+    const url = new URL(route.request().url());
+    const path = url.pathname.replace('/functions/v1/admin-api', '');
+    if (path === '/v2/activity') {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
+    const payload = successPayload(path, url.searchParams.get('window') || '30d');
+    await route.fulfill({
+      status: payload ? 200 : 404,
+      headers: { 'access-control-allow-origin': '*' },
+      json: payload || { error: 'Missing fixture.' },
+    });
+  });
+  const slowActivityStarted = Date.now();
+  await openDashboard(slowActivityPage);
+  await slowActivityPage.waitForFunction(() => document.querySelector('#kpiSearches')?.textContent === '300');
+  const overviewReadyMs = Date.now() - slowActivityStarted;
+  ok(overviewReadyMs < 1000, `A slow Activity request blocked Overview for ${overviewReadyMs} ms.`);
+  ok(
+    await slowActivityPage.locator('#refreshButton').getAttribute('aria-busy') === 'true',
+    'The shell stopped reporting the still-running Activity request.',
+  );
+  await slowActivityPage.click('[data-section="intelligence"]');
+  await slowActivityPage.fill('#explorerSearch', 'concurrent refresh');
+  await slowActivityPage.dispatchEvent('#explorerSearch', 'input');
+  await slowActivityPage.waitForFunction(
+    () => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false',
+    null,
+    { timeout: 4000 },
+  );
+  await slowActivityPage.close();
+
   console.log(JSON.stringify({
     status: 'ok',
-    cases: ['all_endpoints_failed', 'window_change_failed'],
+    cases: [
+      'all_endpoints_failed',
+      'window_change_failed',
+      'slow_activity_does_not_block_overview',
+      'targeted_refresh_does_not_strand_other_panels',
+    ],
   }, null, 2));
 } finally {
   await browser.close();

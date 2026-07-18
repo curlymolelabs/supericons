@@ -56,7 +56,19 @@ try {
   ), null, { timeout: 120_000 });
 
   ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
-  ok(await page.evaluate(() => window.sessionStorage.getItem('si_admin_secret') === null), 'The browser stored the admin secret.');
+  ok(await page.evaluate(() => (
+    window.sessionStorage.getItem('si_admin_secret') === null
+    && window.localStorage.getItem('si_admin_secret') === null
+  )), 'The browser stored the admin secret.');
+  ok(await page.evaluate(() => (
+    [window.sessionStorage, window.localStorage].every((storage) => (
+      Object.values(storage).every((value) => (
+        !String(value).includes('@')
+        && !String(value).includes('"users"')
+        && !String(value).includes('"registered_users"')
+      ))
+    ))
+  )), 'Browser storage contains account or email-bearing payloads.');
   ok(await page.locator('.nav-button').count() === 3, 'The dashboard must have exactly three navigation sections.');
   ok(await page.getByText('Stats', { exact: true }).count() === 0, 'The Stats section still exists.');
   ok(await page.getByText('Audit Log', { exact: true }).count() === 0, 'The Audit Log section still exists.');
@@ -191,7 +203,6 @@ try {
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 120_000 });
   await page.waitForFunction(() => (
     !document.querySelector('#kpiClients')?.classList.contains('skeleton')
-      && document.querySelector('#latestActivity .activity-row')
   ), null, { timeout: 5_000 });
   const warmRenderMs = Date.now() - warmStart;
   ok(warmRenderMs < 1_000, `Warm cached content took ${warmRenderMs} ms to appear.`);

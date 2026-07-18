@@ -300,6 +300,26 @@ const queryRows = [
 }
 
 {
+  const [grouped] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'settings',
+    library_filter: 'all',
+    attempt_count: 4,
+    successful_attempt_count: 4,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    estimated_unique_clients: 2,
+    channels: ['hosted_mcp'],
+    countries: ['SG'],
+    query_origins: ['agent_query'],
+    audit_sources: ['mcp_usage_events'],
+    minimum_result_count: 2,
+  }]));
+  assert.equal(grouped.result_count, 2);
+  assert.equal(grouped.result_count_kind, 'minimum_across_attempts');
+  assert.equal(grouped.result_count_reason, 'Minimum result count across grouped attempts');
+}
+
+{
   const kpis = buildDashboardV2Kpis([
     {
       day: '2026-07-17',

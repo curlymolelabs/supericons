@@ -171,7 +171,7 @@
       font-weight: 700;
     }
     .period-button:hover, .small-button:hover, .tab-button:hover { color: var(--text); background: var(--panel-3); }
-    .period-button.active, .tab-button.active { border-color: transparent; color: var(--orange); background: var(--orange-soft); }
+    .period-button.active, .small-button.active, .tab-button.active { border-color: transparent; color: var(--orange); background: var(--orange-soft); }
     .filter-select, .date-input {
       height: 34px;
       border: 1px solid var(--line);
@@ -249,6 +249,31 @@
       place-items: center;
     }
     .panel-actions .icon-button svg { width: 15px; height: 15px; }
+    .inline-select {
+      max-width: 132px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 0 6px;
+      font-size: 11px;
+    }
+    .inline-select:disabled { opacity: 0.65; cursor: wait; }
+    .text-link {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      text-align: left;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
+    }
+    .text-link:hover, .text-link:focus-visible { color: var(--orange); text-decoration-color: currentColor; }
     .row-limit-control {
       display: inline-flex;
       align-items: center;
@@ -390,6 +415,8 @@
     .funnel-card { padding: 15px; border-radius: 12px; background: var(--panel-2); }
     .funnel-value { margin-top: 8px; font: 700 23px/1 ui-sans-serif, system-ui, sans-serif; }
     .funnel-note { margin-top: 7px; color: var(--dim); font-size: 11px; }
+    .funnel-spark { min-height: 30px; margin-top: 10px; }
+    .funnel-spark svg { display: block; width: 100%; height: 30px; overflow: visible; }
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -492,7 +519,7 @@
       <header class="topbar">
         <label class="global-search">
           <span>?</span>
-          <input id="globalSearch" type="search" placeholder="Search queries, icons, clients, or countries" autocomplete="off" />
+          <input id="globalSearch" type="search" aria-label="Search dashboard data" placeholder="Search queries, icons, clients, or countries" autocomplete="off" />
         </label>
         <div class="top-status" id="freshnessLine">Loading production data</div>
         <button class="refresh-button" id="refreshButton" type="button" aria-busy="false">Refresh</button>
@@ -500,14 +527,14 @@
 
       <div class="content">
         <div class="filter-bar" aria-label="Global dashboard filters">
-          <div class="periods" id="periodButtons">
-            <button class="period-button" data-window="1d" type="button">24h</button>
-            <button class="period-button" data-window="7d" type="button">7d</button>
-            <button class="period-button active" data-window="30d" type="button">30d</button>
-            <button class="period-button" data-window="90d" type="button">90d</button>
-            <button class="period-button" data-window="1y" type="button">12m</button>
-            <button class="period-button" data-window="all" type="button">All</button>
-            <button class="period-button" data-window="custom" type="button">Custom</button>
+          <div class="periods" id="periodButtons" role="group" aria-label="Dashboard period">
+            <button class="period-button" data-window="1d" type="button" aria-pressed="false">24h</button>
+            <button class="period-button" data-window="7d" type="button" aria-pressed="false">7d</button>
+            <button class="period-button active" data-window="30d" type="button" aria-pressed="true">30d</button>
+            <button class="period-button" data-window="90d" type="button" aria-pressed="false">90d</button>
+            <button class="period-button" data-window="1y" type="button" aria-pressed="false">12m</button>
+            <button class="period-button" data-window="all" type="button" aria-pressed="false">All</button>
+            <button class="period-button" data-window="custom" type="button" aria-pressed="false">Custom</button>
           </div>
           <div class="date-range" id="customRange" hidden>
             <input class="date-input" id="customFrom" type="date" aria-label="Custom range start" />
@@ -538,7 +565,7 @@
 
           <div class="grid-2">
             <article class="panel">
-              <div class="panel-head"><div><div class="panel-title">Searches over time</div><div class="panel-subtitle">Daily search volume split by venue</div></div><button class="small-button" data-export="series-searches" type="button">CSV</button></div>
+              <div class="panel-head"><div><div class="panel-title">Searches over time</div><div class="panel-subtitle">Daily search volume, total or split by venue</div></div><div class="panel-actions"><button class="small-button" data-search-chart-mode="total" type="button" aria-pressed="false">Total</button><button class="small-button active" data-search-chart-mode="venue" type="button" aria-pressed="true">Venues</button><button class="small-button" data-export="series-searches" type="button">CSV</button></div></div>
               <div class="panel-body"><div class="chart" id="searchesChart"><span class="skeleton" style="width:100%;height:190px"></span></div></div>
             </article>
             <article class="panel">
@@ -555,7 +582,7 @@
           <div class="grid-main-side">
             <article class="panel" data-row-key="topList" data-row-label="Top lists">
               <div class="panel-head">
-                <div><div class="panel-title">Top lists</div><div class="panel-subtitle" id="topListSubtitle">Top 50 for the selected period</div></div>
+                <div><div class="panel-title">Top lists</div><div class="panel-subtitle" id="topListSubtitle">Top results for the selected period</div></div>
                 <div class="panel-actions">
                   <button class="small-button" data-export="top-list-csv" type="button">CSV</button>
                   <button class="small-button" data-export="top-list-json" type="button">JSON</button>
@@ -589,7 +616,7 @@
           </div>
           <article class="panel" data-row-key="queries" data-row-label="Query explorer" style="margin-bottom:14px">
             <div class="panel-head"><div><div class="panel-title">Query explorer</div><div class="panel-subtitle">Use plain text or filters such as zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" type="button">CSV</button><button class="small-button" data-export="queries-json" type="button">JSON</button></div></div>
-            <div class="explorer-tools"><input id="explorerSearch" type="search" placeholder="Search every query" /><select class="filter-select" id="explorerIssue"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
+            <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query explorer" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
             <div class="table-wrap scroll-region" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
           </article>
 
@@ -605,11 +632,14 @@
           </div>
 
           <article class="panel" data-row-key="contact" data-row-label="Contact inbox">
-            <div class="panel-head"><div><div class="panel-title">Contact inbox</div><div class="panel-subtitle">Stored website contact-form messages</div></div></div>
+            <div class="panel-head"><div><div class="panel-title">Contact inbox</div><div class="panel-subtitle">Stored website contact-form messages</div></div><div class="panel-actions"><button class="small-button" data-export="contact-csv" type="button">CSV</button><button class="small-button" data-export="contact-json" type="button">JSON</button></div></div>
             <div class="table-wrap scroll-region" id="contactInbox"><div class="empty">Loading contact submissions</div></div>
             <details id="diagnosticsDrawer">
               <summary>Diagnostics and raw data access</summary>
-              <div class="panel-body" id="diagnosticsContent">Loading diagnostics</div>
+              <div class="panel-body">
+                <div class="panel-actions" style="justify-content:flex-end;margin-bottom:10px"><button class="small-button" data-export="diagnostics-csv" type="button">CSV</button><button class="small-button" data-export="diagnostics-json" type="button">JSON</button></div>
+                <div id="diagnosticsContent">Loading diagnostics</div>
+              </div>
             </details>
           </article>
         </section>
@@ -622,9 +652,9 @@
             <div class="panel-head"><div><div class="panel-title">Audience funnel</div><div class="panel-subtitle">Search activity links to an account only when the request sends an API key. Registered users lists every account.</div></div></div>
             <div class="panel-body">
               <div class="funnel">
-                <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div></div>
-                <div class="funnel-card"><div class="kpi-label">Registered</div><div class="funnel-value skeleton" id="funnelRegistered">000</div><div class="funnel-note" id="funnelRegisteredNote">Loading</div></div>
-                <div class="funnel-card"><div class="kpi-label">Pro</div><div class="funnel-value skeleton" id="funnelPro">000</div><div class="funnel-note" id="funnelProNote">Loading</div></div>
+                <div class="funnel-card"><div class="kpi-label">Unique clients</div><div class="funnel-value skeleton" id="funnelClients">000</div><div class="funnel-note" id="funnelClientsNote">Loading</div><div class="funnel-spark" id="funnelClientsSpark"></div></div>
+                <div class="funnel-card"><div class="kpi-label">Registered</div><div class="funnel-value skeleton" id="funnelRegistered">000</div><div class="funnel-note" id="funnelRegisteredNote">Loading</div><div class="funnel-spark" id="funnelRegisteredSpark"></div></div>
+                <div class="funnel-card"><div class="kpi-label">Pro</div><div class="funnel-value skeleton" id="funnelPro">000</div><div class="funnel-note" id="funnelProNote">Loading</div><div class="funnel-spark" id="funnelProSpark"></div></div>
                 <div class="funnel-card"><div class="kpi-label">MRR</div><div class="funnel-value" id="funnelMrr">Unavailable</div><div class="funnel-note" id="funnelMrrNote">Waiting for an exact billing price source</div></div>
               </div>
               <div class="chart" id="audienceChart" style="min-height:170px;margin-top:14px"><span class="skeleton" style="width:100%;height:150px"></span></div>
@@ -645,12 +675,12 @@
     </main>
   </div>
 
-  <div class="modal-overlay open" id="adminSecretModal" aria-hidden="false">
+  <div class="modal-overlay open" id="adminSecretModal" aria-hidden="false" role="dialog" aria-modal="true" aria-labelledby="adminSecretTitle" aria-describedby="adminSecretLead">
     <div class="modal">
-      <h2>Connect the admin API</h2>
+      <h2 id="adminSecretTitle">Connect the admin API</h2>
       <p id="adminSecretLead">Enter the current admin secret for this browser tab. The local managed gateway skips this step.</p>
       <form id="adminSecretForm">
-        <input id="adminSecretInput" type="password" autocomplete="off" placeholder="Admin secret" />
+        <input id="adminSecretInput" type="password" autocomplete="off" aria-label="Admin secret" placeholder="Admin secret" />
         <div class="form-error" id="adminSecretError"></div>
         <div class="modal-actions">
           <button class="small-button" id="adminSecretCancelBtn" type="button" hidden>Cancel</button>

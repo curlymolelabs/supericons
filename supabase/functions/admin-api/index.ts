@@ -1811,7 +1811,12 @@ async function buildDashboardV2ActivityPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
-  const limit = parsePositiveInt(url.searchParams.get('limit'), 50, 100);
+  const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
+  const pageSize = parsePositiveInt(
+    url.searchParams.get('page_size') || url.searchParams.get('limit'),
+    50,
+    100,
+  );
   const telemetry = await fetchDashboardV2Telemetry(adminClient, filters);
   const telemetryRows = telemetry.rows;
   let overviewRows: Array<Record<string, unknown>>;
@@ -1842,14 +1847,24 @@ async function buildDashboardV2ActivityPayload(
     ];
   }
   const series = buildDashboardV2Series(overviewRows, telemetryRows);
+  const sortedRows = telemetryRows
+    .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')));
+  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const start = (currentPage - 1) * pageSize;
   return {
-    activity: telemetryRows
-      .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')))
-      .slice(0, limit)
+    activity: sortedRows
+      .slice(start, start + pageSize)
       .map(compactDashboardV2ActivityRow),
     channel_counts: channelCountsFromSeries(series),
+    pagination: {
+      page: currentPage,
+      page_size: pageSize,
+      total: sortedRows.length,
+      page_count: pageCount,
+    },
     meta: dashboardV2Meta(filters, startedAt, {
-      row_limit: limit,
+      row_limit: pageSize,
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: telemetry.truncated,
     }),
@@ -1977,7 +1992,7 @@ async function fetchDashboardV2IconRequests(
   }
   let query = adminClient
     .from('icon_evidence')
-    .select('id, evidence_text, session_hash, created_at')
+    .select('id, evidence_text, session_hash, created_at', { count: 'exact' })
     .eq('signal_type', 'search_attempt')
     .eq('ui_surface', 'grid_empty_feedback')
     .not('evidence_text', 'is', null)
@@ -1985,14 +2000,14 @@ async function fetchDashboardV2IconRequests(
     .limit(100);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     if (isMissingRelationError(error) || isMissingColumnError(error)) {
       return { available: false, reason: 'The icon request source is not available in this environment.', rows: [] };
     }
     throw error;
   }
-  const rows = ((data || []) as Array<Record<string, unknown>>)
+  const sourceRows = ((data || []) as Array<Record<string, unknown>>)
     .filter((row) => String(row.evidence_text || '').trim())
     .map((row) => ({
       id: row.id,
@@ -2002,7 +2017,81 @@ async function fetchDashboardV2IconRequests(
       country_code: null,
       created_at: row.created_at,
     }));
-  return { available: true, rows };
+  if (Number(count || 0) > sourceRows.length) {
+    return {
+      available: false,
+      reason: 'Complete icon requests exceed the safe inbox limit. Choose a shorter date range.',
+      status_available: false,
+      rows: [],
+    };
+  }
+  if (!sourceRows.length) {
+    return { available: true, status_available: true, rows: [] };
+  }
+
+  const { data: reviewData, error: reviewError } = await adminClient
+    .from('admin_icon_request_reviews')
+    .select('icon_evidence_id, status, note, updated_at')
+    .in('icon_evidence_id', sourceRows.map((row) => row.id));
+  if (reviewError && !isMissingRelationError(reviewError)) throw reviewError;
+  const reviews = new Map(
+    ((reviewData || []) as Array<Record<string, unknown>>)
+      .map((row) => [String(row.icon_evidence_id || ''), row]),
+  );
+  return {
+    available: true,
+    status_available: !reviewError,
+    status_reason: reviewError
+      ? 'Request review status is not available until the dashboard review migration is applied.'
+      : null,
+    rows: sourceRows.map((row) => {
+      const review = reviews.get(String(row.id || ''));
+      return {
+        ...row,
+        status: review?.status || 'new',
+        review_note: review?.note || null,
+        reviewed_at: review?.updated_at || null,
+      };
+    }),
+  };
+}
+
+async function handleDashboardV2IconRequestReview(
+  req: Request,
+  adminClient: SupabaseClient,
+  body: JsonRecord,
+) {
+  const iconEvidenceId = String(body.icon_evidence_id || '').trim();
+  const status = normalizeSearchQuery(body.status);
+  if (!iconEvidenceId) {
+    return jsonResponse(req, { error: 'icon_evidence_id is required' }, 400);
+  }
+  if (!['new', 'planned', 'added', 'declined'].includes(status)) {
+    return jsonResponse(req, { error: 'status must be one of: new, planned, added, declined' }, 400);
+  }
+  const note = typeof body.note === 'string' ? body.note.trim() || null : null;
+  const { data, error } = await adminClient
+    .from('admin_icon_request_reviews')
+    .upsert({
+      icon_evidence_id: iconEvidenceId,
+      status,
+      note,
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'icon_evidence_id',
+    })
+    .select('icon_evidence_id, status, note, updated_at')
+    .single();
+  if (error) {
+    if (isMissingRelationError(error)) {
+      return jsonResponse(req, {
+        error: 'Request review status is not available until the dashboard review migration is applied.',
+      }, 409);
+    }
+    throw error;
+  }
+  v2DashboardCache.clear();
+  return jsonResponse(req, { success: true, review: data });
 }
 
 async function fetchDashboardV2Contacts(
@@ -2014,12 +2103,12 @@ async function fetchDashboardV2Contacts(
   }
   let query = adminClient
     .from('contact_submissions')
-    .select('id, name, email, interest, message, created_at')
+    .select('id, name, email, interest, message, created_at', { count: 'exact' })
     .order('created_at', { ascending: false })
     .limit(100);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     if (isMissingRelationError(error) || isMissingColumnError(error)) {
       return { available: false, reason: 'Stored contact submissions are not available in this environment.', rows: [] };
@@ -2027,6 +2116,13 @@ async function fetchDashboardV2Contacts(
     throw error;
   }
   const rows = (data || []) as Array<Record<string, unknown>>;
+  if (Number(count || 0) > rows.length) {
+    return {
+      available: false,
+      reason: 'Complete contact submissions exceed the safe inbox limit. Choose a shorter date range.',
+      rows: [],
+    };
+  }
   const filtered = filters.q && !filters.q.includes(':')
     ? rows.filter((row) => (
       [row.name, row.email, row.interest, row.message]
@@ -2080,7 +2176,7 @@ async function buildDashboardV2SearchPayload(
         || (right.true_zero_count + right.low_result_count) - (left.true_zero_count + left.low_result_count)
         || String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
       ))
-      .slice(0, 50),
+      .slice(0, 100),
   );
   const rollupUnavailableReason = dataRows.rollup_truncated
     ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
@@ -3141,7 +3237,8 @@ function csvCell(value: unknown) {
   if (Array.isArray(value)) {
     return csvCell(value.join('|'));
   }
-  const text = String(value ?? '');
+  const raw = String(value ?? '');
+  const text = /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
   if (!/[",\n\r]/.test(text)) return text;
   return `"${text.replaceAll('"', '""')}"`;
 }
@@ -5050,6 +5147,17 @@ serve(async (req) => {
       && ['activity', 'overview', 'search', 'audience'].includes(segments[1])
     ) {
       return await handleDashboardV2(req, adminClient, url, segments[1]);
+    }
+
+    if (
+      req.method === 'POST'
+      && segments.length === 3
+      && segments[0] === 'v2'
+      && segments[1] === 'icon-requests'
+      && segments[2] === 'review'
+    ) {
+      const body = await req.json().catch(() => ({})) as JsonRecord;
+      return await handleDashboardV2IconRequestReview(req, adminClient, body);
     }
 
     if (req.method === 'GET' && segments.length === 1 && segments[0] === 'users') {

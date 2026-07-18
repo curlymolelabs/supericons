@@ -27,7 +27,7 @@ function sendJson(response, status, payload) {
 }
 
 function staticPathFor(root, pathname) {
-  if (pathname === '/' || pathname === '/admin.html') return resolve(root, 'admin.html');
+  if (pathname === '/' || pathname === '/admin' || pathname === '/admin.html') return resolve(root, 'admin.html');
   if (pathname === '/admin-app.js') return resolve(root, 'public', 'admin-app.js');
   if (!pathname.startsWith('/assets/')) return null;
   const candidate = resolve(root, pathname.replace(/^\/+/, ''));
@@ -140,7 +140,7 @@ export async function startAdminDashboardPhaseBLiveServer({
     }),
     host,
     port: activePort,
-    url: `http://${host}:${activePort}/admin.html`,
+    url: `http://${host}:${activePort}/admin`,
   };
 }
 

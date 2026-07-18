@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { readFile } from 'node:fs/promises';
 import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
 
 const server = await startAdminDashboardPhaseBLiveServer({
@@ -8,6 +9,7 @@ const server = await startAdminDashboardPhaseBLiveServer({
 });
 const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 const requests = [];
+const writes = [];
 let requestRound = 0;
 const registeredRows = Array.from({ length: 23 }, (_, index) => ({
   user_id: `user-${index + 1}`,
@@ -121,6 +123,23 @@ const queryRows = [
     attempt_count: 5,
     zero_attempt_count: 5,
     last_seen: '2026-07-17T07:30:00Z',
+  },
+  {
+    query: '=SUM(1,1)',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    client_label: '1 client',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'web',
+    result_count: 1,
+    result_count_available: true,
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 1,
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:25:00Z',
   },
   ...Array.from({ length: 55 }, (_, index) => ({
     query: `healthy query ${index + 1}`,
@@ -267,11 +286,14 @@ function responseFor(path, searchParams = new URLSearchParams()) {
       worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
       icon_requests: {
         available: true,
+        status_available: true,
         rows: [{
+          id: '11111111-1111-4111-8111-111111111111',
           request_text: 'A better database migration icon',
           visitor_kind: 'anonymous',
           client_label: 'anon:req123',
           country_code: 'SG',
+          status: 'new',
           created_at: '2026-07-17T06:00:00Z',
         }],
       },
@@ -353,6 +375,21 @@ const page = await browser.newPage({ viewport: { width: 1024, height: 1000 } });
 await page.route(`${apiBase}/**`, async (route) => {
   const url = new URL(route.request().url());
   const path = url.pathname.replace('/functions/v1/admin-api', '');
+  if (route.request().method() === 'POST') {
+    const body = route.request().postDataJSON();
+    writes.push({ path, body });
+    await route.fulfill({
+      status: 200,
+      headers: { 'access-control-allow-origin': '*' },
+      json: {
+        success: true,
+        review: path.includes('icon-requests')
+          ? { icon_evidence_id: body.icon_evidence_id, status: body.status }
+          : { normalized_query: body.query, status: body.status },
+      },
+    });
+    return;
+  }
   requests.push({ path, search: url.search });
   requestRound += 1;
   if (requestRound > 4) await new Promise((resolve) => setTimeout(resolve, 450));
@@ -366,11 +403,34 @@ await page.route(`${apiBase}/**`, async (route) => {
 
 try {
   await page.goto(server.url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+  ok(await page.locator('#adminSecretModal').getAttribute('role') === 'dialog', 'The admin access prompt has no dialog role.');
+  ok(await page.locator('#adminSecretModal').getAttribute('aria-modal') === 'true', 'The admin access prompt is not modal.');
+  await page.waitForFunction(() => document.activeElement?.id === 'adminSecretInput');
+  await page.focus('#adminSecretSubmitBtn');
+  await page.keyboard.press('Tab');
+  ok(await page.evaluate(() => document.activeElement?.id === 'adminSecretInput'), 'Tab escaped the admin access dialog.');
   await page.fill('#adminSecretInput', 'mock-secret');
   await page.click('#adminSecretSubmitBtn');
   await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '32');
 
   ok(await page.locator('.nav-button').count() === 3, 'The dashboard must have exactly three navigation sections.');
+  const unnamedControls = await page.locator('button, input, select').evaluateAll((elements) => elements.flatMap((element) => {
+    if (!(element instanceof HTMLElement) || element.offsetParent === null) return [];
+    const label = element.getAttribute('aria-label')
+      || element.getAttribute('title')
+      || element.textContent?.trim()
+      || element.closest('label')?.textContent?.trim();
+    return label ? [] : [element.outerHTML.slice(0, 120)];
+  }));
+  ok(unnamedControls.length === 0, `Visible controls lack accessible names: ${JSON.stringify(unnamedControls)}`);
+  ok(
+    await page.locator('[data-window="30d"]').getAttribute('aria-pressed') === 'true',
+    'The selected dashboard period is not announced.',
+  );
+  const unfocusableScrollRegions = await page.locator('.scroll-region').evaluateAll(
+    (regions) => regions.filter((region) => region.tabIndex < 0).map((region) => region.id || region.className),
+  );
+  ok(unfocusableScrollRegions.length === 0, `Scroll regions are not keyboard reachable: ${unfocusableScrollRegions.join(', ')}`);
   ok(await page.getByText('Stats', { exact: true }).count() === 0, 'The Stats section still exists.');
   ok(await page.getByText('Audit Log', { exact: true }).count() === 0, 'The Audit Log section still exists.');
   ok(await page.locator('#kpiSearches').innerText() === '128', 'Real search KPI is incorrect.');
@@ -387,8 +447,13 @@ try {
 
   const channelOptions = await page.locator('#channelFilter option').allTextContents();
   ok(channelOptions.some((value) => value.includes('Web (10)')), 'The venue selector does not show live counts.');
-  ok(!channelOptions.some((value) => value.startsWith('CLI')), 'An empty venue was not hidden.');
+  ok(channelOptions.some((value) => value === 'Local MCP (0)'), 'The stable venue selector hides Local MCP when its count is zero.');
+  ok(channelOptions.some((value) => value === 'CLI (0)'), 'The stable venue selector hides CLI when its count is zero.');
   ok(await page.locator('#searchesChart svg').count() === 1, 'The search chart did not render inline SVG.');
+  await page.click('[data-search-chart-mode="total"]');
+  ok(await page.locator('[data-search-chart-mode="total"]').getAttribute('aria-pressed') === 'true', 'The total search chart mode was not selected.');
+  ok((await page.locator('#searchesChart').innerText()).includes('Total'), 'The total search chart legend is missing.');
+  await page.click('[data-search-chart-mode="venue"]');
   ok(await page.locator('#qualityChart').innerText().then((text) => !text.includes('No chart')), 'The quality chart did not render.');
   const chartFontSizes = await page.locator('#section-overview .chart svg text').evaluateAll(
     (nodes) => nodes.map((node) => {
@@ -404,6 +469,14 @@ try {
   ok((await page.locator('#topListTable').innerText()).includes('linkage is incomplete'), 'Returned-icon coverage was not explained.');
   await page.click('[data-top-list="copied"]');
   ok((await page.locator('#topListTable').innerText()).includes('lucide:database'), 'Copied icons did not render.');
+  await page.click('[data-top-list="zero"]');
+  await page.click('[data-open-worklist="missing brand"]');
+  await page.waitForSelector('#section-intelligence:not([hidden])');
+  ok(await page.locator('#explorerSearch').inputValue() === 'missing brand', 'Top zero did not open the matching worklist query.');
+  await page.waitForFunction(() => (
+    document.querySelector('#queryExplorer tbody tr')
+      && document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
+  ));
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
@@ -436,6 +509,25 @@ try {
   await page.selectOption('[data-row-limit="queries"]', '50');
   await page.waitForFunction(() => document.querySelectorAll('#queryExplorer tbody tr').length === 50);
   ok(requests.some((request) => request.path === '/v2/search' && request.search.includes('page_size=50')), 'The 50-row query page was not requested from the API.');
+  const unrelatedBeforeExplorerFilter = requests.filter((request) => request.path !== '/v2/search').length;
+  const filteredSearchRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('q')?.includes('healthy')
+  ));
+  await page.fill('#explorerSearch', 'healthy');
+  await filteredSearchRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  ok(
+    requests.filter((request) => request.path !== '/v2/search').length === unrelatedBeforeExplorerFilter,
+    'Explorer filtering reloaded an unrelated dashboard endpoint.',
+  );
+  const clearedSearchRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && !new URL(request.url()).searchParams.get('q')
+  ));
+  await page.fill('#explorerSearch', '');
+  await clearedSearchRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const scrollStyle = await page.locator('#queryExplorer').evaluate((element) => {
     const style = getComputedStyle(element);
     return {
@@ -484,7 +576,14 @@ try {
   ok((await pendingLookupRow.innerText()).includes('Lookup completed'), 'The unavailable icon lookup result state was not explained.');
   ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
   ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
-  for (const key of ['gap-worklist-csv', 'gap-worklist-json', 'icon-requests-csv', 'icon-requests-json']) {
+  await page.selectOption('[data-query-review]', 'needs_alias');
+  await page.waitForFunction(() => window.__operatorWriteWait === undefined);
+  await page.waitForTimeout(50);
+  ok(writes.some((write) => write.path === '/intelligence/search/review' && write.body.status === 'needs_alias'), 'Gap WHY triage did not save through the existing review boundary.');
+  await page.selectOption('[data-icon-request-review]', 'planned');
+  await page.waitForTimeout(50);
+  ok(writes.some((write) => write.path === '/v2/icon-requests/review' && write.body.status === 'planned'), 'Icon request status did not save.');
+  for (const key of ['gap-worklist-csv', 'gap-worklist-json', 'icon-requests-csv', 'icon-requests-json', 'contact-csv', 'contact-json']) {
     ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
   }
   const gapDownload = page.waitForEvent('download');
@@ -493,6 +592,16 @@ try {
   const requestDownload = page.waitForEvent('download');
   await page.click('[data-export="icon-requests-json"]');
   ok((await requestDownload).suggestedFilename().endsWith('.json'), 'The icon request JSON export failed.');
+  const contactDownload = page.waitForEvent('download');
+  await page.click('[data-export="contact-csv"]');
+  ok((await contactDownload).suggestedFilename().endsWith('.csv'), 'The contact CSV export failed.');
+  const queryDownload = page.waitForEvent('download');
+  await page.click('[data-export="queries-csv"]');
+  const queryExport = await queryDownload;
+  const queryExportPath = await queryExport.path();
+  const queryExportText = await readFile(queryExportPath, 'utf8');
+  ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
+  ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');
@@ -500,6 +609,8 @@ try {
   await assertPanelActionsStayOnOneLine(page, '#section-audience:not([hidden])');
   ok(await page.locator('#funnelRegistered').innerText() === '23', 'Registered funnel count is incorrect.');
   ok(await page.locator('#funnelPro').innerText() === '2', 'Pro funnel count is incorrect.');
+  ok(await page.locator('#funnelRegisteredSpark svg').count() === 1, 'The registered funnel sparkline is missing.');
+  ok(await page.locator('#funnelProSpark svg').count() === 1, 'The Pro funnel sparkline is missing.');
   ok(await page.locator('#audienceChart svg').getAttribute('aria-label') === 'Account-linked search clients over time', 'The audience chart does not explain that it measures API-key-linked search activity.');
   ok((await page.locator('#registeredUsers').innerText()).includes('pro_monthly'), 'Registered users did not render.');
   ok((await page.locator('#registeredUsersSubtitle').innerText()).includes('23 total users'), 'The registered-user total is missing.');
@@ -534,21 +645,69 @@ try {
   await page.click('#applyCustomRange');
   await page.waitForTimeout(700);
   ok(requests.some((request) => request.search.includes('window=custom') && request.search.includes('from=2026-07-15') && request.search.includes('to=2026-07-17')), 'Custom date filters were not sent to the API.');
+  ok(
+    requests.filter((request) => request.path === '/users').length === 1,
+    'Filter changes reloaded the all-account directory.',
+  );
 
   const download = page.waitForEvent('download');
   await page.click('[data-export="registered-users"]');
   const downloaded = await download;
   ok(downloaded.suggestedFilename().endsWith('.csv'), 'The list export did not create a CSV file.');
 
+  const thirtyDayOverviewResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return url.pathname.endsWith('/v2/overview')
+      && url.searchParams.get('window') === '30d';
+  });
   await page.click('[data-window="30d"]');
+  await thirtyDayOverviewResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
   ), null, { timeout: 5000 });
-  const warmStarted = Date.now();
+  const cachedOverviewBeforeReload = await page.evaluate(() => {
+    const key = Object.keys(window.localStorage)
+      .find((candidate) => candidate.includes('si_admin_dashboard_v2_cache:overview:'));
+    return key ? JSON.parse(window.localStorage.getItem(key) || 'null') : null;
+  });
+  ok(
+    cachedOverviewBeforeReload?.payload?.__partial === true
+      && cachedOverviewBeforeReload?.payload?.kpis?.estimated_unique_clients === 32,
+    `The warm aggregate Overview cache was not written before reload: ${JSON.stringify(cachedOverviewBeforeReload)}`,
+  );
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => document.querySelector('#kpiClients')?.textContent === '32');
-  const warmMs = Date.now() - warmStarted;
+  ok(await page.locator('#adminSecretModal.open').count() === 1, 'Direct development mode persisted its secret across reload.');
+  ok(
+    await page.evaluate(() => (
+      window.sessionStorage.getItem('si_admin_secret') === null
+      && window.localStorage.getItem('si_admin_secret') === null
+    )),
+    'Direct development mode stored the admin secret.',
+  );
+  const cacheKeysAfterReload = await page.evaluate(() => Object.keys(window.localStorage));
+  ok(
+    cacheKeysAfterReload.some((candidate) => candidate.endsWith(
+      ':overview:/v2/overview?window=30d&channel=all&include_test=false',
+    )),
+    `Reload removed the warm aggregate Overview cache: ${JSON.stringify(cacheKeysAfterReload)}`,
+  );
+  await page.fill('#adminSecretInput', 'mock-secret');
+  await page.evaluate(() => {
+    window.__warmRenderStartedAt = performance.now();
+    window.__warmRenderAt = null;
+    const target = document.querySelector('#kpiClients');
+    const observer = new MutationObserver(() => {
+      if (target?.textContent === '32') {
+        window.__warmRenderAt = performance.now();
+        observer.disconnect();
+      }
+    });
+    observer.observe(target, { childList: true, characterData: true, subtree: true });
+  });
+  await page.click('#adminSecretSubmitBtn');
+  await page.waitForFunction(() => Number.isFinite(window.__warmRenderAt), null, { polling: 20 });
+  const warmMs = await page.evaluate(() => window.__warmRenderAt - window.__warmRenderStartedAt);
   ok(warmMs < 500, `Warm cached content took ${warmMs} ms to appear.`);
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

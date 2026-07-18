@@ -13,6 +13,8 @@
 -- - Hosted search and remote MCP writers keep their existing contracts.
 -- - No table, column, constraint, or index is added or removed.
 
+begin;
+
 create or replace function public.si_normalize_local_mcp_search_audit_attribution()
 returns trigger
 language plpgsql
@@ -236,3 +238,5 @@ update public.icon_evidence
 set ui_surface = 'local_mcp'
 where signal_type = 'mcp_call'
   and ui_surface = 'mcp';
+
+commit;

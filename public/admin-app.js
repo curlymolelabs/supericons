@@ -4,13 +4,15 @@ const ADMIN_API_BASE = String(
     || 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api',
 ).replace(/\/+$/, '');
 const ADMIN_API_MANAGED_AUTH = ADMIN_RUNTIME_CONFIG.managedAuth === true;
-const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
 const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
+const REQUEST_TIMEOUT_MS = 15_000;
 const DEFAULT_ROW_LIMIT = 25;
 const ROW_LIMIT_OPTIONS = [25, 50, 100];
 const CHART_FONT_SIZE = 14;
-const SERVER_PAGINATED_LISTS = new Set(['queries', 'clients']);
+const SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'clients']);
+const memoryCache = new Map();
+let adminSecretMemory = '';
 
 const WINDOW_LABELS = {
   '1d': 'Last 24 hours',
@@ -32,6 +34,7 @@ const CHANNEL_LABELS = {
   internal_test: 'Test',
   unknown: 'Unclassified',
 };
+const STANDARD_CHANNELS = ['web', 'hosted_mcp', 'local_mcp', 'api', 'cli'];
 
 const ORIGIN_LABELS = {
   agent_query: 'User query',
@@ -53,6 +56,7 @@ const state = {
   explorerQuery: '',
   explorerIssue: '',
   topList: 'searched',
+  searchChartMode: 'venue',
   showRegisteredEmails: false,
   rowLimits: {
     topList: DEFAULT_ROW_LIMIT,
@@ -89,7 +93,10 @@ const state = {
   refreshStartedAt: null,
   toastTimer: null,
   adminSecretPrompt: null,
+  modalReturnFocus: null,
+  savingRows: new Set(),
   requestToken: 0,
+  endpointTokens: {},
 };
 
 function $(id) {
@@ -277,14 +284,12 @@ function showToast(message, isError = false) {
 
 function getAdminSecret() {
   if (ADMIN_API_MANAGED_AUTH) return '';
-  return window.sessionStorage.getItem(ADMIN_SECRET_STORAGE_KEY) || '';
+  return adminSecretMemory;
 }
 
 function setAdminSecret(secret) {
   if (ADMIN_API_MANAGED_AUTH) return;
-  const value = String(secret || '').trim();
-  if (value) window.sessionStorage.setItem(ADMIN_SECRET_STORAGE_KEY, value);
-  else window.sessionStorage.removeItem(ADMIN_SECRET_STORAGE_KEY);
+  adminSecretMemory = String(secret || '').trim();
 }
 
 function setAdminSecretError(message = '') {
@@ -299,6 +304,8 @@ function closeAdminSecretModal() {
   modal?.classList.remove('open');
   modal?.setAttribute('aria-hidden', 'true');
   if (modal && ADMIN_API_MANAGED_AUTH) modal.style.display = 'none';
+  if (state.modalReturnFocus instanceof HTMLElement) state.modalReturnFocus.focus();
+  state.modalReturnFocus = null;
 }
 
 function openAdminSecretModal({ force = false, error = '' } = {}) {
@@ -320,6 +327,7 @@ function openAdminSecretModal({ force = false, error = '' } = {}) {
 
   overlay.classList.add('open');
   overlay.setAttribute('aria-hidden', 'false');
+  state.modalReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   input.value = '';
   setAdminSecretError(error);
   if (cancel) cancel.hidden = !existing;
@@ -393,16 +401,33 @@ async function apiRequest(path, options = {}, retry = true) {
   const requestUrl = method === 'GET'
     ? `${ADMIN_API_BASE}${path}${path.includes('?') ? '&' : '?'}_ts=${Date.now()}`
     : `${ADMIN_API_BASE}${path}`;
-  const response = await fetch(requestUrl, {
-    ...options,
-    method,
-    cache: 'no-store',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(secret ? { 'x-admin-secret': secret } : {}),
-      ...(options.headers || {}),
-    },
-  });
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  if (options.signal) {
+    if (options.signal.aborted) controller.abort();
+    else options.signal.addEventListener('abort', () => controller.abort(), { once: true });
+  }
+  let response;
+  try {
+    response = await fetch(requestUrl, {
+      ...options,
+      method,
+      cache: 'no-store',
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(secret ? { 'x-admin-secret': secret } : {}),
+        ...(options.headers || {}),
+      },
+    });
+  } catch (error) {
+    if (error?.name === 'AbortError') {
+      throw new Error(`The ${method} request timed out after ${REQUEST_TIMEOUT_MS / 1000} seconds.`);
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+  }
   let payload = {};
   try {
     payload = await response.json();
@@ -441,7 +466,10 @@ function sharedParams({ forSearch = false } = {}) {
 function endpointPath(endpoint) {
   if (endpoint === 'accounts') return '/users?page=all';
   const params = sharedParams({ forSearch: endpoint === 'search' });
-  if (endpoint === 'activity') params.set('limit', '100');
+  if (endpoint === 'activity') {
+    params.set('page', String(currentPage('activity')));
+    params.set('page_size', String(rowLimit('activity')));
+  }
   if (endpoint === 'search') {
     params.set('page', String(currentPage('queries')));
     params.set('page_size', String(rowLimit('queries')));
@@ -467,34 +495,60 @@ function cacheKey(endpoint) {
 }
 
 function readCache(endpoint) {
-  try {
-    const value = JSON.parse(window.sessionStorage.getItem(cacheKey(endpoint)) || 'null');
-    if (!value || !value.payload || !Number.isFinite(value.savedAt)) return null;
-    return value;
-  } catch {
-    return null;
+  let value = memoryCache.get(cacheKey(endpoint)) || null;
+  if (!value && endpoint === 'overview') {
+    try {
+      value = JSON.parse(
+        window.localStorage.getItem(cacheKey(endpoint))
+          || window.sessionStorage.getItem(cacheKey(endpoint))
+          || 'null',
+      );
+    } catch {
+      value = null;
+    }
   }
+  if (!value || !value.payload || !Number.isFinite(value.savedAt)) return null;
+  return value;
 }
 
 function writeCache(endpoint, payload) {
-  try {
-    window.sessionStorage.setItem(cacheKey(endpoint), JSON.stringify({
-      payload,
-      savedAt: Date.now(),
-    }));
-  } catch {
-    // The dashboard still works when browser storage is unavailable.
+  const value = {
+    payload,
+    savedAt: Date.now(),
+  };
+  memoryCache.set(cacheKey(endpoint), value);
+  if (endpoint === 'overview') {
+    try {
+      window.localStorage.setItem(cacheKey(endpoint), JSON.stringify({
+        savedAt: value.savedAt,
+        payload: {
+          __partial: true,
+          kpis: payload.kpis,
+          series: payload.series,
+          outage_spans: payload.outage_spans,
+          meta: payload.meta,
+        },
+      }));
+      window.sessionStorage.removeItem(cacheKey(endpoint));
+    } catch {
+      // The current page still uses its memory cache.
+    }
   }
 }
 
 function clearDashboardCache() {
-  try {
-    for (let index = window.sessionStorage.length - 1; index >= 0; index -= 1) {
-      const key = window.sessionStorage.key(index);
-      if (key?.startsWith(CACHE_PREFIX)) window.sessionStorage.removeItem(key);
+  for (const key of memoryCache.keys()) {
+    if (key.startsWith(CACHE_PREFIX)) memoryCache.delete(key);
+  }
+  for (const storage of [window.localStorage, window.sessionStorage]) {
+    try {
+      for (let index = storage.length - 1; index >= 0; index -= 1) {
+        const key = storage.key(index);
+        if (key?.startsWith(CACHE_PREFIX)) storage.removeItem(key);
+      }
+    } catch {
+      // A network refresh is sufficient when browser storage is unavailable.
     }
-  } catch {
-    // Refreshing from the API is sufficient when browser storage is unavailable.
   }
 }
 
@@ -616,6 +670,9 @@ function queryResultCell(row = {}) {
   if (row.result_count_available === false) {
     return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not available for this view')}</span>`;
   }
+  if (row.result_count_kind === 'minimum_across_attempts') {
+    return `<span title="${escapeHtml(row.result_count_reason || 'Minimum result count across grouped attempts')}">${formatNumber(row.result_count ?? row.results)} min</span>`;
+  }
   return formatNumber(row.result_count ?? row.results);
 }
 
@@ -640,7 +697,8 @@ function table(headers, rows, emptyReason) {
 }
 
 function csvCell(value) {
-  const text = String(value ?? '');
+  const raw = String(value ?? '');
+  const text = /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
   return `"${text.replaceAll('"', '""')}"`;
 }
 
@@ -804,9 +862,41 @@ function renderLineChart(element, series, lines, options = {}) {
   element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(options.label || 'Trend chart')}">${grid}${outageSpans}${paths}${legend}${axisLabels(points, xFor, width, height, left, bottom)}</svg>`;
 }
 
-function renderSearchBars(element, series) {
+function renderSparkline(element, series, field, label, color) {
   if (!element) return;
-  const rows = chartRows(series).filter((row) => String(row.channel || row.venue || '') !== 'all');
+  const points = aggregateDays(series, [field])
+    .filter((row) => row[field] !== null && row[field] !== undefined);
+  if (points.length < 2) {
+    element.innerHTML = `<span class="muted-cell">${escapeHtml(label)} history needs two days</span>`;
+    return;
+  }
+  const width = 160;
+  const height = 30;
+  const values = points.map((row) => number(row[field]));
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(1, max - min);
+  const xFor = (index) => 2 + index * (width - 4) / Math.max(1, points.length - 1);
+  const yFor = (value) => height - 3 - ((value - min) / range) * (height - 6);
+  const path = points.map((row, index) => `${index ? 'L' : 'M'} ${xFor(index).toFixed(2)} ${yFor(number(row[field])).toFixed(2)}`).join(' ');
+  element.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(label)}"><path d="${path}" fill="none" stroke="${color}" stroke-width="2"/><circle cx="${xFor(points.length - 1)}" cy="${yFor(values.at(-1))}" r="2.5" fill="${color}"><title>${escapeHtml(`${points.at(-1).day}: ${formatNumber(values.at(-1))}`)}</title></circle></svg>`;
+}
+
+function renderSearchBars(element, series, mode = 'venue') {
+  if (!element) return;
+  const sourceRows = chartRows(series);
+  let rows = mode === 'total'
+    ? sourceRows.filter((row) => String(row.channel || row.venue || '') === 'all')
+    : sourceRows.filter((row) => String(row.channel || row.venue || '') !== 'all');
+  if (mode === 'total' && !rows.length) {
+    const totals = new Map();
+    for (const row of sourceRows) {
+      const day = String(row.day || row.date || '').slice(0, 10);
+      if (!day || String(row.channel || row.venue || '') === 'all') continue;
+      totals.set(day, number(totals.get(day)) + number(row.attempts ?? row.searches));
+    }
+    rows = [...totals.entries()].map(([day, attempts]) => ({ day, channel: 'all', attempts }));
+  }
   const channels = [...new Set(rows.map((row) => String(row.channel || row.venue || 'unknown')))];
   const days = [...new Set(rows.map((row) => String(row.day || row.date || '').slice(0, 10)).filter(Boolean))].sort();
   if (!rows.length || !days.length) {
@@ -841,7 +931,7 @@ function renderSearchBars(element, series) {
   const xFor = (index) => left + index * slot + slot / 2;
   const visibleChannels = channels.slice(0, 5);
   const legendSlot = Math.max(92, (width - left - right) / Math.max(1, visibleChannels.length));
-  const legend = visibleChannels.map((channel, index) => `<g transform="translate(${left + index * legendSlot},7)"><rect width="10" height="10" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="16" y="11" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(channelLabel(channel))}</text></g>`).join('');
+  const legend = visibleChannels.map((channel, index) => `<g transform="translate(${left + index * legendSlot},7)"><rect width="10" height="10" rx="2" fill="${CHART_COLORS[index % CHART_COLORS.length]}"/><text x="16" y="11" fill="#c7c4c1" font-size="${CHART_FONT_SIZE}">${escapeHtml(channel === 'all' ? 'Total' : channelLabel(channel))}</text></g>`).join('');
   const grid = [0, 0.5, 1].map((ratio) => {
     const value = max * ratio;
     const y = bottom - ratio * (bottom - top);
@@ -860,6 +950,7 @@ function availability(value, defaultReason) {
   if (Array.isArray(value)) return { available: true, rows: value, reason: '' };
   if (!value) return { available: false, rows: [], reason: defaultReason };
   return {
+    ...value,
     available: value.available !== false,
     rows: normalizeList(value.rows),
     reason: value.reason || defaultReason,
@@ -888,11 +979,13 @@ function renderChannelFilter() {
   const current = state.filters.channel;
   const options = [
     `<option value="all">All venues${number(counts.all) ? ` (${formatNumber(counts.all)})` : ''}</option>`,
+    ...STANDARD_CHANNELS.map((key) => `<option value="${escapeHtml(key)}">${escapeHtml(CHANNEL_LABELS[key])} (${formatNumber(counts[key])})</option>`),
     ...Object.entries(CHANNEL_LABELS)
-      .filter(([key]) => key !== 'all' && number(counts[key]) > 0)
+      .filter(([key]) => !['all', ...STANDARD_CHANNELS].includes(key))
+      .filter(([key]) => number(counts[key]) > 0 || (key === 'internal_test' && state.filters.includeTest))
       .map(([key, label]) => `<option value="${escapeHtml(key)}">${escapeHtml(label)} (${formatNumber(counts[key])})</option>`),
   ];
-  if (current !== 'all' && number(counts[current]) === 0) {
+  if (current !== 'all' && !options.some((option) => option.includes(`value="${escapeHtml(current)}"`))) {
     options.push(`<option value="${escapeHtml(current)}">${escapeHtml(channelLabel(current))}</option>`);
   }
   select.innerHTML = options.join('');
@@ -907,7 +1000,7 @@ function renderActivity() {
     element.innerHTML = loadingState('Loading latest activity');
     return;
   }
-  const rows = rowsForPage('activity', state.data.activity?.activity);
+  const rows = rowsForPage('activity', state.data.activity?.activity, state.data.activity?.pagination);
   if (!rows.length) {
     element.innerHTML = emptyState(state.errors.activity || 'No real user queries match these filters.');
     return;
@@ -942,7 +1035,7 @@ function qualitySeries(series) {
     'low_results',
     'low_result_count',
   ]).map((row) => {
-    const attempts = number(row.eligible_attempts ?? row.attempts);
+    const attempts = number(row.attempts);
     const lowEligible = number(row.low_result_eligible_count ?? row.eligible_attempts);
     return {
       ...row,
@@ -1030,7 +1123,7 @@ function renderCharts() {
     return;
   }
   const series = overview?.series;
-  renderSearchBars($('searchesChart'), series);
+  renderSearchBars($('searchesChart'), series, state.searchChartMode);
   renderLineChart(
     $('clientsChart'),
     series,
@@ -1076,7 +1169,7 @@ function topListConfig(key, rows = []) {
   if (key === 'zero') {
     return {
       headers: [
-        { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
+        { label: 'Query', render: (row) => `<button class="text-link" type="button" data-open-worklist="${escapeHtml(safeText(row.query, ''))}">${escapeHtml(safeText(row.query, 'Empty query'))}</button><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
         { label: 'Zeros', number: true, render: (row) => formatNumber(row.count ?? row.attempt_count ?? row.zero_attempt_count) },
         { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
         { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
@@ -1113,7 +1206,7 @@ function renderTopList() {
   const value = state.data.overview?.top_lists?.[state.topList];
   const list = availability(value, 'This list is not available from the current data source.');
   $('topListSubtitle').textContent = list.available
-    ? `Top 50 for ${appliedWindowLabel().toLowerCase()}`
+    ? `Top ${formatNumber(list.rows.length)} available for ${appliedWindowLabel().toLowerCase()}`
     : list.reason;
   if (!list.available) {
     renderPagination('topList', 0, 1);
@@ -1224,6 +1317,20 @@ function renderWorklist() {
     { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
     { label: 'Attempts', number: true, render: (row) => formatNumber(row.attempt_count) },
+    {
+      label: 'WHY',
+      render: (row) => {
+        const key = `query:${safeText(row.query, '')}:${safeText(row.library_filter, 'all')}`;
+        const value = safeText(row.review_status, '');
+        return `<select class="inline-select" data-query-review data-query="${escapeHtml(row.query)}" data-library="${escapeHtml(row.library_filter || 'all')}" aria-label="Review ${escapeHtml(row.query)}"${state.savingRows.has(key) ? ' disabled' : ''}>
+          <option value=""${!value ? ' selected' : ''}>Not reviewed</option>
+          <option value="needs_alias"${value === 'needs_alias' ? ' selected' : ''}>Needs alias</option>
+          <option value="needs_icon"${value === 'needs_icon' ? ' selected' : ''}>Needs icon</option>
+          <option value="resolved"${value === 'resolved' ? ' selected' : ''}>Resolved</option>
+          <option value="ignore"${value === 'ignore' ? ' selected' : ''}>Ignore</option>
+        </select>`;
+      },
+    },
   ], rows, 'No unresolved search gaps match these filters.');
 }
 
@@ -1253,6 +1360,20 @@ function renderIconRequests() {
     { label: 'Submitter', render: (row) => visitorLabel(row) },
     { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
     { label: 'Submitted', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
+    {
+      label: 'Status',
+      render: (row) => {
+        if (inbox.status_available === false) return `<span class="muted-cell">${escapeHtml(inbox.status_reason || 'Status unavailable')}</span>`;
+        const key = `request:${safeText(row.id, '')}`;
+        const value = safeText(row.status, 'new');
+        return `<select class="inline-select" data-icon-request-review data-request-id="${escapeHtml(row.id)}" aria-label="Status for ${escapeHtml(safeText(row.request_text || row.evidence_text, 'icon request'))}"${state.savingRows.has(key) ? ' disabled' : ''}>
+          <option value="new"${value === 'new' ? ' selected' : ''}>New</option>
+          <option value="planned"${value === 'planned' ? ' selected' : ''}>Planned</option>
+          <option value="added"${value === 'added' ? ' selected' : ''}>Added</option>
+          <option value="declined"${value === 'declined' ? ' selected' : ''}>Declined</option>
+        </select>`;
+      },
+    },
   ], rowsForPage('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
 }
 
@@ -1412,6 +1533,15 @@ function renderAudience() {
   const mrr = funnel.mrr || {};
   $('funnelMrr').textContent = mrr.available ? safeText(mrr.display_value) : 'Unavailable';
   $('funnelMrrNote').textContent = mrr.reason || 'Exact billing price is not linked to every active subscription.';
+  renderSparkline(
+    $('funnelClientsSpark'),
+    data?.series,
+    'client_days',
+    'Client-days over time',
+    CHART_COLORS[0],
+  );
+  renderSparkline($('funnelRegisteredSpark'), data?.series, 'registered_clients', 'Registered clients over time', CHART_COLORS[1]);
+  renderSparkline($('funnelProSpark'), data?.series, 'pro_clients', 'Pro clients over time', CHART_COLORS[2]);
   if (funnel.identity_available === false) {
     renderLineChart(
       $('audienceChart'),
@@ -1710,6 +1840,7 @@ async function fetchEndpoint(endpoint) {
 }
 
 async function loadEndpoint(endpoint, token, { force = false } = {}) {
+  state.endpointTokens[endpoint] = token;
   const dataKey = endpointDataKey(endpoint);
   const existingMatches = state.dataKeys[endpoint] === dataKey;
   const cached = force ? null : readCache(endpoint);
@@ -1717,7 +1848,9 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
     state.data[endpoint] = cached.payload;
     state.dataKeys[endpoint] = dataKey;
     renderAll();
-    if (Date.now() - cached.savedAt < CACHE_TTL_MS) return cached.payload;
+    if (Date.now() - cached.savedAt < CACHE_TTL_MS && cached.payload.__partial !== true) {
+      return cached.payload;
+    }
   }
 
   state.loading.add(endpoint);
@@ -1729,13 +1862,13 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
   renderAll();
   try {
     const payload = await fetchEndpoint(endpoint);
-    if (token !== state.requestToken) return null;
+    if (state.endpointTokens[endpoint] !== token) return null;
     state.data[endpoint] = payload;
     state.dataKeys[endpoint] = dataKey;
     writeCache(endpoint, payload);
     return payload;
   } catch (error) {
-    if (token === state.requestToken) {
+    if (state.endpointTokens[endpoint] === token) {
       state.errors[endpoint] = error.message || `Could not load ${endpoint}.`;
       if (!existingMatches || state.dataKeys[endpoint] !== dataKey) {
         state.data[endpoint] = null;
@@ -1744,25 +1877,28 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
     }
     return null;
   } finally {
-    if (token === state.requestToken) {
+    if (state.endpointTokens[endpoint] === token) {
       state.loading.delete(endpoint);
       renderAll();
     }
   }
 }
 
-async function refreshDashboard({ force = false } = {}) {
+async function refreshDashboard({ force = false, includeAccounts = true } = {}) {
   const token = state.requestToken + 1;
   state.requestToken = token;
   state.refreshStartedAt = Date.now();
   if (force) clearDashboardCache();
-  await Promise.all([
+  const requests = [
     loadEndpoint('activity', token, { force }),
     loadEndpoint('overview', token, { force }),
     loadEndpoint('search', token, { force }),
     loadEndpoint('audience', token, { force }),
-    loadEndpoint('accounts', token, { force }),
-  ]);
+  ];
+  if (includeAccounts || !state.data.accounts) {
+    requests.push(loadEndpoint('accounts', token, { force }));
+  }
+  await Promise.all(requests);
   if (token !== state.requestToken) return;
   if (Object.keys(state.errors).length === 0) {
     state.refreshedAt = Date.now();
@@ -1775,7 +1911,13 @@ async function refreshDashboard({ force = false } = {}) {
 }
 
 async function refreshListEndpoint(key) {
-  const endpoint = key === 'queries' ? 'search' : key === 'clients' ? 'audience' : null;
+  const endpoint = key === 'queries'
+    ? 'search'
+    : key === 'clients'
+      ? 'audience'
+      : key === 'activity'
+        ? 'activity'
+        : null;
   if (!endpoint) {
     renderAll();
     return;
@@ -1795,13 +1937,74 @@ async function refreshListEndpoint(key) {
 let filterTimer = null;
 function scheduleRefresh(delay = 240) {
   window.clearTimeout(filterTimer);
-  filterTimer = window.setTimeout(() => refreshDashboard({ force: true }), delay);
+  filterTimer = window.setTimeout(() => refreshDashboard({ force: true, includeAccounts: false }), delay);
 }
 
-function exportData(key) {
+let endpointFilterTimer = null;
+function scheduleEndpointRefresh(endpoint, delay = 240) {
+  window.clearTimeout(endpointFilterTimer);
+  endpointFilterTimer = window.setTimeout(() => refreshListEndpoint(endpoint), delay);
+}
+
+async function fetchAllPages(endpoint, rowsPath) {
+  const pageSize = 100;
+  const params = sharedParams({ forSearch: endpoint === 'search' });
+  params.set('page', '1');
+  params.set('page_size', String(pageSize));
+  if (endpoint === 'search' && state.explorerIssue) params.set('issue', state.explorerIssue);
+  const first = await apiRequest(`/v2/${endpoint}?${params}`);
+  if (endpoint === 'activity' && first.meta?.raw_rows_truncated === true) {
+    throw new Error('Complete activity exceeds the safe export limit. Choose a shorter date range.');
+  }
+  if (endpoint === 'search' && first.queries_available === false) {
+    throw new Error(first.queries_unavailable_reason || 'Complete query data is not available for this period.');
+  }
+  if (endpoint === 'audience' && first.clients?.available === false) {
+    throw new Error(first.clients.reason || 'Complete client data is not available for this period.');
+  }
+  const firstRows = rowsPath(first);
+  const pageCount = Math.max(1, number(first.pagination?.page_count) || 1);
+  if (pageCount === 1) return firstRows;
+  const rest = [];
+  for (let firstPage = 2; firstPage <= pageCount; firstPage += 4) {
+    const pages = Array.from(
+      { length: Math.min(4, pageCount - firstPage + 1) },
+      (_, index) => firstPage + index,
+    );
+    const batch = await Promise.all(pages.map(async (page) => {
+      const pageParams = new URLSearchParams(params);
+      pageParams.set('page', String(page));
+      const payload = await apiRequest(`/v2/${endpoint}?${pageParams}`);
+      return rowsPath(payload);
+    }));
+    rest.push(...batch);
+  }
+  return [firstRows, ...rest].flat();
+}
+
+async function exportData(key) {
   const overview = state.data.overview || {};
   const search = state.data.search || {};
   const audience = state.data.audience || {};
+  let completeRows = null;
+  try {
+    if (key === 'queries-csv' || key === 'queries-json') {
+      completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
+    } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
+      const queryRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
+      completeRows = queryRows.filter((row) => (
+        ['zero_result', 'low_result', 'mixed_result'].includes(String(row.issue_type || ''))
+        && !['resolved', 'ignore'].includes(String(row.review_status || ''))
+      ));
+    } else if (key === 'clients') {
+      completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
+    } else if (key === 'activity') {
+      completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
+    }
+  } catch (error) {
+    showToast(error.message || 'The complete export could not be loaded.', true);
+    return;
+  }
   const mapping = {
     'series-searches': chartRows(overview.series),
     'series-clients': aggregateDays(overview.series, ['client_days']),
@@ -1809,19 +2012,26 @@ function exportData(key) {
     'top-list-csv': unwrapRows(overview.top_lists?.[state.topList]),
     'top-list-json': unwrapRows(overview.top_lists?.[state.topList]),
     geography: unwrapRows(overview.geography),
-    activity: normalizeList(state.data.activity?.activity),
-    'queries-csv': normalizeList(search.queries),
-    'queries-json': normalizeList(search.queries),
-    'gap-worklist-csv': normalizeList(search.worklist),
-    'gap-worklist-json': normalizeList(search.worklist),
+    activity: completeRows ?? normalizeList(state.data.activity?.activity),
+    'queries-csv': completeRows ?? normalizeList(search.queries),
+    'queries-json': completeRows ?? normalizeList(search.queries),
+    'gap-worklist-csv': completeRows ?? normalizeList(search.worklist),
+    'gap-worklist-json': completeRows ?? normalizeList(search.worklist),
     'icon-requests-csv': unwrapRows(search.icon_requests),
     'icon-requests-json': unwrapRows(search.icon_requests),
+    'contact-csv': unwrapRows(search.contact_submissions),
+    'contact-json': unwrapRows(search.contact_submissions),
+    'diagnostics-csv': Object.entries(search.diagnostics || {}).map(([field, value]) => ({
+      field,
+      value: typeof value === 'object' ? JSON.stringify(value) : value,
+    })),
+    'diagnostics-json': [search.diagnostics || {}],
     'registered-users': registeredUserDisplayRows(unwrapRows(audience.registered_users)).map((row) => {
       const copy = { ...row };
       if (!state.showRegisteredEmails) delete copy.email;
       return copy;
     }),
-    clients: unwrapRows(audience.clients),
+    clients: completeRows ?? unwrapRows(audience.clients),
   };
   const rows = normalizeList(mapping[key]).map(plainExportRow);
   exportRows(
@@ -1835,6 +2045,66 @@ function setSection(section) {
   if (!['overview', 'intelligence', 'audience'].includes(section)) return;
   state.activeSection = section;
   renderNavigation();
+}
+
+async function saveQueryReview(select) {
+  const query = String(select.dataset.query || '').trim();
+  const libraryFilter = String(select.dataset.library || 'all').trim() || 'all';
+  const status = String(select.value || '').trim();
+  if (!status) {
+    showToast('Choose a review action.', true);
+    renderWorklist();
+    return;
+  }
+  const key = `query:${query}:${libraryFilter}`;
+  state.savingRows.add(key);
+  renderWorklist();
+  try {
+    await apiRequest('/intelligence/search/review', {
+      method: 'POST',
+      body: JSON.stringify({ query, library_filter: libraryFilter, status }),
+    });
+    showToast('Search gap review saved.');
+    await refreshListEndpoint('queries');
+  } catch (error) {
+    showToast(error.message || 'The search gap review could not be saved.', true);
+    renderWorklist();
+  } finally {
+    state.savingRows.delete(key);
+    renderWorklist();
+  }
+}
+
+async function saveIconRequestReview(select) {
+  const iconEvidenceId = String(select.dataset.requestId || '').trim();
+  const status = String(select.value || '').trim();
+  const key = `request:${iconEvidenceId}`;
+  state.savingRows.add(key);
+  renderIconRequests();
+  try {
+    await apiRequest('/v2/icon-requests/review', {
+      method: 'POST',
+      body: JSON.stringify({ icon_evidence_id: iconEvidenceId, status }),
+    });
+    showToast('Icon request status saved.');
+    await refreshListEndpoint('queries');
+  } catch (error) {
+    showToast(error.message || 'The icon request status could not be saved.', true);
+    renderIconRequests();
+  } finally {
+    state.savingRows.delete(key);
+    renderIconRequests();
+  }
+}
+
+function openWorklist(query) {
+  state.activeSection = 'intelligence';
+  state.explorerQuery = String(query || '').trim();
+  state.pages.queries = 1;
+  renderNavigation();
+  if ($('explorerSearch')) $('explorerSearch').value = state.explorerQuery;
+  document.querySelector('.panel[data-row-key="worklist"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scheduleEndpointRefresh('queries', 0);
 }
 
 function initializePanelControls() {
@@ -1888,6 +2158,13 @@ function initializePanelControls() {
     toggle.innerHTML = iconSvg('collapse');
     actions.appendChild(toggle);
   });
+  document.querySelectorAll('.scroll-region').forEach((region) => {
+    region.tabIndex = 0;
+    if (!region.getAttribute('aria-label')) {
+      const panelTitle = region.closest('.panel')?.querySelector('.panel-title')?.textContent?.trim();
+      region.setAttribute('aria-label', `${panelTitle || 'Dashboard results'} scroll area`);
+    }
+  });
 }
 
 function setPanelCollapsed(panel, collapsed) {
@@ -1923,7 +2200,9 @@ function initializeEvents() {
     });
   });
   document.querySelectorAll('[data-export]').forEach((button) => {
-    button.addEventListener('click', () => exportData(button.dataset.export));
+    button.addEventListener('click', () => {
+      exportData(button.dataset.export);
+    });
   });
   document.querySelectorAll('[data-row-limit]').forEach((select) => {
     select.addEventListener('change', () => {
@@ -1947,6 +2226,11 @@ function initializeEvents() {
     });
   });
   document.addEventListener('click', (event) => {
+    const worklistButton = event.target.closest('[data-open-worklist]');
+    if (worklistButton) {
+      openWorklist(worklistButton.dataset.openWorklist);
+      return;
+    }
     const button = event.target.closest('[data-pagination] button');
     if (!button) return;
     const pagination = button.closest('[data-pagination]');
@@ -1955,6 +2239,26 @@ function initializeEvents() {
     if (button.dataset.pageNumber) setPage(key, Number(button.dataset.pageNumber));
     else if (button.hasAttribute('data-page-prev')) setPage(key, currentPage(key) - 1);
     else if (button.hasAttribute('data-page-next')) setPage(key, currentPage(key) + 1);
+  });
+  document.addEventListener('change', (event) => {
+    const queryReview = event.target.closest('[data-query-review]');
+    if (queryReview) {
+      saveQueryReview(queryReview);
+      return;
+    }
+    const requestReview = event.target.closest('[data-icon-request-review]');
+    if (requestReview) saveIconRequestReview(requestReview);
+  });
+  document.querySelectorAll('[data-search-chart-mode]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.searchChartMode = button.dataset.searchChartMode;
+      document.querySelectorAll('[data-search-chart-mode]').forEach((candidate) => {
+        const active = candidate === button;
+        candidate.classList.toggle('active', active);
+        candidate.setAttribute('aria-pressed', String(active));
+      });
+      renderCharts();
+    });
   });
   $('toggleRegisteredEmails')?.addEventListener('click', () => {
     state.showRegisteredEmails = !state.showRegisteredEmails;
@@ -1966,7 +2270,9 @@ function initializeEvents() {
     state.filters.window = button.dataset.window;
     resetPages();
     document.querySelectorAll('[data-window]').forEach((candidate) => {
-      candidate.classList.toggle('active', candidate === button);
+      const active = candidate === button;
+      candidate.classList.toggle('active', active);
+      candidate.setAttribute('aria-pressed', String(active));
     });
     $('customRange').hidden = state.filters.window !== 'custom';
     if (state.filters.window !== 'custom') scheduleRefresh(0);
@@ -2001,16 +2307,34 @@ function initializeEvents() {
   $('explorerSearch')?.addEventListener('input', (event) => {
     state.explorerQuery = String(event.target.value || '').trim();
     state.pages.queries = 1;
-    scheduleRefresh();
+    scheduleEndpointRefresh('queries');
   });
   $('explorerIssue')?.addEventListener('change', (event) => {
     state.explorerIssue = event.target.value;
     state.pages.queries = 1;
-    scheduleRefresh(0);
+    scheduleEndpointRefresh('queries', 0);
   });
   $('refreshButton')?.addEventListener('click', () => refreshDashboard({ force: true }));
   $('adminSecretForm')?.addEventListener('submit', submitAdminSecret);
   $('adminSecretCancelBtn')?.addEventListener('click', cancelAdminSecret);
+  $('adminSecretModal')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      if (getAdminSecret()) cancelAdminSecret();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = [...event.currentTarget.querySelectorAll('input, button:not([hidden]):not([disabled])')];
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 }
 
 async function initializeDashboard() {
