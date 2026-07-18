@@ -32,6 +32,8 @@ function includes(source, value, label) {
   "queryOrigin: separateQueryOrigins ? row.query_origin : 'all'",
   'separateQueryOrigins = false',
   'separateChannels = false',
+  'separateSearchers = false',
+  'separateSearchers: true',
   '{ applyQuery: false, separateQueryOrigins: true, separateChannels: true }',
   'includeQueryRows = true',
   '{ includeQueryRows: false }',
@@ -40,7 +42,7 @@ function includes(source, value, label) {
   "select(overviewSelect, { count: 'exact' })",
   "select(querySelect, { count: 'exact' })",
   ".eq('event_type', 'search_outcome')",
-  ".filter((row) => String(row.signal_type || '') === 'search_attempt')",
+  "String(row.signal_type || '') === 'search_attempt'",
   "from('admin_rollup_overview')",
   "from('admin_rollup_queries')",
   "from('contact_submissions')",
@@ -65,7 +67,11 @@ function includes(source, value, label) {
   'data_cutoff: filters.data_cutoff',
   'filter_key: filters.filter_key',
   'last_search: telemetry?.last_active || null',
-  'attempts: filteredRows.reduce',
+  'attempts: filteredWorklistRows.reduce',
+  'history_attempts: filteredHistoryRows.reduce',
+  'history_rows: filteredHistoryRows.length',
+  'filteredWorklistRows',
+  "query_row_grain: ['searcher', 'query', 'library_filter', 'query_origin', 'channel']",
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
 
@@ -75,6 +81,7 @@ function includes(source, value, label) {
   'Custom date ranges cannot exceed 366 days.',
   'use_raw: durationDays === 1',
   'buildDashboardV2Series',
+  'buildDashboardV2QueryHistoryKey',
   'buildDashboardV2Kpis',
   'buildDashboardV2TopLists',
   'buildDashboardV2Geography',
@@ -99,6 +106,7 @@ function includes(source, value, label) {
   'Searcher details',
   'Searchers seen in the selected period',
   'registeredUsersSubtitle',
+  'clearActiveDashboardCache',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
 
 if (api.includes('if (rangeStart !== null && signup < rangeStart)')) {

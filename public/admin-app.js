@@ -577,15 +577,18 @@ function writeCache(endpoint, payload) {
   }
 }
 
-function clearDashboardCache() {
+function clearActiveDashboardCache() {
+  const activeKeys = new Set(
+    ['activity', 'overview', 'search', 'audience', 'accounts'].map((endpoint) => cacheKey(endpoint)),
+  );
   for (const key of memoryCache.keys()) {
-    if (key.startsWith(CACHE_PREFIX)) memoryCache.delete(key);
+    if (activeKeys.has(key)) memoryCache.delete(key);
   }
   for (const storage of [window.localStorage, window.sessionStorage]) {
     try {
       for (let index = storage.length - 1; index >= 0; index -= 1) {
         const key = storage.key(index);
-        if (key?.startsWith(CACHE_PREFIX)) storage.removeItem(key);
+        if (key && activeKeys.has(key)) storage.removeItem(key);
       }
     } catch {
       // A network refresh is sufficient when browser storage is unavailable.
@@ -723,12 +726,18 @@ function queryActivityCell(row = {}, rowIndex = -1) {
   const count = number(row.activity_count ?? row.attempt_count);
   const kind = String(row.activity_kind || '').toLowerCase() === 'lookup' ? 'lookup' : 'search';
   const label = count === 1 ? kind : kind === 'search' ? 'searches' : 'lookups';
-  const searcherCount = number(row.estimated_client_id_count ?? row.distinct_clients);
-  const detailsAvailable = row.searcher_details_available === true && normalizeList(row.searchers).length > 0;
+  return `<span title="Recorded ${escapeHtml(kind)} activity for this searcher">${formatNumber(count)} ${escapeHtml(label)}</span>`;
+}
+
+function querySearcherCell(row = {}, rowIndex = -1) {
+  const searcher = normalizeList(row.searchers)[0];
+  if (!searcher) return '<span class="muted-cell">Unknown searcher</span>';
+  const detailsAvailable = row.searcher_details_available === true;
+  const kind = safeText(searcher.kind, 'anonymous');
   return `
-    <span title="Recorded ${escapeHtml(kind)} activity in this grouped row">${formatNumber(count)} ${escapeHtml(label)}</span>
+    <strong>${escapeHtml(safeText(searcher.label, 'Unknown searcher'))}</strong>
     <div class="activity-meta">
-      ${escapeHtml(searcherCountLabel(searcherCount))}
+      ${escapeHtml(kind)}${searcher.account_linked ? ' | Account linked' : ''}
       ${detailsAvailable ? `<button class="icon-button inline-icon-button" type="button" data-searcher-details="${rowIndex}" aria-label="Open Searcher details" title="Searcher details">${iconSvg('info')}</button>` : ''}
     </div>
   `;
@@ -1400,8 +1409,9 @@ function renderQueryExplorer() {
       label: 'Query',
       render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter || row.library, 'All libraries'))} | ${escapeHtml(originLabel(row.query_origin || row.origin))}</div>`,
     },
+    { label: 'Searcher', render: (row, rowIndex) => querySearcherCell(row, rowIndex) },
+    { label: 'Searches', render: (row, rowIndex) => queryActivityCell(row, rowIndex) },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: 'Activity', render: (row, rowIndex) => queryActivityCell(row, rowIndex) },
     { label: 'Country', render: (row) => queryCountryCell(row) },
     { label: 'Venue', render: (row) => queryChannelCell(row) },
     { label: 'Returned', number: true, render: (row) => queryResultCell(row) },
@@ -2016,7 +2026,7 @@ async function refreshDashboard({ force = false, includeAccounts = true, notify 
   const token = state.requestToken + 1;
   state.requestToken = token;
   state.refreshStartedAt = Date.now();
-  if (force) clearDashboardCache();
+  if (force) clearActiveDashboardCache();
   const requests = [
     loadEndpoint('activity', token, { force }),
     loadEndpoint('overview', token, { force }),

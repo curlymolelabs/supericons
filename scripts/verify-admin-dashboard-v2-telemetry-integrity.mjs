@@ -36,13 +36,13 @@ assert.doesNotMatch(
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Activity'/,
-  'The query summary must show recorded activity rather than privacy-safe identity keys.',
+  /\{\s*label:\s*'Searcher'/,
+  'Search history must show which searcher produced each row.',
 );
-assert.doesNotMatch(
+assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Client',\s*render:\s*\(row\)\s*=>\s*visitorLabel\(row\)\s*\}/,
-  'The query summary must not present privacy-safe identity keys as clients.',
+  /\{\s*label:\s*'Searches'/,
+  'Search history must show the activity count for each searcher row.',
 );
 assert.match(
   api,
@@ -58,6 +58,11 @@ assert.match(
   api,
   /\{\s*applyQuery:\s*false,\s*separateQueryOrigins:\s*true,\s*separateChannels:\s*true\s*\}/,
   'The query explorer must keep venues separate when All venues is selected.',
+);
+assert.match(
+  api,
+  /separateSearchers:\s*true/,
+  'Search history must keep different searchers in different rows.',
 );
 assert.match(
   api,

@@ -19,6 +19,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
@@ -284,18 +285,23 @@ function buildQueryWorkbenchGroupKey({
   jobCategory,
   queryOrigin,
   channel,
+  searcherKey,
 }: {
   query: unknown;
   libraryFilter?: unknown;
   jobCategory?: unknown;
   queryOrigin?: unknown;
   channel?: unknown;
+  searcherKey?: unknown;
 }) {
-  return JSON.stringify([
-    buildQueryReviewContextKey({ query, libraryFilter, jobCategory }),
-    normalizeSearchQuery(queryOrigin) || 'legacy_unknown',
-    normalizeSearchQuery(channel) || 'unknown',
-  ]);
+  return buildDashboardV2QueryHistoryKey({
+    query,
+    libraryFilter,
+    jobCategory,
+    queryOrigin,
+    channel,
+    searcherKey,
+  });
 }
 
 function parseIntelligenceWindow(url: URL): IntelligenceWindow {
@@ -1440,8 +1446,8 @@ async function fetchDashboardV2IdentityTelemetry(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
 ) {
-  const auditSelect = 'id, query_norm, source, session_hash, ip_hash, country_code, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, anonymous_client_hash, user_agent_hash, api_key_hash, request_id, dedupe_key, created_at';
-  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, query_origin, session_hash, ip_hash, country_code, user_id, is_registered, is_pro, account_plan, subscription_status, anonymous_client_hash, user_agent_hash, api_key_hash, search_request_audit_id, created_at';
+  const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
 
   const loadAuditRows = async () => {
     try {
@@ -1498,7 +1504,7 @@ async function fetchDashboardV2IdentityTelemetry(
           ? source.select(usageSelect, { count: 'exact' })
           : source.select(usageSelect);
         query = query
-          .eq('event_type', 'search_outcome')
+          .in('event_type', ['search_outcome', 'tool_call'])
           .order('created_at', { ascending: false })
           .range(from, to);
         if (filters.from) query = query.gte('created_at', filters.from);
@@ -1537,7 +1543,13 @@ async function fetchDashboardV2IdentityTelemetry(
     ...row,
     environment: classifySearchEvidenceEnvironment(row),
     channel: classifySearchEvidenceChannel(row),
-  })).filter((row) => String(row.signal_type || '') === 'search_attempt');
+  })).filter((row) => (
+    String(row.signal_type || '') === 'search_attempt'
+    || (
+      String(row.signal_type || '') === 'mcp_call'
+      && String(row.query_origin || '') === 'icon_lookup'
+    )
+  ));
   return {
     rows: filterDashboardV2Rows(rows, filters) as SearchEvidenceRow[],
     truncated,
@@ -2165,21 +2177,40 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const [dataRows, iconRequests, contacts] = await Promise.all([
+  const historyTelemetryPromise = filters.use_raw
+    ? Promise.resolve(null)
+    : fetchDashboardV2IdentityTelemetry(adminClient, { ...filters, q: '' });
+  const [dataRows, historyTelemetry, iconRequests, contacts] = await Promise.all([
     buildDashboardV2DataRows(
       adminClient,
       { ...filters, q: '' },
       { applyQuery: false, separateQueryOrigins: true, separateChannels: true },
     ),
+    historyTelemetryPromise,
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
   ]);
-  const filteredRows = filterDashboardV2QueryRows(
+  const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historyRows = buildQueryWorkbenchRows(
+    historyEvidenceRows,
+    new Map(),
+    {
+      separateQueryOrigins: true,
+      separateChannels: true,
+      separateSearchers: true,
+    },
+  );
+  const filteredHistoryRows = filterDashboardV2QueryRows(
+    historyRows,
+    filters.q,
+    issue,
+  ) as Array<any>;
+  const filteredWorklistRows = filterDashboardV2QueryRows(
     dataRows.query_rows,
     filters.q,
     issue,
   ) as Array<any>;
-  const sortedRows = [...filteredRows].sort((left, right) => (
+  const sortedRows = [...filteredHistoryRows].sort((left, right) => (
     String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
     || right.attempt_count - left.attempt_count
     || left.query.localeCompare(right.query)
@@ -2189,7 +2220,7 @@ async function buildDashboardV2SearchPayload(
   const start = (currentPage - 1) * pageSize;
   const queries = compactDashboardV2QueryRows(sortedRows.slice(start, start + pageSize));
   const worklist = compactDashboardV2QueryRows(
-    filteredRows
+    filteredWorklistRows
       .filter((row) => (
         (row.true_zero_count > 0 || row.low_result_count > 0)
         && row.review_status !== 'resolved'
@@ -2205,15 +2236,21 @@ async function buildDashboardV2SearchPayload(
   const rollupUnavailableReason = dataRows.rollup_truncated
     ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
     : null;
+  const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
+  const historyUnavailableReason = historyTruncated
+    ? 'Complete searcher-level history exceeds the safe detail limit for this period. Choose a shorter date range.'
+    : null;
 
   return {
     summary: {
-      attempts: filteredRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
-      query_groups: filteredRows.length,
+      attempts: filteredWorklistRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
+      query_groups: filteredWorklistRows.length,
+      history_attempts: filteredHistoryRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
+      history_rows: filteredHistoryRows.length,
     },
-    queries: rollupUnavailableReason ? [] : queries,
-    queries_available: !rollupUnavailableReason,
-    queries_unavailable_reason: rollupUnavailableReason,
+    queries: historyUnavailableReason ? [] : queries,
+    queries_available: !historyUnavailableReason,
+    queries_unavailable_reason: historyUnavailableReason,
     pagination: {
       page: currentPage,
       page_size: pageSize,
@@ -2235,9 +2272,10 @@ async function buildDashboardV2SearchPayload(
       })),
       query_review_available: dataRows.query_review_available,
       raw_rows_truncated: dataRows.raw_truncated,
+      history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
-      query_row_grain: ['query', 'library_filter', 'query_origin', 'channel'],
+      query_row_grain: ['searcher', 'query', 'library_filter', 'query_origin', 'channel'],
       activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
       result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
       estimated_client_id_measure: 'Searchers seen in the selected period.',
@@ -2488,18 +2526,21 @@ function getQueryWorkbenchEntry(
   separateQueryOrigins = false,
   channel: unknown = null,
   separateChannels = false,
+  searcherKey: unknown = null,
+  separateSearchers = false,
 ) {
   const normalizedQuery = normalizeSearchQuery(query);
   const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
   const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
   const normalizedQueryOrigin = normalizeSearchQuery(queryOrigin) || 'legacy_unknown';
-  const key = separateQueryOrigins || separateChannels
+  const key = separateQueryOrigins || separateChannels || separateSearchers
     ? buildQueryWorkbenchGroupKey({
       query: normalizedQuery,
       libraryFilter: normalizedLibrary,
       jobCategory: normalizedJobCategory,
       queryOrigin: separateQueryOrigins ? normalizedQueryOrigin : 'all',
       channel: separateChannels ? channel : 'all',
+      searcherKey: separateSearchers ? searcherKey : 'all',
     })
     : buildQueryReviewContextKey({
       query: normalizedQuery,
@@ -2573,7 +2614,11 @@ function getQueryWorkbenchEntry(
 function buildQueryWorkbenchRows(
   evidenceRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
-  { separateQueryOrigins = false, separateChannels = false } = {},
+  {
+    separateQueryOrigins = false,
+    separateChannels = false,
+    separateSearchers = false,
+  } = {},
 ) {
   const map = new Map<string, Record<string, unknown>>();
 
@@ -2586,6 +2631,18 @@ function buildQueryWorkbenchRows(
     const libraryFilter = row.library_filter;
     const jobCategory = row.job_category;
     const rowChannel = classifySearchEvidenceChannel(row);
+    const recordedSearcherKey = typeof row._estimated_client_key === 'string'
+      ? row._estimated_client_key.trim()
+      : '';
+    const fallbackSearcherKey = [
+      'unknown',
+      row.source_table,
+      row.source_row_id,
+      row.request_id,
+      row.dedupe_key,
+      row.created_at,
+    ].filter(Boolean).join(':');
+    const groupedSearcherKey = recordedSearcherKey || fallbackSearcherKey || 'unknown';
     const entry = getQueryWorkbenchEntry(
       map,
       normalizedQuery,
@@ -2595,20 +2652,24 @@ function buildQueryWorkbenchRows(
       separateQueryOrigins,
       rowChannel,
       separateChannels,
+      groupedSearcherKey,
+      separateSearchers,
     );
     updateSeenRange(entry, createdAt);
     (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
     (entry.channels as Set<string>).add(rowChannel);
     (entry.query_origins as Set<string>).add(String(row.query_origin || 'legacy_unknown'));
 
-    if (typeof row._estimated_client_key === 'string' && row._estimated_client_key.trim()) {
-      const searcherKey = row._estimated_client_key.trim();
-      (entry.estimated_client_keys as Set<string>).add(searcherKey);
+    if (recordedSearcherKey || separateSearchers) {
+      const searcherKey = groupedSearcherKey;
+      if (recordedSearcherKey) {
+        (entry.estimated_client_keys as Set<string>).add(searcherKey);
+      }
       const details = entry.searcher_details as Map<string, Record<string, unknown>>;
       const searcher = details.get(searcherKey) || {
-        label: typeof row.estimated_client_key === 'string' && row.estimated_client_key.trim()
+        label: recordedSearcherKey && typeof row.estimated_client_key === 'string' && row.estimated_client_key.trim()
           ? row.estimated_client_key.trim()
-          : `Searcher ${searcherKey.slice(0, 8)}`,
+          : 'Unknown searcher',
         kind: typeof row.visitor_kind === 'string' ? row.visitor_kind : 'anonymous',
         account_linked: Boolean(row.user_id),
         searches: 0,
@@ -2692,11 +2753,9 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'search_attempt') {
       entry.attempt_count = Number(entry.attempt_count || 0) + 1;
-      if (typeof row._estimated_client_key === 'string') {
-        const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
-          .get(row._estimated_client_key.trim());
-        if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
-      }
+      const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+        .get(groupedSearcherKey);
+      if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
       const localeKey = typeof row.locale === 'string' && row.locale.trim()
         ? row.locale.trim()
         : '(missing)';
@@ -2763,11 +2822,9 @@ function buildQueryWorkbenchRows(
     if (signalType === 'mcp_call') {
       entry.mcp_result_rows = Number(entry.mcp_result_rows || 0) + 1;
       if (String(row.query_origin || '') === 'icon_lookup') {
-        if (typeof row._estimated_client_key === 'string') {
-          const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
-            .get(row._estimated_client_key.trim());
-          if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
-        }
+        const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+          .get(groupedSearcherKey);
+        if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
         const resultCount = Number(row.result_count);
         if (Number.isFinite(resultCount)) {
           entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;

@@ -4,6 +4,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
@@ -18,6 +19,33 @@ import {
 } from '../lib/admin-dashboard-v2.js';
 
 const now = new Date('2026-07-17T12:00:00.000Z');
+
+{
+  const sharedContext = {
+    query: 'user',
+    libraryFilter: 'lucide',
+    queryOrigin: 'recommend_variant',
+    channel: 'hosted_mcp',
+  };
+  const firstSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:first',
+  });
+  const repeatedFirstSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:first',
+  });
+  const secondSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:second',
+  });
+  assert.equal(firstSearcher, repeatedFirstSearcher);
+  assert.notEqual(
+    firstSearcher,
+    secondSearcher,
+    'Two searchers using the same query were incorrectly combined into one history row.',
+  );
+}
 
 {
   const range = parseDashboardV2Range(new URL('https://example.test/v2/overview?window=30d'), now);

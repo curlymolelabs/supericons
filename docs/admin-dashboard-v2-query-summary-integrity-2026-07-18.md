@@ -2,6 +2,8 @@
 
 Date: 2026-07-18
 
+> Historical evidence: this record describes the version 78 query-level summary. The current Search history contract in `docs/admin-dashboard-v2-prd-2026-07-17.md` keeps different searchers in different rows.
+
 ## Problem
 
 The query table combined repeated telemetry into summary rows, but the display made each row look like one event. Three presentation defects followed:

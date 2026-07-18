@@ -175,14 +175,14 @@ const queryRows = [
     result_count_max: 8,
     result_count_available: true,
     result_count_kind: 'range_across_attempts',
-    result_count_reason: 'Results ranged from 2 to 8 across 4 searches',
+    result_count_reason: 'Results ranged from 2 to 8 across 3 searches',
     result_unit: 'icon',
     issue_type: 'successful',
     outcome_label: 'Success',
-    attempt_count: 4,
-    activity_count: 4,
+    attempt_count: 3,
+    activity_count: 3,
     activity_kind: 'search',
-    estimated_client_id_count: 2,
+    estimated_client_id_count: 1,
     searcher_details_available: true,
     searchers: [
       {
@@ -195,6 +195,32 @@ const queryRows = [
         first_seen: '2026-07-17T07:10:00Z',
         last_seen: '2026-07-17T07:22:00Z',
       },
+    ],
+    zero_attempt_count: 0,
+    last_seen: '2026-07-17T07:22:00Z',
+  },
+  {
+    query: 'varying results',
+    library_filter: 'lucide',
+    query_origin: 'recommend_variant',
+    visitor_kind: 'registered',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'local_mcp',
+    result_count: 5,
+    result_count_min: 5,
+    result_count_max: 5,
+    result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'icon',
+    issue_type: 'successful',
+    outcome_label: 'Success',
+    attempt_count: 1,
+    activity_count: 1,
+    activity_kind: 'search',
+    estimated_client_id_count: 1,
+    searcher_details_available: true,
+    searchers: [
       {
         label: 'Registered d4e5f6',
         kind: 'registered',
@@ -207,7 +233,7 @@ const queryRows = [
       },
     ],
     zero_attempt_count: 0,
-    last_seen: '2026-07-17T07:22:00Z',
+    last_seen: '2026-07-17T07:21:00Z',
   },
   ...Array.from({ length: 55 }, (_, index) => ({
     query: `healthy query ${index + 1}`,
@@ -689,22 +715,26 @@ try {
   await requestPanel.locator('[data-panel-toggle]').click();
   ok(!(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed'))), 'The paired gap worklist did not expand with icon requests.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
-  ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Query summary', 'The grouped table is still labelled like an event explorer.');
+  ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The searcher-level table is not labelled Search history.');
   const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
-  ok(queryHeaders.includes('Activity'), 'The query summary does not show recorded activity.');
-  ok(queryHeaders.includes('Returned'), 'The query summary does not label returned values.');
-  ok(!queryHeaders.includes('Client'), 'The query summary still presents privacy-safe identifiers as people.');
-  const varyingRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
-  ok((await varyingRow.innerText()).includes('4 searches'), 'Grouped activity is not shown as a search count.');
-  ok((await varyingRow.innerText()).includes('2 searchers'), 'Grouped activity does not show its searcher count.');
-  ok((await varyingRow.innerText()).includes('2 to 8 icons'), 'Varying grouped results are not shown as a range.');
-  await varyingRow.locator('[data-searcher-details]').click();
+  ok(queryHeaders.includes('Searcher'), 'Search history does not show its searcher column.');
+  ok(queryHeaders.includes('Searches'), 'Search history does not show recorded activity.');
+  ok(queryHeaders.includes('Returned'), 'Search history does not label returned values.');
+  const varyingRows = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
+  ok(await varyingRows.count() === 2, 'The same query from two searchers was incorrectly combined.');
+  const firstVaryingRow = varyingRows.filter({ hasText: 'Anonymous a1b2c3' });
+  const secondVaryingRow = varyingRows.filter({ hasText: 'Registered d4e5f6' });
+  ok(await firstVaryingRow.count() === 1, 'The first searcher row is missing.');
+  ok(await secondVaryingRow.count() === 1, 'The second searcher row is missing.');
+  ok((await firstVaryingRow.innerText()).includes('3 searches'), 'Repeated activity for one searcher is not combined.');
+  ok((await firstVaryingRow.innerText()).includes('2 to 8 icons'), 'Varying results for one searcher are not shown as a range.');
+  await secondVaryingRow.locator('[data-searcher-details]').click();
   ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'false', 'Searcher details did not open.');
-  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Anonymous a1b2c3'), 'Searcher details omitted the masked searcher label.');
+  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Registered d4e5f6'), 'Searcher details omitted the masked searcher label.');
   ok((await page.locator('#searcherDetailsContent').innerText()).includes('Account linked'), 'Searcher details omitted the account-link status.');
   await page.click('#closeSearcherDetails');
   ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'true', 'Searcher details did not close.');
-  ok(!(await varyingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
+  ok(!(await firstVaryingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
   ok((await healthyRow.innerText()).includes('3 icons'), 'Exact current-day returned icons were hidden from the grouped query row.');
@@ -717,7 +747,7 @@ try {
   ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
   ok((await iconLookupRow.innerText()).includes('1 lookup'), 'A successful icon lookup did not render its activity count.');
-  ok((await iconLookupRow.innerText()).includes('1 searcher'), 'A singular searcher label is incorrect.');
+  ok((await iconLookupRow.innerText()).includes('Unknown searcher'), 'A lookup without an identity did not show an honest searcher state.');
   ok((await iconLookupRow.innerText()).includes('1 match'), 'A successful icon lookup did not render one match.');
   const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup pending', { exact: true }),

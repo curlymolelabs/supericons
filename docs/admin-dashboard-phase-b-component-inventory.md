@@ -21,8 +21,8 @@ The admin dashboard is a local operator tool backed by the protected production 
 | Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
 | Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
 | Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
-| Query summary | `#queryExplorer` | `GET /v2/search` | Shows grouped search outcomes, searcher counts, Searcher details, server paging, and complete filtered export |
-| Searcher details | `#searcherDetailsModal` | Bounded masked rows in `GET /v2/search` | Shows the search sources behind one grouped query without exposing raw keys or emails |
+| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per searcher, query, venue, library, and origin, with server paging and complete filtered export |
+| Searcher details | `#searcherDetailsModal` | Bounded masked rows in `GET /v2/search` | Shows the selected searcher's type, search count, venue, country, and first and last activity without exposing raw keys or emails |
 | Gap worklist | `#gapWorklist` | `GET /v2/search` plus `POST /intelligence/search/review` | Shows repeated zero and low-result work with triage actions |
 | Icon requests | `#iconRequests` | `GET /v2/search` plus `POST /v2/icon-requests/review` | Shows stored requests with New, Planned, Added, and Declined states |
 | Contact inbox | `#contactInbox` | `GET /v2/search` | Shows stored contact messages with CSV and JSON exports |
@@ -41,7 +41,8 @@ The admin dashboard is a local operator tool backed by the protected production 
 - CSV text beginning with a spreadsheet formula character is made inert before download.
 - Activity, overview, search, audience, and account requests start independently. A slow panel does not block the others.
 - Every filtered endpoint in one refresh uses the same view marker, data cutoff, and filter marker. Older responses are rejected.
-- Search explorer changes refresh only Search Intelligence. Account rows are not reloaded for unrelated filter changes.
+- Search Intelligence summary totals use the same aggregate source as Overview. Search history rows use bounded detailed records so late records remain visible.
+- Search history changes refresh only Search Intelligence. Account rows are not reloaded for unrelated filter changes.
 - The browser may keep a sanitized aggregate Overview payload for up to 30 seconds. Secrets, emails, account rows, query rows, request rows, contact rows, and client rows are never stored in browser storage.
 - Direct development mode keeps the entered admin secret in memory only and asks again after a reload.
 - The managed gateway is the normal start path. It keeps `ADMIN_SECRET` in the local Node process and forwards protected API requests over loopback.
