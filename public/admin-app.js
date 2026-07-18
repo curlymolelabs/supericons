@@ -1188,11 +1188,7 @@ function renderKpis() {
     });
     return;
   }
-  const accounts = accountSummary();
   const clients = number(kpis.estimated_unique_clients ?? kpis.unique_clients);
-  const registered = accounts.available ? accounts.registered : number(kpis.registered_clients ?? kpis.registered);
-  const pro = accounts.available ? accounts.pro : number(kpis.pro_clients ?? kpis.pro);
-  const anonymous = number(kpis.anonymous_clients ?? Math.max(0, clients - registered));
   const searches = number(kpis.attempts ?? kpis.searches);
   const successRate = number(kpis.success_rate ?? (searches ? number(kpis.success_count) / searches : 0));
   if (kpis.identity_available === false && kpis.client_measure === 'client_days') {
@@ -1203,9 +1199,7 @@ function renderKpis() {
     $('kpiClientsNote').textContent = kpis.identity_unavailable_reason || 'Choose a shorter date range for exact searcher totals.';
   } else {
     setSkeleton($('kpiClients'), formatNumber(clients));
-    $('kpiClientsNote').textContent = accounts.available
-      ? `${searcherCountLabel(clients)} seen in the selected period. All time accounts: ${formatNumber(registered)} registered, ${formatNumber(pro)} Pro.`
-      : `${searcherCountLabel(clients)} seen in the selected period. ${formatNumber(registered)} linked to registered accounts, ${formatNumber(pro)} linked to Pro.`;
+    $('kpiClientsNote').textContent = `${searcherCountLabel(clients)} seen in the selected period`;
   }
   setSkeleton($('kpiSearches'), formatNumber(searches));
   $('kpiSearchesNote').textContent = `Selected period: ${formatNumber(kpis.searches_per_client)} per ${kpis.client_measure === 'client_days' ? 'daily reach unit' : 'searcher'}, ${formatPercent(successRate)} successful`;
@@ -1607,7 +1601,7 @@ function renderAudience() {
     if ($('funnelMrrNote')) $('funnelMrrNote').textContent = 'Loading billing availability';
     if ($('audienceChart')) $('audienceChart').innerHTML = loadingState('Loading audience history');
     if ($('registeredUsers')) $('registeredUsers').innerHTML = loadingState('Loading registered users');
-    if ($('allClients')) $('allClients').innerHTML = loadingState('Loading observed identifier profiles');
+    if ($('allClients')) $('allClients').innerHTML = loadingState('Loading searcher details');
     return;
   }
   if (!data && state.errors.audience) {

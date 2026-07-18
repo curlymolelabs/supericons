@@ -55,9 +55,8 @@ try {
       && !document.querySelector('#kpiClients')?.classList.contains('skeleton')
   ), null, { timeout: 120_000 });
   await page.waitForFunction(() => (
-    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered')
-      && document.querySelector('#kpiClientsNote')?.textContent?.includes('privacy-safe identifiers')
-      && !document.querySelector('#kpiClientsNote')?.textContent?.includes('0 registered')
+    document.querySelector('#kpiClientsNote')?.textContent?.includes('searchers')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.includes('registered')
   ), null, { timeout: 120_000 });
 
   ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
@@ -126,15 +125,23 @@ try {
 
   const liveContract = await page.evaluate(async () => {
     const common = 'window=30d&channel=all&include_test=false';
-    const [overviewResponse, audienceResponse] = await Promise.all([
-      fetch(`/api/admin/v2/overview?${common}`),
-      fetch(`/api/admin/v2/audience?${common}&page=1&page_size=50`),
+    const cutoff = new Date().toISOString();
+    const viewId = `livecontract${Date.now()}`;
+    const shared = new URLSearchParams(common);
+    shared.set('view_id', viewId);
+    shared.set('data_cutoff', cutoff);
+    shared.set('filter_key', common);
+    const [overviewResponse, searchResponse, audienceResponse] = await Promise.all([
+      fetch(`/api/admin/v2/overview?${shared}`),
+      fetch(`/api/admin/v2/search?${shared}&page=1&page_size=50`),
+      fetch(`/api/admin/v2/audience?${shared}&page=1&page_size=50`),
     ]);
-    if (!overviewResponse.ok || !audienceResponse.ok) {
-      throw new Error(`Production contract failed (${overviewResponse.status}, ${audienceResponse.status}).`);
+    if (!overviewResponse.ok || !searchResponse.ok || !audienceResponse.ok) {
+      throw new Error(`Production contract failed (${overviewResponse.status}, ${searchResponse.status}, ${audienceResponse.status}).`);
     }
-    const [overview, audience] = await Promise.all([
+    const [overview, search, audience] = await Promise.all([
       overviewResponse.json(),
+      searchResponse.json(),
       audienceResponse.json(),
     ]);
     return {
@@ -151,6 +158,17 @@ try {
       audienceIdentityAvailable: audience?.funnel?.identity_available !== false,
       registeredUsersAvailable: audience?.registered_users?.available === true,
       clientsAvailable: audience?.clients?.available === true,
+      viewMarkersMatch: [overview, search, audience].every((payload) => (
+        payload?.meta?.view_id === viewId
+        && payload?.meta?.data_cutoff === cutoff
+        && payload?.meta?.filter_key === common
+      )),
+      overviewAttempts: Number(overview?.kpis?.attempts),
+      searchAttempts: Number(search?.summary?.attempts),
+      overviewReach: Number(overview?.kpis?.estimated_unique_clients),
+      audienceReach: Number(audience?.funnel?.unique_clients),
+      attemptsMatch: Number(overview?.kpis?.attempts) === Number(search?.summary?.attempts),
+      reachMatches: Number(overview?.kpis?.estimated_unique_clients) === Number(audience?.funnel?.unique_clients),
     };
   });
   ok(liveContract.identityAvailable, 'The 30-day identity KPI is unavailable.');
@@ -161,6 +179,9 @@ try {
   ok(liveContract.audienceIdentityAvailable, 'Audience identity is unavailable.');
   ok(liveContract.registeredUsersAvailable, 'Registered users are unavailable.');
   ok(liveContract.clientsAvailable, 'Client profiles are unavailable.');
+  ok(liveContract.viewMarkersMatch, 'The live v2 responses do not share one view marker and cutoff.');
+  ok(liveContract.attemptsMatch, 'Overview and Search Intelligence attempt totals disagree.');
+  ok(liveContract.reachMatches, 'Overview and Audience estimated reach disagree.');
 
   await page.click('[data-window="custom"]');
   const today = new Date();
@@ -214,8 +235,8 @@ try {
   const warmRenderMs = Date.now() - warmStart;
   ok(warmRenderMs < 1_000, `Warm cached content took ${warmRenderMs} ms to appear.`);
   await page.waitForFunction(() => (
-    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered accounts')
-      && !document.querySelector('#kpiClientsNote')?.textContent?.startsWith('0 registered')
+    document.querySelector('#kpiClientsNote')?.textContent?.includes('searchers')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.includes('registered')
   ), null, { timeout: 120_000 });
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
@@ -245,6 +266,10 @@ try {
     live_api_requests: apiRequests.length,
     latest_activity_rows: liveContract.activityRows,
     completed_series_days: liveContract.completedSeriesDays,
+    overview_attempts: liveContract.overviewAttempts,
+    search_attempts: liveContract.searchAttempts,
+    overview_reach: liveContract.overviewReach,
+    audience_reach: liveContract.audienceReach,
     navigation_sections: 3,
     inline_svg_charts: await page.locator('.chart svg').count(),
     warm_render_ms: warmRenderMs,

@@ -517,9 +517,10 @@ try {
   ok(await page.locator('#kpiSearches').innerText() === '128', 'Real search KPI is incorrect.');
   ok(await page.locator('#kpiZero').innerText() === '6%', 'True zero KPI is incorrect.');
   ok(await page.locator('#kpiLow').innerText() === '5%', 'Low-result KPI is incorrect.');
-  await page.waitForFunction(() => document.querySelector('#kpiClientsNote')?.textContent?.includes('23 registered'));
-  ok((await page.locator('#kpiClientsNote').innerText()).includes('2 Pro'), 'The reach KPI note did not use account-backed Pro totals.');
-  ok((await page.locator('#kpiClientsNote').innerText()).includes('32 searchers'), 'Estimated reach does not identify the selected-period searcher count.');
+  const reachNote = await page.locator('#kpiClientsNote').innerText();
+  ok(reachNote.includes('32 searchers'), 'Estimated reach does not identify the selected-period searcher count.');
+  ok(!reachNote.includes('registered'), 'The filtered reach card mixes in all-time registered-account totals.');
+  ok(!reachNote.includes('Pro'), 'The filtered reach card mixes in all-time Pro-account totals.');
   await assertPanelActionsStayOnOneLine(page, '#section-overview:not([hidden])');
 
   const activity = await page.locator('#latestActivity').innerText();
