@@ -1,7 +1,7 @@
 # Admin dashboard Search IDs and page sync fix plan
 
 - Date: 2026-07-18
-- Status: ready for implementation
+- Status: revised for audit
 - Branch: `codex/admin-dashboard-v2-gap-repair`
 - Product authority: `docs/admin-dashboard-v2-prd-2026-07-17.md`
 - Design authority: `mockups/admin-dashboard-v2-mockup-2026-07-17.html`
@@ -34,26 +34,26 @@ The current code and screenshot confirm these issues:
 
 ## 3. Plain-language naming contract
 
-Use these exact labels unless usability testing proves that a shorter label is needed:
+Keep the clear existing term `Estimated reach`. Replace only the jargon around it:
 
 | Current label | Replacement |
 | --- | --- |
-| Estimated reach | Search IDs seen |
+| Estimated reach | Estimated reach |
 | Privacy-safe identifiers | Search IDs |
 | Observed identifiers | Search IDs |
-| Estimated reach over time | Search IDs over time |
-| Client-days | Daily Search IDs added together |
+| Estimated reach over time | Estimated reach over time |
+| Client-days in visible UI copy | Daily reach |
 | Clients, when the value is not a confirmed account count | Search IDs |
 
-### Short explanation
+### Default card copy
 
-Use this beside the headline value:
+Keep the main card short:
 
-> Separate search sources seen in this period. One person can use more than one Search ID.
+- label: `Estimated reach`
+- note for an exact view: `Search IDs seen in the selected period`
+- note for a long-range daily total: `Daily reach for the selected period`
 
-For long periods where daily totals are added together, use:
-
-> Daily Search IDs added together. The same ID can be counted again on another day.
+Put any deeper explanation behind the info icon. Do not place a long definition in the default card.
 
 For registered and Pro figures, use the word "accounts," never "clients" or "Search IDs."
 
@@ -61,12 +61,12 @@ For registered and Pro figures, use the word "accounts," never "clients" or "Sea
 
 ### 4.1 Overview
 
-Replace the Estimated reach card with:
+Keep the Estimated reach card:
 
-- label: Search IDs seen
+- label: Estimated reach
 - value: distinct Search IDs for the selected filters when exact identity rows are available
-- note: the short explanation from section 3
-- info icon: opens the explanation and states whether the number is exact for the selected period or a sum of daily counts
+- note: `Search IDs seen in the selected period`
+- info icon: states whether the number uses exact Search IDs or daily reach totals
 
 Do not place all-time registered or Pro totals in this card's note. If linked-account activity is useful here, show filtered values explicitly:
 
@@ -80,15 +80,10 @@ Restore the Search ID count as supporting information without presenting it as a
 The Activity cell should show:
 
 - primary: `20 searches`
-- secondary: `from 3 Search IDs`
+- secondary: `3 Search IDs`
 - details icon: opens the Search ID detail drawer for that row
 
-Examples:
-
-- `20 searches from 1 Search ID` means concentrated repeat activity from one recorded source.
-- `20 searches from 10 Search IDs` means the query appeared across more recorded sources.
-
-This is useful for prioritizing repeated gaps. It is not proof that 10 people searched.
+Keep interpretation and deeper explanation inside the details view, not in the default table.
 
 ### 4.3 Search ID details
 
@@ -109,12 +104,12 @@ Full internal values should not appear by default. The masked value must be stab
 
 ### 4.4 Audience
 
-Rename the Search ID list and chart using the labels in section 3.
+Keep the chart title `Estimated reach over time`. Rename the `Observed identifiers` list to `Search IDs`.
 
 Keep two clearly separate groups:
 
 1. Search activity:
-   - Search IDs seen
+   - Estimated reach
    - Search IDs linked to registered accounts in the selected period
    - Search IDs linked to Pro accounts in the selected period
 2. Account inventory:
@@ -180,7 +175,7 @@ Do not label the whole dashboard `Up to date` unless every required panel has lo
 
 Add tests that fail against the current build:
 
-1. Overview Search IDs equal Audience Search IDs for the same period, venue, and test-traffic setting.
+1. Overview estimated reach equals Audience estimated reach for the same period, venue, and test-traffic setting.
 2. Overview real searches equal the complete Search Intelligence attempt total for the same filters.
 3. Venue totals add up to the all-venue total.
 4. Account totals match the complete registered-user directory and remain labelled All time.
@@ -188,7 +183,7 @@ Add tests that fail against the current build:
 6. A text query cannot filter an Audience list while leaving a related headline search figure unfiltered.
 7. Last sign-in and Last search remain separate.
 8. Responses from a previous filter key cannot replace the active view.
-9. Search ID wording contains no unexplained "privacy-safe identifier," "client," or "reach" label.
+9. Search ID wording contains no unexplained "privacy-safe identifier" or "client" label. `Estimated reach` remains allowed.
 
 ### Phase 2: API contract repair
 
@@ -201,7 +196,7 @@ Add tests that fail against the current build:
 
 ### Phase 3: UI repair
 
-1. Apply the naming contract from section 3.
+1. Apply the naming contract from section 3 without renaming Estimated reach.
 2. Restore Search IDs as secondary information in Query summary.
 3. Add the Search ID details icon and drawer.
 4. Split Last sign-in and Last search.
@@ -243,8 +238,8 @@ Every affected panel must define:
 
 This fix is complete only when:
 
-1. The dashboard uses Search IDs and account language consistently.
-2. A non-technical reader can explain what one Search ID and several Search IDs mean after reading one short note.
+1. The dashboard keeps Estimated reach and uses Search IDs and account language consistently.
+2. The default cards and tables contain no long Search ID explanation; deeper meaning is available through the info or details icon.
 3. The same filtered search measure agrees across Overview, Search Intelligence, and Audience.
 4. All-time account totals are visibly separate from filtered search activity.
 5. Query summary provides Search ID context and an inspectable details view.
