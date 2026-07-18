@@ -940,6 +940,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
     navLabel: 'Overview',
     kicker: 'MCP Reference',
     pageTitle: 'MCP Tools Overview',
+    summary: 'All public Supericons MCP tools.',
     bodyHtml: `
       <section class="docs-section" id="mcp-overview-intro">
         <p class="docs-section__copy">The Supericons MCP server exposes ${mcpToolCount} tools your coding agent can call directly. ${mcpFreeToolCount} tools are free and work without an account. Premium icon access depends on what your account already has: the packs you bought, the ${appLink('pricing', 'Supericons Pro plan')}, or both. Motion Lab and Converter tools require the ${appLink('pricing', 'Supericons Pro plan')} and a valid <code>SUPERICONS_API_KEY</code>.</p>
@@ -994,6 +995,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
     navLabel: 'Icon Tools',
     kicker: 'MCP Reference',
     pageTitle: 'Icon Tools Reference',
+    summary: 'Search and retrieve icons through MCP.',
     bodyHtml: `
       <section class="docs-section" id="icon-tools-intro">
         <p class="docs-section__copy">These ${mcpFreeToolCount} tools are free and do not require an API key for the standard ${PRODUCT_FACT_LABELS.freeIconLibraryLabel}. Premium animated icon collections from these tools require either the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
@@ -1132,6 +1134,7 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
     navLabel: 'Motion Lab',
     kicker: 'MCP Reference',
     pageTitle: 'Motion Lab MCP Tools',
+    summary: 'Animate icons through MCP.',
     bodyHtml: `
       <section class="docs-section" id="motion-tools-intro">
         <p class="docs-section__copy">These five tools expose Motion Lab capabilities to your coding agent. All five require the ${appLink('pricing', 'Supericons Pro plan')} plus a valid <code>SUPERICONS_API_KEY</code>.</p>
@@ -1247,6 +1250,7 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
     navLabel: 'Converter',
     kicker: 'MCP Reference',
     pageTitle: 'Converter MCP Tools',
+    summary: 'Convert PNG and SVG assets through MCP.',
     bodyHtml: `
       <section class="docs-section" id="converter-tools-intro">
         <p class="docs-section__copy">These four tools expose Converter capabilities to your coding agent. All four require the ${appLink('pricing', 'Supericons Pro plan')}. The safest workflow is to inspect the PNG first, inspect the option guidance second, then convert with a justified starting configuration.</p>
@@ -2088,22 +2092,22 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
     navLabel: 'API Keys',
     kicker: 'Access and API Keys',
     pageTitle: 'API Keys',
-    summary: 'Use an API key from your Supericons account for MCP and other app integrations.',
+    summary: 'Free MCP works without an API key. Add a key only when you need account access for purchases or Pro tools.',
     bodyHtml: `
       <section class="docs-section" id="access-api-keys-intro">
-        <h2 class="docs-section__title">How the key connects your account</h2>
-        <p class="docs-section__copy">Use an API key from your Supericons account when you connect Supericons outside the browser UI. The key identifies which account is making the request, so the app or MCP client can load whatever that account can access.</p>
+        <h2 class="docs-section__title">Start free without a key</h2>
+        <p class="docs-section__copy">You do not need an API key to search, preview, retrieve, or list free icons through local or hosted MCP. Add a key only when a supported tool needs access tied to your Supericons account.</p>
       </section>
       <section class="docs-callout" id="access-api-keys-reassurance">
-        <h3>One thing to remember</h3>
-        <p>There is not a separate Pro key or pack key. Your API key uses the access already on your account.</p>
+        <h3>A key identifies your account</h3>
+        <p>It does not upgrade your account or unlock anything you have not bought. There is not a separate Pro key or pack key.</p>
       </section>
       <section class="docs-section" id="access-api-keys-does">
         <h2 class="docs-section__title">What an API key does</h2>
         <ul>
           <li>Signs your app or MCP client into your Supericons account.</li>
           <li>Lets Supericons check which icons and tools that account can use.</li>
-          <li>Is required for MCP and other programmatic workflows.</li>
+          <li>Connects supported paid and account-bound workflows to that access.</li>
         </ul>
       </section>
       <section class="docs-section" id="access-api-keys-does-not">
@@ -2118,15 +2122,15 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
         <h2 class="docs-section__title">When you need one</h2>
         <div class="docs-grid docs-grid--cards">
           <article class="docs-card">
-            <h3>MCP and coding agents</h3>
-            <p>You need <code>SUPERICONS_API_KEY</code> when you use Supericons through Claude Code, Codex, Cursor, or another MCP client.</p>
+            <h3>Free MCP tools</h3>
+            <p>No key is needed to search, preview, retrieve, or list free icons through Claude Code, Codex, Cursor, or another MCP client.</p>
           </article>
           <article class="docs-card">
-            <h3>Programmatic requests</h3>
-            <p>You need an API key when your app or workflow is calling Supericons outside the normal browser UI.</p>
+            <h3>Purchased and Pro access</h3>
+            <p>Add <code>SUPERICONS_API_KEY</code> when a supported MCP tool needs a purchased pack or a Pro feature such as Motion Lab or Converter.</p>
           </article>
         </div>
-        <p class="docs-section__copy">If you are only browsing the site and using the free library in the browser, you do not need an API key.</p>
+        <p class="docs-section__copy">Today, API keys are available to accounts with an active Pro subscription or at least one pack purchase.</p>
       </section>
       <section class="docs-section" id="access-api-keys-account-bridge">
         <p class="docs-section__copy">What your account can access depends on what you have bought or subscribed to. See ${docsLink('docs-access-premium', 'Pro and Collections')} for a clear breakdown.</p>
@@ -2139,14 +2143,14 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
               <h3>Open API Keys</h3>
               <a class="docs-btn docs-btn--ghost" href="/?view=api-keys" data-docs-view="api-keys">Open page</a>
             </div>
-            <p>Generate or manage the key you want to use with MCP or your app.</p>
+            <p>If your account is eligible, generate or manage the key you use for account-bound access.</p>
           </article>
           <article class="docs-card">
             <div class="docs-card__head">
               <h3>Read Quickstart</h3>
               <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-quickstart')}" data-docs-view="docs-quickstart">Open guide</a>
             </div>
-            <p>Set up MCP and place <code>SUPERICONS_API_KEY</code> in the right config file.</p>
+            <p>Set up keyless free MCP first. Add <code>SUPERICONS_API_KEY</code> later only if you need account-bound tools.</p>
           </article>
           <article class="docs-card">
             <div class="docs-card__head">
@@ -2280,9 +2284,10 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
       </section>
       <section class="docs-section" id="troubleshooting-access">
         <h2 class="docs-section__title">Access and API keys</h2>
+        <p class="docs-section__copy">Free icon search does not need an API key. If free search fails, check the MCP server setup above. Use the checks below only for purchased or Pro access.</p>
         <div class="docs-grid docs-grid--cards">
           <article class="docs-card">
-            <h3>Access features are not available</h3>
+            <h3>Purchased or Pro features are not available</h3>
             <p>Confirm all four:</p>
             <ol>
               <li>You are using an API key from the correct Supericons account.</li>
