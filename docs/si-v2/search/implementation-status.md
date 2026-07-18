@@ -133,14 +133,24 @@ For the deterministic-first scope, the read-only hosted migration inventory and 
 
 The complete four-surface map and its evidence limits are recorded in `references/verification/search-v2-material-integration-2026-07-16.md`. The later main reconciliation and case-level fingerprint changes are recorded in `references/verification/search-v2-main-reintegration-2026-07-16.md`.
 
+## Access policy state
+
+| item | verified state |
+| --- | --- |
+| Local-first access | The beta package allows eligible local search without an API key. The search runs from packaged data and makes a non-blocking tool-outcome telemetry attempt. |
+| Local telemetry | The package honors `SUPERICONS_DISABLE_TELEMETRY`, `SUPERICONS_TELEMETRY`, and `DO_NOT_TRACK`. Telemetry is best-effort and must not be treated as a complete denominator. |
+| Hosted access | The shared Supabase limiter currently uses an IP hash and a default 120 requests per minute. Anonymous, registered-free, and paid allowance tiers are not implemented. |
+| Tier policy | `D-028`, `FR-43`, and `FR-44` define the intended public local core and tiered hosted service. This policy is documented, not deployed. |
+| Free account benefit | Self-service free keys, a higher registered hosted allowance, and personal usage analytics are not verified as live by this ledger. |
+
 ## Immediate next gate
 
-1. Run the active read-only beta monitor and weekly maintenance audit without changing the request path.
-2. Manually share the reviewed opt-in invitation. Do not automate public messages.
-3. Start the beta clock only from the first verified eligible user request, then require at least 3 complete days plus the minimum sample and green or resolved daily monitoring.
-4. Report relevance, zeros, errors, telemetry coverage, traffic concentration, and remaining deterministic gaps against the closeout scorecard.
-5. Extend to 14 days if the sample remains below 200 eligible attempts or 20 session groups, then report underpowered if the target is still unmet.
-6. Keep hosted attribution unresolved until a future separately bounded hosted measurement is justified.
+1. Follow the bounded execution order in `search-v2-completion-prd-2026-07-18.md`: quality mining, documentation accuracy, Railway local-first preparation, and hosted allowance measurement design may proceed in parallel.
+2. Count only verified organic beta activity toward the founder validation window. Closure requires at least 200 eligible attempts and 3 complete green days. Report session groups and traffic concentration as facts, not gates.
+3. Report relevance, zeros, errors, telemetry coverage limits, traffic concentration, and remaining deterministic gaps against the closeout scorecard. Local package telemetry remains best-effort and cannot supply a complete denominator.
+4. Measure the current hosted database and recommendation path with a separately bounded workload before choosing further recommendation or database changes.
+5. Keep hosted tier enforcement disabled until the `FR-43` readiness conditions pass: measured thresholds, working self-service free keys, one two-ingress contract, and copy that promises only live benefits.
+6. Promote npm, Railway, Supabase, and web behavior separately. Each venue retains its own compatibility, performance, public-boundary, and rollback gate.
 
 Phases `P3` through `P6` remain paused until the owner accepts a new evidence-backed decision.
 

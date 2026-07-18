@@ -40,6 +40,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-025` | Use packaged local search only for eligible English MCP beta queries while stable hosting serves localized, recommendation, and web requests | Accepted | Architecture and rollout |
 | `D-026` | Let agents execute audited release work autonomously and involve the owner only for access, money, default-user changes, or material risk | Accepted | Release governance |
 | `D-027` | Keep living search intelligence private while licensing, marking, and minifying staged public engine artifacts | Accepted | Public bundle boundary |
+| `D-028` | Keep local search keyless while giving hosted search measured anonymous, registered, and paid allowances | Accepted | Access, cost, telemetry, and public/private product boundary |
 
 ## Decision records
 
@@ -367,6 +368,41 @@ Rejected alternatives:
 Specification change: version 1.11 adds `FR-41` and `FR-42`.
 
 Superseded decisions: the explicit-owner-approval portions of earlier rollout decisions and plans are replaced by this owner-involvement boundary. Their technical gates, evidence requirements, mutation limits, and rollback rules remain active.
+
+### D-028: Public local core and tiered hosted allowances
+
+Date: 2026-07-18
+Status: Accepted
+
+Decision:
+
+- Static icons and eligible local-first search stay free and keyless. Local-only execution uses the user's device and is not artificially metered by making every search contact Supericons.
+- The public npm package is a versioned snapshot of the deterministic engine and public icon data. It is not the complete living service.
+- Local telemetry is best-effort, disclosed, and optional. Product reporting must never describe it as complete usage measurement because it can be disabled, blocked, unavailable, or removed from a fork.
+- Anonymous hosted search keeps a generous keyless allowance. A registered free account receives a higher hosted allowance. Paid accounts receive the highest fair-use allowance plus their existing entitlements.
+- Hosted allowance enforcement applies consistently at both hosted entry points: the Railway MCP service and the shared Supabase search gateway used by installed-package fallbacks.
+- Exact thresholds come from measured client and cost distributions. The initial anonymous target is at or above measured legitimate p99 usage, subject to cost and abuse evidence. No threshold is guessed from a single cohort or anecdote.
+- Enforcement stays off until free key issuance works, the higher registered allowance is real, and the limit response promises only benefits that are already live. Personal analytics may be advertised only after usage deduplication and the account dashboard are verified.
+- A limit response states the reset time, retry guidance, signup path, and higher registered allowance. It does not pressure an anonymous user to buy Pro.
+- Usage-derived ranking weights, query-behavior signals, community curation, contributor reputation, and paid design intelligence remain private under `VC-3`.
+
+Reason: local execution does not consume Supericons server compute and cannot be honestly secured through a client-side meter. Hosted execution does create shared cost and can support reliable identity, freshness, recommendations, localized search, and account value. This policy preserves low-friction adoption while creating a measured path from anonymous use to a useful free account and paid services.
+
+Rejected alternatives:
+
+- Requiring an API key before the first free MCP search, because it adds a universal setup dependency before registration provides compensating value.
+- Pretending local package usage can be completely tracked or enforced, because public client code and offline execution make that claim false.
+- Unlimited anonymous hosted compute without measured controls, because it exposes shared infrastructure to unbounded cost and abuse.
+- Metering local execution through a mandatory network call, because it would weaken speed, privacy, offline use, and reliability while remaining removable from public code.
+- Treating the public package as the full business, because fresh data, account features, hosted recommendations, localized service, and protected living intelligence remain service-side value.
+
+Deferred:
+
+- Exact anonymous, registered, and paid thresholds, pending the measured distribution and cost artifact.
+- Personal analytics copy in the limit response, pending verified usage deduplication and the account dashboard.
+- Any paid or x402 action beyond the existing entitlement system, pending separate product evidence and owner decision.
+
+Specification change: version 1.12 adds `G-10`, `NG-10`, `FR-43`, and `FR-44`, updates the constraints and risks, and resolves `OQ-05`.
 
 ## Adding or superseding a decision
 

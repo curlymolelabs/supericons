@@ -1,8 +1,8 @@
 # SI Search Engine v2
 
-Version: 1.11
+Version: 1.12
 Approved: 2026-07-11
-Amended: 2026-07-17
+Amended: 2026-07-18
 Status: canonical product and technical specification
 
 ## Authority and scope
@@ -14,6 +14,8 @@ Related authority is deliberately separated:
 - [`../vision-charter.md`](../vision-charter.md) defines the project commitments that every canonical and public release must satisfy.
 - [`decisions.md`](decisions.md) records why accepted decisions were made. A decision is active only when this specification is updated in the same change.
 - [`implementation-status.md`](implementation-status.md) records what is implemented, verified, packaged, deployed, and observed live. It does not define intended behavior.
+- [`search-v2-completion-prd-2026-07-18.md`](search-v2-completion-prd-2026-07-18.md) is the current bounded execution plan for completing deterministic Search v2 across quality, hosted MCP, accounts, and venue-specific promotion. It is subordinate to this specification.
+- [`account-value-ladder-2026-07-18.md`](account-value-ladder-2026-07-18.md) records the parallel account-benefit sequence. Search quality and hosted performance do not wait for its later rungs.
 - [`consolidation-traceability.md`](consolidation-traceability.md) is frozen evidence showing how the four earlier planning generations were handled. It is not normative.
 
 When sources conflict:
@@ -64,6 +66,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 - `G-07` Keep exact/rule search available when embeddings or vector retrieval fail.
 - `G-08` Measure search quality, acceptance, latency, client concentration, and hosted resource pressure without storing raw sensitive identifiers in public artifacts.
 - `G-09` Keep the default free web and MCP search path deterministic and free of paid model calls per request.
+- `G-10` Keep local-first search keyless while protecting hosted compute with measured, useful account tiers and one consistent allowance contract.
 
 ## Non-goals
 
@@ -73,9 +76,10 @@ When schema-native icons are published, their public meaning, appearance, use gu
 - `NG-04` Do not auto-promote raw searches or feedback into public records without review.
 - `NG-05` Do not require a new vector vendor before Supabase/Postgres with pgvector is evaluated against explicit gates.
 - `NG-06` Do not create new icons inside the search-engine implementation; create reviewed Icons Lab briefs instead.
-- `NG-07` Do not include payment, entitlement, affiliate, or deployment-platform redesign in this program.
+- `NG-07` Do not redesign payment, affiliate, premium entitlement, or deployment platforms in this program. Existing verified account plans may inform hosted fair-use allowances under `FR-43`.
 - `NG-08` Do not treat liveness checks, scanners, or concentrated automation as equivalent to user demand.
 - `NG-09` Do not call an AI agent, general-purpose language model, or metered third-party embedding API in the default free search path.
+- `NG-10` Do not claim complete telemetry, secrecy, or enforceable metering for public local client code.
 
 ## Product principles
 
@@ -90,6 +94,7 @@ When schema-native icons are published, their public meaning, appearance, use gu
 9. Brand identity priority applies to genuine identity matches, not accidental prefixes, substrings, or ambiguous common words.
 10. Deterministic search ships and is measured before semantic retrieval is reconsidered. AI may help offline with reviewed maintenance, but it does not decide live search results by default.
 11. Remove avoidable network and database round trips only when exact result and response parity remain checked.
+12. Meter shared hosted compute, not work performed entirely on the user's device.
 
 ## Authoritative dependencies
 
@@ -408,12 +413,15 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-40` | An opt-in MCP prerelease may use its packaged deterministic index and public synonym map for `search_icons` only when the query has no locale and contains ASCII text. Localized and non-ASCII search, `recommend_icons`, and web search keep their stable hosted paths. Material SVGs needed by the local route ship in the package. The response reports local runtime and index generation date, and one non-blocking tool-outcome telemetry attempt is made per eligible call. | `G-03`, `G-07`, `G-09`, `FR-24`, `FR-26`, `D-025` | Route, clean-install fingerprint, Material bundle, response, telemetry-failure, package-size, memory, latency, and fixed-suite checks pass. Local-versus-hosted divergence is reported for information, and hosted attribution remains required before a later hosted surface gate. |
 | `FR-41` | Public npm and web bundles must exclude every VC-3 protected class: usage-derived ranking weights, query-behavior signals, community curation data, contributor reputation data, and paid design intelligence. The existing hand-maintained deterministic ranking policy, intent graph, synonyms, taxonomy, and icon indexes remain intentionally public. | `VC-3`, `NG-03`, `FR-25`, `D-027` | A named VC-3 bundle-content probe checks both staged public surfaces against the maintained protected-class identifiers and fails on any match. |
 | `FR-42` | Every public npm and web release must include the applicable license terms and private-record-bound copying-detection markers. The private record never enters the repository or public verifier, and release verification fails if the record is missing or does not match its manifest-bound commitment. | `VC-2`, `VC-4`, `FR-25`, `D-027` | A named VC-4 license-and-canary probe checks both staged surfaces, verifies the private record commitment, and confirms that source artifacts remain free of private canary values. |
+| `FR-43` | Keep eligible local-first search keyless and unmetered by Supericons. Apply measured hosted allowances consistently at the Railway MCP service and the shared Supabase gateway: generous anonymous access, a higher registered-free allowance, and the highest fair-use paid allowance. Enforcement stays disabled until thresholds are measured, self-service free keys deliver the higher allowance, and the limit response promises only live benefits. | `G-10`, `VC-1`, `D-028` | A shared tier contract, two-ingress behavior tests, disabled-until-ready checks, and reset/retry/signup response fixtures pass. The anonymous threshold is bound to a reviewed measurement artifact rather than a hardcoded guess. |
+| `FR-44` | Treat local package telemetry as best-effort and optional. Disclose what is sent, honor the documented opt-out, minimize retained fields, and never use local telemetry as a complete denominator. Keep protected living intelligence and account analytics server-side. | `G-08`, `NG-10`, `VC-3`, `D-028` | Package tests prove opt-out and telemetry-failure behavior; public docs match the shipped fields; reporting labels local coverage as partial; bundle probes keep protected classes out of public artifacts. |
 
 ## Constraints
 
 - Current public APIs remain available until a compatible migration is approved.
 - Semantic and relationship schema changes remain additive until v2 is proven.
-- Hosted functions retain current CORS, authentication, rate-limit, and audit boundaries.
+- Hosted functions retain current CORS and audit boundaries. Authentication and rate-limit changes require the compatible, disabled-by-default two-ingress contract in `FR-43`.
+- Any hosted allowance change must preserve keyless entry, apply at both hosted entry points, and remain disabled until the `FR-43` readiness conditions pass.
 - Query fan-out and semantic candidates are bounded.
 - No secrets, credentials, raw personal identifiers, private prompts, or internal process metadata enter public docs, packages, responses, or logs.
 - No Supabase or Netlify deployment and no npm publication occurs without a bounded mutation plan, independent audit, and rollback rule. Owner involvement follows `FR-26` and is not a routine gate.
@@ -530,6 +538,9 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 | Deployment state is mistaken for local completion | Lifecycle status ledger with verification and deployment evidence |
 | Diversification adds weak or noisy results | Require approved families, catalog availability, relevance floors, and context-based narrowing |
 | Common-word or substring brand matches dominate concepts | Maintain brand match classes and require brand intent for ambiguous or partial matches |
+| Anonymous hosted use creates unbounded shared cost | Measure client and cost distributions, retain bill and concurrency ceilings, then apply the same tier contract at both hosted entry points |
+| Local usage is overcounted or described as complete | Treat package telemetry as optional best-effort evidence, publish its field and opt-out contract, and keep complete-denominator claims out of reporting |
+| Public engine bytes are mistaken for the whole product | Keep the public boundary explicit and retain freshness, account features, and VC-3 living intelligence in the hosted service |
 
 ## Open questions
 
@@ -537,7 +548,6 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 - `OQ-02` If deterministic beta evidence justifies semantic retrieval, which owner-approved local or external model and dimensions win the documented multilingual quality, latency, cost, and rebuild experiment?
 - `OQ-03` What downstream event defines `recommend_icons` acceptance: fetch, preview, copy/export, or another tool action?
 - `OQ-04` What confidence thresholds separate normal, related, fallback, clarification, and gap-classification behavior?
-- `OQ-05` When should hosted MCP require an API key, apply throttling, or use a paid/x402 action based on usage and cost evidence?
 - `OQ-06` What minimum geography/client attribution is useful when trusted headers or authenticated identity are absent?
 - `OQ-07` Should approved search reviews edit SI v2 records directly or create owner-approved change proposals?
 - `OQ-08` Which conditions justify a dedicated vector service instead of pgvector?
@@ -546,6 +556,7 @@ Semantic retrieval must also have an independent time-budget/kill-switch path.
 ## Resolved questions
 
 - `OQ-09` Resolved by `D-018`: engineering or admin review proposes brand-term changes, the owner approves them in the maintained ranking policy, and approved identity or sanitized search evidence plus stable fixtures governs changes.
+- `OQ-05` Resolved by `D-028`: local-first search stays keyless; hosted search starts keyless with a generous measured anonymous allowance, registered and paid tiers receive higher allowances, and enforcement waits for measurement, working free keys, and honest live-benefit copy.
 
 ## Acceptance criteria for the first hybrid beta
 
