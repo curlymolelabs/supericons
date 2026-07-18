@@ -40,13 +40,15 @@ const queryRows = [
     query_origin: 'agent_query',
     visitor_kind: 'anonymous',
     client_label: '3 clients',
-    country_code: null,
-    country_available: false,
-    country_reason: 'Not available for aggregate view',
+    country_code: 'US',
+    country_available: true,
+    country_scope: 'current_day',
     channel: 'web',
-    result_count: null,
-    result_count_available: false,
-    result_count_reason: 'Not available for aggregate view',
+    result_count: 3,
+    result_count_available: true,
+    result_count_kind: 'exact',
+    result_count_scope: 'current_day',
+    result_unit: 'icon',
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 5,
@@ -439,6 +441,13 @@ function responseFor(path, searchParams = new URLSearchParams()) {
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1024, height: 1000 } });
+await page.addInitScript(({ base }) => {
+  window.__SI_ADMIN_RUNTIME__ = Object.freeze({
+    apiBase: base,
+    managedAuth: false,
+    autoRefreshMs: 100,
+  });
+}, { base: apiBase });
 
 await page.route(`${apiBase}/**`, async (route) => {
   const url = new URL(route.request().url());
@@ -568,12 +577,17 @@ try {
   await page.evaluate(() => window.scrollTo(0, 0));
   const compactLayout = await page.evaluate(() => {
     const box = (selector) => document.querySelector(selector)?.getBoundingClientRect();
+    const topbarElement = document.querySelector('.topbar');
+    const filterElement = document.querySelector('.filter-bar');
     const topbar = box('.topbar');
     const filter = box('.filter-bar');
     const pagination = box('[data-pagination="queries"]');
     return {
       topbarHeight: topbar?.height,
       filterHeight: filter?.height,
+      filterBorderWidth: filterElement ? getComputedStyle(filterElement).borderTopWidth : null,
+      filterBackground: filterElement ? getComputedStyle(filterElement).backgroundColor : null,
+      topbarBorderWidth: topbarElement ? getComputedStyle(topbarElement).borderBottomWidth : null,
       redundantHeadingCount: document.querySelectorAll('#section-intelligence .section-head').length,
       paginationBottom: pagination?.bottom,
       paginationTop: pagination?.top,
@@ -582,6 +596,9 @@ try {
   });
   ok(compactLayout.topbarHeight <= 54, `The top navigation is still too tall at ${compactLayout.topbarHeight}px.`);
   ok(compactLayout.filterHeight <= 50, `The filter bar is still too tall at ${compactLayout.filterHeight}px.`);
+  ok(compactLayout.filterBorderWidth === '0px', 'The period controls still have an outer border.');
+  ok(compactLayout.filterBackground === 'rgba(0, 0, 0, 0)', 'The period controls still have an outer filled container.');
+  ok(compactLayout.topbarBorderWidth === '0px', 'The divider below the dashboard search box still exists.');
   ok(compactLayout.redundantHeadingCount === 0, 'The redundant Search Intelligence heading still exists.');
   ok(
     compactLayout.paginationTop >= 0 && compactLayout.paginationBottom <= compactLayout.viewportHeight,
@@ -686,8 +703,8 @@ try {
   ok(!(await varyingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
-  ok((await healthyRow.innerText()).includes('Not available for aggregate view'), 'Aggregate result and country gaps were not explained.');
-  ok(!(await healthyRow.innerText()).includes('Unknown'), 'An aggregate query still shows a false Unknown country pill.');
+  ok((await healthyRow.innerText()).includes('3 icons'), 'Exact current-day returned icons were hidden from the grouped query row.');
+  ok((await healthyRow.innerText()).includes('US'), 'The exact current-day country was hidden from the grouped query row.');
   const mixedRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'mixed aggregate' });
   ok((await mixedRow.innerText()).includes('Mixed: 1 of 5 zero'), 'A mixed aggregate query was mislabelled.');
   const iconLookupRow = page.locator('#queryExplorer tbody tr').filter({
@@ -704,6 +721,15 @@ try {
   ok((await pendingLookupRow.innerText()).includes('Lookup'), 'An unavailable icon lookup did not render an honest lookup state.');
   ok(!(await pendingLookupRow.innerText()).includes('Zero'), 'An unavailable icon lookup rendered a false Zero pill.');
   ok((await pendingLookupRow.innerText()).includes('Lookup completed'), 'The unavailable icon lookup result state was not explained.');
+  ok(await page.locator('#autoRefresh').count() === 1, 'The 30-second auto-refresh option is missing.');
+  ok(!(await page.locator('#autoRefresh').isChecked()), 'Auto-refresh must be off until the operator enables it.');
+  const autoRefreshRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/overview')
+  ));
+  await page.check('#autoRefresh');
+  await autoRefreshRequest;
+  await page.uncheck('#autoRefresh');
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
   ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
   await page.selectOption('[data-query-review]', 'needs_alias');

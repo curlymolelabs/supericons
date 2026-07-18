@@ -26,6 +26,7 @@ import {
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
+  mergeDashboardV2CurrentQueryDetails,
   normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
 } from '../../../lib/admin-dashboard-v2.js';
@@ -1720,16 +1721,23 @@ async function buildDashboardV2DataRows(
     ? telemetryRows.filter((row) => String(row.created_at || '').slice(0, 10) === currentUtcDayStartIso().slice(0, 10))
     : [];
   const currentRollups = buildAdminRollups(todayRows, knownSearchDefects);
+  const aggregateQueryRows = includeQueryRows
+    ? buildQueryWorkbenchRowsFromRollups(
+      [...completedQueryRows, ...currentRollups.queries],
+      reviews.reviews,
+      { separateQueryOrigins, separateChannels },
+    )
+    : [];
+  const currentQueryRows = includeQueryRows
+    ? buildQueryWorkbenchRows(todayRows, reviews.reviews, {
+      separateQueryOrigins,
+      separateChannels,
+    })
+    : [];
   return {
     telemetry_rows: telemetryRows,
     overview_rows: [...completedOverviewRows, ...currentRollups.overview],
-    query_rows: includeQueryRows
-      ? buildQueryWorkbenchRowsFromRollups(
-        [...completedQueryRows, ...currentRollups.queries],
-        reviews.reviews,
-        { separateQueryOrigins, separateChannels },
-      )
-      : [],
+    query_rows: mergeDashboardV2CurrentQueryDetails(aggregateQueryRows, currentQueryRows),
     query_review_available: includeQueryRows && reviews.available,
     raw_truncated: telemetry.truncated,
     rollup_truncated: overviewRollups.truncated || (includeQueryRows && queryRollups.truncated),

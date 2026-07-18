@@ -110,7 +110,7 @@
       padding: 6px clamp(18px, 3vw, 40px);
       background: rgba(13, 13, 13, 0.92);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      border-bottom: 0;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -144,16 +144,20 @@
     }
     .refresh-button:hover { border-color: #494746; }
     .refresh-button[aria-busy="true"] { color: var(--orange); }
+    .auto-refresh {
+      white-space: nowrap;
+      padding: 4px 0;
+    }
     .content { padding: 16px clamp(18px, 3vw, 40px) 60px; }
     .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
     h1 { margin: 0; font: 700 clamp(23px, 2.5vw, 27px)/1.05 "Space Grotesk", sans-serif; letter-spacing: -0.03em; }
     .section-subtitle { margin-top: 3px; color: var(--muted); font-size: 11.5px; line-height: 1.2; }
     .filter-bar {
-      padding: 7px 9px;
+      padding: 0;
       margin-bottom: 12px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
@@ -562,6 +566,10 @@
           <input id="globalSearch" type="search" aria-label="Search dashboard data" placeholder="Search queries, icons, searchers, or countries" autocomplete="off" />
         </label>
         <div class="top-status" id="freshnessLine">Loading production data</div>
+        <label class="switch auto-refresh">
+          <input id="autoRefresh" type="checkbox" aria-label="Auto refresh every 30 seconds" />
+          Auto refresh 30s
+        </label>
         <button class="refresh-button" id="refreshButton" type="button" aria-busy="false">Refresh</button>
       </header>
 

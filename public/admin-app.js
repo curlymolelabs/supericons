@@ -7,6 +7,9 @@ const ADMIN_API_MANAGED_AUTH = ADMIN_RUNTIME_CONFIG.managedAuth === true;
 const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
 const REQUEST_TIMEOUT_MS = 15_000;
+const AUTO_REFRESH_MS = Number(ADMIN_RUNTIME_CONFIG.autoRefreshMs) > 0
+  ? Number(ADMIN_RUNTIME_CONFIG.autoRefreshMs)
+  : 30_000;
 const DEFAULT_ROW_LIMIT = 25;
 const ROW_LIMIT_OPTIONS = [25, 50, 100];
 const CHART_FONT_SIZE = 14;
@@ -101,6 +104,8 @@ const state = {
   view: null,
   visibleQueryRows: [],
   searcherDetailsReturnFocus: null,
+  autoRefreshEnabled: false,
+  autoRefreshTimer: null,
 };
 
 function $(id) {
@@ -773,9 +778,14 @@ function queryResultCell(row = {}) {
   }
   if (row.result_count_kind === 'range_across_attempts') {
     const range = `${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)}`;
-    return `<span title="${escapeHtml(row.result_count_reason || 'Result range across grouped activity')}">${escapeHtml(range)} ${escapeHtml(countWithUnit(2, row.result_unit).replace(/^2 /, ''))}</span>`;
+    const scope = row.result_count_scope === 'current_day'
+      ? 'Exact results recorded today within this grouped period'
+      : row.result_count_reason || 'Result range across grouped activity';
+    return `<span title="${escapeHtml(scope)}">${escapeHtml(range)} ${escapeHtml(countWithUnit(2, row.result_unit).replace(/^2 /, ''))}</span>`;
   }
-  return countWithUnit(row.result_count ?? row.results, row.result_unit);
+  const value = countWithUnit(row.result_count ?? row.results, row.result_unit);
+  if (row.result_count_scope !== 'current_day') return value;
+  return `<span title="Exact result recorded today within this grouped period">${value}</span>`;
 }
 
 function queryCountryCell(row = {}) {
@@ -786,7 +796,8 @@ function queryCountryCell(row = {}) {
     }
     return `<span class="muted-cell">${escapeHtml(row.country_reason || 'Country not recorded')}</span>`;
   }
-  return pill(country);
+  if (row.country_scope !== 'current_day') return pill(country);
+  return `<span title="Country recorded today within this grouped period">${pill(country)}</span>`;
 }
 
 function queryChannelCell(row = {}) {
@@ -2000,7 +2011,7 @@ async function loadEndpoint(endpoint, token, { force = false } = {}) {
   }
 }
 
-async function refreshDashboard({ force = false, includeAccounts = true } = {}) {
+async function refreshDashboard({ force = false, includeAccounts = true, notify = true } = {}) {
   beginDashboardView();
   const token = state.requestToken + 1;
   state.requestToken = token;
@@ -2024,7 +2035,20 @@ async function refreshDashboard({ force = false, includeAccounts = true } = {}) 
     state.refreshedAt = null;
   }
   setRefreshState();
-  if (force && Object.keys(state.errors).length === 0) showToast('Production data refreshed.');
+  if (force && notify && Object.keys(state.errors).length === 0) showToast('Production data refreshed.');
+}
+
+function setAutoRefresh(enabled) {
+  state.autoRefreshEnabled = enabled === true;
+  if (state.autoRefreshTimer) {
+    window.clearInterval(state.autoRefreshTimer);
+    state.autoRefreshTimer = null;
+  }
+  if (!state.autoRefreshEnabled) return;
+  state.autoRefreshTimer = window.setInterval(() => {
+    if (document.hidden || state.loading.size > 0) return;
+    refreshDashboard({ force: true, includeAccounts: false, notify: false });
+  }, AUTO_REFRESH_MS);
 }
 
 async function refreshListEndpoint(key) {
@@ -2438,6 +2462,9 @@ function initializeEvents() {
     scheduleEndpointRefresh('queries', 0);
   });
   $('refreshButton')?.addEventListener('click', () => refreshDashboard({ force: true }));
+  $('autoRefresh')?.addEventListener('change', (event) => {
+    setAutoRefresh(event.target.checked);
+  });
   $('adminSecretForm')?.addEventListener('submit', submitAdminSecret);
   $('adminSecretCancelBtn')?.addEventListener('click', cancelAdminSecret);
   $('adminSecretModal')?.addEventListener('keydown', (event) => {

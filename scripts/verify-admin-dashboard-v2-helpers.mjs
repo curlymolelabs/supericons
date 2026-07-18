@@ -11,6 +11,7 @@ import {
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
+  mergeDashboardV2CurrentQueryDetails,
   normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
   parseDashboardV2Range,
@@ -301,6 +302,79 @@ const queryRows = [
   assert.equal(lookup.outcome_label, 'Success');
   assert.equal(lookup.result_count, 1);
   assert.equal(lookup.result_count_available, true);
+}
+
+{
+  const [merged] = mergeDashboardV2CurrentQueryDetails(
+    [{
+      query: 'current detail',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 8,
+      successful_attempt_count: 8,
+      client_days: 5,
+      countries: [],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+      maximum_result_count: null,
+      result_sample_count: 0,
+      last_seen: '2026-07-18T10:18:00Z',
+    }],
+    [{
+      query: 'current detail',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 1,
+      successful_attempt_count: 1,
+      estimated_unique_clients: 1,
+      countries: ['US'],
+      audit_sources: ['search_request_audit'],
+      minimum_result_count: 3,
+      maximum_result_count: 3,
+      result_sample_count: 1,
+      first_seen: '2026-07-18T10:18:00Z',
+      last_seen: '2026-07-18T10:18:00Z',
+    }],
+  );
+  const [compact] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([merged]));
+  assert.equal(compact.country_code, 'US');
+  assert.equal(compact.country_available, true);
+  assert.equal(compact.country_scope, 'current_day');
+  assert.equal(compact.result_count, 3);
+  assert.equal(compact.result_count_available, true);
+  assert.equal(compact.result_count_kind, 'exact');
+  assert.equal(compact.result_count_scope, 'current_day');
+  assert.equal(compact.attempt_count, 8);
+
+  const [stale] = mergeDashboardV2CurrentQueryDetails(
+    [{
+      query: 'do not cross records',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 4,
+      countries: [],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+      last_seen: '2026-07-18T10:18:00Z',
+    }],
+    [{
+      query: 'do not cross records',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      countries: ['PL'],
+      minimum_result_count: 7,
+      maximum_result_count: 7,
+      result_sample_count: 1,
+      last_seen: '2026-07-18T10:17:00Z',
+    }],
+  );
+  const [staleCompact] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([stale]));
+  assert.equal(staleCompact.country_available, false);
+  assert.equal(staleCompact.result_count_available, false);
 }
 
 {
