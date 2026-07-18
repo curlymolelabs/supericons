@@ -270,7 +270,7 @@ async function assertPanelActionsStayOnOneLine(page, sectionSelector) {
 }
 
 function responseFor(path, searchParams = new URLSearchParams()) {
-  const windowKey = searchParams.get('window') || '30d';
+  const windowKey = searchParams.get('window') || '1d';
   const allHistory = windowKey === 'all';
   const meta = { window: windowKey, generated_at: '2026-07-17T08:00:00Z' };
   if (path === '/v2/activity') {
@@ -514,8 +514,12 @@ try {
   }));
   ok(unnamedControls.length === 0, `Visible controls lack accessible names: ${JSON.stringify(unnamedControls)}`);
   ok(
-    await page.locator('[data-window="30d"]').getAttribute('aria-pressed') === 'true',
-    'The selected dashboard period is not announced.',
+    await page.locator('[data-window="1d"]').getAttribute('aria-pressed') === 'true',
+    'The dashboard does not start with the 24-hour period selected.',
+  );
+  ok(
+    initialV2Requests.every((request) => new URLSearchParams(request.search).get('window') === '1d'),
+    'The initial dashboard requests do not use the 24-hour period.',
   );
   const unfocusableScrollRegions = await page.locator('.scroll-region').evaluateAll(
     (regions) => regions.filter((region) => region.tabIndex < 0).map((region) => region.id || region.className),
@@ -819,13 +823,13 @@ try {
   const downloaded = await download;
   ok(downloaded.suggestedFilename().endsWith('.csv'), 'The list export did not create a CSV file.');
 
-  const thirtyDayOverviewResponse = page.waitForResponse((response) => {
+  const defaultOverviewResponse = page.waitForResponse((response) => {
     const url = new URL(response.url());
     return url.pathname.endsWith('/v2/overview')
-      && url.searchParams.get('window') === '30d';
+      && url.searchParams.get('window') === '1d';
   });
-  await page.click('[data-window="30d"]');
-  await thirtyDayOverviewResponse;
+  await page.click('[data-window="1d"]');
+  await defaultOverviewResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
@@ -852,7 +856,7 @@ try {
   const cacheKeysAfterReload = await page.evaluate(() => Object.keys(window.localStorage));
   ok(
     cacheKeysAfterReload.some((candidate) => candidate.endsWith(
-      ':overview:/v2/overview?window=30d&channel=all&include_test=false',
+      ':overview:/v2/overview?window=1d&channel=all&include_test=false',
     )),
     `Reload removed the warm aggregate Overview cache: ${JSON.stringify(cacheKeysAfterReload)}`,
   );

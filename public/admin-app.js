@@ -50,7 +50,7 @@ const ORIGIN_LABELS = {
 const state = {
   activeSection: 'overview',
   filters: {
-    window: '30d',
+    window: '1d',
     from: '',
     to: '',
     channel: 'all',
