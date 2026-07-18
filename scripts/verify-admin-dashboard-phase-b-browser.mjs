@@ -564,6 +564,30 @@ try {
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const compactLayout = await page.evaluate(() => {
+    const box = (selector) => document.querySelector(selector)?.getBoundingClientRect();
+    const topbar = box('.topbar');
+    const filter = box('.filter-bar');
+    const heading = box('#section-intelligence .section-head');
+    const pagination = box('[data-pagination="queries"]');
+    return {
+      topbarHeight: topbar?.height,
+      filterHeight: filter?.height,
+      headingHeight: heading?.height,
+      paginationBottom: pagination?.bottom,
+      paginationTop: pagination?.top,
+      viewportHeight: window.innerHeight,
+    };
+  });
+  ok(compactLayout.topbarHeight <= 54, `The top navigation is still too tall at ${compactLayout.topbarHeight}px.`);
+  ok(compactLayout.filterHeight <= 50, `The filter bar is still too tall at ${compactLayout.filterHeight}px.`);
+  ok(compactLayout.headingHeight <= 48, `The Search Intelligence heading is still too tall at ${compactLayout.headingHeight}px.`);
+  ok(
+    compactLayout.paginationTop >= 0 && compactLayout.paginationBottom <= compactLayout.viewportHeight,
+    `Query pagination is outside the initial viewport: ${JSON.stringify(compactLayout)}`,
+  );
   await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
   ok(await page.locator('[data-row-limit]').count() === 8, 'Every long list must have a row display control.');
   ok(
@@ -618,9 +642,14 @@ try {
       maxHeight: style.maxHeight,
       overflowY: style.overflowY,
       scrollbarWidth: style.scrollbarWidth,
+      height: element.getBoundingClientRect().height,
+      panelHeight: element.closest('.panel')?.getBoundingClientRect().height,
     };
   });
-  ok(scrollStyle.maxHeight !== 'none', 'The query explorer height is not bounded.');
+  ok(
+    scrollStyle.maxHeight !== 'none' || scrollStyle.height < scrollStyle.panelHeight,
+    'The query explorer height is not bounded.',
+  );
   ok(scrollStyle.overflowY === 'auto', 'The query explorer does not scroll vertically.');
   ok(scrollStyle.scrollbarWidth === 'none', 'The query explorer shows a vertical scrollbar.');
   const queryPanel = page.locator('.panel[data-row-key="queries"]');
@@ -829,6 +858,7 @@ try {
     warm_render_ms: warmMs,
     navigation_sections: 3,
     inline_svg_charts: await page.locator('.chart svg').count(),
+    compact_layout: compactLayout,
   }, null, 2));
 } finally {
   await browser.close();
