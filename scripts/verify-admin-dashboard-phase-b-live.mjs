@@ -54,6 +54,10 @@ try {
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
       && !document.querySelector('#kpiClients')?.classList.contains('skeleton')
   ), null, { timeout: 120_000 });
+  await page.waitForFunction(() => (
+    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered accounts')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.startsWith('0 registered')
+  ), null, { timeout: 120_000 });
 
   ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
   ok(await page.evaluate(() => (
@@ -112,6 +116,8 @@ try {
       .map((id) => page.locator(`#${id}`).innerText()),
   );
   ok(funnel.every(populated), 'The production audience funnel is unavailable.');
+  ok(Number(funnel[1]) > 0, 'The registered account funnel incorrectly shows zero.');
+  ok(Number(funnel[2]) > 0, 'The Pro account funnel incorrectly shows zero.');
   for (const id of ['registeredUsers', 'allClients']) {
     const text = await page.locator(`#${id}`).innerText();
     ok(text.trim() && !text.includes('Loading'), `${id} has no truthful production state.`);
@@ -206,6 +212,15 @@ try {
   ), null, { timeout: 5_000 });
   const warmRenderMs = Date.now() - warmStart;
   ok(warmRenderMs < 1_000, `Warm cached content took ${warmRenderMs} ms to appear.`);
+  await page.waitForFunction(() => (
+    document.querySelector('#kpiClientsNote')?.textContent?.includes('registered accounts')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.startsWith('0 registered')
+  ), null, { timeout: 120_000 });
+  await page.waitForFunction(() => (
+    document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelectorAll('#latestActivity .activity-row').length > 0
+  ), null, { timeout: 120_000 });
 
   const overflow = await page.evaluate(() => ({
     document: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 2,

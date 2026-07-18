@@ -1,11 +1,12 @@
 # Admin dashboard v2 gap remediation plan
 
 - Date: 2026-07-18
-- Status: approved for autonomous execution
+- Status: completed
 - Branch: `codex/admin-dashboard-v2-gap-repair`
 - Design authority: `mockups/admin-dashboard-v2-mockup-2026-07-17.html`
 - Product authority: `docs/admin-dashboard-v2-prd-2026-07-17.md`
 - Correctness authority: `docs/admin-dashboard-v2-fix-round-2-2026-07-17.md`
+- Completion evidence: `references/verification/admin-dashboard-v2-gap-remediation-2026-07-18.md`
 
 ## 1. Goal
 
@@ -286,4 +287,3 @@ Before release:
 - The attribution migration may be applied only with a recorded backup query, bounded update count, post-check, and reversal SQL.
 - If live verification fails, restore the previous active admin API revision. Reverse only the migration rows identified by the migration's explicit correction predicate.
 - Keep the existing production dashboard available until the repaired build passes the managed real-data walkthrough.
-
