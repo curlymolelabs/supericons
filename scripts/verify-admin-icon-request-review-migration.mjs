@@ -78,6 +78,7 @@ try {
     );
   `);
   runSql(migration);
+  runSql('grant select on table public.admin_icon_request_reviews to anon, authenticated;');
   runSql(migration);
   const evidenceId = runSql(
     "insert into public.icon_evidence (evidence_text) values ('missing icon') returning id;",

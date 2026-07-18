@@ -25,6 +25,7 @@ create index if not exists admin_icon_request_reviews_status_updated_at_idx
 alter table public.admin_icon_request_reviews enable row level security;
 
 revoke all on table public.admin_icon_request_reviews from public;
+revoke all on table public.admin_icon_request_reviews from anon, authenticated;
 grant select, insert, update, delete on table public.admin_icon_request_reviews to service_role;
 
 comment on table public.admin_icon_request_reviews is
