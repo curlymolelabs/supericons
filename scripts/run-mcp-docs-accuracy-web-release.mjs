@@ -365,6 +365,9 @@ export function prepareAndVerifyArtifact({
   assert.equal(builder.artifact.file_count, manifest.artifact.file_count);
   assert.equal(builder.artifact.total_bytes, manifest.artifact.total_bytes);
 
+  const catalogConsistency = runLocalSuccess([
+    join(repoRoot, 'scripts', 'verify-i18n-catalogs.mjs'),
+  ], 'maintained_sources_and_public_outputs');
   const clientAndDocs = runLocalSuccess([
     join(repoRoot, 'scripts', 'verify-mcp-client-tabs-browser.mjs'),
     '--use-existing-dist',
@@ -391,6 +394,7 @@ export function prepareAndVerifyArtifact({
   assert.equal(protection.final_web_surface_checked, true);
   return {
     builder,
+    catalog_consistency: catalogConsistency,
     client_and_docs: clientAndDocs,
     preview_regression: previewRegression,
     protection,
@@ -505,6 +509,7 @@ async function main() {
       status: 'local_packet_verified',
       manifest_sha256: expectedManifestHash,
       artifact: localEvidence.builder.artifact,
+      catalog_consistency: localEvidence.catalog_consistency,
       client_and_docs: localEvidence.client_and_docs,
       preview_regression: localEvidence.preview_regression,
       protection: localEvidence.protection.probes,

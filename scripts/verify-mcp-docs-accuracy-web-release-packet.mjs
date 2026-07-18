@@ -47,8 +47,7 @@ const expectedProbeInventory = [
   'tab_keyboard_navigation',
   'mobile_tab_scroll',
   'free_mcp_keyless_claim_english',
-  'free_mcp_keyless_claim_localized',
-  'stale_api_key_claim_absent',
+  'free_mcp_keyless_claim_german_spot_check',
   'generated_catalog_parity',
 ];
 
@@ -70,6 +69,11 @@ function runBoundCliVerification() {
   const report = JSON.parse(result.stdout.slice(start));
   assert.equal(report.status, 'local_packet_verified');
   assert.equal(report.manifest_sha256, expectedManifestHash);
+  assert.equal(report.catalog_consistency.status, 'ok');
+  assert.equal(
+    report.catalog_consistency.tested_surface,
+    'maintained_sources_and_public_outputs',
+  );
   assert.equal(report.client_and_docs.tested_surface, 'existing_dist');
   assert.equal(report.preview_regression.tested_surface, 'existing_dist');
   return report;
@@ -309,6 +313,7 @@ console.log(JSON.stringify({
   status: 'ok',
   manifest_sha256: expectedManifestHash,
   artifact: local.artifact,
+  catalog_consistency: local.catalog_consistency,
   client_and_docs: local.client_and_docs,
   preview_regression: local.preview_regression,
   protection: local.protection,
