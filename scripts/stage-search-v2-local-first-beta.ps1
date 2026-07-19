@@ -1,6 +1,7 @@
 param(
     [switch]$ExecuteApprovedStaging,
     [string]$ApprovedManifestSha256,
+    [string]$ManifestPath,
     [switch]$RunStageAttemptSelfTest,
     [switch]$RunStagedVerificationSelfTest
 )
@@ -407,12 +408,20 @@ if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
-$actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
+$resolvedManifestPath = if ([string]::IsNullOrWhiteSpace($ManifestPath)) {
+    Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
+}
+elseif ([System.IO.Path]::IsPathRooted($ManifestPath)) {
+    $ManifestPath
+}
+else {
+    Join-Path $repoRoot $ManifestPath
+}
+$actualManifestSha256 = Get-NormalizedTextSha256 $resolvedManifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
     throw 'The current manifest does not match the audited release fingerprint.'
 }
-$manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+$manifest = Get-Content -Raw -LiteralPath $resolvedManifestPath | ConvertFrom-Json
 if ($manifest.publication_flow.mode -ne 'npm_staged_browser_security_key') {
     throw 'The manifest does not authorize npm staged publishing.'
 }
