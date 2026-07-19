@@ -12,8 +12,8 @@ Design every MCP interaction as if the calling model can do exactly two things: 
 
 Every `search_icons` response is a complete answer kit:
 
-1. Results, always. A query never returns empty-handed: exact matches when they exist, otherwise engine-generated alternates ("no exact match for ship it; closest concepts: rocket, deploy, package") produced by server-side decomposition and concept fallback, clearly labeled as alternates.
-2. A visual, always. `image_url` (hosted PNG contact sheet) and a ready-made `markdown_image` snippet ship in the search response itself, so showing icons in chat requires pasting one line, not making a second tool call.
+1. Results for meaningful queries, honesty for the rest. A meaningful query never returns empty-handed: exact matches when they exist, otherwise engine-generated alternates ("no exact match for ship it; closest concepts: rocket, deploy, package") produced by server-side decomposition and concept fallback, clearly labeled as alternates. Unsupported or nonsensical queries (the "flibbertigibbet quantum banana zxqv" class) keep the honest structured no-result with a useful next step; the contract never fabricates relevance to avoid an empty answer, and the dummy-agent gate must assert the honest no-result path as a passing outcome, not penalize it.
+2. A visual when usable icons exist. `image_url` (hosted PNG contact sheet) and a ready-made `markdown_image` snippet ship in the search response itself, so showing icons in chat requires pasting one line, not making a second tool call. When no honest visual can be produced, these fields are omitted rather than filled with junk.
 3. A paste-ready answer. A `suggested_response_markdown` field containing a compact, correct final answer (icon names, refs, the preview image, the browser link). Weak models paste it verbatim; strong models rewrite it. Same outcome either way.
 4. A next step, always. Every response and every error names the follow-up in plain words ("include markdown_image in your reply to show the icons", "showing 12 of 40; call again with the rest"). No response is a dead end.
 

@@ -146,7 +146,7 @@ The complete four-surface map and its evidence limits are recorded in `reference
 ## Immediate next gate
 
 1. Follow the bounded execution order in `search-v2-completion-prd-2026-07-18.md`: quality mining, documentation accuracy, Railway local-first preparation, and hosted allowance measurement design may proceed in parallel.
-2. Count only verified organic beta activity toward the founder validation window. Closure requires at least 200 eligible attempts and 3 complete green days. Report session groups and traffic concentration as facts, not gates.
+2. The promotion window follows `D-030`: 200 correctly labeled controlled eligible attempts across at least three qualifying days plus the quality, error, latency, canary, and rollback conditions. Organic adoption is reported separately and is not a gate. Labeled counting requires the 0.4.19-beta.2 labeling support; the 30 earlier unlabeled events are quality evidence only.
 3. Report relevance, zeros, errors, telemetry coverage limits, traffic concentration, and remaining deterministic gaps against the closeout scorecard. Local package telemetry remains best-effort and cannot supply a complete denominator.
 4. Measure the current hosted database and recommendation path with a separately bounded workload before choosing further recommendation or database changes.
 5. Keep hosted tier enforcement disabled until the `FR-43` readiness conditions pass: measured thresholds, working self-service free keys, one two-ingress contract, and copy that promises only live benefits.

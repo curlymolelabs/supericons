@@ -42,6 +42,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-027` | Keep living search intelligence private while licensing, marking, and minifying staged public engine artifacts | Accepted | Public bundle boundary |
 | `D-028` | Keep local search keyless while giving hosted search measured anonymous, registered, and paid allowances | Accepted | Access, cost, telemetry, and public/private product boundary |
 | `D-029` | Make MCP telemetry venue follow the client entry point | Accepted | Measurement and dashboard attribution |
+| `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
 
 ## Decision records
 
@@ -419,6 +420,24 @@ Alternatives rejected or deferred: keeping beta traffic under Hosted MCP; requir
 Specification change: version 1.13 adds `FR-45`.
 
 Superseded decisions: the channel rule in the deterministic MCP beta measurement plan is replaced by this decision. The beta eligibility, cohort, privacy, and one-call outcome rules remain active.
+
+### D-030: Ratified allowance thresholds and controlled-evidence promotion gate
+
+Date: 2026-07-20
+Status: Accepted
+
+Decision:
+
+- The hosted allowance thresholds deferred by `D-028` are ratified: anonymous keyless 300 hosted logical searches per client per UTC day; registered free accounts, including pack-only purchasers, 1,500 per account per UTC day; active Pro subscriptions 5,000 per account per UTC day under fair use; 120 requests per minute burst for all tiers; local npm search unlimited and keyless. Enforcement remains off until every precondition in the measurement artifact passes, and the thresholds are revalidated on a fresh 30-day window before enforcement is enabled.
+- The 200-organic-attempt pre-promotion minimum is replaced by a controlled-evidence gate: 200 correctly labeled controlled eligible `search_icons` attempts across at least three qualifying days, at least 50 manually reviewed distinct query and mode combinations rerun against the promotion candidate bytes, the full 225-case deterministic suite green, error rate at or below 1 percent, local p95 below 500 ms, no canary violations, and verified venue rollback. Organic adoption is a reported post-release metric, never a promotion prerequisite, and labeled or scripted traffic is never reported as organic.
+
+Evidence: `docs/si-v2/search/experiments/hosted-allowance-measurement-2026-07-19.md` (measured distribution, direct exceedance counts, grain definitions, enforcement preconditions), reproduced independently three times with consistent values; owner direction of 2026-07-20 recorded in `docs/si-v2/search/search-v2-execution-prd-2026-07-20.md`.
+
+Alternatives rejected or deferred: waiting for organic adoption that the known-inaccurate public docs and unpromoted engine themselves suppress; counting unlabeled scripted traffic toward the window; per-key registered allowances that multiply across keys.
+
+Superseded decisions: the founder validation window minimums recorded in the beta1 publication approval request are superseded as promotion prerequisites.
+
+Specification change: none in this change set; the execution PRD is the controlling plan and the status ledger is updated in the same commit.
 
 ## Adding or superseding a decision
 

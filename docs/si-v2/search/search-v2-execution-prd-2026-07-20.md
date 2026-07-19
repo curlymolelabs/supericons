@@ -12,13 +12,13 @@ Owner direction of 2026-07-20 adopts the recommended positions from the decision
 
 | id | decision |
 | --- | --- |
-| A-1 | Hosted allowance thresholds ratified as policy: anonymous 300, registered free including pack-only purchasers 1,500, Pro 5,000 hosted logical searches per client per UTC day; 120 per minute burst unchanged; local npm search unlimited and keyless. Enforcement stays OFF until every precondition in the measurement artifact passes. |
+| A-1 | Hosted allowance thresholds ratified as policy and recorded as `D-030`: anonymous 300 hosted logical searches per client per UTC day; registered free including pack-only purchasers 1,500 per account per UTC day; Pro 5,000 per account per UTC day; 120 per minute burst unchanged; local npm search unlimited and keyless. Registered and Pro allowances aggregate per account so multiple clients or keys cannot multiply them. Enforcement stays OFF until every precondition in the measurement artifact passes. |
 | A-2 | The 200-organic beta gate is replaced by the controlled-evidence gate (section 6). Organic adoption becomes a reported post-release metric, never a promotion prerequisite. |
 | A-3 | Public numeric limits stay out of the maintained docs sources until enforcement and free-key issuance are live. The drafted 12-locale copy is preserved at commit `eb5d6878c`. |
 | A-4 | Release packet content freeze rule: once a packet has no open falsehood findings, wording preferences ride the next release. The keyless docs packet is frozen at branch commit `4933f4bc3`. |
 | A-5 | The two July 18 review files committed by the earlier broad staging remain in history. |
 | A-6 | Coarse server-side country for the hosted gateway leg is approved as a low-priority future gateway release with its telemetry disclosure updated in the same release. Local telemetry stays location-free. |
-| A-7 | `recommend_icons` is removed from the completion critical path. Rationale: agent orchestration over plain search already delivers the recommendation outcome (observed in real sessions), recommendation quality is good, and only its hosted latency (p50 42 s) is defective. Revisit after Railway local-first ships. |
+| A-7 | `recommend_icons` is removed from the completion critical path. Rationale: agent orchestration over plain search already delivers the recommendation outcome (observed in real sessions), and its expansion quality is strong. Two known defects remain: hosted latency (p50 42 s) and the clarification contract violation found in the 14-case verification (ambiguous low-confidence slots resolve without asking, contrary to the tool contract). The clarification alignment ships in beta.2; latency and full promotion are revisited after Railway local-first ships. |
 | A-8 | Beta.2 is the agent-experience release: it carries the one-call contract package shell (section 5) in addition to controlled-run labeling and 429 details propagation. |
 
 ## 2. Verified current state (as of 2026-07-20)
@@ -35,7 +35,7 @@ Owner direction of 2026-07-20 adopts the recommended positions from the decision
 1. Rebuild the web artifact from branch commit `4933f4bc3` exactly; rebind the manifest (source commit, file hashes, probe inventory); run the full packet verifier including the updated OpenCode assertion ("Project: opencode.json or opencode.jsonc. Global: ~/.config/opencode/opencode.json or ~/.config/opencode/opencode.jsonc") and the scope-explicit Claude CLI block.
 2. Deep auditor: independent GO on the rebuilt manifest, tracing every claimed probe to its call site. In-session verifications by the advisor do not count as the second reviewer.
 3. Owner manual smoke on the exact rebuilt bytes (changed spots only: OpenCode tab, Claude CLI commands; everything else was previously smoke-passed).
-4. Owner runs the single guarded Netlify deploy (one deploy, one restore, one-use receipt). Post-deploy: confirm the live `en.json` no longer contains "required for MCP and other programmatic workflows".
+4. Owner runs the single guarded Netlify deploy (one production deployment, at most one exact restore triggered only if the deployment or live verification fails, one-use receipt). Post-deploy: confirm the live `en.json` no longer contains "required for MCP and other programmatic workflows".
 
 Acceptance: live site keyless truth verified on deployed bytes; rollback target recorded; no other venue changed.
 
@@ -68,14 +68,14 @@ Contents (all package-side, one exact tarball, verified against that tarball):
 4. The dummy-agent gate: a behavioral test that makes exactly one `search_icons` call per scenario and asserts results or labeled alternates, a resolvable `markdown_image`, an accurate `suggested_response_markdown`, and no dead ends. Runs in the packet verifier; trace its invocation.
 5. Additions from the 14-case beta.1 verification: refresh the packaged local index and pin its generation timestamp in the release evidence (the beta.1 index was over three weeks old at test time); add a package fixture proving the query-frame and intent data load and produce non-empty concepts for known semantic queries; align the recommendation clarification contract with behavior (minimum: treat low-confidence ambiguous slots such as bare "run" as clarification cases, or soften the tool description so it promises only what it does; the description must not overpromise); add integration fixtures for every failed query in that report; and rerun the exact 14-case matrix against the beta.2 tarball as an acceptance gate.
 
-Release mechanics: version 0.4.19-beta.2 under the npm `beta` tag only; `latest` unchanged; staged archive, hashes, license and public-boundary checks (VC-3, VC-4), dual GO, owner approval to publish; rollback is repointing the beta tag. After publish, the owner updates any pinned client configs and the validation runner refuses unlabeled runs by default from then on.
+Release mechanics and sequencing: the shell, labeling, and 429 work may be implemented immediately and in parallel, but the exact beta.2 tarball is built only after the quality fixes required by the five failed beta.1 cases merge (the query-frame packaging resolution and relevance floor from batch 2, typo recovery from batch 3, clarification alignment from this workstream). The 14-case matrix then runs against that exact tarball and publication requires it to pass. Version 0.4.19-beta.2 ships under the npm `beta` tag only; `latest` unchanged; staged archive, hashes, license and public-boundary checks (VC-3, VC-4), dual GO, owner approval to publish; rollback is repointing the beta tag. After publish, the owner updates any pinned client configs and the validation runner refuses unlabeled runs by default from then on.
 
 ## 6. Workstream 4: controlled validation window (the A-2 gate)
 
 Requirements to close the window, all against beta.2 or later:
 
-- 200 labeled controlled attempts across at least three days. Primary source: the owner's natural agent usage with the label set in the client environment; the fixed runner is for regression passes and may contribute.
-- At least 50 manually reviewed distinct query and mode combinations; the founder quality documents already contribute reviewed combinations and may be counted.
+- 200 labeled controlled eligible `search_icons` attempts across at least three qualifying days, where a qualifying day has at least 30 labeled attempts (so the spread is real, not 198 plus one plus one). The labeled gate covers eligible `search_icons` calls because cohort labeling attaches to the beta search cohort, not to every tool. Primary source: the owner's natural agent usage with the label set in the client environment; the fixed runner is for regression passes and may contribute.
+- At least 50 manually reviewed distinct query and mode combinations, rerun against the exact beta.2 bytes. Earlier founder-pass reviews identify the combinations and expected judgments but count only after their rerun on the promotion candidate.
 - Full 225-case deterministic suite green; error rate at or below 1 percent; local p95 below 500 ms; no canary violations; venue rollback verified.
 - Scripted or labeled traffic is never reported as organic. Organic adoption is reported separately, post-release.
 
@@ -97,7 +97,7 @@ Order: 1) Railway hosted MCP promotes to v2 by default after the workstream 5 ga
 
 ## 10. Sequencing summary
 
-Immediately and in parallel: workstream 1 (docs release chain), workstream 2 batch 1, workstream 3 build. Then: beta.2 publish, window opens (workstream 4) while batches 2 and 3 land. Then: workstream 5 deploy and canary. Then: workstream 7 promotions, with workstream 6 building in the background throughout. Nothing waits on a calendar; everything starts when its dependency clears.
+Immediately and in parallel: workstream 1 (docs release chain), workstream 2 batch 1 plus the query-frame packaging investigation, and workstream 3 shell implementation. Then: batches 2 and 3 land the fixes the failed beta.1 cases require; the beta.2 tarball is built, passes the 14-case matrix, and publishes; the window opens (workstream 4). Then: workstream 5 deploy and canary. Then: workstream 7 promotions, with workstream 6 building in the background throughout. Nothing waits on a calendar; everything starts when its dependency clears.
 
 ## 11. Reporting and audit protocol
 
