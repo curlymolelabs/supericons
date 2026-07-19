@@ -4,6 +4,7 @@ const ADMIN_API_BASE = String(
     || 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api',
 ).replace(/\/+$/, '');
 const ADMIN_API_MANAGED_AUTH = ADMIN_RUNTIME_CONFIG.managedAuth === true;
+const ADMIN_SESSION_URL = `${ADMIN_API_BASE}/session`;
 const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
 const REQUEST_TIMEOUT_MS = 15_000;
@@ -16,6 +17,8 @@ const CHART_FONT_SIZE = 14;
 const SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'clients']);
 const memoryCache = new Map();
 let adminSecretMemory = '';
+let managedSessionChecked = false;
+let managedSessionReady = false;
 
 const WINDOW_LABELS = {
   '1d': 'Last 24 hours',
@@ -313,16 +316,11 @@ function closeAdminSecretModal() {
   const modal = $('adminSecretModal');
   modal?.classList.remove('open');
   modal?.setAttribute('aria-hidden', 'true');
-  if (modal && ADMIN_API_MANAGED_AUTH) modal.style.display = 'none';
   if (state.modalReturnFocus instanceof HTMLElement) state.modalReturnFocus.focus();
   state.modalReturnFocus = null;
 }
 
 function openAdminSecretModal({ force = false, error = '' } = {}) {
-  if (ADMIN_API_MANAGED_AUTH) {
-    closeAdminSecretModal();
-    return Promise.resolve('');
-  }
   const existing = getAdminSecret();
   if (existing && !force) return Promise.resolve(existing);
   if (state.adminSecretPrompt?.promise) {
@@ -336,6 +334,7 @@ function openAdminSecretModal({ force = false, error = '' } = {}) {
   if (!overlay || !input) return Promise.reject(new Error('Admin sign-in is unavailable.'));
 
   overlay.classList.add('open');
+  overlay.style.removeProperty('display');
   overlay.setAttribute('aria-hidden', 'false');
   state.modalReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   input.value = '';
@@ -352,22 +351,82 @@ function openAdminSecretModal({ force = false, error = '' } = {}) {
 
 async function ensureAdminSecret(force = false, error = '') {
   if (ADMIN_API_MANAGED_AUTH) {
-    closeAdminSecretModal();
-    return '';
+    if (force) {
+      managedSessionChecked = true;
+      managedSessionReady = false;
+    } else if (!managedSessionChecked) {
+      const response = await fetch(ADMIN_SESSION_URL, {
+        cache: 'no-store',
+        headers: { Accept: 'application/json' },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(formatApiErrorMessage(payload, response.status));
+      managedSessionChecked = true;
+      managedSessionReady = payload.authenticated === true;
+    }
+    if (managedSessionReady) {
+      closeAdminSecretModal();
+      return '';
+    }
+    return openAdminSecretModal({ force, error });
   }
   const existing = getAdminSecret();
   return existing && !force ? existing : openAdminSecretModal({ force, error });
 }
 
-function submitAdminSecret(event) {
+async function submitAdminSecret(event) {
   event.preventDefault();
   const input = $('adminSecretInput');
+  const submit = $('adminSecretSubmitBtn');
   const value = String(input?.value || '').trim();
   if (!value) {
     setAdminSecretError('Enter the current admin secret.');
     input?.focus();
     return;
   }
+
+  if (ADMIN_API_MANAGED_AUTH) {
+    if (submit?.disabled) return;
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = 'Checking...';
+    }
+    setAdminSecretError('');
+    try {
+      const response = await fetch(ADMIN_SESSION_URL, {
+        method: 'POST',
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ secret: value }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(formatApiErrorMessage(payload, response.status));
+      managedSessionChecked = true;
+      managedSessionReady = payload.authenticated === true;
+      if (!managedSessionReady) throw new Error('The admin secret could not be confirmed.');
+      input.value = '';
+      closeAdminSecretModal();
+      const pending = state.adminSecretPrompt;
+      state.adminSecretPrompt = null;
+      pending?.resolve('');
+    } catch (error) {
+      managedSessionChecked = true;
+      managedSessionReady = false;
+      if (input) input.value = '';
+      setAdminSecretError(error.message || 'The admin secret could not be confirmed.');
+      input?.focus();
+    } finally {
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = 'Open dashboard';
+      }
+    }
+    return;
+  }
+
   setAdminSecret(value);
   closeAdminSecretModal();
   setAdminSecretError('');
@@ -444,8 +503,13 @@ async function apiRequest(path, options = {}, retry = true) {
   } catch {
     payload = {};
   }
-  if (response.status === 403 && retry && !ADMIN_API_MANAGED_AUTH) {
-    setAdminSecret('');
+  if ([401, 403].includes(response.status) && retry) {
+    if (ADMIN_API_MANAGED_AUTH) {
+      managedSessionChecked = true;
+      managedSessionReady = false;
+    } else {
+      setAdminSecret('');
+    }
     await ensureAdminSecret(true, 'That secret was rejected. Enter the current admin secret.');
     return apiRequest(path, options, false);
   }
@@ -1511,8 +1575,6 @@ function renderIconRequests() {
     return;
   }
   const inbox = availability(state.data.search?.icon_requests, 'Icon requests are not available from the current data source.');
-  $('requestBadge').textContent = formatNumber(inbox.rows.length);
-  $('requestBadge').hidden = inbox.rows.length === 0;
   if (!inbox.available) {
     renderPagination('iconRequests', 0, 1);
     element.innerHTML = emptyState(inbox.reason);

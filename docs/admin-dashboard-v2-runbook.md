@@ -6,7 +6,7 @@ Run the dashboard from the main Supericons repository folder. The working page i
 
 ## Recommended start
 
-Set `ADMIN_SECRET` in your Windows user environment, then double-click:
+Double-click:
 
 ```text
 start-admin-dashboard.cmd
@@ -18,23 +18,34 @@ The launcher starts the managed local server and opens:
 http://127.0.0.1:4178/admin
 ```
 
-For a temporary PowerShell session, run:
-
-```powershell
-$env:ADMIN_SECRET = "YOUR_ADMIN_API_SECRET"
-.\start-admin-dashboard.cmd
-```
+The page asks for the current temporary admin secret. Enter the same value that is configured as `ADMIN_SECRET` for the Supabase `admin-api` function.
 
 ## Manual start
 
 From the main repository folder:
 
 ```powershell
-$env:ADMIN_SECRET = "YOUR_ADMIN_API_SECRET"
 npm run dev:admin
 ```
 
-The server reads `ADMIN_SECRET` from the process environment and keeps it on the local server. The browser does not receive or store the secret. If the variable is missing, the server stops and names the missing value.
+Then open `http://127.0.0.1:4178/admin` and enter the secret in the sign-in window.
+
+## Temporary secret behavior
+
+- The browser sends the entered secret only to the dashboard server on `127.0.0.1`.
+- The local server checks the secret with the protected Supabase admin API.
+- A rejected secret leaves the dashboard locked and shows an error.
+- An accepted secret stays only in the local Node process. It is not stored in local storage, session storage, a file, or the page source.
+- Closing the server forgets the secret.
+- If the Supabase secret expires or is rotated while the dashboard is open, the next rejected request clears the local copy and opens the sign-in window again.
+
+An older `setx ADMIN_SECRET ...` value is no longer used by the normal dashboard start command. To remove that stored Windows user variable, open PowerShell and run:
+
+```powershell
+[Environment]::SetEnvironmentVariable("ADMIN_SECRET", $null, "User")
+```
+
+Close any older command windows after removing it.
 
 ## Data and cache boundary
 

@@ -52,7 +52,7 @@ Every query in the window, grouped only when the same searcher repeats the same 
 True-zero and low-result queries ranked by distinct clients. Columns add a WHY triage value captured at review time: missing icon, extraction problem, sparse coverage, filtered library, ignore. Actions: Alias, Add icon, Resolve, Ignore (existing review write path). Rows link back to explorer detail.
 
 ### 4.3 Icon request inbox (new)
-Rows from public.icon_evidence (user-submitted requests from the web form). Columns: request text, submitter (visitor chip, country when known), submitted date, status (New, Planned, Added, Declined) with status writes stored alongside the existing review mechanism. Badge with open count in the sidebar.
+Rows from public.icon_evidence (user-submitted requests from the web form). Columns: request text, submitter (visitor chip, country when known), submitted date, status (New, Planned, Added, Declined) with status writes stored alongside the existing review mechanism. Keep request counts inside this inbox. Do not place an unlabeled request count beside the Searches page name.
 
 ### 4.4 Diagnostics drawer (existing)
 Collapsed by default; holds pruned stats, raw evidence access, and engine-health signals including defect-registry listings.

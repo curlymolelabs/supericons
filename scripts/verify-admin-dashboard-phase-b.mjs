@@ -123,12 +123,18 @@ function excludes(source, value, label) {
   'npm run dev:admin',
   'http://127.0.0.1:4178/admin',
 ].forEach((value) => includes(launcher, value, 'start-admin-dashboard.cmd'));
+excludes(launcher, 'ADMIN_SECRET', 'start-admin-dashboard.cmd');
 
 [
   'One working dashboard',
   'start-admin-dashboard.cmd',
   'The file under `mockups/` is a design reference with example data.',
+  'The page asks for the current temporary admin secret.',
+  'Closing the server forgets the secret.',
 ].forEach((value) => includes(runbook, value, 'admin dashboard runbook'));
+
+excludes(html, 'id="requestBadge"', 'admin.html');
+excludes(app, 'requestBadge', 'public/admin-app.js');
 
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];

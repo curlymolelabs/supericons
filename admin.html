@@ -72,16 +72,6 @@
     .nav-button:hover { background: var(--panel-2); color: var(--text); }
     .nav-button.active { background: var(--orange-soft); color: var(--orange); font-weight: 800; }
     .nav-icon { display: none; }
-    .nav-badge {
-      min-width: 22px;
-      padding: 1px 7px;
-      border-radius: 999px;
-      background: var(--panel-3);
-      color: var(--muted);
-      font-size: 11px;
-      text-align: center;
-    }
-    .nav-button.active .nav-badge { background: var(--orange); color: #111; }
     .main { min-width: 0; }
     .topbar {
       position: sticky;
@@ -523,7 +513,6 @@
             </button>
             <button class="nav-button" id="nav-intelligence" data-section="intelligence" type="button">
               <span class="nav-icon">S</span><span class="nav-label">Searches</span>
-              <span class="nav-badge" id="requestBadge">0</span>
             </button>
             <button class="nav-button" id="nav-audience" data-section="audience" type="button">
               <span class="nav-icon">A</span><span class="nav-label">Users</span>
@@ -693,13 +682,13 @@
   <div class="modal-overlay open" id="adminSecretModal" aria-hidden="false" role="dialog" aria-modal="true" aria-labelledby="adminSecretTitle" aria-describedby="adminSecretLead">
     <div class="modal">
       <h2 id="adminSecretTitle">Connect the admin API</h2>
-      <p id="adminSecretLead">Enter the current admin secret for this browser tab. The local managed gateway skips this step.</p>
+      <p id="adminSecretLead">Enter the current temporary admin secret. It stays only in the local dashboard server until you close it.</p>
       <form id="adminSecretForm">
         <input id="adminSecretInput" type="password" autocomplete="off" aria-label="Admin secret" placeholder="Admin secret" />
         <div class="form-error" id="adminSecretError"></div>
         <div class="modal-actions">
           <button class="small-button" id="adminSecretCancelBtn" type="button" hidden>Cancel</button>
-          <button class="primary-button" id="adminSecretSubmitBtn" type="submit">Connect</button>
+          <button class="primary-button" id="adminSecretSubmitBtn" type="submit">Open dashboard</button>
         </div>
       </form>
     </div>

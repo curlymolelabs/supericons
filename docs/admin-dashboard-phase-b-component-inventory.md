@@ -8,7 +8,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 
 - `admin.html` owns the page structure and dashboard styles.
 - `public/admin-app.js` owns filter state, independent panel loading, rendering, paging, exports, and operator actions.
-- `scripts/serve-admin-dashboard-phase-b-live.mjs` provides the recommended loopback-only gateway at `/admin` and keeps the admin secret out of browser code and storage.
+- `scripts/serve-admin-dashboard-phase-b-live.mjs` provides the recommended loopback-only gateway at `/admin`. It checks the secret entered through the local sign-in window and keeps the accepted value only in server memory.
 - `supabase/functions/admin-api/index.ts` provides the bounded v2 read endpoints and protected review-write endpoints.
 - `lib/admin-dashboard-v2.js` owns shared data normalization, grouping, KPI, series, and list semantics.
 
@@ -44,6 +44,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 - Search Intelligence summary totals use the same aggregate source as Overview. Search history rows use bounded detailed records so late records remain visible.
 - Search history changes refresh only Search Intelligence. Account rows are not reloaded for unrelated filter changes.
 - The browser may keep a sanitized aggregate Overview payload for up to 30 seconds. Secrets, emails, account rows, query rows, request rows, contact rows, and client rows are never stored in browser storage.
-- Direct development mode keeps the entered admin secret in memory only and asks again after a reload.
-- The managed gateway is the normal start path. It keeps `ADMIN_SECRET` in the local Node process and forwards protected API requests over loopback.
+- Direct development mode keeps the entered admin secret in browser memory only and asks again after a reload.
+- The managed gateway is the normal start path. It starts without a secret, accepts sign-in only over loopback, validates the value against the protected admin API, and keeps an accepted value only in the local Node process.
+- The managed gateway clears its secret when the protected API rejects it, so an expired or rotated value returns the operator to the sign-in window.
 - Missing, partial, stale, loading, empty, failed, and ready states are explicit. A missing measurement is not rendered as zero.

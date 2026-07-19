@@ -33,7 +33,6 @@ const outputPath = readArg('output');
 ok(adminSecret, 'ADMIN_SECRET must be present in the process environment.');
 
 const dashboard = await startAdminDashboardPhaseBLiveServer({
-  adminSecret,
   port: 0,
 });
 const servedHtmlResponse = await fetch(dashboard.url);
@@ -42,6 +41,19 @@ ok(servedHtmlResponse.ok, 'The local live dashboard HTML could not be loaded.');
 ok(servedHtml.includes('managedAuth:true'), 'The managed local runtime configuration is missing.');
 ok(!servedHtml.includes(adminSecret), 'The local live dashboard HTML contains the admin secret.');
 ok((await fetch(new URL('/package.json', dashboard.url))).status === 404, 'The local gateway exposed an unapproved file.');
+const initialSession = await fetch(new URL('/api/admin/session', dashboard.url));
+const initialSessionPayload = await initialSession.json();
+ok(initialSession.ok && initialSessionPayload.authenticated === false, 'The local live dashboard started authenticated.');
+ok(
+  (await fetch(new URL('/api/admin/v2/overview', dashboard.url))).status === 401,
+  'The local gateway allowed a protected request before browser sign-in.',
+);
+const rejectedSession = await fetch(new URL('/api/admin/session', dashboard.url), {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ secret: `invalid-admin-secret-${Date.now()}` }),
+});
+ok(rejectedSession.status === 403, 'The live admin API accepted an invalid browser-entered secret.');
 ok((await fetch(new URL('/api/admin/v2/overview', dashboard.url), {
   headers: { Origin: 'https://example.com' },
 })).status === 403, 'The local gateway accepted a cross-site request.');
@@ -59,6 +71,11 @@ page.on('request', (request) => {
 
 try {
   await page.goto(dashboard.url, { waitUntil: 'domcontentloaded', timeout: 120_000 });
+  await page.waitForFunction(() => document.activeElement?.id === 'adminSecretInput');
+  ok(await page.locator('#adminSecretModal.open').count() === 1, 'The managed local dashboard did not request the current secret.');
+  await page.fill('#adminSecretInput', adminSecret);
+  await page.click('#adminSecretSubmitBtn');
+  await page.waitForFunction(() => document.querySelector('#adminSecretModal')?.getAttribute('aria-hidden') === 'true');
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
       && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
@@ -66,7 +83,7 @@ try {
   ), null, { timeout: 120_000 });
   await waitForEstimatedReachCard(page);
 
-  ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
+  ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard remained locked after valid sign-in.');
   ok(await page.evaluate(() => (
     window.sessionStorage.getItem('si_admin_secret') === null
     && window.localStorage.getItem('si_admin_secret') === null
@@ -283,7 +300,7 @@ try {
     inline_svg_charts: await page.locator('.chart svg').count(),
     warm_render_ms: warmRenderMs,
     horizontal_overflow: false,
-    auth_prompt_shown: false,
+    auth_prompt_shown: true,
     screenshot_sha256: createHash('sha256').update(screenshot).digest('hex'),
     screenshot_bytes: screenshot.length,
   };

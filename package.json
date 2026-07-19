@@ -52,6 +52,7 @@
     "verify:admin-dashboard-phase-b-browser": "node scripts/verify-admin-dashboard-phase-b-browser.mjs",
     "verify:admin-query-workbench-browser": "node scripts/verify-admin-query-workbench-browser.mjs",
     "verify:admin-dashboard-phase-b-live": "node scripts/verify-admin-dashboard-phase-b-live.mjs",
+    "verify:admin-dashboard-local-login": "node scripts/verify-admin-dashboard-local-login.mjs",
     "verify:admin-dashboard-v2-helpers": "node scripts/verify-admin-dashboard-v2-helpers.mjs",
     "verify:admin-dashboard-v2-api": "node scripts/verify-admin-dashboard-v2-api.mjs",
     "verify:admin-dashboard-v2-error-states": "node scripts/verify-admin-dashboard-v2-error-states.mjs",
