@@ -24,8 +24,8 @@ The public setup continues to use `@supericons/mcp@latest`. It does not advertis
 
 ## Local evidence
 
-- The exact protected web artifact contains 188 files and 41,234,684 bytes.
-- Its content-tree SHA-256 is `81b320dc3f101cd4f9431f17e3876a91c16d689f1d4e51d01a2ffbb01fcca5c4`.
+- The exact protected web artifact contains 188 files and 41,235,944 bytes.
+- Its content-tree SHA-256 is `c465324c7a8294a76f5f483bad6606755925b63fa577591763262d6b86ab3487`.
 - Browser checks pass for all seven tabs, exact setup text, file locations, clipboard behavior, keyboard navigation, and narrow-screen access.
 - The browser test verifies the English keyless statement and a German localized spot check.
 - Website and MCP locale catalogs match their maintained source files.
