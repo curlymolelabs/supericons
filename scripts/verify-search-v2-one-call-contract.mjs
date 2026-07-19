@@ -86,6 +86,65 @@ try {
   assert.equal(typeof matchPayload.next_step, 'string');
   assert.equal(matchPayload.warnings.length, 2, 'unsupported optional filters should be ignored with warnings');
 
+  let variantSearchCalls = 0;
+  const variantResult = await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'analytics dashboard',
+      library: 'tabler',
+      library_mode: 'prefer',
+      limit: 3,
+    },
+  });
+  variantSearchCalls += 1;
+  const variantPayload = parsePayload(variantResult);
+  assert.equal(variantSearchCalls, 1, 'variant scenario must make exactly one search call');
+  assert.ok(variantPayload.results.length > 0, 'variant scenario must return usable icons');
+  assert.ok(
+    variantPayload.results.every((icon) => typeof icon.matchedQueryVariant === 'string'),
+    'variant fallback results must name the matched query variant',
+  );
+  assert.ok(
+    variantPayload.results.every((icon) => icon.matchKind === 'semantic_fallback'),
+    'variant fallback results must label the match kind',
+  );
+  assertResolvableMarkdownImage(variantPayload);
+
+  let styleSearchCalls = 0;
+  const styleResult = await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'settings solid',
+      library: 'material',
+      library_mode: 'strict',
+      limit: 3,
+    },
+  });
+  styleSearchCalls += 1;
+  const stylePayload = parsePayload(styleResult);
+  assert.equal(styleSearchCalls, 1, 'style scenario must make exactly one search call');
+  assert.ok(stylePayload.results.length > 0, 'style scenario must return usable icons');
+  assert.ok(stylePayload.results.every((icon) => icon.style === 'solid'));
+  assert.ok(stylePayload.results.every((icon) => icon.matchedQueryVariant === 'settings'));
+  assert.ok(stylePayload.results.every((icon) => icon.matchKind === 'normalized_style'));
+
+  let constraintSearchCalls = 0;
+  const constraintResult = await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'settings visually distinct 18px',
+      library: 'material',
+      library_mode: 'strict',
+      limit: 3,
+    },
+  });
+  constraintSearchCalls += 1;
+  const constraintPayload = parsePayload(constraintResult);
+  assert.equal(constraintSearchCalls, 1, 'constraint scenario must make exactly one search call');
+  assert.ok(constraintPayload.results.length > 0, 'constraint scenario must return usable icons');
+  assert.ok(constraintPayload.results.every((icon) => icon.matchedQueryVariant === 'settings'));
+  assert.ok(constraintPayload.results.every((icon) => icon.matchKind === 'normalized_constraints'));
+
   let noResultSearchCalls = 0;
   const noResult = await client.callTool({
     name: 'search_icons',
@@ -147,6 +206,12 @@ try {
     instructions: 'verified',
     match_search_calls: matchSearchCalls,
     match_result_count: matchPayload.results.length,
+    variant_search_calls: variantSearchCalls,
+    variant_result_count: variantPayload.results.length,
+    style_search_calls: styleSearchCalls,
+    style_result_count: stylePayload.results.length,
+    constraint_search_calls: constraintSearchCalls,
+    constraint_result_count: constraintPayload.results.length,
     no_result_search_calls: noResultSearchCalls,
     no_result_code: noResultPayload.code,
     preview_input_count: longRefs.length,

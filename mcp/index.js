@@ -452,6 +452,19 @@ async function buildToolIconResult(icon, options = {}) {
     svgSource,
   };
 
+  const normalizedQueryVariant = options.queryNormalization?.changed
+    ? options.queryNormalization.query
+    : null;
+  const matchedQueryVariant = icon.query_variant || normalizedQueryVariant;
+  if (
+    matchedQueryVariant
+    && String(matchedQueryVariant).trim().toLowerCase() !== String(options.query || '').trim().toLowerCase()
+  ) {
+    result.matchedQueryVariant = matchedQueryVariant;
+    result.matchKind = icon.query_variant_kind
+      || (options.queryNormalization?.inferred_style ? 'normalized_style' : 'normalized_constraints');
+  }
+
   if (materialAxes) {
     result.materialExportAxes = materialAxes;
   }
@@ -969,14 +982,17 @@ server.tool(
   async (rawArgs) => {
     const {
       query,
+      original_query,
       library,
       library_mode,
       style,
       locale,
       limit,
       include_query_frame,
+      query_normalization,
       warnings,
     } = normalizeSearchToolArguments(rawArgs, { supportedLocales: SUPPORTED_MCP_OUTPUT_LOCALES });
+    const displayQuery = original_query || query;
     const toolStartedAt = performance.now();
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
@@ -1025,7 +1041,7 @@ server.tool(
       });
     } catch (error) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -1038,7 +1054,7 @@ server.tool(
         latencyMs: performance.now() - toolStartedAt,
       });
       return buildTextResponse(buildSearchFailurePresentation({
-        query,
+        query: displayQuery,
         error,
         fallbackMessage: 'SuperIcons search is unavailable.',
       }));
@@ -1046,7 +1062,7 @@ server.tool(
 
     if (results.length === 0) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -1064,12 +1080,12 @@ server.tool(
       return buildTextResponse({
         error: 'No icons found',
         code: 'no_icons_found',
-        query,
+        query: displayQuery,
         library: library || null,
         library_mode,
         locale: locale || null,
         hint,
-        ...buildSearchNoResultPresentation({ query, hint }),
+        ...buildSearchNoResultPresentation({ query: displayQuery, hint }),
         ...(warnings.length ? { warnings } : {}),
         ...(localizeSearchNoResultsHint(locale, Boolean(locale))
           ? {
@@ -1091,14 +1107,15 @@ server.tool(
     }
     const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, {
       style,
-      query,
+      query: displayQuery,
+      queryNormalization: query_normalization,
       library,
       locale,
       limit,
     })))).filter(Boolean);
     if (formatted.length === 0) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -1114,10 +1131,10 @@ server.tool(
       return buildTextResponse({
         error: 'Icon SVGs are unavailable',
         code: 'icon_svg_unavailable',
-        query,
+        query: displayQuery,
         library: library || null,
         hint,
-        ...buildSearchNoResultPresentation({ query, hint }),
+        ...buildSearchNoResultPresentation({ query: displayQuery, hint }),
         ...(warnings.length ? { warnings } : {}),
         ...(localFirstSearch ? {
           search_runtime: {
@@ -1129,7 +1146,7 @@ server.tool(
       });
     }
     void logMcpSearchAttempt({
-      query,
+      query: displayQuery,
       resultCount: formatted.length,
       libraryFilter: library || 'all',
       libraryMode: library_mode,
@@ -1142,7 +1159,7 @@ server.tool(
       latencyMs: performance.now() - toolStartedAt,
     });
     void logMcpSearchBatch({
-      query,
+      query: displayQuery,
       results: formatted,
       locale: locale || null,
     });
@@ -1156,7 +1173,7 @@ server.tool(
       requested_library: library || null,
       preview_url: previewUrl,
       ...buildSearchMatchPresentation({
-        query,
+        query: displayQuery,
         results: formatted,
         previewUrl,
         imageUrl,

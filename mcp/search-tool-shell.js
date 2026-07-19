@@ -1,3 +1,5 @@
+import { normalizeSearchQueryRequest } from './search-query-normalization.js';
+
 export const SEARCH_TOOL_SERVER_INSTRUCTIONS = [
   'Use search_icons as the main tool when a user asks for icons.',
   'When search_icons returns markdown_image, include it in the final answer so the user can see the result set.',
@@ -64,8 +66,18 @@ export function normalizeSearchToolArguments(args = {}, { supportedLocales = [] 
   if (args.locale && !locale) {
     warnings.push(`Ignored unsupported locale "${String(args.locale)}".`);
   }
+  const normalizedStyle = normalizeChoice(
+    args.style,
+    SEARCH_STYLES,
+    'any',
+    'style',
+    warnings,
+  );
+  const queryNormalization = normalizeSearchQueryRequest(args.query, normalizedStyle);
   return {
     ...args,
+    query: queryNormalization.query,
+    original_query: queryNormalization.original_query,
     library_mode: normalizeChoice(
       args.library_mode,
       SEARCH_LIBRARY_MODES,
@@ -73,8 +85,9 @@ export function normalizeSearchToolArguments(args = {}, { supportedLocales = [] 
       'library_mode',
       warnings,
     ),
-    style: normalizeChoice(args.style, SEARCH_STYLES, 'any', 'style', warnings),
+    style: queryNormalization.style,
     locale,
+    query_normalization: queryNormalization,
     warnings,
   };
 }

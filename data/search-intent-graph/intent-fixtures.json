@@ -61,6 +61,96 @@
       "expected_avoid_concepts": ["generic ai logo"]
     },
     {
+      "query": "analytics dashboard",
+      "expected_groups": ["analytics_dashboard"],
+      "expected_positive_concepts": ["dashboard", "analytics", "chart"],
+      "expected_avoid_concepts": ["mobile data", "campaign monitor brand"]
+    },
+    {
+      "query": "restore an item that was deleted by mistake",
+      "expected_groups": ["restore_deleted_item"],
+      "expected_positive_concepts": ["restore", "undo", "history"],
+      "expected_avoid_concepts": ["dishwasher", "car wash"]
+    },
+    {
+      "query": "cloud deployment",
+      "expected_groups": ["cloud_deployment"],
+      "expected_positive_concepts": ["cloud upload", "deployed code", "rocket launch"],
+      "expected_avoid_concepts": ["production quantity", "factory"]
+    },
+    {
+      "query": "unit test",
+      "expected_groups": ["software_testing"],
+      "expected_positive_concepts": ["test tube", "test", "checklist"],
+      "expected_avoid_concepts": ["aspect ratio", "call quality"]
+    },
+    {
+      "query": "docker container",
+      "expected_groups": ["container_platform"],
+      "expected_positive_concepts": ["container", "docker", "package"],
+      "expected_avoid_concepts": ["animated image", "broken image"]
+    },
+    {
+      "query": "user profile",
+      "expected_groups": ["user_profile_identity"],
+      "expected_positive_concepts": ["user", "profile", "avatar"],
+      "expected_avoid_concepts": ["account balance", "wallet"]
+    },
+    {
+      "query": "dark mode",
+      "expected_groups": ["dark_theme"],
+      "expected_positive_concepts": ["dark mode", "moon", "theme"],
+      "expected_avoid_concepts": ["moderator", "airplane mode"]
+    },
+    {
+      "query": "package deliver send class",
+      "expected_groups": ["package_delivery"],
+      "expected_positive_concepts": ["package delivery", "delivery truck", "send"],
+      "expected_avoid_concepts": ["school class", "classification"]
+    },
+    {
+      "query": "ship it",
+      "expected_groups": ["ship_it_expression"],
+      "expected_positive_concepts": ["rocket launch", "deployed code", "package check"],
+      "expected_avoid_concepts": ["cargo ship", "boat"]
+    },
+    {
+      "query": "burnout",
+      "expected_groups": ["burnout_expression"],
+      "expected_positive_concepts": ["flame", "battery low", "battery warning"],
+      "expected_avoid_concepts": ["stove", "campfire only"]
+    },
+    {
+      "query": "chill",
+      "expected_groups": ["chill_expression"],
+      "expected_positive_concepts": ["relax", "coffee", "weather snow"],
+      "expected_avoid_concepts": ["snowflake company logo", "air conditioner control"]
+    },
+    {
+      "query": "doomscrolling",
+      "expected_groups": ["doomscrolling_expression"],
+      "expected_positive_concepts": ["mouse scroll", "phone", "hourglass"],
+      "expected_avoid_concepts": ["paper document scroll", "historical scroll"]
+    },
+    {
+      "query": "touch grass",
+      "expected_groups": ["touch_grass_expression"],
+      "expected_positive_concepts": ["sprout", "leaf", "tree"],
+      "expected_avoid_concepts": ["lawn equipment", "sports field"]
+    },
+    {
+      "query": "brainstorm",
+      "expected_groups": ["brainstorm_expression"],
+      "expected_positive_concepts": ["brain", "lightbulb", "sparkles"],
+      "expected_avoid_concepts": ["weather storm only"]
+    },
+    {
+      "query": "lightbulb moment",
+      "expected_groups": ["lightbulb_moment_expression"],
+      "expected_positive_concepts": ["lightbulb", "sparkles", "idea"],
+      "expected_avoid_concepts": ["hardware light fixture only"]
+    },
+    {
       "query": "AI 垃圾",
       "expected_language": "zh-Hans",
       "expected_groups": ["ai_low_quality_output"],

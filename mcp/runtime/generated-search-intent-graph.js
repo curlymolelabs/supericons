@@ -1603,6 +1603,1067 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
     "confidenceFloor": "medium"
   },
   {
+    "id": "analytics_dashboard",
+    "label": "Analytics dashboard",
+    "description": "Dashboards, charts, reports, and monitoring views used to understand product or business data.",
+    "domains": [
+      "analytics",
+      "reporting",
+      "monitoring"
+    ],
+    "facets": [
+      "dashboard",
+      "chart",
+      "metrics"
+    ],
+    "intentTypes": [
+      "data_interface",
+      "monitoring"
+    ],
+    "phrases": [
+      "analytics dashboard",
+      "monitoring dashboard",
+      "metrics dashboard",
+      "reporting dashboard"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "analytics dashboard",
+        "normalized": "analytics dashboard"
+      },
+      {
+        "locale": "en",
+        "phrase": "monitoring dashboard",
+        "normalized": "monitoring dashboard"
+      },
+      {
+        "locale": "en",
+        "phrase": "metrics dashboard",
+        "normalized": "metrics dashboard"
+      },
+      {
+        "locale": "en",
+        "phrase": "reporting dashboard",
+        "normalized": "reporting dashboard"
+      }
+    ],
+    "positiveConcepts": [
+      "dashboard",
+      "analytics",
+      "chart",
+      "gauge",
+      "panel"
+    ],
+    "avoidConcepts": [
+      "mobile data",
+      "campaign monitor brand",
+      "cellular signal"
+    ],
+    "fallbackTerms": [
+      "dashboard",
+      "chart",
+      "analytics"
+    ],
+    "resultFamilies": [
+      "dashboard",
+      "chart",
+      "metrics"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_dashboard_or_chart_fallback",
+    "confidenceFloor": "medium"
+  },
+  {
+    "id": "restore_deleted_item",
+    "label": "Restore a deleted item",
+    "description": "Undo an accidental deletion or recover an item from history, an archive, or trash.",
+    "domains": [
+      "editing",
+      "files",
+      "recovery"
+    ],
+    "facets": [
+      "restore",
+      "undo",
+      "recovery"
+    ],
+    "intentTypes": [
+      "recovery_action",
+      "editing_action"
+    ],
+    "phrases": [
+      "restore an item that was deleted by mistake",
+      "restore deleted item",
+      "recover deleted item",
+      "undo delete",
+      "deleted by mistake"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "restore an item that was deleted by mistake",
+        "normalized": "restore an item that was deleted by mistake"
+      },
+      {
+        "locale": "en",
+        "phrase": "restore deleted item",
+        "normalized": "restore deleted item"
+      },
+      {
+        "locale": "en",
+        "phrase": "recover deleted item",
+        "normalized": "recover deleted item"
+      },
+      {
+        "locale": "en",
+        "phrase": "undo delete",
+        "normalized": "undo delete"
+      },
+      {
+        "locale": "en",
+        "phrase": "deleted by mistake",
+        "normalized": "deleted by mistake"
+      }
+    ],
+    "positiveConcepts": [
+      "restore",
+      "undo",
+      "archive restore",
+      "history",
+      "trash restore"
+    ],
+    "avoidConcepts": [
+      "dishwasher",
+      "car wash",
+      "refresh only"
+    ],
+    "fallbackTerms": [
+      "restore",
+      "undo",
+      "recovery"
+    ],
+    "resultFamilies": [
+      "restore",
+      "undo",
+      "history"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_restore_or_undo_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "cloud_deployment",
+    "label": "Cloud deployment",
+    "description": "Deploy, release, or publish software to cloud or production infrastructure.",
+    "domains": [
+      "developer tools",
+      "cloud",
+      "infrastructure"
+    ],
+    "facets": [
+      "deployment",
+      "release",
+      "production"
+    ],
+    "intentTypes": [
+      "developer_action",
+      "infrastructure"
+    ],
+    "phrases": [
+      "cloud deployment",
+      "deploy to production",
+      "production deployment",
+      "release to production"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "cloud deployment",
+        "normalized": "cloud deployment"
+      },
+      {
+        "locale": "en",
+        "phrase": "deploy to production",
+        "normalized": "deploy to production"
+      },
+      {
+        "locale": "en",
+        "phrase": "production deployment",
+        "normalized": "production deployment"
+      },
+      {
+        "locale": "en",
+        "phrase": "release to production",
+        "normalized": "release to production"
+      }
+    ],
+    "positiveConcepts": [
+      "cloud upload",
+      "deployed code",
+      "rocket launch",
+      "server",
+      "package"
+    ],
+    "avoidConcepts": [
+      "production quantity",
+      "factory",
+      "physical mail"
+    ],
+    "fallbackTerms": [
+      "deploy",
+      "deployment",
+      "cloud upload",
+      "release"
+    ],
+    "resultFamilies": [
+      "deployment",
+      "cloud",
+      "release"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_deployment_or_cloud_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "software_testing",
+    "label": "Software testing",
+    "description": "Unit, integration, end-to-end, and automated software tests.",
+    "domains": [
+      "developer tools",
+      "quality assurance"
+    ],
+    "facets": [
+      "test",
+      "quality",
+      "automation"
+    ],
+    "intentTypes": [
+      "developer_action",
+      "quality_assurance"
+    ],
+    "phrases": [
+      "unit test",
+      "integration test",
+      "end to end test",
+      "automated test"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "unit test",
+        "normalized": "unit test"
+      },
+      {
+        "locale": "en",
+        "phrase": "integration test",
+        "normalized": "integration test"
+      },
+      {
+        "locale": "en",
+        "phrase": "end to end test",
+        "normalized": "end to end test"
+      },
+      {
+        "locale": "en",
+        "phrase": "automated test",
+        "normalized": "automated test"
+      }
+    ],
+    "positiveConcepts": [
+      "test tube",
+      "test",
+      "checklist",
+      "beaker",
+      "bug check"
+    ],
+    "avoidConcepts": [
+      "aspect ratio",
+      "call quality",
+      "air conditioning unit"
+    ],
+    "fallbackTerms": [
+      "test",
+      "testing",
+      "quality assurance"
+    ],
+    "resultFamilies": [
+      "testing",
+      "quality",
+      "checklist"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_test_or_checklist_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "container_platform",
+    "label": "Containers and orchestration",
+    "description": "Docker containers, Kubernetes workloads, pods, and packaged application environments.",
+    "domains": [
+      "developer tools",
+      "infrastructure"
+    ],
+    "facets": [
+      "container",
+      "orchestration",
+      "runtime"
+    ],
+    "intentTypes": [
+      "developer_object",
+      "infrastructure"
+    ],
+    "phrases": [
+      "docker container",
+      "kubernetes",
+      "k8s",
+      "container platform",
+      "container deployment"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "docker container",
+        "normalized": "docker container"
+      },
+      {
+        "locale": "en",
+        "phrase": "kubernetes",
+        "normalized": "kubernetes"
+      },
+      {
+        "locale": "en",
+        "phrase": "k8s",
+        "normalized": "k8s"
+      },
+      {
+        "locale": "en",
+        "phrase": "container platform",
+        "normalized": "container platform"
+      },
+      {
+        "locale": "en",
+        "phrase": "container deployment",
+        "normalized": "container deployment"
+      }
+    ],
+    "positiveConcepts": [
+      "container",
+      "docker",
+      "boxes",
+      "package",
+      "kubernetes"
+    ],
+    "avoidConcepts": [
+      "animated image",
+      "broken image",
+      "photo"
+    ],
+    "fallbackTerms": [
+      "container",
+      "docker",
+      "pod",
+      "orchestration"
+    ],
+    "resultFamilies": [
+      "container",
+      "orchestration",
+      "package"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_container_or_package_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "user_profile_identity",
+    "label": "User profile",
+    "description": "A person, avatar, account profile, or member identity.",
+    "domains": [
+      "account",
+      "identity",
+      "people"
+    ],
+    "facets": [
+      "profile",
+      "avatar",
+      "user"
+    ],
+    "intentTypes": [
+      "person_identity",
+      "account"
+    ],
+    "phrases": [
+      "user profile",
+      "account profile",
+      "member profile",
+      "profile avatar"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "user profile",
+        "normalized": "user profile"
+      },
+      {
+        "locale": "en",
+        "phrase": "account profile",
+        "normalized": "account profile"
+      },
+      {
+        "locale": "en",
+        "phrase": "member profile",
+        "normalized": "member profile"
+      },
+      {
+        "locale": "en",
+        "phrase": "profile avatar",
+        "normalized": "profile avatar"
+      }
+    ],
+    "positiveConcepts": [
+      "user",
+      "profile",
+      "avatar",
+      "account circle",
+      "person"
+    ],
+    "avoidConcepts": [
+      "account balance",
+      "wallet",
+      "bank"
+    ],
+    "fallbackTerms": [
+      "user",
+      "profile",
+      "avatar"
+    ],
+    "resultFamilies": [
+      "user",
+      "profile",
+      "avatar"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_user_or_profile_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "dark_theme",
+    "label": "Dark theme",
+    "description": "A dark color theme or night-mode interface setting.",
+    "domains": [
+      "appearance",
+      "settings"
+    ],
+    "facets": [
+      "theme",
+      "dark",
+      "night"
+    ],
+    "intentTypes": [
+      "appearance_setting"
+    ],
+    "phrases": [
+      "dark mode",
+      "dark theme",
+      "night mode"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "dark mode",
+        "normalized": "dark mode"
+      },
+      {
+        "locale": "en",
+        "phrase": "dark theme",
+        "normalized": "dark theme"
+      },
+      {
+        "locale": "en",
+        "phrase": "night mode",
+        "normalized": "night mode"
+      }
+    ],
+    "positiveConcepts": [
+      "dark mode",
+      "moon",
+      "theme",
+      "night"
+    ],
+    "avoidConcepts": [
+      "moderator",
+      "airplane mode",
+      "model training"
+    ],
+    "fallbackTerms": [
+      "dark mode",
+      "moon",
+      "theme"
+    ],
+    "resultFamilies": [
+      "theme",
+      "dark_mode",
+      "night"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_dark_theme_fallback",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "package_delivery",
+    "label": "Package delivery",
+    "description": "Send, ship, dispatch, or deliver a parcel or software package.",
+    "domains": [
+      "delivery",
+      "shipping",
+      "developer tools"
+    ],
+    "facets": [
+      "package",
+      "send",
+      "delivery"
+    ],
+    "intentTypes": [
+      "delivery_action"
+    ],
+    "phrases": [
+      "package delivery",
+      "send package",
+      "deliver package",
+      "package deliver send class"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "package delivery",
+        "normalized": "package delivery"
+      },
+      {
+        "locale": "en",
+        "phrase": "send package",
+        "normalized": "send package"
+      },
+      {
+        "locale": "en",
+        "phrase": "deliver package",
+        "normalized": "deliver package"
+      },
+      {
+        "locale": "en",
+        "phrase": "package deliver send class",
+        "normalized": "package deliver send class"
+      }
+    ],
+    "positiveConcepts": [
+      "package delivery",
+      "delivery truck",
+      "package",
+      "send",
+      "box"
+    ],
+    "avoidConcepts": [
+      "school class",
+      "classification"
+    ],
+    "fallbackTerms": [
+      "package",
+      "delivery",
+      "send"
+    ],
+    "resultFamilies": [
+      "package",
+      "delivery",
+      "send"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_package_or_delivery_fallback",
+    "confidenceFloor": "medium"
+  },
+  {
+    "id": "ship_it_expression",
+    "label": "Ship it",
+    "description": "A confident release, launch, or completion moment.",
+    "domains": [
+      "developer tools",
+      "release",
+      "expression"
+    ],
+    "facets": [
+      "launch",
+      "complete",
+      "release"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "developer_action"
+    ],
+    "phrases": [
+      "ship it",
+      "ready to ship",
+      "release complete"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "ship it",
+        "normalized": "ship it"
+      },
+      {
+        "locale": "en",
+        "phrase": "ready to ship",
+        "normalized": "ready to ship"
+      },
+      {
+        "locale": "en",
+        "phrase": "release complete",
+        "normalized": "release complete"
+      }
+    ],
+    "positiveConcepts": [
+      "rocket launch",
+      "deployed code",
+      "package check",
+      "check circle",
+      "send"
+    ],
+    "avoidConcepts": [
+      "cargo ship",
+      "boat",
+      "ocean vessel"
+    ],
+    "fallbackTerms": [
+      "rocket launch",
+      "deployed code",
+      "package check"
+    ],
+    "resultFamilies": [
+      "launch",
+      "deployment",
+      "success"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_launch_or_success_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "burnout_expression",
+    "label": "Burnout",
+    "description": "Exhaustion, depleted energy, or work pressure.",
+    "domains": [
+      "wellbeing",
+      "work",
+      "expression"
+    ],
+    "facets": [
+      "exhaustion",
+      "low_energy",
+      "stress"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "wellbeing_state"
+    ],
+    "phrases": [
+      "burnout",
+      "burned out",
+      "feeling burned out"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "burnout",
+        "normalized": "burnout"
+      },
+      {
+        "locale": "en",
+        "phrase": "burned out",
+        "normalized": "burned out"
+      },
+      {
+        "locale": "en",
+        "phrase": "feeling burned out",
+        "normalized": "feeling burned out"
+      }
+    ],
+    "positiveConcepts": [
+      "flame",
+      "battery low",
+      "battery warning",
+      "coffee",
+      "hourglass"
+    ],
+    "avoidConcepts": [
+      "stove",
+      "campfire only"
+    ],
+    "fallbackTerms": [
+      "battery low",
+      "flame",
+      "battery warning"
+    ],
+    "resultFamilies": [
+      "low_energy",
+      "warning",
+      "exhaustion"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_low_energy_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "chill_expression",
+    "label": "Chill",
+    "description": "A relaxed, calm, or easygoing mood.",
+    "domains": [
+      "mood",
+      "wellbeing",
+      "expression"
+    ],
+    "facets": [
+      "relax",
+      "calm",
+      "cool"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "mood_state"
+    ],
+    "phrases": [
+      "chill",
+      "take it easy",
+      "relax and chill"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "chill",
+        "normalized": "chill"
+      },
+      {
+        "locale": "en",
+        "phrase": "take it easy",
+        "normalized": "take it easy"
+      },
+      {
+        "locale": "en",
+        "phrase": "relax and chill",
+        "normalized": "relax and chill"
+      }
+    ],
+    "positiveConcepts": [
+      "relax",
+      "coffee",
+      "weather snow",
+      "smile",
+      "sofa"
+    ],
+    "avoidConcepts": [
+      "snowflake company logo",
+      "air conditioner control"
+    ],
+    "fallbackTerms": [
+      "relax",
+      "coffee",
+      "smile"
+    ],
+    "resultFamilies": [
+      "relax",
+      "calm",
+      "cool"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_relaxed_mood_metaphor",
+    "confidenceFloor": "medium"
+  },
+  {
+    "id": "doomscrolling_expression",
+    "label": "Doomscrolling",
+    "description": "Endless anxious scrolling on a phone or screen.",
+    "domains": [
+      "digital wellbeing",
+      "social media",
+      "expression"
+    ],
+    "facets": [
+      "scroll",
+      "phone",
+      "time"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "digital_behavior"
+    ],
+    "phrases": [
+      "doomscrolling",
+      "doom scrolling",
+      "endless bad news scrolling"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "doomscrolling",
+        "normalized": "doomscrolling"
+      },
+      {
+        "locale": "en",
+        "phrase": "doom scrolling",
+        "normalized": "doom scrolling"
+      },
+      {
+        "locale": "en",
+        "phrase": "endless bad news scrolling",
+        "normalized": "endless bad news scrolling"
+      }
+    ],
+    "positiveConcepts": [
+      "mouse scroll",
+      "phone",
+      "hourglass",
+      "warning",
+      "screen time"
+    ],
+    "avoidConcepts": [
+      "paper document scroll",
+      "historical scroll"
+    ],
+    "fallbackTerms": [
+      "mouse scroll",
+      "phone",
+      "hourglass"
+    ],
+    "resultFamilies": [
+      "scrolling",
+      "phone",
+      "time_warning"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_scroll_and_time_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "touch_grass_expression",
+    "label": "Touch grass",
+    "description": "Step away from the screen and reconnect with the outdoors.",
+    "domains": [
+      "digital wellbeing",
+      "nature",
+      "expression"
+    ],
+    "facets": [
+      "outdoors",
+      "break",
+      "nature"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "wellbeing_action"
+    ],
+    "phrases": [
+      "touch grass",
+      "go touch grass",
+      "take an outdoor break"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "touch grass",
+        "normalized": "touch grass"
+      },
+      {
+        "locale": "en",
+        "phrase": "go touch grass",
+        "normalized": "go touch grass"
+      },
+      {
+        "locale": "en",
+        "phrase": "take an outdoor break",
+        "normalized": "take an outdoor break"
+      }
+    ],
+    "positiveConcepts": [
+      "sprout",
+      "leaf",
+      "tree",
+      "sun",
+      "footprints"
+    ],
+    "avoidConcepts": [
+      "lawn equipment",
+      "sports field"
+    ],
+    "fallbackTerms": [
+      "sprout",
+      "leaf",
+      "tree"
+    ],
+    "resultFamilies": [
+      "nature",
+      "outdoors",
+      "break"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_nature_break_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "brainstorm_expression",
+    "label": "Brainstorm",
+    "description": "Generate and connect new ideas.",
+    "domains": [
+      "creativity",
+      "planning",
+      "expression"
+    ],
+    "facets": [
+      "ideas",
+      "thinking",
+      "spark"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "creative_action"
+    ],
+    "phrases": [
+      "brainstorm",
+      "brainstorm ideas",
+      "idea storm"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "brainstorm",
+        "normalized": "brainstorm"
+      },
+      {
+        "locale": "en",
+        "phrase": "brainstorm ideas",
+        "normalized": "brainstorm ideas"
+      },
+      {
+        "locale": "en",
+        "phrase": "idea storm",
+        "normalized": "idea storm"
+      }
+    ],
+    "positiveConcepts": [
+      "brain",
+      "lightbulb",
+      "sparkles",
+      "cloud",
+      "network"
+    ],
+    "avoidConcepts": [
+      "weather storm only"
+    ],
+    "fallbackTerms": [
+      "brain",
+      "lightbulb",
+      "sparkles"
+    ],
+    "resultFamilies": [
+      "ideas",
+      "thinking",
+      "creativity"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_idea_generation_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "lightbulb_moment_expression",
+    "label": "Lightbulb moment",
+    "description": "A sudden insight, realization, or new idea.",
+    "domains": [
+      "creativity",
+      "insight",
+      "expression"
+    ],
+    "facets": [
+      "idea",
+      "insight",
+      "spark"
+    ],
+    "intentTypes": [
+      "expressive_metaphor",
+      "insight"
+    ],
+    "phrases": [
+      "lightbulb moment",
+      "aha moment",
+      "sudden insight"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "lightbulb moment",
+        "normalized": "lightbulb moment"
+      },
+      {
+        "locale": "en",
+        "phrase": "aha moment",
+        "normalized": "aha moment"
+      },
+      {
+        "locale": "en",
+        "phrase": "sudden insight",
+        "normalized": "sudden insight"
+      }
+    ],
+    "positiveConcepts": [
+      "lightbulb",
+      "sparkles",
+      "idea",
+      "bolt",
+      "brain"
+    ],
+    "avoidConcepts": [
+      "hardware light fixture only"
+    ],
+    "fallbackTerms": [
+      "lightbulb",
+      "sparkles",
+      "idea"
+    ],
+    "resultFamilies": [
+      "idea",
+      "insight",
+      "spark"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_insight_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
     "id": "mystical_dream_symbol",
     "label": "Dream, mystical, and symbolic interpretation",
     "description": "Dream interpretation, mystical symbols, moon, stars, eyes, and imaginative meaning.",
@@ -1750,6 +2811,14 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
 
 export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
   {
+    "groupId": "restore_deleted_item",
+    "locale": "en",
+    "phrase": "restore an item that was deleted by mistake",
+    "normalized": "restore an item that was deleted by mistake",
+    "tokenCount": 8,
+    "charLength": 43
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "en",
     "phrase": "dream interpretation moon star eye mystical",
@@ -1780,6 +2849,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "normalized": "reconocimiento de matrículas",
     "tokenCount": 3,
     "charLength": 28
+  },
+  {
+    "groupId": "doomscrolling_expression",
+    "locale": "en",
+    "phrase": "endless bad news scrolling",
+    "normalized": "endless bad news scrolling",
+    "tokenCount": 4,
+    "charLength": 26
+  },
+  {
+    "groupId": "package_delivery",
+    "locale": "en",
+    "phrase": "package deliver send class",
+    "normalized": "package deliver send class",
+    "tokenCount": 4,
+    "charLength": 26
   },
   {
     "groupId": "vision_scan_detection",
@@ -1846,6 +2931,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 21
   },
   {
+    "groupId": "touch_grass_expression",
+    "locale": "en",
+    "phrase": "take an outdoor break",
+    "normalized": "take an outdoor break",
+    "tokenCount": 4,
+    "charLength": 21
+  },
+  {
     "groupId": "agentic_workflow",
     "locale": "pt",
     "phrase": "chamada de ferramenta",
@@ -1854,11 +2947,67 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 21
   },
   {
+    "groupId": "cloud_deployment",
+    "locale": "en",
+    "phrase": "release to production",
+    "normalized": "release to production",
+    "tokenCount": 3,
+    "charLength": 21
+  },
+  {
+    "groupId": "cloud_deployment",
+    "locale": "en",
+    "phrase": "production deployment",
+    "normalized": "production deployment",
+    "tokenCount": 2,
+    "charLength": 21
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "de",
     "phrase": "schlechte KI Ausgabe",
     "normalized": "schlechte ki ausgabe",
     "tokenCount": 3,
+    "charLength": 20
+  },
+  {
+    "groupId": "cloud_deployment",
+    "locale": "en",
+    "phrase": "deploy to production",
+    "normalized": "deploy to production",
+    "tokenCount": 3,
+    "charLength": 20
+  },
+  {
+    "groupId": "restore_deleted_item",
+    "locale": "en",
+    "phrase": "recover deleted item",
+    "normalized": "recover deleted item",
+    "tokenCount": 3,
+    "charLength": 20
+  },
+  {
+    "groupId": "restore_deleted_item",
+    "locale": "en",
+    "phrase": "restore deleted item",
+    "normalized": "restore deleted item",
+    "tokenCount": 3,
+    "charLength": 20
+  },
+  {
+    "groupId": "analytics_dashboard",
+    "locale": "en",
+    "phrase": "monitoring dashboard",
+    "normalized": "monitoring dashboard",
+    "tokenCount": 2,
+    "charLength": 20
+  },
+  {
+    "groupId": "container_platform",
+    "locale": "en",
+    "phrase": "container deployment",
+    "normalized": "container deployment",
+    "tokenCount": 2,
     "charLength": 20
   },
   {
@@ -1894,6 +3043,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 19
   },
   {
+    "groupId": "analytics_dashboard",
+    "locale": "en",
+    "phrase": "analytics dashboard",
+    "normalized": "analytics dashboard",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
+    "groupId": "analytics_dashboard",
+    "locale": "en",
+    "phrase": "reporting dashboard",
+    "normalized": "reporting dashboard",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "vi",
     "phrase": "AI chất lượng thấp",
@@ -1907,6 +3072,30 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "phrase": "IA de baja calidad",
     "normalized": "ia de baja calidad",
     "tokenCount": 4,
+    "charLength": 18
+  },
+  {
+    "groupId": "burnout_expression",
+    "locale": "en",
+    "phrase": "feeling burned out",
+    "normalized": "feeling burned out",
+    "tokenCount": 3,
+    "charLength": 18
+  },
+  {
+    "groupId": "restore_deleted_item",
+    "locale": "en",
+    "phrase": "deleted by mistake",
+    "normalized": "deleted by mistake",
+    "tokenCount": 3,
+    "charLength": 18
+  },
+  {
+    "groupId": "container_platform",
+    "locale": "en",
+    "phrase": "container platform",
+    "normalized": "container platform",
+    "tokenCount": 2,
     "charLength": 18
   },
   {
@@ -1931,6 +3120,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "phrase": "nhận diện biển số",
     "normalized": "nhận diện biển số",
     "tokenCount": 4,
+    "charLength": 17
+  },
+  {
+    "groupId": "analytics_dashboard",
+    "locale": "en",
+    "phrase": "metrics dashboard",
+    "normalized": "metrics dashboard",
+    "tokenCount": 2,
     "charLength": 17
   },
   {
@@ -1966,6 +3163,46 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 16
   },
   {
+    "groupId": "brainstorm_expression",
+    "locale": "en",
+    "phrase": "brainstorm ideas",
+    "normalized": "brainstorm ideas",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "cloud_deployment",
+    "locale": "en",
+    "phrase": "cloud deployment",
+    "normalized": "cloud deployment",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "container_platform",
+    "locale": "en",
+    "phrase": "docker container",
+    "normalized": "docker container",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "lightbulb_moment_expression",
+    "locale": "en",
+    "phrase": "lightbulb moment",
+    "normalized": "lightbulb moment",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "package_delivery",
+    "locale": "en",
+    "phrase": "package delivery",
+    "normalized": "package delivery",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
     "groupId": "power_strength_performance",
     "locale": "es",
     "phrase": "alto rendimiento",
@@ -1982,6 +3219,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 16
   },
   {
+    "groupId": "ship_it_expression",
+    "locale": "en",
+    "phrase": "release complete",
+    "normalized": "release complete",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "software_testing",
+    "locale": "en",
+    "phrase": "integration test",
+    "normalized": "integration test",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
     "groupId": "trust_security_privacy",
     "locale": "en",
     "phrase": "verified account",
@@ -1994,6 +3247,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "vi",
     "phrase": "giải mã giấc mơ",
     "normalized": "giải mã giấc mơ",
+    "tokenCount": 4,
+    "charLength": 15
+  },
+  {
+    "groupId": "software_testing",
+    "locale": "en",
+    "phrase": "end to end test",
+    "normalized": "end to end test",
     "tokenCount": 4,
     "charLength": 15
   },
@@ -2022,10 +3283,26 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 15
   },
   {
+    "groupId": "chill_expression",
+    "locale": "en",
+    "phrase": "relax and chill",
+    "normalized": "relax and chill",
+    "tokenCount": 3,
+    "charLength": 15
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "en",
     "phrase": "spiritual dream",
     "normalized": "spiritual dream",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "package_delivery",
+    "locale": "en",
+    "phrase": "deliver package",
+    "normalized": "deliver package",
     "tokenCount": 2,
     "charLength": 15
   },
@@ -2054,6 +3331,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 15
   },
   {
+    "groupId": "user_profile_identity",
+    "locale": "en",
+    "phrase": "account profile",
+    "normalized": "account profile",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
     "groupId": "power_strength_performance",
     "locale": "th",
     "phrase": "ประสิทธิภาพสูง",
@@ -2070,10 +3355,34 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 14
   },
   {
+    "groupId": "touch_grass_expression",
+    "locale": "en",
+    "phrase": "go touch grass",
+    "normalized": "go touch grass",
+    "tokenCount": 3,
+    "charLength": 14
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "en",
     "phrase": "bad generation",
     "normalized": "bad generation",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "doomscrolling_expression",
+    "locale": "en",
+    "phrase": "doom scrolling",
+    "normalized": "doom scrolling",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "lightbulb_moment_expression",
+    "locale": "en",
+    "phrase": "sudden insight",
+    "normalized": "sudden insight",
     "tokenCount": 2,
     "charLength": 14
   },
@@ -2094,10 +3403,34 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 14
   },
   {
+    "groupId": "software_testing",
+    "locale": "en",
+    "phrase": "automated test",
+    "normalized": "automated test",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
     "groupId": "speed_latency",
     "locale": "pt",
     "phrase": "baixa latência",
     "normalized": "baixa latência",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "user_profile_identity",
+    "locale": "en",
+    "phrase": "member profile",
+    "normalized": "member profile",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "user_profile_identity",
+    "locale": "en",
+    "phrase": "profile avatar",
+    "normalized": "profile avatar",
     "tokenCount": 2,
     "charLength": 14
   },
@@ -2150,6 +3483,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 13
   },
   {
+    "groupId": "ship_it_expression",
+    "locale": "en",
+    "phrase": "ready to ship",
+    "normalized": "ready to ship",
+    "tokenCount": 3,
+    "charLength": 13
+  },
+  {
     "groupId": "speed_latency",
     "locale": "es",
     "phrase": "baja latencia",
@@ -2198,6 +3539,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 13
   },
   {
+    "groupId": "doomscrolling_expression",
+    "locale": "en",
+    "phrase": "doomscrolling",
+    "normalized": "doomscrolling",
+    "tokenCount": 1,
+    "charLength": 13
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "th",
     "phrase": "AI คุณภาพต่ำ",
@@ -2222,6 +3571,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 12
   },
   {
+    "groupId": "chill_expression",
+    "locale": "en",
+    "phrase": "take it easy",
+    "normalized": "take it easy",
+    "tokenCount": 3,
+    "charLength": 12
+  },
+  {
+    "groupId": "package_delivery",
+    "locale": "en",
+    "phrase": "send package",
+    "normalized": "send package",
+    "tokenCount": 2,
+    "charLength": 12
+  },
+  {
     "groupId": "quality_polish",
     "locale": "es",
     "phrase": "alta calidad",
@@ -2242,6 +3607,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "high quality",
     "normalized": "high quality",
+    "tokenCount": 2,
+    "charLength": 12
+  },
+  {
+    "groupId": "user_profile_identity",
+    "locale": "en",
+    "phrase": "user profile",
+    "normalized": "user profile",
     "tokenCount": 2,
     "charLength": 12
   },
@@ -2326,10 +3699,26 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 11
   },
   {
+    "groupId": "restore_deleted_item",
+    "locale": "en",
+    "phrase": "undo delete",
+    "normalized": "undo delete",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
     "groupId": "speed_latency",
     "locale": "en",
     "phrase": "low latency",
     "normalized": "low latency",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "touch_grass_expression",
+    "locale": "en",
+    "phrase": "touch grass",
+    "normalized": "touch grass",
     "tokenCount": 2,
     "charLength": 11
   },
@@ -2366,6 +3755,46 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 10
   },
   {
+    "groupId": "brainstorm_expression",
+    "locale": "en",
+    "phrase": "idea storm",
+    "normalized": "idea storm",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
+    "groupId": "burnout_expression",
+    "locale": "en",
+    "phrase": "burned out",
+    "normalized": "burned out",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
+    "groupId": "dark_theme",
+    "locale": "en",
+    "phrase": "dark theme",
+    "normalized": "dark theme",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
+    "groupId": "dark_theme",
+    "locale": "en",
+    "phrase": "night mode",
+    "normalized": "night mode",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
+    "groupId": "lightbulb_moment_expression",
+    "locale": "en",
+    "phrase": "aha moment",
+    "normalized": "aha moment",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
     "groupId": "power_strength_performance",
     "locale": "en",
     "phrase": "heavy duty",
@@ -2378,6 +3807,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "autonomous",
     "normalized": "autonomous",
+    "tokenCount": 1,
+    "charLength": 10
+  },
+  {
+    "groupId": "brainstorm_expression",
+    "locale": "en",
+    "phrase": "brainstorm",
+    "normalized": "brainstorm",
+    "tokenCount": 1,
+    "charLength": 10
+  },
+  {
+    "groupId": "container_platform",
+    "locale": "en",
+    "phrase": "kubernetes",
+    "normalized": "kubernetes",
     "tokenCount": 1,
     "charLength": 10
   },
@@ -2450,6 +3895,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "sloppy ai",
     "normalized": "sloppy ai",
+    "tokenCount": 2,
+    "charLength": 9
+  },
+  {
+    "groupId": "dark_theme",
+    "locale": "en",
+    "phrase": "dark mode",
+    "normalized": "dark mode",
+    "tokenCount": 2,
+    "charLength": 9
+  },
+  {
+    "groupId": "software_testing",
+    "locale": "en",
+    "phrase": "unit test",
+    "normalized": "unit test",
     "tokenCount": 2,
     "charLength": 9
   },
@@ -2622,6 +4083,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 7
   },
   {
+    "groupId": "ship_it_expression",
+    "locale": "en",
+    "phrase": "ship it",
+    "normalized": "ship it",
+    "tokenCount": 2,
+    "charLength": 7
+  },
+  {
     "groupId": "trust_security_privacy",
     "locale": "vi",
     "phrase": "bảo mật",
@@ -2674,6 +4143,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "failure",
     "normalized": "failure",
+    "tokenCount": 1,
+    "charLength": 7
+  },
+  {
+    "groupId": "burnout_expression",
+    "locale": "en",
+    "phrase": "burnout",
+    "normalized": "burnout",
     "tokenCount": 1,
     "charLength": 7
   },
@@ -3062,6 +4539,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 5
   },
   {
+    "groupId": "chill_expression",
+    "locale": "en",
+    "phrase": "chill",
+    "normalized": "chill",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "ja",
     "phrase": "神秘的な夢",
@@ -3282,6 +4767,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ja",
     "phrase": "エラー",
     "normalized": "エラー",
+    "tokenCount": 1,
+    "charLength": 3
+  },
+  {
+    "groupId": "container_platform",
+    "locale": "en",
+    "phrase": "k8s",
+    "normalized": "k8s",
     "tokenCount": 1,
     "charLength": 3
   },

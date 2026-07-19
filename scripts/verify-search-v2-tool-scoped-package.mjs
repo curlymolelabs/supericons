@@ -53,6 +53,7 @@ try {
     'recommend-icons.js',
     'release-channel.js',
     'remote-server.js',
+    'search-query-normalization.js',
     'telemetry.js',
   ]) {
     assert.equal(packedPaths.has(required), true, `Package is missing ${required}.`);
