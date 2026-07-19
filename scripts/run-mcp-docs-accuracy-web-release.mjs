@@ -39,6 +39,11 @@ export function sha256NormalizedText(path) {
   return sha256Buffer(readFileSync(path, 'utf8').replace(/\r\n/g, '\n'));
 }
 
+export function assertExactProvenanceBytes(value, expectedHash) {
+  assert.equal(sha256Buffer(value), expectedHash);
+  return true;
+}
+
 function parseFirstJsonValue(text) {
   const source = String(text || '').replace(/^\uFEFF/, '');
   for (let start = 0; start < source.length; start += 1) {
@@ -439,24 +444,28 @@ export function prepareAndVerifyArtifact({
   };
 }
 
-async function verifyRemoteWebSurface(baseUrl, manifest, privateRecordPath) {
+export async function verifyRemoteWebSurface(baseUrl, manifest, privateRecordPath) {
   const root = new URL(baseUrl);
-  const fetchText = async (pathname) => {
+  const fetchResponse = async (pathname) => {
     const url = new URL(pathname, root);
     url.searchParams.set('release_check', Date.now().toString());
     const response = await fetch(url, { redirect: 'follow' });
     assert.equal(response.ok, true, `${pathname} returned HTTP ${response.status}.`);
-    return response.text();
+    return response;
   };
+  const fetchText = async (pathname) => (await fetchResponse(pathname)).text();
+  const fetchBytes = async (pathname) => Buffer.from(
+    await (await fetchResponse(pathname)).arrayBuffer(),
+  );
 
   const homepage = await fetchText('/');
   assert.match(homepage, /mcpClientTabs/);
   assert.match(homepage, /Free icon tools work without an API key/);
   const license = await fetchText('/search-engine-license.txt');
   assert.match(license, /may not extract/);
-  const provenanceText = await fetchText('/THIRD_PARTY_PROVENANCE.json');
-  assert.equal(
-    sha256Buffer(provenanceText.replace(/\r\n/g, '\n')),
+  const provenanceBytes = await fetchBytes('/THIRD_PARTY_PROVENANCE.json');
+  assertExactProvenanceBytes(
+    provenanceBytes,
     manifest.protection.third_party_provenance_sha256,
   );
   const synonyms = JSON.parse(await fetchText('/synonyms.json'));

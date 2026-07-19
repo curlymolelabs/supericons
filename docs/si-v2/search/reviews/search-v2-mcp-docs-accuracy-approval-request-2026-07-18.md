@@ -51,10 +51,12 @@ The Netlify command is bound to version `23.15.1` and to the exact hashes of its
 
 The first one-use manifest was consumed on 2026-07-20. Netlify accepted deploy `6a5d3aaf20758f02b79be91a`, but its site record briefly continued to report the previous production deploy. The runner treated that temporary response as a mismatch and restored the pinned deploy `6a5a62e4382d02608226d0f7`. The local receipt records status `rolled_back`.
 
-The replacement packet keeps the same site, artifact, mutation budget, and rollback target. Its only release-control change is a bounded visibility wait: it checks the published deploy up to 30 times at two-second intervals before treating visibility as failed. A timeout or any later live verification failure still restores only the pinned deploy.
+The second one-use manifest added a bounded visibility wait. Netlify accepted deploy `6a5d3c3a02c7340daaf4715e`, and the intended deploy became visible. The later live check incorrectly normalized the provenance file's line endings before comparing them with its raw-byte hash, so the runner again restored the pinned deploy. Direct checks against that deploy's permanent URL confirmed the raw provenance SHA-256 is the expected `e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94`, all three canaries are present, and the client-tab and preview suites pass.
+
+The current replacement packet keeps the same site, artifact, mutation budget, and rollback target. It checks the published deploy up to 30 times at two-second intervals before treating visibility as failed, and it verifies the provenance file as exact response bytes. A timeout or any later live verification failure still restores only the pinned deploy.
 
 ## External action status
 
-This replacement packet prepares evidence for independent review after the first attempt restored production. It does not itself authorize or perform another deployment. The replacement manifest must pass its full packet verification before external execution.
+This replacement packet prepares evidence for independent review after both earlier attempts restored production. It does not itself authorize or perform another deployment. The replacement manifest must pass its full packet verification before external execution.
 
 The accepted product decision is unchanged: correct the public MCP setup and access guidance before invitations are shared. Review is the remaining safety gate, not a request to revisit that product decision.

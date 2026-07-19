@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import {
+  assertExactProvenanceBytes,
   executeBoundedNetlifyRelease,
   sha256NormalizedText,
   verifyNetlifyCliBinding,
@@ -27,6 +28,13 @@ assert.equal(sha256NormalizedText(manifestPath), expectedManifestHash);
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 assert.equal(manifest.netlify.visibility_poll_attempts, 30);
 assert.equal(manifest.netlify.visibility_poll_interval_ms, 2000);
+assert.equal(
+  assertExactProvenanceBytes(
+    readFileSync(join(repoRoot, 'mcp', 'THIRD_PARTY_PROVENANCE.json')),
+    manifest.protection.third_party_provenance_sha256,
+  ),
+  true,
+);
 
 const expectedProbeInventory = [
   'exact_artifact_rebuild',
@@ -341,4 +349,5 @@ console.log(JSON.stringify({
     wrong_version_rejected: true,
     wrong_entrypoint_hash_rejected: true,
   },
+  remote_provenance_exact_bytes: true,
 }, null, 2));
