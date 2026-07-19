@@ -14,6 +14,13 @@ const usageEvents = [];
 const snapshotRequests = [];
 let snapshotFailure = false;
 let hostedSearchRequests = 0;
+const hostedRateLimitDetails = {
+  limit_scope: 'daily_allowance',
+  tier: 'anonymous',
+  daily_limit: 300,
+  resets_at_utc: '2026-07-21T00:00:00.000Z',
+  retry_after_seconds: 43200,
+};
 
 function listen(server) {
   return new Promise((resolve, reject) => {
@@ -58,6 +65,20 @@ const mockServer = createServer(async (req, res) => {
 
   if (url.pathname === '/functions/v1/mcp-search') {
     hostedSearchRequests += 1;
+    const body = JSON.parse(await readBody(req));
+    if (body.query.includes('rate limited probe')) {
+      res.writeHead(429, {
+        'content-type': 'application/json',
+        'retry-after': String(hostedRateLimitDetails.retry_after_seconds),
+      });
+      res.end(JSON.stringify({
+        error: 'hosted_allowance_exceeded',
+        message: 'Daily hosted search allowance reached.',
+        retryable: true,
+        details: hostedRateLimitDetails,
+      }));
+      return;
+    }
     res.writeHead(200, { 'content-type': 'application/json' });
     res.end(JSON.stringify({ results: [] }));
     return;
@@ -129,6 +150,7 @@ try {
   const health = await waitForHealth();
   assert.equal(health.material_assets.available, false);
   await client.connect(transport);
+  assert.match(client.getInstructions(), /Use search_icons as the main tool/);
 
   const exact = await client.callTool({
     name: 'get_icon',
@@ -171,6 +193,10 @@ try {
   const allModePayload = parsePayload(allModeSolid);
   assert.equal(allModePayload.results.length, 5);
   assert.ok(allModePayload.results.every((row) => row.library === 'material' && row.style === 'solid' && row.svg));
+  assert.equal(typeof allModePayload.image_url, 'string');
+  assert.ok(allModePayload.markdown_image.includes(allModePayload.image_url));
+  assert.match(allModePayload.suggested_response_markdown, /settings/i);
+  assert.equal(typeof allModePayload.next_step, 'string');
   assert.ok(snapshotRequests.length - beforeAllMode <= 5);
   assert.equal(hostedSearchRequests, 0, 'verified Material-only solid mode must not contact hosted search');
   const searchEvent = await waitForUsageEvent((event) => (
@@ -179,6 +205,79 @@ try {
   assert.equal(searchEvent.query_origin, 'agent_query');
   assert.equal(searchEvent.requested_limit, 5);
   assert.equal(searchEvent.client_ip_public, false);
+
+  const noResult = await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'zzzzqv unsupported nonsense 918273645',
+      library: 'lucide',
+      library_mode: 'strict',
+      limit: '3',
+    },
+  });
+  const noResultPayload = parsePayload(noResult);
+  assert.equal(noResultPayload.code, 'no_icons_found');
+  assert.deepEqual(noResultPayload.results, []);
+  assert.equal('image_url' in noResultPayload, false);
+  assert.equal('markdown_image' in noResultPayload, false);
+  assert.equal(typeof noResultPayload.hint, 'string');
+  assert.equal(typeof noResultPayload.suggested_response_markdown, 'string');
+  assert.equal(typeof noResultPayload.next_step, 'string');
+
+  const rateLimited = await client.callTool({
+    name: 'search_icons',
+    arguments: {
+      query: 'zzzzqv rate limited probe 918273645',
+      library: 'nonexistent',
+      library_mode: 'strict',
+      locale: 'es',
+      limit: 3,
+    },
+  });
+  const rateLimitedPayload = parsePayload(rateLimited);
+  assert.equal(rateLimited.isError, true);
+  assert.equal(rateLimitedPayload.code, 'hosted_allowance_exceeded');
+  assert.equal(rateLimitedPayload.status, 429);
+  assert.equal(rateLimitedPayload.retry_after_seconds, hostedRateLimitDetails.retry_after_seconds);
+  assert.deepEqual(rateLimitedPayload.details, hostedRateLimitDetails);
+  assert.equal(typeof rateLimitedPayload.suggested_response_markdown, 'string');
+  assert.equal(typeof rateLimitedPayload.next_step, 'string');
+  assert.equal('image_url' in rateLimitedPayload, false);
+  assert.equal('markdown_image' in rateLimitedPayload, false);
+
+  const longRefs = [
+    'material:settings',
+    'material:home',
+    'material:person',
+    'material:alarm',
+    'material:search',
+    'material:favorite',
+    'material:calendar_today',
+    'material:delete',
+    'material:download',
+    'material:upload',
+    'material:menu',
+    'material:close',
+    'material:check',
+    'material:star',
+    'material:mail',
+  ];
+  const longPreview = await client.callTool({
+    name: 'preview_icons',
+    arguments: {
+      icon_refs: longRefs.join(','),
+      style: 'unsupported-style',
+      include_image: 'false',
+      limit: '12',
+    },
+  });
+  const longPreviewPayload = parsePayload(longPreview);
+  assert.equal(longPreview.isError, undefined);
+  assert.equal(longPreviewPayload.truncated_from, longRefs.length);
+  assert.ok(longPreviewPayload.results.length > 0);
+  assert.ok(longPreviewPayload.results.length <= 12);
+  assert.equal(longPreviewPayload.image_included, false);
+  assert.equal(longPreviewPayload.warnings.length, 1);
 
   snapshotFailure = true;
   const failed = await client.callTool({
@@ -197,7 +296,10 @@ try {
     exact_lookup_asset_fetches: 1,
     fixed_preview_asset_fetches: 3,
     preview_png_verified: true,
+    long_preview_truncated_from: longPreviewPayload.truncated_from,
     all_mode_solid_count: allModePayload.results.length,
+    no_result_code: noResultPayload.code,
+    rate_limit_code: rateLimitedPayload.code,
     error_code: errorEvent.error_code,
     hosted_search_requests: hostedSearchRequests,
     telemetry_contract: {

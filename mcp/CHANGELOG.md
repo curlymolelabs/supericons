@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.4.19-beta.2 - 2026-07-20
+
+### Added
+
+- added labeled semantic fallback results for clear multi-word search requests
+- added conservative typo and inflection recovery for common search terms
+- added query parsing for style words and display constraints
+- added structured one-call search guidance, preview links, and honest no-result responses
+- added clarification options for ambiguous recommendation slots
+- added controlled validation labels and complete 429 retry details
+
+### Improved
+
+- improved top results for deployment, restore, profiles, testing, containers, dashboards, and expressive concepts
+- suppressed weak substring matches instead of filling result limits with unrelated icons
+- refreshed the packaged icon index timestamp with its content hashes pinned in release evidence
+
 ## 0.4.19-beta.1 - 2026-07-17
 
 ### Added

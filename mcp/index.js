@@ -69,6 +69,19 @@ import {
   buildIconContactSheetPng,
   buildPreviewTextPayload,
 } from './preview-icons.js';
+import {
+  MAX_ACCEPTED_PREVIEW_REFS,
+  SEARCH_TOOL_SERVER_INSTRUCTIONS,
+  buildSearchFailurePresentation,
+  buildSearchMatchPresentation,
+  buildSearchNoResultPresentation,
+  coerceToolBoolean,
+  coerceToolIconRefs,
+  coerceToolNumber,
+  coerceToolString,
+  normalizePreviewToolArguments,
+  normalizeSearchToolArguments,
+} from './search-tool-shell.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -438,6 +451,19 @@ async function buildToolIconResult(icon, options = {}) {
     svg,
     svgSource,
   };
+
+  const normalizedQueryVariant = options.queryNormalization?.changed
+    ? options.queryNormalization.query
+    : null;
+  const matchedQueryVariant = icon.query_variant || normalizedQueryVariant;
+  if (
+    matchedQueryVariant
+    && String(matchedQueryVariant).trim().toLowerCase() !== String(options.query || '').trim().toLowerCase()
+  ) {
+    result.matchedQueryVariant = matchedQueryVariant;
+    result.matchKind = icon.query_variant_kind
+      || (options.queryNormalization?.inferred_style ? 'normalized_style' : 'normalized_constraints');
+  }
 
   if (materialAxes) {
     result.materialExportAxes = materialAxes;
@@ -906,6 +932,11 @@ const freeIconCountLabel = productFacts?.display?.freeIconsAcrossLibrariesFreeLa
   || `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
 const mcpLocaleSchema = z.enum(SUPPORTED_MCP_OUTPUT_LOCALES);
 const mcpLocaleDescription = `Optional locale for multilingual output. Supported values: ${SUPPORTED_MCP_OUTPUT_LOCALES.join(', ')}.`;
+const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
+const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
+const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
+const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(12));
+const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 
 function buildLocalMcpUsageContext(toolName, context = {}) {
   const betaCohort = getBetaCohortForRequest(mcpPackage.version, toolName, {
@@ -931,33 +962,57 @@ function buildLocalMcpUsageContext(toolName, context = {}) {
 const server = new McpServer({
   name: 'supericons',
   version: mcpPackage.version,
+}, {
+  instructions: SEARCH_TOOL_SERVER_INSTRUCTIONS,
 });
 
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching free icons with SVG code, explicit public library labels, browser preview URLs, and SI semantic guidance when available, including Supericons AI and developer tool logos. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
+  `Use this as the main icon tool. Search ${freeIconCountLabel} using synonym expansion. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
-    query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
-    library: z.string().optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute'),
-    library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
-    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other libraries report their supported styles in list_libraries.'),
-    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
-    limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
-    include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
+    query: forgivingNonEmptyStringSchema.describe('Search term, for example "heart", "login", or "download arrow".'),
+    library: forgivingStringSchema.optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute.'),
+    library_mode: forgivingStringSchema.optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.'),
+    style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+    locale: forgivingStringSchema.optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th. Unsupported values are ignored with a warning.'),
+    limit: forgivingSearchLimitSchema.optional().default(10).describe('Maximum results from 1 to 50. Numeric strings are accepted.'),
+    include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
   },
-  async ({ query, library, library_mode, style, locale, limit, include_query_frame }) => {
+  async (rawArgs) => {
+    const {
+      query,
+      original_query,
+      library,
+      library_mode,
+      style,
+      locale,
+      limit,
+      include_query_frame,
+      query_normalization,
+      warnings,
+    } = normalizeSearchToolArguments(rawArgs, { supportedLocales: SUPPORTED_MCP_OUTPUT_LOCALES });
+    const displayQuery = original_query || query;
     const toolStartedAt = performance.now();
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
-      return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
+      const accessError = buildPremiumLibraryAccessError(libraryMeta[library].name);
+      return buildTextResponse({
+        ...accessError,
+        suggested_response_markdown: `The ${libraryMeta[library].name} pack is not available to this MCP connection. ${accessError.hint}`,
+        next_step: accessError.hint,
+        ...(warnings.length ? { warnings } : {}),
+      });
     }
     if (library_mode === 'prefer' && !library) {
       return buildTextResponse({
         error: 'Preferred-library mode requires a library',
         code: 'preferred_library_required',
         hint: 'Provide a library or use all mode.',
+        suggested_response_markdown: 'A preferred library was not provided. Choose a library or search all libraries.',
+        next_step: 'Provide a library or set library_mode to "all".',
+        ...(warnings.length ? { warnings } : {}),
         retryable: false,
       });
     }
@@ -986,7 +1041,7 @@ server.tool(
       });
     } catch (error) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -998,12 +1053,16 @@ server.tool(
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
-      return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
+      return buildTextResponse(buildSearchFailurePresentation({
+        query: displayQuery,
+        error,
+        fallbackMessage: 'SuperIcons search is unavailable.',
+      }));
     }
 
     if (results.length === 0) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -1015,16 +1074,19 @@ server.tool(
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
+      const hint = locale
+        ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
+        : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.';
       return buildTextResponse({
         error: 'No icons found',
         code: 'no_icons_found',
-        query,
+        query: displayQuery,
         library: library || null,
         library_mode,
         locale: locale || null,
-        hint: locale
-          ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
-          : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.',
+        hint,
+        ...buildSearchNoResultPresentation({ query: displayQuery, hint }),
+        ...(warnings.length ? { warnings } : {}),
         ...(localizeSearchNoResultsHint(locale, Boolean(locale))
           ? {
               localized: {
@@ -1045,14 +1107,15 @@ server.tool(
     }
     const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, {
       style,
-      query,
+      query: displayQuery,
+      queryNormalization: query_normalization,
       library,
       locale,
       limit,
     })))).filter(Boolean);
     if (formatted.length === 0) {
       void logMcpSearchAttempt({
-        query,
+        query: displayQuery,
         resultCount: 0,
         libraryFilter: library || 'all',
         libraryMode: library_mode,
@@ -1064,22 +1127,26 @@ server.tool(
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
-      return buildTextResponse(localFirstSearch
-        ? {
-            error: 'Icon SVGs are unavailable',
-            code: 'icon_svg_unavailable',
-            query,
-            library: library || null,
-            search_runtime: {
-              mode: 'local_first',
-              index_generated_at: indexGeneratedAt,
-            },
-            retryable: true,
-          }
-        : `Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
+      const hint = 'Try the search again, remove the library filter, or choose a different result.';
+      return buildTextResponse({
+        error: 'Icon SVGs are unavailable',
+        code: 'icon_svg_unavailable',
+        query: displayQuery,
+        library: library || null,
+        hint,
+        ...buildSearchNoResultPresentation({ query: displayQuery, hint }),
+        ...(warnings.length ? { warnings } : {}),
+        ...(localFirstSearch ? {
+          search_runtime: {
+            mode: 'local_first',
+            index_generated_at: indexGeneratedAt,
+          },
+        } : {}),
+        retryable: true,
+      });
     }
     void logMcpSearchAttempt({
-      query,
+      query: displayQuery,
       resultCount: formatted.length,
       libraryFilter: library || 'all',
       libraryMode: library_mode,
@@ -1092,15 +1159,27 @@ server.tool(
       latencyMs: performance.now() - toolStartedAt,
     });
     void logMcpSearchBatch({
-      query,
+      query: displayQuery,
       results: formatted,
       locale: locale || null,
     });
+    const previewUrl = buildSearchPreviewUrl({ query, library, style, locale, limit });
+    const imageOptions = { query, library, style, locale, limit };
+    const imageUrl = buildPreviewImageUrl(imageOptions);
+    const markdownImage = buildPreviewMarkdownImage(imageOptions);
     return buildTextResponse({
       results: formatted,
       library_mode,
       requested_library: library || null,
-      preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
+      preview_url: previewUrl,
+      ...buildSearchMatchPresentation({
+        query: displayQuery,
+        results: formatted,
+        previewUrl,
+        imageUrl,
+        markdownImage,
+      }),
+      ...(warnings.length ? { warnings } : {}),
       ...(queryFrame ? { query_frame: queryFrame } : {}),
       ...(localFirstSearch ? {
         search_runtime: {
@@ -1247,20 +1326,36 @@ server.tool(
 // --- Tool: preview_icons ---
 server.tool(
   'preview_icons',
-  'Create a visual preview for icon search results or a fixed list of icon refs. Returns a browser preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet. Use markdown_image in final answers when the client supports remote Markdown images; otherwise share image_url or preview_url.',
+  'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a browser preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
   {
-    query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
-    icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
-    library: z.string().optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
-    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference.'),
-    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual search terms.'),
-    limit: z.number().min(1).max(12).optional().default(9).describe('Maximum icons to include in the preview. Keep this small for image-capable clients.'),
-    include_image: z.boolean().optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. A preview_url is always returned.'),
+    query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
+    icon_refs: z.preprocess(
+      coerceToolIconRefs,
+      z.array(z.string()).min(1).max(MAX_ACCEPTED_PREVIEW_REFS),
+    ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 12 are rendered.'),
+    library: forgivingStringSchema.optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
+    style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+    locale: forgivingStringSchema.optional().describe('Optional locale for multilingual search terms. Unsupported values are ignored with a warning.'),
+    limit: forgivingPreviewLimitSchema.optional().default(12).describe('Maximum icons to include from 1 to 12. Numeric strings are accepted.'),
+    include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
   },
-  async ({ query, icon_refs, library, style, locale, limit, include_image }) => {
+  async (rawArgs) => {
+    const {
+      query,
+      icon_refs,
+      library,
+      style,
+      locale,
+      limit,
+      include_image,
+      truncated_from,
+      warnings,
+    } = normalizePreviewToolArguments(rawArgs, { supportedLocales: SUPPORTED_MCP_OUTPUT_LOCALES });
     if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
       return buildTextResponse({
         error: 'Provide either query or icon_refs.',
+        next_step: 'Provide a search query or one or more icon refs in library:id format.',
+        ...(warnings.length ? { warnings } : {}),
       });
     }
 
@@ -1317,6 +1412,8 @@ server.tool(
       imageUrl,
       markdownImage,
       imageIncluded: Boolean(include_image && icons.length > 0),
+      truncatedFrom: truncated_from,
+      warnings,
     });
 
     let imagePng = null;

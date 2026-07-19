@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_beta2_incident_guardrails",
+  "date": "2026-07-20",
+  "package_version": "0.4.19-beta.2",
+  "tool_routes": {
+    "search_icons_eligible_english": "local_first_english",
+    "search_icons_fallback": "mcp-search",
+    "recommend_icons": "mcp-search"
+  },
+  "cohort": {
+    "controlled_label_required_for_gate": true,
+    "organic_reported_separately": true,
+    "unlabeled_attempts_excluded_from_gate": true
+  },
+  "concurrency": {
+    "grouped_search_internal_max": 2,
+    "material_snapshot_fetch_max": 4,
+    "published_smoke_max": 1,
+    "production_load_test_authorized": false
+  },
+  "quality": {
+    "fixed_suite_cases": 225,
+    "labeled_attempts_required": 200,
+    "qualifying_days_required": 3,
+    "labeled_attempts_per_qualifying_day_min": 30,
+    "reviewed_query_mode_combinations_required": 50,
+    "error_rate_percent_max": 1,
+    "local_search_p95_ms_max": 500,
+    "canary_violations_max": 0
+  },
+  "usage_integrity": {
+    "dedupe_verification_required": true,
+    "separate_sessions_must_not_collide": true,
+    "same_session_retries_must_dedupe": true
+  },
+  "material": {
+    "capability_truth_required": true,
+    "outline_and_solid_svg_required": true,
+    "clean_install_required": true
+  },
+  "release": {
+    "archive_sha256": "520c9c99986a4eddd2f7d38cf3f517be412953e4471669f0db9c24c6bfdcec73",
+    "exact_14_case_matrix_required": true,
+    "exact_150_case_route_required": true,
+    "vc3_vc4_required": true,
+    "npm_tag": "beta",
+    "rollback_beta_tag_to": "0.4.19-beta.1",
+    "production_functions_must_remain_unchanged": true,
+    "npm_latest_must_remain_unchanged": true,
+    "model_provider_calls": 0
+  }
+}

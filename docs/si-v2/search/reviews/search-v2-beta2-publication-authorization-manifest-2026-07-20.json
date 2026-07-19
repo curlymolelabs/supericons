@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "name": "search_v2_beta2_publication",
+  "date": "2026-07-20",
+  "hash_mode": "utf8_lf_normalized_text",
+  "implementation": {
+    "package_source_commit": "baf714960cf44f3ba658354c609ec64ced3f8f54",
+    "release_type": "npm_prerelease_only",
+    "hosted_function_deployment_required": false,
+    "database_migration_required": false,
+    "web_deployment_required": false
+  },
+  "package": {
+    "name": "@supericons/mcp",
+    "version": "0.4.19-beta.2",
+    "publish_tag": "beta",
+    "latest_must_remain": "0.4.17",
+    "rollback_beta_tag_to": "0.4.19-beta.1",
+    "browser_security_key_approval_required": true,
+    "archive_path": "tmp/search-v2-beta2-release-baf714960/archive/supericons-mcp-0.4.19-beta.2.tgz",
+    "archive_sha256": "520c9c99986a4eddd2f7d38cf3f517be412953e4471669f0db9c24c6bfdcec73",
+    "archive_size_bytes": 6132653,
+    "unpacked_size_bytes": 25403364,
+    "file_count": 65,
+    "npm_shasum": "1bf884205b55c57cf04d562f7ef9b9c4f0aea900",
+    "npm_integrity": "sha512-40VCC6kk8oVY0bzOm4eq65vi7qhy5dKpDr97QQSAb/VCnBjlixrIUiAHu024qgVqhxb5Nhwimm8Kq8ld9J2+Eg=="
+  },
+  "search_contract": {
+    "fixed_cases": 225,
+    "eligible_stdio_cases": 150,
+    "beta1_matrix_cases": 14,
+    "fixed_fingerprint": "3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777",
+    "stdio_route_fingerprint": "357d161cf6059b9371ea38591f267f623e43e37cfd680cb5a097af50861c1659",
+    "index_generated_at": "2026-07-19T20:30:08.523Z",
+    "local_p95_ms_maximum": 500,
+    "model_provider_calls": 0
+  },
+  "routes": {
+    "eligible_search_icons": "packaged_local_index",
+    "localized_search_icons": "stable_mcp_search",
+    "non_ascii_search_icons": "stable_mcp_search",
+    "recommend_icons": "stable_mcp_search",
+    "hosted_mcp": "unchanged",
+    "web_search": "unchanged",
+    "eligible_beta_cohort": "deterministic-v2-beta"
+  },
+  "public_bundle": {
+    "vc3_required": true,
+    "vc4_required": true,
+    "protected_classes": [
+      "usage_derived_ranking_weights",
+      "query_behavior_signals",
+      "community_curation_data",
+      "contributor_reputation_data",
+      "paid_design_intelligence"
+    ],
+    "private_record_sha256": "abed31fb65d8ae606680ac55e862ef2f06a091617e3c266b79ecd12c2fd03963",
+    "third_party_provenance_sha256": "e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94",
+    "private_record_values_must_remain_out_of_git": true,
+    "npm_artifact_licensed_and_canaried": true,
+    "web_deployment_authorized": false
+  },
+  "publication_flow": {
+    "mode": "npm_staged_browser_security_key",
+    "staging_cli": "11.18.0",
+    "staged_archive_download_and_smoke_required_before_browser_approval": true,
+    "browser_approval_requires_owner_access": true,
+    "postapproval_registry_and_smoke_verification_required": true,
+    "postapproval_failure_requires_exact_prerelease_deprecation": true,
+    "postapproval_failure_restores_beta_tag": true,
+    "postapproval_finalization_single_use": true,
+    "postapproval_in_progress_recovery": "manifest_bound_deprecation_and_beta_tag_rollback",
+    "postapproval_terminal_outcomes": [
+      "published_and_verified",
+      "rolled_back"
+    ],
+    "publish_tag_locked_at_staging": "beta"
+  },
+  "publication_attempts": {
+    "maximum_additional_stage_commands": 1,
+    "maximum_successful_publications": 1,
+    "receipt_schema_version": 1,
+    "receipt_scope": "user_local_application_data",
+    "receipt_contains_credentials": false,
+    "consumption_timing": "immediately_before_npm_stage_publish"
+  },
+  "external_actions": {
+    "maximum_private_npm_staged_uploads": 1,
+    "maximum_npm_prerelease_publications": 1,
+    "maximum_conditional_npm_deprecations": 1,
+    "maximum_beta_tag_rollbacks": 1,
+    "function_deployments": 0,
+    "database_mutations": 0,
+    "normal_database_pushes": 0,
+    "production_load_tests": 0,
+    "npm_latest_changes": 0,
+    "web_deployments": 0,
+    "model_provider_calls": 0,
+    "automated_public_messages": 0,
+    "scheduled_warm_pings": 0
+  },
+  "artifacts": {
+    "stager": "scripts/stage-search-v2-local-first-beta.ps1",
+    "stager_sha256": "3fc10c1c8ee4b1947fda3c26a954fd280fc125a9fbbb6eef89f4ad362b2d62ac",
+    "postapproval_finalizer": "scripts/finalize-search-v2-local-first-beta.ps1",
+    "postapproval_finalizer_sha256": "1457f58811f01578d85c1ba9e35dcf36e8203fdb276c5d32cb58e0a4c5bd7b41",
+    "published_smoke": "scripts/smoke-search-v2-local-first-beta-published.mjs",
+    "published_smoke_sha256": "80ce9e4c9150a26c536c6c4431176b32d782340780c8448808eb40d7cf92b7d6",
+    "protected_builder": "scripts/build-search-v2-protected-public-artifacts.mjs",
+    "protected_builder_sha256": "ca298cd114c9a0ffb1e583879a4430a4ab41fd70e9e62092acdf22f41ae315be",
+    "protected_verifier": "scripts/verify-search-v2-protected-public-artifacts.mjs",
+    "protected_verifier_sha256": "b7019f6128a29883d7c4f8aaf68d2086e50b6b06197e0e7e3dcf640da9eb37b0",
+    "matrix_verifier": "scripts/verify-search-v2-beta2-14-case-matrix.mjs",
+    "matrix_verifier_sha256": "c0ee93e4fe87fea451d8954d9b3b0a16dddbff669e0df3f966021ce78592b720",
+    "incident_verifier": "scripts/verify-search-v2-beta-incident-gates.mjs",
+    "incident_verifier_sha256": "9f19ab58b222d9b8c001e1289ce6f00fa05e9304abb7119764890176b553145a",
+    "packet_verifier": "scripts/verify-search-v2-beta2-publication-packet.mjs",
+    "packet_verifier_sha256": "2a5571c2cb683acbdef293ac5c7d5e1fffc4276f375cd592e30f8c35713affd9"
+  },
+  "probe_inventory": [
+    "archive_byte_identity",
+    "package_source_freeze",
+    "fixed_225_fingerprint",
+    "installed_150_route",
+    "beta1_14_case_matrix",
+    "vc3_vc4_public_boundary",
+    "incident_guardrails",
+    "prepublish_suite",
+    "dependency_audit_zero",
+    "single_use_stage",
+    "staged_download_verification",
+    "postapproval_replay",
+    "exact_prerelease_deprecation",
+    "beta_tag_rollback",
+    "latest_unchanged",
+    "owner_request_binding"
+  ],
+  "rollback": {
+    "prepublication_failure": "stop_without_registry_mutation",
+    "staged_verification_failure": "do_not_approve_and_reject_only_the_exact_stage",
+    "postpublication_verification_failure": "deprecate_only_0.4.19-beta.2_restore_beta_tag_to_0.4.19-beta.1_keep_latest_unchanged",
+    "beta_quality_failure": "restore_beta_tag_to_0.4.19-beta.1_deprecate_0.4.19-beta.2_stop_invitations"
+  },
+  "excluded_scope": [
+    "supabase_function_deployment",
+    "database_migration",
+    "production_load_test",
+    "npm_latest_change",
+    "hosted_mcp_change",
+    "web_search_change",
+    "web_deployment",
+    "automated_public_invitation",
+    "scheduled_warm_ping",
+    "model_provider_call"
+  ]
+}

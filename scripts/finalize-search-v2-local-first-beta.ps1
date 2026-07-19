@@ -2,6 +2,7 @@ param(
     [switch]$ExecuteApprovedFinalization,
     [switch]$RecoverApprovedFinalization,
     [string]$ApprovedManifestSha256,
+    [string]$ManifestPath,
     [switch]$RunRollbackSelfTest,
     [ValidateSet('integrity_mismatch', 'tag_mismatch', 'smoke_failure', 'already_deprecated')]
     [string]$RollbackTestScenario,
@@ -293,10 +294,14 @@ function Invoke-ExactPrereleaseRollback(
     if ($finalTags.latest -ne $Manifest.package.latest_must_remain) {
         throw 'npm latest changed during rollback.'
     }
+    if ($finalTags.beta -ne $Manifest.package.rollback_beta_tag_to) {
+        throw 'The beta tag was not restored to the approved rollback version.'
+    }
 
     return [pscustomobject]@{
         deprecated = $true
         exact_package = $PackageSpec
+        beta_tag = $finalTags.beta
         latest_tag = $finalTags.latest
     }
 }
@@ -311,6 +316,9 @@ function Confirm-LatestUnchanged(
         $Description
     if ($tags.latest -ne $Manifest.package.latest_must_remain) {
         throw 'npm latest changed during rollback recovery.'
+    }
+    if ($tags.beta -ne $Manifest.package.rollback_beta_tag_to) {
+        throw 'The beta tag does not match the approved rollback version.'
     }
     return $tags
 }
@@ -470,15 +478,17 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     $manifest = [pscustomobject]@{
         package = [pscustomobject]@{
             name = '@supericons/mcp'
-            version = '0.4.19-beta.1'
+            version = '0.4.19-beta.2'
             npm_shasum = 'approved-shasum'
             npm_integrity = 'approved-integrity'
             latest_must_remain = '0.4.17'
+            rollback_beta_tag_to = '0.4.19-beta.1'
         }
     }
-    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.2'
     $events = [System.Collections.Generic.List[string]]::new()
     $tagReadCount = [pscustomobject]@{ Count = 0 }
+    $betaTag = [pscustomobject]@{ Value = '0.4.19-beta.2' }
     $deprecationReadCount = [pscustomobject]@{ Count = 0 }
     $comparisonCount = [pscustomobject]@{ Count = 0 }
     $readInvoker = {
@@ -497,7 +507,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
                 '0.4.18-beta.0'
             }
             else {
-                '0.4.19-beta.1'
+                $betaTag.Value
             }
             return [pscustomobject]@{
                 ExitCode = 0
@@ -522,6 +532,8 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
     $deprecateInvoker = {
         param([string[]]$NpmArguments)
         $events.Add($NpmArguments -join ' ')
+        $events.Add('dist-tag add @supericons/mcp@0.4.19-beta.1 beta')
+        $betaTag.Value = '0.4.19-beta.1'
         return [pscustomobject]@{ ExitCode = 0; Output = 'deprecated' }
     }.GetNewClosure()
     $smokeVerifier = {
@@ -543,10 +555,17 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
         throw 'Rollback self-test did not produce the required verification failure.'
     }
     $deprecationCount = @($events | Where-Object { $_ -match '^deprecate ' }).Count
-    $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag ' }).Count
+    $betaTagMutationCount = @($events | Where-Object { $_ -match '^dist-tag add .* beta$' }).Count
+    $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag add .* latest$' }).Count
     $publishCount = @($events | Where-Object { $_ -match '^publish |^stage publish ' }).Count
     $expectedDeprecationCount = if ($Scenario -eq 'already_deprecated') { 0 } else { 1 }
-    if ($deprecationCount -ne $expectedDeprecationCount -or $latestMutationCount -ne 0 -or $publishCount -ne 0) {
+    $expectedBetaTagMutationCount = if ($Scenario -eq 'already_deprecated') { 0 } else { 1 }
+    if (
+        $deprecationCount -ne $expectedDeprecationCount -or
+        $betaTagMutationCount -ne $expectedBetaTagMutationCount -or
+        $latestMutationCount -ne 0 -or
+        $publishCount -ne 0
+    ) {
         throw 'Rollback self-test command counts do not match the safety contract.'
     }
     return [pscustomobject]@{
@@ -555,6 +574,7 @@ function Invoke-RollbackSelfTest([string]$Scenario) {
         verification_failure = $verificationFailure
         publish_calls = $publishCount
         deprecation_calls = $deprecationCount
+        beta_tag_rollback_calls = $betaTagMutationCount
         latest_mutation_calls = $latestMutationCount
         comparison_calls = $comparisonCount.Count
     }
@@ -564,7 +584,7 @@ function Invoke-StageRecordSelfTest {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-stage-record-$([guid]::NewGuid().ToString('N'))"
     $recordPath = Join-Path $temporaryRoot 'record.json'
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.2'
     $manifest = [pscustomobject]@{
         package = [pscustomobject]@{
             publish_tag = 'beta'
@@ -716,26 +736,28 @@ function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
     $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) "supericons-outer-rollback-$([guid]::NewGuid().ToString('N'))"
     $outcomePath = Join-Path $temporaryRoot 'outcome.json'
     $manifestSha256 = 'a' * 64
-    $packageSpec = '@supericons/mcp@0.4.19-beta.1'
+    $packageSpec = '@supericons/mcp@0.4.19-beta.2'
     $stageId = '11111111-1111-4111-8111-111111111111'
     $manifest = [pscustomobject]@{
         package = [pscustomobject]@{
             name = '@supericons/mcp'
-            version = '0.4.19-beta.1'
+            version = '0.4.19-beta.2'
             npm_shasum = 'approved-shasum'
             npm_integrity = 'approved-integrity'
             latest_must_remain = '0.4.17'
+            rollback_beta_tag_to = '0.4.19-beta.1'
         }
     }
     $events = [System.Collections.Generic.List[string]]::new()
     $deprecated = [pscustomobject]@{ Value = $false }
+    $betaTag = [pscustomobject]@{ Value = '0.4.19-beta.2' }
     $readInvoker = {
         param([string[]]$NpmArguments)
         $events.Add($NpmArguments -join ' ')
         if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'version') {
             return [pscustomobject]@{
                 ExitCode = 0
-                Output = ('0.4.19-beta.1' | ConvertTo-Json -Compress)
+                Output = ('0.4.19-beta.2' | ConvertTo-Json -Compress)
             }
         }
         if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq $packageSpec -and $NpmArguments[2] -eq 'deprecated') {
@@ -754,7 +776,7 @@ function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
         if ($NpmArguments[0] -eq 'view' -and $NpmArguments[1] -eq '@supericons/mcp' -and $NpmArguments[2] -eq 'dist-tags') {
             return [pscustomobject]@{
                 ExitCode = 0
-                Output = (@{ latest = '0.4.17'; beta = '0.4.19-beta.1' } | ConvertTo-Json -Compress)
+                Output = (@{ latest = '0.4.17'; beta = $betaTag.Value } | ConvertTo-Json -Compress)
             }
         }
         return [pscustomobject]@{ ExitCode = 1; Output = 'unsupported read command' }
@@ -762,6 +784,8 @@ function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
     $deprecateInvoker = {
         param([string[]]$NpmArguments)
         $events.Add($NpmArguments -join ' ')
+        $events.Add('dist-tag add @supericons/mcp@0.4.19-beta.1 beta')
+        $betaTag.Value = '0.4.19-beta.1'
         $deprecated.Value = $true
         return [pscustomobject]@{ ExitCode = 0; Output = 'deprecated' }
     }.GetNewClosure()
@@ -817,11 +841,13 @@ function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
         $outcome = Get-Content -Raw -LiteralPath $outcomePath | ConvertFrom-Json
         $deprecationCount = @($events | Where-Object { $_ -match '^deprecate ' }).Count
         $publishCount = @($events | Where-Object { $_ -match '^publish |^stage publish ' }).Count
-        $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag ' }).Count
+        $betaTagMutationCount = @($events | Where-Object { $_ -match '^dist-tag add .* beta$' }).Count
+        $latestMutationCount = @($events | Where-Object { $_ -match '^dist-tag add .* latest$' }).Count
         if (
             $outcome.status -ne 'rolled_back' -or
             $deprecationCount -ne 1 -or
             $publishCount -ne 0 -or
+            $betaTagMutationCount -ne 1 -or
             $latestMutationCount -ne 0 -or
             -not $deprecated.Value
         ) {
@@ -833,6 +859,7 @@ function Invoke-OuterFlowRollbackSelfTest([string]$Scenario) {
             terminal_status = $outcome.status
             deprecation_calls = $deprecationCount
             publish_calls = $publishCount
+            beta_tag_rollback_calls = $betaTagMutationCount
             latest_mutation_calls = $latestMutationCount
             recovery_manifest_bound = $true
         }
@@ -892,12 +919,20 @@ if ($ApprovedManifestSha256 -notmatch '^[a-fA-F0-9]{64}$') {
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$manifestPath = Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
-$actualManifestSha256 = Get-NormalizedTextSha256 $manifestPath
+$resolvedManifestPath = if ([string]::IsNullOrWhiteSpace($ManifestPath)) {
+    Join-Path $repoRoot 'docs\si-v2\search\reviews\search-v2-beta1-publication-authorization-manifest-2026-07-17.json'
+}
+elseif ([System.IO.Path]::IsPathRooted($ManifestPath)) {
+    $ManifestPath
+}
+else {
+    Join-Path $repoRoot $ManifestPath
+}
+$actualManifestSha256 = Get-NormalizedTextSha256 $resolvedManifestPath
 if ($actualManifestSha256 -ne $ApprovedManifestSha256.ToLowerInvariant()) {
     throw 'The current manifest does not match the audited release fingerprint.'
 }
-$manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+$manifest = Get-Content -Raw -LiteralPath $resolvedManifestPath | ConvertFrom-Json
 if ($manifest.publication_flow.mode -ne 'npm_staged_browser_security_key') {
     throw 'The manifest does not authorize browser-approved staged publication.'
 }
@@ -931,9 +966,22 @@ $deprecateInvoker = {
         -NoNewWindow `
         -Wait `
         -PassThru
+    if ($process.ExitCode -ne 0) {
+        return [pscustomobject]@{
+            ExitCode = $process.ExitCode
+            Output = 'Interactive deprecation command failed.'
+        }
+    }
+    $rollbackPackageSpec = "$($manifest.package.name)@$($manifest.package.rollback_beta_tag_to)"
+    $tagProcess = Start-Process `
+        -FilePath $npmExecutable `
+        -ArgumentList @('dist-tag', 'add', $rollbackPackageSpec, 'beta') `
+        -NoNewWindow `
+        -Wait `
+        -PassThru
     return [pscustomobject]@{
-        ExitCode = $process.ExitCode
-        Output = 'Interactive deprecation command completed.'
+        ExitCode = $tagProcess.ExitCode
+        Output = 'Interactive deprecation and beta-tag rollback commands completed.'
     }
 }
 $smokeVerifier = {

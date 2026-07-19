@@ -1,6 +1,6 @@
 {
   "name": "@supericons/mcp",
-  "version": "0.4.19-beta.1",
+  "version": "0.4.19-beta.2",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
@@ -49,6 +49,8 @@
     "release-channel.js",
     "recommend-icons.js",
     "remote-server.js",
+    "search-query-normalization.js",
+    "search-tool-shell.js",
     "server.json",
     "runtime/converter-workflow.js",
     "runtime/cjk-search-core.js",
@@ -76,8 +78,9 @@
     "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
     "verify:local-first-beta": "node ../scripts/verify-search-v2-local-first-beta.mjs",
     "verify:route-package": "node ../scripts/verify-search-v2-tool-scoped-package.mjs",
-    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:route-package && npm run verify:package",
-    "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
+    "verify:search-v2-shell": "node ../scripts/verify-search-v2-one-call-contract.mjs --package-root . && node ../scripts/verify-search-v2-packaged-query-frame.mjs --package-root . && node ../scripts/verify-search-v2-429-propagation.mjs && node ../scripts/verify-recommend-icons-clarification.mjs",
+    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:route-package && npm run verify:search-v2-shell && npm run verify:package",
+    "verify:package": "node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {
     "@ip-location-db/geolite2-country-mmdb": "2.3.2026061719",

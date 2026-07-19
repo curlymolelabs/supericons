@@ -622,6 +622,61 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
       ]
     },
     {
+      "id": "software_execution",
+      "label": "Run code or start a process",
+      "retrieval_queries": [
+        "play circle",
+        "terminal",
+        "code execution"
+      ],
+      "candidate_terms": [
+        "play",
+        "start",
+        "terminal",
+        "code",
+        "command",
+        "process"
+      ],
+      "context_terms": [
+        "app",
+        "automation",
+        "build",
+        "code",
+        "command",
+        "developer",
+        "process",
+        "script",
+        "test",
+        "workflow"
+      ]
+    },
+    {
+      "id": "physical_running",
+      "label": "Running or exercise",
+      "retrieval_queries": [
+        "person running",
+        "activity",
+        "sprint"
+      ],
+      "candidate_terms": [
+        "running",
+        "runner",
+        "exercise",
+        "activity",
+        "sprint"
+      ],
+      "context_terms": [
+        "activity",
+        "exercise",
+        "fitness",
+        "jog",
+        "race",
+        "sport",
+        "sprint",
+        "workout"
+      ]
+    },
+    {
       "id": "settings_control",
       "label": "Settings control",
       "retrieval_queries": [
@@ -1116,6 +1171,28 @@ export const GENERATED_SEARCH_RANKING_POLICY = Object.freeze({
         "file_picker",
         "emoji_picker",
         "selection_control"
+      ]
+    },
+    {
+      "id": "run",
+      "trigger_terms": [
+        "run"
+      ],
+      "match": "exact",
+      "bare_intent_types": [
+        "ambiguous_concept"
+      ],
+      "context_intent_types": [
+        "context_narrowed_concept"
+      ],
+      "bare_query_family_ids": [
+        "software_execution",
+        "physical_running"
+      ],
+      "minimum_distinct_families_top_8": 2,
+      "context_family_order": [
+        "software_execution",
+        "physical_running"
       ]
     },
     {

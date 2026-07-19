@@ -53,6 +53,7 @@ try {
     'recommend-icons.js',
     'release-channel.js',
     'remote-server.js',
+    'search-query-normalization.js',
     'telemetry.js',
   ]) {
     assert.equal(packedPaths.has(required), true, `Package is missing ${required}.`);
@@ -68,7 +69,7 @@ try {
 
   const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.19-beta.1');
+  assert.equal(installedPackage.version, '0.4.19-beta.2');
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
   assert.equal(installedServer.version, installedPackage.version);
   assert.equal(installedServer.packages[0].version, installedPackage.version);
@@ -134,7 +135,7 @@ try {
     .digest('hex');
   assert.equal(
     installedFingerprint,
-    'ef2934097555867d1695e9861f35c346132f6c33ec9899c602635ce12aba76c8',
+    '3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777',
     'Clean-installed package changed the fixed search fingerprint.',
   );
 
@@ -209,7 +210,7 @@ try {
     .digest('hex');
   assert.equal(
     routeFingerprint,
-    '7a56bd231101974a5c0a3d347ed500153402d5095a1e2eadbb6739a124c32184',
+    '357d161cf6059b9371ea38591f267f623e43e37cfd680cb5a097af50861c1659',
     'Clean-installed stdio route changed the 150-case ordered result contract.',
   );
 

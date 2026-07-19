@@ -37,11 +37,13 @@ export const ICON_SEMANTIC_ALIASES = {
     'node network',
     'mesh network',
     'decentralized',
+    'orchestrator',
   ],
   'lucide:workflow': [
     'langgraph',
     'langchain',
     'orchestration',
+    'orchestrator',
     'agent flow',
     'chain execution',
     'workflow builder',
@@ -308,6 +310,87 @@ export const ICON_SEMANTIC_ALIASES = {
     'transform with ai',
     'ai rewrite',
     'one click ai',
+  ],
+  'si:orchestrator': [
+    'orchestrator',
+    'agent orchestrator',
+    'workflow orchestrator',
+  ],
+  'lucide:list-checks': [
+    'choose',
+    'chooser',
+  ],
+  'lucide:mouse-pointer-2': [
+    'choose',
+    'chooser',
+  ],
+  'iconoir:list-select': [
+    'choose',
+    'chooser',
+  ],
+  'lucide:plane': [
+    'aviation',
+    'airline',
+  ],
+  'tabler:plane': [
+    'aviation',
+    'airline',
+  ],
+  'phosphor:airplane': [
+    'aviation',
+    'airline',
+  ],
+  'lucide:at-sign': [
+    'mention',
+  ],
+  'tabler:at': [
+    'mention',
+  ],
+  'phosphor:at': [
+    'mention',
+  ],
+  'lucide:bell': [
+    'notify',
+  ],
+  'tabler:bell': [
+    'notify',
+  ],
+  'phosphor:bell': [
+    'notify',
+  ],
+  'lucide:users': [
+    'customers',
+    'community',
+  ],
+  'tabler:users': [
+    'customers',
+  ],
+  'phosphor:users': [
+    'customers',
+  ],
+  'lucide:tag': [
+    'pricing',
+  ],
+  'tabler:tag': [
+    'pricing',
+  ],
+  'phosphor:tag': [
+    'pricing',
+  ],
+  'lucide:stethoscope': [
+    'doctor',
+  ],
+  'tabler:stethoscope': [
+    'doctor',
+  ],
+  'phosphor:stethoscope': [
+    'doctor',
+  ],
+  'lucide:handshake': [
+    'community',
+  ],
+  'iconoir:community': [
+    'community',
   ],
   'material:database_search': [
     'database search',

@@ -31,6 +31,19 @@ import {
   buildIconContactSheetPng,
   buildPreviewTextPayload,
 } from './preview-icons.js';
+import {
+  MAX_ACCEPTED_PREVIEW_REFS,
+  SEARCH_TOOL_SERVER_INSTRUCTIONS,
+  buildSearchFailurePresentation,
+  buildSearchMatchPresentation,
+  buildSearchNoResultPresentation,
+  coerceToolBoolean,
+  coerceToolIconRefs,
+  coerceToolNumber,
+  coerceToolString,
+  normalizePreviewToolArguments,
+  normalizeSearchToolArguments,
+} from './search-tool-shell.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
@@ -93,6 +106,11 @@ const libraryKeysDescription =
 const multilingualLocaleValues = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th'];
 const multilingualLocaleDescription =
   'Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.';
+const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
+const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
+const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
+const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(12));
+const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 const previewStyles = new Set(['any', 'outline', 'solid']);
 const previewLocales = new Set(multilingualLocaleValues);
 
@@ -156,6 +174,19 @@ const searchIconsOutputSchema = {
   library_mode: z.enum(['strict', 'prefer', 'all']).describe('Library behavior used for this search.'),
   requested_library: z.string().nullable().describe('Preferred or required library, when supplied.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of this search result set.'),
+  image_url: z.string().optional().describe('Direct PNG URL when usable icons exist.'),
+  markdown_image: z.string().optional().describe('Ready-made Markdown image when usable icons exist.'),
+  suggested_response_markdown: z.string().describe('Compact answer that accurately reflects this response.'),
+  next_step: z.string().describe('Useful next action for the caller.'),
+  warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored.'),
+  error: z.string().optional().describe('Plain-language error for a structured no-result.'),
+  code: z.string().optional().describe('Stable code for a structured no-result.'),
+  hint: z.string().optional().describe('Plain-language recovery hint for a structured no-result.'),
+  retryable: z.boolean().optional().describe('Whether changing the query or filters may produce a result.'),
+  status: z.number().optional().describe('HTTP status from an upstream search failure.'),
+  retry_after_seconds: z.number().optional().describe('Seconds to wait before retrying a rate-limited search.'),
+  limit_scope: z.string().optional().describe('Allowance scope reported by a rate limit.'),
+  details: z.record(z.unknown()).optional().describe('Structured rate-limit or upstream failure details.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
 };
 
@@ -177,6 +208,9 @@ const previewIconsOutputSchema = {
   image_url: z.string().nullable().optional().describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
   markdown_image: z.string().nullable().optional().describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
   image_included: z.boolean().describe('Whether this response includes MCP image content.'),
+  truncated_from: z.number().optional().describe('Original icon ref count when the input was truncated.'),
+  warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored.'),
+  next_step: z.string().describe('Useful next action for the caller.'),
   client_display_note: z.string().describe('Plain-language note for clients that do not render images inline.'),
   error: z.string().optional().describe('Recoverable error message when preview inputs are missing or invalid.'),
   results: z.array(previewIconResultSchema).describe('Icons included in the visual preview.'),
@@ -606,6 +640,8 @@ async function buildHostedPreviewModel({
   limit = 9,
   includeImage = false,
   usageContext = null,
+  truncatedFrom = null,
+  warnings = [],
 } = {}) {
   const effectiveLimit = normalizePreviewLimit(limit);
   const fixedRefs = normalizePreviewIconRefs(iconRefs, effectiveLimit);
@@ -652,6 +688,8 @@ async function buildHostedPreviewModel({
       imageUrl,
       markdownImage,
       imageIncluded: Boolean(includeImage && icons.length > 0),
+      truncatedFrom,
+      warnings,
     }),
   };
 }
@@ -1171,54 +1209,116 @@ function createServer({ requestContext = null } = {}) {
   const server = new McpServer({
     name: 'supericons',
     version: packageJson.version,
+  }, {
+    instructions: SEARCH_TOOL_SERVER_INSTRUCTIONS,
   });
 
   server.registerTool(
     'search_icons',
     {
       title: 'Search Icons',
-      description: `Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. Use this when the user describes an icon concept such as "database", "user profile", "chill", "security", "AI model", or "OpenAI Codex logo". Returns matching icons with SVG code, public semantic guidance, explicit library labels, and browser preview URLs. Library key si means Supericons, not Simple Icons.`,
+      description: `Use this as the main icon tool. Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Library key si means Supericons, not Simple Icons.`,
       inputSchema: {
-        query: z.string().describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
-        library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
-        library_mode: z.enum(['strict', 'prefer', 'all']).optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library.'),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
-        locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
-        limit: z.number().min(1).max(50).optional().default(10).describe('Maximum number of icons to return. Use 5-10 for browsing and 1-3 for quick agent choices.'),
-        include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
+        query: forgivingNonEmptyStringSchema.describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
+        library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
+        library_mode: forgivingStringSchema.optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.'),
+        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
+        limit: forgivingSearchLimitSchema.optional().default(10).describe('Maximum number of icons from 1 to 50. Numeric strings are accepted.'),
+        include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
       },
       outputSchema: searchIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async (args) => withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
-      const { query, library, library_mode, style, locale, limit, include_query_frame } = args;
-      if (library_mode === 'prefer' && !library) {
-        throw new Error('Preferred-library mode requires a library. Provide a library or use all mode.');
-      }
-      const results = await searchHostedIcons({
-        query,
-        library,
-        libraryMode: library_mode,
-        style,
-        locale,
-        limit,
-        includeQueryFrame: include_query_frame,
-        usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
-      });
-      return asStructured({
-        results: results.map((icon) => buildPublicIconResult(icon, {
+    async (rawArgs) => {
+      const args = normalizeSearchToolArguments(rawArgs, { supportedLocales: multilingualLocaleValues });
+      return withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
+        const { query, library, library_mode, style, locale, limit, include_query_frame, warnings } = args;
+        if (library_mode === 'prefer' && !library) {
+          return asStructured({
+            results: [],
+            library_mode,
+            requested_library: null,
+            error: 'Preferred-library mode requires a library.',
+            code: 'preferred_library_required',
+            hint: 'Provide a library or use all mode.',
+            suggested_response_markdown: 'A preferred library was not provided. Choose a library or search all libraries.',
+            next_step: 'Provide a library or set library_mode to "all".',
+            ...(warnings.length ? { warnings } : {}),
+            retryable: false,
+          }, { isError: true });
+        }
+        let results;
+        try {
+          results = await searchHostedIcons({
+            query,
+            library,
+            libraryMode: library_mode,
+            style,
+            locale,
+            limit,
+            includeQueryFrame: include_query_frame,
+            usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
+          });
+        } catch (error) {
+          return asStructured({
+            results: [],
+            library_mode,
+            requested_library: library || null,
+            ...buildSearchFailurePresentation({
+              query,
+              error,
+              fallbackMessage: 'Supericons search is unavailable.',
+            }),
+            ...(warnings.length ? { warnings } : {}),
+          }, { isError: true });
+        }
+        const formatted = results.map((icon) => buildPublicIconResult(icon, {
           query,
           library,
           style,
           locale,
           limit,
-        })),
-        library_mode,
-        requested_library: library || null,
-        preview_url: buildSearchPreviewUrl({ query, library, style, locale, limit }),
-        ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
+        }));
+        const previewUrl = buildSearchPreviewUrl({ query, library, style, locale, limit });
+        if (formatted.length === 0) {
+          const hint = locale
+            ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
+            : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.';
+          return asStructured({
+            results: [],
+            library_mode,
+            requested_library: library || null,
+            preview_url: previewUrl,
+            error: 'No icons found',
+            code: 'no_icons_found',
+            hint,
+            ...buildSearchNoResultPresentation({ query, hint }),
+            ...(warnings.length ? { warnings } : {}),
+            retryable: true,
+            ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
+          });
+        }
+        const imageOptions = { query, library, style, locale, limit };
+        const imageUrl = buildPreviewImageUrl(imageOptions);
+        const markdownImage = buildPreviewMarkdownImage(imageOptions);
+        return asStructured({
+          results: formatted,
+          library_mode,
+          requested_library: library || null,
+          preview_url: previewUrl,
+          ...buildSearchMatchPresentation({
+            query,
+            results: formatted,
+            previewUrl,
+            imageUrl,
+            markdownImage,
+          }),
+          ...(warnings.length ? { warnings } : {}),
+          ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
+        });
       });
-    })
+    }
   );
 
   server.registerTool(
@@ -1327,54 +1427,74 @@ function createServer({ requestContext = null } = {}) {
     'preview_icons',
     {
       title: 'Preview Icons',
-      description: 'Create a visual preview for icon search results or a fixed list of icon refs. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet. Use markdown_image in final answers when the client supports remote Markdown images; otherwise share image_url or preview_url.',
+      description: 'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
       inputSchema: {
-        query: z.string().optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
-        icon_refs: z.array(z.string()).min(1).max(12).optional().describe('Optional fixed icon refs in library:id format, for example ["si:x-ai", "mingcute:scan_2_line"].'),
-        library: z.string().optional().describe(`Optional library key. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference.'),
-        locale: z.enum(multilingualLocaleValues).optional().describe(multilingualLocaleDescription),
-        limit: z.number().min(1).max(12).optional().default(9).describe('Maximum icons to include in the preview. Keep this small for image-capable clients.'),
-        include_image: z.boolean().optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. A preview_url is always returned.'),
+        query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
+        icon_refs: z.preprocess(
+          coerceToolIconRefs,
+          z.array(z.string()).min(1).max(MAX_ACCEPTED_PREVIEW_REFS),
+        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 12 are rendered.'),
+        library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
+        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
+        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Maximum icons from 1 to 12. Numeric strings are accepted.'),
+        include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
       },
       outputSchema: previewIconsOutputSchema,
       annotations: readOnlyLookupAnnotations,
     },
-    async (args) => withMcpUsageEvent(requestContext, 'preview_icons', args, async () => {
-      const { query, icon_refs, library, style, locale, limit, include_image } = args;
-      if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
-        return asPreviewResponse({
-          query: null,
-          preview_url: buildSearchPreviewUrl({ library, style, locale, limit }),
-          image_url: null,
-          markdown_image: null,
-          image_included: false,
-          client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
-          results: [],
-          error: 'Provide either query or icon_refs.',
-        }, { isError: true });
-      }
+    async (rawArgs) => {
+      const args = normalizePreviewToolArguments(rawArgs, { supportedLocales: multilingualLocaleValues });
+      return withMcpUsageEvent(requestContext, 'preview_icons', args, async () => {
+        const {
+          query,
+          icon_refs,
+          library,
+          style,
+          locale,
+          limit,
+          include_image,
+          truncated_from,
+          warnings,
+        } = args;
+        if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
+          return asPreviewResponse({
+            query: null,
+            preview_url: buildSearchPreviewUrl({ library, style, locale, limit }),
+            image_url: null,
+            markdown_image: null,
+            image_included: false,
+            next_step: 'Provide a search query or one or more icon refs in library:id format.',
+            ...(warnings.length ? { warnings } : {}),
+            client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
+            results: [],
+            error: 'Provide either query or icon_refs.',
+          }, { isError: true });
+        }
 
-      const { icons, payload } = await buildHostedPreviewModel({
-        query,
-        iconRefs: Array.isArray(icon_refs) ? icon_refs : [],
-        library,
-        style,
-        locale,
-        limit,
-        includeImage: include_image,
-        usageContext: buildToolUsageContext(requestContext, 'preview_icons', args),
-      });
-
-      let imagePng = null;
-      if (include_image && icons.length > 0) {
-        imagePng = buildIconContactSheetPng(icons, {
-          title: query ? `Supericons preview: ${query}` : 'Supericons icon preview',
+        const { icons, payload } = await buildHostedPreviewModel({
+          query,
+          iconRefs: Array.isArray(icon_refs) ? icon_refs : [],
+          library,
+          style,
+          locale,
+          limit,
+          includeImage: include_image,
+          usageContext: buildToolUsageContext(requestContext, 'preview_icons', args),
+          truncatedFrom: truncated_from,
+          warnings,
         });
-      }
 
-      return asPreviewResponse(payload, { imagePng });
-    })
+        let imagePng = null;
+        if (include_image && icons.length > 0) {
+          imagePng = buildIconContactSheetPng(icons, {
+            title: query ? `Supericons preview: ${query}` : 'Supericons icon preview',
+          });
+        }
+
+        return asPreviewResponse(payload, { imagePng });
+      });
+    }
   );
 
   server.registerTool(
