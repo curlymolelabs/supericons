@@ -56,6 +56,10 @@ function parseArgs(argv) {
   const allowUnlabeled = argv.includes('--allow-unlabeled');
   const specIndex = argv.indexOf('--spec');
   const spec = specIndex >= 0 ? argv[specIndex + 1] : 'beta';
+  if (!/^[a-z0-9.\-]+$/i.test(spec)) {
+    console.error(`Invalid --spec value: ${spec}. Use an npm tag or version like beta or 0.4.19-beta.2.`);
+    process.exit(1);
+  }
   return { quick, spec, allowUnlabeled };
 }
 
@@ -138,12 +142,15 @@ if (telemetrySuppressed) {
 }
 
 console.log(`Launching @supericons/mcp@${spec} over stdio (telemetry on; controlled run, labeled where the package supports it)...`);
+// A single command string avoids DEP0190: with shell: true, an args array is
+// concatenated unescaped, and every piece here is a hardcoded literal anyway.
 const child = spawn(
-  process.platform === 'win32' ? 'npx.cmd' : 'npx',
-  ['-y', `@supericons/mcp@${spec}`],
+  process.platform === 'win32'
+    ? `npx.cmd -y "@supericons/mcp@${spec}"`
+    : `npx -y "@supericons/mcp@${spec}"`,
   {
     stdio: ['pipe', 'pipe', 'inherit'],
-    shell: process.platform === 'win32',
+    shell: true,
     env: { ...process.env, SUPERICONS_CONTROLLED_RUN_LABEL: 'founder_controlled' },
   },
 );
