@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "source": "docs/si-v2/search/experiments/hosted-zero-cluster-mining-2026-07-20.md",
+  "cases": [
+    {
+      "id": "vocabulary-dropdown",
+      "query": "dropdown",
+      "acceptable_families": ["dropdown", "chevron down", "list"]
+    },
+    {
+      "id": "vocabulary-combobox",
+      "query": "combobox",
+      "acceptable_families": ["dropdown", "chevron down", "list select"]
+    },
+    {
+      "id": "vocabulary-respond",
+      "query": "respond",
+      "acceptable_families": ["reply", "message", "answer"]
+    },
+    {
+      "id": "vocabulary-chooser",
+      "query": "chooser",
+      "acceptable_families": ["dropdown", "select", "picker", "pointer", "list check"]
+    },
+    {
+      "id": "vocabulary-choose",
+      "query": "choose",
+      "acceptable_families": ["dropdown", "select", "picker", "pointer", "list check"]
+    },
+    {
+      "id": "vocabulary-orchestrator",
+      "query": "orchestrator",
+      "acceptable_families": ["orchestrator", "workflow", "network", "git merge", "robot", "bot"]
+    },
+    {
+      "id": "vocabulary-slides",
+      "query": "slides",
+      "acceptable_families": ["slide", "presentation", "projector", "deck"]
+    },
+    {
+      "id": "vocabulary-keynote",
+      "query": "keynote",
+      "acceptable_families": ["slide", "presentation", "projector", "deck"]
+    },
+    {
+      "id": "vocabulary-deck",
+      "query": "deck",
+      "acceptable_families": ["slide", "presentation", "projector", "deck"]
+    },
+    {
+      "id": "vocabulary-repair",
+      "query": "repair",
+      "acceptable_families": ["repair", "wrench", "tool", "hammer", "fix"]
+    },
+    {
+      "id": "vocabulary-fix",
+      "query": "fix",
+      "acceptable_families": ["repair", "wrench", "tool", "hammer", "fix"]
+    },
+    {
+      "id": "vocabulary-firewall",
+      "query": "firewall",
+      "acceptable_families": ["firewall", "shield", "brick wall"]
+    },
+    {
+      "id": "vocabulary-category",
+      "query": "category",
+      "acceptable_families": ["category", "tag", "folder tree", "grid"]
+    },
+    {
+      "id": "vocabulary-pagination",
+      "query": "pagination",
+      "acceptable_families": ["page", "pager", "chevron", "dots", "ellipsis"]
+    },
+    {
+      "id": "vocabulary-certificate",
+      "query": "certificate",
+      "acceptable_families": ["certificate", "encrypted", "lock", "shield", "https"]
+    },
+    {
+      "id": "vocabulary-ssl",
+      "query": "ssl",
+      "acceptable_families": ["certificate", "encrypted", "lock", "shield", "https"]
+    },
+    {
+      "id": "vocabulary-tls",
+      "query": "tls",
+      "acceptable_families": ["certificate", "encrypted", "lock", "shield", "https"]
+    },
+    {
+      "id": "vocabulary-cert",
+      "query": "cert",
+      "acceptable_families": ["certificate", "encrypted", "lock", "shield", "https"]
+    },
+    {
+      "id": "vocabulary-flight",
+      "query": "flight",
+      "acceptable_families": ["flight", "plane", "airplane", "luggage", "map"]
+    },
+    {
+      "id": "vocabulary-aviation",
+      "query": "aviation",
+      "acceptable_families": ["flight", "plane", "airplane", "luggage", "map"]
+    },
+    {
+      "id": "vocabulary-airline",
+      "query": "airline",
+      "acceptable_families": ["flight", "plane", "airplane", "luggage", "map"]
+    },
+    {
+      "id": "vocabulary-travel",
+      "query": "travel",
+      "acceptable_families": ["travel", "flight", "plane", "airplane", "luggage", "map"]
+    },
+    {
+      "id": "vocabulary-attachment",
+      "query": "attachment",
+      "acceptable_families": ["attachment", "paperclip", "attach"]
+    },
+    {
+      "id": "vocabulary-mention",
+      "query": "mention",
+      "acceptable_families": ["lucide at sign", "tabler at", "phosphor at", "mention"]
+    },
+    {
+      "id": "vocabulary-notify",
+      "query": "notify",
+      "acceptable_families": ["bell", "notification", "notify", "alert"]
+    },
+    {
+      "id": "vocabulary-customers",
+      "query": "customers",
+      "acceptable_families": ["user", "people", "customer"]
+    },
+    {
+      "id": "vocabulary-pricing",
+      "query": "pricing",
+      "acceptable_families": ["tag", "receipt", "currency", "money", "price"]
+    },
+    {
+      "id": "vocabulary-health",
+      "query": "health",
+      "acceptable_families": ["health", "heart pulse", "stethoscope", "medical"]
+    },
+    {
+      "id": "vocabulary-doctor",
+      "query": "doctor",
+      "acceptable_families": ["doctor", "stethoscope", "medical", "health"]
+    },
+    {
+      "id": "vocabulary-plugin",
+      "query": "plugin",
+      "acceptable_families": ["plugin", "puzzle", "extension"]
+    },
+    {
+      "id": "vocabulary-community",
+      "query": "community",
+      "acceptable_families": ["community", "user", "people", "handshake", "group"]
+    }
+  ]
+}
