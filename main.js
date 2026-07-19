@@ -80,6 +80,11 @@ import {
   getRouteViewFromPath,
   normalizeRouteView,
 } from './lib/view-route-policy.js';
+import {
+  MCP_CLIENT_CONFIGS,
+  assertMcpClientConfig,
+  getMcpClientConfig,
+} from './lib/mcp-client-configs.js';
 
 // ============================================================
 
@@ -4464,23 +4469,82 @@ if (heroSearchBtn) {
   });
 }
 
-// MCP config copy button
+// MCP client setup tabs and copy button
+const mcpClientTabs = [...$$('[data-mcp-client]')];
+const mcpConfigPanel = $('#mcpConfigPanel');
+const mcpConfigCode = $('#mcpConfigBlock code');
+const mcpConfigLocation = $('#mcpConfigLocation');
 const mcpCopyBtn = $('#mcpCopyBtn');
-if (mcpCopyBtn) {
-  mcpCopyBtn.addEventListener('click', () => {
-    const code = $('#mcpConfigBlock code');
-    if (code) {
-      navigator.clipboard.writeText(code.textContent).then(() => {
-        mcpCopyBtn.classList.add('copied');
-        mcpCopyBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">check</span> Copied!';
-        setTimeout(() => {
-          mcpCopyBtn.classList.remove('copied');
-          mcpCopyBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy';
-        }, 2000);
-      });
+let activeMcpClientId = mcpClientTabs.find((tab) => tab.getAttribute('aria-selected') === 'true')?.dataset.mcpClient
+  || MCP_CLIENT_CONFIGS[0].id;
+let mcpCopyResetTimer = null;
+
+MCP_CLIENT_CONFIGS.forEach(assertMcpClientConfig);
+
+function renderMcpCopyButton(copied = false) {
+  if (!mcpCopyBtn) return;
+  const icon = document.createElement('span');
+  icon.className = 'material-symbols-outlined';
+  icon.style.fontSize = '16px';
+  icon.textContent = copied ? 'check' : 'content_copy';
+  const label = document.createElement('span');
+  label.textContent = copied
+    ? t('landing.copied', {}, 'Copied!')
+    : t('landing.copy', {}, 'Copy');
+  mcpCopyBtn.replaceChildren(icon, label);
+  mcpCopyBtn.classList.toggle('copied', copied);
+}
+
+function showMcpClientConfig(clientId, { focus = false } = {}) {
+  const config = getMcpClientConfig(clientId);
+  activeMcpClientId = config.id;
+  if (mcpConfigCode) {
+    mcpConfigCode.textContent = config.code;
+    mcpConfigCode.dataset.format = config.format;
+  }
+  if (mcpConfigLocation) mcpConfigLocation.textContent = config.location;
+
+  for (const tab of mcpClientTabs) {
+    const selected = tab.dataset.mcpClient === config.id;
+    tab.classList.toggle('is-active', selected);
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    if (selected) {
+      if (mcpConfigPanel) mcpConfigPanel.setAttribute('aria-labelledby', tab.id);
+      if (focus) tab.focus();
     }
+  }
+
+  clearTimeout(mcpCopyResetTimer);
+  renderMcpCopyButton(false);
+}
+
+for (const tab of mcpClientTabs) {
+  tab.addEventListener('click', () => showMcpClientConfig(tab.dataset.mcpClient));
+  tab.addEventListener('keydown', (event) => {
+    const currentIndex = mcpClientTabs.indexOf(tab);
+    let nextIndex = null;
+    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % mcpClientTabs.length;
+    if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + mcpClientTabs.length) % mcpClientTabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = mcpClientTabs.length - 1;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    showMcpClientConfig(mcpClientTabs[nextIndex].dataset.mcpClient, { focus: true });
   });
 }
+
+if (mcpCopyBtn) {
+  mcpCopyBtn.addEventListener('click', async () => {
+    if (!mcpConfigCode) return;
+    await navigator.clipboard.writeText(mcpConfigCode.textContent);
+    clearTimeout(mcpCopyResetTimer);
+    renderMcpCopyButton(true);
+    mcpCopyResetTimer = setTimeout(() => renderMcpCopyButton(false), 2000);
+  });
+}
+showMcpClientConfig(activeMcpClientId);
+window.addEventListener('supericons:locale-change', () => renderMcpCopyButton(false));
 
 // Auto-dismiss hero on first meaningful interaction
 const autoDismissOnce = () => {

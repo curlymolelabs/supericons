@@ -26,6 +26,7 @@
     "verify:motion-lab-presets": "node scripts/verify-motion-lab-preset-parity.mjs",
     "verify:motion-lab-agent-metadata": "node scripts/verify-motion-lab-agent-metadata.mjs",
     "verify:docs-site-render": "node scripts/verify-docs-site-render.mjs",
+    "verify:mcp-client-tabs-browser": "node scripts/verify-mcp-client-tabs-browser.mjs",
     "verify:product-facts": "node scripts/verify-product-facts.mjs",
     "verify:si-registry": "node scripts/verify-si-registry-projections.mjs",
     "verify:si-registry-source-boundaries": "node scripts/verify-si-registry-source-boundaries.mjs",

@@ -138,17 +138,21 @@
                     </button>
                 </div>
                 <p class="landing-mcp__subtitle" data-i18n="landing.mcpSubtitle">Let agents search Supericons and paste SVGs into your code.</p>
-                <div class="landing-mcp__editors">
-                    <span class="editor-badge">Claude Code</span>
-                    <span class="editor-badge">Codex</span>
-                    <span class="editor-badge">Cursor</span>
-                    <span class="editor-badge">OpenCode</span>
-                    <span class="editor-badge">Cline</span>
-                    <span class="editor-badge">Copilot agent</span>
-                    <span class="editor-badge">Windsurf</span>
+                <div class="landing-mcp__editors" id="mcpClientTabs" role="tablist" aria-label="Choose your MCP client" data-i18n-aria-label="landing.chooseMcpClient">
+                    <button class="editor-badge is-active" id="mcpTabClaudeCode" type="button" role="tab" aria-selected="true" aria-controls="mcpConfigPanel" tabindex="0" data-mcp-client="claude-code">Claude Code</button>
+                    <button class="editor-badge" id="mcpTabCodex" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="codex">Codex</button>
+                    <button class="editor-badge" id="mcpTabCursor" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="cursor">Cursor</button>
+                    <button class="editor-badge" id="mcpTabOpenCode" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="opencode">OpenCode</button>
+                    <button class="editor-badge" id="mcpTabCline" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="cline">Cline</button>
+                    <button class="editor-badge" id="mcpTabGithubCopilot" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="github-copilot">GitHub Copilot CLI</button>
+                    <button class="editor-badge" id="mcpTabWindsurf" type="button" role="tab" aria-selected="false" aria-controls="mcpConfigPanel" tabindex="-1" data-mcp-client="windsurf">Windsurf</button>
                 </div>
-                <div class="landing-mcp__install">
+                <div class="landing-mcp__install" id="mcpConfigPanel" role="tabpanel" aria-labelledby="mcpTabClaudeCode">
                     <div class="landing-mcp__install-label" data-i18n="landing.addToMcpConfig">Add to your MCP config:</div>
+                    <div class="landing-mcp__config-location">
+                        <span data-i18n="landing.configFile">Config file</span>
+                        <code id="mcpConfigLocation">.mcp.json in your project</code>
+                    </div>
                     <div class="landing-mcp__code-block" id="mcpConfigBlock">
                         <pre class="landing-mcp__pre"><code>{
   "mcpServers": {
@@ -163,6 +167,7 @@
                             <span data-i18n="landing.copy">Copy</span>
                         </button>
                     </div>
+                    <p class="landing-mcp__key-note" data-i18n="landing.mcpKeylessNote">Free icon tools work without an API key.</p>
                     <a href="/?view=docs" class="landing-mcp__docs-link" id="landingMcpDocsLink" data-i18n="landing.openMcpDocs">Open setup guides and MCP docs</a>
                 </div>
             </div>

@@ -600,6 +600,25 @@ body.landing-active .header {
   border-radius: var(--si-radius-pill, 999px);
   letter-spacing: 0.02em;
   user-select: none;
+  cursor: pointer;
+  transition:
+    color var(--si-transition-fast),
+    background-color var(--si-transition-fast),
+    border-color var(--si-transition-fast);
+}
+.editor-badge:hover,
+.editor-badge:focus-visible {
+  color: var(--si-text);
+  border-color: color-mix(in srgb, var(--si-primary) 45%, rgba(255, 255, 255, 0.08));
+}
+.editor-badge:focus-visible {
+  outline: 2px solid var(--si-primary);
+  outline-offset: 2px;
+}
+.editor-badge.is-active {
+  color: var(--si-text);
+  background: color-mix(in srgb, var(--si-primary) 14%, transparent);
+  border-color: color-mix(in srgb, var(--si-primary) 55%, rgba(255, 255, 255, 0.08));
 }
 .landing-mcp__install-label {
   font-family: var(--si-font-label);
@@ -608,6 +627,21 @@ body.landing-active .header {
   color: var(--si-text-dim);
   text-align: left;
   margin-bottom: 6px;
+}
+.landing-mcp__config-location {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  color: var(--si-text-dim);
+  font-family: var(--si-font-label);
+  font-size: 0.72rem;
+  text-align: left;
+}
+.landing-mcp__config-location code {
+  color: var(--si-text);
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  overflow-wrap: anywhere;
 }
 .landing-mcp__code-block {
   position: relative;
@@ -661,6 +695,14 @@ body.landing-active .header {
   color: var(--si-primary);
   border-color: var(--si-primary);
 }
+.landing-mcp__key-note {
+  margin: 0.75rem 0 0;
+  color: var(--si-text-dim);
+  font-family: var(--si-font-label);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: left;
+}
 .landing-mcp__docs-link {
   display: inline-flex;
   align-items: center;
@@ -697,6 +739,15 @@ body.landing-active .header {
   }
   .landing-mcp__pre code { font-size: 0.65rem; }
   .editor-badge { font-size: 0.66rem; padding: 4px 10px; }
+  .landing-mcp__editors {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin-inline: -1rem;
+    padding: 2px 1rem 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .editor-badge { flex: 0 0 auto; }
 }
 
 /* --- Header --- */
