@@ -77,3 +77,14 @@ Pattern: when no strong lexical match exists, ranking falls back to what looks l
 6. Fuzzy brand descriptors and long-intent handling (larger design questions; separate proposals).
 
 Every confirmed fix lands per `CP-01`: smallest maintained-data or general-policy change, stable regression case added, 225-case fingerprint reviewed.
+
+## Addendum: in-client pass through a real MCP agent (same day)
+
+A second pass ran inside OpenCode with an agent driving the same beta through its MCP tools (18 searches at limit 3, plus one `recommend_icons` call). Determinism held again where queries overlapped. New evidence beyond the scripted pass:
+
+1. The filler mechanism is loose substring matching, not just alphabetical padding. At limit 3 the pattern is visible directly: "dark mode" pulls `add_moderator` and `airplanemode_active` (the token "mode" as a substring), "databse" pulls mobile-data icons (the substring "data"), "auth" pulls `android_wifi_3_bar_lock`. Weak lexical candidates need a confidence floor instead of being promoted to fill the requested limit. This refines fix order item 1.
+2. Small limits amplify the damage. At limit 6 the right icon usually appears somewhere; at limit 3 the filler occupies a third to two thirds of everything shown. Agents typically request small limits, so the confidence floor matters more than raw recall.
+3. Brand and concept results interleave badly: "vibe coding" returns the right concept icon first, then unrelated brand logos (Base44, Bolt); "cursor logo" mixes the Cursor brand with generic mouse cursors. Intent separation between brand and concept spaces needs sharpening.
+4. `recommend_icons` for "icons for a developer dashboard" resolved all six slots with reasonable picks (deployments to cloud-upload, monitoring to line-chart, databases to database-search, api keys to api, logs to logs, settings to settings) at medium confidence. Recommendation quality is not the problem; its hosted latency remains the open issue tracked separately.
+5. One correction to the agent's own report: it judged "user profile" as having no avatar icon, but `account_box` (its third result) is a person avatar; the true defect is ranking wallet icons above it.
+6. Not yet covered by either pass: inline preview rendering inside agent chat (`preview_icons` output display), which stays on the client compatibility matrix.
