@@ -47,7 +47,7 @@ The runner stops before reservation if production no longer matches the pinned r
 
 The Netlify command is bound to version `23.15.1` and to the exact hashes of its entry point and package record.
 
-## First release attempt
+## Release attempts and outcome
 
 The first one-use manifest was consumed on 2026-07-20. Netlify accepted deploy `6a5d3aaf20758f02b79be91a`, but its site record briefly continued to report the previous production deploy. The runner treated that temporary response as a mismatch and restored the pinned deploy `6a5a62e4382d02608226d0f7`. The local receipt records status `rolled_back`.
 
@@ -57,6 +57,6 @@ The current replacement packet keeps the same site, artifact, mutation budget, a
 
 ## External action status
 
-This replacement packet prepares evidence for independent review after both earlier attempts restored production. It does not itself authorize or perform another deployment. The replacement manifest must pass its full packet verification before external execution.
+The final manifest `7c36b1a5855a3921b2be1a00f364f5e81f671b673a1cd2e942b8ad1c3a83ccb8` passed the full packet verification and was consumed once. Netlify deploy `6a5d3d4c1967b6dadfb1104d` is published on `https://supericons.dev`.
 
-The accepted product decision is unchanged: correct the public MCP setup and access guidance before invitations are shared. Review is the remaining safety gate, not a request to revisit that product decision.
+The live release checks passed the homepage keyless guidance, exact provenance bytes, all three canaries, all seven client setups, and the preview persistence regression suite. A read-only Netlify check after completion confirmed the same deploy is current and ready.
