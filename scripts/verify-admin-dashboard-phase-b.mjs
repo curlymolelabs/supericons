@@ -6,6 +6,7 @@ const prd = await readFile('docs/admin-dashboard-v2-prd-2026-07-17.md', 'utf8');
 const mockup = await readFile('mockups/admin-dashboard-v2-mockup-2026-07-17.html', 'utf8');
 const launcher = await readFile('start-admin-dashboard.cmd', 'utf8');
 const runbook = await readFile('docs/admin-dashboard-v2-runbook.md', 'utf8');
+const logo = await readFile('brand/supericons-logo.svg', 'utf8');
 
 function includes(source, value, label) {
   if (!source.includes(value)) throw new Error(`${label} is missing: ${value}`);
@@ -135,6 +136,10 @@ excludes(launcher, 'ADMIN_SECRET', 'start-admin-dashboard.cmd');
 
 excludes(html, 'id="requestBadge"', 'admin.html');
 excludes(app, 'requestBadge', 'public/admin-app.js');
+includes(html, 'src="/brand/supericons-logo.svg"', 'admin.html');
+excludes(html, 'class="brand-mark"', 'admin.html');
+excludes(html, 'class="brand-name"', 'admin.html');
+includes(logo, '<text x="152" y="138" class="brand">Supericons</text>', 'Supericons logo');
 
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];

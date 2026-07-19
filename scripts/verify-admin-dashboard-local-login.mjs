@@ -70,6 +70,12 @@ try {
   ok(html.includes('managedAuth:true'), 'The browser login runtime was not enabled.');
   ok(!html.includes(acceptedSecret), 'The dashboard page exposed the admin secret.');
   ok(!html.includes('requestBadge'), 'The ambiguous Searches badge is still present.');
+  const logoResponse = await fetch(new URL('/brand/supericons-logo.svg', dashboard.url));
+  ok(logoResponse.ok, 'The official Supericons logo was not served by the local dashboard.');
+  ok(
+    (logoResponse.headers.get('content-type') || '').startsWith('image/svg+xml'),
+    'The official Supericons logo was served with the wrong content type.',
+  );
 
   let response = await fetch(new URL('/api/admin/session', dashboard.url));
   let payload = await response.json();
@@ -133,6 +139,11 @@ try {
   await page.goto(dashboard.url, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.activeElement?.id === 'adminSecretInput');
   ok(await page.locator('#adminSecretModal.open').count() === 1, 'The sign-in window did not open on first load.');
+  ok(await page.locator('.brand-logo').count() === 1, 'The official Supericons logo is missing from the header.');
+  ok(
+    await page.locator('.brand-logo').evaluate((image) => image.complete && image.naturalWidth > 0),
+    'The official Supericons logo did not render.',
+  );
   await mkdir('.tmp', { recursive: true });
   await page.screenshot({ path: '.tmp/admin-dashboard-local-login.png', fullPage: true });
 
@@ -174,6 +185,7 @@ try {
     rotation_reprompt: true,
     browser_storage_secret: false,
     ambiguous_searches_badge: false,
+    official_brand_logo: true,
     screenshot: '.tmp/admin-dashboard-local-login.png',
   }, null, 2));
 } finally {

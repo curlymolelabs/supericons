@@ -30,6 +30,7 @@ function sendJson(response, status, payload) {
 function staticPathFor(root, pathname) {
   if (pathname === '/' || pathname === '/admin' || pathname === '/admin.html') return resolve(root, 'admin.html');
   if (pathname === '/admin-app.js') return resolve(root, 'public', 'admin-app.js');
+  if (pathname === '/brand/supericons-logo.svg') return resolve(root, 'brand', 'supericons-logo.svg');
   if (!pathname.startsWith('/assets/')) return null;
   const candidate = resolve(root, pathname.replace(/^\/+/, ''));
   const assetsPrefix = `${resolve(root, 'assets')}${sep}`;

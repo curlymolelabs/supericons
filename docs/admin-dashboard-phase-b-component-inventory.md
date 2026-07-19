@@ -16,6 +16,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 
 | Component | Main element | Data source | Purpose |
 |---|---|---|---|
+| Header brand | `.brand-logo` | `brand/supericons-logo.svg` | Shows the official combined Supericons symbol and name |
 | Global filter bar | `.filter-bar` | Local state shared by v2 requests | Applies time, venue, environment, and free-text filters |
 | KPI strip | `.kpi-grid` | `GET /v2/overview` plus the complete account directory | Shows estimated reach or daily reach, real searches, true zero rate, and low-result rate |
 | Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
