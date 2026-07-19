@@ -55,6 +55,43 @@ Local-first search in the npm package remains unlimited and keyless at every tie
 2. Railway and the Supabase gateway resolve tiers identically and pass the two-ingress behavior tests.
 3. Limit-response copy promises only live benefits; no analytics claim before the dedupe fix and dashboard ship.
 4. These thresholds are re-validated against a fresh 30-day window before enforcement is switched on, because current volume is growing quickly and the distribution may shift.
+5. Registered allowances aggregate per account across all of that account's keys and clients, so multiple keys cannot multiply the limit.
+6. The gateway trusts a forwarded per-client hash only from authenticated server ingresses; an anonymous caller must not be able to evade metering by supplying an arbitrary `ip_hash` in the request body.
+7. The public docs unit and the enforcement counter unit are proven identical (searches versus tool calls) by a behavioral test that includes one `recommend_icons` call.
+
+## Measurement grain and definitions
+
+Added 2026-07-19 after independent review raised grain questions. These definitions bind the artifact and the dormant enforcement wiring.
+
+1. One measured request is one row in `search_request_audit`, which is one hosted logical search executed by the gateway. It is not one user-initiated MCP tool call.
+2. `recommend_icons` counts once per generated hosted search, so a single recommendation call consumes several units. Event-level data confirms the difference: the same window holds 1,209 `search_icons` tool events and 435 `recommend_icons` tool events against roughly 24,000 mcp-source audit rows.
+3. Localized retry fallbacks issue additional hosted searches and are counted, not deduplicated.
+4. The allowance period is the UTC calendar day; it resets at 00:00 UTC. It is not a rolling window or refill bucket.
+5. The anonymous subject is the SHA-256 hash of the client IP, or the per-client hash a trusted server ingress (Railway) forwards. It rotates whenever the client IP changes.
+6. Several users behind one shared egress IP share one anonymous allowance. Known limitation, accepted for launch.
+7. Tier is resolved per account, but the counter subject is still the per-client hash. Account-wide aggregation across devices and keys is NOT implemented; without it a registered user with several clients receives the allowance per client. This is recorded as an enforcement precondition below.
+8. The dataset includes both ingresses: Railway-forwarded traffic and direct gateway traffic both land in the audit table under the client hash.
+9. Only hosted searches are measured and metered. `get_icon`, `preview_icons`, `preview_image`, and `list_libraries` are outside the daily allowance.
+10. Direct exceedance counts, not inferred from percentiles: 8 of 1,382 public client-days (0.58%) exceeded 300; none exceeded 1,500 or 5,000.
+
+Because the unit is a hosted search rather than a tool call, the public copy uses the word "searches". An open product question remains whether to re-meter on user-initiated tool calls (simpler to explain) or keep search-grain metering with explicit fanout disclosure; either way the docs and the counter must use the same unit before enforcement is enabled.
+
+Paid tier definition: the current tier resolver maps active Pro subscribers to `paid` (5,000) and all other registered accounts, including pack purchasers without Pro, to `registered_free` (1,500). A one-time pack purchase grants purchased content access, not the highest ongoing hosted compute tier. This is deliberate.
+
+Failure mode: allowance lookup errors fail open. Metering exists for abuse protection; a metering outage must never remove search availability. The 120 per minute burst limiter and provider spend caps remain the backstop.
+
+## Tool-level segmentation (hosted MCP events, same window)
+
+| tool | events | zero rate | error rate | latency p50 ms | latency p95 ms |
+| --- | --- | --- | --- | --- | --- |
+| `search_icons` | 1,209 | 1.7% | 0.1% | 2,461 | 10,669 |
+| `get_icon` | 1,323 | 0% | 0% | 1,731 | 5,804 |
+| `recommend_icons` | 435 | 0.2% | 0% | 41,957 | 115,660 |
+| `list_libraries` | 73 | 0% | 0% | 0 | 1 |
+| `preview_icons` | 17 | 0% | 0% | 32 | 13,783 |
+| `preview_image` | 27 | 0% | 0% | 6,275 | 12,335 |
+
+The aggregate 25.2% zero-result rate and 8.5 second p95 in the distribution table above are search-row grain and are dominated by recommendation fanout searches. At tool-call grain, direct `search_icons` quality is far better (1.7% zero) and the dominant latency problem is `recommend_icons`. Railway local-first addresses eligible `search_icons` latency; it does not by itself fix recommendation latency, which needs its own measured change.
 
 ## Limits of this evidence
 
