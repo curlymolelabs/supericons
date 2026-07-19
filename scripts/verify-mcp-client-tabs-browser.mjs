@@ -181,7 +181,7 @@ try {
   await mobile.page.locator('[data-mcp-client="opencode"]').click();
   assert.equal(
     await mobile.page.locator('#mcpConfigLocation').textContent(),
-    'opencode.json or opencode.jsonc in your project root, or globally at ~/.config/opencode/opencode.json',
+    'Project: opencode.json or opencode.jsonc. Global: ~/.config/opencode/opencode.json or opencode.jsonc',
   );
   assert.ok((await mobile.page.locator('#mcpConfigBlock code').textContent()).includes('"type": "local"'));
   await mobile.context.close();
