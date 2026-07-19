@@ -549,11 +549,11 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
         <p class="docs-section__copy">The fastest way to add Supericons. Run this command once:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-claude-cli">Copy</button>
-          <pre><code id="docs-claude-cli"># macOS / Linux
-claude mcp add supericons -- npx -y @supericons/mcp@latest
+          <pre><code id="docs-claude-cli"># macOS / Linux (all your projects; use --scope project for a shared .mcp.json)
+claude mcp add --scope user supericons -- npx -y @supericons/mcp@latest
 
 # Windows
-claude mcp add supericons -- cmd /c npx -y @supericons/mcp@latest</code></pre>
+claude mcp add --scope user supericons -- cmd /c npx -y @supericons/mcp@latest</code></pre>
         </div>
         <h3>Option 2: Config file</h3>
         <p class="docs-section__copy">Claude Code stores MCP servers in a JSON config file. Choose the scope that fits your workflow:</p>
