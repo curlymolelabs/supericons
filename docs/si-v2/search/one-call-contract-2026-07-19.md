@@ -42,7 +42,7 @@ A scenario fails if it ends in a raw protocol error, an unexplained empty answer
 
 | change | layer | candidate release |
 | --- | --- | --- |
-| `image_url` + `markdown_image` + `suggested_response_markdown` in search responses; description steering; server instructions; preview truncation; forgiving inputs | npm package and Railway server (same code) | beta.2 or beta.3, owner's call |
+| `suggested_response_markdown` in every search response, plus `image_url` and `markdown_image` when usable icons exist; description steering; server instructions; preview truncation; forgiving inputs | npm package and Railway server (same code) | beta.2 or beta.3, owner's call |
 | Phrase decomposition, concept-neighbor fallback, expressive synonyms, edit-distance recovery, confidence floor over substring filler | shared engine and maintained data, benefits web equally | quality program fix batches per `CP-01` |
 | Dummy-agent gate | verification suite | with whichever release ships the contract |
 | Per client and model preview-form rows | compatibility matrix per `CP-06` | ongoing |

@@ -182,6 +182,8 @@ export function buildPreviewTextPayload({
   imageUrl,
   markdownImage,
   imageIncluded = false,
+  truncatedFrom = null,
+  warnings = [],
 } = {}) {
   return {
     query,
@@ -189,6 +191,11 @@ export function buildPreviewTextPayload({
     image_url: imageUrl || null,
     markdown_image: markdownImage || null,
     image_included: imageIncluded,
+    ...(truncatedFrom ? { truncated_from: truncatedFrom } : {}),
+    ...(warnings.length ? { warnings } : {}),
+    next_step: icons.length > 0
+      ? 'Choose an icon ref from the preview, then call get_icon when you need the exact SVG.'
+      : 'Try a broader query or provide different icon refs.',
     client_display_note: imageIncluded
       ? 'If your MCP client does not render image content inline, use markdown_image in the final answer or open image_url/preview_url in a browser.'
       : 'Use markdown_image in the final answer when supported, or open image_url/preview_url in a browser.',
