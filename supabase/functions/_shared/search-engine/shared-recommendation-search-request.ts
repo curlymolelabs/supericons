@@ -18,7 +18,12 @@ import {
 } from './handle-search-request.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
-import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
+import {
+  enforceDailyAllowance,
+  enforceSearchRateLimit,
+  resolveAllowanceTier,
+  SearchEngineHttpError,
+} from './rate-limit.ts';
 import {
   retrieveRecommendationCandidateBatches,
 } from './recommendation-candidate-retrieval.ts';
@@ -221,6 +226,13 @@ export async function handleSharedRecommendationSearchRequest(
       'account_resolution',
       () => resolveSearchAuditAccount(adminClient, req, plans[0].auditContext.api_key_hash),
     );
+
+    // Tiered daily allowance; inert unless SEARCH_ENGINE_TIER_ENFORCEMENT=on.
+    // Recommendation fanout must consume the same allowance as direct search.
+    await enforceDailyAllowance(adminClient, {
+      ipHash: plans[0].auditContext.ip_hash || identity.ipHash,
+      tier: resolveAllowanceTier(account),
+    });
 
     const logicalBatches = await timing.measure(
       'candidate_search',

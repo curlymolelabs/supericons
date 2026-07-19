@@ -3,9 +3,14 @@
 // Trigger: run manually with `node scripts/run-founder-beta-validation.mjs`.
 // Side effects: spawns the published @supericons/mcp@beta package over stdio and
 // performs eligible English search_icons calls. The package sends its normal
-// best-effort tool-outcome telemetry, which is what counts toward the founder
-// validation window (200 eligible attempts across 3 green days). Nothing is
-// written to the repository or any service by this script itself.
+// best-effort tool-outcome telemetry. Nothing is written to the repository or
+// any service by this script itself.
+//
+// Evidence class: CONTROLLED founder validation, not organic adoption. Scripted
+// runs must never be reported as organic user activity. They count toward the
+// beta window only if the owner ratifies a revised gate that accepts labeled
+// controlled attempts; until then this script serves the owner quality pass
+// (reviewing per-query outcomes and feeding misses into the quality backlog).
 //
 // Usage:
 //   node scripts/run-founder-beta-validation.mjs             # full pass (~70 queries)
@@ -110,11 +115,13 @@ function summarizeResult(message) {
 const { quick, spec } = parseArgs(process.argv.slice(2));
 const queries = quick ? QUERIES.slice(0, 15) : QUERIES;
 
-for (const flag of ['SUPERICONS_DISABLE_TELEMETRY', 'DO_NOT_TRACK']) {
-  if (process.env[flag]) {
-    console.error(`${flag} is set; telemetry would be suppressed and this pass would not count. Unset it first.`);
-    process.exit(1);
-  }
+const telemetryFlag = String(process.env.SUPERICONS_TELEMETRY || '').trim().toLowerCase();
+const telemetrySuppressed = Boolean(process.env.SUPERICONS_DISABLE_TELEMETRY)
+  || Boolean(process.env.DO_NOT_TRACK)
+  || ['0', 'false', 'off', 'disabled'].includes(telemetryFlag);
+if (telemetrySuppressed) {
+  console.error('Telemetry is disabled by environment (SUPERICONS_DISABLE_TELEMETRY, SUPERICONS_TELEMETRY, or DO_NOT_TRACK). This pass would record nothing; unset those first.');
+  process.exit(1);
 }
 
 console.log(`Launching @supericons/mcp@${spec} over stdio (telemetry on, this pass counts toward the window)...`);
@@ -171,9 +178,9 @@ if (zeroQueries.length) {
   console.log('Zero-result queries (feed these into the quality backlog):');
   for (const q of zeroQueries) console.log(`  - ${q}`);
 }
-console.log('\nWindow math: the gate needs 200 eligible attempts across 3 green days.');
-console.log('A full pass is about 70 attempts, so one full pass per day for 3 days meets the count.');
-console.log('Telemetry is best-effort; verify recorded totals in mcp_usage_events before closing the window.');
+console.log('\nThese are controlled founder-validation attempts, not organic adoption.');
+console.log('They close the beta window only under a ratified revised gate that accepts labeled controlled evidence.');
+console.log('Telemetry is best-effort; verify recorded totals in mcp_usage_events before reporting any counts.');
 
 child.kill();
 process.exit(0);

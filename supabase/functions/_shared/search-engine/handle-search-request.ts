@@ -82,12 +82,17 @@ export const RAILWAY_PROMOTION_TRIGGERS = {
   requiresLongLivedWorker: false,
 };
 
-export function buildJsonResponse(body: unknown, status = 200) {
+export function buildJsonResponse(
+  body: unknown,
+  status = 200,
+  extraHeaders: Record<string, string> = {},
+) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       ...corsHeaders,
       'Content-Type': 'application/json',
+      ...extraHeaders,
     },
   });
 }
@@ -228,14 +233,23 @@ export function buildErrorResponse(
       },
     );
 
-  return buildJsonResponse({
-    error: normalized.code,
-    message: normalized.message,
-    hint: normalized.hint,
-    retryable: normalized.retryable,
-    ...normalized.details,
-    ...(measurementTiming ? { measurement_timing: measurementTiming } : {}),
-  }, normalized.status);
+  const hasDetails = normalized.details && Object.keys(normalized.details).length > 0;
+  const retryAfterSeconds = Number(normalized.details?.retry_after_seconds);
+  return buildJsonResponse(
+    {
+      error: normalized.code,
+      message: normalized.message,
+      hint: normalized.hint,
+      retryable: normalized.retryable,
+      ...normalized.details,
+      ...(hasDetails ? { details: normalized.details } : {}),
+      ...(measurementTiming ? { measurement_timing: measurementTiming } : {}),
+    },
+    normalized.status,
+    Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0
+      ? { 'Retry-After': String(Math.ceil(retryAfterSeconds)) }
+      : {},
+  );
 }
 
 function extractBearerToken(req: Request) {

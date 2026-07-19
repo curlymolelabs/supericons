@@ -42,10 +42,10 @@ Calibration rule from `D-028`: the anonymous allowance targets at or above measu
 | tier | daily hosted search allowance | burst | basis |
 | --- | --- | --- | --- |
 | Anonymous (keyless) | 300 per client per day | keep existing 120 per minute | 1.5x measured public p99 (198); affects under 1% of observed client-days |
-| Registered free (self-service key) | 1,500 per client per day | 120 per minute | covers measured p99.9 (879) and the observed maximum (1,078); every legitimate client observed in 30 days fits |
-| Paid (Pro or pack key) | 5,000 per client per day, fair use | 120 per minute | headroom well above any observed behavior; labeled fair use with a contact path |
+| Registered free (self-service key; includes pack purchasers without Pro) | 1,500 per client per day | 120 per minute | covers measured p99.9 (879) and the observed maximum (1,078); every legitimate client observed in 30 days fits |
+| Pro (active subscription) | 5,000 per client per day, fair use | 120 per minute | headroom well above any observed behavior; labeled fair use with a contact path; recurring hosted compute matches the recurring subscription |
 
-Reset: daily at 00:00 UTC. The limit response must state the reset time, a retry-after value, and the registration URL, and may promise only benefits that are live.
+Reset: daily at 00:00 UTC. The limit response must state the reset time and a retry-after value, and may promise only benefits that are live; the registration URL joins the response only once self-service free keys exist.
 
 Local-first search in the npm package remains unlimited and keyless at every tier and is unaffected by these numbers.
 
@@ -58,6 +58,9 @@ Local-first search in the npm package remains unlimited and keyless at every tie
 5. Registered allowances aggregate per account across all of that account's keys and clients, so multiple keys cannot multiply the limit.
 6. The gateway trusts a forwarded per-client hash only from authenticated server ingresses; an anonymous caller must not be able to evade metering by supplying an arbitrary `ip_hash` in the request body.
 7. The public docs unit and the enforcement counter unit are proven identical (searches versus tool calls) by a behavioral test that includes one `recommend_icons` call.
+8. Quota consumption is made atomic or approximately race-safe. The current check counts existing audit rows and then inserts later, so concurrent requests near the limit can both pass; acceptable while dormant, not for enforcement.
+9. The 429 response gains the registration or upgrade URL only when self-service free keys are live, so the message never advertises an unavailable benefit.
+10. Every hosted search pipeline that bypasses the single-search handler (today: the shared recommendation pipeline, plus any future variant) calls the same allowance check; a route-coverage test enumerates the pipelines and fails when one is missing.
 
 ## Measurement grain and definitions
 
@@ -72,7 +75,7 @@ Added 2026-07-19 after independent review raised grain questions. These definiti
 7. Tier is resolved per account, but the counter subject is still the per-client hash. Account-wide aggregation across devices and keys is NOT implemented; without it a registered user with several clients receives the allowance per client. This is recorded as an enforcement precondition below.
 8. The dataset includes both ingresses: Railway-forwarded traffic and direct gateway traffic both land in the audit table under the client hash.
 9. Only hosted searches are measured and metered. `get_icon`, `preview_icons`, `preview_image`, and `list_libraries` are outside the daily allowance.
-10. Direct exceedance counts, not inferred from percentiles: 8 of 1,382 public client-days (0.58%) exceeded 300; none exceeded 1,500 or 5,000.
+10. Direct exceedance counts, not inferred from percentiles: 8 of 1,382 public client-days (0.58%) exceeded 300; none exceeded 1,500 or 5,000. Snapshot note: the exceedance query ran later in the day than the distribution table above, so its trailing 30-day window contains 19 more client-days (1,382 versus 1,363). Both reads are correct for their instant; rerun `scripts/measure-hosted-allowance-distribution.mjs` for a single consistent snapshot before enforcement.
 
 Because the unit is a hosted search rather than a tool call, the public copy uses the word "searches". An open product question remains whether to re-meter on user-initiated tool calls (simpler to explain) or keep search-grain metering with explicit fanout disclosure; either way the docs and the counter must use the same unit before enforcement is enabled.
 

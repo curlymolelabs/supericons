@@ -2132,6 +2132,16 @@ Return a table with slot, icon ID, confidence, and alternatives. Use response_mo
         </div>
         <p class="docs-section__copy">Today, API keys are available to accounts with an active Pro subscription or at least one pack purchase.</p>
       </section>
+      <section class="docs-section" id="access-fair-use">
+        <h2 class="docs-section__title">Fair use and rate limits</h2>
+        <p class="docs-section__copy">Local MCP search runs on your machine and has no usage limits. Hosted MCP search and web search share a fair-use allowance that protects the service from abuse:</p>
+        <ul>
+          <li>Anonymous (no key): up to 120 requests per minute, with a fair-use allowance of 300 hosted searches per day for each client.</li>
+          <li>Registered free accounts: a higher allowance of 1,500 hosted searches per day, available once self-service free API keys launch.</li>
+          <li>Paid accounts: a fair-use allowance of 5,000 hosted searches per day.</li>
+        </ul>
+        <p class="docs-section__copy">These numbers come from measured real usage, and fewer than one in one hundred clients ever reaches the anonymous allowance. If you reach a limit, the response tells you when it resets.</p>
+      </section>
       <section class="docs-section" id="access-api-keys-account-bridge">
         <p class="docs-section__copy">What your account can access depends on what you have bought or subscribed to. See ${docsLink('docs-access-premium', 'Pro and Collections')} for a clear breakdown.</p>
       </section>

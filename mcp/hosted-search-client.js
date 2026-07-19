@@ -190,10 +190,14 @@ async function postSearchRequest(url, headers, body, {
     if (Number.isFinite(retryAfter) && retryAfter > 0) {
       error.retry_after_seconds = Math.min(retryAfter, 30);
     }
+    // Daily-allowance 429s carry tier, daily_limit, and resets_at_utc so
+    // clients can tell users exactly when the allowance returns. Older
+    // gateways spread these at the top level instead of a details object.
     if (payload?.details && typeof payload.details === 'object') {
-      // Daily-allowance 429s carry tier, daily_limit, and resets_at_utc so
-      // clients can tell users exactly when the allowance returns.
       error.details = payload.details;
+    } else if (payload?.limit_scope || payload?.resets_at_utc) {
+      const { limit_scope, tier, daily_limit, resets_at_utc, retry_after_seconds } = payload;
+      error.details = { limit_scope, tier, daily_limit, resets_at_utc, retry_after_seconds };
     }
     throw error;
   });
