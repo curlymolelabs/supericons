@@ -31,7 +31,12 @@ The quality gaps the founder passes found are exactly the places where strong mo
 
 ## Enforcement: the dummy-agent gate
 
-A behavioral test impersonates the weakest possible agent: it makes exactly one `search_icons` call per scenario and renders only what the response hands it. The gate asserts, for a fixed scenario suite: results or labeled alternates present, `markdown_image` present and resolvable, `suggested_response_markdown` present and accurate, and no scenario ends in an error or empty answer. This turns "idiot proof" from an aspiration into a regression-checked property, alongside the existing 225-case fingerprint suite.
+A behavioral test impersonates the weakest possible agent: it makes exactly one `search_icons` call per scenario and renders only what the response hands it. Every scenario must land on exactly one of two passing paths:
+
+- Match path (meaningful queries): results or clearly labeled alternates present, `markdown_image` present and resolvable, `suggested_response_markdown` present and accurate.
+- Honest no-result path (unsupported or nonsensical queries): a structured no-result code, a useful hint and suggested response naming the next step, no image fields, and no fabricated icons.
+
+A scenario fails if it ends in a raw protocol error, an unexplained empty answer, or fabricated relevance on either path. The scenario suite includes both query classes so the gate can never be satisfied by inventing results. This turns "idiot proof" from an aspiration into a regression-checked property, alongside the existing 225-case fingerprint suite.
 
 ## Layer mapping
 
