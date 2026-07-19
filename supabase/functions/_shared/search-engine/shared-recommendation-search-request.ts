@@ -228,10 +228,12 @@ export async function handleSharedRecommendationSearchRequest(
     );
 
     // Tiered daily allowance; inert unless SEARCH_ENGINE_TIER_ENFORCEMENT=on.
-    // Recommendation fanout must consume the same allowance as direct search.
+    // Recommendation fanout consumes one allowance unit per logical search,
+    // matching the audit rows the request will write.
     await enforceDailyAllowance(adminClient, {
       ipHash: plans[0].auditContext.ip_hash || identity.ipHash,
       tier: resolveAllowanceTier(account),
+      requestCost: plans.length,
     });
 
     const logicalBatches = await timing.measure(

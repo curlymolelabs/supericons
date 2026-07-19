@@ -188,7 +188,12 @@ async function postSearchRequest(url, headers, body, {
     error.hosted_search_dependency_failure = response.status >= 500;
     const retryAfter = Number(response.headers.get('retry-after'));
     if (Number.isFinite(retryAfter) && retryAfter > 0) {
-      error.retry_after_seconds = Math.min(retryAfter, 30);
+      // Burst 429s retry within seconds; a daily allowance may not reset for
+      // hours, so its reset time must never be clamped down to 30 seconds.
+      error.retry_after_seconds = payload?.limit_scope === 'daily_allowance'
+        || payload?.details?.limit_scope === 'daily_allowance'
+        ? retryAfter
+        : Math.min(retryAfter, 30);
     }
     // Daily-allowance 429s carry tier, daily_limit, and resets_at_utc so
     // clients can tell users exactly when the allowance returns. Older

@@ -20,11 +20,23 @@ export function getHostedSearchFunctionNameForTool(version, toolName = 'search_i
   return STABLE_HOSTED_SEARCH_FUNCTION;
 }
 
+function getControlledRunLabel() {
+  const raw = String(process.env.SUPERICONS_CONTROLLED_RUN_LABEL || '').trim().toLowerCase();
+  if (!raw) return null;
+  const normalized = raw.replace(/[^a-z0-9_-]/g, '').slice(0, 32);
+  return normalized || null;
+}
+
 export function getBetaCohortForTool(version, toolName = 'search_icons') {
   const normalizedToolName = String(toolName || '').trim().toLowerCase();
-  return isDeterministicBetaVersion(version) && normalizedToolName === 'search_icons'
+  const cohort = isDeterministicBetaVersion(version) && normalizedToolName === 'search_icons'
     ? DETERMINISTIC_BETA_COHORT
     : null;
+  if (!cohort) return null;
+  // Controlled runs (owner validation scripts, reliability workloads) label
+  // their cohort so telemetry stays distinguishable from organic beta use.
+  const label = getControlledRunLabel();
+  return label ? `${cohort}:${label}` : cohort;
 }
 
 export function getBetaCohortForRequest(

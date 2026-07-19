@@ -173,6 +173,7 @@
     "verify:search-v2-tool-scoped-package": "node scripts/verify-search-v2-tool-scoped-package.mjs",
     "verify:search-v2-tool-latency-migration-smoke": "node scripts/verify-search-v2-tool-latency-migration-smoke.mjs",
     "verify:search-v2-tool-latency-hosted-runner": "node scripts/verify-search-v2-tool-latency-hosted-runner.mjs",
+    "verify:search-v2-daily-allowance": "deno run --allow-env scripts/verify-search-v2-daily-allowance.ts",
     "verify:search-v2-shared-recommendation-pipeline": "deno run --allow-read --allow-net=esm.sh scripts/verify-search-v2-shared-recommendation-pipeline.ts",
     "verify:search-v2-shared-recommendation-migration-smoke": "node scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs",
     "verify:search-v2-live-parity-artifacts": "node scripts/verify-search-v2-live-parity-artifacts.mjs",

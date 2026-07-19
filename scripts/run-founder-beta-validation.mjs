@@ -115,20 +115,29 @@ function summarizeResult(message) {
 const { quick, spec } = parseArgs(process.argv.slice(2));
 const queries = quick ? QUERIES.slice(0, 15) : QUERIES;
 
+// Mirror the package's own opt-out semantics exactly (see mcp/telemetry.js):
+// SUPERICONS_DISABLE_TELEMETRY disables on 1/true/on; SUPERICONS_TELEMETRY
+// disables on 0/false/off/disabled; DO_NOT_TRACK disables on 1/true.
+const disableFlag = String(process.env.SUPERICONS_DISABLE_TELEMETRY || '').trim().toLowerCase();
 const telemetryFlag = String(process.env.SUPERICONS_TELEMETRY || '').trim().toLowerCase();
-const telemetrySuppressed = Boolean(process.env.SUPERICONS_DISABLE_TELEMETRY)
-  || Boolean(process.env.DO_NOT_TRACK)
-  || ['0', 'false', 'off', 'disabled'].includes(telemetryFlag);
+const doNotTrack = String(process.env.DO_NOT_TRACK || '').trim().toLowerCase();
+const telemetrySuppressed = ['1', 'true', 'on'].includes(disableFlag)
+  || ['0', 'false', 'off', 'disabled'].includes(telemetryFlag)
+  || ['1', 'true'].includes(doNotTrack);
 if (telemetrySuppressed) {
   console.error('Telemetry is disabled by environment (SUPERICONS_DISABLE_TELEMETRY, SUPERICONS_TELEMETRY, or DO_NOT_TRACK). This pass would record nothing; unset those first.');
   process.exit(1);
 }
 
-console.log(`Launching @supericons/mcp@${spec} over stdio (telemetry on, this pass counts toward the window)...`);
+console.log(`Launching @supericons/mcp@${spec} over stdio (telemetry on; controlled run, labeled where the package supports it)...`);
 const child = spawn(
   process.platform === 'win32' ? 'npx.cmd' : 'npx',
   ['-y', `@supericons/mcp@${spec}`],
-  { stdio: ['pipe', 'pipe', 'inherit'], shell: process.platform === 'win32' },
+  {
+    stdio: ['pipe', 'pipe', 'inherit'],
+    shell: process.platform === 'win32',
+    env: { ...process.env, SUPERICONS_CONTROLLED_RUN_LABEL: 'founder_controlled' },
+  },
 );
 child.on('exit', (code) => {
   if (code) console.error(`server exited with code ${code}`);
@@ -145,6 +154,7 @@ console.log(`Connected. Server version: ${serverVersion}`);
 if (!String(serverVersion).includes('beta') && spec === 'beta') {
   console.error('Warning: resolved server version does not look like the beta prerelease.');
 }
+console.log('Note: cohort labeling (SUPERICONS_CONTROLLED_RUN_LABEL) takes effect only in package versions that ship the labeling support; events from older betas record the plain cohort and are indistinguishable from organic use.');
 rpc.notify('notifications/initialized', {});
 
 let attempts = 0;

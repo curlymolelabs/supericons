@@ -131,7 +131,13 @@ export const HOSTED_ALLOWANCE_POLICY = Object.freeze({
 export type AllowanceTier = keyof typeof HOSTED_ALLOWANCE_POLICY.dailyByTier;
 
 export function isTierEnforcementEnabled() {
-  return String(Deno.env.get('SEARCH_ENGINE_TIER_ENFORCEMENT') || '').trim().toLowerCase() === 'on';
+  try {
+    return String(Deno.env.get('SEARCH_ENGINE_TIER_ENFORCEMENT') || '').trim().toLowerCase() === 'on';
+  } catch {
+    // Missing env permission (restricted test harnesses) must read as
+    // enforcement off, never as a search failure.
+    return false;
+  }
 }
 
 export function resolveAllowanceTier(
@@ -157,11 +163,12 @@ export async function enforceDailyAllowance(
       };
     };
   },
-  { ipHash, tier }: { ipHash: string | null; tier: AllowanceTier },
+  { ipHash, tier, requestCost = 1 }: { ipHash: string | null; tier: AllowanceTier; requestCost?: number },
 ) {
   if (!isTierEnforcementEnabled()) return;
   if (!ipHash) return;
 
+  const cost = Math.max(1, Math.floor(Number(requestCost) || 1));
   const dailyLimit = HOSTED_ALLOWANCE_POLICY.dailyByTier[tier]
     ?? HOSTED_ALLOWANCE_POLICY.dailyByTier.anonymous;
   const now = new Date();
@@ -178,7 +185,7 @@ export async function enforceDailyAllowance(
     return;
   }
 
-  if ((count || 0) + 1 > dailyLimit) {
+  if ((count || 0) + cost > dailyLimit) {
     const retryAfterSeconds = secondsUntilUtcMidnight(now);
     throw new SearchEngineHttpError('Daily fair-use search allowance reached.', {
       status: 429,

@@ -629,6 +629,15 @@ function buildStructuredToolErrorResponse(error, fallbackMessage) {
   if (typeof error?.limit_scope === 'string') {
     payload.limit_scope = error.limit_scope;
   }
+  if (error?.details && typeof error.details === 'object') {
+    // Daily-allowance 429s carry tier, daily_limit, resets_at_utc, and an
+    // unclamped retry_after_seconds; surface them so agents can tell users
+    // exactly when the allowance returns.
+    payload.details = error.details;
+    if (typeof error.details.retry_after_seconds === 'number') {
+      payload.retry_after_seconds = error.details.retry_after_seconds;
+    }
+  }
 
   return buildTextResponse(payload);
 }
