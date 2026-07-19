@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "case_id": "bare-run-needs-clarification",
+      "task": "Choose an icon.",
+      "slot": "run",
+      "expected_status": "clarification",
+      "expected_family_ids": ["software_execution", "physical_running"]
+    },
+    {
+      "case_id": "run-code-context-resolves",
+      "task": "Choose an icon for a developer workflow that starts a script.",
+      "slot": "run",
+      "expected_status": "resolved",
+      "expected_primary_family_id": "software_execution"
+    },
+    {
+      "case_id": "run-fitness-context-resolves",
+      "task": "Choose an icon for a fitness workout tracker.",
+      "slot": "run",
+      "expected_status": "resolved",
+      "expected_primary_family_id": "physical_running"
+    }
+  ]
+}
