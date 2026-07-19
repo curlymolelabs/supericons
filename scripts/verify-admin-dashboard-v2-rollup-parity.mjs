@@ -75,6 +75,128 @@ function numeric(value) {
   return parsed;
 }
 
+function verifySemanticRows(expectedRows, payload, windowLabel) {
+  const explorerRows = payload.queries;
+  assert.ok(Array.isArray(explorerRows), `${windowLabel} query explorer is missing.`);
+  assert.ok(explorerRows.length >= 10, `${windowLabel} query explorer returned fewer than 10 rows.`);
+  const explorerByKey = new Map(explorerRows.map((row) => [
+    `${row.query}|${row.library_filter || 'all'}`,
+    row,
+  ]));
+  const semanticRows = expectedRows.slice(0, 10);
+  assert.equal(semanticRows.length, 10, `${windowLabel} database sample returned fewer than 10 rows.`);
+  for (const [semanticIndex, expected] of semanticRows.entries()) {
+    const key = `${expected.query_norm}|${expected.library_filter || 'all'}`;
+    const actual = explorerByKey.get(key);
+    const sampleLabel = `${windowLabel} semantic sample ${semanticIndex + 1}`;
+    assert.ok(actual, `The API query explorer is missing ${sampleLabel}.`);
+    for (const field of [
+      'zero_attempt_count',
+      'low_attempt_count',
+      'issue_type',
+      'outcome_label',
+      'country_available',
+      'country_code',
+      'result_count_available',
+    ]) {
+      assert.ok(
+        Object.hasOwn(actual, field),
+        `The API query explorer ${sampleLabel} is missing semantic field ${field}.`,
+      );
+    }
+    const attempts = numeric(expected.attempts);
+    const zeroCount = numeric(expected.true_zero_count);
+    const lowCount = numeric(expected.low_result_count);
+    const allZero = attempts > 0 && zeroCount === attempts;
+    const mixed = zeroCount > 0 && zeroCount < attempts;
+    const expectedIssue = allZero
+      ? 'zero_result'
+      : mixed
+        ? 'mixed_result'
+        : lowCount > 0
+          ? 'low_result'
+          : 'successful';
+    const expectedLabel = allZero
+      ? 'Zero'
+      : mixed
+        ? `Mixed: ${zeroCount} of ${attempts} zero`
+        : lowCount > 0
+          ? 'Low'
+          : 'Success';
+    assert.equal(numeric(actual.attempt_count), attempts, `Attempt count differs for ${sampleLabel}.`);
+    assert.equal(numeric(actual.zero_attempt_count), zeroCount, `Zero count differs for ${sampleLabel}.`);
+    assert.equal(actual.issue_type, expectedIssue, `Outcome type differs for ${sampleLabel}.`);
+    assert.equal(actual.outcome_label, expectedLabel, `Outcome label differs for ${sampleLabel}.`);
+    assert.equal(actual.country_available, false, `Aggregate country availability differs for ${sampleLabel}.`);
+    assert.equal(actual.country_code, null, `Aggregate country must be null for ${sampleLabel}.`);
+    if (allZero) {
+      assert.equal(actual.result_count_available, true, `All-zero result availability differs for ${sampleLabel}.`);
+      assert.equal(numeric(actual.result_count), 0, `All-zero result count differs for ${sampleLabel}.`);
+    } else {
+      assert.equal(actual.result_count_available, false, `Aggregate result availability differs for ${sampleLabel}.`);
+      assert.equal(actual.result_count, null, `Aggregate result count must be null for ${sampleLabel}.`);
+      assert.equal(actual.result_count_reason, 'Not available for aggregate view');
+    }
+  }
+  return semanticRows.length;
+}
+
+function verifyWindowSemanticRows(payload, windowLabel) {
+  const explorerRows = payload.queries;
+  assert.ok(Array.isArray(explorerRows), `${windowLabel} query explorer is missing.`);
+  assert.ok(explorerRows.length >= 10, `${windowLabel} query explorer returned fewer than 10 rows.`);
+  const semanticRows = explorerRows.slice(0, 10);
+  for (const [semanticIndex, actual] of semanticRows.entries()) {
+    const sampleLabel = `${windowLabel} semantic sample ${semanticIndex + 1}`;
+    for (const field of [
+      'zero_attempt_count',
+      'low_attempt_count',
+      'issue_type',
+      'outcome_label',
+      'country_available',
+      'country_code',
+      'result_count_available',
+    ]) {
+      assert.ok(
+        Object.hasOwn(actual, field),
+        `The API query explorer ${sampleLabel} is missing semantic field ${field}.`,
+      );
+    }
+    const attempts = numeric(actual.attempt_count);
+    const zeroCount = numeric(actual.zero_attempt_count);
+    const lowCount = numeric(actual.low_attempt_count);
+    const allZero = attempts > 0 && zeroCount === attempts;
+    const mixed = zeroCount > 0 && zeroCount < attempts;
+    const expectedIssue = allZero
+      ? 'zero_result'
+      : mixed
+        ? 'mixed_result'
+        : lowCount > 0
+          ? 'low_result'
+          : 'successful';
+    const expectedLabel = allZero
+      ? 'Zero'
+      : mixed
+        ? `Mixed: ${zeroCount} of ${attempts} zero`
+        : lowCount > 0
+          ? 'Low'
+          : 'Success';
+    assert.equal(actual.issue_type, expectedIssue, `Outcome type differs for ${sampleLabel}.`);
+    assert.equal(actual.outcome_label, expectedLabel, `Outcome label differs for ${sampleLabel}.`);
+    assert.equal(actual.country_available, false, `Aggregate country availability differs for ${sampleLabel}.`);
+    assert.equal(actual.country_code, null, `Aggregate country must be null for ${sampleLabel}.`);
+    if (allZero) {
+      assert.equal(actual.result_count_available, true, `All-zero result availability differs for ${sampleLabel}.`);
+      assert.equal(numeric(actual.result_count), 0, `All-zero result count differs for ${sampleLabel}.`);
+    } else {
+      assert.equal(actual.result_count_available, false, `Aggregate result availability differs for ${sampleLabel}.`);
+      assert.equal(actual.result_count, null, `Aggregate result count must be null for ${sampleLabel}.`);
+      assert.equal(actual.result_count_reason, 'Not available for aggregate view');
+    }
+  }
+  return semanticRows.length;
+}
+
 const overviewSql = `
 begin read only;
 set local statement_timeout = '3000ms';
@@ -104,18 +226,25 @@ set local statement_timeout = '3000ms';
 select
   query_norm,
   coalesce(library_filter, 'all') as library_filter,
-  sum(attempt_count)::bigint as searches
+  sum(attempt_count)::bigint as attempts,
+  sum(success_count)::bigint as success_count,
+  sum(true_zero_count)::bigint as true_zero_count,
+  sum(low_result_count)::bigint as low_result_count,
+  max(last_seen)::text as last_seen
 from public.admin_rollup_queries
 where environment = 'production'
   and day >= ((now() at time zone 'UTC')::date - 7)
   and day < (now() at time zone 'UTC')::date
 group by query_norm, coalesce(library_filter, 'all')
-order by searches desc, query_norm asc, library_filter asc;
+order by last_seen desc, attempts desc, query_norm asc, library_filter asc;
 rollback;
 `;
 
 try {
-  const [expectedOverview, expectedQueries] = await Promise.all([
+  const [
+    expectedOverview,
+    expectedQueries,
+  ] = await Promise.all([
     queryDatabase('overview rollup parity source', overviewSql),
     queryDatabase('query rollup parity source', querySql),
   ]);
@@ -124,9 +253,20 @@ try {
     .toISOString().slice(0, 10);
   const yesterday = new Date(Date.parse(`${today}T00:00:00.000Z`) - 86_400_000)
     .toISOString().slice(0, 10);
-  const [overview30d, completed7d] = await Promise.all([
+  const [
+    overview30d,
+    completed7d,
+    completedSearch7d,
+    search7d,
+    search30d,
+    searchAll,
+  ] = await Promise.all([
     requestOverview('/v2/overview?window=30d&channel=all&include_test=false'),
     requestOverview(`/v2/overview?window=custom&from=${sevenDaysAgo}&to=${yesterday}&channel=all&include_test=false`),
+    requestOverview(`/v2/search?window=custom&from=${sevenDaysAgo}&to=${yesterday}&channel=all&include_test=false&page=1&page_size=100`),
+    requestOverview('/v2/search?window=7d&channel=all&include_test=false&page=1&page_size=100'),
+    requestOverview('/v2/search?window=30d&channel=all&include_test=false&page=1&page_size=100'),
+    requestOverview('/v2/search?window=all&channel=all&include_test=false&page=1&page_size=100'),
   ]);
 
   assert.equal(overview30d.payload.meta.raw_rows_truncated, false);
@@ -169,7 +309,7 @@ try {
   assert.ok(searchedRows.length >= 20, 'The completed-range searched list is unexpectedly short.');
   const expectedQueriesByKey = new Map(expectedQueries.rows.map((row) => [
     `${row.query_norm}|${row.library_filter || 'all'}`,
-    numeric(row.searches),
+    numeric(row.attempts),
   ]));
   const actualQueriesToCompare = searchedRows.slice(0, 50);
   for (const [index, actual] of actualQueriesToCompare.entries()) {
@@ -189,6 +329,18 @@ try {
     }
   }
 
+  const semanticRows = expectedQueries.rows.slice(0, 10);
+  const completedSemanticCount = verifySemanticRows(
+    semanticRows,
+    completedSearch7d.payload,
+    'completed 7-day',
+  );
+  const windowSemanticCounts = {
+    '7d': verifyWindowSemanticRows(search7d.payload, '7-day'),
+    '30d': verifyWindowSemanticRows(search30d.payload, '30-day'),
+    all: verifyWindowSemanticRows(searchAll.payload, 'all-history'),
+  };
+
   summary.status = 'ok';
   summary.overview = {
     completed_days_compared: expectedOverview.rows.length,
@@ -201,9 +353,12 @@ try {
   summary.queries = {
     completed_days_compared: 7,
     top_rows_compared: actualQueriesToCompare.length,
+    completed_semantic_rows_compared: completedSemanticCount,
+    window_semantic_rows_compared: windowSemanticCounts,
     database_rows_available: expectedQueries.rows.length,
     database_latency_ms: expectedQueries.latency_ms,
-    api_latency_ms: completed7d.latency_ms,
+    overview_api_latency_ms: completed7d.latency_ms,
+    search_api_latency_ms: completedSearch7d.latency_ms,
   };
 } catch (error) {
   summary.status = 'failed';

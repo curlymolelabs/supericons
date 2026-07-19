@@ -26,6 +26,10 @@ function getSessionHash() {
     .digest('hex');
 }
 
+export function getMcpTelemetrySessionHash() {
+  return getSessionHash();
+}
+
 async function callRpc(name, payload) {
   if (isTelemetryDisabled()) return;
 
@@ -65,8 +69,8 @@ export async function logMcpSearchBatch({
       p_icon_id: `${result.library}:${result.id}`,
       p_batch_id: batchId,
       p_search_query: query || null,
-        p_result_position: index + 1,
-        p_ui_surface: 'mcp',
+      p_result_position: index + 1,
+      p_ui_surface: 'local_mcp',
       p_evidence_text: locale ? `search_icons locale=${locale}` : 'search_icons',
       p_session_hash: sessionHash,
       p_created_at: new Date().toISOString(),

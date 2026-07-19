@@ -76,7 +76,11 @@ import {
   hasPremiumLibraryAccess,
   hasProWorkflowAccess,
 } from './workflow-access.js';
-import { logMcpSearchAttempt, logMcpSearchBatch } from './telemetry.js';
+import {
+  getMcpTelemetrySessionHash,
+  logMcpSearchAttempt,
+  logMcpSearchBatch,
+} from './telemetry.js';
 import {
   getBetaCohortForRequest,
   getBetaCohortForTool,
@@ -901,12 +905,13 @@ function buildLocalMcpUsageContext(toolName, context = {}) {
   });
   return {
     source: 'mcp',
-    channel: betaCohort ? 'hosted_mcp' : 'local_mcp',
-    environment: betaCohort ? 'preview' : 'local',
+    channel: 'local_mcp',
+    environment: 'production',
     client_family: 'mcp_stdio',
     tool_name: toolName,
     mcp_server_version: mcpPackage.version,
     beta_cohort: betaCohort,
+    session_hash: getMcpTelemetrySessionHash(),
     ...context,
   };
 }

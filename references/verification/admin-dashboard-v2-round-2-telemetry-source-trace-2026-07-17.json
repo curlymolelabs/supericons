@@ -1,0 +1,15 @@
+{
+  "artifact": "admin_dashboard_v2_round_2_live_trace",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "telemetry_only": true,
+  "status": "failed",
+  "started_at": "2026-07-17T16:01:33.588Z",
+  "probe_contract": {
+    "search_calls": 3,
+    "lookup_calls": 2,
+    "environment": "production",
+    "synthetic": true
+  },
+  "error": "A synthetic search probe failed.\n+ actual - expected\n\n+ undefined\n- false\n",
+  "finished_at": "2026-07-17T16:01:38.007Z"
+}

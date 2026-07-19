@@ -80,6 +80,11 @@ async function verifyOverview(path, expectedWindow) {
     geography_available: payload.geography.available,
     geography_rows: payload.geography.rows.length,
     identity_available: payload.kpis.identity_available !== false,
+    client_measure: payload.kpis.client_measure,
+    estimated_unique_clients: Number(payload.kpis.estimated_unique_clients || 0),
+    attempts: Number(payload.kpis.attempts || 0),
+    true_zero_count: Number(payload.kpis.true_zero_count || 0),
+    true_zero_rate: Number(payload.kpis.true_zero_rate || 0),
     series_days: new Set(
       payload.series
         .filter((row) => row.channel === 'all')
@@ -105,6 +110,32 @@ try {
   assert.ok(overview30d.series_days > 0, 'The 30-day chart must include completed-day rollup data.');
   const search = await requestJson(`/v2/search?window=30d&${common}&page=1&page_size=50`);
   assert.ok(Array.isArray(search.payload.queries), 'Search explorer rows are missing.');
+  assert.ok(search.payload.queries.length > 0, 'Search explorer returned no rows.');
+  for (const [index, row] of search.payload.queries.entries()) {
+    for (const field of [
+      'zero_attempt_count',
+      'issue_type',
+      'outcome_label',
+      'country_available',
+      'result_count_available',
+    ]) {
+      assert.equal(
+        Object.hasOwn(row, field),
+        true,
+        `Search explorer sample ${index + 1} is missing ${field}.`,
+      );
+    }
+    assert.equal(row.country_available, false, 'Aggregate search rows must not claim country data.');
+    assert.equal(row.country_code, null, 'Aggregate search rows must not show an Unknown country.');
+    if (row.issue_type === 'zero_result') {
+      assert.equal(Number(row.zero_attempt_count), Number(row.attempt_count));
+      assert.equal(row.result_count_available, true);
+      assert.equal(Number(row.result_count), 0);
+    } else {
+      assert.equal(row.result_count_available, false);
+      assert.equal(row.result_count, null);
+    }
+  }
   assert.ok(Array.isArray(search.payload.worklist), 'Gap worklist rows are missing.');
   requireAvailability(search.payload.icon_requests, 'Icon request inbox');
   requireAvailability(search.payload.contact_submissions, 'Contact inbox');
@@ -118,6 +149,7 @@ try {
   requireAvailability(audience.payload.registered_users, 'Registered users');
   requireAvailability(audience.payload.clients, 'Client profiles');
   assert.equal(audience.payload.registered_users.available, true, 'The 30-day registered-user table must be available.');
+  assert.ok(Number(audience.payload.registered_users.total) >= audience.payload.registered_users.rows.length);
   assert.equal(audience.payload.clients.available, true, 'The 30-day client table must be available.');
   assert.ok(audience.payload.funnel.mrr && typeof audience.payload.funnel.mrr === 'object', 'MRR state is missing.');
   if (!audience.payload.funnel.mrr.available) {
@@ -127,7 +159,39 @@ try {
 
   const overview1d = await verifyOverview(`/v2/overview?window=1d&${common}`, '1d');
   const overview7d = await verifyOverview(`/v2/overview?window=7d&${common}`, '7d');
+  const overviewAll = await verifyOverview(`/v2/overview?window=all&${common}`, 'all');
   assert.ok(overview7d.series_days > 0, 'The 7-day chart must include completed-day rollup data.');
+  assert.equal(overviewAll.client_measure, 'client_days');
+  assert.ok(overviewAll.estimated_unique_clients > 0, 'The All view must render client-days.');
+  assert.ok(overviewAll.series_days > 0, 'The All view must render rollup charts.');
+  assert.equal(
+    overviewAll.true_zero_rate,
+    overviewAll.attempts ? overviewAll.true_zero_count / overviewAll.attempts : 0,
+    'True Zero Rate must use per-attempt counts.',
+  );
+  const [audience1d, audienceAll] = await Promise.all([
+    requestJson(`/v2/audience?window=1d&${common}&page=1&page_size=100`),
+    requestJson(`/v2/audience?window=all&${common}&page=1&page_size=100`),
+  ]);
+  requireAvailability(audience1d.payload.registered_users, '1-day registered users');
+  requireAvailability(audienceAll.payload.registered_users, 'All-history registered users');
+  requireAvailability(audienceAll.payload.clients, 'All-history client profiles');
+  assert.equal(audience1d.payload.registered_users.available, true);
+  assert.equal(audienceAll.payload.registered_users.available, true);
+  assert.equal(
+    Number(audience1d.payload.registered_users.total),
+    Number(audience.payload.registered_users.total),
+    'The registered-user total changed under the 1-day filter.',
+  );
+  assert.equal(
+    Number(audienceAll.payload.registered_users.total),
+    Number(audience.payload.registered_users.total),
+    'The registered-user total changed under the All filter.',
+  );
+  assert.equal(audienceAll.payload.funnel.client_measure, 'client_days');
+  assert.ok(Number(audienceAll.payload.funnel.unique_clients) > 0);
+  assert.equal(audienceAll.payload.clients.available, false);
+  assert.ok(String(audienceAll.payload.clients.reason || '').includes('shorter date range'));
   const today = new Date();
   const to = today.toISOString().slice(0, 10);
   const fromDate = new Date(Date.UTC(
@@ -190,6 +254,7 @@ try {
     '7d': overview7d.series_rows,
     '30d': overview30d.series_rows,
     custom: custom.series_rows,
+    all: overviewAll.series_rows,
     custom_from: from,
     custom_to: to,
   };

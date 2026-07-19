@@ -1,0 +1,48 @@
+{
+  "artifact": "admin_dashboard_v2_round_2_live_trace",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "telemetry_only": false,
+  "status": "ok",
+  "started_at": "2026-07-17T16:50:39.413Z",
+  "probe_contract": {
+    "search_calls": 3,
+    "lookup_calls": 2,
+    "environment": "production",
+    "synthetic": true,
+    "unique_session": true
+  },
+  "telemetry": {
+    "search_rows_verified": 3,
+    "lookup_rows_verified": 2,
+    "search_result_counts": [
+      3,
+      3,
+      3
+    ],
+    "lookup_result_counts": [
+      1,
+      1
+    ],
+    "search_origins_correct": true,
+    "lookup_origins_correct": true,
+    "lookup_source_result_count_correct": true,
+    "search_telemetry_retries": 0,
+    "lookup_telemetry_retries": 0
+  },
+  "dashboard": {
+    "search_rows_verified": 12,
+    "search_windows_verified": [
+      "1d",
+      "7d",
+      "30d",
+      "all"
+    ],
+    "lookup_rows_verified": 2,
+    "lookup_result_counts": [
+      1,
+      1
+    ],
+    "true_zero_rate_uses_attempt_counts": true
+  },
+  "finished_at": "2026-07-17T16:51:11.884Z"
+}

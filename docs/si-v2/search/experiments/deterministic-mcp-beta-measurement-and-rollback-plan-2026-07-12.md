@@ -1,7 +1,7 @@
 # Deterministic MCP beta measurement and rollback plan
 
 Date: 2026-07-12
-Amended: 2026-07-17
+Amended: 2026-07-18
 Status: local-first npm beta published and verified; evidence window awaiting its first eligible user request
 Authority: operational beta plan under `D-021`, `D-025`, `FR-26`, `FR-31`, `FR-32`, and `FR-40`
 
@@ -79,7 +79,7 @@ Before any external beta, engineering must provide:
 4. A beta identifier carried into the local tool-outcome record through MCP server version and beta cohort.
 5. A default-off release. Users who do not install the prerelease must remain on the current path.
 
-No hosted function deployment or database migration is required for this beta. A later hosted web or recommendation gate still requires a separate approved attribution measurement and its own isolation plan.
+The local-attribution correction uses one additive database migration so the already-published prerelease is classified by its local MCP entry point. It does not deploy a hosted search function or change ranking. A later hosted web or recommendation gate still requires a separate approved attribution measurement and its own isolation plan.
 
 ## Measurement prerequisites
 
@@ -102,7 +102,8 @@ The audit record must not store raw IP addresses, raw API keys, private prompts,
 
 An eligible attempt is one `mcp_usage_events` tool-outcome row that meets all of these rules:
 
-- channel is `hosted_mcp`
+- channel is `local_mcp`
+- environment is `production`
 - cohort identifies the deterministic beta
 - tool is `search_icons`
 - client family is `mcp_stdio`

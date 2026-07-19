@@ -7,6 +7,6 @@ if "%ADMIN_SECRET%"=="" (
   pause
   exit /b 1
 )
-start "Supericons admin server" cmd /k node scripts\serve-admin-dashboard-phase-b-live.mjs
+start "Supericons admin server" cmd /k npm run dev:admin
 timeout /t 2 >nul
-start "" http://127.0.0.1:4178
+start "" http://127.0.0.1:4178/admin

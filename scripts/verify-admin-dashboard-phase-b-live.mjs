@@ -18,6 +18,16 @@ function readArg(name) {
   return index >= 0 ? process.argv[index + 1] : '';
 }
 
+async function waitForEstimatedReachCard(page, timeout = 120_000) {
+  await page.waitForFunction(() => (
+    document.querySelector('#kpiClients')?.closest('.kpi')
+      ?.querySelector('.kpi-label')?.textContent?.includes('Estimated reach')
+      && document.querySelector('#kpiClients')?.closest('.kpi')
+        ?.querySelector('.inline-icon-button')?.getAttribute('title')?.includes('A searcher')
+      && !document.querySelector('#kpiClientsNote')?.textContent?.includes('registered')
+  ), null, { timeout });
+}
+
 const adminSecret = String(process.env.ADMIN_SECRET || '').trim();
 const outputPath = readArg('output');
 ok(adminSecret, 'ADMIN_SECRET must be present in the process environment.');
@@ -51,12 +61,25 @@ try {
   await page.goto(dashboard.url, { waitUntil: 'domcontentloaded', timeout: 120_000 });
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
       && !document.querySelector('#kpiClients')?.classList.contains('skeleton')
   ), null, { timeout: 120_000 });
+  await waitForEstimatedReachCard(page);
 
   ok(await page.locator('#adminSecretModal.open').count() === 0, 'The managed local dashboard requested a secret.');
-  ok(await page.evaluate(() => window.sessionStorage.getItem('si_admin_secret') === null), 'The browser stored the admin secret.');
+  ok(await page.evaluate(() => (
+    window.sessionStorage.getItem('si_admin_secret') === null
+    && window.localStorage.getItem('si_admin_secret') === null
+  )), 'The browser stored the admin secret.');
+  ok(await page.evaluate(() => (
+    [window.sessionStorage, window.localStorage].every((storage) => (
+      Object.values(storage).every((value) => (
+        !String(value).includes('@')
+        && !String(value).includes('"users"')
+        && !String(value).includes('"registered_users"')
+      ))
+    ))
+  )), 'Browser storage contains account or email-bearing payloads.');
   ok(await page.locator('.nav-button').count() === 3, 'The dashboard must have exactly three navigation sections.');
   ok(await page.getByText('Stats', { exact: true }).count() === 0, 'The Stats section still exists.');
   ok(await page.getByText('Audit Log', { exact: true }).count() === 0, 'The Audit Log section still exists.');
@@ -67,7 +90,12 @@ try {
   );
   ok(kpis.every(populated), 'One or more production KPIs are blank or unavailable.');
 
-  ok(await page.locator('.chart svg').count() === 4, 'All four inline SVG charts did not render.');
+  for (const id of ['searchesChart', 'clientsChart', 'qualityChart', 'audienceChart']) {
+    ok(
+      await page.locator(`#${id} svg, #${id} .chart-empty`).count() === 1,
+      `${id} has neither a chart nor its truthful compact state.`,
+    );
+  }
   ok(await page.locator('#latestActivity .activity-row').count() > 0, 'Latest Activity has no real production rows.');
   const activityText = await page.locator('#latestActivity').innerText();
   ok(activityText.includes('User query'), 'Latest Activity does not use the approved origin wording.');
@@ -100,6 +128,8 @@ try {
       .map((id) => page.locator(`#${id}`).innerText()),
   );
   ok(funnel.every(populated), 'The production audience funnel is unavailable.');
+  ok(Number(funnel[1]) > 0, 'The registered account funnel incorrectly shows zero.');
+  ok(Number(funnel[2]) > 0, 'The Pro account funnel incorrectly shows zero.');
   for (const id of ['registeredUsers', 'allClients']) {
     const text = await page.locator(`#${id}`).innerText();
     ok(text.trim() && !text.includes('Loading'), `${id} has no truthful production state.`);
@@ -107,15 +137,23 @@ try {
 
   const liveContract = await page.evaluate(async () => {
     const common = 'window=30d&channel=all&include_test=false';
-    const [overviewResponse, audienceResponse] = await Promise.all([
-      fetch(`/api/admin/v2/overview?${common}`),
-      fetch(`/api/admin/v2/audience?${common}&page=1&page_size=50`),
+    const cutoff = new Date().toISOString();
+    const viewId = `livecontract${Date.now()}`;
+    const shared = new URLSearchParams(common);
+    shared.set('view_id', viewId);
+    shared.set('data_cutoff', cutoff);
+    shared.set('filter_key', common);
+    const [overviewResponse, searchResponse, audienceResponse] = await Promise.all([
+      fetch(`/api/admin/v2/overview?${shared}`),
+      fetch(`/api/admin/v2/search?${shared}&page=1&page_size=50`),
+      fetch(`/api/admin/v2/audience?${shared}&page=1&page_size=50`),
     ]);
-    if (!overviewResponse.ok || !audienceResponse.ok) {
-      throw new Error(`Production contract failed (${overviewResponse.status}, ${audienceResponse.status}).`);
+    if (!overviewResponse.ok || !searchResponse.ok || !audienceResponse.ok) {
+      throw new Error(`Production contract failed (${overviewResponse.status}, ${searchResponse.status}, ${audienceResponse.status}).`);
     }
-    const [overview, audience] = await Promise.all([
+    const [overview, search, audience] = await Promise.all([
       overviewResponse.json(),
+      searchResponse.json(),
       audienceResponse.json(),
     ]);
     return {
@@ -132,6 +170,17 @@ try {
       audienceIdentityAvailable: audience?.funnel?.identity_available !== false,
       registeredUsersAvailable: audience?.registered_users?.available === true,
       clientsAvailable: audience?.clients?.available === true,
+      viewMarkersMatch: [overview, search, audience].every((payload) => (
+        payload?.meta?.view_id === viewId
+        && payload?.meta?.data_cutoff === cutoff
+        && payload?.meta?.filter_key === common
+      )),
+      overviewAttempts: Number(overview?.kpis?.attempts),
+      searchAttempts: Number(search?.summary?.attempts),
+      overviewReach: Number(overview?.kpis?.estimated_unique_clients),
+      audienceReach: Number(audience?.funnel?.unique_clients),
+      attemptsMatch: Number(overview?.kpis?.attempts) === Number(search?.summary?.attempts),
+      reachMatches: Number(overview?.kpis?.estimated_unique_clients) === Number(audience?.funnel?.unique_clients),
     };
   });
   ok(liveContract.identityAvailable, 'The 30-day identity KPI is unavailable.');
@@ -142,6 +191,9 @@ try {
   ok(liveContract.audienceIdentityAvailable, 'Audience identity is unavailable.');
   ok(liveContract.registeredUsersAvailable, 'Registered users are unavailable.');
   ok(liveContract.clientsAvailable, 'Client profiles are unavailable.');
+  ok(liveContract.viewMarkersMatch, 'The live v2 responses do not share one view marker and cutoff.');
+  ok(liveContract.attemptsMatch, 'Overview and Search Intelligence attempt totals disagree.');
+  ok(liveContract.reachMatches, 'Overview and Audience estimated reach disagree.');
 
   await page.click('[data-window="custom"]');
   const today = new Date();
@@ -164,7 +216,7 @@ try {
   await customOverviewRequest;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
   ), null, { timeout: 120_000 });
   ok(
     apiRequests.some((request) => (
@@ -185,16 +237,21 @@ try {
   await overview30dResponse;
   await page.waitForFunction(() => (
     document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Up to date')
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
   ), null, { timeout: 120_000 });
   const warmStart = Date.now();
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 120_000 });
   await page.waitForFunction(() => (
     !document.querySelector('#kpiClients')?.classList.contains('skeleton')
-      && document.querySelector('#latestActivity .activity-row')
   ), null, { timeout: 5_000 });
   const warmRenderMs = Date.now() - warmStart;
   ok(warmRenderMs < 1_000, `Warm cached content took ${warmRenderMs} ms to appear.`);
+  await waitForEstimatedReachCard(page);
+  await page.waitForFunction(() => (
+    document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
+      && document.querySelector('#freshnessLine')?.textContent?.startsWith('Updated')
+      && document.querySelectorAll('#latestActivity .activity-row').length > 0
+  ), null, { timeout: 120_000 });
 
   const overflow = await page.evaluate(() => ({
     document: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 2,
@@ -218,6 +275,10 @@ try {
     live_api_requests: apiRequests.length,
     latest_activity_rows: liveContract.activityRows,
     completed_series_days: liveContract.completedSeriesDays,
+    overview_attempts: liveContract.overviewAttempts,
+    search_attempts: liveContract.searchAttempts,
+    overview_reach: liveContract.overviewReach,
+    audience_reach: liveContract.audienceReach,
     navigation_sections: 3,
     inline_svg_charts: await page.locator('.chart svg').count(),
     warm_render_ms: warmRenderMs,

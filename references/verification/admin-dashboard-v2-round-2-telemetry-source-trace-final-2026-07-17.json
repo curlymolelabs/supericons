@@ -1,0 +1,32 @@
+{
+  "artifact": "admin_dashboard_v2_round_2_live_trace",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "telemetry_only": true,
+  "status": "ok",
+  "started_at": "2026-07-17T16:03:34.609Z",
+  "probe_contract": {
+    "search_calls": 3,
+    "lookup_calls": 2,
+    "environment": "production",
+    "synthetic": true
+  },
+  "telemetry": {
+    "search_rows_verified": 3,
+    "lookup_rows_verified": 2,
+    "search_result_counts": [
+      3,
+      3,
+      3
+    ],
+    "lookup_result_counts": [
+      1,
+      1
+    ],
+    "search_origins_correct": true,
+    "lookup_origins_correct": true,
+    "lookup_source_result_count_correct": true,
+    "search_telemetry_retries": 3,
+    "lookup_telemetry_retries": 2
+  },
+  "finished_at": "2026-07-17T16:04:30.022Z"
+}

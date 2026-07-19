@@ -1,6 +1,6 @@
 # SI Search Engine v2
 
-Version: 1.12
+Version: 1.13
 Approved: 2026-07-11
 Amended: 2026-07-18
 Status: canonical product and technical specification
@@ -415,6 +415,7 @@ The labels explain broad visual directions only. They do not expose scores or pr
 | `FR-42` | Every public npm and web release must include the applicable license terms and private-record-bound copying-detection markers. The private record never enters the repository or public verifier, and release verification fails if the record is missing or does not match its manifest-bound commitment. | `VC-2`, `VC-4`, `FR-25`, `D-027` | A named VC-4 license-and-canary probe checks both staged surfaces, verifies the private record commitment, and confirms that source artifacts remain free of private canary values. |
 | `FR-43` | Keep eligible local-first search keyless and unmetered by Supericons. Apply measured hosted allowances consistently at the Railway MCP service and the shared Supabase gateway: generous anonymous access, a higher registered-free allowance, and the highest fair-use paid allowance. Enforcement stays disabled until thresholds are measured, self-service free keys deliver the higher allowance, and the limit response promises only live benefits. | `G-10`, `VC-1`, `D-028` | A shared tier contract, two-ingress behavior tests, disabled-until-ready checks, and reset/retry/signup response fixtures pass. The anonymous threshold is bound to a reviewed measurement artifact rather than a hardcoded guess. |
 | `FR-44` | Treat local package telemetry as best-effort and optional. Disclose what is sent, honor the documented opt-out, minimize retained fields, and never use local telemetry as a complete denominator. Keep protected living intelligence and account analytics server-side. | `G-08`, `NG-10`, `VC-3`, `D-028` | Package tests prove opt-out and telemetry-failure behavior; public docs match the shipped fields; reporting labels local coverage as partial; bundle probes keep protected classes out of public artifacts. |
+| `FR-45` | Telemetry venue identifies the client entry point, not the server that performs a fallback. Calls from the installed npm MCP server use `local_mcp`; calls to the remote MCP service use `hosted_mcp`. Genuine user calls use the `production` environment even when a beta cohort is present. Cohort, package version, client family, and execution route remain separate fields. | Measurement honesty; `VC-6`, `D-029` | Local stdio, hosted fallback, remote MCP, beta-cohort, and dashboard-default fixtures prove that venue and environment do not change when only the execution route or cohort changes. |
 
 ## Constraints
 

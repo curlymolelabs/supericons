@@ -1,34 +1,49 @@
-# Admin dashboard Phase B component inventory
+# Admin dashboard component inventory
 
-Date: 2026-07-17
+Date: 2026-07-18
 
 ## Architecture
 
-The admin dashboard remains a local-only static page.
+The admin dashboard is a local operator tool backed by the protected production admin API.
 
-- `admin.html` owns the page structure and embedded dashboard styles.
-- `public/admin-app.js` owns state, API calls, rendering, filters, review actions, and browser storage.
-- `scripts/serve-admin-dashboard-phase-b-live.mjs` serves the local walkthrough and forwards API requests without exposing the stored admin secret to the browser.
-- `supabase/functions/admin-api/index.ts` defines the Phase A API contract consumed by the page. Phase B does not change this function.
+- `admin.html` owns the page structure and dashboard styles.
+- `public/admin-app.js` owns filter state, independent panel loading, rendering, paging, exports, and operator actions.
+- `scripts/serve-admin-dashboard-phase-b-live.mjs` provides the recommended loopback-only gateway at `/admin` and keeps the admin secret out of browser code and storage.
+- `supabase/functions/admin-api/index.ts` provides the bounded v2 read endpoints and protected review-write endpoints.
+- `lib/admin-dashboard-v2.js` owns shared data normalization, grouping, KPI, series, and list semantics.
 
-## Phase B components
+## Main components
 
 | Component | Main element | Data source | Purpose |
 |---|---|---|---|
-| Global filter bar | `#panel-intelligence .panel-header` | Local state plus all intelligence requests | Applies time, channel, environment, and free-text search across the dashboard |
-| KPI strip | `#phaseBKpiStrip` | `GET /intelligence/search/dashboard` summary | Shows estimated unique clients or client-days, real searches, true zero rate, and low-result rate |
-| Latest Activity | `#phaseBLatestActivity` | `GET /intelligence/search/dashboard` latest activity | Shows the newest direct searches first, with visitor and origin chips |
-| Gap Worklist | `#phaseBGapPanel` | `GET /intelligence/search/queue` | Shows true zero and low-result searches with review actions |
-| Diagnostics | `#intelligenceRawSignalsDetails` | Existing overview, search, and evidence endpoints | Keeps raw counts, secondary metrics, and detailed activity available without crowding the default view |
-| Query detail drawer | `#queryDetailDrawer` | Existing query detail endpoint | Preserves detailed evidence and notes for a selected gap |
+| Global filter bar | `.filter-bar` | Local state shared by v2 requests | Applies time, venue, environment, and free-text filters |
+| KPI strip | `.kpi-grid` | `GET /v2/overview` plus the complete account directory | Shows estimated reach or daily reach, real searches, true zero rate, and low-result rate |
+| Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
+| Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
+| Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
+| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per searcher, query, venue, library, and origin, with server paging and complete filtered export |
+| Searcher details | `#searcherDetailsModal` | Bounded masked rows in `GET /v2/search` | Shows the selected searcher's type, search count, venue, country, and first and last activity without exposing raw keys or emails |
+| Gap worklist | `#gapWorklist` | `GET /v2/search` plus `POST /intelligence/search/review` | Shows repeated zero and low-result work with triage actions |
+| Icon requests | `#iconRequests` | `GET /v2/search` plus `POST /v2/icon-requests/review` | Shows stored requests with New, Planned, Added, and Declined states |
+| Contact inbox | `#contactInbox` | `GET /v2/search` | Shows stored contact messages with CSV and JSON exports |
+| Diagnostics | `#diagnosticsContent` | `GET /v2/search` | Shows bounded source and completeness details with CSV and JSON exports |
+| Reach and accounts | `.funnel` | `GET /v2/audience` plus the complete account directory | Shows estimated or daily reach, all-time registered accounts, all-time active Pro accounts, and truthful MRR availability |
+| Registered users | `#registeredUsers` | Protected paged `GET /users` plus `GET /v2/audience` telemetry | Shows every account with separate signup, last sign-in, and last-search times, plus linked venue and country |
+| Searchers | `#allClients` | `GET /v2/audience` | Shows masked searcher profiles with server paging |
 
-## Shared patterns
+## Shared behavior
 
-- Existing buttons, badges, tables, drawers, colors, spacing tokens, and typography remain in use.
-- Panel skeletons are visible before the first response.
-- The latest Phase A dashboard response is cached in browser session storage by window, channel, and environment.
-- Cached content renders immediately while a fresh request runs in the background.
-- Refresh state is visible in the button and in `#phaseBRefreshStatus`.
-- Latest Activity loads before the secondary intelligence requests.
-- Fields that do not exist for a channel are omitted instead of replaced with missing-data text.
-- The local live walkthrough uses managed authentication through a loopback-only gateway, so it does not show a password prompt or store the admin secret in browser code.
+- Every list offers 25, 50, and 100 row choices.
+- Server-backed query, activity, and client lists use numbered paging. Bounded lists use local numbered paging.
+- Every panel has a compact named chevron control. Panels sharing a visual row collapse and expand together.
+- Scroll regions are height-bounded, keyboard reachable, and hide the visual scrollbar.
+- CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
+- CSV text beginning with a spreadsheet formula character is made inert before download.
+- Activity, overview, search, audience, and account requests start independently. A slow panel does not block the others.
+- Every filtered endpoint in one refresh uses the same view marker, data cutoff, and filter marker. Older responses are rejected.
+- Search Intelligence summary totals use the same aggregate source as Overview. Search history rows use bounded detailed records so late records remain visible.
+- Search history changes refresh only Search Intelligence. Account rows are not reloaded for unrelated filter changes.
+- The browser may keep a sanitized aggregate Overview payload for up to 30 seconds. Secrets, emails, account rows, query rows, request rows, contact rows, and client rows are never stored in browser storage.
+- Direct development mode keeps the entered admin secret in memory only and asks again after a reload.
+- The managed gateway is the normal start path. It keeps `ADMIN_SECRET` in the local Node process and forwards protected API requests over loopback.
+- Missing, partial, stale, loading, empty, failed, and ready states are explicit. A missing measurement is not rendered as zero.

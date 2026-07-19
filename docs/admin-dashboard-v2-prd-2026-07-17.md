@@ -45,8 +45,8 @@ Concise rows: query, library and origin subtext, visitor chip (kind-aware: anony
 
 ## 4. Search Intelligence section
 
-### 4.1 Explorer (the single query interface)
-Every query in the window; columns: query (with library and origin subtext), outcome pill, origin, client chip, country, venue, results, last seen. The free-text search supports plain text plus key:value filters (zero:true, low:true, venue:web, country:DE, origin:user, registered:true). CSV/JSON export of the filtered set. The legacy evidence tables are deleted.
+### 4.1 Search history (the single query interface)
+Every query in the window, grouped only when the same searcher repeats the same query in the same venue, library, and origin. The same query from different searchers must appear as separate rows. Columns: query (with library and origin subtext), searcher, search count, outcome, country, venue, results, last seen. The free-text search supports plain text plus key:value filters (zero:true, low:true, venue:web, country:DE, origin:user, registered:true). CSV/JSON export of the filtered set. The legacy evidence tables are deleted.
 
 ### 4.2 Gap worklist (existing, amended)
 True-zero and low-result queries ranked by distinct clients. Columns add a WHY triage value captured at review time: missing icon, extraction problem, sparse coverage, filtered library, ignore. Actions: Alias, Add icon, Resolve, Ignore (existing review write path). Rows link back to explorer detail.

@@ -1,0 +1,15 @@
+{
+  "artifact": "admin_dashboard_v2_round_2_live_trace",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "telemetry_only": true,
+  "status": "failed",
+  "started_at": "2026-07-17T16:01:54.193Z",
+  "probe_contract": {
+    "search_calls": 3,
+    "lookup_calls": 2,
+    "environment": "production",
+    "synthetic": true
+  },
+  "error": "A successful search probe is missing from telemetry.\n\nfalse !== true\n",
+  "finished_at": "2026-07-17T16:02:40.550Z"
+}

@@ -41,6 +41,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-026` | Let agents execute audited release work autonomously and involve the owner only for access, money, default-user changes, or material risk | Accepted | Release governance |
 | `D-027` | Keep living search intelligence private while licensing, marking, and minifying staged public engine artifacts | Accepted | Public bundle boundary |
 | `D-028` | Keep local search keyless while giving hosted search measured anonymous, registered, and paid allowances | Accepted | Access, cost, telemetry, and public/private product boundary |
+| `D-029` | Make MCP telemetry venue follow the client entry point | Accepted | Measurement and dashboard attribution |
 
 ## Decision records
 
@@ -403,6 +404,21 @@ Deferred:
 - Any paid or x402 action beyond the existing entitlement system, pending separate product evidence and owner decision.
 
 Specification change: version 1.12 adds `G-10`, `NG-10`, `FR-43`, and `FR-44`, updates the constraints and risks, and resolves `OQ-05`.
+
+### D-029: MCP telemetry venue follows the client entry point
+
+Date: 2026-07-18
+Status: Accepted
+
+Decision: classify calls from the installed npm MCP server as `local_mcp`, including calls that use hosted search as a fallback. Classify calls to the remote MCP service as `hosted_mcp`. Record genuine user activity as `production` even when it belongs to a beta cohort. Keep beta cohort, package version, client family, and execution route as separate evidence instead of overloading venue or environment.
+
+Reason: the local-first prerelease used `hosted_mcp` and `preview` as beta labels. This hid genuine local npm user searches from the dashboard default view and made the venue selector describe an experiment rather than the client surface. The corrected fields answer separate questions: where the user connected, whether the call was real user activity, which package and cohort ran, and whether the search used a local or hosted execution path.
+
+Alternatives rejected or deferred: keeping beta traffic under Hosted MCP; requiring the dashboard to include preview traffic to find real user calls; treating a hosted fallback as a hosted client; inferring the local client product from unvalidated free-form identifiers.
+
+Specification change: version 1.13 adds `FR-45`.
+
+Superseded decisions: the channel rule in the deterministic MCP beta measurement plan is replaced by this decision. The beta eligibility, cohort, privacy, and one-call outcome rules remain active.
 
 ## Adding or superseding a decision
 

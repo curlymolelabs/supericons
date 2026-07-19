@@ -4,6 +4,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
@@ -11,11 +12,40 @@ import {
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
+  mergeDashboardV2CurrentQueryDetails,
+  normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
   parseDashboardV2Range,
 } from '../lib/admin-dashboard-v2.js';
 
 const now = new Date('2026-07-17T12:00:00.000Z');
+
+{
+  const sharedContext = {
+    query: 'user',
+    libraryFilter: 'lucide',
+    queryOrigin: 'recommend_variant',
+    channel: 'hosted_mcp',
+  };
+  const firstSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:first',
+  });
+  const repeatedFirstSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:first',
+  });
+  const secondSearcher = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    searcherKey: 'anonymous:second',
+  });
+  assert.equal(firstSearcher, repeatedFirstSearcher);
+  assert.notEqual(
+    firstSearcher,
+    secondSearcher,
+    'Two searchers using the same query were incorrectly combined into one history row.',
+  );
+}
 
 {
   const range = parseDashboardV2Range(new URL('https://example.test/v2/overview?window=30d'), now);
@@ -118,6 +148,20 @@ assert.throws(
   assert.equal(filtered.length, 2);
 }
 
+{
+  const filters = parseDashboardV2Filters(new URL('https://example.test/v2/overview?window=1d&channel=all&include_test=false'), now);
+  const filtered = filterDashboardV2Rows([
+    { environment: 'production', channel: 'web', search_query: 'real user query' },
+    { environment: 'production', channel: 'internal_test', search_query: 'synthetic production probe' },
+    { environment: 'preview', channel: 'web', search_query: 'preview query' },
+  ], filters);
+  assert.deepEqual(
+    filtered.map((row) => row.search_query),
+    ['real user query'],
+    'The default dashboard leaked internal test or preview traffic.',
+  );
+}
+
 const identityRows = [
   { created_at: '2026-07-16T01:00:00Z', channel: 'web', _estimated_client_key: 'a', estimated_client_key: 'anon:a', is_registered: false, is_pro: false, country_code: 'SG', search_query: 'database' },
   { created_at: '2026-07-16T02:00:00Z', channel: 'hosted_mcp', _estimated_client_key: 'b', estimated_client_key: 'user:b', user_id: 'b', is_registered: true, is_pro: true, country_code: 'US', search_query: 'calendar', account_plan: 'pro_monthly' },
@@ -186,7 +230,286 @@ const queryRows = [
   assert.equal(filtered[0].query, 'missing brand');
   const compact = compactDashboardV2QueryRows(filtered);
   assert.equal(compact[0].issue_type, 'zero_result');
+  assert.equal(compact[0].zero_attempt_count, 5);
+  assert.equal(compact[0].low_attempt_count, 0);
   assert.equal(compact[0].channel, 'hosted_mcp');
+}
+
+{
+  const aggregateRows = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([
+    {
+      query: 'healthy aggregate',
+      library_filter: 'all',
+      attempt_count: 5,
+      successful_attempt_count: 5,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      client_days: 3,
+      channels: ['web'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'all zero aggregate',
+      library_filter: 'all',
+      attempt_count: 3,
+      successful_attempt_count: 0,
+      zero_attempt_count: 3,
+      low_attempt_count: 0,
+      client_days: 2,
+      channels: ['hosted_mcp'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'mixed aggregate',
+      library_filter: 'all',
+      attempt_count: 5,
+      successful_attempt_count: 4,
+      zero_attempt_count: 1,
+      low_attempt_count: 0,
+      client_days: 4,
+      channels: ['web'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'database',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      estimated_unique_clients: 1,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      minimum_result_count: 1,
+      maximum_result_count: 1,
+      result_sample_count: 1,
+      mcp_result_rows: 1,
+    },
+  ]));
+  const healthy = aggregateRows.find((row) => row.query === 'healthy aggregate');
+  assert.equal(healthy.issue_type, 'successful');
+  assert.equal(healthy.outcome_label, 'Success');
+  assert.equal(healthy.result_count, null);
+  assert.equal(healthy.result_count_available, false);
+  assert.equal(healthy.result_count_reason, 'Not available for aggregate view');
+  assert.equal(healthy.country_code, null);
+  assert.equal(healthy.country_available, false);
+  assert.equal(healthy.estimated_client_id_count, 3);
+  assert.equal(healthy.estimated_client_id_count_reason, 'Daily reach is available for this grouped period.');
+  assert.equal('client_label' in healthy, false);
+
+  const allZero = aggregateRows.find((row) => row.query === 'all zero aggregate');
+  assert.equal(allZero.issue_type, 'zero_result');
+  assert.equal(allZero.outcome_label, 'Zero');
+  assert.equal(allZero.result_count, 0);
+  assert.equal(allZero.result_count_available, true);
+
+  const mixed = aggregateRows.find((row) => row.query === 'mixed aggregate');
+  assert.equal(mixed.issue_type, 'mixed_result');
+  assert.equal(mixed.outcome_label, 'Mixed: 1 of 5 zero');
+  assert.equal(mixed.zero_attempt_count, 1);
+  assert.equal(mixed.low_attempt_count, 0);
+  assert.equal(mixed.result_count, null);
+  assert.equal(mixed.result_count_available, false);
+  assert.equal(mixed.country_code, null);
+  assert.equal(mixed.country_available, false);
+
+  const lookup = aggregateRows.find((row) => row.query_origin === 'icon_lookup');
+  assert.equal(lookup.issue_type, 'successful');
+  assert.equal(lookup.outcome_label, 'Success');
+  assert.equal(lookup.result_count, 1);
+  assert.equal(lookup.result_count_available, true);
+}
+
+{
+  const [merged] = mergeDashboardV2CurrentQueryDetails(
+    [{
+      query: 'current detail',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 8,
+      successful_attempt_count: 8,
+      client_days: 5,
+      countries: [],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+      maximum_result_count: null,
+      result_sample_count: 0,
+      last_seen: '2026-07-18T10:18:00.123Z',
+    }],
+    [{
+      query: 'current detail',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 1,
+      successful_attempt_count: 1,
+      estimated_unique_clients: 1,
+      countries: ['US'],
+      audit_sources: ['search_request_audit'],
+      minimum_result_count: 3,
+      maximum_result_count: 3,
+      result_sample_count: 1,
+      first_seen: '2026-07-18T10:18:00Z',
+      last_seen: '2026-07-18T10:18:00.123456+00:00',
+    }],
+  );
+  const [compact] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([merged]));
+  assert.equal(compact.country_code, 'US');
+  assert.equal(compact.country_available, true);
+  assert.equal(compact.country_scope, 'current_day');
+  assert.equal(compact.result_count, 3);
+  assert.equal(compact.result_count_available, true);
+  assert.equal(compact.result_count_kind, 'exact');
+  assert.equal(compact.result_count_scope, 'current_day');
+  assert.equal(compact.attempt_count, 8);
+
+  const [stale] = mergeDashboardV2CurrentQueryDetails(
+    [{
+      query: 'do not cross records',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      attempt_count: 4,
+      countries: [],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+      last_seen: '2026-07-18T10:18:00Z',
+    }],
+    [{
+      query: 'do not cross records',
+      library_filter: 'lucide',
+      query_origins: ['agent_query'],
+      channels: ['hosted_mcp'],
+      countries: ['PL'],
+      minimum_result_count: 7,
+      maximum_result_count: 7,
+      result_sample_count: 1,
+      last_seen: '2026-07-18T10:17:00Z',
+    }],
+  );
+  const [staleCompact] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([stale]));
+  assert.equal(staleCompact.country_available, false);
+  assert.equal(staleCompact.result_count_available, false);
+}
+
+{
+  const [grouped] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'settings',
+    library_filter: 'all',
+    attempt_count: 4,
+    successful_attempt_count: 4,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    estimated_unique_clients: 2,
+    channels: ['hosted_mcp'],
+    countries: ['SG'],
+    query_origins: ['agent_query'],
+    audit_sources: ['mcp_usage_events'],
+    minimum_result_count: 2,
+    maximum_result_count: 8,
+  }]));
+  assert.equal(grouped.result_count, null);
+  assert.equal(grouped.result_count_min, 2);
+  assert.equal(grouped.result_count_max, 8);
+  assert.equal(grouped.result_count_kind, 'range_across_attempts');
+  assert.equal(grouped.result_count_reason, 'Results ranged from 2 to 8 across 4 searches');
+  assert.equal(grouped.activity_label, '4 searches');
+  assert.equal(grouped.estimated_client_id_count, 2);
+  assert.equal('client_label' in grouped, false);
+}
+
+{
+  const [grouped] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'shield lock',
+    library_filter: 'lucide',
+    attempt_count: 3,
+    successful_attempt_count: 3,
+    zero_attempt_count: 0,
+    low_attempt_count: 0,
+    estimated_unique_clients: 3,
+    channels: ['hosted_mcp'],
+    countries: ['BR', 'SG'],
+    query_origins: ['recommend_variant'],
+    audit_sources: ['search_request_audit'],
+    minimum_result_count: 10,
+    maximum_result_count: 10,
+  }]));
+  assert.equal(grouped.country_code, null);
+  assert.equal(grouped.country_count, 2);
+  assert.equal(grouped.country_available, false);
+  assert.equal(grouped.country_reason, '2 countries across grouped attempts');
+  assert.equal(grouped.result_count, 10);
+  assert.equal(grouped.result_count_kind, 'exact');
+}
+
+{
+  const [recommendation] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'choose a gatekeeper icon',
+    library_filter: 'lucide',
+    attempt_count: 1,
+    successful_attempt_count: 1,
+    estimated_unique_clients: 1,
+    channels: ['local_mcp'],
+    countries: [],
+    query_origins: ['agent_query'],
+    tools: ['recommend_icons'],
+    audit_sources: ['mcp_usage_events'],
+    minimum_result_count: 1,
+    maximum_result_count: 1,
+    result_sample_count: 1,
+  }]));
+  assert.equal(recommendation.activity_label, '1 search');
+  assert.equal(recommendation.result_count, 1);
+  assert.equal(recommendation.result_unit, 'primary_pick');
+}
+
+{
+  const kpis = buildDashboardV2Kpis([
+    {
+      day: '2026-07-17',
+      channel: 'all',
+      attempts: 10,
+      success_count: 9,
+      true_zero_count: 1,
+      low_result_count: 0,
+      low_result_eligible_count: 9,
+      client_days: 4,
+    },
+  ], []);
+  assert.equal(kpis.true_zero_count, 1);
+  assert.equal(kpis.attempts, 10);
+  assert.equal(kpis.true_zero_rate, 0.1);
+}
+
+{
+  const kpis = buildDashboardV2Kpis([
+    {
+      day: '2026-07-17',
+      channel: 'all',
+      attempts: 100,
+      success_count: 100,
+      true_zero_count: 0,
+      low_result_count: 0,
+      low_result_eligible_count: 0,
+      client_days: 10,
+    },
+  ], []);
+  assert.equal(kpis.low_result_rate, null);
+  assert.equal(kpis.low_result_rate_available, false);
+  assert.equal(kpis.low_result_coverage_rate, 0);
 }
 
 {
@@ -217,8 +540,10 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 13,
+  cases: 15,
   series_rows: series.length,
   query_filters: true,
-  privacy_safe_identifiers: true,
+  aggregate_query_semantics: true,
+  true_zero_rate_uses_attempt_counts: true,
+  searcher_semantics: true,
 }, null, 2));

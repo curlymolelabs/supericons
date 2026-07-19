@@ -19,6 +19,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2QueryRows,
@@ -26,6 +27,7 @@ import {
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
   maskDashboardV2Identifier,
+  mergeDashboardV2CurrentQueryDetails,
   normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
 } from '../../../lib/admin-dashboard-v2.js';
@@ -39,7 +41,7 @@ type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
 type QueryIssueType = 'zero_result' | 'low_result' | 'replacement_heavy' | 'successful' | 'mcp';
 type QueryEnvironment = 'production' | 'preview' | 'local' | 'test' | 'legacy';
 type QueryEnvironmentFilter = QueryEnvironment | 'live' | 'all';
-type QueryChannel = 'web' | 'hosted_mcp' | 'local_mcp' | 'cli' | 'api' | 'internal_test' | 'unknown';
+type QueryChannel = 'web' | 'hosted_mcp' | 'local_mcp' | 'internal_test' | 'unknown';
 type QueryChannelFilter = QueryChannel | 'all';
 type QueryOrigin = 'agent_query' | 'recommend_variant' | 'icon_lookup' | 'legacy_unknown';
 type QueryOriginFilter = QueryOrigin | 'all';
@@ -106,7 +108,7 @@ const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
 const QUERY_ENVIRONMENT_FILTERS = new Set<QueryEnvironmentFilter>(['live', 'production', 'preview', 'local', 'test', 'legacy', 'all']);
-const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'cli', 'api', 'internal_test', 'unknown']);
+const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'internal_test', 'unknown']);
 const QUERY_ORIGIN_FILTERS = new Set<QueryOriginFilter>(['agent_query', 'recommend_variant', 'icon_lookup', 'legacy_unknown', 'all']);
 const PRODUCTION_ANALYTICS_HOSTS = new Set(['supericons.dev', 'www.supericons.dev']);
 const QUERY_SORT_FIELDS = new Set<QuerySortField>([
@@ -277,6 +279,31 @@ function buildQueryReviewContextKey({
   ].join('|');
 }
 
+function buildQueryWorkbenchGroupKey({
+  query,
+  libraryFilter,
+  jobCategory,
+  queryOrigin,
+  channel,
+  searcherKey,
+}: {
+  query: unknown;
+  libraryFilter?: unknown;
+  jobCategory?: unknown;
+  queryOrigin?: unknown;
+  channel?: unknown;
+  searcherKey?: unknown;
+}) {
+  return buildDashboardV2QueryHistoryKey({
+    query,
+    libraryFilter,
+    jobCategory,
+    queryOrigin,
+    channel,
+    searcherKey,
+  });
+}
+
 function parseIntelligenceWindow(url: URL): IntelligenceWindow {
   const raw = String(url.searchParams.get('window') || '30d').trim().toLowerCase() as IntelligenceWindowKey;
   return INTELLIGENCE_WINDOWS[raw] || INTELLIGENCE_WINDOWS['30d'];
@@ -347,8 +374,6 @@ function classifyAnalyticsChannel(value: unknown): QueryChannel | null {
   if (isUnclassifiedAnalyticsToken(source)) return null;
   if (source.includes('local_mcp') || source === 'npm' || source === 'npx') return 'local_mcp';
   if (source === 'mcp' || source === 'hosted_mcp' || source === 'mcp_search' || source.includes('mcp')) return 'hosted_mcp';
-  if (source === 'cli' || source.includes('cli')) return 'cli';
-  if (source === 'api' || source.includes('api')) return 'api';
   if (source === 'verify' || source === 'internal_test' || source === 'test' || source.includes('test') || source.includes('verify') || source.includes('trap')) return 'internal_test';
   if (
     source === 'web'
@@ -1325,9 +1350,9 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
 }
 
 const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
-const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 25000;
+const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 30000;
 const V2_IDENTITY_PAGE_CONCURRENCY = 4;
-const V2_MAX_ROLLUP_ROWS = 10000;
+const V2_MAX_ROLLUP_ROWS = 50000;
 const V2_ROLLUP_PAGE_CONCURRENCY = 4;
 const V2_MAX_ICON_ROWS = 5000;
 
@@ -1421,8 +1446,8 @@ async function fetchDashboardV2IdentityTelemetry(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
 ) {
-  const auditSelect = 'id, query_norm, source, session_hash, ip_hash, country_code, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, anonymous_client_hash, user_agent_hash, api_key_hash, request_id, dedupe_key, created_at';
-  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, query_origin, session_hash, ip_hash, country_code, user_id, is_registered, is_pro, account_plan, subscription_status, anonymous_client_hash, user_agent_hash, api_key_hash, search_request_audit_id, created_at';
+  const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
 
   const loadAuditRows = async () => {
     try {
@@ -1479,7 +1504,7 @@ async function fetchDashboardV2IdentityTelemetry(
           ? source.select(usageSelect, { count: 'exact' })
           : source.select(usageSelect);
         query = query
-          .eq('event_type', 'search_outcome')
+          .in('event_type', ['search_outcome', 'tool_call'])
           .order('created_at', { ascending: false })
           .range(from, to);
         if (filters.from) query = query.gte('created_at', filters.from);
@@ -1518,7 +1543,13 @@ async function fetchDashboardV2IdentityTelemetry(
     ...row,
     environment: classifySearchEvidenceEnvironment(row),
     channel: classifySearchEvidenceChannel(row),
-  })).filter((row) => String(row.signal_type || '') === 'search_attempt');
+  })).filter((row) => (
+    String(row.signal_type || '') === 'search_attempt'
+    || (
+      String(row.signal_type || '') === 'mcp_call'
+      && String(row.query_origin || '') === 'icon_lookup'
+    )
+  ));
   return {
     rows: filterDashboardV2Rows(rows, filters) as SearchEvidenceRow[],
     truncated,
@@ -1551,7 +1582,11 @@ async function fetchDashboardV2OverviewRollups(
       .range(from, to);
     if (filters.from_day) query = query.gte('day', filters.from_day);
     if (filters.to_day) query = query.lte('day', filters.to_day);
-    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (!filters.include_test) {
+      query = query
+        .eq('environment', 'production')
+        .neq('channel', 'internal_test');
+    }
     if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
     const { data, error, count } = await query;
     if (error) throw error;
@@ -1600,7 +1635,11 @@ async function fetchDashboardV2QueryRollups(
       .range(from, to);
     if (filters.from_day) query = query.gte('day', filters.from_day);
     if (filters.to_day) query = query.lte('day', filters.to_day);
-    if (!filters.include_test) query = query.eq('environment', 'production');
+    if (!filters.include_test) {
+      query = query
+        .eq('environment', 'production')
+        .neq('channel', 'internal_test');
+    }
     if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
     const { data, error, count } = await query;
     if (error) throw error;
@@ -1626,6 +1665,8 @@ async function buildDashboardV2DataRows(
   {
     applyQuery = true,
     includeQueryRows = true,
+    separateQueryOrigins = false,
+    separateChannels = false,
   } = {},
 ) {
   if (filters.use_raw) {
@@ -1641,7 +1682,10 @@ async function buildDashboardV2DataRows(
       telemetry_rows: telemetryRows,
       overview_rows: rollups.overview,
       query_rows: includeQueryRows
-        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews)
+        ? buildQueryWorkbenchRows(telemetryRows, reviews.reviews, {
+          separateQueryOrigins,
+          separateChannels,
+        })
         : [],
       query_review_available: includeQueryRows && reviews.available,
       raw_truncated: telemetry.truncated,
@@ -1689,15 +1733,23 @@ async function buildDashboardV2DataRows(
     ? telemetryRows.filter((row) => String(row.created_at || '').slice(0, 10) === currentUtcDayStartIso().slice(0, 10))
     : [];
   const currentRollups = buildAdminRollups(todayRows, knownSearchDefects);
+  const aggregateQueryRows = includeQueryRows
+    ? buildQueryWorkbenchRowsFromRollups(
+      [...completedQueryRows, ...currentRollups.queries],
+      reviews.reviews,
+      { separateQueryOrigins, separateChannels },
+    )
+    : [];
+  const currentQueryRows = includeQueryRows
+    ? buildQueryWorkbenchRows(todayRows, reviews.reviews, {
+      separateQueryOrigins,
+      separateChannels,
+    })
+    : [];
   return {
     telemetry_rows: telemetryRows,
     overview_rows: [...completedOverviewRows, ...currentRollups.overview],
-    query_rows: includeQueryRows
-      ? buildQueryWorkbenchRowsFromRollups(
-        [...completedQueryRows, ...currentRollups.queries],
-        reviews.reviews,
-      )
-      : [],
+    query_rows: mergeDashboardV2CurrentQueryDetails(aggregateQueryRows, currentQueryRows),
     query_review_available: includeQueryRows && reviews.available,
     raw_truncated: telemetry.truncated,
     rollup_truncated: overviewRollups.truncated || (includeQueryRows && queryRollups.truncated),
@@ -1716,6 +1768,9 @@ function dashboardV2Meta(
     channel: filters.channel,
     include_test: filters.include_test,
     q: filters.q,
+    view_id: filters.view_id,
+    data_cutoff: filters.data_cutoff,
+    filter_key: filters.filter_key,
     generated_at: new Date().toISOString(),
     generation_ms: Date.now() - startedAt,
     ...extras,
@@ -1784,7 +1839,12 @@ async function buildDashboardV2ActivityPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
-  const limit = parsePositiveInt(url.searchParams.get('limit'), 50, 100);
+  const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
+  const pageSize = parsePositiveInt(
+    url.searchParams.get('page_size') || url.searchParams.get('limit'),
+    50,
+    100,
+  );
   const telemetry = await fetchDashboardV2Telemetry(adminClient, filters);
   const telemetryRows = telemetry.rows;
   let overviewRows: Array<Record<string, unknown>>;
@@ -1815,14 +1875,26 @@ async function buildDashboardV2ActivityPayload(
     ];
   }
   const series = buildDashboardV2Series(overviewRows, telemetryRows);
+  const sortedRows = telemetryRows
+    .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')));
+  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const start = (currentPage - 1) * pageSize;
   return {
-    activity: telemetryRows
-      .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')))
-      .slice(0, limit)
+    activity: sortedRows
+      .slice(start, start + pageSize)
       .map(compactDashboardV2ActivityRow),
     channel_counts: channelCountsFromSeries(series),
+    pagination: {
+      page: currentPage,
+      page_size: pageSize,
+      total: sortedRows.length,
+      page_count: pageCount,
+    },
     meta: dashboardV2Meta(filters, startedAt, {
-      row_limit: limit,
+      metric_scope: 'filtered_search_activity',
+      completeness: { raw_rows_complete: !telemetry.truncated },
+      row_limit: pageSize,
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: telemetry.truncated,
     }),
@@ -1837,7 +1909,9 @@ async function buildDashboardV2OverviewPayload(
   const filters = parseDashboardV2Filters(url);
   const [dataRows, identityTelemetry, copySource, returnedSource] = await Promise.all([
     buildDashboardV2DataRows(adminClient, filters),
-    fetchDashboardV2IdentityTelemetry(adminClient, filters),
+    filters.key === 'all'
+      ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
+      : fetchDashboardV2IdentityTelemetry(adminClient, filters),
     filters.channel === 'all' || filters.channel === 'web'
       ? fetchDashboardV2IconRows(adminClient, filters, 'copy')
       : Promise.resolve({ rows: [], available: true, reason: '', truncated: false }),
@@ -1852,7 +1926,9 @@ async function buildDashboardV2OverviewPayload(
   const geography = identityTelemetry.truncated
     ? {
       available: false,
-      reason: 'Exact country totals exceed the bounded identity-row limit for this period. Choose a shorter date range.',
+      reason: filters.key === 'all'
+        ? 'Country totals are not available for all recorded history because anonymous identities rotate over time.'
+        : 'Exact country totals exceed the bounded identity-row limit for this period. Choose a shorter date range.',
       coverage_rate: 0,
       rows: [],
     }
@@ -1896,24 +1972,46 @@ async function buildDashboardV2OverviewPayload(
       ...kpis,
       identity_available: !identityTelemetry.truncated,
       identity_unavailable_reason: identityTelemetry.truncated
-        ? 'Exact client identities exceed the bounded identity-row limit for this period. Choose a shorter date range.'
+        ? filters.key === 'all'
+          ? 'All-history reach uses daily totals because anonymous searcher counting resets over time.'
+          : 'Exact searcher totals exceed the safe row limit for this period. Choose a shorter date range.'
         : null,
     },
     series,
     outage_spans: outageSpans,
     top_lists: {
-      searched: { available: true, rows: topLists.searched },
+      searched: dataRows.rollup_truncated
+        ? {
+          available: false,
+          reason: 'Complete query rankings exceed the bounded rollup limit for this period. Choose a shorter date range.',
+          rows: [],
+        }
+        : { available: true, rows: topLists.searched },
       returned,
       copied,
-      zero: { available: true, rows: topLists.zero },
+      zero: dataRows.rollup_truncated
+        ? {
+          available: false,
+          reason: 'Complete zero-result rankings exceed the bounded rollup limit for this period. Choose a shorter date range.',
+          rows: [],
+        }
+        : { available: true, rows: topLists.zero },
     },
     geography,
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        identity_rows_complete: !identityTelemetry.truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       identity_rows_truncated: identityTelemetry.truncated,
+      identity_rows_skipped_unbounded: filters.key === 'all',
       rollup_rows_truncated: dataRows.rollup_truncated,
+      rollup_data_complete: !dataRows.rollup_truncated,
       client_measure: kpis.client_measure,
       query_review_available: dataRows.query_review_available,
       copy_rows_truncated: copySource.truncated,
@@ -1930,7 +2028,7 @@ async function fetchDashboardV2IconRequests(
   }
   let query = adminClient
     .from('icon_evidence')
-    .select('id, evidence_text, session_hash, created_at')
+    .select('id, evidence_text, session_hash, created_at', { count: 'exact' })
     .eq('signal_type', 'search_attempt')
     .eq('ui_surface', 'grid_empty_feedback')
     .not('evidence_text', 'is', null)
@@ -1938,14 +2036,14 @@ async function fetchDashboardV2IconRequests(
     .limit(100);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     if (isMissingRelationError(error) || isMissingColumnError(error)) {
       return { available: false, reason: 'The icon request source is not available in this environment.', rows: [] };
     }
     throw error;
   }
-  const rows = ((data || []) as Array<Record<string, unknown>>)
+  const sourceRows = ((data || []) as Array<Record<string, unknown>>)
     .filter((row) => String(row.evidence_text || '').trim())
     .map((row) => ({
       id: row.id,
@@ -1955,7 +2053,81 @@ async function fetchDashboardV2IconRequests(
       country_code: null,
       created_at: row.created_at,
     }));
-  return { available: true, rows };
+  if (Number(count || 0) > sourceRows.length) {
+    return {
+      available: false,
+      reason: 'Complete icon requests exceed the safe inbox limit. Choose a shorter date range.',
+      status_available: false,
+      rows: [],
+    };
+  }
+  if (!sourceRows.length) {
+    return { available: true, status_available: true, rows: [] };
+  }
+
+  const { data: reviewData, error: reviewError } = await adminClient
+    .from('admin_icon_request_reviews')
+    .select('icon_evidence_id, status, note, updated_at')
+    .in('icon_evidence_id', sourceRows.map((row) => row.id));
+  if (reviewError && !isMissingRelationError(reviewError)) throw reviewError;
+  const reviews = new Map(
+    ((reviewData || []) as Array<Record<string, unknown>>)
+      .map((row) => [String(row.icon_evidence_id || ''), row]),
+  );
+  return {
+    available: true,
+    status_available: !reviewError,
+    status_reason: reviewError
+      ? 'Request review status is not available until the dashboard review migration is applied.'
+      : null,
+    rows: sourceRows.map((row) => {
+      const review = reviews.get(String(row.id || ''));
+      return {
+        ...row,
+        status: review?.status || 'new',
+        review_note: review?.note || null,
+        reviewed_at: review?.updated_at || null,
+      };
+    }),
+  };
+}
+
+async function handleDashboardV2IconRequestReview(
+  req: Request,
+  adminClient: SupabaseClient,
+  body: JsonRecord,
+) {
+  const iconEvidenceId = String(body.icon_evidence_id || '').trim();
+  const status = normalizeSearchQuery(body.status);
+  if (!iconEvidenceId) {
+    return jsonResponse(req, { error: 'icon_evidence_id is required' }, 400);
+  }
+  if (!['new', 'planned', 'added', 'declined'].includes(status)) {
+    return jsonResponse(req, { error: 'status must be one of: new, planned, added, declined' }, 400);
+  }
+  const note = typeof body.note === 'string' ? body.note.trim() || null : null;
+  const { data, error } = await adminClient
+    .from('admin_icon_request_reviews')
+    .upsert({
+      icon_evidence_id: iconEvidenceId,
+      status,
+      note,
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'icon_evidence_id',
+    })
+    .select('icon_evidence_id, status, note, updated_at')
+    .single();
+  if (error) {
+    if (isMissingRelationError(error)) {
+      return jsonResponse(req, {
+        error: 'Request review status is not available until the dashboard review migration is applied.',
+      }, 409);
+    }
+    throw error;
+  }
+  v2DashboardCache.clear();
+  return jsonResponse(req, { success: true, review: data });
 }
 
 async function fetchDashboardV2Contacts(
@@ -1967,12 +2139,12 @@ async function fetchDashboardV2Contacts(
   }
   let query = adminClient
     .from('contact_submissions')
-    .select('id, name, email, interest, message, created_at')
+    .select('id, name, email, interest, message, created_at', { count: 'exact' })
     .order('created_at', { ascending: false })
     .limit(100);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     if (isMissingRelationError(error) || isMissingColumnError(error)) {
       return { available: false, reason: 'Stored contact submissions are not available in this environment.', rows: [] };
@@ -1980,6 +2152,13 @@ async function fetchDashboardV2Contacts(
     throw error;
   }
   const rows = (data || []) as Array<Record<string, unknown>>;
+  if (Number(count || 0) > rows.length) {
+    return {
+      available: false,
+      reason: 'Complete contact submissions exceed the safe inbox limit. Choose a shorter date range.',
+      rows: [],
+    };
+  }
   const filtered = filters.q && !filters.q.includes(':')
     ? rows.filter((row) => (
       [row.name, row.email, row.interest, row.message]
@@ -1998,17 +2177,40 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const [dataRows, iconRequests, contacts] = await Promise.all([
-    buildDashboardV2DataRows(adminClient, { ...filters, q: '' }, { applyQuery: false }),
+  const historyTelemetryPromise = filters.use_raw
+    ? Promise.resolve(null)
+    : fetchDashboardV2IdentityTelemetry(adminClient, { ...filters, q: '' });
+  const [dataRows, historyTelemetry, iconRequests, contacts] = await Promise.all([
+    buildDashboardV2DataRows(
+      adminClient,
+      { ...filters, q: '' },
+      { applyQuery: false, separateQueryOrigins: true, separateChannels: true },
+    ),
+    historyTelemetryPromise,
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
   ]);
-  const filteredRows = filterDashboardV2QueryRows(
+  const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historyRows = buildQueryWorkbenchRows(
+    historyEvidenceRows,
+    new Map(),
+    {
+      separateQueryOrigins: true,
+      separateChannels: true,
+      separateSearchers: true,
+    },
+  );
+  const filteredHistoryRows = filterDashboardV2QueryRows(
+    historyRows,
+    filters.q,
+    issue,
+  ) as Array<any>;
+  const filteredWorklistRows = filterDashboardV2QueryRows(
     dataRows.query_rows,
     filters.q,
     issue,
   ) as Array<any>;
-  const sortedRows = [...filteredRows].sort((left, right) => (
+  const sortedRows = [...filteredHistoryRows].sort((left, right) => (
     String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
     || right.attempt_count - left.attempt_count
     || left.query.localeCompare(right.query)
@@ -2018,7 +2220,7 @@ async function buildDashboardV2SearchPayload(
   const start = (currentPage - 1) * pageSize;
   const queries = compactDashboardV2QueryRows(sortedRows.slice(start, start + pageSize));
   const worklist = compactDashboardV2QueryRows(
-    filteredRows
+    filteredWorklistRows
       .filter((row) => (
         (row.true_zero_count > 0 || row.low_result_count > 0)
         && row.review_status !== 'resolved'
@@ -2029,18 +2231,35 @@ async function buildDashboardV2SearchPayload(
         || (right.true_zero_count + right.low_result_count) - (left.true_zero_count + left.low_result_count)
         || String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
       ))
-      .slice(0, 50),
+      .slice(0, 100),
   );
+  const rollupUnavailableReason = dataRows.rollup_truncated
+    ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
+    : null;
+  const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
+  const historyUnavailableReason = historyTruncated
+    ? 'Complete searcher-level history exceeds the safe detail limit for this period. Choose a shorter date range.'
+    : null;
 
   return {
-    queries,
+    summary: {
+      attempts: filteredWorklistRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
+      query_groups: filteredWorklistRows.length,
+      history_attempts: filteredHistoryRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
+      history_rows: filteredHistoryRows.length,
+    },
+    queries: historyUnavailableReason ? [] : queries,
+    queries_available: !historyUnavailableReason,
+    queries_unavailable_reason: historyUnavailableReason,
     pagination: {
       page: currentPage,
       page_size: pageSize,
       total: sortedRows.length,
       page_count: pageCount,
     },
-    worklist,
+    worklist: rollupUnavailableReason ? [] : worklist,
+    worklist_available: !rollupUnavailableReason,
+    worklist_unavailable_reason: rollupUnavailableReason,
     icon_requests: iconRequests,
     contact_submissions: contacts,
     diagnostics: {
@@ -2053,13 +2272,24 @@ async function buildDashboardV2SearchPayload(
       })),
       query_review_available: dataRows.query_review_available,
       raw_rows_truncated: dataRows.raw_truncated,
+      history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
+      query_row_grain: ['searcher', 'query', 'library_filter', 'query_origin', 'channel'],
+      activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
+      result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
+      estimated_client_id_measure: 'Searchers seen in the selected period.',
     },
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
+      rollup_data_complete: !dataRows.rollup_truncated,
       query_review_available: dataRows.query_review_available,
     }),
   };
@@ -2102,14 +2332,15 @@ async function buildDashboardV2AudiencePayload(
   const filters = parseDashboardV2Filters(url);
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const identityFilters = { ...filters, q: '' };
   const [dataRows, identityTelemetry, authUsers] = await Promise.all([
     buildDashboardV2DataRows(
       adminClient,
-      identityFilters,
-      { applyQuery: false, includeQueryRows: false },
+      filters,
+      { includeQueryRows: false },
     ),
-    fetchDashboardV2IdentityTelemetry(adminClient, identityFilters),
+    filters.key === 'all'
+      ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
+      : fetchDashboardV2IdentityTelemetry(adminClient, filters),
     listAllAuthUsers(adminClient),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
@@ -2118,18 +2349,7 @@ async function buildDashboardV2AudiencePayload(
   const userTelemetry = buildDashboardV2UserTelemetry(identityRows);
   const { users } = authUsers;
   const subscriptions = await fetchSubscriptions(adminClient, users.map((user) => user.id));
-  const rangeStart = filters.from ? Date.parse(filters.from) : null;
-  const rangeEnd = filters.to_exclusive ? Date.parse(filters.to_exclusive) : null;
   const registeredUsers = users
-    .filter((user) => {
-      const signup = Date.parse(String(user.created_at || ''));
-      const activity = userTelemetry.get(user.id);
-      if (activity) return true;
-      if (!Number.isFinite(signup)) return false;
-      if (rangeStart !== null && signup < rangeStart) return false;
-      if (rangeEnd !== null && signup >= rangeEnd) return false;
-      return true;
-    })
     .map((user) => {
       const subscription = (subscriptions.get(user.id) || {}) as Record<string, unknown>;
       const telemetry = userTelemetry.get(user.id);
@@ -2137,22 +2357,29 @@ async function buildDashboardV2AudiencePayload(
         ? [...telemetry.countries.entries()].sort((left, right) => right[1] - left[1])
         : [];
       return {
+        user_id: user.id,
         identifier: maskDashboardV2Identifier(user.email || user.id),
         provider: formatProviderLabel(user),
         plan: subscription.plan || 'Free',
         signup_at: user.created_at || null,
-        last_active: telemetry?.last_active || user.last_sign_in_at || null,
+        last_search: telemetry?.last_active || null,
+        last_active: telemetry?.last_active || null,
         searches: telemetry?.searches || 0,
         venues: telemetry ? [...telemetry.channels].sort() : [],
-        country_code: countries[0]?.[0] || 'Unknown',
+        country_code: countries[0]?.[0] || null,
+        activity_linked: Boolean(telemetry),
+        activity_matches_filter: Boolean(telemetry),
       };
     })
     .filter((row) => {
       if (!filters.q) return true;
-      return [row.identifier, row.provider, row.plan, row.country_code, ...row.venues]
+      return row.activity_matches_filter || [row.identifier, row.provider, row.plan, row.country_code, ...row.venues]
         .filter(Boolean).join(' ').toLowerCase().includes(filters.q);
     })
-    .sort((left, right) => String(right.last_active || '').localeCompare(String(left.last_active || '')));
+    .sort((left, right) => (
+      String(right.last_search || '').localeCompare(String(left.last_search || ''))
+      || String(right.signup_at || '').localeCompare(String(left.signup_at || ''))
+    ));
   const filteredClients = clientRows.filter((row) => {
     if (!filters.q) return true;
     return [
@@ -2163,22 +2390,38 @@ async function buildDashboardV2AudiencePayload(
       row.top_query,
     ].filter(Boolean).join(' ').toLowerCase().includes(filters.q);
   });
-  const uniqueClients = clientRows.length;
-  const registeredClients = clientRows.filter((row) => row.is_registered).length;
-  const proClients = clientRows.filter((row) => row.is_pro).length;
+  const dataUnavailable = identityTelemetry.truncated;
+  const fallbackKpis = buildDashboardV2Kpis(series, identityRows);
+  const uniqueClients = dataUnavailable
+    ? Number(fallbackKpis.estimated_unique_clients || 0)
+    : clientRows.length;
+  const registeredClients = dataUnavailable
+    ? users.length
+    : clientRows.filter((row) => row.is_registered).length;
+  const proClients = dataUnavailable
+    ? users.filter((user) => String(
+      (subscriptions.get(user.id) as Record<string, unknown> | undefined)?.plan || '',
+    ).toLowerCase().includes('pro')).length
+    : clientRows.filter((row) => row.is_pro).length;
   const pageCount = Math.max(1, Math.ceil(filteredClients.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * pageSize;
-  const dataUnavailable = identityTelemetry.truncated;
-  const unavailableReason = 'Exact client profiles exceed the bounded identity-row limit for this period. Choose a shorter date range.';
+  const unavailableReason = 'Searcher details exceed the safe row limit for this period. Choose a shorter date range.';
 
   return {
     funnel: {
       unique_clients: uniqueClients,
       registered_clients: registeredClients,
-      registered_percentage: uniqueClients ? registeredClients / uniqueClients : 0,
+      registered_percentage: dataUnavailable
+        ? null
+        : uniqueClients ? registeredClients / uniqueClients : 0,
       pro_clients: proClients,
-      pro_percentage: uniqueClients ? proClients / uniqueClients : 0,
+      pro_percentage: dataUnavailable
+        ? null
+        : uniqueClients ? proClients / uniqueClients : 0,
+      client_measure: dataUnavailable ? 'client_days' : 'estimated_unique_clients',
+      registered_measure: dataUnavailable ? 'all_registered_accounts' : 'active_registered_clients',
+      pro_measure: dataUnavailable ? 'all_pro_accounts' : 'active_pro_clients',
       identity_available: !dataUnavailable,
       identity_unavailable_reason: dataUnavailable ? unavailableReason : null,
       mrr: {
@@ -2186,9 +2429,12 @@ async function buildDashboardV2AudiencePayload(
         reason: 'Exact billing price is not linked to every active subscription.',
       },
     },
-    registered_users: dataUnavailable
-      ? { available: false, reason: unavailableReason, rows: [] }
-      : { available: true, rows: registeredUsers.slice(0, 100) },
+    registered_users: {
+      available: true,
+      total: users.length,
+      rows: registeredUsers.slice(0, 100),
+      activity_window: filters.key,
+    },
     clients: dataUnavailable
       ? { available: false, reason: unavailableReason, rows: [] }
       : { available: true, rows: filteredClients.slice(pageStart, pageStart + pageSize) },
@@ -2200,11 +2446,20 @@ async function buildDashboardV2AudiencePayload(
       page_count: pageCount,
     },
     meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_activity_and_all_time_accounts',
+      completeness: {
+        raw_rows_complete: !dataRows.raw_truncated,
+        identity_rows_complete: !identityTelemetry.truncated,
+        rollup_rows_complete: !dataRows.rollup_truncated,
+        account_inventory_complete: true,
+      },
       raw_row_limit_per_source: V2_MAX_RAW_ROWS_PER_SOURCE,
       raw_rows_truncated: dataRows.raw_truncated,
       identity_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       identity_rows_truncated: identityTelemetry.truncated,
+      identity_rows_skipped_unbounded: filters.key === 'all',
       rollup_rows_truncated: dataRows.rollup_truncated,
+      audience_series_measure: dataUnavailable ? 'client_days' : 'registered_and_pro_clients',
       anonymous_identity_rotates_monthly: true,
       mrr_available: false,
     }),
@@ -2217,6 +2472,9 @@ function isDashboardV2ValidationError(error: unknown) {
     message.startsWith('Choose both custom dates')
     || message.startsWith('The custom start date')
     || message.startsWith('Custom date ranges cannot exceed')
+    || message.startsWith('The dashboard data cutoff')
+    || message.startsWith('The dashboard view marker')
+    || message.startsWith('The dashboard filter marker')
   );
 }
 
@@ -2264,15 +2522,31 @@ function getQueryWorkbenchEntry(
   query: string,
   libraryFilter: unknown,
   jobCategory: unknown,
+  queryOrigin: unknown,
+  separateQueryOrigins = false,
+  channel: unknown = null,
+  separateChannels = false,
+  searcherKey: unknown = null,
+  separateSearchers = false,
 ) {
   const normalizedQuery = normalizeSearchQuery(query);
   const normalizedLibrary = normalizeReviewLibraryFilter(libraryFilter);
   const normalizedJobCategory = normalizeReviewJobCategory(jobCategory);
-  const key = buildQueryReviewContextKey({
-    query: normalizedQuery,
-    libraryFilter: normalizedLibrary,
-    jobCategory: normalizedJobCategory,
-  });
+  const normalizedQueryOrigin = normalizeSearchQuery(queryOrigin) || 'legacy_unknown';
+  const key = separateQueryOrigins || separateChannels || separateSearchers
+    ? buildQueryWorkbenchGroupKey({
+      query: normalizedQuery,
+      libraryFilter: normalizedLibrary,
+      jobCategory: normalizedJobCategory,
+      queryOrigin: separateQueryOrigins ? normalizedQueryOrigin : 'all',
+      channel: separateChannels ? channel : 'all',
+      searcherKey: separateSearchers ? searcherKey : 'all',
+    })
+    : buildQueryReviewContextKey({
+      query: normalizedQuery,
+      libraryFilter: normalizedLibrary,
+      jobCategory: normalizedJobCategory,
+    });
   const existing = map.get(key);
   if (existing) return existing;
 
@@ -2292,6 +2566,7 @@ function getQueryWorkbenchEntry(
     total_result_count: 0,
     result_samples: 0,
     minimum_result_count: null,
+    maximum_result_count: null,
     replacement_count: 0,
     unique_replacements: new Set<string>(),
     successful_attempt_count: 0,
@@ -2309,6 +2584,7 @@ function getQueryWorkbenchEntry(
     ip_hash_prefixes: new Set<string>(),
     api_key_hash_prefixes: new Set<string>(),
     estimated_client_keys: new Set<string>(),
+    searcher_details: new Map<string, Record<string, unknown>>(),
     visitor_kinds: new Set<string>(),
     countries: new Set<string>(),
     registered_user_ids: new Set<string>(),
@@ -2326,7 +2602,7 @@ function getQueryWorkbenchEntry(
     search_outcomes: new Set<string>(),
     confidence_labels: new Set<string>(),
     beta_cohorts: new Set<string>(),
-    query_origins: new Set<string>(),
+    query_origins: new Set<string>([normalizedQueryOrigin]),
     locale_attempt_counts: {} as Record<string, number>,
     first_seen: null,
     last_seen: null,
@@ -2338,6 +2614,11 @@ function getQueryWorkbenchEntry(
 function buildQueryWorkbenchRows(
   evidenceRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
+  {
+    separateQueryOrigins = false,
+    separateChannels = false,
+    separateSearchers = false,
+  } = {},
 ) {
   const map = new Map<string, Record<string, unknown>>();
 
@@ -2349,14 +2630,60 @@ function buildQueryWorkbenchRows(
     const createdAt = typeof row.created_at === 'string' ? row.created_at : null;
     const libraryFilter = row.library_filter;
     const jobCategory = row.job_category;
-    const entry = getQueryWorkbenchEntry(map, normalizedQuery, libraryFilter, jobCategory);
+    const rowChannel = classifySearchEvidenceChannel(row);
+    const recordedSearcherKey = typeof row._estimated_client_key === 'string'
+      ? row._estimated_client_key.trim()
+      : '';
+    const fallbackSearcherKey = [
+      'unknown',
+      row.source_table,
+      row.source_row_id,
+      row.request_id,
+      row.dedupe_key,
+      row.created_at,
+    ].filter(Boolean).join(':');
+    const groupedSearcherKey = recordedSearcherKey || fallbackSearcherKey || 'unknown';
+    const entry = getQueryWorkbenchEntry(
+      map,
+      normalizedQuery,
+      libraryFilter,
+      jobCategory,
+      row.query_origin,
+      separateQueryOrigins,
+      rowChannel,
+      separateChannels,
+      groupedSearcherKey,
+      separateSearchers,
+    );
     updateSeenRange(entry, createdAt);
     (entry.environments as Set<string>).add(classifySearchEvidenceEnvironment(row));
-    (entry.channels as Set<string>).add(classifySearchEvidenceChannel(row));
+    (entry.channels as Set<string>).add(rowChannel);
     (entry.query_origins as Set<string>).add(String(row.query_origin || 'legacy_unknown'));
 
-    if (typeof row._estimated_client_key === 'string' && row._estimated_client_key.trim()) {
-      (entry.estimated_client_keys as Set<string>).add(row._estimated_client_key.trim());
+    if (recordedSearcherKey || separateSearchers) {
+      const searcherKey = groupedSearcherKey;
+      if (recordedSearcherKey) {
+        (entry.estimated_client_keys as Set<string>).add(searcherKey);
+      }
+      const details = entry.searcher_details as Map<string, Record<string, unknown>>;
+      const searcher = details.get(searcherKey) || {
+        label: recordedSearcherKey && typeof row.estimated_client_key === 'string' && row.estimated_client_key.trim()
+          ? row.estimated_client_key.trim()
+          : 'Unknown searcher',
+        kind: typeof row.visitor_kind === 'string' ? row.visitor_kind : 'anonymous',
+        account_linked: Boolean(row.user_id),
+        searches: 0,
+        channels: new Set<string>(),
+        countries: new Set<string>(),
+        first_seen: createdAt,
+        last_seen: createdAt,
+      };
+      (searcher.channels as Set<string>).add(rowChannel);
+      const searcherCountry = normalizeAuditCountry(row.country_code);
+      if (searcherCountry) (searcher.countries as Set<string>).add(searcherCountry);
+      if (!searcher.first_seen || (createdAt && createdAt < String(searcher.first_seen))) searcher.first_seen = createdAt;
+      if (!searcher.last_seen || (createdAt && createdAt > String(searcher.last_seen))) searcher.last_seen = createdAt;
+      details.set(searcherKey, searcher);
     }
     if (typeof row.visitor_kind === 'string' && row.visitor_kind.trim()) {
       (entry.visitor_kinds as Set<string>).add(row.visitor_kind.trim());
@@ -2426,6 +2753,9 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'search_attempt') {
       entry.attempt_count = Number(entry.attempt_count || 0) + 1;
+      const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+        .get(groupedSearcherKey);
+      if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
       const localeKey = typeof row.locale === 'string' && row.locale.trim()
         ? row.locale.trim()
         : '(missing)';
@@ -2457,6 +2787,10 @@ function buildQueryWorkbenchRows(
         if (currentMinimum === null || resultCount < currentMinimum) {
           entry.minimum_result_count = resultCount;
         }
+        const currentMaximum = typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null;
+        if (currentMaximum === null || resultCount > currentMaximum) {
+          entry.maximum_result_count = resultCount;
+        }
         if (classification.is_true_zero) {
           entry.zero_attempt_count = Number(entry.zero_attempt_count || 0) + 1;
         } else if (classification.is_exact_low) {
@@ -2487,6 +2821,31 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'mcp_call') {
       entry.mcp_result_rows = Number(entry.mcp_result_rows || 0) + 1;
+      if (String(row.query_origin || '') === 'icon_lookup') {
+        const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
+          .get(groupedSearcherKey);
+        if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
+        const resultCount = Number(row.result_count);
+        if (Number.isFinite(resultCount)) {
+          entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
+          entry.result_samples = Number(entry.result_samples || 0) + 1;
+          const currentMinimum = typeof entry.minimum_result_count === 'number'
+            ? entry.minimum_result_count
+            : null;
+          if (currentMinimum === null || resultCount < currentMinimum) {
+            entry.minimum_result_count = resultCount;
+          }
+          const currentMaximum = typeof entry.maximum_result_count === 'number'
+            ? entry.maximum_result_count
+            : null;
+          if (currentMaximum === null || resultCount > currentMaximum) {
+            entry.maximum_result_count = resultCount;
+          }
+          if (resultCount > 0) {
+            entry.successful_signal_count = Number(entry.successful_signal_count || 0) + 1;
+          }
+        }
+      }
       if (typeof row.batch_id === 'string' && row.batch_id.trim()) {
         (entry.mcp_batch_ids as Set<string>).add(row.batch_id.trim());
         if (row.agent_converged === true) {
@@ -2533,6 +2892,8 @@ function buildQueryWorkbenchRows(
         ? Number((totalResultCount / resultSamples).toFixed(2))
         : null,
       minimum_result_count: typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null,
+      maximum_result_count: typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null,
+      result_sample_count: resultSamples,
       replacement_count: Number(entry.replacement_count || 0),
       unique_replacements: (entry.unique_replacements as Set<string>).size,
       successful_attempt_count: Number(entry.successful_attempt_count || 0),
@@ -2552,6 +2913,22 @@ function buildQueryWorkbenchRows(
       api_key_hash_count: (entry.api_key_hash_prefixes as Set<string>).size,
       api_key_hash_prefixes: [...(entry.api_key_hash_prefixes as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
       estimated_unique_clients: (entry.estimated_client_keys as Set<string>).size,
+      searcher_details: [...(entry.searcher_details as Map<string, Record<string, unknown>>).values()]
+        .map((searcher) => ({
+          label: searcher.label,
+          kind: searcher.kind,
+          account_linked: searcher.account_linked,
+          searches: searcher.searches,
+          channels: [...(searcher.channels as Set<string>)].sort(),
+          countries: [...(searcher.countries as Set<string>)].sort(),
+          first_seen: searcher.first_seen,
+          last_seen: searcher.last_seen,
+        }))
+        .sort((left, right) => (
+          String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
+          || String(left.label || '').localeCompare(String(right.label || ''))
+        ))
+        .slice(0, 100),
       visitor_kinds: [...(entry.visitor_kinds as Set<string>)].sort((a, b) => a.localeCompare(b)),
       countries: [...(entry.countries as Set<string>)].sort((a, b) => a.localeCompare(b)),
       registered_user_count: (entry.registered_user_ids as Set<string>).size,
@@ -2731,6 +3108,7 @@ async function fetchQueryRollups(
 function buildQueryWorkbenchRowsFromRollups(
   rollupRows: Array<Record<string, unknown>>,
   reviews: Map<string, QueryReviewRow>,
+  { separateQueryOrigins = false, separateChannels = false } = {},
 ) {
   const grouped = new Map<string, Record<string, unknown>>();
   const countFields = [
@@ -2751,7 +3129,15 @@ function buildQueryWorkbenchRowsFromRollups(
     const query = normalizeSearchQuery(row.query_norm);
     if (!query) continue;
     const library = normalizeReviewLibraryFilter(row.library_filter);
-    const key = buildQueryReviewContextKey({ query, libraryFilter: library, jobCategory: '' });
+    const key = separateQueryOrigins || separateChannels
+      ? buildQueryWorkbenchGroupKey({
+        query,
+        libraryFilter: library,
+        jobCategory: '',
+        queryOrigin: separateQueryOrigins ? row.query_origin : 'all',
+        channel: separateChannels ? row.channel : 'all',
+      })
+      : buildQueryReviewContextKey({ query, libraryFilter: library, jobCategory: '' });
     const entry = grouped.get(key) || {
       query,
       library_filter: library,
@@ -2806,6 +3192,8 @@ function buildQueryWorkbenchRowsFromRollups(
       successful_signal_count: 0,
       average_result_count: null,
       minimum_result_count: null,
+      maximum_result_count: null,
+      result_sample_count: 0,
       replacement_count: 0,
       unique_replacements: 0,
       copy_count: 0,
@@ -2824,6 +3212,7 @@ function buildQueryWorkbenchRowsFromRollups(
       api_key_hash_prefixes: [],
       estimated_unique_clients: null,
       client_days: Number(entry.client_days || 0),
+      searcher_details: [],
       visitor_kinds: [],
       countries: [],
       registered_user_count: 0,
@@ -3023,7 +3412,8 @@ function csvCell(value: unknown) {
   if (Array.isArray(value)) {
     return csvCell(value.join('|'));
   }
-  const text = String(value ?? '');
+  const raw = String(value ?? '');
+  const text = /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
   if (!/[",\n\r]/.test(text)) return text;
   return `"${text.replaceAll('"', '""')}"`;
 }
@@ -4932,6 +5322,17 @@ serve(async (req) => {
       && ['activity', 'overview', 'search', 'audience'].includes(segments[1])
     ) {
       return await handleDashboardV2(req, adminClient, url, segments[1]);
+    }
+
+    if (
+      req.method === 'POST'
+      && segments.length === 3
+      && segments[0] === 'v2'
+      && segments[1] === 'icon-requests'
+      && segments[2] === 'review'
+    ) {
+      const body = await req.json().catch(() => ({})) as JsonRecord;
+      return await handleDashboardV2IconRequestReview(req, adminClient, body);
     }
 
     if (req.method === 'GET' && segments.length === 1 && segments[0] === 'users') {
