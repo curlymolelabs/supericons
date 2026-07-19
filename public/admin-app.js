@@ -966,6 +966,108 @@ function plainExportRow(row = {}) {
   ]));
 }
 
+function searcherIdentityScope(kind) {
+  const scopes = {
+    registered: 'account',
+    pro: 'account',
+    api_key: 'api_key',
+    anonymous: 'monthly_rotating_client',
+    session: 'session',
+    ip: 'network_estimate',
+  };
+  return scopes[String(kind || '').toLowerCase()] || '';
+}
+
+function queryCountryExportValue(row = {}) {
+  const country = row.country_code || row.country;
+  if (row.country_available === false || !country) {
+    const count = number(row.country_count);
+    if (count > 1) return `${formatNumber(count)} countries`;
+    return row.country_reason || 'Country not recorded';
+  }
+  return country;
+}
+
+function queryReturnedExportValue(row = {}) {
+  const queryOrigin = String(row.query_origin || row.origin || '').toLowerCase();
+  if (row.result_count_available === false) {
+    return queryOrigin === 'icon_lookup'
+      ? 'Lookup completed'
+      : row.result_count_reason || '';
+  }
+  if (row.result_count_kind === 'range_across_attempts') {
+    const unit = countWithUnit(2, row.result_unit).replace(/^2 /, '');
+    return `${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)} ${unit}`;
+  }
+  const resultCount = row.result_count ?? row.results;
+  if (resultCount === null || resultCount === undefined || resultCount === '') return '';
+  if (row.result_unit === 'match' && number(resultCount) === 0) return 'Icon not found';
+  return countWithUnit(resultCount, row.result_unit);
+}
+
+function queryCsvExportRow(row = {}, searcher = null) {
+  const {
+    query,
+    searchers: ignoredSearchers,
+    library_filter: libraryFilter,
+    job_category: jobCategory,
+    query_origin: queryOrigin,
+    activity_count: activityCount,
+    activity_label: activityLabel,
+    outcome_label: outcomeLabel,
+    country_code: countryCode,
+    channel,
+    result_count: resultCount,
+    result_count_min: resultCountMin,
+    result_count_max: resultCountMax,
+    last_seen: lastSeen,
+    ...details
+  } = row;
+  const sourceSearcherCount = normalizeList(ignoredSearchers).length;
+  const searcherKind = searcher ? safeText(searcher.kind, '') : '';
+  const rawSearcherChannels = normalizeList(searcher?.channels);
+  return {
+    query,
+    searcher_identifier: searcher ? safeText(searcher.label, '') : '',
+    searches: activityCount ?? row.attempt_count ?? '',
+    outcome: outcomeLabel || outcomeFor(row).label,
+    country: queryCountryExportValue(row),
+    venue: channelLabel(channel),
+    returned: queryReturnedExportValue(row),
+    last_seen: lastSeen,
+    searcher_kind: searcherKind,
+    searcher_account_linked: searcher ? Boolean(searcher.account_linked) : null,
+    identity_scope: searcherIdentityScope(searcherKind),
+    searcher_searches: searcher?.searches ?? '',
+    searcher_venues: rawSearcherChannels.map(channelLabel).join('|'),
+    searcher_channels: rawSearcherChannels.join('|'),
+    searcher_countries: normalizeList(searcher?.countries).join('|'),
+    searcher_first_seen: searcher?.first_seen ?? '',
+    searcher_last_seen: searcher?.last_seen ?? '',
+    searcher_count_in_source_row: sourceSearcherCount,
+    library_filter: libraryFilter,
+    job_category: jobCategory ?? '',
+    query_origin: queryOrigin,
+    activity_count: activityCount,
+    activity_label: activityLabel,
+    outcome_label: outcomeLabel,
+    country_code: countryCode,
+    channel,
+    result_count: resultCount,
+    result_count_min: resultCountMin,
+    result_count_max: resultCountMax,
+    ...details,
+  };
+}
+
+function queryCsvExportRows(rows = []) {
+  return normalizeList(rows).flatMap((row) => {
+    const searchers = normalizeList(row.searchers);
+    if (!searchers.length) return [queryCsvExportRow(row)];
+    return searchers.map((searcher) => queryCsvExportRow(row, searcher));
+  });
+}
+
 function setSkeleton(element, text) {
   if (!element) return;
   element.classList.remove('skeleton');
@@ -2293,7 +2395,12 @@ async function exportData(key) {
     }),
     clients: completeRows ?? unwrapRows(audience.clients),
   };
-  const rows = normalizeList(mapping[key]).map(plainExportRow);
+  const mappedRows = normalizeList(mapping[key]);
+  const rows = key === 'queries-csv'
+    ? queryCsvExportRows(mappedRows).map(plainExportRow)
+    : key === 'queries-json'
+      ? mappedRows
+      : mappedRows.map(plainExportRow);
   exportRows(
     `supericons-${key}-${state.filters.window}`,
     rows,

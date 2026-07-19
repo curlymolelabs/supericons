@@ -71,7 +71,7 @@ function includes(source, value, label) {
   'history_attempts: filteredHistoryRows.reduce',
   'history_rows: filteredHistoryRows.length',
   'filteredWorklistRows',
-  "query_row_grain: ['searcher', 'query', 'library_filter', 'query_origin', 'channel']",
+  "query_row_grain: ['searcher', 'query', 'library_filter', 'job_category', 'query_origin', 'channel']",
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
 

@@ -39,11 +39,21 @@ const now = new Date('2026-07-17T12:00:00.000Z');
     ...sharedContext,
     searcherKey: 'anonymous:second',
   });
+  const secondJobCategory = buildDashboardV2QueryHistoryKey({
+    ...sharedContext,
+    jobCategory: 'navigation',
+    searcherKey: 'anonymous:first',
+  });
   assert.equal(firstSearcher, repeatedFirstSearcher);
   assert.notEqual(
     firstSearcher,
     secondSearcher,
     'Two searchers using the same query were incorrectly combined into one history row.',
+  );
+  assert.notEqual(
+    firstSearcher,
+    secondJobCategory,
+    'Two job categories using the same query were incorrectly combined into one history row.',
   );
 }
 
@@ -409,6 +419,7 @@ const queryRows = [
   const [grouped] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
     query: 'settings',
     library_filter: 'all',
+    job_category: 'navigation',
     attempt_count: 4,
     successful_attempt_count: 4,
     zero_attempt_count: 0,
@@ -428,6 +439,7 @@ const queryRows = [
   assert.equal(grouped.result_count_reason, 'Results ranged from 2 to 8 across 4 searches');
   assert.equal(grouped.activity_label, '4 searches');
   assert.equal(grouped.estimated_client_id_count, 2);
+  assert.equal(grouped.job_category, 'navigation');
   assert.equal('client_label' in grouped, false);
 }
 

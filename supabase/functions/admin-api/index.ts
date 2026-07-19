@@ -2275,7 +2275,7 @@ async function buildDashboardV2SearchPayload(
       history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
-      query_row_grain: ['searcher', 'query', 'library_filter', 'query_origin', 'channel'],
+      query_row_grain: ['searcher', 'query', 'library_filter', 'job_category', 'query_origin', 'channel'],
       activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
       result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
       estimated_client_id_measure: 'Searchers seen in the selected period.',

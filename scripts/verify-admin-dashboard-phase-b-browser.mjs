@@ -244,6 +244,7 @@ const queryRows = [
   {
     query: 'varying results',
     library_filter: 'lucide',
+    job_category: 'navigation',
     query_origin: 'recommend_variant',
     visitor_kind: 'registered',
     country_code: 'SG',
@@ -840,6 +841,24 @@ try {
   const queryExportText = await readFile(queryExportPath, 'utf8');
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
+  ok(queryExportText.includes('"searcher_identifier"'), 'The query CSV omits the searcher identifier column.');
+  ok(queryExportText.includes('"Registered d4e5f6"'), 'The query CSV omits the masked searcher identifier.');
+  ok(queryExportText.includes('"searcher_kind"'), 'The query CSV omits the searcher kind.');
+  ok(queryExportText.includes('"searcher_account_linked"'), 'The query CSV omits the account-link status.');
+  ok(queryExportText.includes('"identity_scope"'), 'The query CSV omits the identity scope.');
+  ok(queryExportText.includes('"job_category"'), 'The query CSV omits the job category used by the row grouping.');
+  ok(!queryExportText.includes('[object Object]'), 'The query CSV converts searcher details into object placeholder text.');
+  const queryJsonDownload = page.waitForEvent('download');
+  await page.click('[data-export="queries-json"]');
+  const queryJsonExport = await queryJsonDownload;
+  const queryJsonExportPath = await queryJsonExport.path();
+  const queryJsonRows = JSON.parse(await readFile(queryJsonExportPath, 'utf8'));
+  const registeredQueryJsonRow = queryJsonRows.find((row) => (
+    row.query === 'varying results'
+    && row.searchers?.[0]?.label === 'Registered d4e5f6'
+  ));
+  ok(Boolean(registeredQueryJsonRow), 'The query JSON loses the nested searcher details.');
+  ok(registeredQueryJsonRow.job_category === 'navigation', 'The query JSON omits the job category used by the row grouping.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');
