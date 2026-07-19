@@ -2,7 +2,7 @@
 
 Date: 2026-07-20
 
-Lifecycle state: built and verified locally, not published, not merged to main, and not promoted on any public venue.
+Lifecycle state: built, independently reproduced, and bound to a verified one-use npm publication packet. It is not published, not merged to main, and not promoted on any public venue.
 
 ## Candidate identity
 
@@ -89,12 +89,18 @@ The pinned GeoLite2 Country package is dated 2026-06-17 and is 32 days old. A re
 
 ## Remaining gates
 
-1. An independent reviewer must reproduce the archive identity, 14-case matrix, 150-case route fingerprint, and VC-3 and VC-4 probes.
-2. Publication requires the existing explicit approval for the `beta` tag. npm `latest` must remain unchanged.
-3. After publication, verify the registry tarball hash, installed package behavior, `beta` tag, and unchanged `latest` tag.
+1. Sign in to npm so the verified one-use packet can create and download-check one private stage. The failed login preflight created no receipt and made no staged upload.
+2. The owner approves only that verified stage through npm's browser security-key flow.
+3. After approval, run the manifest-bound finalizer. It verifies registry identity, installed behavior, the `beta` tag, and unchanged `latest`. A failure deprecates only beta.2 and restores `beta` to beta.1.
 4. Public venue replacement remains a later decision. This candidate is the beta.2 validation package, not approval to promote every surface.
 
-The keyless docs artifact is a separate production release. Its browser smoke passed, but its production deploy still waits for the independent docs packet GO.
+The keyless docs artifact is a separate production release. Netlify deploy `6a5d3d4c1967b6dadfb1104d` is live and passed the remote client, keyless-copy, provenance, canary, and preview checks.
+
+## Independent release packet
+
+Manifest `c15133ea945ca350959aa2eb64341b6390a812618d47ee147552261ab646cfd6` passed all 16 publication probes. The audit independently reproduced the archive SHA-256, all 14 beta.1 rejection cases, the 150-case installed route fingerprint with zero hosted calls, the 225-case fingerprint, VC-3 and VC-4, the full prepublish suite, and zero dependency vulnerabilities.
+
+The audit also corrected a stale release-control check before the packet was sealed. The beta.0 incident record remains historical. A new beta.2 guardrail binds current local-first routing, D-030 evidence rules, local p95 at 500 ms, and beta-tag rollback to beta.1. Rollback self-tests passed for integrity, tag, smoke, packet, and authentication failures with zero npm `latest` mutations.
 
 ## Independent reproduction commands
 
