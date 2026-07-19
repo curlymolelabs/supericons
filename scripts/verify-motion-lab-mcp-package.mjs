@@ -49,6 +49,7 @@ const expectedFiles = [
   'recommend-icons.js',
   'release-channel.js',
   'remote-server.js',
+  'search-query-normalization.js',
   'search-tool-shell.js',
   'runtime/converter-workflow.js',
   'runtime/cjk-search-core.js',

@@ -11,7 +11,12 @@ const outputPaths = [
   path.join(repoRoot, 'mcp', 'public', 'product-facts.json'),
 ];
 
-const productFacts = await buildProductFactsObject();
+const generatedAtFlag = process.argv.indexOf('--generated-at');
+const generatedAt = generatedAtFlag >= 0 ? process.argv[generatedAtFlag + 1] : new Date().toISOString();
+if (new Date(generatedAt).toISOString() !== generatedAt) {
+  throw new Error('The product facts timestamp must use the exact ISO UTC format.');
+}
+const productFacts = await buildProductFactsObject({ generatedAt });
 
 for (const outputPath of outputPaths) {
   await fs.mkdir(path.dirname(outputPath), { recursive: true });

@@ -473,7 +473,6 @@ function expandSingleTerm(word, synonyms, options = {}) {
   for (const [key, values] of Object.entries(synonyms)) {
     if (values.some(v => v === word || v.split(' ').includes(word))) {
       terms.add(key);
-      values.forEach(t => terms.add(t));
     }
   }
 
@@ -803,8 +802,12 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
     const { lowerName: name, lowerId: id, segments } = getIconSearchMetadata(icon);
     return sets.every(terms =>
       terms.some(term => {
-        if (term.length <= 3) return segments.some(s => s === term);
-        return name.includes(term) || id.includes(term);
+        const normalizedTerm = normalizeSemanticText(term);
+        const termWords = tokenizeSemanticText(normalizedTerm);
+        if (termWords.length <= 1) {
+          return segments.some((segment) => segment === normalizedTerm);
+        }
+        return name.includes(normalizedTerm) || id.includes(normalizedTerm);
       })
     );
   };

@@ -9,6 +9,7 @@ import {
 } from '../mcp/usage-attribution.js';
 
 const mcpPackage = JSON.parse(readFileSync('mcp/package.json', 'utf8'));
+const dependencyFreshness = JSON.parse(readFileSync('data/dependency-freshness.json', 'utf8'));
 const remoteSource = readFileSync('mcp/remote-server.js', 'utf8');
 const notices = readFileSync('THIRD_PARTY_NOTICES.md', 'utf8');
 
@@ -73,7 +74,18 @@ const versionDateMatch = mcpPackage.dependencies['@ip-location-db/geolite2-count
 assert.ok(versionDateMatch, 'The pinned GeoIP package version must contain its dataset date.');
 const versionDate = Date.parse(`${versionDateMatch[1].slice(0, 4)}-${versionDateMatch[1].slice(4, 6)}-${versionDateMatch[1].slice(6, 8)}T00:00:00Z`);
 const ageDays = Math.floor((Date.now() - versionDate) / 86400000);
-assert.ok(ageDays >= 0 && ageDays <= 30, `The pinned GeoIP dataset is ${ageDays} days old.`);
+assert.ok(ageDays >= 0, 'The pinned GeoIP dataset date cannot be in the future.');
+const geoLiteFreshness = dependencyFreshness.packages['@ip-location-db/geolite2-country-mmdb'];
+assert.equal(geoLiteFreshness.installed_version, mcpPackage.dependencies['@ip-location-db/geolite2-country-mmdb']);
+assert.equal(geoLiteFreshness.latest_version, mcpPackage.dependencies['@ip-location-db/geolite2-country-mmdb']);
+assert.match(geoLiteFreshness.latest_integrity, /^sha512-[A-Za-z0-9+/]+=*$/);
+const registryCheckAgeDays = Math.floor(
+  (Date.now() - Date.parse(dependencyFreshness.checked_at)) / 86400000,
+);
+assert.ok(
+  registryCheckAgeDays >= 0 && registryCheckAgeDays <= 7,
+  `The GeoIP registry check is ${registryCheckAgeDays} days old.`,
+);
 
 for (const field of ['query_origin', 'requested_limit', 'client_ip_public']) {
   assert.match(remoteSource, new RegExp(`\\b${field}:`), `Hosted telemetry must write ${field}.`);
@@ -93,5 +105,7 @@ console.log(JSON.stringify({
   geoip_reader: mcpPackage.dependencies.maxmind,
   geoip_database: mcpPackage.dependencies['@ip-location-db/geolite2-country-mmdb'],
   dataset_age_days: ageDays,
+  registry_latest_version: geoLiteFreshness.latest_version,
+  registry_check_age_days: registryCheckAgeDays,
   telemetry_fields: ['query_origin', 'requested_limit', 'client_ip_public'],
 }, null, 2));

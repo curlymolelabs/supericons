@@ -37,7 +37,7 @@ const FREE_MCP_TOOL_IDS = Object.freeze([
   'list_libraries',
 ]);
 
-export async function buildProductFactsObject() {
+export async function buildProductFactsObject({ generatedAt = new Date().toISOString() } = {}) {
   const freeCatalog = await readJson('public/icon-index.json');
   const premiumManifest = await readJson('public/packs/manifest.json');
   const mcpPackage = await readJson('mcp/package.json');
@@ -55,7 +55,7 @@ export async function buildProductFactsObject() {
   const freeIconsRounded = roundDownDisplayCount(freeIconCount);
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     freeIconCount,
     freeLibraryCount,
     premiumCollectionCount,

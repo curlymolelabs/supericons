@@ -30,6 +30,17 @@ function searchableText(icon) {
 const icons = readJson('mcp/public/icon-index.json').icons
   .filter((icon) => icon.style !== 'solid');
 const synonyms = readJson('mcp/public/synonyms.json');
+
+const favoriteResults = searchIcons('favorite', icons, synonyms, {
+  library: 'material',
+  libraryMode: 'strict',
+  limit: 5,
+});
+assert.equal(favoriteResults.length, 5);
+assert.ok(
+  favoriteResults.every((icon) => /favorite|heart|star|bookmark/.test(searchableText(icon))),
+  'favorite must not return substring fillers such as start or saver',
+);
 const cases = [
   {
     id: 'analytics-dashboard-prefer-tabler',
