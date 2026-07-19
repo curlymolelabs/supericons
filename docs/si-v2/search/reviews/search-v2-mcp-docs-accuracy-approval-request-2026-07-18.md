@@ -24,8 +24,8 @@ The public setup continues to use `@supericons/mcp@latest`. It does not advertis
 
 ## Local evidence
 
-- The exact protected web artifact contains 188 files and 41,234,684 bytes.
-- Its content-tree SHA-256 is `81b320dc3f101cd4f9431f17e3876a91c16d689f1d4e51d01a2ffbb01fcca5c4`.
+- The exact protected web artifact contains 188 files and 41,235,944 bytes.
+- Its content-tree SHA-256 is `c465324c7a8294a76f5f483bad6606755925b63fa577591763262d6b86ab3487`.
 - Browser checks pass for all seven tabs, exact setup text, file locations, clipboard behavior, keyboard navigation, and narrow-screen access.
 - The browser test verifies the English keyless statement and a German localized spot check.
 - Website and MCP locale catalogs match their maintained source files.
@@ -47,8 +47,16 @@ The runner stops before reservation if production no longer matches the pinned r
 
 The Netlify command is bound to version `23.15.1` and to the exact hashes of its entry point and package record.
 
+## Release attempts and outcome
+
+The first one-use manifest was consumed on 2026-07-20. Netlify accepted deploy `6a5d3aaf20758f02b79be91a`, but its site record briefly continued to report the previous production deploy. The runner treated that temporary response as a mismatch and restored the pinned deploy `6a5a62e4382d02608226d0f7`. The local receipt records status `rolled_back`.
+
+The second one-use manifest added a bounded visibility wait. Netlify accepted deploy `6a5d3c3a02c7340daaf4715e`, and the intended deploy became visible. The later live check incorrectly normalized the provenance file's line endings before comparing them with its raw-byte hash, so the runner again restored the pinned deploy. Direct checks against that deploy's permanent URL confirmed the raw provenance SHA-256 is the expected `e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94`, all three canaries are present, and the client-tab and preview suites pass.
+
+The current replacement packet keeps the same site, artifact, mutation budget, and rollback target. It checks the published deploy up to 30 times at two-second intervals before treating visibility as failed, and it verifies the provenance file as exact response bytes. A timeout or any later live verification failure still restores only the pinned deploy.
+
 ## External action status
 
-This packet prepares evidence for independent review. It does not itself authorize or perform a deployment. No reviewer GO is recorded in this packet yet.
+The final manifest `7c36b1a5855a3921b2be1a00f364f5e81f671b673a1cd2e942b8ad1c3a83ccb8` passed the full packet verification and was consumed once. Netlify deploy `6a5d3d4c1967b6dadfb1104d` is published on `https://supericons.dev`.
 
-The accepted product decision is unchanged: correct the public MCP setup and access guidance before invitations are shared. Review is the remaining safety gate, not a request to revisit that product decision.
+The live release checks passed the homepage keyless guidance, exact provenance bytes, all three canaries, all seven client setups, and the preview persistence regression suite. A read-only Netlify check after completion confirmed the same deploy is current and ready.

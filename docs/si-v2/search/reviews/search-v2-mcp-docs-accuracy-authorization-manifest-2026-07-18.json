@@ -7,8 +7,8 @@
     "default_user_change": "The website explains that free MCP tools work without an API key and shows a working setup for each advertised client."
   },
   "preparation": {
-    "source_commit": "5d3f29e97c322142eea9d2d40f4fda55558e471e",
-    "source_tree": "b348f3617897e56cd600b7a0e67ba599c6e35eb7",
+    "source_commit": "4933f4bc3d31fc4a4b81c414f58f80bc74335313",
+    "source_tree": "db57ca11f8efbcb98d0fd2d0dc3fd70dccc55fd6",
     "allowed_packet_paths": [
       "docs/si-v2/search/reviews/search-v2-mcp-docs-accuracy-approval-request-2026-07-18.md",
       "docs/si-v2/search/reviews/search-v2-mcp-docs-accuracy-authorization-manifest-2026-07-18.json",
@@ -16,20 +16,20 @@
       "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs"
     ],
     "required_file_sha256": {
-      "lib/mcp-client-configs.js": "a9b9c5456e108dbf27cbb976b9eeece1aaa9e86bfa96682b1ae86e629aef185e",
+      "lib/mcp-client-configs.js": "0dd3791ba421a847e437a05dc2555f5c36a05061b92f09f673d88044699ccef0",
       "index.html": "19b03139b48f6a7f8bb25673e34eb61de3ee3b15ed656afec99d22e22b911e1b",
       "main.js": "09468cc82ce8881c9ac989494e5a4585d07f6da17b98679d7e46e827d7f74d1a",
       "style.css": "6235b56dbb09ecee8f6f297648d4c946750b48a22642b1221164eab12a1012d1",
-      "docs-pages.js": "97ecec1c1e9f8161d13e48a71d463ebff6a0ba601393d9c6d72649a687928164",
+      "docs-pages.js": "8643bd335d28c4ae93a1d7264a535cb444ee182f07e4e70e81bdcf2e65ba6d90",
       "lib/docs-search-index.js": "79b037b967762f3a40e7be00197bde6a621deedef5c25f04ef0f22b15b932e3b",
-      "scripts/verify-mcp-client-tabs-browser.mjs": "7906d5fa1a748a9e8ee7ff41c783c0969d1270bdbd0ebd64c272bb14e07be9f6",
+      "scripts/verify-mcp-client-tabs-browser.mjs": "0ef621b4972b9d134f4451353c0833a51b6e0407a01891240d53d124b49b3642",
       "scripts/verify-i18n-catalogs.mjs": "eaa1a7d97eafbacbe515876c813f4e6df100f4544643499c14c06a19aad11847",
       "scripts/verify-mcp-preview-persistence.mjs": "4670ae90baf0cf7143aac4464ddb8f19a70975e200d88384a709cf8a60497229",
       "scripts/build-web-preview-persistence-release.mjs": "a5f067088530759cdcb5efbd52cfdbb960e5fa7d7676d519dcbfb9e44a614a47",
       "scripts/build-search-v2-protected-public-artifacts.mjs": "1fb59abab29ff6ed2222fee9a906dfefa3cf1a1b160bc68aa49dd784b101723d",
       "scripts/verify-search-v2-protected-public-artifacts.mjs": "894207a7a16288ca92d5c3e7f7f47189824371b129ae5eb40473c873ccae06ea",
-      "scripts/run-mcp-docs-accuracy-web-release.mjs": "b74ed70fdf3a7c68e155302fc88fcf13f067293e1b948e586ffc7abad42510a5",
-      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "c8df141bf4fba197d82f6a19b55b161a347f85baf11fa5793d9affc1643849ac",
+      "scripts/run-mcp-docs-accuracy-web-release.mjs": "efd796f09b3456ec008cad634ce10635200e40550d71f25bf906f1d734f363bd",
+      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "1abfd942fa6ef0e7c23564ae3156f3caa4b61072a43cdab5d26355bb82d8c354",
       "mcp/THIRD_PARTY_PROVENANCE.json": "e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94",
       "package.json": "8dad89b98a04f0a7a75468f9f62f97b9453ec54c1e34f113905e740fcc485f48",
       "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
@@ -40,8 +40,8 @@
   "artifact": {
     "directory": "dist",
     "file_count": 188,
-    "total_bytes": 41234684,
-    "tree_sha256": "81b320dc3f101cd4f9431f17e3876a91c16d689f1d4e51d01a2ffbb01fcca5c4",
+    "total_bytes": 41235944,
+    "tree_sha256": "c465324c7a8294a76f5f483bad6606755925b63fa577591763262d6b86ab3487",
     "build_rule": "Build once from the pinned source, apply the protected web overlays, verify those exact bytes, then deploy with no additional build."
   },
   "protection": {
@@ -68,7 +68,10 @@
     "rollback_deploy_id": "6a5a62e4382d02608226d0f7",
     "rollback_deploy_published_at": "2026-07-17T17:14:25.906Z",
     "rollback_deploy_title": "Preserve MCP preview results on the Supericons web grid",
-    "preflight_rule": "Stop before reservation or deployment if the current published deploy is not the pinned rollback deploy."
+    "preflight_rule": "Stop before reservation or deployment if the current published deploy is not the pinned rollback deploy.",
+    "visibility_poll_attempts": 30,
+    "visibility_poll_interval_ms": 2000,
+    "visibility_rule": "After deployment, check the published deploy for up to 60 seconds before treating visibility as failed."
   },
   "mutation_budget": {
     "netlify_production_deployments": 1,
@@ -145,9 +148,9 @@
       "evidence": "A failed site read after deployment still makes one exact restore call and verifies the restored state."
     },
     {
-      "id": "delayed_visibility_exact_rollback",
+      "id": "delayed_visibility_wait_then_verify",
       "status": "enforced",
-      "evidence": "A temporarily old published-deploy response still makes one exact restore call."
+      "evidence": "A temporarily old published-deploy response is retried and succeeds without a restore when the intended deploy becomes visible within the bounded wait."
     },
     {
       "id": "rollback_failure_terminal_record",
@@ -162,7 +165,7 @@
     {
       "id": "mcp_client_tabs_all_seven",
       "status": "enforced",
-      "evidence": "Every advertised client selects its own valid setup and exact file location."
+      "evidence": "Every advertised client selects its own valid setup and exact file location. The OpenCode assertion requires Project: opencode.json or opencode.jsonc. Global: ~/.config/opencode/opencode.json or ~/.config/opencode/opencode.jsonc."
     },
     {
       "id": "active_config_clipboard",
@@ -203,7 +206,7 @@
     "protection": "The public license, provenance, canaries, and protected-class boundary match the staged artifact."
   },
   "rollback": {
-    "trigger": "Any deploy response mismatch, site-read failure, delayed visibility, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
+    "trigger": "Any deploy response mismatch, site-read failure or visibility timeout after the bounded checks, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
     "action": "After any deployment attempt, restore Netlify deploy 6a5a62e4382d02608226d0f7 once without requiring a pre-restore site read, verify it is current, record the failure, and stop.",
     "replay": "Any in-progress, successful, rolled-back, or rollback-failed receipt blocks another execution. Reconciliation requires a new independently reviewed manifest."
   },

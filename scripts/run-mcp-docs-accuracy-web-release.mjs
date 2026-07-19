@@ -39,6 +39,11 @@ export function sha256NormalizedText(path) {
   return sha256Buffer(readFileSync(path, 'utf8').replace(/\r\n/g, '\n'));
 }
 
+export function assertExactProvenanceBytes(value, expectedHash) {
+  assert.equal(sha256Buffer(value), expectedHash);
+  return true;
+}
+
 function parseFirstJsonValue(text) {
   const source = String(text || '').replace(/^\uFEFF/, '');
   for (let start = 0; start < source.length; start += 1) {
@@ -152,6 +157,39 @@ async function currentPublishedDeploy(netlify, siteId) {
   return site.published_deploy;
 }
 
+export async function waitForPublishedDeploy(
+  netlify,
+  siteId,
+  deployId,
+  {
+    maximumAttempts = 30,
+    intervalMs = 2000,
+    wait = (milliseconds) => new Promise((resolvePromise) => {
+      setTimeout(resolvePromise, milliseconds);
+    }),
+  } = {},
+) {
+  assert.ok(Number.isInteger(maximumAttempts) && maximumAttempts >= 1);
+  assert.ok(Number.isInteger(intervalMs) && intervalMs >= 0);
+  assert.equal(typeof wait, 'function');
+  let lastFailure = null;
+
+  for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
+    try {
+      const published = await currentPublishedDeploy(netlify, siteId);
+      if (published.id === deployId) return published;
+      lastFailure = `production still reports deploy ${published.id}`;
+    } catch (error) {
+      lastFailure = error?.message || String(error);
+    }
+    if (attempt < maximumAttempts) await wait(intervalMs);
+  }
+
+  throw new Error(
+    `New production deploy did not become visible after ${maximumAttempts} checks: ${lastFailure}`,
+  );
+}
+
 async function restoreExactDeploy(netlify, siteId, deployId) {
   await netlify([
     'api',
@@ -171,6 +209,7 @@ export async function executeBoundedNetlifyRelease({
   receiptRoot = defaultReceiptRoot,
   netlify,
   verifyLive,
+  visibilityWait = {},
   now = () => new Date().toISOString(),
 }) {
   assert.equal(typeof netlify, 'function');
@@ -218,8 +257,12 @@ export async function executeBoundedNetlifyRelease({
     deploymentId = deployment.deploy_id || deployment.id;
     assert.match(deploymentId || '', /^[a-z0-9]{24}$/);
 
-    const published = await currentPublishedDeploy(netlify, siteId);
-    assert.equal(published.id, deploymentId);
+    const published = await waitForPublishedDeploy(
+      netlify,
+      siteId,
+      deploymentId,
+      visibilityWait,
+    );
     assert.equal(new URL(published.ssl_url).hostname, manifest.netlify.hostname);
 
     const liveEvidence = await verifyLive(published.ssl_url);
@@ -401,24 +444,28 @@ export function prepareAndVerifyArtifact({
   };
 }
 
-async function verifyRemoteWebSurface(baseUrl, manifest, privateRecordPath) {
+export async function verifyRemoteWebSurface(baseUrl, manifest, privateRecordPath) {
   const root = new URL(baseUrl);
-  const fetchText = async (pathname) => {
+  const fetchResponse = async (pathname) => {
     const url = new URL(pathname, root);
     url.searchParams.set('release_check', Date.now().toString());
     const response = await fetch(url, { redirect: 'follow' });
     assert.equal(response.ok, true, `${pathname} returned HTTP ${response.status}.`);
-    return response.text();
+    return response;
   };
+  const fetchText = async (pathname) => (await fetchResponse(pathname)).text();
+  const fetchBytes = async (pathname) => Buffer.from(
+    await (await fetchResponse(pathname)).arrayBuffer(),
+  );
 
   const homepage = await fetchText('/');
   assert.match(homepage, /mcpClientTabs/);
   assert.match(homepage, /Free icon tools work without an API key/);
   const license = await fetchText('/search-engine-license.txt');
   assert.match(license, /may not extract/);
-  const provenanceText = await fetchText('/THIRD_PARTY_PROVENANCE.json');
-  assert.equal(
-    sha256Buffer(provenanceText.replace(/\r\n/g, '\n')),
+  const provenanceBytes = await fetchBytes('/THIRD_PARTY_PROVENANCE.json');
+  assertExactProvenanceBytes(
+    provenanceBytes,
     manifest.protection.third_party_provenance_sha256,
   );
   const synonyms = JSON.parse(await fetchText('/synonyms.json'));
@@ -523,6 +570,10 @@ async function main() {
     artifactRoot: join(outputRoot, 'dist'),
     netlify: createNetlifyInvoker(manifest.toolchain.netlify_cli),
     verifyLive: (baseUrl) => verifyRemoteWebSurface(baseUrl, manifest, defaultPrivateRecord),
+    visibilityWait: {
+      maximumAttempts: manifest.netlify.visibility_poll_attempts,
+      intervalMs: manifest.netlify.visibility_poll_interval_ms,
+    },
   });
   console.log(JSON.stringify(result, null, 2));
 }
