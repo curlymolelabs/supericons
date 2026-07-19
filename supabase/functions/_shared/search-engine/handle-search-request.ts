@@ -4,7 +4,12 @@ import { buildPrivateRowMaps } from './catalog.ts';
 import { retrieveCandidateBatches } from './candidate-retrieval.ts';
 import { normalizeQuery } from './normalize.ts';
 import { rerankCandidates } from './rank.ts';
-import { enforceSearchRateLimit, SearchEngineHttpError } from './rate-limit.ts';
+import {
+  enforceDailyAllowance,
+  enforceSearchRateLimit,
+  resolveAllowanceTier,
+  SearchEngineHttpError,
+} from './rate-limit.ts';
 import { hydrateServingSvgRows, type FinalSvgRow } from './result-hydration.ts';
 import {
   filterEligibleMaterialCandidates,
@@ -493,6 +498,14 @@ export async function handleSearchRequest(
       'account_resolution',
       () => resolveSearchAuditAccount(adminClient, req, auditContext.api_key_hash),
     );
+
+    // Tiered daily allowance; inert unless SEARCH_ENGINE_TIER_ENFORCEMENT=on.
+    // Meter the same key the audit row uses: the forwarded per-client hash from
+    // trusted server-side ingresses (Railway) wins over the connection identity.
+    await enforceDailyAllowance(adminClient, {
+      ipHash: auditContext.ip_hash || identity.ipHash,
+      tier: resolveAllowanceTier(account),
+    });
 
     const intentProfile = buildSearchIntentProfile(queryNorm);
     const queryVariants = buildSearchRankingQueryVariants(

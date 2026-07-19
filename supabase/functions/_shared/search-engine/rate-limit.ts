@@ -114,6 +114,88 @@ export async function getAuditIdentity(req: Request) {
   };
 }
 
+// Tiered daily fair-use allowances measured in
+// docs/si-v2/search/experiments/hosted-allowance-measurement-2026-07-19.md.
+// Enforcement is disabled unless SEARCH_ENGINE_TIER_ENFORCEMENT=on (D-028/FR-43:
+// it stays off until free-key issuance is live and both ingresses resolve tiers equally).
+export const HOSTED_ALLOWANCE_POLICY = Object.freeze({
+  version: '2026-07-19',
+  burstPerMinute: 120,
+  dailyByTier: Object.freeze({
+    anonymous: 300,
+    registered_free: 1500,
+    paid: 5000,
+  }),
+});
+
+export type AllowanceTier = keyof typeof HOSTED_ALLOWANCE_POLICY.dailyByTier;
+
+export function isTierEnforcementEnabled() {
+  return String(Deno.env.get('SEARCH_ENGINE_TIER_ENFORCEMENT') || '').trim().toLowerCase() === 'on';
+}
+
+export function resolveAllowanceTier(
+  account: { isRegistered?: boolean; isPro?: boolean } | null | undefined,
+): AllowanceTier {
+  if (account?.isPro) return 'paid';
+  if (account?.isRegistered) return 'registered_free';
+  return 'anonymous';
+}
+
+export function secondsUntilUtcMidnight(now = new Date()) {
+  const reset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+  return Math.max(1, Math.ceil((reset.getTime() - now.getTime()) / 1000));
+}
+
+export async function enforceDailyAllowance(
+  adminClient: {
+    from: (table: string) => {
+      select: (columns: string, options: { count: 'exact'; head: true }) => {
+        eq: (column: string, value: string) => {
+          gte: (column: string, value: string) => Promise<{ count: number | null; error: unknown }>;
+        };
+      };
+    };
+  },
+  { ipHash, tier }: { ipHash: string | null; tier: AllowanceTier },
+) {
+  if (!isTierEnforcementEnabled()) return;
+  if (!ipHash) return;
+
+  const dailyLimit = HOSTED_ALLOWANCE_POLICY.dailyByTier[tier]
+    ?? HOSTED_ALLOWANCE_POLICY.dailyByTier.anonymous;
+  const now = new Date();
+  const utcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const { count, error } = await adminClient
+    .from('search_request_audit')
+    .select('id', { count: 'exact', head: true })
+    .eq('ip_hash', ipHash)
+    .gte('created_at', utcMidnight.toISOString());
+
+  if (error) {
+    // Fail open on lookup errors: the allowance protects against abuse, and a
+    // metering outage must never take search availability down with it.
+    return;
+  }
+
+  if ((count || 0) + 1 > dailyLimit) {
+    const retryAfterSeconds = secondsUntilUtcMidnight(now);
+    throw new SearchEngineHttpError('Daily fair-use search allowance reached.', {
+      status: 429,
+      code: 'search_daily_allowance_reached',
+      hint: 'The allowance resets at 00:00 UTC.',
+      retryable: true,
+      details: {
+        retry_after_seconds: retryAfterSeconds,
+        limit_scope: 'daily_allowance',
+        tier,
+        daily_limit: dailyLimit,
+        resets_at_utc: new Date(utcMidnight.getTime() + (24 * 60 * 60 * 1000)).toISOString(),
+      },
+    });
+  }
+}
+
 export async function enforceSearchRateLimit(req: Request, requestCost = 1) {
   const identity = await getAuditIdentity(req);
   if (!identity.ipHash) return identity;
