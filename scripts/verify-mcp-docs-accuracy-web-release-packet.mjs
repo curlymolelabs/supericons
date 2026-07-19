@@ -25,6 +25,8 @@ assert.ok(expectedIndex >= 0, '--expected-manifest is required.');
 const expectedManifestHash = args[expectedIndex + 1];
 assert.equal(sha256NormalizedText(manifestPath), expectedManifestHash);
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+assert.equal(manifest.netlify.visibility_poll_attempts, 30);
+assert.equal(manifest.netlify.visibility_poll_interval_ms, 2000);
 
 const expectedProbeInventory = [
   'exact_artifact_rebuild',
@@ -39,7 +41,7 @@ const expectedProbeInventory = [
   'single_use_release_receipt',
   'postdeploy_exact_rollback',
   'postdeploy_read_failure_exact_rollback',
-  'delayed_visibility_exact_rollback',
+  'delayed_visibility_wait_then_verify',
   'rollback_failure_terminal_record',
   'netlify_cli_binding',
   'mcp_client_tabs_all_seven',
@@ -169,6 +171,11 @@ async function executeWithMock(receiptRoot, mock, verifyLive) {
     receiptRoot,
     netlify: mock.netlify,
     verifyLive,
+    visibilityWait: {
+      maximumAttempts: 3,
+      intervalMs: 0,
+      wait: async () => {},
+    },
   });
 }
 
@@ -234,7 +241,7 @@ async function runMutationSelfTests() {
       const receiptRoot = join(temporaryRoot, 'post-deploy-read-failure');
       const mock = createMockNetlify({
         rollbackDeployId: manifest.netlify.rollback_deploy_id,
-        postDeployReadFailures: 1,
+        postDeployReadFailures: 3,
       });
       await expectRejected(
         () => executeWithMock(receiptRoot, mock, async () => ({ status: 'ok' })),
@@ -250,12 +257,15 @@ async function runMutationSelfTests() {
         rollbackDeployId: manifest.netlify.rollback_deploy_id,
         delayedVisibilityReads: 1,
       });
-      await expectRejected(
-        () => executeWithMock(receiptRoot, mock, async () => ({ status: 'ok' })),
-        /production was restored/,
+      const result = await executeWithMock(
+        receiptRoot,
+        mock,
+        async () => ({ status: 'ok' }),
       );
+      assert.equal(result.status, 'published_and_verified');
       assert.equal(commandCount(mock.calls, 'deploy'), 1);
-      assert.equal(commandCount(mock.calls, 'api', 'restoreSiteDeploy'), 1);
+      assert.equal(commandCount(mock.calls, 'api', 'restoreSiteDeploy'), 0);
+      assert.equal(commandCount(mock.calls, 'api', 'getSite'), 3);
     }
 
     {
@@ -323,7 +333,7 @@ console.log(JSON.stringify({
     wrong_production_zero_deploy: true,
     smoke_failure_one_exact_restore: true,
     postdeploy_read_failure_one_exact_restore: true,
-    delayed_visibility_one_exact_restore: true,
+    delayed_visibility_wait_then_verify: true,
     rollback_failure_terminal_and_replay_safe: true,
   },
   netlify_cli: netlifyCli,

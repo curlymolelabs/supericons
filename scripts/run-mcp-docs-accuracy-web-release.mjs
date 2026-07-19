@@ -152,6 +152,39 @@ async function currentPublishedDeploy(netlify, siteId) {
   return site.published_deploy;
 }
 
+export async function waitForPublishedDeploy(
+  netlify,
+  siteId,
+  deployId,
+  {
+    maximumAttempts = 30,
+    intervalMs = 2000,
+    wait = (milliseconds) => new Promise((resolvePromise) => {
+      setTimeout(resolvePromise, milliseconds);
+    }),
+  } = {},
+) {
+  assert.ok(Number.isInteger(maximumAttempts) && maximumAttempts >= 1);
+  assert.ok(Number.isInteger(intervalMs) && intervalMs >= 0);
+  assert.equal(typeof wait, 'function');
+  let lastFailure = null;
+
+  for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
+    try {
+      const published = await currentPublishedDeploy(netlify, siteId);
+      if (published.id === deployId) return published;
+      lastFailure = `production still reports deploy ${published.id}`;
+    } catch (error) {
+      lastFailure = error?.message || String(error);
+    }
+    if (attempt < maximumAttempts) await wait(intervalMs);
+  }
+
+  throw new Error(
+    `New production deploy did not become visible after ${maximumAttempts} checks: ${lastFailure}`,
+  );
+}
+
 async function restoreExactDeploy(netlify, siteId, deployId) {
   await netlify([
     'api',
@@ -171,6 +204,7 @@ export async function executeBoundedNetlifyRelease({
   receiptRoot = defaultReceiptRoot,
   netlify,
   verifyLive,
+  visibilityWait = {},
   now = () => new Date().toISOString(),
 }) {
   assert.equal(typeof netlify, 'function');
@@ -218,8 +252,12 @@ export async function executeBoundedNetlifyRelease({
     deploymentId = deployment.deploy_id || deployment.id;
     assert.match(deploymentId || '', /^[a-z0-9]{24}$/);
 
-    const published = await currentPublishedDeploy(netlify, siteId);
-    assert.equal(published.id, deploymentId);
+    const published = await waitForPublishedDeploy(
+      netlify,
+      siteId,
+      deploymentId,
+      visibilityWait,
+    );
     assert.equal(new URL(published.ssl_url).hostname, manifest.netlify.hostname);
 
     const liveEvidence = await verifyLive(published.ssl_url);
@@ -523,6 +561,10 @@ async function main() {
     artifactRoot: join(outputRoot, 'dist'),
     netlify: createNetlifyInvoker(manifest.toolchain.netlify_cli),
     verifyLive: (baseUrl) => verifyRemoteWebSurface(baseUrl, manifest, defaultPrivateRecord),
+    visibilityWait: {
+      maximumAttempts: manifest.netlify.visibility_poll_attempts,
+      intervalMs: manifest.netlify.visibility_poll_interval_ms,
+    },
   });
   console.log(JSON.stringify(result, null, 2));
 }

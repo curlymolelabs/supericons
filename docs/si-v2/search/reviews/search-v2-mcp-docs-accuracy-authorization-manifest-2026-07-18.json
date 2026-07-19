@@ -28,8 +28,8 @@
       "scripts/build-web-preview-persistence-release.mjs": "a5f067088530759cdcb5efbd52cfdbb960e5fa7d7676d519dcbfb9e44a614a47",
       "scripts/build-search-v2-protected-public-artifacts.mjs": "1fb59abab29ff6ed2222fee9a906dfefa3cf1a1b160bc68aa49dd784b101723d",
       "scripts/verify-search-v2-protected-public-artifacts.mjs": "894207a7a16288ca92d5c3e7f7f47189824371b129ae5eb40473c873ccae06ea",
-      "scripts/run-mcp-docs-accuracy-web-release.mjs": "b74ed70fdf3a7c68e155302fc88fcf13f067293e1b948e586ffc7abad42510a5",
-      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "c8df141bf4fba197d82f6a19b55b161a347f85baf11fa5793d9affc1643849ac",
+      "scripts/run-mcp-docs-accuracy-web-release.mjs": "3ea6ca728d3e409303edd5cbe7ccb12c8138073003f105887c4dc1f55f030df8",
+      "scripts/verify-mcp-docs-accuracy-web-release-packet.mjs": "24f9073dbf972cd4261b13f27de672570a9f44e0d26467c0f454f2b657852e60",
       "mcp/THIRD_PARTY_PROVENANCE.json": "e86d3d35ad3b5bd1436d19d3c44964a5693ff3044db21480511f0e4b26628a94",
       "package.json": "8dad89b98a04f0a7a75468f9f62f97b9453ec54c1e34f113905e740fcc485f48",
       "package-lock.json": "884c04452a535c5677554f0402a04ec93e37ec8ab9f2d914341d97f2c88f1add",
@@ -68,7 +68,10 @@
     "rollback_deploy_id": "6a5a62e4382d02608226d0f7",
     "rollback_deploy_published_at": "2026-07-17T17:14:25.906Z",
     "rollback_deploy_title": "Preserve MCP preview results on the Supericons web grid",
-    "preflight_rule": "Stop before reservation or deployment if the current published deploy is not the pinned rollback deploy."
+    "preflight_rule": "Stop before reservation or deployment if the current published deploy is not the pinned rollback deploy.",
+    "visibility_poll_attempts": 30,
+    "visibility_poll_interval_ms": 2000,
+    "visibility_rule": "After deployment, check the published deploy for up to 60 seconds before treating visibility as failed."
   },
   "mutation_budget": {
     "netlify_production_deployments": 1,
@@ -145,9 +148,9 @@
       "evidence": "A failed site read after deployment still makes one exact restore call and verifies the restored state."
     },
     {
-      "id": "delayed_visibility_exact_rollback",
+      "id": "delayed_visibility_wait_then_verify",
       "status": "enforced",
-      "evidence": "A temporarily old published-deploy response still makes one exact restore call."
+      "evidence": "A temporarily old published-deploy response is retried and succeeds without a restore when the intended deploy becomes visible within the bounded wait."
     },
     {
       "id": "rollback_failure_terminal_record",
@@ -203,7 +206,7 @@
     "protection": "The public license, provenance, canaries, and protected-class boundary match the staged artifact."
   },
   "rollback": {
-    "trigger": "Any deploy response mismatch, site-read failure, delayed visibility, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
+    "trigger": "Any deploy response mismatch, site-read failure or visibility timeout after the bounded checks, current-site mismatch, live behavior failure, or protection failure after the deployment starts.",
     "action": "After any deployment attempt, restore Netlify deploy 6a5a62e4382d02608226d0f7 once without requiring a pre-restore site read, verify it is current, record the failure, and stop.",
     "replay": "Any in-progress, successful, rolled-back, or rollback-failed receipt blocks another execution. Reconciliation requires a new independently reviewed manifest."
   },

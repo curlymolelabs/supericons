@@ -47,8 +47,14 @@ The runner stops before reservation if production no longer matches the pinned r
 
 The Netlify command is bound to version `23.15.1` and to the exact hashes of its entry point and package record.
 
+## First release attempt
+
+The first one-use manifest was consumed on 2026-07-20. Netlify accepted deploy `6a5d3aaf20758f02b79be91a`, but its site record briefly continued to report the previous production deploy. The runner treated that temporary response as a mismatch and restored the pinned deploy `6a5a62e4382d02608226d0f7`. The local receipt records status `rolled_back`.
+
+The replacement packet keeps the same site, artifact, mutation budget, and rollback target. Its only release-control change is a bounded visibility wait: it checks the published deploy up to 30 times at two-second intervals before treating visibility as failed. A timeout or any later live verification failure still restores only the pinned deploy.
+
 ## External action status
 
-This packet prepares evidence for independent review. It does not itself authorize or perform a deployment. No reviewer GO is recorded in this packet yet.
+This replacement packet prepares evidence for independent review after the first attempt restored production. It does not itself authorize or perform another deployment. The replacement manifest must pass its full packet verification before external execution.
 
 The accepted product decision is unchanged: correct the public MCP setup and access guidance before invitations are shared. Review is the remaining safety gate, not a request to revisit that product decision.
