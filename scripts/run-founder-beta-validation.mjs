@@ -53,9 +53,17 @@ const QUERIES = [
 
 function parseArgs(argv) {
   const quick = argv.includes('--quick');
+  const allowUnlabeled = argv.includes('--allow-unlabeled');
   const specIndex = argv.indexOf('--spec');
   const spec = specIndex >= 0 ? argv[specIndex + 1] : 'beta';
-  return { quick, spec };
+  return { quick, spec, allowUnlabeled };
+}
+
+function supportsControlledRunLabel(version) {
+  // Cohort labeling via SUPERICONS_CONTROLLED_RUN_LABEL ships from
+  // 0.4.19-beta.2 onward; beta.1 records the plain cohort.
+  const match = /^0\.4\.19-beta\.(\d+)$/.exec(String(version || '').trim());
+  return match ? Number(match[1]) >= 2 : false;
 }
 
 function createRpcClient(child) {
@@ -112,7 +120,7 @@ function summarizeResult(message) {
   return { outcome: isZero ? 'zero' : 'results', names: names.slice(0, 3), detail: null };
 }
 
-const { quick, spec } = parseArgs(process.argv.slice(2));
+const { quick, spec, allowUnlabeled } = parseArgs(process.argv.slice(2));
 const queries = quick ? QUERIES.slice(0, 15) : QUERIES;
 
 // Mirror the package's own opt-out semantics exactly (see mcp/telemetry.js):
@@ -154,7 +162,14 @@ console.log(`Connected. Server version: ${serverVersion}`);
 if (!String(serverVersion).includes('beta') && spec === 'beta') {
   console.error('Warning: resolved server version does not look like the beta prerelease.');
 }
-console.log('Note: cohort labeling (SUPERICONS_CONTROLLED_RUN_LABEL) takes effect only in package versions that ship the labeling support; events from older betas record the plain cohort and are indistinguishable from organic use.');
+if (!supportsControlledRunLabel(serverVersion)) {
+  if (!allowUnlabeled) {
+    console.error(`Refusing to run: version ${serverVersion} does not support controlled-run labeling, so its telemetry would be indistinguishable from organic use and would contaminate the evidence window. Publish 0.4.19-beta.2 or later first, or pass --allow-unlabeled for a quality-only pass whose events must not be counted.`);
+    child.kill();
+    process.exit(1);
+  }
+  console.error('WARNING: --allow-unlabeled set. Events from this pass are UNLABELED and must never be counted as controlled or organic evidence; use the results only for quality review.');
+}
 rpc.notify('notifications/initialized', {});
 
 let attempts = 0;

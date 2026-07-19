@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 
 import { handleGroupedSearchRequest } from '../supabase/functions/_shared/search-engine/grouped-search-request.ts';
+import { buildErrorResponse } from '../supabase/functions/_shared/search-engine/handle-search-request.ts';
+import { SearchEngineHttpError } from '../supabase/functions/_shared/search-engine/rate-limit.ts';
 import {
   handleSharedRecommendationSearchRequest,
 } from '../supabase/functions/_shared/search-engine/shared-recommendation-search-request.ts';
@@ -153,6 +155,7 @@ function buildRequest() {
 
 const sharedClient = createAdminClient();
 const sharedRateLimitCosts: number[] = [];
+const sharedAllowanceCalls: Array<{ tier: string; requestCost: number }> = [];
 const sharedResponse = await handleSharedRecommendationSearchRequest(buildRequest(), {
   adminClientFactory: () => sharedClient,
   candidateRpcName: 'si_search_icon_candidates_v4',
@@ -164,8 +167,41 @@ const sharedResponse = await handleSharedRecommendationSearchRequest(buildReques
     sharedRateLimitCosts.push(cost);
     return { sessionHash: null, ipHash: null, countryCode: null, geoSource: null };
   },
+  dailyAllowanceEnforcer: async (_adminClient, { tier, requestCost = 1 }) => {
+    sharedAllowanceCalls.push({ tier, requestCost });
+  },
 });
 assert.equal(sharedResponse.status, 200);
+// The daily allowance must reserve one unit per logical search in the plan,
+// not one unit per recommendation request.
+assert.equal(sharedAllowanceCalls.length, 1);
+assert.equal(sharedAllowanceCalls[0].requestCost, queries.length);
+assert.equal(sharedAllowanceCalls[0].tier, 'anonymous');
+
+// An allowance-exhaustion error must reach the HTTP surface with its full
+// details object and an unclamped Retry-After header.
+const allowanceHttp = buildErrorResponse(new SearchEngineHttpError('Daily fair-use search allowance reached.', {
+  status: 429,
+  code: 'search_daily_allowance_reached',
+  hint: 'The allowance resets at 00:00 UTC.',
+  retryable: true,
+  details: {
+    retry_after_seconds: 14_400,
+    limit_scope: 'daily_allowance',
+    tier: 'anonymous',
+    daily_limit: 300,
+    resets_at_utc: '2026-07-20T00:00:00.000Z',
+  },
+}));
+assert.equal(allowanceHttp.status, 429);
+assert.equal(allowanceHttp.headers.get('Retry-After'), '14400');
+const allowanceBody = await allowanceHttp.json();
+assert.equal(allowanceBody.error, 'search_daily_allowance_reached');
+assert.equal(allowanceBody.details.limit_scope, 'daily_allowance');
+assert.equal(allowanceBody.details.daily_limit, 300);
+assert.equal(allowanceBody.details.tier, 'anonymous');
+assert.equal(allowanceBody.details.resets_at_utc, '2026-07-20T00:00:00.000Z');
+assert.equal(allowanceBody.details.retry_after_seconds, 14_400);
 const sharedPayload = await sharedResponse.json();
 const sharedTiming = sharedPayload.measurement_timing;
 delete sharedPayload.measurement_timing;

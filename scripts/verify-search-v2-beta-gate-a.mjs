@@ -1,3 +1,14 @@
+// SUPERSEDED 2026-07-19. This gate verified the first hosted search-only beta,
+// which bound the isolated mcp-search-v2-beta endpoint. That design failed
+// Gate C, was rolled back, and the endpoint was deleted; the current
+// local-first beta routes hosted fallbacks through the stable mcp-search
+// endpoint, so this gate's endpoint assertions describe a retired design.
+// Superseding evidence: the 150-case stdio route parity suite and
+// references/verification/search-v2-search-only-beta-gate-c-execution-2026-07-16.md.
+// The historical assertions below are preserved unexecuted for the record.
+console.log('verify-search-v2-beta-gate-a: superseded by the local-first beta gates; see script header.');
+process.exit(0);
+
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
