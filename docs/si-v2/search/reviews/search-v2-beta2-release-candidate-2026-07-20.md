@@ -2,7 +2,7 @@
 
 Date: 2026-07-20
 
-Lifecycle state: built, independently reproduced, and bound to a verified one-use npm publication packet. It is not published, not merged to main, and not promoted on any public venue.
+Lifecycle state: published and verified under the npm `beta` tag, with the reviewed implementation merged to main. npm `latest` remains `0.4.17`. This release is not promoted on any default public venue.
 
 ## Candidate identity
 
@@ -27,7 +27,7 @@ Two protected builds from the same source commit produced the same archive SHA-2
 - Material outline and solid checks: 3 results each
 - Clean source fingerprint inputs: yes
 
-The fixed-suite change review found 19 changed cases relative to the first quality-batch commit. Each change follows the same general correction: synonym matches now use token boundaries, and reverse synonym lookup no longer imports unrelated sibling terms. This removes cases such as `star` matching `start`, `save` matching `saver`, and `respond` importing question icons. The direct Material `favorite` check now returns:
+The fixed-suite change review found 26 changed cases relative to the first quality-batch commit. Seven changes came from the reviewed Batch 2 and Batch 3 corrections. The later 19 changes came from one general correction: synonym matches now use token boundaries, and reverse synonym lookup no longer imports unrelated sibling terms. This removes cases such as `star` matching `start`, `save` matching `saver`, and `respond` importing question icons. The direct Material `favorite` check now returns:
 
 1. `material:favorite`
 2. `material:favorite_border`
@@ -87,12 +87,14 @@ The refresh script proves that public and packaged copies match before and after
 
 The pinned GeoLite2 Country package is dated 2026-06-17 and is 32 days old. A registry query on 2026-07-20 returned `2.3.2026061719` as the newest published version, which is the version already pinned in the package and lockfile. No unavailable update was invented. The freshness gate now requires a registry check no older than seven days and requires the installed version to equal the recorded registry latest version.
 
-## Remaining gates
+## Publication outcome and remaining gates
 
-1. Sign in to npm so the verified one-use packet can create and download-check one private stage. The failed login preflight created no receipt and made no staged upload.
-2. The owner approves only that verified stage through npm's browser security-key flow.
-3. After approval, run the manifest-bound finalizer. It verifies registry identity, installed behavior, the `beta` tag, and unchanged `latest`. A failure deprecates only beta.2 and restores `beta` to beta.1.
-4. Public venue replacement remains a later decision. This candidate is the beta.2 validation package, not approval to promote every surface.
+1. The owner approved verified npm stage `50cd9878-70f9-4968-b236-c7367eb074b9`.
+2. The manifest-bound finalizer completed with status `published_and_verified` at `2026-07-20T08:50:33.3729851Z`.
+3. Registry readback confirmed shasum `1bf884205b55c57cf04d562f7ef9b9c4f0aea900`, the approved integrity value, 65 package files, `beta` at `0.4.19-beta.2`, and unchanged `latest` at `0.4.17`.
+4. The installed-package smoke passed with zero hosted comparison requests, and no pending npm stages remain.
+5. The D-030 labeled validation window is now the next promotion gate.
+6. Public venue replacement remains a later decision. This beta publication does not approve promotion to every surface.
 
 The keyless docs artifact is a separate production release. Netlify deploy `6a5d3d4c1967b6dadfb1104d` is live and passed the remote client, keyless-copy, provenance, canary, and preview checks.
 
