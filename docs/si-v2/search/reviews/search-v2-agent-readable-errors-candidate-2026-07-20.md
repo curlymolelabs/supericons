@@ -13,6 +13,10 @@ Packet implementation commits after the pinned source revision:
 3. `53696f9c35b0196cd173f1a10e8c1be6025c3d33`: make grouped-route proof and rollback function-id checks strict.
 4. `46ac99dbfcdbc2cf8e30e1724d2f36754b9c83d1`: preserve the original live-gate failure without the Windows teardown crash.
 5. `dec067701b8fa68ab19c2ff81970c91bec7c78ff`: commit the negative-path and rollback simulations and wire them into the packet verifier.
+6. `40227c580a054454ab382df5a9d54d8cfc2b16a1`: record the first committed-harness audit handoff.
+7. `5bd15dec1052c661118176ea4eded2509998802f`: add GNU tar and Windows bsdtar coverage after an independent rerun found that absolute Windows archive paths fail under GNU tar.
+8. `6ac5b706afc9df58457d71a1095949d5c3afa68e`: preserve child-process output when a rollback simulation fails.
+9. `4bafd2bf6a8c3f07a21f5d4483d606372beba928`: anchor `git archive` to the repository root and give both tar implementations a relative archive path.
 
 ## Outcome
 
@@ -111,17 +115,18 @@ The packet manifest is:
 
 Its normalized SHA-256 is:
 
-`1b21bf0676659460d8e727de6f4c3d14e2824951b51348d3cada81d3fbf55d40`
+`7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24`
 
 The packet verifier passed locally:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 1b21bf0676659460d8e727de6f4c3d14e2824951b51348d3cada81d3fbf55d40
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24
 ```
 
 The release runner:
 
-- expands the exact source commit through `git archive`;
+- expands the exact source commit through `git archive`, anchored to the repository root;
+- gives tar a relative archive path, which works with both GNU tar and Windows bsdtar;
 - refuses to run if `mcp-search-grouped` already exists;
 - pins the existing `mcp-search` id, version, update time, keyless setting, and active state;
 - deploys only `mcp-search-grouped`;
@@ -133,7 +138,17 @@ The release runner:
 The packet verifier now runs two committed safety harnesses:
 
 - `scripts/verify-search-v2-beta3-grouped-negative-paths.mjs` proves grouped live and FR-47 failures cannot use the working stable endpoint.
-- `scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs` runs the actual release runner with command shims and proves missing and mismatched ids refuse deletion while a matching id permits exactly one grouped deletion.
+- `scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs` runs the actual release runner with command shims and proves missing and mismatched ids refuse deletion while a matching id permits exactly one grouped deletion. It runs matching-id cases with Windows bsdtar and Git GNU tar.
+
+The targeted rerun passed after the archive fix:
+
+```powershell
+node scripts/verify-search-v2-beta3-grouped-negative-paths.mjs
+node scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24
+```
+
+The rollback simulation reported zero stable-function mutations. Missing and mismatched grouped ids caused zero deletions. Matching ids caused one grouped deletion under each tar implementation.
 
 ## Remaining release gates
 
