@@ -15,12 +15,12 @@ $StableFunctionName = 'mcp-search'
 $GroupedUrl = "https://$ProjectRef.supabase.co/functions/v1/$FunctionName"
 $StableUrl = "https://$ProjectRef.supabase.co/functions/v1/$StableFunctionName"
 $Root = Split-Path -Parent $PSScriptRoot
-$ManifestPath = Join-Path $Root 'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-20.json'
-$Workspace = Join-Path $Root '.tmp/search-v2-beta3-grouped-release'
-$LiveEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-live-2026-07-20.json'
-$LatencyEvidence = Join-Path $Root 'references/verification/search-v2-beta3-fr47-live-2026-07-20.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-release-completion-2026-07-20.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-release-rollback-2026-07-20.json'
+$ManifestPath = Join-Path $Root 'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-21.json'
+$Workspace = Join-Path $Root '.tmp/search-v2-beta3-grouped-release-20260721'
+$LiveEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-live-2026-07-21.json'
+$LatencyEvidence = Join-Path $Root 'references/verification/search-v2-beta3-fr47-live-2026-07-21.json'
+$CompletionEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-release-completion-2026-07-21.json'
+$RollbackEvidence = Join-Path $Root 'references/verification/search-v2-beta3-grouped-release-rollback-2026-07-21.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -375,7 +375,8 @@ try {
     '--stable-url', $StableUrl,
     '--output', $LatencyEvidence,
     '--samples', '3',
-    '--minimum-interval-ms', '22000',
+    '--rate-window-reset-ms', '65000',
+    '--keepalive-interval-ms', '5000',
     '--timeout-ms', '20000'
   )
 
@@ -411,8 +412,8 @@ try {
       updated_at = [long]$preStable.updated_at
       mutated = $false
     }
-    live_evidence = 'references/verification/search-v2-beta3-grouped-live-2026-07-20.json'
-    latency_evidence = 'references/verification/search-v2-beta3-fr47-live-2026-07-20.json'
+    live_evidence = 'references/verification/search-v2-beta3-grouped-live-2026-07-21.json'
+    latency_evidence = 'references/verification/search-v2-beta3-fr47-live-2026-07-21.json'
     rollback_used = $false
     finished_at = (Get-Date).ToUniversalTime().ToString('o')
   })

@@ -34,11 +34,14 @@ const stableFallbackSentinelUrl =
   `${stableUrl}-grouped-route-must-not-fallback`;
 const outputPath = readArgument('--output');
 const samples = Number(readArgument('--samples', '3'));
-const minimumIntervalMs = Number(readArgument('--minimum-interval-ms', '22000'));
+const rateWindowResetMs = Number(readArgument('--rate-window-reset-ms', '65000'));
+const keepaliveIntervalMs = Number(readArgument('--keepalive-interval-ms', '5000'));
 const timeoutMs = Number(readArgument('--timeout-ms', '20000'));
 
 assert.ok(Number.isInteger(samples) && samples >= 3 && samples <= 10);
-assert.ok(Number.isInteger(minimumIntervalMs) && minimumIntervalMs >= 0);
+assert.ok(Number.isInteger(rateWindowResetMs) && rateWindowResetMs >= 0);
+assert.ok(Number.isInteger(keepaliveIntervalMs) && keepaliveIntervalMs >= 0);
+assert.ok(rateWindowResetMs === 0 || keepaliveIntervalMs > 0);
 assert.ok(Number.isInteger(timeoutMs) && timeoutMs === 20000);
 
 const sdkClientRoot = join(
@@ -156,24 +159,54 @@ const summary = {
   stable_fallback_disabled: true,
   samples_per_english_scenario: samples,
   timeout_ms: timeoutMs,
+  rate_window_reset_ms: rateWindowResetMs,
+  keepalive_interval_ms: keepaliveIntervalMs,
+  warm_measurement_strategy: 'options_keepalive_then_back_to_back_samples',
   scenarios: [],
 };
-let lastCallStartedAt = 0;
 
-async function waitForRequestSpacing() {
-  const elapsed = Date.now() - lastCallStartedAt;
-  const remaining = minimumIntervalMs - elapsed;
-  if (remaining > 0) await new Promise((resolveWait) => setTimeout(resolveWait, remaining));
+async function keepGroupedWorkerWarmThroughRateWindow() {
+  if (rateWindowResetMs === 0) {
+    return {
+      duration_ms: 0,
+      keepalive_requests: 0,
+    };
+  }
+
+  const startedAt = Date.now();
+  let keepaliveRequests = 0;
+  while (Date.now() - startedAt < rateWindowResetMs) {
+    const response = await fetch(groupedUrl, {
+      method: 'OPTIONS',
+      signal: AbortSignal.timeout(Math.min(timeoutMs, 5000)),
+    });
+    assert.equal(response.ok, true, `Grouped keepalive returned HTTP ${response.status}.`);
+    keepaliveRequests += 1;
+
+    const remaining = rateWindowResetMs - (Date.now() - startedAt);
+    if (remaining <= 0) break;
+    await new Promise((resolveWait) => setTimeout(
+      resolveWait,
+      Math.min(keepaliveIntervalMs, remaining),
+    ));
+  }
+
+  return {
+    duration_ms: Date.now() - startedAt,
+    keepalive_requests: keepaliveRequests,
+  };
 }
 
 async function runTimedRecommendation(scenario) {
-  await waitForRequestSpacing();
-  lastCallStartedAt = Date.now();
   const startedAt = performance.now();
   let timeoutHandle;
   const timeout = new Promise((_, reject) => {
     timeoutHandle = setTimeout(
-      () => reject(new Error(`FR-47 call exceeded ${timeoutMs} ms.`)),
+      () => {
+        const error = new Error(`FR-47 call exceeded ${timeoutMs} ms.`);
+        error.code = 'fr47_timeout';
+        reject(error);
+      },
       timeoutMs,
     );
   });
@@ -208,35 +241,57 @@ async function runTimedRecommendation(scenario) {
 try {
   await client.connect(transport);
   for (const scenario of scenarios) {
-    await runTimedRecommendation(scenario);
-    const latenciesMs = [];
-    for (let index = 0; index < scenario.measuredSamples; index += 1) {
-      latenciesMs.push(await runTimedRecommendation(scenario));
-    }
-    const p95Ms = percentile(latenciesMs, 0.95);
-    const maximumMs = Math.max(...latenciesMs);
-    assert.ok(
-      p95Ms <= scenario.p95LimitMs,
-      `${scenario.id} p95 ${p95Ms} ms exceeds ${scenario.p95LimitMs} ms.`,
-    );
-    assert.ok(
-      maximumMs < timeoutMs,
-      `${scenario.id} maximum ${maximumMs} ms reached the ${timeoutMs} ms timeout.`,
-    );
-    summary.scenarios.push({
+    const scenarioSummary = {
       id: scenario.id,
       slot_count: scenario.slots.length,
       locale: scenario.locale,
       samples: scenario.measuredSamples,
-      warmup_calls: 1,
-      latencies_ms: latenciesMs,
-      p95_ms: p95Ms,
-      maximum_ms: maximumMs,
+      warmup_calls: 0,
+      warmup_latency_ms: null,
+      pre_warmup_rate_window_reset: null,
+      pre_measurement_rate_window_reset: null,
+      measured_back_to_back: true,
+      latencies_ms: [],
+      p95_ms: null,
+      maximum_ms: null,
       p95_limit_ms: scenario.p95LimitMs,
       timeouts: 0,
-      all_slots_resolved: true,
-      status: 'ok',
-    });
+      all_slots_resolved: false,
+      status: 'blocked',
+    };
+    summary.scenarios.push(scenarioSummary);
+
+    scenarioSummary.pre_warmup_rate_window_reset =
+      await keepGroupedWorkerWarmThroughRateWindow();
+    try {
+      scenarioSummary.warmup_latency_ms = await runTimedRecommendation(scenario);
+    } catch (error) {
+      if (error?.code === 'fr47_timeout') scenarioSummary.timeouts += 1;
+      throw error;
+    }
+    scenarioSummary.warmup_calls = 1;
+    scenarioSummary.pre_measurement_rate_window_reset =
+      await keepGroupedWorkerWarmThroughRateWindow();
+    for (let index = 0; index < scenario.measuredSamples; index += 1) {
+      try {
+        scenarioSummary.latencies_ms.push(await runTimedRecommendation(scenario));
+      } catch (error) {
+        if (error?.code === 'fr47_timeout') scenarioSummary.timeouts += 1;
+        throw error;
+      }
+    }
+    scenarioSummary.p95_ms = percentile(scenarioSummary.latencies_ms, 0.95);
+    scenarioSummary.maximum_ms = Math.max(...scenarioSummary.latencies_ms);
+    scenarioSummary.all_slots_resolved = true;
+    assert.ok(
+      scenarioSummary.p95_ms <= scenario.p95LimitMs,
+      `${scenario.id} p95 ${scenarioSummary.p95_ms} ms exceeds ${scenario.p95LimitMs} ms.`,
+    );
+    assert.ok(
+      scenarioSummary.maximum_ms < timeoutMs,
+      `${scenario.id} maximum ${scenarioSummary.maximum_ms} ms reached the ${timeoutMs} ms timeout.`,
+    );
+    scenarioSummary.status = 'ok';
   }
   summary.status = 'ok';
   summary.finished_at = new Date().toISOString();

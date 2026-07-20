@@ -184,7 +184,8 @@ async function verifyFr47FailureCannotUseStableFallback() {
       '--grouped-url', `http://127.0.0.1:${port}/grouped`,
       '--stable-url', `http://127.0.0.1:${port}/stable`,
       '--samples', '3',
-      '--minimum-interval-ms', '0',
+      '--rate-window-reset-ms', '0',
+      '--keepalive-interval-ms', '0',
       '--timeout-ms', '20000',
     ]);
 

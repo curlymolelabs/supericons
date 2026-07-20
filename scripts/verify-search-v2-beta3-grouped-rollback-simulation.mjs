@@ -12,16 +12,16 @@ import { dirname, join, resolve } from 'node:path';
 
 const repoRoot = resolve('.');
 const manifestPath = resolve(
-  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-20.json',
+  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-21.json',
 );
 const runnerPath = resolve('scripts/run-search-v2-beta3-grouped-release.ps1');
 const workspace = resolve('.tmp/search-v2-beta3-grouped-rollback-simulation');
 const binDir = join(workspace, 'bin');
 const evidencePaths = [
-  resolve('references/verification/search-v2-beta3-grouped-live-2026-07-20.json'),
-  resolve('references/verification/search-v2-beta3-fr47-live-2026-07-20.json'),
-  resolve('references/verification/search-v2-beta3-grouped-release-completion-2026-07-20.json'),
-  resolve('references/verification/search-v2-beta3-grouped-release-rollback-2026-07-20.json'),
+  resolve('references/verification/search-v2-beta3-grouped-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-fr47-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-grouped-release-completion-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-grouped-release-rollback-2026-07-21.json'),
 ];
 const rollbackEvidencePath = evidencePaths[3];
 const realNode = process.execPath;

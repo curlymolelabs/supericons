@@ -36,7 +36,7 @@ function run(command, args) {
 }
 
 const manifestPath =
-  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-20.json';
+  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-21.json';
 const expectedManifestHash = readArgument('--manifest-hash');
 const skipNestedReleaseSimulations =
   process.argv.includes('--skip-nested-release-simulations');
@@ -55,7 +55,15 @@ assert.equal(manifestHash, expectedManifestHash, 'The release manifest hash does
 const manifest = JSON.parse(manifestText);
 
 assert.equal(manifest.schema_version, 1);
-assert.equal(manifest.release, 'search-v2-beta3-grouped-endpoint');
+assert.equal(manifest.release, 'search-v2-beta3-grouped-endpoint-retry');
+assert.equal(manifest.attempt, 2);
+assert.equal(
+  manifest.supersedes_manifest_sha256,
+  '7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24',
+);
+assert.equal(manifest.prior_attempt.status, 'rolled_back');
+assert.equal(manifest.prior_attempt.grouped_function_removed, true);
+assert.equal(manifest.prior_attempt.stable_function_mutated, false);
 assert.equal(manifest.project_ref, 'kcjmkakdhsqplvasgkjv');
 assert.equal(manifest.function_name, 'mcp-search-grouped');
 assert.equal(manifest.stable_function.name, 'mcp-search');
@@ -74,6 +82,14 @@ assert.equal(manifest.live_gates.committed_negative_path_harness, true);
 assert.equal(manifest.live_gates.committed_rollback_simulation, true);
 assert.equal(manifest.live_gates.relative_archive_extraction, true);
 assert.equal(manifest.live_gates.gnu_tar_and_bsdtar_simulated, true);
+assert.equal(
+  manifest.live_gates.warm_measurement_strategy,
+  'options_keepalive_then_back_to_back_samples',
+);
+assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
+assert.equal(manifest.live_gates.keepalive_interval_ms, 5000);
+assert.equal(manifest.live_gates.failed_samples_preserved, true);
+assert.equal(manifest.live_gates.committed_measurement_schedule_harness, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -134,6 +150,8 @@ const negativePathsHarness =
   'scripts/verify-search-v2-beta3-grouped-negative-paths.mjs';
 const rollbackHarness =
   'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs';
+const measurementScheduleHarness =
+  'scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs';
 const runner = normalizedText(readFileSync(runnerPath, 'utf8'));
 const live = normalizedText(readFileSync(livePath, 'utf8'));
 const latency = normalizedText(readFileSync(latencyPath, 'utf8'));
@@ -173,6 +191,9 @@ assert.equal(runner.includes('Read-Host'), false);
 assert.equal(/supabase functions deploy \$StableFunctionName/.test(runner), false);
 assert.equal(/supabase functions delete \$StableFunctionName/.test(runner), false);
 assert.equal(/npm\s+publish/i.test(runner), false);
+assert.match(runner, /--rate-window-reset-ms', '65000'/);
+assert.match(runner, /--keepalive-interval-ms', '5000'/);
+assert.equal(runner.includes('--minimum-interval-ms'), false);
 
 assert.match(live, /direct_grouped_http/);
 assert.match(live, /mcp_grouped_client/);
@@ -205,7 +226,18 @@ assert.match(latency, /p95LimitMs: 15000/);
 assert.match(latency, /timeoutMs === 20000/);
 assert.match(latency, /payload\?\.all_slots_resolved, true/);
 assert.match(latency, /entry\) => Boolean\(entry\.recommended\)/);
-assert.match(latency, /minimumIntervalMs/);
+assert.match(latency, /rateWindowResetMs/);
+assert.match(latency, /keepaliveIntervalMs/);
+assert.match(latency, /keepGroupedWorkerWarmThroughRateWindow/);
+assert.match(latency, /method: 'OPTIONS'/);
+assert.match(latency, /options_keepalive_then_back_to_back_samples/);
+assert.match(latency, /measured_back_to_back: true/);
+assert.ok(
+  latency.indexOf('summary.scenarios.push(scenarioSummary)')
+    < latency.indexOf('p95_ms <= scenario.p95LimitMs'),
+  'Failed latency samples must be added to the evidence before the p95 assertion.',
+);
+assert.equal(latency.includes('minimumIntervalMs'), false);
 assert.match(latency, /measuredSamples: samples/);
 assert.match(latency, /measuredSamples: 1/);
 assert.match(latency, /stableFallbackSentinelUrl/);
@@ -214,6 +246,7 @@ assert.match(latency, /stable_fallback_disabled: true/);
 
 const negativePaths = normalizedText(readFileSync(negativePathsHarness, 'utf8'));
 const rollbackSimulation = normalizedText(readFileSync(rollbackHarness, 'utf8'));
+const measurementSchedule = normalizedText(readFileSync(measurementScheduleHarness, 'utf8'));
 assert.match(negativePaths, /realStableRequests|realStable/);
 assert.match(negativePaths, /sentinelStableRequests|sentinelStable/);
 assert.match(negativePaths, /verify-search-v2-beta3-grouped-live\.mjs/);
@@ -226,6 +259,10 @@ assert.match(rollbackSimulation, /run-search-v2-beta3-grouped-release\.ps1/);
 assert.match(rollbackSimulation, /match_bsdtar/);
 assert.match(rollbackSimulation, /match_gnu_tar/);
 assert.match(rollbackSimulation, /Git.*usr.*bin.*tar\.exe/s);
+assert.match(measurementSchedule, /options_keepalive_then_back_to_back_samples/);
+assert.match(measurementSchedule, /keepaliveRequests/);
+assert.match(measurementSchedule, /latencies_ms\.length, 3/);
+assert.match(measurementSchedule, /p95_ms > 3000/);
 
 for (const path of [
   runnerPath,
@@ -233,6 +270,7 @@ for (const path of [
   latencyPath,
   negativePathsHarness,
   rollbackHarness,
+  measurementScheduleHarness,
   manifestPath,
 ]) {
   const text = readFileSync(path, 'utf8');
@@ -252,6 +290,7 @@ run('deno', ['check', 'supabase/functions/mcp-search-grouped/index.ts']);
 if (!skipNestedReleaseSimulations) {
   run('node', [negativePathsHarness]);
   run('node', [rollbackHarness]);
+  run('node', [measurementScheduleHarness]);
 }
 
 console.log(JSON.stringify({
