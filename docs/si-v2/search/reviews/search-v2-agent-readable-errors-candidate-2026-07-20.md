@@ -103,12 +103,12 @@ The packet manifest is:
 
 Its normalized SHA-256 is:
 
-`185e8ef15819c2dcc7a234ffeda8743b02994f73313aa2694b333aaf49157bd5`
+`e63ac32333be9ce32a765b722b014560b3978a963a5f77309c514a2d93d62f2a`
 
 The packet verifier passed locally:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 185e8ef15819c2dcc7a234ffeda8743b02994f73313aa2694b333aaf49157bd5
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash e63ac32333be9ce32a765b722b014560b3978a963a5f77309c514a2d93d62f2a
 ```
 
 The release runner:

@@ -116,7 +116,7 @@ function Assert-ActiveFunction {
 
 function Assert-StableFunctionPin {
   param([Parameter(Mandatory = $true)][object[]]$Functions)
-  $matches = Get-MatchingFunction -Functions $Functions -Name $StableFunctionName
+  $matches = @(Get-MatchingFunction -Functions $Functions -Name $StableFunctionName)
   if ($matches.Count -ne 1) {
     throw "Expected exactly one $StableFunctionName function, found $($matches.Count)."
   }
@@ -137,7 +137,7 @@ function Assert-StableFunctionPin {
 function Wait-ForGroupedFunction {
   for ($attempt = 0; $attempt -lt 60; $attempt += 1) {
     $functions = Get-Functions
-    $matches = Get-MatchingFunction -Functions $functions -Name $FunctionName
+    $matches = @(Get-MatchingFunction -Functions $functions -Name $FunctionName)
     if ($matches.Count -eq 1) {
       $function = $matches[0]
       if ("$($function.status)".ToUpperInvariant() -in @('ACTIVE', 'READY')) {
@@ -154,7 +154,7 @@ function Wait-ForGroupedFunction {
 function Wait-ForGroupedFunctionAbsence {
   for ($attempt = 0; $attempt -lt 60; $attempt += 1) {
     $functions = Get-Functions
-    $matches = Get-MatchingFunction -Functions $functions -Name $FunctionName
+    $matches = @(Get-MatchingFunction -Functions $functions -Name $FunctionName)
     Assert-StableFunctionPin -Functions $functions | Out-Null
     if ($matches.Count -eq 0) { return }
     Start-Sleep -Seconds 2
@@ -181,7 +181,7 @@ function Remove-GroupedFunctionForRollback {
   param([Parameter(Mandatory = $true)][string]$Reason)
 
   $functions = Get-Functions
-  $matches = Get-MatchingFunction -Functions $functions -Name $FunctionName
+  $matches = @(Get-MatchingFunction -Functions $functions -Name $FunctionName)
   if ($matches.Count -gt 1) {
     throw "Rollback found more than one $FunctionName function."
   }
@@ -238,7 +238,7 @@ if ($mainStableBlob -ne $stableBlob) {
 }
 
 $preFunctions = Get-Functions
-$preGrouped = Get-MatchingFunction -Functions $preFunctions -Name $FunctionName
+$preGrouped = @(Get-MatchingFunction -Functions $preFunctions -Name $FunctionName)
 if ($preGrouped.Count -ne 0) {
   throw "$FunctionName already exists. This one-use create-and-delete packet cannot run."
 }
@@ -322,7 +322,7 @@ try {
   )
 
   $postFunctions = Get-Functions
-  $postGrouped = Get-MatchingFunction -Functions $postFunctions -Name $FunctionName
+  $postGrouped = @(Get-MatchingFunction -Functions $postFunctions -Name $FunctionName)
   if ($postGrouped.Count -ne 1) {
     throw "Expected one active $FunctionName after live verification."
   }
