@@ -6,6 +6,14 @@ Source commit: `ff5698272072409caeefaf29998a80cf753fbe11`
 Source tree: `7cdd231acf5fa434d00996452409725f33b8f3f4`
 Specification: `D-031`, `FR-46`, `FR-47`
 
+Packet implementation commits after the pinned source revision:
+
+1. `eaaf06aed59a8adf3ec396981dbfc2d40ba3a728`: add the guarded grouped endpoint packet.
+2. `ec5ba5ae74dcc489e8e9060ed4dc5cbf25b33a7b`: fix preflight collection handling.
+3. `53696f9c35b0196cd173f1a10e8c1be6025c3d33`: make grouped-route proof and rollback function-id checks strict.
+4. `46ac99dbfcdbc2cf8e30e1724d2f36754b9c83d1`: preserve the original live-gate failure without the Windows teardown crash.
+5. `dec067701b8fa68ab19c2ff81970c91bec7c78ff`: commit the negative-path and rollback simulations and wire them into the packet verifier.
+
 ## Outcome
 
 The earlier candidate at `35744b8a8` received a no-go because it changed the stable hosted route, skipped existing local fallback behavior, accepted malformed grouped results as empty results, lacked endpoint rollback compatibility, and could bypass safe allowance accounting. Source commit `ff5698272` supersedes that release design and the incomplete repair at `e48858314`.
@@ -103,12 +111,12 @@ The packet manifest is:
 
 Its normalized SHA-256 is:
 
-`ccd21ae9811f61dd9efb7f722a3c18995b5a9c3a85d65a7d536303cf342f02cb`
+`1b21bf0676659460d8e727de6f4c3d14e2824951b51348d3cada81d3fbf55d40`
 
 The packet verifier passed locally:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash ccd21ae9811f61dd9efb7f722a3c18995b5a9c3a85d65a7d536303cf342f02cb
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 1b21bf0676659460d8e727de6f4c3d14e2824951b51348d3cada81d3fbf55d40
 ```
 
 The release runner:
@@ -122,9 +130,14 @@ The release runner:
 - deletes `mcp-search-grouped` after a failed gate only when its function id matches the id captured by this release attempt;
 - never deploys or deletes `mcp-search`, and never publishes npm.
 
+The packet verifier now runs two committed safety harnesses:
+
+- `scripts/verify-search-v2-beta3-grouped-negative-paths.mjs` proves grouped live and FR-47 failures cannot use the working stable endpoint.
+- `scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs` runs the actual release runner with command shims and proves missing and mismatched ids refuse deletion while a matching id permits exactly one grouped deletion.
+
 ## Remaining release gates
 
-1. Receive independent source and packet verification.
+1. Have the independent auditor rerun both committed safety harnesses and the packet verifier, then issue full GO.
 2. Run the packet in preflight mode and confirm it performs no mutation.
 3. Deploy only `mcp-search-grouped` with delete-on-failure rollback.
 4. Verify live grouped success and stable individual fallback.
