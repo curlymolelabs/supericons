@@ -38,7 +38,16 @@ function run(command, args) {
 const manifestPath =
   'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-20.json';
 const expectedManifestHash = readArgument('--manifest-hash');
+const skipNestedReleaseSimulations =
+  process.argv.includes('--skip-nested-release-simulations');
 assert.match(expectedManifestHash || '', /^[0-9a-f]{64}$/, 'Provide --manifest-hash with 64 lowercase hex characters.');
+if (skipNestedReleaseSimulations) {
+  assert.equal(
+    process.env.SUPERICONS_BETA3_NESTED_RELEASE_SIMULATION,
+    '1',
+    'Nested release simulations may be skipped only by the committed rollback harness.',
+  );
+}
 
 const manifestText = normalizedText(readFileSync(manifestPath, 'utf8'));
 const manifestHash = sha256(manifestText);
@@ -61,6 +70,8 @@ assert.equal(manifest.rollback, 'delete_new_grouped_function_after_id_match');
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
+assert.equal(manifest.live_gates.committed_negative_path_harness, true);
+assert.equal(manifest.live_gates.committed_rollback_simulation, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -117,6 +128,10 @@ assert.equal(packageJson.version, '0.4.19-beta.2');
 const runnerPath = 'scripts/run-search-v2-beta3-grouped-release.ps1';
 const livePath = 'scripts/verify-search-v2-beta3-grouped-live.mjs';
 const latencyPath = 'scripts/measure-search-v2-beta3-fr47-live.mjs';
+const negativePathsHarness =
+  'scripts/verify-search-v2-beta3-grouped-negative-paths.mjs';
+const rollbackHarness =
+  'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs';
 const runner = normalizedText(readFileSync(runnerPath, 'utf8'));
 const live = normalizedText(readFileSync(livePath, 'utf8'));
 const latency = normalizedText(readFileSync(latencyPath, 'utf8'));
@@ -147,6 +162,7 @@ assert.ok(
 assert.match(runner, /Assert-StableFunctionPin/);
 assert.match(runner, /stable_function_mutated = \$false/);
 assert.match(runner, /ExecuteApprovedGroupedRelease/);
+assert.equal(runner.includes('--skip-nested-release-simulations'), false);
 assert.equal(runner.includes('Read-Host'), false);
 assert.equal(/supabase functions deploy \$StableFunctionName/.test(runner), false);
 assert.equal(/supabase functions delete \$StableFunctionName/.test(runner), false);
@@ -190,7 +206,26 @@ assert.match(latency, /stableFallbackSentinelUrl/);
 assert.match(latency, /SUPERICONS_MCP_SEARCH_URL: stableFallbackSentinelUrl/);
 assert.match(latency, /stable_fallback_disabled: true/);
 
-for (const path of [runnerPath, livePath, latencyPath, manifestPath]) {
+const negativePaths = normalizedText(readFileSync(negativePathsHarness, 'utf8'));
+const rollbackSimulation = normalizedText(readFileSync(rollbackHarness, 'utf8'));
+assert.match(negativePaths, /realStableRequests|realStable/);
+assert.match(negativePaths, /sentinelStableRequests|sentinelStable/);
+assert.match(negativePaths, /verify-search-v2-beta3-grouped-live\.mjs/);
+assert.match(negativePaths, /measure-search-v2-beta3-fr47-live\.mjs/);
+assert.match(rollbackSimulation, /blocked_unverified_function/);
+assert.match(rollbackSimulation, /blocked_mismatched_function/);
+assert.match(rollbackSimulation, /expectedDeleteCount: 0/);
+assert.match(rollbackSimulation, /expectedDeleteCount: 1/);
+assert.match(rollbackSimulation, /run-search-v2-beta3-grouped-release\.ps1/);
+
+for (const path of [
+  runnerPath,
+  livePath,
+  latencyPath,
+  negativePathsHarness,
+  rollbackHarness,
+  manifestPath,
+]) {
   const text = readFileSync(path, 'utf8');
   assert.equal(/[\u2013\u2014]/u.test(text), false, `${path} contains a prohibited dash character.`);
 }
@@ -205,6 +240,10 @@ run('deno', [
   'scripts/verify-search-v2-grouped-http-request.ts',
 ]);
 run('deno', ['check', 'supabase/functions/mcp-search-grouped/index.ts']);
+if (!skipNestedReleaseSimulations) {
+  run('node', [negativePathsHarness]);
+  run('node', [rollbackHarness]);
+}
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -220,4 +259,7 @@ console.log(JSON.stringify({
     stable_function_deployments: 0,
     npm_publications: 0,
   },
+  committed_safety_harnesses: skipNestedReleaseSimulations
+    ? 'skipped_in_nested_simulation'
+    : 'passed',
 }, null, 2));

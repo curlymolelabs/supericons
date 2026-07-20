@@ -150,7 +150,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "c2fbaee21a8c2881b4314520453d35e1e8a8bc72a96488169cad0f40c5e02d04"
+      "sha256": "5e179750d23d2287bcd39f2ddda674df888e3c68d68f4c95cbd3916eabd43215"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -159,6 +159,14 @@
     {
       "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
       "sha256": "691badc5465d31dba69b433b4ab6d46e08dc03e32955fd16e8815bc2a81bce47"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
+      "sha256": "5ea0cb267c3e808459bdbfe735bca2bd8418266e4360a7fb97d5562e2d8a0e48"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
+      "sha256": "7419495722d746672297ab2c2e1ed4516413e680484d2041090a454059cfd848"
     }
   ],
   "live_gates": {
@@ -168,6 +176,8 @@
     "stable_fallback_when_grouped_missing": true,
     "fr47_stable_fallback_disabled": true,
     "rollback_function_id_pinned": true,
+    "committed_negative_path_harness": true,
+    "committed_rollback_simulation": true,
     "one_slot_warm_p95_ms_max": 3000,
     "ten_slot_warm_p95_ms_max": 10000,
     "twenty_slot_warm_p95_ms_max": 15000,
