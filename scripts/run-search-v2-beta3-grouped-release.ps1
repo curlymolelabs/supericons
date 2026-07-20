@@ -228,9 +228,13 @@ function Remove-GroupedFunctionForRollback {
         observed_function_id = $observedFunctionId
       }
     }
-    & npx supabase functions delete $FunctionName `
-      --project-ref $ProjectRef --yes
-    if ($LASTEXITCODE -ne 0) {
+    $deleteLines = @(& npx supabase functions delete $FunctionName `
+      --project-ref $ProjectRef --yes)
+    $deleteExitCode = $LASTEXITCODE
+    foreach ($line in $deleteLines) {
+      Write-Host $line
+    }
+    if ($deleteExitCode -ne 0) {
       throw "Rollback could not delete $FunctionName."
     }
     Wait-ForGroupedFunctionAbsence
