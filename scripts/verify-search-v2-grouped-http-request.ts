@@ -111,6 +111,17 @@ assert.equal(integrated.status, 200);
 assert.equal(integratedRateLimitCost, 2);
 assert.equal(auditWrites, 2, 'Every logical grouped search must finish its synchronous audit write.');
 
+const stableRouteSource = await Deno.readTextFile(
+  new URL('../supabase/functions/mcp-search/index.ts', import.meta.url),
+);
+assert.match(
+  stableRouteSource,
+  /handleGroupedSearchRequest/,
+  'The stable MCP search route must accept grouped recommendation requests.',
+);
+assert.match(stableRouteSource, /defaultSource:\s*'mcp'/);
+assert.match(stableRouteSource, /maxQueries:\s*96/);
+
 console.log(JSON.stringify({
   status: 'ok',
   logical_queries: handledBodies.length,
@@ -118,4 +129,5 @@ console.log(JSON.stringify({
   maximum_internal_concurrency: maximumActive,
   response_order_preserved: true,
   synchronous_audit_writes: auditWrites,
+  stable_route_grouped_support: true,
 }, null, 2));

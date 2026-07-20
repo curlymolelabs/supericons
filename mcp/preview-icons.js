@@ -183,18 +183,27 @@ export function buildPreviewTextPayload({
   markdownImage,
   imageIncluded = false,
   truncatedFrom = null,
+  browserPreviewCount = null,
   warnings = [],
 } = {}) {
+  const renderedCount = icons.length;
+  const acceptedBrowserCount = Number.isInteger(browserPreviewCount)
+    ? browserPreviewCount
+    : renderedCount;
   return {
     query,
     preview_url: previewUrl,
     image_url: imageUrl || null,
     markdown_image: markdownImage || null,
     image_included: imageIncluded,
+    rendered_count: renderedCount,
+    browser_preview_count: acceptedBrowserCount,
     ...(truncatedFrom ? { truncated_from: truncatedFrom } : {}),
     ...(warnings.length ? { warnings } : {}),
-    next_step: icons.length > 0
-      ? 'Choose an icon ref from the preview, then call get_icon when you need the exact SVG.'
+    next_step: renderedCount > 0
+      ? acceptedBrowserCount > renderedCount
+        ? `The inline preview shows ${renderedCount} icons. Open preview_url to view all ${acceptedBrowserCount} accepted icon refs, then call get_icon for the exact SVG.`
+        : 'Choose an icon ref from the preview, then call get_icon when you need the exact SVG.'
       : 'Try a broader query or provide different icon refs.',
     client_display_note: imageIncluded
       ? 'If your MCP client does not render image content inline, use markdown_image in the final answer or open image_url/preview_url in a browser.'

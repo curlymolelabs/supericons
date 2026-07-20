@@ -78,7 +78,7 @@
     "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
     "verify:local-first-beta": "node ../scripts/verify-search-v2-local-first-beta.mjs",
     "verify:route-package": "node ../scripts/verify-search-v2-tool-scoped-package.mjs",
-    "verify:search-v2-shell": "node ../scripts/verify-search-v2-one-call-contract.mjs --package-root . && node ../scripts/verify-search-v2-packaged-query-frame.mjs --package-root . && node ../scripts/verify-search-v2-429-propagation.mjs && node ../scripts/verify-recommend-icons-clarification.mjs",
+    "verify:search-v2-shell": "node ../scripts/verify-search-v2-one-call-contract.mjs --package-root . && node ../scripts/verify-mcp-agent-friendly-errors.mjs && node ../scripts/verify-search-v2-packaged-query-frame.mjs --package-root . && node ../scripts/verify-search-v2-429-propagation.mjs && node ../scripts/verify-recommend-icons-clarification.mjs",
     "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:route-package && npm run verify:search-v2-shell && npm run verify:package",
     "verify:package": "node ../scripts/verify-motion-lab-mcp-package.mjs"
   },

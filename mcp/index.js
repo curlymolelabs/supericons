@@ -16,7 +16,10 @@ import { z } from 'zod';
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
-import { searchIconsHostedMcp } from './hosted-search-client.js';
+import {
+  searchIconQueriesHostedMcp,
+  searchIconsHostedMcp,
+} from './hosted-search-client.js';
 import { getBundledMaterialSvg } from './material-hydration.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import { validateApiKey } from './auth.js';
@@ -70,16 +73,18 @@ import {
   buildPreviewTextPayload,
 } from './preview-icons.js';
 import {
-  MAX_ACCEPTED_PREVIEW_REFS,
   SEARCH_TOOL_SERVER_INSTRUCTIONS,
+  buildRecommendationFailurePresentation,
   buildSearchFailurePresentation,
   buildSearchMatchPresentation,
   buildSearchNoResultPresentation,
   coerceToolBoolean,
   coerceToolIconRefs,
   coerceToolNumber,
+  coerceToolSlots,
   coerceToolString,
   normalizePreviewToolArguments,
+  normalizeRecommendationToolArguments,
   normalizeSearchToolArguments,
 } from './search-tool-shell.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
@@ -890,6 +895,29 @@ async function searchAccessibleIcons({
   ).slice(0, Math.max(1, limit));
 }
 
+async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {
+  const payloads = await searchIconQueriesHostedMcp({
+    queries: queries.map((query) => ({
+      ...query,
+      libraryMode: 'strict',
+      routeToolName: toolName,
+      usageContext: buildLocalMcpUsageContext(toolName, {
+        locale: query.locale,
+        query: query.query,
+      }),
+    })),
+  });
+
+  return payloads.map((payload, index) => {
+    const requestedStyle = normalizeRequestedStyle(queries[index]?.style);
+    const limit = Math.max(1, Number(queries[index]?.limit) || 10);
+    return (payload.results || [])
+      .map(buildHostedIcon)
+      .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle))
+      .slice(0, limit);
+  });
+}
+
 // ============================================================
 // Library Metadata
 // ============================================================
@@ -935,7 +963,18 @@ const mcpLocaleDescription = `Optional locale for multilingual output. Supported
 const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
 const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
 const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
-const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(12));
+const forgivingPreviewLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationSlotsSchema = z.preprocess(
+  coerceToolSlots,
+  z.array(z.string()),
+);
 const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 
 function buildLocalMcpUsageContext(toolName, context = {}) {
@@ -1195,19 +1234,36 @@ server.tool(
 // --- Tool: recommend_icons ---
 server.tool(
   'recommend_icons',
-  'Recommend the most suitable icons for one or more UI slots. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Returns shortlist choices with preview-ready SVGs, explicit public library labels, browser preview URLs, short reasons, and SI semantic guidance when available. Library key si means Supericons, not Simple Icons.',
+  'Recommend the most suitable icons for up to 20 UI slots in one call. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Invalid inputs and service failures return a plain-language reason and a next step instead of a bare protocol error. Returns shortlist choices with preview-ready SVGs, explicit public library labels, browser preview URLs, short reasons, and SI semantic guidance when available. Library key si means Supericons, not Simple Icons.',
   {
-    task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
-    library: z.string().optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
-    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to prefer filled variants where they exist.'),
-    locale: z.enum(['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th']).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
-    slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
-    limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
-    response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
-    include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
+    task: forgivingStringSchema.optional().default('').describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel". Missing task text returns a structured recovery message.'),
+    library: forgivingStringSchema.optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
+    style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+    locale: forgivingStringSchema.optional().describe('Optional locale for multilingual slot labels. Unsupported values are ignored with a warning.'),
+    slots: forgivingRecommendationSlotsSchema.optional().default([]).describe('List of 1 to 20 UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"]. A single string is accepted as one slot. Larger lists return a structured split instruction.'),
+    limit_per_slot: forgivingRecommendationLimitSchema.optional().default(3).describe('How many choices to return per slot. Values outside 1 to 5 are clamped with a warning. Numeric strings are accepted.'),
+    response_mode: forgivingStringSchema.optional().default('plan').describe('Response size mode: plan, assets, or full. Unsupported values use plan with a warning.'),
+    include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
   },
-  async ({ task, library, style, locale, slots, limit_per_slot, response_mode, include_query_frame }) => {
+  async (rawArgs) => {
+    const {
+      task,
+      library,
+      style,
+      locale,
+      slots,
+      limit_per_slot,
+      response_mode,
+      include_query_frame,
+      warnings,
+      input_error,
+    } = normalizeRecommendationToolArguments(rawArgs, {
+      supportedLocales: SUPPORTED_MCP_OUTPUT_LOCALES,
+    });
     const toolStartedAt = performance.now();
+    if (input_error) {
+      return buildTextResponse(input_error);
+    }
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -1232,6 +1288,10 @@ server.tool(
             locale: searchLocale,
             toolName: 'recommend_icons',
           }),
+        searchIconsForQueries: (queries) => searchAccessibleIconQueries(
+          queries,
+          { toolName: 'recommend_icons' },
+        ),
         buildIconResult: (icon, options = {}) => buildToolIconResult(icon, {
           ...options,
           library,
@@ -1277,6 +1337,7 @@ server.tool(
             ...(Array.isArray(slot.alternatives) ? slot.alternatives.map((icon) => icon.icon_ref) : []),
           ]).filter(Boolean),
         ),
+        ...(warnings.length ? { warnings } : {}),
         source: 'Powered by SuperIcons (https://supericons.dev)',
       });
     } catch (error) {
@@ -1292,7 +1353,15 @@ server.tool(
         mcpServerVersion: mcpPackage.version,
         latencyMs: performance.now() - toolStartedAt,
       });
-      return buildStructuredToolErrorResponse(error, 'SuperIcons icon recommendation is unavailable.');
+      return buildTextResponse(buildRecommendationFailurePresentation({
+        task,
+        library,
+        style,
+        responseMode: response_mode,
+        slots,
+        error,
+        warnings,
+      }));
     }
   }
 );
@@ -1331,18 +1400,19 @@ server.tool(
     query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
     icon_refs: z.preprocess(
       coerceToolIconRefs,
-      z.array(z.string()).min(1).max(MAX_ACCEPTED_PREVIEW_REFS),
-    ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 12 are rendered.'),
+      z.array(z.string()).min(1),
+    ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 100 are accepted, 24 appear on the browser preview, and 12 are rendered inline. Larger lists are safely truncated with a warning.'),
     library: forgivingStringSchema.optional().describe('Optional library filter such as si (Supericons), mingcute, lucide, tabler, material, or simpleicons (Simple Icons).'),
     style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
     locale: forgivingStringSchema.optional().describe('Optional locale for multilingual search terms. Unsupported values are ignored with a warning.'),
-    limit: forgivingPreviewLimitSchema.optional().default(12).describe('Maximum icons to include from 1 to 12. Numeric strings are accepted.'),
+    limit: forgivingPreviewLimitSchema.optional().default(12).describe('Requested inline icon count. Values outside 1 to 12 are safely clamped with a warning. Numeric strings are accepted.'),
     include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
   },
   async (rawArgs) => {
     const {
       query,
       icon_refs,
+      browser_icon_refs,
       library,
       style,
       locale,
@@ -1382,7 +1452,7 @@ server.tool(
     }
 
     const previewUrl = Array.isArray(icon_refs) && icon_refs.length > 0
-      ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+      ? buildPreviewBoardUrlForIcons(browser_icon_refs)
       : buildSearchPreviewUrl({ query, library, style, locale, limit });
     const previewImageOptions = Array.isArray(icon_refs) && icon_refs.length > 0
       ? {
@@ -1413,6 +1483,9 @@ server.tool(
       markdownImage,
       imageIncluded: Boolean(include_image && icons.length > 0),
       truncatedFrom: truncated_from,
+      browserPreviewCount: Array.isArray(browser_icon_refs)
+        ? browser_icon_refs.length
+        : icons.length,
       warnings,
     });
 

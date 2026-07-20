@@ -56,6 +56,8 @@ try {
   assert.match(instructions, /Use search_icons as the main tool/);
   assert.match(instructions, /include it in the final answer/);
   assert.match(instructions, /do not invent an icon/);
+  assert.match(instructions, /up to 20 named UI slots/);
+  assert.match(instructions, /explain the plain-language reason and follow next_step/);
 
   const tools = await client.listTools();
   const searchTool = tools.tools.find((tool) => tool.name === 'search_icons');
@@ -188,7 +190,7 @@ try {
     arguments: {
       icon_refs: longRefs.join(','),
       include_image: 'false',
-      limit: '12',
+      limit: '13',
       style: 'unexpected-style',
     },
   });
@@ -198,8 +200,54 @@ try {
   assert.ok(previewPayload.results.length <= 12);
   assert.ok(previewPayload.results.length > 0);
   assert.equal(previewPayload.image_included, false);
-  assert.equal(previewPayload.warnings.length, 1);
+  assert.equal(previewPayload.rendered_count, previewPayload.results.length);
+  assert.equal(previewPayload.browser_preview_count, longRefs.length);
+  assert.equal(new URL(previewPayload.preview_url).searchParams.get('icons').split(',').length, longRefs.length);
+  assert.equal(previewPayload.warnings.length, 2);
+  assert.match(previewPayload.warnings.join(' '), /maximum of 12/);
   assert.equal(typeof previewPayload.next_step, 'string');
+  assert.match(previewPayload.next_step, /Open preview_url to view all 15/);
+
+  const twentySlotResult = await client.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      task: 'Choose icons for a running application.',
+      slots: Array.from({ length: 20 }, () => 'run'),
+      response_mode: 'plan',
+      limit_per_slot: '1',
+    },
+  });
+  const twentySlotPayload = parsePayload(twentySlotResult);
+  assert.equal(twentySlotResult.isError, undefined);
+  assert.equal(twentySlotPayload.slot_count, 20);
+  assert.equal(twentySlotPayload.results.length, 20);
+  assert.equal(twentySlotPayload.needs_clarification, true);
+
+  const overLimitResult = await client.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      task: 'Choose icons for a fitness application.',
+      slots: Array.from({ length: 21 }, (_, index) => `Slot ${index + 1}`),
+    },
+  });
+  const overLimitPayload = parsePayload(overLimitResult);
+  assert.equal(overLimitResult.isError, undefined);
+  assert.equal(overLimitPayload.code, 'recommendation_slot_limit_exceeded');
+  assert.equal(overLimitPayload.details.received_slot_count, 21);
+  assert.equal(overLimitPayload.details.maximum_slot_count, 20);
+  assert.match(overLimitPayload.next_step, /groups of 20 or fewer/);
+  assert.deepEqual(overLimitPayload.results, []);
+
+  const missingTaskResult = await client.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      slots: ['Home'],
+    },
+  });
+  const missingTaskPayload = parsePayload(missingTaskResult);
+  assert.equal(missingTaskResult.isError, undefined);
+  assert.equal(missingTaskPayload.code, 'recommendation_task_required');
+  assert.match(missingTaskPayload.next_step, /task description/);
 
   console.log(JSON.stringify({
     status: 'ok',
@@ -217,6 +265,10 @@ try {
     preview_input_count: longRefs.length,
     preview_result_count: previewPayload.results.length,
     preview_truncated_from: previewPayload.truncated_from,
+    preview_browser_count: previewPayload.browser_preview_count,
+    recommendation_slot_limit: twentySlotPayload.slot_count,
+    recommendation_over_limit_code: overLimitPayload.code,
+    recommendation_missing_task_code: missingTaskPayload.code,
   }, null, 2));
 } finally {
   await transport.close().catch(() => {});

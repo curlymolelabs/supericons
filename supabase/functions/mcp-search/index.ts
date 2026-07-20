@@ -1,5 +1,9 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 
-import { handleSearchRequest } from '../_shared/search-engine/handle-search-request.ts';
+import { handleGroupedSearchRequest } from '../_shared/search-engine/grouped-search-request.ts';
 
-serve((req) => handleSearchRequest(req, { defaultSource: 'mcp' }));
+serve((req) => handleGroupedSearchRequest(req, {
+  defaultSource: 'mcp',
+  maxQueries: 96,
+  concurrency: 8,
+}));

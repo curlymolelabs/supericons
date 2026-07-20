@@ -46,6 +46,49 @@ try {
     'lucide:cog',
     'lucide:settings',
   ]);
+
+  globalThis.fetch = async (url, options) => {
+    requests.push({ url, options, body: JSON.parse(options.body) });
+    return new Response(JSON.stringify({
+      schema_version: 1,
+      response_count: 1,
+      responses: [{
+        index: 0,
+        status: 429,
+        body: {
+          error: 'daily_allowance_exceeded',
+          code: 'daily_allowance_exceeded',
+          hint: 'Wait until the allowance resets.',
+          retryable: true,
+          retry_after_seconds: 43_200,
+          details: {
+            tier: 'anonymous',
+            daily_limit: 300,
+            retry_after_seconds: 43_200,
+          },
+        },
+      }],
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  };
+
+  await assert.rejects(
+    searchIconQueriesHostedMcp({
+      queries: [
+        { query: 'cog', usageContext: { tool_name: 'recommend_icons', request_id: 'request-2' } },
+      ],
+    }),
+    (error) => (
+      error.code === 'daily_allowance_exceeded'
+      && error.status === 429
+      && error.retryable === true
+      && error.retry_after_seconds === 43_200
+      && error.details?.daily_limit === 300
+    ),
+    'Grouped subrequest failures must preserve actionable rate-limit details.',
+  );
 } finally {
   globalThis.fetch = originalFetch;
   if (originalUrl === undefined) delete process.env.SUPERICONS_MCP_SEARCH_URL;
@@ -61,4 +104,5 @@ console.log(JSON.stringify({
   http_requests: requests.length,
   logical_queries: requests[0].body.queries.length,
   response_order_preserved: true,
+  grouped_rate_limit_propagated: true,
 }, null, 2));

@@ -410,15 +410,42 @@ export async function searchIconQueriesHostedMcp({ queries }) {
 
   const payload = await postSearch(url, headers, { queries: groupedQueries });
   if (!Array.isArray(payload?.responses) || payload.responses.length !== groupedQueries.length) {
-    throw new Error('grouped hosted search returned an invalid response');
+    const error = new Error('Grouped hosted search returned an invalid response.');
+    error.code = 'grouped_hosted_search_invalid_response';
+    error.status = 502;
+    error.retryable = true;
+    throw error;
   }
 
-  return payload.responses.map((entry, index) => {
+  const responses = payload.responses.map((entry, index) => {
     if (entry?.index !== index || !Number.isInteger(entry?.status)) {
-      throw new Error('grouped hosted search returned responses out of order');
+      const error = new Error('Grouped hosted search returned responses out of order.');
+      error.code = 'grouped_hosted_search_invalid_response';
+      error.status = 502;
+      error.retryable = true;
+      throw error;
     }
-    return entry.status >= 200 && entry.status < 300 && entry.body && typeof entry.body === 'object'
-      ? entry.body
-      : { results: [], grouped_status: entry.status };
+    if (entry.status >= 200 && entry.status < 300 && entry.body && typeof entry.body === 'object') {
+      return entry.body;
+    }
+
+    const body = entry?.body && typeof entry.body === 'object' ? entry.body : {};
+    const error = new Error(
+      body.message || body.error || `Grouped hosted search failed for query ${index + 1}.`,
+    );
+    error.code = body.code || body.error || 'grouped_hosted_search_failed';
+    error.status = entry.status;
+    error.retryable = typeof body.retryable === 'boolean'
+      ? body.retryable
+      : entry.status === 429 || entry.status >= 500;
+    if (typeof body.hint === 'string') error.hint = body.hint;
+    if (body.details && typeof body.details === 'object') error.details = body.details;
+    const retryAfterSeconds = Number(body.retry_after_seconds || body.details?.retry_after_seconds);
+    if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0) {
+      error.retry_after_seconds = retryAfterSeconds;
+    }
+    throw error;
   });
+
+  return responses;
 }

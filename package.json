@@ -161,6 +161,7 @@
     "verify:search-v2-grouped-http-request": "deno run --allow-read scripts/verify-search-v2-grouped-http-request.ts",
     "verify:hosted-search-grouped-client": "node scripts/verify-hosted-search-grouped-client.mjs",
     "verify:recommend-icons-grouped-search": "node scripts/verify-recommend-icons-grouped-search.mjs",
+    "verify:mcp-agent-friendly-errors": "node scripts/verify-mcp-agent-friendly-errors.mjs",
     "verify:search-v2-lightweight-hosted-runner": "node scripts/verify-search-v2-lightweight-hosted-runner.mjs",
     "verify:search-v2-latency-gate-a-packet": "node scripts/verify-search-v2-latency-gate-a-packet.mjs",
     "verify:search-v2-latency-rerun-packet": "node scripts/verify-search-v2-latency-rerun-packet.mjs",

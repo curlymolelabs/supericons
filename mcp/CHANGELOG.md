@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- added support for up to 20 recommendation slots in one call
+- added plain-language recommendation input and service error responses with useful next steps
+
+### Improved
+
+- grouped recommendation searches into one bounded hosted request
+- changed oversized preview requests into successful 12-icon inline previews with warnings and fuller browser links
+
 ## 0.4.19-beta.2 - 2026-07-20
 
 ### Added

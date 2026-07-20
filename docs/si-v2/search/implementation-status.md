@@ -1,7 +1,17 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-18
+Last verified: 2026-07-20
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
+
+## Active recommendation reliability candidate
+
+The current local candidate implements `D-031` and `FR-46` without changing the package metadata version:
+
+| artifact | lifecycle state | proof | remaining boundary |
+| --- | --- | --- | --- |
+| Local and hosted `recommend_icons` contract | Implemented and locally verified | `scripts/verify-mcp-agent-friendly-errors.mjs` accepts 20 slots on both MCP transports, returns structured guidance for 21 slots and missing task text, and preserves a hosted 429 reset of 43,200 seconds. `scripts/verify-recommend-icons-grouped-search.mjs` proves one grouped request with 40 logical queries for both English and localized 20-slot cases. | No new npm version is assigned or published. Live hosted latency is not measured. |
+| Stable Supabase MCP grouped route | Implemented and locally verified | `deno check supabase/functions/mcp-search/index.ts` and `scripts/verify-search-v2-grouped-http-request.ts` prove single-request compatibility, a 96-query route bound, per-query rate cost, response order, and synchronous audit rows. | No deployment was performed for this candidate. |
+| `preview_icons` over-limit behavior | Implemented, locally verified, and clean-install verified | `scripts/verify-search-v2-one-call-contract.mjs` sends 15 refs with limit 13, receives a successful inline result capped at 12, and confirms all 15 accepted refs remain in `preview_url`. | Not published or deployed. |
 
 ## Lifecycle definitions
 

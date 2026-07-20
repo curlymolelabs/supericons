@@ -13,7 +13,11 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import { z } from 'zod';
-import { getHostedSearchResilienceStatus, searchIconsHostedMcp } from './hosted-search-client.js';
+import {
+  getHostedSearchResilienceStatus,
+  searchIconQueriesHostedMcp,
+  searchIconsHostedMcp,
+} from './hosted-search-client.js';
 import { getMaterialBundleStatus, hydrateMaterialHostedRows } from './material-hydration.js';
 import { SUPABASE_URL } from './auth.js';
 import { searchIcons as searchLocalIcons } from './search.js';
@@ -32,16 +36,18 @@ import {
   buildPreviewTextPayload,
 } from './preview-icons.js';
 import {
-  MAX_ACCEPTED_PREVIEW_REFS,
   SEARCH_TOOL_SERVER_INSTRUCTIONS,
+  buildRecommendationFailurePresentation,
   buildSearchFailurePresentation,
   buildSearchMatchPresentation,
   buildSearchNoResultPresentation,
   coerceToolBoolean,
   coerceToolIconRefs,
   coerceToolNumber,
+  coerceToolSlots,
   coerceToolString,
   normalizePreviewToolArguments,
+  normalizeRecommendationToolArguments,
   normalizeSearchToolArguments,
 } from './search-tool-shell.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
@@ -109,7 +115,18 @@ const multilingualLocaleDescription =
 const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
 const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
 const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
-const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(12));
+const forgivingPreviewLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationSlotsSchema = z.preprocess(
+  coerceToolSlots,
+  z.array(z.string()),
+);
 const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 const previewStyles = new Set(['any', 'outline', 'solid']);
 const previewLocales = new Set(multilingualLocaleValues);
@@ -194,12 +211,26 @@ const recommendIconsOutputSchema = {
   task: z.string().describe('Original UI task.'),
   library: z.string().optional().describe('Library filter used for recommendations, if provided.'),
   style: z.string().optional().describe('Style preference used for recommendations.'),
+  response_mode: z.enum(['plan', 'assets', 'full']).describe('Response size mode used for this recommendation.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
+  all_slots_resolved: z.boolean().describe('Whether every requested slot received a recommendation without clarification.'),
   needs_clarification: z.boolean().describe('Whether one or more ambiguous slots require more context.'),
   clarification_slots: z.array(z.string()).describe('Slots that need the caller to choose an interpretation.'),
+  low_confidence_slots: z.array(z.string()).describe('Slots whose result is missing or has low confidence.'),
+  fallback_recommended: z.boolean().describe('Whether the caller should consider direct search or clarification.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of the recommended icon set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
+  warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored or clamped.'),
+  error: z.string().optional().describe('Plain-language reason the recommendation did not complete.'),
+  code: z.string().optional().describe('Stable error code for programmatic recovery.'),
+  hint: z.string().optional().describe('Plain-language recovery instruction.'),
+  retryable: z.boolean().optional().describe('Whether a corrected or later request may succeed.'),
+  status: z.number().optional().describe('HTTP status from a hosted dependency failure.'),
+  retry_after_seconds: z.number().optional().describe('Seconds to wait before retrying a rate-limited recommendation.'),
+  details: z.record(z.unknown()).optional().describe('Structured limits or failure details.'),
+  suggested_response_markdown: z.string().optional().describe('Plain-language explanation suitable for the agent response.'),
+  next_step: z.string().optional().describe('Useful next action for the caller.'),
 };
 
 const previewIconsOutputSchema = {
@@ -208,6 +239,8 @@ const previewIconsOutputSchema = {
   image_url: z.string().nullable().optional().describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
   markdown_image: z.string().nullable().optional().describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
   image_included: z.boolean().describe('Whether this response includes MCP image content.'),
+  rendered_count: z.number().describe('Number of icons rendered in the inline preview.'),
+  browser_preview_count: z.number().describe('Number of accepted icon refs available at preview_url.'),
   truncated_from: z.number().optional().describe('Original icon ref count when the input was truncated.'),
   warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored.'),
   next_step: z.string().describe('Useful next action for the caller.'),
@@ -494,6 +527,26 @@ async function searchHostedIcons({
   return hostedResults;
 }
 
+async function searchHostedIconQueries(queries = [], { usageContextForQuery } = {}) {
+  const payloads = await searchIconQueriesHostedMcp({
+    queries: queries.map((query, index) => ({
+      ...query,
+      libraryMode: 'strict',
+      routeToolName: 'recommend_icons',
+      usageContext: typeof usageContextForQuery === 'function'
+        ? usageContextForQuery(query, index)
+        : null,
+    })),
+  });
+
+  return payloads.map((payload, index) => {
+    const limit = Math.max(1, Number(queries[index]?.limit) || 10);
+    return (payload.results || [])
+      .map(normalizeHostedIcon)
+      .slice(0, limit);
+  });
+}
+
 function buildPublicIconResult(icon, options = {}) {
   const result = {
     id: icon.id,
@@ -634,6 +687,7 @@ function buildDirectPreviewImageFields({ query, iconRefs = [], library, style, l
 async function buildHostedPreviewModel({
   query,
   iconRefs = [],
+  browserIconRefs = [],
   library,
   style = 'any',
   locale,
@@ -664,7 +718,9 @@ async function buildHostedPreviewModel({
     }));
 
   const previewUrl = fixedRefs.length > 0
-    ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+    ? buildPreviewBoardUrlForIcons(
+      normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24),
+    )
     : buildSearchPreviewUrl({ query: searchQuery, library, style, locale, limit: effectiveLimit });
   const { imageUrl, markdownImage } = buildDirectPreviewImageFields({
     query: searchQuery,
@@ -689,6 +745,9 @@ async function buildHostedPreviewModel({
       markdownImage,
       imageIncluded: Boolean(includeImage && icons.length > 0),
       truncatedFrom,
+      browserPreviewCount: fixedRefs.length > 0
+        ? normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24).length
+        : icons.length,
       warnings,
     }),
   };
@@ -1185,7 +1244,16 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
   const startedAt = Date.now();
   try {
     const result = await handler();
-    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, 'ok'));
+    const resultIsError = result?.isError === true;
+    void logMcpUsageEvent(buildMcpUsageEventPayload(
+      requestContext,
+      toolName,
+      args,
+      result,
+      startedAt,
+      resultIsError ? 'error' : 'ok',
+      resultIsError ? result?.structuredContent : null,
+    ));
     return result;
   } catch (error) {
     void logMcpUsageEvent(buildMcpUsageEventPayload(
@@ -1325,64 +1393,110 @@ function createServer({ requestContext = null } = {}) {
     'recommend_icons',
     {
       title: 'Recommend Icons',
-      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
+      description: 'Recommend a coherent icon set for up to 20 named UI slots in one call. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Invalid inputs and service failures return a plain-language reason and a next step instead of a bare protocol error. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
       inputSchema: {
-        task: z.string().describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app".'),
-        slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"].'),
-        library: z.string().optional().describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "outline" for most sidebar and toolbar icon sets unless the user asks otherwise.'),
-        locale: z.enum(multilingualLocaleValues).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
-        limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('Number of choices to return for each slot. Use 1 for a final pick or 2-3 when the user wants alternatives.'),
-        response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
-        include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
+        task: forgivingStringSchema.optional().default('').describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app". Missing task text returns a structured recovery message.'),
+        slots: forgivingRecommendationSlotsSchema.optional().default([]).describe('List of 1 to 20 UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"]. A single string is accepted as one slot. Larger lists return a structured split instruction.'),
+        library: forgivingStringSchema.optional().describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
+        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema.optional().describe('Optional locale for multilingual slot labels. Unsupported values are ignored with a warning.'),
+        limit_per_slot: forgivingRecommendationLimitSchema.optional().default(3).describe('Number of choices per slot. Values outside 1 to 5 are clamped with a warning. Numeric strings are accepted.'),
+        response_mode: forgivingStringSchema.optional().default('plan').describe('Response size mode: plan, assets, or full. Unsupported values use plan with a warning.'),
+        include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
       },
       outputSchema: recommendIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async (args) => withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
-      const { task, slots, library, style, locale, limit_per_slot, response_mode, include_query_frame } = args;
-      const payload = await recommendIconsForTask({
-        task,
-        slots,
-        library,
-        style,
-        locale,
-        limitPerSlot: limit_per_slot,
-        responseMode: response_mode,
-        includeQueryFrame: include_query_frame,
-        semanticMap,
-        searchIconsForQuery: (params) => searchHostedIcons({
-          ...params,
-          includeQueryFrame: include_query_frame,
-          usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
-            ...args,
-            query: params.query,
-            library: params.library,
-            limit: params.limit,
-          }),
-        }),
-        buildIconResult: async (icon) => buildPublicIconResult(icon),
+    async (rawArgs) => {
+      const args = normalizeRecommendationToolArguments(rawArgs, {
+        supportedLocales: multilingualLocaleValues,
       });
-
-      const iconRefs = [];
-      for (const slot of payload.results || []) {
-        const candidates = [
-          slot.recommended,
-          slot.recommendation,
-          slot.icon,
-          ...(Array.isArray(slot.alternatives) ? slot.alternatives : []),
-          ...(Array.isArray(slot.choices) ? slot.choices : []),
-        ].filter(Boolean);
-        for (const candidate of candidates) {
-          if (candidate.icon_ref) iconRefs.push(candidate.icon_ref);
+      return withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
+        const {
+          task,
+          slots,
+          library,
+          style,
+          locale,
+          limit_per_slot,
+          response_mode,
+          include_query_frame,
+          warnings,
+          input_error,
+        } = args;
+        if (input_error) {
+          return asStructured(input_error, { isError: true });
         }
-      }
 
-      return asStructured({
-        ...payload,
-        preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+        try {
+          const payload = await recommendIconsForTask({
+            task,
+            slots,
+            library,
+            style,
+            locale,
+            limitPerSlot: limit_per_slot,
+            responseMode: response_mode,
+            includeQueryFrame: include_query_frame,
+            semanticMap,
+            searchIconsForQuery: (params) => searchHostedIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+              usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
+                ...args,
+                query: params.query,
+                library: params.library,
+                limit: params.limit,
+              }),
+            }),
+            searchIconsForQueries: (queries) => searchHostedIconQueries(queries, {
+              usageContextForQuery: (params, index) => buildToolUsageContext(
+                requestContext,
+                'recommend_icons',
+                {
+                  ...args,
+                  query: params.query,
+                  library: params.library,
+                  limit: params.limit,
+                  grouped_query_index: index,
+                },
+              ),
+            }),
+            buildIconResult: async (icon) => buildPublicIconResult(icon),
+          });
+
+          const iconRefs = [];
+          for (const slot of payload.results || []) {
+            const candidates = [
+              slot.recommended,
+              slot.recommendation,
+              slot.icon,
+              ...(Array.isArray(slot.alternatives) ? slot.alternatives : []),
+              ...(Array.isArray(slot.choices) ? slot.choices : []),
+            ].filter(Boolean);
+            for (const candidate of candidates) {
+              if (candidate.icon_ref) iconRefs.push(candidate.icon_ref);
+            }
+          }
+
+          return asStructured({
+            ...payload,
+            preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+            ...(warnings.length ? { warnings } : {}),
+          });
+        } catch (error) {
+          return asStructured(buildRecommendationFailurePresentation({
+            task,
+            library,
+            style,
+            responseMode: response_mode,
+            slots,
+            error,
+            warnings,
+          }), { isError: true });
+        }
       });
-    })
+    }
   );
 
   server.registerTool(
@@ -1432,12 +1546,12 @@ function createServer({ requestContext = null } = {}) {
         query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
         icon_refs: z.preprocess(
           coerceToolIconRefs,
-          z.array(z.string()).min(1).max(MAX_ACCEPTED_PREVIEW_REFS),
-        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 12 are rendered.'),
+          z.array(z.string()).min(1),
+        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 100 are accepted, 24 appear on the browser preview, and 12 are rendered inline. Larger lists are safely truncated with a warning.'),
         library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
         style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
         locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
-        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Maximum icons from 1 to 12. Numeric strings are accepted.'),
+        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Requested inline icon count. Values outside 1 to 12 are safely clamped with a warning. Numeric strings are accepted.'),
         include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
       },
       outputSchema: previewIconsOutputSchema,
@@ -1449,6 +1563,7 @@ function createServer({ requestContext = null } = {}) {
         const {
           query,
           icon_refs,
+          browser_icon_refs,
           library,
           style,
           locale,
@@ -1464,6 +1579,8 @@ function createServer({ requestContext = null } = {}) {
             image_url: null,
             markdown_image: null,
             image_included: false,
+            rendered_count: 0,
+            browser_preview_count: 0,
             next_step: 'Provide a search query or one or more icon refs in library:id format.',
             ...(warnings.length ? { warnings } : {}),
             client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
@@ -1475,6 +1592,7 @@ function createServer({ requestContext = null } = {}) {
         const { icons, payload } = await buildHostedPreviewModel({
           query,
           iconRefs: Array.isArray(icon_refs) ? icon_refs : [],
+          browserIconRefs: Array.isArray(browser_icon_refs) ? browser_icon_refs : [],
           library,
           style,
           locale,

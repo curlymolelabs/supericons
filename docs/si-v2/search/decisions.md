@@ -43,6 +43,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-028` | Keep local search keyless while giving hosted search measured anonymous, registered, and paid allowances | Accepted | Access, cost, telemetry, and public/private product boundary |
 | `D-029` | Make MCP telemetry venue follow the client entry point | Accepted | Measurement and dashboard attribution |
 | `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
+| `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
 
 ## Decision records
 
@@ -438,6 +439,19 @@ Alternatives rejected or deferred: waiting for organic adoption that the known-i
 Superseded decisions: the founder validation window minimums recorded in the beta1 publication approval request are superseded as promotion prerequisites.
 
 Specification change: none in this change set; the execution PRD is the controlling plan and the status ledger is updated in the same commit.
+
+### D-031: Twenty-slot recommendation and agent-readable recovery
+
+Date: 2026-07-20
+Status: Accepted
+
+Decision: `recommend_icons` accepts up to 20 UI slots in one call on local and hosted MCP. The implementation groups the generated recommendation searches into one hosted request, caps recommendation fan-out at 40 logical queries within the endpoint limit of 96, and charges once per logical query under existing rate and audit rules. Correctable input problems return structured plain-language guidance instead of a bare MCP parameter error. Hosted timeouts, usage limits, and invalid responses return stable codes and useful recovery steps. `preview_icons` keeps its 12-icon inline rendering bound, but requests above that bound are clamped with a warning and retain up to 24 accepted refs in the browser preview.
+
+Reason: a real OpenCode call requested 16 recommendation slots and was rejected by the former 12-slot schema. A retry with 12 slots then took almost one minute because recommendation variants were sent through separate hosted calls. The same session requested a 13-icon preview and received another bare parameter rejection even though the intended safe behavior was truncation. The corrected contract supports normal agent workloads without weakening the existing inline image, rate-limit, or query-fanout bounds.
+
+Alternatives rejected or deferred: increasing only the schema maximum while keeping separate hosted calls; silently truncating recommendation slots; increasing the inline contact sheet beyond 12; returning raw Zod or MCP parameter messages for recoverable user inputs.
+
+Specification change: version 1.14 adds `FR-46`.
 
 ## Adding or superseding a decision
 
