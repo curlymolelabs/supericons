@@ -165,7 +165,8 @@ function Wait-ForGroupedFunctionAbsence {
 function Expand-GitRevision {
   param(
     [Parameter(Mandatory = $true)][string]$Revision,
-    [Parameter(Mandatory = $true)][string]$Destination
+    [Parameter(Mandatory = $true)][string]$Destination,
+    [Parameter(Mandatory = $true)][string]$RepositoryRoot
   )
 
   New-Item -ItemType Directory -Path $Destination | Out-Null
@@ -174,12 +175,12 @@ function Expand-GitRevision {
   $archiveFileName = "$destinationLeaf.tar"
   $archivePath = Join-Path $destinationParent $archiveFileName
 
-  Push-Location $destinationParent
   try {
     Invoke-CheckedCommand -FilePath 'git' -Arguments @(
-      'archive', '--format=tar', '--output', $archiveFileName, $Revision
+      '-C', $RepositoryRoot,
+      'archive', '--format=tar', '--output', $archivePath, $Revision
     )
-    Push-Location $destinationLeaf
+    Push-Location $Destination
     try {
       Invoke-CheckedCommand -FilePath 'tar' -Arguments @(
         '-xf', "../$archiveFileName"
@@ -190,7 +191,6 @@ function Expand-GitRevision {
     }
   }
   finally {
-    Pop-Location
     if (Test-Path -LiteralPath $archivePath) {
       Remove-Item -LiteralPath $archivePath
     }
@@ -308,7 +308,10 @@ if (Test-Path -LiteralPath $Workspace) {
   Remove-Item -LiteralPath $Workspace -Recurse -Force
 }
 $sourceWorkspace = Join-Path $Workspace 'source'
-Expand-GitRevision -Revision $resolvedSource -Destination $sourceWorkspace
+Expand-GitRevision `
+  -Revision $resolvedSource `
+  -Destination $sourceWorkspace `
+  -RepositoryRoot $Root
 
 Invoke-CheckedCommand -FilePath 'deno' -Arguments @(
   'check',
