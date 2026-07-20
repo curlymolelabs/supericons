@@ -72,6 +72,8 @@ assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
 assert.equal(manifest.live_gates.committed_negative_path_harness, true);
 assert.equal(manifest.live_gates.committed_rollback_simulation, true);
+assert.equal(manifest.live_gates.relative_archive_extraction, true);
+assert.equal(manifest.live_gates.gnu_tar_and_bsdtar_simulated, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -146,6 +148,11 @@ assert.match(runner, /--use-api/);
 assert.match(runner, /--workdir \$sourceWorkspace/);
 assert.match(runner, /The tracked worktree must be clean/);
 assert.match(runner, /git status --porcelain=v1 --untracked-files=no/);
+assert.match(runner, /Push-Location \$destinationParent/);
+assert.match(runner, /Push-Location \$destinationLeaf/);
+assert.match(runner, /'-xf', "\.\.\/\$archiveFileName"/);
+assert.equal(runner.includes("'archive', '--format=tar', '--output', $archivePath"), false);
+assert.equal(runner.includes("'tar' -Arguments @('-xf', $archivePath"), false);
 assert.match(runner, /preGrouped\.Count -ne 0/);
 assert.match(runner, /Remove-GroupedFunctionForRollback/);
 assert.match(runner, /ExpectedFunctionId/);
@@ -217,6 +224,9 @@ assert.match(rollbackSimulation, /blocked_mismatched_function/);
 assert.match(rollbackSimulation, /expectedDeleteCount: 0/);
 assert.match(rollbackSimulation, /expectedDeleteCount: 1/);
 assert.match(rollbackSimulation, /run-search-v2-beta3-grouped-release\.ps1/);
+assert.match(rollbackSimulation, /match_bsdtar/);
+assert.match(rollbackSimulation, /match_gnu_tar/);
+assert.match(rollbackSimulation, /Git.*usr.*bin.*tar\.exe/s);
 
 for (const path of [
   runnerPath,

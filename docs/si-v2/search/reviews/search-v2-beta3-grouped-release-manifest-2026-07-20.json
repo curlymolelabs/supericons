@@ -146,11 +146,11 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "295aa5cfef3da956d7a3613f3fa374eaf3f483cf76c2c5bde336ebaef4689c30"
+      "sha256": "195a8d54abf2967a02c4dd1f27aff77ccf31f298b8d8b4356bc649ebfe7dbafa"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "5e179750d23d2287bcd39f2ddda674df888e3c68d68f4c95cbd3916eabd43215"
+      "sha256": "67dbfebab11e319c78dbd5876c4123d261cfbc8753d5524ae11e955da4e6a474"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -166,7 +166,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "7419495722d746672297ab2c2e1ed4516413e680484d2041090a454059cfd848"
+      "sha256": "7cd3b3e69cc6725642f02e799da34dee4f533eba3b78d65a4988d15e4e487e19"
     }
   ],
   "live_gates": {
@@ -178,6 +178,8 @@
     "rollback_function_id_pinned": true,
     "committed_negative_path_harness": true,
     "committed_rollback_simulation": true,
+    "relative_archive_extraction": true,
+    "gnu_tar_and_bsdtar_simulated": true,
     "one_slot_warm_p95_ms_max": 3000,
     "ten_slot_warm_p95_ms_max": 10000,
     "twenty_slot_warm_p95_ms_max": 15000,

@@ -25,6 +25,18 @@ const evidencePaths = [
 ];
 const rollbackEvidencePath = evidencePaths[3];
 const realNode = process.execPath;
+const windowsSystemDirectory = process.env.SystemRoot
+  ? join(process.env.SystemRoot, 'System32')
+  : null;
+const gitGnuTarCandidates = [
+  process.env.ProgramFiles
+    ? join(process.env.ProgramFiles, 'Git', 'usr', 'bin', 'tar.exe')
+    : null,
+  process.env.LOCALAPPDATA
+    ? join(process.env.LOCALAPPDATA, 'Programs', 'Git', 'usr', 'bin', 'tar.exe')
+    : null,
+].filter(Boolean);
+const gitGnuTarPath = gitGnuTarCandidates.find((path) => existsSync(path)) || null;
 
 function normalizedSha256(path) {
   const text = readFileSync(path, 'utf8').replace(/\r\n?/g, '\n');
@@ -187,6 +199,7 @@ function runScenario({
   id,
   expectedStatus,
   expectedDeleteCount,
+  tarDirectory = null,
 }) {
   const scenarioDir = join(workspace, id);
   const statePath = join(scenarioDir, 'state.json');
@@ -203,7 +216,11 @@ function runScenario({
     cwd: repoRoot,
     env: {
       ...process.env,
-      PATH: `${binDir};${process.env.PATH}`,
+      PATH: [
+        binDir,
+        ...(tarDirectory ? [tarDirectory] : []),
+        process.env.PATH,
+      ].join(';'),
       BETA3_REAL_NODE: realNode,
       BETA3_SHIM_STATE_PATH: statePath,
       BETA3_SHIM_LOG_PATH: logPath,
@@ -276,10 +293,26 @@ try {
       expectedDeleteCount: 0,
     }),
     match: runScenario({
-      id: 'match',
+      id: 'match_bsdtar',
       expectedStatus: 'removed',
       expectedDeleteCount: 1,
+      tarDirectory: windowsSystemDirectory,
     }),
+    ...(gitGnuTarPath
+      ? {
+          match_gnu_tar: runScenario({
+            id: 'match_gnu_tar',
+            expectedStatus: 'removed',
+            expectedDeleteCount: 1,
+            tarDirectory: dirname(gitGnuTarPath),
+          }),
+        }
+      : {
+          match_gnu_tar: {
+            status: 'not_available',
+            delete_commands: 0,
+          },
+        }),
   };
 } finally {
   removeGeneratedEvidence();
@@ -290,4 +323,8 @@ console.log(JSON.stringify({
   status: 'ok',
   scenarios: results,
   stable_function_mutations: 0,
+  archive_tools: {
+    bsdtar: windowsSystemDirectory ? 'tested' : 'not_available',
+    gnu_tar: gitGnuTarPath ? 'tested' : 'not_available',
+  },
 }, null, 2));

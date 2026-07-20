@@ -169,12 +169,32 @@ function Expand-GitRevision {
   )
 
   New-Item -ItemType Directory -Path $Destination | Out-Null
-  $archivePath = "$Destination.tar"
-  Invoke-CheckedCommand -FilePath 'git' -Arguments @(
-    'archive', '--format=tar', '--output', $archivePath, $Revision
-  )
-  Invoke-CheckedCommand -FilePath 'tar' -Arguments @('-xf', $archivePath, '-C', $Destination)
-  Remove-Item -LiteralPath $archivePath
+  $destinationParent = Split-Path -Parent $Destination
+  $destinationLeaf = Split-Path -Leaf $Destination
+  $archiveFileName = "$destinationLeaf.tar"
+  $archivePath = Join-Path $destinationParent $archiveFileName
+
+  Push-Location $destinationParent
+  try {
+    Invoke-CheckedCommand -FilePath 'git' -Arguments @(
+      'archive', '--format=tar', '--output', $archiveFileName, $Revision
+    )
+    Push-Location $destinationLeaf
+    try {
+      Invoke-CheckedCommand -FilePath 'tar' -Arguments @(
+        '-xf', "../$archiveFileName"
+      )
+    }
+    finally {
+      Pop-Location
+    }
+  }
+  finally {
+    Pop-Location
+    if (Test-Path -LiteralPath $archivePath) {
+      Remove-Item -LiteralPath $archivePath
+    }
+  }
 }
 
 function Remove-GroupedFunctionForRollback {
