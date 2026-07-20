@@ -131,6 +131,33 @@ try {
   assert.equal(compatibilityFallbackSearches, 1);
   assert.equal(malformedFallback[0].results[0].icon_id, 'lucide:cog');
 
+  let invalidJsonFallbackSearches = 0;
+  globalThis.fetch = async (url, options) => {
+    requests.push({ url, options, body: JSON.parse(options.body) });
+    if (url === process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL) {
+      return new Response('{not valid JSON', {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    invalidJsonFallbackSearches += 1;
+    return new Response(JSON.stringify({
+      query: 'cog',
+      results: [{ icon_id: 'lucide:cog' }],
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  };
+
+  const invalidJsonFallback = await searchIconQueriesHostedMcp({
+    queries: [
+      { query: 'cog', usageContext: { tool_name: 'recommend_icons', request_id: 'request-3-json' } },
+    ],
+  });
+  assert.equal(invalidJsonFallbackSearches, 1);
+  assert.equal(invalidJsonFallback[0].results[0].icon_id, 'lucide:cog');
+
   let rollbackFallbackSearches = 0;
   globalThis.fetch = async (url, options) => {
     requests.push({ url, options, body: JSON.parse(options.body) });
@@ -157,6 +184,73 @@ try {
   });
   assert.equal(rollbackFallbackSearches, 1);
   assert.equal(rollbackFallback[0].results[0].icon_id, 'lucide:settings');
+
+  delete process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
+  process.env.SUPERICONS_MCP_SEARCH_URL = 'https://custom.example/functions/v1/mcp-search';
+  const customRouteUrls = [];
+  globalThis.fetch = async (url, options) => {
+    customRouteUrls.push(String(url));
+    requests.push({ url, options, body: JSON.parse(options.body) });
+    return new Response(JSON.stringify({
+      query: 'settings',
+      results: [{ icon_id: 'lucide:settings' }],
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  };
+  const customRouteResult = await searchIconQueriesHostedMcp({
+    queries: [
+      { query: 'settings', usageContext: { tool_name: 'recommend_icons', request_id: 'request-5' } },
+    ],
+  });
+  assert.deepEqual(customRouteUrls, ['https://custom.example/functions/v1/mcp-search']);
+  assert.equal(customRouteResult[0].results[0].icon_id, 'lucide:settings');
+
+  process.env.SUPERICONS_MCP_SEARCH_URL = 'https://example.test/functions/v1/mcp-search';
+  process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL = 'https://example.test/functions/v1/mcp-search-grouped';
+  let concurrentGroupedFailures = 0;
+  let concurrentIndividualFallbacks = 0;
+  globalThis.fetch = async (url, options) => {
+    requests.push({ url, options, body: JSON.parse(options.body) });
+    if (url === process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL) {
+      concurrentGroupedFailures += 1;
+      if (concurrentGroupedFailures === 2) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      return new Response(JSON.stringify({
+        error: 'grouped_unavailable',
+        retryable: true,
+      }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    concurrentIndividualFallbacks += 1;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    return new Response(JSON.stringify({
+      query: 'settings',
+      results: [{ icon_id: 'lucide:settings' }],
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  };
+  const concurrentFallbacks = await Promise.allSettled([
+    searchIconQueriesHostedMcp({
+      queries: [
+        { query: 'settings', usageContext: { tool_name: 'recommend_icons', request_id: 'request-6-a' } },
+      ],
+    }),
+    searchIconQueriesHostedMcp({
+      queries: [
+        { query: 'settings', usageContext: { tool_name: 'recommend_icons', request_id: 'request-6-b' } },
+      ],
+    }),
+  ]);
+  assert.equal(concurrentFallbacks.every((outcome) => outcome.status === 'fulfilled'), true);
+  assert.equal(concurrentGroupedFailures, 2);
+  assert.equal(concurrentIndividualFallbacks, 2);
 } finally {
   globalThis.fetch = originalFetch;
   if (originalUrl === undefined) delete process.env.SUPERICONS_MCP_SEARCH_URL;
@@ -176,5 +270,8 @@ console.log(JSON.stringify({
   response_order_preserved: true,
   grouped_rate_limit_propagated: true,
   malformed_response_fell_back_to_individual: true,
+  invalid_json_fell_back_to_individual: true,
   grouped_endpoint_rollback_fell_back_to_individual: true,
+  custom_individual_route_preserved: true,
+  concurrent_grouped_failures_used_individual_fallback: true,
 }, null, 2));

@@ -14,6 +14,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import express from 'express';
 import { z } from 'zod';
 import {
+  getGroupedHostedSearchResilienceStatus,
   getHostedSearchResilienceStatus,
   searchIconQueriesHostedMcp,
   searchIconsHostedMcp,
@@ -1767,6 +1768,7 @@ app.use((req, res, next) => {
 app.get('/health', (_req, res) => {
   const materialAssets = getMaterialBundleStatus();
   const hostedSearch = getHostedSearchResilienceStatus();
+  const groupedHostedSearch = getGroupedHostedSearchResilienceStatus();
   sendJson(res, 200, {
     ok: true,
     service: 'supericons-remote-mcp',
@@ -1777,6 +1779,7 @@ app.get('/health', (_req, res) => {
       asset_count: materialAssets.assetCount,
     },
     hosted_search: hostedSearch,
+    grouped_hosted_search: groupedHostedSearch,
   });
 });
 

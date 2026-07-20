@@ -679,6 +679,12 @@ function shouldAllowLocalSearchFallback() {
   return raw === '1' || raw === 'true' || raw === 'on';
 }
 
+function shouldUseLocalFallbackForHostedError(error) {
+  const status = Number(error?.status);
+  if (Number.isFinite(status) && status >= 400 && status < 500) return false;
+  return true;
+}
+
 function hasLocalSearchData() {
   return freeIcons.length > 0;
 }
@@ -932,7 +938,13 @@ async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend
       })),
     });
   } catch (error) {
-    if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) throw error;
+    if (
+      !shouldUseLocalFallbackForHostedError(error)
+      || !shouldAllowLocalSearchFallback()
+      || !hasLocalSearchData()
+    ) {
+      throw error;
+    }
     payloads = queries.map(() => ({ results: [] }));
   }
 

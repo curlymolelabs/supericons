@@ -14,7 +14,10 @@ import {
   getBetaCohortForRequest,
   getHostedSearchFunctionNameForTool,
 } from './release-channel.js';
-import { hostedSearchResilience } from './hosted-search-resilience.js';
+import {
+  createHostedSearchResilience,
+  hostedSearchResilience,
+} from './hosted-search-resilience.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
@@ -142,6 +145,7 @@ function hasSearchResults(payload) {
 }
 
 const HOSTED_SEARCH_REQUEST_TIMEOUT_MS = 20_000;
+const groupedHostedSearchResilience = createHostedSearchResilience();
 
 function buildLocalizedRetryQueries(query, locale) {
   if (!locale || multilingualExpansionTerms.length === 0) return [];
@@ -167,8 +171,9 @@ function buildLocalizedRetryQueries(query, locale) {
 async function postSearchRequest(url, headers, body, {
   failureLabel,
   failureCode,
+  resilience = hostedSearchResilience,
 }) {
-  return hostedSearchResilience.execute(async () => {
+  return resilience.execute(async () => {
     let response;
     try {
       response = await fetch(url, {
@@ -186,7 +191,18 @@ async function postSearchRequest(url, headers, body, {
       throw error;
     }
 
-    if (response.ok) return response.json();
+    if (response.ok) {
+      try {
+        return await response.json();
+      } catch (cause) {
+        const error = new Error(`${failureLabel} returned an invalid JSON response.`, { cause });
+        error.code = failureCode;
+        error.status = 502;
+        error.retryable = true;
+        error.hosted_search_dependency_failure = true;
+        throw error;
+      }
+    }
 
     const payload = await response.json().catch(() => null);
     const error = new Error(payload?.message || `${failureLabel} failed (${response.status})`);
@@ -230,8 +246,28 @@ async function postPublicSearch(url, headers, body) {
   });
 }
 
+async function postGroupedHostedSearch(url, headers, body) {
+  return postSearchRequest(url, headers, body, {
+    failureLabel: 'grouped hosted MCP search',
+    failureCode: 'grouped_hosted_search_failed',
+    resilience: groupedHostedSearchResilience,
+  });
+}
+
+async function postGroupedPublicSearch(url, headers, body) {
+  return postSearchRequest(url, headers, body, {
+    failureLabel: 'grouped public MCP search',
+    failureCode: 'grouped_public_search_failed',
+    resilience: groupedHostedSearchResilience,
+  });
+}
+
 export function getHostedSearchResilienceStatus() {
   return hostedSearchResilience.getStatus();
+}
+
+export function getGroupedHostedSearchResilienceStatus() {
+  return groupedHostedSearchResilience.getStatus();
 }
 
 async function retryLocalizedHostedSearch({ postSearch, url, headers, body, locale }) {
@@ -384,6 +420,12 @@ async function searchIconQueriesIndividually(queries) {
   return responses;
 }
 
+function shouldUseGroupedHostedSearch() {
+  if (String(process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL || '').trim()) return true;
+  if (shouldUseInternalHostedDebug()) return false;
+  return !String(process.env.SUPERICONS_MCP_SEARCH_URL || '').trim();
+}
+
 async function searchIconQueriesGrouped(queries) {
   if (!Array.isArray(queries) || queries.length < 1 || queries.length > 96) {
     throw new Error('grouped hosted search requires between 1 and 96 queries');
@@ -421,14 +463,14 @@ async function searchIconQueriesGrouped(queries) {
   let publicKey;
   if (shouldUseInternalHostedDebug()) {
     url = getGroupedPublicGatewayUrl();
-    postSearch = postHostedSearch;
+    postSearch = postGroupedHostedSearch;
     publicKey = process.env.SUPERICONS_SEARCH_ENGINE_ANON_KEY || process.env.SUPABASE_ANON_KEY || SUPABASE_ANON;
     if (shouldRequireJwt() && !looksLikeJwt(publicKey)) {
       throw new Error('hosted MCP search requires a legacy Supabase anon JWT; publishable keys are not valid bearer tokens');
     }
   } else {
     url = getGroupedPublicGatewayUrl();
-    postSearch = postPublicSearch;
+    postSearch = postGroupedPublicSearch;
     publicKey = getPublicGatewayAnonKey();
   }
 
@@ -496,6 +538,9 @@ async function searchIconQueriesGrouped(queries) {
 }
 
 export async function searchIconQueriesHostedMcp({ queries }) {
+  if (!shouldUseGroupedHostedSearch()) {
+    return await searchIconQueriesIndividually(queries);
+  }
   try {
     return await searchIconQueriesGrouped(queries);
   } catch (error) {

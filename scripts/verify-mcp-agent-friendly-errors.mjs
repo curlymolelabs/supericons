@@ -130,7 +130,8 @@ const hostedSearchServer = createServer(async (request, response) => {
   const localPackageRequest = queries.length > 0
     && queries.every((query) => query.channel === 'local_mcp');
   const hostedFallbackProbe = queries.some((query) => String(query.query || '').includes('fallbackprobe'));
-  const successfulRequest = localPackageRequest || hostedFallbackProbe;
+  const forcedAllowance = requestUrl.pathname === '/allowance';
+  const successfulRequest = !forcedAllowance && (localPackageRequest || hostedFallbackProbe);
   response.writeHead(200, { 'Content-Type': 'application/json' });
   response.end(JSON.stringify({
     schema_version: 1,
@@ -247,6 +248,46 @@ try {
   throw error;
 }
 
+const localAllowanceTransport = new StdioClientTransport({
+  command: process.execPath,
+  args: [join(mcpRoot, 'index.js')],
+  cwd: mcpRoot,
+  env: {
+    ...process.env,
+    SUPERICONS_MCP_LOG_STARTUP: '0',
+    SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
+    SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK: '1',
+    SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/allowance`,
+    SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/allowance`,
+  },
+  stderr: 'pipe',
+});
+const localAllowanceClient = new Client({ name: 'mcp-local-visible-allowance', version: '1.0.0' });
+try {
+  const beforeLocalAllowanceRequests = groupedSearchRequests;
+  await localAllowanceClient.connect(localAllowanceTransport);
+  const localAllowanceResult = await localAllowanceClient.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      task: 'Choose an icon for application settings.',
+      slots: ['settings'],
+      response_mode: 'plan',
+      limit_per_slot: 1,
+    },
+  });
+  const localAllowancePayload = parsePayload(localAllowanceResult);
+  assert.equal(localAllowancePayload.code, 'daily_allowance_exceeded');
+  assert.equal(localAllowancePayload.error, 'The hosted icon recommendation limit was reached.');
+  assert.equal(localAllowancePayload.retry_after_seconds, 43_200);
+  assert.equal(localAllowancePayload.results.length, 0);
+  assert.equal(groupedSearchRequests, beforeLocalAllowanceRequests + 1);
+} catch (error) {
+  await localAllowanceTransport.close().catch(() => {});
+  await localAllowanceClient.close().catch(() => {});
+  await new Promise((resolveClose) => hostedSearchServer.close(resolveClose));
+  throw error;
+}
+
 const child = spawn(process.execPath, ['mcp/remote-server.js'], {
   cwd: repoRoot,
   env: {
@@ -343,7 +384,7 @@ try {
   assert.equal(hostedAllowancePayload.error, 'The hosted icon recommendation limit was reached.');
   assert.equal(hostedAllowancePayload.retry_after_seconds, 43_200);
   assert.match(hostedAllowancePayload.next_step, /43200 seconds/);
-  assert.equal(groupedSearchRequests, 4);
+  assert.equal(groupedSearchRequests, 5);
 
   const hostedPreviewInputResult = await client.callTool({
     name: 'preview_icons',
@@ -362,6 +403,8 @@ try {
   await localClient.close().catch(() => {});
   await localFallbackTransport.close().catch(() => {});
   await localFallbackClient.close().catch(() => {});
+  await localAllowanceTransport.close().catch(() => {});
+  await localAllowanceClient.close().catch(() => {});
   child.kill();
   await new Promise((resolveClose) => hostedSearchServer.close(resolveClose));
   await new Promise((resolveExit) => {
@@ -383,6 +426,7 @@ console.log(JSON.stringify({
   local_twenty_slot_grouped_queries: groupedSearchRequestSizes[0],
   grouped_empty_used_local_fallback: true,
   hosted_grouped_empty_used_local_fallback: true,
+  local_allowance_error_propagated: true,
   over_limit_code: rejected.input_error.code,
   timeout_code: timeoutPayload.code,
   allowance_retry_after_seconds: allowancePayload.retry_after_seconds,

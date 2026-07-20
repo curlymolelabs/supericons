@@ -10,8 +10,11 @@
 ### Improved
 
 - grouped distinct recommendation searches through an additive endpoint while keeping individual-request fallback
+- isolated grouped failure protection from the stable individual endpoint
+- kept existing custom individual endpoints in individual mode unless a grouped endpoint is explicitly configured
 - reused local results when grouped or individual hosted search returns no matches
-- rejected malformed grouped responses instead of treating them as normal empty results
+- rejected malformed or invalid-JSON grouped responses instead of treating them as normal empty results
+- kept hosted 4xx responses visible when optional local fallback is enabled
 - deduplicated repeated recommendation searches before hosted retrieval
 - changed oversized preview requests into successful 12-icon inline previews with warnings and fuller browser links
 
