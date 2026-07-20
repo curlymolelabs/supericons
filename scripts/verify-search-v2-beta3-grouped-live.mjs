@@ -15,6 +15,8 @@ const stableUrl = readArgument(
   '--stable-url',
   'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search',
 );
+const stableFallbackSentinelUrl =
+  `${stableUrl}-grouped-route-must-not-fallback`;
 const outputPath = readArgument('--output');
 const requestTimeoutMs = Number(readArgument('--request-timeout-ms', '20000'));
 
@@ -91,7 +93,7 @@ try {
   };
 
   process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL = groupedUrl;
-  process.env.SUPERICONS_MCP_SEARCH_URL = stableUrl;
+  process.env.SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl;
   process.env.SUPERICONS_MCP_TELEMETRY_ENABLED = '0';
   process.env.SUPERICONS_MCP_USAGE_DEBUG = '0';
   const { searchIconQueriesHostedMcp } = await import('../mcp/hosted-search-client.js');
@@ -118,10 +120,12 @@ try {
   summary.checks.mcp_grouped_client = {
     status: 'ok',
     result_count: groupedClient[0].results.length,
+    stable_fallback_disabled: true,
   };
 
   process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL =
     `${groupedUrl}-rollback-probe-missing`;
+  process.env.SUPERICONS_MCP_SEARCH_URL = stableUrl;
   const fallbackClient = await searchIconQueriesHostedMcp({
     queries: [
       {

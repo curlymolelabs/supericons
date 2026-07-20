@@ -30,6 +30,8 @@ const stableUrl = readArgument(
   '--stable-url',
   'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/mcp-search',
 );
+const stableFallbackSentinelUrl =
+  `${stableUrl}-grouped-route-must-not-fallback`;
 const outputPath = readArgument('--output');
 const samples = Number(readArgument('--samples', '3'));
 const minimumIntervalMs = Number(readArgument('--minimum-interval-ms', '22000'));
@@ -137,7 +139,7 @@ const transport = new StdioClientTransport({
   env: {
     ...process.env,
     SUPERICONS_MCP_GROUPED_SEARCH_URL: groupedUrl,
-    SUPERICONS_MCP_SEARCH_URL: stableUrl,
+    SUPERICONS_MCP_SEARCH_URL: stableFallbackSentinelUrl,
     SUPERICONS_MCP_LOG_STARTUP: '0',
     SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
     SUPERICONS_MCP_USAGE_DEBUG: '0',
@@ -150,7 +152,8 @@ const summary = {
   status: 'blocked',
   package_root: packageRoot,
   grouped_url: groupedUrl,
-  stable_url: stableUrl,
+  stable_fallback_url: stableFallbackSentinelUrl,
+  stable_fallback_disabled: true,
   samples_per_english_scenario: samples,
   timeout_ms: timeoutMs,
   scenarios: [],

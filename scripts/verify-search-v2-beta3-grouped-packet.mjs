@@ -57,7 +57,10 @@ assert.equal(manifest.deployments_authorized, 1);
 assert.equal(manifest.conditional_deletions_authorized, 1);
 assert.equal(manifest.stable_function_deployments_authorized, 0);
 assert.equal(manifest.npm_publications_authorized, 0);
-assert.equal(manifest.rollback, 'delete_new_grouped_function');
+assert.equal(manifest.rollback, 'delete_new_grouped_function_after_id_match');
+assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
+assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
+assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -130,6 +133,17 @@ assert.match(runner, /The tracked worktree must be clean/);
 assert.match(runner, /git status --porcelain=v1 --untracked-files=no/);
 assert.match(runner, /preGrouped\.Count -ne 0/);
 assert.match(runner, /Remove-GroupedFunctionForRollback/);
+assert.match(runner, /ExpectedFunctionId/);
+assert.match(runner, /blocked_unverified_function/);
+assert.match(runner, /blocked_mismatched_function/);
+assert.match(runner, /Rollback function id does not match/);
+assert.match(runner, /The grouped function id changed during live verification/);
+assert.match(runner, /-ExpectedFunctionId \$expectedRollbackFunctionId/);
+assert.ok(
+  runner.indexOf('if ($observedFunctionId -ne $ExpectedFunctionId)')
+    < runner.indexOf('& npx supabase functions delete $FunctionName'),
+  'Rollback must verify the grouped function id before deletion.',
+);
 assert.match(runner, /Assert-StableFunctionPin/);
 assert.match(runner, /stable_function_mutated = \$false/);
 assert.match(runner, /ExecuteApprovedGroupedRelease/);
@@ -143,6 +157,19 @@ assert.match(live, /mcp_grouped_client/);
 assert.match(live, /missing_grouped_uses_stable_fallback/);
 assert.match(live, /rollback-probe-missing/);
 assert.match(live, /AbortSignal\.timeout\(requestTimeoutMs\)/);
+assert.match(live, /stableFallbackSentinelUrl/);
+assert.match(live, /SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl/);
+assert.match(live, /stable_fallback_disabled: true/);
+assert.ok(
+  live.indexOf('SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl')
+    < live.indexOf('const groupedClient'),
+  'The grouped MCP live check must disable stable fallback before the request.',
+);
+assert.ok(
+  live.indexOf('SUPERICONS_MCP_SEARCH_URL = stableUrl')
+    < live.indexOf('const fallbackClient'),
+  'The explicit compatibility check must restore the stable endpoint.',
+);
 
 assert.match(latency, /id: 'one_slot'/);
 assert.match(latency, /id: 'ten_slots'/);
@@ -157,6 +184,9 @@ assert.match(latency, /entry\) => Boolean\(entry\.recommended\)/);
 assert.match(latency, /minimumIntervalMs/);
 assert.match(latency, /measuredSamples: samples/);
 assert.match(latency, /measuredSamples: 1/);
+assert.match(latency, /stableFallbackSentinelUrl/);
+assert.match(latency, /SUPERICONS_MCP_SEARCH_URL: stableFallbackSentinelUrl/);
+assert.match(latency, /stable_fallback_disabled: true/);
 
 for (const path of [runnerPath, livePath, latencyPath, manifestPath]) {
   const text = readFileSync(path, 'utf8');

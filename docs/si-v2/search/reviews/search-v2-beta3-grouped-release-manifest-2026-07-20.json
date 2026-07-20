@@ -20,7 +20,7 @@
   "conditional_deletions_authorized": 1,
   "stable_function_deployments_authorized": 0,
   "npm_publications_authorized": 0,
-  "rollback": "delete_new_grouped_function",
+  "rollback": "delete_new_grouped_function_after_id_match",
   "source_files": [
     {
       "path": "lib/cjk-search-core.js",
@@ -146,25 +146,28 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "449621abcf78bf1bd8f8b5c04f1bd0342ad80e32b7efcb1eaf9df7366027fbf8"
+      "sha256": "295aa5cfef3da956d7a3613f3fa374eaf3f483cf76c2c5bde336ebaef4689c30"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "3f0254861a482424d13716ee578dd97c703730646f9bf9b031ea696ab4ea5971"
+      "sha256": "ee2bb721239d74a9d44d3d6fc35a89a10029cca20749a12bae66c2822737b7b2"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
-      "sha256": "8d563093284cde4f5f20614a740e5fa6ee558574d99d236575c34b31b3db1422"
+      "sha256": "7d1f1c8f16b6d3d6d7d0cdeb18fd66a8b1691c5ab65713d32250c4a4817d29b5"
     },
     {
       "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
-      "sha256": "aae72ac2a89e41fcff39ae5f809dba82f5d67379f362e3f2207ecdf68b7e4456"
+      "sha256": "691badc5465d31dba69b433b4ab6d46e08dc03e32955fd16e8815bc2a81bce47"
     }
   ],
   "live_gates": {
     "direct_grouped_http": true,
     "mcp_grouped_client": true,
+    "mcp_grouped_client_stable_fallback_disabled": true,
     "stable_fallback_when_grouped_missing": true,
+    "fr47_stable_fallback_disabled": true,
+    "rollback_function_id_pinned": true,
     "one_slot_warm_p95_ms_max": 3000,
     "ten_slot_warm_p95_ms_max": 10000,
     "twenty_slot_warm_p95_ms_max": 15000,

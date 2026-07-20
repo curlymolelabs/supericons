@@ -103,12 +103,12 @@ The packet manifest is:
 
 Its normalized SHA-256 is:
 
-`e63ac32333be9ce32a765b722b014560b3978a963a5f77309c514a2d93d62f2a`
+`96de8722a8e85640913adb812d57fb8de1cde0415d26479fa5b494a27a763314`
 
 The packet verifier passed locally:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash e63ac32333be9ce32a765b722b014560b3978a963a5f77309c514a2d93d62f2a
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 96de8722a8e85640913adb812d57fb8de1cde0415d26479fa5b494a27a763314
 ```
 
 The release runner:
@@ -117,9 +117,9 @@ The release runner:
 - refuses to run if `mcp-search-grouped` already exists;
 - pins the existing `mcp-search` id, version, update time, keyless setting, and active state;
 - deploys only `mcp-search-grouped`;
-- checks direct grouped HTTP, MCP grouped routing, and stable fallback when the grouped route is absent;
-- runs the accepted FR-47 warm limits for 1, 10, and 20 slots, plus a Japanese 20-slot case;
-- deletes only `mcp-search-grouped` if deployment or either live gate fails;
+- checks direct grouped HTTP and MCP grouped routing with the stable fallback disabled, then checks stable fallback separately when the grouped route is absent;
+- runs the accepted FR-47 warm limits for 1, 10, and 20 slots, plus a Japanese 20-slot case, with the stable fallback disabled;
+- deletes `mcp-search-grouped` after a failed gate only when its function id matches the id captured by this release attempt;
 - never deploys or deletes `mcp-search`, and never publishes npm.
 
 ## Remaining release gates

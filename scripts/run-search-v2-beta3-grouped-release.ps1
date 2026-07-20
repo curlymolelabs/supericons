@@ -178,25 +178,60 @@ function Expand-GitRevision {
 }
 
 function Remove-GroupedFunctionForRollback {
-  param([Parameter(Mandatory = $true)][string]$Reason)
+  param(
+    [Parameter(Mandatory = $true)][string]$Reason,
+    [AllowNull()][string]$ExpectedFunctionId
+  )
 
   $functions = Get-Functions
   $matches = @(Get-MatchingFunction -Functions $functions -Name $FunctionName)
   if ($matches.Count -gt 1) {
     throw "Rollback found more than one $FunctionName function."
   }
+  $rollbackStatus = 'already_absent'
+  $observedFunctionId = $null
   if ($matches.Count -eq 1) {
+    $observedFunctionId = "$($matches[0].id)"
+    if ([string]::IsNullOrWhiteSpace($ExpectedFunctionId)) {
+      Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
+        artifact = 'search_v2_beta3_grouped_release_rollback'
+        status = 'blocked_unverified_function'
+        function_name = $FunctionName
+        expected_function_id = $null
+        observed_function_id = $observedFunctionId
+        stable_function_mutated = $false
+        reason = $Reason
+        finished_at = (Get-Date).ToUniversalTime().ToString('o')
+      })
+      throw "Rollback refused to delete $FunctionName without a captured function id."
+    }
+    if ($observedFunctionId -ne $ExpectedFunctionId) {
+      Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
+        artifact = 'search_v2_beta3_grouped_release_rollback'
+        status = 'blocked_mismatched_function'
+        function_name = $FunctionName
+        expected_function_id = $ExpectedFunctionId
+        observed_function_id = $observedFunctionId
+        stable_function_mutated = $false
+        reason = $Reason
+        finished_at = (Get-Date).ToUniversalTime().ToString('o')
+      })
+      throw "Rollback function id does not match the function created by this release attempt."
+    }
     & npx supabase functions delete $FunctionName `
       --project-ref $ProjectRef --yes
     if ($LASTEXITCODE -ne 0) {
       throw "Rollback could not delete $FunctionName."
     }
     Wait-ForGroupedFunctionAbsence
+    $rollbackStatus = 'removed'
   }
   Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
     artifact = 'search_v2_beta3_grouped_release_rollback'
-    status = 'removed'
+    status = $rollbackStatus
     function_name = $FunctionName
+    expected_function_id = $ExpectedFunctionId
+    observed_function_id = $observedFunctionId
     stable_function_mutated = $false
     reason = $Reason
     finished_at = (Get-Date).ToUniversalTime().ToString('o')
@@ -326,6 +361,9 @@ try {
   if ($postGrouped.Count -ne 1) {
     throw "Expected one active $FunctionName after live verification."
   }
+  if ("$($postGrouped[0].id)" -ne "$($deployedFunction.id)") {
+    throw "The grouped function id changed during live verification."
+  }
   Assert-ActiveFunction -Function $postGrouped[0] -Name $FunctionName
   Assert-StableFunctionPin -Functions $postFunctions | Out-Null
 
@@ -359,7 +397,14 @@ try {
 catch {
   $releaseError = $_.Exception.Message
   if ($deploymentAttempted) {
-    Remove-GroupedFunctionForRollback -Reason $releaseError
+    $expectedRollbackFunctionId = if ($null -eq $deployedFunction) {
+      $null
+    } else {
+      "$($deployedFunction.id)"
+    }
+    Remove-GroupedFunctionForRollback `
+      -Reason $releaseError `
+      -ExpectedFunctionId $expectedRollbackFunctionId
   }
   throw
 }
