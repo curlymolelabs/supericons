@@ -10,6 +10,7 @@ import {
 } from './runtime/cjk-search-core.js';
 import {
   DETERMINISTIC_BETA_COHORT,
+  GROUPED_HOSTED_SEARCH_FUNCTION,
   getBetaCohortForRequest,
   getHostedSearchFunctionNameForTool,
 } from './release-channel.js';
@@ -119,6 +120,13 @@ function getPublicGatewayUrl(toolName = 'search_icons') {
   return (
     process.env.SUPERICONS_MCP_SEARCH_URL
     || `${SUPABASE_URL}/functions/v1/${getHostedSearchFunctionNameForTool(mcpPackageVersion, toolName)}`
+  ).replace(/\/+$/, '');
+}
+
+function getGroupedPublicGatewayUrl() {
+  return (
+    process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL
+    || `${SUPABASE_URL}/functions/v1/${GROUPED_HOSTED_SEARCH_FUNCTION}`
   ).replace(/\/+$/, '');
 }
 
@@ -355,7 +363,28 @@ export async function searchIconsHostedMcp({
   }) || payload;
 }
 
-export async function searchIconQueriesHostedMcp({ queries }) {
+function shouldRetryGroupedSearchIndividually(error) {
+  const status = Number(error?.status);
+  const code = String(error?.code || '');
+  if ([404, 405, 501, 502, 503, 504].includes(status)) return true;
+  return [
+    'grouped_hosted_search_invalid_response',
+    'grouped_hosted_search_failed',
+    'grouped_search_temporarily_unavailable',
+    'hosted_search_timeout',
+    'public_search_failed',
+  ].includes(code);
+}
+
+async function searchIconQueriesIndividually(queries) {
+  const responses = [];
+  for (const query of queries) {
+    responses.push(await searchIconsHostedMcp(query));
+  }
+  return responses;
+}
+
+async function searchIconQueriesGrouped(queries) {
   if (!Array.isArray(queries) || queries.length < 1 || queries.length > 96) {
     throw new Error('grouped hosted search requires between 1 and 96 queries');
   }
@@ -391,14 +420,14 @@ export async function searchIconQueriesHostedMcp({ queries }) {
   let postSearch;
   let publicKey;
   if (shouldUseInternalHostedDebug()) {
-    url = getDirectHostedSearchUrl();
+    url = getGroupedPublicGatewayUrl();
     postSearch = postHostedSearch;
     publicKey = process.env.SUPERICONS_SEARCH_ENGINE_ANON_KEY || process.env.SUPABASE_ANON_KEY || SUPABASE_ANON;
     if (shouldRequireJwt() && !looksLikeJwt(publicKey)) {
       throw new Error('hosted MCP search requires a legacy Supabase anon JWT; publishable keys are not valid bearer tokens');
     }
   } else {
-    url = getPublicGatewayUrl(routeToolName);
+    url = getGroupedPublicGatewayUrl();
     postSearch = postPublicSearch;
     publicKey = getPublicGatewayAnonKey();
   }
@@ -425,11 +454,27 @@ export async function searchIconQueriesHostedMcp({ queries }) {
       error.retryable = true;
       throw error;
     }
-    if (entry.status >= 200 && entry.status < 300 && entry.body && typeof entry.body === 'object') {
+    if (
+      entry.status >= 200
+      && entry.status < 300
+      && entry.body
+      && typeof entry.body === 'object'
+      && !Array.isArray(entry.body)
+      && Array.isArray(entry.body.results)
+      && !entry.body.error
+      && !entry.body.code
+    ) {
       return entry.body;
     }
 
     const body = entry?.body && typeof entry.body === 'object' ? entry.body : {};
+    if (entry.status >= 200 && entry.status < 300) {
+      const error = new Error(`Grouped hosted search returned an invalid result for query ${index + 1}.`);
+      error.code = 'grouped_hosted_search_invalid_response';
+      error.status = 502;
+      error.retryable = true;
+      throw error;
+    }
     const error = new Error(
       body.message || body.error || `Grouped hosted search failed for query ${index + 1}.`,
     );
@@ -448,4 +493,13 @@ export async function searchIconQueriesHostedMcp({ queries }) {
   });
 
   return responses;
+}
+
+export async function searchIconQueriesHostedMcp({ queries }) {
+  try {
+    return await searchIconQueriesGrouped(queries);
+  } catch (error) {
+    if (!shouldRetryGroupedSearchIndividually(error)) throw error;
+    return await searchIconQueriesIndividually(queries);
+  }
 }

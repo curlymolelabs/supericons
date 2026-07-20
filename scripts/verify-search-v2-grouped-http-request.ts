@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { handleGroupedSearchRequest } from '../supabase/functions/_shared/search-engine/grouped-search-request.ts';
 import { exceedsSearchRateLimit } from '../supabase/functions/_shared/search-engine/rate-limit.ts';
 
+const originalTierEnforcement = Deno.env.get('SEARCH_ENGINE_TIER_ENFORCEMENT');
+Deno.env.delete('SEARCH_ENGINE_TIER_ENFORCEMENT');
+
 assert.equal(exceedsSearchRateLimit(119, 1, 120), false);
 assert.equal(exceedsSearchRateLimit(120, 1, 120), true);
 assert.equal(exceedsSearchRateLimit(115, 6, 120), true);
@@ -71,6 +74,59 @@ const tooMany = await handleGroupedSearchRequest(new Request('https://example.te
 assert.equal(tooMany.status, 400);
 assert.equal((await tooMany.json()).code, 'grouped_query_limit_exceeded');
 
+const nullBody = await handleGroupedSearchRequest(new Request('https://example.test/search', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: 'null',
+}), {
+  rateLimitEnforcer: async () => ({ sessionHash: null, ipHash: null, countryCode: null, geoSource: null }),
+  singleHandler: async () => new Response('{}'),
+});
+assert.equal(nullBody.status, 400);
+assert.equal((await nullBody.json()).code, 'invalid_search_request');
+
+const invalidJson = await handleGroupedSearchRequest(new Request('https://example.test/search', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: '{',
+}), {
+  rateLimitEnforcer: async () => ({ sessionHash: null, ipHash: null, countryCode: null, geoSource: null }),
+  singleHandler: async () => new Response('{}'),
+});
+assert.equal(invalidJson.status, 400);
+assert.equal((await invalidJson.json()).code, 'invalid_search_request');
+
+const malformedSubresponse = await handleGroupedSearchRequest(new Request('https://example.test/search', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ queries: [{ query: 'cog' }] }),
+}), {
+  rateLimitEnforcer: async () => ({ sessionHash: null, ipHash: null, countryCode: null, geoSource: null }),
+  singleHandler: async () => new Response('not-json', { status: 200 }),
+});
+assert.equal(malformedSubresponse.status, 200);
+const malformedPayload = await malformedSubresponse.json();
+assert.equal(malformedPayload.responses[0].status, 502);
+assert.equal(malformedPayload.responses[0].body.code, 'invalid_grouped_response');
+
+let enforcementHandlerCalls = 0;
+Deno.env.set('SEARCH_ENGINE_TIER_ENFORCEMENT', 'on');
+const enforcementBlocked = await handleGroupedSearchRequest(new Request('https://example.test/search', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ queries: [{ query: 'cog' }] }),
+}), {
+  rateLimitEnforcer: async () => ({ sessionHash: null, ipHash: null, countryCode: null, geoSource: null }),
+  singleHandler: async () => {
+    enforcementHandlerCalls += 1;
+    return new Response('{}');
+  },
+});
+assert.equal(enforcementBlocked.status, 503);
+assert.equal((await enforcementBlocked.json()).code, 'grouped_search_temporarily_unavailable');
+assert.equal(enforcementHandlerCalls, 0);
+Deno.env.delete('SEARCH_ENGINE_TIER_ENFORCEMENT');
+
 let auditWrites = 0;
 let integratedRateLimitCost = 0;
 const emptyQueryBuilder = {
@@ -116,11 +172,24 @@ const stableRouteSource = await Deno.readTextFile(
 );
 assert.match(
   stableRouteSource,
-  /handleGroupedSearchRequest/,
-  'The stable MCP search route must accept grouped recommendation requests.',
+  /handleSearchRequest/,
+  'The stable MCP search route must retain the individual request handler.',
 );
 assert.match(stableRouteSource, /defaultSource:\s*'mcp'/);
-assert.match(stableRouteSource, /maxQueries:\s*96/);
+assert.doesNotMatch(stableRouteSource, /handleGroupedSearchRequest/);
+
+const groupedRouteSource = await Deno.readTextFile(
+  new URL('../supabase/functions/mcp-search-grouped/index.ts', import.meta.url),
+);
+assert.match(groupedRouteSource, /handleGroupedSearchRequest/);
+assert.match(groupedRouteSource, /defaultSource:\s*'mcp'/);
+assert.match(groupedRouteSource, /maxQueries:\s*96/);
+
+if (originalTierEnforcement === undefined) {
+  Deno.env.delete('SEARCH_ENGINE_TIER_ENFORCEMENT');
+} else {
+  Deno.env.set('SEARCH_ENGINE_TIER_ENFORCEMENT', originalTierEnforcement);
+}
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -129,5 +198,9 @@ console.log(JSON.stringify({
   maximum_internal_concurrency: maximumActive,
   response_order_preserved: true,
   synchronous_audit_writes: auditWrites,
-  stable_route_grouped_support: true,
+  stable_route_unchanged: true,
+  additive_grouped_route: true,
+  null_body_rejected: true,
+  malformed_subresponse_status: malformedPayload.responses[0].status,
+  tier_enforcement_fails_closed: true,
 }, null, 2));

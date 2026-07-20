@@ -1458,6 +1458,16 @@ function normalizeResponseMode(responseMode) {
 
 const MAX_GROUPED_RECOMMENDATION_QUERIES = 40;
 
+function buildGroupedRecommendationQueryKey(request) {
+  return JSON.stringify([
+    String(request.query || '').trim().toLowerCase(),
+    String(request.library || '').trim().toLowerCase(),
+    String(request.style || 'any').trim().toLowerCase(),
+    Number(request.limit) || 0,
+    String(request.locale || '').trim().toLowerCase(),
+  ]);
+}
+
 function isNoisyAlternative(entry) {
   return entry.variantPenalty >= 12 || entry.brandPenalty >= 12 || entry.slotPreferenceBonus < 0;
 }
@@ -1524,17 +1534,25 @@ export async function recommendIconsForTask({
   if (typeof searchIconsForQueries === 'function') {
     const groupedRequests = [];
     const groupedLocations = [];
+    const groupedRequestIndexes = new Map();
     for (const plan of slotPlans) {
       if (plan.interpretationFrame.needs_clarification) continue;
       for (const [variantIndex, query] of plan.queries_used.entries()) {
-        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex });
-        groupedRequests.push({
+        const request = {
           query,
           library,
           style,
           limit: Math.max(limitPerSlot * 5, 10),
           locale,
-        });
+        };
+        const requestKey = buildGroupedRecommendationQueryKey(request);
+        let requestIndex = groupedRequestIndexes.get(requestKey);
+        if (requestIndex === undefined) {
+          requestIndex = groupedRequests.length;
+          groupedRequestIndexes.set(requestKey, requestIndex);
+          groupedRequests.push(request);
+        }
+        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex, requestIndex });
       }
     }
 
@@ -1557,10 +1575,10 @@ export async function recommendIconsForTask({
         Array.from({ length: plan.queries_used.length }, () => []),
       );
     }
-    for (const [resultIndex, location] of groupedLocations.entries()) {
+    for (const location of groupedLocations) {
       const slotGroups = groupedResultsBySlot.get(location.slotIndex);
-      slotGroups[location.variantIndex] = Array.isArray(groupedResults[resultIndex])
-        ? groupedResults[resultIndex]
+      slotGroups[location.variantIndex] = Array.isArray(groupedResults[location.requestIndex])
+        ? groupedResults[location.requestIndex]
         : [];
     }
   }

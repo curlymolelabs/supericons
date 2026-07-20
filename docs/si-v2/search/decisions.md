@@ -445,13 +445,17 @@ Specification change: none in this change set; the execution PRD is the controll
 Date: 2026-07-20
 Status: Accepted
 
-Decision: `recommend_icons` accepts up to 20 UI slots in one call on local and hosted MCP. The implementation groups the generated recommendation searches into one hosted request, caps recommendation fan-out at 40 logical queries within the endpoint limit of 96, and charges once per logical query under existing rate and audit rules. Correctable input problems return structured plain-language guidance instead of a bare MCP parameter error. Hosted timeouts, usage limits, and invalid responses return stable codes and useful recovery steps. `preview_icons` keeps its 12-icon inline rendering bound, but requests above that bound are clamped with a warning and retain up to 24 accepted refs in the browser preview.
+Decision: `recommend_icons` accepts up to 20 UI slots in one call on local and hosted MCP. The implementation deduplicates identical generated searches, groups up to 40 distinct logical queries within the endpoint limit of 96, and charges once per distinct logical query under existing rate and audit rules. Grouped search uses an additive endpoint and never replaces the stable individual endpoint. If grouped mode is unavailable, rolled back, or malformed, the client retries each distinct search individually once. Individual and grouped results use the same local fallback. Hosted limits remain visible errors. Grouped mode fails closed when tier enforcement is enabled until D-030 account identity and race-safe accounting are complete. Correctable input problems return structured plain-language guidance. `preview_icons` keeps its 12-icon inline rendering bound, but requests above that bound are clamped with a warning and retain up to 24 accepted refs in the browser preview.
 
 Reason: a real OpenCode call requested 16 recommendation slots and was rejected by the former 12-slot schema. A retry with 12 slots then took almost one minute because recommendation variants were sent through separate hosted calls. The same session requested a 13-icon preview and received another bare parameter rejection even though the intended safe behavior was truncation. The corrected contract supports normal agent workloads without weakening the existing inline image, rate-limit, or query-fanout bounds.
 
-Alternatives rejected or deferred: increasing only the schema maximum while keeping separate hosted calls; silently truncating recommendation slots; increasing the inline contact sheet beyond 12; returning raw Zod or MCP parameter messages for recoverable user inputs.
+The prerelease latency gate is below the fixed 20-second client timeout: warm end-to-end p95 at or below 3 seconds for 1 slot, 10 seconds for 10 slots, and 15 seconds for 20 slots, with zero client timeouts in the approved workload. The exact candidate bytes must also pass one supported non-English 20-slot case.
 
-Specification change: version 1.14 adds `FR-46`.
+Alternatives rejected or deferred: increasing only the schema maximum while keeping separate hosted calls; replacing the stable production function; silently truncating recommendation slots; allowing grouped requests while allowance enforcement uses a race-prone counter; increasing the inline contact sheet beyond 12; returning raw Zod or MCP parameter messages for recoverable user inputs.
+
+Superseded decisions: the A-7 sequencing rule is superseded only for this bounded user-visible recommendation reliability repair. Railway local-first remains the next engineering workstream after beta.3 is safe.
+
+Specification change: version 1.15 expands `FR-46` and adds `FR-47`.
 
 ## Adding or superseding a decision
 

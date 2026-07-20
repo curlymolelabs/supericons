@@ -1,5 +1,6 @@
 export const DETERMINISTIC_BETA_COHORT = 'deterministic-v2-beta';
 export const STABLE_HOSTED_SEARCH_FUNCTION = 'mcp-search';
+export const GROUPED_HOSTED_SEARCH_FUNCTION = 'mcp-search-grouped';
 export const BETA_HOSTED_SEARCH_FUNCTION = 'mcp-search-v2-beta';
 
 export function isDeterministicBetaVersion(version) {

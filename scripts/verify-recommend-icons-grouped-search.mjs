@@ -177,6 +177,29 @@ assert.ok(
   'Twenty localized slots must stay inside the recommendation query-fanout cap.',
 );
 
+let repeatedSlotQueryCount = 0;
+const repeatedSlotRecommendation = await recommendIconsForTask({
+  task: 'Choose icons for application settings.',
+  slots: Array.from({ length: 20 }, () => 'settings'),
+  limitPerSlot: 1,
+  responseMode: 'plan',
+  semanticMap: new Map(),
+  searchIconsForQuery: async () => {
+    throw new Error('The repeated-slot case must use grouped search.');
+  },
+  searchIconsForQueries: async (queries) => {
+    repeatedSlotQueryCount = queries.length;
+    return queries.map(() => parityIcons);
+  },
+  buildIconResult,
+});
+assert.equal(repeatedSlotRecommendation.results.length, 20);
+assert.equal(repeatedSlotRecommendation.results.every((result) => Boolean(result.recommended)), true);
+assert.ok(
+  repeatedSlotQueryCount <= 2,
+  'Repeated slots must reuse identical logical searches instead of issuing 40 duplicates.',
+);
+
 const groupedFailure = new Error('Hosted request timed out.');
 groupedFailure.code = 'hosted_search_timeout';
 await assert.rejects(
@@ -206,5 +229,6 @@ console.log(JSON.stringify({
   twenty_slot_grouped_calls: twentySlotGroupedCalls,
   twenty_slot_query_count: twentySlotQueryCount,
   localized_twenty_slot_query_count: localizedTwentySlotQueryCount,
+  repeated_twenty_slot_query_count: repeatedSlotQueryCount,
   grouped_failure_propagated: true,
 }, null, 2));

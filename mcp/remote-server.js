@@ -369,6 +369,12 @@ function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', styl
   return results.slice(0, Math.max(1, limit));
 }
 
+function shouldUseLocalFallbackForHostedError(error) {
+  const status = Number(error?.status);
+  if (Number.isFinite(status) && status >= 400 && status < 500) return false;
+  return true;
+}
+
 function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId = null }) {
   if (exactIconId) {
     const exact = publicIcons.find((icon) => (
@@ -435,6 +441,51 @@ function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId
   return rows;
 }
 
+async function finishHostedIconSearch({
+  rankedRows,
+  query,
+  library,
+  libraryMode = 'strict',
+  style = 'any',
+  limit = 20,
+  locale = null,
+  exactIconId = null,
+  hostedLibrary = library,
+}) {
+  const selectedRows = exactIconId
+    ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
+    : rankedRows.slice(0, Math.max(1, limit));
+  const hydration = await hydrateMaterialHostedRows(selectedRows, {
+    style,
+    onError: (error) => console.error('[SuperIcons] Material hydration failed:', error.message),
+  });
+  const selectedMaterialRows = selectedRows.filter((row) => getHostedRowIdentity(row).library === 'material');
+  if (hydration.failed > 0 && selectedMaterialRows.length > 0 && hydration.kept.length === 0) {
+    const error = new Error('Material assets are temporarily unavailable from the snapshot service.');
+    error.code = 'material_asset_unavailable';
+    throw error;
+  }
+
+  const hostedResults = hydration.kept
+    .map(normalizeHostedIcon)
+    .slice(0, Math.max(1, limit));
+  if (hostedResults.length > 0) return hostedResults;
+
+  const fallbackResults = searchLocalFallbackIcons({
+    query,
+    library,
+    libraryMode,
+    style,
+    limit,
+    locale,
+  });
+  return exactIconId
+    ? fallbackResults.filter((icon) => (
+      icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase()
+    )).slice(0, 1)
+    : fallbackResults;
+}
+
 async function searchHostedIcons({
   query,
   library,
@@ -473,6 +524,7 @@ async function searchHostedIcons({
         usageContext,
       });
     } catch (error) {
+      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
       const fallbackResults = searchLocalFallbackIcons({
         query,
         library,
@@ -492,59 +544,75 @@ async function searchHostedIcons({
     rankedRows = Array.isArray(payload.results) ? payload.results : [];
   }
 
-  const selectedRows = exactIconId
-    ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
-    : rankedRows.slice(0, Math.max(1, limit));
-  const hydration = await hydrateMaterialHostedRows(selectedRows, {
-    style,
-    onError: (error) => console.error('[SuperIcons] Material hydration failed:', error.message),
-  });
-  const selectedMaterialRows = selectedRows.filter((row) => getHostedRowIdentity(row).library === 'material');
-  if (hydration.failed > 0 && selectedMaterialRows.length > 0 && hydration.kept.length === 0) {
-    const error = new Error('Material assets are temporarily unavailable from the snapshot service.');
-    error.code = 'material_asset_unavailable';
-    throw error;
-  }
-
-  const hostedResults = hydration.kept
-    .map(normalizeHostedIcon)
-    .slice(0, Math.max(1, limit));
-
-  if (hostedResults.length > 0) {
-    return hostedResults;
-  }
-
-  const fallbackResults = searchLocalFallbackIcons({
+  return await finishHostedIconSearch({
+    rankedRows,
     query,
     library,
     libraryMode,
     style,
     limit,
     locale,
+    exactIconId,
+    hostedLibrary,
   });
-  if (fallbackResults.length > 0) return fallbackResults;
-
-  return hostedResults;
 }
 
 async function searchHostedIconQueries(queries = [], { usageContextForQuery } = {}) {
-  const payloads = await searchIconQueriesHostedMcp({
-    queries: queries.map((query, index) => ({
-      ...query,
+  let payloads;
+  try {
+    payloads = await searchIconQueriesHostedMcp({
+      queries: queries.map((query, index) => ({
+        ...query,
+        libraryMode: 'strict',
+        routeToolName: 'recommend_icons',
+        usageContext: typeof usageContextForQuery === 'function'
+          ? usageContextForQuery(query, index)
+          : null,
+      })),
+    });
+  } catch (error) {
+    if (!shouldUseLocalFallbackForHostedError(error)) throw error;
+    const fallbackResults = queries.map((query) => searchLocalFallbackIcons({
+      query: query.query,
+      library: query.library,
       libraryMode: 'strict',
-      routeToolName: 'recommend_icons',
-      usageContext: typeof usageContextForQuery === 'function'
-        ? usageContextForQuery(query, index)
-        : null,
-    })),
-  });
+      style: query.style,
+      limit: query.limit,
+      locale: query.locale,
+    }));
+    if (fallbackResults.every((results) => results.length > 0)) {
+      return fallbackResults;
+    }
+    throw error;
+  }
 
-  return payloads.map((payload, index) => {
-    const limit = Math.max(1, Number(queries[index]?.limit) || 10);
-    return (payload.results || [])
-      .map(normalizeHostedIcon)
-      .slice(0, limit);
-  });
+  return await Promise.all(payloads.map(async (payload, index) => {
+    const query = queries[index] || {};
+    const limit = Math.max(1, Number(query.limit) || 10);
+    try {
+      return await finishHostedIconSearch({
+        rankedRows: Array.isArray(payload.results) ? payload.results : [],
+        query: query.query,
+        library: query.library,
+        libraryMode: 'strict',
+        style: query.style,
+        limit,
+        locale: query.locale,
+      });
+    } catch (error) {
+      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
+      const fallbackResults = searchLocalFallbackIcons({
+        query: query.query,
+        library: query.library,
+        libraryMode: 'strict',
+        style: query.style,
+        limit,
+        locale: query.locale,
+      });
+      if (fallbackResults.length > 0) return fallbackResults;
+      throw error;
+    }
+  }));
 }
 
 function buildPublicIconResult(icon, options = {}) {

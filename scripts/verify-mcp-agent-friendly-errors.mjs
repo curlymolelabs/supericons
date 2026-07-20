@@ -125,19 +125,23 @@ const hostedSearchServer = createServer(async (request, response) => {
   groupedSearchRequests += 1;
   const queries = Array.isArray(body.queries) ? body.queries : [];
   groupedSearchRequestSizes.push(queries.length);
+  const requestUrl = new URL(request.url || '/', `http://127.0.0.1:${hostedSearchPort}`);
+  const returnEmptyResults = requestUrl.pathname === '/empty';
   const localPackageRequest = queries.length > 0
     && queries.every((query) => query.channel === 'local_mcp');
+  const hostedFallbackProbe = queries.some((query) => String(query.query || '').includes('fallbackprobe'));
+  const successfulRequest = localPackageRequest || hostedFallbackProbe;
   response.writeHead(200, { 'Content-Type': 'application/json' });
   response.end(JSON.stringify({
     schema_version: 1,
     response_count: queries.length,
     responses: queries.map((query, index) => ({
       index,
-      status: localPackageRequest ? 200 : 429,
-      body: localPackageRequest
+      status: successfulRequest ? 200 : 429,
+      body: successfulRequest
         ? {
           query: query.query,
-          results: [{
+          results: returnEmptyResults || hostedFallbackProbe ? [] : [{
             icon_id: 'lucide:settings',
             name: 'Settings',
             source_library: 'lucide',
@@ -175,6 +179,7 @@ const localTransport = new StdioClientTransport({
     SUPERICONS_MCP_LOG_STARTUP: '0',
     SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
     SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/search`,
+    SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/grouped`,
   },
   stderr: 'pipe',
 });
@@ -196,10 +201,48 @@ try {
   assert.equal(localTwentyPayload.results.length, 20);
   assert.equal(localTwentyPayload.results.every((slot) => Boolean(slot.recommended)), true);
   assert.equal(groupedSearchRequests, 1);
-  assert.equal(groupedSearchRequestSizes[0], 40);
+  assert.ok(groupedSearchRequestSizes[0] <= 2);
 } catch (error) {
   await localTransport.close().catch(() => {});
   await localClient.close().catch(() => {});
+  await new Promise((resolveClose) => hostedSearchServer.close(resolveClose));
+  throw error;
+}
+
+const localFallbackTransport = new StdioClientTransport({
+  command: process.execPath,
+  args: [join(mcpRoot, 'index.js')],
+  cwd: mcpRoot,
+  env: {
+    ...process.env,
+    SUPERICONS_MCP_LOG_STARTUP: '0',
+    SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
+    SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK: '1',
+    SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/empty`,
+    SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/empty`,
+  },
+  stderr: 'pipe',
+});
+const localFallbackClient = new Client({ name: 'mcp-local-grouped-empty-fallback', version: '1.0.0' });
+try {
+  await localFallbackClient.connect(localFallbackTransport);
+  const localFallbackResult = await localFallbackClient.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      task: 'Choose an icon for application settings.',
+      slots: ['settings'],
+      response_mode: 'plan',
+      limit_per_slot: 1,
+    },
+  });
+  const localFallbackPayload = parsePayload(localFallbackResult);
+  assert.equal(localFallbackResult.isError, undefined);
+  assert.equal(localFallbackPayload.results.length, 1);
+  assert.ok(localFallbackPayload.results[0].recommended);
+  assert.equal(groupedSearchRequests, 2);
+} catch (error) {
+  await localFallbackTransport.close().catch(() => {});
+  await localFallbackClient.close().catch(() => {});
   await new Promise((resolveClose) => hostedSearchServer.close(resolveClose));
   throw error;
 }
@@ -211,6 +254,7 @@ const child = spawn(process.execPath, ['mcp/remote-server.js'], {
     PORT: String(port),
     SUPERICONS_MCP_USAGE_DEBUG: '0',
     SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/search`,
+    SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/grouped`,
   },
   stdio: ['ignore', 'pipe', 'pipe'],
   windowsHide: true,
@@ -246,6 +290,20 @@ try {
   assert.equal(hostedTwentyPayload.slot_count, 20);
   assert.equal(hostedTwentyPayload.results.length, 20);
   assert.equal(hostedTwentyPayload.needs_clarification, true);
+
+  const hostedFallbackResult = await client.callTool({
+    name: 'recommend_icons',
+    arguments: {
+      task: 'Choose a settings icon for a fallbackprobe application.',
+      slots: ['settings'],
+      response_mode: 'plan',
+      limit_per_slot: 1,
+    },
+  });
+  const hostedFallbackPayload = parsePayload(hostedFallbackResult);
+  assert.equal(hostedFallbackResult.isError, undefined);
+  assert.equal(hostedFallbackPayload.results.length, 1);
+  assert.ok(hostedFallbackPayload.results[0].recommended);
 
   const hostedOverLimitResult = await client.callTool({
     name: 'recommend_icons',
@@ -285,7 +343,7 @@ try {
   assert.equal(hostedAllowancePayload.error, 'The hosted icon recommendation limit was reached.');
   assert.equal(hostedAllowancePayload.retry_after_seconds, 43_200);
   assert.match(hostedAllowancePayload.next_step, /43200 seconds/);
-  assert.equal(groupedSearchRequests, 2);
+  assert.equal(groupedSearchRequests, 4);
 
   const hostedPreviewInputResult = await client.callTool({
     name: 'preview_icons',
@@ -302,6 +360,8 @@ try {
   await client.close().catch(() => {});
   await localTransport.close().catch(() => {});
   await localClient.close().catch(() => {});
+  await localFallbackTransport.close().catch(() => {});
+  await localFallbackClient.close().catch(() => {});
   child.kill();
   await new Promise((resolveClose) => hostedSearchServer.close(resolveClose));
   await new Promise((resolveExit) => {
@@ -321,6 +381,8 @@ console.log(JSON.stringify({
   local_recommendation_slot_limit: 20,
   hosted_recommendation_slot_limit: 20,
   local_twenty_slot_grouped_queries: groupedSearchRequestSizes[0],
+  grouped_empty_used_local_fallback: true,
+  hosted_grouped_empty_used_local_fallback: true,
   over_limit_code: rejected.input_error.code,
   timeout_code: timeoutPayload.code,
   allowance_retry_after_seconds: allowancePayload.retry_after_seconds,

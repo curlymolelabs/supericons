@@ -18,7 +18,7 @@ Owner direction of 2026-07-20 adopts the recommended positions from the decision
 | A-4 | Release packet content freeze rule: once a packet has no open falsehood findings, wording preferences ride the next release. The keyless docs packet is frozen at branch commit `4933f4bc3`. |
 | A-5 | The two July 18 review files committed by the earlier broad staging remain in history. |
 | A-6 | Coarse server-side country for the hosted gateway leg is approved as a low-priority future gateway release with its telemetry disclosure updated in the same release. Local telemetry stays location-free. |
-| A-7 | `recommend_icons` is removed from the completion critical path. Rationale: agent orchestration over plain search already delivers the recommendation outcome (observed in real sessions), and its expansion quality is strong. Two known defects remain: hosted latency (p50 42 s) and the clarification contract violation found in the 14-case verification (ambiguous low-confidence slots resolve without asking, contrary to the tool contract). The clarification alignment ships in beta.2; latency and full promotion are revisited after Railway local-first ships. |
+| A-7 | Superseded in part by `D-031` after reproduced beta.2 recommendation failures. The bounded beta.3 reliability repair now completes before Railway local-first: plain-language errors, 20 slots, additive grouped search, rollback-compatible individual fallback, shared local fallback, repeated-query deduplication, and latency below the 20-second client timeout. Railway local-first remains the next engineering workstream after this repair. |
 | A-8 | Beta.2 is the agent-experience release: it carries the one-call contract package shell (section 5) in addition to controlled-run labeling and 429 details propagation. |
 
 ## 2. Verified current state (as of 2026-07-20)
@@ -93,7 +93,7 @@ Build order after the measurement artifact preconditions: free-key issuance for 
 
 ## 9. Workstream 7: venue promotion (strictly separate decisions)
 
-Order: 1) Railway hosted MCP promotes to v2 by default after the workstream 5 gates and the A-2 window close. 2) Web follows, inheriting shared engine data, with its own performance and interaction checks. 3) npm `latest` promotes last with the owner's explicit yes. `recommend_icons` promotion is out of scope per A-7. Each venue retains its own quality, compatibility, latency, error, public-boundary, and rollback gate on the exact promoted bytes.
+Order: 1) The bounded beta.3 recommendation reliability repair passes `D-031`, exact-byte compatibility, rollback, and latency gates. 2) Railway hosted MCP promotes to v2 by default after the workstream 5 gates and the A-2 window close. 3) Web follows, inheriting shared engine data, with its own performance and interaction checks. 4) npm `latest` promotes last with the owner's explicit yes. Each venue retains its own quality, compatibility, latency, error, public-boundary, and rollback gate on the exact promoted bytes.
 
 ## 10. Sequencing summary
 

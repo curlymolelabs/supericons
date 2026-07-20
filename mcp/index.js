@@ -792,6 +792,60 @@ async function resolveAccessibleIcon(id, library, options = {}) {
   return null;
 }
 
+async function finishAccessibleIconSearch({
+  query,
+  library,
+  libraryMode,
+  limit,
+  requestedStyle,
+  searchableIcons,
+  locale = null,
+  hostedResults = [],
+}) {
+  if (hostedResults.length > 0) {
+    return hostedResults.slice(0, Math.max(1, limit));
+  }
+  if (!hasLocalSearchData()) return [];
+
+  const { searchIcons } = await import('./search.js');
+  const localQueryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const localResults = [];
+  const localSeen = new Set();
+
+  for (const queryVariant of localQueryVariants) {
+    const variantResults = searchIcons(queryVariant, searchableIcons, synonyms, {
+      library,
+      libraryMode,
+      limit: Math.max(limit * 2, 20),
+      style: requestedStyle,
+      locale,
+    });
+
+    for (const icon of variantResults) {
+      const key = `${icon.lib}:${icon.id}:${icon.style || VARIANT_STYLES.OUTLINE}`;
+      if (localSeen.has(key)) continue;
+      localSeen.add(key);
+      localResults.push(icon);
+    }
+  }
+
+  const baselineResults = requestedStyle === VARIANT_STYLES.SOLID
+    ? localResults
+    : mergeOrderedSearchResults(hostedResults, localResults, requestedStyle);
+
+  const intentProfile = buildSearchIntentProfile(query);
+  const semanticMergeLimit = intentProfile.expanded ? Math.max(limit * 4, 40) : limit;
+  const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, {
+    limit: semanticMergeLimit,
+  });
+  const intentRanked = rerankIconsForIntent(query, merged);
+  return rerankSearchCandidatesAtFusion(
+    query,
+    mergeOrderedSearchResults(intentRanked, [], requestedStyle),
+    { libraryMode, requestedLibrary: library },
+  ).slice(0, Math.max(1, limit));
+}
+
 async function searchAccessibleIcons({
   query,
   library,
@@ -845,77 +899,69 @@ async function searchAccessibleIcons({
     hostedResults = (hostedPayload.results || [])
       .map(buildHostedIcon)
       .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
-    if (hostedResults.length > 0) {
-      return hostedResults.slice(0, Math.max(1, limit));
-    }
   } catch (error) {
     if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) {
       throw error;
     }
   }
 
-  if (!hasLocalSearchData()) return [];
-
-  const { searchIcons } = await import('./search.js');
-  const localQueryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
-  const localResults = [];
-  const localSeen = new Set();
-
-  for (const queryVariant of localQueryVariants) {
-    const variantResults = searchIcons(queryVariant, searchableIcons, synonyms, {
-      library,
-      libraryMode: normalizedLibraryMode,
-      limit: Math.max(limit * 2, 20),
-      style: requestedStyle,
-      locale,
-    });
-
-    for (const icon of variantResults) {
-      const key = `${icon.lib}:${icon.id}:${icon.style || VARIANT_STYLES.OUTLINE}`;
-      if (localSeen.has(key)) continue;
-      localSeen.add(key);
-      localResults.push(icon);
-    }
-  }
-
-  const baselineResults = requestedStyle === VARIANT_STYLES.SOLID
-    ? localResults
-    : mergeOrderedSearchResults(hostedResults, localResults, requestedStyle);
-
-  const intentProfile = buildSearchIntentProfile(query);
-  const semanticMergeLimit = intentProfile.expanded ? Math.max(limit * 4, 40) : limit;
-  const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, {
-    limit: semanticMergeLimit,
-  });
-  const intentRanked = rerankIconsForIntent(query, merged);
-  return rerankSearchCandidatesAtFusion(
+  return finishAccessibleIconSearch({
     query,
-    mergeOrderedSearchResults(intentRanked, [], requestedStyle),
-    { libraryMode: normalizedLibraryMode, requestedLibrary: library },
-  ).slice(0, Math.max(1, limit));
+    library,
+    libraryMode: normalizedLibraryMode,
+    limit,
+    requestedStyle,
+    searchableIcons,
+    locale,
+    hostedResults,
+  });
 }
 
 async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {
-  const payloads = await searchIconQueriesHostedMcp({
-    queries: queries.map((query) => ({
-      ...query,
-      libraryMode: 'strict',
-      routeToolName: toolName,
-      usageContext: buildLocalMcpUsageContext(toolName, {
-        locale: query.locale,
-        query: query.query,
-      }),
-    })),
-  });
+  let payloads;
+  try {
+    payloads = await searchIconQueriesHostedMcp({
+      queries: queries.map((query) => ({
+        ...query,
+        libraryMode: 'strict',
+        routeToolName: toolName,
+        usageContext: buildLocalMcpUsageContext(toolName, {
+          locale: query.locale,
+          query: query.query,
+        }),
+      })),
+    });
+  } catch (error) {
+    if (!shouldAllowLocalSearchFallback() || !hasLocalSearchData()) throw error;
+    payloads = queries.map(() => ({ results: [] }));
+  }
 
-  return payloads.map((payload, index) => {
-    const requestedStyle = normalizeRequestedStyle(queries[index]?.style);
-    const limit = Math.max(1, Number(queries[index]?.limit) || 10);
-    return (payload.results || [])
+  return await Promise.all(payloads.map(async (payload, index) => {
+    const query = queries[index] || {};
+    const requestedStyle = normalizeRequestedStyle(query.style);
+    const limit = Math.max(1, Number(query.limit) || 10);
+    const normalizedLibraryMode = normalizeSearchLibraryMode(query.libraryMode || 'strict');
+    const accessibleIcons = getAccessibleIcons();
+    const searchableIcons = query.library && normalizedLibraryMode === 'strict'
+      ? accessibleIcons.filter((icon) => (
+        icon.lib === query.library && iconMatchesRequestedStyle(icon, requestedStyle)
+      ))
+      : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
+    const hostedResults = (payload.results || [])
       .map(buildHostedIcon)
-      .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle))
-      .slice(0, limit);
-  });
+      .filter((icon) => icon && iconMatchesRequestedStyle(icon, requestedStyle));
+
+    return await finishAccessibleIconSearch({
+      query: query.query,
+      library: query.library,
+      libraryMode: normalizedLibraryMode,
+      limit,
+      requestedStyle,
+      searchableIcons,
+      locale: query.locale,
+      hostedResults,
+    });
+  }));
 }
 
 // ============================================================

@@ -9,7 +9,10 @@
 
 ### Improved
 
-- grouped recommendation searches into one bounded hosted request
+- grouped distinct recommendation searches through an additive endpoint while keeping individual-request fallback
+- reused local results when grouped or individual hosted search returns no matches
+- rejected malformed grouped responses instead of treating them as normal empty results
+- deduplicated repeated recommendation searches before hosted retrieval
 - changed oversized preview requests into successful 12-icon inline previews with warnings and fuller browser links
 
 ## 0.4.19-beta.2 - 2026-07-20

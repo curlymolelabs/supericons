@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 
 import {
   DETERMINISTIC_BETA_COHORT,
+  GROUPED_HOSTED_SEARCH_FUNCTION,
   STABLE_HOSTED_SEARCH_FUNCTION,
   getBetaCohortForRequest,
   getBetaCohortForTool,
@@ -123,9 +124,11 @@ assert.doesNotMatch(hostedMcp, /const mcpBetaCohort =/);
 
 const originalFetch = globalThis.fetch;
 const originalUrl = process.env.SUPERICONS_MCP_SEARCH_URL;
+const originalGroupedUrl = process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
 const originalAnon = process.env.SUPERICONS_MCP_SEARCH_ANON_KEY;
 const originalApiKey = process.env.SUPERICONS_API_KEY;
 delete process.env.SUPERICONS_MCP_SEARCH_URL;
+delete process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
 delete process.env.SUPERICONS_MCP_SEARCH_ANON_KEY;
 delete process.env.SUPERICONS_API_KEY;
 
@@ -233,7 +236,7 @@ try {
 
   const groupedRecommendationRequest = requests.find((request) => Array.isArray(request.body.queries));
   assert.ok(groupedRecommendationRequest);
-  assert.match(groupedRecommendationRequest.url, new RegExp(`/${STABLE_HOSTED_SEARCH_FUNCTION}$`));
+  assert.match(groupedRecommendationRequest.url, new RegExp(`/${GROUPED_HOSTED_SEARCH_FUNCTION}$`));
 
   await logMcpSearchAttempt({
     query: 'settings',
@@ -249,6 +252,8 @@ try {
   globalThis.fetch = originalFetch;
   if (originalUrl === undefined) delete process.env.SUPERICONS_MCP_SEARCH_URL;
   else process.env.SUPERICONS_MCP_SEARCH_URL = originalUrl;
+  if (originalGroupedUrl === undefined) delete process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
+  else process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL = originalGroupedUrl;
   if (originalAnon === undefined) delete process.env.SUPERICONS_MCP_SEARCH_ANON_KEY;
   else process.env.SUPERICONS_MCP_SEARCH_ANON_KEY = originalAnon;
   if (originalApiKey === undefined) delete process.env.SUPERICONS_API_KEY;
@@ -264,6 +269,7 @@ console.log(JSON.stringify({
   beta_contract_search_route: 'local_first_english',
   beta_contract_hosted_fallback: STABLE_HOSTED_SEARCH_FUNCTION,
   beta_contract_recommendation_route: STABLE_HOSTED_SEARCH_FUNCTION,
+  beta_contract_grouped_recommendation_route: GROUPED_HOSTED_SEARCH_FUNCTION,
   beta_contract_search_cohort: DETERMINISTIC_BETA_COHORT,
   recommendation_beta_cohort: null,
   english_variant_limit: 4,

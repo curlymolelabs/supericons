@@ -24,6 +24,11 @@ verify_jwt = false
 [functions.mcp-search]
 verify_jwt = false
 
+# Recommendation clients use this additive endpoint for grouped searches. The
+# stable mcp-search endpoint remains available for individual-request fallback.
+[functions.mcp-search-grouped]
+verify_jwt = false
+
 # The local MCP package uses this endpoint to fetch Material SVG snapshots on
 # cache misses. The function only serves the fixed public Material presets.
 [functions.serve-material-snapshot]

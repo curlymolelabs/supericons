@@ -5,13 +5,17 @@ Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.m
 
 ## Active recommendation reliability candidate
 
-The current local candidate implements `D-031` and `FR-46` without changing the package metadata version:
+The current local candidate implements `D-031`, `FR-46`, and `FR-47` without changing the package metadata version:
 
 | artifact | lifecycle state | proof | remaining boundary |
 | --- | --- | --- | --- |
-| Local and hosted `recommend_icons` contract | Implemented and locally verified | `scripts/verify-mcp-agent-friendly-errors.mjs` accepts 20 slots on both MCP transports, returns structured guidance for 21 slots and missing task text, and preserves a hosted 429 reset of 43,200 seconds. `scripts/verify-recommend-icons-grouped-search.mjs` proves one grouped request with 40 logical queries for both English and localized 20-slot cases. | No new npm version is assigned or published. Live hosted latency is not measured. |
-| Stable Supabase MCP grouped route | Implemented and locally verified | `deno check supabase/functions/mcp-search/index.ts` and `scripts/verify-search-v2-grouped-http-request.ts` prove single-request compatibility, a 96-query route bound, per-query rate cost, response order, and synchronous audit rows. | No deployment was performed for this candidate. |
+| Local and hosted `recommend_icons` contract | Implemented and locally verified | `scripts/verify-mcp-agent-friendly-errors.mjs` accepts 20 slots on both MCP transports, returns structured guidance for 21 slots and missing task text, preserves a hosted 429 reset of 43,200 seconds, and proves local fallback after grouped empty results. `scripts/verify-recommend-icons-grouped-search.mjs` proves parity, a 40-query upper bound, and two distinct searches for 20 repeated slots. | No new npm version is assigned or published. The live `FR-47` latency workload is not run. |
+| Grouped hosted compatibility | Implemented and locally verified | `scripts/verify-hosted-search-grouped-client.mjs` rejects malformed successful responses, retries individual searches once, and proves grouped-endpoint rollback compatibility. `scripts/verify-search-v2-grouped-http-request.ts` rejects `null` and malformed JSON, converts malformed subresponses to 502, and fails closed when tier enforcement is on. | The additive `mcp-search-grouped` endpoint is not deployed. |
+| Stable Supabase MCP route | Source restored and hash-verified against main | `supabase/functions/mcp-search/index.ts` has Git blob `71e568f3014a3e07f7271801b4503080b7111ec7`, equal to main `4a96175c6`. Grouped behavior lives in `supabase/functions/mcp-search-grouped/index.ts`. | Do not deploy the stable function as part of beta.3. |
 | `preview_icons` over-limit behavior | Implemented, locally verified, and clean-install verified | `scripts/verify-search-v2-one-call-contract.mjs` sends 15 refs with limit 13, receives a successful inline result capped at 12, and confirms all 15 accepted refs remain in `preview_url`. | Not published or deployed. |
+| Public 20-slot documentation | Implemented, generated, built, and locally verified | `scripts/verify-recommend-icons-doc-limits.mjs` checks all 12 maintained, web, and MCP catalogs. `verify:i18n-catalogs`, `verify:localized-docs-bodies`, `verify:docs-site-render`, and the production Vite build pass. | The documentation changes are not deployed. |
+
+The historical Material production-surface guard remains red on both main `4a96175c6` and this candidate: actual aggregate `f52be4b6...` versus recorded `050db70c...`. This confirms cumulative stable-function source drift already existed before this repair. Beta.3 therefore uses an additive endpoint and must not deploy `mcp-search`.
 
 ## Lifecycle definitions
 

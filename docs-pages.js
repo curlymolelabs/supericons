@@ -1076,7 +1076,7 @@ search_icons({ query: "الأمان", locale: "ar" })</code></pre>
             </thead>
             <tbody>
               <tr><td><code>task</code></td><td>string</td><td>Yes</td><td>-</td><td>Overall UI task. Example: "choose icons for an ecommerce admin sidebar"</td></tr>
-              <tr><td><code>slots</code></td><td>string array</td><td>Yes</td><td>-</td><td>One to twelve UI slots, such as <code>["Products", "Orders", "Customers"]</code></td></tr>
+              <tr><td><code>slots</code></td><td>string array</td><td>Yes</td><td>-</td><td>One to twenty UI slots, such as <code>["Products", "Orders", "Customers"]</code></td></tr>
               <tr><td><code>library</code></td><td>string</td><td>No</td><td>-</td><td>Optional library filter, such as <code>si</code> for Supericons, <code>lucide</code>, <code>tabler</code>, <code>phosphor</code>, <code>mingcute</code>, or <code>simpleicons</code> for Simple Icons</td></tr>
               <tr><td><code>style</code></td><td>string</td><td>No</td><td><code>any</code></td><td>Use <code>outline</code>, <code>solid</code>, or <code>any</code></td></tr>
               <tr><td><code>locale</code></td><td>string</td><td>No</td><td>-</td><td>Use when slot labels are not in English. Supported values match <code>search_icons</code></td></tr>
