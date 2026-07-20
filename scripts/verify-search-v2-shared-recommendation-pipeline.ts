@@ -286,6 +286,50 @@ assert.equal(typeof failedPayload.measurement_timing.stages_ms.candidate_search,
 assert.equal(failingClient.counters.auditInsertCalls, 1);
 assert.equal(failingClient.counters.auditRows, 4);
 
+const maximumQueries = Array.from({ length: 40 }, (_, index) => ({
+  query: `settings ${index + 1}`,
+  library_mode: 'all',
+  style: 'any',
+  limit: 10,
+  locale: null,
+  tool_name: 'recommend_icons',
+  request_id: 'shared-recommendation-maximum-test',
+  dedupe_key: `shared-recommendation-maximum-test:${index}`,
+}));
+const maximumClient = createAdminClient();
+const maximumRateLimitCosts: number[] = [];
+const maximumResponse = await handleSharedRecommendationSearchRequest(
+  new Request('https://example.test/recommend-search', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ queries: maximumQueries }),
+  }),
+  {
+    adminClientFactory: () => maximumClient,
+    candidateRpcName: 'si_search_icon_candidates_v4',
+    maxQueries: 40,
+    rateLimitEnforcer: async (_request, cost = 1) => {
+      maximumRateLimitCosts.push(cost);
+      return { sessionHash: null, ipHash: null, countryCode: null, geoSource: null };
+    },
+    dailyAllowanceEnforcer: async () => {},
+  },
+);
+assert.equal(maximumResponse.status, 200);
+const maximumPayload = await maximumResponse.json();
+assert.equal(maximumPayload.response_count, 40);
+assert.equal(maximumPayload.responses.length, 40);
+assert.deepEqual(maximumPayload.responses.map((entry: any) => entry.index), (
+  Array.from({ length: 40 }, (_, index) => index)
+));
+assert.deepEqual(maximumRateLimitCosts, [40]);
+assert.equal(maximumClient.counters.rpc, 1);
+assert.equal(maximumClient.counters.metadata, 2);
+assert.equal(maximumClient.counters.svg, 1);
+assert.equal(maximumClient.counters.publicSemantic, 1);
+assert.equal(maximumClient.counters.auditInsertCalls, 1);
+assert.equal(maximumClient.counters.auditRows, 40);
+
 console.log(JSON.stringify({
   status: 'ok',
   logical_queries: queries.length,
@@ -302,4 +346,7 @@ console.log(JSON.stringify({
   failure_audit_rows: failingClient.counters.auditRows,
   timed_failure_includes_stage_evidence: true,
   in_band_stage_timing: true,
+  maximum_logical_queries: maximumPayload.response_count,
+  maximum_candidate_rpc_calls: maximumClient.counters.rpc,
+  maximum_audit_rows: maximumClient.counters.auditRows,
 }, null, 2));

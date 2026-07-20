@@ -181,9 +181,13 @@ assert.doesNotMatch(stableRouteSource, /handleGroupedSearchRequest/);
 const groupedRouteSource = await Deno.readTextFile(
   new URL('../supabase/functions/mcp-search-grouped/index.ts', import.meta.url),
 );
-assert.match(groupedRouteSource, /handleGroupedSearchRequest/);
+assert.match(groupedRouteSource, /handleSharedRecommendationSearchRequest/);
 assert.match(groupedRouteSource, /defaultSource:\s*'mcp'/);
-assert.match(groupedRouteSource, /maxQueries:\s*96/);
+assert.match(groupedRouteSource, /defaultEnvironment:\s*null/);
+assert.match(groupedRouteSource, /candidateRpcName:\s*'si_search_icon_candidates_v4'/);
+assert.match(groupedRouteSource, /hydrateFinalSvg:\s*true/);
+assert.match(groupedRouteSource, /includeTimingInResponse:\s*true/);
+assert.match(groupedRouteSource, /maxQueries:\s*40/);
 
 if (originalTierEnforcement === undefined) {
   Deno.env.delete('SEARCH_ENGINE_TIER_ENFORCEMENT');
@@ -200,6 +204,8 @@ console.log(JSON.stringify({
   synchronous_audit_writes: auditWrites,
   stable_route_unchanged: true,
   additive_grouped_route: true,
+  grouped_route_uses_shared_recommendation_pipeline: true,
+  grouped_route_max_logical_queries: 40,
   null_body_rejected: true,
   malformed_subresponse_status: malformedPayload.responses[0].status,
   tier_enforcement_fails_closed: true,
