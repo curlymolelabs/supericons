@@ -77,6 +77,7 @@ const summary = {
   stable_url: stableUrl,
   checks: {},
 };
+let failure = null;
 
 try {
   const direct = await postJson(groupedUrl, {
@@ -158,7 +159,7 @@ try {
     message: error?.message || String(error),
   };
   summary.finished_at = new Date().toISOString();
-  throw error;
+  failure = error;
 } finally {
   if (originalGroupedUrl === undefined) delete process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
   else process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL = originalGroupedUrl;
@@ -172,4 +173,9 @@ try {
   const serialized = `${JSON.stringify(summary, null, 2)}\n`;
   if (outputPath) writeFileSync(resolve(outputPath), serialized, 'utf8');
   console.log(serialized.trim());
+}
+
+if (failure) {
+  console.error(failure?.stack || failure?.message || String(failure));
+  process.exitCode = 1;
 }

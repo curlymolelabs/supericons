@@ -160,6 +160,8 @@ assert.match(live, /AbortSignal\.timeout\(requestTimeoutMs\)/);
 assert.match(live, /stableFallbackSentinelUrl/);
 assert.match(live, /SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl/);
 assert.match(live, /stable_fallback_disabled: true/);
+assert.match(live, /process\.exitCode = 1/);
+assert.equal(live.includes('throw error;'), false);
 assert.ok(
   live.indexOf('SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl')
     < live.indexOf('const groupedClient'),
