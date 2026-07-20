@@ -1,63 +1,93 @@
-# Search v2 agent-readable errors and 20-slot recommendation candidate
+# Search v2 beta.3 recommendation reliability audit request
 
 Date: 2026-07-20
-State: implemented and locally verified, not deployed or published
-Specification: `D-031`, `FR-46`
+State: source candidate implemented and locally verified, not deployed, versioned, staged, or published
+Repair commit: `e48858314`
+Specification: `D-031`, `FR-46`, `FR-47`
 
 ## Outcome
 
-This candidate changes the MCP recommendation and preview contract in four ways:
+The earlier candidate at `35744b8a8` received a no-go because it changed the stable hosted route, skipped existing local fallback behavior, accepted malformed grouped results as empty results, lacked endpoint rollback compatibility, and could bypass safe allowance accounting. Repair commit `e48858314` supersedes that release design.
 
-1. `recommend_icons` accepts 1 to 20 UI slots on both local stdio MCP and hosted HTTP MCP.
-2. A request with more than 20 slots, missing task text, or missing slots returns a stable code, a plain-language reason, and a useful next step instead of a bare parameter error.
-3. Resolved recommendation searches use one grouped hosted request. Fan-out is capped at 40 logical queries, including localized 20-slot calls, within the hosted route limit of 96.
-4. `preview_icons` safely clamps inline output to 12 icons. The response warns about the clamp and keeps up to 24 accepted refs in the browser preview.
+The repaired candidate:
 
-Hosted recommendation failures now preserve safe recovery details. Timeouts explain that the request took too long. Rate-limit responses preserve the tier details and full retry delay. Invalid grouped responses fail as structured recommendation errors instead of appearing as false no-results.
+1. Accepts 1 to 20 recommendation slots on local and hosted MCP.
+2. Returns plain-language codes, reasons, and next steps for correctable inputs and service failures.
+3. Keeps HTTP 429 limit responses visible, including the full retry delay.
+4. Uses a new additive `mcp-search-grouped` endpoint for grouped recommendation searches.
+5. Retries distinct searches through the stable individual endpoint once if grouped mode is missing, unavailable, or invalid.
+6. Sends grouped empty results through the same local fallback used by individual searches.
+7. Deduplicates identical generated searches before the grouped request.
+8. Rejects malformed JSON, a `null` request body, and malformed successful subresponses.
+9. Disables grouped execution when tier enforcement is active, then lets the client use the existing individual route. This avoids group-specific allowance bypass until D-030 account identity and race-safe accounting exist.
+10. Keeps the 12-icon inline preview safety limit while preserving up to 24 accepted refs in the browser preview.
 
-## Changed serving paths
+## Serving-path boundary
 
-- `mcp/search-tool-shell.js`: shared normalization, error presentation, slot limit, preview clamp, and server instructions.
-- `mcp/index.js`: local stdio schemas, 20-slot handler, grouped client wiring, and preview response behavior.
-- `mcp/remote-server.js`: hosted schemas, 20-slot handler, grouped client wiring, output schema alignment, structured errors, and preview response behavior.
-- `mcp/hosted-search-client.js`: grouped subrequest failure propagation.
-- `mcp/recommend-icons.js`: grouped failure propagation and 40-query fan-out bound.
-- `supabase/functions/mcp-search/index.ts`: backward-compatible single or grouped request handling.
-- `mcp/preview-icons.js`: rendered and browser preview counts plus a specific next step when the browser preview contains more refs.
+The stable `supabase/functions/mcp-search/index.ts` source has Git blob `71e568f3014a3e07f7271801b4503080b7111ec7`, equal to main `4a96175c6`.
+
+Grouped behavior is isolated in:
+
+- `supabase/functions/mcp-search-grouped/index.ts`
+- `supabase/functions/_shared/search-engine/grouped-search-request.ts`
+- `mcp/hosted-search-client.js`
+
+Beta.3 must not deploy the stable `mcp-search` function.
 
 ## Verification results
 
-| check | verified result |
+The following commands passed against repair commit `e48858314`:
+
+| area | command and result |
 | --- | --- |
-| MCP shell | `npm --prefix mcp run verify:search-v2-shell` passed. Local and hosted transports accepted 20 slots. A 21-slot request returned `recommendation_slot_limit_exceeded`. Missing task text returned `recommendation_task_required`. |
-| Real grouped local call | `scripts/verify-mcp-agent-friendly-errors.mjs` sent 20 resolved slots through the local MCP server and observed one hosted request containing 40 logical queries. All 20 slots returned a recommendation. |
-| Hosted structured failure | The same verifier sent a hosted recommendation through a controlled 429 response and preserved code `daily_allowance_exceeded`, retry delay 43,200 seconds, and a plain-language next step. |
-| Grouped recommendation core | `scripts/verify-recommend-icons-grouped-search.mjs` passed result parity, clarification short-circuiting, failure propagation, and English and localized 20-slot fan-out of 40 queries. |
-| Grouped client | `scripts/verify-hosted-search-grouped-client.mjs` passed single-request ordering and 429 detail propagation. |
-| Stable Edge route | `deno check supabase/functions/mcp-search/index.ts` and `scripts/verify-search-v2-grouped-http-request.ts` passed single-request compatibility, per-query rate cost, response order, bounded concurrency, and synchronous audit rows. |
-| Preview behavior | `scripts/verify-search-v2-one-call-contract.mjs` sent 15 refs with limit 13. The call succeeded, rendered no more than 12, reported the clamp, and kept all 15 refs in `preview_url`. |
-| Search regression | `scripts/verify-search-v2-phase1-parity.mjs` passed all 225 cases with unchanged fingerprint `3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777`. |
-| Clean install | `scripts/verify-search-v2-tool-scoped-package.mjs` passed 65 packed files, clean install, 150 eligible stdio cases, and unchanged route fingerprint `357d161cf6059b9371ea38591f267f623e43e37cfd680cb5a097af50861c1659`. |
-| Package contents | `npm --prefix mcp run verify:package` passed with 65 files and 25,498,899 unpacked bytes. |
-| Package safety | `npm --prefix mcp run verify:public-safety` scanned all 65 packed files and passed. |
+| MCP contract | `npm --prefix mcp run verify:search-v2-shell` passed. |
+| Grouped HTTP input and allowance safety | `npm run verify:search-v2-grouped-http-request` passed. |
+| Grouped client validation and rollback | `npm run verify:hosted-search-grouped-client` passed. |
+| Recommendation parity and deduplication | `npm run verify:recommend-icons-grouped-search` passed. |
+| Daily allowance contract | `npm run verify:search-v2-daily-allowance` passed. |
+| Shared recommendation pipeline | `npm run verify:search-v2-shared-recommendation-pipeline` passed. |
+| Search regression | `npm run verify:search-v2-phase1-parity` passed 225 cases with fingerprint `3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777`. |
+| Multilingual MCP | `npm run verify:mcp-multilingual-support` passed. |
+| Material package contracts | `verify:material-mcp-contract`, `verify:material-mcp-clean-install`, and `verify:material-mcp-package` passed. |
+| Hosted resilience | `npm run verify:hosted-search-resilience` passed. |
+| Tool-scoped source | `npm run verify:search-v2-tool-scoped-beta` passed. |
+| Exact clean-install package | `npm run verify:search-v2-tool-scoped-package` passed 150 eligible stdio cases. |
+| Package safety and contents | `npm --prefix mcp run verify:public-safety` and `npm --prefix mcp run verify:package` passed with 65 packed files. |
+| Protected public artifacts | `npm run verify:search-v2-protected-public-artifacts` passed VC-3 and VC-4. |
+| Usage deduplication | `npm run verify:mcp-usage-dedupe` passed. |
+| Public 20-slot copy | `npm run verify:recommend-icons-doc-limits` passed all 12 locales and all maintained and generated catalogs. |
+| Documentation generation | `verify:i18n-catalogs`, `verify:localized-docs-bodies`, and `verify:docs-site-render` passed. |
+| Production web build | `npm run build` passed after the locked root dependencies were installed. |
+| Syntax and type checks | Node syntax checks for changed MCP files and Deno checks for both Supabase entrypoints passed. |
 
-The repository-root safety scanner is not the MCP package release check. When run from the root, it reported an existing root-only script reference to a local environment file. The scoped MCP package scan above passed, and this candidate does not change that root script.
+The controlled 20-slot fixture generated two distinct searches for 20 repeated settings slots. Both local and hosted MCP fixtures also proved local fallback after grouped empty results.
 
-## Release boundaries
+## Known inherited guard failure
 
-- Package metadata remains `0.4.19-beta.2`. This source must receive a new prerelease version before publication.
-- No Supabase function was deployed.
-- No npm package was staged or published.
-- Live hosted recommendation latency was not measured. The candidate removes repeated client HTTP round trips, but it does not claim a production latency pass.
-- The public `beta` tag continues to require an MCP process restart before a running client loads a newly published version.
+`npm run verify:material-production-search-surface` reports actual aggregate `f52be4b6aa28cde419a3fae52c4cf3b360dae16229d041f3638e87ef0e359780` instead of recorded aggregate `050db70ca82676339aa0e186d23e50d50c1578a0f6e77f71262764e400b60733`.
 
-## Required release checks
+The same failure reproduces on main `4a96175c6`. It is inherited cumulative stable-function drift, not a beta.3 repair change. Do not update the historical record or deploy the stable function as part of this release.
 
-Before deployment or publication:
+## Independent verification requests
 
-1. Verify the exact diff and rerun every command in the verification table.
-2. Deploy the stable `mcp-search` grouped wrapper with a bounded rollback plan.
-3. Prove existing single-query response compatibility on the deployed function.
-4. Measure end-to-end `recommend_icons` latency for 1, 10, and 20 resolved slots, including a 20-slot localized case.
-5. Prepare a newly versioned tarball, run the MCP shell and clean-install checks on its exact bytes, then perform the normal staged publication checks.
-6. After publication, restart OpenCode and verify that its running MCP process reports the new package version.
+1. Confirm the stable `mcp-search/index.ts` blob is byte-identical to main.
+2. Trace every grouped endpoint fallback condition to the stable individual request call.
+3. Confirm malformed grouped status 200 responses cannot become false empty results.
+4. Reproduce grouped empty-result local fallback on both MCP transports.
+5. Reproduce malformed JSON, `null`, malformed subresponse, and tier-enforcement behavior.
+6. Confirm HTTP 429 never falls back or hides its retry details.
+7. Confirm repeated 20-slot requests are deduplicated without changing slot ordering or results.
+8. Confirm all 12 source, web, and MCP documentation catalogs state the 20-slot limit.
+9. Rerun the clean-install, package safety, 225-case regression, and exact MCP integration checks.
+10. Confirm the known Material guard failure is identical on main and does not authorize a stable-route deployment.
+
+## Remaining release gates
+
+1. Receive independent source and test verification.
+2. Deploy only `mcp-search-grouped` with delete-on-failure rollback.
+3. Verify live grouped success and stable individual fallback.
+4. Run the exact candidate's `FR-47` warm workload: p95 at most 3 seconds for 1 slot, 10 seconds for 10 slots, and 15 seconds for 20 slots, with zero timeouts. Include one supported non-English 20-slot case.
+5. Assign the beta.3 version only after the hosted gates pass.
+6. Build and verify the exact beta.3 tarball before staging or publication.
+
+No release-go claim is made by this record.
