@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "release": "search-v2-beta3-shared-grouped-endpoint",
+  "date": "2026-07-21",
+  "attempt": 3,
+  "supersedes_manifest_sha256": "8906a313b44e9880779904d1226373bd385724ebb23b387c274ec577dbab06f6",
+  "prior_attempt": {
+    "status": "rolled_back",
+    "reason": "one_slot p95 5067 ms exceeds 3000 ms",
+    "grouped_function_id": "27d64531-6a8d-4e8c-8a6b-3a8ae2d8f814",
+    "grouped_function_removed": true,
+    "stable_function_mutated": false,
+    "live_routing_gate": "passed",
+    "latency_gate": "blocked",
+    "one_slot_p95_ms": 5067,
+    "worker_affinity_assumption": "falsified"
+  },
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "function_name": "mcp-search-grouped",
+  "source_revision": "85647ebdbcf6669606291927ec8f9f49c75d7ee1",
+  "source_tree": "ba2929b59912e5eb1814a397ee48a706c7deadfb",
+  "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
+  "grouped_function_present_before": false,
+  "stable_function": {
+    "id": "ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43",
+    "name": "mcp-search",
+    "version": 40,
+    "updated_at": 1784045797971,
+    "verify_jwt": false,
+    "status": "ACTIVE"
+  },
+  "shared_candidate_rpc": {
+    "signature": "public.si_search_icon_candidates_v4(jsonb,text,integer)",
+    "migration_version": "20260714190000",
+    "migration_path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
+    "migration_sha256": "e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3",
+    "present_before": false,
+    "migration_record_present_before": false,
+    "service_role_only": true
+  },
+  "deployments_authorized": 1,
+  "conditional_deletions_authorized": 1,
+  "stable_function_deployments_authorized": 0,
+  "npm_publications_authorized": 0,
+  "database_mutations_authorized": {
+    "shared_candidate_rpc_creations": 1,
+    "migration_history_inserts": 1,
+    "conditional_shared_candidate_rpc_drops": 1,
+    "conditional_migration_history_deletes": 1
+  },
+  "rollback": "delete_matching_grouped_endpoint_then_remove_matching_shared_candidate_rpc_and_migration_record",
+  "source_files": [
+    {
+      "path": "lib/cjk-search-core.js",
+      "sha256": "9b2d0935e2f5f060aabb215a261e33f695e886f3e9e03eb67faae7d538fb1a3e"
+    },
+    {
+      "path": "lib/generated-search-intent-graph.js",
+      "sha256": "cd467951a0d98856dccf52293a8f5cba95eb66a73d8b8b0ced4164d9f6b8413f"
+    },
+    {
+      "path": "lib/generated-search-intent-rules.js",
+      "sha256": "876c6f2ed69580e32e5059d422961761d8d31cd9dc05bc99d9a048e6131e39ef"
+    },
+    {
+      "path": "lib/generated-search-ranking-policy.js",
+      "sha256": "938f5a1fc38c0be6bea229b4fba792df8380868405268d7b552532de18861335"
+    },
+    {
+      "path": "lib/hosted-search-core.js",
+      "sha256": "ec987968d9753fb6d620cbac6e5ea8c7fed08816c2c0049b1b01b9539d87266e"
+    },
+    {
+      "path": "lib/search-intent-core.js",
+      "sha256": "9e90b860024214bfc5adc1c5e0b36a0cf1bb223ff093083a9eb5df7034011c5c"
+    },
+    {
+      "path": "lib/search-query-frame.js",
+      "sha256": "45de1bd6c3d1daf5fa652a5cbf38d00d15181a5d2cc7a7feba8c77ce19912d80"
+    },
+    {
+      "path": "lib/search-ranking-policy.js",
+      "sha256": "28d45573a3eb5c9303265f59db7e00ad1d8851ce5b339947188497db3a45ceb3"
+    },
+    {
+      "path": "mcp/hosted-search-client.js",
+      "sha256": "13cda003e97ab8c913cacb7a0b80fde5b93dcc83da31d73cb5a465239c56900e"
+    },
+    {
+      "path": "mcp/hosted-search-resilience.js",
+      "sha256": "ab2c70bd019688181f2836550f54287f1965c9826fabaa02415a06a31b79cf71"
+    },
+    {
+      "path": "mcp/index.js",
+      "sha256": "dae8195da79f9d4e8af8608104d5d5a02ddcc1bcbd5968c2915f9b2371b8f03a"
+    },
+    {
+      "path": "mcp/package.json",
+      "sha256": "5b52f3c76923465c592b899bf1f4b0526e4438dd20f5ada10cf5e6c5eed99229"
+    },
+    {
+      "path": "mcp/recommend-icons.js",
+      "sha256": "f3705b6acb1f981859f56cbf795c05cc7240234740767219f27422b8a20e2f11"
+    },
+    {
+      "path": "mcp/release-channel.js",
+      "sha256": "6170c163d63cc2bf42ec875ae32ddbce4c78de7e158f136f56998e635d9d0af8"
+    },
+    {
+      "path": "mcp/remote-server.js",
+      "sha256": "a13444c115c4e109f1c67137fb1fbc03843703741ea2456fb544885add8eaaa9"
+    },
+    {
+      "path": "mcp/search-tool-shell.js",
+      "sha256": "86e65ef832900d0310abfaed38ee0eb830ad5b049b7627bb53e096ead879ee10"
+    },
+    {
+      "path": "scripts/verify-hosted-search-grouped-client.mjs",
+      "sha256": "2c4fdc040fbab70539b513000169c3cda810df69a3d4cb7cfcc28811c96f0237"
+    },
+    {
+      "path": "scripts/verify-hosted-search-resilience.mjs",
+      "sha256": "636bdcdeec6adcb111a087512d20da68715cc994f50a1af51ec589c443271ddb"
+    },
+    {
+      "path": "scripts/verify-mcp-agent-friendly-errors.mjs",
+      "sha256": "0c1066a4c0d47b75e3daa27ea3108c1edc86a702986875551ca9ce9da7083395"
+    },
+    {
+      "path": "scripts/verify-recommend-icons-grouped-search.mjs",
+      "sha256": "380e4393d235e53282d139ba76c78ee099948e1238f01799cd950fba747b1b8a"
+    },
+    {
+      "path": "scripts/verify-search-v2-deterministic-mcp-default.mjs",
+      "sha256": "a433562bb0e0e1ab0d121e5ee5c5f838889915a147e29e2504c56286eceb5a27"
+    },
+    {
+      "path": "scripts/verify-search-v2-grouped-http-request.ts",
+      "sha256": "f65a357238906baf6112d9aa3776052339552d9104afd3375188cff17823ff9e"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-pipeline.ts",
+      "sha256": "8aa2ce648ac70b305446b11957c71657b0401f41aab3e691c186258729e40126"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/candidate-retrieval.ts",
+      "sha256": "870c3617bcf443e4e31efa8325501260f45240ecba9936d4dd48f5f5e1d114b1"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/catalog.ts",
+      "sha256": "265eeea824895ac4bb81b8b0d607dbef43db9e3c2578972e01b40e97458faabc"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/handle-search-request.ts",
+      "sha256": "a24b81f26e34d0f4fd3548d8c0b5e7e5c1ae503dcee13cee6fc2e9595a2c80db"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/material-serving.ts",
+      "sha256": "98aa2de3be91bb32263d86e2c9f3744cf8b975d343b410955786a6aecd5ad217"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/normalize.ts",
+      "sha256": "27e5601d37195fe14c5a1da6e58e85e28480e80afe1e94ba42b551a0f96e491d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rank.ts",
+      "sha256": "51e340739693219255e1fc0918cc5affcf470a41c90930be474d8d0b31eb253d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rate-limit.ts",
+      "sha256": "1a023edc01835863ebd68d0dcfea58b399dc8b8f068eaca67b278b6b72d49915"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/recommendation-candidate-retrieval.ts",
+      "sha256": "c07a0fafaaddb34834a5c8140682f2d60751f3287400a2e16984469cf5532489"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/result-hydration.ts",
+      "sha256": "27b7d526b17a3a4743546be5c970fe306b44389c67be0993a24f3e524248cea0"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/shared-recommendation-search-request.ts",
+      "sha256": "3444e08833f3eef3c7d9c46c7ec8c9d21d083ba2a11e14d7d00081236a006aa2"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/stage-timing.ts",
+      "sha256": "d6bb6d7347c48513951340727130ff1ad26af3d04f89f809603025b921aaac0d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/types.ts",
+      "sha256": "5035ce460228219bec7796ebd46266b7fa4137a0d3bcfcd12fc2b3b4c13e3f41"
+    },
+    {
+      "path": "supabase/functions/mcp-search-grouped/index.ts",
+      "sha256": "5d4dccacd56dbd8794553189813542ebc8c487632ea8f31b0363929ec3bd85c1"
+    },
+    {
+      "path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
+      "sha256": "576d144ce410a1e4dfd6fdf9853729f1fd97a91f7b23649ee5e0db0340780b0b"
+    }
+  ],
+  "packet_files": [
+    {
+      "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
+      "sha256": "3c81f3ca9e90a1a4a4ccf7194c913d5983940744ccf06da1ef9cfa0221492023"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
+      "sha256": "ca78a1c74aac1fdcacce0dc68f2848a1e6c50e2a7682ead3f40ef9221a5a3f93"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
+      "sha256": "13f0908bd70e6e32fe8f2ba019c58e97b3c1b448e2550e75d1331a92d149899b"
+    },
+    {
+      "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
+      "sha256": "ce1014ad6f71de6c54542be83f12de8e545bb5d38fcc00c9dab6dbdfe4430491"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
+      "sha256": "5cf80d9acb31821e556c82724127be2e9e390f4cd45acd37bd57f54020e049ed"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
+      "sha256": "923e387747441796abc79dd5b74f866dcdb531df01b196f8cd595dcbc3f2fcdd"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
+      "sha256": "4bf707194646c3b2a5622813e80bd44395c02e5dd5e81f6a666cc3fe0c605dd4"
+    },
+    {
+      "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
+      "sha256": "f336188599b125438cce196f6737b40cb24c0773d93b03c6e3a092f655df0444"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-manager.mjs",
+      "sha256": "02aef9bafa649a61d4146f6cdd7b55180e7acb8f913f3d676563705da0b369c6"
+    }
+  ],
+  "live_gates": {
+    "direct_grouped_http": true,
+    "mcp_grouped_client": true,
+    "mcp_grouped_client_stable_fallback_disabled": true,
+    "stable_fallback_when_grouped_missing": true,
+    "fr47_stable_fallback_disabled": true,
+    "shared_candidate_pipeline": true,
+    "shared_candidate_rpc_call_count": 1,
+    "maximum_logical_queries": 40,
+    "in_band_stage_timing": true,
+    "worker_affinity_assumed": false,
+    "measurement_strategy": "rate_window_reset_then_back_to_back_first_call_samples",
+    "rate_window_reset_ms": 65000,
+    "failed_samples_preserved": true,
+    "rollback_function_id_pinned": true,
+    "rollback_shared_candidate_definition_pinned": true,
+    "committed_negative_path_harness": true,
+    "committed_rollback_simulation": true,
+    "committed_measurement_schedule_harness": true,
+    "committed_database_manager_fixture": true,
+    "relative_archive_extraction": true,
+    "gnu_tar_and_bsdtar_simulated": true,
+    "one_slot_first_call_p95_ms_max": 3000,
+    "ten_slot_first_call_p95_ms_max": 10000,
+    "twenty_slot_first_call_p95_ms_max": 15000,
+    "request_timeout_ms": 20000,
+    "timeouts_allowed": 0,
+    "supported_non_english_twenty_slot_case": "ja"
+  }
+}
