@@ -36,11 +36,15 @@ function run(command, args) {
 }
 
 const manifestPath =
-  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-21.json';
+  'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json';
 const expectedManifestHash = readArgument('--manifest-hash');
 const skipNestedReleaseSimulations =
   process.argv.includes('--skip-nested-release-simulations');
-assert.match(expectedManifestHash || '', /^[0-9a-f]{64}$/, 'Provide --manifest-hash with 64 lowercase hex characters.');
+assert.match(
+  expectedManifestHash || '',
+  /^[0-9a-f]{64}$/,
+  'Provide --manifest-hash with 64 lowercase hex characters.',
+);
 if (skipNestedReleaseSimulations) {
   assert.equal(
     process.env.SUPERICONS_BETA3_NESTED_RELEASE_SIMULATION,
@@ -55,15 +59,16 @@ assert.equal(manifestHash, expectedManifestHash, 'The release manifest hash does
 const manifest = JSON.parse(manifestText);
 
 assert.equal(manifest.schema_version, 1);
-assert.equal(manifest.release, 'search-v2-beta3-grouped-endpoint-retry');
-assert.equal(manifest.attempt, 2);
+assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
+assert.equal(manifest.attempt, 3);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24',
+  '8906a313b44e9880779904d1226373bd385724ebb23b387c274ec577dbab06f6',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
 assert.equal(manifest.prior_attempt.stable_function_mutated, false);
+assert.equal(manifest.prior_attempt.one_slot_p95_ms, 5067);
 assert.equal(manifest.project_ref, 'kcjmkakdhsqplvasgkjv');
 assert.equal(manifest.function_name, 'mcp-search-grouped');
 assert.equal(manifest.stable_function.name, 'mcp-search');
@@ -74,22 +79,40 @@ assert.equal(manifest.deployments_authorized, 1);
 assert.equal(manifest.conditional_deletions_authorized, 1);
 assert.equal(manifest.stable_function_deployments_authorized, 0);
 assert.equal(manifest.npm_publications_authorized, 0);
-assert.equal(manifest.rollback, 'delete_new_grouped_function_after_id_match');
+assert.equal(manifest.shared_candidate_rpc.migration_version, '20260714190000');
+assert.equal(
+  manifest.shared_candidate_rpc.migration_path,
+  'supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql',
+);
+assert.equal(
+  manifest.shared_candidate_rpc.migration_sha256,
+  'e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3',
+);
+assert.equal(manifest.shared_candidate_rpc.present_before, false);
+assert.equal(manifest.shared_candidate_rpc.migration_record_present_before, false);
+assert.equal(manifest.database_mutations_authorized.shared_candidate_rpc_creations, 1);
+assert.equal(manifest.database_mutations_authorized.migration_history_inserts, 1);
+assert.equal(manifest.database_mutations_authorized.conditional_shared_candidate_rpc_drops, 1);
+assert.equal(manifest.database_mutations_authorized.conditional_migration_history_deletes, 1);
+assert.equal(manifest.live_gates.shared_candidate_pipeline, true);
+assert.equal(manifest.live_gates.shared_candidate_rpc_call_count, 1);
+assert.equal(manifest.live_gates.maximum_logical_queries, 40);
+assert.equal(manifest.live_gates.in_band_stage_timing, true);
+assert.equal(manifest.live_gates.worker_affinity_assumed, false);
+assert.equal(
+  manifest.live_gates.measurement_strategy,
+  'rate_window_reset_then_back_to_back_first_call_samples',
+);
+assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
+assert.equal(manifest.live_gates.failed_samples_preserved, true);
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
+assert.equal(manifest.live_gates.rollback_shared_candidate_definition_pinned, true);
 assert.equal(manifest.live_gates.committed_negative_path_harness, true);
 assert.equal(manifest.live_gates.committed_rollback_simulation, true);
-assert.equal(manifest.live_gates.relative_archive_extraction, true);
-assert.equal(manifest.live_gates.gnu_tar_and_bsdtar_simulated, true);
-assert.equal(
-  manifest.live_gates.warm_measurement_strategy,
-  'options_keepalive_then_back_to_back_samples',
-);
-assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
-assert.equal(manifest.live_gates.keepalive_interval_ms, 5000);
-assert.equal(manifest.live_gates.failed_samples_preserved, true);
 assert.equal(manifest.live_gates.committed_measurement_schedule_harness, true);
+assert.equal(manifest.live_gates.committed_database_manager_fixture, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -99,7 +122,9 @@ assert.equal(
   manifest.source_revision,
 );
 assert.equal(
-  execFileSync('git', ['rev-parse', `${manifest.source_revision}^{tree}`], { encoding: 'utf8' }).trim(),
+  execFileSync('git', ['rev-parse', `${manifest.source_revision}^{tree}`], {
+    encoding: 'utf8',
+  }).trim(),
   manifest.source_tree,
 );
 assert.equal(
@@ -126,7 +151,6 @@ for (const entry of manifest.source_files) {
     `${entry.path} does not match the pinned source revision.`,
   );
 }
-
 for (const entry of manifest.packet_files) {
   assert.match(entry.sha256, /^[0-9a-f]{64}$/);
   assert.equal(sha256TextFile(entry.path), entry.sha256, `${entry.path} hash does not match.`);
@@ -139,82 +163,80 @@ const sourceGraphDiff = execFileSync(
   { encoding: 'utf8' },
 ).trim();
 assert.equal(sourceGraphDiff, '', 'Packet commits must not alter the pinned deployment source graph.');
+assert.equal(JSON.parse(readFileSync('mcp/package.json', 'utf8')).version, '0.4.19-beta.2');
 
-const packageJson = JSON.parse(readFileSync('mcp/package.json', 'utf8'));
-assert.equal(packageJson.version, '0.4.19-beta.2');
-
-const runnerPath = 'scripts/run-search-v2-beta3-grouped-release.ps1';
-const livePath = 'scripts/verify-search-v2-beta3-grouped-live.mjs';
-const latencyPath = 'scripts/measure-search-v2-beta3-fr47-live.mjs';
-const negativePathsHarness =
-  'scripts/verify-search-v2-beta3-grouped-negative-paths.mjs';
-const rollbackHarness =
-  'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs';
-const measurementScheduleHarness =
-  'scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs';
-const runner = normalizedText(readFileSync(runnerPath, 'utf8'));
-const live = normalizedText(readFileSync(livePath, 'utf8'));
-const latency = normalizedText(readFileSync(latencyPath, 'utf8'));
+const paths = {
+  runner: 'scripts/run-search-v2-beta3-grouped-release.ps1',
+  packet: 'scripts/verify-search-v2-beta3-grouped-packet.mjs',
+  live: 'scripts/verify-search-v2-beta3-grouped-live.mjs',
+  latency: 'scripts/measure-search-v2-beta3-fr47-live.mjs',
+  negative: 'scripts/verify-search-v2-beta3-grouped-negative-paths.mjs',
+  rollback: 'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs',
+  schedule: 'scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs',
+  databaseManager: 'scripts/manage-search-v2-shared-candidate-rpc.mjs',
+  databaseFixture: 'scripts/verify-search-v2-shared-candidate-rpc-manager.mjs',
+};
+const runner = normalizedText(readFileSync(paths.runner, 'utf8'));
+const live = normalizedText(readFileSync(paths.live, 'utf8'));
+const latency = normalizedText(readFileSync(paths.latency, 'utf8'));
+const rollback = normalizedText(readFileSync(paths.rollback, 'utf8'));
+const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
+const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
+const databaseFixture = normalizedText(readFileSync(paths.databaseFixture, 'utf8'));
 
 assert.match(runner, /\$FunctionName = 'mcp-search-grouped'/);
 assert.match(runner, /\$StableFunctionName = 'mcp-search'/);
 assert.equal((runner.match(/supabase functions deploy \$FunctionName/g) || []).length, 1);
 assert.equal((runner.match(/supabase functions delete \$FunctionName/g) || []).length, 1);
-assert.match(runner, /--project-ref \$ProjectRef/);
-assert.match(runner, /--no-verify-jwt/);
-assert.match(runner, /--use-api/);
-assert.match(runner, /--workdir \$sourceWorkspace/);
-assert.match(runner, /The tracked worktree must be clean/);
+assert.equal(/supabase functions deploy \$StableFunctionName/.test(runner), false);
+assert.equal(/supabase functions delete \$StableFunctionName/.test(runner), false);
+assert.equal(/npm\s+publish/i.test(runner), false);
+assert.match(runner, /--action', 'preflight'/);
+assert.match(runner, /--action', 'apply'/);
+assert.match(runner, /--action', 'inspect'/);
+assert.match(runner, /--action', 'verify'/);
+assert.match(runner, /--action', 'rollback'/);
+assert.ok(
+  runner.indexOf("'--action', 'apply'") < runner.indexOf('supabase functions deploy $FunctionName'),
+  'The shared candidate RPC must be verified before endpoint deployment.',
+);
+assert.ok(
+  runner.indexOf('$endpointRollback = Remove-GroupedFunctionForRollback')
+    < runner.lastIndexOf("'--action', 'rollback'"),
+  'Endpoint rollback must run before the database dependency rollback.',
+);
+assert.match(runner, /blocked_unverified_function/);
+assert.match(runner, /blocked_mismatched_function/);
+assert.match(runner, /blocked_unverified_state/);
+assert.match(runner, /retained_for_endpoint_dependency/);
+assert.match(runner, /The grouped function id changed during live verification/);
+assert.match(runner, /The shared candidate RPC changed during live verification/);
+assert.match(runner, /stable_function_mutated = \$false/);
 assert.match(runner, /git status --porcelain=v1 --untracked-files=no/);
 assert.match(runner, /'-C', \$RepositoryRoot/);
 assert.match(runner, /Push-Location \$Destination/);
 assert.match(runner, /'-xf', "\.\.\/\$archiveFileName"/);
-assert.equal(runner.includes("'tar' -Arguments @('-xf', $archivePath"), false);
-assert.match(runner, /preGrouped\.Count -ne 0/);
-assert.match(runner, /Remove-GroupedFunctionForRollback/);
-assert.match(runner, /ExpectedFunctionId/);
-assert.match(runner, /blocked_unverified_function/);
-assert.match(runner, /blocked_mismatched_function/);
-assert.match(runner, /Rollback function id does not match/);
-assert.match(runner, /The grouped function id changed during live verification/);
-assert.match(runner, /-ExpectedFunctionId \$expectedRollbackFunctionId/);
-assert.ok(
-  runner.indexOf('if ($observedFunctionId -ne $ExpectedFunctionId)')
-    < runner.indexOf('& npx supabase functions delete $FunctionName'),
-  'Rollback must verify the grouped function id before deletion.',
-);
-assert.match(runner, /Assert-StableFunctionPin/);
-assert.match(runner, /stable_function_mutated = \$false/);
-assert.match(runner, /ExecuteApprovedGroupedRelease/);
-assert.equal(runner.includes('--skip-nested-release-simulations'), false);
 assert.equal(runner.includes('Read-Host'), false);
-assert.equal(/supabase functions deploy \$StableFunctionName/.test(runner), false);
-assert.equal(/supabase functions delete \$StableFunctionName/.test(runner), false);
-assert.equal(/npm\s+publish/i.test(runner), false);
-assert.match(runner, /--rate-window-reset-ms', '65000'/);
-assert.match(runner, /--keepalive-interval-ms', '5000'/);
-assert.equal(runner.includes('--minimum-interval-ms'), false);
+assert.equal(runner.includes('--keepalive-interval-ms'), false);
+
+assert.match(databaseManager, /si_search_icon_candidates_v4\(jsonb,text,integer\)/);
+assert.match(databaseManager, /Shared and batched candidate RPC results differ/);
+assert.match(databaseManager, /PUBLIC can execute the shared candidate RPC/);
+assert.match(databaseManager, /begin;[\s\S]*commit;/);
+assert.match(databaseManager, /Rollback refused because the shared candidate RPC definition changed/);
+assert.match(databaseManager, /drop function public\.si_search_icon_candidates_v4/);
+assert.match(databaseManager, /delete from supabase_migrations\.schema_migrations/);
+assert.match(databaseFixture, /mismatched_definition_rollback_refused/);
+assert.match(databaseFixture, /function_and_migration_history_rolled_back_together/);
 
 assert.match(live, /direct_grouped_http/);
-assert.match(live, /mcp_grouped_client/);
-assert.match(live, /missing_grouped_uses_stable_fallback/);
-assert.match(live, /rollback-probe-missing/);
-assert.match(live, /AbortSignal\.timeout\(requestTimeoutMs\)/);
-assert.match(live, /stableFallbackSentinelUrl/);
+assert.match(live, /measurement_timing/);
+assert.match(live, /stages_ms\?\.candidate_search/);
+assert.match(live, /stages_ms\?\.audit_write/);
 assert.match(live, /SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl/);
 assert.match(live, /stable_fallback_disabled: true/);
 assert.match(live, /process\.exitCode = 1/);
 assert.equal(live.includes('throw error;'), false);
-assert.ok(
-  live.indexOf('SUPERICONS_MCP_SEARCH_URL = stableFallbackSentinelUrl')
-    < live.indexOf('const groupedClient'),
-  'The grouped MCP live check must disable stable fallback before the request.',
-);
-assert.ok(
-  live.indexOf('SUPERICONS_MCP_SEARCH_URL = stableUrl')
-    < live.indexOf('const fallbackClient'),
-  'The explicit compatibility check must restore the stable endpoint.',
-);
 
 assert.match(latency, /id: 'one_slot'/);
 assert.match(latency, /id: 'ten_slots'/);
@@ -224,73 +246,56 @@ assert.match(latency, /p95LimitMs: 3000/);
 assert.match(latency, /p95LimitMs: 10000/);
 assert.match(latency, /p95LimitMs: 15000/);
 assert.match(latency, /timeoutMs === 20000/);
-assert.match(latency, /payload\?\.all_slots_resolved, true/);
-assert.match(latency, /entry\) => Boolean\(entry\.recommended\)/);
-assert.match(latency, /rateWindowResetMs/);
-assert.match(latency, /keepaliveIntervalMs/);
-assert.match(latency, /keepGroupedWorkerWarmThroughRateWindow/);
-assert.match(latency, /method: 'OPTIONS'/);
-assert.match(latency, /options_keepalive_then_back_to_back_samples/);
-assert.match(latency, /measured_back_to_back: true/);
+assert.match(latency, /rate_window_reset_then_back_to_back_first_call_samples/);
+assert.match(latency, /worker_affinity_assumed: false/);
+assert.match(latency, /async function resetRateWindow/);
+assert.equal(latency.includes("method: 'OPTIONS'"), false);
+assert.equal(latency.includes('keepalive'), false);
 assert.ok(
   latency.indexOf('summary.scenarios.push(scenarioSummary)')
     < latency.indexOf('p95_ms <= scenario.p95LimitMs'),
   'Failed latency samples must be added to the evidence before the p95 assertion.',
 );
-assert.equal(latency.includes('minimumIntervalMs'), false);
-assert.match(latency, /measuredSamples: samples/);
-assert.match(latency, /measuredSamples: 1/);
-assert.match(latency, /stableFallbackSentinelUrl/);
-assert.match(latency, /SUPERICONS_MCP_SEARCH_URL: stableFallbackSentinelUrl/);
-assert.match(latency, /stable_fallback_disabled: true/);
+assert.match(latency, /process\.exitCode = 1/);
 
-const negativePaths = normalizedText(readFileSync(negativePathsHarness, 'utf8'));
-const rollbackSimulation = normalizedText(readFileSync(rollbackHarness, 'utf8'));
-const measurementSchedule = normalizedText(readFileSync(measurementScheduleHarness, 'utf8'));
-assert.match(negativePaths, /realStableRequests|realStable/);
-assert.match(negativePaths, /sentinelStableRequests|sentinelStable/);
-assert.match(negativePaths, /verify-search-v2-beta3-grouped-live\.mjs/);
-assert.match(negativePaths, /measure-search-v2-beta3-fr47-live\.mjs/);
-assert.match(rollbackSimulation, /blocked_unverified_function/);
-assert.match(rollbackSimulation, /blocked_mismatched_function/);
-assert.match(rollbackSimulation, /expectedDeleteCount: 0/);
-assert.match(rollbackSimulation, /expectedDeleteCount: 1/);
-assert.match(rollbackSimulation, /run-search-v2-beta3-grouped-release\.ps1/);
-assert.match(rollbackSimulation, /match_bsdtar/);
-assert.match(rollbackSimulation, /match_gnu_tar/);
-assert.match(rollbackSimulation, /Git.*usr.*bin.*tar\.exe/s);
-assert.match(measurementSchedule, /options_keepalive_then_back_to_back_samples/);
-assert.match(measurementSchedule, /keepaliveRequests/);
-assert.match(measurementSchedule, /latencies_ms\.length, 3/);
-assert.match(measurementSchedule, /p95_ms > 3000/);
+assert.match(rollback, /retained_for_endpoint_dependency/);
+assert.match(rollback, /database_rollback_count/);
+assert.match(rollback, /match_bsdtar/);
+assert.match(rollback, /match_gnu_tar/);
+assert.match(rollback, /expectedDatabaseRollbackCount: 1/);
+assert.match(schedule, /rate_window_reset_then_back_to_back_first_call_samples/);
+assert.match(schedule, /reset_network_requests: 0/);
+assert.match(schedule, /latencies_ms\.length, 3/);
+assert.match(schedule, /p95_ms > 3000/);
 
-for (const path of [
-  runnerPath,
-  livePath,
-  latencyPath,
-  negativePathsHarness,
-  rollbackHarness,
-  measurementScheduleHarness,
-  manifestPath,
-]) {
+for (const path of [...Object.values(paths), manifestPath]) {
   const text = readFileSync(path, 'utf8');
   assert.equal(/[\u2013\u2014]/u.test(text), false, `${path} contains a prohibited dash character.`);
 }
 
+run('node', [paths.databaseFixture]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);
+run('node', ['scripts/verify-recommend-icons-grouped-search.mjs']);
+run('node', ['scripts/verify-search-v2-deterministic-mcp-default.mjs']);
 run('deno', [
   'run',
   '--allow-read',
   '--allow-env',
   'scripts/verify-search-v2-grouped-http-request.ts',
 ]);
+run('deno', [
+  'run',
+  '--allow-read',
+  '--allow-env',
+  'scripts/verify-search-v2-shared-recommendation-pipeline.ts',
+]);
 run('deno', ['check', 'supabase/functions/mcp-search-grouped/index.ts']);
 if (!skipNestedReleaseSimulations) {
-  run('node', [negativePathsHarness]);
-  run('node', [rollbackHarness]);
-  run('node', [measurementScheduleHarness]);
+  run('node', [paths.negative]);
+  run('node', [paths.rollback]);
+  run('node', [paths.schedule]);
 }
 
 console.log(JSON.stringify({
@@ -304,6 +309,10 @@ console.log(JSON.stringify({
   mutations: {
     grouped_function_deployments: 1,
     conditional_grouped_function_deletions: 1,
+    shared_candidate_rpc_creations: 1,
+    migration_history_inserts: 1,
+    conditional_shared_candidate_rpc_drops: 1,
+    conditional_migration_history_deletes: 1,
     stable_function_deployments: 0,
     npm_publications: 0,
   },

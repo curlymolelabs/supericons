@@ -72,6 +72,31 @@ async function verifyGroupedLiveFailureCannotUseStableFallback() {
               results: [{ ref: `lucide:grouped-${index}` }],
             },
           })),
+          measurement_timing: {
+            schema_version: 2,
+            event: 'search_stage_timing',
+            measurement_variant: 'unspecified',
+            worker_state: 'first_request',
+            worker_request_ordinal: 1,
+            module_age_ms_at_handler_entry: 1,
+            outcome: 'results',
+            total_ms: 10,
+            stages_ms: {
+              candidate_search: 2,
+              audit_write: 1,
+            },
+            counts: {
+              query_variants: queries.length,
+              candidate_rows: queries.length,
+              unique_candidates: queries.length,
+              final_results: queries.length,
+            },
+            approximate_sizes: {
+              candidate_svg_characters: 0,
+              candidate_payload_characters: 100,
+              response_json_characters: 200,
+            },
+          },
         });
         return;
       }

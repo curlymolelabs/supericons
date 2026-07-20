@@ -53,19 +53,12 @@ function parseSummary(stdout) {
 
 function createGroupedFixture({ responseDelayMs = 0 } = {}) {
   const observations = {
-    keepaliveRequests: 0,
+    fixtureStartedAtMs: Date.now(),
     groupedRequests: [],
     realStableRequests: 0,
     sentinelRequests: 0,
   };
   const server = http.createServer(async (request, response) => {
-    if (request.method === 'OPTIONS' && request.url === '/grouped') {
-      observations.keepaliveRequests += 1;
-      response.statusCode = 204;
-      response.end();
-      return;
-    }
-
     let rawBody = '';
     for await (const chunk of request) rawBody += chunk;
     const body = rawBody ? JSON.parse(rawBody) : {};
@@ -133,18 +126,21 @@ function measureArgs(port, extra = []) {
   ];
 }
 
-async function verifyWarmSchedule() {
+async function verifyFirstCallSchedule() {
   const fixture = createGroupedFixture();
   try {
     const port = await listen(fixture.server);
     const result = await runNode(measureArgs(port, [
       '--rate-window-reset-ms', '40',
-      '--keepalive-interval-ms', '10',
     ]));
     assert.equal(result.exitCode, 0, result.stderr);
     const summary = parseSummary(result.stdout);
     assert.equal(summary.status, 'ok');
-    assert.equal(summary.warm_measurement_strategy, 'options_keepalive_then_back_to_back_samples');
+    assert.equal(
+      summary.measurement_strategy,
+      'rate_window_reset_then_back_to_back_first_call_samples',
+    );
+    assert.equal(summary.worker_affinity_assumed, false);
     assert.equal(summary.scenarios.length, 4);
     assert.deepEqual(summary.scenarios.map((scenario) => scenario.status), [
       'ok',
@@ -158,10 +154,17 @@ async function verifyWarmSchedule() {
       3,
       1,
     ]);
-    assert.equal(fixture.observations.groupedRequests.length, 14);
-    assert.ok(fixture.observations.keepaliveRequests >= 16);
+    assert.equal(fixture.observations.groupedRequests.length, 10);
     assert.equal(fixture.observations.realStableRequests, 0);
     assert.equal(fixture.observations.sentinelRequests, 0);
+    assert.equal(
+      summary.scenarios.every((scenario) => (
+        scenario.pre_measurement_rate_window_reset.duration_ms >= 30
+        && scenario.pre_measurement_rate_window_reset.network_requests === 0
+        && scenario.worker_affinity_assumed === false
+      )),
+      true,
+    );
     assert.equal(
       fixture.observations.groupedRequests.every((request) => (
         request.logical_queries >= 1 && request.logical_queries <= 40
@@ -171,30 +174,32 @@ async function verifyWarmSchedule() {
 
     const scenarioBlocks = [
       { start: 0, measured: 3 },
-      { start: 4, measured: 3 },
-      { start: 8, measured: 3 },
-      { start: 12, measured: 1 },
+      { start: 3, measured: 3 },
+      { start: 6, measured: 3 },
+      { start: 9, measured: 1 },
     ];
-    for (const block of scenarioBlocks) {
-      const warmup = fixture.observations.groupedRequests[block.start];
-      const firstMeasured = fixture.observations.groupedRequests[block.start + 1];
+    for (const [blockIndex, block] of scenarioBlocks.entries()) {
+      const firstMeasured = fixture.observations.groupedRequests[block.start];
+      const previousTimestamp = blockIndex === 0
+        ? fixture.observations.fixtureStartedAtMs
+        : fixture.observations.groupedRequests[block.start - 1].started_at_ms;
       assert.ok(
-        firstMeasured.started_at_ms - warmup.started_at_ms >= 30,
-        'A rate-window reset must separate the scenario warmup from measured samples.',
+        firstMeasured.started_at_ms - previousTimestamp >= 30,
+        'A rate-window reset must separate each measured scenario.',
       );
       for (let index = 1; index < block.measured; index += 1) {
-        const previous = fixture.observations.groupedRequests[block.start + index];
-        const current = fixture.observations.groupedRequests[block.start + index + 1];
+        const previous = fixture.observations.groupedRequests[block.start + index - 1];
+        const current = fixture.observations.groupedRequests[block.start + index];
         assert.ok(
           current.started_at_ms - previous.started_at_ms < 2000,
-          'Measured warm samples must run back to back instead of aging out the worker.',
+          'Measured first-call samples must run back to back.',
         );
       }
     }
 
     return {
       grouped_requests: fixture.observations.groupedRequests.length,
-      keepalive_requests: fixture.observations.keepaliveRequests,
+      reset_network_requests: 0,
       scenario_samples: summary.scenarios.map((scenario) => scenario.latencies_ms.length),
     };
   } finally {
@@ -208,7 +213,6 @@ async function verifyFailedSamplesRemainVisible() {
     const port = await listen(fixture.server);
     const result = await runNode(measureArgs(port, [
       '--rate-window-reset-ms', '0',
-      '--keepalive-interval-ms', '0',
     ]));
     assert.equal(result.exitCode, 1);
     const summary = parseSummary(result.stdout);
@@ -216,7 +220,6 @@ async function verifyFailedSamplesRemainVisible() {
     assert.equal(summary.scenarios.length, 1);
     assert.equal(summary.scenarios[0].id, 'one_slot');
     assert.equal(summary.scenarios[0].status, 'blocked');
-    assert.equal(summary.scenarios[0].warmup_calls, 1);
     assert.equal(summary.scenarios[0].latencies_ms.length, 3);
     assert.ok(summary.scenarios[0].p95_ms > 3000);
     assert.match(summary.error.message, /one_slot p95 .* exceeds 3000 ms/);
@@ -233,11 +236,11 @@ async function verifyFailedSamplesRemainVisible() {
   }
 }
 
-const warmSchedule = await verifyWarmSchedule();
+const firstCallSchedule = await verifyFirstCallSchedule();
 const failureEvidence = await verifyFailedSamplesRemainVisible();
 
 console.log(JSON.stringify({
   status: 'ok',
-  warm_schedule: warmSchedule,
+  first_call_schedule: firstCallSchedule,
   failure_evidence: failureEvidence,
 }, null, 2));

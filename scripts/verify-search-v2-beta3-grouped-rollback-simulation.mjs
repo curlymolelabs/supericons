@@ -12,16 +12,16 @@ import { dirname, join, resolve } from 'node:path';
 
 const repoRoot = resolve('.');
 const manifestPath = resolve(
-  'docs/si-v2/search/reviews/search-v2-beta3-grouped-release-manifest-2026-07-21.json',
+  'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json',
 );
 const runnerPath = resolve('scripts/run-search-v2-beta3-grouped-release.ps1');
-const workspace = resolve('.tmp/search-v2-beta3-grouped-rollback-simulation');
+const workspace = resolve('.tmp/search-v2-beta3-shared-grouped-rollback-simulation');
 const binDir = join(workspace, 'bin');
 const evidencePaths = [
-  resolve('references/verification/search-v2-beta3-grouped-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-fr47-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-grouped-release-completion-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-grouped-release-rollback-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'),
 ];
 const rollbackEvidencePath = evidencePaths[3];
 const realNode = process.execPath;
@@ -81,11 +81,83 @@ writeText(join(binDir, 'npx.cmd'), [
 
 writeText(join(binDir, 'node-wrapper.mjs'), `
 import { spawnSync } from 'node:child_process';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
 
 const realNode = process.env.BETA3_REAL_NODE;
 const args = process.argv.slice(2);
 const scriptName = basename(args[0] || '');
+const statePath = process.env.BETA3_SHIM_STATE_PATH;
+
+function readState() {
+  return existsSync(statePath)
+    ? JSON.parse(readFileSync(statePath, 'utf8'))
+    : {
+        deployed: false,
+        grouped_list_count: 0,
+        delete_count: 0,
+        database_present: false,
+        database_apply_count: 0,
+        database_rollback_count: 0,
+      };
+}
+
+function writeState(state) {
+  writeFileSync(statePath, JSON.stringify(state, null, 2) + '\\n', 'utf8');
+}
+
+if (scriptName === 'manage-search-v2-shared-candidate-rpc.mjs') {
+  const state = readState();
+  const actionIndex = args.indexOf('--action');
+  const action = actionIndex >= 0 ? args[actionIndex + 1] : '';
+  const definitionSha256 = 'a'.repeat(64);
+  const definitionMd5 = 'b'.repeat(32);
+  if (action === 'preflight') {
+    if (state.database_present) process.exit(2);
+    console.log(JSON.stringify({ status: 'ok' }));
+    process.exit(0);
+  }
+  if (action === 'apply') {
+    if (state.database_present) process.exit(2);
+    state.database_present = true;
+    state.database_apply_count += 1;
+    writeState(state);
+    console.log(JSON.stringify({
+      status: 'applied_and_verified',
+      function_definition_sha256: definitionSha256,
+      function_definition_md5: definitionMd5,
+    }));
+    process.exit(0);
+  }
+  if (action === 'inspect') {
+    console.log(JSON.stringify(state.database_present
+      ? {
+          status: 'present_and_verified',
+          function_definition_sha256: definitionSha256,
+          function_definition_md5: definitionMd5,
+        }
+      : { status: 'absent' }));
+    process.exit(0);
+  }
+  if (action === 'verify') {
+    if (!state.database_present) process.exit(2);
+    console.log(JSON.stringify({
+      status: 'present_and_verified',
+      function_definition_sha256: definitionSha256,
+      function_definition_md5: definitionMd5,
+    }));
+    process.exit(0);
+  }
+  if (action === 'rollback') {
+    if (!state.database_present) process.exit(2);
+    state.database_present = false;
+    state.database_rollback_count += 1;
+    writeState(state);
+    console.log(JSON.stringify({ status: 'removed_and_verified' }));
+    process.exit(0);
+  }
+  process.exit(3);
+}
 
 if (scriptName === 'verify-search-v2-beta3-grouped-live.mjs') {
   console.error('Simulated grouped live-gate failure.');
@@ -117,7 +189,14 @@ const args = process.argv.slice(2);
 const command = args.slice(0, 3).join(' ');
 const state = existsSync(statePath)
   ? JSON.parse(readFileSync(statePath, 'utf8'))
-  : { deployed: false, grouped_list_count: 0, delete_count: 0 };
+  : {
+      deployed: false,
+      grouped_list_count: 0,
+      delete_count: 0,
+      database_present: false,
+      database_apply_count: 0,
+      database_rollback_count: 0,
+    };
 
 function save() {
   writeFileSync(statePath, JSON.stringify(state, null, 2) + '\\n', 'utf8');
@@ -197,8 +276,12 @@ function parseLog(path) {
 
 function runScenario({
   id,
-  expectedStatus,
+  expectedOverallStatus,
+  expectedEndpointStatus,
+  expectedDatabaseStatus,
   expectedDeleteCount,
+  expectedDatabasePresent,
+  expectedDatabaseRollbackCount,
   tarDirectory = null,
 }) {
   const scenarioDir = join(workspace, id);
@@ -250,40 +333,51 @@ function runScenario({
   const state = JSON.parse(readFileSync(statePath, 'utf8'));
   const commands = parseLog(logPath);
 
-  assert.equal(rollback.status, expectedStatus);
+  assert.equal(rollback.status, expectedOverallStatus);
+  assert.equal(rollback.endpoint.status, expectedEndpointStatus);
+  assert.equal(rollback.shared_candidate_rpc.status, expectedDatabaseStatus);
   assert.equal(rollback.stable_function_mutated, false);
   assert.equal(state.delete_count, expectedDeleteCount);
+  assert.equal(state.database_present, expectedDatabasePresent);
+  assert.equal(state.database_apply_count, 1);
+  assert.equal(state.database_rollback_count, expectedDatabaseRollbackCount);
   assert.equal(
     commands.filter((entry) => entry.event === 'delete').length,
     expectedDeleteCount,
   );
 
-  if (expectedStatus === 'blocked_unverified_function') {
-    assert.equal(rollback.expected_function_id, null);
+  if (expectedEndpointStatus === 'blocked_unverified_function') {
+    assert.equal(rollback.endpoint.expected_function_id, null);
     assert.equal(
-      rollback.observed_function_id,
+      rollback.endpoint.observed_function_id,
       '11111111-1111-4111-8111-111111111111',
     );
   }
-  if (expectedStatus === 'blocked_mismatched_function') {
+  if (expectedEndpointStatus === 'blocked_mismatched_function') {
     assert.equal(
-      rollback.expected_function_id,
+      rollback.endpoint.expected_function_id,
       '11111111-1111-4111-8111-111111111111',
     );
     assert.equal(
-      rollback.observed_function_id,
+      rollback.endpoint.observed_function_id,
       '22222222-2222-4222-8222-222222222222',
     );
   }
-  if (expectedStatus === 'removed') {
-    assert.equal(rollback.expected_function_id, rollback.observed_function_id);
+  if (expectedEndpointStatus === 'removed') {
+    assert.equal(
+      rollback.endpoint.expected_function_id,
+      rollback.endpoint.observed_function_id,
+    );
     assert.equal(state.deployed, false);
   }
 
   removeGeneratedEvidence();
   return {
     status: rollback.status,
+    endpoint_status: rollback.endpoint.status,
+    database_status: rollback.shared_candidate_rpc.status,
     delete_commands: expectedDeleteCount,
+    database_rollback_mutations: expectedDatabaseRollbackCount,
   };
 }
 
@@ -292,33 +386,52 @@ try {
   results = {
     missing_id: runScenario({
       id: 'missing_id',
-      expectedStatus: 'blocked_unverified_function',
+      expectedOverallStatus: 'blocked',
+      expectedEndpointStatus: 'blocked_unverified_function',
+      expectedDatabaseStatus: 'retained_for_endpoint_dependency',
       expectedDeleteCount: 0,
+      expectedDatabasePresent: true,
+      expectedDatabaseRollbackCount: 0,
     }),
     mismatch: runScenario({
       id: 'mismatch',
-      expectedStatus: 'blocked_mismatched_function',
+      expectedOverallStatus: 'blocked',
+      expectedEndpointStatus: 'blocked_mismatched_function',
+      expectedDatabaseStatus: 'retained_for_endpoint_dependency',
       expectedDeleteCount: 0,
+      expectedDatabasePresent: true,
+      expectedDatabaseRollbackCount: 0,
     }),
     match: runScenario({
       id: 'match_bsdtar',
-      expectedStatus: 'removed',
+      expectedOverallStatus: 'removed',
+      expectedEndpointStatus: 'removed',
+      expectedDatabaseStatus: 'removed',
       expectedDeleteCount: 1,
+      expectedDatabasePresent: false,
+      expectedDatabaseRollbackCount: 1,
       tarDirectory: windowsSystemDirectory,
     }),
     ...(gitGnuTarPath
       ? {
           match_gnu_tar: runScenario({
             id: 'match_gnu_tar',
-            expectedStatus: 'removed',
+            expectedOverallStatus: 'removed',
+            expectedEndpointStatus: 'removed',
+            expectedDatabaseStatus: 'removed',
             expectedDeleteCount: 1,
+            expectedDatabasePresent: false,
+            expectedDatabaseRollbackCount: 1,
             tarDirectory: dirname(gitGnuTarPath),
           }),
         }
       : {
           match_gnu_tar: {
             status: 'not_available',
+            endpoint_status: 'not_available',
+            database_status: 'not_available',
             delete_commands: 0,
+            database_rollback_mutations: 0,
           },
         }),
   };
@@ -331,6 +444,11 @@ console.log(JSON.stringify({
   status: 'ok',
   scenarios: results,
   stable_function_mutations: 0,
+  shared_candidate_database_mutations: {
+    apply_per_scenario: 1,
+    rollback_on_exact_endpoint_match: 1,
+    rollback_when_endpoint_identity_unverified: 0,
+  },
   archive_tools: {
     bsdtar: windowsSystemDirectory ? 'tested' : 'not_available',
     gnu_tar: gitGnuTarPath ? 'tested' : 'not_available',

@@ -57,6 +57,13 @@ function assertGroupedResponse(payload, expectedCount) {
   assert.equal(payload?.schema_version, 1);
   assert.equal(payload?.response_count, expectedCount);
   assert.equal(payload?.responses?.length, expectedCount);
+  assert.equal(payload?.measurement_timing?.schema_version, 2);
+  assert.equal(payload?.measurement_timing?.event, 'search_stage_timing');
+  assert.equal(payload?.measurement_timing?.outcome, 'results');
+  assert.ok(Number.isFinite(payload?.measurement_timing?.total_ms));
+  assert.ok(Number.isFinite(payload?.measurement_timing?.stages_ms?.candidate_search));
+  assert.ok(Number.isFinite(payload?.measurement_timing?.stages_ms?.audit_write));
+  assert.ok(payload?.measurement_timing?.counts?.query_variants > 0);
   for (const [index, entry] of payload.responses.entries()) {
     assert.equal(entry.index, index);
     assert.equal(entry.status, 200);
@@ -91,6 +98,7 @@ try {
   summary.checks.direct_grouped_http = {
     status: 'ok',
     response_count: direct.payload.response_count,
+    measurement_timing: direct.payload.measurement_timing,
   };
 
   process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL = groupedUrl;

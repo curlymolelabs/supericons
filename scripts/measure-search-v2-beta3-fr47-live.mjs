@@ -35,13 +35,10 @@ const stableFallbackSentinelUrl =
 const outputPath = readArgument('--output');
 const samples = Number(readArgument('--samples', '3'));
 const rateWindowResetMs = Number(readArgument('--rate-window-reset-ms', '65000'));
-const keepaliveIntervalMs = Number(readArgument('--keepalive-interval-ms', '5000'));
 const timeoutMs = Number(readArgument('--timeout-ms', '20000'));
 
 assert.ok(Number.isInteger(samples) && samples >= 3 && samples <= 10);
 assert.ok(Number.isInteger(rateWindowResetMs) && rateWindowResetMs >= 0);
-assert.ok(Number.isInteger(keepaliveIntervalMs) && keepaliveIntervalMs >= 0);
-assert.ok(rateWindowResetMs === 0 || keepaliveIntervalMs > 0);
 assert.ok(Number.isInteger(timeoutMs) && timeoutMs === 20000);
 
 const sdkClientRoot = join(
@@ -160,40 +157,26 @@ const summary = {
   samples_per_english_scenario: samples,
   timeout_ms: timeoutMs,
   rate_window_reset_ms: rateWindowResetMs,
-  keepalive_interval_ms: keepaliveIntervalMs,
-  warm_measurement_strategy: 'options_keepalive_then_back_to_back_samples',
+  measurement_strategy: 'rate_window_reset_then_back_to_back_first_call_samples',
+  worker_affinity_assumed: false,
   scenarios: [],
 };
+let failure = null;
 
-async function keepGroupedWorkerWarmThroughRateWindow() {
+async function resetRateWindow() {
   if (rateWindowResetMs === 0) {
     return {
       duration_ms: 0,
-      keepalive_requests: 0,
+      network_requests: 0,
     };
   }
 
   const startedAt = Date.now();
-  let keepaliveRequests = 0;
-  while (Date.now() - startedAt < rateWindowResetMs) {
-    const response = await fetch(groupedUrl, {
-      method: 'OPTIONS',
-      signal: AbortSignal.timeout(Math.min(timeoutMs, 5000)),
-    });
-    assert.equal(response.ok, true, `Grouped keepalive returned HTTP ${response.status}.`);
-    keepaliveRequests += 1;
-
-    const remaining = rateWindowResetMs - (Date.now() - startedAt);
-    if (remaining <= 0) break;
-    await new Promise((resolveWait) => setTimeout(
-      resolveWait,
-      Math.min(keepaliveIntervalMs, remaining),
-    ));
-  }
+  await new Promise((resolveWait) => setTimeout(resolveWait, rateWindowResetMs));
 
   return {
     duration_ms: Date.now() - startedAt,
-    keepalive_requests: keepaliveRequests,
+    network_requests: 0,
   };
 }
 
@@ -246,11 +229,9 @@ try {
       slot_count: scenario.slots.length,
       locale: scenario.locale,
       samples: scenario.measuredSamples,
-      warmup_calls: 0,
-      warmup_latency_ms: null,
-      pre_warmup_rate_window_reset: null,
       pre_measurement_rate_window_reset: null,
       measured_back_to_back: true,
+      worker_affinity_assumed: false,
       latencies_ms: [],
       p95_ms: null,
       maximum_ms: null,
@@ -261,17 +242,8 @@ try {
     };
     summary.scenarios.push(scenarioSummary);
 
-    scenarioSummary.pre_warmup_rate_window_reset =
-      await keepGroupedWorkerWarmThroughRateWindow();
-    try {
-      scenarioSummary.warmup_latency_ms = await runTimedRecommendation(scenario);
-    } catch (error) {
-      if (error?.code === 'fr47_timeout') scenarioSummary.timeouts += 1;
-      throw error;
-    }
-    scenarioSummary.warmup_calls = 1;
     scenarioSummary.pre_measurement_rate_window_reset =
-      await keepGroupedWorkerWarmThroughRateWindow();
+      await resetRateWindow();
     for (let index = 0; index < scenario.measuredSamples; index += 1) {
       try {
         scenarioSummary.latencies_ms.push(await runTimedRecommendation(scenario));
@@ -301,10 +273,15 @@ try {
     message: error?.message || String(error),
   };
   summary.finished_at = new Date().toISOString();
-  throw error;
+  failure = error;
 } finally {
   await client.close().catch(() => {});
   const serialized = `${JSON.stringify(summary, null, 2)}\n`;
   if (outputPath) writeFileSync(resolve(outputPath), serialized, 'utf8');
   console.log(serialized.trim());
+}
+
+if (failure) {
+  console.error(failure?.stack || failure?.message || String(failure));
+  process.exitCode = 1;
 }
