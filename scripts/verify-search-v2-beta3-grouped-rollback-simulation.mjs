@@ -236,7 +236,15 @@ function runScenario({
     0,
     `${id} simulation unexpectedly completed the release.`,
   );
-  assert.equal(existsSync(rollbackEvidencePath), true);
+  assert.equal(
+    existsSync(rollbackEvidencePath),
+    true,
+    [
+      `${id} simulation produced no rollback evidence.`,
+      `stdout:\n${result.stdout || '(empty)'}`,
+      `stderr:\n${result.stderr || '(empty)'}`,
+    ].join('\n'),
+  );
 
   const rollback = JSON.parse(readFileSync(rollbackEvidencePath, 'utf8'));
   const state = JSON.parse(readFileSync(statePath, 'utf8'));
