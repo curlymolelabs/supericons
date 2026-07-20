@@ -42,8 +42,8 @@ Calibration rule from `D-028`: the anonymous allowance targets at or above measu
 | tier | daily hosted search allowance | burst | basis |
 | --- | --- | --- | --- |
 | Anonymous (keyless) | 300 per client per day | keep existing 120 per minute | 1.5x measured public p99 (198); affects under 1% of observed client-days |
-| Registered free (self-service key; includes pack purchasers without Pro) | 1,500 per client per day | 120 per minute | covers measured p99.9 (879) and the observed maximum (1,078); every legitimate client observed in 30 days fits |
-| Pro (active subscription) | 5,000 per client per day, fair use | 120 per minute | headroom well above any observed behavior; labeled fair use with a contact path; recurring hosted compute matches the recurring subscription |
+| Registered free (self-service key; includes pack purchasers without Pro) | 1,500 per account per UTC day | 120 per minute | covers measured p99.9 (879) and the observed maximum (1,078); every legitimate client observed in 30 days fits |
+| Pro (active subscription) | 5,000 per account per UTC day, fair use | 120 per minute | headroom well above any observed behavior; labeled fair use with a contact path; recurring hosted compute matches the recurring subscription |
 
 Reset: daily at 00:00 UTC. The limit response must state the reset time and a retry-after value, and may promise only benefits that are live; the registration URL joins the response only once self-service free keys exist.
 
