@@ -66,6 +66,7 @@ const CONCEPTS = [
   'vpn',
   'llm',
   'prompt',
+  'kubernetes',
   'workflow',
 ];
 
@@ -81,6 +82,10 @@ const { icons } = await readJson('public/icon-index.json');
 const synonyms = await readJson('public/synonyms.json');
 const cjkTerms = (await readJson('data/i18n/cjk-search-terms.json')).terms;
 const fixtures = [];
+const englishResultsByConcept = new Map(CONCEPTS.map((concept) => [
+  concept,
+  searchIcons(concept, icons, synonyms, { limit: 8 }).map(iconId),
+]));
 
 for (const locale of LOCALES) {
   for (const concept of CONCEPTS) {
@@ -88,7 +93,7 @@ for (const locale of LOCALES) {
     if (!record) throw new Error(`missing term for ${locale}:${concept}`);
     const query = record.term;
     const localizedResults = searchIcons(query, icons, synonyms, { locale, limit: 8 }).map(iconId);
-    const englishResults = searchIcons(concept, icons, synonyms, { limit: 8 }).map(iconId);
+    const englishResults = englishResultsByConcept.get(concept) || [];
     const overlap = localizedResults.filter((id) => englishResults.includes(id));
     const requiredIncluded = (overlap.length >= 2 ? overlap : localizedResults).slice(0, 2);
     if (requiredIncluded.length === 0) throw new Error(`no search results for ${locale}:${concept}:${query}`);

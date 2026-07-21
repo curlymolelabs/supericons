@@ -98,7 +98,7 @@ const expressiveCases = [
     id: 'chill',
     query: 'chill',
     group: 'chill_expression',
-    acceptable: /relax|coffee|weather.snow|smile|sofa/,
+    acceptable: /relax|coffee|weather.snow|sun.snow|smile|sofa/,
   },
   {
     id: 'doomscrolling',

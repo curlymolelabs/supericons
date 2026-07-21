@@ -4,7 +4,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
 const baseUrl = String(process.argv[2] || 'https://mcp.supericons.dev').replace(/\/+$/, '');
-const expectedVersion = String(process.argv[3] || '0.4.19');
+const expectedVersion = String(process.argv[3] || '0.4.20');
 
 function parsePayload(result) {
   if (result?.structuredContent) return result.structuredContent;

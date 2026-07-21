@@ -63469,6 +63469,127 @@
       "quality_score": 0.86,
       "quality_warnings": [],
       "gate": "auto_accept"
+    },
+    {
+      "locale": "zh-Hans",
+      "concept": "kubernetes",
+      "term": "容器编排",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "zh-Hant",
+      "concept": "kubernetes",
+      "term": "容器編排",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "ja",
+      "concept": "kubernetes",
+      "term": "クバネティス",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "ko",
+      "concept": "kubernetes",
+      "term": "쿠버네티스",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "es",
+      "concept": "kubernetes",
+      "term": "Kubernetes",
+      "variants": ["K8s", "orquestación de contenedores"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "de",
+      "concept": "kubernetes",
+      "term": "Kubernetes",
+      "variants": ["K8s", "Container-Orchestrierung"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "pt",
+      "concept": "kubernetes",
+      "term": "Kubernetes",
+      "variants": ["K8s", "orquestração de contêineres"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "ar",
+      "concept": "kubernetes",
+      "term": "كوبرنيتس",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "hi",
+      "concept": "kubernetes",
+      "term": "कुबेरनेट्स",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "vi",
+      "concept": "kubernetes",
+      "term": "Kubernetes",
+      "variants": ["K8s", "điều phối vùng chứa"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "th",
+      "concept": "kubernetes",
+      "term": "คูเบอร์เนทีส",
+      "variants": ["Kubernetes", "K8s"],
+      "maps_to": ["kubernetes", "k8s", "container orchestration", "cluster", "pod"],
+      "source_confidence": 0.86,
+      "quality_score": 0.86,
+      "quality_warnings": [],
+      "gate": "auto_accept"
     }
   ]
 }

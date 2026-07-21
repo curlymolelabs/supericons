@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.4.20 - 2026-07-22
+
+### Improved
+
+- expanded broad English meaning coverage for quality, emotion, status, people, communication, media, travel, nature, accessibility, and common app concepts
+- expanded the same reviewed meaning groups across 11 maintained languages, with traffic and zero-result evidence guiding language priority
+- made localized intent matches use the same deterministic ranking path as English queries
+- removed accidental substring matches such as `win` inside `window`, while preserving reviewed aliases and safe word forms
+- kept unsupported words honest instead of filling results with unrelated icons
+- reduced repeated full-index scans with a bounded in-process candidate index
+
+### Fixed
+
+- fixed zero results for broad searches such as `amazing`, `sports`, Japanese `スポーツ`, and Spanish `deportes`
+- restored Kubernetes search terms in every maintained locale
+- narrowed explicit brand and logo searches to the requested identity instead of unrelated filler
+
 ## 0.4.19 - 2026-07-22
 
 ### Added

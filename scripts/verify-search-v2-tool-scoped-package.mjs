@@ -89,7 +89,7 @@ try {
     assert.equal(existsSync(join(installedRoot, required)), true, `Package is missing ${required}.`);
   }
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.19');
+  assert.equal(installedPackage.version, '0.4.20');
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
   assert.equal(installedServer.version, installedPackage.version);
   assert.equal(installedServer.packages[0].version, installedPackage.version);

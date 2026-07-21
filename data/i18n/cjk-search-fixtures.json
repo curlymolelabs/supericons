@@ -6,8 +6,8 @@
       "query": "搜索",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -69,8 +69,8 @@
       "query": "数据库",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -195,8 +195,8 @@
       "query": "变焦",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -232,7 +232,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -240,8 +240,8 @@
       "query": "火箭",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -276,8 +276,8 @@
       "query": "商店",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -295,7 +295,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -304,7 +304,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -348,8 +348,8 @@
       "query": "应用接口",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -357,8 +357,8 @@
       "query": "版本控制",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -393,8 +393,8 @@
       "query": "静音",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -403,7 +403,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -411,8 +411,8 @@
       "query": "支持",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -447,8 +447,8 @@
       "query": "医生",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -483,8 +483,8 @@
       "query": "虚拟专用网络",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -492,8 +492,8 @@
       "query": "大语言模型",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -501,8 +501,17 @@
       "query": "提示词",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "query": "容器编排",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -510,8 +519,8 @@
       "query": "工作流程",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -519,8 +528,8 @@
       "query": "搜尋",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -582,8 +591,8 @@
       "query": "資料庫",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -708,8 +717,8 @@
       "query": "變焦",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -745,7 +754,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -753,8 +762,8 @@
       "query": "火箭",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -789,8 +798,8 @@
       "query": "商店",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -808,7 +817,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -817,7 +826,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -861,8 +870,8 @@
       "query": "應用介面",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -870,8 +879,8 @@
       "query": "版本控制",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -906,8 +915,8 @@
       "query": "靜音",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -916,7 +925,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -924,8 +933,8 @@
       "query": "支援",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -960,8 +969,8 @@
       "query": "醫生",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -996,8 +1005,8 @@
       "query": "虛擬私人網路",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -1005,8 +1014,8 @@
       "query": "大型語言模型",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -1014,8 +1023,17 @@
       "query": "提示詞",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "query": "容器編排",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -1023,8 +1041,8 @@
       "query": "工作流程",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -1032,8 +1050,8 @@
       "query": "検索",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -1095,8 +1113,8 @@
       "query": "データベース",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -1221,8 +1239,8 @@
       "query": "ズーム",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -1258,7 +1276,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -1266,8 +1284,8 @@
       "query": "ロケット",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -1302,8 +1320,8 @@
       "query": "店",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -1321,7 +1339,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -1330,7 +1348,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -1374,8 +1392,8 @@
       "query": "アプリ連携",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -1383,8 +1401,8 @@
       "query": "バージョン管理",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -1419,8 +1437,8 @@
       "query": "ミュート",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -1429,7 +1447,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -1437,8 +1455,8 @@
       "query": "サポート",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -1473,8 +1491,8 @@
       "query": "医者",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -1509,8 +1527,8 @@
       "query": "仮想専用線",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -1518,8 +1536,8 @@
       "query": "大規模言語モデル",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -1527,8 +1545,17 @@
       "query": "プロンプト",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "ja",
+      "query": "クバネティス",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -1536,8 +1563,8 @@
       "query": "ワークフロー",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -1545,8 +1572,8 @@
       "query": "검색",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -1608,8 +1635,8 @@
       "query": "데이터베이스",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -1734,8 +1761,8 @@
       "query": "줌",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -1771,7 +1798,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -1779,8 +1806,8 @@
       "query": "로켓",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -1815,8 +1842,8 @@
       "query": "가게",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -1834,7 +1861,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -1843,7 +1870,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -1887,8 +1914,8 @@
       "query": "응용 프로그램 인터페이스",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -1896,8 +1923,8 @@
       "query": "버전 관리",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -1932,8 +1959,8 @@
       "query": "음소거",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -1942,7 +1969,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -1951,7 +1978,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:support",
-        "material:browser_not_supported"
+        "material:contact_support"
       ]
     },
     {
@@ -1986,8 +2013,8 @@
       "query": "의사",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -2022,8 +2049,8 @@
       "query": "가상 사설망",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -2031,8 +2058,8 @@
       "query": "대규모 언어 모델",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -2040,8 +2067,17 @@
       "query": "프롬프트",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "ko",
+      "query": "쿠버네티스",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -2049,8 +2085,8 @@
       "query": "작업 흐름",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -2058,8 +2094,8 @@
       "query": "buscar",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -2121,8 +2157,8 @@
       "query": "base de datos",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -2247,8 +2283,8 @@
       "query": "ampliar",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -2283,8 +2319,8 @@
       "query": "robot",
       "topN": 8,
       "requiredIncluded": [
-        "material:model_training",
-        "lucide:brain-circuit"
+        "tabler:ai",
+        "mingcute:ai_line"
       ]
     },
     {
@@ -2292,8 +2328,8 @@
       "query": "cohete",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -2328,8 +2364,8 @@
       "query": "tienda",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -2347,7 +2383,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -2356,7 +2392,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -2400,8 +2436,8 @@
       "query": "api",
       "topN": 8,
       "requiredIncluded": [
-        "material:webhook",
-        "material:alt_route"
+        "material:api",
+        "tabler:api-app-off"
       ]
     },
     {
@@ -2409,8 +2445,8 @@
       "query": "git",
       "topN": 8,
       "requiredIncluded": [
-        "material:bug_report",
-        "material:call_merge"
+        "si:agent-commit",
+        "si:agent-pr"
       ]
     },
     {
@@ -2445,8 +2481,8 @@
       "query": "silenciar",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -2455,7 +2491,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -2463,8 +2499,8 @@
       "query": "soporte",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -2499,8 +2535,8 @@
       "query": "doctor",
       "topN": 8,
       "requiredIncluded": [
-        "material:medical_information",
-        "material:medical_mask"
+        "ionicons:medical-outline",
+        "lucide:briefcase-medical"
       ]
     },
     {
@@ -2536,7 +2572,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:vpn_key",
-        "tabler:brand-nord-vpn"
+        "material:vpn_key_alert"
       ]
     },
     {
@@ -2544,8 +2580,8 @@
       "query": "modelo de lenguaje grande",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -2553,8 +2589,17 @@
       "query": "indicación",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "es",
+      "query": "Kubernetes",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "lucide:container"
       ]
     },
     {
@@ -2562,8 +2607,8 @@
       "query": "flujo de trabajo",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -2571,8 +2616,8 @@
       "query": "suche",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -2634,8 +2679,8 @@
       "query": "datenbank",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -2643,8 +2688,8 @@
       "query": "code",
       "topN": 8,
       "requiredIncluded": [
-        "material:audio_description",
-        "material:barcode"
+        "material:code",
+        "material:code_blocks"
       ]
     },
     {
@@ -2761,7 +2806,7 @@
       "topN": 8,
       "requiredIncluded": [
         "tabler:zoom",
-        "simpleicons:zoom"
+        "material:zoom_in"
       ]
     },
     {
@@ -2797,7 +2842,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -2805,8 +2850,8 @@
       "query": "rakete",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -2841,8 +2886,8 @@
       "query": "laden",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -2860,7 +2905,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -2868,8 +2913,8 @@
       "query": "online",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:network",
-        "material:bluetooth_connected"
+        "material:bluetooth_connected",
+        "material:cast_connected"
       ]
     },
     {
@@ -2913,8 +2958,8 @@
       "query": "api",
       "topN": 8,
       "requiredIncluded": [
-        "material:webhook",
-        "material:alt_route"
+        "material:api",
+        "tabler:api-app-off"
       ]
     },
     {
@@ -2922,8 +2967,8 @@
       "query": "git",
       "topN": 8,
       "requiredIncluded": [
-        "material:bug_report",
-        "material:call_merge"
+        "si:agent-commit",
+        "si:agent-pr"
       ]
     },
     {
@@ -2958,8 +3003,8 @@
       "query": "stumm",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -2968,7 +3013,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -2976,8 +3021,8 @@
       "query": "support",
       "topN": 8,
       "requiredIncluded": [
-        "material:airplane_ticket",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -3003,8 +3048,8 @@
       "query": "laptop",
       "topN": 8,
       "requiredIncluded": [
-        "material:computer",
-        "material:computer_arrow_up"
+        "material:laptop",
+        "material:laptop_car"
       ]
     },
     {
@@ -3012,8 +3057,8 @@
       "query": "arzt",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -3021,8 +3066,8 @@
       "query": "restaurant",
       "topN": 8,
       "requiredIncluded": [
-        "material:android_cell_4_bar",
-        "material:android_cell_4_bar_alert"
+        "material:restaurant",
+        "material:restaurant_menu"
       ]
     },
     {
@@ -3039,8 +3084,8 @@
       "query": "firewall",
       "topN": 8,
       "requiredIncluded": [
-        "material:app_blocking",
-        "material:block"
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
       ]
     },
     {
@@ -3049,7 +3094,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:vpn_key",
-        "tabler:brand-nord-vpn"
+        "material:vpn_key_alert"
       ]
     },
     {
@@ -3057,8 +3102,8 @@
       "query": "großes sprachmodell",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -3066,8 +3111,17 @@
       "query": "eingabeaufforderung",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "de",
+      "query": "Kubernetes",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "lucide:container"
       ]
     },
     {
@@ -3075,8 +3129,8 @@
       "query": "arbeitsablauf",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -3084,8 +3138,8 @@
       "query": "pesquisa",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -3102,8 +3156,8 @@
       "query": "menu",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:hamburger",
-        "phosphor:hamburger"
+        "material:accessible_menu",
+        "material:menu"
       ]
     },
     {
@@ -3147,8 +3201,8 @@
       "query": "banco de dados",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -3273,8 +3327,8 @@
       "query": "ampliar",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -3310,7 +3364,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -3318,8 +3372,8 @@
       "query": "foguete",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -3354,8 +3408,8 @@
       "query": "loja",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -3373,7 +3427,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -3381,8 +3435,8 @@
       "query": "online",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:network",
-        "material:bluetooth_connected"
+        "material:bluetooth_connected",
+        "material:cast_connected"
       ]
     },
     {
@@ -3426,8 +3480,8 @@
       "query": "api",
       "topN": 8,
       "requiredIncluded": [
-        "material:webhook",
-        "material:alt_route"
+        "material:api",
+        "tabler:api-app-off"
       ]
     },
     {
@@ -3435,8 +3489,8 @@
       "query": "git",
       "topN": 8,
       "requiredIncluded": [
-        "material:bug_report",
-        "material:call_merge"
+        "si:agent-commit",
+        "si:agent-pr"
       ]
     },
     {
@@ -3471,8 +3525,8 @@
       "query": "mudo",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -3481,7 +3535,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -3489,8 +3543,8 @@
       "query": "suporte",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -3525,8 +3579,8 @@
       "query": "médico",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "ionicons:fitness-outline",
+        "lucide:dumbbell"
       ]
     },
     {
@@ -3552,8 +3606,8 @@
       "query": "firewall",
       "topN": 8,
       "requiredIncluded": [
-        "material:app_blocking",
-        "material:block"
+        "tabler:firewall-check",
+        "tabler:firewall-flame"
       ]
     },
     {
@@ -3562,7 +3616,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:vpn_key",
-        "tabler:brand-nord-vpn"
+        "material:vpn_key_alert"
       ]
     },
     {
@@ -3570,8 +3624,8 @@
       "query": "modelo de linguagem grande",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -3579,8 +3633,17 @@
       "query": "prompt",
       "topN": 8,
       "requiredIncluded": [
-        "material:arrows_input",
-        "material:contextual_token"
+        "si:prompt-field",
+        "material:prompt_suggestion"
+      ]
+    },
+    {
+      "locale": "pt",
+      "query": "Kubernetes",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "lucide:container"
       ]
     },
     {
@@ -3588,8 +3651,8 @@
       "query": "fluxo de trabalho",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -3597,8 +3660,8 @@
       "query": "بحث",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -3660,8 +3723,8 @@
       "query": "قاعدة بيانات",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -3786,8 +3849,8 @@
       "query": "تكبير",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -3823,7 +3886,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -3831,8 +3894,8 @@
       "query": "صاروخ",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -3867,8 +3930,8 @@
       "query": "محل",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -3886,7 +3949,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -3895,7 +3958,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -3939,8 +4002,8 @@
       "query": "واجهة برمجة التطبيقات",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -3948,8 +4011,8 @@
       "query": "جيت",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -3984,8 +4047,8 @@
       "query": "صامت",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -3994,7 +4057,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -4002,8 +4065,8 @@
       "query": "دعم",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -4038,8 +4101,8 @@
       "query": "طبيب",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -4074,8 +4137,8 @@
       "query": "شبكة خاصة افتراضية",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -4083,8 +4146,8 @@
       "query": "نموذج لغة كبير",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -4092,8 +4155,17 @@
       "query": "مطالبة",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "ar",
+      "query": "كوبرنيتس",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -4101,8 +4173,8 @@
       "query": "سير العمل",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -4110,8 +4182,8 @@
       "query": "खोज",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -4173,8 +4245,8 @@
       "query": "डेटाबेस",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -4299,8 +4371,8 @@
       "query": "ज़ूम",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -4336,7 +4408,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -4344,8 +4416,8 @@
       "query": "राकेट",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -4380,8 +4452,8 @@
       "query": "इकट्ठा करना",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -4399,7 +4471,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -4408,7 +4480,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -4452,8 +4524,8 @@
       "query": "एपीआई",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -4461,8 +4533,8 @@
       "query": "गिट",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -4497,8 +4569,8 @@
       "query": "आवाज़ बंद करना",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -4507,7 +4579,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -4515,8 +4587,8 @@
       "query": "सहायता",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -4551,8 +4623,8 @@
       "query": "चिकित्सक",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "mingcute:surprise_line",
+        "lucide:circle-alert"
       ]
     },
     {
@@ -4587,8 +4659,8 @@
       "query": "वीपीएन",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -4596,8 +4668,8 @@
       "query": "बड़ा भाषा मॉडल",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -4605,8 +4677,17 @@
       "query": "प्रॉम्प्ट",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "material:check",
+        "tabler:trophy"
+      ]
+    },
+    {
+      "locale": "hi",
+      "query": "कुबेरनेट्स",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -4614,8 +4695,8 @@
       "query": "कार्यप्रवाह",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -4623,8 +4704,8 @@
       "query": "tìm kiếm",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -4641,8 +4722,8 @@
       "query": "menu",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:hamburger",
-        "phosphor:hamburger"
+        "material:accessible_menu",
+        "material:menu"
       ]
     },
     {
@@ -4686,8 +4767,8 @@
       "query": "cơ sở dữ liệu",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -4812,8 +4893,8 @@
       "query": "phóng",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -4849,7 +4930,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -4857,8 +4938,8 @@
       "query": "tên lửa",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -4893,8 +4974,8 @@
       "query": "cửa hàng",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -4912,7 +4993,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -4921,7 +5002,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -4965,8 +5046,8 @@
       "query": "API",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -4974,8 +5055,8 @@
       "query": "git",
       "topN": 8,
       "requiredIncluded": [
-        "material:bug_report",
-        "material:call_merge"
+        "si:agent-commit",
+        "si:agent-pr"
       ]
     },
     {
@@ -5010,8 +5091,8 @@
       "query": "tắt tiếng",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -5020,7 +5101,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -5028,8 +5109,8 @@
       "query": "hỗ trợ biểu tượng support",
       "topN": 8,
       "requiredIncluded": [
-        "material:support",
-        "material:browser_not_supported"
+        "material:help",
+        "phosphor:question"
       ]
     },
     {
@@ -5064,8 +5145,8 @@
       "query": "bác sĩ",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -5101,7 +5182,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:vpn_key",
-        "tabler:brand-nord-vpn"
+        "material:vpn_key_alert"
       ]
     },
     {
@@ -5109,8 +5190,8 @@
       "query": "mô hình ngôn ngữ lớn",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -5118,8 +5199,17 @@
       "query": "lời nhắc",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "vi",
+      "query": "Kubernetes",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "lucide:container"
       ]
     },
     {
@@ -5127,8 +5217,8 @@
       "query": "quy trình làm việc",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     },
     {
@@ -5136,8 +5226,8 @@
       "query": "ค้นหา",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "lucide:shuffle"
+        "material:search",
+        "lucide:search"
       ]
     },
     {
@@ -5199,8 +5289,8 @@
       "query": "ฐานข้อมูล",
       "topN": 8,
       "requiredIncluded": [
-        "material:database_search",
-        "heroicons:circle-stack"
+        "material:database",
+        "lucide:database"
       ]
     },
     {
@@ -5325,8 +5415,8 @@
       "query": "ซูม",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:zoom",
-        "simpleicons:zoom"
+        "simpleicons:zoom",
+        "tabler:brand-zoom"
       ]
     },
     {
@@ -5362,7 +5452,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:robot",
-        "tabler:robot-off"
+        "tabler:robot"
       ]
     },
     {
@@ -5370,8 +5460,8 @@
       "query": "จรวด",
       "topN": 8,
       "requiredIncluded": [
-        "material:rocket",
-        "lucide:rocket"
+        "simpleicons:rocket",
+        "material:rocket"
       ]
     },
     {
@@ -5406,8 +5496,8 @@
       "query": "เก็บ",
       "topN": 8,
       "requiredIncluded": [
-        "heroicons:circle-stack",
-        "material:store"
+        "material:store",
+        "lucide:store"
       ]
     },
     {
@@ -5425,7 +5515,7 @@
       "topN": 8,
       "requiredIncluded": [
         "mingcute:loading_line",
-        "material:downloading"
+        "si:loader-orbit"
       ]
     },
     {
@@ -5434,7 +5524,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:book_online",
-        "simpleicons:collaboraonline"
+        "material:online_prediction"
       ]
     },
     {
@@ -5478,8 +5568,8 @@
       "query": "เอพีไอ",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:api",
-        "material:api"
+        "material:api",
+        "tabler:api"
       ]
     },
     {
@@ -5487,8 +5577,8 @@
       "query": "กิต",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:folder-git-2",
-        "lucide:git-branch"
+        "simpleicons:git",
+        "tabler:brand-git"
       ]
     },
     {
@@ -5523,8 +5613,8 @@
       "query": "ปิดเสียง",
       "topN": 8,
       "requiredIncluded": [
-        "material:commute",
-        "bootstrap:mic-mute"
+        "bootstrap:mic-mute",
+        "iconoir:microphone-mute"
       ]
     },
     {
@@ -5533,7 +5623,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:auto_meeting_room",
-        "simpleicons:gotomeeting"
+        "material:meeting_room"
       ]
     },
     {
@@ -5542,7 +5632,7 @@
       "topN": 8,
       "requiredIncluded": [
         "material:support",
-        "material:browser_not_supported"
+        "material:contact_support"
       ]
     },
     {
@@ -5577,8 +5667,8 @@
       "query": "หมอ",
       "topN": 8,
       "requiredIncluded": [
-        "simpleicons:asciidoctor",
-        "material:child_care"
+        "material:medical_information",
+        "material:medical_mask"
       ]
     },
     {
@@ -5613,8 +5703,8 @@
       "query": "วีพีเอ็น",
       "topN": 8,
       "requiredIncluded": [
-        "tabler:brand-nord-vpn",
-        "tabler:brand-openvpn"
+        "iconoir:open-vpn",
+        "material:vpn_key"
       ]
     },
     {
@@ -5622,8 +5712,8 @@
       "query": "โมเดลภาษาขนาดใหญ่",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:brain",
-        "material:model_training"
+        "si:stepfun",
+        "si:x-ai"
       ]
     },
     {
@@ -5631,8 +5721,17 @@
       "query": "พรอมต์",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:eye",
-        "tabler:prompt"
+        "tabler:prompt",
+        "si:prompt-field"
+      ]
+    },
+    {
+      "locale": "th",
+      "query": "คูเบอร์เนทีส",
+      "topN": 8,
+      "requiredIncluded": [
+        "simpleicons:kubernetes",
+        "tabler:brand-docker"
       ]
     },
     {
@@ -5640,8 +5739,8 @@
       "query": "เวิร์กโฟลว์",
       "topN": 8,
       "requiredIncluded": [
-        "lucide:workflow",
-        "material:workflow"
+        "material:workflow",
+        "lucide:workflow"
       ]
     }
   ]

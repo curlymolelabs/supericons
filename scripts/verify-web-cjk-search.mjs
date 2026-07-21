@@ -40,7 +40,7 @@ const cases = [
   { locale: 'ko', concept: 'password', requiredIncluded: ['material:password', 'tabler:password'] },
   { locale: 'zh-Hans', concept: 'firewall', requiredIncluded: ['tabler:firewall-check', 'tabler:firewall-flame'] },
   { locale: 'zh-Hant', concept: 'invoice', requiredIncluded: ['tabler:invoice', 'phosphor:invoice'] },
-  { locale: 'ja', concept: 'llm', requiredIncluded: ['lucide:brain', 'material:model_training'] },
+  { locale: 'ja', concept: 'llm', requiredIncluded: ['si:stepfun', 'lucide:brain'] },
   { locale: 'ko', concept: 'workflow', requiredIncluded: ['lucide:workflow', 'material:workflow'] },
   { locale: 'es', concept: 'password', requiredIncluded: ['material:password', 'tabler:password'] },
   { locale: 'de', concept: 'invoice', requiredIncluded: ['tabler:invoice', 'phosphor:invoice'] },

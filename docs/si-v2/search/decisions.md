@@ -495,6 +495,23 @@ Superseded decisions: `D-025` remains historical prerelease policy and is supers
 
 Specification change: version 1.17 adds `FR-49` and the synchronized deterministic surface contract.
 
+### D-034: Broad deterministic meaning coverage
+
+Date: 2026-07-22
+Status: Accepted
+
+Decision: expand Search v2 through reviewed meaning groups instead of promising a literal match for every possible word. A meaning group may translate a broad word such as `amazing` into several conventional icon concepts, while exact icon identities and technical terms keep priority. The same public-safe graph supports English and 11 maintained locales. Localized graph matches take priority over older translation fallbacks when both apply. Matching uses word boundaries and reviewed word forms, never arbitrary substrings. Unsupported or nonsensical text returns an honest empty result instead of unrelated filler.
+
+Language work follows measured request volume and zero-result rate. Simplified Chinese, Portuguese, Japanese, Korean, German, Spanish, and Arabic receive the highest initial attention based on the reviewed 30-day hosted sample. Traditional Chinese, Hindi, Vietnamese, and Thai remain in the maintained regression suite even where the observed sample is smaller. Future additions use production zero-result clusters, common vocabulary, and failures from the fixed suite rather than unbounded dictionary expansion.
+
+Evidence required: the exact candidate passes the fixed 225-case suite, at least 244 English meaning checks, at least 612 localized meaning checks across all 11 maintained locales, 638 established multilingual fixtures, honest no-result fixtures, public-boundary checks, and the local p95 requirement from `D-030`. Changed fixed-suite rankings receive a case-level review before release.
+
+Alternatives rejected or deferred: returning a generic icon for every input; arbitrary substring matching; sending free searches to a general-purpose model; claiming complete natural-language coverage; expanding every language equally without traffic or failure evidence.
+
+Superseded decisions: none. `D-033` remains the release synchronization rule, and `D-030` remains the performance and promotion boundary.
+
+Specification change: version 1.18 adds `FR-50` and the broad deterministic meaning-coverage contract.
+
 ## Adding or superseding a decision
 
 Every new entry must include:

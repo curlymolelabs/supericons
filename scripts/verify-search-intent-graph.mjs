@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 
 const sourcePath = resolve('data/search-intent-graph/intent-groups.json');
+const coverageSourcePath = resolve('data/search-intent-graph/coverage-groups.json');
 const fixturesPath = resolve('data/search-intent-graph/intent-fixtures.json');
 const libGeneratedPath = resolve('lib/generated-search-intent-graph.js');
 const mcpGeneratedPath = resolve('mcp/runtime/generated-search-intent-graph.js');
@@ -11,6 +12,7 @@ const libFramePath = resolve('lib/search-query-frame.js');
 const mcpFramePath = resolve('mcp/runtime/search-query-frame.js');
 
 const source = JSON.parse(readFileSync(sourcePath, 'utf8'));
+const coverageSource = JSON.parse(readFileSync(coverageSourcePath, 'utf8'));
 const fixtures = JSON.parse(readFileSync(fixturesPath, 'utf8'));
 const failures = [];
 const runtimePaths = [
@@ -95,16 +97,21 @@ function walkKeys(value, path = []) {
 
 assert.equal(typeof source.version, 'number', 'intent graph version must be a number');
 assert.ok(Array.isArray(source.groups), 'intent graph groups must be an array');
+assert.equal(typeof coverageSource.version, 'number', 'coverage graph version must be a number');
+assert.ok(Array.isArray(coverageSource.groups), 'coverage graph groups must be an array');
 assert.equal(typeof fixtures.version, 'number', 'intent fixtures version must be a number');
 assert.ok(Array.isArray(fixtures.fixtures), 'intent fixtures must be an array');
 
 walkKeys(source);
+walkKeys(coverageSource);
 walkKeys(fixtures);
 
 const groupIds = new Set();
 const phraseKeys = new Set();
 
-for (const group of source.groups) {
+const sourceGroups = [...source.groups, ...coverageSource.groups];
+
+for (const group of sourceGroups) {
   const id = String(group.id || '').trim();
   if (!/^[a-z0-9_]+$/.test(id)) failures.push(`${id || '(empty)'}: group id must be snake_case`);
   if (groupIds.has(id)) failures.push(`${id}: duplicate group id`);
@@ -205,4 +212,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`verify-search-intent-graph: ok (${source.groups.length} groups, ${fixtures.fixtures.length} fixtures)`);
+console.log(`verify-search-intent-graph: ok (${sourceGroups.length} groups, ${fixtures.fixtures.length} fixtures)`);

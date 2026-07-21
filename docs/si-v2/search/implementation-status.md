@@ -3,6 +3,12 @@
 Last verified: 2026-07-22
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
+## Broad meaning coverage candidate
+
+Version 0.4.20 is implemented locally as the `D-034` coverage candidate. The generated graph contains 49 meaning groups and 1,058 reviewed phrases. The candidate passes 244 English meaning checks, 612 localized meaning checks across 11 maintained locales, three honest no-result checks, and all 638 established multilingual fixtures. The fixed 225-case fingerprint is `17ed68b3...7002c`. All 34 changed legacy cases are reviewed in `reviews/search-v2-coverage-release-2026-07-22.md`. The local latency gate observed a first semantic search of 475.3 ms and a 30-sample p95 of 344.5 ms on the 21,427-icon public package index.
+
+No production surface has version 0.4.20 yet. The release must preserve the `D-033` synchronized-surface contract: exact package audit, Railway deployment and live tests, npm `latest` publication and clean registry install, then public web deployment and browser checks. Each surface keeps its own rollback target.
+
 ## Synchronized stable release
 
 Source revision `5a701234a9dfac2ea1145d4b3221c03ed1bbf43e` implements the `D-033` surface alignment as version `0.4.19`. Railway and the public website are deployed and observed live. npm publication is prepared and verified but is blocked only by an expired local registry login.
