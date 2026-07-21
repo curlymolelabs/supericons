@@ -62,10 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 4);
-assert.equal(manifest.packet_revision, 6);
+assert.equal(manifest.packet_revision, 7);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  'e8eb2cd8e0295ea92f6f4d9adf85b09bdc2f53b37f8523fd6c7592b94b6cbffd',
+  'e35a819f62b8a4007e2b5f3587a5c7a118d13bc1466923d805aaa85257cc25c5',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -140,6 +140,7 @@ assert.equal(manifest.live_gates.database_apply_rollback_advisory_lock, true);
 assert.equal(manifest.live_gates.docker_smoke_unique_run_owned_container, true);
 assert.equal(manifest.live_gates.concurrent_docker_smoke_fixture, true);
 assert.equal(manifest.live_gates.docker_readiness_diagnostics, true);
+assert.equal(manifest.live_gates.concurrency_harnesses_top_level_only, true);
 assert.equal(manifest.live_gates.production_benchmark_v4_p95_ms_max, 500);
 assert.equal(manifest.live_gates.production_benchmark_speedup_minimum, 3);
 assert.equal(manifest.live_gates.one_slot_actual_routed_p95_ms_max, 3000);
@@ -402,8 +403,6 @@ for (const path of [...Object.values(paths), manifestPath]) {
 
 run('node', [paths.databaseFixture]);
 run('node', [paths.databaseSmoke]);
-run('node', [paths.databaseSmokeConcurrency]);
-run('node', [paths.productionBenchmarkLock]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);
@@ -424,6 +423,8 @@ run('deno', [
 ]);
 run('deno', ['check', 'supabase/functions/mcp-search-grouped/index.ts']);
 if (!skipNestedReleaseSimulations) {
+  run('node', [paths.databaseSmokeConcurrency]);
+  run('node', [paths.productionBenchmarkLock]);
   run('node', [paths.negative]);
   run('node', [paths.rollback]);
   run('node', [paths.schedule]);

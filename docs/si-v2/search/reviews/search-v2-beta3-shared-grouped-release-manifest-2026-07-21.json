@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 4,
-  "packet_revision": 6,
-  "supersedes_manifest_sha256": "e8eb2cd8e0295ea92f6f4d9adf85b09bdc2f53b37f8523fd6c7592b94b6cbffd",
-  "rebind_reason": "Bind shared release and database locks, trustworthy stale-lock recovery, and run-owned concurrent Docker verification after revision 5 independent audits.",
+  "packet_revision": 7,
+  "supersedes_manifest_sha256": "e35a819f62b8a4007e2b5f3587a5c7a118d13bc1466923d805aaa85257cc25c5",
+  "rebind_reason": "Keep concurrency harnesses in the top-level packet while nested release simulations run the non-recursive source and safety checks.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot produced only 0 reused-worker samples; 3 were required",
@@ -209,7 +209,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "3e28385bab26f62d944428873bdd6fe1429e3ac0fbd423c06f6b254bad341711"
+      "sha256": "44c45777759883cccd2e3ee890d5d45da4b629b8e98481336fa9c0c92e836e1b"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -314,6 +314,7 @@
     "docker_smoke_unique_run_owned_container": true,
     "concurrent_docker_smoke_fixture": true,
     "docker_readiness_diagnostics": true,
+    "concurrency_harnesses_top_level_only": true,
     "production_benchmark_v4_p95_ms_max": 500,
     "production_benchmark_speedup_minimum": 3,
     "one_slot_actual_routed_p95_ms_max": 3000,
