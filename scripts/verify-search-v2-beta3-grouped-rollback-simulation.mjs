@@ -22,13 +22,12 @@ const simulationRunId = randomUUID();
 let simulationLockAcquired = false;
 let workspace = null;
 let binDir = null;
-const evidencePaths = [
+const productionEvidencePaths = [
   resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
   resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
   resolve('references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'),
   resolve('references/verification/search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'),
 ];
-const rollbackEvidencePath = evidencePaths[3];
 const realNode = process.execPath;
 const windowsSystemDirectory = process.env.SystemRoot
   ? join(process.env.SystemRoot, 'System32')
@@ -82,24 +81,24 @@ function normalizedSha256(path) {
   return createHash('sha256').update(text).digest('hex');
 }
 
+function snapshotProductionEvidence() {
+  return Object.fromEntries(productionEvidencePaths.map((path) => [
+    path,
+    existsSync(path)
+      ? {
+          exists: true,
+          sha256: createHash('sha256').update(readFileSync(path)).digest('hex'),
+        }
+      : { exists: false },
+  ]));
+}
+
 function writeText(path, text) {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, text, 'utf8');
 }
 
-function removeGeneratedEvidence() {
-  for (const path of evidencePaths) {
-    if (existsSync(path)) rmSync(path, { force: true });
-  }
-}
-
-for (const path of evidencePaths) {
-  assert.equal(
-    existsSync(path),
-    false,
-    `Rollback simulation refuses to replace existing release evidence: ${path}`,
-  );
-}
+const productionEvidenceBefore = snapshotProductionEvidence();
 
 mkdirSync(binDir, { recursive: true });
 
@@ -339,7 +338,12 @@ function runScenario({
   const scenarioDir = join(workspace, id);
   const statePath = join(scenarioDir, 'state.json');
   const logPath = join(scenarioDir, 'commands.jsonl');
-  mkdirSync(scenarioDir, { recursive: true });
+  const evidenceDirectory = join(scenarioDir, 'evidence');
+  const rollbackEvidencePath = join(
+    evidenceDirectory,
+    'search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json',
+  );
+  mkdirSync(evidenceDirectory, { recursive: true });
 
   const result = spawnSync('powershell', [
     '-NoProfile',
@@ -347,6 +351,7 @@ function runScenario({
     '-File', runnerPath,
     '-ExpectedManifest', normalizedSha256(manifestPath),
     '-ExecuteApprovedGroupedRelease',
+    '-SimulationEvidenceDirectory', evidenceDirectory,
   ], {
     cwd: repoRoot,
     env: {
@@ -360,6 +365,8 @@ function runScenario({
       BETA3_SHIM_STATE_PATH: statePath,
       BETA3_SHIM_LOG_PATH: logPath,
       BETA3_SHIM_SCENARIO: id,
+      BETA3_SHIM_BIN_DIR: binDir,
+      SUPERICONS_BETA3_ROLLBACK_SIMULATION: '1',
     },
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,
@@ -393,6 +400,11 @@ function runScenario({
   assert.equal(state.database_present, expectedDatabasePresent);
   assert.equal(state.database_apply_count, 1);
   assert.equal(state.database_rollback_count, expectedDatabaseRollbackCount);
+  assert.deepEqual(
+    snapshotProductionEvidence(),
+    productionEvidenceBefore,
+    'A rollback simulation changed production release evidence.',
+  );
   assert.equal(
     commands.filter((entry) => entry.event === 'delete').length,
     expectedDeleteCount,
@@ -423,7 +435,6 @@ function runScenario({
     assert.equal(state.deployed, false);
   }
 
-  removeGeneratedEvidence();
   return {
     status: rollback.status,
     endpoint_status: rollback.endpoint.status,
@@ -489,7 +500,6 @@ try {
   };
 } finally {
   try {
-    removeGeneratedEvidence();
     if (workspace) rmSync(workspace, { recursive: true, force: true });
   } finally {
     releaseSimulationLock();

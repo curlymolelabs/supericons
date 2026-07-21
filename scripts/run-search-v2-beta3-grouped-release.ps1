@@ -3,7 +3,9 @@ param(
   [ValidatePattern('^[0-9a-f]{64}$')]
   [string]$ExpectedManifest,
 
-  [switch]$ExecuteApprovedGroupedRelease
+  [switch]$ExecuteApprovedGroupedRelease,
+
+  [string]$SimulationEvidenceDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -19,10 +21,37 @@ $ManifestPath = Join-Path $Root 'docs/si-v2/search/reviews/search-v2-beta3-share
 $RunId = [guid]::NewGuid().ToString('D').ToLowerInvariant()
 $ReleaseLockName = 'search-v2-beta3-shared-grouped'
 $Workspace = Join-Path $Root ".tmp/search-v2-beta3-shared-grouped-release-$RunId"
-$LiveEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'
-$LatencyEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'
-$CompletionEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'
-$RollbackEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'
+$EvidenceRoot = Join-Path $Root 'references/verification'
+if (-not [string]::IsNullOrWhiteSpace($SimulationEvidenceDirectory)) {
+  if ($env:SUPERICONS_BETA3_ROLLBACK_SIMULATION -ne '1') {
+    throw 'A simulation evidence directory is allowed only inside the committed rollback simulator.'
+  }
+  if ([string]::IsNullOrWhiteSpace($env:BETA3_SHIM_BIN_DIR)) {
+    throw 'The rollback simulator did not provide its shim directory.'
+  }
+  $resolvedTemporaryRoot = [System.IO.Path]::GetFullPath((Join-Path $Root '.tmp'))
+  $resolvedEvidenceRoot = [System.IO.Path]::GetFullPath($SimulationEvidenceDirectory)
+  if (-not $resolvedEvidenceRoot.StartsWith(
+    "$resolvedTemporaryRoot\search-v2-beta3-shared-grouped-rollback-simulation-",
+    [System.StringComparison]::OrdinalIgnoreCase
+  )) {
+    throw 'The simulation evidence directory is outside its unique rollback workspace.'
+  }
+  $resolvedShimDirectory = [System.IO.Path]::GetFullPath($env:BETA3_SHIM_BIN_DIR)
+  $resolvedNode = [System.IO.Path]::GetFullPath((Get-Command node -ErrorAction Stop).Source)
+  $resolvedNpx = [System.IO.Path]::GetFullPath((Get-Command npx -ErrorAction Stop).Source)
+  if (-not $resolvedNode.StartsWith("$resolvedShimDirectory\", [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw 'Simulation mode requires the committed node shim.'
+  }
+  if (-not $resolvedNpx.StartsWith("$resolvedShimDirectory\", [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw 'Simulation mode requires the committed npx shim.'
+  }
+  $EvidenceRoot = $resolvedEvidenceRoot
+}
+$LiveEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-live-2026-07-21.json'
+$LatencyEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-fr47-live-2026-07-21.json'
+$CompletionEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'
+$RollbackEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {

@@ -13,6 +13,9 @@ const lockScript = resolve('scripts/manage-search-v2-release-lock.mjs');
 const lockName = 'search-v2-beta3-shared-grouped';
 const simulationLockName = 'search-v2-beta3-shared-grouped-simulation';
 const lockOwnerRunId = randomUUID();
+const probeLockName = process.argv.includes('--probe-preheld-lock')
+  ? process.argv[process.argv.indexOf('--probe-preheld-lock') + 1]
+  : null;
 const evidencePaths = [
   resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
   resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
@@ -49,19 +52,75 @@ const worktrees = worktreeLines
   .filter((line) => line.startsWith('worktree '))
   .map((line) => resolve(line.slice('worktree '.length)));
 const lockOwnerWorktree = worktrees.find((path) => path !== repoRoot) || repoRoot;
-const evidenceBefore = snapshotEvidence();
-const workspacesBefore = releaseWorkspaces();
 
-let runnerResult;
-let simulationResult;
-try {
+function acquireLock(name, runId) {
   execFileSync(process.execPath, [
     lockScript,
     '--action', 'acquire',
-    '--name', lockName,
-    '--run-id', lockOwnerRunId,
+    '--name', name,
+    '--run-id', runId,
     '--repository-root', lockOwnerWorktree,
   ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+}
+
+function releaseLock(name, runId) {
+  execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'release',
+    '--name', name,
+    '--run-id', runId,
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+}
+
+if (probeLockName) {
+  const probeRunId = randomUUID();
+  let probeAcquired = false;
+  try {
+    acquireLock(probeLockName, probeRunId);
+    probeAcquired = true;
+  } finally {
+    if (probeAcquired) releaseLock(probeLockName, probeRunId);
+  }
+  console.log(JSON.stringify({ status: 'unexpected_probe_acquisition' }));
+  process.exit(0);
+}
+
+function verifyPreheldLockFailure(name) {
+  const ownerRunId = randomUUID();
+  let ownerAcquired = false;
+  try {
+    acquireLock(name, ownerRunId);
+    ownerAcquired = true;
+    const result = spawnSync(process.execPath, [
+      'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
+      '--probe-preheld-lock', name,
+    ], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      timeout: 30_000,
+      maxBuffer: 16 * 1024 * 1024,
+    });
+    assert.notEqual(result.status, 0, `A pre-held ${name} lock must be refused.`);
+    const output = `${result.stdout}\n${result.stderr}`;
+    assert.match(output, new RegExp(`Release lock ${name} is already held`));
+    assert.doesNotMatch(output, /belongs to another run and was not released/);
+  } finally {
+    if (ownerAcquired) releaseLock(name, ownerRunId);
+  }
+}
+
+const evidenceBefore = snapshotEvidence();
+const workspacesBefore = releaseWorkspaces();
+verifyPreheldLockFailure(lockName);
+verifyPreheldLockFailure(simulationLockName);
+
+let runnerResult;
+let simulationResult;
+let releaseTestLockAcquired = false;
+try {
+  acquireLock(lockName, lockOwnerRunId);
+  releaseTestLockAcquired = true;
 
   runnerResult = spawnSync('powershell', [
     '-NoProfile',
@@ -75,24 +134,14 @@ try {
     maxBuffer: 16 * 1024 * 1024,
   });
 } finally {
-  execFileSync(process.execPath, [
-    lockScript,
-    '--action', 'release',
-    '--name', lockName,
-    '--run-id', lockOwnerRunId,
-    '--repository-root', lockOwnerWorktree,
-  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  if (releaseTestLockAcquired) releaseLock(lockName, lockOwnerRunId);
 }
 
 const simulationOwnerRunId = randomUUID();
+let simulationTestLockAcquired = false;
 try {
-  execFileSync(process.execPath, [
-    lockScript,
-    '--action', 'acquire',
-    '--name', simulationLockName,
-    '--run-id', simulationOwnerRunId,
-    '--repository-root', lockOwnerWorktree,
-  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  acquireLock(simulationLockName, simulationOwnerRunId);
+  simulationTestLockAcquired = true;
   simulationResult = spawnSync(process.execPath, [
     'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs',
   ], {
@@ -102,13 +151,7 @@ try {
     maxBuffer: 16 * 1024 * 1024,
   });
 } finally {
-  execFileSync(process.execPath, [
-    lockScript,
-    '--action', 'release',
-    '--name', simulationLockName,
-    '--run-id', simulationOwnerRunId,
-    '--repository-root', lockOwnerWorktree,
-  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  if (simulationTestLockAcquired) releaseLock(simulationLockName, simulationOwnerRunId);
 }
 
 assert.ok(runnerResult);
@@ -131,6 +174,8 @@ console.log(JSON.stringify({
   cross_worktree_lock: lockOwnerWorktree !== repoRoot,
   concurrent_runner_refused: true,
   concurrent_rollback_simulation_refused: true,
+  preheld_release_lock_preserved_original_error: true,
+  preheld_simulation_lock_preserved_original_error: true,
   evidence_unchanged: true,
   release_workspaces_unchanged: true,
 }, null, 2));
