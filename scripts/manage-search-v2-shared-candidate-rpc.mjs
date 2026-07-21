@@ -23,6 +23,7 @@ const migrationPath =
 const migrationVersion = '20260714190000';
 const migrationName = 'search_v2_shared_recommendation_candidates';
 const functionSignature = 'public.si_search_icon_candidates_v4(jsonb,text,integer)';
+const databaseAdvisoryLockName = 'supericons:search-v2:shared-candidate-rpc-v4';
 const accessToken = String(process.env.SUPABASE_ACCESS_TOKEN || '').trim();
 const migrationSource = readFileSync(migrationPath);
 const migrationText = migrationSource.toString('utf8');
@@ -364,6 +365,7 @@ if (action === 'apply') {
   assert.equal(migrationText.includes(migrationRecordTag), false);
   const applySql = `
 begin;
+select pg_advisory_xact_lock(hashtextextended('${databaseAdvisoryLockName}', 0));
 do $shared_candidate_preflight$
 begin
   if to_regprocedure('public.si_search_icon_candidates_v3(text[],text,integer)') is null then
@@ -465,6 +467,7 @@ assert.equal(
 
 const rollbackSql = `
 begin;
+select pg_advisory_xact_lock(hashtextextended('${databaseAdvisoryLockName}', 0));
 do $shared_candidate_rollback$
 begin
   if to_regprocedure('${functionSignature}') is null then

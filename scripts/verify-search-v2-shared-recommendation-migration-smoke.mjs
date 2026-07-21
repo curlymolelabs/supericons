@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
-const containerName = 'supericons_search_v2_shared_recommendation_smoke';
+const runId = randomUUID();
+const containerName = `supericons_search_v2_shared_recommendation_smoke_${runId.replaceAll('-', '')}`;
+const runOwnerLabelName = 'com.supericons.search-v2-smoke-run';
 const postgresImage = 'postgres:17-alpine';
+let containerId = null;
 
 function runDocker(args, { input = null } = {}) {
   const result = spawnSync('docker', args, { encoding: 'utf8', input });
@@ -11,24 +15,67 @@ function runDocker(args, { input = null } = {}) {
   return result.stdout;
 }
 
-function removeContainer() {
-  spawnSync('docker', ['rm', '-f', containerName], { encoding: 'utf8' });
+function verifyDockerPrerequisites() {
+  const version = spawnSync('docker', ['version', '--format', '{{.Server.Version}}'], {
+    encoding: 'utf8',
+  });
+  assert.equal(
+    version.status,
+    0,
+    `Docker Desktop must be running for the PostgreSQL smoke test. ${version.stderr || version.stdout}`,
+  );
+  const image = spawnSync('docker', ['image', 'inspect', postgresImage], { encoding: 'utf8' });
+  if (image.status !== 0) {
+    runDocker(['pull', postgresImage]);
+  }
+  return version.stdout.trim();
+}
+
+function containerDetails() {
+  assert.ok(containerId, 'The smoke test did not capture its Docker container ID.');
+  const [details] = JSON.parse(runDocker(['inspect', containerId]));
+  assert.equal(details.Id, containerId, 'The Docker container ID changed during the smoke test.');
+  assert.equal(
+    details.Config?.Labels?.[runOwnerLabelName],
+    runId,
+    'The Docker container belongs to another smoke-test run.',
+  );
+  return details;
+}
+
+function removeOwnedContainer() {
+  if (!containerId) return;
+  containerDetails();
+  runDocker(['rm', '-f', containerId]);
+  const after = spawnSync('docker', ['inspect', containerId], { encoding: 'utf8' });
+  assert.notEqual(after.status, 0, 'The run-owned Docker container was not removed.');
+  containerId = null;
 }
 
 function waitForDatabase() {
-  for (let attempt = 0; attempt < 90; attempt += 1) {
+  for (let attempt = 0; attempt < 120; attempt += 1) {
+    const details = containerDetails();
+    if (!details.State?.Running) {
+      const logs = spawnSync('docker', ['logs', containerId], { encoding: 'utf8' });
+      throw new Error(
+        `Disposable PostgreSQL stopped before readiness. ${logs.stderr || logs.stdout}`,
+      );
+    }
     const result = spawnSync('docker', [
-      'exec', containerName, 'pg_isready', '-U', 'postgres', '-d', 'postgres',
+      'exec', containerId, 'pg_isready', '-U', 'postgres', '-d', 'postgres',
     ], { encoding: 'utf8' });
     if (result.status === 0) return;
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 500);
   }
-  throw new Error('Disposable PostgreSQL did not become ready.');
+  const logs = spawnSync('docker', ['logs', containerId], { encoding: 'utf8' });
+  throw new Error(
+    `Disposable PostgreSQL did not become ready within 60 seconds. ${logs.stderr || logs.stdout}`,
+  );
 }
 
 function runSql(sql) {
   return runDocker([
-    'exec', '-i', containerName,
+    'exec', '-i', containerId,
     'psql', '-U', 'postgres', '-d', 'postgres', '-v', 'ON_ERROR_STOP=1', '-tA',
   ], { input: sql })
     .split(/\r?\n/)
@@ -105,14 +152,16 @@ function batchedCandidateJson(queries, library = null) {
   return JSON.parse(line);
 }
 
-removeContainer();
+const dockerServerVersion = verifyDockerPrerequisites();
 try {
-  runDocker([
+  containerId = runDocker([
     'run', '--name', containerName,
+    '--label', `${runOwnerLabelName}=${runId}`,
     '-e', 'POSTGRES_PASSWORD=local-smoke-only',
     '-e', 'POSTGRES_DB=postgres',
     '-d', postgresImage,
-  ]);
+  ]).trim();
+  assert.match(containerId, /^[0-9a-f]{64}$/);
   waitForDatabase();
   runSql(prerequisiteSql);
 
@@ -182,6 +231,11 @@ try {
   console.log(JSON.stringify({
     status: 'ok',
     database: 'disposable_postgresql_17',
+    docker_server_version: dockerServerVersion,
+    run_id: runId,
+    container_name: containerName,
+    container_id: containerId,
+    run_owned_container: true,
     migration_idempotent: true,
     logical_queries: 3,
     query_variants: queryGroups.length,
@@ -193,5 +247,5 @@ try {
     hosted_systems_touched: false,
   }, null, 2));
 } finally {
-  removeContainer();
+  removeOwnedContainer();
 }

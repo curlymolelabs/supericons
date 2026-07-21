@@ -199,7 +199,11 @@ const paths = {
   databaseManager: 'scripts/manage-search-v2-shared-candidate-rpc.mjs',
   databaseFixture: 'scripts/verify-search-v2-shared-candidate-rpc-manager.mjs',
   databaseSmoke: 'scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs',
+  databaseSmokeConcurrency:
+    'scripts/verify-search-v2-shared-recommendation-migration-smoke-concurrency.mjs',
   productionBenchmark: 'scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs',
+  productionBenchmarkLock:
+    'scripts/verify-search-v2-shared-candidate-rpc-production-benchmark-lock.mjs',
   releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
   concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
@@ -211,7 +215,13 @@ const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
 const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
 const databaseFixture = normalizedText(readFileSync(paths.databaseFixture, 'utf8'));
 const databaseSmoke = normalizedText(readFileSync(paths.databaseSmoke, 'utf8'));
+const databaseSmokeConcurrency = normalizedText(
+  readFileSync(paths.databaseSmokeConcurrency, 'utf8'),
+);
 const productionBenchmark = normalizedText(readFileSync(paths.productionBenchmark, 'utf8'));
+const productionBenchmarkLock = normalizedText(
+  readFileSync(paths.productionBenchmarkLock, 'utf8'),
+);
 const sharedMigration = normalizedText(readFileSync(manifest.shared_candidate_rpc.migration_path, 'utf8'));
 const groupedRoute = normalizedText(readFileSync('supabase/functions/mcp-search-grouped/index.ts', 'utf8'));
 const releaseLock = normalizedText(readFileSync(paths.releaseLock, 'utf8'));
@@ -247,6 +257,7 @@ assert.match(runner, /The shared candidate RPC changed during live verification/
 assert.match(runner, /stable_function_mutated = \$false/);
 assert.match(runner, /git status --porcelain=v1 --untracked-files=no/);
 assert.match(runner, /manage-search-v2-release-lock\.mjs/);
+assert.match(runner, /--owner-process-id', "\$PID"/);
 assert.match(runner, /\$RunId = \[guid\]::NewGuid/);
 assert.match(runner, /--skip-nested-release-simulations/);
 assert.match(runner, /SUPERICONS_BETA3_RELEASE_RUNNER/);
@@ -270,6 +281,7 @@ assert.match(databaseManager, /si_search_icon_candidates_v4\(jsonb,text,integer\
 assert.match(databaseManager, /Shared and batched candidate RPC results differ/);
 assert.match(databaseManager, /PUBLIC can execute the shared candidate RPC/);
 assert.match(databaseManager, /begin;[\s\S]*commit;/);
+assert.match(databaseManager, /pg_advisory_xact_lock\(hashtextextended/);
 assert.match(databaseManager, /Rollback refused because the shared candidate RPC definition changed/);
 assert.match(databaseManager, /drop function public\.si_search_icon_candidates_v4/);
 assert.match(databaseManager, /delete from supabase_migrations\.schema_migrations/);
@@ -281,10 +293,26 @@ assert.match(databaseFixture, /mismatched_definition_rollback_refused/);
 assert.match(databaseFixture, /mismatched_owner_rollback_refused/);
 assert.match(databaseFixture, /function_and_migration_history_rolled_back_together/);
 assert.match(databaseSmoke, /exact_batched_result_parity/);
+assert.match(databaseSmoke, /randomUUID\(\)/);
+assert.match(databaseSmoke, /com\.supericons\.search-v2-smoke-run/);
+assert.match(databaseSmoke, /containerDetails\(\)/);
+assert.match(databaseSmoke, /removeOwnedContainer\(\)/);
+assert.match(databaseSmoke, /Docker Desktop must be running/);
+assert.match(databaseSmoke, /did not become ready within 60 seconds/);
+assert.equal(databaseSmoke.includes("docker', ['rm', '-f', containerName"), false);
+assert.match(databaseSmokeConcurrency, /Promise\.all\(\[runSmoke\(\), runSmoke\(\)\]\)/);
+assert.match(databaseSmokeConcurrency, /unique_container_names/);
+assert.match(databaseSmokeConcurrency, /owner_checked_cleanup/);
 assert.match(productionBenchmark, /exact_result_parity: true/);
 assert.match(productionBenchmark, /v4_absent_before_and_after: true/);
 assert.match(productionBenchmark, /speedup >= 3/);
 assert.match(productionBenchmark, /indexedP95 <= 500/);
+assert.match(productionBenchmark, /search-v2-beta3-shared-grouped/);
+assert.match(productionBenchmark, /--owner-process-id/);
+assert.match(productionBenchmark, /pg_advisory_xact_lock\(hashtextextended/);
+assert.match(productionBenchmark, /finally \{/);
+assert.match(productionBenchmarkLock, /preheld_release_lock_blocked_benchmark/);
+assert.match(productionBenchmarkLock, /production_api_requests: apiRequests/);
 assert.match(sharedMigration, /candidate_ids as/);
 assert.match(sharedMigration, /join public\.icon_catalog c\s+on c\.search_document @@ q\.query_ts/);
 assert.match(sharedMigration, /join public\.icon_search_public_registry_metadata r\s+on r\.search_document @@ q\.query_ts/);
@@ -292,8 +320,15 @@ assert.match(groupedRoute, /expandCandidateQueryVariants:\s*false/);
 assert.match(releaseLock, /mkdirSync\(lockPath\)/);
 assert.match(releaseLock, /already held/);
 assert.match(releaseLock, /belongs to another run and was not released/);
+assert.match(releaseLock, /cleanup-stale/);
+assert.match(releaseLock, /action === 'list'/);
+assert.match(releaseLock, /ownerProcessId/);
+assert.match(releaseLock, /processIsAlive/);
+assert.match(releaseLock, /Only version 2 locks have trustworthy owner PIDs/);
 assert.match(concurrentRun, /A concurrent release runner must be refused/);
 assert.match(concurrentRun, /evidence_unchanged/);
+assert.match(concurrentRun, /live_lock_cleanup_refused/);
+assert.match(concurrentRun, /abandoned_lock_listed_and_cleaned/);
 
 assert.match(live, /direct_grouped_http/);
 assert.match(live, /measurement_timing/);
@@ -358,6 +393,8 @@ for (const path of [...Object.values(paths), manifestPath]) {
 
 run('node', [paths.databaseFixture]);
 run('node', [paths.databaseSmoke]);
+run('node', [paths.databaseSmokeConcurrency]);
+run('node', [paths.productionBenchmarkLock]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);

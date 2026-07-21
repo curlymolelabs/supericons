@@ -287,6 +287,7 @@ $releaseLock = Invoke-JsonCommand -FilePath 'node' -Arguments @(
   '--action', 'acquire',
   '--name', $ReleaseLockName,
   '--run-id', $RunId,
+  '--owner-process-id', "$PID",
   '--repository-root', $Root
 )
 if ("$($releaseLock.status)" -ne 'acquired' -or "$($releaseLock.run_id)" -ne $RunId) {

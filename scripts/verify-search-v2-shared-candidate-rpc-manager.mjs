@@ -66,6 +66,7 @@ const server = http.createServer(async (request, response) => {
     observations.mutationSql.push(sql);
     assert.equal(state, 'absent');
     assert.match(sql, /^(\s*)begin;/);
+    assert.match(sql, /pg_advisory_xact_lock\(hashtextextended\('supericons:search-v2:shared-candidate-rpc-v4', 0\)\)/);
     assert.match(sql, /create or replace function public\.si_search_icon_candidates_v4/);
     assert.match(sql, /Shared and batched candidate RPC results differ/);
     assert.match(sql, /grant execute on function public\.si_search_icon_candidates_v4/);
@@ -82,6 +83,7 @@ const server = http.createServer(async (request, response) => {
     observations.mutationSql.push(sql);
     assert.equal(state, 'present');
     assert.match(sql, /^(\s*)begin;/);
+    assert.match(sql, /pg_advisory_xact_lock\(hashtextextended\('supericons:search-v2:shared-candidate-rpc-v4', 0\)\)/);
     assert.match(sql, /md5\(pg_get_functiondef/);
     assert.match(sql, new RegExp(`supericons_release_owner:${runId}`));
     assert.match(sql, /drop function public\.si_search_icon_candidates_v4\(jsonb, text, integer\)/);
@@ -247,6 +249,7 @@ try {
     mismatched_owner_verify_refused: true,
     mismatched_owner_rollback_refused: true,
     function_and_migration_history_rolled_back_together: true,
+    database_advisory_lock_shared_by_apply_and_rollback: true,
   }, null, 2));
 } finally {
   await new Promise((resolveClose, reject) => {

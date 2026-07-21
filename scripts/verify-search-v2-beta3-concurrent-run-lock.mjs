@@ -57,23 +57,43 @@ const worktrees = worktreeLines
 const lockOwnerWorktree = worktrees.find((path) => path !== repoRoot) || repoRoot;
 
 function acquireLock(name, runId) {
-  execFileSync(process.execPath, [
+  return JSON.parse(execFileSync(process.execPath, [
     lockScript,
     '--action', 'acquire',
     '--name', name,
     '--run-id', runId,
+    '--owner-process-id', String(process.pid),
     '--repository-root', lockOwnerWorktree,
-  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  ], { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
 }
 
 function releaseLock(name, runId) {
-  execFileSync(process.execPath, [
+  return JSON.parse(execFileSync(process.execPath, [
     lockScript,
     '--action', 'release',
     '--name', name,
     '--run-id', runId,
     '--repository-root', lockOwnerWorktree,
-  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  ], { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+}
+
+function listLocks() {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'list',
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
+}
+
+function cleanupStaleLock(name, runId, minimumStaleAgeMs = 0) {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'cleanup-stale',
+    '--name', name,
+    '--run-id', runId,
+    '--minimum-stale-age-ms', String(minimumStaleAgeMs),
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
 }
 
 if (probeLockName) {
@@ -113,10 +133,75 @@ function verifyPreheldLockFailure(name) {
   }
 }
 
+function verifyStaleLockRecovery() {
+  const staleLockName = `search-v2-beta3-stale-${randomUUID().slice(0, 8)}`;
+  const staleRunId = randomUUID();
+  const acquireArguments = [
+    lockScript,
+    '--action', 'acquire',
+    '--name', staleLockName,
+    '--run-id', staleRunId,
+    '--repository-root', lockOwnerWorktree,
+  ];
+  const childCode = `
+    const { execFileSync } = require('node:child_process');
+    const args = ${JSON.stringify(acquireArguments)};
+    args.push('--owner-process-id', String(process.pid));
+    execFileSync(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+  `;
+  const child = spawnSync(process.execPath, ['-e', childCode], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  });
+  assert.equal(child.status, 0, child.stderr || child.stdout);
+
+  let staleLockPresent = true;
+  try {
+    const listed = listLocks();
+    const staleOwner = listed.locks.find((lock) => lock.lock_name === staleLockName);
+    assert.ok(staleOwner, 'The abandoned fixture lock was not listed.');
+    assert.equal(staleOwner.run_id, staleRunId);
+    assert.equal(staleOwner.owner_process_alive, false);
+    const cleanup = cleanupStaleLock(staleLockName, staleRunId);
+    assert.equal(cleanup.status, 'cleaned_stale');
+    staleLockPresent = false;
+  } finally {
+    if (staleLockPresent) releaseLock(staleLockName, staleRunId);
+  }
+}
+
+function verifyLiveLockCleanupRefused() {
+  const liveLockName = `search-v2-beta3-live-${randomUUID().slice(0, 8)}`;
+  const liveRunId = randomUUID();
+  let liveLockAcquired = false;
+  try {
+    const lock = acquireLock(liveLockName, liveRunId);
+    assert.equal(lock.process_id, process.pid);
+    liveLockAcquired = true;
+    const cleanup = spawnSync(process.execPath, [
+      lockScript,
+      '--action', 'cleanup-stale',
+      '--name', liveLockName,
+      '--run-id', liveRunId,
+      '--minimum-stale-age-ms', '0',
+      '--repository-root', lockOwnerWorktree,
+    ], { cwd: repoRoot, encoding: 'utf8' });
+    assert.notEqual(cleanup.status, 0, 'A live release lock must not be cleaned up.');
+    assert.match(
+      `${cleanup.stdout}\n${cleanup.stderr}`,
+      /still has a live owner process and was not cleaned up/,
+    );
+  } finally {
+    if (liveLockAcquired) releaseLock(liveLockName, liveRunId);
+  }
+}
+
 const evidenceBefore = snapshotEvidence();
 const workspacesBefore = releaseWorkspaces();
 verifyPreheldLockFailure(lockName);
 verifyPreheldLockFailure(simulationLockName);
+verifyLiveLockCleanupRefused();
+verifyStaleLockRecovery();
 
 let runnerResult;
 let simulationResult;
@@ -179,6 +264,8 @@ console.log(JSON.stringify({
   concurrent_rollback_simulation_refused: true,
   preheld_release_lock_preserved_original_error: true,
   preheld_simulation_lock_preserved_original_error: true,
+  live_lock_cleanup_refused: true,
+  abandoned_lock_listed_and_cleaned: true,
   evidence_unchanged: true,
   release_workspaces_unchanged: true,
 }, null, 2));

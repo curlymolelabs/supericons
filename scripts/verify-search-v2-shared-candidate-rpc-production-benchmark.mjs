@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 function readArgument(name, fallback = '') {
   const index = process.argv.indexOf(name);
@@ -27,6 +29,10 @@ const migrationText = migrationSource.toString('utf8');
 const migrationHash = sha256(migrationSource);
 const functionSignature = 'public.si_search_icon_candidates_v4(jsonb,text,integer)';
 const migrationVersion = '20260714190000';
+const databaseAdvisoryLockName = 'supericons:search-v2:shared-candidate-rpc-v4';
+const releaseLockName = 'search-v2-beta3-shared-grouped';
+const repositoryRoot = resolve('.');
+const releaseLockScript = resolve('scripts/manage-search-v2-release-lock.mjs');
 
 assert.match(projectRef, /^[a-z]{20}$/);
 assert.match(expectedMigrationHash, /^[0-9a-f]{64}$/);
@@ -90,6 +96,7 @@ function assertAbsentState(row) {
 
 const benchmarkSql = `
 begin;
+select pg_advisory_xact_lock(hashtextextended('${databaseAdvisoryLockName}', 0));
 
 do $benchmark_preflight$
 begin
@@ -221,45 +228,75 @@ from search_v2_candidate_benchmark
 order by implementation, sample;
 `;
 
-const beforeRows = await queryDatabase(stateSql, { readOnly: true });
-assertAbsentState(beforeRows[0]);
-const benchmarkRows = await queryDatabase(benchmarkSql, { readOnly: false });
-const afterRows = await queryDatabase(stateSql, { readOnly: true });
-assertAbsentState(afterRows[0]);
+const runId = randomUUID();
+let releaseLockAcquired = false;
+try {
+  const releaseLock = JSON.parse(execFileSync(process.execPath, [
+    releaseLockScript,
+    '--action', 'acquire',
+    '--name', releaseLockName,
+    '--run-id', runId,
+    '--owner-process-id', String(process.pid),
+    '--repository-root', repositoryRoot,
+  ], { cwd: repositoryRoot, encoding: 'utf8' }));
+  assert.equal(releaseLock.status, 'acquired');
+  assert.equal(releaseLock.run_id, runId);
+  assert.equal(releaseLock.process_id, process.pid);
+  releaseLockAcquired = true;
 
-const indexedRows = benchmarkRows.filter((row) => row.implementation === 'v4_indexed_candidates');
-const controlRows = benchmarkRows.filter((row) => row.implementation === 'v3_or_scan_control');
-assert.equal(indexedRows.length, 3);
-assert.equal(controlRows.length, 3);
-assert.equal(new Set(benchmarkRows.map((row) => Number(row.row_count))).size, 1);
+  const beforeRows = await queryDatabase(stateSql, { readOnly: true });
+  assertAbsentState(beforeRows[0]);
+  const benchmarkRows = await queryDatabase(benchmarkSql, { readOnly: false });
+  const afterRows = await queryDatabase(stateSql, { readOnly: true });
+  assertAbsentState(afterRows[0]);
 
-const indexedLatencies = indexedRows.map((row) => Number(row.elapsed_ms));
-const controlLatencies = controlRows.map((row) => Number(row.elapsed_ms));
-const indexedP95 = percentile(indexedLatencies, 0.95);
-const controlP95 = percentile(controlLatencies, 0.95);
-const speedup = controlP95 / indexedP95;
-assert.ok(indexedP95 <= 500, `The indexed v4 candidate p95 was ${indexedP95} ms.`);
-assert.ok(speedup >= 3, `The indexed v4 candidate speedup was only ${speedup.toFixed(2)}x.`);
+  const indexedRows = benchmarkRows.filter((row) => row.implementation === 'v4_indexed_candidates');
+  const controlRows = benchmarkRows.filter((row) => row.implementation === 'v3_or_scan_control');
+  assert.equal(indexedRows.length, 3);
+  assert.equal(controlRows.length, 3);
+  assert.equal(new Set(benchmarkRows.map((row) => Number(row.row_count))).size, 1);
 
-console.log(JSON.stringify({
-  status: 'ok',
-  project_ref: projectRef,
-  migration_sha256: migrationHash,
-  workload: {
-    logical_queries: queryGroups.length,
-    query_variants: queryGroups.length,
-    samples_per_implementation: 3,
-  },
-  indexed_v4: {
-    latencies_ms: indexedLatencies,
-    p95_ms: indexedP95,
-  },
-  v3_control: {
-    latencies_ms: controlLatencies,
-    p95_ms: controlP95,
-  },
-  speedup: Number(speedup.toFixed(2)),
-  exact_result_parity: true,
-  v4_absent_before_and_after: true,
-  migration_record_absent_before_and_after: true,
-}, null, 2));
+  const indexedLatencies = indexedRows.map((row) => Number(row.elapsed_ms));
+  const controlLatencies = controlRows.map((row) => Number(row.elapsed_ms));
+  const indexedP95 = percentile(indexedLatencies, 0.95);
+  const controlP95 = percentile(controlLatencies, 0.95);
+  const speedup = controlP95 / indexedP95;
+  assert.ok(indexedP95 <= 500, `The indexed v4 candidate p95 was ${indexedP95} ms.`);
+  assert.ok(speedup >= 3, `The indexed v4 candidate speedup was only ${speedup.toFixed(2)}x.`);
+
+  console.log(JSON.stringify({
+    status: 'ok',
+    project_ref: projectRef,
+    migration_sha256: migrationHash,
+    release_lock_run_id: runId,
+    database_advisory_lock: databaseAdvisoryLockName,
+    workload: {
+      logical_queries: queryGroups.length,
+      query_variants: queryGroups.length,
+      samples_per_implementation: 3,
+    },
+    indexed_v4: {
+      latencies_ms: indexedLatencies,
+      p95_ms: indexedP95,
+    },
+    v3_control: {
+      latencies_ms: controlLatencies,
+      p95_ms: controlP95,
+    },
+    speedup: Number(speedup.toFixed(2)),
+    exact_result_parity: true,
+    v4_absent_before_and_after: true,
+    migration_record_absent_before_and_after: true,
+  }, null, 2));
+} finally {
+  if (releaseLockAcquired) {
+    const releaseLock = JSON.parse(execFileSync(process.execPath, [
+      releaseLockScript,
+      '--action', 'release',
+      '--name', releaseLockName,
+      '--run-id', runId,
+      '--repository-root', repositoryRoot,
+    ], { cwd: repositoryRoot, encoding: 'utf8' }));
+    assert.equal(releaseLock.status, 'released');
+  }
+}

@@ -67,6 +67,7 @@ execFileSync(process.execPath, [
   '--action', 'acquire',
   '--name', simulationLockName,
   '--run-id', simulationRunId,
+  '--owner-process-id', String(process.pid),
   '--repository-root', repoRoot,
 ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
 simulationLockAcquired = true;
