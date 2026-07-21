@@ -1,7 +1,7 @@
 # Railway local-first recommendation contract
 
 Date: 2026-07-21
-Status: implemented and locally verified, not deployed
+Status: deployed and observed live
 Authority: `D-032`, `FR-47`, and `FR-48`
 
 ## Purpose
@@ -52,3 +52,19 @@ The user response does not wait for the telemetry write. Best-effort telemetry r
 7. `node scripts/verify-search-v2-phase1-parity.mjs`
 
 After deployment, repeat the 1, 10, 20, Japanese 20-slot, clarification, health, telemetry, and zero-hosted-call checks against the live Railway endpoint. Roll back if any public contract fails or the existing `FR-47` latency limits are missed.
+
+## Live release result
+
+Source commit `49581b67612ccc797123425125ab42bd8c5832fb` was deployed to the Railway MCP service as deployment `ff667522-5e54-426d-b737-04a415e0b59e`. The prior deployment `3745b7da-abd8-4f7d-8c53-5406c9f205ac` is the rollback target.
+
+The live verifier passed against `https://mcp.supericons.dev`:
+
+| case | live duration |
+| --- | ---: |
+| 1 slot | 523.0 ms |
+| 10 slots | 2,288.3 ms |
+| 20 slots | 2,250.1 ms |
+| Japanese 20 slots | 1,760.5 ms |
+| Repeated 20-slot p95 | 415.0 ms |
+
+Every call reported `local_first`, zero hosted search calls, and no fallback. English, Japanese, Material solid, and clarification cases passed. A read-only telemetry check found 11 recent recommendation events with channel `hosted_mcp`, execution mode `local_first`, and status `ok`. Railway health remained green after the checks. No npm or Supabase release occurred.

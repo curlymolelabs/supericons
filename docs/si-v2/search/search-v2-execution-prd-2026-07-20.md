@@ -87,6 +87,8 @@ Gates: real HTTP MCP checks for 1, 10, and 20 English slots; one supported non-E
 
 Sequencing note: deploy after quality batches 1 and 2 land in the packaged data so the hosted upgrade ships speed and answer-rate together. Railway live traffic then supplies real-user evidence for later venue promotions.
 
+Execution update, 2026-07-21: source commit `49581b676` deployed as Railway deployment `ff667522-5e54-426d-b737-04a415e0b59e`. Health, English 1/10/20-slot calls, Japanese 20 slots, Material solid, clarification, route reporting, and telemetry passed live. The live 20-slot call measured 2,250.1 ms and repeated 20-slot p95 measured 415.0 ms. The one-day traffic observation remains open before later venue promotion.
+
 ## 8. Workstream 6: access enforcement build (build now, enable later)
 
 Build order after the measurement artifact preconditions: free-key issuance for free-only registered users reusing the existing key lifecycle; the two-layer entitlement safety gate (integration fixture plus one guarded live smoke on the dedicated `internal_test` account, asserting registered allowance received, `isPro` false, no purchased entitlements, both ingresses); account-level allowance aggregation; atomic or race-safe counting; trusted forwarded identity; route-coverage test; unit-alignment behavioral test; fresh-window threshold revalidation. Enforcement flag stays off until every item passes and the limit-response copy promises only live benefits. Public numeric docs (A-3) ship in the same release that enables enforcement, restoring the preserved 12-locale draft after linguistic review.
