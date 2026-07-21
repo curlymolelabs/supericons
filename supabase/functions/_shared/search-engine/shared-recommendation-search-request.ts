@@ -63,6 +63,7 @@ interface SharedRecommendationSearchOptions {
   hydrateFinalSvg?: boolean;
   includeTimingInResponse?: boolean;
   maxQueries?: number;
+  expandCandidateQueryVariants?: boolean;
   adminClientFactory?: (() => any) | null;
   rateLimitEnforcer?: typeof enforceSearchRateLimit;
   dailyAllowanceEnforcer?: typeof enforceDailyAllowance;
@@ -91,6 +92,7 @@ export async function handleSharedRecommendationSearchRequest(
     hydrateFinalSvg = true,
     includeTimingInResponse = false,
     maxQueries = 8,
+    expandCandidateQueryVariants = true,
     adminClientFactory = null,
     rateLimitEnforcer = enforceSearchRateLimit,
     dailyAllowanceEnforcer = enforceDailyAllowance,
@@ -185,11 +187,13 @@ export async function handleSharedRecommendationSearchRequest(
       const locale = requestBody.locale || null;
       const auditQueryFrame = buildSearchQueryFrame(queryNorm, { locale });
       const includeQueryFrame = normalizeBoolean(requestBody.include_query_frame);
-      const queryVariants = buildSearchRankingQueryVariants(
-        queryNorm,
-        buildIntentQueryVariants(queryNorm, { maxVariants: 10 }),
-        { maxVariants: 14 },
-      );
+      const queryVariants = expandCandidateQueryVariants
+        ? buildSearchRankingQueryVariants(
+          queryNorm,
+          buildIntentQueryVariants(queryNorm, { maxVariants: 10 }),
+          { maxVariants: 14 },
+        )
+        : [queryNorm];
       return {
         index,
         queryNorm,

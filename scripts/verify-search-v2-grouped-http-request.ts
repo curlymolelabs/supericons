@@ -189,6 +189,7 @@ assert.match(groupedRouteSource, /hydrateFinalSvg:\s*true/);
 assert.match(groupedRouteSource, /timingSink:\s*\(\)\s*=>\s*\{\}/);
 assert.match(groupedRouteSource, /includeTimingInResponse:\s*true/);
 assert.match(groupedRouteSource, /maxQueries:\s*40/);
+assert.match(groupedRouteSource, /expandCandidateQueryVariants:\s*false/);
 
 if (originalTierEnforcement === undefined) {
   Deno.env.delete('SEARCH_ENGINE_TIER_ENFORCEMENT');
@@ -207,6 +208,7 @@ console.log(JSON.stringify({
   additive_grouped_route: true,
   grouped_route_uses_shared_recommendation_pipeline: true,
   grouped_route_max_logical_queries: 40,
+  grouped_route_reuses_preexpanded_queries: true,
   null_body_rejected: true,
   malformed_subresponse_status: malformedPayload.responses[0].status,
   tier_enforcement_fails_closed: true,

@@ -12,4 +12,5 @@ serve((req) => handleSharedRecommendationSearchRequest(req, {
   timingSink: () => {},
   includeTimingInResponse: true,
   maxQueries: 40,
+  expandCandidateQueryVariants: false,
 }));

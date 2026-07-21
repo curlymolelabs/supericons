@@ -341,10 +341,20 @@ function normalizeLocalIcon(icon) {
   };
 }
 
-function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', style = 'any', limit = 20, locale = null }) {
+function searchLocalFallbackIcons({
+  query,
+  library,
+  libraryMode = 'strict',
+  style = 'any',
+  limit = 20,
+  locale = null,
+  expandIntentVariants = true,
+}) {
   if (publicIcons.length === 0) return [];
 
-  const queryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const queryVariants = expandIntentVariants
+    ? buildIntentQueryVariants(query, { maxVariants: 10 })
+    : [query];
   const results = [];
   const seen = new Set();
 
@@ -452,6 +462,7 @@ async function finishHostedIconSearch({
   locale = null,
   exactIconId = null,
   hostedLibrary = library,
+  expandLocalIntentVariants = true,
 }) {
   const selectedRows = exactIconId
     ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
@@ -479,6 +490,7 @@ async function finishHostedIconSearch({
     style,
     limit,
     locale,
+    expandIntentVariants: expandLocalIntentVariants,
   });
   return exactIconId
     ? fallbackResults.filter((icon) => (
@@ -580,6 +592,7 @@ async function searchHostedIconQueries(queries = [], { usageContextForQuery } = 
       style: query.style,
       limit: query.limit,
       locale: query.locale,
+      expandIntentVariants: false,
     }));
     if (fallbackResults.every((results) => results.length > 0)) {
       return fallbackResults;
@@ -599,6 +612,7 @@ async function searchHostedIconQueries(queries = [], { usageContextForQuery } = 
         style: query.style,
         limit,
         locale: query.locale,
+        expandLocalIntentVariants: false,
       });
     } catch (error) {
       if (!shouldUseLocalFallbackForHostedError(error)) throw error;
@@ -609,6 +623,7 @@ async function searchHostedIconQueries(queries = [], { usageContextForQuery } = 
         style: query.style,
         limit,
         locale: query.locale,
+        expandIntentVariants: false,
       });
       if (fallbackResults.length > 0) return fallbackResults;
       throw error;

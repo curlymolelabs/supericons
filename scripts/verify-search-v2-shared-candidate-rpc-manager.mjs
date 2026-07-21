@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import http from 'node:http';
 
-const migrationHash = 'e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3';
+const migrationHash = 'f22d209938aaafa685e4f1ab074b8e9d3802de503a91d9d3d24b2c05ef207ae6';
 const projectRef = 'kcjmkakdhsqplvasgkjv';
 const fakeDefinition = 'CREATE FUNCTION public.si_search_icon_candidates_v4() RETURNS void';
 const fakeDefinitionSha256 = createHash('sha256').update(fakeDefinition).digest('hex');

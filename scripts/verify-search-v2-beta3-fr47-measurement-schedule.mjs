@@ -168,7 +168,7 @@ async function verifyWorkerClassifiedSchedule() {
     assert.equal(summary.status, 'ok');
     assert.equal(
       summary.measurement_strategy,
-      'worker_classified_routed_samples',
+      'actual_routed_samples_with_worker_classification',
     );
     assert.equal(summary.worker_affinity_assumed, false);
     assert.equal(summary.scenarios.length, 4);
@@ -179,12 +179,12 @@ async function verifyWorkerClassifiedSchedule() {
       'ok',
     ]);
     assert.deepEqual(summary.scenarios.map((scenario) => scenario.latencies_ms.length), [
-      4,
+      3,
       3,
       3,
       1,
     ]);
-    assert.equal(fixture.observations.groupedRequests.length, 11);
+    assert.equal(fixture.observations.groupedRequests.length, 10);
     assert.equal(fixture.observations.realStableRequests, 0);
     assert.equal(fixture.observations.sentinelRequests, 0);
     assert.equal(
@@ -197,7 +197,7 @@ async function verifyWorkerClassifiedSchedule() {
     );
     assert.deepEqual(
       summary.scenarios.map((scenario) => scenario.worker_cohorts.reused_worker.sample_count),
-      [3, 3, 3, 1],
+      [2, 3, 3, 1],
     );
     assert.deepEqual(
       summary.scenarios.map((scenario) => scenario.worker_cohorts.first_request.sample_count),
@@ -245,17 +245,16 @@ async function verifyFailedSamplesRemainVisible() {
     assert.equal(summary.scenarios.length, 1);
     assert.equal(summary.scenarios[0].id, 'one_slot');
     assert.equal(summary.scenarios[0].status, 'blocked');
-    assert.equal(summary.scenarios[0].latencies_ms.length, 4);
-    assert.equal(summary.scenarios[0].worker_cohorts.reused_worker.sample_count, 3);
-    assert.ok(summary.scenarios[0].worker_cohorts.reused_worker.p95_ms > 3000);
-    assert.match(summary.error.message, /one_slot warm p95 .* exceeds 3000 ms/);
+    assert.equal(summary.scenarios[0].latencies_ms.length, 3);
+    assert.ok(summary.scenarios[0].overall_p95_ms > 3000);
+    assert.match(summary.error.message, /one_slot p95 .* exceeds 3000 ms/);
     assert.equal(fixture.observations.realStableRequests, 0);
     assert.equal(fixture.observations.sentinelRequests, 0);
 
     return {
       failed_scenario: summary.scenarios[0].id,
       retained_samples: summary.scenarios[0].latencies_ms.length,
-      retained_p95_ms: summary.scenarios[0].worker_cohorts.reused_worker.p95_ms,
+      retained_p95_ms: summary.scenarios[0].overall_p95_ms,
     };
   } finally {
     await close(fixture.server);
@@ -279,8 +278,8 @@ async function verifyMixedWorkerClassification() {
     assert.equal(result.exitCode, 0, result.stderr);
     const summary = parseSummary(result.stdout);
     const firstScenario = summary.scenarios[0];
-    assert.equal(firstScenario.worker_cohorts.first_request.sample_count, 3);
-    assert.equal(firstScenario.worker_cohorts.reused_worker.sample_count, 3);
+    assert.equal(firstScenario.worker_cohorts.first_request.sample_count, 2);
+    assert.equal(firstScenario.worker_cohorts.reused_worker.sample_count, 1);
     assert.equal(firstScenario.status, 'ok');
     assert.equal(summary.status, 'ok');
     return {
@@ -292,21 +291,28 @@ async function verifyMixedWorkerClassification() {
   }
 }
 
-async function verifyMissingWarmCohortBlocks() {
+async function verifyAllFirstRequestCohortPasses() {
   const fixture = createGroupedFixture({ workerStates: ['first_request'] });
   try {
     const port = await listen(fixture.server);
     const result = await runNode(measureArgs(port, ['--rate-window-reset-ms', '0']));
-    assert.equal(result.exitCode, 1);
+    assert.equal(result.exitCode, 0, result.stderr);
     const summary = parseSummary(result.stdout);
-    assert.equal(summary.scenarios.length, 1);
-    assert.equal(summary.scenarios[0].worker_cohorts.first_request.sample_count, 6);
+    assert.equal(summary.scenarios.length, 4);
+    assert.equal(summary.scenarios[0].worker_cohorts.first_request.sample_count, 3);
     assert.equal(summary.scenarios[0].worker_cohorts.reused_worker.sample_count, 0);
-    assert.match(summary.error.message, /produced only 0 reused-worker samples/);
+    assert.equal(
+      summary.scenarios.every((scenario) => scenario.worker_cohorts.reused_worker.sample_count === 0),
+      true,
+    );
+    assert.equal(summary.status, 'ok');
     return {
-      first_request_samples: 6,
+      first_request_samples: summary.scenarios.reduce(
+        (total, scenario) => total + scenario.worker_cohorts.first_request.sample_count,
+        0,
+      ),
       reused_worker_samples: 0,
-      release_blocked: true,
+      release_passed: true,
     };
   } finally {
     await close(fixture.server);
@@ -316,12 +322,12 @@ async function verifyMissingWarmCohortBlocks() {
 const workerClassifiedSchedule = await verifyWorkerClassifiedSchedule();
 const failureEvidence = await verifyFailedSamplesRemainVisible();
 const mixedWorkerClassification = await verifyMixedWorkerClassification();
-const missingWarmCohort = await verifyMissingWarmCohortBlocks();
+const allFirstRequestCohort = await verifyAllFirstRequestCohortPasses();
 
 console.log(JSON.stringify({
   status: 'ok',
   worker_classified_schedule: workerClassifiedSchedule,
   failure_evidence: failureEvidence,
   mixed_worker_classification: mixedWorkerClassification,
-  missing_warm_cohort: missingWarmCohort,
+  all_first_request_cohort: allFirstRequestCohort,
 }, null, 2));

@@ -54,6 +54,43 @@ as $$
     from query_inputs
     where query_variant is not null
   ),
+  candidate_ids as (
+    select
+      q.logical_query_index,
+      q.query_variant,
+      q.query_variant_rank,
+      q.query_ts,
+      c.icon_id
+    from prepared_queries q
+    join public.icon_catalog c
+      on c.search_document @@ q.query_ts
+    where p_library is null or c.source_library = p_library
+
+    union
+
+    select
+      q.logical_query_index,
+      q.query_variant,
+      q.query_variant_rank,
+      q.query_ts,
+      m.icon_id
+    from prepared_queries q
+    join public.icon_search_private_manifest m
+      on coalesce(array_to_string(m.semantic_aliases, ' '), '') ilike '%' || q.query_variant || '%'
+      or coalesce(array_to_string(m.use_cases, ' '), '') ilike '%' || q.query_variant || '%'
+
+    union
+
+    select
+      q.logical_query_index,
+      q.query_variant,
+      q.query_variant_rank,
+      q.query_ts,
+      r.icon_id
+    from prepared_queries q
+    join public.icon_search_public_registry_metadata r
+      on r.search_document @@ q.query_ts
+  ),
   scored_candidates as (
     select
       q.logical_query_index,
@@ -80,19 +117,14 @@ as $$
       ) as lexical_rank,
       coalesce(ts_rank_cd(r.search_document, q.query_ts), 0)::double precision as registry_rank,
       coalesce(ts_rank_cd(r.avoid_document, q.query_ts), 0)::double precision as avoid_rank
-    from prepared_queries q
-    cross join public.icon_catalog c
+    from candidate_ids q
+    join public.icon_catalog c
+      on c.icon_id = q.icon_id
     left join public.icon_search_private_manifest m
       on m.icon_id = c.icon_id
     left join public.icon_search_public_registry_metadata r
       on r.icon_id = c.icon_id
-    where (p_library is null or c.source_library = p_library)
-      and (
-        c.search_document @@ q.query_ts
-        or coalesce(array_to_string(m.semantic_aliases, ' '), '') ilike '%' || q.query_variant || '%'
-        or coalesce(array_to_string(m.use_cases, ' '), '') ilike '%' || q.query_variant || '%'
-        or r.search_document @@ q.query_ts
-      )
+    where p_library is null or c.source_library = p_library
   ),
   ranked_candidates as (
     select

@@ -807,6 +807,7 @@ async function finishAccessibleIconSearch({
   searchableIcons,
   locale = null,
   hostedResults = [],
+  expandIntentVariants = true,
 }) {
   if (hostedResults.length > 0) {
     return hostedResults.slice(0, Math.max(1, limit));
@@ -814,7 +815,9 @@ async function finishAccessibleIconSearch({
   if (!hasLocalSearchData()) return [];
 
   const { searchIcons } = await import('./search.js');
-  const localQueryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const localQueryVariants = expandIntentVariants
+    ? buildIntentQueryVariants(query, { maxVariants: 10 })
+    : [query];
   const localResults = [];
   const localSeen = new Set();
 
@@ -972,6 +975,7 @@ async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend
       searchableIcons,
       locale: query.locale,
       hostedResults,
+      expandIntentVariants: false,
     });
   }));
 }

@@ -31,6 +31,7 @@ function createAdminClient() {
     publicSemantic: 0,
     auditInsertCalls: 0,
     auditRows: 0,
+    candidateGroups: [] as Array<Record<string, unknown>>,
   };
 
   const client = {
@@ -42,6 +43,7 @@ function createAdminClient() {
       counters.rpc += 1;
       if (name === 'si_search_icon_candidates_v4') {
         const groups = params.p_query_groups as Array<Record<string, unknown>>;
+        counters.candidateGroups = groups;
         return {
           data: groups.map((group) => candidate(
             String(group.query_variant),
@@ -308,6 +310,7 @@ const maximumResponse = await handleSharedRecommendationSearchRequest(
     adminClientFactory: () => maximumClient,
     candidateRpcName: 'si_search_icon_candidates_v4',
     maxQueries: 40,
+    expandCandidateQueryVariants: false,
     rateLimitEnforcer: async (_request, cost = 1) => {
       maximumRateLimitCosts.push(cost);
       return { sessionHash: null, ipHash: null, countryCode: null, geoSource: null };
@@ -329,6 +332,11 @@ assert.equal(maximumClient.counters.svg, 1);
 assert.equal(maximumClient.counters.publicSemantic, 1);
 assert.equal(maximumClient.counters.auditInsertCalls, 1);
 assert.equal(maximumClient.counters.auditRows, 40);
+assert.equal(maximumClient.counters.candidateGroups.length, 40);
+assert.deepEqual(
+  maximumClient.counters.candidateGroups.map((group) => group.query_variant),
+  maximumQueries.map((query) => query.query),
+);
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -348,5 +356,6 @@ console.log(JSON.stringify({
   in_band_stage_timing: true,
   maximum_logical_queries: maximumPayload.response_count,
   maximum_candidate_rpc_calls: maximumClient.counters.rpc,
+  maximum_candidate_query_groups: maximumClient.counters.candidateGroups.length,
   maximum_audit_rows: maximumClient.counters.auditRows,
 }, null, 2));

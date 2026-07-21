@@ -93,6 +93,18 @@ function sharedCandidateJson(queryGroups, library = null) {
   return JSON.parse(line);
 }
 
+function batchedCandidateJson(queries, library = null) {
+  const librarySql = library === null ? 'null' : `'${library.replaceAll("'", "''")}'`;
+  const queriesSql = `array[${queries
+    .map((query) => `'${query.replaceAll("'", "''")}'`)
+    .join(',')}]::text[]`;
+  const [line] = runSql(`
+    select coalesce(jsonb_agg(to_jsonb(candidate)), '[]'::jsonb)
+    from public.si_search_icon_candidates_v3(${queriesSql}, ${librarySql}, 40) candidate;
+  `);
+  return JSON.parse(line);
+}
+
 removeContainer();
 try {
   runDocker([
@@ -103,6 +115,12 @@ try {
   ]);
   waitForDatabase();
   runSql(prerequisiteSql);
+
+  const batchedMigration = readFileSync(
+    'supabase/migrations/20260714120000_search_v2_batched_candidates.sql',
+    'utf8',
+  );
+  runSql(batchedMigration);
 
   const migration = readFileSync(
     'supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql',
@@ -137,6 +155,21 @@ try {
   assert.equal(lucideRows.length > 0, true);
   assert.equal(lucideRows.every((row) => row.source_library === 'lucide'), true);
 
+  const parityQueries = ['settings', 'hello', 'cog', 'respond'];
+  const parityGroups = parityQueries.map((query, index) => ({
+    logical_query_index: index,
+    query_variant: query,
+    query_variant_rank: 0,
+  }));
+  const sharedParityRows = sharedCandidateJson(parityGroups)
+    .map(({ query_variant_rank, ...row }) => row);
+  const batchedParityRows = batchedCandidateJson(parityQueries)
+    .map(({ query_variant_rank, ...row }) => ({
+      logical_query_index: query_variant_rank,
+      ...row,
+    }));
+  assert.deepEqual(sharedParityRows, batchedParityRows);
+
   runSql('drop function public.si_search_icon_candidates_v4(jsonb, text, integer);');
   const [functionCount] = runSql(`
     select count(*)
@@ -155,6 +188,7 @@ try {
     provenance_preserved: true,
     svg_returned: false,
     library_filter_preserved: true,
+    exact_batched_result_parity: true,
     rollback_isolated: true,
     hosted_systems_touched: false,
   }, null, 2));

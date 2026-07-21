@@ -2,16 +2,17 @@
 
 Date: 2026-07-21
 
-Status: production endpoint absent after exact-ID rollback; third deployment blocked pending a source-level latency fix and new release packet
+Status: production endpoint and v4 RPC absent after exact-ID and owner-checked rollback; a fourth attempt requires the indexed candidate fix and a fresh release packet
 
 ## Observed failures
 
-Two guarded deployments of the additive `mcp-search-grouped` endpoint passed routing and failed the unchanged one-slot latency gate. Both attempts rolled back by deleting the exact function ID created by that attempt. Stable `mcp-search` remained unchanged at version 40.
+Three guarded deployments of the additive `mcp-search-grouped` endpoint passed routing and failed the one-slot latency gate. Every attempt rolled back by deleting the exact function ID created by that attempt. Attempt 3 also removed its owner-marked v4 RPC and migration record. Stable `mcp-search` remained unchanged at version 40.
 
 | attempt | measurement schedule | one-slot p95 | limit | outcome |
 | --- | --- | ---: | ---: | --- |
 | 1 | calls spaced by 22 seconds | 4,858 ms | 3,000 ms | rolled back |
 | 2 | OPTIONS keepalives, then back-to-back samples | 5,067 ms | 3,000 ms | rolled back |
+| 3 | actual routed samples with server worker classification | 6,238 ms | 3,000 ms | rolled back |
 
 Attempt 2 retained the full one-slot evidence:
 
@@ -22,13 +23,15 @@ Attempt 2 retained the full one-slot evidence:
 
 The attempt-2 rollback record pins expected and observed function ID `27d64531-6a8d-4e8c-8a6b-3a8ae2d8f814`, records status `removed`, and records `stable_function_mutated: false`.
 
+Attempt 3 recorded six one-slot samples between 5,933 and 6,238 ms. Every sample reported `first_request`, request ordinal 1, and module age under 7 ms. Candidate retrieval took 5,137 to 5,291 ms. The rollback matched endpoint ID `2c6a5a63-f944-4b87-818a-59068b36936a`, removed the owner-marked v4 RPC and migration record, and recorded `stable_function_mutated: false`.
+
 ## Corrected worker-state conclusion
 
 The first retry assumed that an OPTIONS request every five seconds would preserve a warm worker. Production audit rows disprove that assumption.
 
 Each measured grouped POST started a new worker. Within one grouped POST, its parallel logical searches used later request ordinals on the same worker. Back-to-back POSTs still reset to ordinal 1 with a new module age. OPTIONS therefore kept the route reachable but did not provide worker affinity for the next POST.
 
-The 4.8 to 5.1 second result is real first-call behavior for the current endpoint. It is not a warm result and it is not a reason to weaken the 3,000 ms gate.
+The 4.8 to 6.2 second result is real first-call behavior for the tested endpoints. It is not a warm result and it is not a reason to weaken the 3,000 ms gate. Because production supplied no reused workers, the gate now counts all actual routed samples while preserving worker classification for diagnosis.
 
 ## Source-level finding
 
@@ -107,3 +110,19 @@ H2 is the selected local candidate. `mcp-search-grouped` now uses the existing s
 - all 225 deterministic search cases green.
 
 The v4 candidate RPC required by this handler remains absent from production. The next packet must treat its additive creation and exact rollback as separate, bounded database mutations alongside the additive endpoint deployment.
+
+## Attempt 3 root cause and selected repair
+
+Attempt 3 proved that the shared metadata, hydration, and audit design was not the remaining bottleneck. Candidate retrieval still consumed about 5.2 seconds because two avoidable costs remained:
+
+1. `recommend_icons` already generates bounded search variants for every slot, but the shared handler expanded each of those variants again. The grouped route now marks its incoming queries as pre-expanded. The stable route and direct `search_icons` behavior are unchanged.
+2. The v4 SQL joined every query to the full icon catalog and used one `OR` across catalog full-text search, private alias substring search, and registry full-text search. That shape prevented the existing full-text indexes from narrowing the catalog first. The revised v4 function collects matching candidate IDs from the indexed catalog and registry paths plus the smaller private manifest path, then computes the same scores only for those candidates.
+
+A rerunnable production-sized benchmark uses one transaction to create the revised v4 function, compare it with v3 on the exact one-slot recommendation queries, drop v4, and commit with no persistent v4 function or migration record. On 2026-07-21 it reported:
+
+| implementation | three samples | p95 |
+| --- | --- | ---: |
+| v3 control | 1,000.473 ms, 988.625 ms, 992.930 ms | 1,000.473 ms |
+| indexed v4 | 30.371 ms, 21.964 ms, 22.234 ms | 30.371 ms |
+
+The indexed function returned the same 80 rows as v3 and was 32.94 times faster at p95. Read-only checks before and after confirmed that v4 and its migration record were absent. This closes the source-level diagnosis. It does not authorize another deployment without a fresh packet and independent review.

@@ -167,7 +167,7 @@ const summary = {
   samples_per_english_scenario: samples,
   timeout_ms: timeoutMs,
   rate_window_reset_ms: rateWindowResetMs,
-  measurement_strategy: 'worker_classified_routed_samples',
+  measurement_strategy: 'actual_routed_samples_with_worker_classification',
   worker_affinity_assumed: false,
   timing_transport: 'measurement_only_jsonl',
   scenarios: [],
@@ -287,12 +287,12 @@ async function runTimedRecommendation(scenario) {
 try {
   await client.connect(transport);
   for (const scenario of scenarios) {
-    const maximumAttempts = scenario.measuredSamples === 1 ? 4 : scenario.measuredSamples * 2;
+    const maximumAttempts = scenario.measuredSamples;
     const scenarioSummary = {
       id: scenario.id,
       slot_count: scenario.slots.length,
       locale: scenario.locale,
-      warm_sample_target: scenario.measuredSamples,
+      sample_target: scenario.measuredSamples,
       maximum_attempts: maximumAttempts,
       rate_window_resets: [],
       measured_back_to_back: true,
@@ -305,7 +305,7 @@ try {
         first_request: null,
         reused_worker: null,
       },
-      warm_p95_limit_ms: scenario.p95LimitMs,
+      p95_limit_ms: scenario.p95LimitMs,
       timeouts: 0,
       all_slots_resolved: false,
       status: 'blocked',
@@ -326,10 +326,6 @@ try {
         if (error?.code === 'fr47_timeout') scenarioSummary.timeouts += 1;
         throw error;
       }
-      const warmCount = scenarioSummary.sample_records.filter(
-        (sample) => sample.worker_state === 'reused_worker',
-      ).length;
-      if (warmCount >= scenario.measuredSamples) break;
     }
     scenarioSummary.overall_p95_ms = percentile(scenarioSummary.latencies_ms, 0.95);
     scenarioSummary.overall_maximum_ms = Math.max(...scenarioSummary.latencies_ms);
@@ -342,13 +338,10 @@ try {
       'reused_worker',
     );
     scenarioSummary.all_slots_resolved = true;
+    assert.equal(scenarioSummary.sample_records.length, scenario.measuredSamples);
     assert.ok(
-      scenarioSummary.worker_cohorts.reused_worker.sample_count >= scenario.measuredSamples,
-      `${scenario.id} produced only ${scenarioSummary.worker_cohorts.reused_worker.sample_count} reused-worker samples; ${scenario.measuredSamples} are required.`,
-    );
-    assert.ok(
-      scenarioSummary.worker_cohorts.reused_worker.p95_ms <= scenario.p95LimitMs,
-      `${scenario.id} warm p95 ${scenarioSummary.worker_cohorts.reused_worker.p95_ms} ms exceeds ${scenario.p95LimitMs} ms.`,
+      scenarioSummary.overall_p95_ms <= scenario.p95LimitMs,
+      `${scenario.id} p95 ${scenarioSummary.overall_p95_ms} ms exceeds ${scenario.p95LimitMs} ms.`,
     );
     assert.ok(
       scenarioSummary.overall_maximum_ms < timeoutMs,
