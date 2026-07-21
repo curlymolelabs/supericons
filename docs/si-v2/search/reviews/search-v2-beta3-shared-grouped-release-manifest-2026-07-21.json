@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 4,
-  "packet_revision": 7,
-  "supersedes_manifest_sha256": "e35a819f62b8a4007e2b5f3587a5c7a118d13bc1466923d805aaa85257cc25c5",
-  "rebind_reason": "Keep concurrency harnesses in the top-level packet while nested release simulations run the non-recursive source and safety checks.",
+  "packet_revision": 8,
+  "supersedes_manifest_sha256": "920c06c47ea1204ca5034750945dfd4c72ac8d761d37114bfb9c77c9fcd46f8b",
+  "rebind_reason": "Separate the first call after function creation from a 20-sample warm cohort, preserve every sample before threshold assertions, and keep first-call behavior inside the authoritative end-to-end live gate.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot produced only 0 reused-worker samples; 3 were required",
@@ -209,7 +209,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "44c45777759883cccd2e3ee890d5d45da4b629b8e98481336fa9c0c92e836e1b"
+      "sha256": "7936c5e8158a7704fd8fa70a37ff7fec8ed30edf93b7a1210d0057df49c03792"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -249,11 +249,19 @@
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs",
-      "sha256": "3167e1025e838a590be633cfe0a534abf38ccb48f8704e1f2952c2e44565213b"
+      "sha256": "f817d8c4bd1d3fa61d1bef59dacb72cbb4614a56943bfbb0e7165763066d2b14"
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark-lock.mjs",
       "sha256": "1cec44052ea4470414cdb6521da80c309f471af56f847185ca8dee5bef940035"
+    },
+    {
+      "path": "scripts/lib/search-v2-candidate-benchmark-policy.mjs",
+      "sha256": "3e82b178a93eb08e7db6f80e2c48e8c5518fef59e89cb3ab8acf69bb999cda5f"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-benchmark-policy.mjs",
+      "sha256": "b4517d97bae3ce85c442af2500396ed82cd300a5a380e8ac19b874b3decfb4e1"
     },
     {
       "path": "scripts/manage-search-v2-release-lock.mjs",
@@ -315,8 +323,11 @@
     "concurrent_docker_smoke_fixture": true,
     "docker_readiness_diagnostics": true,
     "concurrency_harnesses_top_level_only": true,
-    "production_benchmark_v4_p95_ms_max": 500,
-    "production_benchmark_speedup_minimum": 3,
+    "production_benchmark_first_call_recorded": true,
+    "production_benchmark_warm_sample_count": 20,
+    "production_benchmark_warm_v4_p95_ms_max": 500,
+    "production_benchmark_warm_speedup_minimum": 3,
+    "production_benchmark_first_call_release_gate": "actual_routed_end_to_end_one_slot_p95_at_most_3000_ms",
     "one_slot_actual_routed_p95_ms_max": 3000,
     "ten_slot_actual_routed_p95_ms_max": 10000,
     "twenty_slot_actual_routed_p95_ms_max": 15000,
