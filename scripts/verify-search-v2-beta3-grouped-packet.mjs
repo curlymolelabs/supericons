@@ -62,10 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 4);
-assert.equal(manifest.packet_revision, 5);
+assert.equal(manifest.packet_revision, 6);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f',
+  'e8eb2cd8e0295ea92f6f4d9adf85b09bdc2f53b37f8523fd6c7592b94b6cbffd',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -122,6 +122,9 @@ assert.equal(manifest.live_gates.committed_database_manager_fixture, true);
 assert.equal(manifest.live_gates.committed_concurrent_run_fixture, true);
 assert.equal(manifest.live_gates.cross_worktree_release_lock, true);
 assert.equal(manifest.live_gates.cross_worktree_simulation_lock, true);
+assert.equal(manifest.live_gates.release_lock_actual_owner_pid, true);
+assert.equal(manifest.live_gates.live_lock_cleanup_refused, true);
+assert.equal(manifest.live_gates.abandoned_lock_list_and_cleanup, true);
 assert.equal(manifest.live_gates.simulation_evidence_run_owned, true);
 assert.equal(manifest.live_gates.lock_release_requires_acquisition, true);
 assert.equal(manifest.live_gates.preheld_lock_errors_preserved, true);
@@ -131,6 +134,12 @@ assert.equal(manifest.live_gates.dry_run_skips_nested_release_simulations, true)
 assert.equal(manifest.live_gates.indexed_candidate_collection, true);
 assert.equal(manifest.live_gates.preexpanded_grouped_queries, true);
 assert.equal(manifest.live_gates.production_benchmark_exact_parity, true);
+assert.equal(manifest.live_gates.production_benchmark_release_lock, true);
+assert.equal(manifest.live_gates.production_benchmark_database_advisory_lock, true);
+assert.equal(manifest.live_gates.database_apply_rollback_advisory_lock, true);
+assert.equal(manifest.live_gates.docker_smoke_unique_run_owned_container, true);
+assert.equal(manifest.live_gates.concurrent_docker_smoke_fixture, true);
+assert.equal(manifest.live_gates.docker_readiness_diagnostics, true);
 assert.equal(manifest.live_gates.production_benchmark_v4_p95_ms_max, 500);
 assert.equal(manifest.live_gates.production_benchmark_speedup_minimum, 3);
 assert.equal(manifest.live_gates.one_slot_actual_routed_p95_ms_max, 3000);

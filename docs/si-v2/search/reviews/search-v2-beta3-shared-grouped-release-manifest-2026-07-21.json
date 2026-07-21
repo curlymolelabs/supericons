@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 4,
-  "packet_revision": 5,
-  "supersedes_manifest_sha256": "1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f",
-  "rebind_reason": "Bind the indexed candidate retrieval fix, actual routed latency gate, and fresh one-use evidence paths after attempt 3 rolled back.",
+  "packet_revision": 6,
+  "supersedes_manifest_sha256": "e8eb2cd8e0295ea92f6f4d9adf85b09bdc2f53b37f8523fd6c7592b94b6cbffd",
+  "rebind_reason": "Bind shared release and database locks, trustworthy stale-lock recovery, and run-owned concurrent Docker verification after revision 5 independent audits.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot produced only 0 reused-worker samples; 3 were required",
@@ -205,11 +205,11 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "a66d4b8ef2529c742cda4eb9c84f78dd1701bf071d26df89d873b15a3fb4c634"
+      "sha256": "6d3737cb4cf9df78bc062a9549832a41c2f97c6802366b6a97bbfe4a8a24d352"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "21977060c1632ce36907f5bb580c9e15984c8fb876414f661b9a8e2a3e0c040d"
+      "sha256": "3e28385bab26f62d944428873bdd6fe1429e3ac0fbd423c06f6b254bad341711"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -225,7 +225,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "6b27e99c38e37bc001bfe517b805d0d9d264231168db2fce5cf6f6c2ecbe9f98"
+      "sha256": "d91b6614554e37f1128b1684e393d1f150764c8a6420a4b0b3b45ec6e51294dd"
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
@@ -233,27 +233,35 @@
     },
     {
       "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
-      "sha256": "8afb38b8f83d7394cb43015dbbbc28c2d8814f7a21b24660874e1ac993afaa80"
+      "sha256": "c78b1a971acb604a926192c4f91054b36a40cdf90d531f72ef0b47182c9a94a8"
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-manager.mjs",
-      "sha256": "fc6431a0312e554f516f5e3bb04204ae9b4113b86443257dcc387d10e652bc62"
+      "sha256": "e69e4611d575dcd4e89b6f51f88ba4b96734324e75b1e87730fb8a3912581850"
     },
     {
       "path": "scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs",
-      "sha256": "30280463ca2740490f5c9f53626089dad3c60f9be6161b96d066475b2e93465f"
+      "sha256": "1d40e646011e090b755bcdde80ca339765b98ce757107b6abd594bcb8dae6c58"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-migration-smoke-concurrency.mjs",
+      "sha256": "e929b7af5a386c6a9b0ee32470837f7885a664c2c48e2c173f474b7ff646a907"
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs",
-      "sha256": "556ef418968e885c160339c2581fb3aafe4be92649f6b1d0f935a5a2999b0dc4"
+      "sha256": "3167e1025e838a590be633cfe0a534abf38ccb48f8704e1f2952c2e44565213b"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark-lock.mjs",
+      "sha256": "1cec44052ea4470414cdb6521da80c309f471af56f847185ca8dee5bef940035"
     },
     {
       "path": "scripts/manage-search-v2-release-lock.mjs",
-      "sha256": "6f4bb198532be527c709309200d5d12cf7cad5d6d10abd1e0b2355aafaeed930"
+      "sha256": "2ee35beece29015f962f54c1aaf6795e5799946cda452177b967289468350b55"
     },
     {
       "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
-      "sha256": "9b946babfd7574678d12d8c96bc26fce129159dffb35a6f1539a3b0d631aa7fd"
+      "sha256": "3013c511b6f66d44107d969aeb312968ea6acf9ecaabc67e2282001138dd9e1b"
     },
     {
       "path": "scripts/verify-search-v2-phase1-parity.mjs",
@@ -286,6 +294,9 @@
     "committed_concurrent_run_fixture": true,
     "cross_worktree_release_lock": true,
     "cross_worktree_simulation_lock": true,
+    "release_lock_actual_owner_pid": true,
+    "live_lock_cleanup_refused": true,
+    "abandoned_lock_list_and_cleanup": true,
     "simulation_evidence_run_owned": true,
     "lock_release_requires_acquisition": true,
     "preheld_lock_errors_preserved": true,
@@ -297,6 +308,12 @@
     "indexed_candidate_collection": true,
     "preexpanded_grouped_queries": true,
     "production_benchmark_exact_parity": true,
+    "production_benchmark_release_lock": true,
+    "production_benchmark_database_advisory_lock": true,
+    "database_apply_rollback_advisory_lock": true,
+    "docker_smoke_unique_run_owned_container": true,
+    "concurrent_docker_smoke_fixture": true,
+    "docker_readiness_diagnostics": true,
     "production_benchmark_v4_p95_ms_max": 500,
     "production_benchmark_speedup_minimum": 3,
     "one_slot_actual_routed_p95_ms_max": 3000,
