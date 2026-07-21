@@ -1458,6 +1458,11 @@ function normalizeResponseMode(responseMode) {
 
 const MAX_GROUPED_RECOMMENDATION_QUERIES = 40;
 
+export function getRecommendationCandidateLimit(limitPerSlot) {
+  const requested = Math.max(1, Math.min(5, Math.floor(Number(limitPerSlot) || 1)));
+  return Math.min(10, Math.max(requested * 3, 5));
+}
+
 function buildGroupedRecommendationQueryKey(request) {
   return JSON.stringify([
     String(request.query || '').trim().toLowerCase(),
@@ -1542,7 +1547,7 @@ export async function recommendIconsForTask({
           query,
           library,
           style,
-          limit: Math.max(limitPerSlot * 5, 10),
+          limit: getRecommendationCandidateLimit(limitPerSlot),
           locale,
         };
         const requestKey = buildGroupedRecommendationQueryKey(request);
@@ -1614,7 +1619,7 @@ export async function recommendIconsForTask({
             query: queryVariant,
             library,
             style,
-            limit: Math.max(limitPerSlot * 5, 10),
+            limit: getRecommendationCandidateLimit(limitPerSlot),
             locale,
           });
         } catch {
