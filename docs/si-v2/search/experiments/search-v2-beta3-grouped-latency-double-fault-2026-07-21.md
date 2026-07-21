@@ -2,7 +2,7 @@
 
 Date: 2026-07-21
 
-Status: production endpoint and v4 RPC absent after exact-ID and owner-checked rollback; attempt 5 requires the bounded candidate-payload fix and a fresh release packet
+Status: production endpoint and v4 RPC absent after exact-ID and owner-checked rollback; attempt 5 requires the candidate-only transport fix and a fresh release packet
 
 ## Observed failures
 
@@ -136,6 +136,8 @@ Rollback matched endpoint ID `47aab266-72f2-4e92-9c81-8cfee14a7ed1`, removed tha
 
 A controlled localhost reproduction returned 40 logical queries and an 86 KB grouped fixture response with only 60 to 190 ms of package-side work above an artificial 800 ms server delay. Three stable hosted searches returning 10 results measured 1,403 ms, 987 ms, and 1,021 ms. Together these checks rule out local ranking as the dominant remaining delay and identify grouped candidate response volume as the narrow controllable cost.
 
-The repair changes the per-variant candidate limit from `max(limit_per_slot * 5, 10)` to `min(10, max(limit_per_slot * 3, 5))`. One requested choice now retrieves 5 candidates per query variant instead of 10. Requests for 2 through 5 choices retrieve 6, 9, 10, and 10 candidates per variant. The query fanout, result contract, fallback behavior, stable endpoint, database function, rate accounting, and latency thresholds remain unchanged.
+The first proposed repair reduced the per-variant candidate limit. A production-data quality comparison rejected that approach before deployment. Candidate depths 5 through 8 changed the selected home icon for a five-slot fitness task. Only depths 9 and 10 preserved all five selections, and a 10 percent reduction was too small to justify another release attempt. The full candidate count is therefore restored.
 
-Targeted verification passed grouped-versus-individual recommendation parity, English and Japanese 20-slot behavior, repeated-query deduplication, agent-readable errors, hosted fallback behavior, and the complete 225-case fingerprint `3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777`. A new measurement assertion retains query variants, candidate rows, final results, and response size for every live sample so attempt 5 can directly confirm whether the intended payload reduction occurred.
+The selected repair preserves the original `max(limit_per_slot * 5, 10)` candidate pool, every ranking step, and the public semantic profile used for brand matching and labels. Grouped `recommend_icons` requests now ask for candidate identities without SVG payloads or unused ranking diagnostics. The shared endpoint skips final catalog SVG and Material SVG reads for that response mode. The package restores non-Material SVGs from its pinned local icon index. Material export remains deferred to the existing bundled Material asset path. Ordinary `search_icons`, the stable endpoint, ranking, rate accounting, audit rows, and latency thresholds remain unchanged.
+
+Targeted verification proves full-versus-candidate-only ranked identity and semantic parity, zero final SVG reads, one shared public semantic read, local outline and solid SVG restoration, unchanged Material deferred hydration, grouped-versus-individual recommendation parity, English and Japanese 20-slot behavior, repeated-query deduplication, and hosted fallback behavior. The live measurement record retains query variants, candidate rows, final results, and response size so attempt 5 can confirm the transport reduction directly.

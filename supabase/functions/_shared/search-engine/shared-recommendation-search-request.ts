@@ -77,6 +77,7 @@ function sharedContractKey(plan: Record<string, unknown>) {
     limit: plan.limit,
     locale: plan.locale,
     includeQueryFrame: plan.includeQueryFrame,
+    candidateOnly: plan.candidateOnly,
   });
 }
 
@@ -187,6 +188,7 @@ export async function handleSharedRecommendationSearchRequest(
       const locale = requestBody.locale || null;
       const auditQueryFrame = buildSearchQueryFrame(queryNorm, { locale });
       const includeQueryFrame = normalizeBoolean(requestBody.include_query_frame);
+      const candidateOnly = normalizeBoolean(requestBody.candidate_only);
       const queryVariants = expandCandidateQueryVariants
         ? buildSearchRankingQueryVariants(
           queryNorm,
@@ -206,6 +208,7 @@ export async function handleSharedRecommendationSearchRequest(
         limit,
         locale,
         includeQueryFrame,
+        candidateOnly,
         auditQueryFrame,
         intentProfile: buildSearchIntentProfile(queryNorm),
       };
@@ -216,7 +219,7 @@ export async function handleSharedRecommendationSearchRequest(
       throw new SearchEngineHttpError('Shared recommendation queries must use one search contract.', {
         status: 400,
         code: 'mixed_grouped_search_contract',
-        hint: 'Use the same library, library mode, style, limit, and locale for every query.',
+        hint: 'Use the same library, library mode, style, limit, locale, and response mode for every query.',
         retryable: false,
       });
     }
@@ -388,13 +391,13 @@ export async function handleSharedRecommendationSearchRequest(
     let publicRecordsById = new Map<string, Record<string, unknown>>();
     if (resultIconIds.length > 0) {
       const [finalSvgResult, materialSvgResult, publicRegistryResult] = await Promise.all([
-        hydrateFinalSvg && catalogResultIds.length > 0
+        !plans[0].candidateOnly && hydrateFinalSvg && catalogResultIds.length > 0
           ? timing.measure<any>(
             'final_svg',
             () => adminClient.from('icon_catalog').select('icon_id, svg').in('icon_id', catalogResultIds),
           )
           : Promise.resolve(null),
-        materialResultIds.length > 0
+        !plans[0].candidateOnly && materialResultIds.length > 0
           ? timing.measure<any>(
             'material_svg',
             () => adminClient
@@ -430,6 +433,20 @@ export async function handleSharedRecommendationSearchRequest(
     }
 
     const resultsByLogicalQuery = rankedByLogicalQuery.map((rows) => {
+      if (plans[0].candidateOnly) {
+        return rows.map((row) => {
+          const publicRecord = publicRecordsById.get(row.icon_id);
+          return {
+            icon_id: row.icon_id,
+            name: row.name,
+            library: row.library,
+            source_library: row.source_library,
+            style: row.style,
+            icon_type: row.icon_type,
+            ...(publicRecord ? { semantic: buildPublicSemanticPayload(publicRecord) } : {}),
+          };
+        });
+      }
       const hydratedRows = hydrateServingSvgRows(rows, {
         catalogSvgRows: hydrateFinalSvg
           ? rows

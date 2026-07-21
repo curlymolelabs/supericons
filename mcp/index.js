@@ -20,6 +20,7 @@ import {
   searchIconQueriesHostedMcp,
   searchIconsHostedMcp,
 } from './hosted-search-client.js';
+import { createHostedIconHydrator } from './hosted-candidate-hydration.js';
 import { getBundledMaterialSvg } from './material-hydration.js';
 import { recommendIconsForTask } from './recommend-icons.js';
 import { validateApiKey } from './auth.js';
@@ -500,6 +501,7 @@ const premiumIcons = loadPremiumPacks();
 
 // Combined icon set (auth determines which subset is searchable)
 const allIcons = [...freeIcons, ...premiumIcons];
+const buildHostedIcon = createHostedIconHydrator(freeIcons);
 
 // ============================================================
 // Auth State (resolved at startup)
@@ -687,27 +689,6 @@ function shouldUseLocalFallbackForHostedError(error) {
 
 function hasLocalSearchData() {
   return freeIcons.length > 0;
-}
-
-function buildHostedIcon(row) {
-  if (!row?.icon_id) return null;
-  const [libraryFromId, ...idParts] = String(row.icon_id).split(':');
-  const library = row.library || row.source_library || libraryFromId;
-  const id = idParts.join(':') || row.id || row.name;
-  if (!library || !id) return null;
-  if (!row.svg && library !== 'material') return null;
-
-  return {
-    id,
-    name: row.name || id.replace(/[-_]/g, ' '),
-    lib: library,
-    type: row.icon_type || 'svg',
-    style: row.style || VARIANT_STYLES.OUTLINE,
-    svg: row.svg,
-    semantic: row.semantic || null,
-    premium: false,
-    hosted: true,
-  };
 }
 
 function buildSelectorInstructions(selectorMode, selectorToken) {

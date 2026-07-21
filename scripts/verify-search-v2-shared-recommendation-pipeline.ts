@@ -109,7 +109,7 @@ function createAdminClient() {
               if (table === 'icon_catalog') {
                 counters.svg += 1;
                 return {
-                  data: [{ icon_id: 'lucide:settings', svg: '<svg>settings</svg>' }],
+                  data: [{ icon_id: 'lucide:settings', svg: `<svg>${'x'.repeat(2_000)}</svg>` }],
                   error: null,
                 };
               }
@@ -147,11 +147,11 @@ const queries = ['cog', 'settings', 'gear', 'preferences'].map((query, index) =>
   request_id: 'shared-recommendation-test',
   dedupe_key: `shared-recommendation-test:${index}`,
 }));
-function buildRequest() {
+function buildRequest(sharedFields: Record<string, unknown> = {}) {
   return new Request('https://example.test/recommend-search', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ queries }),
+    body: JSON.stringify({ queries, ...sharedFields }),
   });
 }
 
@@ -207,6 +207,66 @@ assert.equal(allowanceBody.details.retry_after_seconds, 14_400);
 const sharedPayload = await sharedResponse.json();
 const sharedTiming = sharedPayload.measurement_timing;
 delete sharedPayload.measurement_timing;
+
+const candidateOnlyClient = createAdminClient();
+const candidateOnlyResponse = await handleSharedRecommendationSearchRequest(
+  buildRequest({ candidate_only: true }),
+  {
+    adminClientFactory: () => candidateOnlyClient,
+    candidateRpcName: 'si_search_icon_candidates_v4',
+    hydrateFinalSvg: true,
+    maxQueries: 8,
+    rateLimitEnforcer: async () => ({
+      sessionHash: null,
+      ipHash: null,
+      countryCode: null,
+      geoSource: null,
+    }),
+    dailyAllowanceEnforcer: async () => {},
+  },
+);
+assert.equal(candidateOnlyResponse.status, 200);
+const candidateOnlyPayload = await candidateOnlyResponse.json();
+assert.equal(candidateOnlyClient.counters.svg, 0);
+assert.equal(candidateOnlyClient.counters.publicSemantic, 1);
+assert.equal(candidateOnlyClient.counters.metadata, 2);
+assert.deepEqual(
+  candidateOnlyPayload.responses.map((entry: any) => entry.body.results.map((row: any) => ({
+    icon_id: row.icon_id,
+    name: row.name,
+    source_library: row.source_library,
+    style: row.style,
+    icon_type: row.icon_type,
+  }))),
+  sharedPayload.responses.map((entry: any) => entry.body.results.map((row: any) => ({
+    icon_id: row.icon_id,
+    name: row.name,
+    source_library: row.source_library,
+    style: row.style,
+    icon_type: row.icon_type,
+  }))),
+  'Candidate-only responses must preserve every ranked candidate identity.',
+);
+assert.deepEqual(
+  candidateOnlyPayload.responses.map((entry: any) => entry.body.results.map((row: any) => row.semantic)),
+  sharedPayload.responses.map((entry: any) => entry.body.results.map((row: any) => row.semantic)),
+  'Candidate-only responses must preserve the semantic profile used by recommendation ranking and labels.',
+);
+assert.equal(
+  candidateOnlyPayload.responses.every((entry: any) => entry.body.results.every((row: any) => (
+    !Object.hasOwn(row, 'svg')
+    && !Object.hasOwn(row, 'match_signals')
+  ))),
+  true,
+  'Candidate-only responses must omit SVG and ranking diagnostics restored or unused by the MCP package.',
+);
+const fullResponseCharacters = JSON.stringify(sharedPayload).length;
+const candidateOnlyResponseCharacters = JSON.stringify(candidateOnlyPayload).length;
+assert.equal(
+  candidateOnlyResponseCharacters < fullResponseCharacters * 0.5,
+  true,
+  'Candidate-only transport must remove at least half of an SVG-heavy grouped response.',
+);
 
 const separateClient = createAdminClient();
 const separateRateLimitCosts: number[] = [];
@@ -358,4 +418,9 @@ console.log(JSON.stringify({
   maximum_candidate_rpc_calls: maximumClient.counters.rpc,
   maximum_candidate_query_groups: maximumClient.counters.candidateGroups.length,
   maximum_audit_rows: maximumClient.counters.auditRows,
+  candidate_only_ranked_identity_parity: true,
+  candidate_only_svg_reads: candidateOnlyClient.counters.svg,
+  candidate_only_public_semantic_reads: candidateOnlyClient.counters.publicSemantic,
+  full_response_characters: fullResponseCharacters,
+  candidate_only_response_characters: candidateOnlyResponseCharacters,
 }, null, 2));

@@ -510,7 +510,10 @@ async function searchIconQueriesGrouped(queries) {
   if (apiKey) headers['x-supericons-api-key'] = apiKey;
   if (looksLikeJwt(publicKey)) headers.Authorization = `Bearer ${publicKey}`;
 
-  const payload = await postSearch(url, headers, { queries: groupedQueries });
+  const payload = await postSearch(url, headers, {
+    queries: groupedQueries,
+    ...(routeToolName === 'recommend_icons' ? { candidate_only: true } : {}),
+  });
   if (!Array.isArray(payload?.responses) || payload.responses.length !== groupedQueries.length) {
     const error = new Error('Grouped hosted search returned an invalid response.');
     error.code = 'grouped_hosted_search_invalid_response';

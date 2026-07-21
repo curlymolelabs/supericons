@@ -1,9 +1,6 @@
 import assert from 'node:assert/strict';
 
-import {
-  getRecommendationCandidateLimit,
-  recommendIconsForTask,
-} from '../mcp/recommend-icons.js';
+import { recommendIconsForTask } from '../mcp/recommend-icons.js';
 
 const stubIcon = {
   id: 'settings',
@@ -47,15 +44,9 @@ const grouped = await recommendIconsForTask({
 assert.equal(groupedCalls, 1, 'One recommendation must use one grouped search call.');
 assert.equal(singleCalls, 0, 'Grouped mode must not fall back to separate search calls.');
 assert.ok(groupedQueries.length >= 2, 'Grouped search must include variants from every resolved slot.');
-assert.equal(groupedQueries.every((query) => query.limit === 6), true);
+assert.equal(groupedQueries.every((query) => query.limit === 10), true);
 assert.equal(grouped.results.length, 2);
 assert.equal(grouped.results.every((result) => Boolean(result.recommended)), true);
-
-assert.deepEqual(
-  [1, 2, 3, 4, 5].map(getRecommendationCandidateLimit),
-  [5, 6, 9, 10, 10],
-  'Candidate pools must stay large enough for ranking without returning unnecessary rows.',
-);
 
 let clarificationGroupedCalls = 0;
 let clarificationSingleCalls = 0;
@@ -155,7 +146,7 @@ const twentySlotRecommendation = await recommendIconsForTask({
   searchIconsForQueries: async (queries) => {
     twentySlotGroupedCalls += 1;
     twentySlotQueryCount = queries.length;
-    assert.equal(queries.every((query) => query.limit === 5), true);
+    assert.equal(queries.every((query) => query.limit === 10), true);
     return queries.map(() => parityIcons);
   },
   buildIconResult,
@@ -178,7 +169,7 @@ const localizedTwentySlotRecommendation = await recommendIconsForTask({
   },
   searchIconsForQueries: async (queries) => {
     localizedTwentySlotQueryCount = queries.length;
-    assert.equal(queries.every((query) => query.limit === 5), true);
+    assert.equal(queries.every((query) => query.limit === 10), true);
     return queries.map(() => parityIcons);
   },
   buildIconResult,
@@ -201,7 +192,7 @@ const repeatedSlotRecommendation = await recommendIconsForTask({
   },
   searchIconsForQueries: async (queries) => {
     repeatedSlotQueryCount = queries.length;
-    assert.equal(queries.every((query) => query.limit === 5), true);
+    assert.equal(queries.every((query) => query.limit === 10), true);
     return queries.map(() => parityIcons);
   },
   buildIconResult,
@@ -243,6 +234,6 @@ console.log(JSON.stringify({
   twenty_slot_query_count: twentySlotQueryCount,
   localized_twenty_slot_query_count: localizedTwentySlotQueryCount,
   repeated_twenty_slot_query_count: repeatedSlotQueryCount,
-  candidate_limits_by_requested_count: [1, 2, 3, 4, 5].map(getRecommendationCandidateLimit),
+  candidate_limit_preserved: 10,
   grouped_failure_propagated: true,
 }, null, 2));

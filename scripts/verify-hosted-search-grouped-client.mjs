@@ -47,6 +47,7 @@ try {
   assert.equal(requests.length, 1, 'Grouped client must make one HTTP request.');
   assert.equal(requests[0].url, process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL);
   assert.equal(requests[0].body.queries.length, 2);
+  assert.equal(requests[0].body.candidate_only, true);
   assert.equal(requests[0].body.queries[0].library_mode, 'all');
   assert.equal('libraryMode' in requests[0].body.queries[0], false);
   assert.equal('usageContext' in requests[0].body.queries[0], false);
@@ -330,4 +331,5 @@ console.log(JSON.stringify({
   custom_individual_route_preserved: true,
   concurrent_grouped_failures_used_individual_fallback: true,
   worker_timing_preserved_for_measurement: true,
+  recommendation_candidate_only_transport: true,
 }, null, 2));
