@@ -46,7 +46,12 @@ output/
 
 # Raw media and large local-only assets
 video/
-public/videos/
+public/videos/*
+!public/videos/mcp-setup/
+public/videos/mcp-setup/*
+!public/videos/mcp-setup/hosted-claude-desktop.mp4
+!public/videos/mcp-setup/local-cursor-ide.mp4
+!public/videos/mcp-setup/local-codex-desktop.mp4
 tools/icon-research/
 
 # Local data exports and private data

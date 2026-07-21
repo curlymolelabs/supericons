@@ -51,6 +51,11 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
 # Security headers
 [[headers]]
   for = "/*"

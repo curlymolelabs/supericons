@@ -159,6 +159,29 @@ try {
     { exact: true },
   ).waitFor();
 
+  const universalDocsUrl = new URL(baseUrl);
+  universalDocsUrl.searchParams.set('view', 'docs-mcp-universal');
+  await desktop.page.goto(universalDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await desktop.page.getByRole('heading', { name: 'Quick setup videos' }).waitFor();
+  assert.equal(
+    await desktop.page.locator('[data-setup-video]').count(),
+    3,
+    'Universal MCP docs must show all three setup videos.',
+  );
+  await desktop.page.getByRole('button', { name: 'Watch hosted setup guide for Claude Desktop' }).click();
+  const setupVideo = desktop.page.locator('#setupGuideVideo');
+  await desktop.page.waitForFunction(() => {
+    const video = document.querySelector('#setupGuideVideo');
+    return Number.isFinite(video?.duration) && video.duration > 0;
+  });
+  assert.equal(await setupVideo.getAttribute('src'), '/videos/mcp-setup/hosted-claude-desktop.mp4');
+  await desktop.page.getByRole('button', { name: 'Play video' }).click();
+  await desktop.page.waitForFunction(() => document.querySelector('#setupGuideVideo')?.currentTime > 0);
+  await desktop.page.getByRole('button', { name: 'Stop video' }).click();
+  assert.equal(await setupVideo.evaluate((video) => video.currentTime), 0);
+  await desktop.page.keyboard.press('Escape');
+  assert.equal(await desktop.page.locator('#setupVideoModal').getAttribute('aria-hidden'), 'true');
+
   const germanDocsUrl = new URL(englishDocsUrl);
   germanDocsUrl.searchParams.set('locale', 'de');
   await desktop.page.goto(germanDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
@@ -184,6 +207,16 @@ try {
     'Project: opencode.json or opencode.jsonc. Global: ~/.config/opencode/opencode.json or ~/.config/opencode/opencode.jsonc',
   );
   assert.ok((await mobile.page.locator('#mcpConfigBlock code').textContent()).includes('"type": "local"'));
+
+  const mobileUniversalDocsUrl = new URL(baseUrl);
+  mobileUniversalDocsUrl.searchParams.set('view', 'docs-mcp-universal');
+  mobileUniversalDocsUrl.searchParams.set('locale', 'ja');
+  await mobile.page.goto(mobileUniversalDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await mobile.page.getByRole('heading', { name: 'クイックセットアップ動画' }).waitFor();
+  await mobile.page.getByRole('button', { name: 'Claude Desktop のホスト型セットアップガイドを見る' }).click();
+  await mobile.page.getByRole('button', { name: '動画を再生' }).waitFor();
+  await mobile.page.getByRole('button', { name: '動画を停止' }).waitFor();
+  await mobile.page.getByRole('button', { name: '動画を全画面で開く' }).waitFor();
   await mobile.context.close();
 
   console.log('verify-mcp-client-tabs-browser: ok');

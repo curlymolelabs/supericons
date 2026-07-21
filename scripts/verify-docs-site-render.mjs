@@ -44,21 +44,44 @@ assert.match(articleMarkup, /search_icons/);
 assert.match(articleMarkup, /docs-shell__pager/);
 
 const universalMarkup = renderDocsArticleMarkup('docs-mcp-universal');
-assert.match(universalMarkup, /Video guide coming here/);
+assert.doesNotMatch(universalMarkup, /Video guide coming here/);
+assert.match(universalMarkup, /Quick setup videos/);
+assert.match(universalMarkup, /data-setup-video/);
+assert.match(universalMarkup, /\/videos\/mcp-setup\/hosted-claude-desktop\.mp4/);
+assert.match(universalMarkup, /\/videos\/mcp-setup\/local-cursor-ide\.mp4/);
+assert.match(universalMarkup, /\/videos\/mcp-setup\/local-codex-desktop\.mp4/);
+assert.match(universalMarkup, /Quick local setup/);
+assert.match(universalMarkup, /docs-universal-cli-command/);
+assert.match(universalMarkup, /npx -y @supericons\/mcp@latest/);
 assert.match(universalMarkup, /Choose your setup/);
-assert.match(universalMarkup, /Free setup/);
+assert.match(universalMarkup, /Hosted setup/);
+assert.match(universalMarkup, /Local setup/);
 assert.match(universalMarkup, /Premium\/Pro setup/);
 assert.match(universalMarkup, /href="#universal-premium"/);
 assert.match(universalMarkup, /Step 1: Add the MCP server/);
+assert.match(universalMarkup, /docs-universal-hosted-url/);
+assert.match(universalMarkup, /https:\/\/mcp\.supericons\.dev\/mcp/);
+assert.match(universalMarkup, /Authentication for free icon tools/);
 assert.match(universalMarkup, /docs-universal-field-name/);
 assert.match(universalMarkup, /docs-universal-field-command/);
 assert.match(universalMarkup, /docs-universal-field-arg-y/);
 assert.match(universalMarkup, /docs-universal-field-arg-package/);
 assert.match(universalMarkup, /Environment variables for free setup/);
+assert.match(universalMarkup, /Free hosted setup/);
+assert.match(universalMarkup, /Free local config-file setup/);
 assert.match(universalMarkup, /Step 2 for Premium\/Pro: Add your API key/);
 assert.match(universalMarkup, /docs-universal-premium-env-key/);
 assert.match(universalMarkup, /Keep your key private/);
 assert.match(universalMarkup, /Use Supericons MCP to search for a database icon/);
+
+for (const video of [
+  'hosted-claude-desktop.mp4',
+  'local-cursor-ide.mp4',
+  'local-codex-desktop.mp4',
+]) {
+  const stats = await fs.stat(path.join(rootDir, 'public', 'videos', 'mcp-setup', video));
+  assert.ok(stats.size > 1_000_000, `${video} must be a real video asset`);
+}
 
 setRuntimeLocale('zh-Hans');
 const localizedSidebar = renderDocsSidebar('docs-mcp-tools');

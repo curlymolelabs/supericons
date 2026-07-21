@@ -35,6 +35,22 @@ assert.ok(
   docsPagesSource.includes('Smithery authentication'),
   'docs must mention that Smithery hosted access may require Smithery authentication',
 );
+assert.ok(
+  docsPagesSource.includes("const hostedMcpUrl = 'https://mcp.supericons.dev/mcp'"),
+  'docs must publish the official hosted MCP endpoint',
+);
+assert.ok(
+  docsPagesSource.includes('Free public icon tools work without an account, API key, Node.js, or package installation.'),
+  'hosted setup must clearly state that free public icon tools are keyless',
+);
+assert.ok(
+  docsPagesSource.includes('Transport: streamable-http'),
+  'the agent setup prompt must include the hosted MCP transport',
+);
+assert.ok(
+  !docsPagesSource.includes('Video guide coming here'),
+  'live docs must not show the retired video placeholder',
+);
 for (const [sourceName, source] of [
   ['docs-pages.js', docsPagesSource],
   ['lib/docs-guide-config.js', docsGuideConfigSource],

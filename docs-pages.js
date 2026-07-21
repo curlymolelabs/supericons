@@ -7,6 +7,7 @@ import { PRODUCT_FACTS, PRODUCT_FACT_LABELS } from './lib/product-facts.js';
 const docsHref = (view) => `/?view=${view}`;
 const docsLink = (view, label) => `<a href="${docsHref(view)}" data-docs-view="${view}">${label}</a>`;
 const appLink = (view, label) => `<a href="/?view=${view}" data-docs-view="${view}">${label}</a>`;
+const hostedMcpUrl = 'https://mcp.supericons.dev/mcp';
 
 const MOTION_LAB_GROUP_GUIDE = Object.freeze({
   motion: {
@@ -43,6 +44,88 @@ const freeIconsAcrossLibrariesFreeLabel = PRODUCT_FACT_LABELS.freeIconsAcrossLib
 const openSourceSvgIconsAcrossLibrariesLabel = PRODUCT_FACT_LABELS.openSourceSvgIconsAcrossLibrariesLabel;
 const mcpToolCount = PRODUCT_FACTS.mcpToolCount;
 const mcpFreeToolCount = PRODUCT_FACTS.mcpFreeToolCount;
+
+const MCP_SETUP_VIDEOS = Object.freeze([
+  {
+    badge: 'Hosted',
+    title: 'Claude Desktop',
+    description: 'Connect Claude Desktop to the keyless hosted MCP server.',
+    src: '/videos/mcp-setup/hosted-claude-desktop.mp4',
+    icon: 'cloud_done',
+  },
+  {
+    badge: 'Local',
+    title: 'Cursor IDE',
+    description: 'Run the latest local MCP package with npx in Cursor.',
+    src: '/videos/mcp-setup/local-cursor-ide.mp4',
+    icon: 'terminal',
+  },
+  {
+    badge: 'Local',
+    title: 'Codex Desktop',
+    description: 'Connect the latest local MCP package in Codex Desktop.',
+    src: '/videos/mcp-setup/local-codex-desktop.mp4',
+    icon: 'data_object',
+  },
+]);
+
+function renderMcpSetupVideoGuide() {
+  const cards = MCP_SETUP_VIDEOS.map((video) => `
+          <button
+            class="docs-video-thumb"
+            type="button"
+            data-setup-video
+            data-video-src="${video.src}"
+            data-video-title="${video.title}"
+            data-video-eyebrow="${video.badge} setup"
+            data-video-description="${video.description}"
+            aria-label="Watch ${video.badge.toLowerCase()} setup guide for ${video.title}"
+          >
+            <span class="docs-video-thumb__art" aria-hidden="true">
+              <span class="docs-video-thumb__icon material-symbols-outlined">${video.icon}</span>
+              <span class="docs-video-thumb__play">
+                <span class="material-symbols-outlined">play_arrow</span>
+              </span>
+              <span class="docs-video-thumb__line docs-video-thumb__line--one"></span>
+              <span class="docs-video-thumb__line docs-video-thumb__line--two"></span>
+            </span>
+            <span class="docs-video-thumb__body">
+              <span class="docs-video-thumb__badge">${video.badge}</span>
+              <strong>${video.title}</strong>
+              <span>${video.description}</span>
+            </span>
+          </button>`)
+    .join('');
+
+  return `
+      <section class="docs-section docs-video-guide" id="universal-setup-videos" aria-labelledby="universal-setup-videos-title">
+        <div class="docs-video-guide__head">
+          <div>
+            <h2 class="docs-section__title" id="universal-setup-videos-title">Quick setup videos</h2>
+            <p class="docs-section__copy">Watch the setup flow, then use the current values below. These videos were recorded in May 2026, so client screens may move while the connection details stay the same.</p>
+          </div>
+          <a class="docs-btn docs-btn--secondary" href="#universal-ide-form">Use setup fields</a>
+        </div>
+        <div class="docs-video-grid" aria-label="Supericons MCP setup videos">
+${cards}
+        </div>
+      </section>
+    `;
+}
+
+function renderMcpCliSetupGuide() {
+  return `
+      <section class="docs-section" id="universal-cli-setup">
+        <h2 class="docs-section__title">Quick local setup</h2>
+        <p class="docs-section__copy">If your client asks for a local command, use this one-line setup. If it asks for separate fields, put <code>npx</code> in the command field and add <code>-y</code> and <code>@supericons/mcp@latest</code> as arguments. The package name follows the npm latest tag.</p>
+        <div class="docs-code docs-code--with-copy docs-code--compact">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-cli-command">Copy</button>
+          <pre><code id="docs-universal-cli-command">npx -y @supericons/mcp@latest</code></pre>
+        </div>
+        <p class="docs-section__copy">If your client asks for a remote server URL instead, use <code>${hostedMcpUrl}</code>.</p>
+      </section>
+    `;
+}
 
 function renderPlaceholderBody({ title, summary, todayLinks = [] }) {
   const linksMarkup = todayLinks.length
@@ -299,27 +382,60 @@ const docsPages = {
     pageTitle: 'Universal MCP Setup',
     summary: 'The field values and config blocks for MCP-capable coding agents and IDEs.',
     bodyHtml: `
-      <section class="docs-callout" id="universal-video-placeholder">
-        <h3>Video guide coming here</h3>
-        <p>A short IDE setup video will go here. It should show the MCP settings screen, the exact fields to fill, saving the server, restarting the agent, and running the first Supericons search.</p>
-      </section>
+      ${renderMcpSetupVideoGuide()}
+      ${renderMcpCliSetupGuide()}
       <section class="docs-section" id="universal-setup-types">
         <h2 class="docs-section__title">Choose your setup</h2>
         <div class="docs-grid docs-grid--cards">
           <article class="docs-card">
-            <h3>Free setup</h3>
-            <p>Use the MCP server fields below. Leave environment variables empty. This works for free icon search.</p>
+            <h3>Hosted setup</h3>
+            <p>Use this when your client supports remote or Streamable HTTP MCP servers. Free public icon tools work without an account, API key, Node.js, or package installation.</p>
+          </article>
+          <article class="docs-card">
+            <h3>Local setup</h3>
+            <p>Use this when your client supports local stdio MCP servers, or when you need purchased packs or Pro tools through <code>SUPERICONS_API_KEY</code>.</p>
           </article>
           <article class="docs-card">
             <h3><a href="#universal-premium">Premium/Pro setup</a></h3>
-            <p>Use the same MCP server fields below. Then add one environment variable: <code>SUPERICONS_API_KEY</code>.</p>
+            <p>Use the local setup below, then add one environment variable: <code>SUPERICONS_API_KEY</code>.</p>
           </article>
         </div>
       </section>
       <section class="docs-section" id="universal-ide-form">
         <h2 class="docs-section__title">Step 1: Add the MCP server</h2>
-        <p class="docs-section__copy">These fields are the same for both free and Premium/Pro setup. Copy each value into the matching field in your IDE.</p>
-        <div class="docs-field-list" aria-label="MCP setup field values">
+        <p class="docs-section__copy">Choose hosted when your client asks for a server URL. Choose local when it asks for a command and arguments.</p>
+        <h3>Hosted setup fields</h3>
+        <div class="docs-field-list" aria-label="Hosted MCP setup field values">
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Name</span>
+              <code id="docs-universal-hosted-name">supericons</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-hosted-name">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Transport</span>
+              <code id="docs-universal-hosted-transport">streamable-http</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-hosted-transport">Copy</button>
+          </div>
+          <div class="docs-field-row">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Server URL</span>
+              <code id="docs-universal-hosted-url">${hostedMcpUrl}</code>
+            </div>
+            <button class="docs-copy docs-copy--small" type="button" data-copy-target="docs-universal-hosted-url">Copy</button>
+          </div>
+          <div class="docs-field-row docs-field-row--muted">
+            <div class="docs-field-row__body">
+              <span class="docs-field-row__label">Authentication for free icon tools</span>
+              <span class="docs-field-row__value">None. Connect and start searching.</span>
+            </div>
+          </div>
+        </div>
+        <h3>Local setup fields</h3>
+        <div class="docs-field-list" aria-label="Local MCP setup field values">
           <div class="docs-field-row">
             <div class="docs-field-row__body">
               <span class="docs-field-row__label">Name</span>
@@ -370,6 +486,10 @@ const docsPages = {
         </div>
         <div class="docs-grid docs-grid--cards">
           <article class="docs-card">
+            <h3>If your IDE asks for a server URL</h3>
+            <p>Use <code>${hostedMcpUrl}</code>. Do not add an API key for free public icon tools.</p>
+          </article>
+          <article class="docs-card">
             <h3>If your IDE has separate argument rows</h3>
             <p>Add two arguments. First add <code>-y</code>. Then add <code>@supericons/mcp@latest</code>.</p>
           </article>
@@ -379,11 +499,11 @@ const docsPages = {
           </article>
           <article class="docs-card">
             <h3>If your IDE asks for environment variables</h3>
-            <p>For free setup, leave them empty. For Premium/Pro setup, add <code>SUPERICONS_API_KEY</code> in Step 2.</p>
+            <p>For hosted setup and free local setup, leave them empty. For account features through local setup, add <code>SUPERICONS_API_KEY</code> in Step 2.</p>
           </article>
           <article class="docs-card">
-            <h3>If your IDE asks for HTTP</h3>
-            <p>Choose <code>stdio</code> instead when your client supports local MCP servers. This setup runs the local Supericons MCP package through <code>npx</code>.</p>
+            <h3>If the hosted URL does not connect</h3>
+            <p>Check that your client supports remote or Streamable HTTP MCP servers. If it supports local MCP only, use the <code>npx</code> setup.</p>
           </article>
         </div>
       </section>
@@ -394,7 +514,13 @@ const docsPages = {
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-agent-install-prompt">Copy</button>
           <pre><code id="docs-universal-agent-install-prompt">Connect the Supericons MCP server to this IDE.
 
-Use these MCP values:
+Prefer this keyless hosted setup when the IDE supports remote or Streamable HTTP MCP servers:
+Name: supericons
+Transport: streamable-http
+Server URL: ${hostedMcpUrl}
+Authentication: none
+
+Otherwise use this local stdio setup:
 Name: supericons
 Transport: stdio
 Command: npx
@@ -403,8 +529,25 @@ Arguments: -y @supericons/mcp@latest
 After saving, restart or reconnect MCP if this IDE requires it. Then test it by asking Supericons MCP to search for a database icon.</code></pre>
         </div>
       </section>
+      <section class="docs-section" id="universal-hosted">
+        <h2 class="docs-section__title">Free hosted setup</h2>
+        <p class="docs-section__copy">Hosted MCP is the simplest path when your client supports remote servers. It uses the current hosted Search v2 service and needs no package installation for free public icon tools.</p>
+        <p class="docs-section__copy">Use this common JSON shape when your client accepts <code>type</code> and <code>url</code> fields. Client field names can differ, so use the setup fields above if this exact shape is not accepted.</p>
+        <div class="docs-code docs-code--with-copy">
+          <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-hosted-json">Copy</button>
+          <pre><code id="docs-universal-hosted-json">{
+  "mcpServers": {
+    "supericons": {
+      "type": "streamable-http",
+      "url": "${hostedMcpUrl}"
+    }
+  }
+}</code></pre>
+        </div>
+        <p class="docs-section__copy">If your client supports local MCP only, use the local setup below.</p>
+      </section>
       <section class="docs-section" id="universal-free">
-        <h2 class="docs-section__title">Free config-file setup</h2>
+        <h2 class="docs-section__title">Free local config-file setup</h2>
         <p class="docs-section__copy">Free icons work without an account or API key. Any coding agent that can launch a local stdio MCP server can use Supericons.</p>
         <p class="docs-section__copy">Use this JSON config block when your client accepts <code>mcpServers</code>, <code>command</code>, and <code>args</code> fields:</p>
         <div class="docs-code docs-code--with-copy">
@@ -447,7 +590,7 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
       </section>
       <section class="docs-section" id="universal-premium">
         <h2 class="docs-section__title">Step 2 for Premium/Pro: Add your API key</h2>
-        <p class="docs-section__copy">Skip this step if you only want free icon search. Add this step if you want premium icons you own, Motion Lab, or Converter.</p>
+        <p class="docs-section__copy">Skip this step if you only want free icon tools. Use the local setup and add this step when you need purchased packs, Motion Lab, or Converter through your account.</p>
         <h3>If your IDE has environment variable fields</h3>
         <p class="docs-section__copy">Click Add environment variable. Put <code>SUPERICONS_API_KEY</code> in the key field. Put your real Supericons API key in the value field.</p>
         <div class="docs-field-list" aria-label="Premium MCP setup field values">
@@ -531,6 +674,10 @@ Use Supericons MCP to recommend Lucide outline icons for an AI dashboard sidebar
           <article class="docs-card">
             <h3>The arguments do not work</h3>
             <p>If separate rows fail, try one argument line: <code>-y @supericons/mcp@latest</code>. If one line fails, split it into <code>-y</code> and <code>@supericons/mcp@latest</code>.</p>
+          </article>
+          <article class="docs-card">
+            <h3>The hosted URL does not work</h3>
+            <p>Confirm your client supports remote or Streamable HTTP MCP servers. If it does not, use the local <code>npx</code> setup instead.</p>
           </article>
         </div>
       </section>

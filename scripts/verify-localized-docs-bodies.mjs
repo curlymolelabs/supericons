@@ -40,7 +40,12 @@ const STALE_MCP_SETUP_PATTERNS = [
 ];
 
 function bodyMetrics(bodyHtml = '') {
-  const tags = [...bodyHtml.matchAll(/<[^>]+>/g)].map((match) => match[0]);
+  const tags = [...bodyHtml.matchAll(/<[^>]+>/g)].map((match) =>
+    match[0].replace(
+      /\s(aria-label|data-video-eyebrow|data-video-description|title)="[^"]*"/g,
+      ' $1="<localized>"',
+    ),
+  );
   const sectionIds = [...bodyHtml.matchAll(/<section\b[^>]*id="([^"]+)"/g)].map((match) => match[1]);
   const headingCount = [...bodyHtml.matchAll(/<h[2-4]\b/g)].length;
   const codeCount = [...bodyHtml.matchAll(/<code\b/g)].length;

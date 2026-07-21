@@ -528,6 +528,43 @@
             </div>
         </div>
 
+        <!-- Setup Video Modal -->
+        <div class="setup-video-modal" id="setupVideoModal" aria-hidden="true">
+            <div class="setup-video-modal__backdrop" id="setupVideoBackdrop"></div>
+            <div class="setup-video-modal__panel" role="dialog" aria-modal="true" aria-labelledby="setupVideoTitle" tabindex="-1">
+                <button class="setup-video-modal__close" id="setupVideoClose" type="button" aria-label="Close video" data-i18n-aria-label="setupVideo.closeVideo">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="setup-video-modal__head">
+                    <p class="setup-video-modal__eyebrow" id="setupVideoEyebrow" data-i18n="setupVideo.guide">Setup guide</p>
+                    <h2 class="setup-video-modal__title" id="setupVideoTitle" data-i18n="setupVideo.defaultTitle">Supericons setup</h2>
+                    <p class="setup-video-modal__desc" id="setupVideoDescription" data-i18n="setupVideo.defaultDescription">Watch the setup guide.</p>
+                </div>
+                <div class="setup-video-modal__stage">
+                    <video class="setup-video-modal__video" id="setupGuideVideo" preload="metadata" playsinline></video>
+                    <p class="setup-video-modal__status" id="setupVideoStatus" role="status" hidden>Video could not be loaded. Use the current setup fields below the video cards.</p>
+                </div>
+                <div class="setup-video-modal__controls" aria-label="Video controls" data-i18n-aria-label="setupVideo.videoControls">
+                    <button class="setup-video-modal__control" id="setupVideoPlayPause" type="button" aria-label="Play video" data-i18n-aria-label="setupVideo.playVideo">
+                        <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
+                        <span id="setupVideoPlayPauseLabel" data-i18n="setupVideo.play">Play</span>
+                    </button>
+                    <button class="setup-video-modal__control" id="setupVideoStop" type="button" aria-label="Stop video" data-i18n-aria-label="setupVideo.stopVideo">
+                        <span class="material-symbols-outlined" aria-hidden="true">stop</span>
+                        <span data-i18n="setupVideo.stop">Stop</span>
+                    </button>
+                    <label class="setup-video-modal__progress">
+                        <span id="setupVideoTime">0:00 / 0:00</span>
+                        <input id="setupVideoProgress" type="range" min="0" max="0" value="0" step="0.1" aria-label="Video progress" data-i18n-aria-label="setupVideo.videoProgress">
+                    </label>
+                    <button class="setup-video-modal__control" id="setupVideoFullscreen" type="button" aria-label="Open video fullscreen" data-i18n-aria-label="setupVideo.openFullscreen">
+                        <span class="material-symbols-outlined" aria-hidden="true">fullscreen</span>
+                        <span data-i18n="setupVideo.fullscreen">Fullscreen</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Auth Modal -->
         <div class="auth-modal" id="authModal">
             <div class="auth-modal__backdrop" id="authBackdrop"></div>

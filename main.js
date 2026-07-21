@@ -4440,6 +4440,223 @@ function showToast(message, duration = 2000) {
 }
 
 // ============================================================
+// Setup Video Preview
+// ============================================================
+const setupVideoEls = {
+  modal: $('#setupVideoModal'),
+  backdrop: $('#setupVideoBackdrop'),
+  panel: $('#setupVideoModal .setup-video-modal__panel'),
+  stage: $('#setupVideoModal .setup-video-modal__stage'),
+  close: $('#setupVideoClose'),
+  video: $('#setupGuideVideo'),
+  status: $('#setupVideoStatus'),
+  eyebrow: $('#setupVideoEyebrow'),
+  title: $('#setupVideoTitle'),
+  description: $('#setupVideoDescription'),
+  playPause: $('#setupVideoPlayPause'),
+  playPauseLabel: $('#setupVideoPlayPauseLabel'),
+  stop: $('#setupVideoStop'),
+  fullscreen: $('#setupVideoFullscreen'),
+  progress: $('#setupVideoProgress'),
+  time: $('#setupVideoTime'),
+};
+let lastSetupVideoTrigger = null;
+
+function getSetupVideoText(key, fallback) {
+  const translationKey = `setupVideo.${key}`;
+  const value = t(translationKey);
+  return value && value !== translationKey ? value : fallback;
+}
+
+function isSetupVideoPreviewOpen() {
+  return setupVideoEls.modal?.classList.contains('open') || false;
+}
+
+function formatVideoTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds <= 0) return '0:00';
+  const totalSeconds = Math.floor(seconds);
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = String(totalSeconds % 60).padStart(2, '0');
+  return `${minutes}:${remainingSeconds}`;
+}
+
+function getSetupVideoDuration() {
+  const duration = setupVideoEls.video?.duration || 0;
+  return Number.isFinite(duration) ? duration : 0;
+}
+
+function setSetupVideoError(isError) {
+  if (setupVideoEls.status) {
+    setupVideoEls.status.hidden = !isError;
+    if (isError) {
+      setupVideoEls.status.textContent = getSetupVideoText(
+        'unavailable',
+        'Video could not be loaded. Use the current setup fields below the video cards.',
+      );
+    }
+  }
+  setupVideoEls.stage?.classList.toggle('has-error', isError);
+}
+
+function syncSetupVideoControls() {
+  const video = setupVideoEls.video;
+  if (!video) return;
+
+  const isPaused = video.paused || video.ended;
+  const playIcon = setupVideoEls.playPause?.querySelector('.material-symbols-outlined');
+  if (playIcon) playIcon.textContent = isPaused ? 'play_arrow' : 'pause';
+  if (setupVideoEls.playPauseLabel) {
+    setupVideoEls.playPauseLabel.textContent = isPaused
+      ? getSetupVideoText('play', 'Play')
+      : getSetupVideoText('pause', 'Pause');
+  }
+  setupVideoEls.playPause?.setAttribute(
+    'aria-label',
+    isPaused ? getSetupVideoText('playVideo', 'Play video') : getSetupVideoText('pauseVideo', 'Pause video'),
+  );
+
+  const duration = getSetupVideoDuration();
+  if (setupVideoEls.progress) {
+    setupVideoEls.progress.max = String(duration || 0);
+    setupVideoEls.progress.value = String(duration ? Math.min(video.currentTime || 0, duration) : 0);
+    setupVideoEls.progress.disabled = !duration;
+  }
+  if (setupVideoEls.time) {
+    setupVideoEls.time.textContent = `${formatVideoTime(video.currentTime)} / ${formatVideoTime(duration)}`;
+  }
+}
+
+function openSetupVideoPreview(trigger) {
+  const modal = setupVideoEls.modal;
+  const video = setupVideoEls.video;
+  if (!modal || !video || !trigger?.dataset.videoSrc) return;
+
+  lastSetupVideoTrigger = trigger;
+  if (setupVideoEls.eyebrow) setupVideoEls.eyebrow.textContent = trigger.dataset.videoEyebrow || getSetupVideoText('guide', 'Setup guide');
+  if (setupVideoEls.title) setupVideoEls.title.textContent = trigger.dataset.videoTitle || getSetupVideoText('defaultTitle', 'Supericons setup');
+  if (setupVideoEls.description) setupVideoEls.description.textContent = trigger.dataset.videoDescription || getSetupVideoText('defaultDescription', 'Watch the setup guide.');
+
+  setSetupVideoError(false);
+  video.pause();
+  video.src = trigger.dataset.videoSrc;
+  video.muted = true;
+  video.currentTime = 0;
+  video.load();
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('setup-video-modal-open');
+  syncSetupVideoControls();
+  window.umami?.track('mcp-setup-video-open', { video: trigger.dataset.videoTitle || 'unknown' });
+  requestAnimationFrame(() => setupVideoEls.playPause?.focus());
+}
+
+function closeSetupVideoPreview({ restoreFocus = true } = {}) {
+  const modal = setupVideoEls.modal;
+  const video = setupVideoEls.video;
+  if (!modal || !video || !isSetupVideoPreviewOpen()) return;
+
+  video.pause();
+  video.currentTime = 0;
+  video.removeAttribute('src');
+  video.load();
+  setSetupVideoError(false);
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('setup-video-modal-open');
+  syncSetupVideoControls();
+  if (restoreFocus && lastSetupVideoTrigger) {
+    lastSetupVideoTrigger.focus({ preventScroll: true });
+  }
+}
+
+async function toggleSetupVideoPlayback() {
+  const video = setupVideoEls.video;
+  if (!video) return;
+
+  if (video.paused || video.ended) {
+    try {
+      await video.play();
+    } catch {
+      setSetupVideoError(true);
+    }
+  } else {
+    video.pause();
+  }
+  syncSetupVideoControls();
+}
+
+function stopSetupVideoPlayback() {
+  const video = setupVideoEls.video;
+  if (!video) return;
+  video.pause();
+  video.currentTime = 0;
+  syncSetupVideoControls();
+}
+
+async function openSetupVideoFullscreen() {
+  const video = setupVideoEls.video;
+  if (!video) return;
+
+  if (typeof video.webkitEnterFullscreen === 'function') {
+    video.webkitEnterFullscreen();
+    return;
+  }
+
+  const fullscreenTarget = video.requestFullscreen
+    ? video
+    : setupVideoEls.stage?.requestFullscreen
+      ? setupVideoEls.stage
+      : setupVideoEls.panel;
+
+  if (fullscreenTarget?.requestFullscreen) {
+    try {
+      await fullscreenTarget.requestFullscreen();
+    } catch {
+      showToast(getSetupVideoText('fullscreenFailed', 'Fullscreen is not available in this browser.'));
+    }
+  }
+}
+
+function initSetupVideoPreview() {
+  if (!setupVideoEls.modal || !setupVideoEls.video) return;
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target?.closest?.('[data-setup-video]');
+    if (!trigger) return;
+    event.preventDefault();
+    openSetupVideoPreview(trigger);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isSetupVideoPreviewOpen()) {
+      closeSetupVideoPreview();
+    }
+  });
+  setupVideoEls.backdrop?.addEventListener('click', () => closeSetupVideoPreview());
+  setupVideoEls.close?.addEventListener('click', () => closeSetupVideoPreview());
+  setupVideoEls.playPause?.addEventListener('click', () => {
+    void toggleSetupVideoPlayback();
+  });
+  setupVideoEls.stop?.addEventListener('click', stopSetupVideoPlayback);
+  setupVideoEls.fullscreen?.addEventListener('click', () => {
+    void openSetupVideoFullscreen();
+  });
+  setupVideoEls.progress?.addEventListener('input', () => {
+    const duration = getSetupVideoDuration();
+    if (!duration) return;
+    setupVideoEls.video.currentTime = Number(setupVideoEls.progress.value || 0);
+    syncSetupVideoControls();
+  });
+  setupVideoEls.video.addEventListener('error', () => setSetupVideoError(true));
+
+  for (const eventName of ['loadedmetadata', 'durationchange', 'timeupdate', 'play', 'pause', 'ended']) {
+    setupVideoEls.video.addEventListener(eventName, syncSetupVideoControls);
+  }
+}
+
+initSetupVideoPreview();
+
+// ============================================================
 // Landing Hero Dismiss (S7)
 // ============================================================
 function dismissHero() {
