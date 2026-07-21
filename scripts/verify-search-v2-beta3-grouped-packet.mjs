@@ -62,10 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 5);
-assert.equal(manifest.packet_revision, 9);
+assert.equal(manifest.packet_revision, 10);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '33c5127de87ea08bb59f43c0da36bda1a7db4cb27f19228cf9ba90015c119a50',
+  '6f211efd352abb242194c58a641e451c9ded80c5d0549c7fa4eccd5e2b335e6f',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -112,8 +112,13 @@ assert.equal(manifest.live_gates.all_routed_samples_counted, true);
 assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
 assert.equal(manifest.live_gates.failed_samples_preserved, true);
 assert.equal(manifest.live_gates.response_size_recorded, true);
-assert.equal(manifest.live_gates.reduced_candidate_payload, true);
-assert.deepEqual(manifest.live_gates.candidate_limits_by_requested_count, [5, 6, 9, 10, 10]);
+assert.equal(manifest.live_gates.original_candidate_pool_preserved, true);
+assert.equal(manifest.live_gates.candidate_only_transport, true);
+assert.equal(manifest.live_gates.candidate_only_ranked_identity_parity, true);
+assert.equal(manifest.live_gates.candidate_only_semantic_parity, true);
+assert.equal(manifest.live_gates.candidate_only_final_svg_reads, 0);
+assert.equal(manifest.live_gates.candidate_only_public_semantic_reads, 1);
+assert.equal(manifest.live_gates.local_candidate_svg_hydration, true);
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
@@ -229,6 +234,11 @@ const paths = {
     'scripts/verify-search-v2-shared-candidate-rpc-benchmark-policy.mjs',
   recommendation: 'mcp/recommend-icons.js',
   recommendationFixture: 'scripts/verify-recommend-icons-grouped-search.mjs',
+  candidateHydration: 'mcp/hosted-candidate-hydration.js',
+  candidateHydrationFixture: 'scripts/verify-hosted-candidate-hydration.mjs',
+  groupedClient: 'mcp/hosted-search-client.js',
+  groupedClientFixture: 'scripts/verify-hosted-search-grouped-client.mjs',
+  sharedPipelineFixture: 'scripts/verify-search-v2-shared-recommendation-pipeline.ts',
   releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
   concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
@@ -237,6 +247,13 @@ const live = normalizedText(readFileSync(paths.live, 'utf8'));
 const latency = normalizedText(readFileSync(paths.latency, 'utf8'));
 const recommendation = normalizedText(readFileSync(paths.recommendation, 'utf8'));
 const recommendationFixture = normalizedText(readFileSync(paths.recommendationFixture, 'utf8'));
+const candidateHydration = normalizedText(readFileSync(paths.candidateHydration, 'utf8'));
+const candidateHydrationFixture = normalizedText(
+  readFileSync(paths.candidateHydrationFixture, 'utf8'),
+);
+const groupedClient = normalizedText(readFileSync(paths.groupedClient, 'utf8'));
+const groupedClientFixture = normalizedText(readFileSync(paths.groupedClientFixture, 'utf8'));
+const sharedPipelineFixture = normalizedText(readFileSync(paths.sharedPipelineFixture, 'utf8'));
 const rollback = normalizedText(readFileSync(paths.rollback, 'utf8'));
 const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
 const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
@@ -407,15 +424,23 @@ assert.ok(
 );
 assert.match(latency, /process\.exitCode = 1/);
 
-assert.match(recommendation, /export function getRecommendationCandidateLimit/);
-assert.match(recommendation, /Math\.min\(10, Math\.max\(requested \* 3, 5\)\)/);
+assert.equal(recommendation.includes('getRecommendationCandidateLimit'), false);
 assert.equal(
-  (recommendation.match(/limit: getRecommendationCandidateLimit\(limitPerSlot\)/g) || []).length,
+  (recommendation.match(/limit: Math\.max\(limitPerSlot \* 5, 10\)/g) || []).length,
   2,
-  'Grouped search and individual fallback must use the same bounded candidate limit.',
+  'Grouped search and individual fallback must preserve the original candidate pool.',
 );
-assert.match(recommendationFixture, /candidate_limits_by_requested_count/);
-assert.match(recommendationFixture, /\[5, 6, 9, 10, 10\]/);
+assert.match(recommendationFixture, /candidate_limit_preserved: 10/);
+assert.match(groupedClient, /candidate_only: true/);
+assert.match(groupedClientFixture, /recommendation_candidate_only_transport: true/);
+assert.match(candidateHydration, /createHostedIconHydrator/);
+assert.match(candidateHydration, /row\.svg \|\| localIcon\?\.svg/);
+assert.match(candidateHydrationFixture, /hosted_semantic_profile_preserved: true/);
+assert.match(candidateHydrationFixture, /material_deferred_hydration_preserved: true/);
+assert.match(sharedPipelineFixture, /candidate_only_ranked_identity_parity: true/);
+assert.match(sharedPipelineFixture, /candidate_only_svg_reads/);
+assert.match(sharedPipelineFixture, /candidate_only_public_semantic_reads/);
+assert.match(sharedPipelineFixture, /candidateOnlyResponseCharacters < fullResponseCharacters \* 0\.5/);
 
 assert.match(rollback, /retained_for_endpoint_dependency/);
 assert.match(rollback, /database_rollback_count/);
@@ -452,6 +477,7 @@ run('node', [paths.databaseFixture]);
 run('node', [paths.databaseSmoke]);
 run('node', [paths.productionBenchmarkPolicyFixture]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
+run('node', ['scripts/verify-hosted-candidate-hydration.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);
 run('node', ['scripts/verify-recommend-icons-grouped-search.mjs']);

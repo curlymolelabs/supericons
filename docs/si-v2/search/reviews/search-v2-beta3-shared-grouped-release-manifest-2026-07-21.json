@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 5,
-  "packet_revision": 9,
-  "supersedes_manifest_sha256": "33c5127de87ea08bb59f43c0da36bda1a7db4cb27f19228cf9ba90015c119a50",
-  "rebind_reason": "Reduce unnecessary recommendation candidates for small requested result counts while preserving ranking headroom, parity, fallback behavior, and the unchanged end-to-end latency gates.",
+  "packet_revision": 10,
+  "supersedes_manifest_sha256": "6f211efd352abb242194c58a641e451c9ded80c5d0549c7fa4eccd5e2b335e6f",
+  "rebind_reason": "Preserve the original recommendation candidate pool and semantic profile while removing SVG and unused ranking payload from grouped recommendation transport. Restore non-Material SVGs from the pinned MCP package index.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot p95 3693 ms exceeds 3000 ms",
@@ -22,8 +22,8 @@
   },
   "project_ref": "kcjmkakdhsqplvasgkjv",
   "function_name": "mcp-search-grouped",
-  "source_revision": "194dfaf2e7c6683805d4a6e3dd6f6b88b10bfc0a",
-  "source_tree": "5bfe541927cc9e668086fc5b808874fe9e856880",
+  "source_revision": "6b9d04544371ce13bffafbb5441796dfbdb46b8c",
+  "source_tree": "675991f22eda3bcd035a0577d9118872c8fa2b2f",
   "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
   "grouped_function_present_before": false,
   "stable_function": {
@@ -88,8 +88,12 @@
       "sha256": "28d45573a3eb5c9303265f59db7e00ad1d8851ce5b339947188497db3a45ceb3"
     },
     {
+      "path": "mcp/hosted-candidate-hydration.js",
+      "sha256": "512acc3a6e2b5a23bc1aaeaade0a0729606511aa5752ecf91de1411387176c6e"
+    },
+    {
       "path": "mcp/hosted-search-client.js",
-      "sha256": "9facf7830a649855e4ab1ffc414a36f1939e892b2bf283b5c79650fb47895ae7"
+      "sha256": "c65ff115b6c2cb17298d8077f30ec9ce6a6907858bd73dbbdad0e0eb78580f2d"
     },
     {
       "path": "mcp/hosted-search-resilience.js",
@@ -97,15 +101,15 @@
     },
     {
       "path": "mcp/index.js",
-      "sha256": "e69358520d3fdc78b3e1a9be88c8e4ef8245041b8abbed42e3b41f8e1dd20577"
+      "sha256": "6cc5e9816a458751cfcedeca6355618f35ec908a49bcbd183c6b378c5514085f"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "5b52f3c76923465c592b899bf1f4b0526e4438dd20f5ada10cf5e6c5eed99229"
+      "sha256": "ca2464d2f7f1f3f71939678a729d91fe195790768e41c5b20d9239d71276e64e"
     },
     {
       "path": "mcp/recommend-icons.js",
-      "sha256": "4b2eff7a8143b7810639324f3287ea2c1fe5956f432e967f5b50d208dc0b4934"
+      "sha256": "f3705b6acb1f981859f56cbf795c05cc7240234740767219f27422b8a20e2f11"
     },
     {
       "path": "mcp/release-channel.js",
@@ -120,8 +124,12 @@
       "sha256": "86e65ef832900d0310abfaed38ee0eb830ad5b049b7627bb53e096ead879ee10"
     },
     {
+      "path": "scripts/verify-hosted-candidate-hydration.mjs",
+      "sha256": "7d7d337bfb1b48c8786a2d72eb46fac32053f60b123b3743e36ee163ddd957b0"
+    },
+    {
       "path": "scripts/verify-hosted-search-grouped-client.mjs",
-      "sha256": "8a07b918235b8e77b92a8588be81da4f2d9837895e794db7f8af1249273f6acd"
+      "sha256": "1ade9518a8f6a6bde2635c7b61a8c0f876e09724981c2f828b7fb48ae7fd24e9"
     },
     {
       "path": "scripts/verify-hosted-search-resilience.mjs",
@@ -133,7 +141,7 @@
     },
     {
       "path": "scripts/verify-recommend-icons-grouped-search.mjs",
-      "sha256": "d7e27c9f2db7ad6e7f84692f3092aab0fd168fada01637ca493178c181fe982a"
+      "sha256": "2a42c45f61689a7dd978422e1e43cbcbd40068cd2d2e16b8212a2117320bad34"
     },
     {
       "path": "scripts/verify-search-v2-deterministic-mcp-default.mjs",
@@ -145,7 +153,7 @@
     },
     {
       "path": "scripts/verify-search-v2-shared-recommendation-pipeline.ts",
-      "sha256": "f45d3e03b1fb3c136c1ac0b27a6187c2df76f9d5e5cfaad7da64f6fedec706fd"
+      "sha256": "e643bbbc22c41079b450b9fcbd64afcfaa0804dc04232160601e54aefdbc546d"
     },
     {
       "path": "supabase/functions/_shared/search-engine/candidate-retrieval.ts",
@@ -185,7 +193,7 @@
     },
     {
       "path": "supabase/functions/_shared/search-engine/shared-recommendation-search-request.ts",
-      "sha256": "5351f06f8d8bd1b0dee2e7a3d5b4de005fe28f37afaeb0db82db8251304c1246"
+      "sha256": "29bc3fdb64259d1e0dbd1c08e184354eb0cbbb581b8a638f3c0f7932c69dab3b"
     },
     {
       "path": "supabase/functions/_shared/search-engine/stage-timing.ts",
@@ -211,7 +219,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "6cfaf3dd65a45583e0a5b38a8aafa7d0d1a364882106fb7362a429f6ee5a8d1a"
+      "sha256": "ec7b6f2beeba85ba87f7702e32a88a3c5ff7d4c90cf858ae9c2fd9ecd04e1d96"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -296,8 +304,13 @@
     "rate_window_reset_ms": 65000,
     "failed_samples_preserved": true,
     "response_size_recorded": true,
-    "reduced_candidate_payload": true,
-    "candidate_limits_by_requested_count": [5, 6, 9, 10, 10],
+    "original_candidate_pool_preserved": true,
+    "candidate_only_transport": true,
+    "candidate_only_ranked_identity_parity": true,
+    "candidate_only_semantic_parity": true,
+    "candidate_only_final_svg_reads": 0,
+    "candidate_only_public_semantic_reads": 1,
+    "local_candidate_svg_hydration": true,
     "rollback_function_id_pinned": true,
     "rollback_shared_candidate_definition_pinned": true,
     "committed_negative_path_harness": true,
