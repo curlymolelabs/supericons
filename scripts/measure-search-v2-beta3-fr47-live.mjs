@@ -216,6 +216,10 @@ function readNextWorkerTiming() {
   assert.ok(Number.isFinite(timing?.total_ms));
   assert.ok(Number.isFinite(timing?.stages_ms?.candidate_search));
   assert.ok(Number.isFinite(timing?.stages_ms?.audit_write));
+  assert.ok(Number.isInteger(timing?.counts?.query_variants));
+  assert.ok(Number.isInteger(timing?.counts?.candidate_rows));
+  assert.ok(Number.isInteger(timing?.counts?.final_results));
+  assert.ok(Number.isFinite(timing?.approximate_sizes?.response_json_characters));
   return {
     logical_query_count: record.logical_query_count,
     timing,
@@ -281,6 +285,10 @@ async function runTimedRecommendation(scenario) {
     handler_total_ms: workerRecord.timing.total_ms,
     candidate_search_ms: workerRecord.timing.stages_ms.candidate_search,
     audit_write_ms: workerRecord.timing.stages_ms.audit_write,
+    query_variants: workerRecord.timing.counts.query_variants,
+    candidate_rows: workerRecord.timing.counts.candidate_rows,
+    final_results: workerRecord.timing.counts.final_results,
+    response_json_characters: workerRecord.timing.approximate_sizes.response_json_characters,
   };
 }
 

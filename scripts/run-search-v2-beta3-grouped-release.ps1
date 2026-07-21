@@ -48,10 +48,10 @@ if (-not [string]::IsNullOrWhiteSpace($SimulationEvidenceDirectory)) {
   }
   $EvidenceRoot = $resolvedEvidenceRoot
 }
-$LiveEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-live-2026-07-21.json'
-$LatencyEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-fr47-live-2026-07-21.json'
-$CompletionEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-completion-2026-07-21.json'
-$RollbackEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json'
+$LiveEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-live-attempt5-2026-07-21.json'
+$LatencyEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-fr47-live-attempt5-2026-07-21.json'
+$CompletionEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-completion-attempt5-2026-07-21.json'
+$RollbackEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-rollback-attempt5-2026-07-21.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -523,8 +523,8 @@ try {
       updated_at = [long]$preStable.updated_at
       mutated = $false
     }
-    live_evidence = 'references/verification/search-v2-beta3-indexed-grouped-live-2026-07-21.json'
-    latency_evidence = 'references/verification/search-v2-beta3-indexed-fr47-live-2026-07-21.json'
+    live_evidence = 'references/verification/search-v2-beta3-indexed-grouped-live-attempt5-2026-07-21.json'
+    latency_evidence = 'references/verification/search-v2-beta3-indexed-fr47-live-attempt5-2026-07-21.json'
     rollback_used = $false
     finished_at = (Get-Date).ToUniversalTime().ToString('o')
   })

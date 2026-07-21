@@ -209,6 +209,10 @@ async function verifyWorkerClassifiedSchedule() {
         && Number.isInteger(sample.worker_request_ordinal)
         && Number.isFinite(sample.module_age_ms_at_handler_entry)
         && Number.isFinite(sample.handler_total_ms)
+        && Number.isInteger(sample.query_variants)
+        && Number.isInteger(sample.candidate_rows)
+        && Number.isInteger(sample.final_results)
+        && Number.isFinite(sample.response_json_characters)
       ))),
       true,
     );

@@ -2,7 +2,7 @@
 
 Date: 2026-07-21
 
-Status: production endpoint and v4 RPC absent after exact-ID and owner-checked rollback; a fourth attempt requires the indexed candidate fix and a fresh release packet
+Status: production endpoint and v4 RPC absent after exact-ID and owner-checked rollback; attempt 5 requires the bounded candidate-payload fix and a fresh release packet
 
 ## Observed failures
 
@@ -13,6 +13,7 @@ Three guarded deployments of the additive `mcp-search-grouped` endpoint passed r
 | 1 | calls spaced by 22 seconds | 4,858 ms | 3,000 ms | rolled back |
 | 2 | OPTIONS keepalives, then back-to-back samples | 5,067 ms | 3,000 ms | rolled back |
 | 3 | actual routed samples with server worker classification | 6,238 ms | 3,000 ms | rolled back |
+| 4 | indexed v4 with all actual routed samples | 3,693 ms | 3,000 ms | rolled back |
 
 Attempt 2 retained the full one-slot evidence:
 
@@ -126,3 +127,15 @@ A rerunnable production-sized benchmark uses one transaction to create the revis
 | indexed v4 | 30.371 ms, 21.964 ms, 22.234 ms | 30.371 ms |
 
 The indexed function returned the same 80 rows as v3 and was 32.94 times faster at p95. Read-only checks before and after confirmed that v4 and its migration record were absent. This closes the source-level diagnosis. It does not authorize another deployment without a fresh packet and independent review.
+
+## Attempt 4 result and bounded repair
+
+Attempt 4 deployed the indexed v4 function and additive grouped endpoint under manifest `33c5127de87ea08bb59f43c0da36bda1a7db4cb27f19228cf9ba90015c119a50`. Live routing passed. The one-slot samples were 3,693 ms, 3,064 ms, and 2,527 ms, so the nearest-rank p95 was 3,693 ms against the unchanged 3,000 ms limit. All three samples resolved the requested slot without a timeout. The endpoint handler itself reported 944.120 ms, 1,185.947 ms, and 648.680 ms. Candidate search used 254.668 ms, 153.368 ms, and 117.910 ms.
+
+Rollback matched endpoint ID `47aab266-72f2-4e92-9c81-8cfee14a7ed1`, removed that endpoint, removed the owner-marked v4 function and migration record, and recorded `stable_function_mutated: false`. Read-only postflight confirmed v3 present, v4 absent, the v4 migration record absent, stable `mcp-search` at version 40, npm `beta` at `0.4.19-beta.2`, no release locks, and no release workspaces.
+
+A controlled localhost reproduction returned 40 logical queries and an 86 KB grouped fixture response with only 60 to 190 ms of package-side work above an artificial 800 ms server delay. Three stable hosted searches returning 10 results measured 1,403 ms, 987 ms, and 1,021 ms. Together these checks rule out local ranking as the dominant remaining delay and identify grouped candidate response volume as the narrow controllable cost.
+
+The repair changes the per-variant candidate limit from `max(limit_per_slot * 5, 10)` to `min(10, max(limit_per_slot * 3, 5))`. One requested choice now retrieves 5 candidates per query variant instead of 10. Requests for 2 through 5 choices retrieve 6, 9, 10, and 10 candidates per variant. The query fanout, result contract, fallback behavior, stable endpoint, database function, rate accounting, and latency thresholds remain unchanged.
+
+Targeted verification passed grouped-versus-individual recommendation parity, English and Japanese 20-slot behavior, repeated-query deduplication, agent-readable errors, hosted fallback behavior, and the complete 225-case fingerprint `3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777`. A new measurement assertion retains query variants, candidate rows, final results, and response size for every live sample so attempt 5 can directly confirm whether the intended payload reduction occurred.
