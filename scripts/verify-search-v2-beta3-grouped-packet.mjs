@@ -61,17 +61,17 @@ const manifest = JSON.parse(manifestText);
 
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
-assert.equal(manifest.attempt, 4);
-assert.equal(manifest.packet_revision, 8);
+assert.equal(manifest.attempt, 5);
+assert.equal(manifest.packet_revision, 9);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '920c06c47ea1204ca5034750945dfd4c72ac8d761d37114bfb9c77c9fcd46f8b',
+  '33c5127de87ea08bb59f43c0da36bda1a7db4cb27f19228cf9ba90015c119a50',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
 assert.equal(manifest.prior_attempt.shared_candidate_rpc_removed, true);
 assert.equal(manifest.prior_attempt.stable_function_mutated, false);
-assert.equal(manifest.prior_attempt.one_slot_p95_ms, 6238);
+assert.equal(manifest.prior_attempt.one_slot_p95_ms, 3693);
 assert.equal(manifest.project_ref, 'kcjmkakdhsqplvasgkjv');
 assert.equal(manifest.function_name, 'mcp-search-grouped');
 assert.equal(manifest.stable_function.name, 'mcp-search');
@@ -111,6 +111,9 @@ assert.equal(manifest.live_gates.worker_cohorts_separated, true);
 assert.equal(manifest.live_gates.all_routed_samples_counted, true);
 assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
 assert.equal(manifest.live_gates.failed_samples_preserved, true);
+assert.equal(manifest.live_gates.response_size_recorded, true);
+assert.equal(manifest.live_gates.reduced_candidate_payload, true);
+assert.deepEqual(manifest.live_gates.candidate_limits_by_requested_count, [5, 6, 9, 10, 10]);
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.fr47_stable_fallback_disabled, true);
 assert.equal(manifest.live_gates.rollback_function_id_pinned, true);
@@ -224,12 +227,16 @@ const paths = {
     'scripts/lib/search-v2-candidate-benchmark-policy.mjs',
   productionBenchmarkPolicyFixture:
     'scripts/verify-search-v2-shared-candidate-rpc-benchmark-policy.mjs',
+  recommendation: 'mcp/recommend-icons.js',
+  recommendationFixture: 'scripts/verify-recommend-icons-grouped-search.mjs',
   releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
   concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
 const runner = normalizedText(readFileSync(paths.runner, 'utf8'));
 const live = normalizedText(readFileSync(paths.live, 'utf8'));
 const latency = normalizedText(readFileSync(paths.latency, 'utf8'));
+const recommendation = normalizedText(readFileSync(paths.recommendation, 'utf8'));
+const recommendationFixture = normalizedText(readFileSync(paths.recommendationFixture, 'utf8'));
 const rollback = normalizedText(readFileSync(paths.rollback, 'utf8'));
 const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
 const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
@@ -300,8 +307,8 @@ assert.match(runner, /Push-Location \$Destination/);
 assert.match(runner, /'-xf', "\.\.\/\$archiveFileName"/);
 assert.equal(runner.includes('Read-Host'), false);
 assert.equal(runner.includes('--keepalive-interval-ms'), false);
-assert.match(runner, /search-v2-beta3-indexed-grouped-live-2026-07-21\.json/);
-assert.match(runner, /search-v2-beta3-indexed-fr47-live-2026-07-21\.json/);
+assert.match(runner, /search-v2-beta3-indexed-grouped-live-attempt5-2026-07-21\.json/);
+assert.match(runner, /search-v2-beta3-indexed-fr47-live-attempt5-2026-07-21\.json/);
 
 assert.match(databaseManager, /si_search_icon_candidates_v4\(jsonb,text,integer\)/);
 assert.match(databaseManager, /Shared and batched candidate RPC results differ/);
@@ -389,6 +396,7 @@ assert.match(latency, /worker_affinity_assumed: false/);
 assert.match(latency, /SUPERICONS_MCP_GROUPED_TIMING_OUTPUT/);
 assert.match(latency, /worker_cohorts/);
 assert.match(latency, /overall_p95_ms <= scenario\.p95LimitMs/);
+assert.match(latency, /response_json_characters/);
 assert.match(latency, /async function resetRateWindow/);
 assert.equal(latency.includes("method: 'OPTIONS'"), false);
 assert.equal(latency.includes('keepalive'), false);
@@ -398,6 +406,16 @@ assert.ok(
   'Failed latency samples must be added to the evidence before the p95 assertion.',
 );
 assert.match(latency, /process\.exitCode = 1/);
+
+assert.match(recommendation, /export function getRecommendationCandidateLimit/);
+assert.match(recommendation, /Math\.min\(10, Math\.max\(requested \* 3, 5\)\)/);
+assert.equal(
+  (recommendation.match(/limit: getRecommendationCandidateLimit\(limitPerSlot\)/g) || []).length,
+  2,
+  'Grouped search and individual fallback must use the same bounded candidate limit.',
+);
+assert.match(recommendationFixture, /candidate_limits_by_requested_count/);
+assert.match(recommendationFixture, /\[5, 6, 9, 10, 10\]/);
 
 assert.match(rollback, /retained_for_endpoint_dependency/);
 assert.match(rollback, /database_rollback_count/);

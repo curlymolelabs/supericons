@@ -2,26 +2,28 @@
   "schema_version": 1,
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
-  "attempt": 4,
-  "packet_revision": 8,
-  "supersedes_manifest_sha256": "920c06c47ea1204ca5034750945dfd4c72ac8d761d37114bfb9c77c9fcd46f8b",
-  "rebind_reason": "Separate the first call after function creation from a 20-sample warm cohort, preserve every sample before threshold assertions, and keep first-call behavior inside the authoritative end-to-end live gate.",
+  "attempt": 5,
+  "packet_revision": 9,
+  "supersedes_manifest_sha256": "33c5127de87ea08bb59f43c0da36bda1a7db4cb27f19228cf9ba90015c119a50",
+  "rebind_reason": "Reduce unnecessary recommendation candidates for small requested result counts while preserving ranking headroom, parity, fallback behavior, and the unchanged end-to-end latency gates.",
   "prior_attempt": {
     "status": "rolled_back",
-    "reason": "one_slot produced only 0 reused-worker samples; 3 were required",
-    "grouped_function_id": "2c6a5a63-f944-4b87-818a-59068b36936a",
+    "reason": "one_slot p95 3693 ms exceeds 3000 ms",
+    "grouped_function_id": "47aab266-72f2-4e92-9c81-8cfee14a7ed1",
     "grouped_function_removed": true,
     "shared_candidate_rpc_removed": true,
     "stable_function_mutated": false,
     "live_routing_gate": "passed",
     "latency_gate": "blocked",
-    "one_slot_p95_ms": 6238,
-    "worker_affinity_assumption": "falsified"
+    "one_slot_p95_ms": 3693,
+    "one_slot_samples_ms": [3693, 3064, 2527],
+    "one_slot_handler_samples_ms": [944.12, 1185.947, 648.68],
+    "worker_affinity_assumption": "not_assumed"
   },
   "project_ref": "kcjmkakdhsqplvasgkjv",
   "function_name": "mcp-search-grouped",
-  "source_revision": "bca4f502f07f93a518da0601e85100bb4f90795d",
-  "source_tree": "481922e0ef4602461664db4ba0390b1de1059e10",
+  "source_revision": "194dfaf2e7c6683805d4a6e3dd6f6b88b10bfc0a",
+  "source_tree": "5bfe541927cc9e668086fc5b808874fe9e856880",
   "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
   "grouped_function_present_before": false,
   "stable_function": {
@@ -103,7 +105,7 @@
     },
     {
       "path": "mcp/recommend-icons.js",
-      "sha256": "f3705b6acb1f981859f56cbf795c05cc7240234740767219f27422b8a20e2f11"
+      "sha256": "4b2eff7a8143b7810639324f3287ea2c1fe5956f432e967f5b50d208dc0b4934"
     },
     {
       "path": "mcp/release-channel.js",
@@ -131,7 +133,7 @@
     },
     {
       "path": "scripts/verify-recommend-icons-grouped-search.mjs",
-      "sha256": "380e4393d235e53282d139ba76c78ee099948e1238f01799cd950fba747b1b8a"
+      "sha256": "d7e27c9f2db7ad6e7f84692f3092aab0fd168fada01637ca493178c181fe982a"
     },
     {
       "path": "scripts/verify-search-v2-deterministic-mcp-default.mjs",
@@ -205,11 +207,11 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "6d3737cb4cf9df78bc062a9549832a41c2f97c6802366b6a97bbfe4a8a24d352"
+      "sha256": "e9bed1550a41ae0851709b013fb7a0f4eb3720c669193d9cd872fba3ec73ba36"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "7936c5e8158a7704fd8fa70a37ff7fec8ed30edf93b7a1210d0057df49c03792"
+      "sha256": "dcbf0d86023145d8c6ec7c20b1d93580c9cc3b83f6238eb00449ad4e23fe36e2"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -217,7 +219,7 @@
     },
     {
       "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
-      "sha256": "52fd0ec0bd5709616bc2cf2a57f4f207f0960a63bb7a28886e29ee7845c94ea4"
+      "sha256": "8bc92ea0bced40444dea66e4f2561e5d12a680b08ba64e91ba1a6da84df158e1"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
@@ -229,7 +231,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
-      "sha256": "5f682348ddcf8af0eab2e2019acbb9b43eb25e951e7ab487d11714f8555b2e47"
+      "sha256": "b44545f1ed0114e54fa3883ffcd22212479f2abb4983966fa99ac92916a56a55"
     },
     {
       "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
@@ -293,6 +295,9 @@
     "all_routed_samples_counted": true,
     "rate_window_reset_ms": 65000,
     "failed_samples_preserved": true,
+    "response_size_recorded": true,
+    "reduced_candidate_payload": true,
+    "candidate_limits_by_requested_count": [5, 6, 9, 10, 10],
     "rollback_function_id_pinned": true,
     "rollback_shared_candidate_definition_pinned": true,
     "committed_negative_path_harness": true,
