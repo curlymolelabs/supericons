@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 3,
-  "packet_revision": 2,
-  "supersedes_manifest_sha256": "9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70",
-  "rebind_reason": "Close the independent audit findings on worker timing, concurrent releases, database ownership, dry-run recursion, and stale workspaces.",
+  "packet_revision": 3,
+  "supersedes_manifest_sha256": "59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550",
+  "rebind_reason": "Close the independent audit findings and prevent concurrent packet audits from sharing rollback evidence.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot p95 5067 ms exceeds 3000 ms",
@@ -208,7 +208,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "a9263d044f92af3ca6019b899bd41d1829af04a2d9ce79dc79c82b4f2956d8fb"
+      "sha256": "d7d2c5d4d9c64902a3342dbb38e2108c2dcf47c78455ff4f0fe2b23427aa02ef"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -224,7 +224,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "ca07e4179a44500c5e11af5189467bbea54d793ceb692c9d61f07996b65c5911"
+      "sha256": "b3e09fabdf048064c816024d94fa82e3ce316570fef8acc228b9ca24ebfaeca8"
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
@@ -244,7 +244,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
-      "sha256": "6a29caeb4d08d67c2ce9f09ffd95ad49c5a5ee332fe870c0473f718d6095a7c1"
+      "sha256": "e5562f58f7fa0aed2c7b77a56767b8800bc34cc3a8ce47c1cca3ebb9b9f84361"
     }
   ],
   "live_gates": {
@@ -271,6 +271,7 @@
     "committed_database_manager_fixture": true,
     "committed_concurrent_run_fixture": true,
     "cross_worktree_release_lock": true,
+    "cross_worktree_simulation_lock": true,
     "unique_release_workspaces": true,
     "database_run_ownership": true,
     "dry_run_skips_nested_release_simulations": true,

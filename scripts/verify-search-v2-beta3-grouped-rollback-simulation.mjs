@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash, randomUUID } from 'node:crypto';
 import {
   existsSync,
   mkdtempSync,
@@ -16,10 +16,12 @@ const manifestPath = resolve(
   'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json',
 );
 const runnerPath = resolve('scripts/run-search-v2-beta3-grouped-release.ps1');
-const temporaryRoot = resolve('.tmp');
-mkdirSync(temporaryRoot, { recursive: true });
-const workspace = mkdtempSync(resolve(temporaryRoot, 'search-v2-beta3-shared-grouped-rollback-simulation-'));
-const binDir = join(workspace, 'bin');
+const releaseLockScript = resolve('scripts/manage-search-v2-release-lock.mjs');
+const simulationLockName = 'search-v2-beta3-shared-grouped-simulation';
+const simulationRunId = randomUUID();
+let simulationLockAcquired = false;
+let workspace = null;
+let binDir = null;
 const evidencePaths = [
   resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
   resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
@@ -40,6 +42,40 @@ const gitGnuTarCandidates = [
     : null,
 ].filter(Boolean);
 const gitGnuTarPath = gitGnuTarCandidates.find((path) => existsSync(path)) || null;
+
+function releaseSimulationLock() {
+  if (!simulationLockAcquired) return;
+  execFileSync(process.execPath, [
+    releaseLockScript,
+    '--action', 'release',
+    '--name', simulationLockName,
+    '--run-id', simulationRunId,
+    '--repository-root', repoRoot,
+  ], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+  simulationLockAcquired = false;
+}
+
+function releaseSimulationLockOnExit() {
+  try {
+    releaseSimulationLock();
+  } catch {
+    // A failed release remains locked for safe manual inspection.
+  }
+}
+
+execFileSync(process.execPath, [
+  releaseLockScript,
+  '--action', 'acquire',
+  '--name', simulationLockName,
+  '--run-id', simulationRunId,
+  '--repository-root', repoRoot,
+], { cwd: repoRoot, stdio: ['ignore', 'pipe', 'pipe'] });
+simulationLockAcquired = true;
+process.once('exit', releaseSimulationLockOnExit);
+const temporaryRoot = resolve('.tmp');
+mkdirSync(temporaryRoot, { recursive: true });
+workspace = mkdtempSync(resolve(temporaryRoot, 'search-v2-beta3-shared-grouped-rollback-simulation-'));
+binDir = join(workspace, 'bin');
 
 function normalizedSha256(path) {
   const text = readFileSync(path, 'utf8').replace(/\r\n?/g, '\n');
@@ -452,8 +488,13 @@ try {
         }),
   };
 } finally {
-  removeGeneratedEvidence();
-  rmSync(workspace, { recursive: true, force: true });
+  try {
+    removeGeneratedEvidence();
+    if (workspace) rmSync(workspace, { recursive: true, force: true });
+  } finally {
+    releaseSimulationLock();
+    process.removeListener('exit', releaseSimulationLockOnExit);
+  }
 }
 
 console.log(JSON.stringify({
