@@ -2,14 +2,16 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
+  existsSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
+  readdirSync,
   rmSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repoRoot = resolve(import.meta.dirname, '..');
@@ -17,33 +19,61 @@ const mcpDir = join(repoRoot, 'mcp');
 const tempRoot = mkdtempSync(join(tmpdir(), 'search-v2-tool-scoped-package-'));
 const packDir = join(tempRoot, 'pack');
 const installDir = join(tempRoot, 'install');
+const args = process.argv.slice(2);
 mkdirSync(packDir, { recursive: true });
 mkdirSync(installDir, { recursive: true });
 let client;
 let transport;
 
+function getArgument(name) {
+  const index = args.indexOf(name);
+  return index >= 0 ? args[index + 1] : null;
+}
+
+function countFiles(root) {
+  return readdirSync(root, { withFileTypes: true }).reduce(
+    (total, entry) => total + (entry.isDirectory() ? countFiles(join(root, entry.name)) : 1),
+    0,
+  );
+}
+
 function runNpm(args, cwd) {
-  const npmExecPath = process.env.npm_execpath;
-  const command = npmExecPath ? process.execPath : 'npm';
-  const commandArgs = npmExecPath ? [npmExecPath, ...args] : args;
-  return execFileSync(command, commandArgs, {
+  const npmExecPath = process.env.npm_execpath
+    || join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  assert.equal(existsSync(npmExecPath), true, 'npm CLI entry point was not found.');
+  return execFileSync(process.execPath, [npmExecPath, ...args], {
     cwd,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
-    shell: !npmExecPath && process.platform === 'win32',
   });
 }
 
 try {
-  const packOutput = runNpm([
-    'pack',
-    '--json',
-    '--ignore-scripts',
-    '--pack-destination',
-    packDir,
-  ], mcpDir);
-  const [packRecord] = JSON.parse(packOutput);
-  const packedPaths = new Set(packRecord.files.map((entry) => entry.path));
+  const packageSpec = getArgument('--package-spec');
+  let tarballPath;
+  if (packageSpec) {
+    tarballPath = resolve(packageSpec);
+    assert.equal(existsSync(tarballPath), true, `Package archive not found: ${tarballPath}`);
+  } else {
+    const packOutput = runNpm([
+      'pack',
+      '--json',
+      '--ignore-scripts',
+      '--pack-destination',
+      packDir,
+    ], mcpDir);
+    const [packRecord] = JSON.parse(packOutput);
+    tarballPath = join(packDir, packRecord.filename);
+  }
+
+  writeFileSync(join(installDir, 'package.json'), JSON.stringify({
+    name: 'search-v2-tool-scoped-package-check',
+    private: true,
+    type: 'module',
+  }, null, 2));
+  runNpm(['install', '--ignore-scripts', tarballPath], installDir);
+
+  const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   for (const required of [
     'hosted-search-client.js',
     'index.js',
@@ -56,18 +86,8 @@ try {
     'search-query-normalization.js',
     'telemetry.js',
   ]) {
-    assert.equal(packedPaths.has(required), true, `Package is missing ${required}.`);
+    assert.equal(existsSync(join(installedRoot, required)), true, `Package is missing ${required}.`);
   }
-
-  writeFileSync(join(installDir, 'package.json'), JSON.stringify({
-    name: 'search-v2-tool-scoped-package-check',
-    private: true,
-    type: 'module',
-  }, null, 2));
-  const tarballPath = join(packDir, packRecord.filename);
-  runNpm(['install', '--ignore-scripts', tarballPath], installDir);
-
-  const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
   assert.equal(installedPackage.version, '0.4.19');
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
@@ -238,7 +258,8 @@ try {
     status: 'ok',
     package: installedPackage.name,
     version: installedPackage.version,
-    packed_files: packRecord.files.length,
+    packed_files: countFiles(installedRoot),
+    package_spec: packageSpec ? tarballPath : 'source_pack',
     clean_install: true,
     search_route: 'local_first_all_supported_locales',
     localized_search_route: 'local_first',
