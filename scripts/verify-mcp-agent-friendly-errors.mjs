@@ -293,6 +293,7 @@ const child = spawn(process.execPath, ['mcp/remote-server.js'], {
   env: {
     ...process.env,
     PORT: String(port),
+    SUPERICONS_RAILWAY_LOCAL_FIRST: 'off',
     SUPERICONS_MCP_USAGE_DEBUG: '0',
     SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/search`,
     SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/grouped`,

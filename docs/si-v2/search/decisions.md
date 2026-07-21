@@ -44,6 +44,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-029` | Make MCP telemetry venue follow the client entry point | Accepted | Measurement and dashboard attribution |
 | `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
 | `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
+| `D-032` | Run Railway recommendations from the in-process index with one controlled hosted fallback | Accepted | Hosted MCP architecture and performance |
 
 ## Decision records
 
@@ -456,6 +457,23 @@ Alternatives rejected or deferred: increasing only the schema maximum while keep
 Superseded decisions: the A-7 sequencing rule is superseded only for this bounded user-visible recommendation reliability repair. Railway local-first remains the next engineering workstream after beta.3 is safe.
 
 Specification change: version 1.15 expands `FR-46` and adds `FR-47`.
+
+### D-032: Railway local-first recommendations
+
+Date: 2026-07-21
+Status: Accepted
+
+Decision: stop the Supabase grouped recommendation release after guarded attempt 5 missed the unchanged one-slot latency gate and rolled back cleanly. The Railway hosted MCP service runs `recommend_icons` from its in-process icon index, synonym data, semantic records, and deterministic recommendation engine by default. A successful local recommendation makes zero Supabase search calls. An honest local zero-result also stays local. If the local engine throws, one stable hosted search request may provide a shared emergency candidate pool for the whole recommendation call. The service records the execution mode in the response and best-effort telemetry. An environment switch may temporarily restore the previous hosted route during rollback.
+
+The Railway path uses a bounded token candidate index and a 512-entry least-recently-used query cache. The candidate index reduces full-corpus scans while the deterministic recommendation layer still applies slot intent, semantic scoring, clarification, distinctness, and public result shaping. Local execution is not charged against hosted search allowances.
+
+Evidence: guarded Supabase attempt 5 recorded one-slot samples of 3,743, 2,924, and 2,821 ms, then removed the additive endpoint and v4 database function without changing stable search. The focused Railway verifier starts the real HTTP MCP server and proves a fresh 20-slot English call below 3 seconds, a 20-slot Japanese call below 3 seconds, repeated 20-slot p95 below 500 ms, all requested slots resolved, zero hosted search requests, telemetry route attribution, clarification behavior, exact style reporting, honest local zero-results, and one hosted request after an injected local failure. The fixed 225-case fingerprint remains unchanged.
+
+Alternatives rejected or deferred: a sixth Supabase deployment attempt; weakening the three-second one-slot gate; silently treating local zero-results as infrastructure failures; one hosted fallback call per generated query; removing telemetry; publishing beta.3 before the Railway route has its own deployment and live checks.
+
+Superseded decisions: `D-025` is superseded for Railway `recommend_icons`; its npm `search_icons` eligibility boundary remains active. `D-031` remains active for the 20-slot, clarification, error, preview, and latency contracts, but its grouped Supabase route is no longer the Railway release path.
+
+Specification change: version 1.16 adds `FR-48` and updates the hosted MCP rollout boundary.
 
 ## Adding or superseding a decision
 

@@ -26,6 +26,14 @@ const hydrate = createHostedIconHydrator([
     type: 'font',
     style: 'outline',
   },
+  {
+    id: 'search',
+    name: 'Search',
+    lib: 'lucide',
+    type: 'svg',
+    style: 'outline',
+    svg: '<svg>outline search</svg>',
+  },
 ]);
 
 const outline = hydrate({
@@ -53,6 +61,16 @@ const solid = hydrate({
   icon_type: 'svg',
 });
 assert.equal(solid.svg, '<svg>solid settings</svg>');
+assert.equal(solid.style, 'solid');
+
+const missingSolid = hydrate({
+  icon_id: 'lucide:search',
+  source_library: 'lucide',
+  style: 'solid',
+  icon_type: 'svg',
+});
+assert.equal(missingSolid.svg, '<svg>outline search</svg>');
+assert.equal(missingSolid.style, 'outline');
 
 const hostedSvg = hydrate({
   icon_id: 'lucide:settings',
@@ -81,6 +99,7 @@ console.log(JSON.stringify({
   status: 'ok',
   local_outline_svg_restored: true,
   local_solid_svg_restored: true,
+  fallback_svg_style_reported_accurately: true,
   hosted_svg_preserved: true,
   hosted_semantic_profile_preserved: true,
   material_deferred_hydration_preserved: true,

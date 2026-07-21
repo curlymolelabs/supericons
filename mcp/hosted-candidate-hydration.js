@@ -34,13 +34,16 @@ export function createHostedIconHydrator(localIcons = []) {
       || null;
     const svg = row.svg || localIcon?.svg || null;
     if (!svg && normalizeKeyPart(identity.library) !== 'material') return null;
+    const resolvedStyle = row.svg
+      ? row.style || localIcon?.style || 'outline'
+      : localIcon?.style || row.style || 'outline';
 
     return {
       id: identity.id,
       name: row.name || localIcon?.name || identity.id.replace(/[-_]/g, ' '),
       lib: identity.library,
       type: row.icon_type || localIcon?.type || 'svg',
-      style: row.style || localIcon?.style || 'outline',
+      style: resolvedStyle,
       svg,
       semantic: row.semantic || localIcon?.semantic || null,
       premium: false,

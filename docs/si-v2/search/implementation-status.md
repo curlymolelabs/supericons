@@ -1,6 +1,6 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-20
+Last verified: 2026-07-21
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
 ## Active recommendation reliability candidate
@@ -14,6 +14,7 @@ The current local candidate implements `D-031`, `FR-46`, and `FR-47` without cha
 | Stable Supabase MCP route | Source restored and hash-verified against main | `supabase/functions/mcp-search/index.ts` has Git blob `71e568f3014a3e07f7271801b4503080b7111ec7`, equal to main `4a96175c6`. Grouped behavior lives in `supabase/functions/mcp-search-grouped/index.ts`. | Do not deploy the stable function as part of beta.3. |
 | `preview_icons` over-limit behavior | Implemented, locally verified, and clean-install verified | `scripts/verify-search-v2-one-call-contract.mjs` sends 15 refs with limit 13, receives a successful inline result capped at 12, and confirms all 15 accepted refs remain in `preview_url`. | Not published or deployed. |
 | Public 20-slot documentation | Implemented, generated, built, and locally verified | `scripts/verify-recommend-icons-doc-limits.mjs` checks all 12 maintained, web, and MCP catalogs. `verify:i18n-catalogs`, `verify:localized-docs-bodies`, `verify:docs-site-render`, and the production Vite build pass. | The documentation changes are not deployed. |
+| Railway local-first recommendation | Implemented and locally verified, not deployed | `scripts/verify-railway-local-first-recommendations.mjs` starts the real HTTP MCP server and resolves 1, 10, and 20-slot English calls plus a Japanese 20-slot call with zero hosted search requests. In the final local gate run, fresh English 20-slot latency was 1,622.1 ms, Japanese 20-slot latency was 1,058.7 ms, and repeated English 20-slot p95 was 53.7 ms. The same verifier covers Material solid recommendations, one hosted fallback after an injected local exception, a telemetry failure that does not fail the user call, route attribution, clarification, and a six-slot Lucide quality case. `scripts/verify-hosted-candidate-hydration.mjs` proves fallback SVG style labels are accurate. The 225-case fingerprint remains `3e529b41...9777`. | Railway is not linked or deployed from this worktree. Live health, live MCP calls, traffic error rate, and rollback are not yet verified. |
 
 The historical Material production-surface guard remains red on both main `4a96175c6` and this candidate: actual aggregate `f52be4b6...` versus recorded `050db70c...`. This confirms cumulative stable-function source drift already existed before this repair. Beta.3 therefore uses an additive endpoint and must not deploy `mcp-search`.
 

@@ -54,6 +54,11 @@ import {
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
+import {
+  createRailwayCandidateIndex,
+  createRailwayRecommendationSearch,
+  isRailwayLocalFirstEnabled,
+} from './railway-local-search.js';
 import { buildLibraryCapability } from './library-capabilities.js';
 import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
 import {
@@ -84,6 +89,26 @@ const publicIcons = [
   ...(Array.isArray(solidIconIndex?.icons) ? solidIconIndex.icons : []),
 ];
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
+const railwayLocalFirstEnabled = isRailwayLocalFirstEnabled();
+const railwayCandidateIndex = createRailwayCandidateIndex({
+  icons: publicIcons,
+  synonyms,
+  getSearchValues: (icon) => {
+    const semanticRecord = getSemanticRecordForIcon(semanticMap, icon?.lib, icon?.id);
+    return [
+      icon?.id,
+      icon?.name,
+      semanticRecord?.label,
+      semanticRecord?.purpose,
+      semanticRecord?.depicts,
+      ...(semanticRecord?.semantic_tags || []),
+      ...(semanticRecord?.synonyms || []),
+      semanticRecord?.use_when,
+    ].filter(Boolean);
+  },
+});
+const RAILWAY_RECOMMENDATION_CACHE_LIMIT = 512;
+const railwayRecommendationSearchCache = new Map();
 const mcpApiKeyAccountCache = new Map();
 const MCP_API_KEY_ACCOUNT_CACHE_MS = 5 * 60 * 1000;
 
@@ -232,6 +257,13 @@ const recommendIconsOutputSchema = {
   details: z.record(z.unknown()).optional().describe('Structured limits or failure details.'),
   suggested_response_markdown: z.string().optional().describe('Plain-language explanation suitable for the agent response.'),
   next_step: z.string().optional().describe('Useful next action for the caller.'),
+  search_runtime: z.object({
+    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+    fallback_used: z.boolean(),
+    hosted_search_calls: z.number(),
+    local_failure_code: z.string().nullable(),
+    index_generated_at: z.string(),
+  }).optional().describe('Search execution path used for this recommendation.'),
 };
 
 const previewIconsOutputSchema = {
@@ -349,8 +381,9 @@ function searchLocalFallbackIcons({
   limit = 20,
   locale = null,
   expandIntentVariants = true,
+  iconPool = publicIcons,
 }) {
-  if (publicIcons.length === 0) return [];
+  if (iconPool.length === 0) return [];
 
   const queryVariants = expandIntentVariants
     ? buildIntentQueryVariants(query, { maxVariants: 10 })
@@ -359,7 +392,7 @@ function searchLocalFallbackIcons({
   const seen = new Set();
 
   for (const queryVariant of queryVariants) {
-    const variantResults = searchLocalIcons(queryVariant, publicIcons, synonyms, {
+    const variantResults = searchLocalIcons(queryVariant, iconPool, synonyms, {
       library: library || null,
       libraryMode,
       style,
@@ -378,6 +411,47 @@ function searchLocalFallbackIcons({
   }
 
   return results.slice(0, Math.max(1, limit));
+}
+
+async function searchRailwayLocalIcons(params) {
+  const cacheKey = JSON.stringify([
+    String(params.query || '').trim().toLowerCase(),
+    String(params.library || '').trim().toLowerCase(),
+    String(params.libraryMode || 'strict').trim().toLowerCase(),
+    String(params.style || 'any').trim().toLowerCase(),
+    Number(params.limit) || 20,
+    String(params.locale || '').trim().toLowerCase(),
+  ]);
+  const cached = railwayRecommendationSearchCache.get(cacheKey);
+  if (cached) {
+    railwayRecommendationSearchCache.delete(cacheKey);
+    railwayRecommendationSearchCache.set(cacheKey, cached);
+    return cached;
+  }
+
+  let results;
+  if (params.library === 'material') {
+    results = await searchHostedIcons(params);
+  } else {
+    const candidateIcons = railwayCandidateIndex.select(params.query);
+    results = searchLocalFallbackIcons({
+      query: params.query,
+      library: params.library,
+      libraryMode: params.libraryMode || 'strict',
+      style: params.style,
+      limit: params.limit,
+      locale: params.locale,
+      expandIntentVariants: false,
+      iconPool: candidateIcons,
+    });
+  }
+
+  railwayRecommendationSearchCache.set(cacheKey, results);
+  if (railwayRecommendationSearchCache.size > RAILWAY_RECOMMENDATION_CACHE_LIMIT) {
+    const oldestKey = railwayRecommendationSearchCache.keys().next().value;
+    railwayRecommendationSearchCache.delete(oldestKey);
+  }
+  return results;
 }
 
 function shouldUseLocalFallbackForHostedError(error) {
@@ -1294,6 +1368,7 @@ function buildMcpUsageEventPayload(
       rpc_id: requestContext?.rpc_id || null,
       api_key_present: requestContext?.api_key_present === true,
       api_key_valid: requestContext?.api_key_valid === true,
+      search_execution: result?.structuredContent?.search_runtime?.mode || null,
     },
   };
 }
@@ -1513,17 +1588,13 @@ function createServer({ requestContext = null } = {}) {
         }
 
         try {
-          const payload = await recommendIconsForTask({
-            task,
-            slots,
-            library,
-            style,
-            locale,
-            limitPerSlot: limit_per_slot,
-            responseMode: response_mode,
-            includeQueryFrame: include_query_frame,
-            semanticMap,
-            searchIconsForQuery: (params) => searchHostedIcons({
+          const recommendationSearch = createRailwayRecommendationSearch({
+            enabled: railwayLocalFirstEnabled,
+            localSearchOne: (params) => searchRailwayLocalIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+            }),
+            hostedSearchOne: (params) => searchHostedIcons({
               ...params,
               includeQueryFrame: include_query_frame,
               usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
@@ -1533,7 +1604,7 @@ function createServer({ requestContext = null } = {}) {
                 limit: params.limit,
               }),
             }),
-            searchIconsForQueries: (queries) => searchHostedIconQueries(queries, {
+            hostedSearchMany: (queries) => searchHostedIconQueries(queries, {
               usageContextForQuery: (params, index) => buildToolUsageContext(
                 requestContext,
                 'recommend_icons',
@@ -1546,6 +1617,19 @@ function createServer({ requestContext = null } = {}) {
                 },
               ),
             }),
+          });
+          const payload = await recommendIconsForTask({
+            task,
+            slots,
+            library,
+            style,
+            locale,
+            limitPerSlot: limit_per_slot,
+            responseMode: response_mode,
+            includeQueryFrame: include_query_frame,
+            semanticMap,
+            searchIconsForQuery: recommendationSearch.searchOne,
+            searchIconsForQueries: recommendationSearch.searchMany,
             buildIconResult: async (icon) => buildPublicIconResult(icon),
           });
 
@@ -1566,6 +1650,10 @@ function createServer({ requestContext = null } = {}) {
           return asStructured({
             ...payload,
             preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+            search_runtime: {
+              ...recommendationSearch.getRuntime(),
+              index_generated_at: iconIndex.generatedAt,
+            },
             ...(warnings.length ? { warnings } : {}),
           });
         } catch (error) {
@@ -1795,6 +1883,16 @@ app.get('/health', (_req, res) => {
     },
     hosted_search: hostedSearch,
     grouped_hosted_search: groupedHostedSearch,
+    railway_local_first: {
+      enabled: railwayLocalFirstEnabled,
+      recommendation_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
+      index_generated_at: iconIndex.generatedAt,
+      icon_count: publicIcons.length,
+      semantic_record_count: semanticMap.size,
+      candidate_index_token_count: railwayCandidateIndex.token_count,
+      recommendation_cache_limit: RAILWAY_RECOMMENDATION_CACHE_LIMIT,
+      recommendation_cache_size: railwayRecommendationSearchCache.size,
+    },
   });
 });
 
