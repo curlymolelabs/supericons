@@ -1618,7 +1618,10 @@ function renderQueryExplorer() {
     { label: 'Returned', number: true, render: (row) => queryResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
-  element.innerHTML = table(headers, rows, state.errors.search || 'No queries match these filters.');
+  const notice = state.data.search?.queries_complete === false
+    ? `<div class="data-notice" role="status">${escapeHtml(state.data.search.queries_notice || 'Showing the newest available search details. Narrow the filters for exact totals.')}</div>`
+    : '';
+  element.innerHTML = `${notice}${table(headers, rows, state.errors.search || 'No queries match these filters.')}`;
 }
 
 function renderWorklist() {
@@ -2320,6 +2323,9 @@ async function fetchAllPages(endpoint, rowsPath) {
   }
   if (endpoint === 'search' && first.queries_available === false) {
     throw new Error(first.queries_unavailable_reason || 'Complete query data is not available for this period.');
+  }
+  if (endpoint === 'search' && first.queries_export_available === false) {
+    throw new Error(first.queries_export_unavailable_reason || 'Complete query export is not available for this period. Narrow the filters and try again.');
   }
   if (endpoint === 'audience' && first.clients?.available === false) {
     throw new Error(first.clients.reason || 'Complete client data is not available for this period.');

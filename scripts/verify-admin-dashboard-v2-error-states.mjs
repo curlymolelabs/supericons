@@ -54,6 +54,11 @@ function successPayload(path, windowKey) {
   }
   if (path === '/v2/search') {
     return {
+      queries_available: true,
+      queries_complete: true,
+      queries_notice: null,
+      queries_export_available: true,
+      queries_export_unavailable_reason: null,
       queries: [{
         query: 'thirty day marker',
         outcome_label: 'Success',
@@ -209,6 +214,33 @@ try {
   );
   await slowActivityPage.close();
 
+  const boundedHistoryPage = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await boundedHistoryPage.route(`${apiBase}/**`, async (route) => {
+    const url = new URL(route.request().url());
+    const path = url.pathname.replace('/functions/v1/admin-api', '');
+    const payload = attachViewMeta(successPayload(path, url.searchParams.get('window') || '1d'), url);
+    if (path === '/v2/search' && payload) {
+      payload.queries_complete = false;
+      payload.queries_notice = 'Showing the newest search details. Older matching searches may be omitted.';
+      payload.queries_export_available = false;
+      payload.queries_export_unavailable_reason = 'Complete search export exceeds the current limit. Choose a narrower venue before exporting.';
+    }
+    await route.fulfill({
+      status: payload ? 200 : 404,
+      headers: { 'access-control-allow-origin': '*' },
+      json: payload || { error: 'Missing fixture.' },
+    });
+  });
+  await openDashboard(boundedHistoryPage);
+  await boundedHistoryPage.click('[data-section="intelligence"]');
+  await boundedHistoryPage.waitForFunction(() => document.querySelector('#queryExplorer')?.textContent?.includes('thirty day marker'));
+  const boundedHistoryText = await boundedHistoryPage.locator('#queryExplorer').innerText();
+  ok(boundedHistoryText.includes('thirty day marker'), 'Bounded history hides the available query rows.');
+  ok(boundedHistoryText.includes('Older matching searches may be omitted'), 'Bounded history does not explain that the visible rows are partial.');
+  await boundedHistoryPage.click('[data-export="queries-csv"]');
+  await boundedHistoryPage.waitForFunction(() => document.querySelector('#adminToast')?.textContent?.includes('Complete search export exceeds'));
+  await boundedHistoryPage.close();
+
   console.log(JSON.stringify({
     status: 'ok',
     cases: [
@@ -216,6 +248,7 @@ try {
       'window_change_failed',
       'slow_activity_does_not_block_overview',
       'targeted_refresh_does_not_strand_other_panels',
+      'bounded_search_history_stays_visible_and_blocks_incomplete_export',
     ],
   }, null, 2));
 } finally {

@@ -16,6 +16,7 @@ import {
 import { createBoundedAsyncCache } from '../../../lib/bounded-async-cache.js';
 import {
   aggregateDashboardV2IconRows,
+  buildDashboardV2HistoryState,
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
@@ -841,6 +842,8 @@ async function fetchHostedSearchAuditRows(
   iconRows: SearchEvidenceRow[],
   until: string | null = null,
   maxRows = Number.POSITIVE_INFINITY,
+  channel = 'all',
+  liveOnly = false,
 ) {
   const fullSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
   const baseSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, created_at';
@@ -860,6 +863,12 @@ async function fetchHostedSearchAuditRows(
       }
       if (until) {
         query = query.lt('created_at', until);
+      }
+      if (select === fullSelect && channel !== 'all') {
+        query = query.eq('channel', channel);
+      }
+      if (select === fullSelect && liveOnly) {
+        query = query.in('environment', ['production', 'legacy']);
       }
 
       return query;
@@ -959,6 +968,9 @@ async function fetchMcpUsageEventRows(
   since: string | null,
   until: string | null = null,
   maxRows = Number.POSITIVE_INFINITY,
+  channel = 'all',
+  liveOnly = false,
+  eventTypes: string[] = [],
 ) {
   const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
 
@@ -975,6 +987,15 @@ async function fetchMcpUsageEventRows(
       }
       if (until) {
         query = query.lt('created_at', until);
+      }
+      if (channel !== 'all') {
+        query = query.eq('channel', channel);
+      }
+      if (liveOnly) {
+        query = query.in('environment', ['production', 'legacy']);
+      }
+      if (eventTypes.length > 0) {
+        query = query.in('event_type', eventTypes);
       }
 
       return query;
@@ -1349,7 +1370,7 @@ async function handlePhaseADashboard(req: Request, adminClient: SupabaseClient, 
   return jsonResponse(req, await buildPhaseADashboardPayload(adminClient, url));
 }
 
-const V2_MAX_RAW_ROWS_PER_SOURCE = 2500;
+const V2_MAX_RAW_ROWS_PER_SOURCE = 30000;
 const V2_MAX_IDENTITY_ROWS_PER_SOURCE = 30000;
 const V2_IDENTITY_PAGE_CONCURRENCY = 4;
 const V2_MAX_ROLLUP_ROWS = 50000;
@@ -1415,12 +1436,17 @@ async function fetchDashboardV2Telemetry(
       [],
       filters.to_exclusive,
       V2_MAX_RAW_ROWS_PER_SOURCE + 1,
+      filters.channel,
+      filters.use_raw && !filters.include_test,
     ),
     fetchMcpUsageEventRows(
       adminClient,
       filters.from,
       filters.to_exclusive,
       V2_MAX_RAW_ROWS_PER_SOURCE + 1,
+      filters.channel,
+      filters.use_raw && !filters.include_test,
+      ['search_outcome', 'tool_call'],
     ),
   ]);
   const truncated = (
@@ -1468,6 +1494,10 @@ async function fetchDashboardV2IdentityTelemetry(
           .neq('source', 'trap')
           .order('created_at', { ascending: false })
           .range(from, to);
+        if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
+        if (filters.use_raw && !filters.include_test) {
+          query = query.in('environment', ['production', 'legacy']);
+        }
         if (filters.from) query = query.gte('created_at', filters.from);
         if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
         const { data, error, count } = await query;
@@ -1507,6 +1537,10 @@ async function fetchDashboardV2IdentityTelemetry(
           .in('event_type', ['search_outcome', 'tool_call'])
           .order('created_at', { ascending: false })
           .range(from, to);
+        if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
+        if (filters.use_raw && !filters.include_test) {
+          query = query.in('environment', ['production', 'legacy']);
+        }
         if (filters.from) query = query.gte('created_at', filters.from);
         if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
         const { data, error, count } = await query;
@@ -2237,9 +2271,10 @@ async function buildDashboardV2SearchPayload(
     ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
     : null;
   const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
-  const historyUnavailableReason = historyTruncated
-    ? 'Complete searcher-level history exceeds the safe detail limit for this period. Choose a shorter date range.'
-    : null;
+  const historyState = buildDashboardV2HistoryState({
+    truncated: historyTruncated,
+    rowLimit: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
+  });
 
   return {
     summary: {
@@ -2248,9 +2283,8 @@ async function buildDashboardV2SearchPayload(
       history_attempts: filteredHistoryRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
       history_rows: filteredHistoryRows.length,
     },
-    queries: historyUnavailableReason ? [] : queries,
-    queries_available: !historyUnavailableReason,
-    queries_unavailable_reason: historyUnavailableReason,
+    queries,
+    ...historyState,
     pagination: {
       page: currentPage,
       page_size: pageSize,

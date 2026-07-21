@@ -58,6 +58,7 @@
     "verify:admin-dashboard-v2-error-states": "node scripts/verify-admin-dashboard-v2-error-states.mjs",
     "verify:admin-dashboard-v2-operator-contract": "node scripts/verify-admin-dashboard-v2-operator-contract.mjs",
     "verify:admin-dashboard-v2-searcher-sync": "node scripts/verify-admin-dashboard-v2-searcher-sync.mjs",
+    "verify:admin-dashboard-search-history-cap": "node scripts/verify-admin-dashboard-search-history-cap.mjs",
     "verify:admin-icon-request-review-migration": "node scripts/verify-admin-icon-request-review-migration.mjs",
     "verify:local-mcp-telemetry-attribution": "node scripts/verify-local-mcp-telemetry-attribution.mjs",
     "verify:mcp-phase-a-telemetry": "node scripts/verify-mcp-phase-a-telemetry.mjs",
