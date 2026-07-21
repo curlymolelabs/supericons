@@ -62,10 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 3);
-assert.equal(manifest.packet_revision, 3);
+assert.equal(manifest.packet_revision, 4);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550',
+  'f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -120,6 +120,9 @@ assert.equal(manifest.live_gates.committed_database_manager_fixture, true);
 assert.equal(manifest.live_gates.committed_concurrent_run_fixture, true);
 assert.equal(manifest.live_gates.cross_worktree_release_lock, true);
 assert.equal(manifest.live_gates.cross_worktree_simulation_lock, true);
+assert.equal(manifest.live_gates.simulation_evidence_run_owned, true);
+assert.equal(manifest.live_gates.lock_release_requires_acquisition, true);
+assert.equal(manifest.live_gates.preheld_lock_errors_preserved, true);
 assert.equal(manifest.live_gates.unique_release_workspaces, true);
 assert.equal(manifest.live_gates.database_run_ownership, true);
 assert.equal(manifest.live_gates.dry_run_skips_nested_release_simulations, true);

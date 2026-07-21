@@ -3,9 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 3,
-  "packet_revision": 3,
-  "supersedes_manifest_sha256": "59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550",
-  "rebind_reason": "Close the independent audit findings and prevent concurrent packet audits from sharing rollback evidence.",
+  "packet_revision": 4,
+  "supersedes_manifest_sha256": "f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831",
+  "rebind_reason": "Isolate simulation evidence from production evidence and preserve original lock-contention failures.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot p95 5067 ms exceeds 3000 ms",
@@ -204,11 +204,11 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "8f18dc5de7bee82d112ad5de11d48ec998b281c3e7ba007ad0c2b934a68a2964"
+      "sha256": "f82f5626b4faefe379bb42e321787fae2bd0ead9576b03dd988a4a3bbc9e82c8"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "d7d2c5d4d9c64902a3342dbb38e2108c2dcf47c78455ff4f0fe2b23427aa02ef"
+      "sha256": "d10faf3620135eeaae57e91a944cb6b5fbd24ee3754c1d698ccdb684e7f695fa"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -224,7 +224,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "b3e09fabdf048064c816024d94fa82e3ce316570fef8acc228b9ca24ebfaeca8"
+      "sha256": "e47a6333144f99b2ba5dce5ce4ccff6cd7ec9b65a0c10c42d394ff5540b5ee07"
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
@@ -244,7 +244,7 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
-      "sha256": "e5562f58f7fa0aed2c7b77a56767b8800bc34cc3a8ce47c1cca3ebb9b9f84361"
+      "sha256": "b3298f2b5ce9c3b77d1dc295d8be8ab4873433248d51fe1f7f79ea20b724af91"
     }
   ],
   "live_gates": {
@@ -272,6 +272,9 @@
     "committed_concurrent_run_fixture": true,
     "cross_worktree_release_lock": true,
     "cross_worktree_simulation_lock": true,
+    "simulation_evidence_run_owned": true,
+    "lock_release_requires_acquisition": true,
+    "preheld_lock_errors_preserved": true,
     "unique_release_workspaces": true,
     "database_run_ownership": true,
     "dry_run_skips_nested_release_simulations": true,

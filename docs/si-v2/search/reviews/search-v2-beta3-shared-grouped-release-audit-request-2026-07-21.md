@@ -2,7 +2,7 @@
 
 Date: 2026-07-21
 
-Requested verdict: independent GO or findings for the guarded attempt-3 release packet, revision 3. Do not deploy, merge, version, or publish during this audit.
+Requested verdict: independent GO or findings for the guarded attempt-3 release packet, revision 4. Do not deploy, merge, version, or publish during this audit.
 
 ## Why this packet was rebound
 
@@ -10,16 +10,17 @@ Attempts 1 and 2 deployed only the additive `mcp-search-grouped` endpoint. Both 
 
 Attempt 3 replaces the per-query fanout with the shared recommendation pipeline. It uses one candidate RPC for up to 40 logical queries, shared metadata and SVG reads, one bulk audit insert, and in-band timing.
 
-Independent review and the executor's follow-up review found six release-control gaps:
+Independent review and the executor's follow-up review found seven release-control gaps:
 
 1. Latency evidence did not retain worker state, request ordinal, or module age.
 2. Fixed temporary paths allowed concurrent runs to interfere.
 3. The database recovery path could adopt a matching v4 function created by another run.
 4. The no-mutation dry run recursively invoked release simulations.
 5. Aborted runs could leave a fixed workspace that confused later runs.
-6. Concurrent standalone packet audits could share rollback-simulation evidence paths.
+6. The rollback simulator could share and delete the real release evidence paths while its separate outer lock was held.
+7. The concurrency fixture attempted to release locks even when its acquisition failed, masking the original contention error.
 
-Packet revision 3 closes those gaps. It does not expand the mutation budget.
+Packet revision 4 closes those gaps. It does not expand the mutation budget.
 
 ## Complete commit chain
 
@@ -33,19 +34,21 @@ Audit every commit after the attempt-2 record:
 6. `8291049d98b54817a50f098c3165a98fedf9803c` closes the five independent review findings.
 7. `6aa095040` binds packet revision 2 to the corrected source and control files.
 8. `837245aa3` updates the audit handoff after revision 2 passed.
-9. The current audit-closure commit adds the standalone simulation lock and binds packet revision 3.
+9. `dd28fa280` adds the standalone simulation lock and binds packet revision 3.
+10. `adb93f448` routes simulation evidence into run-owned temporary directories and fixes acquisition tracking.
+11. The current audit-closure commit binds packet revision 4 and refreshes this handoff.
 
 The deployment source is pinned to `8291049d98b54817a50f098c3165a98fedf9803c`. Later commits change only release controls, the manifest, and this audit request.
 
 ## Exact packet identity
 
 - Manifest: `docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json`
-- Manifest SHA-256: `f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831`
+- Manifest SHA-256: `1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f`
 - Source revision: `8291049d98b54817a50f098c3165a98fedf9803c`
 - Source tree: `255e4b7cae1e004d5c6ef01e93baaf0167593869`
 - Stable route blob: `71e568f3014a3e07f7271801b4503080b7111ec7`
 - Shared candidate migration raw SHA-256: `e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3`
-- Superseded packet-revision-2 manifest SHA-256: `59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550`
+- Superseded packet-revision-3 manifest SHA-256: `f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831`
 
 ## Authorized mutation budget
 
@@ -101,6 +104,9 @@ The database creation, ownership record, parity checks, privilege checks, and mi
 - Confirm the lock lives under the Git common directory, so all worktrees share it.
 - Confirm lock acquisition is atomic and release requires the exact run ID.
 - Confirm the release runner and standalone rollback simulator use separate cross-worktree locks.
+- Confirm every simulated runner writes only inside its run-owned temporary evidence directory.
+- Confirm the simulator never deletes or changes files under `references/verification`.
+- Pre-hold each lock and confirm the fixture reports the original `already held` error without attempting a foreign release.
 - Confirm each runner uses a unique workspace and removes it in `finally`.
 - Confirm the dry run skips nested release simulations only under the runner marker.
 - Rerun the concurrent-run fixture and verify the second runner changes no evidence or workspace state.
@@ -126,7 +132,7 @@ The database creation, ownership record, parity checks, privilege checks, and mi
 Run from the branch worktree:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f
 ```
 
 ```powershell
@@ -134,7 +140,7 @@ node scripts/manage-search-v2-shared-candidate-rpc.mjs --action preflight --proj
 ```
 
 ```powershell
-& scripts/run-search-v2-beta3-grouped-release.ps1 -ExpectedManifest f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831
+& scripts/run-search-v2-beta3-grouped-release.ps1 -ExpectedManifest 1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f
 ```
 
 The runner command above omits `-ExecuteApprovedGroupedRelease`, so it cannot deploy, delete, or mutate the database.
@@ -146,7 +152,8 @@ These are claims for independent reproduction:
 - Full packet passed with 37 source files and 11 packet files.
 - Database fixture passed different-owner inspect, verify, and rollback refusal plus exact-owner rollback.
 - Measurement fixture passed mixed-worker classification and blocked a missing warm cohort.
-- Concurrent-run fixture refused both a second runner and a second rollback simulator across worktrees without changing evidence or workspaces.
+- Concurrent-run fixture refused both a second runner and a second rollback simulator, and both pre-held lock probes preserved the original contention error.
+- Every simulated runner used a unique evidence directory under the simulator workspace; production evidence remained byte-identical.
 - Combined rollback simulation passed missing-ID, mismatched-ID, exact-ID bsdtar, and exact-ID GNU tar cases.
 - Exact no-mutation runner returned `preflight_ok_no_mutation` and removed its unique workspace and release lock.
 - Read-only production checks found the grouped endpoint absent, v4 absent, stable version 40, npm beta.2, and npm latest 0.4.17.
