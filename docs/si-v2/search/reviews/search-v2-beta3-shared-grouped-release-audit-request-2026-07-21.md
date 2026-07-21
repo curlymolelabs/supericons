@@ -2,112 +2,121 @@
 
 Date: 2026-07-21
 
-Requested verdict: independent GO or findings for the guarded attempt-3 release packet. Do not deploy, merge, version, or publish during this audit.
+Requested verdict: independent GO or findings for the guarded attempt-3 release packet, revision 2. Do not deploy, merge, version, or publish during this audit.
 
-## Why attempt 3 exists
+## Why this packet was rebound
 
-Attempts 1 and 2 deployed only the additive `mcp-search-grouped` endpoint. Both passed live routing and rolled back after the one-slot latency gate failed.
+Attempts 1 and 2 deployed only the additive `mcp-search-grouped` endpoint. Both passed live routing and rolled back after the one-slot latency gate failed. Attempt 2 recorded a one-slot p95 of 5,067 ms. Its samples reached different workers, so an earlier `OPTIONS` keepalive schedule did not prove warm-worker performance.
 
-Attempt 2 recorded a one-slot p95 of 5,067 ms. A read-only trace of hosted audit rows then showed that every measured POST reached a different worker. The earlier `OPTIONS` keepalive schedule did not create worker affinity. Attempt 3 therefore removes the warm-worker claim and measures real first-call requests.
+Attempt 3 replaces the per-query fanout with the shared recommendation pipeline. It uses one candidate RPC for up to 40 logical queries, shared metadata and SVG reads, one bulk audit insert, and in-band timing.
 
-The underlying endpoint was also doing one complete search pipeline per logical query. Attempt 3 replaces that fanout with the existing shared recommendation pipeline:
+Independent review then found five release-control gaps:
 
-- One candidate RPC for up to 40 logical queries.
-- One read per metadata table.
-- One final SVG hydration read.
-- One public semantic read.
-- One bulk audit insert covering all logical queries.
-- In-band stage timing in the direct grouped response.
+1. Latency evidence did not retain worker state, request ordinal, or module age.
+2. Fixed temporary paths allowed concurrent runs to interfere.
+3. The database recovery path could adopt a matching v4 function created by another run.
+4. The no-mutation dry run recursively invoked release simulations.
+5. Aborted runs could leave a fixed workspace that confused later runs.
 
-The stable `mcp-search` route remains byte-identical to `main`.
+Packet revision 2 closes those gaps. It does not expand the mutation budget.
 
-## Commit chain
+## Complete commit chain
 
-Audit every commit after the last attempt-2 record:
+Audit every commit after the attempt-2 record:
 
-1. `85647ebdbcf6669606291927ec8f9f49c75d7ee1` replaces grouped fanout with the shared recommendation pipeline and records the double-fault diagnosis.
-2. `f479e7300` adds the database manager, database fixture, first-call measurement, combined rollback simulation, and attempt-3 packet verifier.
-3. `4cdec1bca` fixes a PowerShell return-stream defect found by the committed rollback simulation.
-4. `f62d6c589` binds the attempt-3 release manifest.
+1. `85647ebdbcf6669606291927ec8f9f49c75d7ee1` replaces grouped fanout with the shared recommendation pipeline.
+2. `f479e7300` adds the database manager, database fixture, measurement controls, combined rollback simulation, and attempt-3 packet verifier.
+3. `4cdec1bca` isolates PowerShell command output used by the release runner.
+4. `f62d6c589` binds the first attempt-3 manifest.
+5. `9bf24fdc6` records the first attempt-3 audit request.
+6. `8291049d98b54817a50f098c3165a98fedf9803c` closes the five independent review findings.
+7. `6aa095040` binds packet revision 2 to the corrected source and control files.
 
-The deployment source is intentionally pinned to `85647ebdbcf6669606291927ec8f9f49c75d7ee1`. Later commits change only release controls and the manifest.
+The audit request update is the only later documentation-only commit. It does not change source, release controls, or the manifest.
+
+The deployment source is pinned to `8291049d98b54817a50f098c3165a98fedf9803c`. The later packet commit changes only the manifest, verifier, and audit request.
 
 ## Exact packet identity
 
 - Manifest: `docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json`
-- Manifest SHA-256: `9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70`
-- Source revision: `85647ebdbcf6669606291927ec8f9f49c75d7ee1`
-- Source tree: `ba2929b59912e5eb1814a397ee48a706c7deadfb`
+- Manifest SHA-256: `59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550`
+- Source revision: `8291049d98b54817a50f098c3165a98fedf9803c`
+- Source tree: `255e4b7cae1e004d5c6ef01e93baaf0167593869`
 - Stable route blob: `71e568f3014a3e07f7271801b4503080b7111ec7`
 - Shared candidate migration raw SHA-256: `e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3`
+- Superseded attempt-3 manifest SHA-256: `9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70`
 
 ## Authorized mutation budget
 
 The guarded runner authorizes:
 
 - One additive `mcp-search-grouped` deployment.
-- One conditional deletion of that endpoint after exact function-ID match.
+- One conditional deletion of that endpoint after an exact function-ID match.
 - One additive `si_search_icon_candidates_v4(jsonb,text,integer)` creation.
 - One matching migration-history insert.
-- One conditional database rollback that drops the exact v4 function and matching migration-history row after definition fingerprints match.
-- Zero stable `mcp-search` deployments.
-- Zero stable `mcp-search` deletions.
+- One conditional database rollback after function fingerprint and run-owner checks.
+- Zero stable `mcp-search` deployments or deletions.
 - Zero npm publications.
 
-The database creation, parity checks, privilege checks, and migration-history insert run in one transaction. The database rollback also runs in one transaction.
+The database creation, ownership record, parity checks, privilege checks, and migration-history insert run in one transaction. Database rollback checks the function fingerprint and matching run owner inside its transaction.
 
 ## Required independent checks
 
 ### 1. Packet and source identity
 
-- Recompute the manifest SHA-256.
-- Verify every source and packet hash.
-- Confirm the pinned source tree.
-- Confirm the stable route blob equals `main`.
-- Confirm no deployable source changed after `85647ebdb`.
+- Recompute the manifest SHA-256 and every source and packet hash.
+- Confirm the pinned source tree and the stable route blob.
+- Confirm the stable route equals `main`.
+- Confirm no deployable source changed after `8291049d9`.
 
-### 2. Shared pipeline behavior
+### 2. Worker timing and latency cohorts
+
+- Trace `timingSink` and `includeTimingInResponse` from `mcp-search-grouped/index.ts` into the shared handler.
+- Trace `measurement_timing` through `mcp/hosted-search-client.js` into the measurement-only JSONL record.
+- Confirm normal MCP tool responses are unchanged.
+- Confirm every sample records worker state, request ordinal, module age, end-to-end latency, handler latency, candidate-search time, and audit-write time.
+- Confirm first-request and reused-worker cohorts remain separate.
+- Confirm FR-47 p95 gates use only the reused-worker cohort and fail if too few reused-worker samples exist.
+- Rerun the mixed-worker and missing-warm-cohort fixtures.
+
+### 3. Shared pipeline behavior
 
 - Trace `mcp-search-grouped/index.ts` into `handleSharedRecommendationSearchRequest`.
-- Verify the endpoint uses `si_search_icon_candidates_v4`, final SVG hydration, in-band timing, and a 40-query maximum.
-- Rerun the shared-pipeline fixture and confirm one candidate RPC for both 4 and 40 logical queries.
-- Confirm response parity with the separate control path.
-- Confirm one bulk audit insert retains one row per logical query.
-- Confirm the 20-slot English, Japanese, and repeated-slot fixtures pass.
+- Verify v4 candidate retrieval, final SVG hydration, in-band timing, and the 40-query maximum.
+- Confirm one candidate RPC for both 4 and 40 logical queries.
+- Confirm response parity, one audit row per logical query, and 20-slot English, Japanese, and repeated-slot coverage.
 
-### 3. Database manager safety
+### 4. Database ownership and rollback
 
-- Read the exact migration and manager line by line.
-- Verify the v4 function is additive and service-role only.
-- Verify apply checks v3 existence, v4 absence, migration-history absence, table presence, parity with v3, and function privileges before commit.
-- Verify rollback refuses a mismatched SHA-256 or database MD5 fingerprint.
-- Verify rollback drops only the v4 signature and deletes only the matching migration-history row.
-- Rerun the committed database manager fixture.
+- Confirm apply records the generated run ID in the function comment and migration statements inside the same transaction.
+- Confirm inspect reports `present_other_owner` without returning rollback fingerprints to a different run.
+- Confirm verify and rollback refuse a different run owner.
+- Confirm exact-owner rollback still checks SHA-256 and database MD5 fingerprints inside the transaction.
+- Confirm rollback removes only the v4 signature and matching migration row.
+- Rerun the database manager fixture.
 
-### 4. Combined rollback safety
+### 5. Concurrent-run and workspace safety
+
+- Confirm the lock lives under the Git common directory, so all worktrees share it.
+- Confirm lock acquisition is atomic and release requires the exact run ID.
+- Confirm each runner uses a unique workspace and removes it in `finally`.
+- Confirm the dry run skips nested release simulations only under the runner marker.
+- Rerun the concurrent-run fixture and verify the second runner changes no evidence or workspace state.
+
+### 6. Combined rollback safety
 
 - Confirm endpoint rollback occurs before database rollback.
-- Confirm missing or mismatched endpoint IDs refuse endpoint deletion.
-- Confirm the database dependency is retained when endpoint identity is not verified.
-- Confirm an exact endpoint match deletes once, then the exact database definition rolls back once.
-- Confirm both Windows bsdtar and Git GNU tar scenarios execute the actual PowerShell runner.
-- Confirm stable-function mutations remain zero in every scenario.
-- Confirm the apply-output recovery path inspects database state before deciding rollback.
+- Confirm missing or mismatched endpoint IDs refuse deletion.
+- Confirm the database dependency remains when endpoint identity is unverified.
+- Confirm an exact endpoint ID removes the endpoint once, then exact-owner database rollback runs once.
+- Confirm both Windows bsdtar and Git GNU tar execute the real PowerShell runner.
+- Confirm stable-function mutations remain zero.
 
-### 5. Measurement truthfulness
-
-- Confirm the latency script makes no `OPTIONS` keepalive requests.
-- Confirm it records `worker_affinity_assumed: false`.
-- Confirm each scenario waits for the rate window, then measures back-to-back first-call requests.
-- Confirm failed samples and p95 remain in the evidence before an assertion stops the run.
-- Confirm the live direct grouped check requires in-band candidate-search and audit-write timing.
-
-### 6. Read-only production preflight
+### 7. Read-only production preflight
 
 - Confirm `mcp-search-grouped` is absent.
 - Confirm stable `mcp-search` remains ID `ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43`, version 40, active, and keyless.
-- Confirm v3 is present.
-- Confirm v4 and its migration-history record are absent.
+- Confirm v3 is present, while v4 and its migration-history record are absent.
 - Confirm npm remains `beta` 0.4.19-beta.2 and `latest` 0.4.17.
 
 ## Reproduction commands
@@ -115,7 +124,7 @@ The database creation, parity checks, privilege checks, and migration-history in
 Run from the branch worktree:
 
 ```powershell
-node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70
+node scripts/verify-search-v2-beta3-grouped-packet.mjs --manifest-hash 59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550
 ```
 
 ```powershell
@@ -123,22 +132,22 @@ node scripts/manage-search-v2-shared-candidate-rpc.mjs --action preflight --proj
 ```
 
 ```powershell
-& scripts/run-search-v2-beta3-grouped-release.ps1 -ExpectedManifest 9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70
+& scripts/run-search-v2-beta3-grouped-release.ps1 -ExpectedManifest 59dd98f9cd81c40c59381e97f91ef752f8d2556d7bb7b4bd6f5741f2217f5550
 ```
 
-The runner command above is a no-mutation dry run because it omits `-ExecuteApprovedGroupedRelease`.
+The runner command above omits `-ExecuteApprovedGroupedRelease`, so it cannot deploy, delete, or mutate the database.
 
-## Executor reproduction already completed
+## Executor results to reproduce
 
-The following results are claims for the auditor to reproduce, not substitutes for independent verification:
+These are claims for independent reproduction:
 
-- Full packet passed with 37 source files and 9 packet files.
-- Database manager fixture passed absent inspection, apply, present inspection, verify, mismatched-definition refusal, and exact rollback.
-- Combined rollback simulation passed missing-ID, mismatched-ID, exact-ID bsdtar, and exact-ID GNU tar scenarios.
-- Shared pipeline fixture passed one candidate RPC for 4 and 40 logical queries.
-- Recommendation fixtures passed 20-slot English, Japanese, and repeated-slot cases.
-- Exact runner dry run reported `preflight_ok_no_mutation`.
-- The worktree was clean after the manifest commit.
+- Full packet passed with 37 source files and 11 packet files.
+- Database fixture passed different-owner inspect, verify, and rollback refusal plus exact-owner rollback.
+- Measurement fixture passed mixed-worker classification and blocked a missing warm cohort.
+- Concurrent-run fixture refused a second runner across worktrees without changing evidence or workspaces.
+- Combined rollback simulation passed missing-ID, mismatched-ID, exact-ID bsdtar, and exact-ID GNU tar cases.
+- Exact no-mutation runner returned `preflight_ok_no_mutation` and removed its unique workspace and release lock.
+- Read-only production checks found the grouped endpoint absent, v4 absent, stable version 40, npm beta.2, and npm latest 0.4.17.
 
 ## Release rule after audit
 
