@@ -1456,6 +1456,18 @@ function normalizeResponseMode(responseMode) {
   return 'plan';
 }
 
+const MAX_GROUPED_RECOMMENDATION_QUERIES = 40;
+
+function buildGroupedRecommendationQueryKey(request) {
+  return JSON.stringify([
+    String(request.query || '').trim().toLowerCase(),
+    String(request.library || '').trim().toLowerCase(),
+    String(request.style || 'any').trim().toLowerCase(),
+    Number(request.limit) || 0,
+    String(request.locale || '').trim().toLowerCase(),
+  ]);
+}
+
 function isNoisyAlternative(entry) {
   return entry.variantPenalty >= 12 || entry.brandPenalty >= 12 || entry.slotPreferenceBonus < 0;
 }
@@ -1476,6 +1488,9 @@ export async function recommendIconsForTask({
 }) {
   const normalizedResponseMode = normalizeResponseMode(responseMode);
   const taskQueryFrame = includeQueryFrame ? buildSearchQueryFrame(task, { locale }) : null;
+  const groupedVariantLimit = typeof searchIconsForQueries === 'function'
+    ? Math.max(1, Math.floor(MAX_GROUPED_RECOMMENDATION_QUERIES / Math.max(1, slots.length)))
+    : null;
   const slotPlans = slots.map((slotLabel, slotIndex) => {
     const interpretationFrame = buildSearchQueryFrame(slotLabel, { locale, context: task });
     if (interpretationFrame.needs_clarification) {
@@ -1495,10 +1510,14 @@ export async function recommendIconsForTask({
       ...buildLocalizedVariants(slotLabel, locale).flatMap(tokenizeText),
       ...buildDirectLocalizedIntentTerms(slotLabel),
     ]);
+    const defaultVariantLimit = getRecommendationQueryVariantLimit(locale);
+    const queryVariantLimit = groupedVariantLimit === null
+      ? defaultVariantLimit
+      : Math.min(defaultVariantLimit, groupedVariantLimit);
     const queryVariants = dedupe([
       ...buildBrandLogoQueryVariants(task, slotLabel, library),
       ...buildSlotQueryVariants(task, slotLabel, locale),
-    ]).slice(0, getRecommendationQueryVariantLimit(locale));
+    ]).slice(0, queryVariantLimit);
 
     return {
       slotIndex,
@@ -1515,28 +1534,39 @@ export async function recommendIconsForTask({
   if (typeof searchIconsForQueries === 'function') {
     const groupedRequests = [];
     const groupedLocations = [];
+    const groupedRequestIndexes = new Map();
     for (const plan of slotPlans) {
       if (plan.interpretationFrame.needs_clarification) continue;
       for (const [variantIndex, query] of plan.queries_used.entries()) {
-        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex });
-        groupedRequests.push({
+        const request = {
           query,
           library,
           style,
           limit: Math.max(limitPerSlot * 5, 10),
           locale,
-        });
+        };
+        const requestKey = buildGroupedRecommendationQueryKey(request);
+        let requestIndex = groupedRequestIndexes.get(requestKey);
+        if (requestIndex === undefined) {
+          requestIndex = groupedRequests.length;
+          groupedRequestIndexes.set(requestKey, requestIndex);
+          groupedRequests.push(request);
+        }
+        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex, requestIndex });
       }
     }
 
     let groupedResults = [];
     if (groupedRequests.length > 0) {
-      try {
-        const received = await searchIconsForQueries(groupedRequests);
-        groupedResults = Array.isArray(received) ? received : [];
-      } catch {
-        groupedResults = [];
+      const received = await searchIconsForQueries(groupedRequests);
+      if (!Array.isArray(received) || received.length !== groupedRequests.length) {
+        const error = new Error('Grouped recommendation search returned an incomplete response.');
+        error.code = 'grouped_recommendation_invalid_response';
+        error.status = 502;
+        error.retryable = true;
+        throw error;
       }
+      groupedResults = received;
     }
 
     for (const plan of slotPlans) {
@@ -1545,10 +1575,10 @@ export async function recommendIconsForTask({
         Array.from({ length: plan.queries_used.length }, () => []),
       );
     }
-    for (const [resultIndex, location] of groupedLocations.entries()) {
+    for (const location of groupedLocations) {
       const slotGroups = groupedResultsBySlot.get(location.slotIndex);
-      slotGroups[location.variantIndex] = Array.isArray(groupedResults[resultIndex])
-        ? groupedResults[resultIndex]
+      slotGroups[location.variantIndex] = Array.isArray(groupedResults[location.requestIndex])
+        ? groupedResults[location.requestIndex]
         : [];
     }
   }

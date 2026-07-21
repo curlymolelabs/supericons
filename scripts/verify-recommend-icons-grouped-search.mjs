@@ -44,6 +44,7 @@ const grouped = await recommendIconsForTask({
 assert.equal(groupedCalls, 1, 'One recommendation must use one grouped search call.');
 assert.equal(singleCalls, 0, 'Grouped mode must not fall back to separate search calls.');
 assert.ok(groupedQueries.length >= 2, 'Grouped search must include variants from every resolved slot.');
+assert.equal(groupedQueries.every((query) => query.limit === 10), true);
 assert.equal(grouped.results.length, 2);
 assert.equal(grouped.results.every((result) => Boolean(result.recommended)), true);
 
@@ -109,6 +110,119 @@ const groupedParity = await recommendIconsForTask({
 });
 assert.deepEqual(groupedParity, separateParity, 'Grouped recommendation results must match separate searches exactly.');
 
+const twentySlots = [
+  'home',
+  'workouts',
+  'progress',
+  'goals',
+  'nutrition',
+  'calendar',
+  'profile',
+  'settings',
+  'notifications',
+  'search',
+  'favorites',
+  'history',
+  'community',
+  'coaching',
+  'achievements',
+  'heart rate',
+  'sleep',
+  'hydration',
+  'running',
+  'strength',
+];
+let twentySlotGroupedCalls = 0;
+let twentySlotQueryCount = 0;
+const twentySlotRecommendation = await recommendIconsForTask({
+  task: 'Choose navigation and feature icons for a fitness application.',
+  slots: twentySlots,
+  limitPerSlot: 1,
+  responseMode: 'plan',
+  semanticMap: new Map(),
+  searchIconsForQuery: async () => {
+    throw new Error('The 20-slot case must use grouped search.');
+  },
+  searchIconsForQueries: async (queries) => {
+    twentySlotGroupedCalls += 1;
+    twentySlotQueryCount = queries.length;
+    assert.equal(queries.every((query) => query.limit === 10), true);
+    return queries.map(() => parityIcons);
+  },
+  buildIconResult,
+});
+assert.equal(twentySlotGroupedCalls, 1, 'Twenty slots must use one grouped hosted request.');
+assert.equal(twentySlotRecommendation.slot_count, 20);
+assert.equal(twentySlotRecommendation.results.length, 20);
+assert.ok(twentySlotQueryCount <= 40, 'Twenty slots must stay inside the recommendation query-fanout cap.');
+
+let localizedTwentySlotQueryCount = 0;
+const localizedTwentySlotRecommendation = await recommendIconsForTask({
+  task: 'フィットネスアプリのナビゲーションアイコンを選ぶ。',
+  slots: Array.from({ length: 20 }, (_, index) => `設定 ${index + 1}`),
+  locale: 'ja',
+  limitPerSlot: 1,
+  responseMode: 'plan',
+  semanticMap: new Map(),
+  searchIconsForQuery: async () => {
+    throw new Error('The localized 20-slot case must use grouped search.');
+  },
+  searchIconsForQueries: async (queries) => {
+    localizedTwentySlotQueryCount = queries.length;
+    assert.equal(queries.every((query) => query.limit === 10), true);
+    return queries.map(() => parityIcons);
+  },
+  buildIconResult,
+});
+assert.equal(localizedTwentySlotRecommendation.slot_count, 20);
+assert.ok(
+  localizedTwentySlotQueryCount <= 40,
+  'Twenty localized slots must stay inside the recommendation query-fanout cap.',
+);
+
+let repeatedSlotQueryCount = 0;
+const repeatedSlotRecommendation = await recommendIconsForTask({
+  task: 'Choose icons for application settings.',
+  slots: Array.from({ length: 20 }, () => 'settings'),
+  limitPerSlot: 1,
+  responseMode: 'plan',
+  semanticMap: new Map(),
+  searchIconsForQuery: async () => {
+    throw new Error('The repeated-slot case must use grouped search.');
+  },
+  searchIconsForQueries: async (queries) => {
+    repeatedSlotQueryCount = queries.length;
+    assert.equal(queries.every((query) => query.limit === 10), true);
+    return queries.map(() => parityIcons);
+  },
+  buildIconResult,
+});
+assert.equal(repeatedSlotRecommendation.results.length, 20);
+assert.equal(repeatedSlotRecommendation.results.every((result) => Boolean(result.recommended)), true);
+assert.ok(
+  repeatedSlotQueryCount <= 2,
+  'Repeated slots must reuse identical logical searches instead of issuing 40 duplicates.',
+);
+
+const groupedFailure = new Error('Hosted request timed out.');
+groupedFailure.code = 'hosted_search_timeout';
+await assert.rejects(
+  recommendIconsForTask({
+    task: 'Choose settings icons.',
+    slots: ['settings'],
+    limitPerSlot: 1,
+    responseMode: 'plan',
+    semanticMap: new Map(),
+    searchIconsForQuery: async () => [],
+    searchIconsForQueries: async () => {
+      throw groupedFailure;
+    },
+    buildIconResult,
+  }),
+  (error) => error === groupedFailure,
+  'Grouped dependency failures must reach the tool handler instead of becoming false no-results.',
+);
+
 console.log(JSON.stringify({
   status: 'ok',
   grouped_calls: groupedCalls,
@@ -116,4 +230,10 @@ console.log(JSON.stringify({
   clarification_retrieval_calls: 0,
   fallback_calls: fallbackCalls,
   recommendation_result_parity: true,
+  twenty_slot_grouped_calls: twentySlotGroupedCalls,
+  twenty_slot_query_count: twentySlotQueryCount,
+  localized_twenty_slot_query_count: localizedTwentySlotQueryCount,
+  repeated_twenty_slot_query_count: repeatedSlotQueryCount,
+  candidate_limit_preserved: 10,
+  grouped_failure_propagated: true,
 }, null, 2));

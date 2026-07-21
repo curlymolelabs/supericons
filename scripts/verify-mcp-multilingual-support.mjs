@@ -86,8 +86,14 @@ const [
 
 assertIncludesAll(indexSource, expectedLocales, 'stdio MCP search schema');
 assertIncludesAll(remoteSource, expectedLocales, 'hosted MCP search schema');
-assert.ok(indexSource.includes('locale: z.enum'), 'stdio MCP must expose a locale schema');
-assert.ok(remoteSource.includes('locale: z.enum'), 'hosted MCP must expose a locale schema');
+assert.ok(
+  indexSource.includes('locale: forgivingStringSchema.optional()'),
+  'stdio MCP must expose the forgiving locale schema used for agent-readable warnings',
+);
+assert.ok(
+  remoteSource.includes('locale: forgivingStringSchema.optional()'),
+  'hosted MCP must expose the forgiving locale schema used for agent-readable warnings',
+);
 assert.ok(remoteSource.includes('locale,') && remoteSource.includes('searchIconsHostedMcp'), 'hosted MCP must pass locale to search');
 assert.ok(indexSource.includes('locale,') && indexSource.includes('recommendIconsForTask'), 'stdio recommend_icons must accept locale');
 assert.ok(remoteSource.includes('recommendIconsForTask') && remoteSource.includes('locale,'), 'hosted recommend_icons must accept locale');

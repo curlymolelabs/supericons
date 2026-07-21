@@ -1972,6 +1972,8 @@ async function refreshHostedSearchResults({
     const payload = await searchIconsHosted({
       query,
       library: getHostedSearchLibraryFilter(),
+      libraryMode: getHostedSearchLibraryFilter() ? 'strict' : 'all',
+      style: state.iconStyle,
       limit: Math.max(state.batchSize, 60),
       locale,
       source: getSearchAnalyticsSource(),

@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "release": "search-v2-beta3-shared-grouped-endpoint",
+  "date": "2026-07-21",
+  "attempt": 5,
+  "packet_revision": 10,
+  "supersedes_manifest_sha256": "6f211efd352abb242194c58a641e451c9ded80c5d0549c7fa4eccd5e2b335e6f",
+  "rebind_reason": "Preserve the original recommendation candidate pool and semantic profile while removing SVG and unused ranking payload from grouped recommendation transport. Restore non-Material SVGs from the pinned MCP package index.",
+  "prior_attempt": {
+    "status": "rolled_back",
+    "reason": "one_slot p95 3693 ms exceeds 3000 ms",
+    "grouped_function_id": "47aab266-72f2-4e92-9c81-8cfee14a7ed1",
+    "grouped_function_removed": true,
+    "shared_candidate_rpc_removed": true,
+    "stable_function_mutated": false,
+    "live_routing_gate": "passed",
+    "latency_gate": "blocked",
+    "one_slot_p95_ms": 3693,
+    "one_slot_samples_ms": [3693, 3064, 2527],
+    "one_slot_handler_samples_ms": [944.12, 1185.947, 648.68],
+    "worker_affinity_assumption": "not_assumed"
+  },
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "function_name": "mcp-search-grouped",
+  "source_revision": "6b9d04544371ce13bffafbb5441796dfbdb46b8c",
+  "source_tree": "675991f22eda3bcd035a0577d9118872c8fa2b2f",
+  "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
+  "grouped_function_present_before": false,
+  "stable_function": {
+    "id": "ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43",
+    "name": "mcp-search",
+    "version": 40,
+    "updated_at": 1784045797971,
+    "verify_jwt": false,
+    "status": "ACTIVE"
+  },
+  "shared_candidate_rpc": {
+    "signature": "public.si_search_icon_candidates_v4(jsonb,text,integer)",
+    "migration_version": "20260714190000",
+    "migration_path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
+    "migration_sha256": "f22d209938aaafa685e4f1ab074b8e9d3802de503a91d9d3d24b2c05ef207ae6",
+    "present_before": false,
+    "migration_record_present_before": false,
+    "service_role_only": true
+  },
+  "deployments_authorized": 1,
+  "conditional_deletions_authorized": 1,
+  "stable_function_deployments_authorized": 0,
+  "npm_publications_authorized": 0,
+  "database_mutations_authorized": {
+    "shared_candidate_rpc_creations": 1,
+    "migration_history_inserts": 1,
+    "conditional_shared_candidate_rpc_drops": 1,
+    "conditional_migration_history_deletes": 1
+  },
+  "rollback": "delete_matching_grouped_endpoint_then_remove_matching_shared_candidate_rpc_and_migration_record",
+  "source_files": [
+    {
+      "path": "lib/cjk-search-core.js",
+      "sha256": "9b2d0935e2f5f060aabb215a261e33f695e886f3e9e03eb67faae7d538fb1a3e"
+    },
+    {
+      "path": "lib/generated-search-intent-graph.js",
+      "sha256": "cd467951a0d98856dccf52293a8f5cba95eb66a73d8b8b0ced4164d9f6b8413f"
+    },
+    {
+      "path": "lib/generated-search-intent-rules.js",
+      "sha256": "876c6f2ed69580e32e5059d422961761d8d31cd9dc05bc99d9a048e6131e39ef"
+    },
+    {
+      "path": "lib/generated-search-ranking-policy.js",
+      "sha256": "938f5a1fc38c0be6bea229b4fba792df8380868405268d7b552532de18861335"
+    },
+    {
+      "path": "lib/hosted-search-core.js",
+      "sha256": "ec987968d9753fb6d620cbac6e5ea8c7fed08816c2c0049b1b01b9539d87266e"
+    },
+    {
+      "path": "lib/search-intent-core.js",
+      "sha256": "9e90b860024214bfc5adc1c5e0b36a0cf1bb223ff093083a9eb5df7034011c5c"
+    },
+    {
+      "path": "lib/search-query-frame.js",
+      "sha256": "45de1bd6c3d1daf5fa652a5cbf38d00d15181a5d2cc7a7feba8c77ce19912d80"
+    },
+    {
+      "path": "lib/search-ranking-policy.js",
+      "sha256": "28d45573a3eb5c9303265f59db7e00ad1d8851ce5b339947188497db3a45ceb3"
+    },
+    {
+      "path": "mcp/hosted-candidate-hydration.js",
+      "sha256": "512acc3a6e2b5a23bc1aaeaade0a0729606511aa5752ecf91de1411387176c6e"
+    },
+    {
+      "path": "mcp/hosted-search-client.js",
+      "sha256": "c65ff115b6c2cb17298d8077f30ec9ce6a6907858bd73dbbdad0e0eb78580f2d"
+    },
+    {
+      "path": "mcp/hosted-search-resilience.js",
+      "sha256": "ab2c70bd019688181f2836550f54287f1965c9826fabaa02415a06a31b79cf71"
+    },
+    {
+      "path": "mcp/index.js",
+      "sha256": "6cc5e9816a458751cfcedeca6355618f35ec908a49bcbd183c6b378c5514085f"
+    },
+    {
+      "path": "mcp/package.json",
+      "sha256": "ca2464d2f7f1f3f71939678a729d91fe195790768e41c5b20d9239d71276e64e"
+    },
+    {
+      "path": "mcp/recommend-icons.js",
+      "sha256": "f3705b6acb1f981859f56cbf795c05cc7240234740767219f27422b8a20e2f11"
+    },
+    {
+      "path": "mcp/release-channel.js",
+      "sha256": "6170c163d63cc2bf42ec875ae32ddbce4c78de7e158f136f56998e635d9d0af8"
+    },
+    {
+      "path": "mcp/remote-server.js",
+      "sha256": "1fb77a47755ee651fb74a4e478c23ed7c830d0de9eb4f6f2022bbe98aa02134c"
+    },
+    {
+      "path": "mcp/search-tool-shell.js",
+      "sha256": "86e65ef832900d0310abfaed38ee0eb830ad5b049b7627bb53e096ead879ee10"
+    },
+    {
+      "path": "scripts/verify-hosted-candidate-hydration.mjs",
+      "sha256": "7d7d337bfb1b48c8786a2d72eb46fac32053f60b123b3743e36ee163ddd957b0"
+    },
+    {
+      "path": "scripts/verify-hosted-search-grouped-client.mjs",
+      "sha256": "1ade9518a8f6a6bde2635c7b61a8c0f876e09724981c2f828b7fb48ae7fd24e9"
+    },
+    {
+      "path": "scripts/verify-hosted-search-resilience.mjs",
+      "sha256": "636bdcdeec6adcb111a087512d20da68715cc994f50a1af51ec589c443271ddb"
+    },
+    {
+      "path": "scripts/verify-mcp-agent-friendly-errors.mjs",
+      "sha256": "0c1066a4c0d47b75e3daa27ea3108c1edc86a702986875551ca9ce9da7083395"
+    },
+    {
+      "path": "scripts/verify-recommend-icons-grouped-search.mjs",
+      "sha256": "2a42c45f61689a7dd978422e1e43cbcbd40068cd2d2e16b8212a2117320bad34"
+    },
+    {
+      "path": "scripts/verify-search-v2-deterministic-mcp-default.mjs",
+      "sha256": "a433562bb0e0e1ab0d121e5ee5c5f838889915a147e29e2504c56286eceb5a27"
+    },
+    {
+      "path": "scripts/verify-search-v2-grouped-http-request.ts",
+      "sha256": "f88749170299fd23eb2df38082ae66eeb20393a0db02555c179231a4604d52d1"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-pipeline.ts",
+      "sha256": "e643bbbc22c41079b450b9fcbd64afcfaa0804dc04232160601e54aefdbc546d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/candidate-retrieval.ts",
+      "sha256": "870c3617bcf443e4e31efa8325501260f45240ecba9936d4dd48f5f5e1d114b1"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/catalog.ts",
+      "sha256": "265eeea824895ac4bb81b8b0d607dbef43db9e3c2578972e01b40e97458faabc"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/handle-search-request.ts",
+      "sha256": "a24b81f26e34d0f4fd3548d8c0b5e7e5c1ae503dcee13cee6fc2e9595a2c80db"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/material-serving.ts",
+      "sha256": "98aa2de3be91bb32263d86e2c9f3744cf8b975d343b410955786a6aecd5ad217"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/normalize.ts",
+      "sha256": "27e5601d37195fe14c5a1da6e58e85e28480e80afe1e94ba42b551a0f96e491d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rank.ts",
+      "sha256": "51e340739693219255e1fc0918cc5affcf470a41c90930be474d8d0b31eb253d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rate-limit.ts",
+      "sha256": "1a023edc01835863ebd68d0dcfea58b399dc8b8f068eaca67b278b6b72d49915"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/recommendation-candidate-retrieval.ts",
+      "sha256": "c07a0fafaaddb34834a5c8140682f2d60751f3287400a2e16984469cf5532489"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/result-hydration.ts",
+      "sha256": "27b7d526b17a3a4743546be5c970fe306b44389c67be0993a24f3e524248cea0"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/shared-recommendation-search-request.ts",
+      "sha256": "29bc3fdb64259d1e0dbd1c08e184354eb0cbbb581b8a638f3c0f7932c69dab3b"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/stage-timing.ts",
+      "sha256": "d6bb6d7347c48513951340727130ff1ad26af3d04f89f809603025b921aaac0d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/types.ts",
+      "sha256": "5035ce460228219bec7796ebd46266b7fa4137a0d3bcfcd12fc2b3b4c13e3f41"
+    },
+    {
+      "path": "supabase/functions/mcp-search-grouped/index.ts",
+      "sha256": "b93676c2bba974b1da761c4a48c987eda47e326f0e24cc2d5e63e9f0f2d66a63"
+    },
+    {
+      "path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
+      "sha256": "63e391a441b2e2de3ca0972fadd79d41e4112e3eb20c12139cab50f6fdce64f1"
+    }
+  ],
+  "packet_files": [
+    {
+      "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
+      "sha256": "e9bed1550a41ae0851709b013fb7a0f4eb3720c669193d9cd872fba3ec73ba36"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
+      "sha256": "ec7b6f2beeba85ba87f7702e32a88a3c5ff7d4c90cf858ae9c2fd9ecd04e1d96"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
+      "sha256": "13f0908bd70e6e32fe8f2ba019c58e97b3c1b448e2550e75d1331a92d149899b"
+    },
+    {
+      "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
+      "sha256": "8bc92ea0bced40444dea66e4f2561e5d12a680b08ba64e91ba1a6da84df158e1"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
+      "sha256": "5cf80d9acb31821e556c82724127be2e9e390f4cd45acd37bd57f54020e049ed"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
+      "sha256": "fe99c86019df87f54143a0772fd481815bc76c775cdb25535d9782eaadaf02e0"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
+      "sha256": "b44545f1ed0114e54fa3883ffcd22212479f2abb4983966fa99ac92916a56a55"
+    },
+    {
+      "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
+      "sha256": "c78b1a971acb604a926192c4f91054b36a40cdf90d531f72ef0b47182c9a94a8"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-manager.mjs",
+      "sha256": "e69e4611d575dcd4e89b6f51f88ba4b96734324e75b1e87730fb8a3912581850"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs",
+      "sha256": "1d40e646011e090b755bcdde80ca339765b98ce757107b6abd594bcb8dae6c58"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-migration-smoke-concurrency.mjs",
+      "sha256": "e929b7af5a386c6a9b0ee32470837f7885a664c2c48e2c173f474b7ff646a907"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs",
+      "sha256": "f817d8c4bd1d3fa61d1bef59dacb72cbb4614a56943bfbb0e7165763066d2b14"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark-lock.mjs",
+      "sha256": "1cec44052ea4470414cdb6521da80c309f471af56f847185ca8dee5bef940035"
+    },
+    {
+      "path": "scripts/lib/search-v2-candidate-benchmark-policy.mjs",
+      "sha256": "3e82b178a93eb08e7db6f80e2c48e8c5518fef59e89cb3ab8acf69bb999cda5f"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-benchmark-policy.mjs",
+      "sha256": "b4517d97bae3ce85c442af2500396ed82cd300a5a380e8ac19b874b3decfb4e1"
+    },
+    {
+      "path": "scripts/manage-search-v2-release-lock.mjs",
+      "sha256": "2ee35beece29015f962f54c1aaf6795e5799946cda452177b967289468350b55"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
+      "sha256": "3013c511b6f66d44107d969aeb312968ea6acf9ecaabc67e2282001138dd9e1b"
+    },
+    {
+      "path": "scripts/verify-search-v2-phase1-parity.mjs",
+      "sha256": "58899ca4db94b8cb42c885342487f7156c33b9ef51b4c9c8d36ea02c478b4380"
+    }
+  ],
+  "live_gates": {
+    "direct_grouped_http": true,
+    "mcp_grouped_client": true,
+    "mcp_grouped_client_stable_fallback_disabled": true,
+    "stable_fallback_when_grouped_missing": true,
+    "fr47_stable_fallback_disabled": true,
+    "shared_candidate_pipeline": true,
+    "shared_candidate_rpc_call_count": 1,
+    "maximum_logical_queries": 40,
+    "in_band_stage_timing": true,
+    "worker_affinity_assumed": false,
+    "measurement_strategy": "actual_routed_samples_with_worker_classification",
+    "worker_timing_recorded": true,
+    "worker_cohorts_separated": true,
+    "all_routed_samples_counted": true,
+    "rate_window_reset_ms": 65000,
+    "failed_samples_preserved": true,
+    "response_size_recorded": true,
+    "original_candidate_pool_preserved": true,
+    "candidate_only_transport": true,
+    "candidate_only_ranked_identity_parity": true,
+    "candidate_only_semantic_parity": true,
+    "candidate_only_final_svg_reads": 0,
+    "candidate_only_public_semantic_reads": 1,
+    "local_candidate_svg_hydration": true,
+    "rollback_function_id_pinned": true,
+    "rollback_shared_candidate_definition_pinned": true,
+    "committed_negative_path_harness": true,
+    "committed_rollback_simulation": true,
+    "committed_measurement_schedule_harness": true,
+    "committed_database_manager_fixture": true,
+    "committed_concurrent_run_fixture": true,
+    "cross_worktree_release_lock": true,
+    "cross_worktree_simulation_lock": true,
+    "release_lock_actual_owner_pid": true,
+    "live_lock_cleanup_refused": true,
+    "abandoned_lock_list_and_cleanup": true,
+    "simulation_evidence_run_owned": true,
+    "lock_release_requires_acquisition": true,
+    "preheld_lock_errors_preserved": true,
+    "unique_release_workspaces": true,
+    "database_run_ownership": true,
+    "dry_run_skips_nested_release_simulations": true,
+    "relative_archive_extraction": true,
+    "gnu_tar_and_bsdtar_simulated": true,
+    "indexed_candidate_collection": true,
+    "preexpanded_grouped_queries": true,
+    "production_benchmark_exact_parity": true,
+    "production_benchmark_release_lock": true,
+    "production_benchmark_database_advisory_lock": true,
+    "database_apply_rollback_advisory_lock": true,
+    "docker_smoke_unique_run_owned_container": true,
+    "concurrent_docker_smoke_fixture": true,
+    "docker_readiness_diagnostics": true,
+    "concurrency_harnesses_top_level_only": true,
+    "production_benchmark_first_call_recorded": true,
+    "production_benchmark_warm_sample_count": 20,
+    "production_benchmark_warm_v4_p95_ms_max": 500,
+    "production_benchmark_warm_speedup_minimum": 3,
+    "production_benchmark_first_call_release_gate": "actual_routed_end_to_end_one_slot_p95_at_most_3000_ms",
+    "one_slot_actual_routed_p95_ms_max": 3000,
+    "ten_slot_actual_routed_p95_ms_max": 10000,
+    "twenty_slot_actual_routed_p95_ms_max": 15000,
+    "request_timeout_ms": 20000,
+    "timeouts_allowed": 0,
+    "supported_non_english_twenty_slot_case": "ja"
+  }
+}

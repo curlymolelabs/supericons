@@ -13,7 +13,12 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import { z } from 'zod';
-import { getHostedSearchResilienceStatus, searchIconsHostedMcp } from './hosted-search-client.js';
+import {
+  getGroupedHostedSearchResilienceStatus,
+  getHostedSearchResilienceStatus,
+  searchIconQueriesHostedMcp,
+  searchIconsHostedMcp,
+} from './hosted-search-client.js';
 import { getMaterialBundleStatus, hydrateMaterialHostedRows } from './material-hydration.js';
 import { SUPABASE_URL } from './auth.js';
 import { searchIcons as searchLocalIcons } from './search.js';
@@ -32,21 +37,28 @@ import {
   buildPreviewTextPayload,
 } from './preview-icons.js';
 import {
-  MAX_ACCEPTED_PREVIEW_REFS,
   SEARCH_TOOL_SERVER_INSTRUCTIONS,
+  buildRecommendationFailurePresentation,
   buildSearchFailurePresentation,
   buildSearchMatchPresentation,
   buildSearchNoResultPresentation,
   coerceToolBoolean,
   coerceToolIconRefs,
   coerceToolNumber,
+  coerceToolSlots,
   coerceToolString,
   normalizePreviewToolArguments,
+  normalizeRecommendationToolArguments,
   normalizeSearchToolArguments,
 } from './search-tool-shell.js';
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
+import {
+  createRailwayCandidateIndex,
+  createRailwayRecommendationSearch,
+  isRailwayLocalFirstEnabled,
+} from './railway-local-search.js';
 import { buildLibraryCapability } from './library-capabilities.js';
 import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
 import {
@@ -77,6 +89,26 @@ const publicIcons = [
   ...(Array.isArray(solidIconIndex?.icons) ? solidIconIndex.icons : []),
 ];
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
+const railwayLocalFirstEnabled = isRailwayLocalFirstEnabled();
+const railwayCandidateIndex = createRailwayCandidateIndex({
+  icons: publicIcons,
+  synonyms,
+  getSearchValues: (icon) => {
+    const semanticRecord = getSemanticRecordForIcon(semanticMap, icon?.lib, icon?.id);
+    return [
+      icon?.id,
+      icon?.name,
+      semanticRecord?.label,
+      semanticRecord?.purpose,
+      semanticRecord?.depicts,
+      ...(semanticRecord?.semantic_tags || []),
+      ...(semanticRecord?.synonyms || []),
+      semanticRecord?.use_when,
+    ].filter(Boolean);
+  },
+});
+const RAILWAY_RECOMMENDATION_CACHE_LIMIT = 512;
+const railwayRecommendationSearchCache = new Map();
 const mcpApiKeyAccountCache = new Map();
 const MCP_API_KEY_ACCOUNT_CACHE_MS = 5 * 60 * 1000;
 
@@ -109,7 +141,18 @@ const multilingualLocaleDescription =
 const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
 const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
 const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
-const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(12));
+const forgivingPreviewLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationLimitSchema = z.preprocess(
+  coerceToolNumber,
+  z.union([z.number(), z.string()]),
+);
+const forgivingRecommendationSlotsSchema = z.preprocess(
+  coerceToolSlots,
+  z.array(z.string()),
+);
 const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 const previewStyles = new Set(['any', 'outline', 'solid']);
 const previewLocales = new Set(multilingualLocaleValues);
@@ -188,18 +231,46 @@ const searchIconsOutputSchema = {
   limit_scope: z.string().optional().describe('Allowance scope reported by a rate limit.'),
   details: z.record(z.unknown()).optional().describe('Structured rate-limit or upstream failure details.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
+  search_runtime: z.object({
+    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+    fallback_used: z.boolean(),
+    hosted_search_calls: z.number(),
+    local_failure_code: z.string().nullable(),
+    index_generated_at: z.string(),
+  }).optional().describe('Search execution path used for this request.'),
 };
 
 const recommendIconsOutputSchema = {
   task: z.string().describe('Original UI task.'),
   library: z.string().optional().describe('Library filter used for recommendations, if provided.'),
   style: z.string().optional().describe('Style preference used for recommendations.'),
+  response_mode: z.enum(['plan', 'assets', 'full']).describe('Response size mode used for this recommendation.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
+  all_slots_resolved: z.boolean().describe('Whether every requested slot received a recommendation without clarification.'),
   needs_clarification: z.boolean().describe('Whether one or more ambiguous slots require more context.'),
   clarification_slots: z.array(z.string()).describe('Slots that need the caller to choose an interpretation.'),
+  low_confidence_slots: z.array(z.string()).describe('Slots whose result is missing or has low confidence.'),
+  fallback_recommended: z.boolean().describe('Whether the caller should consider direct search or clarification.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of the recommended icon set.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
+  warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored or clamped.'),
+  error: z.string().optional().describe('Plain-language reason the recommendation did not complete.'),
+  code: z.string().optional().describe('Stable error code for programmatic recovery.'),
+  hint: z.string().optional().describe('Plain-language recovery instruction.'),
+  retryable: z.boolean().optional().describe('Whether a corrected or later request may succeed.'),
+  status: z.number().optional().describe('HTTP status from a hosted dependency failure.'),
+  retry_after_seconds: z.number().optional().describe('Seconds to wait before retrying a rate-limited recommendation.'),
+  details: z.record(z.unknown()).optional().describe('Structured limits or failure details.'),
+  suggested_response_markdown: z.string().optional().describe('Plain-language explanation suitable for the agent response.'),
+  next_step: z.string().optional().describe('Useful next action for the caller.'),
+  search_runtime: z.object({
+    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+    fallback_used: z.boolean(),
+    hosted_search_calls: z.number(),
+    local_failure_code: z.string().nullable(),
+    index_generated_at: z.string(),
+  }).optional().describe('Search execution path used for this recommendation.'),
 };
 
 const previewIconsOutputSchema = {
@@ -208,6 +279,8 @@ const previewIconsOutputSchema = {
   image_url: z.string().nullable().optional().describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
   markdown_image: z.string().nullable().optional().describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
   image_included: z.boolean().describe('Whether this response includes MCP image content.'),
+  rendered_count: z.number().describe('Number of icons rendered in the inline preview.'),
+  browser_preview_count: z.number().describe('Number of accepted icon refs available at preview_url.'),
   truncated_from: z.number().optional().describe('Original icon ref count when the input was truncated.'),
   warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored.'),
   next_step: z.string().describe('Useful next action for the caller.'),
@@ -307,15 +380,26 @@ function normalizeLocalIcon(icon) {
   };
 }
 
-function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', style = 'any', limit = 20, locale = null }) {
-  if (publicIcons.length === 0) return [];
+function searchLocalFallbackIcons({
+  query,
+  library,
+  libraryMode = 'strict',
+  style = 'any',
+  limit = 20,
+  locale = null,
+  expandIntentVariants = true,
+  iconPool = publicIcons,
+}) {
+  if (iconPool.length === 0) return [];
 
-  const queryVariants = buildIntentQueryVariants(query, { maxVariants: 10 });
+  const queryVariants = expandIntentVariants
+    ? buildIntentQueryVariants(query, { maxVariants: 10 })
+    : [query];
   const results = [];
   const seen = new Set();
 
   for (const queryVariant of queryVariants) {
-    const variantResults = searchLocalIcons(queryVariant, publicIcons, synonyms, {
+    const variantResults = searchLocalIcons(queryVariant, iconPool, synonyms, {
       library: library || null,
       libraryMode,
       style,
@@ -334,6 +418,80 @@ function searchLocalFallbackIcons({ query, library, libraryMode = 'strict', styl
   }
 
   return results.slice(0, Math.max(1, limit));
+}
+
+async function searchRailwayLocalIcons(params) {
+  const cacheKey = JSON.stringify([
+    String(params.query || '').trim().toLowerCase(),
+    String(params.library || '').trim().toLowerCase(),
+    String(params.libraryMode || 'strict').trim().toLowerCase(),
+    String(params.style || 'any').trim().toLowerCase(),
+    Number(params.limit) || 20,
+    String(params.locale || '').trim().toLowerCase(),
+    params.candidateOnly === true,
+  ]);
+  const cached = railwayRecommendationSearchCache.get(cacheKey);
+  if (cached) {
+    railwayRecommendationSearchCache.delete(cacheKey);
+    railwayRecommendationSearchCache.set(cacheKey, cached);
+    return cached;
+  }
+
+  const limit = Math.max(1, Number(params.limit) || 20);
+  let results;
+  if (params.candidateOnly === true && params.library === 'material') {
+    results = await searchHostedIcons(params);
+  } else if (params.candidateOnly === true) {
+    const candidateIcons = railwayCandidateIndex.select(params.query);
+    results = searchLocalFallbackIcons({
+      query: params.query,
+      library: params.library,
+      libraryMode: params.libraryMode || 'strict',
+      style: params.style,
+      limit,
+      locale: params.locale,
+      expandIntentVariants: false,
+      iconPool: candidateIcons,
+    });
+  } else {
+    const rankedIcons = searchLocalIcons(params.query, publicIcons, synonyms, {
+      library: params.library || null,
+      libraryMode: params.libraryMode || 'strict',
+      style: params.style || 'any',
+      limit,
+      locale: params.locale || null,
+    });
+    const rankedRows = rankedIcons.map((icon) => ({
+      icon_id: `${icon.lib}:${icon.id}`,
+      id: icon.id,
+      name: icon.name || icon.id.replace(/[-_]/g, ' '),
+      library: icon.lib,
+      source_library: icon.lib,
+      icon_type: icon.type || 'svg',
+      style: icon.style || 'outline',
+      svg: icon.svg || null,
+    }));
+    const hydration = await hydrateMaterialHostedRows(rankedRows, {
+      style: params.style || 'any',
+      onError: (error) => console.error('[SuperIcons] Railway Material hydration failed:', error.message),
+    });
+    results = hydration.kept
+      .map(normalizeHostedIcon)
+      .slice(0, limit);
+  }
+
+  railwayRecommendationSearchCache.set(cacheKey, results);
+  if (railwayRecommendationSearchCache.size > RAILWAY_RECOMMENDATION_CACHE_LIMIT) {
+    const oldestKey = railwayRecommendationSearchCache.keys().next().value;
+    railwayRecommendationSearchCache.delete(oldestKey);
+  }
+  return results;
+}
+
+function shouldUseLocalFallbackForHostedError(error) {
+  const status = Number(error?.status);
+  if (Number.isFinite(status) && status >= 400 && status < 500) return false;
+  return true;
 }
 
 function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId = null }) {
@@ -402,6 +560,53 @@ function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId
   return rows;
 }
 
+async function finishHostedIconSearch({
+  rankedRows,
+  query,
+  library,
+  libraryMode = 'strict',
+  style = 'any',
+  limit = 20,
+  locale = null,
+  exactIconId = null,
+  hostedLibrary = library,
+  expandLocalIntentVariants = true,
+}) {
+  const selectedRows = exactIconId
+    ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
+    : rankedRows.slice(0, Math.max(1, limit));
+  const hydration = await hydrateMaterialHostedRows(selectedRows, {
+    style,
+    onError: (error) => console.error('[SuperIcons] Material hydration failed:', error.message),
+  });
+  const selectedMaterialRows = selectedRows.filter((row) => getHostedRowIdentity(row).library === 'material');
+  if (hydration.failed > 0 && selectedMaterialRows.length > 0 && hydration.kept.length === 0) {
+    const error = new Error('Material assets are temporarily unavailable from the snapshot service.');
+    error.code = 'material_asset_unavailable';
+    throw error;
+  }
+
+  const hostedResults = hydration.kept
+    .map(normalizeHostedIcon)
+    .slice(0, Math.max(1, limit));
+  if (hostedResults.length > 0) return hostedResults;
+
+  const fallbackResults = searchLocalFallbackIcons({
+    query,
+    library,
+    libraryMode,
+    style,
+    limit,
+    locale,
+    expandIntentVariants: expandLocalIntentVariants,
+  });
+  return exactIconId
+    ? fallbackResults.filter((icon) => (
+      icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase()
+    )).slice(0, 1)
+    : fallbackResults;
+}
+
 async function searchHostedIcons({
   query,
   library,
@@ -440,6 +645,7 @@ async function searchHostedIcons({
         usageContext,
       });
     } catch (error) {
+      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
       const fallbackResults = searchLocalFallbackIcons({
         query,
         library,
@@ -459,39 +665,78 @@ async function searchHostedIcons({
     rankedRows = Array.isArray(payload.results) ? payload.results : [];
   }
 
-  const selectedRows = exactIconId
-    ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
-    : rankedRows.slice(0, Math.max(1, limit));
-  const hydration = await hydrateMaterialHostedRows(selectedRows, {
-    style,
-    onError: (error) => console.error('[SuperIcons] Material hydration failed:', error.message),
-  });
-  const selectedMaterialRows = selectedRows.filter((row) => getHostedRowIdentity(row).library === 'material');
-  if (hydration.failed > 0 && selectedMaterialRows.length > 0 && hydration.kept.length === 0) {
-    const error = new Error('Material assets are temporarily unavailable from the snapshot service.');
-    error.code = 'material_asset_unavailable';
-    throw error;
-  }
-
-  const hostedResults = hydration.kept
-    .map(normalizeHostedIcon)
-    .slice(0, Math.max(1, limit));
-
-  if (hostedResults.length > 0) {
-    return hostedResults;
-  }
-
-  const fallbackResults = searchLocalFallbackIcons({
+  return await finishHostedIconSearch({
+    rankedRows,
     query,
     library,
     libraryMode,
     style,
     limit,
     locale,
+    exactIconId,
+    hostedLibrary,
   });
-  if (fallbackResults.length > 0) return fallbackResults;
+}
 
-  return hostedResults;
+async function searchHostedIconQueries(queries = [], { usageContextForQuery } = {}) {
+  let payloads;
+  try {
+    payloads = await searchIconQueriesHostedMcp({
+      queries: queries.map((query, index) => ({
+        ...query,
+        libraryMode: 'strict',
+        routeToolName: 'recommend_icons',
+        usageContext: typeof usageContextForQuery === 'function'
+          ? usageContextForQuery(query, index)
+          : null,
+      })),
+    });
+  } catch (error) {
+    if (!shouldUseLocalFallbackForHostedError(error)) throw error;
+    const fallbackResults = queries.map((query) => searchLocalFallbackIcons({
+      query: query.query,
+      library: query.library,
+      libraryMode: 'strict',
+      style: query.style,
+      limit: query.limit,
+      locale: query.locale,
+      expandIntentVariants: false,
+    }));
+    if (fallbackResults.every((results) => results.length > 0)) {
+      return fallbackResults;
+    }
+    throw error;
+  }
+
+  return await Promise.all(payloads.map(async (payload, index) => {
+    const query = queries[index] || {};
+    const limit = Math.max(1, Number(query.limit) || 10);
+    try {
+      return await finishHostedIconSearch({
+        rankedRows: Array.isArray(payload.results) ? payload.results : [],
+        query: query.query,
+        library: query.library,
+        libraryMode: 'strict',
+        style: query.style,
+        limit,
+        locale: query.locale,
+        expandLocalIntentVariants: false,
+      });
+    } catch (error) {
+      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
+      const fallbackResults = searchLocalFallbackIcons({
+        query: query.query,
+        library: query.library,
+        libraryMode: 'strict',
+        style: query.style,
+        limit,
+        locale: query.locale,
+        expandIntentVariants: false,
+      });
+      if (fallbackResults.length > 0) return fallbackResults;
+      throw error;
+    }
+  }));
 }
 
 function buildPublicIconResult(icon, options = {}) {
@@ -634,6 +879,7 @@ function buildDirectPreviewImageFields({ query, iconRefs = [], library, style, l
 async function buildHostedPreviewModel({
   query,
   iconRefs = [],
+  browserIconRefs = [],
   library,
   style = 'any',
   locale,
@@ -664,7 +910,9 @@ async function buildHostedPreviewModel({
     }));
 
   const previewUrl = fixedRefs.length > 0
-    ? buildPreviewBoardUrlForIcons(icons.map((icon) => icon.icon_ref).filter(Boolean))
+    ? buildPreviewBoardUrlForIcons(
+      normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24),
+    )
     : buildSearchPreviewUrl({ query: searchQuery, library, style, locale, limit: effectiveLimit });
   const { imageUrl, markdownImage } = buildDirectPreviewImageFields({
     query: searchQuery,
@@ -689,6 +937,9 @@ async function buildHostedPreviewModel({
       markdownImage,
       imageIncluded: Boolean(includeImage && icons.length > 0),
       truncatedFrom,
+      browserPreviewCount: fixedRefs.length > 0
+        ? normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24).length
+        : icons.length,
       warnings,
     }),
   };
@@ -1151,6 +1402,7 @@ function buildMcpUsageEventPayload(
       rpc_id: requestContext?.rpc_id || null,
       api_key_present: requestContext?.api_key_present === true,
       api_key_valid: requestContext?.api_key_valid === true,
+      search_execution: result?.structuredContent?.search_runtime?.mode || null,
     },
   };
 }
@@ -1185,7 +1437,16 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
   const startedAt = Date.now();
   try {
     const result = await handler();
-    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, 'ok'));
+    const resultIsError = result?.isError === true;
+    void logMcpUsageEvent(buildMcpUsageEventPayload(
+      requestContext,
+      toolName,
+      args,
+      result,
+      startedAt,
+      resultIsError ? 'error' : 'ok',
+      resultIsError ? result?.structuredContent : null,
+    ));
     return result;
   } catch (error) {
     void logMcpUsageEvent(buildMcpUsageEventPayload(
@@ -1249,17 +1510,29 @@ function createServer({ requestContext = null } = {}) {
           }, { isError: true });
         }
         let results;
+        let searchRuntime;
         try {
-          results = await searchHostedIcons({
+          const searchExecution = createRailwayRecommendationSearch({
+            enabled: railwayLocalFirstEnabled,
+            localSearchOne: searchRailwayLocalIcons,
+            hostedSearchOne: (params) => searchHostedIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+              usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
+            }),
+          });
+          results = await searchExecution.searchOne({
             query,
             library,
             libraryMode: library_mode,
             style,
             locale,
             limit,
-            includeQueryFrame: include_query_frame,
-            usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
           });
+          searchRuntime = {
+            ...searchExecution.getRuntime(),
+            index_generated_at: iconIndex.generatedAt,
+          };
         } catch (error) {
           return asStructured({
             results: [],
@@ -1296,6 +1569,7 @@ function createServer({ requestContext = null } = {}) {
             ...buildSearchNoResultPresentation({ query, hint }),
             ...(warnings.length ? { warnings } : {}),
             retryable: true,
+            ...(searchRuntime ? { search_runtime: searchRuntime } : {}),
             ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
           });
         }
@@ -1315,6 +1589,7 @@ function createServer({ requestContext = null } = {}) {
             markdownImage,
           }),
           ...(warnings.length ? { warnings } : {}),
+          ...(searchRuntime ? { search_runtime: searchRuntime } : {}),
           ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
         });
       });
@@ -1325,64 +1600,124 @@ function createServer({ requestContext = null } = {}) {
     'recommend_icons',
     {
       title: 'Recommend Icons',
-      description: 'Recommend a coherent icon set for named UI slots in a product, app, dashboard, or navigation flow. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
+      description: 'Recommend a coherent icon set for up to 20 named UI slots in one call. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Invalid inputs and service failures return a plain-language reason and a next step instead of a bare protocol error. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
       inputSchema: {
-        task: z.string().describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app".'),
-        slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"].'),
-        library: z.string().optional().describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use "outline" for most sidebar and toolbar icon sets unless the user asks otherwise.'),
-        locale: z.enum(multilingualLocaleValues).optional().describe('Optional locale for multilingual slot labels. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th.'),
-        limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('Number of choices to return for each slot. Use 1 for a final pick or 2-3 when the user wants alternatives.'),
-        response_mode: z.enum(['plan', 'assets', 'full']).optional().default('plan').describe('Response size mode. Use plan for compact icon IDs and reasons, assets to include SVG only for each top recommendation, or full to include SVG and semantic payloads for all returned choices.'),
-        include_query_frame: z.boolean().optional().default(false).describe('Optional public-safe diagnostics for query understanding. Leave false for normal compact responses.'),
+        task: forgivingStringSchema.optional().default('').describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app". Missing task text returns a structured recovery message.'),
+        slots: forgivingRecommendationSlotsSchema.optional().default([]).describe('List of 1 to 20 UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"]. A single string is accepted as one slot. Larger lists return a structured split instruction.'),
+        library: forgivingStringSchema.optional().describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
+        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema.optional().describe('Optional locale for multilingual slot labels. Unsupported values are ignored with a warning.'),
+        limit_per_slot: forgivingRecommendationLimitSchema.optional().default(3).describe('Number of choices per slot. Values outside 1 to 5 are clamped with a warning. Numeric strings are accepted.'),
+        response_mode: forgivingStringSchema.optional().default('plan').describe('Response size mode: plan, assets, or full. Unsupported values use plan with a warning.'),
+        include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
       },
       outputSchema: recommendIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async (args) => withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
-      const { task, slots, library, style, locale, limit_per_slot, response_mode, include_query_frame } = args;
-      const payload = await recommendIconsForTask({
-        task,
-        slots,
-        library,
-        style,
-        locale,
-        limitPerSlot: limit_per_slot,
-        responseMode: response_mode,
-        includeQueryFrame: include_query_frame,
-        semanticMap,
-        searchIconsForQuery: (params) => searchHostedIcons({
-          ...params,
-          includeQueryFrame: include_query_frame,
-          usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
-            ...args,
-            query: params.query,
-            library: params.library,
-            limit: params.limit,
-          }),
-        }),
-        buildIconResult: async (icon) => buildPublicIconResult(icon),
+    async (rawArgs) => {
+      const args = normalizeRecommendationToolArguments(rawArgs, {
+        supportedLocales: multilingualLocaleValues,
       });
-
-      const iconRefs = [];
-      for (const slot of payload.results || []) {
-        const candidates = [
-          slot.recommended,
-          slot.recommendation,
-          slot.icon,
-          ...(Array.isArray(slot.alternatives) ? slot.alternatives : []),
-          ...(Array.isArray(slot.choices) ? slot.choices : []),
-        ].filter(Boolean);
-        for (const candidate of candidates) {
-          if (candidate.icon_ref) iconRefs.push(candidate.icon_ref);
+      return withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
+        const {
+          task,
+          slots,
+          library,
+          style,
+          locale,
+          limit_per_slot,
+          response_mode,
+          include_query_frame,
+          warnings,
+          input_error,
+        } = args;
+        if (input_error) {
+          return asStructured(input_error, { isError: true });
         }
-      }
 
-      return asStructured({
-        ...payload,
-        preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+        try {
+          const recommendationSearch = createRailwayRecommendationSearch({
+            enabled: railwayLocalFirstEnabled,
+            localSearchOne: (params) => searchRailwayLocalIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+              candidateOnly: true,
+            }),
+            hostedSearchOne: (params) => searchHostedIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+              usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
+                ...args,
+                query: params.query,
+                library: params.library,
+                limit: params.limit,
+              }),
+            }),
+            hostedSearchMany: (queries) => searchHostedIconQueries(queries, {
+              usageContextForQuery: (params, index) => buildToolUsageContext(
+                requestContext,
+                'recommend_icons',
+                {
+                  ...args,
+                  query: params.query,
+                  library: params.library,
+                  limit: params.limit,
+                  grouped_query_index: index,
+                },
+              ),
+            }),
+          });
+          const payload = await recommendIconsForTask({
+            task,
+            slots,
+            library,
+            style,
+            locale,
+            limitPerSlot: limit_per_slot,
+            responseMode: response_mode,
+            includeQueryFrame: include_query_frame,
+            semanticMap,
+            searchIconsForQuery: recommendationSearch.searchOne,
+            searchIconsForQueries: recommendationSearch.searchMany,
+            buildIconResult: async (icon) => buildPublicIconResult(icon),
+          });
+
+          const iconRefs = [];
+          for (const slot of payload.results || []) {
+            const candidates = [
+              slot.recommended,
+              slot.recommendation,
+              slot.icon,
+              ...(Array.isArray(slot.alternatives) ? slot.alternatives : []),
+              ...(Array.isArray(slot.choices) ? slot.choices : []),
+            ].filter(Boolean);
+            for (const candidate of candidates) {
+              if (candidate.icon_ref) iconRefs.push(candidate.icon_ref);
+            }
+          }
+
+          return asStructured({
+            ...payload,
+            preview_url: buildPreviewBoardUrlForIcons(iconRefs),
+            search_runtime: {
+              ...recommendationSearch.getRuntime(),
+              index_generated_at: iconIndex.generatedAt,
+            },
+            ...(warnings.length ? { warnings } : {}),
+          });
+        } catch (error) {
+          return asStructured(buildRecommendationFailurePresentation({
+            task,
+            library,
+            style,
+            responseMode: response_mode,
+            slots,
+            error,
+            warnings,
+          }), { isError: true });
+        }
       });
-    })
+    }
   );
 
   server.registerTool(
@@ -1432,12 +1767,12 @@ function createServer({ requestContext = null } = {}) {
         query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
         icon_refs: z.preprocess(
           coerceToolIconRefs,
-          z.array(z.string()).min(1).max(MAX_ACCEPTED_PREVIEW_REFS),
-        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 12 are rendered.'),
+          z.array(z.string()).min(1),
+        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 100 are accepted, 24 appear on the browser preview, and 12 are rendered inline. Larger lists are safely truncated with a warning.'),
         library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
         style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
         locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
-        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Maximum icons from 1 to 12. Numeric strings are accepted.'),
+        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Requested inline icon count. Values outside 1 to 12 are safely clamped with a warning. Numeric strings are accepted.'),
         include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
       },
       outputSchema: previewIconsOutputSchema,
@@ -1449,6 +1784,7 @@ function createServer({ requestContext = null } = {}) {
         const {
           query,
           icon_refs,
+          browser_icon_refs,
           library,
           style,
           locale,
@@ -1464,6 +1800,8 @@ function createServer({ requestContext = null } = {}) {
             image_url: null,
             markdown_image: null,
             image_included: false,
+            rendered_count: 0,
+            browser_preview_count: 0,
             next_step: 'Provide a search query or one or more icon refs in library:id format.',
             ...(warnings.length ? { warnings } : {}),
             client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
@@ -1475,6 +1813,7 @@ function createServer({ requestContext = null } = {}) {
         const { icons, payload } = await buildHostedPreviewModel({
           query,
           iconRefs: Array.isArray(icon_refs) ? icon_refs : [],
+          browserIconRefs: Array.isArray(browser_icon_refs) ? browser_icon_refs : [],
           library,
           style,
           locale,
@@ -1530,6 +1869,63 @@ function sendJson(res, status, payload) {
   res.status(status).json(payload);
 }
 
+function parsePublicSearchRequest(body = {}) {
+  const query = String(body.query || '').trim();
+  if (!query) {
+    throw createPreviewHttpError(400, 'search_query_required', 'Enter a search term.');
+  }
+  if (query.length > 240) {
+    throw createPreviewHttpError(400, 'search_query_too_long', 'Search terms must be 240 characters or fewer.');
+  }
+
+  const library = String(body.library || '').trim() || null;
+  const supportedLibraries = new Set(LIBRARIES.map(([id]) => id));
+  if (library && !supportedLibraries.has(library)) {
+    throw createPreviewHttpError(400, 'unsupported_library', 'Choose a supported icon library or search all libraries.');
+  }
+
+  const style = String(body.style || 'any').trim() || 'any';
+  if (!previewStyles.has(style)) {
+    throw createPreviewHttpError(400, 'unsupported_style', 'Style must be any, outline, or solid.');
+  }
+
+  const locale = String(body.locale || '').trim() || null;
+  if (locale && !previewLocales.has(locale)) {
+    throw createPreviewHttpError(400, 'unsupported_locale', 'Choose a supported locale or leave locale empty.');
+  }
+
+  const requestedLimit = Number.parseInt(String(body.limit ?? '60'), 10);
+  const limit = Number.isFinite(requestedLimit)
+    ? Math.min(100, Math.max(1, requestedLimit))
+    : 60;
+
+  return {
+    query,
+    library,
+    libraryMode: library ? 'strict' : 'all',
+    style,
+    locale,
+    limit,
+    includeQueryFrame: body.include_query_frame === true,
+  };
+}
+
+async function runRailwayPublicSearch(params) {
+  const execution = createRailwayRecommendationSearch({
+    enabled: railwayLocalFirstEnabled,
+    localSearchOne: searchRailwayLocalIcons,
+    hostedSearchOne: (fallbackParams) => searchHostedIcons(fallbackParams),
+  });
+  const results = await execution.searchOne(params);
+  return {
+    results,
+    searchRuntime: {
+      ...execution.getRuntime(),
+      index_generated_at: iconIndex.generatedAt,
+    },
+  };
+}
+
 function buildServerCard(req) {
   const host = req.get('host');
   const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
@@ -1581,6 +1977,7 @@ app.use((req, res, next) => {
 app.get('/health', (_req, res) => {
   const materialAssets = getMaterialBundleStatus();
   const hostedSearch = getHostedSearchResilienceStatus();
+  const groupedHostedSearch = getGroupedHostedSearchResilienceStatus();
   sendJson(res, 200, {
     ok: true,
     service: 'supericons-remote-mcp',
@@ -1591,7 +1988,51 @@ app.get('/health', (_req, res) => {
       asset_count: materialAssets.assetCount,
     },
     hosted_search: hostedSearch,
+    grouped_hosted_search: groupedHostedSearch,
+    railway_local_first: {
+      enabled: railwayLocalFirstEnabled,
+      search_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
+      recommendation_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
+      index_generated_at: iconIndex.generatedAt,
+      icon_count: publicIcons.length,
+      semantic_record_count: semanticMap.size,
+      candidate_index_token_count: railwayCandidateIndex.token_count,
+      recommendation_cache_limit: RAILWAY_RECOMMENDATION_CACHE_LIMIT,
+      recommendation_cache_size: railwayRecommendationSearchCache.size,
+    },
   });
+});
+
+app.post('/search-icons', async (req, res) => {
+  try {
+    const params = parsePublicSearchRequest(req.body);
+    const { results, searchRuntime } = await runRailwayPublicSearch(params);
+    sendJson(res, 200, {
+      results: results.map((icon, index) => ({
+        icon_id: `${icon.library}:${icon.id}`,
+        id: icon.id,
+        name: icon.name,
+        library: icon.library,
+        source_library: icon.library,
+        style: icon.style,
+        icon_type: icon.type,
+        rank: index + 1,
+      })),
+      search_runtime: searchRuntime,
+      ...(params.includeQueryFrame
+        ? { query_frame: buildSearchQueryFrame(params.query, { locale: params.locale }) }
+        : {}),
+    });
+  } catch (error) {
+    const status = Number(error?.status || 500);
+    sendJson(res, status, {
+      error: error?.code || 'search_unavailable',
+      message: status >= 500
+        ? 'Icon search is temporarily unavailable. Try again shortly.'
+        : error.message,
+      retryable: status >= 500,
+    });
+  }
 });
 
 app.get('/.well-known/mcp/server-card.json', (req, res) => {

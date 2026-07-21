@@ -1,6 +1,6 @@
 {
   "name": "@supericons/mcp",
-  "version": "0.4.19-beta.2",
+  "version": "0.4.19",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
@@ -26,6 +26,7 @@
     "converter.js",
     "generated/motion-lab-baseline.json",
     "generated/mcp-output-locales.json",
+    "hosted-candidate-hydration.js",
     "hosted-search-client.js",
     "hosted-search-resilience.js",
     "index.js",
@@ -47,6 +48,7 @@
     "public-icon-preview.js",
     "preview-icons.js",
     "release-channel.js",
+    "railway-local-search.js",
     "recommend-icons.js",
     "remote-server.js",
     "search-query-normalization.js",
@@ -77,9 +79,11 @@
     "start:remote": "node remote-server.js",
     "verify:public-safety": "node ../scripts/verify-public-safety.mjs --verbose",
     "verify:local-first-beta": "node ../scripts/verify-search-v2-local-first-beta.mjs",
+    "verify:synchronized-surfaces": "node ../scripts/verify-search-v2-synchronized-surfaces.mjs",
+    "verify:railway-local-first": "node ../scripts/verify-railway-local-first-recommendations.mjs",
     "verify:route-package": "node ../scripts/verify-search-v2-tool-scoped-package.mjs",
-    "verify:search-v2-shell": "node ../scripts/verify-search-v2-one-call-contract.mjs --package-root . && node ../scripts/verify-search-v2-packaged-query-frame.mjs --package-root . && node ../scripts/verify-search-v2-429-propagation.mjs && node ../scripts/verify-recommend-icons-clarification.mjs",
-    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:local-first-beta && npm run verify:route-package && npm run verify:search-v2-shell && npm run verify:package",
+    "verify:search-v2-shell": "node ../scripts/verify-search-v2-one-call-contract.mjs --package-root . && node ../scripts/verify-mcp-agent-friendly-errors.mjs && node ../scripts/verify-search-v2-packaged-query-frame.mjs --package-root . && node ../scripts/verify-search-v2-429-propagation.mjs && node ../scripts/verify-recommend-icons-clarification.mjs",
+    "prepublishOnly": "npm run verify:public-safety && node ../scripts/verify-mcp-preview-icons-image.mjs && npm run verify:synchronized-surfaces && npm run verify:route-package && npm run verify:search-v2-shell && npm run verify:package",
     "verify:package": "node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {

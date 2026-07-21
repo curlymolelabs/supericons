@@ -43,6 +43,9 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-028` | Keep local search keyless while giving hosted search measured anonymous, registered, and paid allowances | Accepted | Access, cost, telemetry, and public/private product boundary |
 | `D-029` | Make MCP telemetry venue follow the client entry point | Accepted | Measurement and dashboard attribution |
 | `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
+| `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
+| `D-032` | Run Railway recommendations from the in-process index with one controlled hosted fallback | Accepted | Hosted MCP architecture and performance |
+| `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Accepted | Surface alignment and stable release |
 
 ## Decision records
 
@@ -438,6 +441,59 @@ Alternatives rejected or deferred: waiting for organic adoption that the known-i
 Superseded decisions: the founder validation window minimums recorded in the beta1 publication approval request are superseded as promotion prerequisites.
 
 Specification change: none in this change set; the execution PRD is the controlling plan and the status ledger is updated in the same commit.
+
+### D-031: Twenty-slot recommendation and agent-readable recovery
+
+Date: 2026-07-20
+Status: Accepted
+
+Decision: `recommend_icons` accepts up to 20 UI slots in one call on local and hosted MCP. The implementation deduplicates identical generated searches, groups up to 40 distinct logical queries within the endpoint limit of 96, and charges once per distinct logical query under existing rate and audit rules. Grouped search uses an additive endpoint and never replaces the stable individual endpoint. If grouped mode is unavailable, rolled back, malformed, or returns invalid JSON, the client retries each distinct search individually once. Grouped and stable requests use separate resilience state so a grouped failure cannot block the stable fallback. An existing custom individual endpoint stays individual unless a grouped endpoint is explicitly configured. Individual and grouped results use the same local fallback, but hosted 4xx responses remain visible errors. Grouped mode fails closed when tier enforcement is enabled until D-030 account identity and race-safe accounting are complete. Correctable input problems return structured plain-language guidance. `preview_icons` keeps its 12-icon inline rendering bound, but requests above that bound are clamped with a warning and retain up to 24 accepted refs in the browser preview.
+
+Reason: a real OpenCode call requested 16 recommendation slots and was rejected by the former 12-slot schema. A retry with 12 slots then took almost one minute because recommendation variants were sent through separate hosted calls. The same session requested a 13-icon preview and received another bare parameter rejection even though the intended safe behavior was truncation. The corrected contract supports normal agent workloads without weakening the existing inline image, rate-limit, or query-fanout bounds.
+
+The prerelease latency gate is below the fixed 20-second client timeout: actual routed end-to-end p95 at or below 3 seconds for 1 slot, 10 seconds for 10 slots, and 15 seconds for 20 slots, with zero client timeouts in the approved workload. Worker state is recorded for every sample, but the gate evaluates all routed samples because production evidence showed that Supabase may start a new worker for every request. The exact candidate bytes must also pass one supported non-English 20-slot case.
+
+Alternatives rejected or deferred: increasing only the schema maximum while keeping separate hosted calls; replacing the stable production function; silently truncating recommendation slots; allowing grouped requests while allowance enforcement uses a race-prone counter; increasing the inline contact sheet beyond 12; returning raw Zod or MCP parameter messages for recoverable user inputs.
+
+Superseded decisions: the A-7 sequencing rule is superseded only for this bounded user-visible recommendation reliability repair. Railway local-first remains the next engineering workstream after beta.3 is safe.
+
+Specification change: version 1.15 expands `FR-46` and adds `FR-47`.
+
+### D-032: Railway local-first recommendations
+
+Date: 2026-07-21
+Status: Accepted
+
+Decision: stop the Supabase grouped recommendation release after guarded attempt 5 missed the unchanged one-slot latency gate and rolled back cleanly. The Railway hosted MCP service runs `recommend_icons` from its in-process icon index, synonym data, semantic records, and deterministic recommendation engine by default. A successful local recommendation makes zero Supabase search calls. An honest local zero-result also stays local. If the local engine throws, one stable hosted search request may provide a shared emergency candidate pool for the whole recommendation call. The service records the execution mode in the response and best-effort telemetry. An environment switch may temporarily restore the previous hosted route during rollback.
+
+The Railway path uses a bounded token candidate index and a 512-entry least-recently-used query cache. The candidate index reduces full-corpus scans while the deterministic recommendation layer still applies slot intent, semantic scoring, clarification, distinctness, and public result shaping. Local execution is not charged against hosted search allowances.
+
+Evidence: guarded Supabase attempt 5 recorded one-slot samples of 3,743, 2,924, and 2,821 ms, then removed the additive endpoint and v4 database function without changing stable search. The focused Railway verifier starts the real HTTP MCP server and proves a fresh 20-slot English call below 3 seconds, a 20-slot Japanese call below 3 seconds, repeated 20-slot p95 below 500 ms, all requested slots resolved, zero hosted search requests, telemetry route attribution, clarification behavior, exact style reporting, honest local zero-results, and one hosted request after an injected local failure. The fixed 225-case fingerprint remains unchanged.
+
+Alternatives rejected or deferred: a sixth Supabase deployment attempt; weakening the three-second one-slot gate; silently treating local zero-results as infrastructure failures; one hosted fallback call per generated query; removing telemetry; publishing beta.3 before the Railway route has its own deployment and live checks.
+
+Superseded decisions: `D-025` is superseded for Railway `recommend_icons`; its npm `search_icons` eligibility boundary remains active. `D-031` remains active for the 20-slot, clarification, error, preview, and latency contracts, but its grouped Supabase route is no longer the Railway release path.
+
+Specification change: version 1.16 adds `FR-48` and updates the hosted MCP rollout boundary.
+
+### D-033: Synchronized deterministic Search v2 release
+
+Date: 2026-07-22
+Status: Accepted
+
+Decision: promote the verified deterministic Search v2 engine as one stable release across the Railway hosted MCP service, the npm `latest` package, and the public web search. Both MCP tools run from the packaged local engine by default on Railway and in the stable npm package. Railway keeps the existing bounded hosted fallback for local engine exceptions. Web search uses a public Railway endpoint that returns ranked public icon IDs and route information, while SVG rendering continues from the existing public web bundle.
+
+The release uses one stable package version and one reviewed source revision. Railway health, npm metadata, website release evidence, and public documentation identify that release. Each venue still has a separate live verification and rollback target. A failed venue gate stops later mutations but does not require rolling back a surface that already passed unless the failure reveals a shared product defect.
+
+Reason: the earlier beta sequence left hosted recommendations, hosted search, local npm search, npm recommendations, and web search on different execution routes. The resulting version labels and behavior were confusing even though the underlying quality work was compatible. The synchronized release removes that drift while keeping protected ranking inputs and usage-derived intelligence out of public package and browser artifacts.
+
+Evidence required: the fixed 225-case fingerprint, a clean-installed stdio route test across every maintained locale, real HTTP tests for hosted search and recommendations, browser-safe payload checks, browser interaction tests in English and Japanese, VC-3 and VC-4 public-boundary checks, exact package inspection, and live post-release probes for Railway, npm, and web.
+
+Alternatives rejected or deferred: leaving npm `latest` on 0.4.17 while hosted MCP uses newer behavior; keeping web on the older Supabase route; publishing protected server ranking data to the browser; changing all surfaces without independent rollback targets.
+
+Superseded decisions: `D-025` remains historical prerelease policy and is superseded for the stable package and web promotion. `D-032` remains active for Railway fallback and recommendation behavior. `D-030` remains active and hosted daily allowance enforcement stays off until its prerequisites pass.
+
+Specification change: version 1.17 adds `FR-49` and the synchronized deterministic surface contract.
 
 ## Adding or superseding a decision
 

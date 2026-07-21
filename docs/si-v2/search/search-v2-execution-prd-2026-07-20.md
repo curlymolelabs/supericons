@@ -18,7 +18,7 @@ Owner direction of 2026-07-20 adopts the recommended positions from the decision
 | A-4 | Release packet content freeze rule: once a packet has no open falsehood findings, wording preferences ride the next release. The keyless docs packet is frozen at branch commit `4933f4bc3`. |
 | A-5 | The two July 18 review files committed by the earlier broad staging remain in history. |
 | A-6 | Coarse server-side country for the hosted gateway leg is approved as a low-priority future gateway release with its telemetry disclosure updated in the same release. Local telemetry stays location-free. |
-| A-7 | `recommend_icons` is removed from the completion critical path. Rationale: agent orchestration over plain search already delivers the recommendation outcome (observed in real sessions), and its expansion quality is strong. Two known defects remain: hosted latency (p50 42 s) and the clarification contract violation found in the 14-case verification (ambiguous low-confidence slots resolve without asking, contrary to the tool contract). The clarification alignment ships in beta.2; latency and full promotion are revisited after Railway local-first ships. |
+| A-7 | Superseded by `D-032` after five guarded Supabase attempts. The 20-slot and agent-readable contracts remain, but Railway now runs recommendations from its in-process deterministic index. No sixth Supabase attempt is allowed for this release. |
 | A-8 | Beta.2 is the agent-experience release: it carries the one-call contract package shell (section 5) in addition to controlled-run labeling and 429 details propagation. |
 
 ## 2. Verified current state (as of 2026-07-20)
@@ -81,11 +81,13 @@ Requirements to close the window, all against beta.2 or later:
 
 ## 7. Workstream 5: Railway local-first search
 
-Contract (unchanged from prior ratification): eligible English `search_icons` served from the packaged in-process index inside the Railway server; successful eligible search makes zero Supabase search calls; a controlled local failure makes at most one stable hosted fallback call; ineligible, localized, non-ASCII, and recommendation requests keep their approved routes; response shape preserved.
+Contract: Railway `recommend_icons` runs from the in-process icon index, synonym data, semantic records, and deterministic recommendation engine by default. Successful and honest no-result calls make zero Supabase search requests. A local engine exception may make at most one stable hosted fallback request for the whole recommendation call. The response and best-effort telemetry identify the execution mode. The existing npm `search_icons` eligibility boundary remains unchanged.
 
-Gates: 150-case ordered route parity on the exact deployment candidate, failure-injection proving one fallback maximum, public-boundary checks, pinned rollback deploy, dual GO. Post-deploy: live hosted eligible p95 under 500 ms sustained across a monitoring day, error rate not regressed, parity spot checks against the live endpoint.
+Gates: real HTTP MCP checks for 1, 10, and 20 English slots; one supported non-English 20-slot case; distinct six-slot quality and clarification checks; zero hosted calls on success; one hosted call after injected local failure; honest local zero-result behavior; telemetry route attribution; exact style labels; fresh calls below the existing `FR-47` limits; repeated 20-slot p95 below 500 ms; unchanged 225-case fingerprint; public-boundary checks; a pinned Railway rollback deploy. Post-deploy: the same calls pass against the live endpoint, error rate does not regress, and the prior Railway deploy remains available for rollback.
 
 Sequencing note: deploy after quality batches 1 and 2 land in the packaged data so the hosted upgrade ships speed and answer-rate together. Railway live traffic then supplies real-user evidence for later venue promotions.
+
+Execution update, 2026-07-21: source commit `49581b676` deployed as Railway deployment `ff667522-5e54-426d-b737-04a415e0b59e`. Health, English 1/10/20-slot calls, Japanese 20 slots, Material solid, clarification, route reporting, and telemetry passed live. The live 20-slot call measured 2,250.1 ms and repeated 20-slot p95 measured 415.0 ms. The one-day traffic observation remains open before later venue promotion.
 
 ## 8. Workstream 6: access enforcement build (build now, enable later)
 
@@ -93,7 +95,9 @@ Build order after the measurement artifact preconditions: free-key issuance for 
 
 ## 9. Workstream 7: venue promotion (strictly separate decisions)
 
-Order: 1) Railway hosted MCP promotes to v2 by default after the workstream 5 gates and the A-2 window close. 2) Web follows, inheriting shared engine data, with its own performance and interaction checks. 3) npm `latest` promotes last with the owner's explicit yes. `recommend_icons` promotion is out of scope per A-7. Each venue retains its own quality, compatibility, latency, error, public-boundary, and rollback gate on the exact promoted bytes.
+Order: 1) Railway hosted MCP ships the `D-032` local-first recommendation route after its own compatibility, rollback, and latency gates. 2) The controlled evidence window runs against the deployed route. 3) Web follows, inheriting shared engine data, with its own performance and interaction checks. 4) npm `latest` promotes last with the owner's explicit yes. Each venue retains its own quality, compatibility, latency, error, public-boundary, and rollback gate on the exact promoted bytes.
+
+Execution update, 2026-07-22: the owner explicitly approved synchronizing Railway hosted search and recommendations, public web search, and npm `latest` under `D-033`. The release uses one stable version and reviewed source revision, but keeps a separate verification and rollback target for each venue. Hosted allowance enforcement and public numeric limit copy remain outside this release until the `D-030` prerequisites pass.
 
 ## 10. Sequencing summary
 

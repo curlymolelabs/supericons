@@ -1,0 +1,271 @@
+import assert from 'node:assert/strict';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash, randomUUID } from 'node:crypto';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const repoRoot = resolve('.');
+const manifestPath = resolve(
+  'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json',
+);
+const runnerPath = resolve('scripts/run-search-v2-beta3-grouped-release.ps1');
+const lockScript = resolve('scripts/manage-search-v2-release-lock.mjs');
+const lockName = 'search-v2-beta3-shared-grouped';
+const simulationLockName = 'search-v2-beta3-shared-grouped-simulation';
+const lockOwnerRunId = randomUUID();
+const probeLockName = process.argv.includes('--probe-preheld-lock')
+  ? process.argv[process.argv.indexOf('--probe-preheld-lock') + 1]
+  : null;
+const evidencePaths = [
+  resolve('references/verification/search-v2-beta3-indexed-grouped-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-fr47-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-completion-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json'),
+];
+
+function normalizedSha256(path) {
+  const text = readFileSync(path, 'utf8').replace(/\r\n?/g, '\n');
+  return createHash('sha256').update(text).digest('hex');
+}
+
+function snapshotEvidence() {
+  return Object.fromEntries(evidencePaths.map((path) => {
+    if (!existsSync(path)) return [path, { exists: false }];
+    const stats = statSync(path);
+    return [path, { exists: true, size: stats.size, mtime_ms: stats.mtimeMs }];
+  }));
+}
+
+function releaseWorkspaces() {
+  const temporaryRoot = resolve('.tmp');
+  if (!existsSync(temporaryRoot)) return [];
+  return readdirSync(temporaryRoot)
+    .filter((name) => (
+      name.startsWith('search-v2-beta3-shared-grouped-')
+      || name.startsWith('search-v2-beta3-indexed-grouped-')
+    ))
+    .sort();
+}
+
+const worktreeLines = execFileSync('git', ['worktree', 'list', '--porcelain'], {
+  cwd: repoRoot,
+  encoding: 'utf8',
+}).split(/\r?\n/);
+const worktrees = worktreeLines
+  .filter((line) => line.startsWith('worktree '))
+  .map((line) => resolve(line.slice('worktree '.length)));
+const lockOwnerWorktree = worktrees.find((path) => path !== repoRoot) || repoRoot;
+
+function acquireLock(name, runId) {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'acquire',
+    '--name', name,
+    '--run-id', runId,
+    '--owner-process-id', String(process.pid),
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+}
+
+function releaseLock(name, runId) {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'release',
+    '--name', name,
+    '--run-id', runId,
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+}
+
+function listLocks() {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'list',
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
+}
+
+function cleanupStaleLock(name, runId, minimumStaleAgeMs = 0) {
+  return JSON.parse(execFileSync(process.execPath, [
+    lockScript,
+    '--action', 'cleanup-stale',
+    '--name', name,
+    '--run-id', runId,
+    '--minimum-stale-age-ms', String(minimumStaleAgeMs),
+    '--repository-root', lockOwnerWorktree,
+  ], { cwd: repoRoot, encoding: 'utf8' }));
+}
+
+if (probeLockName) {
+  const probeRunId = randomUUID();
+  let probeAcquired = false;
+  try {
+    acquireLock(probeLockName, probeRunId);
+    probeAcquired = true;
+  } finally {
+    if (probeAcquired) releaseLock(probeLockName, probeRunId);
+  }
+  console.log(JSON.stringify({ status: 'unexpected_probe_acquisition' }));
+  process.exit(0);
+}
+
+function verifyPreheldLockFailure(name) {
+  const ownerRunId = randomUUID();
+  let ownerAcquired = false;
+  try {
+    acquireLock(name, ownerRunId);
+    ownerAcquired = true;
+    const result = spawnSync(process.execPath, [
+      'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
+      '--probe-preheld-lock', name,
+    ], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      timeout: 30_000,
+      maxBuffer: 16 * 1024 * 1024,
+    });
+    assert.notEqual(result.status, 0, `A pre-held ${name} lock must be refused.`);
+    const output = `${result.stdout}\n${result.stderr}`;
+    assert.match(output, new RegExp(`Release lock ${name} is already held`));
+    assert.doesNotMatch(output, /belongs to another run and was not released/);
+  } finally {
+    if (ownerAcquired) releaseLock(name, ownerRunId);
+  }
+}
+
+function verifyStaleLockRecovery() {
+  const staleLockName = `search-v2-beta3-stale-${randomUUID().slice(0, 8)}`;
+  const staleRunId = randomUUID();
+  const acquireArguments = [
+    lockScript,
+    '--action', 'acquire',
+    '--name', staleLockName,
+    '--run-id', staleRunId,
+    '--repository-root', lockOwnerWorktree,
+  ];
+  const childCode = `
+    const { execFileSync } = require('node:child_process');
+    const args = ${JSON.stringify(acquireArguments)};
+    args.push('--owner-process-id', String(process.pid));
+    execFileSync(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+  `;
+  const child = spawnSync(process.execPath, ['-e', childCode], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  });
+  assert.equal(child.status, 0, child.stderr || child.stdout);
+
+  let staleLockPresent = true;
+  try {
+    const listed = listLocks();
+    const staleOwner = listed.locks.find((lock) => lock.lock_name === staleLockName);
+    assert.ok(staleOwner, 'The abandoned fixture lock was not listed.');
+    assert.equal(staleOwner.run_id, staleRunId);
+    assert.equal(staleOwner.owner_process_alive, false);
+    const cleanup = cleanupStaleLock(staleLockName, staleRunId);
+    assert.equal(cleanup.status, 'cleaned_stale');
+    staleLockPresent = false;
+  } finally {
+    if (staleLockPresent) releaseLock(staleLockName, staleRunId);
+  }
+}
+
+function verifyLiveLockCleanupRefused() {
+  const liveLockName = `search-v2-beta3-live-${randomUUID().slice(0, 8)}`;
+  const liveRunId = randomUUID();
+  let liveLockAcquired = false;
+  try {
+    const lock = acquireLock(liveLockName, liveRunId);
+    assert.equal(lock.process_id, process.pid);
+    liveLockAcquired = true;
+    const cleanup = spawnSync(process.execPath, [
+      lockScript,
+      '--action', 'cleanup-stale',
+      '--name', liveLockName,
+      '--run-id', liveRunId,
+      '--minimum-stale-age-ms', '0',
+      '--repository-root', lockOwnerWorktree,
+    ], { cwd: repoRoot, encoding: 'utf8' });
+    assert.notEqual(cleanup.status, 0, 'A live release lock must not be cleaned up.');
+    assert.match(
+      `${cleanup.stdout}\n${cleanup.stderr}`,
+      /still has a live owner process and was not cleaned up/,
+    );
+  } finally {
+    if (liveLockAcquired) releaseLock(liveLockName, liveRunId);
+  }
+}
+
+const evidenceBefore = snapshotEvidence();
+const workspacesBefore = releaseWorkspaces();
+verifyPreheldLockFailure(lockName);
+verifyPreheldLockFailure(simulationLockName);
+verifyLiveLockCleanupRefused();
+verifyStaleLockRecovery();
+
+let runnerResult;
+let simulationResult;
+let releaseTestLockAcquired = false;
+try {
+  acquireLock(lockName, lockOwnerRunId);
+  releaseTestLockAcquired = true;
+
+  runnerResult = spawnSync('powershell', [
+    '-NoProfile',
+    '-ExecutionPolicy', 'Bypass',
+    '-File', runnerPath,
+    '-ExpectedManifest', normalizedSha256(manifestPath),
+  ], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+} finally {
+  if (releaseTestLockAcquired) releaseLock(lockName, lockOwnerRunId);
+}
+
+const simulationOwnerRunId = randomUUID();
+let simulationTestLockAcquired = false;
+try {
+  acquireLock(simulationLockName, simulationOwnerRunId);
+  simulationTestLockAcquired = true;
+  simulationResult = spawnSync(process.execPath, [
+    'scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs',
+  ], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+} finally {
+  if (simulationTestLockAcquired) releaseLock(simulationLockName, simulationOwnerRunId);
+}
+
+assert.ok(runnerResult);
+assert.notEqual(runnerResult.status, 0, 'A concurrent release runner must be refused.');
+assert.match(
+  `${runnerResult.stdout}\n${runnerResult.stderr}`,
+  /Release lock search-v2-beta3-shared-grouped is already held/,
+);
+assert.ok(simulationResult);
+assert.notEqual(simulationResult.status, 0, 'A concurrent rollback simulation must be refused.');
+assert.match(
+  `${simulationResult.stdout}\n${simulationResult.stderr}`,
+  /Release lock search-v2-beta3-shared-grouped-simulation is already held/,
+);
+assert.deepEqual(snapshotEvidence(), evidenceBefore, 'A refused runner changed release evidence.');
+assert.deepEqual(releaseWorkspaces(), workspacesBefore, 'A refused runner changed release workspaces.');
+
+console.log(JSON.stringify({
+  status: 'ok',
+  cross_worktree_lock: lockOwnerWorktree !== repoRoot,
+  concurrent_runner_refused: true,
+  concurrent_rollback_simulation_refused: true,
+  preheld_release_lock_preserved_original_error: true,
+  preheld_simulation_lock_preserved_original_error: true,
+  live_lock_cleanup_refused: true,
+  abandoned_lock_listed_and_cleaned: true,
+  evidence_unchanged: true,
+  release_workspaces_unchanged: true,
+}, null, 2));

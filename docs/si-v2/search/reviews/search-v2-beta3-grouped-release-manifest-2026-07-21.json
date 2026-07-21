@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "release": "search-v2-beta3-grouped-endpoint-retry",
+  "date": "2026-07-21",
+  "attempt": 2,
+  "supersedes_manifest_sha256": "7285952737376b538ab751f7ba03f025b128ba7c643f2547481b259488ca2a24",
+  "prior_attempt": {
+    "status": "rolled_back",
+    "reason": "one_slot p95 4858 ms exceeds 3000 ms",
+    "grouped_function_id": "2aeaf77c-10c0-479e-9351-762f50914831",
+    "grouped_function_removed": true,
+    "stable_function_mutated": false,
+    "live_routing_gate": "passed",
+    "latency_gate": "blocked"
+  },
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "function_name": "mcp-search-grouped",
+  "source_revision": "ff5698272072409caeefaf29998a80cf753fbe11",
+  "source_tree": "7cdd231acf5fa434d00996452409725f33b8f3f4",
+  "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
+  "grouped_function_present_before": false,
+  "stable_function": {
+    "id": "ce1f7353-c5e7-4c8c-aeac-75d1f4df5a43",
+    "name": "mcp-search",
+    "version": 40,
+    "updated_at": 1784045797971,
+    "verify_jwt": false,
+    "status": "ACTIVE"
+  },
+  "deployments_authorized": 1,
+  "conditional_deletions_authorized": 1,
+  "stable_function_deployments_authorized": 0,
+  "npm_publications_authorized": 0,
+  "rollback": "delete_new_grouped_function_after_id_match",
+  "source_files": [
+    {
+      "path": "lib/cjk-search-core.js",
+      "sha256": "9b2d0935e2f5f060aabb215a261e33f695e886f3e9e03eb67faae7d538fb1a3e"
+    },
+    {
+      "path": "lib/generated-search-intent-graph.js",
+      "sha256": "cd467951a0d98856dccf52293a8f5cba95eb66a73d8b8b0ced4164d9f6b8413f"
+    },
+    {
+      "path": "lib/generated-search-intent-rules.js",
+      "sha256": "876c6f2ed69580e32e5059d422961761d8d31cd9dc05bc99d9a048e6131e39ef"
+    },
+    {
+      "path": "lib/generated-search-ranking-policy.js",
+      "sha256": "938f5a1fc38c0be6bea229b4fba792df8380868405268d7b552532de18861335"
+    },
+    {
+      "path": "lib/hosted-search-core.js",
+      "sha256": "ec987968d9753fb6d620cbac6e5ea8c7fed08816c2c0049b1b01b9539d87266e"
+    },
+    {
+      "path": "lib/search-intent-core.js",
+      "sha256": "9e90b860024214bfc5adc1c5e0b36a0cf1bb223ff093083a9eb5df7034011c5c"
+    },
+    {
+      "path": "lib/search-query-frame.js",
+      "sha256": "45de1bd6c3d1daf5fa652a5cbf38d00d15181a5d2cc7a7feba8c77ce19912d80"
+    },
+    {
+      "path": "lib/search-ranking-policy.js",
+      "sha256": "28d45573a3eb5c9303265f59db7e00ad1d8851ce5b339947188497db3a45ceb3"
+    },
+    {
+      "path": "mcp/hosted-search-client.js",
+      "sha256": "13cda003e97ab8c913cacb7a0b80fde5b93dcc83da31d73cb5a465239c56900e"
+    },
+    {
+      "path": "mcp/hosted-search-resilience.js",
+      "sha256": "ab2c70bd019688181f2836550f54287f1965c9826fabaa02415a06a31b79cf71"
+    },
+    {
+      "path": "mcp/index.js",
+      "sha256": "dae8195da79f9d4e8af8608104d5d5a02ddcc1bcbd5968c2915f9b2371b8f03a"
+    },
+    {
+      "path": "mcp/recommend-icons.js",
+      "sha256": "f3705b6acb1f981859f56cbf795c05cc7240234740767219f27422b8a20e2f11"
+    },
+    {
+      "path": "mcp/remote-server.js",
+      "sha256": "a13444c115c4e109f1c67137fb1fbc03843703741ea2456fb544885add8eaaa9"
+    },
+    {
+      "path": "scripts/verify-hosted-search-grouped-client.mjs",
+      "sha256": "2c4fdc040fbab70539b513000169c3cda810df69a3d4cb7cfcc28811c96f0237"
+    },
+    {
+      "path": "scripts/verify-hosted-search-resilience.mjs",
+      "sha256": "636bdcdeec6adcb111a087512d20da68715cc994f50a1af51ec589c443271ddb"
+    },
+    {
+      "path": "scripts/verify-mcp-agent-friendly-errors.mjs",
+      "sha256": "0c1066a4c0d47b75e3daa27ea3108c1edc86a702986875551ca9ce9da7083395"
+    },
+    {
+      "path": "scripts/verify-recommend-icons-grouped-search.mjs",
+      "sha256": "380e4393d235e53282d139ba76c78ee099948e1238f01799cd950fba747b1b8a"
+    },
+    {
+      "path": "scripts/verify-search-v2-grouped-http-request.ts",
+      "sha256": "d2804f50e9790100203f210642ea886fbb25ebd0c00eb8dece800aabd942d086"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/candidate-retrieval.ts",
+      "sha256": "870c3617bcf443e4e31efa8325501260f45240ecba9936d4dd48f5f5e1d114b1"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/catalog.ts",
+      "sha256": "265eeea824895ac4bb81b8b0d607dbef43db9e3c2578972e01b40e97458faabc"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/grouped-search-request.ts",
+      "sha256": "125c3f08977dea003aa3bdaff3e6e1ebec1a6645fc4b3ea846b29195bd303262"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/handle-search-request.ts",
+      "sha256": "a24b81f26e34d0f4fd3548d8c0b5e7e5c1ae503dcee13cee6fc2e9595a2c80db"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/material-serving.ts",
+      "sha256": "98aa2de3be91bb32263d86e2c9f3744cf8b975d343b410955786a6aecd5ad217"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/normalize.ts",
+      "sha256": "27e5601d37195fe14c5a1da6e58e85e28480e80afe1e94ba42b551a0f96e491d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rank.ts",
+      "sha256": "51e340739693219255e1fc0918cc5affcf470a41c90930be474d8d0b31eb253d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/rate-limit.ts",
+      "sha256": "1a023edc01835863ebd68d0dcfea58b399dc8b8f068eaca67b278b6b72d49915"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/result-hydration.ts",
+      "sha256": "27b7d526b17a3a4743546be5c970fe306b44389c67be0993a24f3e524248cea0"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/stage-timing.ts",
+      "sha256": "d6bb6d7347c48513951340727130ff1ad26af3d04f89f809603025b921aaac0d"
+    },
+    {
+      "path": "supabase/functions/_shared/search-engine/types.ts",
+      "sha256": "5035ce460228219bec7796ebd46266b7fa4137a0d3bcfcd12fc2b3b4c13e3f41"
+    },
+    {
+      "path": "supabase/functions/mcp-search-grouped/index.ts",
+      "sha256": "6aa651332dfcb4e83c9e437c216c68c6e3276129b59ad00c8126e9a17ca6d2a6"
+    }
+  ],
+  "packet_files": [
+    {
+      "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
+      "sha256": "a687657dff6b5ed93198c0ed28eb92b1a7f2458b5f73929b43fe09eebc02d5c3"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
+      "sha256": "5918f6f2c1f28afff632c2f03a4b1e82db26208f9323dfae37de810c56f286d1"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
+      "sha256": "90a07bcc7df5731b8b00045f3550ea55cf38f63b1a74b56377b0211224ccf945"
+    },
+    {
+      "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
+      "sha256": "ca0c1712144766a08ed5a64ac0207b7475c2739edb0a6d2620abf064fa3009e3"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
+      "sha256": "c8b2b40548e1837fb1782eeac26a9dc7e5e89e08cda5302f7f3dd08acdd05564"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
+      "sha256": "4947ecee40633cc334fd684aa0764330ac83947e02a35fec90b3d42809b04694"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
+      "sha256": "f2473648e56f2cd4284706ae179dd98478e885e87e4b50e326e1684a77f35554"
+    }
+  ],
+  "live_gates": {
+    "direct_grouped_http": true,
+    "mcp_grouped_client": true,
+    "mcp_grouped_client_stable_fallback_disabled": true,
+    "stable_fallback_when_grouped_missing": true,
+    "fr47_stable_fallback_disabled": true,
+    "rollback_function_id_pinned": true,
+    "committed_negative_path_harness": true,
+    "committed_rollback_simulation": true,
+    "committed_measurement_schedule_harness": true,
+    "relative_archive_extraction": true,
+    "gnu_tar_and_bsdtar_simulated": true,
+    "warm_measurement_strategy": "options_keepalive_then_back_to_back_samples",
+    "rate_window_reset_ms": 65000,
+    "keepalive_interval_ms": 5000,
+    "failed_samples_preserved": true,
+    "one_slot_warm_p95_ms_max": 3000,
+    "ten_slot_warm_p95_ms_max": 10000,
+    "twenty_slot_warm_p95_ms_max": 15000,
+    "request_timeout_ms": 20000,
+    "timeouts_allowed": 0,
+    "supported_non_english_twenty_slot_case": "ja"
+  }
+}

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.4.19 - 2026-07-22
+
+### Added
+
+- added support for up to 20 recommendation slots in one call
+- added plain-language recommendation input and service error responses with useful next steps
+
+### Improved
+
+- grouped distinct recommendation searches through an additive endpoint while keeping individual-request fallback
+- isolated grouped failure protection from the stable individual endpoint
+- kept existing custom individual endpoints in individual mode unless a grouped endpoint is explicitly configured
+- reused local results when grouped or individual hosted search returns no matches
+- rejected malformed or invalid-JSON grouped responses instead of treating them as normal empty results
+- kept hosted 4xx responses visible when optional local fallback is enabled
+- deduplicated repeated recommendation searches before hosted retrieval
+- changed oversized preview requests into successful 12-icon inline previews with warnings and fuller browser links
+- promoted local-first search and recommendations to the default npm release
+- aligned local MCP, hosted MCP, and browser search on the same Railway engine
+
 ## 0.4.19-beta.2 - 2026-07-20
 
 ### Added

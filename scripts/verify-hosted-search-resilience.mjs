@@ -74,10 +74,12 @@ assert.equal(circuitGuard.getStatus().state, 'closed');
 
 const clientSource = readFileSync('mcp/hosted-search-client.js', 'utf8');
 assert.equal(clientSource.includes('attempt < 3'), false, 'The hosted client must not retry 5xx responses internally.');
-assert.match(clientSource, /hostedSearchResilience\.execute/);
+assert.match(clientSource, /resilience\.execute/);
+assert.match(clientSource, /groupedHostedSearchResilience/);
 assert.match(clientSource, /AbortSignal\.timeout\(HOSTED_SEARCH_REQUEST_TIMEOUT_MS\)/);
 const remoteServerSource = readFileSync('mcp/remote-server.js', 'utf8');
 assert.match(remoteServerSource, /hosted_search: hostedSearch/);
+assert.match(remoteServerSource, /grouped_hosted_search: groupedHostedSearch/);
 const mcpPackage = JSON.parse(readFileSync('mcp/package.json', 'utf8'));
 assert.equal(mcpPackage.files.includes('hosted-search-resilience.js'), true);
 

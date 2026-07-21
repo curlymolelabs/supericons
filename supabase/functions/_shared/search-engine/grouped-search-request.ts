@@ -4,7 +4,10 @@ import {
   handleSearchRequest,
   type SearchRequestHandlerOptions,
 } from './handle-search-request.ts';
-import { enforceSearchRateLimit } from './rate-limit.ts';
+import {
+  enforceSearchRateLimit,
+  isTierEnforcementEnabled,
+} from './rate-limit.ts';
 
 type RateLimitIdentity = Awaited<ReturnType<typeof enforceSearchRateLimit>>;
 type SingleHandler = (request: Request, options: SearchRequestHandlerOptions) => Promise<Response>;
@@ -63,12 +66,27 @@ export async function handleGroupedSearchRequest(
     return jsonResponse({ error: 'method_not_allowed' }, 405);
   }
 
-  let body: Record<string, unknown>;
+  let parsedBody: unknown;
   try {
-    body = await req.json();
+    parsedBody = await req.json();
   } catch {
-    body = {};
+    return jsonResponse({
+      error: 'The search request body is not valid JSON.',
+      code: 'invalid_search_request',
+      hint: 'Send one JSON object containing either normal search fields or a queries array.',
+      retryable: false,
+    }, 400);
   }
+
+  if (!parsedBody || typeof parsedBody !== 'object' || Array.isArray(parsedBody)) {
+    return jsonResponse({
+      error: 'The search request body must be a JSON object.',
+      code: 'invalid_search_request',
+      hint: 'Send one JSON object containing either normal search fields or a queries array.',
+      retryable: false,
+    }, 400);
+  }
+  const body = parsedBody as Record<string, unknown>;
 
   if (!Array.isArray(body.queries)) {
     const singleRequest = new Request(req.url, {
@@ -96,6 +114,15 @@ export async function handleGroupedSearchRequest(
     }, 400);
   }
 
+  if (isTierEnforcementEnabled()) {
+    return jsonResponse({
+      error: 'Grouped search is temporarily unavailable while hosted allowance accounting is active.',
+      code: 'grouped_search_temporarily_unavailable',
+      hint: 'Retry these searches as individual requests.',
+      retryable: true,
+    }, 503);
+  }
+
   let identity: RateLimitIdentity;
   try {
     identity = await rateLimitEnforcer(req, body.queries.length);
@@ -120,6 +147,7 @@ export async function handleGroupedSearchRequest(
         rateLimitEnforcer: async () => identity,
       });
       let responseBody: unknown;
+      let responseStatus = response.status;
       try {
         responseBody = JSON.parse(await response.text());
       } catch {
@@ -128,10 +156,11 @@ export async function handleGroupedSearchRequest(
           code: 'invalid_grouped_response',
           retryable: false,
         };
+        responseStatus = 502;
       }
       return {
         index,
-        status: response.status,
+        status: responseStatus,
         body: responseBody,
       };
     },
