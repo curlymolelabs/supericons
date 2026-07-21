@@ -19,6 +19,7 @@ The same generated graph is packaged for npm, Railway hosted MCP, and public web
 - Established multilingual gate: 638 of 638 passed, with 58 fixtures per locale.
 - Honest no-result gate: 3 of 3 passed.
 - Fixed suite: 225 of 225 executed, fingerprint `17ed68b34768e1432fe176d44a994e3da6bac4566c607e229116f85001a7002c`.
+- Clean-installed stdio route: 225 of 225 matched the direct helper, fingerprint `9627b1054af4feab30787d9341093b897fbd4352f4317a6e5dde977d5611f68c`.
 - Local latency: first `amazing` search 475.3 ms; 30-sample p95 344.5 ms on the 21,427-icon public package index.
 - Representative results: `amazing` starts with `tabler:sparkles`; `sports` starts with `material:sports`; Japanese `スポーツ` and Spanish `deportes` return reviewed sports symbols; nonsense `florblequux` returns no result.
 
