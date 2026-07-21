@@ -54,6 +54,7 @@ const transport = new StdioClientTransport({
   env: {
     ...process.env,
     SUPERICONS_MCP_LOG_STARTUP: '0',
+    SUPERICONS_LOCAL_FIRST: 'off',
     SUPERICONS_MCP_SEARCH_URL: gatewayUrl,
     SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK: '0',
     SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
