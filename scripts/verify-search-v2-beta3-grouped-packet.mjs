@@ -428,6 +428,8 @@ assert.match(rollback, /releaseSimulationLock/);
 assert.match(rollback, /SimulationEvidenceDirectory/);
 assert.match(rollback, /snapshotProductionEvidence/);
 assert.match(rollback, /A rollback simulation changed production release evidence/);
+assert.match(rollback, /search-v2-beta3-indexed-grouped-release-rollback-attempt5-2026-07-21\.json/);
+assert.match(rollback, /search-v2-beta3-indexed-grouped-live-attempt5-2026-07-21\.json/);
 assert.equal(rollback.includes('removeGeneratedEvidence'), false);
 assert.match(schedule, /actual_routed_samples_with_worker_classification/);
 assert.match(schedule, /reset_network_requests: 0/);
