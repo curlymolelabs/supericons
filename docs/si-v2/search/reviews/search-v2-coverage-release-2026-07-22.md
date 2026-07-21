@@ -36,6 +36,18 @@ The 0.4.20 fingerprint changes 34 of the 225 maintained cases compared with the 
 
 The first comparison exposed unrelated brand logos entering generic `motion`, `avatar`, and `voice` lanes. The candidate was corrected so non-brand interpretation and semantic fallback lanes exclude brand-logo records. The table and fingerprint above describe the corrected bytes.
 
+## Exact npm archive
+
+- Engine and package source revision: `cf2d1903ba23694e8da260892ccf67677de67b5c`.
+- File: `supericons-mcp-0.4.20.tgz`.
+- Packed size: 6,174,114 bytes.
+- Unpacked size: 25,769,232 bytes across 67 files.
+- SHA-256: `9bf4079b70fce74dfe57b0e49e82b85b692d45a6175e5baf36319462800c066c`.
+- npm shasum: `a7f37859e8169db2ecd40ee811a8935ad1f65b0b`.
+- npm integrity: `sha512-TnqVCBbnWE0mjbpZPb1m1J7KjOiLUzRoY01rK8/4B4YS0tsAqVevO00gCwqTJORVoWvKzsR59KDk5KZ1wNVefA==`.
+
+The exact archive passed clean installation, all 225 stdio search cases, package inspection, image preview generation, public-safety scanning, synchronized-surface checks, the one-call contract, structured error checks, packaged query-frame checks, hosted 429 propagation, and recommendation clarification behavior.
+
 ## Multilingual data repair
 
 The established public multilingual data had 281 English concepts but only 280 localized concepts. Kubernetes was the missing record in every maintained locale. This release adds the 11 public-safe Kubernetes records and regenerates the fixture set. The three distributed locale files are byte-identical, contain 3,091 terms, and have SHA-256 `92128ff971ad3e76875ec59ccfd4c2017f68a80ddcfce848012c77a4852fea19`.

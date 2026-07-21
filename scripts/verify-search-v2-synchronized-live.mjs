@@ -23,6 +23,27 @@ async function postSearch(body) {
   return response.json();
 }
 
+function assertBrowserSafeResults(payload) {
+  assert.equal(payload.search_runtime?.mode, 'local_first');
+  assert.equal(payload.search_runtime?.hosted_search_calls, 0);
+  assert.ok(payload.results.every((row) => !Object.hasOwn(row, 'svg')));
+  assert.ok(payload.results.every((row) => !Object.hasOwn(row, 'semantic')));
+}
+
+async function verifyPublicSearch({ query, locale, expectedTop, expectedCount = null }) {
+  const payload = await postSearch({
+    query,
+    ...(locale ? { locale } : {}),
+    library_mode: 'all',
+    style: 'outline',
+    limit: 20,
+  });
+  assertBrowserSafeResults(payload);
+  if (expectedTop) assert.equal(payload.results?.[0]?.icon_id, expectedTop);
+  if (expectedCount !== null) assert.equal(payload.results?.length, expectedCount);
+  return payload;
+}
+
 const healthResponse = await fetch(`${baseUrl}/health`);
 assert.equal(healthResponse.status, 200);
 const health = await healthResponse.json();
@@ -31,28 +52,42 @@ assert.equal(health.railway_local_first?.enabled, true);
 assert.equal(health.railway_local_first?.search_mode, 'local_first');
 assert.equal(health.railway_local_first?.recommendation_mode, 'local_first');
 
-const webEnglish = await postSearch({
+const webEnglish = await verifyPublicSearch({
   query: 'application settings',
-  library_mode: 'all',
-  style: 'outline',
-  limit: 20,
+  expectedTop: 'material:settings_applications',
 });
-assert.equal(webEnglish.search_runtime?.mode, 'local_first');
-assert.equal(webEnglish.search_runtime?.hosted_search_calls, 0);
-assert.equal(webEnglish.results?.[0]?.icon_id, 'material:settings_applications');
-assert.ok(webEnglish.results.every((row) => !Object.hasOwn(row, 'svg')));
-assert.ok(webEnglish.results.every((row) => !Object.hasOwn(row, 'semantic')));
-
-const webJapanese = await postSearch({
+const webAmazing = await verifyPublicSearch({
+  query: 'amazing',
+  expectedTop: 'tabler:sparkles',
+});
+const webSports = await verifyPublicSearch({
+  query: 'sports',
+  expectedTop: 'material:sports',
+});
+const webJapanese = await verifyPublicSearch({
   query: '設定',
   locale: 'ja',
-  library_mode: 'all',
-  style: 'outline',
-  limit: 20,
+  expectedTop: 'material:settings',
 });
-assert.equal(webJapanese.search_runtime?.mode, 'local_first');
-assert.equal(webJapanese.search_runtime?.hosted_search_calls, 0);
-assert.equal(webJapanese.results?.[0]?.icon_id, 'material:settings');
+const webJapaneseSports = await verifyPublicSearch({
+  query: 'スポーツ',
+  locale: 'ja',
+  expectedTop: 'material:sports',
+});
+const webJapaneseAmazing = await verifyPublicSearch({
+  query: 'すごい',
+  locale: 'ja',
+  expectedTop: 'tabler:sparkles',
+});
+const webSpanishSports = await verifyPublicSearch({
+  query: 'deportes',
+  locale: 'es',
+  expectedTop: 'material:sports',
+});
+const webNonsense = await verifyPublicSearch({
+  query: 'florblequux',
+  expectedCount: 0,
+});
 
 const transport = new StreamableHTTPClientTransport(new URL(`${baseUrl}/mcp`));
 const client = new Client({ name: 'search-v2-synchronized-live', version: '1.0.0' });
@@ -107,7 +142,13 @@ try {
     index_generated_at: health.railway_local_first.index_generated_at,
     web_search: {
       english_top: webEnglish.results[0].icon_id,
+      amazing_top: webAmazing.results[0].icon_id,
+      sports_top: webSports.results[0].icon_id,
       japanese_top: webJapanese.results[0].icon_id,
+      japanese_sports_top: webJapaneseSports.results[0].icon_id,
+      japanese_amazing_top: webJapaneseAmazing.results[0].icon_id,
+      spanish_sports_top: webSpanishSports.results[0].icon_id,
+      nonsense_count: webNonsense.results.length,
     },
     hosted_mcp: {
       search_top: searchResult.results[0].icon_ref,
