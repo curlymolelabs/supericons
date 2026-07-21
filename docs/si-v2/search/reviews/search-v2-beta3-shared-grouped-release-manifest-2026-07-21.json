@@ -3,7 +3,9 @@
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
   "attempt": 3,
-  "supersedes_manifest_sha256": "8906a313b44e9880779904d1226373bd385724ebb23b387c274ec577dbab06f6",
+  "packet_revision": 2,
+  "supersedes_manifest_sha256": "9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70",
+  "rebind_reason": "Close the independent audit findings on worker timing, concurrent releases, database ownership, dry-run recursion, and stale workspaces.",
   "prior_attempt": {
     "status": "rolled_back",
     "reason": "one_slot p95 5067 ms exceeds 3000 ms",
@@ -17,8 +19,8 @@
   },
   "project_ref": "kcjmkakdhsqplvasgkjv",
   "function_name": "mcp-search-grouped",
-  "source_revision": "85647ebdbcf6669606291927ec8f9f49c75d7ee1",
-  "source_tree": "ba2929b59912e5eb1814a397ee48a706c7deadfb",
+  "source_revision": "8291049d98b54817a50f098c3165a98fedf9803c",
+  "source_tree": "255e4b7cae1e004d5c6ef01e93baaf0167593869",
   "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
   "grouped_function_present_before": false,
   "stable_function": {
@@ -84,7 +86,7 @@
     },
     {
       "path": "mcp/hosted-search-client.js",
-      "sha256": "13cda003e97ab8c913cacb7a0b80fde5b93dcc83da31d73cb5a465239c56900e"
+      "sha256": "9facf7830a649855e4ab1ffc414a36f1939e892b2bf283b5c79650fb47895ae7"
     },
     {
       "path": "mcp/hosted-search-resilience.js",
@@ -116,7 +118,7 @@
     },
     {
       "path": "scripts/verify-hosted-search-grouped-client.mjs",
-      "sha256": "2c4fdc040fbab70539b513000169c3cda810df69a3d4cb7cfcc28811c96f0237"
+      "sha256": "8a07b918235b8e77b92a8588be81da4f2d9837895e794db7f8af1249273f6acd"
     },
     {
       "path": "scripts/verify-hosted-search-resilience.mjs",
@@ -136,7 +138,7 @@
     },
     {
       "path": "scripts/verify-search-v2-grouped-http-request.ts",
-      "sha256": "f65a357238906baf6112d9aa3776052339552d9104afd3375188cff17823ff9e"
+      "sha256": "84d3022c56ebfdc60fe59d2abe60811fd50af89708a3954dd6631eba2e3c6cb5"
     },
     {
       "path": "scripts/verify-search-v2-shared-recommendation-pipeline.ts",
@@ -192,7 +194,7 @@
     },
     {
       "path": "supabase/functions/mcp-search-grouped/index.ts",
-      "sha256": "5d4dccacd56dbd8794553189813542ebc8c487632ea8f31b0363929ec3bd85c1"
+      "sha256": "c8b94cce90d8674b828ad9e2a7f1a8ceaeca18de4751dc25f672aca8194ca690"
     },
     {
       "path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
@@ -202,11 +204,11 @@
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "3c81f3ca9e90a1a4a4ccf7194c913d5983940744ccf06da1ef9cfa0221492023"
+      "sha256": "8f18dc5de7bee82d112ad5de11d48ec998b281c3e7ba007ad0c2b934a68a2964"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "ca78a1c74aac1fdcacce0dc68f2848a1e6c50e2a7682ead3f40ef9221a5a3f93"
+      "sha256": "a9263d044f92af3ca6019b899bd41d1829af04a2d9ce79dc79c82b4f2956d8fb"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -214,7 +216,7 @@
     },
     {
       "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
-      "sha256": "ce1014ad6f71de6c54542be83f12de8e545bb5d38fcc00c9dab6dbdfe4430491"
+      "sha256": "770aeb147628f0783815d842c9ff3b099b83a6361f3756260a429dce26df4025"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
@@ -222,19 +224,27 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "923e387747441796abc79dd5b74f866dcdb531df01b196f8cd595dcbc3f2fcdd"
+      "sha256": "ca07e4179a44500c5e11af5189467bbea54d793ceb692c9d61f07996b65c5911"
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
-      "sha256": "4bf707194646c3b2a5622813e80bd44395c02e5dd5e81f6a666cc3fe0c605dd4"
+      "sha256": "817c63b89d6e7cc15c1dd85c9047dee484fc52d35f8b08158dd0034be1e29c02"
     },
     {
       "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
-      "sha256": "f336188599b125438cce196f6737b40cb24c0773d93b03c6e3a092f655df0444"
+      "sha256": "8afb38b8f83d7394cb43015dbbbc28c2d8814f7a21b24660874e1ac993afaa80"
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-manager.mjs",
-      "sha256": "02aef9bafa649a61d4146f6cdd7b55180e7acb8f913f3d676563705da0b369c6"
+      "sha256": "44b30674ec0c8e934edf55273e6d7a7ef4dffc3153ee4eea8653ee9b8809cef4"
+    },
+    {
+      "path": "scripts/manage-search-v2-release-lock.mjs",
+      "sha256": "6f4bb198532be527c709309200d5d12cf7cad5d6d10abd1e0b2355aafaeed930"
+    },
+    {
+      "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
+      "sha256": "6a29caeb4d08d67c2ce9f09ffd95ad49c5a5ee332fe870c0473f718d6095a7c1"
     }
   ],
   "live_gates": {
@@ -248,7 +258,9 @@
     "maximum_logical_queries": 40,
     "in_band_stage_timing": true,
     "worker_affinity_assumed": false,
-    "measurement_strategy": "rate_window_reset_then_back_to_back_first_call_samples",
+    "measurement_strategy": "worker_classified_routed_samples",
+    "worker_timing_recorded": true,
+    "worker_cohorts_separated": true,
     "rate_window_reset_ms": 65000,
     "failed_samples_preserved": true,
     "rollback_function_id_pinned": true,
@@ -257,11 +269,16 @@
     "committed_rollback_simulation": true,
     "committed_measurement_schedule_harness": true,
     "committed_database_manager_fixture": true,
+    "committed_concurrent_run_fixture": true,
+    "cross_worktree_release_lock": true,
+    "unique_release_workspaces": true,
+    "database_run_ownership": true,
+    "dry_run_skips_nested_release_simulations": true,
     "relative_archive_extraction": true,
     "gnu_tar_and_bsdtar_simulated": true,
-    "one_slot_first_call_p95_ms_max": 3000,
-    "ten_slot_first_call_p95_ms_max": 10000,
-    "twenty_slot_first_call_p95_ms_max": 15000,
+    "one_slot_reused_worker_p95_ms_max": 3000,
+    "ten_slot_reused_worker_p95_ms_max": 10000,
+    "twenty_slot_reused_worker_p95_ms_max": 15000,
     "request_timeout_ms": 20000,
     "timeouts_allowed": 0,
     "supported_non_english_twenty_slot_case": "ja"

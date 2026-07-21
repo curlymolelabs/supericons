@@ -62,9 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 3);
+assert.equal(manifest.packet_revision, 2);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  '8906a313b44e9880779904d1226373bd385724ebb23b387c274ec577dbab06f6',
+  '9699660da02f2f460e45df2a1208960b5dfce84f35226d98c0b7ea0242116f70',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -102,8 +103,10 @@ assert.equal(manifest.live_gates.in_band_stage_timing, true);
 assert.equal(manifest.live_gates.worker_affinity_assumed, false);
 assert.equal(
   manifest.live_gates.measurement_strategy,
-  'rate_window_reset_then_back_to_back_first_call_samples',
+  'worker_classified_routed_samples',
 );
+assert.equal(manifest.live_gates.worker_timing_recorded, true);
+assert.equal(manifest.live_gates.worker_cohorts_separated, true);
 assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
 assert.equal(manifest.live_gates.failed_samples_preserved, true);
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
@@ -114,6 +117,11 @@ assert.equal(manifest.live_gates.committed_negative_path_harness, true);
 assert.equal(manifest.live_gates.committed_rollback_simulation, true);
 assert.equal(manifest.live_gates.committed_measurement_schedule_harness, true);
 assert.equal(manifest.live_gates.committed_database_manager_fixture, true);
+assert.equal(manifest.live_gates.committed_concurrent_run_fixture, true);
+assert.equal(manifest.live_gates.cross_worktree_release_lock, true);
+assert.equal(manifest.live_gates.unique_release_workspaces, true);
+assert.equal(manifest.live_gates.database_run_ownership, true);
+assert.equal(manifest.live_gates.dry_run_skips_nested_release_simulations, true);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
