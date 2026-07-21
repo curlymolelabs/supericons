@@ -17,10 +17,10 @@ const probeLockName = process.argv.includes('--probe-preheld-lock')
   ? process.argv[process.argv.indexOf('--probe-preheld-lock') + 1]
   : null;
 const evidencePaths = [
-  resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-fr47-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-completion-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json'),
 ];
 
 function normalizedSha256(path) {
@@ -40,7 +40,10 @@ function releaseWorkspaces() {
   const temporaryRoot = resolve('.tmp');
   if (!existsSync(temporaryRoot)) return [];
   return readdirSync(temporaryRoot)
-    .filter((name) => name.startsWith('search-v2-beta3-shared-grouped-'))
+    .filter((name) => (
+      name.startsWith('search-v2-beta3-shared-grouped-')
+      || name.startsWith('search-v2-beta3-indexed-grouped-')
+    ))
     .sort();
 }
 

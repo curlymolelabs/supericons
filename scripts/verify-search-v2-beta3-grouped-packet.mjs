@@ -61,16 +61,17 @@ const manifest = JSON.parse(manifestText);
 
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
-assert.equal(manifest.attempt, 3);
-assert.equal(manifest.packet_revision, 4);
+assert.equal(manifest.attempt, 4);
+assert.equal(manifest.packet_revision, 5);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  'f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831',
+  '1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
+assert.equal(manifest.prior_attempt.shared_candidate_rpc_removed, true);
 assert.equal(manifest.prior_attempt.stable_function_mutated, false);
-assert.equal(manifest.prior_attempt.one_slot_p95_ms, 5067);
+assert.equal(manifest.prior_attempt.one_slot_p95_ms, 6238);
 assert.equal(manifest.project_ref, 'kcjmkakdhsqplvasgkjv');
 assert.equal(manifest.function_name, 'mcp-search-grouped');
 assert.equal(manifest.stable_function.name, 'mcp-search');
@@ -88,7 +89,7 @@ assert.equal(
 );
 assert.equal(
   manifest.shared_candidate_rpc.migration_sha256,
-  'e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3',
+  'f22d209938aaafa685e4f1ab074b8e9d3802de503a91d9d3d24b2c05ef207ae6',
 );
 assert.equal(manifest.shared_candidate_rpc.present_before, false);
 assert.equal(manifest.shared_candidate_rpc.migration_record_present_before, false);
@@ -103,10 +104,11 @@ assert.equal(manifest.live_gates.in_band_stage_timing, true);
 assert.equal(manifest.live_gates.worker_affinity_assumed, false);
 assert.equal(
   manifest.live_gates.measurement_strategy,
-  'worker_classified_routed_samples',
+  'actual_routed_samples_with_worker_classification',
 );
 assert.equal(manifest.live_gates.worker_timing_recorded, true);
 assert.equal(manifest.live_gates.worker_cohorts_separated, true);
+assert.equal(manifest.live_gates.all_routed_samples_counted, true);
 assert.equal(manifest.live_gates.rate_window_reset_ms, 65000);
 assert.equal(manifest.live_gates.failed_samples_preserved, true);
 assert.equal(manifest.live_gates.mcp_grouped_client_stable_fallback_disabled, true);
@@ -126,6 +128,14 @@ assert.equal(manifest.live_gates.preheld_lock_errors_preserved, true);
 assert.equal(manifest.live_gates.unique_release_workspaces, true);
 assert.equal(manifest.live_gates.database_run_ownership, true);
 assert.equal(manifest.live_gates.dry_run_skips_nested_release_simulations, true);
+assert.equal(manifest.live_gates.indexed_candidate_collection, true);
+assert.equal(manifest.live_gates.preexpanded_grouped_queries, true);
+assert.equal(manifest.live_gates.production_benchmark_exact_parity, true);
+assert.equal(manifest.live_gates.production_benchmark_v4_p95_ms_max, 500);
+assert.equal(manifest.live_gates.production_benchmark_speedup_minimum, 3);
+assert.equal(manifest.live_gates.one_slot_actual_routed_p95_ms_max, 3000);
+assert.equal(manifest.live_gates.ten_slot_actual_routed_p95_ms_max, 10000);
+assert.equal(manifest.live_gates.twenty_slot_actual_routed_p95_ms_max, 15000);
 assert.match(manifest.source_revision, /^[0-9a-f]{40}$/);
 assert.match(manifest.source_tree, /^[0-9a-f]{40}$/);
 assert.match(manifest.stable_route_blob, /^[0-9a-f]{40}$/);
@@ -188,6 +198,8 @@ const paths = {
   schedule: 'scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs',
   databaseManager: 'scripts/manage-search-v2-shared-candidate-rpc.mjs',
   databaseFixture: 'scripts/verify-search-v2-shared-candidate-rpc-manager.mjs',
+  databaseSmoke: 'scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs',
+  productionBenchmark: 'scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs',
   releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
   concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
@@ -198,6 +210,10 @@ const rollback = normalizedText(readFileSync(paths.rollback, 'utf8'));
 const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
 const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
 const databaseFixture = normalizedText(readFileSync(paths.databaseFixture, 'utf8'));
+const databaseSmoke = normalizedText(readFileSync(paths.databaseSmoke, 'utf8'));
+const productionBenchmark = normalizedText(readFileSync(paths.productionBenchmark, 'utf8'));
+const sharedMigration = normalizedText(readFileSync(manifest.shared_candidate_rpc.migration_path, 'utf8'));
+const groupedRoute = normalizedText(readFileSync('supabase/functions/mcp-search-grouped/index.ts', 'utf8'));
 const releaseLock = normalizedText(readFileSync(paths.releaseLock, 'utf8'));
 const concurrentRun = normalizedText(readFileSync(paths.concurrentRun, 'utf8'));
 
@@ -247,6 +263,8 @@ assert.match(runner, /Push-Location \$Destination/);
 assert.match(runner, /'-xf', "\.\.\/\$archiveFileName"/);
 assert.equal(runner.includes('Read-Host'), false);
 assert.equal(runner.includes('--keepalive-interval-ms'), false);
+assert.match(runner, /search-v2-beta3-indexed-grouped-live-2026-07-21\.json/);
+assert.match(runner, /search-v2-beta3-indexed-fr47-live-2026-07-21\.json/);
 
 assert.match(databaseManager, /si_search_icon_candidates_v4\(jsonb,text,integer\)/);
 assert.match(databaseManager, /Shared and batched candidate RPC results differ/);
@@ -262,6 +280,15 @@ assert.match(databaseManager, /statements\[2\] = '\$\{ownerMarker\}'/);
 assert.match(databaseFixture, /mismatched_definition_rollback_refused/);
 assert.match(databaseFixture, /mismatched_owner_rollback_refused/);
 assert.match(databaseFixture, /function_and_migration_history_rolled_back_together/);
+assert.match(databaseSmoke, /exact_batched_result_parity/);
+assert.match(productionBenchmark, /exact_result_parity: true/);
+assert.match(productionBenchmark, /v4_absent_before_and_after: true/);
+assert.match(productionBenchmark, /speedup >= 3/);
+assert.match(productionBenchmark, /indexedP95 <= 500/);
+assert.match(sharedMigration, /candidate_ids as/);
+assert.match(sharedMigration, /join public\.icon_catalog c\s+on c\.search_document @@ q\.query_ts/);
+assert.match(sharedMigration, /join public\.icon_search_public_registry_metadata r\s+on r\.search_document @@ q\.query_ts/);
+assert.match(groupedRoute, /expandCandidateQueryVariants:\s*false/);
 assert.match(releaseLock, /mkdirSync\(lockPath\)/);
 assert.match(releaseLock, /already held/);
 assert.match(releaseLock, /belongs to another run and was not released/);
@@ -285,17 +312,17 @@ assert.match(latency, /p95LimitMs: 3000/);
 assert.match(latency, /p95LimitMs: 10000/);
 assert.match(latency, /p95LimitMs: 15000/);
 assert.match(latency, /timeoutMs === 20000/);
-assert.match(latency, /worker_classified_routed_samples/);
+assert.match(latency, /actual_routed_samples_with_worker_classification/);
 assert.match(latency, /worker_affinity_assumed: false/);
 assert.match(latency, /SUPERICONS_MCP_GROUPED_TIMING_OUTPUT/);
 assert.match(latency, /worker_cohorts/);
-assert.match(latency, /reused_worker\.p95_ms <= scenario\.p95LimitMs/);
+assert.match(latency, /overall_p95_ms <= scenario\.p95LimitMs/);
 assert.match(latency, /async function resetRateWindow/);
 assert.equal(latency.includes("method: 'OPTIONS'"), false);
 assert.equal(latency.includes('keepalive'), false);
 assert.ok(
   latency.indexOf('summary.scenarios.push(scenarioSummary)')
-    < latency.indexOf('p95_ms <= scenario.p95LimitMs'),
+    < latency.indexOf('overall_p95_ms <= scenario.p95LimitMs'),
   'Failed latency samples must be added to the evidence before the p95 assertion.',
 );
 assert.match(latency, /process\.exitCode = 1/);
@@ -312,11 +339,11 @@ assert.match(rollback, /SimulationEvidenceDirectory/);
 assert.match(rollback, /snapshotProductionEvidence/);
 assert.match(rollback, /A rollback simulation changed production release evidence/);
 assert.equal(rollback.includes('removeGeneratedEvidence'), false);
-assert.match(schedule, /worker_classified_routed_samples/);
+assert.match(schedule, /actual_routed_samples_with_worker_classification/);
 assert.match(schedule, /reset_network_requests: 0/);
 assert.match(schedule, /mixed_worker_classification/);
-assert.match(schedule, /missing_warm_cohort/);
-assert.match(schedule, /reused_worker\.p95_ms > 3000/);
+assert.match(schedule, /all_first_request_cohort/);
+assert.match(schedule, /overall_p95_ms > 3000/);
 assert.match(concurrentRun, /concurrent_rollback_simulation_refused/);
 assert.match(concurrentRun, /preheld_release_lock_preserved_original_error/);
 assert.match(concurrentRun, /preheld_simulation_lock_preserved_original_error/);
@@ -330,11 +357,13 @@ for (const path of [...Object.values(paths), manifestPath]) {
 }
 
 run('node', [paths.databaseFixture]);
+run('node', [paths.databaseSmoke]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);
 run('node', ['scripts/verify-recommend-icons-grouped-search.mjs']);
 run('node', ['scripts/verify-search-v2-deterministic-mcp-default.mjs']);
+run('node', ['scripts/verify-search-v2-phase1-parity.mjs']);
 run('deno', [
   'run',
   '--allow-read',

@@ -23,10 +23,10 @@ let simulationLockAcquired = false;
 let workspace = null;
 let binDir = null;
 const productionEvidencePaths = [
-  resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'),
-  resolve('references/verification/search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-fr47-live-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-completion-2026-07-21.json'),
+  resolve('references/verification/search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json'),
 ];
 const realNode = process.execPath;
 const windowsSystemDirectory = process.env.SystemRoot
@@ -341,7 +341,7 @@ function runScenario({
   const evidenceDirectory = join(scenarioDir, 'evidence');
   const rollbackEvidencePath = join(
     evidenceDirectory,
-    'search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json',
+    'search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json',
   );
   mkdirSync(evidenceDirectory, { recursive: true });
 

@@ -20,7 +20,7 @@ $Root = Split-Path -Parent $PSScriptRoot
 $ManifestPath = Join-Path $Root 'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json'
 $RunId = [guid]::NewGuid().ToString('D').ToLowerInvariant()
 $ReleaseLockName = 'search-v2-beta3-shared-grouped'
-$Workspace = Join-Path $Root ".tmp/search-v2-beta3-shared-grouped-release-$RunId"
+$Workspace = Join-Path $Root ".tmp/search-v2-beta3-indexed-grouped-release-$RunId"
 $EvidenceRoot = Join-Path $Root 'references/verification'
 if (-not [string]::IsNullOrWhiteSpace($SimulationEvidenceDirectory)) {
   if ($env:SUPERICONS_BETA3_ROLLBACK_SIMULATION -ne '1') {
@@ -48,10 +48,10 @@ if (-not [string]::IsNullOrWhiteSpace($SimulationEvidenceDirectory)) {
   }
   $EvidenceRoot = $resolvedEvidenceRoot
 }
-$LiveEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-live-2026-07-21.json'
-$LatencyEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-fr47-live-2026-07-21.json'
-$CompletionEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'
-$RollbackEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-shared-grouped-release-rollback-2026-07-21.json'
+$LiveEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-live-2026-07-21.json'
+$LatencyEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-fr47-live-2026-07-21.json'
+$CompletionEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-completion-2026-07-21.json'
+$RollbackEvidence = Join-Path $EvidenceRoot 'search-v2-beta3-indexed-grouped-release-rollback-2026-07-21.json'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-CheckedCommand {
@@ -522,8 +522,8 @@ try {
       updated_at = [long]$preStable.updated_at
       mutated = $false
     }
-    live_evidence = 'references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'
-    latency_evidence = 'references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'
+    live_evidence = 'references/verification/search-v2-beta3-indexed-grouped-live-2026-07-21.json'
+    latency_evidence = 'references/verification/search-v2-beta3-indexed-fr47-live-2026-07-21.json'
     rollback_used = $false
     finished_at = (Get-Date).ToUniversalTime().ToString('o')
   })

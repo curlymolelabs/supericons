@@ -2,25 +2,26 @@
   "schema_version": 1,
   "release": "search-v2-beta3-shared-grouped-endpoint",
   "date": "2026-07-21",
-  "attempt": 3,
-  "packet_revision": 4,
-  "supersedes_manifest_sha256": "f56e256293cd232e7a19ca49bdc5331ce2ba9ebf03efabb5c099174ad8639831",
-  "rebind_reason": "Isolate simulation evidence from production evidence and preserve original lock-contention failures.",
+  "attempt": 4,
+  "packet_revision": 5,
+  "supersedes_manifest_sha256": "1b4bf6193cf67c7b5a13d32e2d1b733ffac031024004058e1ae63c4045ce6e4f",
+  "rebind_reason": "Bind the indexed candidate retrieval fix, actual routed latency gate, and fresh one-use evidence paths after attempt 3 rolled back.",
   "prior_attempt": {
     "status": "rolled_back",
-    "reason": "one_slot p95 5067 ms exceeds 3000 ms",
-    "grouped_function_id": "27d64531-6a8d-4e8c-8a6b-3a8ae2d8f814",
+    "reason": "one_slot produced only 0 reused-worker samples; 3 were required",
+    "grouped_function_id": "2c6a5a63-f944-4b87-818a-59068b36936a",
     "grouped_function_removed": true,
+    "shared_candidate_rpc_removed": true,
     "stable_function_mutated": false,
     "live_routing_gate": "passed",
     "latency_gate": "blocked",
-    "one_slot_p95_ms": 5067,
+    "one_slot_p95_ms": 6238,
     "worker_affinity_assumption": "falsified"
   },
   "project_ref": "kcjmkakdhsqplvasgkjv",
   "function_name": "mcp-search-grouped",
-  "source_revision": "8291049d98b54817a50f098c3165a98fedf9803c",
-  "source_tree": "255e4b7cae1e004d5c6ef01e93baaf0167593869",
+  "source_revision": "bca4f502f07f93a518da0601e85100bb4f90795d",
+  "source_tree": "481922e0ef4602461664db4ba0390b1de1059e10",
   "stable_route_blob": "71e568f3014a3e07f7271801b4503080b7111ec7",
   "grouped_function_present_before": false,
   "stable_function": {
@@ -35,7 +36,7 @@
     "signature": "public.si_search_icon_candidates_v4(jsonb,text,integer)",
     "migration_version": "20260714190000",
     "migration_path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
-    "migration_sha256": "e864e9ef9052fa4f894894285fc27993732ef00c46068f2ad2e52818c1b183c3",
+    "migration_sha256": "f22d209938aaafa685e4f1ab074b8e9d3802de503a91d9d3d24b2c05ef207ae6",
     "present_before": false,
     "migration_record_present_before": false,
     "service_role_only": true
@@ -94,7 +95,7 @@
     },
     {
       "path": "mcp/index.js",
-      "sha256": "dae8195da79f9d4e8af8608104d5d5a02ddcc1bcbd5968c2915f9b2371b8f03a"
+      "sha256": "e69358520d3fdc78b3e1a9be88c8e4ef8245041b8abbed42e3b41f8e1dd20577"
     },
     {
       "path": "mcp/package.json",
@@ -110,7 +111,7 @@
     },
     {
       "path": "mcp/remote-server.js",
-      "sha256": "a13444c115c4e109f1c67137fb1fbc03843703741ea2456fb544885add8eaaa9"
+      "sha256": "1fb77a47755ee651fb74a4e478c23ed7c830d0de9eb4f6f2022bbe98aa02134c"
     },
     {
       "path": "mcp/search-tool-shell.js",
@@ -138,11 +139,11 @@
     },
     {
       "path": "scripts/verify-search-v2-grouped-http-request.ts",
-      "sha256": "84d3022c56ebfdc60fe59d2abe60811fd50af89708a3954dd6631eba2e3c6cb5"
+      "sha256": "f88749170299fd23eb2df38082ae66eeb20393a0db02555c179231a4604d52d1"
     },
     {
       "path": "scripts/verify-search-v2-shared-recommendation-pipeline.ts",
-      "sha256": "8aa2ce648ac70b305446b11957c71657b0401f41aab3e691c186258729e40126"
+      "sha256": "f45d3e03b1fb3c136c1ac0b27a6187c2df76f9d5e5cfaad7da64f6fedec706fd"
     },
     {
       "path": "supabase/functions/_shared/search-engine/candidate-retrieval.ts",
@@ -182,7 +183,7 @@
     },
     {
       "path": "supabase/functions/_shared/search-engine/shared-recommendation-search-request.ts",
-      "sha256": "3444e08833f3eef3c7d9c46c7ec8c9d21d083ba2a11e14d7d00081236a006aa2"
+      "sha256": "5351f06f8d8bd1b0dee2e7a3d5b4de005fe28f37afaeb0db82db8251304c1246"
     },
     {
       "path": "supabase/functions/_shared/search-engine/stage-timing.ts",
@@ -194,21 +195,21 @@
     },
     {
       "path": "supabase/functions/mcp-search-grouped/index.ts",
-      "sha256": "c8b94cce90d8674b828ad9e2a7f1a8ceaeca18de4751dc25f672aca8194ca690"
+      "sha256": "b93676c2bba974b1da761c4a48c987eda47e326f0e24cc2d5e63e9f0f2d66a63"
     },
     {
       "path": "supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql",
-      "sha256": "576d144ce410a1e4dfd6fdf9853729f1fd97a91f7b23649ee5e0db0340780b0b"
+      "sha256": "63e391a441b2e2de3ca0972fadd79d41e4112e3eb20c12139cab50f6fdce64f1"
     }
   ],
   "packet_files": [
     {
       "path": "scripts/run-search-v2-beta3-grouped-release.ps1",
-      "sha256": "f82f5626b4faefe379bb42e321787fae2bd0ead9576b03dd988a4a3bbc9e82c8"
+      "sha256": "a66d4b8ef2529c742cda4eb9c84f78dd1701bf071d26df89d873b15a3fb4c634"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-packet.mjs",
-      "sha256": "d10faf3620135eeaae57e91a944cb6b5fbd24ee3754c1d698ccdb684e7f695fa"
+      "sha256": "21977060c1632ce36907f5bb580c9e15984c8fb876414f661b9a8e2a3e0c040d"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-live.mjs",
@@ -216,7 +217,7 @@
     },
     {
       "path": "scripts/measure-search-v2-beta3-fr47-live.mjs",
-      "sha256": "770aeb147628f0783815d842c9ff3b099b83a6361f3756260a429dce26df4025"
+      "sha256": "52fd0ec0bd5709616bc2cf2a57f4f207f0960a63bb7a28886e29ee7845c94ea4"
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-negative-paths.mjs",
@@ -224,11 +225,11 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-grouped-rollback-simulation.mjs",
-      "sha256": "e47a6333144f99b2ba5dce5ce4ccff6cd7ec9b65a0c10c42d394ff5540b5ee07"
+      "sha256": "6b27e99c38e37bc001bfe517b805d0d9d264231168db2fce5cf6f6c2ecbe9f98"
     },
     {
       "path": "scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs",
-      "sha256": "817c63b89d6e7cc15c1dd85c9047dee484fc52d35f8b08158dd0034be1e29c02"
+      "sha256": "5f682348ddcf8af0eab2e2019acbb9b43eb25e951e7ab487d11714f8555b2e47"
     },
     {
       "path": "scripts/manage-search-v2-shared-candidate-rpc.mjs",
@@ -236,7 +237,15 @@
     },
     {
       "path": "scripts/verify-search-v2-shared-candidate-rpc-manager.mjs",
-      "sha256": "44b30674ec0c8e934edf55273e6d7a7ef4dffc3153ee4eea8653ee9b8809cef4"
+      "sha256": "fc6431a0312e554f516f5e3bb04204ae9b4113b86443257dcc387d10e652bc62"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-recommendation-migration-smoke.mjs",
+      "sha256": "30280463ca2740490f5c9f53626089dad3c60f9be6161b96d066475b2e93465f"
+    },
+    {
+      "path": "scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs",
+      "sha256": "556ef418968e885c160339c2581fb3aafe4be92649f6b1d0f935a5a2999b0dc4"
     },
     {
       "path": "scripts/manage-search-v2-release-lock.mjs",
@@ -244,7 +253,11 @@
     },
     {
       "path": "scripts/verify-search-v2-beta3-concurrent-run-lock.mjs",
-      "sha256": "b3298f2b5ce9c3b77d1dc295d8be8ab4873433248d51fe1f7f79ea20b724af91"
+      "sha256": "9b946babfd7574678d12d8c96bc26fce129159dffb35a6f1539a3b0d631aa7fd"
+    },
+    {
+      "path": "scripts/verify-search-v2-phase1-parity.mjs",
+      "sha256": "58899ca4db94b8cb42c885342487f7156c33b9ef51b4c9c8d36ea02c478b4380"
     }
   ],
   "live_gates": {
@@ -258,9 +271,10 @@
     "maximum_logical_queries": 40,
     "in_band_stage_timing": true,
     "worker_affinity_assumed": false,
-    "measurement_strategy": "worker_classified_routed_samples",
+    "measurement_strategy": "actual_routed_samples_with_worker_classification",
     "worker_timing_recorded": true,
     "worker_cohorts_separated": true,
+    "all_routed_samples_counted": true,
     "rate_window_reset_ms": 65000,
     "failed_samples_preserved": true,
     "rollback_function_id_pinned": true,
@@ -280,9 +294,14 @@
     "dry_run_skips_nested_release_simulations": true,
     "relative_archive_extraction": true,
     "gnu_tar_and_bsdtar_simulated": true,
-    "one_slot_reused_worker_p95_ms_max": 3000,
-    "ten_slot_reused_worker_p95_ms_max": 10000,
-    "twenty_slot_reused_worker_p95_ms_max": 15000,
+    "indexed_candidate_collection": true,
+    "preexpanded_grouped_queries": true,
+    "production_benchmark_exact_parity": true,
+    "production_benchmark_v4_p95_ms_max": 500,
+    "production_benchmark_speedup_minimum": 3,
+    "one_slot_actual_routed_p95_ms_max": 3000,
+    "ten_slot_actual_routed_p95_ms_max": 10000,
+    "twenty_slot_actual_routed_p95_ms_max": 15000,
     "request_timeout_ms": 20000,
     "timeouts_allowed": 0,
     "supported_non_english_twenty_slot_case": "ja"
