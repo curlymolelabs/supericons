@@ -3,6 +3,11 @@ import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import {
+  evaluateCandidateBenchmark,
+  expectedWarmSampleCount,
+  reportAndAssertCandidateBenchmark,
+} from './lib/search-v2-candidate-benchmark-policy.mjs';
 
 function readArgument(name, fallback = '') {
   const index = process.argv.indexOf(name);
@@ -11,11 +16,6 @@ function readArgument(name, fallback = '') {
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
-}
-
-function percentile(values, quantile) {
-  const sorted = [...values].sort((left, right) => left - right);
-  return sorted[Math.max(0, Math.ceil(sorted.length * quantile) - 1)];
 }
 
 const projectRef = readArgument('--project-ref', 'kcjmkakdhsqplvasgkjv');
@@ -128,7 +128,7 @@ declare
   observed_count integer;
   sample_number integer;
 begin
-  for sample_number in 1..3 loop
+  for sample_number in 1..${expectedWarmSampleCount + 1} loop
     started_at := clock_timestamp();
     select count(*) into observed_count
     from public.si_search_icon_candidates_v4(${queryGroupsSql}, null, 40);
@@ -141,7 +141,7 @@ begin
       );
   end loop;
 
-  for sample_number in 1..3 loop
+  for sample_number in 1..${expectedWarmSampleCount + 1} loop
     started_at := clock_timestamp();
     select count(*) into observed_count
     from public.si_search_icon_candidates_v3(${queryTextsSql}, null, 40);
@@ -252,20 +252,15 @@ try {
 
   const indexedRows = benchmarkRows.filter((row) => row.implementation === 'v4_indexed_candidates');
   const controlRows = benchmarkRows.filter((row) => row.implementation === 'v3_or_scan_control');
-  assert.equal(indexedRows.length, 3);
-  assert.equal(controlRows.length, 3);
+  assert.equal(indexedRows.length, expectedWarmSampleCount + 1);
+  assert.equal(controlRows.length, expectedWarmSampleCount + 1);
   assert.equal(new Set(benchmarkRows.map((row) => Number(row.row_count))).size, 1);
 
   const indexedLatencies = indexedRows.map((row) => Number(row.elapsed_ms));
   const controlLatencies = controlRows.map((row) => Number(row.elapsed_ms));
-  const indexedP95 = percentile(indexedLatencies, 0.95);
-  const controlP95 = percentile(controlLatencies, 0.95);
-  const speedup = controlP95 / indexedP95;
-  assert.ok(indexedP95 <= 500, `The indexed v4 candidate p95 was ${indexedP95} ms.`);
-  assert.ok(speedup >= 3, `The indexed v4 candidate speedup was only ${speedup.toFixed(2)}x.`);
-
-  console.log(JSON.stringify({
-    status: 'ok',
+  const evaluation = evaluateCandidateBenchmark({ indexedLatencies, controlLatencies });
+  const summary = {
+    ...evaluation,
     project_ref: projectRef,
     migration_sha256: migrationHash,
     release_lock_run_id: runId,
@@ -273,21 +268,15 @@ try {
     workload: {
       logical_queries: queryGroups.length,
       query_variants: queryGroups.length,
-      samples_per_implementation: 3,
+      samples_per_implementation: expectedWarmSampleCount + 1,
+      first_call_samples_per_implementation: 1,
+      warm_samples_per_implementation: expectedWarmSampleCount,
     },
-    indexed_v4: {
-      latencies_ms: indexedLatencies,
-      p95_ms: indexedP95,
-    },
-    v3_control: {
-      latencies_ms: controlLatencies,
-      p95_ms: controlP95,
-    },
-    speedup: Number(speedup.toFixed(2)),
     exact_result_parity: true,
     v4_absent_before_and_after: true,
     migration_record_absent_before_and_after: true,
-  }, null, 2));
+  };
+  reportAndAssertCandidateBenchmark(summary);
 } finally {
   if (releaseLockAcquired) {
     const releaseLock = JSON.parse(execFileSync(process.execPath, [

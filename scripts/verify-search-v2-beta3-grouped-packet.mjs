@@ -62,10 +62,10 @@ const manifest = JSON.parse(manifestText);
 assert.equal(manifest.schema_version, 1);
 assert.equal(manifest.release, 'search-v2-beta3-shared-grouped-endpoint');
 assert.equal(manifest.attempt, 4);
-assert.equal(manifest.packet_revision, 7);
+assert.equal(manifest.packet_revision, 8);
 assert.equal(
   manifest.supersedes_manifest_sha256,
-  'e35a819f62b8a4007e2b5f3587a5c7a118d13bc1466923d805aaa85257cc25c5',
+  '920c06c47ea1204ca5034750945dfd4c72ac8d761d37114bfb9c77c9fcd46f8b',
 );
 assert.equal(manifest.prior_attempt.status, 'rolled_back');
 assert.equal(manifest.prior_attempt.grouped_function_removed, true);
@@ -141,8 +141,14 @@ assert.equal(manifest.live_gates.docker_smoke_unique_run_owned_container, true);
 assert.equal(manifest.live_gates.concurrent_docker_smoke_fixture, true);
 assert.equal(manifest.live_gates.docker_readiness_diagnostics, true);
 assert.equal(manifest.live_gates.concurrency_harnesses_top_level_only, true);
-assert.equal(manifest.live_gates.production_benchmark_v4_p95_ms_max, 500);
-assert.equal(manifest.live_gates.production_benchmark_speedup_minimum, 3);
+assert.equal(manifest.live_gates.production_benchmark_first_call_recorded, true);
+assert.equal(manifest.live_gates.production_benchmark_warm_sample_count, 20);
+assert.equal(manifest.live_gates.production_benchmark_warm_v4_p95_ms_max, 500);
+assert.equal(manifest.live_gates.production_benchmark_warm_speedup_minimum, 3);
+assert.equal(
+  manifest.live_gates.production_benchmark_first_call_release_gate,
+  'actual_routed_end_to_end_one_slot_p95_at_most_3000_ms',
+);
 assert.equal(manifest.live_gates.one_slot_actual_routed_p95_ms_max, 3000);
 assert.equal(manifest.live_gates.ten_slot_actual_routed_p95_ms_max, 10000);
 assert.equal(manifest.live_gates.twenty_slot_actual_routed_p95_ms_max, 15000);
@@ -214,6 +220,10 @@ const paths = {
   productionBenchmark: 'scripts/verify-search-v2-shared-candidate-rpc-production-benchmark.mjs',
   productionBenchmarkLock:
     'scripts/verify-search-v2-shared-candidate-rpc-production-benchmark-lock.mjs',
+  productionBenchmarkPolicy:
+    'scripts/lib/search-v2-candidate-benchmark-policy.mjs',
+  productionBenchmarkPolicyFixture:
+    'scripts/verify-search-v2-shared-candidate-rpc-benchmark-policy.mjs',
   releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
   concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
@@ -231,6 +241,12 @@ const databaseSmokeConcurrency = normalizedText(
 const productionBenchmark = normalizedText(readFileSync(paths.productionBenchmark, 'utf8'));
 const productionBenchmarkLock = normalizedText(
   readFileSync(paths.productionBenchmarkLock, 'utf8'),
+);
+const productionBenchmarkPolicy = normalizedText(
+  readFileSync(paths.productionBenchmarkPolicy, 'utf8'),
+);
+const productionBenchmarkPolicyFixture = normalizedText(
+  readFileSync(paths.productionBenchmarkPolicyFixture, 'utf8'),
 );
 const sharedMigration = normalizedText(readFileSync(manifest.shared_candidate_rpc.migration_path, 'utf8'));
 const groupedRoute = normalizedText(readFileSync('supabase/functions/mcp-search-grouped/index.ts', 'utf8'));
@@ -315,14 +331,25 @@ assert.match(databaseSmokeConcurrency, /unique_container_names/);
 assert.match(databaseSmokeConcurrency, /owner_checked_cleanup/);
 assert.match(productionBenchmark, /exact_result_parity: true/);
 assert.match(productionBenchmark, /v4_absent_before_and_after: true/);
-assert.match(productionBenchmark, /speedup >= 3/);
-assert.match(productionBenchmark, /indexedP95 <= 500/);
+assert.match(productionBenchmark, /expectedWarmSampleCount \+ 1/);
+assert.match(productionBenchmark, /reportAndAssertCandidateBenchmark\(summary\)/);
 assert.match(productionBenchmark, /search-v2-beta3-shared-grouped/);
 assert.match(productionBenchmark, /--owner-process-id/);
 assert.match(productionBenchmark, /pg_advisory_xact_lock\(hashtextextended/);
 assert.match(productionBenchmark, /finally \{/);
 assert.match(productionBenchmarkLock, /preheld_release_lock_blocked_benchmark/);
 assert.match(productionBenchmarkLock, /production_api_requests: apiRequests/);
+assert.match(productionBenchmarkPolicy, /first_call_after_function_creation/);
+assert.match(productionBenchmarkPolicy, /expectedWarmSampleCount = 20/);
+assert.match(productionBenchmarkPolicy, /warmP95LimitMs = 500/);
+assert.match(productionBenchmarkPolicy, /warmSpeedupMinimum = 3/);
+assert.ok(
+  productionBenchmarkPolicy.indexOf('writeLine(JSON.stringify(summary')
+    < productionBenchmarkPolicy.indexOf('summary.gates.warm_v4_p95_passed'),
+  'The benchmark summary must be emitted before its threshold assertion.',
+);
+assert.match(productionBenchmarkPolicyFixture, /failed_summary_emitted_before_assertion/);
+assert.match(productionBenchmarkPolicyFixture, /actual_routed_end_to_end_one_slot_p95_at_most_3000_ms/);
 assert.match(sharedMigration, /candidate_ids as/);
 assert.match(sharedMigration, /join public\.icon_catalog c\s+on c\.search_document @@ q\.query_ts/);
 assert.match(sharedMigration, /join public\.icon_search_public_registry_metadata r\s+on r\.search_document @@ q\.query_ts/);
@@ -403,6 +430,7 @@ for (const path of [...Object.values(paths), manifestPath]) {
 
 run('node', [paths.databaseFixture]);
 run('node', [paths.databaseSmoke]);
+run('node', [paths.productionBenchmarkPolicyFixture]);
 run('node', ['scripts/verify-hosted-search-grouped-client.mjs']);
 run('node', ['scripts/verify-mcp-agent-friendly-errors.mjs']);
 run('node', ['scripts/verify-hosted-search-resilience.mjs']);
