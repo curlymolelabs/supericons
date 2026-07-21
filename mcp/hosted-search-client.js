@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -426,6 +426,37 @@ function shouldUseGroupedHostedSearch() {
   return !String(process.env.SUPERICONS_MCP_SEARCH_URL || '').trim();
 }
 
+function appendGroupedMeasurementRecord(payload, logicalQueryCount) {
+  const outputPath = String(process.env.SUPERICONS_MCP_GROUPED_TIMING_OUTPUT || '').trim();
+  if (!outputPath) return;
+
+  const timing = payload?.measurement_timing;
+  const validWorkerState = ['first_request', 'reused_worker'].includes(timing?.worker_state);
+  const validTiming = (
+    timing?.schema_version === 2
+    && timing?.event === 'search_stage_timing'
+    && validWorkerState
+    && Number.isInteger(timing?.worker_request_ordinal)
+    && timing.worker_request_ordinal > 0
+    && Number.isFinite(timing?.module_age_ms_at_handler_entry)
+    && Number.isFinite(timing?.total_ms)
+    && Number.isFinite(timing?.stages_ms?.candidate_search)
+    && Number.isFinite(timing?.stages_ms?.audit_write)
+  );
+  if (!validTiming) {
+    const error = new Error('Grouped hosted search returned no usable worker timing record.');
+    error.code = 'grouped_measurement_timing_missing';
+    error.retryable = false;
+    throw error;
+  }
+
+  appendFileSync(outputPath, `${JSON.stringify({
+    schema_version: 1,
+    logical_query_count: logicalQueryCount,
+    measurement_timing: timing,
+  })}\n`, 'utf8');
+}
+
 async function searchIconQueriesGrouped(queries) {
   if (!Array.isArray(queries) || queries.length < 1 || queries.length > 96) {
     throw new Error('grouped hosted search requires between 1 and 96 queries');
@@ -487,6 +518,7 @@ async function searchIconQueriesGrouped(queries) {
     error.retryable = true;
     throw error;
   }
+  appendGroupedMeasurementRecord(payload, groupedQueries.length);
 
   const responses = payload.responses.map((entry, index) => {
     if (entry?.index !== index || !Number.isInteger(entry?.status)) {

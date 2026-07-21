@@ -47,9 +47,10 @@ assert.match(
 );
 if (skipNestedReleaseSimulations) {
   assert.equal(
-    process.env.SUPERICONS_BETA3_NESTED_RELEASE_SIMULATION,
-    '1',
-    'Nested release simulations may be skipped only by the committed rollback harness.',
+    process.env.SUPERICONS_BETA3_NESTED_RELEASE_SIMULATION === '1'
+      || process.env.SUPERICONS_BETA3_RELEASE_RUNNER === '1',
+    true,
+    'Nested release simulations may be skipped only by the committed rollback harness or release runner.',
   );
 }
 
@@ -175,6 +176,8 @@ const paths = {
   schedule: 'scripts/verify-search-v2-beta3-fr47-measurement-schedule.mjs',
   databaseManager: 'scripts/manage-search-v2-shared-candidate-rpc.mjs',
   databaseFixture: 'scripts/verify-search-v2-shared-candidate-rpc-manager.mjs',
+  releaseLock: 'scripts/manage-search-v2-release-lock.mjs',
+  concurrentRun: 'scripts/verify-search-v2-beta3-concurrent-run-lock.mjs',
 };
 const runner = normalizedText(readFileSync(paths.runner, 'utf8'));
 const live = normalizedText(readFileSync(paths.live, 'utf8'));
@@ -183,6 +186,8 @@ const rollback = normalizedText(readFileSync(paths.rollback, 'utf8'));
 const schedule = normalizedText(readFileSync(paths.schedule, 'utf8'));
 const databaseManager = normalizedText(readFileSync(paths.databaseManager, 'utf8'));
 const databaseFixture = normalizedText(readFileSync(paths.databaseFixture, 'utf8'));
+const releaseLock = normalizedText(readFileSync(paths.releaseLock, 'utf8'));
+const concurrentRun = normalizedText(readFileSync(paths.concurrentRun, 'utf8'));
 
 assert.match(runner, /\$FunctionName = 'mcp-search-grouped'/);
 assert.match(runner, /\$StableFunctionName = 'mcp-search'/);
@@ -213,6 +218,12 @@ assert.match(runner, /The grouped function id changed during live verification/)
 assert.match(runner, /The shared candidate RPC changed during live verification/);
 assert.match(runner, /stable_function_mutated = \$false/);
 assert.match(runner, /git status --porcelain=v1 --untracked-files=no/);
+assert.match(runner, /manage-search-v2-release-lock\.mjs/);
+assert.match(runner, /\$RunId = \[guid\]::NewGuid/);
+assert.match(runner, /--skip-nested-release-simulations/);
+assert.match(runner, /SUPERICONS_BETA3_RELEASE_RUNNER/);
+assert.match(runner, /The unique release workspace already exists/);
+assert.equal(runner.includes('search-v2-beta3-shared-grouped-release-20260721'), false);
 assert.match(runner, /'-C', \$RepositoryRoot/);
 assert.match(runner, /Push-Location \$Destination/);
 assert.match(runner, /'-xf', "\.\.\/\$archiveFileName"/);
@@ -226,8 +237,18 @@ assert.match(databaseManager, /begin;[\s\S]*commit;/);
 assert.match(databaseManager, /Rollback refused because the shared candidate RPC definition changed/);
 assert.match(databaseManager, /drop function public\.si_search_icon_candidates_v4/);
 assert.match(databaseManager, /delete from supabase_migrations\.schema_migrations/);
+assert.match(databaseManager, /supericons_release_owner:/);
+assert.match(databaseManager, /present_other_owner/);
+assert.match(databaseManager, /belongs to another release run/);
+assert.match(databaseManager, /statements\[2\] = '\$\{ownerMarker\}'/);
 assert.match(databaseFixture, /mismatched_definition_rollback_refused/);
+assert.match(databaseFixture, /mismatched_owner_rollback_refused/);
 assert.match(databaseFixture, /function_and_migration_history_rolled_back_together/);
+assert.match(releaseLock, /mkdirSync\(lockPath\)/);
+assert.match(releaseLock, /already held/);
+assert.match(releaseLock, /belongs to another run and was not released/);
+assert.match(concurrentRun, /A concurrent release runner must be refused/);
+assert.match(concurrentRun, /evidence_unchanged/);
 
 assert.match(live, /direct_grouped_http/);
 assert.match(live, /measurement_timing/);
@@ -246,8 +267,11 @@ assert.match(latency, /p95LimitMs: 3000/);
 assert.match(latency, /p95LimitMs: 10000/);
 assert.match(latency, /p95LimitMs: 15000/);
 assert.match(latency, /timeoutMs === 20000/);
-assert.match(latency, /rate_window_reset_then_back_to_back_first_call_samples/);
+assert.match(latency, /worker_classified_routed_samples/);
 assert.match(latency, /worker_affinity_assumed: false/);
+assert.match(latency, /SUPERICONS_MCP_GROUPED_TIMING_OUTPUT/);
+assert.match(latency, /worker_cohorts/);
+assert.match(latency, /reused_worker\.p95_ms <= scenario\.p95LimitMs/);
 assert.match(latency, /async function resetRateWindow/);
 assert.equal(latency.includes("method: 'OPTIONS'"), false);
 assert.equal(latency.includes('keepalive'), false);
@@ -263,10 +287,12 @@ assert.match(rollback, /database_rollback_count/);
 assert.match(rollback, /match_bsdtar/);
 assert.match(rollback, /match_gnu_tar/);
 assert.match(rollback, /expectedDatabaseRollbackCount: 1/);
-assert.match(schedule, /rate_window_reset_then_back_to_back_first_call_samples/);
+assert.match(rollback, /database_owner_run_id/);
+assert.match(schedule, /worker_classified_routed_samples/);
 assert.match(schedule, /reset_network_requests: 0/);
-assert.match(schedule, /latencies_ms\.length, 3/);
-assert.match(schedule, /p95_ms > 3000/);
+assert.match(schedule, /mixed_worker_classification/);
+assert.match(schedule, /missing_warm_cohort/);
+assert.match(schedule, /reused_worker\.p95_ms > 3000/);
 
 for (const path of [...Object.values(paths), manifestPath]) {
   const text = readFileSync(path, 'utf8');
@@ -296,6 +322,7 @@ if (!skipNestedReleaseSimulations) {
   run('node', [paths.negative]);
   run('node', [paths.rollback]);
   run('node', [paths.schedule]);
+  run('node', [paths.concurrentRun]);
 }
 
 console.log(JSON.stringify({

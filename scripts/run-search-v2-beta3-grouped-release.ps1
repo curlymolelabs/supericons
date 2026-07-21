@@ -16,7 +16,9 @@ $GroupedUrl = "https://$ProjectRef.supabase.co/functions/v1/$FunctionName"
 $StableUrl = "https://$ProjectRef.supabase.co/functions/v1/$StableFunctionName"
 $Root = Split-Path -Parent $PSScriptRoot
 $ManifestPath = Join-Path $Root 'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json'
-$Workspace = Join-Path $Root '.tmp/search-v2-beta3-shared-grouped-release-20260721'
+$RunId = [guid]::NewGuid().ToString('D').ToLowerInvariant()
+$ReleaseLockName = 'search-v2-beta3-shared-grouped'
+$Workspace = Join-Path $Root ".tmp/search-v2-beta3-shared-grouped-release-$RunId"
 $LiveEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'
 $LatencyEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-fr47-live-2026-07-21.json'
 $CompletionEvidence = Join-Path $Root 'references/verification/search-v2-beta3-shared-grouped-release-completion-2026-07-21.json'
@@ -249,15 +251,41 @@ function Remove-GroupedFunctionForRollback {
 }
 
 Set-Location $Root
+$releaseLockAcquired = $false
+try {
+$releaseLock = Invoke-JsonCommand -FilePath 'node' -Arguments @(
+  'scripts/manage-search-v2-release-lock.mjs',
+  '--action', 'acquire',
+  '--name', $ReleaseLockName,
+  '--run-id', $RunId,
+  '--repository-root', $Root
+)
+if ("$($releaseLock.status)" -ne 'acquired' -or "$($releaseLock.run_id)" -ne $RunId) {
+  throw 'The cross-worktree release lock was not acquired.'
+}
+$releaseLockAcquired = $true
 if (-not (Test-Path -LiteralPath $ManifestPath)) {
   throw "Missing release manifest: $ManifestPath"
 }
 $script:Manifest = Get-Content -LiteralPath $ManifestPath -Raw | ConvertFrom-Json
 
-Invoke-CheckedCommand -FilePath 'node' -Arguments @(
-  'scripts/verify-search-v2-beta3-grouped-packet.mjs',
-  '--manifest-hash', $ExpectedManifest
-)
+$previousReleaseRunnerMarker = $env:SUPERICONS_BETA3_RELEASE_RUNNER
+try {
+  $env:SUPERICONS_BETA3_RELEASE_RUNNER = '1'
+  Invoke-CheckedCommand -FilePath 'node' -Arguments @(
+    'scripts/verify-search-v2-beta3-grouped-packet.mjs',
+    '--manifest-hash', $ExpectedManifest,
+    '--skip-nested-release-simulations'
+  )
+}
+finally {
+  if ($null -eq $previousReleaseRunnerMarker) {
+    Remove-Item Env:SUPERICONS_BETA3_RELEASE_RUNNER -ErrorAction SilentlyContinue
+  }
+  else {
+    $env:SUPERICONS_BETA3_RELEASE_RUNNER = $previousReleaseRunnerMarker
+  }
+}
 
 $statusLines = @(git status --porcelain=v1 --untracked-files=no)
 if ($LASTEXITCODE -ne 0) { throw 'git status failed.' }
@@ -304,7 +332,7 @@ if (-not $resolvedWorkspace.StartsWith("$resolvedRoot\", [System.StringCompariso
   throw 'The release workspace is outside the repository.'
 }
 if (Test-Path -LiteralPath $Workspace) {
-  Remove-Item -LiteralPath $Workspace -Recurse -Force
+  throw "The unique release workspace already exists: $Workspace"
 }
 $sourceWorkspace = Join-Path $Workspace 'source'
 Expand-GitRevision `
@@ -339,8 +367,9 @@ if (-not $ExecuteApprovedGroupedRelease) {
     authorized_deletions = 0
     authorized_database_creations = 0
     authorized_database_rollbacks = 0
+    run_id = $RunId
   } | ConvertTo-Json -Depth 4
-  exit 0
+  return
 }
 
 foreach ($path in @($LiveEvidence, $LatencyEvidence, $CompletionEvidence, $RollbackEvidence)) {
@@ -360,11 +389,15 @@ try {
   $sharedCandidateApply = Invoke-JsonCommand -FilePath 'node' -Arguments @(
     'scripts/manage-search-v2-shared-candidate-rpc.mjs',
     '--action', 'apply',
+    '--run-id', $RunId,
     '--project-ref', $ProjectRef,
     '--expected-migration-hash', "$($script:Manifest.shared_candidate_rpc.migration_sha256)"
   )
   if ("$($sharedCandidateApply.status)" -ne 'applied_and_verified') {
     throw 'The shared candidate RPC apply step did not verify.'
+  }
+  if ("$($sharedCandidateApply.run_id)" -ne $RunId -or "$($sharedCandidateApply.owner_run_id)" -ne $RunId) {
+    throw 'The shared candidate RPC apply step returned a different release owner.'
   }
   $sharedCandidateDefinitionSha256 = "$($sharedCandidateApply.function_definition_sha256)"
   $sharedCandidateDefinitionMd5 = "$($sharedCandidateApply.function_definition_md5)"
@@ -419,6 +452,7 @@ try {
   $sharedCandidateVerify = Invoke-JsonCommand -FilePath 'node' -Arguments @(
     'scripts/manage-search-v2-shared-candidate-rpc.mjs',
     '--action', 'verify',
+    '--run-id', $RunId,
     '--project-ref', $ProjectRef,
     '--expected-migration-hash', "$($script:Manifest.shared_candidate_rpc.migration_sha256)",
     '--expected-definition-sha256', $sharedCandidateDefinitionSha256
@@ -426,11 +460,15 @@ try {
   if ("$($sharedCandidateVerify.status)" -ne 'present_and_verified') {
     throw 'The shared candidate RPC changed during live verification.'
   }
+  if ("$($sharedCandidateVerify.run_id)" -ne $RunId -or "$($sharedCandidateVerify.owner_run_id)" -ne $RunId) {
+    throw 'The shared candidate RPC owner changed during live verification.'
+  }
 
   Write-JsonEvidence -Path $CompletionEvidence -Value ([ordered]@{
     artifact = 'search_v2_beta3_shared_grouped_release_completion'
     status = 'published_and_verified'
     manifest_sha256 = $ExpectedManifest
+    run_id = $RunId
     source_revision = $resolvedSource
     source_tree = $sourceTree
     function = [ordered]@{
@@ -469,10 +507,14 @@ catch {
       $sharedCandidateInspection = Invoke-JsonCommand -FilePath 'node' -Arguments @(
         'scripts/manage-search-v2-shared-candidate-rpc.mjs',
         '--action', 'inspect',
+        '--run-id', $RunId,
         '--project-ref', $ProjectRef,
         '--expected-migration-hash', "$($script:Manifest.shared_candidate_rpc.migration_sha256)"
       )
       if ("$($sharedCandidateInspection.status)" -eq 'present_and_verified') {
+        if ("$($sharedCandidateInspection.owner_run_id)" -ne $RunId) {
+          throw 'The recovered shared candidate RPC belongs to another release run.'
+        }
         $sharedCandidateDefinitionSha256 =
           "$($sharedCandidateInspection.function_definition_sha256)"
         $sharedCandidateDefinitionMd5 =
@@ -529,6 +571,7 @@ catch {
       $sharedCandidateRollbackResult = Invoke-JsonCommand -FilePath 'node' -Arguments @(
         'scripts/manage-search-v2-shared-candidate-rpc.mjs',
         '--action', 'rollback',
+        '--run-id', $RunId,
         '--project-ref', $ProjectRef,
         '--expected-migration-hash', "$($script:Manifest.shared_candidate_rpc.migration_sha256)",
         '--expected-definition-sha256', $sharedCandidateDefinitionSha256,
@@ -536,6 +579,9 @@ catch {
       )
       if ("$($sharedCandidateRollbackResult.status)" -ne 'removed_and_verified') {
         throw 'The shared candidate RPC rollback did not verify.'
+      }
+      if ("$($sharedCandidateRollbackResult.run_id)" -ne $RunId) {
+        throw 'The shared candidate RPC rollback returned a different release owner.'
       }
       $sharedCandidateRollback.status = 'removed'
     }
@@ -554,6 +600,7 @@ catch {
   $overallRollbackStatus = if ($rollbackSucceeded) { 'removed' } else { 'blocked' }
   Write-JsonEvidence -Path $RollbackEvidence -Value ([ordered]@{
     artifact = 'search_v2_beta3_shared_grouped_release_rollback'
+    run_id = $RunId
     status = $overallRollbackStatus
     endpoint = $endpointRollback
     shared_candidate_rpc = $sharedCandidateRollback
@@ -568,4 +615,26 @@ catch {
     throw "Release failed and shared candidate RPC rollback was blocked. $releaseError"
   }
   throw
+}
+}
+finally {
+  try {
+    if (Test-Path -LiteralPath $Workspace) {
+      Remove-Item -LiteralPath $Workspace -Recurse -Force
+    }
+  }
+  finally {
+    if ($releaseLockAcquired) {
+      $releaseLock = Invoke-JsonCommand -FilePath 'node' -Arguments @(
+        'scripts/manage-search-v2-release-lock.mjs',
+        '--action', 'release',
+        '--name', $ReleaseLockName,
+        '--run-id', $RunId,
+        '--repository-root', $Root
+      )
+      if ("$($releaseLock.status)" -ne 'released') {
+        throw 'The cross-worktree release lock was not released.'
+      }
+    }
+  }
 }

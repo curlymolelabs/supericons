@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   existsSync,
+  mkdtempSync,
   mkdirSync,
   readFileSync,
   rmSync,
@@ -15,7 +16,9 @@ const manifestPath = resolve(
   'docs/si-v2/search/reviews/search-v2-beta3-shared-grouped-release-manifest-2026-07-21.json',
 );
 const runnerPath = resolve('scripts/run-search-v2-beta3-grouped-release.ps1');
-const workspace = resolve('.tmp/search-v2-beta3-shared-grouped-rollback-simulation');
+const temporaryRoot = resolve('.tmp');
+mkdirSync(temporaryRoot, { recursive: true });
+const workspace = mkdtempSync(resolve(temporaryRoot, 'search-v2-beta3-shared-grouped-rollback-simulation-'));
 const binDir = join(workspace, 'bin');
 const evidencePaths = [
   resolve('references/verification/search-v2-beta3-shared-grouped-live-2026-07-21.json'),
@@ -62,7 +65,6 @@ for (const path of evidencePaths) {
   );
 }
 
-rmSync(workspace, { recursive: true, force: true });
 mkdirSync(binDir, { recursive: true });
 
 writeText(join(binDir, 'node.cmd'), [
@@ -97,6 +99,7 @@ function readState() {
         grouped_list_count: 0,
         delete_count: 0,
         database_present: false,
+        database_owner_run_id: null,
         database_apply_count: 0,
         database_rollback_count: 0,
       };
@@ -110,6 +113,8 @@ if (scriptName === 'manage-search-v2-shared-candidate-rpc.mjs') {
   const state = readState();
   const actionIndex = args.indexOf('--action');
   const action = actionIndex >= 0 ? args[actionIndex + 1] : '';
+  const runIdIndex = args.indexOf('--run-id');
+  const runId = runIdIndex >= 0 ? args[runIdIndex + 1] : '';
   const definitionSha256 = 'a'.repeat(64);
   const definitionMd5 = 'b'.repeat(32);
   if (action === 'preflight') {
@@ -120,40 +125,51 @@ if (scriptName === 'manage-search-v2-shared-candidate-rpc.mjs') {
   if (action === 'apply') {
     if (state.database_present) process.exit(2);
     state.database_present = true;
+    state.database_owner_run_id = runId;
     state.database_apply_count += 1;
     writeState(state);
     console.log(JSON.stringify({
       status: 'applied_and_verified',
       function_definition_sha256: definitionSha256,
       function_definition_md5: definitionMd5,
+      run_id: runId,
+      owner_run_id: runId,
     }));
     process.exit(0);
   }
   if (action === 'inspect') {
     console.log(JSON.stringify(state.database_present
-      ? {
+      ? state.database_owner_run_id === runId ? {
           status: 'present_and_verified',
           function_definition_sha256: definitionSha256,
           function_definition_md5: definitionMd5,
+          owner_run_id: runId,
+        } : {
+          status: 'present_other_owner',
+          requested_run_id: runId,
+          owner_run_id: state.database_owner_run_id,
         }
       : { status: 'absent' }));
     process.exit(0);
   }
   if (action === 'verify') {
-    if (!state.database_present) process.exit(2);
+    if (!state.database_present || state.database_owner_run_id !== runId) process.exit(2);
     console.log(JSON.stringify({
       status: 'present_and_verified',
       function_definition_sha256: definitionSha256,
       function_definition_md5: definitionMd5,
+      run_id: runId,
+      owner_run_id: runId,
     }));
     process.exit(0);
   }
   if (action === 'rollback') {
-    if (!state.database_present) process.exit(2);
+    if (!state.database_present || state.database_owner_run_id !== runId) process.exit(2);
     state.database_present = false;
+    state.database_owner_run_id = null;
     state.database_rollback_count += 1;
     writeState(state);
-    console.log(JSON.stringify({ status: 'removed_and_verified' }));
+    console.log(JSON.stringify({ status: 'removed_and_verified', run_id: runId }));
     process.exit(0);
   }
   process.exit(3);

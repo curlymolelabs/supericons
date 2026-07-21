@@ -186,6 +186,7 @@ assert.match(groupedRouteSource, /defaultSource:\s*'mcp'/);
 assert.match(groupedRouteSource, /defaultEnvironment:\s*null/);
 assert.match(groupedRouteSource, /candidateRpcName:\s*'si_search_icon_candidates_v4'/);
 assert.match(groupedRouteSource, /hydrateFinalSvg:\s*true/);
+assert.match(groupedRouteSource, /timingSink:\s*\(\)\s*=>\s*\{\}/);
 assert.match(groupedRouteSource, /includeTimingInResponse:\s*true/);
 assert.match(groupedRouteSource, /maxQueries:\s*40/);
 

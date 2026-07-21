@@ -8,6 +8,8 @@ const projectRef = 'kcjmkakdhsqplvasgkjv';
 const fakeDefinition = 'CREATE FUNCTION public.si_search_icon_candidates_v4() RETURNS void';
 const fakeDefinitionSha256 = createHash('sha256').update(fakeDefinition).digest('hex');
 const fakeDefinitionMd5 = createHash('md5').update(fakeDefinition).digest('hex');
+const runId = '11111111-1111-4111-8111-111111111111';
+const otherRunId = '22222222-2222-4222-8222-222222222222';
 const observations = {
   preflightReads: 0,
   applyMutations: 0,
@@ -16,6 +18,7 @@ const observations = {
   mutationSql: [],
 };
 let state = 'absent';
+let ownerRunId = null;
 
 function stateRow() {
   return {
@@ -32,6 +35,11 @@ function definitionRow() {
     function_definition: fakeDefinition,
     function_definition_md5: fakeDefinitionMd5,
     migration_record_count: 1,
+    function_comment: `supericons_release_owner:${ownerRunId}`,
+    migration_statements: [
+      'fixture migration source',
+      `supericons_release_owner:${ownerRunId}`,
+    ],
   };
 }
 
@@ -62,6 +70,10 @@ const server = http.createServer(async (request, response) => {
     assert.match(sql, /Shared and batched candidate RPC results differ/);
     assert.match(sql, /grant execute on function public\.si_search_icon_candidates_v4/);
     assert.match(sql, /insert into supabase_migrations\.schema_migrations/);
+    const ownerMatch = sql.match(/supericons_release_owner:([0-9a-f-]{36})/);
+    assert.ok(ownerMatch);
+    ownerRunId = ownerMatch[1];
+    assert.equal(ownerRunId, runId);
     assert.match(sql, /commit;/);
     state = 'present';
     payload = [definitionRow()];
@@ -71,10 +83,12 @@ const server = http.createServer(async (request, response) => {
     assert.equal(state, 'present');
     assert.match(sql, /^(\s*)begin;/);
     assert.match(sql, /md5\(pg_get_functiondef/);
+    assert.match(sql, new RegExp(`supericons_release_owner:${runId}`));
     assert.match(sql, /drop function public\.si_search_icon_candidates_v4\(jsonb, text, integer\)/);
     assert.match(sql, /delete from supabase_migrations\.schema_migrations/);
     assert.match(sql, /commit;/);
     state = 'absent';
+    ownerRunId = null;
     payload = [stateRow()];
   } else {
     response.statusCode = 500;
@@ -105,6 +119,9 @@ async function runManager(action, extra = []) {
     migrationHash,
     '--management-api-base',
     managementApiBase,
+    ...(['inspect', 'apply', 'verify', 'rollback'].includes(action) && !extra.includes('--run-id')
+      ? ['--run-id', runId]
+      : []),
     ...extra,
   ];
   const child = spawn(process.execPath, args, {
@@ -160,6 +177,33 @@ try {
   assert.equal(presentInspection.payload.function_definition_md5, fakeDefinitionMd5);
   assert.equal(state, 'present');
 
+  const otherOwnerInspection = await runManager('inspect', ['--run-id', otherRunId]);
+  assert.equal(otherOwnerInspection.exitCode, 0, otherOwnerInspection.stderr);
+  assert.equal(otherOwnerInspection.payload.status, 'present_other_owner');
+  assert.equal(otherOwnerInspection.payload.owner_run_id, runId);
+  assert.equal('function_definition_sha256' in otherOwnerInspection.payload, false);
+
+  const otherOwnerVerify = await runManager('verify', [
+    '--run-id', otherRunId,
+    '--expected-definition-sha256',
+    fakeDefinitionSha256,
+  ]);
+  assert.notEqual(otherOwnerVerify.exitCode, 0);
+  assert.match(otherOwnerVerify.stderr, /belongs to another release run/i);
+  assert.equal(state, 'present');
+
+  const otherOwnerRollback = await runManager('rollback', [
+    '--run-id', otherRunId,
+    '--expected-definition-sha256',
+    fakeDefinitionSha256,
+    '--expected-definition-md5',
+    fakeDefinitionMd5,
+  ]);
+  assert.notEqual(otherOwnerRollback.exitCode, 0);
+  assert.match(otherOwnerRollback.stderr, /belongs to another release run/i);
+  assert.equal(observations.rollbackMutations, 0);
+  assert.equal(state, 'present');
+
   const verify = await runManager('verify', [
     '--expected-definition-sha256',
     fakeDefinitionSha256,
@@ -174,7 +218,7 @@ try {
     '--expected-definition-md5',
     fakeDefinitionMd5,
   ]);
-  assert.equal(rejectedRollback.exitCode, 1);
+  assert.notEqual(rejectedRollback.exitCode, 0);
   assert.match(rejectedRollback.stderr, /definition changed/i);
   assert.equal(observations.rollbackMutations, 0);
   assert.equal(state, 'present');
@@ -199,6 +243,9 @@ try {
     rollback_mutations: observations.rollbackMutations,
     absent_and_present_inspection: true,
     mismatched_definition_rollback_refused: true,
+    mismatched_owner_inspection_not_adopted: true,
+    mismatched_owner_verify_refused: true,
+    mismatched_owner_rollback_refused: true,
     function_and_migration_history_rolled_back_together: true,
   }, null, 2));
 } finally {

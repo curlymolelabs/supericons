@@ -16,6 +16,7 @@ const projectRef = readArgument('--project-ref', 'kcjmkakdhsqplvasgkjv');
 const expectedMigrationHash = readArgument('--expected-migration-hash');
 const expectedDefinitionSha256 = readArgument('--expected-definition-sha256');
 const expectedDefinitionMd5 = readArgument('--expected-definition-md5');
+const runId = readArgument('--run-id');
 const managementApiBase = readArgument('--management-api-base', 'https://api.supabase.com/v1');
 const migrationPath =
   'supabase/migrations/20260714190000_search_v2_shared_recommendation_candidates.sql';
@@ -31,6 +32,11 @@ assert.match(projectRef, /^[a-z]{20}$/);
 assert.match(expectedMigrationHash, /^[0-9a-f]{64}$/);
 assert.equal(migrationHash, expectedMigrationHash, 'The shared candidate migration hash changed.');
 assert.ok(['plan', 'preflight', 'inspect', 'apply', 'verify', 'rollback'].includes(action));
+if (['inspect', 'apply', 'verify', 'rollback'].includes(action)) {
+  assert.match(runId, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+}
+const ownerMarker = runId ? `supericons_release_owner:${runId}` : '';
+const ownerRunIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 const readOnlyQueryUrl =
   `${managementApiBase}/projects/${projectRef}/database/query/read-only`;
@@ -221,22 +227,51 @@ function definitionSql() {
 select
   pg_get_functiondef('${functionSignature}'::regprocedure) as function_definition,
   md5(pg_get_functiondef('${functionSignature}'::regprocedure)) as function_definition_md5,
+  obj_description('${functionSignature}'::regprocedure, 'pg_proc') as function_comment,
   (
     select count(*)::int
     from supabase_migrations.schema_migrations
     where version = '${migrationVersion}'
       and name = '${migrationName}'
-  ) as migration_record_count;
+  ) as migration_record_count,
+  (
+    select statements
+    from supabase_migrations.schema_migrations
+    where version = '${migrationVersion}'
+      and name = '${migrationName}'
+  ) as migration_statements;
 `;
 }
 
-function summarizeDefinition(row) {
+function readOwnerRunId(row) {
+  assert.equal(typeof row.function_comment, 'string');
+  assert.ok(Array.isArray(row.migration_statements));
+  assert.equal(row.migration_statements.length, 2);
+  const commentMatch = row.function_comment.match(/^supericons_release_owner:([0-9a-f-]{36})$/);
+  const migrationMatch = String(row.migration_statements[1] || '')
+    .match(/^supericons_release_owner:([0-9a-f-]{36})$/);
+  assert.ok(commentMatch, 'The shared candidate RPC has no valid release owner.');
+  assert.ok(migrationMatch, 'The shared candidate migration has no valid release owner.');
+  assert.match(commentMatch[1], ownerRunIdPattern);
+  assert.match(migrationMatch[1], ownerRunIdPattern);
+  assert.equal(
+    commentMatch[1],
+    migrationMatch[1],
+    'The shared candidate RPC and migration have different owners.',
+  );
+  return commentMatch[1];
+}
+
+function summarizeDefinition(row, expectedOwnerRunId = runId) {
   assert.equal(Number(row.migration_record_count), 1);
   assert.equal(typeof row.function_definition, 'string');
   assert.match(row.function_definition_md5, /^[0-9a-f]{32}$/);
+  const ownerRunId = readOwnerRunId(row);
+  assert.equal(ownerRunId, expectedOwnerRunId, 'The shared candidate RPC belongs to another release run.');
   return {
     function_definition_sha256: sha256(row.function_definition),
     function_definition_md5: row.function_definition_md5,
+    owner_run_id: ownerRunId,
   };
 }
 
@@ -298,8 +333,21 @@ if (action === 'inspect') {
     state.migration_record_present,
     'The shared candidate RPC and migration history disagree.',
   );
-  await queryDatabase(postflightSql, { readOnly: true });
   const definitionRows = await queryDatabase(definitionSql(), { readOnly: true });
+  const observedOwnerRunId = readOwnerRunId(definitionRows[0]);
+  if (observedOwnerRunId !== runId) {
+    console.log(JSON.stringify({
+      status: 'present_other_owner',
+      action,
+      project_ref: projectRef,
+      migration_version: migrationVersion,
+      migration_sha256: migrationHash,
+      requested_run_id: runId,
+      owner_run_id: observedOwnerRunId,
+    }, null, 2));
+    return;
+  }
+  await queryDatabase(postflightSql, { readOnly: true });
   console.log(JSON.stringify({
     status: 'present_and_verified',
     action,
@@ -339,6 +387,8 @@ $shared_candidate_preflight$;
 
 ${migrationText}
 
+comment on function ${functionSignature} is '${ownerMarker}';
+
 ${postflightSql}
 
 insert into supabase_migrations.schema_migrations (
@@ -347,7 +397,10 @@ insert into supabase_migrations.schema_migrations (
   name
 ) values (
   '${migrationVersion}',
-  array[${migrationRecordTag}${migrationText}${migrationRecordTag}]::text[],
+  array[
+    ${migrationRecordTag}${migrationText}${migrationRecordTag},
+    '${ownerMarker}'
+  ]::text[],
   '${migrationName}'
 );
 commit;
@@ -361,6 +414,7 @@ ${definitionSql()}
     project_ref: projectRef,
     migration_version: migrationVersion,
     migration_sha256: migrationHash,
+    run_id: runId,
     ...definition,
   }, null, 2));
   return;
@@ -388,6 +442,7 @@ if (action === 'verify') {
     project_ref: projectRef,
     migration_version: migrationVersion,
     migration_sha256: migrationHash,
+    run_id: runId,
     ...definition,
   }, null, 2));
   return;
@@ -418,11 +473,16 @@ begin
   if md5(pg_get_functiondef('${functionSignature}'::regprocedure)) <> '${expectedDefinitionMd5}' then
     raise exception 'Shared candidate RPC changed before rollback';
   end if;
+  if obj_description('${functionSignature}'::regprocedure, 'pg_proc') <> '${ownerMarker}' then
+    raise exception 'Shared candidate RPC belongs to another release run';
+  end if;
   if not exists (
     select 1
     from supabase_migrations.schema_migrations
     where version = '${migrationVersion}'
       and name = '${migrationName}'
+      and array_length(statements, 1) = 2
+      and statements[2] = '${ownerMarker}'
   ) then
     raise exception 'Shared candidate migration record changed before rollback';
   end if;
@@ -446,6 +506,7 @@ console.log(JSON.stringify({
   project_ref: projectRef,
   migration_version: migrationVersion,
   migration_sha256: migrationHash,
+  run_id: runId,
   function_definition_sha256: expectedDefinitionSha256,
   function_definition_md5: expectedDefinitionMd5,
 }, null, 2));

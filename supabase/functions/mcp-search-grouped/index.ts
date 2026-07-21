@@ -9,6 +9,7 @@ serve((req) => handleSharedRecommendationSearchRequest(req, {
   defaultEnvironment: null,
   candidateRpcName: 'si_search_icon_candidates_v4',
   hydrateFinalSvg: true,
+  timingSink: () => {},
   includeTimingInResponse: true,
   maxQueries: 40,
 }));

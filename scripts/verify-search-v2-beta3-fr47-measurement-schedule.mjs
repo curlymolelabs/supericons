@@ -51,7 +51,7 @@ function parseSummary(stdout) {
   return JSON.parse(stdout.trim());
 }
 
-function createGroupedFixture({ responseDelayMs = 0 } = {}) {
+function createGroupedFixture({ responseDelayMs = 0, workerStates = null } = {}) {
   const observations = {
     fixtureStartedAtMs: Date.now(),
     groupedRequests: [],
@@ -65,9 +65,14 @@ function createGroupedFixture({ responseDelayMs = 0 } = {}) {
 
     if (request.url === '/grouped') {
       const queries = Array.isArray(body.queries) ? body.queries : [];
+      const requestOrdinal = observations.groupedRequests.length + 1;
+      const workerState = Array.isArray(workerStates)
+        ? workerStates[Math.min(requestOrdinal - 1, workerStates.length - 1)]
+        : requestOrdinal === 1 ? 'first_request' : 'reused_worker';
       observations.groupedRequests.push({
         started_at_ms: Date.now(),
         logical_queries: queries.length,
+        worker_state: workerState,
       });
       if (responseDelayMs > 0) {
         await new Promise((resolveWait) => setTimeout(resolveWait, responseDelayMs));
@@ -90,6 +95,31 @@ function createGroupedFixture({ responseDelayMs = 0 } = {}) {
             }],
           },
         })),
+        measurement_timing: {
+          schema_version: 2,
+          event: 'search_stage_timing',
+          measurement_variant: 'unspecified',
+          worker_state: workerState,
+          worker_request_ordinal: requestOrdinal,
+          module_age_ms_at_handler_entry: Date.now() - observations.fixtureStartedAtMs,
+          outcome: 'results',
+          total_ms: responseDelayMs,
+          stages_ms: {
+            candidate_search: Math.max(0, responseDelayMs - 1),
+            audit_write: 1,
+          },
+          counts: {
+            query_variants: queries.length,
+            candidate_rows: queries.length,
+            unique_candidates: queries.length,
+            final_results: queries.length,
+          },
+          approximate_sizes: {
+            candidate_svg_characters: 0,
+            candidate_payload_characters: 0,
+            response_json_characters: 0,
+          },
+        },
       });
       return;
     }
@@ -126,7 +156,7 @@ function measureArgs(port, extra = []) {
   ];
 }
 
-async function verifyFirstCallSchedule() {
+async function verifyWorkerClassifiedSchedule() {
   const fixture = createGroupedFixture();
   try {
     const port = await listen(fixture.server);
@@ -138,7 +168,7 @@ async function verifyFirstCallSchedule() {
     assert.equal(summary.status, 'ok');
     assert.equal(
       summary.measurement_strategy,
-      'rate_window_reset_then_back_to_back_first_call_samples',
+      'worker_classified_routed_samples',
     );
     assert.equal(summary.worker_affinity_assumed, false);
     assert.equal(summary.scenarios.length, 4);
@@ -149,20 +179,37 @@ async function verifyFirstCallSchedule() {
       'ok',
     ]);
     assert.deepEqual(summary.scenarios.map((scenario) => scenario.latencies_ms.length), [
-      3,
+      4,
       3,
       3,
       1,
     ]);
-    assert.equal(fixture.observations.groupedRequests.length, 10);
+    assert.equal(fixture.observations.groupedRequests.length, 11);
     assert.equal(fixture.observations.realStableRequests, 0);
     assert.equal(fixture.observations.sentinelRequests, 0);
     assert.equal(
       summary.scenarios.every((scenario) => (
-        scenario.pre_measurement_rate_window_reset.duration_ms >= 30
-        && scenario.pre_measurement_rate_window_reset.network_requests === 0
+        scenario.rate_window_resets[0].duration_ms >= 30
+        && scenario.rate_window_resets.every((reset) => reset.network_requests === 0)
         && scenario.worker_affinity_assumed === false
       )),
+      true,
+    );
+    assert.deepEqual(
+      summary.scenarios.map((scenario) => scenario.worker_cohorts.reused_worker.sample_count),
+      [3, 3, 3, 1],
+    );
+    assert.deepEqual(
+      summary.scenarios.map((scenario) => scenario.worker_cohorts.first_request.sample_count),
+      [1, 0, 0, 0],
+    );
+    assert.equal(
+      summary.scenarios.every((scenario) => scenario.sample_records.every((sample) => (
+        ['first_request', 'reused_worker'].includes(sample.worker_state)
+        && Number.isInteger(sample.worker_request_ordinal)
+        && Number.isFinite(sample.module_age_ms_at_handler_entry)
+        && Number.isFinite(sample.handler_total_ms)
+      ))),
       true,
     );
     assert.equal(
@@ -172,35 +219,13 @@ async function verifyFirstCallSchedule() {
       true,
     );
 
-    const scenarioBlocks = [
-      { start: 0, measured: 3 },
-      { start: 3, measured: 3 },
-      { start: 6, measured: 3 },
-      { start: 9, measured: 1 },
-    ];
-    for (const [blockIndex, block] of scenarioBlocks.entries()) {
-      const firstMeasured = fixture.observations.groupedRequests[block.start];
-      const previousTimestamp = blockIndex === 0
-        ? fixture.observations.fixtureStartedAtMs
-        : fixture.observations.groupedRequests[block.start - 1].started_at_ms;
-      assert.ok(
-        firstMeasured.started_at_ms - previousTimestamp >= 30,
-        'A rate-window reset must separate each measured scenario.',
-      );
-      for (let index = 1; index < block.measured; index += 1) {
-        const previous = fixture.observations.groupedRequests[block.start + index - 1];
-        const current = fixture.observations.groupedRequests[block.start + index];
-        assert.ok(
-          current.started_at_ms - previous.started_at_ms < 2000,
-          'Measured first-call samples must run back to back.',
-        );
-      }
-    }
-
     return {
       grouped_requests: fixture.observations.groupedRequests.length,
       reset_network_requests: 0,
       scenario_samples: summary.scenarios.map((scenario) => scenario.latencies_ms.length),
+      reused_worker_samples: summary.scenarios.map(
+        (scenario) => scenario.worker_cohorts.reused_worker.sample_count,
+      ),
     };
   } finally {
     await close(fixture.server);
@@ -220,27 +245,83 @@ async function verifyFailedSamplesRemainVisible() {
     assert.equal(summary.scenarios.length, 1);
     assert.equal(summary.scenarios[0].id, 'one_slot');
     assert.equal(summary.scenarios[0].status, 'blocked');
-    assert.equal(summary.scenarios[0].latencies_ms.length, 3);
-    assert.ok(summary.scenarios[0].p95_ms > 3000);
-    assert.match(summary.error.message, /one_slot p95 .* exceeds 3000 ms/);
+    assert.equal(summary.scenarios[0].latencies_ms.length, 4);
+    assert.equal(summary.scenarios[0].worker_cohorts.reused_worker.sample_count, 3);
+    assert.ok(summary.scenarios[0].worker_cohorts.reused_worker.p95_ms > 3000);
+    assert.match(summary.error.message, /one_slot warm p95 .* exceeds 3000 ms/);
     assert.equal(fixture.observations.realStableRequests, 0);
     assert.equal(fixture.observations.sentinelRequests, 0);
 
     return {
       failed_scenario: summary.scenarios[0].id,
       retained_samples: summary.scenarios[0].latencies_ms.length,
-      retained_p95_ms: summary.scenarios[0].p95_ms,
+      retained_p95_ms: summary.scenarios[0].worker_cohorts.reused_worker.p95_ms,
     };
   } finally {
     await close(fixture.server);
   }
 }
 
-const firstCallSchedule = await verifyFirstCallSchedule();
+async function verifyMixedWorkerClassification() {
+  const fixture = createGroupedFixture({
+    workerStates: [
+      'first_request',
+      'reused_worker',
+      'first_request',
+      'reused_worker',
+      'first_request',
+      'reused_worker',
+    ],
+  });
+  try {
+    const port = await listen(fixture.server);
+    const result = await runNode(measureArgs(port, ['--rate-window-reset-ms', '0']));
+    assert.equal(result.exitCode, 0, result.stderr);
+    const summary = parseSummary(result.stdout);
+    const firstScenario = summary.scenarios[0];
+    assert.equal(firstScenario.worker_cohorts.first_request.sample_count, 3);
+    assert.equal(firstScenario.worker_cohorts.reused_worker.sample_count, 3);
+    assert.equal(firstScenario.status, 'ok');
+    assert.equal(summary.status, 'ok');
+    return {
+      first_request_samples: firstScenario.worker_cohorts.first_request.sample_count,
+      reused_worker_samples: firstScenario.worker_cohorts.reused_worker.sample_count,
+    };
+  } finally {
+    await close(fixture.server);
+  }
+}
+
+async function verifyMissingWarmCohortBlocks() {
+  const fixture = createGroupedFixture({ workerStates: ['first_request'] });
+  try {
+    const port = await listen(fixture.server);
+    const result = await runNode(measureArgs(port, ['--rate-window-reset-ms', '0']));
+    assert.equal(result.exitCode, 1);
+    const summary = parseSummary(result.stdout);
+    assert.equal(summary.scenarios.length, 1);
+    assert.equal(summary.scenarios[0].worker_cohorts.first_request.sample_count, 6);
+    assert.equal(summary.scenarios[0].worker_cohorts.reused_worker.sample_count, 0);
+    assert.match(summary.error.message, /produced only 0 reused-worker samples/);
+    return {
+      first_request_samples: 6,
+      reused_worker_samples: 0,
+      release_blocked: true,
+    };
+  } finally {
+    await close(fixture.server);
+  }
+}
+
+const workerClassifiedSchedule = await verifyWorkerClassifiedSchedule();
 const failureEvidence = await verifyFailedSamplesRemainVisible();
+const mixedWorkerClassification = await verifyMixedWorkerClassification();
+const missingWarmCohort = await verifyMissingWarmCohortBlocks();
 
 console.log(JSON.stringify({
   status: 'ok',
-  first_call_schedule: firstCallSchedule,
+  worker_classified_schedule: workerClassifiedSchedule,
   failure_evidence: failureEvidence,
+  mixed_worker_classification: mixedWorkerClassification,
+  missing_warm_cohort: missingWarmCohort,
 }, null, 2));
