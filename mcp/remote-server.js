@@ -231,6 +231,13 @@ const searchIconsOutputSchema = {
   limit_scope: z.string().optional().describe('Allowance scope reported by a rate limit.'),
   details: z.record(z.unknown()).optional().describe('Structured rate-limit or upstream failure details.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
+  search_runtime: z.object({
+    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+    fallback_used: z.boolean(),
+    hosted_search_calls: z.number(),
+    local_failure_code: z.string().nullable(),
+    index_generated_at: z.string(),
+  }).optional().describe('Search execution path used for this request.'),
 };
 
 const recommendIconsOutputSchema = {
@@ -421,6 +428,7 @@ async function searchRailwayLocalIcons(params) {
     String(params.style || 'any').trim().toLowerCase(),
     Number(params.limit) || 20,
     String(params.locale || '').trim().toLowerCase(),
+    params.candidateOnly === true,
   ]);
   const cached = railwayRecommendationSearchCache.get(cacheKey);
   if (cached) {
@@ -429,21 +437,47 @@ async function searchRailwayLocalIcons(params) {
     return cached;
   }
 
+  const limit = Math.max(1, Number(params.limit) || 20);
   let results;
-  if (params.library === 'material') {
+  if (params.candidateOnly === true && params.library === 'material') {
     results = await searchHostedIcons(params);
-  } else {
+  } else if (params.candidateOnly === true) {
     const candidateIcons = railwayCandidateIndex.select(params.query);
     results = searchLocalFallbackIcons({
       query: params.query,
       library: params.library,
       libraryMode: params.libraryMode || 'strict',
       style: params.style,
-      limit: params.limit,
+      limit,
       locale: params.locale,
       expandIntentVariants: false,
       iconPool: candidateIcons,
     });
+  } else {
+    const rankedIcons = searchLocalIcons(params.query, publicIcons, synonyms, {
+      library: params.library || null,
+      libraryMode: params.libraryMode || 'strict',
+      style: params.style || 'any',
+      limit,
+      locale: params.locale || null,
+    });
+    const rankedRows = rankedIcons.map((icon) => ({
+      icon_id: `${icon.lib}:${icon.id}`,
+      id: icon.id,
+      name: icon.name || icon.id.replace(/[-_]/g, ' '),
+      library: icon.lib,
+      source_library: icon.lib,
+      icon_type: icon.type || 'svg',
+      style: icon.style || 'outline',
+      svg: icon.svg || null,
+    }));
+    const hydration = await hydrateMaterialHostedRows(rankedRows, {
+      style: params.style || 'any',
+      onError: (error) => console.error('[SuperIcons] Railway Material hydration failed:', error.message),
+    });
+    results = hydration.kept
+      .map(normalizeHostedIcon)
+      .slice(0, limit);
   }
 
   railwayRecommendationSearchCache.set(cacheKey, results);
@@ -1476,17 +1510,29 @@ function createServer({ requestContext = null } = {}) {
           }, { isError: true });
         }
         let results;
+        let searchRuntime;
         try {
-          results = await searchHostedIcons({
+          const searchExecution = createRailwayRecommendationSearch({
+            enabled: railwayLocalFirstEnabled,
+            localSearchOne: searchRailwayLocalIcons,
+            hostedSearchOne: (params) => searchHostedIcons({
+              ...params,
+              includeQueryFrame: include_query_frame,
+              usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
+            }),
+          });
+          results = await searchExecution.searchOne({
             query,
             library,
             libraryMode: library_mode,
             style,
             locale,
             limit,
-            includeQueryFrame: include_query_frame,
-            usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
           });
+          searchRuntime = {
+            ...searchExecution.getRuntime(),
+            index_generated_at: iconIndex.generatedAt,
+          };
         } catch (error) {
           return asStructured({
             results: [],
@@ -1523,6 +1569,7 @@ function createServer({ requestContext = null } = {}) {
             ...buildSearchNoResultPresentation({ query, hint }),
             ...(warnings.length ? { warnings } : {}),
             retryable: true,
+            ...(searchRuntime ? { search_runtime: searchRuntime } : {}),
             ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
           });
         }
@@ -1542,6 +1589,7 @@ function createServer({ requestContext = null } = {}) {
             markdownImage,
           }),
           ...(warnings.length ? { warnings } : {}),
+          ...(searchRuntime ? { search_runtime: searchRuntime } : {}),
           ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
         });
       });
@@ -1593,6 +1641,7 @@ function createServer({ requestContext = null } = {}) {
             localSearchOne: (params) => searchRailwayLocalIcons({
               ...params,
               includeQueryFrame: include_query_frame,
+              candidateOnly: true,
             }),
             hostedSearchOne: (params) => searchHostedIcons({
               ...params,
@@ -1820,6 +1869,63 @@ function sendJson(res, status, payload) {
   res.status(status).json(payload);
 }
 
+function parsePublicSearchRequest(body = {}) {
+  const query = String(body.query || '').trim();
+  if (!query) {
+    throw createPreviewHttpError(400, 'search_query_required', 'Enter a search term.');
+  }
+  if (query.length > 240) {
+    throw createPreviewHttpError(400, 'search_query_too_long', 'Search terms must be 240 characters or fewer.');
+  }
+
+  const library = String(body.library || '').trim() || null;
+  const supportedLibraries = new Set(LIBRARIES.map(([id]) => id));
+  if (library && !supportedLibraries.has(library)) {
+    throw createPreviewHttpError(400, 'unsupported_library', 'Choose a supported icon library or search all libraries.');
+  }
+
+  const style = String(body.style || 'any').trim() || 'any';
+  if (!previewStyles.has(style)) {
+    throw createPreviewHttpError(400, 'unsupported_style', 'Style must be any, outline, or solid.');
+  }
+
+  const locale = String(body.locale || '').trim() || null;
+  if (locale && !previewLocales.has(locale)) {
+    throw createPreviewHttpError(400, 'unsupported_locale', 'Choose a supported locale or leave locale empty.');
+  }
+
+  const requestedLimit = Number.parseInt(String(body.limit ?? '60'), 10);
+  const limit = Number.isFinite(requestedLimit)
+    ? Math.min(100, Math.max(1, requestedLimit))
+    : 60;
+
+  return {
+    query,
+    library,
+    libraryMode: library ? 'strict' : 'all',
+    style,
+    locale,
+    limit,
+    includeQueryFrame: body.include_query_frame === true,
+  };
+}
+
+async function runRailwayPublicSearch(params) {
+  const execution = createRailwayRecommendationSearch({
+    enabled: railwayLocalFirstEnabled,
+    localSearchOne: searchRailwayLocalIcons,
+    hostedSearchOne: (fallbackParams) => searchHostedIcons(fallbackParams),
+  });
+  const results = await execution.searchOne(params);
+  return {
+    results,
+    searchRuntime: {
+      ...execution.getRuntime(),
+      index_generated_at: iconIndex.generatedAt,
+    },
+  };
+}
+
 function buildServerCard(req) {
   const host = req.get('host');
   const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
@@ -1885,6 +1991,7 @@ app.get('/health', (_req, res) => {
     grouped_hosted_search: groupedHostedSearch,
     railway_local_first: {
       enabled: railwayLocalFirstEnabled,
+      search_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
       recommendation_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
       index_generated_at: iconIndex.generatedAt,
       icon_count: publicIcons.length,
@@ -1894,6 +2001,38 @@ app.get('/health', (_req, res) => {
       recommendation_cache_size: railwayRecommendationSearchCache.size,
     },
   });
+});
+
+app.post('/search-icons', async (req, res) => {
+  try {
+    const params = parsePublicSearchRequest(req.body);
+    const { results, searchRuntime } = await runRailwayPublicSearch(params);
+    sendJson(res, 200, {
+      results: results.map((icon, index) => ({
+        icon_id: `${icon.library}:${icon.id}`,
+        id: icon.id,
+        name: icon.name,
+        library: icon.library,
+        source_library: icon.library,
+        style: icon.style,
+        icon_type: icon.type,
+        rank: index + 1,
+      })),
+      search_runtime: searchRuntime,
+      ...(params.includeQueryFrame
+        ? { query_frame: buildSearchQueryFrame(params.query, { locale: params.locale }) }
+        : {}),
+    });
+  } catch (error) {
+    const status = Number(error?.status || 500);
+    sendJson(res, status, {
+      error: error?.code || 'search_unavailable',
+      message: status >= 500
+        ? 'Icon search is temporarily unavailable. Try again shortly.'
+        : error.message,
+      retryable: status >= 500,
+    });
+  }
 });
 
 app.get('/.well-known/mcp/server-card.json', (req, res) => {

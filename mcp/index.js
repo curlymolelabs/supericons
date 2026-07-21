@@ -103,7 +103,7 @@ import {
 import {
   getBetaCohortForRequest,
   getBetaCohortForTool,
-  shouldUseLocalFirstBetaSearch,
+  shouldUseLocalFirstSearch,
 } from './release-channel.js';
 import {
   attachSemanticPayload,
@@ -121,6 +121,11 @@ import {
 } from './variant-support.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function isLocalFirstPackageEnabled(env = process.env) {
+  const value = String(env.SUPERICONS_LOCAL_FIRST || 'on').trim().toLowerCase();
+  return !['0', 'false', 'off', 'disabled'].includes(value);
+}
 
 // ============================================================
 // Data Loading
@@ -853,7 +858,7 @@ async function searchAccessibleIcons({
     ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
     : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
-  const useLocalFirst = shouldUseLocalFirstBetaSearch(mcpPackage.version, {
+  const useLocalFirst = isLocalFirstPackageEnabled() && shouldUseLocalFirstSearch(mcpPackage.version, {
     toolName,
     query,
     locale,
@@ -908,6 +913,25 @@ async function searchAccessibleIcons({
 }
 
 async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {
+  const useLocalFirst = isLocalFirstPackageEnabled()
+    && queries.length > 0
+    && shouldUseLocalFirstSearch(mcpPackage.version, {
+    toolName,
+    query: queries.map((query) => query?.query || '').join(' '),
+    locale: queries.find((query) => query?.locale)?.locale || null,
+  });
+  if (useLocalFirst) {
+    return Promise.all(queries.map((query) => searchAccessibleIcons({
+      query: query.query,
+      library: query.library,
+      libraryMode: query.libraryMode || 'strict',
+      limit: Math.max(1, Number(query.limit) || 10),
+      style: query.style,
+      locale: query.locale,
+      toolName,
+    })));
+  }
+
   let payloads;
   try {
     payloads = await searchIconQueriesHostedMcp({
@@ -1102,7 +1126,7 @@ server.tool(
     let results;
     const auditQueryFrame = buildSearchQueryFrame(query, { locale });
     const queryFrame = include_query_frame ? auditQueryFrame : null;
-    const localFirstSearch = shouldUseLocalFirstBetaSearch(mcpPackage.version, {
+    const localFirstSearch = isLocalFirstPackageEnabled() && shouldUseLocalFirstSearch(mcpPackage.version, {
       toolName: 'search_icons',
       query,
       locale,

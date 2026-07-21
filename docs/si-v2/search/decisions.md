@@ -45,6 +45,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
 | `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
 | `D-032` | Run Railway recommendations from the in-process index with one controlled hosted fallback | Accepted | Hosted MCP architecture and performance |
+| `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Accepted | Surface alignment and stable release |
 
 ## Decision records
 
@@ -474,6 +475,25 @@ Alternatives rejected or deferred: a sixth Supabase deployment attempt; weakenin
 Superseded decisions: `D-025` is superseded for Railway `recommend_icons`; its npm `search_icons` eligibility boundary remains active. `D-031` remains active for the 20-slot, clarification, error, preview, and latency contracts, but its grouped Supabase route is no longer the Railway release path.
 
 Specification change: version 1.16 adds `FR-48` and updates the hosted MCP rollout boundary.
+
+### D-033: Synchronized deterministic Search v2 release
+
+Date: 2026-07-22
+Status: Accepted
+
+Decision: promote the verified deterministic Search v2 engine as one stable release across the Railway hosted MCP service, the npm `latest` package, and the public web search. Both MCP tools run from the packaged local engine by default on Railway and in the stable npm package. Railway keeps the existing bounded hosted fallback for local engine exceptions. Web search uses a public Railway endpoint that returns ranked public icon IDs and route information, while SVG rendering continues from the existing public web bundle.
+
+The release uses one stable package version and one reviewed source revision. Railway health, npm metadata, website release evidence, and public documentation identify that release. Each venue still has a separate live verification and rollback target. A failed venue gate stops later mutations but does not require rolling back a surface that already passed unless the failure reveals a shared product defect.
+
+Reason: the earlier beta sequence left hosted recommendations, hosted search, local npm search, npm recommendations, and web search on different execution routes. The resulting version labels and behavior were confusing even though the underlying quality work was compatible. The synchronized release removes that drift while keeping protected ranking inputs and usage-derived intelligence out of public package and browser artifacts.
+
+Evidence required: the fixed 225-case fingerprint, a clean-installed stdio route test across every maintained locale, real HTTP tests for hosted search and recommendations, browser-safe payload checks, browser interaction tests in English and Japanese, VC-3 and VC-4 public-boundary checks, exact package inspection, and live post-release probes for Railway, npm, and web.
+
+Alternatives rejected or deferred: leaving npm `latest` on 0.4.17 while hosted MCP uses newer behavior; keeping web on the older Supabase route; publishing protected server ranking data to the browser; changing all surfaces without independent rollback targets.
+
+Superseded decisions: `D-025` remains historical prerelease policy and is superseded for the stable package and web promotion. `D-032` remains active for Railway fallback and recommendation behavior. `D-030` remains active and hosted daily allowance enforcement stays off until its prerequisites pass.
+
+Specification change: version 1.17 adds `FR-49` and the synchronized deterministic surface contract.
 
 ## Adding or superseding a decision
 

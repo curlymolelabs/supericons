@@ -69,7 +69,7 @@ try {
 
   const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.19-beta.2');
+  assert.equal(installedPackage.version, '0.4.19');
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
   assert.equal(installedServer.version, installedPackage.version);
   assert.equal(installedServer.packages[0].version, installedPackage.version);
@@ -86,14 +86,19 @@ try {
     'mcp-search',
   );
   assert.equal(release.getBetaCohortForTool(installedPackage.version, 'recommend_icons'), null);
-  assert.equal(release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+  assert.equal(release.shouldUseLocalFirstSearch(installedPackage.version, {
     toolName: 'search_icons',
     query: 'settings',
   }), true);
-  assert.equal(release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+  assert.equal(release.shouldUseLocalFirstSearch(installedPackage.version, {
     toolName: 'search_icons',
     query: '设置',
-  }), false);
+    locale: 'zh-Hans',
+  }), true);
+  assert.equal(release.shouldUseLocalFirstSearch(installedPackage.version, {
+    toolName: 'recommend_icons',
+    query: 'application settings',
+  }), true);
 
   const installedTelemetry = readFileSync(join(installedRoot, 'telemetry.js'), 'utf8');
   const installedIndex = readFileSync(join(installedRoot, 'index.js'), 'utf8');
@@ -138,6 +143,20 @@ try {
     '3e529b41a8eb1d175f20c9da51788fea7e101a0eb51795e305ccdb5641729777',
     'Clean-installed package changed the fixed search fingerprint.',
   );
+  const routeExpectedObservations = evaluationSet.query_groups.flatMap((group) => group.queries || [])
+    .map((entry) => {
+      const query = String(entry.query || entry.slot || entry.task || '').trim();
+      const results = searchIcons(query, installedIcons, installedSynonyms, {
+        library: entry.requested_library || null,
+        libraryMode: entry.library_mode || 'all',
+        locale: entry.locale || null,
+        limit: 8,
+      });
+      return {
+        case_id: entry.case_id,
+        result_refs: results.map((icon) => `${icon.lib}:${icon.id}`),
+      };
+    });
 
   const sdkBase = join(
     installDir,
@@ -168,15 +187,15 @@ try {
   const eligibleCases = evaluationSet.query_groups.flatMap((group) => group.queries || [])
     .filter((entry) => {
       const query = String(entry.query || entry.slot || entry.task || '').trim();
-      return release.shouldUseLocalFirstBetaSearch(installedPackage.version, {
+      return release.shouldUseLocalFirstSearch(installedPackage.version, {
         toolName: 'search_icons',
         query,
         locale: entry.locale || null,
       });
     });
-  assert.equal(eligibleCases.length, 150);
+  assert.equal(eligibleCases.length, routeExpectedObservations.length);
 
-  const helperByCase = new Map(observations.map((entry) => [entry.case_id, entry.result_refs]));
+  const helperByCase = new Map(routeExpectedObservations.map((entry) => [entry.case_id, entry.result_refs]));
   const routeObservations = [];
   for (const entry of eligibleCases) {
     const query = String(entry.query || entry.slot || entry.task || '').trim();
@@ -186,6 +205,7 @@ try {
         query,
         ...(entry.requested_library ? { library: entry.requested_library } : {}),
         library_mode: entry.library_mode || 'all',
+        ...(entry.locale ? { locale: entry.locale } : {}),
         limit: 8,
       },
     });
@@ -210,8 +230,8 @@ try {
     .digest('hex');
   assert.equal(
     routeFingerprint,
-    '357d161cf6059b9371ea38591f267f623e43e37cfd680cb5a097af50861c1659',
-    'Clean-installed stdio route changed the 150-case ordered result contract.',
+    '533a3ec66a9c81523c7e572ac21c45ca07d086d55f53938ac08b9ca84032c2e9',
+    'Clean-installed stdio route changed the 225-case ordered result contract.',
   );
 
   console.log(JSON.stringify({
@@ -220,9 +240,9 @@ try {
     version: installedPackage.version,
     packed_files: packRecord.files.length,
     clean_install: true,
-    search_route: 'local_first_english',
-    localized_search_route: 'mcp-search',
-    recommendation_route: 'mcp-search',
+    search_route: 'local_first_all_supported_locales',
+    localized_search_route: 'local_first',
+    recommendation_route: 'local_first',
     recommendation_beta_cohort: null,
     latency_rpc: 'si_log_mcp_search_outcome_v2',
     fixed_search_fingerprint: installedFingerprint,

@@ -7,6 +7,15 @@ export function isDeterministicBetaVersion(version) {
   return /^0\.4\.19-beta\.\d+$/.test(String(version || '').trim());
 }
 
+export function isDeterministicStableVersion(version) {
+  const match = String(version || '').trim().match(/^(\d+)\.(\d+)\.(\d+)$/);
+  if (!match) return false;
+  const [, major, minor, patch] = match.map(Number);
+  if (major > 0) return true;
+  if (minor > 4) return true;
+  return minor === 4 && patch >= 19;
+}
+
 export function getDefaultHostedSearchFunctionName(version) {
   return getHostedSearchFunctionNameForTool(version, 'search_icons');
 }
@@ -50,15 +59,26 @@ export function getBetaCohortForRequest(
     : null;
 }
 
-export function shouldUseLocalFirstBetaSearch(
+export function shouldUseLocalFirstSearch(
   version,
   { toolName = 'search_icons', query = '', locale = null } = {},
 ) {
   const normalizedToolName = String(toolName || '').trim().toLowerCase();
   const normalizedQuery = String(query || '').trim();
+  if (!['search_icons', 'recommend_icons'].includes(normalizedToolName)) return false;
+  if (!normalizedQuery) return false;
+
+  if (isDeterministicStableVersion(version)) return true;
+
   return isDeterministicBetaVersion(version)
     && normalizedToolName === 'search_icons'
     && !String(locale || '').trim()
-    && normalizedQuery.length > 0
     && !/[^\x00-\x7f]/.test(normalizedQuery);
+}
+
+export function shouldUseLocalFirstBetaSearch(
+  version,
+  { toolName = 'search_icons', query = '', locale = null } = {},
+) {
+  return shouldUseLocalFirstSearch(version, { toolName, query, locale });
 }

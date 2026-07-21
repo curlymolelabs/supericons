@@ -1,7 +1,18 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-21
+Last verified: 2026-07-22
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
+
+## Synchronized stable release candidate
+
+The current worktree implements the `D-033` surface alignment candidate as version `0.4.19`. It is locally verified but is not yet published or deployed from this candidate.
+
+| surface | verified candidate behavior | remaining boundary |
+| --- | --- | --- |
+| Stable npm MCP | Clean-installed stdio routes all 225 maintained cases through the packaged deterministic engine. Search and recommendations are local-first for every maintained locale. The approved fixed-suite fingerprint remains `3e529b41...9777`, and the all-locale stdio route fingerprint is `533a3ec6...c2e9`. | Build and inspect the exact tarball, verify public boundaries, publish `0.4.19` to `latest`, then verify the registry and a clean registry install. |
+| Railway hosted MCP | Real HTTP verification runs search and recommendations locally by default, makes zero successful hosted search calls, preserves one controlled hosted fallback after an injected local failure, and keeps the 20-slot recommendation contract. | Deploy the exact reviewed revision, then verify health, search, recommendations, Japanese input, fallback status, and latency against the live service. |
+| Public web search | The browser client calls the public `/search-icons` route and renders ranked public icon IDs from the existing web bundle. Local Playwright checks passed for `application settings` and Japanese `設定`, with no browser console errors. The endpoint response contains no SVG or semantic ranking payload. | Deploy the exact production build, then repeat the interaction and network checks against `supericons.dev`. |
+| Public boundaries | The protected-artifact verifier passes against npm and web candidates. | Repeat against the final tarball and production build before publication and deployment. |
 
 ## Active recommendation reliability candidate
 

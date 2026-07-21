@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.19 - 2026-07-22
 
 ### Added
 
@@ -17,6 +17,8 @@
 - kept hosted 4xx responses visible when optional local fallback is enabled
 - deduplicated repeated recommendation searches before hosted retrieval
 - changed oversized preview requests into successful 12-icon inline previews with warnings and fuller browser links
+- promoted local-first search and recommendations to the default npm release
+- aligned local MCP, hosted MCP, and browser search on the same Railway engine
 
 ## 0.4.19-beta.2 - 2026-07-20
 

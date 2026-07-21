@@ -97,6 +97,8 @@ Build order after the measurement artifact preconditions: free-key issuance for 
 
 Order: 1) Railway hosted MCP ships the `D-032` local-first recommendation route after its own compatibility, rollback, and latency gates. 2) The controlled evidence window runs against the deployed route. 3) Web follows, inheriting shared engine data, with its own performance and interaction checks. 4) npm `latest` promotes last with the owner's explicit yes. Each venue retains its own quality, compatibility, latency, error, public-boundary, and rollback gate on the exact promoted bytes.
 
+Execution update, 2026-07-22: the owner explicitly approved synchronizing Railway hosted search and recommendations, public web search, and npm `latest` under `D-033`. The release uses one stable version and reviewed source revision, but keeps a separate verification and rollback target for each venue. Hosted allowance enforcement and public numeric limit copy remain outside this release until the `D-030` prerequisites pass.
+
 ## 10. Sequencing summary
 
 Immediately and in parallel: workstream 1 (docs release chain), workstream 2 batch 1 plus the query-frame packaging investigation, and workstream 3 shell implementation. Then: batches 2 and 3 land the fixes the failed beta.1 cases require; the beta.2 tarball is built, passes the 14-case matrix, and publishes; the window opens (workstream 4). Then: workstream 5 deploy and canary. Then: workstream 7 promotions, with workstream 6 building in the background throughout. Nothing waits on a calendar; everything starts when its dependency clears.

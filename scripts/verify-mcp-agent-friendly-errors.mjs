@@ -201,8 +201,7 @@ try {
   assert.equal(localTwentyPayload.slot_count, 20);
   assert.equal(localTwentyPayload.results.length, 20);
   assert.equal(localTwentyPayload.results.every((slot) => Boolean(slot.recommended)), true);
-  assert.equal(groupedSearchRequests, 1);
-  assert.ok(groupedSearchRequestSizes[0] <= 2);
+  assert.equal(groupedSearchRequests, 0);
 } catch (error) {
   await localTransport.close().catch(() => {});
   await localClient.close().catch(() => {});
@@ -218,6 +217,7 @@ const localFallbackTransport = new StdioClientTransport({
     ...process.env,
     SUPERICONS_MCP_LOG_STARTUP: '0',
     SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
+    SUPERICONS_LOCAL_FIRST: 'off',
     SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK: '1',
     SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/empty`,
     SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/empty`,
@@ -240,7 +240,7 @@ try {
   assert.equal(localFallbackResult.isError, undefined);
   assert.equal(localFallbackPayload.results.length, 1);
   assert.ok(localFallbackPayload.results[0].recommended);
-  assert.equal(groupedSearchRequests, 2);
+  assert.equal(groupedSearchRequests, 1);
 } catch (error) {
   await localFallbackTransport.close().catch(() => {});
   await localFallbackClient.close().catch(() => {});
@@ -256,6 +256,7 @@ const localAllowanceTransport = new StdioClientTransport({
     ...process.env,
     SUPERICONS_MCP_LOG_STARTUP: '0',
     SUPERICONS_MCP_TELEMETRY_ENABLED: '0',
+    SUPERICONS_LOCAL_FIRST: 'off',
     SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK: '1',
     SUPERICONS_MCP_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/allowance`,
     SUPERICONS_MCP_GROUPED_SEARCH_URL: `http://127.0.0.1:${hostedSearchPort}/allowance`,
@@ -385,7 +386,7 @@ try {
   assert.equal(hostedAllowancePayload.error, 'The hosted icon recommendation limit was reached.');
   assert.equal(hostedAllowancePayload.retry_after_seconds, 43_200);
   assert.match(hostedAllowancePayload.next_step, /43200 seconds/);
-  assert.equal(groupedSearchRequests, 5);
+  assert.equal(groupedSearchRequests, 4);
 
   const hostedPreviewInputResult = await client.callTool({
     name: 'preview_icons',
@@ -424,7 +425,7 @@ console.log(JSON.stringify({
   status: 'ok',
   local_recommendation_slot_limit: 20,
   hosted_recommendation_slot_limit: 20,
-  local_twenty_slot_grouped_queries: groupedSearchRequestSizes[0],
+  local_twenty_slot_grouped_queries: 0,
   grouped_empty_used_local_fallback: true,
   hosted_grouped_empty_used_local_fallback: true,
   local_allowance_error_propagated: true,
