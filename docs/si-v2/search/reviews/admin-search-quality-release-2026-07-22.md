@@ -62,7 +62,20 @@ An event-detail request could be slow for a broad period or return an inconsiste
 
 ## Rollout result
 
-- Supabase `admin-api` advanced from version 85 to version 86. Its status is active, JWT verification remains disabled by design, and an unauthenticated event request returns 403.
+- Supabase `admin-api` advanced from version 85 to version 87. Its status is active, JWT verification remains disabled by design, and an unauthenticated event request returns 403. The deployed bundle SHA-256 is `da3ee402dce735084adee48da0d475e5fd7a86757b794f839175cfdb8bdec020`.
 - Railway deployment `ee02bdca-96b6-46f2-9637-7636a2271f33` completed successfully with image digest `sha256:66359ee5f8d6be692d0a3fe9ae44df561e2cf4cb564c1425d157c45bd7084728`.
 - The Railway live handshake passed with MCP version 0.4.20, 8,524 Material assets, all required tools, zero synthetic tool calls, and a healthy closed resilience circuit.
-- Authenticated event export and the live seven-day scorecard remain pending because the Windows `ADMIN_SECRET` available to this process is stale after the owner's Supabase rotation. The dashboard's new prompt accepts the current value without saving it in browser storage or source code.
+- Migration `20260722230000_admin_quality_controlled_traffic_correction.sql` is recorded in linked migration history and corrected 3,041 high-confidence validation rows without deleting history. A post-migration read-only database aggregate confirms that these rows include 628 recommendation errors that no longer count as unclassified live behavior.
+- A fresh seven-day production aggregate contains 879 unclassified hosted direct searches: 770 successes, 108 zero results, and one error. It also contains 267 unclassified recommendations across hosted and local MCP: 260 successes, five zero results, and two errors. Exact lookup contains 572 attempts: 541 found, 26 not found, and five errors.
+- A repeatable post-migration replay over the complete earlier 11,014-event snapshot corrected the 2,942 matching rows that existed at that snapshot's cutoff. The version 2 scorecard then reported no suspected unlabelled controlled workloads, no data-quality blockers, and `trustworthy_for_operational_counts: true`. It does not claim recommendation relevance, multilingual parity, or organic usage.
+- The broad live detail path was too slow before this release and exceeded 180 seconds in a direct check. Against the same production data source, the bounded snapshot implementation generated the first page in 1.881 seconds and returned the complete 111-page, 11,014-event export in another 1.638 seconds from that snapshot.
+- The current rotated production secret was not read by this release session. The production browser credential path therefore remains an owner-operated smoke check. Local login, session, endpoint, browser, CSV, JSON, snapshot, and rejection checks passed, and the dashboard prompt accepts the current value without saving it in browser storage or source code.
+
+## Operating follow-up
+
+- Run `npm run analyze:admin-search-quality -- --input <events-json>` after each seven-day Events JSON export and before making product-quality claims.
+- Treat the direct-search zero rate, recommendation error rate, exact lookup not-found rate, p95 latency, suspicious workload detector, and field coverage as separate measures. Do not combine them into an unsupported quality score.
+- Review explicit locale coverage and returned-icon relevance before claiming multilingual parity. The proposed review trigger remains 100 top-level attempts per locale plus relevance judgments.
+- The local MCP telemetry disable and controlled-run fixes are source-complete and verified. They will reach public package users only in a separately authorized npm release. This release does not change npm tags.
+
+Machine-readable rollout evidence is recorded in `references/verification/admin-search-quality-post-migration-2026-07-22.json`.

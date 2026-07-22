@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-07-22T15:25:05.3354428Z",
+  "admin_api": {
+    "version": 87,
+    "status": "ACTIVE",
+    "verify_jwt": false,
+    "bundle_sha256": "da3ee402dce735084adee48da0d475e5fd7a86757b794f839175cfdb8bdec020",
+    "unauthenticated_events_status": 403
+  },
+  "database_correction": {
+    "migration": "20260722230000_admin_quality_controlled_traffic_correction.sql",
+    "rows_classified_as_controlled_test": 3041,
+    "controlled_recommendation_errors": 628,
+    "rows_deleted": 0
+  },
+  "fresh_seven_day_aggregate": {
+    "unclassified_direct_search": {
+      "attempts": 879,
+      "success": 770,
+      "zero": 108,
+      "error": 1
+    },
+    "unclassified_recommendation": {
+      "attempts": 267,
+      "success": 260,
+      "zero": 5,
+      "error": 2
+    },
+    "exact_lookup": {
+      "attempts": 572,
+      "found": 541,
+      "not_found": 26,
+      "error": 5
+    }
+  },
+  "complete_snapshot_replay": {
+    "source_data_cutoff": "2026-07-22T14:56:49.032Z",
+    "events": 11014,
+    "matching_rows_at_cutoff": 2942,
+    "scorecard_schema_version": 2,
+    "complete": true,
+    "suspected_unlabelled_controlled_workloads": 0,
+    "trustworthy_for_operational_counts": true,
+    "data_quality_blockers": 0,
+    "claim_limits": {
+      "recommendation_relevance": "not_measured",
+      "multilingual_parity": "not_claimed",
+      "organic_usage": "not_claimed"
+    }
+  },
+  "broad_export_performance": {
+    "events": 11014,
+    "pages": 111,
+    "snapshot_generation_ms": 1794,
+    "first_page_total_ms": 1881,
+    "remaining_export_ms": 1638,
+    "pre_change_observation_ms": ">180000"
+  },
+  "credential_boundary": "The current rotated production ADMIN_SECRET was not read. Production browser authentication remains an owner-operated smoke check."
+}
