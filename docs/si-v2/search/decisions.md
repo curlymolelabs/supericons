@@ -49,6 +49,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-034` | Expand broad meaning coverage through reviewed deterministic groups and measured language priorities | Accepted | Meaning coverage and localization |
 | `D-035` | Put stable Search v2 in evidence-driven maintenance mode and keep adaptive retrieval paused | Accepted | Maintenance, measurement, and future architecture |
 | `D-036` | Restore hosted-primary retrieval for hosted search while keeping local-first recommendations | Accepted | Hosted search incident repair |
+| `D-037` | Close the hosted search incident with explicit fusion, trusted test labeling, and an immutable local package repair | Accepted | Incident closure and surface parity |
 
 ## Decision records
 
@@ -554,6 +555,25 @@ Alternatives rejected or deferred: adding one synonym per failed phrase; returni
 Superseded decisions: `D-033` is superseded only where it requires Railway `search_icons` to use the packaged local engine first. Its npm, web-data, versioning, and independent rollback rules remain active. `D-032` remains active for Railway recommendations.
 
 Specification change: version 1.20 adds `FR-52` and the hosted search repair boundary.
+
+### D-037: Hosted search incident closure and local package repair
+
+Date: 2026-07-23
+Status: Accepted
+
+Decision: hosted search requires the hosted variant engine to return successfully before any result is accepted. Packaged local retrieval may run concurrently, then contribute reviewed candidates to a `hosted_fused` response or recover a valid hosted no-result as `local_fallback`. A hosted network or server error remains an error and cannot be converted into a local success.
+
+Live release checks use a signed, time-bounded controlled-run marker. Only a verified marker receives the test classification, so release probes do not contaminate normal search measurements. The local npm repair ships as immutable successor version 0.4.21 because npm does not permit replacing published 0.4.20 bytes. The hosted MCP address, tool names, website configuration, and submitted ChatGPT app configuration remain unchanged.
+
+Reason: the first hosted route repair removed the severe multiword false zeros but still hid hosted failures inside a lower routing layer, reported the wrong route, and admitted live probes into normal telemetry. Broader testing also found weak ranking and localized misses. One bounded incident closure fixed those contract failures and applied the same reviewed query understanding to hosted and local package search.
+
+Evidence required: the exact source and package archive pass forced hosted-error propagation, route attribution, controlled-marker authentication, 225 fixed cases, public-boundary checks, exact package inspection, clean-installed stdio parity, and a judged product matrix covering the confirmed English, Spanish, Japanese, and Portuguese failures. The live Railway deployment must pass the same HTTP and MCP matrix with ordered-reference parity and retain honest no-results.
+
+Alternatives rejected or deferred: silently using local results during hosted failure; trusting a user-agent string as a test marker; rewriting published npm 0.4.20 bytes; changing the MCP URL or resubmitting the ChatGPT app; treating every nonzero response as relevant.
+
+Superseded decisions: `D-036` remains active for hosted-primary search and local-first recommendations. This decision narrows its route-label contract by adding `hosted_fused` and authorizes the immutable npm successor that the first emergency repair deferred.
+
+Specification change: version 1.21 expands `FR-52` and adds `FR-53`.
 
 ## Adding or superseding a decision
 
