@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Roadmap</title>
+<style>
+  :root{
+    --bg:#0e0e0e; --panel:#171717; --panel2:#1f1f1f; --line:#2a2a2a;
+    --text:#e7e5e4; --muted:#9ca3af; --accent:#f97316; --accent2:#fdba74;
+    --done:#22c55e; --now:#f97316; --next:#60a5fa; --later:#a78bfa; --gated:#6b7280;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Arial,sans-serif;padding:0 0 80px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{padding:48px 0 8px;border-bottom:1px solid var(--line)}
+  h1{font-size:34px;font-weight:800}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:8px;max-width:820px}
+  .vision{background:linear-gradient(135deg,#1c1210,#171717);border:1px solid #3b2a1e;border-radius:14px;padding:22px 26px;margin:28px 0}
+  .vision h2{color:var(--accent2);font-size:15px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+  .vision p{font-size:17px}
+  h2.section{font-size:22px;font-weight:800;margin:44px 0 6px}
+  .section-note{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 22px;font-size:13px;color:var(--muted)}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:26px}
+  .ms{position:relative;margin-bottom:22px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .ms::before{content:"";position:absolute;left:-33px;top:22px;width:12px;height:12px;border-radius:50%;background:var(--gated)}
+  .ms.done::before{background:var(--done)}
+  .ms.now::before{background:var(--now);box-shadow:0 0 0 5px rgba(249,115,22,.18)}
+  .ms.next::before{background:var(--next)}
+  .ms.later::before{background:var(--later)}
+  .ms h3{font-size:16px;font-weight:700}
+  .ms .when{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+  .ms p{color:var(--muted);font-size:14px;margin-top:4px}
+  .ms .entry{margin-top:8px;font-size:13px;color:var(--accent2)}
+  .tags{margin-top:8px}
+  .tag{display:inline-block;font-size:11px;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:2px 4px 0 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h3{font-size:15px;font-weight:700;color:var(--accent2);margin-bottom:6px}
+  .card .who{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+  .card ul{margin:8px 0 0 18px;color:var(--muted);font-size:13.5px}
+  .card li{margin-bottom:5px}
+  .card li b{color:var(--text);font-weight:600}
+  .job{font-size:14px;font-style:italic;color:var(--text);border-left:3px solid var(--accent);padding-left:10px;margin-top:6px}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:14px}
+  .pr{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--muted)}
+  .pr b{color:var(--text)}
+  footer{margin-top:52px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+  @media (max-width:640px){h1{font-size:26px}.timeline{padding-left:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Supericons <span>Roadmap</span></h1>
+  <p class="sub">One page connecting the ratified vision to what shipped, what is moving now, and what comes next. Future work is ordered by dependency, never by calendar: each item starts the moment its entry criteria clear.</p>
+</header>
+
+<div class="vision">
+  <h2>The vision (charter, ratified 2026-07-17)</h2>
+  <p>Supericons evolves from an icon library into a <b>living map of programmatic icons</b>: every icon an interactive, schema-backed, payment-capable portal to the thing it represents, curated in real time by agents and governed by human taste. Designers, developers, and agents build, share, vote, contribute, earn, and sell. The moat is not secrecy; it is the living ecosystem and its compounding data, which no snapshot can copy.</p>
+</div>
+
+<h2 class="section">Jobs to be done</h2>
+<p class="section-note">Who Supericons serves and the job each hires it for. Items marked "future" arrive with the milestones below.</p>
+<div class="grid">
+  <div class="card">
+    <div class="who">Primary customer</div>
+    <h3>AI coding agent</h3>
+    <div class="job">"When my user needs an icon, find the right one in a single call and show it in the chat, so the build never breaks flow."</div>
+    <ul>
+      <li><b>Search by meaning</b>, not just name: brands, concepts, phrases, 12 languages</li>
+      <li><b>Recommend by task</b>: up to 20 UI slots in one call, clarification when ambiguous</li>
+      <li><b>Preview inline</b>: rendered contact sheet in the conversation</li>
+      <li><b>Recover from zero</b> with suggested next queries instead of dead ends</li>
+      <li><b>Fetch the user's curated sets</b> (future: rung 1)</li>
+      <li><b>Act and pay programmatically</b> (future: ring 4, x402)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="who">Builder</div>
+    <h3>Developer</h3>
+    <div class="job">"Give me the right icon as usable code in seconds, without accounts, keys, or docs spelunking."</div>
+    <ul>
+      <li><b>Keyless start</b> on every advertised client, copy-paste setup that works</li>
+      <li><b>Fast local search</b> from the installed package, offline-capable</li>
+      <li><b>Stable versions</b> with predictable updates and honest changelogs</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="who">Builder</div>
+    <h3>Designer</h3>
+    <div class="job">"Help me find, customize, and export icons that match my product's personality."</div>
+    <ul>
+      <li><b>Browse and customize</b>: color, stroke, container, export</li>
+      <li><b>Motion</b>: animated variants through Motion Lab</li>
+      <li><b>Expressive originals</b> with personality (growing: si library)</li>
+      <li><b>Collections</b> that follow them across web and agents (future: rung 1)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="who">Account holder</div>
+    <h3>Registered free user</h3>
+    <div class="job">"Reward my sign-in with real utility, never a paywall on what was free."</div>
+    <ul>
+      <li><b>Synced collections</b> plus agent access to them (rung 1)</li>
+      <li><b>Higher hosted allowance</b> via a self-service free key (rung 1)</li>
+      <li><b>Personal usage analytics</b>: what my agents search (rung 2)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="who">Customer</div>
+    <h3>Paid user</h3>
+    <div class="job">"Give my money a clear return: premium content, pro tools, and team insight."</div>
+    <ul>
+      <li><b>Premium packs and Pro tools</b> (live: Motion Lab, Converter)</li>
+      <li><b>Highest fair-use allowance</b> (policy ratified, enforcement staged)</li>
+      <li><b>Team and fleet analytics</b>, Agentic UI Trends (rung 3)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="who">Ecosystem (future)</div>
+    <h3>Contributor and publisher</h3>
+    <div class="job">"Let me add to the map and earn credit and revenue when human taste accepts my work."</div>
+    <ul>
+      <li><b>Contribute</b> through the pipeline: provenance kept, credit named (ring 2)</li>
+      <li><b>Publish supericons</b> through the taste gate; sell and earn (ring 5)</li>
+      <li><b>Curate</b> with agents that propose while humans approve (VC-5)</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="section">Milestones</h2>
+<div class="legend">
+  <span><span class="dot" style="background:var(--done)"></span>Shipped</span>
+  <span><span class="dot" style="background:var(--now)"></span>In motion now</span>
+  <span><span class="dot" style="background:var(--next)"></span>Next: entry criteria clear or nearly clear</span>
+  <span><span class="dot" style="background:var(--later)"></span>Later: entry criteria defined, not yet met</span>
+  <span><span class="dot" style="background:var(--gated)"></span>Evidence-gated: only if the data demands it</span>
+</div>
+
+<div class="timeline">
+
+  <div class="ms done">
+    <div class="when">Shipped · June 2026</div>
+    <h3>The library and its surfaces</h3>
+    <p>21,000+ icons across 11 open libraries with customization, Motion Lab, Converter, premium packs and Pro, the hosted MCP service, the npm package, and the first x402 paid-path experiments.</p>
+    <div class="tags"><span class="tag">web</span><span class="tag">MCP</span><span class="tag">npm</span><span class="tag">payments</span></div>
+  </div>
+
+  <div class="ms done">
+    <div class="when">Shipped · mid July 2026</div>
+    <h3>Search v2 foundation and the deterministic-first pivot</h3>
+    <p>A 225-case owner-reviewed evaluation suite with stable fingerprints, the decision to build on deterministic intelligence before any per-request model calls, and Material Symbols support (8,524 assets).</p>
+    <div class="tags"><span class="tag">quality governance</span><span class="tag">D-021</span></div>
+  </div>
+
+  <div class="ms done">
+    <div class="when">Shipped · 2026-07-17</div>
+    <h3>Vision charter ratified</h3>
+    <p>The living-map vision locked in with nine testable commitments (VC-1 through VC-9), each with a named enforcer: free static library, protected living intelligence, human taste gating agent throughput, honest records, agents as first-class citizens, rewarded contribution, owner authority over money and defaults.</p>
+    <div class="tags"><span class="tag">governance</span></div>
+  </div>
+
+  <div class="ms done">
+    <div class="when">Shipped · 2026-07-17 to 07-19</div>
+    <h3>Local-first beta and the truth releases</h3>
+    <p>The local-first npm prerelease (instant on-device search), the web preview persistence fix, the keyless-truth documentation release across 12 languages with working setup for seven clients, and the ratified access policy: anonymous 300 per client per day, registered free 1,500 and Pro 5,000 per account, local search unlimited and keyless forever. Enforcement stays off until free keys make the promise real.</p>
+    <div class="tags"><span class="tag">docs truth</span><span class="tag">D-030 access policy</span><span class="tag">rollback proven</span></div>
+  </div>
+
+  <div class="ms done">
+    <div class="when">Shipped · 2026-07-20 to 07-21</div>
+    <h3>The agent-experience engine</h3>
+    <p>The one-call contract: results or labeled alternates for meaningful queries, honest structured zeros for nonsense, clarification for ambiguity, forgiving inputs, previews that render inline in chat. Quality batches fixed the measured gaps (vocabulary, phrase decomposition, plural stemming, relevance floor). Grouped recommendations moved to a shared pipeline with an indexed candidate function measured 13.5x faster, shipped through release machinery hardened by seven audit rounds.</p>
+    <div class="tags"><span class="tag">agent UX</span><span class="tag">quality</span><span class="tag">recommendation architecture</span></div>
+  </div>
+
+  <div class="ms done">
+    <div class="when">Shipped · 2026-07-22</div>
+    <h3>Search v2 live on every venue</h3>
+    <p>Railway hosted MCP, the website, and npm all run the promoted v2 engine. The coverage release adds 49 reviewed meaning groups, 1,058 phrase mappings, and 25 broad-language families across 11 locales, with 1,494 passing checks. Coverage is described honestly: broad and reviewed, never "every possible word."</p>
+    <div class="tags"><span class="tag">all venues</span><span class="tag">0.4.20</span></div>
+  </div>
+
+  <div class="ms now">
+    <div class="when">In motion now</div>
+    <h3>Search in maintenance mode, with one closing workstream</h3>
+    <p>Monthly telemetry mining feeds small reviewed group additions as routine upkeep. The final bounded search workstream ships the agent-cooperative zero payload (suggested queries, recommended tool, retry guidance) and the recovery telemetry that measures whether agents reach a usable icon, how fast, and in how many calls. The recovery scorecard formally closes the search chapter.</p>
+    <div class="entry">Exit: scorecard green on live traffic; further search investment becomes evidence-gated.</div>
+    <div class="tags"><span class="tag">search</span><span class="tag">telemetry</span></div>
+  </div>
+
+  <div class="ms now">
+    <div class="when">In motion now</div>
+    <h3>Operational follow-through</h3>
+    <p>Recommendation latency verified against its live gates on the new grouped endpoint, the stable-function evidence drift reconciled, and the remaining release records kept current.</p>
+    <div class="tags"><span class="tag">operations</span></div>
+  </div>
+
+  <div class="ms next">
+    <div class="when">Next · entry: v2 promoted (met)</div>
+    <h3>Rung 1: the free account that gives before it asks</h3>
+    <p>Self-service free keys for every registered user (identity only, never entitlements), synced collections and favorites with agent access through a new retrieval tool, and the newsletter signup. Free keys also unlock the staged allowance enforcement: registration starts buying something real.</p>
+    <div class="entry">Also clears: enforcement preconditions (account aggregation, atomic counting, two-ingress parity), then tier enforcement and the public numeric limits go live together.</div>
+    <div class="tags"><span class="tag">accounts</span><span class="tag">growth ladder</span><span class="tag">enforcement</span></div>
+  </div>
+
+  <div class="ms next">
+    <div class="when">Next · parallel content track</div>
+    <h3>Expressive originals and the design-record pilot</h3>
+    <p>Personality-bearing si originals for the expressive tier (the queries users feel: ship it, burnout, celebration) built in Icons Lab, plus the two-tier design-record schema piloted on pack icons: the first step from icon file to schema-backed record (ring 0 to 1).</p>
+    <div class="entry">Entry: search completion shipped and stable (met).</div>
+    <div class="tags"><span class="tag">content</span><span class="tag">ring 0-1</span></div>
+  </div>
+
+  <div class="ms later">
+    <div class="when">Later · entry: rung 1 live, dedupe fixed</div>
+    <h3>Rung 2: personal usage analytics</h3>
+    <p>A dashboard answering "what do my agents search": searches over time, top queries, zero results, client breakdown. Opt-in attribution through the free key; the key never gates search.</p>
+    <div class="tags"><span class="tag">accounts</span></div>
+  </div>
+
+  <div class="ms later">
+    <div class="when">Later · entry: rung 1 accounts live, taste gate ready</div>
+    <h3>Ring 2: the contribution pipeline</h3>
+    <p>A raw pool with provenance, agent distillation, and human promotion with named credit. Contribution rewarded on acceptance: credits, credit lines, discounts. Human taste remains the gate on everything canonical.</p>
+    <div class="tags"><span class="tag">ecosystem</span><span class="tag">VC-5</span><span class="tag">VC-8</span></div>
+  </div>
+
+  <div class="ms later">
+    <div class="when">Later · entry: ring 2 producing accepted contributions</div>
+    <h3>Ring 3: the living map canvas</h3>
+    <p>The canvas becomes the primary browse surface: icons as a navigable, growing map rather than a grid.</p>
+    <div class="tags"><span class="tag">ecosystem</span></div>
+  </div>
+
+  <div class="ms later">
+    <div class="when">Later · entry: payment rails proven on existing packs</div>
+    <h3>Ring 4: hands and wallets</h3>
+    <p>Actions on records, x402 access so agents can pay natively, and the first service supericons: icons that do things, not only depict them.</p>
+    <div class="tags"><span class="tag">payments</span><span class="tag">VC-7</span></div>
+  </div>
+
+  <div class="ms later">
+    <div class="when">Later · entry: ring 4 live</div>
+    <h3>Ring 5 and rung 3: the open economy</h3>
+    <p>Third-party publishers minting supericons through the taste gate, paid placement, curator agents at scale; team and fleet analytics and the aggregate-only Agentic UI Trends product for paid tiers.</p>
+    <div class="tags"><span class="tag">marketplace</span><span class="tag">rung 3</span></div>
+  </div>
+
+  <div class="ms">
+    <div class="when">Evidence-gated · entry: recovery scorecard shows a persistent gap</div>
+    <h3>Semantic retrieval and model-assisted recovery</h3>
+    <p>Held deliberately, not forgotten: a compact multilingual embedding layer in shadow mode, and an offline evaluation of bounded model reformulation against historical zero-result queries. Either ships only if live recovery evidence proves guided retry cannot close the gap, recorded as a formal decision.</p>
+    <div class="tags"><span class="tag">search</span><span class="tag">gated by data</span></div>
+  </div>
+
+</div>
+
+<h2 class="section">Standing principles</h2>
+<p class="section-note">The rules that outlast any milestone, from the charter and ratified decisions.</p>
+<div class="principles">
+  <div class="pr"><b>Free stays free.</b> The static library and keyless entry are the growth engine, never a concession to claw back.</div>
+  <div class="pr"><b>The moat is living data.</b> Usage-derived intelligence never ships in a public bundle; snapshots age, the service compounds.</div>
+  <div class="pr"><b>Honest beats impressive.</b> Zero results over fabricated relevance; measured claims over adjectives; coverage described as reviewed, not total.</div>
+  <div class="pr"><b>Human taste gates agent scale.</b> Agents propose, humans approve; nothing canonical bypasses judgment.</div>
+  <div class="pr"><b>Agents are first-class citizens.</b> Every capability states its MCP surface; agents pay by x402, humans keep human rails.</div>
+  <div class="pr"><b>Identity is a reward, never a wall.</b> Every rung gives before it asks; keys attribute, they do not gate.</div>
+  <div class="pr"><b>Ship by dependency, not calendar.</b> Everything starts when its entry criteria clear; safety gates never wait, and never rush.</div>
+  <div class="pr"><b>Evidence before architecture.</b> New layers (semantic, model-assisted) exist only when measured demand proves the current layer cannot serve it.</div>
+</div>
+
+<footer>
+  Supericons roadmap, 2026-07-22. Sources: the vision charter, the growth ladder, the ecosystem horizon, the Search v2 execution record, and the ratified decision log. Future milestones carry entry criteria, not dates, by standing owner directive.
+</footer>
+
+</div>
+</body>
+</html>
