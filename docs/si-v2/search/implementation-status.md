@@ -3,6 +3,14 @@
 Last verified: 2026-07-22
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
 
+## Admin search quality data release
+
+The internal admin data path now distinguishes exact icon lookup success, not found, error, and unknown outcomes. Supabase `admin-api` version 86 is active with the privacy-safe `/v2/search/events` endpoint, complete-export metadata, per-source detail limits, and constant-time admin secret comparison. An unauthenticated live request to the event endpoint returned 403 as required. Authenticated live export remains pending because the Windows process credential is older than the secret currently stored in Supabase.
+
+Railway deployment `ee02bdca-96b6-46f2-9637-7636a2271f33` is active with future returned icon references, build and execution metadata, traffic classification, root request linking, and structured `icon_not_found` errors. The live no-synthetic-call handshake reports version 0.4.20, 8,524 Material assets, all required MCP tools, and a closed hosted-search resilience circuit with zero active or queued calls.
+
+The local admin dashboard adds grouped and event-level CSV and JSON exports, refuses incomplete exports, preserves privacy-safe searcher grouping, explains metric limits, and keeps the entered secret in local server memory behind an opaque HttpOnly browser session. The repeatable scorecard separates top-level tool requests from lower-level diagnostics, excludes known test and preview traffic from primary live measures, and does not treat recommendation completion as relevance.
+
 ## Broad meaning coverage release
 
 Version 0.4.20 implements `D-034`. The generated graph contains 49 meaning groups and 1,058 reviewed phrases. The release passes 244 English meaning checks, 612 localized meaning checks across 11 maintained locales, three honest no-result checks, and all 638 established multilingual fixtures. The fixed 225-case fingerprint is `17ed68b3...7002c`. All 34 changed legacy cases are reviewed in `reviews/search-v2-coverage-release-2026-07-22.md`. The final local latency gate observed a first semantic search of 469.0 ms and a 30-sample p95 of 339.2 ms on the 21,427-icon public package index.

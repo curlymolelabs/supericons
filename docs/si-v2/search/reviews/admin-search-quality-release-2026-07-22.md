@@ -56,3 +56,10 @@ No database migration is required. Existing JSON metadata remains backward compa
 ## Worst credible failure in the first 24 hours
 
 An event-detail request could be slow for a broad period or return an incomplete selection. The API limits each source, the browser paginates, and exports fail closed when completeness cannot be proven. Operators can immediately choose a shorter period while the previous API source is redeployed if needed.
+
+## Rollout result
+
+- Supabase `admin-api` advanced from version 85 to version 86. Its status is active, JWT verification remains disabled by design, and an unauthenticated event request returns 403.
+- Railway deployment `ee02bdca-96b6-46f2-9637-7636a2271f33` completed successfully with image digest `sha256:66359ee5f8d6be692d0a3fe9ae44df561e2cf4cb564c1425d157c45bd7084728`.
+- The Railway live handshake passed with MCP version 0.4.20, 8,524 Material assets, all required tools, zero synthetic tool calls, and a healthy closed resilience circuit.
+- Authenticated event export and the live seven-day scorecard remain pending because the Windows `ADMIN_SECRET` available to this process is stale after the owner's Supabase rotation. The dashboard's new prompt accepts the current value without saving it in browser storage or source code.
