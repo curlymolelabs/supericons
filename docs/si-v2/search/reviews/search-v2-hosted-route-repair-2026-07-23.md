@@ -105,7 +105,7 @@ After deployment, the same product matrix runs against `https://mcp.supericons.d
 
 Railway deployment `c247a50f-151b-4ef0-bedf-b529dc4f4255` is live from release source `82decbb40`, which is the previous live source `ca40658fb` plus only this repair. Railway reports status `SUCCESS` and image digest `sha256:fd2f322846b4ffb156c1dc3afdc8879c7ed8d41385c0537200a5b758380f5c74`.
 
-The full 15-case product matrix passed against `https://mcp.supericons.dev` through both the public HTTP route and hosted MCP. Health reported version 0.4.20, `search_mode: hosted_primary`, `recommendation_mode: local_first`, and a closed hosted-search circuit with zero failures. Ordered result references matched across both surfaces.
+The full 15-case product matrix passed twice against `https://mcp.supericons.dev` through both the public HTTP route and hosted MCP. Health reported version 0.4.20, `search_mode: hosted_primary`, `recommendation_mode: local_first`, and a closed hosted-search circuit with zero failures. Ordered result references matched across both surfaces on both runs.
 
 The live checks confirmed the four original false-zero cases, English meaning coverage, Japanese and Spanish coverage, strict library behavior, forbidden-result rules, browser-safe output, and honest no-results. Recorded public-route latency across the judged cases ranged from about 0.9 to 4.2 seconds. Search correctness recovered, but production latency remains an observation target.
 
