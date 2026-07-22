@@ -61,6 +61,7 @@ import { getBetaCohortForTool } from './release-channel.js';
 import {
   createRailwayCandidateIndex,
   createRailwayRecommendationSearch,
+  createRailwaySearchRoute,
   isRailwayLocalFirstEnabled,
 } from './railway-local-search.js';
 import { buildLibraryCapability } from './library-capabilities.js';
@@ -236,7 +237,7 @@ const searchIconsOutputSchema = {
   details: z.record(z.unknown()).optional().describe('Structured rate-limit or upstream failure details.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
   search_runtime: z.object({
-    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+    mode: z.enum(['local_first', 'local_fallback', 'hosted_fallback', 'hosted']),
     fallback_used: z.boolean(),
     hosted_search_calls: z.number(),
     local_failure_code: z.string().nullable(),
@@ -1524,8 +1525,7 @@ function createServer({ requestContext = null } = {}) {
         let results;
         let searchRuntime;
         try {
-          const searchExecution = createRailwayRecommendationSearch({
-            enabled: railwayLocalFirstEnabled,
+          const searchExecution = createRailwaySearchRoute({
             localSearchOne: searchRailwayLocalIcons,
             hostedSearchOne: (params) => searchHostedIcons({
               ...params,
@@ -1927,8 +1927,7 @@ function parsePublicSearchRequest(body = {}) {
 }
 
 async function runRailwayPublicSearch(params) {
-  const execution = createRailwayRecommendationSearch({
-    enabled: railwayLocalFirstEnabled,
+  const execution = createRailwaySearchRoute({
     localSearchOne: searchRailwayLocalIcons,
     hostedSearchOne: (fallbackParams) => searchHostedIcons(fallbackParams),
   });
@@ -2007,7 +2006,7 @@ app.get('/health', (_req, res) => {
     grouped_hosted_search: groupedHostedSearch,
     railway_local_first: {
       enabled: railwayLocalFirstEnabled,
-      search_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
+      search_mode: 'hosted_primary',
       recommendation_mode: railwayLocalFirstEnabled ? 'local_first' : 'hosted',
       index_generated_at: iconIndex.generatedAt,
       icon_count: publicIcons.length,

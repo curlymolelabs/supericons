@@ -144,6 +144,8 @@
     "verify:search-intent-graph": "node scripts/verify-search-intent-graph.mjs",
     "verify:search-v2-semantic-coverage": "node scripts/verify-search-v2-semantic-coverage.mjs",
     "verify:search-v2-semantic-latency": "node scripts/verify-search-v2-semantic-latency.mjs",
+    "verify:search-v2-hosted-route-repair": "node scripts/verify-search-v2-hosted-route-repair.mjs",
+    "verify:search-v2-hosted-route-product": "node scripts/verify-search-v2-hosted-route-product.mjs",
     "verify:search-ranking-policy": "node scripts/verify-search-ranking-policy.mjs",
     "verify:search-brand-classification-review": "node scripts/verify-search-brand-classification-review.mjs",
     "verify:search-library-modes": "node scripts/verify-search-library-modes.mjs",

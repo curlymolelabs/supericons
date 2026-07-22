@@ -89,7 +89,7 @@ try {
   const health = await waitForHealth();
   assert.equal(health.version, packageJson.version);
   assert.equal(health.railway_local_first.enabled, true);
-  assert.equal(health.railway_local_first.search_mode, 'local_first');
+  assert.equal(health.railway_local_first.search_mode, 'hosted_primary');
   assert.equal(health.railway_local_first.recommendation_mode, 'local_first');
 
   const cases = [
@@ -103,9 +103,8 @@ try {
     const { response, payload } = await postSearch(searchCase);
     assert.equal(response.status, 200, JSON.stringify(payload));
     assert.ok(payload.results.length > 0, `Expected results for ${searchCase.query}`);
-    assert.equal(payload.search_runtime.mode, 'local_first');
-    assert.equal(payload.search_runtime.fallback_used, false);
-    assert.equal(payload.search_runtime.hosted_search_calls, 0);
+    assert.ok(['hosted', 'local_fallback'].includes(payload.search_runtime.mode));
+    assert.equal(payload.search_runtime.hosted_search_calls, 1);
     for (const result of payload.results) {
       assert.match(result.icon_id, /^[a-z0-9-]+:.+/i);
       assert.equal(Object.hasOwn(result, 'svg'), false);

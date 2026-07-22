@@ -48,6 +48,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Accepted | Surface alignment and stable release |
 | `D-034` | Expand broad meaning coverage through reviewed deterministic groups and measured language priorities | Accepted | Meaning coverage and localization |
 | `D-035` | Put stable Search v2 in evidence-driven maintenance mode and keep adaptive retrieval paused | Accepted | Maintenance, measurement, and future architecture |
+| `D-036` | Restore hosted-primary retrieval for hosted search while keeping local-first recommendations | Accepted | Hosted search incident repair |
 
 ## Decision records
 
@@ -534,6 +535,25 @@ Alternatives rejected or deferred: continuing manual coverage as a primary works
 Superseded decisions: none. `D-021` remains active and is reaffirmed. `D-034` governs deterministic coverage maintenance. `D-033` governs synchronized releases.
 
 Specification change: version 1.19 adds `FR-51` and the evidence-driven maintenance and adaptive-restart boundary.
+
+### D-036: Hosted search route repair
+
+Date: 2026-07-23
+Status: Accepted
+
+Decision: the Railway hosted MCP `search_icons` tool and public `/search-icons` endpoint use the established hosted variant engine as their primary retrieval path. The packaged local engine runs only after the hosted engine returns a valid no-result. Hosted dependency errors remain visible. `recommend_icons` keeps the local-first route accepted in `D-032`.
+
+The response and telemetry use `hosted` when the hosted engine answers and `local_fallback` when the packaged engine recovers a valid hosted zero. The public endpoint continues to omit SVG and protected semantic data. The MCP URL, tool names, inputs, npm package version, website, and submitted ChatGPT app configuration do not change.
+
+Reason: live version 0.4.20 traffic showed a severe multiword false-zero regression after the packaged fallback ranker replaced the hosted variant pipeline. Confirmed failures included `hard hat construction worker`, `network proximity graph nodes`, `tow truck`, and `verification audit shield check`. The web app appeared healthier because its browser layer retained local query-variant results after a Railway zero. Route and fingerprint gates proved surface consistency but did not compare real agent-style product behavior.
+
+Evidence required: the exact candidate and live deployment pass judged multiword relevance, forbidden-result, multilingual, strict-library, honest no-result, MCP-to-public-HTTP parity, browser-safe payload, agent-readable error, preview, recommendation, latency, and fixed 225-case checks. A failed live product case restores the prior Railway deployment. No npm or Netlify mutation is part of this repair.
+
+Alternatives rejected or deferred: adding one synonym per failed phrase; returning broad unrelated filler; hiding hosted dependency failures behind local results; changing recommendation routing during the incident; publishing a replacement npm version before hosted recovery is proven.
+
+Superseded decisions: `D-033` is superseded only where it requires Railway `search_icons` to use the packaged local engine first. Its npm, web-data, versioning, and independent rollback rules remain active. `D-032` remains active for Railway recommendations.
+
+Specification change: version 1.20 adds `FR-52` and the hosted search repair boundary.
 
 ## Adding or superseding a decision
 

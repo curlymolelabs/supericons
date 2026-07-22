@@ -146,3 +146,50 @@ export function createRailwayRecommendationSearch({
     },
   };
 }
+
+export function createRailwaySearchRoute({
+  localSearchOne,
+  hostedSearchOne,
+}) {
+  if (typeof localSearchOne !== 'function') {
+    throw new TypeError('localSearchOne must be a function.');
+  }
+  if (typeof hostedSearchOne !== 'function') {
+    throw new TypeError('hostedSearchOne must be a function.');
+  }
+
+  const state = {
+    mode: 'hosted',
+    fallback_used: false,
+    hosted_search_calls: 0,
+    local_failure_code: null,
+  };
+
+  async function searchOne(params) {
+    state.hosted_search_calls += 1;
+    const hostedResults = await hostedSearchOne(params);
+    if (Array.isArray(hostedResults) && hostedResults.length > 0) {
+      return hostedResults;
+    }
+
+    try {
+      const localResults = await localSearchOne(params);
+      if (Array.isArray(localResults) && localResults.length > 0) {
+        state.mode = 'local_fallback';
+        state.fallback_used = true;
+        return localResults;
+      }
+    } catch (error) {
+      state.local_failure_code = error?.code || 'local_search_failed';
+    }
+
+    return [];
+  }
+
+  return {
+    searchOne,
+    getRuntime() {
+      return { ...state };
+    },
+  };
+}
