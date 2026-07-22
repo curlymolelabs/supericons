@@ -7,10 +7,15 @@ const hostedResult = [{ id: 'construction', library: 'lucide' }];
 const localRelevantResult = [{ id: 'hard-hat', library: 'lucide' }];
 let hostedCalls = 0;
 let localCalls = 0;
+let releaseHostedSearch;
+const hostedSearchBlocked = new Promise((resolve) => {
+  releaseHostedSearch = resolve;
+});
 
 const hostedPrimary = createRailwaySearchRoute({
   hostedSearchOne: async () => {
     hostedCalls += 1;
+    await hostedSearchBlocked;
     return hostedResult;
   },
   localSearchOne: async () => {
@@ -19,13 +24,18 @@ const hostedPrimary = createRailwaySearchRoute({
   },
 });
 
+const fusedSearch = hostedPrimary.searchOne({ query: 'hard hat construction worker' });
+await new Promise((resolve) => setImmediate(resolve));
+assert.equal(hostedCalls, 1);
+assert.equal(localCalls, 1, 'Hosted and local retrieval must start concurrently.');
+releaseHostedSearch();
 assert.deepEqual(
-  await hostedPrimary.searchOne({ query: 'hard hat construction worker' }),
+  await fusedSearch,
   [...localRelevantResult, ...hostedResult],
   'Search must fuse the reviewed local recovery with established hosted results.',
 );
 assert.equal(hostedCalls, 1);
-assert.equal(localCalls, 1, 'A nonempty hosted result must still run local recovery for fusion.');
+assert.equal(localCalls, 1);
 assert.deepEqual(hostedPrimary.getRuntime(), {
   mode: 'hosted_fused',
   fallback_used: false,
@@ -52,7 +62,7 @@ assert.deepEqual(emptyHostedFallback.getRuntime(), {
   local_fusion_used: false,
 });
 
-let localCalledAfterHostedError = false;
+let localStartedDuringHostedError = false;
 const hostedFailure = new Error('rate limited');
 hostedFailure.code = 'hosted_rate_limited';
 hostedFailure.status = 429;
@@ -61,7 +71,7 @@ const failingHostedRoute = createRailwaySearchRoute({
     throw hostedFailure;
   },
   localSearchOne: async () => {
-    localCalledAfterHostedError = true;
+    localStartedDuringHostedError = true;
     return localResult;
   },
 });
@@ -70,7 +80,7 @@ await assert.rejects(
   (error) => error === hostedFailure,
   'Hosted errors must remain visible instead of being mislabeled as search results.',
 );
-assert.equal(localCalledAfterHostedError, false);
+assert.equal(localStartedDuringHostedError, true, 'Parallel local work may start, but it must never hide a hosted error.');
 
 const localFailureAfterHostedZero = new Error('local fallback failed');
 localFailureAfterHostedZero.code = 'local_fallback_failed';
@@ -130,6 +140,7 @@ console.log(
       hosted_primary: 'passed',
       local_zero_fallback: 'passed',
       error_truthfulness: 'passed',
+      retrieval_concurrency: 'passed',
       recommendation_scope: 'passed',
     },
     null,

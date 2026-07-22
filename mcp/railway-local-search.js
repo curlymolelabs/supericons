@@ -185,12 +185,19 @@ export function createRailwaySearchRoute({ localSearchOne, hostedSearchOne }) {
   }
 
   async function searchOne(params) {
+    const localOutcomePromise = Promise.resolve()
+      .then(() => localSearchOne(params))
+      .then(
+        (results) => ({ ok: true, results }),
+        (error) => ({ ok: false, error }),
+      );
     state.hosted_search_calls += 1;
     const hostedResults = await hostedSearchOne(params);
     const validHostedResults = Array.isArray(hostedResults) ? hostedResults : [];
 
-    try {
-      const localResults = await localSearchOne(params);
+    const localOutcome = await localOutcomePromise;
+    if (localOutcome.ok) {
+      const localResults = localOutcome.results;
       if (Array.isArray(localResults) && localResults.length > 0) {
         if (validHostedResults.length > 0) {
           state.mode = 'hosted_fused';
@@ -201,8 +208,8 @@ export function createRailwaySearchRoute({ localSearchOne, hostedSearchOne }) {
         state.fallback_used = true;
         return localResults.slice(0, Math.max(1, Number(params.limit) || 20));
       }
-    } catch (error) {
-      state.local_failure_code = error?.code || 'local_search_failed';
+    } else {
+      state.local_failure_code = localOutcome.error?.code || 'local_search_failed';
     }
 
     return validHostedResults.slice(0, Math.max(1, Number(params.limit) || 20));
