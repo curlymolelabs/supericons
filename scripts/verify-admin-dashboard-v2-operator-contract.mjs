@@ -24,7 +24,7 @@ assert.match(appSource, /\/v2\/icon-requests\/review/);
 assert.match(appSource, /fetchAllPages\('search'/);
 assert.match(appSource, /fetchAllPages\('audience'/);
 assert.match(appSource, /fetchAllPages\('activity'/);
-assert.match(appSource, /\^\[=\+\\-@\]/);
+assert.match(appSource, /\^\[\\u0000-\\u0020\]\*\[=\+\\-@\]/);
 assert.doesNotMatch(appSource, /si_admin_secret/);
 assert.doesNotMatch(appSource, /sessionStorage\.setItem\([^)]*accounts/);
 assert.doesNotMatch(appSource, /localStorage\.setItem\([^)]*accounts/);
@@ -55,6 +55,9 @@ assert.match(apiSource, /page_size: pageSize/);
 assert.match(apiSource, /slice\(0, 100\)/);
 
 assert.match(gatewaySource, /pathname === '\/admin'/);
+assert.match(gatewaySource, /HttpOnly; Path=\/; SameSite=Strict/);
+assert.match(gatewaySource, /This local dashboard does not accept that host/);
+assert.match(gatewaySource, /Content-Security-Policy/);
 assert.equal(JSON.parse(packageSource).scripts['dev:admin'], 'node scripts/serve-admin-dashboard-phase-b-live.mjs');
 
 assert.match(migrationSource, /Rollback:/);
@@ -69,6 +72,6 @@ console.log(JSON.stringify({
   icon_request_states: 4,
   complete_paged_exports: ['activity', 'queries', 'clients'],
   managed_path: '/admin',
-  secret_storage: 'memory_only',
+  secret_storage: 'server_memory_with_opaque_browser_session',
   account_browser_storage: false,
 }, null, 2));

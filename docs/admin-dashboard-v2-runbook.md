@@ -35,7 +35,8 @@ Then open `http://127.0.0.1:4178/admin` and enter the secret in the sign-in wind
 - The browser sends the entered secret only to the dashboard server on `127.0.0.1`.
 - The local server checks the secret with the protected Supabase admin API.
 - A rejected secret leaves the dashboard locked and shows an error.
-- An accepted secret stays only in the local Node process. It is not stored in local storage, session storage, a file, or the page source.
+- An accepted secret stays only in the local Node process. It is not stored in local storage, session storage, a cookie, a file, or the page source.
+- The browser receives a separate random session cookie. The cookie cannot be read by page scripts, contains no secret, and is forgotten when the browser or local server closes.
 - Closing the server forgets the secret.
 - If the Supabase secret expires or is rotated while the dashboard is open, the next rejected request clears the local copy and opens the sign-in window again.
 

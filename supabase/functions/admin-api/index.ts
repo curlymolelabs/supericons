@@ -23,6 +23,7 @@ import {
   buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
+  compactDashboardV2EventRows,
   compactDashboardV2QueryRows,
   fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
@@ -717,13 +718,31 @@ function compactHashPrefix(value: unknown) {
   return text ? text.slice(0, 12) : null;
 }
 
+function constantTimeTextEqual(leftValue: string, rightValue: string) {
+  const encoder = new TextEncoder();
+  const left = encoder.encode(leftValue);
+  const right = encoder.encode(rightValue);
+  const length = Math.max(left.length, right.length);
+  let difference = left.length ^ right.length;
+  for (let index = 0; index < length; index += 1) {
+    difference |= (left[index] || 0) ^ (right[index] || 0);
+  }
+  return difference === 0;
+}
+
+function optionalNonnegativeInteger(value: unknown) {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : null;
+}
+
 function buildIconAttemptIndex(rows: SearchEvidenceRow[]) {
   return rows
     .filter((row) => String(row.signal_type || '').toLowerCase() === 'search_attempt')
     .map((row) => ({
       query: normalizeSearchQuery(row.search_query),
       library_filter: normalizeReviewLibraryFilter(row.library_filter),
-      result_count: typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0),
+      result_count: optionalNonnegativeInteger(row.result_count),
       created_at_ms: toIsoTimeMs(row.created_at),
     }))
     .filter((row) => row.query && Number.isFinite(row.result_count) && row.created_at_ms !== null);
@@ -735,8 +754,7 @@ function hasNearbyIconAttempt(
 ) {
   const query = normalizeSearchQuery(auditRow.query_norm);
   const libraryFilter = normalizeReviewLibraryFilter(auditRow.library_filter);
-  const rawResultCount = Number(auditRow.result_count);
-  const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
+  const resultCount = optionalNonnegativeInteger(auditRow.result_count);
   const createdAtMs = toIsoTimeMs(auditRow.created_at);
   if (!query || resultCount === null || createdAtMs === null) return false;
 
@@ -754,7 +772,7 @@ function mapAuditRowToEvidenceRow(
   iconAttempts: ReturnType<typeof buildIconAttemptIndex>,
 ) {
   const status = String(row.status || '').toLowerCase();
-  const resultCount = typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0);
+  const resultCount = optionalNonnegativeInteger(row.result_count);
   const hasIconAttempt = hasNearbyIconAttempt(iconAttempts, row);
   const source = normalizeSearchQuery(row.source);
   const channel = classifyAnalyticsChannel(row.channel) || classifyAnalyticsChannel(source) || 'unknown';
@@ -789,7 +807,7 @@ function mapAuditRowToEvidenceRow(
     batch_id: null,
     agent_converged: null,
     replaced_with: null,
-    result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
+    result_count: resultCount,
     library_filter: normalizeReviewLibraryFilter(row.library_filter),
     library_mode: row.library_mode || null,
     search_outcome: row.search_outcome || null,
@@ -891,7 +909,7 @@ async function fetchHostedSearchAuditRows(
 }
 
 function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
-  const resultCount = typeof row.result_count === 'number' ? row.result_count : Number(row.result_count ?? 0);
+  const resultCount = optionalNonnegativeInteger(row.result_count);
   const channel = classifyAnalyticsChannel(row.channel) || 'unknown';
   const environment = classifyAnalyticsSource(row.environment) || 'production';
   const visitor = buildEstimatedClientIdentity(row);
@@ -901,11 +919,21 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     search_query: row.query_norm,
     audit_status: row.status,
   }, knownSearchDefects);
+  const metadata = row.metadata && typeof row.metadata === 'object'
+    ? row.metadata as Record<string, unknown>
+    : {};
+  const returnedIconRefs = Array.isArray(metadata.returned_icon_refs)
+    ? metadata.returned_icon_refs
+      .map((value) => normalizeSearchQuery(value))
+      .filter(Boolean)
+      .slice(0, 100)
+    : [];
   return {
     id: row.id ? `mcp_usage_events:${String(row.id)}` : null,
     source_row_id: row.id ? String(row.id) : null,
     source_table: 'mcp_usage_events',
     event_type: row.event_type || null,
+    event_id: row.event_id || null,
     analytics_source: channel,
     analytics_channel: channel,
     environment,
@@ -916,7 +944,7 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     batch_id: row.request_id || row.dedupe_key || null,
     agent_converged: null,
     replaced_with: null,
-    result_count: Number.isFinite(resultCount) ? Math.max(0, Math.round(resultCount)) : null,
+    result_count: resultCount,
     library_filter: normalizeReviewLibraryFilter(row.library_filter),
     library_mode: row.library_mode || null,
     search_outcome: row.search_outcome || null,
@@ -958,6 +986,12 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     client_ip_public: row.client_ip_public === true,
     audit_status: row.status || null,
     latency_ms: row.latency_ms ?? null,
+    returned_icon_refs: returnedIconRefs,
+    returned_icon_refs_recorded: metadata.returned_icon_refs_recorded === true,
+    root_request_hash_prefix: compactHashPrefix(metadata.root_request_hash),
+    search_execution: metadata.search_execution || null,
+    server_build: metadata.server_build || null,
+    traffic_class: metadata.traffic_class || null,
     evidence_text: `${row.client_family || 'unknown client'} ${row.tool_name || 'mcp tool'} ${row.status || 'event'}`,
     created_at: row.created_at || null,
   };
@@ -972,7 +1006,7 @@ async function fetchMcpUsageEventRows(
   liveOnly = false,
   eventTypes: string[] = [],
 ) {
-  const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
+  const select = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, metadata, created_at';
 
   try {
     const rows = await fetchAllRows<Record<string, unknown>>((from, to) => {
@@ -1473,7 +1507,7 @@ async function fetchDashboardV2IdentityTelemetry(
   filters: ReturnType<typeof parseDashboardV2Filters>,
 ) {
   const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
-  const usageSelect = 'id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, created_at';
+  const usageSelect = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, metadata, created_at';
 
   const loadAuditRows = async () => {
     try {
@@ -2329,6 +2363,112 @@ async function buildDashboardV2SearchPayload(
   };
 }
 
+function dashboardV2FieldCoverage(
+  rows: Array<Record<string, unknown>>,
+  predicate: (row: Record<string, unknown>) => boolean,
+) {
+  if (!rows.length) return { recorded: 0, total: 0, rate: null };
+  const recorded = rows.filter(predicate).length;
+  return {
+    recorded,
+    total: rows.length,
+    rate: Number((recorded / rows.length).toFixed(4)),
+  };
+}
+
+async function privacySafeRootRequestPrefix(row: Record<string, unknown>) {
+  const requestId = String(row.request_id || row.batch_id || '').trim();
+  if (!requestId) return null;
+  const identity = String(
+    row.session_hash
+    || row.api_key_hash
+    || row.anonymous_client_hash
+    || row.ip_hash
+    || 'unattributed',
+  ).trim();
+  const bytes = new TextEncoder().encode(`${identity}|${requestId}`);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)]
+    .map((value) => value.toString(16).padStart(2, '0'))
+    .join('')
+    .slice(0, 12);
+}
+
+async function addPrivacySafeRootRequestPrefixes(
+  rows: Array<Record<string, unknown>>,
+): Promise<Array<Record<string, unknown>>> {
+  return await Promise.all(rows.map(async (row): Promise<Record<string, unknown>> => ({
+    ...row,
+    root_request_hash_prefix: await privacySafeRootRequestPrefix(row)
+      || (typeof row.root_request_hash_prefix === 'string' ? row.root_request_hash_prefix : null),
+  })));
+}
+
+async function buildDashboardV2SearchEventsPayload(
+  adminClient: SupabaseClient,
+  url: URL,
+) {
+  const startedAt = Date.now();
+  const filters = parseDashboardV2Filters(url);
+  const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
+  const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const telemetry = await fetchDashboardV2IdentityTelemetry(adminClient, filters);
+  const linkedRows = await addPrivacySafeRootRequestPrefixes(telemetry.rows);
+  const sortedRows = [...linkedRows].sort((left, right) => (
+    String(right.created_at || '').localeCompare(String(left.created_at || ''))
+    || String(right.id || '').localeCompare(String(left.id || ''))
+  ));
+  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const start = (currentPage - 1) * pageSize;
+  const events = compactDashboardV2EventRows(sortedRows.slice(start, start + pageSize));
+  const complete = !telemetry.truncated;
+
+  return {
+    events,
+    events_complete: complete,
+    events_export_available: complete,
+    events_notice: complete
+      ? null
+      : `Showing the newest event details. This view can load up to ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')} records from each search log. Older matching events may be omitted.`,
+    events_export_unavailable_reason: complete
+      ? null
+      : `Complete event export exceeds the ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')}-record limit for each search log. Choose a narrower date range or venue before exporting.`,
+    pagination: {
+      page: currentPage,
+      page_size: pageSize,
+      total: sortedRows.length,
+      page_count: pageCount,
+    },
+    field_coverage: {
+      locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.locale)),
+      root_request_identifier: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.root_request_hash_prefix)),
+      returned_icon_refs: dashboardV2FieldCoverage(sortedRows, (row) => row.returned_icon_refs_recorded === true),
+      latency_ms: dashboardV2FieldCoverage(sortedRows, (row) => row.latency_ms !== null && row.latency_ms !== undefined),
+      server_version: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.mcp_server_version)),
+      server_build: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.server_build)),
+    },
+    definitions: {
+      grain: 'One telemetry event after exact key-based source merging. A tool event and a lower-level hosted audit can remain separate when older rows have no shared key.',
+      primary_metric_source: 'Use mcp_usage_events for top-level MCP tool metrics. Treat search_request_audit rows as hosted search pipeline diagnostics.',
+      search_zero: 'A user-facing search or final recommendation completed with zero returned results.',
+      lookup_not_found: 'An exact lookup completed without an icon or returned the icon_not_found code.',
+      lookup_error: 'An exact lookup failed for a reason other than icon_not_found.',
+      traffic_class: 'Recorded test, preview, local, named cohort, or unclassified live traffic. Unclassified live traffic is not assumed to be organic.',
+      null_values: 'Null means the field was not recorded for that event. Null is never converted to zero.',
+    },
+    meta: dashboardV2Meta(filters, startedAt, {
+      metric_scope: 'filtered_search_event_details',
+      completeness: {
+        event_rows_complete: complete,
+      },
+      event_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
+      event_rows_truncated: telemetry.truncated,
+      raw_identifiers_exposed: false,
+    }),
+  };
+}
+
 function buildDashboardV2UserTelemetry(rows: Array<Record<string, unknown>>) {
   const byUser = new Map<string, {
     searches: number;
@@ -2524,6 +2664,7 @@ async function handleDashboardV2(
       if (endpoint === 'activity') return await buildDashboardV2ActivityPayload(adminClient, url);
       if (endpoint === 'overview') return await buildDashboardV2OverviewPayload(adminClient, url);
       if (endpoint === 'search') return await buildDashboardV2SearchPayload(adminClient, url);
+      if (endpoint === 'search-events') return await buildDashboardV2SearchEventsPayload(adminClient, url);
       if (endpoint === 'audience') return await buildDashboardV2AudiencePayload(adminClient, url);
       throw new Error('Unknown dashboard v2 endpoint.');
     });
@@ -2611,6 +2752,10 @@ function getQueryWorkbenchEntry(
     mcp_batch_ids: new Set<string>(),
     mcp_converged_batch_ids: new Set<string>(),
     mcp_result_rows: 0,
+    lookup_success_count: 0,
+    lookup_not_found_count: 0,
+    lookup_error_count: 0,
+    lookup_unknown_count: 0,
     surfaces: new Set<string>(),
     domains: new Set<string>(),
     context_urls: new Set<string>(),
@@ -2859,8 +3004,22 @@ function buildQueryWorkbenchRows(
         const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
           .get(groupedSearcherKey);
         if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
-        const resultCount = Number(row.result_count);
-        if (Number.isFinite(resultCount)) {
+        const resultCount = optionalNonnegativeInteger(row.result_count);
+        const status = normalizeSearchQuery(row.audit_status).toLowerCase();
+        const errorCode = normalizeSearchQuery(row.error_code).toLowerCase();
+        const isError = ['error', 'failed', 'failure'].includes(status);
+        const isNotFound = errorCode === 'icon_not_found'
+          || (!isError && resultCount === 0);
+        if (isNotFound) {
+          entry.lookup_not_found_count = Number(entry.lookup_not_found_count || 0) + 1;
+        } else if (isError) {
+          entry.lookup_error_count = Number(entry.lookup_error_count || 0) + 1;
+        } else if (resultCount !== null && resultCount > 0) {
+          entry.lookup_success_count = Number(entry.lookup_success_count || 0) + 1;
+        } else {
+          entry.lookup_unknown_count = Number(entry.lookup_unknown_count || 0) + 1;
+        }
+        if (resultCount !== null) {
           entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
           entry.result_samples = Number(entry.result_samples || 0) + 1;
           const currentMinimum = typeof entry.minimum_result_count === 'number'
@@ -2938,6 +3097,10 @@ function buildQueryWorkbenchRows(
       mcp_batch_count: (entry.mcp_batch_ids as Set<string>).size,
       mcp_converged_batches: (entry.mcp_converged_batch_ids as Set<string>).size,
       mcp_result_rows: Number(entry.mcp_result_rows || 0),
+      lookup_success_count: Number(entry.lookup_success_count || 0),
+      lookup_not_found_count: Number(entry.lookup_not_found_count || 0),
+      lookup_error_count: Number(entry.lookup_error_count || 0),
+      lookup_unknown_count: Number(entry.lookup_unknown_count || 0),
       surfaces: [...(entry.surfaces as Set<string>)].sort((a, b) => a.localeCompare(b)),
       domains: [...(entry.domains as Set<string>)].sort((a, b) => a.localeCompare(b)),
       context_urls: [...(entry.context_urls as Set<string>)].sort((a, b) => a.localeCompare(b)).slice(0, 5),
@@ -5333,7 +5496,7 @@ serve(async (req) => {
 
   const adminSecret = Deno.env.get('ADMIN_SECRET');
   const requestSecret = req.headers.get('x-admin-secret');
-  if (!adminSecret || !requestSecret || requestSecret !== adminSecret) {
+  if (!adminSecret || !requestSecret || !constantTimeTextEqual(requestSecret, adminSecret)) {
     return jsonResponse(req, { error: 'Forbidden' }, 403);
   }
 
@@ -5356,6 +5519,16 @@ serve(async (req) => {
       && ['activity', 'overview', 'search', 'audience'].includes(segments[1])
     ) {
       return await handleDashboardV2(req, adminClient, url, segments[1]);
+    }
+
+    if (
+      req.method === 'GET'
+      && segments.length === 3
+      && segments[0] === 'v2'
+      && segments[1] === 'search'
+      && segments[2] === 'events'
+    ) {
+      return await handleDashboardV2(req, adminClient, url, 'search-events');
     }
 
     if (

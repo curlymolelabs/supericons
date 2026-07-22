@@ -14,6 +14,10 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import express from 'express';
 import { z } from 'zod';
 import {
+  classifyMcpTraffic,
+  extractReturnedIconRefs,
+} from './usage-event-detail.js';
+import {
   getGroupedHostedSearchResilienceStatus,
   getHostedSearchResilienceStatus,
   searchIconQueriesHostedMcp,
@@ -1403,6 +1407,14 @@ function buildMcpUsageEventPayload(
       api_key_present: requestContext?.api_key_present === true,
       api_key_valid: requestContext?.api_key_valid === true,
       search_execution: result?.structuredContent?.search_runtime?.mode || null,
+      root_request_hash: hashUsageValue(context.request_id),
+      returned_icon_refs: extractReturnedIconRefs(result, toolName),
+      returned_icon_refs_recorded: true,
+      server_build: normalizeUsageText(
+        process.env.RAILWAY_GIT_COMMIT_SHA || process.env.RAILWAY_DEPLOYMENT_ID || null,
+        { maxLength: 120 },
+      ),
+      traffic_class: classifyMcpTraffic(context),
     },
   };
 }
@@ -1749,6 +1761,10 @@ function createServer({ requestContext = null } = {}) {
       if (!match) {
         return asStructured({
           error: `No matching icon found for ${library}:${id}.`,
+          code: 'icon_not_found',
+          hint: 'Confirm the icon ID and library, or call search_icons to find the closest available icon.',
+          next_step: 'Call search_icons when the exact icon ID is not known or is unavailable.',
+          retryable: false,
         }, { isError: true });
       }
 

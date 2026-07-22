@@ -1,4 +1,4 @@
-import { createServer } from 'node:http';
+import { createServer, request as httpRequest } from 'node:http';
 import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
@@ -17,6 +17,17 @@ function listen(server) {
 function close(server) {
   return new Promise((resolve, reject) => {
     server.close((error) => (error ? reject(error) : resolve()));
+  });
+}
+
+function requestWithHost(url, host) {
+  return new Promise((resolve, reject) => {
+    const request = httpRequest(url, { headers: { Host: host } }, (response) => {
+      response.resume();
+      response.once('end', () => resolve(response.statusCode));
+    });
+    request.once('error', reject);
+    request.end();
   });
 }
 
@@ -67,7 +78,14 @@ try {
   const htmlResponse = await fetch(dashboard.url);
   const html = await htmlResponse.text();
   ok(htmlResponse.ok, 'The local dashboard page did not load.');
-  ok(html.includes('managedAuth:true'), 'The browser login runtime was not enabled.');
+  ok(html.includes('/admin-runtime.js'), 'The browser login runtime was not loaded as an external script.');
+  ok(!html.includes('managedAuth:true'), 'The runtime configuration is still injected as inline script code.');
+  ok(htmlResponse.headers.get('content-security-policy')?.includes("script-src 'self'"), 'The local dashboard has no strict script policy.');
+  ok(htmlResponse.headers.get('x-frame-options') === 'DENY', 'The local dashboard can be framed.');
+  ok(htmlResponse.headers.get('x-content-type-options') === 'nosniff', 'The local dashboard allows content sniffing.');
+  const runtimeResponse = await fetch(new URL('/admin-runtime.js', dashboard.url));
+  const runtimeScript = await runtimeResponse.text();
+  ok(runtimeResponse.ok && runtimeScript.includes('managedAuth:true'), 'The managed login runtime was not served.');
   ok(!html.includes(acceptedSecret), 'The dashboard page exposed the admin secret.');
   ok(!html.includes('requestBadge'), 'The ambiguous Searches badge is still present.');
   const logoResponse = await fetch(new URL('/brand/supericons-logo.svg', dashboard.url));
@@ -117,16 +135,48 @@ try {
   payload = await response.json();
   ok(response.ok && payload.authenticated === true, 'A valid admin secret did not create a local session.');
   ok(!JSON.stringify(payload).includes(acceptedSecret), 'An accepted secret was echoed in the response.');
+  const setCookie = response.headers.get('set-cookie') || '';
+  const browserSessionCookie = setCookie.split(';')[0];
+  ok(browserSessionCookie.startsWith('si_admin_session='), 'A valid sign-in did not create an opaque local session.');
+  ok(setCookie.includes('HttpOnly') && setCookie.includes('SameSite=Strict'), 'The local session cookie is not hardened.');
+  ok(!setCookie.includes(acceptedSecret), 'The local session cookie contains the admin secret.');
 
   response = await fetch(new URL('/api/admin/v2/overview', dashboard.url));
+  ok(response.status === 401, 'A second local caller inherited another browser session.');
+  response = await fetch(new URL('/api/admin/v2/overview', dashboard.url), {
+    headers: { Cookie: browserSessionCookie },
+  });
   ok(response.ok, 'A protected request failed after valid sign-in.');
 
+  const beforeOversizedProxy = protectedRequests;
+  response = await fetch(new URL('/api/admin/v2/overview', dashboard.url), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: browserSessionCookie,
+    },
+    body: JSON.stringify({ value: 'x'.repeat(1024 * 1024) }),
+  });
+  ok(response.status === 413, 'The local gateway accepted an oversized proxy body.');
+  ok(protectedRequests === beforeOversizedProxy, 'An oversized body reached the protected API.');
+
+  response = await fetch(new URL('/api/admin/session', dashboard.url), {
+    headers: { Cookie: 'si_admin_session=%E0%A4%A' },
+  });
+  ok(response.ok, 'A malformed local session cookie disrupted the server.');
+
   acceptedSecret = 'temporary-secret-two';
-  response = await fetch(new URL('/api/admin/v2/overview', dashboard.url));
+  response = await fetch(new URL('/api/admin/v2/overview', dashboard.url), {
+    headers: { Cookie: browserSessionCookie },
+  });
   ok(response.status === 403, 'A rotated secret did not invalidate the local session.');
-  response = await fetch(new URL('/api/admin/session', dashboard.url));
+  response = await fetch(new URL('/api/admin/session', dashboard.url), {
+    headers: { Cookie: browserSessionCookie },
+  });
   payload = await response.json();
   ok(payload.authenticated === false, 'The server retained a secret rejected after rotation.');
+
+  ok(await requestWithHost(dashboard.url, 'attacker.example') === 421, 'The local gateway accepted a DNS-rebinding host.');
 
   await dashboard.close();
   dashboard = await startAdminDashboardPhaseBLiveServer({
@@ -183,6 +233,10 @@ try {
     allowed_path: true,
     denied_path: true,
     rotation_reprompt: true,
+    per_browser_session: true,
+    dns_rebinding_blocked: true,
+    security_headers: true,
+    bounded_proxy_body: true,
     browser_storage_secret: false,
     ambiguous_searches_badge: false,
     official_brand_logo: true,

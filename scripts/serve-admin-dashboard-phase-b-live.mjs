@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -6,9 +7,14 @@ import { pathToFileURL } from 'node:url';
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 4178;
 const ADMIN_API_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
-const RUNTIME_SCRIPT = '<script>window.__SI_ADMIN_RUNTIME__=Object.freeze({apiBase:"/api/admin",managedAuth:true});</script>';
+const RUNTIME_SCRIPT = '<script src="/admin-runtime.js"></script>';
+const RUNTIME_JAVASCRIPT = 'window.__SI_ADMIN_RUNTIME__=Object.freeze({apiBase:"/api/admin",managedAuth:true});\n';
 const SCRIPT_MARKER = '<script src="/admin-app.js"></script>';
 const MAX_SESSION_BODY_BYTES = 8192;
+const MAX_PROXY_BODY_BYTES = 1024 * 1024;
+const SESSION_COOKIE = 'si_admin_session';
+const SESSION_IDLE_MS = 8 * 60 * 60 * 1000;
+const MAX_MANAGED_SESSIONS = 16;
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
@@ -19,12 +25,67 @@ const CONTENT_TYPES = {
   '.woff2': 'font/woff2',
 };
 
-function sendJson(response, status, payload) {
-  response.writeHead(status, {
+function securityHeaders(contentType) {
+  return {
     'Cache-Control': 'no-store',
-    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Security-Policy': "default-src 'self'; base-uri 'none'; connect-src 'self' https://kcjmkakdhsqplvasgkjv.supabase.co; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'",
+    'Cross-Origin-Resource-Policy': 'same-origin',
+    'Referrer-Policy': 'no-referrer',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    ...(contentType ? { 'Content-Type': contentType } : {}),
+  };
+}
+
+function sendJson(response, status, payload, extraHeaders = {}) {
+  response.writeHead(status, {
+    ...securityHeaders('application/json; charset=utf-8'),
+    ...extraHeaders,
   });
   response.end(JSON.stringify(payload));
+}
+
+function readCookie(request, name) {
+  const prefix = `${name}=`;
+  for (const part of String(request.headers.cookie || '').split(';')) {
+    const value = part.trim();
+    if (value.startsWith(prefix)) {
+      try {
+        return decodeURIComponent(value.slice(prefix.length));
+      } catch {
+        return '';
+      }
+    }
+  }
+  return '';
+}
+
+function pruneManagedSessions(sessions) {
+  const expiredBefore = Date.now() - SESSION_IDLE_MS;
+  for (const [token, session] of sessions) {
+    if (session.lastSeenAt < expiredBefore) sessions.delete(token);
+  }
+  while (sessions.size >= MAX_MANAGED_SESSIONS) {
+    const oldest = sessions.keys().next().value;
+    if (!oldest) break;
+    sessions.delete(oldest);
+  }
+}
+
+function sessionCookie(token = '') {
+  return `${SESSION_COOKIE}=${encodeURIComponent(token)}; HttpOnly; Path=/; SameSite=Strict${token ? '' : '; Max-Age=0'}`;
+}
+
+function getManagedSession(request, sessions) {
+  const token = readCookie(request, SESSION_COOKIE);
+  const session = token ? sessions.get(token) : null;
+  if (!session) return { session: null, token };
+  if (Date.now() - session.lastSeenAt > SESSION_IDLE_MS) {
+    sessions.delete(token);
+    return { session: null, token };
+  }
+  session.lastSeenAt = Date.now();
+  return { session, token };
 }
 
 function staticPathFor(root, pathname) {
@@ -72,9 +133,18 @@ async function validateAdminSecret(secret, adminApiUrl) {
   throw new Error('The live admin API could not confirm the secret.');
 }
 
-async function handleAdminSession(request, response, session, adminApiUrl) {
+async function handleAdminSession(request, response, sessions, adminApiUrl) {
+  const current = getManagedSession(request, sessions);
   if (request.method === 'GET') {
-    sendJson(response, 200, { authenticated: Boolean(session.secret) });
+    sendJson(response, 200, { authenticated: Boolean(current.session?.secret) }, current.token && !current.session
+      ? { 'Set-Cookie': sessionCookie() }
+      : {});
+    return;
+  }
+
+  if (request.method === 'DELETE') {
+    if (current.token) sessions.delete(current.token);
+    sendJson(response, 200, { authenticated: false }, { 'Set-Cookie': sessionCookie() });
     return;
   }
 
@@ -107,7 +177,7 @@ async function handleAdminSession(request, response, session, adminApiUrl) {
 
   try {
     if (!(await validateAdminSecret(candidate, adminApiUrl))) {
-      session.secret = '';
+      if (current.token) sessions.delete(current.token);
       sendJson(response, 403, { error: 'That admin secret was rejected.' });
       return;
     }
@@ -116,21 +186,32 @@ async function handleAdminSession(request, response, session, adminApiUrl) {
     return;
   }
 
-  session.secret = candidate;
-  sendJson(response, 200, { authenticated: true });
+  if (current.token) sessions.delete(current.token);
+  pruneManagedSessions(sessions);
+  const token = randomUUID();
+  sessions.set(token, { secret: candidate, lastSeenAt: Date.now() });
+  sendJson(response, 200, { authenticated: true }, { 'Set-Cookie': sessionCookie(token) });
 }
 
-async function proxyAdminRequest(request, response, session, requestUrl, adminApiUrl) {
-  if (!session.secret) {
+async function proxyAdminRequest(request, response, sessionContext, sessions, requestUrl, adminApiUrl) {
+  if (!sessionContext.session?.secret) {
     sendJson(response, 401, { error: 'Enter the current admin secret to continue.' });
     return;
   }
 
   const targetPath = requestUrl.pathname.replace(/^\/api\/admin/, '') || '/';
   const target = new URL(`${adminApiUrl}${targetPath}${requestUrl.search}`);
-  const body = request.method === 'GET' || request.method === 'HEAD'
-    ? undefined
-    : await readRequestBody(request);
+  let body;
+  try {
+    body = request.method === 'GET' || request.method === 'HEAD'
+      ? undefined
+      : await readRequestBody(request, MAX_PROXY_BODY_BYTES);
+  } catch (error) {
+    sendJson(response, Number(error?.status) || 400, {
+      error: Number(error?.status) === 413 ? error.message : 'The request body is not valid.',
+    });
+    return;
+  }
 
   let upstream;
   try {
@@ -141,7 +222,7 @@ async function proxyAdminRequest(request, response, session, requestUrl, adminAp
       headers: {
         Accept: request.headers.accept || 'application/json',
         'Content-Type': request.headers['content-type'] || 'application/json',
-        'x-admin-secret': session.secret,
+        'x-admin-secret': sessionContext.session.secret,
       },
       signal: AbortSignal.timeout(60000),
     });
@@ -150,16 +231,22 @@ async function proxyAdminRequest(request, response, session, requestUrl, adminAp
     return;
   }
 
-  if (upstream.status === 401 || upstream.status === 403) session.secret = '';
+  const invalidSession = upstream.status === 401 || upstream.status === 403;
+  if (invalidSession && sessionContext.token) sessions.delete(sessionContext.token);
   const payload = Buffer.from(await upstream.arrayBuffer());
   response.writeHead(upstream.status, {
-    'Cache-Control': 'no-store',
-    'Content-Type': upstream.headers.get('content-type') || 'application/octet-stream',
+    ...securityHeaders(upstream.headers.get('content-type') || 'application/octet-stream'),
+    ...(invalidSession ? { 'Set-Cookie': sessionCookie() } : {}),
   });
   response.end(payload);
 }
 
 async function serveStaticFile(response, root, pathname, managedAuth) {
+  if (pathname === '/admin-runtime.js' && managedAuth) {
+    response.writeHead(200, securityHeaders('text/javascript; charset=utf-8'));
+    response.end(RUNTIME_JAVASCRIPT);
+    return;
+  }
   const filePath = staticPathFor(root, pathname);
   if (!filePath) {
     sendJson(response, 404, { error: 'Not found.' });
@@ -177,8 +264,7 @@ async function serveStaticFile(response, root, pathname, managedAuth) {
       payload = Buffer.from(html.replace(SCRIPT_MARKER, `${RUNTIME_SCRIPT}\n${SCRIPT_MARKER}`));
     }
     response.writeHead(200, {
-      'Cache-Control': 'no-store',
-      'Content-Type': CONTENT_TYPES[extension] || 'application/octet-stream',
+      ...securityHeaders(CONTENT_TYPES[extension] || 'application/octet-stream'),
     });
     response.end(payload);
   } catch {
@@ -194,11 +280,17 @@ export async function startAdminDashboardPhaseBLiveServer({
   port = Number(process.env.ADMIN_PHASE_B_PORT || DEFAULT_PORT),
   root = process.cwd(),
 } = {}) {
-  const session = { secret: String(adminSecret || '').trim() };
+  const sessions = new Map();
+  const unmanagedSession = { secret: String(adminSecret || '').trim(), lastSeenAt: Date.now() };
   const resolvedAdminApiUrl = String(adminApiUrl || ADMIN_API_URL).replace(/\/+$/, '');
 
   const server = createServer(async (request, response) => {
     const requestUrl = new URL(request.url || '/', `http://${request.headers.host || host}`);
+    const allowedHostnames = new Set([host, '127.0.0.1', 'localhost', '[::1]']);
+    if (!allowedHostnames.has(requestUrl.hostname)) {
+      sendJson(response, 421, { error: 'This local dashboard does not accept that host.' });
+      return;
+    }
     const requestOrigin = String(request.headers.origin || '');
     if (requestOrigin && requestOrigin !== requestUrl.origin) {
       sendJson(response, 403, { error: 'Cross-site requests are not allowed.' });
@@ -209,11 +301,14 @@ export async function startAdminDashboardPhaseBLiveServer({
         sendJson(response, 404, { error: 'Not found.' });
         return;
       }
-      await handleAdminSession(request, response, session, resolvedAdminApiUrl);
+      await handleAdminSession(request, response, sessions, resolvedAdminApiUrl);
       return;
     }
     if (requestUrl.pathname === '/api/admin' || requestUrl.pathname.startsWith('/api/admin/')) {
-      await proxyAdminRequest(request, response, session, requestUrl, resolvedAdminApiUrl);
+      const sessionContext = managedAuth
+        ? { ...getManagedSession(request, sessions) }
+        : { session: unmanagedSession, token: '' };
+      await proxyAdminRequest(request, response, sessionContext, sessions, requestUrl, resolvedAdminApiUrl);
       return;
     }
     await serveStaticFile(response, root, requestUrl.pathname, managedAuth);

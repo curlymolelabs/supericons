@@ -135,6 +135,29 @@ Response:
 
 The existing `POST /intelligence/search/review` route remains the write path for query triage.
 
+### `GET /v2/search/events`
+
+Purpose: provide a bounded event-detail source for CSV and JSON analysis without changing the grouped Search history contract.
+
+Query:
+
+- shared window, channel, include-test, and text filters
+- `page` and `page_size`, capped at 100 rows
+
+Response:
+
+- `events`: one telemetry event per row after exact key-based source merging
+- each event includes the masked searcher, privacy-safe root request identifier when recorded, query origin, tool, locale, requested limit, result count, returned icon references when recorded, latency, outcome, error code, traffic class, client family, server version, and build identifier
+- `field_coverage`: recorded count, total count, and coverage rate for fields that may be missing from older events
+- `definitions`: event grain, outcome, traffic-class, and null-handling rules
+- `events_complete` and `events_export_available`: false when the selected detail exceeds the bounded source limit
+- `pagination`
+- `meta`
+
+This endpoint never returns raw request IDs, raw session values, raw network values, API keys, user-agent strings, full hashes, or user email addresses. Null means a value was not recorded and is never converted to zero.
+
+Top-level MCP metrics use rows whose source is `mcp_usage_events`. Rows whose source is `search_request_audit` describe lower-level hosted search work, including recommendation variants and fallbacks. They remain diagnostic rows and are not added to top-level MCP counts. A privacy-safe root request identifier links rows when the source data has enough identity and request context. Older unlinked rows remain separate rather than being joined by time or query text.
+
 ### `GET /v2/audience`
 
 Purpose: load estimated reach, the registered-account list, and the Searchers list.

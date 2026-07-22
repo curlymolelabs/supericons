@@ -769,6 +769,13 @@ function outcomeFor(row = {}) {
   const origin = String(row.query_origin || row.origin || '').toLowerCase();
   if (outcome.includes('error')) return { label: 'Error', tone: 'zero' };
   if (origin === 'icon_lookup') {
+    if (outcome.includes('mixed')) {
+      return {
+        label: safeText(row.outcome_label, 'Mixed lookup results'),
+        tone: 'low',
+      };
+    }
+    if (outcome.includes('not_found')) return { label: 'Not found', tone: 'low' };
     if (!hasResultCount) return { label: 'Lookup', tone: 'info' };
     return resultCount > 0
       ? { label: 'Success', tone: 'ok' }
@@ -918,7 +925,7 @@ function table(headers, rows, emptyReason) {
 
 function csvCell(value) {
   const raw = String(value ?? '');
-  const text = /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
+  const text = /^[\u0000-\u0020]*[=+\-@]/.test(raw) ? `'${raw}` : raw;
   return `"${text.replaceAll('"', '""')}"`;
 }
 
@@ -2350,11 +2357,46 @@ async function fetchAllPages(endpoint, rowsPath) {
   return [firstRows, ...rest].flat();
 }
 
+async function fetchAllSearchEvents() {
+  const pageSize = 100;
+  const params = sharedParams({ forSearch: true });
+  params.set('page', '1');
+  params.set('page_size', String(pageSize));
+  const first = await apiRequest(`/v2/search/events?${params}`);
+  if (first.events_export_available === false) {
+    throw new Error(first.events_export_unavailable_reason || 'Complete event export is not available for this period. Narrow the filters and try again.');
+  }
+  const pageCount = Math.max(1, number(first.pagination?.page_count) || 1);
+  const events = [...normalizeList(first.events)];
+  for (let firstPage = 2; firstPage <= pageCount; firstPage += 4) {
+    const pages = Array.from(
+      { length: Math.min(4, pageCount - firstPage + 1) },
+      (_, index) => firstPage + index,
+    );
+    const batch = await Promise.all(pages.map(async (page) => {
+      const pageParams = new URLSearchParams(params);
+      pageParams.set('page', String(page));
+      const payload = await apiRequest(`/v2/search/events?${pageParams}`);
+      return normalizeList(payload.events);
+    }));
+    events.push(...batch.flat());
+  }
+  return {
+    events,
+    events_complete: first.events_complete === true,
+    events_export_available: first.events_export_available !== false,
+    field_coverage: first.field_coverage || {},
+    definitions: first.definitions || {},
+    meta: first.meta || {},
+  };
+}
+
 async function exportData(key) {
   const overview = state.data.overview || {};
   const search = state.data.search || {};
   const audience = state.data.audience || {};
   let completeRows = null;
+  let eventExport = null;
   try {
     if (key === 'queries-csv' || key === 'queries-json') {
       completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
@@ -2368,9 +2410,27 @@ async function exportData(key) {
       completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
     } else if (key === 'activity') {
       completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
+    } else if (key === 'query-events-csv' || key === 'query-events-json') {
+      eventExport = await fetchAllSearchEvents();
     }
   } catch (error) {
     showToast(error.message || 'The complete export could not be loaded.', true);
+    return;
+  }
+  if (eventExport) {
+    if (key === 'query-events-json') {
+      downloadFile(
+        `supericons-query-events-${state.filters.window}.json`,
+        JSON.stringify(eventExport, null, 2),
+        'application/json;charset=utf-8',
+      );
+    } else {
+      exportRows(
+        `supericons-query-events-${state.filters.window}`,
+        eventExport.events.map(plainExportRow),
+        'csv',
+      );
+    }
     return;
   }
   const mapping = {

@@ -23,6 +23,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 | Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
 | Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
 | Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per searcher, query, venue, library, job category, and origin, with server paging and complete filtered export |
+| Search event export | Search history event export controls | `GET /v2/search/events` | Downloads one privacy-safe telemetry event per row with source, field coverage, metric definitions, and completeness rules |
 | Searcher details | `#searcherDetailsModal` | Bounded masked rows in `GET /v2/search` | Shows the selected searcher's type, search count, venue, country, and first and last activity without exposing raw keys or emails |
 | Gap worklist | `#gapWorklist` | `GET /v2/search` plus `POST /intelligence/search/review` | Shows repeated zero and low-result work with triage actions |
 | Icon requests | `#iconRequests` | `GET /v2/search` plus `POST /v2/icon-requests/review` | Shows stored requests with New, Planned, Added, and Declined states |
@@ -40,6 +41,8 @@ The admin dashboard is a local operator tool backed by the protected production 
 - Scroll regions are height-bounded, keyboard reachable, and hide the visual scrollbar.
 - CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
 - Search history CSV exports put the masked searcher identifier and grouping details in separate columns. Search history JSON exports preserve the nested searcher details.
+- Search event CSV and JSON exports use one telemetry event per row after exact key-based source merging. Top-level MCP tool events and lower-level hosted search audits stay separate when no exact shared key exists. They include request-level fields only when recorded and never substitute zero for a missing value.
+- Search event exports expose only a privacy-safe root request identifier. Raw request IDs and full client or session hashes remain private.
 - CSV text beginning with a spreadsheet formula character is made inert before download.
 - Activity, overview, search, audience, and account requests start independently. A slow panel does not block the others.
 - Every filtered endpoint in one refresh uses the same view marker, data cutoff, and filter marker. Older responses are rejected.

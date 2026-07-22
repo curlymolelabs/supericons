@@ -305,6 +305,60 @@ const queryRows = [
       maximum_result_count: 1,
       result_sample_count: 1,
       mcp_result_rows: 1,
+      lookup_success_count: 1,
+    },
+    {
+      query: 'missing icon',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      minimum_result_count: 0,
+      maximum_result_count: 0,
+      result_sample_count: 1,
+      mcp_result_rows: 1,
+      lookup_not_found_count: 1,
+    },
+    {
+      query: 'failed lookup',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      result_sample_count: 0,
+      mcp_result_rows: 1,
+      lookup_error_count: 1,
+    },
+    {
+      query: 'unknown lookup',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      result_sample_count: 0,
+      mcp_result_rows: 1,
+      lookup_unknown_count: 1,
+    },
+    {
+      query: 'mixed lookup',
+      library_filter: 'lucide',
+      attempt_count: 0,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['icon_lookup'],
+      audit_sources: ['mcp_usage_events'],
+      minimum_result_count: 0,
+      maximum_result_count: 1,
+      result_sample_count: 2,
+      mcp_result_rows: 2,
+      lookup_success_count: 1,
+      lookup_not_found_count: 1,
     },
   ]));
   const healthy = aggregateRows.find((row) => row.query === 'healthy aggregate');
@@ -335,11 +389,31 @@ const queryRows = [
   assert.equal(mixed.country_code, null);
   assert.equal(mixed.country_available, false);
 
-  const lookup = aggregateRows.find((row) => row.query_origin === 'icon_lookup');
+  const lookup = aggregateRows.find((row) => row.query === 'database');
   assert.equal(lookup.issue_type, 'successful');
   assert.equal(lookup.outcome_label, 'Success');
   assert.equal(lookup.result_count, 1);
   assert.equal(lookup.result_count_available, true);
+
+  const missingLookup = aggregateRows.find((row) => row.query === 'missing icon');
+  assert.equal(missingLookup.issue_type, 'not_found');
+  assert.equal(missingLookup.outcome_label, 'Not found');
+  assert.equal(missingLookup.result_count, 0);
+
+  const failedLookup = aggregateRows.find((row) => row.query === 'failed lookup');
+  assert.equal(failedLookup.issue_type, 'error');
+  assert.equal(failedLookup.outcome_label, 'Error');
+  assert.equal(failedLookup.result_count_available, false);
+
+  const unknownLookup = aggregateRows.find((row) => row.query === 'unknown lookup');
+  assert.equal(unknownLookup.issue_type, 'unknown');
+  assert.equal(unknownLookup.outcome_label, 'Lookup');
+  assert.equal(unknownLookup.result_count_available, false);
+
+  const mixedLookup = aggregateRows.find((row) => row.query === 'mixed lookup');
+  assert.equal(mixedLookup.issue_type, 'mixed_result');
+  assert.equal(mixedLookup.outcome_label, 'Mixed lookup results: 1 found, 1 not found, 0 failed, 0 unknown');
+  assert.equal(mixedLookup.result_count_kind, 'range_across_attempts');
 }
 
 {

@@ -133,7 +133,7 @@ const queryRows = [
     result_count_available: true,
     result_count_kind: 'exact',
     result_unit: 'match',
-    issue_type: 'zero_result',
+    issue_type: 'not_found',
     outcome_label: 'Not found',
     attempt_count: 0,
     activity_count: 1,
@@ -300,6 +300,79 @@ const queryRows = [
     last_seen: '2026-07-17T07:20:00Z',
   })),
 ];
+const eventRows = [
+  {
+    event_identifier: 'event-1',
+    root_request_identifier: '0123456789ab',
+    recorded_at: '2026-07-17T07:32:00Z',
+    query: '\t=HYPERLINK("https://example.com")',
+    query_origin: 'icon_lookup',
+    tool_name: 'get_icon',
+    event_type: 'tool_call',
+    outcome: 'success',
+    status: 'ok',
+    library_filter: 'lucide',
+    locale: null,
+    locale_recorded: false,
+    requested_limit: 1,
+    result_count: 1,
+    returned_icon_refs: ['lucide:database'],
+    returned_icon_refs_recorded: true,
+    latency_ms: 42,
+    server_version: '0.4.20',
+    server_build: 'abc123',
+    traffic_class: 'unclassified_live',
+    channel: 'hosted_mcp',
+    environment: 'production',
+    client_family: 'codex',
+    searcher_identifier: 'anonymous:0123456789ab',
+    source: 'mcp_usage_events',
+  },
+  {
+    event_identifier: 'event-2',
+    root_request_identifier: 'fedcba987654',
+    recorded_at: '2026-07-17T07:30:30Z',
+    query: 'icon lookup missing',
+    query_origin: 'icon_lookup',
+    tool_name: 'get_icon',
+    event_type: 'tool_call',
+    outcome: 'not_found',
+    status: 'error',
+    error_code: 'icon_not_found',
+    library_filter: 'lucide',
+    locale: null,
+    locale_recorded: false,
+    requested_limit: 1,
+    result_count: 0,
+    returned_icon_refs: [],
+    returned_icon_refs_recorded: true,
+    latency_ms: 23,
+    server_version: '0.4.20',
+    traffic_class: 'controlled_test',
+    channel: 'internal_test',
+    environment: 'test',
+    client_family: 'codex',
+    searcher_identifier: 'anonymous:fedcba987654',
+    source: 'mcp_usage_events',
+  },
+  ...Array.from({ length: 103 }, (_, index) => ({
+    event_identifier: `event-${index + 3}`,
+    recorded_at: '2026-07-17T07:20:00Z',
+    query: `event query ${index + 1}`,
+    query_origin: 'agent_query',
+    tool_name: 'search_icons',
+    event_type: 'search_outcome',
+    outcome: 'success',
+    status: 'ok',
+    result_count: 10,
+    returned_icon_refs: [`lucide:event-${index + 1}`],
+    returned_icon_refs_recorded: true,
+    traffic_class: 'unclassified_live',
+    channel: 'hosted_mcp',
+    environment: 'production',
+    searcher_identifier: `anonymous:event${index + 1}`,
+  })),
+];
 const clientRows = Array.from({ length: 55 }, (_, index) => ({
   visitor_kind: 'anonymous',
   client_label: `anon:client${index + 1}`,
@@ -447,6 +520,32 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         }],
       },
       diagnostics: { known_defects: 2, raw_access: 'available through API export' },
+      meta,
+    };
+  }
+  if (path === '/v2/search/events') {
+    const page = Number(searchParams.get('page') || 1);
+    const pageSize = Number(searchParams.get('page_size') || 25);
+    const pageCount = Math.ceil(eventRows.length / pageSize);
+    const start = (page - 1) * pageSize;
+    return {
+      events: eventRows.slice(start, start + pageSize),
+      events_complete: true,
+      events_export_available: true,
+      pagination: {
+        page,
+        page_size: pageSize,
+        total: eventRows.length,
+        page_count: pageCount,
+      },
+      field_coverage: {
+        locale: { recorded: 0, total: eventRows.length, rate: 0 },
+        returned_icon_refs: { recorded: eventRows.length - 1, total: eventRows.length, rate: 0.9905 },
+      },
+      definitions: {
+        grain: 'One deduplicated event.',
+        null_values: 'Null means the field was not recorded.',
+      },
       meta,
     };
   }
@@ -757,6 +856,11 @@ try {
   ok(!(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed'))), 'The paired gap worklist did not expand with icon requests.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
   ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The searcher-level table is not labelled Search history.');
+  ok(await page.locator('#searchDataGuide').count() === 1, 'Search history does not include its data guide.');
+  const searchDataGuide = await page.locator('#searchDataGuide').textContent();
+  for (const expected of ['Summary rows', 'one recorded event', 'main counts', 'does not prove', 'Blank values', 'not called organic']) {
+    ok(searchDataGuide.includes(expected), `Search history data guide is missing: ${expected}`);
+  }
   const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
   ok(queryHeaders.includes('Searcher'), 'Search history does not show its searcher column.');
   ok(queryHeaders.includes('Searches'), 'Search history does not show recorded activity.');
@@ -859,6 +963,28 @@ try {
   ));
   ok(Boolean(registeredQueryJsonRow), 'The query JSON loses the nested searcher details.');
   ok(registeredQueryJsonRow.job_category === 'navigation', 'The query JSON omits the job category used by the row grouping.');
+  for (const key of ['query-events-csv', 'query-events-json']) {
+    ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
+  }
+  const eventCsvDownload = page.waitForEvent('download');
+  await page.click('[data-export="query-events-csv"]');
+  const eventCsv = await eventCsvDownload;
+  const eventCsvPath = await eventCsv.path();
+  const eventCsvText = await readFile(eventCsvPath, 'utf8');
+  ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === eventRows.length + 1, 'The event CSV contains only the first page.');
+  ok(eventCsvText.includes('"root_request_identifier"'), 'The event CSV omits root request linkage.');
+  ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
+  ok(eventCsvText.includes('"\'\t=HYPERLINK(""https://example.com"")"'), 'The event CSV leaves a whitespace-prefixed spreadsheet formula active.');
+  ok(!eventCsvText.includes('"request_id"'), 'The event CSV exposes a raw request ID field.');
+  const eventJsonDownload = page.waitForEvent('download');
+  await page.click('[data-export="query-events-json"]');
+  const eventJson = await eventJsonDownload;
+  const eventJsonPath = await eventJson.path();
+  const eventJsonPayload = JSON.parse(await readFile(eventJsonPath, 'utf8'));
+  ok(eventJsonPayload.events.length === eventRows.length, 'The event JSON contains only the first page.');
+  ok(eventJsonPayload.events_complete === true, 'The event JSON omits its completeness state.');
+  ok(Boolean(eventJsonPayload.field_coverage.returned_icon_refs), 'The event JSON omits field coverage.');
+  ok(Boolean(eventJsonPayload.definitions.grain), 'The event JSON omits metric definitions.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');
