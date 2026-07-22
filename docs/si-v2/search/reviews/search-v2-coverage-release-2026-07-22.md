@@ -1,7 +1,7 @@
 # Search v2 broad coverage release
 
 Date: 2026-07-22
-Status: Railway and public web live and verified; npm 0.4.20 staged for browser approval
+Status: released and verified on Railway, npm `latest`, and the public website
 Version: 0.4.20
 Base revision: `acb9f09d6fd6057823d45d6083cf019f9d884a0f`
 
@@ -48,7 +48,7 @@ The first comparison exposed unrelated brand logos entering generic `motion`, `a
 
 The exact archive passed clean installation, all 225 stdio search cases, package inspection, image preview generation, public-safety scanning, synchronized-surface checks, the one-call contract, structured error checks, packaged query-frame checks, hosted 429 propagation, and recommendation clarification behavior.
 
-The archive is staged on npm as stage `5c0fa05b-b6e2-45f8-a390-ab44ea695eb5` with public access and tag `latest`. The staged shasum matches `a7f37859e8169db2ecd40ee811a8935ad1f65b0b`. A fresh download of the staged archive has SHA-256 `9bf4079b70fce74dfe57b0e49e82b85b692d45a6175e5baf36319462800c066c`, byte-identical to the approved archive. npm `latest` remains 0.4.19 until the staged package is approved through npm's browser security check.
+npm stage `5c0fa05b-b6e2-45f8-a390-ab44ea695eb5` was approved and published with public access and tag `latest`. Registry metadata reports version 0.4.20, shasum `a7f37859e8169db2ecd40ee811a8935ad1f65b0b`, integrity `sha512-TnqVCBbnWE0mjbpZPb1m1J7KjOiLUzRoY01rK8/4B4YS0tsAqVevO00gCwqTJORVoWvKzsR59KDk5KZ1wNVefA==`, 67 files, and 25,769,232 unpacked bytes. A fresh `@supericons/mcp@0.4.20` registry download has SHA-256 `9bf4079b70fce74dfe57b0e49e82b85b692d45a6175e5baf36319462800c066c`, byte-identical to the approved archive. A clean installation of those registry bytes passed all 225 stdio cases with fixed fingerprint `17ed68b34768e1432fe176d44a994e3da6bac4566c607e229116f85001a7002c` and route fingerprint `9627b1054af4feab30787d9341093b897fbd4352f4317a6e5dde977d5611f68c`.
 
 ## Production deployment
 
