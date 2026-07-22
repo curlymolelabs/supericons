@@ -18,7 +18,9 @@
         "broken ai output",
         "ai garbage",
         "ai junk",
-        "sloppy ai"
+        "sloppy ai",
+        "hallucination",
+        "hallucinate"
       ],
       "localized_phrases": {
         "zh-Hans": ["AI 垃圾", "低质量 AI"],
@@ -31,9 +33,33 @@
         "vi": ["AI chất lượng thấp"],
         "th": ["AI คุณภาพต่ำ"]
       },
-      "positive_concepts": ["bot off", "warning", "trash", "sparkles off", "x circle", "image off", "alert triangle"],
-      "avoid_concepts": ["food", "cooking", "animal feed", "slop bucket", "dish"],
-      "fallback_terms": ["bad output", "messy output", "hallucination", "unreliable ai", "cleanup"],
+      "positive_concepts": [
+        "lucide bot off",
+        "tabler robot off",
+        "lucide alert triangle",
+        "material robot",
+        "bot off",
+        "warning",
+        "trash",
+        "sparkles off",
+        "x circle",
+        "image off",
+        "alert triangle"
+      ],
+      "avoid_concepts": [
+        "food",
+        "cooking",
+        "animal feed",
+        "slop bucket",
+        "dish"
+      ],
+      "fallback_terms": [
+        "bad output",
+        "messy output",
+        "hallucination",
+        "unreliable ai",
+        "cleanup"
+      ],
       "result_families": ["bot_error", "warning", "cleanup", "negative_status"],
       "gap_strategy": "return_warning_or_cleanup_fallback",
       "confidence_floor": "medium"
@@ -45,7 +71,15 @@
       "domains": ["performance", "product quality"],
       "facets": ["performance_positive", "strength", "energy"],
       "intent_types": ["adjective", "performance_positive"],
-      "phrases": ["powerful", "strong", "high performance", "performant", "capable", "heavy duty", "robust"],
+      "phrases": [
+        "powerful",
+        "strong",
+        "high performance",
+        "performant",
+        "capable",
+        "heavy duty",
+        "robust"
+      ],
       "localized_phrases": {
         "zh-Hans": ["强大", "强力", "高性能"],
         "zh-Hant": ["強大", "強力", "高效能"],
@@ -57,8 +91,23 @@
         "vi": ["mạnh mẽ", "hiệu năng cao"],
         "th": ["ทรงพลัง", "ประสิทธิภาพสูง"]
       },
-      "positive_concepts": ["power", "bolt", "zap", "rocket", "gauge", "flame", "shield", "dumbbell"],
-      "avoid_concepts": ["power off", "battery low", "plug off", "circle off", "weak"],
+      "positive_concepts": [
+        "power",
+        "bolt",
+        "zap",
+        "rocket",
+        "gauge",
+        "flame",
+        "shield",
+        "dumbbell"
+      ],
+      "avoid_concepts": [
+        "power off",
+        "battery low",
+        "plug off",
+        "circle off",
+        "weak"
+      ],
       "fallback_terms": ["energy", "speed", "capability", "strength"],
       "result_families": ["energy", "performance", "strength"],
       "gap_strategy": "return_energy_or_performance_fallback",
@@ -71,7 +120,16 @@
       "domains": ["security", "privacy", "commerce"],
       "facets": ["trust", "security", "privacy"],
       "intent_types": ["abstract_attribute", "security"],
-      "phrases": ["secure", "safe", "private", "trusted", "protected", "secure checkout", "privacy first", "verified account"],
+      "phrases": [
+        "secure",
+        "safe",
+        "private",
+        "trusted",
+        "protected",
+        "secure checkout",
+        "privacy first",
+        "verified account"
+      ],
       "localized_phrases": {
         "zh-Hans": ["安全", "隐私", "受保护"],
         "zh-Hant": ["安全", "隱私", "受保護"],
@@ -83,7 +141,14 @@
         "vi": ["bảo mật", "riêng tư"],
         "th": ["ปลอดภัย", "ความเป็นส่วนตัว"]
       },
-      "positive_concepts": ["shield", "lock", "key", "verified", "fingerprint", "badge check"],
+      "positive_concepts": [
+        "shield",
+        "lock",
+        "key",
+        "verified",
+        "fingerprint",
+        "badge check"
+      ],
       "avoid_concepts": ["unlock", "shield off", "lock open"],
       "fallback_terms": ["protection", "trust", "privacy", "authentication"],
       "result_families": ["security", "privacy", "verification"],
@@ -97,7 +162,16 @@
       "domains": ["performance", "infrastructure"],
       "facets": ["speed", "latency", "time"],
       "intent_types": ["performance", "timing"],
-      "phrases": ["fast", "instant", "quick", "low latency", "latency", "slow response", "response time", "speed"],
+      "phrases": [
+        "fast",
+        "instant",
+        "quick",
+        "low latency",
+        "latency",
+        "slow response",
+        "response time",
+        "speed"
+      ],
       "localized_phrases": {
         "zh-Hans": ["快速", "低延迟"],
         "zh-Hant": ["快速", "低延遲"],
@@ -109,7 +183,15 @@
         "vi": ["nhanh", "độ trễ thấp"],
         "th": ["เร็ว", "หน่วงต่ำ"]
       },
-      "positive_concepts": ["timer", "gauge", "rocket", "activity", "bolt", "zap"],
+      "positive_concepts": [
+        "lucide timer",
+        "material network ping",
+        "tabler gauge",
+        "rocket",
+        "activity",
+        "bolt",
+        "zap"
+      ],
       "avoid_concepts": ["slow motion", "pause", "hourglass disabled"],
       "fallback_terms": ["performance", "speed", "timing"],
       "result_families": ["performance", "timer", "status"],
@@ -123,7 +205,16 @@
       "domains": ["design", "product quality"],
       "facets": ["quality_positive", "design", "delight"],
       "intent_types": ["adjective", "quality_positive"],
-      "phrases": ["premium", "beautiful", "polished", "clean design", "delightful", "high quality", "professional", "premium dashboard"],
+      "phrases": [
+        "premium",
+        "beautiful",
+        "polished",
+        "clean design",
+        "delightful",
+        "high quality",
+        "professional",
+        "premium dashboard"
+      ],
       "localized_phrases": {
         "zh-Hans": ["高级", "精美", "高质量"],
         "zh-Hant": ["高級", "精美", "高品質"],
@@ -135,7 +226,14 @@
         "vi": ["cao cấp", "đẹp"],
         "th": ["พรีเมียม", "สวยงาม"]
       },
-      "positive_concepts": ["sparkles", "badge", "gem", "palette", "wand", "star"],
+      "positive_concepts": [
+        "sparkles",
+        "badge",
+        "gem",
+        "palette",
+        "wand",
+        "star"
+      ],
       "avoid_concepts": ["bug", "broken", "warning", "x circle"],
       "fallback_terms": ["quality", "design", "polish"],
       "result_families": ["design_quality", "delight", "premium"],
@@ -149,7 +247,16 @@
       "domains": ["status", "system health"],
       "facets": ["error", "failure", "negative_status"],
       "intent_types": ["status", "error"],
-      "phrases": ["broken", "failed", "not working", "crash", "error", "bug", "failure", "unavailable"],
+      "phrases": [
+        "broken",
+        "failed",
+        "not working",
+        "crash",
+        "error",
+        "bug",
+        "failure",
+        "unavailable"
+      ],
       "localized_phrases": {
         "zh-Hans": ["错误", "失败", "坏了"],
         "zh-Hant": ["錯誤", "失敗", "壞了"],
@@ -161,7 +268,14 @@
         "vi": ["lỗi", "thất bại"],
         "th": ["ข้อผิดพลาด", "ล้มเหลว"]
       },
-      "positive_concepts": ["x circle", "bug", "alert", "wrench", "bot off", "triangle alert"],
+      "positive_concepts": [
+        "x circle",
+        "bug",
+        "alert",
+        "wrench",
+        "bot off",
+        "triangle alert"
+      ],
       "avoid_concepts": ["check", "success", "verified", "badge check"],
       "fallback_terms": ["failure", "problem", "repair", "warning"],
       "result_families": ["error", "warning", "repair"],
@@ -201,8 +315,21 @@
       "objects": ["car", "license plate", "vehicle"],
       "actions": ["scan", "recognize", "detect"],
       "devices": ["camera"],
-      "positive_concepts": ["camera", "scan", "car", "focus", "target", "vehicle"],
-      "avoid_concepts": ["dinner plate", "shopping cart", "legal license", "certificate", "food dish"],
+      "positive_concepts": [
+        "camera",
+        "scan",
+        "car",
+        "focus",
+        "target",
+        "vehicle"
+      ],
+      "avoid_concepts": [
+        "dinner plate",
+        "shopping cart",
+        "legal license",
+        "certificate",
+        "food dish"
+      ],
       "fallback_terms": ["vehicle scan", "camera scan", "car scan"],
       "result_families": ["computer_vision", "vehicle", "scan"],
       "gap_strategy": "return_camera_scan_vehicle_fallback",
@@ -215,7 +342,16 @@
       "domains": ["ai", "automation", "developer tools"],
       "facets": ["agentic", "workflow", "tool_use"],
       "intent_types": ["ai_workflow", "automation"],
-      "phrases": ["agent", "ai agent", "tool call", "autonomous", "orchestration", "agentic workflow", "multi agent", "workflow automation"],
+      "phrases": [
+        "agent",
+        "ai agent",
+        "tool call",
+        "autonomous",
+        "orchestration",
+        "agentic workflow",
+        "multi agent",
+        "workflow automation"
+      ],
       "localized_phrases": {
         "zh-Hans": ["智能体", "工具调用", "工作流自动化"],
         "zh-Hant": ["智能體", "工具呼叫", "工作流程自動化"],
@@ -227,7 +363,15 @@
         "vi": ["tác nhân AI", "gọi công cụ"],
         "th": ["เอเจนต์ AI", "เรียกใช้เครื่องมือ"]
       },
-      "positive_concepts": ["bot", "workflow", "route", "network", "terminal", "blocks", "nodes"],
+      "positive_concepts": [
+        "bot",
+        "workflow",
+        "route",
+        "network",
+        "terminal",
+        "blocks",
+        "nodes"
+      ],
       "avoid_concepts": ["generic ai logo", "single chat bubble"],
       "fallback_terms": ["automation", "workflow", "agent", "tool"],
       "result_families": ["agent", "workflow", "developer_tool"],
@@ -241,9 +385,24 @@
       "domains": ["analytics", "reporting", "monitoring"],
       "facets": ["dashboard", "chart", "metrics"],
       "intent_types": ["data_interface", "monitoring"],
-      "phrases": ["analytics dashboard", "monitoring dashboard", "metrics dashboard", "reporting dashboard"],
-      "positive_concepts": ["dashboard", "analytics", "chart", "gauge", "panel"],
-      "avoid_concepts": ["mobile data", "campaign monitor brand", "cellular signal"],
+      "phrases": [
+        "analytics dashboard",
+        "monitoring dashboard",
+        "metrics dashboard",
+        "reporting dashboard"
+      ],
+      "positive_concepts": [
+        "dashboard",
+        "analytics",
+        "chart",
+        "gauge",
+        "panel"
+      ],
+      "avoid_concepts": [
+        "mobile data",
+        "campaign monitor brand",
+        "cellular signal"
+      ],
       "fallback_terms": ["dashboard", "chart", "analytics"],
       "result_families": ["dashboard", "chart", "metrics"],
       "gap_strategy": "return_dashboard_or_chart_fallback",
@@ -263,7 +422,13 @@
         "undo delete",
         "deleted by mistake"
       ],
-      "positive_concepts": ["restore", "undo", "archive restore", "history", "trash restore"],
+      "positive_concepts": [
+        "restore",
+        "undo",
+        "archive restore",
+        "history",
+        "trash restore"
+      ],
       "avoid_concepts": ["dishwasher", "car wash", "refresh only"],
       "fallback_terms": ["restore", "undo", "recovery"],
       "result_families": ["restore", "undo", "history"],
@@ -277,8 +442,19 @@
       "domains": ["developer tools", "cloud", "infrastructure"],
       "facets": ["deployment", "release", "production"],
       "intent_types": ["developer_action", "infrastructure"],
-      "phrases": ["cloud deployment", "deploy to production", "production deployment", "release to production"],
-      "positive_concepts": ["cloud upload", "deployed code", "rocket launch", "server", "package"],
+      "phrases": [
+        "cloud deployment",
+        "deploy to production",
+        "production deployment",
+        "release to production"
+      ],
+      "positive_concepts": [
+        "cloud upload",
+        "deployed code",
+        "rocket launch",
+        "server",
+        "package"
+      ],
       "avoid_concepts": ["production quantity", "factory", "physical mail"],
       "fallback_terms": ["deploy", "deployment", "cloud upload", "release"],
       "result_families": ["deployment", "cloud", "release"],
@@ -292,9 +468,24 @@
       "domains": ["developer tools", "quality assurance"],
       "facets": ["test", "quality", "automation"],
       "intent_types": ["developer_action", "quality_assurance"],
-      "phrases": ["unit test", "integration test", "end to end test", "automated test"],
-      "positive_concepts": ["test tube", "test", "checklist", "beaker", "bug check"],
-      "avoid_concepts": ["aspect ratio", "call quality", "air conditioning unit"],
+      "phrases": [
+        "unit test",
+        "integration test",
+        "end to end test",
+        "automated test"
+      ],
+      "positive_concepts": [
+        "test tube",
+        "test",
+        "checklist",
+        "beaker",
+        "bug check"
+      ],
+      "avoid_concepts": [
+        "aspect ratio",
+        "call quality",
+        "air conditioning unit"
+      ],
       "fallback_terms": ["test", "testing", "quality assurance"],
       "result_families": ["testing", "quality", "checklist"],
       "gap_strategy": "return_test_or_checklist_fallback",
@@ -307,8 +498,20 @@
       "domains": ["developer tools", "infrastructure"],
       "facets": ["container", "orchestration", "runtime"],
       "intent_types": ["developer_object", "infrastructure"],
-      "phrases": ["docker container", "kubernetes", "k8s", "container platform", "container deployment"],
-      "positive_concepts": ["container", "docker", "boxes", "package", "kubernetes"],
+      "phrases": [
+        "docker container",
+        "kubernetes",
+        "k8s",
+        "container platform",
+        "container deployment"
+      ],
+      "positive_concepts": [
+        "container",
+        "docker",
+        "boxes",
+        "package",
+        "kubernetes"
+      ],
       "avoid_concepts": ["animated image", "broken image", "photo"],
       "fallback_terms": ["container", "docker", "pod", "orchestration"],
       "result_families": ["container", "orchestration", "package"],
@@ -322,8 +525,19 @@
       "domains": ["account", "identity", "people"],
       "facets": ["profile", "avatar", "user"],
       "intent_types": ["person_identity", "account"],
-      "phrases": ["user profile", "account profile", "member profile", "profile avatar"],
-      "positive_concepts": ["user", "profile", "avatar", "account circle", "person"],
+      "phrases": [
+        "user profile",
+        "account profile",
+        "member profile",
+        "profile avatar"
+      ],
+      "positive_concepts": [
+        "user",
+        "profile",
+        "avatar",
+        "account circle",
+        "person"
+      ],
       "avoid_concepts": ["account balance", "wallet", "bank"],
       "fallback_terms": ["user", "profile", "avatar"],
       "result_families": ["user", "profile", "avatar"],
@@ -352,8 +566,19 @@
       "domains": ["delivery", "shipping", "developer tools"],
       "facets": ["package", "send", "delivery"],
       "intent_types": ["delivery_action"],
-      "phrases": ["package delivery", "send package", "deliver package", "package deliver send class"],
-      "positive_concepts": ["package delivery", "delivery truck", "package", "send", "box"],
+      "phrases": [
+        "package delivery",
+        "send package",
+        "deliver package",
+        "package deliver send class"
+      ],
+      "positive_concepts": [
+        "package delivery",
+        "delivery truck",
+        "package",
+        "send",
+        "box"
+      ],
       "avoid_concepts": ["school class", "classification"],
       "fallback_terms": ["package", "delivery", "send"],
       "result_families": ["package", "delivery", "send"],
@@ -368,7 +593,13 @@
       "facets": ["launch", "complete", "release"],
       "intent_types": ["expressive_metaphor", "developer_action"],
       "phrases": ["ship it", "ready to ship", "release complete"],
-      "positive_concepts": ["rocket launch", "deployed code", "package check", "check circle", "send"],
+      "positive_concepts": [
+        "rocket launch",
+        "deployed code",
+        "package check",
+        "check circle",
+        "send"
+      ],
       "avoid_concepts": ["cargo ship", "boat", "ocean vessel"],
       "fallback_terms": ["rocket launch", "deployed code", "package check"],
       "result_families": ["launch", "deployment", "success"],
@@ -383,7 +614,13 @@
       "facets": ["exhaustion", "low energy", "stress"],
       "intent_types": ["expressive_metaphor", "wellbeing_state"],
       "phrases": ["burnout", "burned out", "feeling burned out"],
-      "positive_concepts": ["flame", "battery low", "battery warning", "coffee", "hourglass"],
+      "positive_concepts": [
+        "flame",
+        "battery low",
+        "battery warning",
+        "coffee",
+        "hourglass"
+      ],
       "avoid_concepts": ["stove", "campfire only"],
       "fallback_terms": ["battery low", "flame", "battery warning"],
       "result_families": ["low energy", "warning", "exhaustion"],
@@ -412,8 +649,18 @@
       "domains": ["digital wellbeing", "social media", "expression"],
       "facets": ["scroll", "phone", "time"],
       "intent_types": ["expressive_metaphor", "digital_behavior"],
-      "phrases": ["doomscrolling", "doom scrolling", "endless bad news scrolling"],
-      "positive_concepts": ["mouse scroll", "phone", "hourglass", "warning", "screen time"],
+      "phrases": [
+        "doomscrolling",
+        "doom scrolling",
+        "endless bad news scrolling"
+      ],
+      "positive_concepts": [
+        "mouse scroll",
+        "phone",
+        "hourglass",
+        "warning",
+        "screen time"
+      ],
       "avoid_concepts": ["paper document scroll", "historical scroll"],
       "fallback_terms": ["mouse scroll", "phone", "hourglass"],
       "result_families": ["scrolling", "phone", "time warning"],
@@ -443,7 +690,13 @@
       "facets": ["ideas", "thinking", "spark"],
       "intent_types": ["expressive_metaphor", "creative_action"],
       "phrases": ["brainstorm", "brainstorm ideas", "idea storm"],
-      "positive_concepts": ["brain", "lightbulb", "sparkles", "cloud", "network"],
+      "positive_concepts": [
+        "brain",
+        "lightbulb",
+        "sparkles",
+        "cloud",
+        "network"
+      ],
       "avoid_concepts": ["weather storm only"],
       "fallback_terms": ["brain", "lightbulb", "sparkles"],
       "result_families": ["ideas", "thinking", "creativity"],
@@ -466,13 +719,484 @@
       "confidence_floor": "high"
     },
     {
+      "id": "neck_pain_symptom",
+      "label": "Neck pain",
+      "description": "Neck pain, a sore neck, or a person clearly experiencing neck discomfort.",
+      "domains": ["health", "body", "symptoms"],
+      "facets": ["neck", "pain", "person in pain"],
+      "intent_types": ["health_symptom"],
+      "phrases": ["neck pain", "neck pain person", "sore neck"],
+      "positive_concepts": ["neck pain", "person in pain", "body pain"],
+      "avoid_concepts": ["generic person", "activity", "accessibility"],
+      "fallback_terms": ["neck pain", "person in pain", "body pain"],
+      "result_families": ["neck pain", "person in pain"],
+      "gap_strategy": "return_honest_no_result_without_specific_symptom_icon",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "code_editor",
+      "label": "Code editor",
+      "description": "A source-code editor, coding workspace, or terminal used to edit software.",
+      "domains": ["developer tools", "software development"],
+      "facets": ["code", "editor", "terminal"],
+      "intent_types": ["developer_tool"],
+      "phrases": ["code editor", "source code editor"],
+      "localized_phrases": {
+        "de": ["code-editor"],
+        "es": ["editor de código"],
+        "pt": ["editor de código"]
+      },
+      "positive_concepts": ["code", "terminal", "square code", "braces"],
+      "avoid_concepts": ["editor choice", "text formatting"],
+      "fallback_terms": ["code", "terminal", "braces"],
+      "result_families": ["code", "editor", "terminal"],
+      "gap_strategy": "return_code_or_terminal_icon",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "database_search",
+      "label": "Database search",
+      "description": "Search, inspect, or find records in a database.",
+      "domains": ["data", "developer tools"],
+      "facets": ["database", "search", "records"],
+      "intent_types": ["data_search"],
+      "phrases": ["database search", "search database"],
+      "localized_phrases": {
+        "es": ["buscar icono de base de datos", "buscar base de datos"]
+      },
+      "positive_concepts": ["database search", "database", "search"],
+      "avoid_concepts": ["base station", "radio tower"],
+      "fallback_terms": ["database search", "database"],
+      "result_families": ["database search", "database"],
+      "gap_strategy": "return_database_search_or_database_icon",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "checklist_tasks",
+      "label": "Checklist and pending tasks",
+      "description": "A checklist, task list, or pending work queue.",
+      "domains": ["productivity", "work management"],
+      "facets": ["checklist", "tasks", "pending"],
+      "intent_types": ["task_management"],
+      "phrases": ["checklist tasks", "task checklist", "pending tasks"],
+      "localized_phrases": {
+        "pt": ["checklist tarefas pendentes", "tarefas pendentes"]
+      },
+      "positive_concepts": [
+        "list checks",
+        "list check",
+        "clipboard check",
+        "clipboard list",
+        "checklist"
+      ],
+      "avoid_concepts": ["shopping list only"],
+      "fallback_terms": ["list checks", "clipboard check", "checklist"],
+      "result_families": ["checklist", "tasks"],
+      "gap_strategy": "return_checklist_or_task_list",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "cleaning_sweep",
+      "label": "Cleaning and sweeping",
+      "description": "Cleaning, sweeping, brushing, or vacuuming a space.",
+      "domains": ["cleaning", "maintenance"],
+      "facets": ["cleaning", "sweep", "broom"],
+      "intent_types": ["maintenance_action"],
+      "phrases": [
+        "broom cleanup construction",
+        "cleanup",
+        "cleaning",
+        "sweep",
+        "broom"
+      ],
+      "positive_concepts": ["broom", "vacuum cleaner", "brush", "sweep"],
+      "avoid_concepts": ["delete sweep", "sweepstakes"],
+      "fallback_terms": ["broom", "vacuum cleaner", "brush"],
+      "result_families": ["cleaning", "maintenance"],
+      "gap_strategy": "return_cleaning_tool",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "customer_team_contacts",
+      "label": "Customers, companies, and teams",
+      "description": "Customers, companies, contacts, teams, or groups of people.",
+      "domains": ["crm", "business", "teams"],
+      "facets": ["customers", "companies", "contacts", "team"],
+      "intent_types": ["people_and_organizations"],
+      "phrases": ["customers companies contacts", "team people group"],
+      "localized_phrases": {
+        "pt": ["clientes empresas contatos", "equipe pessoas grupo"]
+      },
+      "positive_concepts": [
+        "users",
+        "contact",
+        "building",
+        "user round",
+        "briefcase business"
+      ],
+      "avoid_concepts": ["library book"],
+      "fallback_terms": ["users", "contact", "building"],
+      "result_families": ["people", "contacts", "organizations"],
+      "gap_strategy": "return_people_contacts_or_company",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "excavation_vehicle",
+      "label": "Excavator and digging vehicle",
+      "description": "An excavator, digger, bulldozer, tractor, or construction vehicle.",
+      "domains": ["construction", "heavy equipment"],
+      "facets": ["excavator", "digger", "vehicle"],
+      "intent_types": ["construction_equipment"],
+      "phrases": [
+        "excavator construction vehicle",
+        "excavator",
+        "digger",
+        "construction vehicle"
+      ],
+      "positive_concepts": [
+        "bulldozer",
+        "tractor",
+        "construction",
+        "car crane"
+      ],
+      "avoid_concepts": ["cable car", "generic car"],
+      "fallback_terms": ["bulldozer", "tractor", "construction"],
+      "result_families": ["construction vehicle", "heavy equipment"],
+      "gap_strategy": "return_construction_vehicle",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "email_document",
+      "label": "Email document",
+      "description": "A document sent, received, or attached through email.",
+      "domains": ["communication", "documents"],
+      "facets": ["email", "document", "attachment"],
+      "intent_types": ["document_communication"],
+      "phrases": ["email document", "mail document", "emailed file"],
+      "positive_concepts": [
+        "file text",
+        "mail",
+        "files",
+        "paperclip",
+        "mail check"
+      ],
+      "avoid_concepts": ["voicemail"],
+      "fallback_terms": ["file text", "mail", "paperclip"],
+      "result_families": ["email", "document"],
+      "gap_strategy": "return_mail_or_document",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "gaming_controller",
+      "label": "Game controller",
+      "description": "A gamepad or handheld gaming controller.",
+      "domains": ["gaming", "entertainment"],
+      "facets": ["controller", "gamepad"],
+      "intent_types": ["gaming_device"],
+      "phrases": [
+        "game controller gaming",
+        "game controller",
+        "gaming controller"
+      ],
+      "positive_concepts": ["gamepad", "game controller", "controller"],
+      "avoid_concepts": ["settings controller"],
+      "fallback_terms": ["gamepad", "game controller"],
+      "result_families": ["gamepad", "controller"],
+      "gap_strategy": "return_game_controller",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "inbox_work_queue",
+      "label": "Inbox and work queue",
+      "description": "An inbox, review queue, or tray holding work items.",
+      "domains": ["productivity", "workflow"],
+      "facets": ["inbox", "queue", "review"],
+      "intent_types": ["work_queue"],
+      "phrases": [
+        "work review queue inbox",
+        "review queue",
+        "work queue",
+        "inbox"
+      ],
+      "positive_concepts": ["tray", "tray arrow down", "inbox", "stack"],
+      "avoid_concepts": ["email logo"],
+      "fallback_terms": ["tray", "inbox", "stack"],
+      "result_families": ["inbox", "work queue"],
+      "gap_strategy": "return_inbox_or_tray",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "claw_grab",
+      "label": "Claw and grab",
+      "description": "A claw, gripping hand, or grab action.",
+      "domains": ["interaction", "tools"],
+      "facets": ["claw", "grab", "grip"],
+      "intent_types": ["grabbing_action"],
+      "phrases": ["claw grab grapple", "claw", "grapple"],
+      "positive_concepts": ["hand grab", "hand grabbing", "grab"],
+      "avoid_concepts": ["brand logo"],
+      "fallback_terms": ["hand grab", "grab"],
+      "result_families": ["grab", "hand"],
+      "gap_strategy": "return_grab_or_gripping_hand",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "why_choose_us_value",
+      "label": "Why choose us",
+      "description": "A reason to choose a product, service, or team.",
+      "domains": ["marketing", "trust"],
+      "facets": ["benefit", "trust", "choice"],
+      "intent_types": ["value_proposition"],
+      "phrases": ["why choose us", "why choose our product"],
+      "positive_concepts": [
+        "badge check",
+        "shield check",
+        "users",
+        "heart handshake",
+        "award"
+      ],
+      "avoid_concepts": ["question mark only"],
+      "fallback_terms": ["badge check", "shield check", "award"],
+      "result_families": ["trust", "benefit", "team"],
+      "gap_strategy": "return_trust_or_benefit_symbol",
+      "confidence_floor": "medium"
+    },
+    {
+      "id": "fortress_boundary_security",
+      "label": "Fortress and secure boundary",
+      "description": "A fortress, protected perimeter, or strong security boundary.",
+      "domains": ["security", "infrastructure"],
+      "facets": ["fortress", "boundary", "protection"],
+      "intent_types": ["security_structure"],
+      "phrases": ["fortress secure boundary", "secure fortress", "fortress"],
+      "positive_concepts": ["building fortress", "fortress", "shield", "wall"],
+      "avoid_concepts": ["layout", "align", "minus"],
+      "fallback_terms": ["building fortress", "fortress", "shield"],
+      "result_families": ["fortress", "security boundary"],
+      "suppress_groups": ["trust_security_privacy"],
+      "gap_strategy": "return_fortress_or_security_boundary",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "construction_safety_worker",
+      "label": "Construction worker and safety helmet",
+      "description": "Construction workers, hard hats, safety helmets, and building work.",
+      "domains": ["construction", "workplace safety"],
+      "facets": ["worker", "helmet", "building"],
+      "intent_types": ["occupation", "safety_equipment"],
+      "phrases": [
+        "hard hat construction worker",
+        "engineer hard hat",
+        "construction worker",
+        "hard hat"
+      ],
+      "localized_phrases": {
+        "es": ["casco de construcción", "trabajador de construcción"],
+        "ja": ["建設作業員", "ヘルメット作業員"]
+      },
+      "positive_concepts": ["hard hat", "construction", "helmet", "worker"],
+      "avoid_concepts": ["hard drive", "chef hat", "magic wand", "palette"],
+      "fallback_terms": ["hard hat", "construction", "helmet"],
+      "result_families": ["construction", "safety", "worker"],
+      "suppress_groups": ["quality_polish"],
+      "gap_strategy": "return_construction_safety_equipment",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "connected_people_relationship",
+      "label": "Connected people and relationships",
+      "description": "People, records, or accounts connected through a relationship graph.",
+      "domains": ["relationships", "community", "data graph"],
+      "facets": ["people", "connection", "relationship"],
+      "intent_types": ["relationship", "connected_people"],
+      "phrases": [
+        "connected people",
+        "people together",
+        "two people together",
+        "care relationship",
+        "relationship graph"
+      ],
+      "localized_phrases": {
+        "es": ["personas conectadas", "relación entre personas"],
+        "ja": ["つながった人々", "人と人のつながり"]
+      },
+      "positive_concepts": [
+        "users",
+        "users three",
+        "share network",
+        "link",
+        "plugs connected"
+      ],
+      "avoid_concepts": ["wifi", "paperclip", "number two"],
+      "fallback_terms": ["users", "share network", "relationship"],
+      "result_families": ["people", "relationship", "network graph"],
+      "gap_strategy": "return_people_or_relationship_graph",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "network_graph_nodes",
+      "label": "Network graph and connected nodes",
+      "description": "Connected graph nodes, topology, proximity, and network relationships.",
+      "domains": ["network graph", "topology", "data relationships"],
+      "facets": ["nodes", "connections", "graph"],
+      "intent_types": ["network_graph", "connected_nodes"],
+      "phrases": [
+        "network proximity graph nodes",
+        "network graph",
+        "graph nodes",
+        "connected nodes",
+        "proximity graph",
+        "nodes",
+        "proximity"
+      ],
+      "localized_phrases": {
+        "es": ["red de nodos conectados", "gráfico de red"],
+        "ja": ["接続ノード", "ネットワークグラフ"]
+      },
+      "positive_concepts": [
+        "graph",
+        "network",
+        "share network",
+        "chart network"
+      ],
+      "avoid_concepts": ["network x", "network slash", "wifi"],
+      "fallback_terms": ["graph", "network", "share network"],
+      "result_families": ["graph", "topology", "connected nodes"],
+      "gap_strategy": "return_graph_or_network_topology",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "disconnected_link_state",
+      "label": "Disconnected network or broken link",
+      "description": "A network or link that is disconnected, broken, off, or unavailable.",
+      "domains": ["network", "link state", "system status"],
+      "facets": ["disconnected", "broken link", "negative status"],
+      "intent_types": ["network_state", "link_state"],
+      "phrases": [
+        "network disconnected broken link",
+        "network disconnected",
+        "disconnected link",
+        "broken link"
+      ],
+      "localized_phrases": {
+        "es": ["red desconectada", "enlace roto"],
+        "ja": ["切断されたネットワーク", "壊れたリンク"]
+      },
+      "positive_concepts": ["link off", "unlink", "network off", "wifi off"],
+      "avoid_concepts": ["generic bug", "generic warning", "check"],
+      "fallback_terms": ["link off", "unlink", "network off"],
+      "result_families": ["disconnected link", "offline network"],
+      "gap_strategy": "return_disconnected_link_or_network",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "construction_crane",
+      "label": "Construction crane",
+      "description": "A construction crane, tower crane, or lifting crane at a building site.",
+      "domains": ["construction", "heavy equipment"],
+      "facets": ["crane", "lifting", "building"],
+      "intent_types": ["construction_equipment"],
+      "phrases": [
+        "crane hook construction",
+        "construction crane",
+        "tower crane"
+      ],
+      "positive_concepts": ["crane", "crane tower", "tower crane", "car crane"],
+      "avoid_concepts": ["fish hook", "fishing hook", "webhook"],
+      "fallback_terms": ["crane", "tower crane"],
+      "result_families": ["construction crane", "heavy equipment"],
+      "gap_strategy": "return_construction_crane",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "tow_truck_vehicle",
+      "label": "Tow truck",
+      "description": "A vehicle that tows, lifts, or recovers another vehicle.",
+      "domains": ["transport", "roadside assistance"],
+      "facets": ["towing", "recovery vehicle"],
+      "intent_types": ["specialized_vehicle"],
+      "phrases": [
+        "tow truck",
+        "towing vehicle",
+        "roadside recovery truck",
+        "tow"
+      ],
+      "positive_concepts": [
+        "auto towing",
+        "truck loading",
+        "truck trailer",
+        "car crane",
+        "truck"
+      ],
+      "avoid_concepts": ["generic car", "delivery only"],
+      "fallback_terms": ["auto towing", "truck loading", "truck trailer"],
+      "result_families": ["tow truck", "vehicle recovery"],
+      "gap_strategy": "return_towing_or_recovery_vehicle",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "celebrating_success",
+      "label": "Celebrating success",
+      "description": "A successful result, achievement, launch, milestone, or moment worth celebrating.",
+      "domains": ["achievement", "celebration", "product launch"],
+      "facets": ["success", "celebration", "recognition"],
+      "intent_types": ["quality_positive", "achievement"],
+      "phrases": [
+        "celebrating success",
+        "celebrate success",
+        "successful celebration",
+        "success celebration"
+      ],
+      "positive_concepts": [
+        "material celebration",
+        "lucide party popper",
+        "lucide trophy",
+        "lucide award",
+        "material rocket launch"
+      ],
+      "avoid_concepts": ["failure", "error", "warning", "party mode off"],
+      "fallback_terms": ["celebration", "party popper", "trophy", "award"],
+      "result_families": ["celebration", "achievement", "recognition"],
+      "gap_strategy": "return_celebration_or_achievement",
+      "confidence_floor": "high"
+    },
+    {
+      "id": "magnetic_snap",
+      "label": "Magnet and magnetic snapping",
+      "description": "A magnet, magnetic attraction, or objects snapping together magnetically.",
+      "domains": ["physics", "interaction", "attachment"],
+      "facets": ["magnet", "attraction", "snap"],
+      "intent_types": ["object", "interaction"],
+      "phrases": ["magnet snapping", "magnetic snap", "magnetic attachment"],
+      "localized_phrases": {
+        "ko": ["자석", "자석 스냅", "자석 magnet snapping"]
+      },
+      "positive_concepts": [
+        "lucide magnet",
+        "tabler magnet",
+        "phosphor magnet",
+        "bootstrap magnet"
+      ],
+      "avoid_concepts": ["magnet off", "unlink", "disconnect"],
+      "fallback_terms": ["magnet", "magnetic"],
+      "result_families": ["magnet", "magnetic attraction"],
+      "gap_strategy": "return_magnet",
+      "confidence_floor": "high"
+    },
+    {
       "id": "mystical_dream_symbol",
       "label": "Dream, mystical, and symbolic interpretation",
       "description": "Dream interpretation, mystical symbols, moon, stars, eyes, and imaginative meaning.",
       "domains": ["wellness", "spiritual", "creative"],
       "facets": ["mystical", "dream", "symbolic"],
       "intent_types": ["abstract_metaphor", "symbolic"],
-      "phrases": ["dream interpretation", "dream interpretation moon star eye mystical", "mystical dream", "moon star eye", "spiritual dream"],
+      "phrases": [
+        "dream interpretation",
+        "dream interpretation moon star eye mystical",
+        "mystical dream",
+        "moon star eye",
+        "spiritual dream"
+      ],
       "localized_phrases": {
         "zh-Hans": ["梦境解析", "神秘梦境"],
         "zh-Hant": ["夢境解析", "神秘夢境"],

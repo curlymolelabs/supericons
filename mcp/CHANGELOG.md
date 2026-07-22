@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.21 - 2026-07-23
+
+### Fixed
+
+- repaired multiword search recovery for local npm and hosted MCP users
+- restored relevant results for construction, network graphs, connected people, towing, celebration, and magnetic concepts
+- kept unsupported brands and nonsense queries as honest no-results
+- removed hidden hosted-error fallback and made route reporting truthful
+- prevented controlled release checks from entering organic usage metrics
+
+### Improved
+
+- added positive relevance checks for recent English, Spanish, Japanese, Korean, and Portuguese production misses
+- filtered disabled, slash, and off-state icons from positive searches unless the query asks for a negative state
+- preserved exact maintained brand identity without unrelated generic filler
+
 ## 0.4.20 - 2026-07-22
 
 ### Improved

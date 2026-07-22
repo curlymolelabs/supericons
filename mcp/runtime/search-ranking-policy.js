@@ -1,16 +1,30 @@
 import { GENERATED_SEARCH_RANKING_POLICY } from './generated-search-ranking-policy.js';
 
 const policy = GENERATED_SEARCH_RANKING_POLICY;
-const familyById = new Map(
-  (policy.interpretation_families || []).map((family) => [family.id, family]),
-);
+const familyById = new Map((policy.interpretation_families || []).map((family) => [family.id, family]));
 const brandIntentTerms = new Set(policy.brand_intent_terms || []);
 const expressiveFallbackTags = new Set(
   (policy.candidate_strength_policy?.expressive_fallback_tags || []).map(normalizeSearchRankingText),
 );
-const expressiveBroadMatchPenalty = Number(
-  policy.candidate_strength_policy?.broad_match_penalty || 0,
-);
+const expressiveBroadMatchPenalty = Number(policy.candidate_strength_policy?.broad_match_penalty || 0);
+const NEGATIVE_STATE_TOKENS = new Set([
+  'blocked',
+  'broken',
+  'disabled',
+  'disconnected',
+  'error',
+  'fail',
+  'failed',
+  'hallucinate',
+  'hallucination',
+  'no',
+  'not',
+  'off',
+  'slash',
+  'unavailable',
+  'unlink',
+  'without',
+]);
 
 export function normalizeSearchRankingText(value) {
   return String(value || '')
@@ -33,7 +47,9 @@ function unique(values = []) {
 }
 
 export function normalizeSearchLibraryMode(value) {
-  const normalized = String(value || '').trim().toLowerCase();
+  const normalized = String(value || '')
+    .trim()
+    .toLowerCase();
   if (normalized === 'prefer' || normalized === 'all') return normalized;
   return 'strict';
 }
@@ -60,9 +76,10 @@ function getContextFamilyIds(queryPolicy, normalizedQuery) {
   return order
     .map((familyId, index) => {
       const family = familyById.get(familyId);
-      const score = (family?.context_terms || []).reduce((sum, term) => (
-        includesPhrase(normalizedQuery, normalizeSearchRankingText(term)) ? sum + 1 : sum
-      ), 0);
+      const score = (family?.context_terms || []).reduce(
+        (sum, term) => (includesPhrase(normalizedQuery, normalizeSearchRankingText(term)) ? sum + 1 : sum),
+        0,
+      );
       return { familyId, index, score };
     })
     .filter((entry) => entry.score > 0)
@@ -81,14 +98,10 @@ export function getSearchInterpretationPlan(query, options = {}) {
   const contextualQuery = [normalizedQuery, normalizedContext].filter(Boolean).join(' ');
   const hasAdditionalContext = normalizedQuery !== match.trigger || Boolean(normalizedContext);
   const isBareQuery = !hasAdditionalContext;
-  const contextualFamilyIds = !hasAdditionalContext
-    ? []
-    : getContextFamilyIds(match.queryPolicy, contextualQuery);
+  const contextualFamilyIds = !hasAdditionalContext ? [] : getContextFamilyIds(match.queryPolicy, contextualQuery);
   const contextNarrowed = contextualFamilyIds.length > 0;
   const familyIds = unique(
-    contextualFamilyIds.length > 0
-      ? contextualFamilyIds
-      : match.queryPolicy.bare_query_family_ids || [],
+    contextualFamilyIds.length > 0 ? contextualFamilyIds : match.queryPolicy.bare_query_family_ids || [],
   );
   const retrievalOverrides = match.queryPolicy.retrieval_queries_by_trigger?.[match.trigger] || {};
   const families = familyIds
@@ -96,16 +109,12 @@ export function getSearchInterpretationPlan(query, options = {}) {
       const family = familyById.get(familyId);
       if (!family) return null;
       const retrievalQueries = retrievalOverrides[familyId];
-      return retrievalQueries?.length
-        ? { ...family, retrieval_queries: retrievalQueries }
-        : family;
+      return retrievalQueries?.length ? { ...family, retrieval_queries: retrievalQueries } : family;
     })
     .filter(Boolean);
   const maintainedDiversityMinimum = Number(match.queryPolicy.minimum_distinct_families_top_8 || 1);
   const ambiguous = !contextNarrowed && maintainedDiversityMinimum >= 2 && families.length >= 2;
-  const interpretationStatus = contextNarrowed
-    ? 'context_narrowed'
-    : (ambiguous ? 'ambiguous' : 'single');
+  const interpretationStatus = contextNarrowed ? 'context_narrowed' : ambiguous ? 'ambiguous' : 'single';
   const intentTypes = contextNarrowed
     ? match.queryPolicy.context_intent_types || match.queryPolicy.bare_intent_types || []
     : match.queryPolicy.bare_intent_types || [];
@@ -119,9 +128,7 @@ export function getSearchInterpretationPlan(query, options = {}) {
     interpretation_status: interpretationStatus,
     needs_clarification: ambiguous,
     intent_types: intentTypes,
-    minimum_distinct_families_top_8: isBareQuery
-      ? maintainedDiversityMinimum
-      : 1,
+    minimum_distinct_families_top_8: isBareQuery ? maintainedDiversityMinimum : 1,
     families,
   };
 }
@@ -133,11 +140,11 @@ export function buildSearchRankingQueryVariants(query, baseVariants = [], option
   const variants = unique([
     ...baseVariants.map(normalizeSearchRankingText),
     normalizedQuery,
-    ...(plan?.families || []).map((family) => (
+    ...(plan?.families || []).map((family) =>
       (family.retrieval_queries || [])
         .map(normalizeSearchRankingText)
-        .find((variant) => variant && variant !== normalizedQuery)
-    )),
+        .find((variant) => variant && variant !== normalizedQuery),
+    ),
   ]);
   return variants.slice(0, maxVariants);
 }
@@ -149,29 +156,35 @@ function getCandidateIconRef(candidate = {}) {
 }
 
 function getCandidateText(candidate = {}) {
-  return normalizeSearchRankingText([
-    candidate.icon_id,
-    candidate.lib,
-    candidate.id,
-    candidate.name,
-    candidate.label,
-    candidate.meaning,
-    candidate.query_variant,
-    ...(candidate.semanticTags || []),
-    ...(candidate.synonyms || []),
-    ...(candidate.aliases || []),
-    ...(candidate.searchTerms || []),
-    ...(candidate.filterTags || []),
-    ...(candidate.aiFilterTags || []),
-  ].filter(Boolean).join(' '));
+  return normalizeSearchRankingText(
+    [
+      candidate.icon_id,
+      candidate.lib,
+      candidate.id,
+      candidate.name,
+      candidate.label,
+      candidate.meaning,
+      candidate.query_variant,
+      ...(candidate.semanticTags || []),
+      ...(candidate.synonyms || []),
+      ...(candidate.aliases || []),
+      ...(candidate.searchTerms || []),
+      ...(candidate.filterTags || []),
+      ...(candidate.aiFilterTags || []),
+    ]
+      .filter(Boolean)
+      .join(' '),
+  );
 }
 
 function isLikelyBrandCandidate(candidate, iconRef) {
-  return iconRef.startsWith('simpleicons:')
-    || iconRef.includes(':brand-')
-    || candidate.assetType === 'brand-logo'
-    || candidate.filterTags?.includes('brand-logo')
-    || candidate.aiFilterTags?.includes('brand-logo');
+  return (
+    iconRef.startsWith('simpleicons:') ||
+    iconRef.includes(':brand-') ||
+    candidate.assetType === 'brand-logo' ||
+    candidate.filterTags?.includes('brand-logo') ||
+    candidate.aiFilterTags?.includes('brand-logo')
+  );
 }
 
 function getCandidateBrandIdentity(candidate, iconRef) {
@@ -201,9 +214,7 @@ export function getBrandRankAdjustment(query, candidate = {}) {
     const iconRefs = (brandTerm.icon_refs || []).map((value) => String(value).toLowerCase());
     if (!iconRefs.includes(iconRef)) continue;
 
-    const blockedAliases = (brandTerm.blocked_aliases || [])
-      .map(normalizeSearchRankingText)
-      .filter(Boolean);
+    const blockedAliases = (brandTerm.blocked_aliases || []).map(normalizeSearchRankingText).filter(Boolean);
     if (blockedAliases.includes(meaningfulQuery)) {
       return { boost: 0, penalty: 1000, match_class: 'blocked_alias' };
     }
@@ -212,9 +223,9 @@ export function getBrandRankAdjustment(query, candidate = {}) {
       .map(normalizeSearchRankingText)
       .filter(Boolean);
     const exactMatch = maintainedTerms.includes(meaningfulQuery);
-    const substringMatch = meaningfulQuery.length >= 3 && maintainedTerms.some((term) => (
-      term.includes(meaningfulQuery) || meaningfulQuery.includes(term)
-    ));
+    const substringMatch =
+      meaningfulQuery.length >= 3 &&
+      maintainedTerms.some((term) => term.includes(meaningfulQuery) || meaningfulQuery.includes(term));
 
     if (exactMatch) {
       if (brandTerm.match_class === 'distinctive_exact' || explicitBrandIntent) {
@@ -242,10 +253,10 @@ export function getBrandRankAdjustment(query, candidate = {}) {
       return { boost: 160, penalty: 0, match_class: 'distinctive_exact' };
     }
     if (
-      !explicitBrandIntent
-      && meaningfulQuery.length >= 3
-      && identity
-      && (identity.includes(meaningfulQuery) || meaningfulQuery.includes(identity))
+      !explicitBrandIntent &&
+      meaningfulQuery.length >= 3 &&
+      identity &&
+      (identity.includes(meaningfulQuery) || meaningfulQuery.includes(identity))
     ) {
       return { boost: 0, penalty: 1000, match_class: 'prefix_or_substring' };
     }
@@ -263,9 +274,7 @@ export function getMeaningPolicyPenalty(query, candidate = {}) {
     ...(match.queryPolicy.avoid_candidate_terms || []),
     ...(match.queryPolicy.avoid_candidate_terms_by_trigger?.[match.trigger] || []),
   ];
-  return avoidTerms.some((term) => (
-    includesPhrase(candidateText, normalizeSearchRankingText(term))
-  )) ? 1000 : 0;
+  return avoidTerms.some((term) => includesPhrase(candidateText, normalizeSearchRankingText(term))) ? 1000 : 0;
 }
 
 export function getExpressiveFallbackPenalty(query, candidate = {}) {
@@ -286,48 +295,75 @@ export function getExpressiveFallbackPenalty(query, candidate = {}) {
     candidate.label,
     ...(candidate.synonyms || []),
     ...(candidate.aliases || []),
-  ].map(normalizeSearchRankingText).filter(Boolean);
-  const directMatch = directMeanings.some((meaning) => (
-    meaning === normalizedQuery || includesPhrase(meaning, normalizedQuery)
-  ));
+  ]
+    .map(normalizeSearchRankingText)
+    .filter(Boolean);
+  const directMatch = directMeanings.some(
+    (meaning) => meaning === normalizedQuery || includesPhrase(meaning, normalizedQuery),
+  );
   return directMatch ? 0 : expressiveBroadMatchPenalty;
+}
+
+function getStateContradictionPenalty(query, candidate = {}) {
+  const queryTokens = new Set(tokenize(query));
+  if ([...queryTokens].some((token) => NEGATIVE_STATE_TOKENS.has(token))) return 0;
+
+  const candidateTokens = tokenize(
+    [candidate.id, candidate.icon_id, candidate.name, candidate.label].filter(Boolean).join(' '),
+  );
+  const candidateId = String(candidate.id || candidate.icon_id || candidate.name || '')
+    .trim()
+    .toLowerCase();
+  const hasNegativeXSuffix = /(?:^|[-_])x$/u.test(candidateId);
+  return candidateTokens.some((token) => NEGATIVE_STATE_TOKENS.has(token)) || hasNegativeXSuffix ? 1000 : 0;
 }
 
 export function rerankSearchCandidatesAtFusion(query, candidates = [], options = {}) {
   const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
-  const requestedLibrary = String(options.requestedLibrary || options.library || '').trim().toLowerCase();
+  const requestedLibrary = String(options.requestedLibrary || options.library || '')
+    .trim()
+    .toLowerCase();
   const applyExpressiveFallback = options.applyExpressiveFallback !== false;
-  const expressiveFallbackPenaltyByIcon = options.expressiveFallbackPenaltyByIcon instanceof Map
-    ? options.expressiveFallbackPenaltyByIcon
-    : null;
+  const expressiveFallbackPenaltyByIcon =
+    options.expressiveFallbackPenaltyByIcon instanceof Map ? options.expressiveFallbackPenaltyByIcon : null;
   const scored = candidates
     .map((candidate, index) => {
       const brandAdjustment = getBrandRankAdjustment(query, candidate);
       const meaningPenalty = getMeaningPolicyPenalty(query, candidate);
+      const stateContradictionPenalty = getStateContradictionPenalty(query, candidate);
       const retainedExpressivePenalty = expressiveFallbackPenaltyByIcon?.get(getCandidateIconRef(candidate));
       const expressiveFallbackPenalty = applyExpressiveFallback
-        ? (Number.isFinite(retainedExpressivePenalty)
-            ? retainedExpressivePenalty
-            : getExpressiveFallbackPenalty(query, candidate))
+        ? Number.isFinite(retainedExpressivePenalty)
+          ? retainedExpressivePenalty
+          : getExpressiveFallbackPenalty(query, candidate)
         : 0;
       return {
         candidate,
         index,
-        policyScore: brandAdjustment.boost - brandAdjustment.penalty - meaningPenalty - expressiveFallbackPenalty,
-        strongPenalty: brandAdjustment.penalty + meaningPenalty >= 1000,
+        policyScore:
+          brandAdjustment.boost -
+          brandAdjustment.penalty -
+          meaningPenalty -
+          stateContradictionPenalty -
+          expressiveFallbackPenalty,
+        strongPenalty: brandAdjustment.penalty + meaningPenalty + stateContradictionPenalty >= 1000,
       };
     })
     .filter((entry) => {
       if (entry.strongPenalty) return false;
       if (libraryMode !== 'strict' || !requestedLibrary) return true;
-      const library = String(entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '').toLowerCase();
+      const library = String(
+        entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '',
+      ).toLowerCase();
       return library === requestedLibrary;
     })
     .sort((left, right) => right.policyScore - left.policyScore || left.index - right.index);
 
   if (libraryMode === 'prefer' && requestedLibrary && scored.length > 1 && scored[0].policyScore <= 0) {
     const preferredIndex = scored.findIndex((entry) => {
-      const library = String(entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '').toLowerCase();
+      const library = String(
+        entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '',
+      ).toLowerCase();
       return library === requestedLibrary;
     });
     if (preferredIndex > 0) {
@@ -336,7 +372,9 @@ export function rerankSearchCandidatesAtFusion(query, candidates = [], options =
 
     const alternativeIndex = scored.findIndex((entry, index) => {
       if (index === 0) return false;
-      const library = String(entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '').toLowerCase();
+      const library = String(
+        entry.candidate.lib || entry.candidate.library || entry.candidate.source_library || '',
+      ).toLowerCase();
       return library !== requestedLibrary;
     });
     if (alternativeIndex > 1) {
@@ -363,9 +401,11 @@ export function getCandidateInterpretationFamilyIds(query, candidate = {}) {
     const matchedVariant = queryVariant && retrievalQueries.includes(queryVariant);
     const matchedCandidate = candidateTerms.some((term) => includesPhrase(candidateText, term));
     const matchedIconRef = candidateIconRefs.includes(iconRef);
-    const matchedBrand = family.id === 'brand_identity' && (policy.brand_terms || []).some((brandTerm) => (
-      (brandTerm.icon_refs || []).map((value) => String(value).toLowerCase()).includes(iconRef)
-    ));
+    const matchedBrand =
+      family.id === 'brand_identity' &&
+      (policy.brand_terms || []).some((brandTerm) =>
+        (brandTerm.icon_refs || []).map((value) => String(value).toLowerCase()).includes(iconRef),
+      );
     if (matchedVariant || matchedCandidate || matchedIconRef || matchedBrand) familyIds.push(family.id);
   }
 
@@ -381,10 +421,11 @@ export function diversifyRankedSearchCandidates(query, rankedCandidates = []) {
   const selected = [];
   const selectedRefs = new Set();
   for (const family of plan.families) {
-    const candidate = rankedCandidates.find((entry) => (
-      !selectedRefs.has(getCandidateIconRef(entry))
-      && (entry.match_signals?.interpretation_family_ids || []).includes(family.id)
-    ));
+    const candidate = rankedCandidates.find(
+      (entry) =>
+        !selectedRefs.has(getCandidateIconRef(entry)) &&
+        (entry.match_signals?.interpretation_family_ids || []).includes(family.id),
+    );
     if (!candidate) continue;
     selected.push(candidate);
     selectedRefs.add(getCandidateIconRef(candidate));

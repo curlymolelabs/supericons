@@ -17,7 +17,7 @@ const serverJson = JSON.parse(readFileSync(join(repoRoot, 'mcp', 'server.json'),
 const productFacts = JSON.parse(readFileSync(join(repoRoot, 'data', 'product-facts.json'), 'utf8'));
 const clientSource = readFileSync(join(repoRoot, 'lib', 'search-engine-client.js'), 'utf8');
 
-assert.equal(packageJson.version, '0.4.20');
+assert.equal(packageJson.version, '0.4.21');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
 assert.equal(serverJson.version, packageJson.version);
@@ -103,7 +103,7 @@ try {
     const { response, payload } = await postSearch(searchCase);
     assert.equal(response.status, 200, JSON.stringify(payload));
     assert.ok(payload.results.length > 0, `Expected results for ${searchCase.query}`);
-    assert.ok(['hosted', 'local_fallback'].includes(payload.search_runtime.mode));
+    assert.ok(['hosted', 'hosted_fused', 'local_fallback'].includes(payload.search_runtime.mode));
     assert.equal(payload.search_runtime.hosted_search_calls, 1);
     for (const result of payload.results) {
       assert.match(result.icon_id, /^[a-z0-9-]+:.+/i);

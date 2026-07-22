@@ -1,13 +1,19 @@
 const DEFAULT_LOCAL_FIRST_VALUE = 'on';
 
+import { rerankSearchCandidatesAtFusion } from './runtime/search-ranking-policy.js';
+
 function normalizeSwitch(value) {
-  return String(value || '').trim().toLowerCase();
+  return String(value || '')
+    .trim()
+    .toLowerCase();
 }
 
 function tokenize(value) {
-  return String(value || '')
-    .toLowerCase()
-    .match(/[\p{L}\p{N}]+/gu) || [];
+  return (
+    String(value || '')
+      .toLowerCase()
+      .match(/[\p{L}\p{N}]+/gu) || []
+  );
 }
 
 export function createRailwayCandidateIndex({ icons = [], synonyms = {}, getSearchValues }) {
@@ -21,19 +27,14 @@ export function createRailwayCandidateIndex({ icons = [], synonyms = {}, getSear
   }
 
   for (const [key, values] of Object.entries(synonyms)) {
-    const terms = new Set([
-      ...tokenize(key),
-      ...(Array.isArray(values) ? values.flatMap(tokenize) : []),
-    ]);
+    const terms = new Set([...tokenize(key), ...(Array.isArray(values) ? values.flatMap(tokenize) : [])]);
     for (const left of terms) {
       for (const right of terms) addRelatedTerm(left, right);
     }
   }
 
   for (const icon of icons) {
-    const values = typeof getSearchValues === 'function'
-      ? getSearchValues(icon)
-      : [icon?.id, icon?.name];
+    const values = typeof getSearchValues === 'function' ? getSearchValues(icon) : [icon?.id, icon?.name];
     const iconTokens = new Set(values.flatMap(tokenize));
     for (const token of iconTokens) {
       if (!iconsByToken.has(token)) iconsByToken.set(token, []);
@@ -71,7 +72,10 @@ function buildSingleFallbackRequest(queries) {
   const libraries = [...new Set(queries.map((query) => query.library).filter(Boolean))];
   const styles = [...new Set(queries.map((query) => query.style || 'any'))];
   return {
-    query: queries.map((query) => query.query).filter(Boolean).join(' '),
+    query: queries
+      .map((query) => query.query)
+      .filter(Boolean)
+      .join(' '),
     library: libraries.length === 1 ? libraries[0] : null,
     libraryMode: 'strict',
     style: styles.length === 1 ? styles[0] : 'any',
@@ -147,10 +151,7 @@ export function createRailwayRecommendationSearch({
   };
 }
 
-export function createRailwaySearchRoute({
-  localSearchOne,
-  hostedSearchOne,
-}) {
+export function createRailwaySearchRoute({ localSearchOne, hostedSearchOne }) {
   if (typeof localSearchOne !== 'function') {
     throw new TypeError('localSearchOne must be a function.');
   }
@@ -163,27 +164,48 @@ export function createRailwaySearchRoute({
     fallback_used: false,
     hosted_search_calls: 0,
     local_failure_code: null,
+    local_fusion_used: false,
   };
+
+  function mergeResults(params, localResults, hostedResults) {
+    const merged = [];
+    const seen = new Set();
+    for (const result of [...localResults, ...hostedResults]) {
+      const library = String(result?.lib || result?.library || result?.source_library || '').toLowerCase();
+      const id = String(result?.id || '').toLowerCase();
+      const key = library && id ? `${library}:${id}` : String(result?.icon_id || '').toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      merged.push(result);
+    }
+    return rerankSearchCandidatesAtFusion(params.query, merged, {
+      libraryMode: params.libraryMode,
+      requestedLibrary: params.library,
+    }).slice(0, Math.max(1, Number(params.limit) || 20));
+  }
 
   async function searchOne(params) {
     state.hosted_search_calls += 1;
     const hostedResults = await hostedSearchOne(params);
-    if (Array.isArray(hostedResults) && hostedResults.length > 0) {
-      return hostedResults;
-    }
+    const validHostedResults = Array.isArray(hostedResults) ? hostedResults : [];
 
     try {
       const localResults = await localSearchOne(params);
       if (Array.isArray(localResults) && localResults.length > 0) {
+        if (validHostedResults.length > 0) {
+          state.mode = 'hosted_fused';
+          state.local_fusion_used = true;
+          return mergeResults(params, localResults, validHostedResults);
+        }
         state.mode = 'local_fallback';
         state.fallback_used = true;
-        return localResults;
+        return localResults.slice(0, Math.max(1, Number(params.limit) || 20));
       }
     } catch (error) {
       state.local_failure_code = error?.code || 'local_search_failed';
     }
 
-    return [];
+    return validHostedResults.slice(0, Math.max(1, Number(params.limit) || 20));
   }
 
   return {

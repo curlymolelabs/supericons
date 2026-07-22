@@ -1,12 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import {
-  createRailwayRecommendationSearch,
-  createRailwaySearchRoute,
-} from '../mcp/railway-local-search.js';
+import { createRailwayRecommendationSearch, createRailwaySearchRoute } from '../mcp/railway-local-search.js';
 
-const hostedResult = [{ id: 'hard-hat', library: 'lucide' }];
+const hostedResult = [{ id: 'construction', library: 'lucide' }];
+const localRelevantResult = [{ id: 'hard-hat', library: 'lucide' }];
 let hostedCalls = 0;
 let localCalls = 0;
 
@@ -17,22 +15,23 @@ const hostedPrimary = createRailwaySearchRoute({
   },
   localSearchOne: async () => {
     localCalls += 1;
-    return [{ id: 'wrong-local-result' }];
+    return localRelevantResult;
   },
 });
 
 assert.deepEqual(
   await hostedPrimary.searchOne({ query: 'hard hat construction worker' }),
-  hostedResult,
-  'Search must return the established hosted result.',
+  [...localRelevantResult, ...hostedResult],
+  'Search must fuse the reviewed local recovery with established hosted results.',
 );
 assert.equal(hostedCalls, 1);
-assert.equal(localCalls, 0, 'A nonempty hosted result must not run the local fallback.');
+assert.equal(localCalls, 1, 'A nonempty hosted result must still run local recovery for fusion.');
 assert.deepEqual(hostedPrimary.getRuntime(), {
-  mode: 'hosted',
+  mode: 'hosted_fused',
   fallback_used: false,
   hosted_search_calls: 1,
   local_failure_code: null,
+  local_fusion_used: true,
 });
 
 const localResult = [{ id: 'sparkles', library: 'tabler' }];
@@ -50,6 +49,7 @@ assert.deepEqual(emptyHostedFallback.getRuntime(), {
   fallback_used: true,
   hosted_search_calls: 1,
   local_failure_code: null,
+  local_fusion_used: false,
 });
 
 let localCalledAfterHostedError = false;
@@ -57,7 +57,9 @@ const hostedFailure = new Error('rate limited');
 hostedFailure.code = 'hosted_rate_limited';
 hostedFailure.status = 429;
 const failingHostedRoute = createRailwaySearchRoute({
-  hostedSearchOne: async () => { throw hostedFailure; },
+  hostedSearchOne: async () => {
+    throw hostedFailure;
+  },
   localSearchOne: async () => {
     localCalledAfterHostedError = true;
     return localResult;
@@ -74,7 +76,9 @@ const localFailureAfterHostedZero = new Error('local fallback failed');
 localFailureAfterHostedZero.code = 'local_fallback_failed';
 const resilientHonestZero = createRailwaySearchRoute({
   hostedSearchOne: async () => [],
-  localSearchOne: async () => { throw localFailureAfterHostedZero; },
+  localSearchOne: async () => {
+    throw localFailureAfterHostedZero;
+  },
 });
 assert.deepEqual(
   await resilientHonestZero.searchOne({ query: 'florblequux' }),
@@ -86,6 +90,7 @@ assert.deepEqual(resilientHonestZero.getRuntime(), {
   fallback_used: false,
   hosted_search_calls: 1,
   local_failure_code: 'local_fallback_failed',
+  local_fusion_used: false,
 });
 
 let recommendationFallbackCalls = 0;
@@ -97,7 +102,9 @@ const recommendationRoute = createRailwayRecommendationSearch({
   },
 });
 assert.deepEqual(
-  await recommendationRoute.searchOne({ query: 'unsupported recommendation slot' }),
+  await recommendationRoute.searchOne({
+    query: 'unsupported recommendation slot',
+  }),
   [],
   'Recommendation routing must keep its existing honest local zero behavior.',
 );
@@ -116,10 +123,16 @@ assert.equal(
   'Only recommend_icons should retain local-first recommendation routing.',
 );
 
-console.log(JSON.stringify({
-  status: 'ok',
-  hosted_primary: 'passed',
-  local_zero_fallback: 'passed',
-  error_truthfulness: 'passed',
-  recommendation_scope: 'passed',
-}, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      status: 'ok',
+      hosted_primary: 'passed',
+      local_zero_fallback: 'passed',
+      error_truthfulness: 'passed',
+      recommendation_scope: 'passed',
+    },
+    null,
+    2,
+  ),
+);

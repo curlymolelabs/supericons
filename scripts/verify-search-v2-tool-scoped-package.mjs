@@ -75,6 +75,7 @@ try {
 
   const installedRoot = join(installDir, 'node_modules', '@supericons', 'mcp');
   for (const required of [
+    'controlled-run-auth.js',
     'hosted-search-client.js',
     'index.js',
     'material-mcp-assets.json.gz',
@@ -89,7 +90,7 @@ try {
     assert.equal(existsSync(join(installedRoot, required)), true, `Package is missing ${required}.`);
   }
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.20');
+  assert.equal(installedPackage.version, '0.4.21');
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
   assert.equal(installedServer.version, installedPackage.version);
   assert.equal(installedServer.packages[0].version, installedPackage.version);
@@ -160,7 +161,7 @@ try {
     .digest('hex');
   assert.equal(
     installedFingerprint,
-    '17ed68b34768e1432fe176d44a994e3da6bac4566c607e229116f85001a7002c',
+    '4ee5e16c9fba0764a33e9f25b65b64c50386037c1226c509d803458e46f937ad',
     'Clean-installed package changed the fixed search fingerprint.',
   );
   const routeExpectedObservations = evaluationSet.query_groups.flatMap((group) => group.queries || [])
@@ -250,7 +251,7 @@ try {
     .digest('hex');
   assert.equal(
     routeFingerprint,
-    '9627b1054af4feab30787d9341093b897fbd4352f4317a6e5dde977d5611f68c',
+    'c97a3c393dde97441b207fd2d960006c92cb434ba3d1c8edf1988a7875df0e97',
     'Clean-installed stdio route changed the 225-case ordered result contract.',
   );
 

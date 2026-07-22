@@ -13,10 +13,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import { z } from 'zod';
-import {
-  classifyMcpTraffic,
-  extractReturnedIconRefs,
-} from './usage-event-detail.js';
+import { classifyMcpTraffic, extractReturnedIconRefs } from './usage-event-detail.js';
 import {
   getGroupedHostedSearchResilienceStatus,
   getHostedSearchResilienceStatus,
@@ -36,10 +33,7 @@ import {
   getPublicLibraryMeta,
   parseIconRef,
 } from './public-icon-preview.js';
-import {
-  buildIconContactSheetPng,
-  buildPreviewTextPayload,
-} from './preview-icons.js';
+import { buildIconContactSheetPng, buildPreviewTextPayload } from './preview-icons.js';
 import {
   SEARCH_TOOL_SERVER_INSTRUCTIONS,
   buildRecommendationFailurePresentation,
@@ -58,6 +52,7 @@ import {
 import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import { getBetaCohortForTool } from './release-channel.js';
+import { verifyControlledRunHeaders } from './controlled-run-auth.js';
 import {
   createRailwayCandidateIndex,
   createRailwayRecommendationSearch,
@@ -66,11 +61,7 @@ import {
 } from './railway-local-search.js';
 import { buildLibraryCapability } from './library-capabilities.js';
 import { buildMcpUsageDedupeKey } from './usage-dedupe.js';
-import {
-  deriveMcpQueryOrigin,
-  getMcpRequestedLimit,
-  resolveCountryContext,
-} from './usage-attribution.js';
+import { deriveMcpQueryOrigin, getMcpRequestedLimit, resolveCountryContext } from './usage-attribution.js';
 import {
   buildPublicSemanticPayload,
   createSemanticRegistryMap,
@@ -87,7 +78,9 @@ const iconIndexPath = join(dataDir, 'icon-index.json');
 const solidIconIndexPath = join(dataDir, 'icon-index-solid.json');
 const synonymsPath = join(dataDir, 'synonyms.json');
 const iconIndex = existsSync(iconIndexPath) ? JSON.parse(readFileSync(iconIndexPath, 'utf8')) : { icons: [] };
-const solidIconIndex = existsSync(solidIconIndexPath) ? JSON.parse(readFileSync(solidIconIndexPath, 'utf8')) : { icons: [] };
+const solidIconIndex = existsSync(solidIconIndexPath)
+  ? JSON.parse(readFileSync(solidIconIndexPath, 'utf8'))
+  : { icons: [] };
 const synonyms = existsSync(synonymsPath) ? JSON.parse(readFileSync(synonymsPath, 'utf8')) : {};
 const publicIcons = [
   ...(Array.isArray(iconIndex?.icons) ? iconIndex.icons : []),
@@ -131,10 +124,7 @@ const LIBRARIES = [
   ['tabler', 'Tabler', 'Large open-source SVG icon library'],
 ];
 const libraryCounts = new Map(
-  (Array.isArray(iconIndex?.libraries) ? iconIndex.libraries : []).map((entry) => [
-    entry.id,
-    Number(entry.count || 0),
-  ])
+  (Array.isArray(iconIndex?.libraries) ? iconIndex.libraries : []).map((entry) => [entry.id, Number(entry.count || 0)]),
 );
 const hostedOutlineCounts = Object.fromEntries(libraryCounts);
 
@@ -146,18 +136,9 @@ const multilingualLocaleDescription =
 const forgivingStringSchema = z.preprocess(coerceToolString, z.string());
 const forgivingNonEmptyStringSchema = z.preprocess(coerceToolString, z.string().min(1));
 const forgivingSearchLimitSchema = z.preprocess(coerceToolNumber, z.number().min(1).max(50));
-const forgivingPreviewLimitSchema = z.preprocess(
-  coerceToolNumber,
-  z.union([z.number(), z.string()]),
-);
-const forgivingRecommendationLimitSchema = z.preprocess(
-  coerceToolNumber,
-  z.union([z.number(), z.string()]),
-);
-const forgivingRecommendationSlotsSchema = z.preprocess(
-  coerceToolSlots,
-  z.array(z.string()),
-);
+const forgivingPreviewLimitSchema = z.preprocess(coerceToolNumber, z.union([z.number(), z.string()]));
+const forgivingRecommendationLimitSchema = z.preprocess(coerceToolNumber, z.union([z.number(), z.string()]));
+const forgivingRecommendationSlotsSchema = z.preprocess(coerceToolSlots, z.array(z.string()));
 const forgivingBooleanSchema = z.preprocess(coerceToolBoolean, z.boolean());
 const previewStyles = new Set(['any', 'outline', 'solid']);
 const previewLocales = new Set(multilingualLocaleValues);
@@ -186,11 +167,19 @@ const publicIconResultSchema = z.object({
   libraryName: z.string().optional().describe('Legacy camelCase public source library name.'),
   icon_ref: z.string().describe('Stable icon reference in library:id format.'),
   icon_preview_url: z.string().nullable().describe('Browser URL for visual inspection of this icon.'),
-  search_preview_url: z.string().nullable().optional().describe('Browser URL for visual inspection of the source search results.'),
+  search_preview_url: z
+    .string()
+    .nullable()
+    .optional()
+    .describe('Browser URL for visual inspection of the source search results.'),
   type: z.string().describe('Icon asset type, normally svg.'),
   style: z.string().describe('Icon style such as outline or solid.'),
   svg: z.string().describe('Inline SVG markup for the icon.'),
-  semantic: z.record(z.unknown()).nullable().optional().describe('Public semantic guidance for search and agent selection.'),
+  semantic: z
+    .record(z.unknown())
+    .nullable()
+    .optional()
+    .describe('Public semantic guidance for search and agent selection.'),
 });
 
 const libraryResultSchema = z.object({
@@ -214,7 +203,11 @@ const previewIconResultSchema = z.object({
   icon_ref: z.string().describe('Stable icon reference in library:id format.'),
   icon_preview_url: z.string().nullable().optional().describe('Browser URL for visual inspection of this icon.'),
   style: z.string().optional().describe('Icon style such as outline or solid.'),
-  semantic: z.record(z.unknown()).nullable().optional().describe('Public semantic guidance for search and agent selection.'),
+  semantic: z
+    .record(z.unknown())
+    .nullable()
+    .optional()
+    .describe('Public semantic guidance for search and agent selection.'),
 });
 
 const searchIconsOutputSchema = {
@@ -236,13 +229,17 @@ const searchIconsOutputSchema = {
   limit_scope: z.string().optional().describe('Allowance scope reported by a rate limit.'),
   details: z.record(z.unknown()).optional().describe('Structured rate-limit or upstream failure details.'),
   query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics.'),
-  search_runtime: z.object({
-    mode: z.enum(['local_first', 'local_fallback', 'hosted_fallback', 'hosted']),
-    fallback_used: z.boolean(),
-    hosted_search_calls: z.number(),
-    local_failure_code: z.string().nullable(),
-    index_generated_at: z.string(),
-  }).optional().describe('Search execution path used for this request.'),
+  search_runtime: z
+    .object({
+      mode: z.enum(['local_first', 'local_fallback', 'hosted_fallback', 'hosted', 'hosted_fused']),
+      fallback_used: z.boolean(),
+      hosted_search_calls: z.number(),
+      local_failure_code: z.string().nullable(),
+      local_fusion_used: z.boolean().optional(),
+      index_generated_at: z.string(),
+    })
+    .optional()
+    .describe('Search execution path used for this request.'),
 };
 
 const recommendIconsOutputSchema = {
@@ -251,13 +248,18 @@ const recommendIconsOutputSchema = {
   style: z.string().optional().describe('Style preference used for recommendations.'),
   response_mode: z.enum(['plan', 'assets', 'full']).describe('Response size mode used for this recommendation.'),
   slot_count: z.number().describe('Number of UI slots requested.'),
-  all_slots_resolved: z.boolean().describe('Whether every requested slot received a recommendation without clarification.'),
+  all_slots_resolved: z
+    .boolean()
+    .describe('Whether every requested slot received a recommendation without clarification.'),
   needs_clarification: z.boolean().describe('Whether one or more ambiguous slots require more context.'),
   clarification_slots: z.array(z.string()).describe('Slots that need the caller to choose an interpretation.'),
   low_confidence_slots: z.array(z.string()).describe('Slots whose result is missing or has low confidence.'),
   fallback_recommended: z.boolean().describe('Whether the caller should consider direct search or clarification.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of the recommended icon set.'),
-  query_frame: z.record(z.unknown()).optional().describe('Optional public-safe query understanding diagnostics for the task.'),
+  query_frame: z
+    .record(z.unknown())
+    .optional()
+    .describe('Optional public-safe query understanding diagnostics for the task.'),
   results: z.array(z.record(z.unknown())).describe('Recommended icon choices grouped by requested UI slot.'),
   warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored or clamped.'),
   error: z.string().optional().describe('Plain-language reason the recommendation did not complete.'),
@@ -267,22 +269,36 @@ const recommendIconsOutputSchema = {
   status: z.number().optional().describe('HTTP status from a hosted dependency failure.'),
   retry_after_seconds: z.number().optional().describe('Seconds to wait before retrying a rate-limited recommendation.'),
   details: z.record(z.unknown()).optional().describe('Structured limits or failure details.'),
-  suggested_response_markdown: z.string().optional().describe('Plain-language explanation suitable for the agent response.'),
+  suggested_response_markdown: z
+    .string()
+    .optional()
+    .describe('Plain-language explanation suitable for the agent response.'),
   next_step: z.string().optional().describe('Useful next action for the caller.'),
-  search_runtime: z.object({
-    mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
-    fallback_used: z.boolean(),
-    hosted_search_calls: z.number(),
-    local_failure_code: z.string().nullable(),
-    index_generated_at: z.string(),
-  }).optional().describe('Search execution path used for this recommendation.'),
+  search_runtime: z
+    .object({
+      mode: z.enum(['local_first', 'hosted_fallback', 'hosted']),
+      fallback_used: z.boolean(),
+      hosted_search_calls: z.number(),
+      local_failure_code: z.string().nullable(),
+      index_generated_at: z.string(),
+    })
+    .optional()
+    .describe('Search execution path used for this recommendation.'),
 };
 
 const previewIconsOutputSchema = {
   query: z.string().nullable().optional().describe('Search query used for the visual preview, if any.'),
   preview_url: z.string().describe('Browser URL for visual inspection.'),
-  image_url: z.string().nullable().optional().describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
-  markdown_image: z.string().nullable().optional().describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
+  image_url: z
+    .string()
+    .nullable()
+    .optional()
+    .describe('Direct PNG URL for clients or Markdown renderers that can show remote images.'),
+  markdown_image: z
+    .string()
+    .nullable()
+    .optional()
+    .describe('Ready-made Markdown image snippet for final answers in clients that render remote Markdown images.'),
   image_included: z.boolean().describe('Whether this response includes MCP image content.'),
   rendered_count: z.number().describe('Number of icons rendered in the inline preview.'),
   browser_preview_count: z.number().describe('Number of accepted icon refs available at preview_url.'),
@@ -301,7 +317,9 @@ const getIconOutputSchema = {
 
 const listLibrariesOutputSchema = {
   libraries: z.array(libraryResultSchema).describe('Free icon libraries available through this hosted MCP server.'),
-  publicRecordCount: z.number().describe('Number of public semantic icon records searchable through the hosted MCP server.'),
+  publicRecordCount: z
+    .number()
+    .describe('Number of public semantic icon records searchable through the hosted MCP server.'),
 };
 
 function asStructured(payload, { isError = false } = {}) {
@@ -365,8 +383,7 @@ function getHostedRowIdentity(row) {
 
 function isExactHostedRow(row, library, id) {
   const identity = getHostedRowIdentity(row);
-  return identity.library === library
-    && String(identity.id || '').toLowerCase() === String(id || '').toLowerCase();
+  return identity.library === library && String(identity.id || '').toLowerCase() === String(id || '').toLowerCase();
 }
 
 function normalizeLocalIcon(icon) {
@@ -397,9 +414,7 @@ function searchLocalFallbackIcons({
 }) {
   if (iconPool.length === 0) return [];
 
-  const queryVariants = expandIntentVariants
-    ? buildIntentQueryVariants(query, { maxVariants: 10 })
-    : [query];
+  const queryVariants = expandIntentVariants ? buildIntentQueryVariants(query, { maxVariants: 10 }) : [query];
   const results = [];
   const seen = new Set();
 
@@ -427,12 +442,22 @@ function searchLocalFallbackIcons({
 
 async function searchRailwayLocalIcons(params) {
   const cacheKey = JSON.stringify([
-    String(params.query || '').trim().toLowerCase(),
-    String(params.library || '').trim().toLowerCase(),
-    String(params.libraryMode || 'strict').trim().toLowerCase(),
-    String(params.style || 'any').trim().toLowerCase(),
+    String(params.query || '')
+      .trim()
+      .toLowerCase(),
+    String(params.library || '')
+      .trim()
+      .toLowerCase(),
+    String(params.libraryMode || 'strict')
+      .trim()
+      .toLowerCase(),
+    String(params.style || 'any')
+      .trim()
+      .toLowerCase(),
     Number(params.limit) || 20,
-    String(params.locale || '').trim().toLowerCase(),
+    String(params.locale || '')
+      .trim()
+      .toLowerCase(),
     params.candidateOnly === true,
   ]);
   const cached = railwayRecommendationSearchCache.get(cacheKey);
@@ -480,9 +505,7 @@ async function searchRailwayLocalIcons(params) {
       style: params.style || 'any',
       onError: (error) => console.error('[SuperIcons] Railway Material hydration failed:', error.message),
     });
-    results = hydration.kept
-      .map(normalizeHostedIcon)
-      .slice(0, limit);
+    results = hydration.kept.map(normalizeHostedIcon).slice(0, limit);
   }
 
   railwayRecommendationSearchCache.set(cacheKey, results);
@@ -501,44 +524,51 @@ function shouldUseLocalFallbackForHostedError(error) {
 
 function searchLocalMaterialRows({ query, limit = 20, locale = null, exactIconId = null }) {
   if (exactIconId) {
-    const exact = publicIcons.find((icon) => (
-      icon?.lib === 'material' && String(icon.id).toLowerCase() === exactIconId.toLowerCase()
-    ));
+    const exact = publicIcons.find(
+      (icon) => icon?.lib === 'material' && String(icon.id).toLowerCase() === exactIconId.toLowerCase(),
+    );
     if (!exact) return [];
-    return [{
-      icon_id: `material:${exact.id}`,
-      id: exact.id,
-      name: exact.name || exact.id.replace(/[-_]/g, ' '),
-      library: 'material',
-      icon_type: 'font',
-      style: 'outline',
-      svg: null,
-    }];
+    return [
+      {
+        icon_id: `material:${exact.id}`,
+        id: exact.id,
+        name: exact.name || exact.id.replace(/[-_]/g, ' '),
+        library: 'material',
+        icon_type: 'font',
+        style: 'outline',
+        svg: null,
+      },
+    ];
   }
 
-  const normalizedQuery = String(query || '').trim().toLowerCase();
+  const normalizedQuery = String(query || '')
+    .trim()
+    .toLowerCase();
   const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
   const directSynonyms = tokens.flatMap((token) => synonyms[token] || []);
   const reverseSynonyms = Object.entries(synonyms)
-    .filter(([, values]) => Array.isArray(values) && values.some((value) => tokens.includes(String(value).toLowerCase())))
+    .filter(
+      ([, values]) => Array.isArray(values) && values.some((value) => tokens.includes(String(value).toLowerCase())),
+    )
     .map(([key]) => key);
-  const queryVariants = [...new Set([
-    normalizedQuery,
-    ...directSynonyms,
-    ...reverseSynonyms,
-    ...buildIntentQueryVariants(query, { maxVariants: 10 }),
-  ].map((value) => String(value || '').trim()).filter(Boolean))].slice(0, 16);
+  const queryVariants = [
+    ...new Set(
+      [normalizedQuery, ...directSynonyms, ...reverseSynonyms, ...buildIntentQueryVariants(query, { maxVariants: 10 })]
+        .map((value) => String(value || '').trim())
+        .filter(Boolean),
+    ),
+  ].slice(0, 16);
   const rows = [];
   const seen = new Set();
-  const rankedByVariant = queryVariants.map((queryVariant) => (
+  const rankedByVariant = queryVariants.map((queryVariant) =>
     searchLocalIcons(queryVariant, publicIcons, synonyms, {
       library: 'material',
       libraryMode: 'strict',
       style: 'any',
       limit: Math.max(limit, 20),
       locale,
-    })
-  ));
+    }),
+  );
 
   for (let rank = 0; rows.length < Math.max(1, limit); rank += 1) {
     let foundAtRank = false;
@@ -576,6 +606,7 @@ async function finishHostedIconSearch({
   exactIconId = null,
   hostedLibrary = library,
   expandLocalIntentVariants = true,
+  allowLocalEmptyFallback = true,
 }) {
   const selectedRows = exactIconId
     ? rankedRows.filter((row) => isExactHostedRow(row, hostedLibrary, exactIconId)).slice(0, 1)
@@ -591,10 +622,9 @@ async function finishHostedIconSearch({
     throw error;
   }
 
-  const hostedResults = hydration.kept
-    .map(normalizeHostedIcon)
-    .slice(0, Math.max(1, limit));
+  const hostedResults = hydration.kept.map(normalizeHostedIcon).slice(0, Math.max(1, limit));
   if (hostedResults.length > 0) return hostedResults;
+  if (!allowLocalEmptyFallback) return [];
 
   const fallbackResults = searchLocalFallbackIcons({
     query,
@@ -606,9 +636,9 @@ async function finishHostedIconSearch({
     expandIntentVariants: expandLocalIntentVariants,
   });
   return exactIconId
-    ? fallbackResults.filter((icon) => (
-      icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase()
-    )).slice(0, 1)
+    ? fallbackResults
+        .filter((icon) => icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase())
+        .slice(0, 1)
     : fallbackResults;
 }
 
@@ -622,6 +652,7 @@ async function searchHostedIcons({
   includeQueryFrame = false,
   usageContext = null,
   exactIconId = null,
+  allowLocalEmptyFallback = true,
 }) {
   // Material is the only library with verified solid support in the stable
   // hosted catalog. Its rows are tagged outline, so solid searches must rank
@@ -635,38 +666,23 @@ async function searchHostedIcons({
 
   let rankedRows;
   if (useLocalMaterialRanking) {
-    rankedRows = searchLocalMaterialRows({ query, limit: hostedLimit, locale, exactIconId });
+    rankedRows = searchLocalMaterialRows({
+      query,
+      limit: hostedLimit,
+      locale,
+      exactIconId,
+    });
   } else {
-    let payload;
-    try {
-      payload = await searchIconsHostedMcp({
-        query,
-        library: hostedLibrary || null,
-        libraryMode: hostedLibraryMode,
-        style: hostedStyle,
-        limit: hostedLimit,
-        locale,
-        includeQueryFrame,
-        usageContext,
-      });
-    } catch (error) {
-      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
-      const fallbackResults = searchLocalFallbackIcons({
-        query,
-        library,
-        libraryMode,
-        style,
-        limit,
-        locale,
-      });
-      const selectedFallback = exactIconId
-        ? fallbackResults.filter((icon) => (
-          icon.library === library && icon.id.toLowerCase() === exactIconId.toLowerCase()
-        )).slice(0, 1)
-        : fallbackResults;
-      if (selectedFallback.length > 0) return selectedFallback;
-      throw error;
-    }
+    const payload = await searchIconsHostedMcp({
+      query,
+      library: hostedLibrary || null,
+      libraryMode: hostedLibraryMode,
+      style: hostedStyle,
+      limit: hostedLimit,
+      locale,
+      includeQueryFrame,
+      usageContext,
+    });
     rankedRows = Array.isArray(payload.results) ? payload.results : [];
   }
 
@@ -680,6 +696,7 @@ async function searchHostedIcons({
     locale,
     exactIconId,
     hostedLibrary,
+    allowLocalEmptyFallback,
   });
 }
 
@@ -691,57 +708,59 @@ async function searchHostedIconQueries(queries = [], { usageContextForQuery } = 
         ...query,
         libraryMode: 'strict',
         routeToolName: 'recommend_icons',
-        usageContext: typeof usageContextForQuery === 'function'
-          ? usageContextForQuery(query, index)
-          : null,
+        usageContext: typeof usageContextForQuery === 'function' ? usageContextForQuery(query, index) : null,
       })),
     });
   } catch (error) {
     if (!shouldUseLocalFallbackForHostedError(error)) throw error;
-    const fallbackResults = queries.map((query) => searchLocalFallbackIcons({
-      query: query.query,
-      library: query.library,
-      libraryMode: 'strict',
-      style: query.style,
-      limit: query.limit,
-      locale: query.locale,
-      expandIntentVariants: false,
-    }));
+    const fallbackResults = queries.map((query) =>
+      searchLocalFallbackIcons({
+        query: query.query,
+        library: query.library,
+        libraryMode: 'strict',
+        style: query.style,
+        limit: query.limit,
+        locale: query.locale,
+        expandIntentVariants: false,
+      }),
+    );
     if (fallbackResults.every((results) => results.length > 0)) {
       return fallbackResults;
     }
     throw error;
   }
 
-  return await Promise.all(payloads.map(async (payload, index) => {
-    const query = queries[index] || {};
-    const limit = Math.max(1, Number(query.limit) || 10);
-    try {
-      return await finishHostedIconSearch({
-        rankedRows: Array.isArray(payload.results) ? payload.results : [],
-        query: query.query,
-        library: query.library,
-        libraryMode: 'strict',
-        style: query.style,
-        limit,
-        locale: query.locale,
-        expandLocalIntentVariants: false,
-      });
-    } catch (error) {
-      if (!shouldUseLocalFallbackForHostedError(error)) throw error;
-      const fallbackResults = searchLocalFallbackIcons({
-        query: query.query,
-        library: query.library,
-        libraryMode: 'strict',
-        style: query.style,
-        limit,
-        locale: query.locale,
-        expandIntentVariants: false,
-      });
-      if (fallbackResults.length > 0) return fallbackResults;
-      throw error;
-    }
-  }));
+  return await Promise.all(
+    payloads.map(async (payload, index) => {
+      const query = queries[index] || {};
+      const limit = Math.max(1, Number(query.limit) || 10);
+      try {
+        return await finishHostedIconSearch({
+          rankedRows: Array.isArray(payload.results) ? payload.results : [],
+          query: query.query,
+          library: query.library,
+          libraryMode: 'strict',
+          style: query.style,
+          limit,
+          locale: query.locale,
+          expandLocalIntentVariants: false,
+        });
+      } catch (error) {
+        if (!shouldUseLocalFallbackForHostedError(error)) throw error;
+        const fallbackResults = searchLocalFallbackIcons({
+          query: query.query,
+          library: query.library,
+          libraryMode: 'strict',
+          style: query.style,
+          limit,
+          locale: query.locale,
+          expandIntentVariants: false,
+        });
+        if (fallbackResults.length > 0) return fallbackResults;
+        throw error;
+      }
+    }),
+  );
 }
 
 function buildPublicIconResult(icon, options = {}) {
@@ -793,7 +812,11 @@ function normalizePreviewText(value, { maxLength = 240 } = {}) {
   const text = String(firstQueryValue(value) || '').trim();
   if (!text) return '';
   if (text.length > maxLength) {
-    throw createPreviewHttpError(400, 'preview_query_too_long', `Preview query must be ${maxLength} characters or fewer.`);
+    throw createPreviewHttpError(
+      400,
+      'preview_query_too_long',
+      `Preview query must be ${maxLength} characters or fewer.`,
+    );
   }
   return text;
 }
@@ -810,7 +833,11 @@ function normalizePreviewLocale(value) {
   const locale = String(firstQueryValue(value) || '').trim();
   if (!locale) return undefined;
   if (!previewLocales.has(locale)) {
-    throw createPreviewHttpError(400, 'invalid_locale', `Preview locale must be one of: ${multilingualLocaleValues.join(', ')}.`);
+    throw createPreviewHttpError(
+      400,
+      'invalid_locale',
+      `Preview locale must be one of: ${multilingualLocaleValues.join(', ')}.`,
+    );
   }
   return locale;
 }
@@ -863,9 +890,7 @@ function buildDirectPreviewImageFields({ query, iconRefs = [], library, style, l
       markdownImage: null,
     };
   }
-  const resolvedRefs = iconRefs.length
-    ? icons.map((icon) => icon.icon_ref).filter(Boolean)
-    : [];
+  const resolvedRefs = iconRefs.length ? icons.map((icon) => icon.icon_ref).filter(Boolean) : [];
   const imageOptions = {
     query: iconRefs.length ? null : query,
     iconRefs: resolvedRefs,
@@ -897,28 +922,38 @@ async function buildHostedPreviewModel({
   const effectiveLimit = normalizePreviewLimit(limit);
   const fixedRefs = normalizePreviewIconRefs(iconRefs, effectiveLimit);
   const searchQuery = normalizePreviewText(query);
-  const icons = fixedRefs.length > 0
-    ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
-    : (await searchHostedIcons({
-      query: searchQuery,
-      library,
-      style,
-      locale,
-      limit: effectiveLimit,
-      usageContext,
-    })).map((icon) => buildPublicIconResult(icon, {
-      query: searchQuery,
-      library,
-      style,
-      locale,
-      limit: effectiveLimit,
-    }));
+  const icons =
+    fixedRefs.length > 0
+      ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
+      : (
+          await searchHostedIcons({
+            query: searchQuery,
+            library,
+            style,
+            locale,
+            limit: effectiveLimit,
+            usageContext,
+          })
+        ).map((icon) =>
+          buildPublicIconResult(icon, {
+            query: searchQuery,
+            library,
+            style,
+            locale,
+            limit: effectiveLimit,
+          }),
+        );
 
-  const previewUrl = fixedRefs.length > 0
-    ? buildPreviewBoardUrlForIcons(
-      normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24),
-    )
-    : buildSearchPreviewUrl({ query: searchQuery, library, style, locale, limit: effectiveLimit });
+  const previewUrl =
+    fixedRefs.length > 0
+      ? buildPreviewBoardUrlForIcons(normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24))
+      : buildSearchPreviewUrl({
+          query: searchQuery,
+          library,
+          style,
+          locale,
+          limit: effectiveLimit,
+        });
   const { imageUrl, markdownImage } = buildDirectPreviewImageFields({
     query: searchQuery,
     iconRefs: fixedRefs,
@@ -942,9 +977,10 @@ async function buildHostedPreviewModel({
       markdownImage,
       imageIncluded: Boolean(includeImage && icons.length > 0),
       truncatedFrom,
-      browserPreviewCount: fixedRefs.length > 0
-        ? normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24).length
-        : icons.length,
+      browserPreviewCount:
+        fixedRefs.length > 0
+          ? normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24).length
+          : icons.length,
       warnings,
     }),
   };
@@ -988,7 +1024,13 @@ function normalizeUsageText(value, { maxLength = 120 } = {}) {
 }
 
 function normalizeUsageQuery(value) {
-  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ').slice(0, 400) || null;
+  return (
+    String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .slice(0, 400) || null
+  );
 }
 
 function hashUsageValue(value) {
@@ -1026,7 +1068,10 @@ function detectClientFamily(req, extraHint = '') {
     req.get('x-client-name'),
     extraHint,
     req.get('user-agent'),
-  ].filter(Boolean).join(' ').toLowerCase();
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
 
   if (hint.includes('smithery')) return 'smithery';
   if (hint.includes('claude')) return 'claude';
@@ -1089,7 +1134,9 @@ function getCountryContext(req, clientIp) {
 }
 
 function extractMcpApiKey(req) {
-  const explicit = normalizeUsageText(req.get('x-supericons-api-key'), { maxLength: 240 });
+  const explicit = normalizeUsageText(req.get('x-supericons-api-key'), {
+    maxLength: 240,
+  });
   if (explicit) return explicit;
 
   const authHeader = String(req.get('authorization') || '').trim();
@@ -1181,11 +1228,9 @@ async function resolveMcpApiKeyAccount(apiKey) {
       return unresolved;
     }
 
-    void updateSupabaseRestRow(
-      `si_api_keys?id=eq.${encodeURIComponent(String(keyRow.id))}`,
-      serviceRoleKey,
-      { last_used: new Date().toISOString() },
-    );
+    void updateSupabaseRestRow(`si_api_keys?id=eq.${encodeURIComponent(String(keyRow.id))}`, serviceRoleKey, {
+      last_used: new Date().toISOString(),
+    });
 
     const subscriptionRows = await fetchSupabaseRestRows(
       `si_subscriptions?select=status,plan&user_id=eq.${encodeURIComponent(userId)}&status=eq.active&limit=1`,
@@ -1222,20 +1267,22 @@ async function resolveMcpApiKeyAccount(apiKey) {
 
 async function buildRequestContext(req) {
   const userAgent = String(req.get('user-agent') || '').trim();
-  const clientInfoHint = [
-    req.body?.params?.clientInfo?.name,
-    req.body?.params?.clientInfo?.version,
-  ].filter(Boolean).join(' ');
+  const clientInfoHint = [req.body?.params?.clientInfo?.name, req.body?.params?.clientInfo?.version]
+    .filter(Boolean)
+    .join(' ');
   const clientFamily = detectClientFamily(req, clientInfoHint);
   const clientIp = getClientIpToken(req);
   const monthBucket = new Date().toISOString().slice(0, 7);
   const apiKeyAccount = await resolveMcpApiKeyAccount(extractMcpApiKey(req));
-  const requestId = normalizeUsageText(
-    req.get('x-request-id') || req.get('cf-ray') || req.body?.id || randomUUID(),
-    { maxLength: 120 },
-  );
+  const requestId = normalizeUsageText(req.get('x-request-id') || req.get('cf-ray') || req.body?.id || randomUUID(), {
+    maxLength: 120,
+  });
   const country = getCountryContext(req, clientIp);
   const sessionHash = hashUsageValue(req.get('mcp-session-id') || req.get('x-session-id') || '');
+  const controlledRun = verifyControlledRunHeaders(
+    (name) => req.get(name),
+    process.env.SUPERICONS_CONTROLLED_RUN_SECRET,
+  );
 
   return {
     request_id: requestId,
@@ -1248,7 +1295,9 @@ async function buildRequestContext(req) {
     client_ip_public: country.client_ip_public,
     session_hash: sessionHash,
     ip_hash: hashUsageValue(clientIp),
-    anonymous_client_hash: hashUsageValue(`${clientIp}|${userAgent}|${clientFamily}|${monthBucket}|supericons-hosted-mcp`),
+    anonymous_client_hash: hashUsageValue(
+      `${clientIp}|${userAgent}|${clientFamily}|${monthBucket}|supericons-hosted-mcp`,
+    ),
     user_agent_hash: hashUsageValue(userAgent),
     api_key_hash: apiKeyAccount.api_key_hash,
     api_key_present: apiKeyAccount.api_key_present,
@@ -1259,7 +1308,7 @@ async function buildRequestContext(req) {
     account_plan: apiKeyAccount.account_plan,
     subscription_status: apiKeyAccount.subscription_status,
     mcp_server_version: packageJson.version,
-    beta_cohort: null,
+    beta_cohort: controlledRun.valid ? `controlled-run:${controlledRun.label}` : null,
   };
 }
 
@@ -1271,19 +1320,26 @@ function buildToolUsageContext(requestContext, toolName, args = {}, { eventId = 
     client_family: 'unknown',
     mcp_server_version: packageJson.version,
   };
-  const argsHash = hashUsageValue(JSON.stringify({
-    query: args.query || null,
-    task: args.task || null,
-    id: args.id || null,
-    library: args.library || null,
-    limit: args.limit || args.limit_per_slot || null,
-  }))?.slice(0, 24);
+  const argsHash = hashUsageValue(
+    JSON.stringify({
+      query: args.query || null,
+      task: args.task || null,
+      id: args.id || null,
+      library: args.library || null,
+      limit: args.limit || args.limit_per_slot || null,
+    }),
+  )?.slice(0, 24);
 
-  const toolBetaCohort = getBetaCohortForTool(packageJson.version, toolName);
+  const requestBetaCohort = context.beta_cohort || null;
+  const toolBetaCohort = requestBetaCohort || getBetaCohortForTool(packageJson.version, toolName);
   return {
     source: 'mcp',
     channel: context.channel,
-    environment: toolBetaCohort ? 'preview' : context.environment,
+    environment: requestBetaCohort?.startsWith('controlled-run:')
+      ? 'test'
+      : toolBetaCohort
+        ? 'preview'
+        : context.environment,
     client_family: context.client_family,
     tool_name: toolName,
     request_id: context.request_id,
@@ -1344,17 +1400,11 @@ function getConfidenceLabelFromToolResult(result) {
   return null;
 }
 
-function buildMcpUsageEventPayload(
-  requestContext,
-  toolName,
-  args,
-  result,
-  startedAt,
-  status = 'ok',
-  error = null,
-) {
+function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok', error = null) {
   const eventId = randomUUID();
-  const context = buildToolUsageContext(requestContext, toolName, args, { eventId });
+  const context = buildToolUsageContext(requestContext, toolName, args, {
+    eventId,
+  });
   return {
     event_id: eventId,
     request_id: context.request_id,
@@ -1384,9 +1434,7 @@ function buildMcpUsageEventPayload(
       : null,
     beta_cohort: context.beta_cohort || null,
     status,
-    error_code: status === 'error'
-      ? normalizeUsageToken(error?.code, { maxLength: 80 }) || null
-      : null,
+    error_code: status === 'error' ? normalizeUsageToken(error?.code, { maxLength: 80 }) || null : null,
     latency_ms: Math.max(0, Date.now() - startedAt),
     country_code: requestContext?.country_code || null,
     geo_source: requestContext?.geo_source || null,
@@ -1451,26 +1499,20 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
   try {
     const result = await handler();
     const resultIsError = result?.isError === true;
-    void logMcpUsageEvent(buildMcpUsageEventPayload(
-      requestContext,
-      toolName,
-      args,
-      result,
-      startedAt,
-      resultIsError ? 'error' : 'ok',
-      resultIsError ? result?.structuredContent : null,
-    ));
+    void logMcpUsageEvent(
+      buildMcpUsageEventPayload(
+        requestContext,
+        toolName,
+        args,
+        result,
+        startedAt,
+        resultIsError ? 'error' : 'ok',
+        resultIsError ? result?.structuredContent : null,
+      ),
+    );
     return result;
   } catch (error) {
-    void logMcpUsageEvent(buildMcpUsageEventPayload(
-      requestContext,
-      toolName,
-      args,
-      null,
-      startedAt,
-      'error',
-      error,
-    ));
+    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, null, startedAt, 'error', error));
     throw error;
   }
 }
@@ -1480,12 +1522,15 @@ function createServer({ requestContext = null } = {}) {
     productFacts?.display?.freeIconsAcrossLibrariesFreeLabel ||
     `${registrySummary.publicRecordCount.toLocaleString()} searchable free icon records`;
 
-  const server = new McpServer({
-    name: 'supericons',
-    version: packageJson.version,
-  }, {
-    instructions: SEARCH_TOOL_SERVER_INSTRUCTIONS,
-  });
+  const server = new McpServer(
+    {
+      name: 'supericons',
+      version: packageJson.version,
+    },
+    {
+      instructions: SEARCH_TOOL_SERVER_INSTRUCTIONS,
+    },
+  );
 
   server.registerTool(
     'search_icons',
@@ -1493,45 +1538,73 @@ function createServer({ requestContext = null } = {}) {
       title: 'Search Icons',
       description: `Use this as the main icon tool. Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Library key si means Supericons, not Simple Icons.`,
       inputSchema: {
-        query: forgivingNonEmptyStringSchema.describe('Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".'),
+        query: forgivingNonEmptyStringSchema.describe(
+          'Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".',
+        ),
         library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
-        library_mode: forgivingStringSchema.optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.'),
-        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
-        locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
-        limit: forgivingSearchLimitSchema.optional().default(10).describe('Maximum number of icons from 1 to 50. Numeric strings are accepted.'),
-        include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
+        library_mode: forgivingStringSchema
+          .optional()
+          .default('strict')
+          .describe(
+            'Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.',
+          ),
+        style: forgivingStringSchema
+          .optional()
+          .default('any')
+          .describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema
+          .optional()
+          .describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
+        limit: forgivingSearchLimitSchema
+          .optional()
+          .default(10)
+          .describe('Maximum number of icons from 1 to 50. Numeric strings are accepted.'),
+        include_query_frame: forgivingBooleanSchema
+          .optional()
+          .default(false)
+          .describe(
+            'Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.',
+          ),
       },
       outputSchema: searchIconsOutputSchema,
       annotations: auditedSearchAnnotations,
     },
     async (rawArgs) => {
-      const args = normalizeSearchToolArguments(rawArgs, { supportedLocales: multilingualLocaleValues });
+      const args = normalizeSearchToolArguments(rawArgs, {
+        supportedLocales: multilingualLocaleValues,
+      });
       return withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
         const { query, library, library_mode, style, locale, limit, include_query_frame, warnings } = args;
         if (library_mode === 'prefer' && !library) {
-          return asStructured({
-            results: [],
-            library_mode,
-            requested_library: null,
-            error: 'Preferred-library mode requires a library.',
-            code: 'preferred_library_required',
-            hint: 'Provide a library or use all mode.',
-            suggested_response_markdown: 'A preferred library was not provided. Choose a library or search all libraries.',
-            next_step: 'Provide a library or set library_mode to "all".',
-            ...(warnings.length ? { warnings } : {}),
-            retryable: false,
-          }, { isError: true });
+          return asStructured(
+            {
+              results: [],
+              library_mode,
+              requested_library: null,
+              error: 'Preferred-library mode requires a library.',
+              code: 'preferred_library_required',
+              hint: 'Provide a library or use all mode.',
+              suggested_response_markdown:
+                'A preferred library was not provided. Choose a library or search all libraries.',
+              next_step: 'Provide a library or set library_mode to "all".',
+              ...(warnings.length ? { warnings } : {}),
+              retryable: false,
+            },
+            { isError: true },
+          );
         }
         let results;
         let searchRuntime;
         try {
           const searchExecution = createRailwaySearchRoute({
             localSearchOne: searchRailwayLocalIcons,
-            hostedSearchOne: (params) => searchHostedIcons({
-              ...params,
-              includeQueryFrame: include_query_frame,
-              usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
-            }),
+            hostedSearchOne: (params) =>
+              searchHostedIcons({
+                ...params,
+                includeQueryFrame: include_query_frame,
+                usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
+                allowLocalEmptyFallback: false,
+              }),
           });
           results = await searchExecution.searchOne({
             query,
@@ -1546,26 +1619,37 @@ function createServer({ requestContext = null } = {}) {
             index_generated_at: iconIndex.generatedAt,
           };
         } catch (error) {
-          return asStructured({
-            results: [],
-            library_mode,
-            requested_library: library || null,
-            ...buildSearchFailurePresentation({
-              query,
-              error,
-              fallbackMessage: 'Supericons search is unavailable.',
-            }),
-            ...(warnings.length ? { warnings } : {}),
-          }, { isError: true });
+          return asStructured(
+            {
+              results: [],
+              library_mode,
+              requested_library: library || null,
+              ...buildSearchFailurePresentation({
+                query,
+                error,
+                fallbackMessage: 'Supericons search is unavailable.',
+              }),
+              ...(warnings.length ? { warnings } : {}),
+            },
+            { isError: true },
+          );
         }
-        const formatted = results.map((icon) => buildPublicIconResult(icon, {
+        const formatted = results.map((icon) =>
+          buildPublicIconResult(icon, {
+            query,
+            library,
+            style,
+            locale,
+            limit,
+          }),
+        );
+        const previewUrl = buildSearchPreviewUrl({
           query,
           library,
           style,
           locale,
           limit,
-        }));
-        const previewUrl = buildSearchPreviewUrl({ query, library, style, locale, limit });
+        });
         if (formatted.length === 0) {
           const hint = locale
             ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
@@ -1605,23 +1689,54 @@ function createServer({ requestContext = null } = {}) {
           ...(include_query_frame ? { query_frame: buildSearchQueryFrame(query, { locale }) } : {}),
         });
       });
-    }
+    },
   );
 
   server.registerTool(
     'recommend_icons',
     {
       title: 'Recommend Icons',
-      description: 'Recommend a coherent icon set for up to 20 named UI slots in one call. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Invalid inputs and service failures return a plain-language reason and a next step instead of a bare protocol error. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
+      description:
+        'Recommend a coherent icon set for up to 20 named UI slots in one call. Uses task context to narrow ambiguous meanings. When context is insufficient, returns needs_clarification with labeled interpretation options instead of guessing. Invalid inputs and service failures return a plain-language reason and a next step instead of a bare protocol error. Returns one recommendation and optional alternatives for each resolved slot, with explicit public library labels and visual preview URLs where available. Library key si means Supericons, not Simple Icons.',
       inputSchema: {
-        task: forgivingStringSchema.optional().default('').describe('Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app". Missing task text returns a structured recovery message.'),
-        slots: forgivingRecommendationSlotsSchema.optional().default([]).describe('List of 1 to 20 UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"]. A single string is accepted as one slot. Larger lists return a structured split instruction.'),
-        library: forgivingStringSchema.optional().describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
-        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
-        locale: forgivingStringSchema.optional().describe('Optional locale for multilingual slot labels. Unsupported values are ignored with a warning.'),
-        limit_per_slot: forgivingRecommendationLimitSchema.optional().default(3).describe('Number of choices per slot. Values outside 1 to 5 are clamped with a warning. Numeric strings are accepted.'),
-        response_mode: forgivingStringSchema.optional().default('plan').describe('Response size mode: plan, assets, or full. Unsupported values use plan with a warning.'),
-        include_query_frame: forgivingBooleanSchema.optional().default(false).describe('Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.'),
+        task: forgivingStringSchema
+          .optional()
+          .default('')
+          .describe(
+            'Overall UI task, for example "choose icons for an AI dashboard sidebar" or "select bottom navigation icons for a finance app". Missing task text returns a structured recovery message.',
+          ),
+        slots: forgivingRecommendationSlotsSchema
+          .optional()
+          .default([])
+          .describe(
+            'List of 1 to 20 UI slots to fill, for example ["model", "prompt", "dataset", "evaluation"]. A single string is accepted as one slot. Larger lists return a structured split instruction.',
+          ),
+        library: forgivingStringSchema
+          .optional()
+          .describe(`Optional library key when the user wants a consistent icon family. ${libraryKeysDescription}`),
+        style: forgivingStringSchema
+          .optional()
+          .default('any')
+          .describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema
+          .optional()
+          .describe('Optional locale for multilingual slot labels. Unsupported values are ignored with a warning.'),
+        limit_per_slot: forgivingRecommendationLimitSchema
+          .optional()
+          .default(3)
+          .describe(
+            'Number of choices per slot. Values outside 1 to 5 are clamped with a warning. Numeric strings are accepted.',
+          ),
+        response_mode: forgivingStringSchema
+          .optional()
+          .default('plan')
+          .describe('Response size mode: plan, assets, or full. Unsupported values use plan with a warning.'),
+        include_query_frame: forgivingBooleanSchema
+          .optional()
+          .default(false)
+          .describe(
+            'Optional public-safe diagnostics for query understanding. Boolean strings are accepted. Leave false for normal compact responses.',
+          ),
       },
       outputSchema: recommendIconsOutputSchema,
       annotations: auditedSearchAnnotations,
@@ -1650,34 +1765,34 @@ function createServer({ requestContext = null } = {}) {
         try {
           const recommendationSearch = createRailwayRecommendationSearch({
             enabled: railwayLocalFirstEnabled,
-            localSearchOne: (params) => searchRailwayLocalIcons({
-              ...params,
-              includeQueryFrame: include_query_frame,
-              candidateOnly: true,
-            }),
-            hostedSearchOne: (params) => searchHostedIcons({
-              ...params,
-              includeQueryFrame: include_query_frame,
-              usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
-                ...args,
-                query: params.query,
-                library: params.library,
-                limit: params.limit,
+            localSearchOne: (params) =>
+              searchRailwayLocalIcons({
+                ...params,
+                includeQueryFrame: include_query_frame,
+                candidateOnly: true,
               }),
-            }),
-            hostedSearchMany: (queries) => searchHostedIconQueries(queries, {
-              usageContextForQuery: (params, index) => buildToolUsageContext(
-                requestContext,
-                'recommend_icons',
-                {
+            hostedSearchOne: (params) =>
+              searchHostedIcons({
+                ...params,
+                includeQueryFrame: include_query_frame,
+                usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
                   ...args,
                   query: params.query,
                   library: params.library,
                   limit: params.limit,
-                  grouped_query_index: index,
-                },
-              ),
-            }),
+                }),
+              }),
+            hostedSearchMany: (queries) =>
+              searchHostedIconQueries(queries, {
+                usageContextForQuery: (params, index) =>
+                  buildToolUsageContext(requestContext, 'recommend_icons', {
+                    ...args,
+                    query: params.query,
+                    library: params.library,
+                    limit: params.limit,
+                    grouped_query_index: index,
+                  }),
+              }),
           });
           const payload = await recommendIconsForTask({
             task,
@@ -1718,84 +1833,126 @@ function createServer({ requestContext = null } = {}) {
             ...(warnings.length ? { warnings } : {}),
           });
         } catch (error) {
-          return asStructured(buildRecommendationFailurePresentation({
-            task,
-            library,
-            style,
-            responseMode: response_mode,
-            slots,
-            error,
-            warnings,
-          }), { isError: true });
+          return asStructured(
+            buildRecommendationFailurePresentation({
+              task,
+              library,
+              style,
+              responseMode: response_mode,
+              slots,
+              error,
+              warnings,
+            }),
+            { isError: true },
+          );
         }
       });
-    }
+    },
   );
 
   server.registerTool(
     'get_icon',
     {
       title: 'Get Icon',
-      description: 'Retrieve one exact SVG icon when the icon ID and library are already known. Use search_icons first if the user only described a concept. Returns SVG code, explicit public library labels, visual preview URL, and public semantic guidance for the exact icon.',
+      description:
+        'Retrieve one exact SVG icon when the icon ID and library are already known. Use search_icons first if the user only described a concept. Returns SVG code, explicit public library labels, visual preview URL, and public semantic guidance for the exact icon.',
       inputSchema: {
-        id: z.string().describe('Exact icon ID without the library prefix, for example "database", "user-circle", "brain-circuit", or "arrow-down".'),
+        id: z
+          .string()
+          .describe(
+            'Exact icon ID without the library prefix, for example "database", "user-circle", "brain-circuit", or "arrow-down".',
+          ),
         library: z.string().describe(`Required library key for the exact icon. ${libraryKeysDescription}`),
-        style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.'),
+        style: z
+          .enum(['any', 'outline', 'solid'])
+          .optional()
+          .default('any')
+          .describe(
+            'Optional style preference. Material Symbols supports outline and solid. Other hosted libraries report their verified styles in list_libraries.',
+          ),
       },
       outputSchema: getIconOutputSchema,
       annotations: auditedSearchAnnotations,
     },
-    async (args) => withMcpUsageEvent(requestContext, 'get_icon', args, async () => {
-      const { id, library, style } = args;
-      const candidates = await searchHostedIcons({
-        query: id.replace(/[-_]+/g, ' '),
-        library,
-        style,
-        limit: 50,
-        exactIconId: id,
-        usageContext: buildToolUsageContext(requestContext, 'get_icon', args),
-      });
-      const normalizedId = id.toLowerCase();
-      const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
+    async (args) =>
+      withMcpUsageEvent(requestContext, 'get_icon', args, async () => {
+        const { id, library, style } = args;
+        const candidates = await searchHostedIcons({
+          query: id.replace(/[-_]+/g, ' '),
+          library,
+          style,
+          limit: 50,
+          exactIconId: id,
+          usageContext: buildToolUsageContext(requestContext, 'get_icon', args),
+        });
+        const normalizedId = id.toLowerCase();
+        const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
 
-      if (!match) {
+        if (!match) {
+          return asStructured(
+            {
+              error: `No matching icon found for ${library}:${id}.`,
+              code: 'icon_not_found',
+              hint: 'Confirm the icon ID and library, or call search_icons to find the closest available icon.',
+              next_step: 'Call search_icons when the exact icon ID is not known or is unavailable.',
+              retryable: false,
+            },
+            { isError: true },
+          );
+        }
+
         return asStructured({
-          error: `No matching icon found for ${library}:${id}.`,
-          code: 'icon_not_found',
-          hint: 'Confirm the icon ID and library, or call search_icons to find the closest available icon.',
-          next_step: 'Call search_icons when the exact icon ID is not known or is unavailable.',
-          retryable: false,
-        }, { isError: true });
-      }
-
-      return asStructured({
-        icon: buildPublicIconResult(match, { style }),
-      });
-    })
+          icon: buildPublicIconResult(match, { style }),
+        });
+      }),
   );
 
   server.registerTool(
     'preview_icons',
     {
       title: 'Preview Icons',
-      description: 'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
+      description:
+        'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
       inputSchema: {
-        query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
-        icon_refs: z.preprocess(
-          coerceToolIconRefs,
-          z.array(z.string()).min(1),
-        ).optional().describe('Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 100 are accepted, 24 appear on the browser preview, and 12 are rendered inline. Larger lists are safely truncated with a warning.'),
+        query: forgivingStringSchema
+          .optional()
+          .describe(
+            'Optional search query to preview visually, for example "license plate recognition camera scan car".',
+          ),
+        icon_refs: z
+          .preprocess(coerceToolIconRefs, z.array(z.string()).min(1))
+          .optional()
+          .describe(
+            'Optional fixed icon refs in library:id format. Arrays, a single ref, and comma-separated refs are accepted. Up to 100 are accepted, 24 appear on the browser preview, and 12 are rendered inline. Larger lists are safely truncated with a warning.',
+          ),
         library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
-        style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
-        locale: forgivingStringSchema.optional().describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
-        limit: forgivingPreviewLimitSchema.optional().default(12).describe('Requested inline icon count. Values outside 1 to 12 are safely clamped with a warning. Numeric strings are accepted.'),
-        include_image: forgivingBooleanSchema.optional().default(true).describe('When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.'),
+        style: forgivingStringSchema
+          .optional()
+          .default('any')
+          .describe('Optional style preference. Unsupported values are ignored with a warning.'),
+        locale: forgivingStringSchema
+          .optional()
+          .describe(`${multilingualLocaleDescription} Unsupported values are ignored with a warning.`),
+        limit: forgivingPreviewLimitSchema
+          .optional()
+          .default(12)
+          .describe(
+            'Requested inline icon count. Values outside 1 to 12 are safely clamped with a warning. Numeric strings are accepted.',
+          ),
+        include_image: forgivingBooleanSchema
+          .optional()
+          .default(true)
+          .describe(
+            'When true, include a PNG contact sheet as MCP image content. Boolean strings are accepted. A preview_url is always returned.',
+          ),
       },
       outputSchema: previewIconsOutputSchema,
       annotations: readOnlyLookupAnnotations,
     },
     async (rawArgs) => {
-      const args = normalizePreviewToolArguments(rawArgs, { supportedLocales: multilingualLocaleValues });
+      const args = normalizePreviewToolArguments(rawArgs, {
+        supportedLocales: multilingualLocaleValues,
+      });
       return withMcpUsageEvent(requestContext, 'preview_icons', args, async () => {
         const {
           query,
@@ -1810,20 +1967,29 @@ function createServer({ requestContext = null } = {}) {
           warnings,
         } = args;
         if (!query && (!Array.isArray(icon_refs) || icon_refs.length === 0)) {
-          return asPreviewResponse({
-            query: null,
-            preview_url: buildSearchPreviewUrl({ library, style, locale, limit }),
-            image_url: null,
-            markdown_image: null,
-            image_included: false,
-            rendered_count: 0,
-            browser_preview_count: 0,
-            next_step: 'Provide a search query or one or more icon refs in library:id format.',
-            ...(warnings.length ? { warnings } : {}),
-            client_display_note: 'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
-            results: [],
-            error: 'Provide either query or icon_refs.',
-          }, { isError: true });
+          return asPreviewResponse(
+            {
+              query: null,
+              preview_url: buildSearchPreviewUrl({
+                library,
+                style,
+                locale,
+                limit,
+              }),
+              image_url: null,
+              markdown_image: null,
+              image_included: false,
+              rendered_count: 0,
+              browser_preview_count: 0,
+              next_step: 'Provide a search query or one or more icon refs in library:id format.',
+              ...(warnings.length ? { warnings } : {}),
+              client_display_note:
+                'Provide either query or icon_refs, then open preview_url if your client cannot render inline images.',
+              results: [],
+              error: 'Provide either query or icon_refs.',
+            },
+            { isError: true },
+          );
         }
 
         const { icons, payload } = await buildHostedPreviewModel({
@@ -1849,33 +2015,37 @@ function createServer({ requestContext = null } = {}) {
 
         return asPreviewResponse(payload, { imagePng });
       });
-    }
+    },
   );
 
   server.registerTool(
     'list_libraries',
     {
       title: 'List Libraries',
-      description: 'List the free icon libraries available through the hosted Supericons MCP server. Use this before filtering by library or when a user asks which icon libraries are supported.',
+      description:
+        'List the free icon libraries available through the hosted Supericons MCP server. Use this before filtering by library or when a user asks which icon libraries are supported.',
       outputSchema: listLibrariesOutputSchema,
       annotations: readOnlyLookupAnnotations,
     },
-    async (args = {}) => withMcpUsageEvent(requestContext, 'list_libraries', args, async () => asStructured({
-      libraries: LIBRARIES.map(([id, name, description]) => {
-        const capability = buildLibraryCapability(id, {
-          outlineCounts: hostedOutlineCounts,
-          materialUsesOutlineForSolid: true,
-        });
-        return {
-          id,
-          name,
-          label: getPublicLibraryMeta(id, { name, description }).label,
-          description,
-          ...capability,
-        };
-      }),
-      publicRecordCount: registrySummary.publicRecordCount,
-    }))
+    async (args = {}) =>
+      withMcpUsageEvent(requestContext, 'list_libraries', args, async () =>
+        asStructured({
+          libraries: LIBRARIES.map(([id, name, description]) => {
+            const capability = buildLibraryCapability(id, {
+              outlineCounts: hostedOutlineCounts,
+              materialUsesOutlineForSolid: true,
+            });
+            return {
+              id,
+              name,
+              label: getPublicLibraryMeta(id, { name, description }).label,
+              description,
+              ...capability,
+            };
+          }),
+          publicRecordCount: registrySummary.publicRecordCount,
+        }),
+      ),
   );
 
   return server;
@@ -1897,7 +2067,11 @@ function parsePublicSearchRequest(body = {}) {
   const library = String(body.library || '').trim() || null;
   const supportedLibraries = new Set(LIBRARIES.map(([id]) => id));
   if (library && !supportedLibraries.has(library)) {
-    throw createPreviewHttpError(400, 'unsupported_library', 'Choose a supported icon library or search all libraries.');
+    throw createPreviewHttpError(
+      400,
+      'unsupported_library',
+      'Choose a supported icon library or search all libraries.',
+    );
   }
 
   const style = String(body.style || 'any').trim() || 'any';
@@ -1911,9 +2085,7 @@ function parsePublicSearchRequest(body = {}) {
   }
 
   const requestedLimit = Number.parseInt(String(body.limit ?? '60'), 10);
-  const limit = Number.isFinite(requestedLimit)
-    ? Math.min(100, Math.max(1, requestedLimit))
-    : 60;
+  const limit = Number.isFinite(requestedLimit) ? Math.min(100, Math.max(1, requestedLimit)) : 60;
 
   return {
     query,
@@ -1926,12 +2098,16 @@ function parsePublicSearchRequest(body = {}) {
   };
 }
 
-async function runRailwayPublicSearch(params) {
+async function runRailwayPublicSearch(params, usageContext = null) {
   const execution = createRailwaySearchRoute({
     localSearchOne: searchRailwayLocalIcons,
-    hostedSearchOne: (fallbackParams) => searchHostedIcons(fallbackParams),
+    hostedSearchOne: (fallbackParams) =>
+      searchHostedIcons({
+        ...fallbackParams,
+        allowLocalEmptyFallback: false,
+      }),
   });
-  const results = await execution.searchOne(params);
+  const results = await execution.searchOne({ ...params, usageContext });
   return {
     results,
     searchRuntime: {
@@ -1949,7 +2125,8 @@ function buildServerCard(req) {
   return {
     name: 'supericons',
     displayName: 'Supericons',
-    description: 'Search and recommend Supericons SVG icons by meaning through MCP, including supported multilingual search terms.',
+    description:
+      'Search and recommend Supericons SVG icons by meaning through MCP, including supported multilingual search terms.',
     version: packageJson.version,
     websiteUrl: 'https://supericons.dev',
     transport: {
@@ -1961,13 +2138,7 @@ function buildServerCard(req) {
       properties: {},
       additionalProperties: false,
     },
-    tools: [
-      'search_icons',
-      'recommend_icons',
-      'get_icon',
-      'preview_icons',
-      'list_libraries',
-    ],
+    tools: ['search_icons', 'recommend_icons', 'get_icon', 'preview_icons', 'list_libraries'],
   };
 }
 
@@ -1980,7 +2151,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'Content-Type, Authorization, MCP-Protocol-Version, Mcp-Session-Id, X-Session-Id, X-Supericons-Api-Key, X-Supericons-Client, X-Mcp-Client, X-Client-Name',
+    'Content-Type, Authorization, MCP-Protocol-Version, Mcp-Session-Id, X-Session-Id, X-Supericons-Api-Key, X-Supericons-Client, X-Mcp-Client, X-Client-Name, X-Supericons-Controlled-Run-Label, X-Supericons-Controlled-Run-Timestamp, X-Supericons-Controlled-Run-Signature',
   );
   if (req.method === 'OPTIONS') {
     res.status(204).end();
@@ -2021,7 +2192,9 @@ app.get('/health', (_req, res) => {
 app.post('/search-icons', async (req, res) => {
   try {
     const params = parsePublicSearchRequest(req.body);
-    const { results, searchRuntime } = await runRailwayPublicSearch(params);
+    const requestContext = await buildRequestContext(req);
+    const usageContext = buildToolUsageContext(requestContext, 'search_icons', params);
+    const { results, searchRuntime } = await runRailwayPublicSearch(params, usageContext);
     sendJson(res, 200, {
       results: results.map((icon, index) => ({
         icon_id: `${icon.library}:${icon.id}`,
@@ -2035,16 +2208,18 @@ app.post('/search-icons', async (req, res) => {
       })),
       search_runtime: searchRuntime,
       ...(params.includeQueryFrame
-        ? { query_frame: buildSearchQueryFrame(params.query, { locale: params.locale }) }
+        ? {
+            query_frame: buildSearchQueryFrame(params.query, {
+              locale: params.locale,
+            }),
+          }
         : {}),
     });
   } catch (error) {
     const status = Number(error?.status || 500);
     sendJson(res, status, {
       error: error?.code || 'search_unavailable',
-      message: status >= 500
-        ? 'Icon search is temporarily unavailable. Try again shortly.'
-        : error.message,
+      message: status >= 500 ? 'Icon search is temporarily unavailable. Try again shortly.' : error.message,
       retryable: status >= 500,
     });
   }
@@ -2098,29 +2273,25 @@ app.get('/preview-icons.png', async (req, res) => {
         'X-Content-Type-Options': 'nosniff',
       })
       .send(Buffer.from(imagePng));
-    void logMcpUsageEvent(buildMcpUsageEventPayload(
-      requestContext,
-      'preview_image',
-      args,
-      { structuredContent: { results: icons } },
-      startedAt,
-      'ok',
-    ));
+    void logMcpUsageEvent(
+      buildMcpUsageEventPayload(
+        requestContext,
+        'preview_image',
+        args,
+        { structuredContent: { results: icons } },
+        startedAt,
+        'ok',
+      ),
+    );
   } catch (error) {
     const status = Number(error?.status || 500);
     sendJson(res, status, {
       error: error?.code || 'preview_image_unavailable',
       message: status >= 500 ? 'Preview image generation failed.' : error.message,
     });
-    void logMcpUsageEvent(buildMcpUsageEventPayload(
-      requestContext,
-      'preview_image',
-      args,
-      null,
-      startedAt,
-      'error',
-      error,
-    ));
+    void logMcpUsageEvent(
+      buildMcpUsageEventPayload(requestContext, 'preview_image', args, null, startedAt, 'error', error),
+    );
   }
 });
 

@@ -1,11 +1,28 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
 
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { createControlledRunHeaders } from '../mcp/controlled-run-auth.js';
 
 const requestedBaseUrl = String(process.argv[2] || '').replace(/\/+$/, '');
+const expectedVersion = String(
+  process.env.SUPERICONS_EXPECTED_VERSION ||
+    JSON.parse(readFileSync(new URL('../mcp/package.json', import.meta.url), 'utf8')).version,
+).trim();
+const outputPath = String(process.env.SUPERICONS_VERIFICATION_OUTPUT || '').trim();
+const controlledRunLabel = 'search-v2-hosted-route-product-gate';
+const controlledRunSecret = requestedBaseUrl
+  ? String(process.env.SUPERICONS_CONTROLLED_RUN_SECRET || '').trim()
+  : 'local-search-v2-product-gate-secret-20260723';
+assert.ok(
+  controlledRunSecret.length >= 32,
+  'SUPERICONS_CONTROLLED_RUN_SECRET must be set to the live Railway secret for a live verification run.',
+);
+const controlledHeaders = createControlledRunHeaders(controlledRunLabel, controlledRunSecret);
 const port = 19_000 + Math.floor(Math.random() * 800);
 const baseUrl = requestedBaseUrl || `http://127.0.0.1:${port}`;
 let child = null;
@@ -40,6 +57,7 @@ async function postSearch(searchCase) {
     headers: {
       'content-type': 'application/json',
       'user-agent': 'supericons-search-v2-route-product-gate/1.0',
+      ...controlledHeaders,
     },
     body: JSON.stringify({
       query: searchCase.query,
@@ -86,13 +104,6 @@ function assertSearchCase(searchCase, payload) {
       `${searchCase.query} had no required icon in the first ${searchCase.topLimit || 3}. Received: ${topRefs.join(', ')}`,
     );
   }
-  for (const forbidden of searchCase.forbiddenTop || []) {
-    assert.notEqual(
-      refs[0],
-      forbidden,
-      `${searchCase.query} was led by the irrelevant icon ${forbidden}.`,
-    );
-  }
   for (const pattern of searchCase.forbiddenPatterns || []) {
     assert.equal(
       refs.slice(0, searchCase.forbiddenLimit || 5).some((ref) => pattern.test(ref)),
@@ -102,10 +113,17 @@ function assertSearchCase(searchCase, payload) {
   }
 
   assert.ok(
-    ['hosted', 'local_fallback'].includes(payload.search_runtime?.mode),
+    ['hosted', 'hosted_fused', 'local_fallback'].includes(payload.search_runtime?.mode),
     `${searchCase.query} used an unexpected route: ${payload.search_runtime?.mode}`,
   );
   assert.equal(payload.search_runtime?.hosted_search_calls, 1);
+  if (payload.search_runtime?.mode === 'hosted') {
+    assert.equal(payload.search_runtime?.fallback_used, false);
+  }
+  if (payload.search_runtime?.mode === 'hosted_fused') {
+    assert.equal(payload.search_runtime?.fallback_used, false);
+    assert.equal(payload.search_runtime?.local_fusion_used, true);
+  }
   assert.ok((payload.results || []).every((result) => !Object.hasOwn(result, 'svg')));
   assert.ok((payload.results || []).every((result) => !Object.hasOwn(result, 'semantic')));
   return refs;
@@ -121,11 +139,12 @@ const cases = [
     query: 'network proximity graph nodes',
     library: 'phosphor',
     topIncludes: ['phosphor:graph', 'phosphor:network', 'phosphor:share-network'],
-    topLimit: 5,
+    topLimit: 3,
+    forbiddenPatterns: [/network-x/i, /network-slash/i, /wifi/i],
   },
   {
     query: 'tow truck',
-    topIncludes: ['bootstrap:truck', 'iconoir:truck', 'phosphor:truck-trailer'],
+    topIncludes: ['material:auto_towing', 'tabler:truck-loading', 'phosphor:truck-trailer', 'tabler:car-crane'],
   },
   {
     query: 'verification audit shield check',
@@ -146,7 +165,7 @@ const cases = [
     query: 'crane hook construction',
     topIncludes: ['phosphor:crane-tower', 'mingcute:tower_crane_line', 'tabler:crane', 'phosphor:crane'],
     forbiddenPatterns: [/fish-hook/i, /fishing-hook/i],
-    forbiddenLimit: 2,
+    forbiddenLimit: 5,
   },
   {
     query: 'connection two people together care relationship',
@@ -157,12 +176,38 @@ const cases = [
   {
     query: 'engineer hard hat professional person',
     library: 'phosphor',
-    forbiddenTop: [
-      'phosphor:palette',
-      'phosphor:magic-wand',
-      'phosphor:star',
-      'phosphor:calendar-star',
-    ],
+    topIncludes: ['phosphor:hard-hat', 'phosphor:baseball-helmet', 'phosphor:football-helmet'],
+    topLimit: 3,
+    forbiddenPatterns: [/:palette$/i, /magic-wand/i, /calendar-star/i],
+  },
+  {
+    query: 'network disconnected broken link',
+    library: 'lucide',
+    topIncludes: ['lucide:link-2-off', 'lucide:unlink', 'lucide:wifi-off'],
+    topLimit: 3,
+  },
+  {
+    query: 'casco de construcción',
+    locale: 'es',
+    library: 'lucide',
+    topIncludes: ['lucide:hard-hat', 'lucide:construction'],
+    topLimit: 3,
+  },
+  {
+    query: 'red de nodos conectados',
+    locale: 'es',
+    library: 'phosphor',
+    topIncludes: ['phosphor:graph', 'phosphor:network', 'phosphor:share-network'],
+    topLimit: 3,
+    forbiddenPatterns: [/wifi/i],
+  },
+  {
+    query: 'つながった人々',
+    locale: 'ja',
+    library: 'phosphor',
+    topIncludes: ['phosphor:users', 'phosphor:users-three', 'phosphor:share-network', 'phosphor:link'],
+    topLimit: 3,
+    forbiddenPatterns: [/wifi/i],
   },
   {
     query: 'amazing',
@@ -190,6 +235,65 @@ const cases = [
     includes: ['ionicons:fitness-outline', 'material:sports'],
   },
   {
+    query: 'checklist tarefas pendentes',
+    locale: 'pt',
+    library: 'lucide',
+    topIncludes: ['lucide:list-checks', 'lucide:list-check', 'lucide:clipboard-check'],
+    topLimit: 3,
+  },
+  {
+    query: 'broom cleanup construction',
+    library: 'tabler',
+    topIncludes: ['tabler:vacuum-cleaner', 'tabler:brush'],
+    topLimit: 3,
+  },
+  {
+    query: 'clientes empresas contatos',
+    locale: 'pt',
+    library: 'lucide',
+    topIncludes: ['lucide:users', 'lucide:contact', 'lucide:building'],
+    topLimit: 3,
+  },
+  {
+    query: 'excavator construction vehicle',
+    topIncludes: [
+      'tabler:bulldozer',
+      'phosphor:bulldozer',
+      'lucide:tractor',
+      'material:construction',
+      'tabler:car-crane',
+    ],
+    topLimit: 3,
+  },
+  {
+    query: 'email document',
+    library: 'lucide',
+    topIncludes: ['lucide:file-text', 'lucide:mail', 'lucide:files'],
+    topLimit: 3,
+  },
+  {
+    query: 'game controller gaming',
+    library: 'phosphor',
+    first: 'phosphor:game-controller',
+  },
+  {
+    query: 'work review queue inbox',
+    library: 'phosphor',
+    topIncludes: ['phosphor:tray', 'phosphor:tray-arrow-down'],
+    topLimit: 3,
+  },
+  {
+    query: 'claw grab grapple',
+    library: 'tabler',
+    first: 'tabler:hand-grab',
+  },
+  {
+    query: 'why choose us',
+    library: 'lucide',
+    topIncludes: ['lucide:badge-check', 'lucide:shield-check'],
+    topLimit: 3,
+  },
+  {
     query: 'definitelymissingbrandzz',
     library: 'simpleicons',
     expectedCount: 0,
@@ -206,19 +310,23 @@ if (!requestedBaseUrl) {
       ...process.env,
       PORT: String(port),
       SUPERICONS_RAILWAY_LOCAL_FIRST: 'on',
-      SUPERICONS_CONTROLLED_RUN_LABEL: 'search-v2-route-product-gate',
+      SUPERICONS_CONTROLLED_RUN_SECRET: controlledRunSecret,
     },
     stdio: ['ignore', 'pipe', 'pipe'],
     windowsHide: true,
   });
-  child.stdout.on('data', (chunk) => { childOutput = `${childOutput}${chunk}`.slice(-12_000); });
-  child.stderr.on('data', (chunk) => { childOutput = `${childOutput}${chunk}`.slice(-12_000); });
+  child.stdout.on('data', (chunk) => {
+    childOutput = `${childOutput}${chunk}`.slice(-12_000);
+  });
+  child.stderr.on('data', (chunk) => {
+    childOutput = `${childOutput}${chunk}`.slice(-12_000);
+  });
 }
 
 let transport;
 try {
   const health = await waitForHealth();
-  assert.equal(health.version, '0.4.20');
+  assert.equal(health.version, expectedVersion);
   assert.equal(health.railway_local_first?.search_mode, 'hosted_primary');
 
   const summaries = [];
@@ -241,23 +349,31 @@ try {
 
   transport = new StreamableHTTPClientTransport(new URL(`${baseUrl}/mcp`), {
     requestInit: {
-      headers: { 'user-agent': 'supericons-search-v2-route-product-gate/1.0' },
+      headers: {
+        'user-agent': 'supericons-search-v2-route-product-gate/1.0',
+        ...controlledHeaders,
+      },
     },
   });
-  const client = new Client({ name: 'search-v2-route-product-gate', version: '1.0.0' });
+  const client = new Client({
+    name: 'search-v2-route-product-gate',
+    version: '1.0.0',
+  });
   await client.connect(transport);
 
   for (const searchCase of cases) {
-    const mcpPayload = parseMcpPayload(await client.callTool({
-      name: 'search_icons',
-      arguments: {
-        query: searchCase.query,
-        library: searchCase.library || undefined,
-        library_mode: searchCase.libraryMode || (searchCase.library ? 'strict' : 'all'),
-        locale: searchCase.locale || undefined,
-        limit: searchCase.limit || 10,
-      },
-    }));
+    const mcpPayload = parseMcpPayload(
+      await client.callTool({
+        name: 'search_icons',
+        arguments: {
+          query: searchCase.query,
+          library: searchCase.library || undefined,
+          library_mode: searchCase.libraryMode || (searchCase.library ? 'strict' : 'all'),
+          locale: searchCase.locale || undefined,
+          limit: searchCase.limit || 10,
+        },
+      }),
+    );
     const httpPayload = payloads.get(`${searchCase.query}:${searchCase.locale || ''}:${searchCase.library || ''}`);
     assert.deepEqual(
       getMcpRefs(mcpPayload),
@@ -272,21 +388,23 @@ try {
     }
   }
 
-  console.log(JSON.stringify({
+  const evidence = {
     status: 'ok',
     target: requestedBaseUrl ? 'live' : 'candidate',
     base_url: baseUrl,
     version: health.version,
+    controlled_run_label: controlledRunLabel,
     cases: summaries,
-  }, null, 2));
+  };
+  if (outputPath) {
+    await writeFile(outputPath, `${JSON.stringify(evidence, null, 2)}\n`, 'utf8');
+  }
+  console.log(JSON.stringify(evidence, null, 2));
 } finally {
   if (transport) await transport.close().catch(() => {});
   if (child) {
     child.kill('SIGTERM');
-    await Promise.race([
-      new Promise((resolveExit) => child.once('exit', resolveExit)),
-      delay(2_000),
-    ]);
+    await Promise.race([new Promise((resolveExit) => child.once('exit', resolveExit)), delay(2_000)]);
     if (child.exitCode === null) child.kill('SIGKILL');
   }
 }

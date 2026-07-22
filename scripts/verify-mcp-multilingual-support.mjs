@@ -91,7 +91,7 @@ assert.ok(
   'stdio MCP must expose the forgiving locale schema used for agent-readable warnings',
 );
 assert.ok(
-  remoteSource.includes('locale: forgivingStringSchema.optional()'),
+  /locale:\s*forgivingStringSchema\s*\.optional\(\)/.test(remoteSource),
   'hosted MCP must expose the forgiving locale schema used for agent-readable warnings',
 );
 assert.ok(remoteSource.includes('locale,') && remoteSource.includes('searchIconsHostedMcp'), 'hosted MCP must pass locale to search');

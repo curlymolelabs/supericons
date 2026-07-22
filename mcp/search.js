@@ -6,13 +6,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  expandCjkQuery,
-  normalizeCjkSearchText,
-} from './runtime/cjk-search-core.js';
+import { expandCjkQuery, normalizeCjkSearchText } from './runtime/cjk-search-core.js';
 import { createIconSemanticAliasMap } from './runtime/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from './runtime/icon-taxonomy-seed.js';
 import {
+  getBrandRankAdjustment,
   getSearchInterpretationPlan,
   normalizeSearchLibraryMode,
   rerankSearchCandidatesAtFusion,
@@ -32,9 +30,7 @@ const iconTaxonomyMap = createIconTaxonomyMap();
 const packagedCjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
 const repoCjkTermsPath = join(__dirname, '..', 'data', 'i18n', 'cjk-search-terms.json');
 const cjkTermsPath = existsSync(packagedCjkTermsPath) ? packagedCjkTermsPath : repoCjkTermsPath;
-const cjkSearchTerms = existsSync(cjkTermsPath)
-  ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || []
-  : [];
+const cjkSearchTerms = existsSync(cjkTermsPath) ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || [] : [];
 const packagedMultilingualAliasesPath = join(__dirname, 'public', 'multilingual-search-aliases.json');
 const repoMultilingualAliasesPath = join(__dirname, '..', 'data', 'i18n', 'multilingual-search-aliases.json');
 const multilingualAliasesPath = existsSync(packagedMultilingualAliasesPath)
@@ -46,7 +42,18 @@ const multilingualSearchAliases = existsSync(multilingualAliasesPath)
 const multilingualExpansionTerms = [...cjkSearchTerms, ...multilingualSearchAliases];
 const iconSearchMetadataCache = new WeakMap();
 const iconCandidateIndexCache = new WeakMap();
-const LOGO_INTENT_TOKENS = new Set(['logo', 'logos', 'icon', 'icons', 'brand', 'brands', 'mark', 'marks', 'symbol', 'symbols']);
+const LOGO_INTENT_TOKENS = new Set([
+  'logo',
+  'logos',
+  'icon',
+  'icons',
+  'brand',
+  'brands',
+  'mark',
+  'marks',
+  'symbol',
+  'symbols',
+]);
 const GENERIC_AI_LOGO_TOKENS = new Set(['ai', 'artificial', 'intelligence']);
 const QUERY_CONFIDENCE_STOP_TOKENS = new Set([
   'a',
@@ -68,24 +75,13 @@ const QUERY_CONFIDENCE_STOP_TOKENS = new Set([
   'was',
   'with',
 ]);
-const QUERY_CONFIDENCE_GENERIC_TOKENS = new Set([
-  'class',
-  'icon',
-  'icons',
-  'item',
-  'mode',
-  'symbol',
-  'thing',
-]);
+const QUERY_CONFIDENCE_GENERIC_TOKENS = new Set(['class', 'icon', 'icons', 'item', 'mode', 'symbol', 'thing']);
 
 /** Inline optimal-string-alignment distance (capped early for performance). */
 function editDistance(a, b) {
   if (Math.abs(a.length - b.length) > 2) return 99;
-  const rows = Array.from(
-    { length: a.length + 1 },
-    (_, row) => Array.from({ length: b.length + 1 }, (_, column) => (
-      row === 0 ? column : column === 0 ? row : 0
-    )),
+  const rows = Array.from({ length: a.length + 1 }, (_, row) =>
+    Array.from({ length: b.length + 1 }, (_, column) => (row === 0 ? column : column === 0 ? row : 0)),
   );
 
   for (let row = 1; row <= a.length; row += 1) {
@@ -96,16 +92,8 @@ function editDistance(a, b) {
         rows[row][column - 1] + 1,
         rows[row - 1][column - 1] + substitutionCost,
       );
-      if (
-        row > 1
-        && column > 1
-        && a[row - 1] === b[column - 2]
-        && a[row - 2] === b[column - 1]
-      ) {
-        rows[row][column] = Math.min(
-          rows[row][column],
-          rows[row - 2][column - 2] + 1,
-        );
+      if (row > 1 && column > 1 && a[row - 1] === b[column - 2] && a[row - 2] === b[column - 1]) {
+        rows[row][column] = Math.min(rows[row][column], rows[row - 2][column - 2] + 1);
       }
     }
   }
@@ -132,9 +120,7 @@ function containsSemanticPhrase(value, phrase) {
 function isSafeInflectionalTokenMatch(left, right) {
   if (!left || !right || Math.min(left.length, right.length) < 3) return false;
   const suffixes = ['s', 'es', 'ed', 'ing'];
-  return suffixes.some((suffix) => (
-    right === `${left}${suffix}` || left === `${right}${suffix}`
-  ));
+  return suffixes.some((suffix) => right === `${left}${suffix}` || left === `${right}${suffix}`);
 }
 
 function iconKey(icon) {
@@ -184,38 +170,29 @@ function collectIconSearchValues(icon) {
 function getMeaningfulQueryWords(queryWords) {
   const withoutLogoIntent = queryWords.filter((word) => !LOGO_INTENT_TOKENS.has(word));
   const candidateWords = withoutLogoIntent.length > 0 ? withoutLogoIntent : queryWords;
-  const withoutGenericAi = candidateWords.length > 1
-    ? candidateWords.filter((word) => !GENERIC_AI_LOGO_TOKENS.has(word))
-    : candidateWords;
+  const withoutGenericAi =
+    candidateWords.length > 1 ? candidateWords.filter((word) => !GENERIC_AI_LOGO_TOKENS.has(word)) : candidateWords;
   return withoutGenericAi.length > 0 ? withoutGenericAi : candidateWords;
 }
 
 function getConfidenceQueryWords(query) {
-  const queryWords = tokenizeSemanticText(query)
-    .filter((word) => !QUERY_CONFIDENCE_STOP_TOKENS.has(word));
-  const specificWords = queryWords
-    .filter((word) => !QUERY_CONFIDENCE_GENERIC_TOKENS.has(word));
+  const queryWords = tokenizeSemanticText(query).filter((word) => !QUERY_CONFIDENCE_STOP_TOKENS.has(word));
+  const specificWords = queryWords.filter((word) => !QUERY_CONFIDENCE_GENERIC_TOKENS.has(word));
   return specificWords.length > 0 ? specificWords : queryWords;
 }
 
 function getCandidateConfidenceTokens(icon) {
   const metadata = getIconSearchMetadata(icon);
-  return new Set([
-    ...metadata.tokens,
-    ...metadata.aliases.flatMap((alias) => [...alias.tokens]),
-  ]);
+  return new Set([...metadata.tokens, ...metadata.aliases.flatMap((alias) => [...alias.tokens])]);
 }
 
 function tokenMatchesQueryConcept(queryWord, candidateToken, allowTypo = false) {
   if (queryWord === candidateToken) return true;
   if (
-    queryWord.length >= 5
-    && candidateToken.length >= 5
-    && (
-      candidateToken.startsWith(queryWord)
-      || queryWord.startsWith(candidateToken)
-    )
-    && Math.abs(queryWord.length - candidateToken.length) <= 4
+    queryWord.length >= 5 &&
+    candidateToken.length >= 5 &&
+    (candidateToken.startsWith(queryWord) || queryWord.startsWith(candidateToken)) &&
+    Math.abs(queryWord.length - candidateToken.length) <= 4
   ) {
     return true;
   }
@@ -241,74 +218,49 @@ function getFuzzySynonymCorrections(word, synonyms) {
   const minimumGroupCount = word.length >= 7 ? 1 : 2;
   const inflectionCandidate = singularizeQueryWord(word);
   return [...candidateGroups]
-    .filter(([candidate, groups]) => (
-      groups.size >= minimumGroupCount
-      && candidate !== inflectionCandidate
-      && editDistance(word, candidate) <= 1
-    ))
+    .filter(
+      ([candidate, groups]) =>
+        groups.size >= minimumGroupCount && candidate !== inflectionCandidate && editDistance(word, candidate) <= 1,
+    )
     .map(([candidate]) => candidate);
 }
 
 function getFuzzyCorrectionWords(query, synonyms) {
-  return new Set(
-    tokenizeSemanticText(query)
-      .filter((word) => getFuzzySynonymCorrections(word, synonyms).length > 0),
-  );
+  return new Set(tokenizeSemanticText(query).filter((word) => getFuzzySynonymCorrections(word, synonyms).length > 0));
 }
 
 function getCorrectedTypoQuery(query, synonyms) {
   const words = tokenizeSemanticText(query);
-  const correctedWords = words.map((word) => (
-    getFuzzySynonymCorrections(word, synonyms)[0] || word
-  ));
+  const correctedWords = words.map((word) => getFuzzySynonymCorrections(word, synonyms)[0] || word);
   const correctedQuery = correctedWords.join(' ');
   const normalizedQuery = normalizeSemanticText(query);
   return correctedQuery !== normalizedQuery ? correctedQuery : null;
 }
 
-function iconMatchesOriginalQueryConcept(
-  icon,
-  query,
-  minimumMatches = 1,
-  fuzzyCorrectionWords = new Set(),
-) {
+function iconMatchesOriginalQueryConcept(icon, query, minimumMatches = 1, fuzzyCorrectionWords = new Set()) {
   const queryWords = getConfidenceQueryWords(query);
   if (queryWords.length === 0) return true;
   const candidateTokens = getCandidateConfidenceTokens(icon);
-  const matchCount = queryWords.filter((queryWord) => (
-    [...candidateTokens].some((candidateToken) => (
-      tokenMatchesQueryConcept(
-        queryWord,
-        candidateToken,
-        fuzzyCorrectionWords.has(queryWord),
-      )
-    ))
-  )).length;
+  const matchCount = queryWords.filter((queryWord) =>
+    [...candidateTokens].some((candidateToken) =>
+      tokenMatchesQueryConcept(queryWord, candidateToken, fuzzyCorrectionWords.has(queryWord)),
+    ),
+  ).length;
   return matchCount >= Math.min(minimumMatches, queryWords.length);
 }
 
-function getDirectSearchFallbackVariants(
-  query,
-  synonyms,
-  frame = buildSearchQueryFrame(query),
-) {
-  if (/[^\x00-\x7f]/.test(query) && !frame.matched) return [];
+function getDirectSearchFallbackVariants(query, synonyms, frame = buildSearchQueryFrame(query), options = {}) {
   const fuzzyCorrectionWords = getFuzzyCorrectionWords(query, synonyms);
   const queryWords = tokenizeSemanticText(query);
-  const allowFuzzyCorrection = queryWords.length === 1
-    ? fuzzyCorrectionWords.size > 0
-    : fuzzyCorrectionWords.size >= 2;
-  if (!frame.matched && !allowFuzzyCorrection) return [];
-  const correctedVariants = tokenizeSemanticText(query)
-    .flatMap((word) => getFuzzySynonymCorrections(word, synonyms));
+  const isCompositionalQuery = queryWords.length >= 2 && options.allowCompositionalFallback === true;
+  const allowFuzzyCorrection = queryWords.length === 1 ? fuzzyCorrectionWords.size > 0 : fuzzyCorrectionWords.size >= 2;
+  if (!frame.matched && !allowFuzzyCorrection && !isCompositionalQuery) return [];
+  const correctedVariants = tokenizeSemanticText(query).flatMap((word) => getFuzzySynonymCorrections(word, synonyms));
   const variants = [
     ...(frame.positive_concepts || []),
     ...(frame.fallback_terms || []),
     ...correctedVariants,
-    ...(frame.matched
-      ? []
-      : buildIntentQueryVariants(query, { maxVariants: 12 })
-        .filter((variant) => fuzzyCorrectionWords.has(normalizeSemanticText(variant)))),
+    ...(frame.matched ? [] : buildIntentQueryVariants(query, { maxVariants: 12 })),
   ];
   const normalizedQuery = normalizeSemanticText(query);
   const seen = new Set([normalizedQuery]);
@@ -325,11 +277,7 @@ function getDirectSearchFallbackVariants(
 }
 
 function singularizeQueryWord(word) {
-  if (
-    word.length <= 4
-    || QUERY_CONFIDENCE_GENERIC_TOKENS.has(word)
-    || /(ss|us|is|ics|news)$/.test(word)
-  ) {
+  if (word.length <= 4 || QUERY_CONFIDENCE_GENERIC_TOKENS.has(word) || /(ss|us|is|ics|news)$/.test(word)) {
     return word;
   }
   if (word.endsWith('ies') && word.length > 5) return `${word.slice(0, -3)}y`;
@@ -352,12 +300,12 @@ function hasLogoIntent(queryWords) {
 }
 
 function isSupericonsBrandLogo(icon) {
-  return icon.lib === 'si'
-    && (
-      icon.assetType === 'brand-logo'
-      || icon.aiFilterTags?.includes('brand-logo')
-      || icon.filterTags?.includes('brand-logo')
-    );
+  return (
+    icon.lib === 'si' &&
+    (icon.assetType === 'brand-logo' ||
+      icon.aiFilterTags?.includes('brand-logo') ||
+      icon.filterTags?.includes('brand-logo'))
+  );
 }
 
 function getIconSearchMetadata(icon) {
@@ -384,9 +332,7 @@ function getIconSearchMetadata(icon) {
   const aliases = [...(getIconSemanticAliases(icon) || []), ...collectIconSearchValues(icon)]
     .map((alias) => {
       const normalized = normalizeSemanticText(alias);
-      return normalized
-        ? { normalized, tokens: new Set(tokenizeSemanticText(normalized)) }
-        : null;
+      return normalized ? { normalized, tokens: new Set(tokenizeSemanticText(normalized)) } : null;
     })
     .filter(Boolean);
   const metadata = {
@@ -464,13 +410,13 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
   }
 
   const singleQueryWord = queryWords.length === 1 ? queryWords[0] : null;
-  const hasLongTokenPrefix = singleQueryWord?.length >= 5
-    && [...tokens].some((token) => token.startsWith(singleQueryWord));
+  const hasLongTokenPrefix =
+    singleQueryWord?.length >= 5 && [...tokens].some((token) => token.startsWith(singleQueryWord));
   if (
-    containsSemanticPhrase(name, normalizedQuery)
-    || containsSemanticPhrase(id, normalizedQuery)
-    || containsSemanticPhrase(fullId, normalizedQuery)
-    || hasLongTokenPrefix
+    containsSemanticPhrase(name, normalizedQuery) ||
+    containsSemanticPhrase(id, normalizedQuery) ||
+    containsSemanticPhrase(fullId, normalizedQuery) ||
+    hasLongTokenPrefix
   ) {
     return 250;
   }
@@ -480,10 +426,10 @@ function getDirectSearchScore(icon, normalizedQuery, queryWords) {
   }
 
   if (
-    meaningfulQueryWords.length > 1
-    && meaningfulQueryWords.every((word) => (
-      [...tokens].some((token) => token === word || isSafeInflectionalTokenMatch(word, token))
-    ))
+    meaningfulQueryWords.length > 1 &&
+    meaningfulQueryWords.every((word) =>
+      [...tokens].some((token) => token === word || isSafeInflectionalTokenMatch(word, token)),
+    )
   ) {
     return 180;
   }
@@ -505,9 +451,7 @@ function iconMatchesExactQueryTokens(icon, query, exactSynonymKeys = []) {
   if (queryWords.length === 0) return false;
   const { primaryTokens } = getIconSearchMetadata(icon);
   if (queryWords.every((word) => primaryTokens.has(word))) return true;
-  return exactSynonymKeys.some((key) => (
-    tokenizeSemanticText(key).every((word) => primaryTokens.has(word))
-  ));
+  return exactSynonymKeys.some((key) => tokenizeSemanticText(key).every((word) => primaryTokens.has(word)));
 }
 
 function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
@@ -531,17 +475,13 @@ function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
     }
 
     if (
-      containsSemanticPhrase(normalizedAlias, normalizedQuery)
-      || (
-        queryWords.length === 1
-        && [...aliasTokens].some((token) => (
-          (
-            queryWords[0].length >= 5
-            && token.startsWith(queryWords[0])
-          )
-          || isSafeInflectionalTokenMatch(queryWords[0], token)
+      containsSemanticPhrase(normalizedAlias, normalizedQuery) ||
+      (queryWords.length === 1 &&
+        [...aliasTokens].some(
+          (token) =>
+            (queryWords[0].length >= 5 && token.startsWith(queryWords[0])) ||
+            isSafeInflectionalTokenMatch(queryWords[0], token),
         ))
-      )
     ) {
       bestScore = Math.max(bestScore, 360);
       continue;
@@ -575,11 +515,11 @@ function expandSingleTerm(word, synonyms, options = {}) {
   const terms = new Set([word]);
 
   // 1. Direct key match
-  if (synonyms[word]) synonyms[word].forEach(t => terms.add(t));
+  if (synonyms[word]) synonyms[word].forEach((t) => terms.add(t));
 
   // 2. Reverse lookup (word is a value in some group)
   for (const [key, values] of Object.entries(synonyms)) {
-    if (values.some(v => v === word || v.split(' ').includes(word))) {
+    if (values.some((v) => v === word || v.split(' ').includes(word))) {
       terms.add(key);
     }
   }
@@ -590,7 +530,7 @@ function expandSingleTerm(word, synonyms, options = {}) {
     for (const [key, values] of Object.entries(synonyms)) {
       if (key.startsWith(word) && key !== word) {
         terms.add(key);
-        values.forEach(t => terms.add(t));
+        values.forEach((t) => terms.add(t));
       }
     }
   }
@@ -603,11 +543,11 @@ function expandSingleTerm(word, synonyms, options = {}) {
       .replace(/es$/, '')
       .replace(/s$/, '');
     if (stripped !== word && stripped.length > 2) {
-      if (synonyms[stripped]) synonyms[stripped].forEach(t => terms.add(t));
+      if (synonyms[stripped]) synonyms[stripped].forEach((t) => terms.add(t));
       for (const [key, values] of Object.entries(synonyms)) {
         if (key === stripped || values.includes(stripped)) {
           terms.add(key);
-          values.forEach(t => terms.add(t));
+          values.forEach((t) => terms.add(t));
         }
       }
     }
@@ -621,20 +561,20 @@ function expandSingleTerm(word, synonyms, options = {}) {
         .filter((value) => value && !value.includes(' '));
       if (candidates.some((candidate) => editDistance(word, candidate) <= 1)) {
         terms.add(key);
-        values.forEach(t => terms.add(t));
+        values.forEach((t) => terms.add(t));
       }
     }
   }
 
   // Filter out 2-char expansions (keep original word)
-  const result = [...terms].filter(t => t === word || t.length > 2);
+  const result = [...terms].filter((t) => t === word || t.length > 2);
   return result.slice(0, 20);
 }
 
 /** Expand a full search query, returning array of term-sets for AND matching */
 function expandSearchTerms(query, synonyms, options = {}) {
   const words = query.trim().split(/\s+/).filter(Boolean);
-  return words.map(w => expandSingleTerm(w, synonyms, options));
+  return words.map((w) => expandSingleTerm(w, synonyms, options));
 }
 
 /**
@@ -692,45 +632,48 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   const queryFrame = semanticQueryFrame;
   const fuzzyCorrectionWords = getFuzzyCorrectionWords(query, synonyms);
   const queryWords = tokenizeSemanticText(query);
-  const allowFuzzyCorrection = queryWords.length === 1
-    ? fuzzyCorrectionWords.size > 0
-    : fuzzyCorrectionWords.size >= 2;
+  const allowFuzzyCorrection = queryWords.length === 1 ? fuzzyCorrectionWords.size > 0 : fuzzyCorrectionWords.size >= 2;
   const effectiveLimit = Math.max(1, Number(options.limit || 20));
   const directResults = searchIconsForSingleQuery(query, icons, synonyms, {
     ...options,
     applyConfidenceFloor: queryFrame.matched || allowFuzzyCorrection,
     allowFuzzyCorrection,
-    ...(queryFrame.matched
-      ? { candidatePool: getIndexedCandidatePool(icons, query, synonyms) }
-      : {}),
+    ...(queryFrame.matched ? { candidatePool: getIndexedCandidatePool(icons, query, synonyms) } : {}),
   });
   const inflectionVariant = getInflectionQueryVariant(query);
-  const directConceptMatches = directResults.filter((icon) => (
-    iconMatchesOriginalQueryConcept(icon, query)
-  ));
+  const directConceptMatches = directResults.filter((icon) => iconMatchesOriginalQueryConcept(icon, query));
   const exactSynonymKeys = getExactSynonymKeys(query, synonyms);
-  const exactDirectMatches = directResults.filter((icon) => (
-    iconMatchesExactQueryTokens(icon, query, exactSynonymKeys)
-  ));
+  const exactDirectMatches = directResults.filter((icon) => iconMatchesExactQueryTokens(icon, query, exactSynonymKeys));
   const minimumUsefulResults = Math.min(3, effectiveLimit);
+  const confidenceQueryWords = getConfidenceQueryWords(query);
+  const recognizedCompositionWords = confidenceQueryWords.filter(
+    (word) => getIndexedCandidatePool(icons, word, synonyms).length > 0,
+  );
+  const shouldTryCompositionalFallback =
+    !queryFrame.matched &&
+    queryWords.length >= 2 &&
+    recognizedCompositionWords.length >= Math.min(2, confidenceQueryWords.length);
+  const directBrandAdjustment = directResults[0] ? getBrandRankAdjustment(query, directResults[0]) : null;
   if (
-    inflectionVariant
-    && !queryFrame.matched
-    && (
-      exactDirectMatches.length < minimumUsefulResults
-      || exactDirectMatches.length < directResults.length
-    )
+    directResults[0] &&
+    isSupericonsBrandLogo(directResults[0]) &&
+    directBrandAdjustment?.boost > 0 &&
+    directBrandAdjustment?.penalty === 0
   ) {
-    const inflectionResults = searchIconsForSingleQuery(
-      inflectionVariant,
-      icons,
-      synonyms,
-      {
-        ...options,
-        limit: Math.max(effectiveLimit, 12),
-        applyExpressiveFallback: false,
-      },
-    )
+    const firstNonBrandIndex = directResults.findIndex((icon) => !isSupericonsBrandLogo(icon));
+    return directResults.slice(0, firstNonBrandIndex === -1 ? directResults.length : firstNonBrandIndex);
+  }
+  if (queryFrame.is_brand_logo_query) return directResults;
+  if (
+    inflectionVariant &&
+    !queryFrame.matched &&
+    (exactDirectMatches.length < minimumUsefulResults || exactDirectMatches.length < directResults.length)
+  ) {
+    const inflectionResults = searchIconsForSingleQuery(inflectionVariant, icons, synonyms, {
+      ...options,
+      limit: Math.max(effectiveLimit, 12),
+      applyExpressiveFallback: false,
+    })
       .filter((icon) => iconMatchesOriginalQueryConcept(icon, query))
       .map((icon) => ({
         ...icon,
@@ -752,16 +695,15 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     }
   }
   if (
-    directResults.length > 0
-    && (!queryFrame.matched || queryFrame.is_brand_logo_query)
+    directResults.length > 0 &&
+    (!queryFrame.matched || queryFrame.is_brand_logo_query) &&
+    !shouldTryCompositionalFallback
   ) {
     if (queryFrame.is_brand_logo_query && directResults[0]?.lib === 'si') {
       const firstNonBrandIndex = directResults.findIndex((icon) => icon.lib !== 'si');
       return directResults.slice(0, firstNonBrandIndex === -1 ? directResults.length : firstNonBrandIndex);
     }
-    const correctedTypoQuery = allowFuzzyCorrection
-      ? getCorrectedTypoQuery(query, synonyms)
-      : null;
+    const correctedTypoQuery = allowFuzzyCorrection ? getCorrectedTypoQuery(query, synonyms) : null;
     if (correctedTypoQuery) {
       return directResults.map((icon) => ({
         ...icon,
@@ -773,7 +715,9 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     return directResults;
   }
 
-  const fallbackVariants = getDirectSearchFallbackVariants(query, synonyms, queryFrame);
+  const fallbackVariants = getDirectSearchFallbackVariants(query, synonyms, queryFrame, {
+    allowCompositionalFallback: shouldTryCompositionalFallback,
+  });
   const fallbackBatches = [];
   for (let index = 0; index < fallbackVariants.length; index += 1) {
     const queryVariant = fallbackVariants[index];
@@ -782,34 +726,36 @@ export function searchIcons(query, icons, synonyms, options = {}) {
       limit: Math.max(effectiveLimit, 12),
       applyExpressiveFallback: false,
       candidatePool: getIndexedCandidatePool(icons, queryVariant, synonyms),
-    }).filter((icon) => (
-      (queryFrame.is_brand_logo_query || !isSupericonsBrandLogo(icon))
-      && iconMatchesOriginalQueryConcept(
-        icon,
-        queryFrame.matched ? queryVariant : query,
-        1,
-        queryFrame.matched ? new Set() : fuzzyCorrectionWords,
-      )
-    ));
+    }).filter(
+      (icon) =>
+        (queryFrame.is_brand_logo_query || !isSupericonsBrandLogo(icon)) &&
+        iconMatchesOriginalQueryConcept(
+          icon,
+          queryFrame.matched ? queryVariant : query,
+          1,
+          queryFrame.matched ? new Set() : fuzzyCorrectionWords,
+        ),
+    );
     if (variantResults.length === 0) continue;
 
-    fallbackBatches.push(variantResults.map((icon) => ({
-      ...icon,
-      query_variant: queryVariant,
-      query_variant_rank: index + 1,
-      query_variant_kind: 'semantic_fallback',
-    })));
+    fallbackBatches.push(
+      variantResults.map((icon) => ({
+        ...icon,
+        query_variant: queryVariant,
+        query_variant_rank: index + 1,
+        query_variant_kind: 'semantic_fallback',
+      })),
+    );
   }
 
   const useExactDirectAnchors = queryFrame.matched && queryFrame.confidence_floor === 'high';
   const mergedFallbackResults = queryFrame.matched
-    ? (useExactDirectAnchors ? [...exactDirectMatches] : [])
+    ? useExactDirectAnchors
+      ? [...exactDirectMatches]
+      : []
     : [...directResults];
   const mergedFallbackKeys = new Set(mergedFallbackResults.map((icon) => iconKey(icon)));
-  const maximumBatchLength = fallbackBatches.reduce(
-    (maximum, batch) => Math.max(maximum, batch.length),
-    0,
-  );
+  const maximumBatchLength = fallbackBatches.reduce((maximum, batch) => Math.max(maximum, batch.length), 0);
   for (let resultIndex = 0; resultIndex < maximumBatchLength; resultIndex += 1) {
     for (const batch of fallbackBatches) {
       const icon = batch[resultIndex];
@@ -821,28 +767,15 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     }
   }
 
-  if (queryFrame.matched) {
-    for (const icon of directResults) {
-      const key = iconKey(icon);
-      if (mergedFallbackKeys.has(key)) continue;
-      mergedFallbackKeys.add(key);
-      mergedFallbackResults.push(icon);
-    }
-  }
-
   if (mergedFallbackResults.length > 0) {
     if (queryFrame.matched) {
       return mergedFallbackResults.slice(0, effectiveLimit);
     }
-    return rerankSearchCandidatesAtFusion(
-      query,
-      mergedFallbackResults,
-      {
-        libraryMode: options.libraryMode,
-        requestedLibrary: options.library,
-        applyExpressiveFallback: false,
-      },
-    ).slice(0, effectiveLimit);
+    return rerankSearchCandidatesAtFusion(query, mergedFallbackResults, {
+      libraryMode: options.libraryMode,
+      requestedLibrary: options.library,
+      applyExpressiveFallback: false,
+    }).slice(0, effectiveLimit);
   }
 
   return directResults;
@@ -925,7 +858,7 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
   // Library filter
   let filtered = Array.isArray(options.candidatePool) ? options.candidatePool : icons;
   if (library && libraryMode === 'strict') {
-    filtered = filtered.filter(icon => icon.lib === library);
+    filtered = filtered.filter((icon) => icon.lib === library);
   }
   filtered = filtered.filter((icon) => iconMatchesRequestedStyle(icon, normalizedStyle));
 
@@ -940,22 +873,21 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
   const termSets = expandSearchTerms(normalizedQuery, synonyms, {
     allowValueFuzzy: options.allowFuzzyCorrection === true,
   });
-  const hasSingleWordFuzzyCorrection = options.allowFuzzyCorrection === true
-    && queryWords.length === 1
-    && fuzzyCorrectionWords.has(queryWords[0]);
+  const hasSingleWordFuzzyCorrection =
+    options.allowFuzzyCorrection === true && queryWords.length === 1 && fuzzyCorrectionWords.has(queryWords[0]);
 
   // Helper: check if icon matches a set of term-sets
   const iconMatchesTermSets = (icon, sets) => {
     const { lowerName: name, lowerId: id, segments } = getIconSearchMetadata(icon);
-    return sets.every(terms =>
-      terms.some(term => {
+    return sets.every((terms) =>
+      terms.some((term) => {
         const normalizedTerm = normalizeSemanticText(term);
         const termWords = tokenizeSemanticText(normalizedTerm);
         if (termWords.length <= 1) {
           return segments.some((segment) => segment === normalizedTerm);
         }
         return name.includes(normalizedTerm) || id.includes(normalizedTerm);
-      })
+      }),
     );
   };
 
@@ -980,18 +912,14 @@ function searchIconsForSingleQuery(query, icons, synonyms, options = {}) {
   const tier1Keys = new Set(tier1.map((i) => iconKey(i)));
 
   // Tier 2: synonym expansion matches
-  const tier2 = filtered.filter(icon =>
-    !tier1Keys.has(iconKey(icon))
-    && iconMatchesTermSets(icon, termSets)
-    && (
-      options.applyConfidenceFloor !== true
-      || (queryWords.length <= 1 && !hasSingleWordFuzzyCorrection)
-      || (
-        queryWords.length === 1
-        && iconMatchesOriginalQueryConcept(icon, query, 1, fuzzyCorrectionWords)
-      )
-      || iconMatchesOriginalQueryConcept(icon, query, 2, fuzzyCorrectionWords)
-    )
+  const tier2 = filtered.filter(
+    (icon) =>
+      !tier1Keys.has(iconKey(icon)) &&
+      iconMatchesTermSets(icon, termSets) &&
+      (options.applyConfidenceFloor !== true ||
+        (queryWords.length <= 1 && !hasSingleWordFuzzyCorrection) ||
+        (queryWords.length === 1 && iconMatchesOriginalQueryConcept(icon, query, 1, fuzzyCorrectionWords)) ||
+        iconMatchesOriginalQueryConcept(icon, query, 2, fuzzyCorrectionWords)),
   );
 
   const merged = [...tier1, ...tier2];

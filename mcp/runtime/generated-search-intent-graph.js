@@ -30,7 +30,9 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "broken ai output",
       "ai garbage",
       "ai junk",
-      "sloppy ai"
+      "sloppy ai",
+      "hallucination",
+      "hallucinate"
     ],
     "aliases": [
       {
@@ -82,6 +84,16 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
         "locale": "en",
         "phrase": "sloppy ai",
         "normalized": "sloppy ai"
+      },
+      {
+        "locale": "en",
+        "phrase": "hallucination",
+        "normalized": "hallucination"
+      },
+      {
+        "locale": "en",
+        "phrase": "hallucinate",
+        "normalized": "hallucinate"
       },
       {
         "locale": "zh-Hans",
@@ -155,6 +167,10 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       }
     ],
     "positiveConcepts": [
+      "lucide bot off",
+      "tabler robot off",
+      "lucide alert triangle",
+      "material robot",
       "bot off",
       "warning",
       "trash",
@@ -183,6 +199,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "cleanup",
       "negative_status"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -380,6 +397,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "performance",
       "strength"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -585,6 +603,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "privacy",
       "verification"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -751,8 +770,9 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       }
     ],
     "positiveConcepts": [
-      "timer",
-      "gauge",
+      "lucide timer",
+      "material network ping",
+      "tabler gauge",
       "rocket",
       "activity",
       "bolt",
@@ -773,6 +793,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "timer",
       "status"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -982,6 +1003,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "delight",
       "premium"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1182,6 +1204,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "warning",
       "repair"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1386,6 +1409,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "vehicle",
       "scan"
     ],
+    "suppressGroups": [],
     "objects": [
       "car",
       "license plate",
@@ -1596,6 +1620,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "workflow",
       "developer_tool"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1670,6 +1695,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "chart",
       "metrics"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1750,6 +1776,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "undo",
       "history"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1825,6 +1852,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "cloud",
       "release"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1898,6 +1926,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "quality",
       "checklist"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -1978,6 +2007,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "orchestration",
       "package"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2052,6 +2082,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "profile",
       "avatar"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2117,6 +2148,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "dark_mode",
       "night"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2189,6 +2221,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "delivery",
       "send"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2257,6 +2290,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "deployment",
       "success"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2324,6 +2358,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "warning",
       "exhaustion"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2391,6 +2426,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "calm",
       "cool"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2458,6 +2494,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "phone",
       "time_warning"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2525,6 +2562,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "outdoors",
       "break"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2591,6 +2629,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "thinking",
       "creativity"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -2657,10 +2696,1581 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "insight",
       "spark"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
     "gapStrategy": "return_insight_metaphor",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "neck_pain_symptom",
+    "label": "Neck pain",
+    "description": "Neck pain, a sore neck, or a person clearly experiencing neck discomfort.",
+    "domains": [
+      "health",
+      "body",
+      "symptoms"
+    ],
+    "facets": [
+      "neck",
+      "pain",
+      "person_in_pain"
+    ],
+    "intentTypes": [
+      "health_symptom"
+    ],
+    "phrases": [
+      "neck pain",
+      "neck pain person",
+      "sore neck"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "neck pain",
+        "normalized": "neck pain"
+      },
+      {
+        "locale": "en",
+        "phrase": "neck pain person",
+        "normalized": "neck pain person"
+      },
+      {
+        "locale": "en",
+        "phrase": "sore neck",
+        "normalized": "sore neck"
+      }
+    ],
+    "positiveConcepts": [
+      "neck pain",
+      "person in pain",
+      "body pain"
+    ],
+    "avoidConcepts": [
+      "generic person",
+      "activity",
+      "accessibility"
+    ],
+    "fallbackTerms": [
+      "neck pain",
+      "person in pain",
+      "body pain"
+    ],
+    "resultFamilies": [
+      "neck_pain",
+      "person_in_pain"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_honest_no_result_without_specific_symptom_icon",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "code_editor",
+    "label": "Code editor",
+    "description": "A source-code editor, coding workspace, or terminal used to edit software.",
+    "domains": [
+      "developer tools",
+      "software development"
+    ],
+    "facets": [
+      "code",
+      "editor",
+      "terminal"
+    ],
+    "intentTypes": [
+      "developer_tool"
+    ],
+    "phrases": [
+      "code editor",
+      "source code editor"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "code editor",
+        "normalized": "code editor"
+      },
+      {
+        "locale": "en",
+        "phrase": "source code editor",
+        "normalized": "source code editor"
+      },
+      {
+        "locale": "de",
+        "phrase": "code-editor",
+        "normalized": "code editor"
+      },
+      {
+        "locale": "es",
+        "phrase": "editor de código",
+        "normalized": "editor de código"
+      },
+      {
+        "locale": "pt",
+        "phrase": "editor de código",
+        "normalized": "editor de código"
+      }
+    ],
+    "positiveConcepts": [
+      "code",
+      "terminal",
+      "square code",
+      "braces"
+    ],
+    "avoidConcepts": [
+      "editor choice",
+      "text formatting"
+    ],
+    "fallbackTerms": [
+      "code",
+      "terminal",
+      "braces"
+    ],
+    "resultFamilies": [
+      "code",
+      "editor",
+      "terminal"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_code_or_terminal_icon",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "database_search",
+    "label": "Database search",
+    "description": "Search, inspect, or find records in a database.",
+    "domains": [
+      "data",
+      "developer tools"
+    ],
+    "facets": [
+      "database",
+      "search",
+      "records"
+    ],
+    "intentTypes": [
+      "data_search"
+    ],
+    "phrases": [
+      "database search",
+      "search database"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "database search",
+        "normalized": "database search"
+      },
+      {
+        "locale": "en",
+        "phrase": "search database",
+        "normalized": "search database"
+      },
+      {
+        "locale": "es",
+        "phrase": "buscar icono de base de datos",
+        "normalized": "buscar icono de base de datos"
+      },
+      {
+        "locale": "es",
+        "phrase": "buscar base de datos",
+        "normalized": "buscar base de datos"
+      }
+    ],
+    "positiveConcepts": [
+      "database search",
+      "database",
+      "search"
+    ],
+    "avoidConcepts": [
+      "base station",
+      "radio tower"
+    ],
+    "fallbackTerms": [
+      "database search",
+      "database"
+    ],
+    "resultFamilies": [
+      "database_search",
+      "database"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_database_search_or_database_icon",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "checklist_tasks",
+    "label": "Checklist and pending tasks",
+    "description": "A checklist, task list, or pending work queue.",
+    "domains": [
+      "productivity",
+      "work management"
+    ],
+    "facets": [
+      "checklist",
+      "tasks",
+      "pending"
+    ],
+    "intentTypes": [
+      "task_management"
+    ],
+    "phrases": [
+      "checklist tasks",
+      "task checklist",
+      "pending tasks"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "checklist tasks",
+        "normalized": "checklist tasks"
+      },
+      {
+        "locale": "en",
+        "phrase": "task checklist",
+        "normalized": "task checklist"
+      },
+      {
+        "locale": "en",
+        "phrase": "pending tasks",
+        "normalized": "pending tasks"
+      },
+      {
+        "locale": "pt",
+        "phrase": "checklist tarefas pendentes",
+        "normalized": "checklist tarefas pendentes"
+      },
+      {
+        "locale": "pt",
+        "phrase": "tarefas pendentes",
+        "normalized": "tarefas pendentes"
+      }
+    ],
+    "positiveConcepts": [
+      "list checks",
+      "list check",
+      "clipboard check",
+      "clipboard list",
+      "checklist"
+    ],
+    "avoidConcepts": [
+      "shopping list only"
+    ],
+    "fallbackTerms": [
+      "list checks",
+      "clipboard check",
+      "checklist"
+    ],
+    "resultFamilies": [
+      "checklist",
+      "tasks"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_checklist_or_task_list",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "cleaning_sweep",
+    "label": "Cleaning and sweeping",
+    "description": "Cleaning, sweeping, brushing, or vacuuming a space.",
+    "domains": [
+      "cleaning",
+      "maintenance"
+    ],
+    "facets": [
+      "cleaning",
+      "sweep",
+      "broom"
+    ],
+    "intentTypes": [
+      "maintenance_action"
+    ],
+    "phrases": [
+      "broom cleanup construction",
+      "cleanup",
+      "cleaning",
+      "sweep",
+      "broom"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "broom cleanup construction",
+        "normalized": "broom cleanup construction"
+      },
+      {
+        "locale": "en",
+        "phrase": "cleanup",
+        "normalized": "cleanup"
+      },
+      {
+        "locale": "en",
+        "phrase": "cleaning",
+        "normalized": "cleaning"
+      },
+      {
+        "locale": "en",
+        "phrase": "sweep",
+        "normalized": "sweep"
+      },
+      {
+        "locale": "en",
+        "phrase": "broom",
+        "normalized": "broom"
+      }
+    ],
+    "positiveConcepts": [
+      "broom",
+      "vacuum cleaner",
+      "brush",
+      "sweep"
+    ],
+    "avoidConcepts": [
+      "delete sweep",
+      "sweepstakes"
+    ],
+    "fallbackTerms": [
+      "broom",
+      "vacuum cleaner",
+      "brush"
+    ],
+    "resultFamilies": [
+      "cleaning",
+      "maintenance"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_cleaning_tool",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "customer_team_contacts",
+    "label": "Customers, companies, and teams",
+    "description": "Customers, companies, contacts, teams, or groups of people.",
+    "domains": [
+      "crm",
+      "business",
+      "teams"
+    ],
+    "facets": [
+      "customers",
+      "companies",
+      "contacts",
+      "team"
+    ],
+    "intentTypes": [
+      "people_and_organizations"
+    ],
+    "phrases": [
+      "customers companies contacts",
+      "team people group"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "customers companies contacts",
+        "normalized": "customers companies contacts"
+      },
+      {
+        "locale": "en",
+        "phrase": "team people group",
+        "normalized": "team people group"
+      },
+      {
+        "locale": "pt",
+        "phrase": "clientes empresas contatos",
+        "normalized": "clientes empresas contatos"
+      },
+      {
+        "locale": "pt",
+        "phrase": "equipe pessoas grupo",
+        "normalized": "equipe pessoas grupo"
+      }
+    ],
+    "positiveConcepts": [
+      "users",
+      "contact",
+      "building",
+      "user round",
+      "briefcase business"
+    ],
+    "avoidConcepts": [
+      "library book"
+    ],
+    "fallbackTerms": [
+      "users",
+      "contact",
+      "building"
+    ],
+    "resultFamilies": [
+      "people",
+      "contacts",
+      "organizations"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_people_contacts_or_company",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "excavation_vehicle",
+    "label": "Excavator and digging vehicle",
+    "description": "An excavator, digger, bulldozer, tractor, or construction vehicle.",
+    "domains": [
+      "construction",
+      "heavy equipment"
+    ],
+    "facets": [
+      "excavator",
+      "digger",
+      "vehicle"
+    ],
+    "intentTypes": [
+      "construction_equipment"
+    ],
+    "phrases": [
+      "excavator construction vehicle",
+      "excavator",
+      "digger",
+      "construction vehicle"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "excavator construction vehicle",
+        "normalized": "excavator construction vehicle"
+      },
+      {
+        "locale": "en",
+        "phrase": "excavator",
+        "normalized": "excavator"
+      },
+      {
+        "locale": "en",
+        "phrase": "digger",
+        "normalized": "digger"
+      },
+      {
+        "locale": "en",
+        "phrase": "construction vehicle",
+        "normalized": "construction vehicle"
+      }
+    ],
+    "positiveConcepts": [
+      "bulldozer",
+      "tractor",
+      "construction",
+      "car crane"
+    ],
+    "avoidConcepts": [
+      "cable car",
+      "generic car"
+    ],
+    "fallbackTerms": [
+      "bulldozer",
+      "tractor",
+      "construction"
+    ],
+    "resultFamilies": [
+      "construction_vehicle",
+      "heavy_equipment"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_construction_vehicle",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "email_document",
+    "label": "Email document",
+    "description": "A document sent, received, or attached through email.",
+    "domains": [
+      "communication",
+      "documents"
+    ],
+    "facets": [
+      "email",
+      "document",
+      "attachment"
+    ],
+    "intentTypes": [
+      "document_communication"
+    ],
+    "phrases": [
+      "email document",
+      "mail document",
+      "emailed file"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "email document",
+        "normalized": "email document"
+      },
+      {
+        "locale": "en",
+        "phrase": "mail document",
+        "normalized": "mail document"
+      },
+      {
+        "locale": "en",
+        "phrase": "emailed file",
+        "normalized": "emailed file"
+      }
+    ],
+    "positiveConcepts": [
+      "file text",
+      "mail",
+      "files",
+      "paperclip",
+      "mail check"
+    ],
+    "avoidConcepts": [
+      "voicemail"
+    ],
+    "fallbackTerms": [
+      "file text",
+      "mail",
+      "paperclip"
+    ],
+    "resultFamilies": [
+      "email",
+      "document"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_mail_or_document",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "gaming_controller",
+    "label": "Game controller",
+    "description": "A gamepad or handheld gaming controller.",
+    "domains": [
+      "gaming",
+      "entertainment"
+    ],
+    "facets": [
+      "controller",
+      "gamepad"
+    ],
+    "intentTypes": [
+      "gaming_device"
+    ],
+    "phrases": [
+      "game controller gaming",
+      "game controller",
+      "gaming controller"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "game controller gaming",
+        "normalized": "game controller gaming"
+      },
+      {
+        "locale": "en",
+        "phrase": "game controller",
+        "normalized": "game controller"
+      },
+      {
+        "locale": "en",
+        "phrase": "gaming controller",
+        "normalized": "gaming controller"
+      }
+    ],
+    "positiveConcepts": [
+      "gamepad",
+      "game controller",
+      "controller"
+    ],
+    "avoidConcepts": [
+      "settings controller"
+    ],
+    "fallbackTerms": [
+      "gamepad",
+      "game controller"
+    ],
+    "resultFamilies": [
+      "gamepad",
+      "controller"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_game_controller",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "inbox_work_queue",
+    "label": "Inbox and work queue",
+    "description": "An inbox, review queue, or tray holding work items.",
+    "domains": [
+      "productivity",
+      "workflow"
+    ],
+    "facets": [
+      "inbox",
+      "queue",
+      "review"
+    ],
+    "intentTypes": [
+      "work_queue"
+    ],
+    "phrases": [
+      "work review queue inbox",
+      "review queue",
+      "work queue",
+      "inbox"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "work review queue inbox",
+        "normalized": "work review queue inbox"
+      },
+      {
+        "locale": "en",
+        "phrase": "review queue",
+        "normalized": "review queue"
+      },
+      {
+        "locale": "en",
+        "phrase": "work queue",
+        "normalized": "work queue"
+      },
+      {
+        "locale": "en",
+        "phrase": "inbox",
+        "normalized": "inbox"
+      }
+    ],
+    "positiveConcepts": [
+      "tray",
+      "tray arrow down",
+      "inbox",
+      "stack"
+    ],
+    "avoidConcepts": [
+      "email logo"
+    ],
+    "fallbackTerms": [
+      "tray",
+      "inbox",
+      "stack"
+    ],
+    "resultFamilies": [
+      "inbox",
+      "work_queue"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_inbox_or_tray",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "claw_grab",
+    "label": "Claw and grab",
+    "description": "A claw, gripping hand, or grab action.",
+    "domains": [
+      "interaction",
+      "tools"
+    ],
+    "facets": [
+      "claw",
+      "grab",
+      "grip"
+    ],
+    "intentTypes": [
+      "grabbing_action"
+    ],
+    "phrases": [
+      "claw grab grapple",
+      "claw",
+      "grapple"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "claw grab grapple",
+        "normalized": "claw grab grapple"
+      },
+      {
+        "locale": "en",
+        "phrase": "claw",
+        "normalized": "claw"
+      },
+      {
+        "locale": "en",
+        "phrase": "grapple",
+        "normalized": "grapple"
+      }
+    ],
+    "positiveConcepts": [
+      "hand grab",
+      "hand grabbing",
+      "grab"
+    ],
+    "avoidConcepts": [
+      "brand logo"
+    ],
+    "fallbackTerms": [
+      "hand grab",
+      "grab"
+    ],
+    "resultFamilies": [
+      "grab",
+      "hand"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_grab_or_gripping_hand",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "why_choose_us_value",
+    "label": "Why choose us",
+    "description": "A reason to choose a product, service, or team.",
+    "domains": [
+      "marketing",
+      "trust"
+    ],
+    "facets": [
+      "benefit",
+      "trust",
+      "choice"
+    ],
+    "intentTypes": [
+      "value_proposition"
+    ],
+    "phrases": [
+      "why choose us",
+      "why choose our product"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "why choose us",
+        "normalized": "why choose us"
+      },
+      {
+        "locale": "en",
+        "phrase": "why choose our product",
+        "normalized": "why choose our product"
+      }
+    ],
+    "positiveConcepts": [
+      "badge check",
+      "shield check",
+      "users",
+      "heart handshake",
+      "award"
+    ],
+    "avoidConcepts": [
+      "question mark only"
+    ],
+    "fallbackTerms": [
+      "badge check",
+      "shield check",
+      "award"
+    ],
+    "resultFamilies": [
+      "trust",
+      "benefit",
+      "team"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_trust_or_benefit_symbol",
+    "confidenceFloor": "medium"
+  },
+  {
+    "id": "fortress_boundary_security",
+    "label": "Fortress and secure boundary",
+    "description": "A fortress, protected perimeter, or strong security boundary.",
+    "domains": [
+      "security",
+      "infrastructure"
+    ],
+    "facets": [
+      "fortress",
+      "boundary",
+      "protection"
+    ],
+    "intentTypes": [
+      "security_structure"
+    ],
+    "phrases": [
+      "fortress secure boundary",
+      "secure fortress",
+      "fortress"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "fortress secure boundary",
+        "normalized": "fortress secure boundary"
+      },
+      {
+        "locale": "en",
+        "phrase": "secure fortress",
+        "normalized": "secure fortress"
+      },
+      {
+        "locale": "en",
+        "phrase": "fortress",
+        "normalized": "fortress"
+      }
+    ],
+    "positiveConcepts": [
+      "building fortress",
+      "fortress",
+      "shield",
+      "wall"
+    ],
+    "avoidConcepts": [
+      "layout",
+      "align",
+      "minus"
+    ],
+    "fallbackTerms": [
+      "building fortress",
+      "fortress",
+      "shield"
+    ],
+    "resultFamilies": [
+      "fortress",
+      "security_boundary"
+    ],
+    "suppressGroups": [
+      "trust_security_privacy"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_fortress_or_security_boundary",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "construction_safety_worker",
+    "label": "Construction worker and safety helmet",
+    "description": "Construction workers, hard hats, safety helmets, and building work.",
+    "domains": [
+      "construction",
+      "workplace safety"
+    ],
+    "facets": [
+      "worker",
+      "helmet",
+      "building"
+    ],
+    "intentTypes": [
+      "occupation",
+      "safety_equipment"
+    ],
+    "phrases": [
+      "hard hat construction worker",
+      "engineer hard hat",
+      "construction worker",
+      "hard hat"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "hard hat construction worker",
+        "normalized": "hard hat construction worker"
+      },
+      {
+        "locale": "en",
+        "phrase": "engineer hard hat",
+        "normalized": "engineer hard hat"
+      },
+      {
+        "locale": "en",
+        "phrase": "construction worker",
+        "normalized": "construction worker"
+      },
+      {
+        "locale": "en",
+        "phrase": "hard hat",
+        "normalized": "hard hat"
+      },
+      {
+        "locale": "es",
+        "phrase": "casco de construcción",
+        "normalized": "casco de construcción"
+      },
+      {
+        "locale": "es",
+        "phrase": "trabajador de construcción",
+        "normalized": "trabajador de construcción"
+      },
+      {
+        "locale": "ja",
+        "phrase": "建設作業員",
+        "normalized": "建設作業員"
+      },
+      {
+        "locale": "ja",
+        "phrase": "ヘルメット作業員",
+        "normalized": "ヘルメット作業員"
+      }
+    ],
+    "positiveConcepts": [
+      "hard hat",
+      "construction",
+      "helmet",
+      "worker"
+    ],
+    "avoidConcepts": [
+      "hard drive",
+      "chef hat",
+      "magic wand",
+      "palette"
+    ],
+    "fallbackTerms": [
+      "hard hat",
+      "construction",
+      "helmet"
+    ],
+    "resultFamilies": [
+      "construction",
+      "safety",
+      "worker"
+    ],
+    "suppressGroups": [
+      "quality_polish"
+    ],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_construction_safety_equipment",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "connected_people_relationship",
+    "label": "Connected people and relationships",
+    "description": "People, records, or accounts connected through a relationship graph.",
+    "domains": [
+      "relationships",
+      "community",
+      "data graph"
+    ],
+    "facets": [
+      "people",
+      "connection",
+      "relationship"
+    ],
+    "intentTypes": [
+      "relationship",
+      "connected_people"
+    ],
+    "phrases": [
+      "connected people",
+      "people together",
+      "two people together",
+      "care relationship",
+      "relationship graph"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "connected people",
+        "normalized": "connected people"
+      },
+      {
+        "locale": "en",
+        "phrase": "people together",
+        "normalized": "people together"
+      },
+      {
+        "locale": "en",
+        "phrase": "two people together",
+        "normalized": "two people together"
+      },
+      {
+        "locale": "en",
+        "phrase": "care relationship",
+        "normalized": "care relationship"
+      },
+      {
+        "locale": "en",
+        "phrase": "relationship graph",
+        "normalized": "relationship graph"
+      },
+      {
+        "locale": "es",
+        "phrase": "personas conectadas",
+        "normalized": "personas conectadas"
+      },
+      {
+        "locale": "es",
+        "phrase": "relación entre personas",
+        "normalized": "relación entre personas"
+      },
+      {
+        "locale": "ja",
+        "phrase": "つながった人々",
+        "normalized": "つながった人々"
+      },
+      {
+        "locale": "ja",
+        "phrase": "人と人のつながり",
+        "normalized": "人と人のつながり"
+      }
+    ],
+    "positiveConcepts": [
+      "users",
+      "users three",
+      "share network",
+      "link",
+      "plugs connected"
+    ],
+    "avoidConcepts": [
+      "wifi",
+      "paperclip",
+      "number two"
+    ],
+    "fallbackTerms": [
+      "users",
+      "share network",
+      "relationship"
+    ],
+    "resultFamilies": [
+      "people",
+      "relationship",
+      "network_graph"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_people_or_relationship_graph",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "network_graph_nodes",
+    "label": "Network graph and connected nodes",
+    "description": "Connected graph nodes, topology, proximity, and network relationships.",
+    "domains": [
+      "network graph",
+      "topology",
+      "data relationships"
+    ],
+    "facets": [
+      "nodes",
+      "connections",
+      "graph"
+    ],
+    "intentTypes": [
+      "network_graph",
+      "connected_nodes"
+    ],
+    "phrases": [
+      "network proximity graph nodes",
+      "network graph",
+      "graph nodes",
+      "connected nodes",
+      "proximity graph",
+      "nodes",
+      "proximity"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "network proximity graph nodes",
+        "normalized": "network proximity graph nodes"
+      },
+      {
+        "locale": "en",
+        "phrase": "network graph",
+        "normalized": "network graph"
+      },
+      {
+        "locale": "en",
+        "phrase": "graph nodes",
+        "normalized": "graph nodes"
+      },
+      {
+        "locale": "en",
+        "phrase": "connected nodes",
+        "normalized": "connected nodes"
+      },
+      {
+        "locale": "en",
+        "phrase": "proximity graph",
+        "normalized": "proximity graph"
+      },
+      {
+        "locale": "en",
+        "phrase": "nodes",
+        "normalized": "nodes"
+      },
+      {
+        "locale": "en",
+        "phrase": "proximity",
+        "normalized": "proximity"
+      },
+      {
+        "locale": "es",
+        "phrase": "red de nodos conectados",
+        "normalized": "red de nodos conectados"
+      },
+      {
+        "locale": "es",
+        "phrase": "gráfico de red",
+        "normalized": "gráfico de red"
+      },
+      {
+        "locale": "ja",
+        "phrase": "接続ノード",
+        "normalized": "接続ノード"
+      },
+      {
+        "locale": "ja",
+        "phrase": "ネットワークグラフ",
+        "normalized": "ネットワークグラフ"
+      }
+    ],
+    "positiveConcepts": [
+      "graph",
+      "network",
+      "share network",
+      "chart network"
+    ],
+    "avoidConcepts": [
+      "network x",
+      "network slash",
+      "wifi"
+    ],
+    "fallbackTerms": [
+      "graph",
+      "network",
+      "share network"
+    ],
+    "resultFamilies": [
+      "graph",
+      "topology",
+      "connected_nodes"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_graph_or_network_topology",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "disconnected_link_state",
+    "label": "Disconnected network or broken link",
+    "description": "A network or link that is disconnected, broken, off, or unavailable.",
+    "domains": [
+      "network",
+      "link state",
+      "system status"
+    ],
+    "facets": [
+      "disconnected",
+      "broken_link",
+      "negative_status"
+    ],
+    "intentTypes": [
+      "network_state",
+      "link_state"
+    ],
+    "phrases": [
+      "network disconnected broken link",
+      "network disconnected",
+      "disconnected link",
+      "broken link"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "network disconnected broken link",
+        "normalized": "network disconnected broken link"
+      },
+      {
+        "locale": "en",
+        "phrase": "network disconnected",
+        "normalized": "network disconnected"
+      },
+      {
+        "locale": "en",
+        "phrase": "disconnected link",
+        "normalized": "disconnected link"
+      },
+      {
+        "locale": "en",
+        "phrase": "broken link",
+        "normalized": "broken link"
+      },
+      {
+        "locale": "es",
+        "phrase": "red desconectada",
+        "normalized": "red desconectada"
+      },
+      {
+        "locale": "es",
+        "phrase": "enlace roto",
+        "normalized": "enlace roto"
+      },
+      {
+        "locale": "ja",
+        "phrase": "切断されたネットワーク",
+        "normalized": "切断されたネットワーク"
+      },
+      {
+        "locale": "ja",
+        "phrase": "壊れたリンク",
+        "normalized": "壊れたリンク"
+      }
+    ],
+    "positiveConcepts": [
+      "link off",
+      "unlink",
+      "network off",
+      "wifi off"
+    ],
+    "avoidConcepts": [
+      "generic bug",
+      "generic warning",
+      "check"
+    ],
+    "fallbackTerms": [
+      "link off",
+      "unlink",
+      "network off"
+    ],
+    "resultFamilies": [
+      "disconnected_link",
+      "offline_network"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_disconnected_link_or_network",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "construction_crane",
+    "label": "Construction crane",
+    "description": "A construction crane, tower crane, or lifting crane at a building site.",
+    "domains": [
+      "construction",
+      "heavy equipment"
+    ],
+    "facets": [
+      "crane",
+      "lifting",
+      "building"
+    ],
+    "intentTypes": [
+      "construction_equipment"
+    ],
+    "phrases": [
+      "crane hook construction",
+      "construction crane",
+      "tower crane"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "crane hook construction",
+        "normalized": "crane hook construction"
+      },
+      {
+        "locale": "en",
+        "phrase": "construction crane",
+        "normalized": "construction crane"
+      },
+      {
+        "locale": "en",
+        "phrase": "tower crane",
+        "normalized": "tower crane"
+      }
+    ],
+    "positiveConcepts": [
+      "crane",
+      "crane tower",
+      "tower crane",
+      "car crane"
+    ],
+    "avoidConcepts": [
+      "fish hook",
+      "fishing hook",
+      "webhook"
+    ],
+    "fallbackTerms": [
+      "crane",
+      "tower crane"
+    ],
+    "resultFamilies": [
+      "construction_crane",
+      "heavy_equipment"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_construction_crane",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "tow_truck_vehicle",
+    "label": "Tow truck",
+    "description": "A vehicle that tows, lifts, or recovers another vehicle.",
+    "domains": [
+      "transport",
+      "roadside assistance"
+    ],
+    "facets": [
+      "towing",
+      "recovery_vehicle"
+    ],
+    "intentTypes": [
+      "specialized_vehicle"
+    ],
+    "phrases": [
+      "tow truck",
+      "towing vehicle",
+      "roadside recovery truck",
+      "tow"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "tow truck",
+        "normalized": "tow truck"
+      },
+      {
+        "locale": "en",
+        "phrase": "towing vehicle",
+        "normalized": "towing vehicle"
+      },
+      {
+        "locale": "en",
+        "phrase": "roadside recovery truck",
+        "normalized": "roadside recovery truck"
+      },
+      {
+        "locale": "en",
+        "phrase": "tow",
+        "normalized": "tow"
+      }
+    ],
+    "positiveConcepts": [
+      "auto towing",
+      "truck loading",
+      "truck trailer",
+      "car crane",
+      "truck"
+    ],
+    "avoidConcepts": [
+      "generic car",
+      "delivery only"
+    ],
+    "fallbackTerms": [
+      "auto towing",
+      "truck loading",
+      "truck trailer"
+    ],
+    "resultFamilies": [
+      "tow_truck",
+      "vehicle_recovery"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_towing_or_recovery_vehicle",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "celebrating_success",
+    "label": "Celebrating success",
+    "description": "A successful result, achievement, launch, milestone, or moment worth celebrating.",
+    "domains": [
+      "achievement",
+      "celebration",
+      "product launch"
+    ],
+    "facets": [
+      "success",
+      "celebration",
+      "recognition"
+    ],
+    "intentTypes": [
+      "quality_positive",
+      "achievement"
+    ],
+    "phrases": [
+      "celebrating success",
+      "celebrate success",
+      "successful celebration",
+      "success celebration"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "celebrating success",
+        "normalized": "celebrating success"
+      },
+      {
+        "locale": "en",
+        "phrase": "celebrate success",
+        "normalized": "celebrate success"
+      },
+      {
+        "locale": "en",
+        "phrase": "successful celebration",
+        "normalized": "successful celebration"
+      },
+      {
+        "locale": "en",
+        "phrase": "success celebration",
+        "normalized": "success celebration"
+      }
+    ],
+    "positiveConcepts": [
+      "material celebration",
+      "lucide party popper",
+      "lucide trophy",
+      "lucide award",
+      "material rocket launch"
+    ],
+    "avoidConcepts": [
+      "failure",
+      "error",
+      "warning",
+      "party mode off"
+    ],
+    "fallbackTerms": [
+      "celebration",
+      "party popper",
+      "trophy",
+      "award"
+    ],
+    "resultFamilies": [
+      "celebration",
+      "achievement",
+      "recognition"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_celebration_or_achievement",
+    "confidenceFloor": "high"
+  },
+  {
+    "id": "magnetic_snap",
+    "label": "Magnet and magnetic snapping",
+    "description": "A magnet, magnetic attraction, or objects snapping together magnetically.",
+    "domains": [
+      "physics",
+      "interaction",
+      "attachment"
+    ],
+    "facets": [
+      "magnet",
+      "attraction",
+      "snap"
+    ],
+    "intentTypes": [
+      "object",
+      "interaction"
+    ],
+    "phrases": [
+      "magnet snapping",
+      "magnetic snap",
+      "magnetic attachment"
+    ],
+    "aliases": [
+      {
+        "locale": "en",
+        "phrase": "magnet snapping",
+        "normalized": "magnet snapping"
+      },
+      {
+        "locale": "en",
+        "phrase": "magnetic snap",
+        "normalized": "magnetic snap"
+      },
+      {
+        "locale": "en",
+        "phrase": "magnetic attachment",
+        "normalized": "magnetic attachment"
+      },
+      {
+        "locale": "ko",
+        "phrase": "자석",
+        "normalized": "자석"
+      },
+      {
+        "locale": "ko",
+        "phrase": "자석 스냅",
+        "normalized": "자석 스냅"
+      },
+      {
+        "locale": "ko",
+        "phrase": "자석 magnet snapping",
+        "normalized": "자석 magnet snapping"
+      }
+    ],
+    "positiveConcepts": [
+      "lucide magnet",
+      "tabler magnet",
+      "phosphor magnet",
+      "bootstrap magnet"
+    ],
+    "avoidConcepts": [
+      "magnet off",
+      "unlink",
+      "disconnect"
+    ],
+    "fallbackTerms": [
+      "magnet",
+      "magnetic"
+    ],
+    "resultFamilies": [
+      "magnet",
+      "magnetic_attraction"
+    ],
+    "suppressGroups": [],
+    "objects": [],
+    "actions": [],
+    "devices": [],
+    "gapStrategy": "return_magnet",
     "confidenceFloor": "high"
   },
   {
@@ -2801,6 +4411,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "dream",
       "symbol"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -3321,6 +4932,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "quality",
       "achievement"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -3708,6 +5320,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "celebration",
       "friendly"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -4012,6 +5625,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "sadness",
       "low_mood"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -4309,6 +5923,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "anger",
       "warning"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -4551,6 +6166,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "surprise",
       "attention"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -4856,6 +6472,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "care",
       "romance"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -5250,6 +6867,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "achievement",
       "approval"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -5324,6 +6942,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "rejection",
       "failure"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -5403,6 +7022,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "trending",
       "featured"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -5707,6 +7327,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "guidance",
       "service"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -6003,6 +7624,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "news",
       "reference"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -6303,6 +7925,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "fantasy",
       "wonder"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -6618,6 +8241,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "competition",
       "activity"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -6969,6 +8593,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "health",
       "medical"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7053,6 +8678,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "learning",
       "academic"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7140,6 +8766,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "family",
       "community"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7216,6 +8843,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "message",
       "conversation"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7283,6 +8911,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "entertainment",
       "playback"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7577,6 +9206,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "location",
       "transport"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7652,6 +9282,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "animals",
       "outdoors"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7726,6 +9357,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "assistive",
       "inclusive"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7801,6 +9433,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "verification",
       "review"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7887,6 +9520,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "low_power",
       "waiting"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -7973,6 +9607,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "risk",
       "warning"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -8053,6 +9688,7 @@ export const GENERATED_INTENT_GRAPH_GROUPS = Object.freeze([
       "archive",
       "past"
     ],
+    "suppressGroups": [],
     "objects": [],
     "actions": [],
     "devices": [],
@@ -8095,12 +9731,68 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 35
   },
   {
+    "groupId": "disconnected_link_state",
+    "locale": "en",
+    "phrase": "network disconnected broken link",
+    "normalized": "network disconnected broken link",
+    "tokenCount": 4,
+    "charLength": 32
+  },
+  {
+    "groupId": "excavation_vehicle",
+    "locale": "en",
+    "phrase": "excavator construction vehicle",
+    "normalized": "excavator construction vehicle",
+    "tokenCount": 3,
+    "charLength": 30
+  },
+  {
+    "groupId": "database_search",
+    "locale": "es",
+    "phrase": "buscar icono de base de datos",
+    "normalized": "buscar icono de base de datos",
+    "tokenCount": 6,
+    "charLength": 29
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "network proximity graph nodes",
+    "normalized": "network proximity graph nodes",
+    "tokenCount": 4,
+    "charLength": 29
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "en",
+    "phrase": "hard hat construction worker",
+    "normalized": "hard hat construction worker",
+    "tokenCount": 4,
+    "charLength": 28
+  },
+  {
+    "groupId": "customer_team_contacts",
+    "locale": "en",
+    "phrase": "customers companies contacts",
+    "normalized": "customers companies contacts",
+    "tokenCount": 3,
+    "charLength": 28
+  },
+  {
     "groupId": "vision_scan_detection",
     "locale": "es",
     "phrase": "reconocimiento de matrículas",
     "normalized": "reconocimiento de matrículas",
     "tokenCount": 3,
     "charLength": 28
+  },
+  {
+    "groupId": "checklist_tasks",
+    "locale": "pt",
+    "phrase": "checklist tarefas pendentes",
+    "normalized": "checklist tarefas pendentes",
+    "tokenCount": 3,
+    "charLength": 27
   },
   {
     "groupId": "doomscrolling_expression",
@@ -8119,12 +9811,44 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 26
   },
   {
+    "groupId": "cleaning_sweep",
+    "locale": "en",
+    "phrase": "broom cleanup construction",
+    "normalized": "broom cleanup construction",
+    "tokenCount": 3,
+    "charLength": 26
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "es",
+    "phrase": "trabajador de construcción",
+    "normalized": "trabajador de construcción",
+    "tokenCount": 3,
+    "charLength": 26
+  },
+  {
+    "groupId": "customer_team_contacts",
+    "locale": "pt",
+    "phrase": "clientes empresas contatos",
+    "normalized": "clientes empresas contatos",
+    "tokenCount": 3,
+    "charLength": 26
+  },
+  {
     "groupId": "vision_scan_detection",
     "locale": "en",
     "phrase": "license plate recognition",
     "normalized": "license plate recognition",
     "tokenCount": 3,
     "charLength": 25
+  },
+  {
+    "groupId": "fortress_boundary_security",
+    "locale": "en",
+    "phrase": "fortress secure boundary",
+    "normalized": "fortress secure boundary",
+    "tokenCount": 3,
+    "charLength": 24
   },
   {
     "groupId": "mystical_dream_symbol",
@@ -8143,10 +9867,50 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 24
   },
   {
+    "groupId": "inbox_work_queue",
+    "locale": "en",
+    "phrase": "work review queue inbox",
+    "normalized": "work review queue inbox",
+    "tokenCount": 4,
+    "charLength": 23
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "es",
+    "phrase": "red de nodos conectados",
+    "normalized": "red de nodos conectados",
+    "tokenCount": 4,
+    "charLength": 23
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "es",
+    "phrase": "relación entre personas",
+    "normalized": "relación entre personas",
+    "tokenCount": 3,
+    "charLength": 23
+  },
+  {
+    "groupId": "construction_crane",
+    "locale": "en",
+    "phrase": "crane hook construction",
+    "normalized": "crane hook construction",
+    "tokenCount": 3,
+    "charLength": 23
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "pt",
     "phrase": "interpretação de sonhos",
     "normalized": "interpretação de sonhos",
+    "tokenCount": 3,
+    "charLength": 23
+  },
+  {
+    "groupId": "tow_truck_vehicle",
+    "locale": "en",
+    "phrase": "roadside recovery truck",
+    "normalized": "roadside recovery truck",
     "tokenCount": 3,
     "charLength": 23
   },
@@ -8167,11 +9931,35 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 23
   },
   {
+    "groupId": "why_choose_us_value",
+    "locale": "en",
+    "phrase": "why choose our product",
+    "normalized": "why choose our product",
+    "tokenCount": 4,
+    "charLength": 22
+  },
+  {
     "groupId": "agentic_workflow",
     "locale": "es",
     "phrase": "llamada de herramienta",
     "normalized": "llamada de herramienta",
     "tokenCount": 3,
+    "charLength": 22
+  },
+  {
+    "groupId": "gaming_controller",
+    "locale": "en",
+    "phrase": "game controller gaming",
+    "normalized": "game controller gaming",
+    "tokenCount": 3,
+    "charLength": 22
+  },
+  {
+    "groupId": "celebrating_success",
+    "locale": "en",
+    "phrase": "successful celebration",
+    "normalized": "successful celebration",
+    "tokenCount": 2,
     "charLength": 22
   },
   {
@@ -8207,6 +9995,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 21
   },
   {
+    "groupId": "construction_safety_worker",
+    "locale": "es",
+    "phrase": "casco de construcción",
+    "normalized": "casco de construcción",
+    "tokenCount": 3,
+    "charLength": 21
+  },
+  {
     "groupId": "cloud_deployment",
     "locale": "en",
     "phrase": "production deployment",
@@ -8223,6 +10019,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 21
   },
   {
+    "groupId": "database_search",
+    "locale": "es",
+    "phrase": "buscar base de datos",
+    "normalized": "buscar base de datos",
+    "tokenCount": 4,
+    "charLength": 20
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "de",
     "phrase": "schlechte KI Ausgabe",
@@ -8235,6 +10039,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "deploy to production",
     "normalized": "deploy to production",
+    "tokenCount": 3,
+    "charLength": 20
+  },
+  {
+    "groupId": "customer_team_contacts",
+    "locale": "pt",
+    "phrase": "equipe pessoas grupo",
+    "normalized": "equipe pessoas grupo",
     "tokenCount": 3,
     "charLength": 20
   },
@@ -8271,6 +10083,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 20
   },
   {
+    "groupId": "disconnected_link_state",
+    "locale": "en",
+    "phrase": "network disconnected",
+    "normalized": "network disconnected",
+    "tokenCount": 2,
+    "charLength": 20
+  },
+  {
+    "groupId": "excavation_vehicle",
+    "locale": "en",
+    "phrase": "construction vehicle",
+    "normalized": "construction vehicle",
+    "tokenCount": 2,
+    "charLength": 20
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "en",
     "phrase": "dream interpretation",
@@ -8292,6 +10120,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "phrase": "chăm sóc khách hàng",
     "normalized": "chăm sóc khách hàng",
     "tokenCount": 4,
+    "charLength": 19
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "en",
+    "phrase": "two people together",
+    "normalized": "two people together",
+    "tokenCount": 3,
     "charLength": 19
   },
   {
@@ -8335,6 +10171,46 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 19
   },
   {
+    "groupId": "celebrating_success",
+    "locale": "en",
+    "phrase": "celebrating success",
+    "normalized": "celebrating success",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
+    "groupId": "celebrating_success",
+    "locale": "en",
+    "phrase": "success celebration",
+    "normalized": "success celebration",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "es",
+    "phrase": "personas conectadas",
+    "normalized": "personas conectadas",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "en",
+    "phrase": "construction worker",
+    "normalized": "construction worker",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
+    "groupId": "magnetic_snap",
+    "locale": "en",
+    "phrase": "magnetic attachment",
+    "normalized": "magnetic attachment",
+    "tokenCount": 2,
+    "charLength": 19
+  },
+  {
     "groupId": "ai_low_quality_output",
     "locale": "vi",
     "phrase": "AI chất lượng thấp",
@@ -8359,11 +10235,43 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 18
   },
   {
+    "groupId": "code_editor",
+    "locale": "en",
+    "phrase": "source code editor",
+    "normalized": "source code editor",
+    "tokenCount": 3,
+    "charLength": 18
+  },
+  {
+    "groupId": "magnetic_snap",
+    "locale": "ko",
+    "phrase": "자석 magnet snapping",
+    "normalized": "자석 magnet snapping",
+    "tokenCount": 3,
+    "charLength": 18
+  },
+  {
     "groupId": "restore_deleted_item",
     "locale": "en",
     "phrase": "deleted by mistake",
     "normalized": "deleted by mistake",
     "tokenCount": 3,
+    "charLength": 18
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "en",
+    "phrase": "relationship graph",
+    "normalized": "relationship graph",
+    "tokenCount": 2,
+    "charLength": 18
+  },
+  {
+    "groupId": "construction_crane",
+    "locale": "en",
+    "phrase": "construction crane",
+    "normalized": "construction crane",
+    "tokenCount": 2,
     "charLength": 18
   },
   {
@@ -8415,6 +10323,30 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 17
   },
   {
+    "groupId": "claw_grab",
+    "locale": "en",
+    "phrase": "claw grab grapple",
+    "normalized": "claw grab grapple",
+    "tokenCount": 3,
+    "charLength": 17
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "en",
+    "phrase": "engineer hard hat",
+    "normalized": "engineer hard hat",
+    "tokenCount": 3,
+    "charLength": 17
+  },
+  {
+    "groupId": "customer_team_contacts",
+    "locale": "en",
+    "phrase": "team people group",
+    "normalized": "team people group",
+    "tokenCount": 3,
+    "charLength": 17
+  },
+  {
     "groupId": "fitness_health",
     "locale": "pt",
     "phrase": "cuidados de saúde",
@@ -8435,6 +10367,46 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "metrics dashboard",
     "normalized": "metrics dashboard",
+    "tokenCount": 2,
+    "charLength": 17
+  },
+  {
+    "groupId": "celebrating_success",
+    "locale": "en",
+    "phrase": "celebrate success",
+    "normalized": "celebrate success",
+    "tokenCount": 2,
+    "charLength": 17
+  },
+  {
+    "groupId": "checklist_tasks",
+    "locale": "pt",
+    "phrase": "tarefas pendentes",
+    "normalized": "tarefas pendentes",
+    "tokenCount": 2,
+    "charLength": 17
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "en",
+    "phrase": "care relationship",
+    "normalized": "care relationship",
+    "tokenCount": 2,
+    "charLength": 17
+  },
+  {
+    "groupId": "disconnected_link_state",
+    "locale": "en",
+    "phrase": "disconnected link",
+    "normalized": "disconnected link",
+    "tokenCount": 2,
+    "charLength": 17
+  },
+  {
+    "groupId": "gaming_controller",
+    "locale": "en",
+    "phrase": "gaming controller",
+    "normalized": "gaming controller",
     "tokenCount": 2,
     "charLength": 17
   },
@@ -8471,6 +10443,30 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 16
   },
   {
+    "groupId": "code_editor",
+    "locale": "es",
+    "phrase": "editor de código",
+    "normalized": "editor de código",
+    "tokenCount": 3,
+    "charLength": 16
+  },
+  {
+    "groupId": "code_editor",
+    "locale": "pt",
+    "phrase": "editor de código",
+    "normalized": "editor de código",
+    "tokenCount": 3,
+    "charLength": 16
+  },
+  {
+    "groupId": "neck_pain_symptom",
+    "locale": "en",
+    "phrase": "neck pain person",
+    "normalized": "neck pain person",
+    "tokenCount": 3,
+    "charLength": 16
+  },
+  {
     "groupId": "agentic_workflow",
     "locale": "en",
     "phrase": "agentic workflow",
@@ -8503,10 +10499,26 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 16
   },
   {
+    "groupId": "connected_people_relationship",
+    "locale": "en",
+    "phrase": "connected people",
+    "normalized": "connected people",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
     "groupId": "container_platform",
     "locale": "en",
     "phrase": "docker container",
     "normalized": "docker container",
+    "tokenCount": 2,
+    "charLength": 16
+  },
+  {
+    "groupId": "disconnected_link_state",
+    "locale": "es",
+    "phrase": "red desconectada",
+    "normalized": "red desconectada",
     "tokenCount": 2,
     "charLength": 16
   },
@@ -8639,6 +10651,38 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 15
   },
   {
+    "groupId": "checklist_tasks",
+    "locale": "en",
+    "phrase": "checklist tasks",
+    "normalized": "checklist tasks",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "en",
+    "phrase": "people together",
+    "normalized": "people together",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "database_search",
+    "locale": "en",
+    "phrase": "database search",
+    "normalized": "database search",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "database_search",
+    "locale": "en",
+    "phrase": "search database",
+    "normalized": "search database",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
     "groupId": "fitness_health",
     "locale": "en",
     "phrase": "physical health",
@@ -8647,10 +10691,50 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 15
   },
   {
+    "groupId": "fortress_boundary_security",
+    "locale": "en",
+    "phrase": "secure fortress",
+    "normalized": "secure fortress",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "gaming_controller",
+    "locale": "en",
+    "phrase": "game controller",
+    "normalized": "game controller",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "magnetic_snap",
+    "locale": "en",
+    "phrase": "magnet snapping",
+    "normalized": "magnet snapping",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
     "groupId": "mystical_dream_symbol",
     "locale": "en",
     "phrase": "spiritual dream",
     "normalized": "spiritual dream",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "connected nodes",
+    "normalized": "connected nodes",
+    "tokenCount": 2,
+    "charLength": 15
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "proximity graph",
+    "normalized": "proximity graph",
     "tokenCount": 2,
     "charLength": 15
   },
@@ -8743,6 +10827,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 14
   },
   {
+    "groupId": "network_graph_nodes",
+    "locale": "es",
+    "phrase": "gráfico de red",
+    "normalized": "gráfico de red",
+    "tokenCount": 3,
+    "charLength": 14
+  },
+  {
     "groupId": "touch_grass_expression",
     "locale": "en",
     "phrase": "go touch grass",
@@ -8759,10 +10851,26 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 14
   },
   {
+    "groupId": "checklist_tasks",
+    "locale": "en",
+    "phrase": "task checklist",
+    "normalized": "task checklist",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
     "groupId": "doomscrolling_expression",
     "locale": "en",
     "phrase": "doom scrolling",
     "normalized": "doom scrolling",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "email_document",
+    "locale": "en",
+    "phrase": "email document",
+    "normalized": "email document",
     "tokenCount": 2,
     "charLength": 14
   },
@@ -8811,6 +10919,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "pt",
     "phrase": "baixa latência",
     "normalized": "baixa latência",
+    "tokenCount": 2,
+    "charLength": 14
+  },
+  {
+    "groupId": "tow_truck_vehicle",
+    "locale": "en",
+    "phrase": "towing vehicle",
+    "normalized": "towing vehicle",
     "tokenCount": 2,
     "charLength": 14
   },
@@ -8951,10 +11067,42 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 13
   },
   {
+    "groupId": "why_choose_us_value",
+    "locale": "en",
+    "phrase": "why choose us",
+    "normalized": "why choose us",
+    "tokenCount": 3,
+    "charLength": 13
+  },
+  {
+    "groupId": "checklist_tasks",
+    "locale": "en",
+    "phrase": "pending tasks",
+    "normalized": "pending tasks",
+    "tokenCount": 2,
+    "charLength": 13
+  },
+  {
+    "groupId": "email_document",
+    "locale": "en",
+    "phrase": "mail document",
+    "normalized": "mail document",
+    "tokenCount": 2,
+    "charLength": 13
+  },
+  {
     "groupId": "help_support",
     "locale": "en",
     "phrase": "customer care",
     "normalized": "customer care",
+    "tokenCount": 2,
+    "charLength": 13
+  },
+  {
+    "groupId": "magnetic_snap",
+    "locale": "en",
+    "phrase": "magnetic snap",
+    "normalized": "magnetic snap",
     "tokenCount": 2,
     "charLength": 13
   },
@@ -8971,6 +11119,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "natural world",
     "normalized": "natural world",
+    "tokenCount": 2,
+    "charLength": 13
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "network graph",
+    "normalized": "network graph",
     "tokenCount": 2,
     "charLength": 13
   },
@@ -9035,6 +11191,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "orchestration",
     "normalized": "orchestration",
+    "tokenCount": 1,
+    "charLength": 13
+  },
+  {
+    "groupId": "ai_low_quality_output",
+    "locale": "en",
+    "phrase": "hallucination",
+    "normalized": "hallucination",
     "tokenCount": 1,
     "charLength": 13
   },
@@ -9159,10 +11323,26 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 12
   },
   {
+    "groupId": "email_document",
+    "locale": "en",
+    "phrase": "emailed file",
+    "normalized": "emailed file",
+    "tokenCount": 2,
+    "charLength": 12
+  },
+  {
     "groupId": "help_support",
     "locale": "ar",
     "phrase": "خدمة العملاء",
     "normalized": "خدمة العملاء",
+    "tokenCount": 2,
+    "charLength": 12
+  },
+  {
+    "groupId": "inbox_work_queue",
+    "locale": "en",
+    "phrase": "review queue",
+    "normalized": "review queue",
     "tokenCount": 2,
     "charLength": 12
   },
@@ -9407,6 +11587,46 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 11
   },
   {
+    "groupId": "code_editor",
+    "locale": "en",
+    "phrase": "code editor",
+    "normalized": "code editor",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "code_editor",
+    "locale": "de",
+    "phrase": "code-editor",
+    "normalized": "code editor",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "construction_crane",
+    "locale": "en",
+    "phrase": "tower crane",
+    "normalized": "tower crane",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "disconnected_link_state",
+    "locale": "en",
+    "phrase": "broken link",
+    "normalized": "broken link",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "disconnected_link_state",
+    "locale": "es",
+    "phrase": "enlace roto",
+    "normalized": "enlace roto",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
     "groupId": "evidence_proof",
     "locale": "en",
     "phrase": "audit trail",
@@ -9419,6 +11639,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "health care",
     "normalized": "health care",
+    "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "graph nodes",
+    "normalized": "graph nodes",
     "tokenCount": 2,
     "charLength": 11
   },
@@ -9460,6 +11688,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "phrase": "camera scan",
     "normalized": "camera scan",
     "tokenCount": 2,
+    "charLength": 11
+  },
+  {
+    "groupId": "ai_low_quality_output",
+    "locale": "en",
+    "phrase": "hallucinate",
+    "normalized": "hallucinate",
+    "tokenCount": 1,
     "charLength": 11
   },
   {
@@ -9531,6 +11767,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "threatening",
     "normalized": "threatening",
+    "tokenCount": 1,
+    "charLength": 11
+  },
+  {
+    "groupId": "disconnected_link_state",
+    "locale": "ja",
+    "phrase": "切断されたネットワーク",
+    "normalized": "切断されたネットワーク",
     "tokenCount": 1,
     "charLength": 11
   },
@@ -9691,6 +11935,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ar",
     "phrase": "رعاية صحية",
     "normalized": "رعاية صحية",
+    "tokenCount": 2,
+    "charLength": 10
+  },
+  {
+    "groupId": "inbox_work_queue",
+    "locale": "en",
+    "phrase": "work queue",
+    "normalized": "work queue",
     "tokenCount": 2,
     "charLength": 10
   },
@@ -10247,6 +12499,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 9
   },
   {
+    "groupId": "neck_pain_symptom",
+    "locale": "en",
+    "phrase": "neck pain",
+    "normalized": "neck pain",
+    "tokenCount": 2,
+    "charLength": 9
+  },
+  {
+    "groupId": "neck_pain_symptom",
+    "locale": "en",
+    "phrase": "sore neck",
+    "normalized": "sore neck",
+    "tokenCount": 2,
+    "charLength": 9
+  },
+  {
     "groupId": "negative_mood_sadness",
     "locale": "vi",
     "phrase": "thất vọng",
@@ -10299,6 +12567,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ar",
     "phrase": "غير متوقع",
     "normalized": "غير متوقع",
+    "tokenCount": 2,
+    "charLength": 9
+  },
+  {
+    "groupId": "tow_truck_vehicle",
+    "locale": "en",
+    "phrase": "tow truck",
+    "normalized": "tow truck",
     "tokenCount": 2,
     "charLength": 9
   },
@@ -10463,6 +12739,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 9
   },
   {
+    "groupId": "excavation_vehicle",
+    "locale": "en",
+    "phrase": "excavator",
+    "normalized": "excavator",
+    "tokenCount": 1,
+    "charLength": 9
+  },
+  {
     "groupId": "knowledge_information",
     "locale": "en",
     "phrase": "knowledge",
@@ -10547,6 +12831,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "miserable",
     "normalized": "miserable",
+    "tokenCount": 1,
+    "charLength": 9
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "proximity",
+    "normalized": "proximity",
+    "tokenCount": 1,
+    "charLength": 9
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "ja",
+    "phrase": "ネットワークグラフ",
+    "normalized": "ネットワークグラフ",
     "tokenCount": 1,
     "charLength": 9
   },
@@ -10871,6 +13171,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 8
   },
   {
+    "groupId": "construction_safety_worker",
+    "locale": "en",
+    "phrase": "hard hat",
+    "normalized": "hard hat",
+    "tokenCount": 2,
+    "charLength": 8
+  },
+  {
     "groupId": "fitness_health",
     "locale": "vi",
     "phrase": "sức khỏe",
@@ -11063,6 +13371,30 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 8
   },
   {
+    "groupId": "cleaning_sweep",
+    "locale": "en",
+    "phrase": "cleaning",
+    "normalized": "cleaning",
+    "tokenCount": 1,
+    "charLength": 8
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "ja",
+    "phrase": "人と人のつながり",
+    "normalized": "人と人のつながり",
+    "tokenCount": 1,
+    "charLength": 8
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "ja",
+    "phrase": "ヘルメット作業員",
+    "normalized": "ヘルメット作業員",
+    "tokenCount": 1,
+    "charLength": 8
+  },
+  {
     "groupId": "education_learning",
     "locale": "en",
     "phrase": "academic",
@@ -11099,6 +13431,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "wellness",
     "normalized": "wellness",
+    "tokenCount": 1,
+    "charLength": 8
+  },
+  {
+    "groupId": "fortress_boundary_security",
+    "locale": "en",
+    "phrase": "fortress",
+    "normalized": "fortress",
     "tokenCount": 1,
     "charLength": 8
   },
@@ -11775,6 +14115,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 7
   },
   {
+    "groupId": "claw_grab",
+    "locale": "en",
+    "phrase": "grapple",
+    "normalized": "grapple",
+    "tokenCount": 1,
+    "charLength": 7
+  },
+  {
+    "groupId": "cleaning_sweep",
+    "locale": "en",
+    "phrase": "cleanup",
+    "normalized": "cleanup",
+    "tokenCount": 1,
+    "charLength": 7
+  },
+  {
     "groupId": "communication_response",
     "locale": "en",
     "phrase": "compose",
@@ -11787,6 +14143,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "en",
     "phrase": "respond",
     "normalized": "respond",
+    "tokenCount": 1,
+    "charLength": 7
+  },
+  {
+    "groupId": "connected_people_relationship",
+    "locale": "ja",
+    "phrase": "つながった人々",
+    "normalized": "つながった人々",
     "tokenCount": 1,
     "charLength": 7
   },
@@ -12599,6 +14963,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 6
   },
   {
+    "groupId": "disconnected_link_state",
+    "locale": "ja",
+    "phrase": "壊れたリンク",
+    "normalized": "壊れたリンク",
+    "tokenCount": 1,
+    "charLength": 6
+  },
+  {
+    "groupId": "excavation_vehicle",
+    "locale": "en",
+    "phrase": "digger",
+    "normalized": "digger",
+    "tokenCount": 1,
+    "charLength": 6
+  },
+  {
     "groupId": "fitness_health",
     "locale": "es",
     "phrase": "médico",
@@ -13231,6 +15611,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 5
   },
   {
+    "groupId": "magnetic_snap",
+    "locale": "ko",
+    "phrase": "자석 스냅",
+    "normalized": "자석 스냅",
+    "tokenCount": 2,
+    "charLength": 5
+  },
+  {
     "groupId": "negative_mood_sadness",
     "locale": "th",
     "phrase": "เศร้า",
@@ -13367,6 +15755,30 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 5
   },
   {
+    "groupId": "cleaning_sweep",
+    "locale": "en",
+    "phrase": "broom",
+    "normalized": "broom",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
+    "groupId": "cleaning_sweep",
+    "locale": "en",
+    "phrase": "sweep",
+    "normalized": "sweep",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
+    "groupId": "construction_safety_worker",
+    "locale": "ja",
+    "phrase": "建設作業員",
+    "normalized": "建設作業員",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
     "groupId": "danger_risk",
     "locale": "en",
     "phrase": "risky",
@@ -13455,6 +15867,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 5
   },
   {
+    "groupId": "inbox_work_queue",
+    "locale": "en",
+    "phrase": "inbox",
+    "normalized": "inbox",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
     "groupId": "knowledge_information",
     "locale": "en",
     "phrase": "facts",
@@ -13539,6 +15959,22 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ar",
     "phrase": "مكتئب",
     "normalized": "مكتئب",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "en",
+    "phrase": "nodes",
+    "normalized": "nodes",
+    "tokenCount": 1,
+    "charLength": 5
+  },
+  {
+    "groupId": "network_graph_nodes",
+    "locale": "ja",
+    "phrase": "接続ノード",
+    "normalized": "接続ノード",
     "tokenCount": 1,
     "charLength": 5
   },
@@ -13923,6 +16359,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ja",
     "phrase": "驚くべき",
     "normalized": "驚くべき",
+    "tokenCount": 1,
+    "charLength": 4
+  },
+  {
+    "groupId": "claw_grab",
+    "locale": "en",
+    "phrase": "claw",
+    "normalized": "claw",
     "tokenCount": 1,
     "charLength": 4
   },
@@ -14967,6 +17411,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "charLength": 3
   },
   {
+    "groupId": "tow_truck_vehicle",
+    "locale": "en",
+    "phrase": "tow",
+    "normalized": "tow",
+    "tokenCount": 1,
+    "charLength": 3
+  },
+  {
     "groupId": "travel_location_geography",
     "locale": "ar",
     "phrase": "سفر",
@@ -15755,6 +18207,14 @@ export const GENERATED_INTENT_GRAPH_PHRASES = Object.freeze([
     "locale": "ja",
     "phrase": "魔術",
     "normalized": "魔術",
+    "tokenCount": 1,
+    "charLength": 2
+  },
+  {
+    "groupId": "magnetic_snap",
+    "locale": "ko",
+    "phrase": "자석",
+    "normalized": "자석",
     "tokenCount": 1,
     "charLength": 2
   },

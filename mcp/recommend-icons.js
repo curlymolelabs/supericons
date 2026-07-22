@@ -1,15 +1,8 @@
-import {
-  buildPublicSemanticPayload,
-  getSemanticRecordForIcon,
-  scoreSemanticAlignment,
-} from './semantic-registry.js';
+import { buildPublicSemanticPayload, getSemanticRecordForIcon, scoreSemanticAlignment } from './semantic-registry.js';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import {
-  expandCjkQuery,
-  normalizeCjkSearchText,
-} from './runtime/cjk-search-core.js';
+import { expandCjkQuery, normalizeCjkSearchText } from './runtime/cjk-search-core.js';
 import {
   buildIntentQueryVariants,
   buildSearchIntentProfile,
@@ -20,9 +13,7 @@ import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cjkTermsPath = join(__dirname, 'public', 'cjk-search-terms.json');
 const multilingualAliasesPath = join(__dirname, 'public', 'multilingual-search-aliases.json');
-const cjkSearchTerms = existsSync(cjkTermsPath)
-  ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || []
-  : [];
+const cjkSearchTerms = existsSync(cjkTermsPath) ? JSON.parse(readFileSync(cjkTermsPath, 'utf8')).terms || [] : [];
 const multilingualSearchAliases = existsSync(multilingualAliasesPath)
   ? JSON.parse(readFileSync(multilingualAliasesPath, 'utf8')).aliases || []
   : [];
@@ -67,14 +58,7 @@ const GENERIC_SLOT_WORDS = new Set([
   'view',
 ]);
 
-const BRAND_LOGO_WORDS = new Set([
-  'brand',
-  'brands',
-  'logo',
-  'logos',
-  'mark',
-  'wordmark',
-]);
+const BRAND_LOGO_WORDS = new Set(['brand', 'brands', 'logo', 'logos', 'mark', 'wordmark']);
 
 const BRAND_LOGO_GENERIC_WORDS = new Set([
   ...GENERIC_SLOT_WORDS,
@@ -175,21 +159,55 @@ const REQUESTED_VARIANT_ALIASES = Object.freeze({
 
 const DIRECT_LOCALIZED_INTENT_RULES = Object.freeze([
   {
-    pattern: /\u901a\u77e5|\u304a\u77e5\u3089\u305b|\uc54c\ub9bc|notificaciones?|benachrichtigungen?|notifica(?:\u00e7|c)[a\u00e3]o|notifica(?:\u00e7|c)[o\u00f5]es?|notificacoes?/iu,
+    pattern:
+      /\u901a\u77e5|\u304a\u77e5\u3089\u305b|\uc54c\ub9bc|notificaciones?|benachrichtigungen?|notifica(?:\u00e7|c)[a\u00e3]o|notifica(?:\u00e7|c)[o\u00f5]es?|notificacoes?/iu,
     terms: ['notification', 'notifications'],
   },
   {
-    pattern: /\u5173\u95ed|\u95dc\u9589|\u30aa\u30d5|\uaebc\uc9d0|\ub044\uae30|desactivad[ao]s?|apagad[ao]s?|aus\b|deaktiviert|disabled|muted|mute|off/iu,
+    pattern:
+      /\u5173\u95ed|\u95dc\u9589|\u30aa\u30d5|\uaebc\uc9d0|\ub044\uae30|desactivad[ao]s?|apagad[ao]s?|aus\b|deaktiviert|disabled|muted|mute|off/iu,
     terms: ['off', 'disabled'],
   },
 ]);
 
 const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
   {
+    priority: 160,
+    slotPatterns: [
+      /relations?\s+graph/i,
+      /relationship\s+graph/i,
+      /proximity\s+graph/i,
+      /connected\s+(records?|nodes?)/i,
+    ],
+    queryVariants: ['graph', 'share network', 'network'],
+    iconPreferences: [
+      { pattern: /^graph$|^share-network$|^network$/i, bonus: 220 },
+      {
+        pattern: /graphics-card|paragraph|wifi|network-(slash|x)/i,
+        bonus: -220,
+      },
+    ],
+  },
+  {
+    priority: 160,
+    slotPatterns: [/attachments?/i, /attached\s+files?/i],
+    queryVariants: ['paperclip', 'file attachment', 'files'],
+    iconPreferences: [
+      {
+        pattern: /^paperclip(?:-horizontal)?$|^files?$|^file-text$/i,
+        bonus: 220,
+      },
+      { pattern: /battery|empty|graph|network/i, bonus: -220 },
+    ],
+  },
+  {
     slotPatterns: [/\busers\b/i, /team/i, /members?/i],
     queryVariants: ['users', 'team', 'user group', 'people'],
     iconPreferences: [
-      { pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|users-group|user-group|user_circle|user-circle/i, bonus: 66 },
+      {
+        pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|users-group|user-group|user_circle|user-circle/i,
+        bonus: 66,
+      },
       { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)/i, bonus: 18 },
     ],
   },
@@ -213,7 +231,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     ],
     queryVariants: ['user profile', 'account user', 'avatar person', 'user'],
     iconPreferences: [
-      { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|users|profile|avatar|circle-user|user-circle/i, bonus: 42 },
+      {
+        pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|users|profile|avatar|circle-user|user-circle/i,
+        bonus: 42,
+      },
       { pattern: /person|contact/i, bonus: 12 },
     ],
   },
@@ -230,9 +251,7 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
       /\u0e2b\u0e19\u0e49\u0e32\u0e2b\u0e25\u0e31\u0e01/u,
     ],
     queryVariants: ['home', 'house'],
-    iconPreferences: [
-      { pattern: /^home(?:_|-|$)|(?:_|-)home(?:_|-|$)|house/i, bonus: 40 },
-    ],
+    iconPreferences: [{ pattern: /^home(?:_|-|$)|(?:_|-)home(?:_|-|$)|house/i, bonus: 40 }],
   },
   {
     slotPatterns: [
@@ -261,7 +280,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/notifications?\s+off/i, /disabled notifications?/i, /muted notifications?/i, /notification\s+off/i],
     queryVariants: ['bell slash', 'bell off', 'notification off', 'muted bell'],
     iconPreferences: [
-      { pattern: /^bell[_-]?(off|slash)$|^bell[_-]?simple[_-]?slash$|notification[_-]?off|notifications?[_-]?off/i, bonus: 180 },
+      {
+        pattern: /^bell[_-]?(off|slash)$|^bell[_-]?simple[_-]?slash$|notification[_-]?off|notifications?[_-]?off/i,
+        bonus: 180,
+      },
       { pattern: /bell|notification/i, bonus: 22 },
     ],
   },
@@ -285,9 +307,15 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     ],
     queryVariants: ['shield lock', 'lock', 'shield', 'privacy security', 'security'],
     iconPreferences: [
-      { pattern: /^shield$|^shield[_-]?check$|shield-check|shield_check/i, bonus: 82 },
+      {
+        pattern: /^shield$|^shield[_-]?check$|shield-check|shield_check/i,
+        bonus: 82,
+      },
       { pattern: /shield.*lock|lock.*shield|shield/i, bonus: 58 },
-      { pattern: /^lock$|^lock[_-]?keyhole$|(?:_|-)lock(?:_|-|$)|key|fingerprint/i, bonus: 34 },
+      {
+        pattern: /^lock$|^lock[_-]?keyhole$|(?:_|-)lock(?:_|-|$)|key|fingerprint/i,
+        bonus: 34,
+      },
       { pattern: /open|unlock|ban|minus|off|slash/i, bonus: -54 },
     ],
   },
@@ -296,7 +324,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/unlock/i, /open account/i, /unlocked account/i],
     queryVariants: ['lock open', 'unlock', 'lock keyhole open'],
     iconPreferences: [
-      { pattern: /^lock[_-]?open$|^lock[_-]?keyhole[_-]?open$|^unlock(?:[_-]?keyhole)?$/i, bonus: 160 },
+      {
+        pattern: /^lock[_-]?open$|^lock[_-]?keyhole[_-]?open$|^unlock(?:[_-]?keyhole)?$/i,
+        bonus: 160,
+      },
       { pattern: /lock.*open|open.*lock|unlock/i, bonus: 80 },
       { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|file-user/i, bonus: -70 },
     ],
@@ -306,7 +337,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/blocked user/i, /banned user/i, /user blocked/i, /user banned/i],
     queryVariants: ['user x', 'user minus', 'ban user', 'blocked user'],
     iconPreferences: [
-      { pattern: /^user[_-]?x$|^user[_-]?minus$|user-round-x|user-round-minus|shield-ban|ban/i, bonus: 150 },
+      {
+        pattern: /^user[_-]?x$|^user[_-]?minus$|user-round-x|user-round-minus|shield-ban|ban/i,
+        bonus: 150,
+      },
       { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)/i, bonus: 24 },
       { pattern: /^file-user$|^user-2$/i, bonus: -80 },
     ],
@@ -357,7 +391,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     ],
     queryVariants: ['globe', 'languages', 'translate', 'language'],
     iconPreferences: [
-      { pattern: /^globe$|^languages?$|^translate$|(?:_|-)(globe|languages?|translate)(?:_|-|$)/i, bonus: 70 },
+      {
+        pattern: /^globe$|^languages?$|^translate$|(?:_|-)(globe|languages?|translate)(?:_|-|$)/i,
+        bonus: 70,
+      },
       { pattern: /globe|language|translate/i, bonus: 28 },
     ],
   },
@@ -382,7 +419,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     ],
     queryVariants: ['globe', 'languages', 'translate', 'language'],
     iconPreferences: [
-      { pattern: /^globe$|^languages?$|^translate$|(?:_|-)(globe|languages?|translate)(?:_|-|$)/i, bonus: 70 },
+      {
+        pattern: /^globe$|^languages?$|^translate$|(?:_|-)(globe|languages?|translate)(?:_|-|$)/i,
+        bonus: 70,
+      },
       { pattern: /globe|language|translate/i, bonus: 28 },
     ],
   },
@@ -415,7 +455,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/profile/i, /account/i, /\buser\b/i, /\busers\b/i, /avatar/i],
     queryVariants: ['user profile', 'account user', 'avatar person'],
     iconPreferences: [
-      { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|users|profile|avatar|circle-user|user-circle/i, bonus: 36 },
+      {
+        pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)|users|profile|avatar|circle-user|user-circle/i,
+        bonus: 36,
+      },
       { pattern: /person|contact/i, bonus: 10 },
     ],
   },
@@ -432,7 +475,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/\bai search\b/i, /smart search/i, /semantic search/i, /assistant search/i],
     queryVariants: ['search ai', 'ai search', 'smart search'],
     iconPreferences: [
-      { pattern: /^search.*ai|ai.*search|search[_-]?[23]?[_-]?ai/i, bonus: 150 },
+      {
+        pattern: /^search.*ai|ai.*search|search[_-]?[23]?[_-]?ai/i,
+        bonus: 150,
+      },
       { pattern: /^search(?:_|-|$)|(?:_|-)search(?:_|-|$)/i, bonus: 34 },
       { pattern: /brain|robot|spark/i, bonus: 24 },
     ],
@@ -442,7 +488,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/automation/i, /workflow/i, /automate/i, /smart action/i],
     queryVariants: ['automation', 'workflow', 'robot', 'refresh', 'sparkles'],
     iconPreferences: [
-      { pattern: /workflow|automation|robot|sparkles?|refresh|settings|adjustments/i, bonus: 90 },
+      {
+        pattern: /workflow|automation|robot|sparkles?|refresh|settings|adjustments/i,
+        bonus: 90,
+      },
       { pattern: /hand|finger|train/i, bonus: -90 },
     ],
   },
@@ -450,7 +499,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/prompt/i],
     queryVariants: ['message text', 'text input', 'terminal', 'text cursor'],
     iconPreferences: [
-      { pattern: /message.*text|text.*input|text-cursor-input|terminal/i, bonus: 36 },
+      {
+        pattern: /message.*text|text.*input|text-cursor-input|terminal/i,
+        bonus: 36,
+      },
       { pattern: /text|prompt|keyboard/i, bonus: 14 },
     ],
   },
@@ -458,7 +510,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/dataset/i, /\bdata\b/i, /table/i],
     queryVariants: ['database', 'data table', 'grid rows columns', 'table'],
     iconPreferences: [
-      { pattern: /^database$|^table-2$|^table_2$|table-cells|table-columns|table-rows/i, bonus: 36 },
+      {
+        pattern: /^database$|^table-2$|^table_2$|table-cells|table-columns|table-rows/i,
+        bonus: 36,
+      },
       { pattern: /database|table|grid/i, bonus: 18 },
     ],
   },
@@ -466,7 +521,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/evaluation/i, /benchmark/i, /score/i, /metrics?/i],
     queryVariants: ['bar chart', 'metrics chart', 'gauge', 'checklist', 'benchmark'],
     iconPreferences: [
-      { pattern: /bar-chart-3|chart-bar|bar-chart|gauge|clipboard-check|list-check/i, bonus: 38 },
+      {
+        pattern: /bar-chart-3|chart-bar|bar-chart|gauge|clipboard-check|list-check/i,
+        bonus: 38,
+      },
       { pattern: /chart|metrics|check/i, bonus: 16 },
     ],
   },
@@ -500,16 +558,30 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/storefront/i, /\bstore\b/i, /\bshop\b/i],
     queryVariants: ['store', 'shop', 'building store', 'shopping bag'],
     iconPreferences: [
-      { pattern: /^store$|^storefront$|building-store|shop[_-]?line|store[_-]?\d?[_-]?line|shopping-bag/i, bonus: 120 },
-      { pattern: /brand-appstore|restore|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i, bonus: -120 },
+      {
+        pattern: /^store$|^storefront$|building-store|shop[_-]?line|store[_-]?\d?[_-]?line|shopping-bag/i,
+        bonus: 120,
+      },
+      {
+        pattern:
+          /brand-appstore|restore|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i,
+        bonus: -120,
+      },
     ],
   },
   {
     priority: 130,
-    slotPatterns: [/(store|shop|storefront)\s+(off|disabled|closed|cancelled|canceled)/i, /(off|disabled|closed|cancelled|canceled)\s+(store|shop|storefront)/i],
+    slotPatterns: [
+      /(store|shop|storefront)\s+(off|disabled|closed|cancelled|canceled)/i,
+      /(off|disabled|closed|cancelled|canceled)\s+(store|shop|storefront)/i,
+    ],
     queryVariants: ['store off', 'shopping bag x', 'shopping cart off', 'store disabled'],
     iconPreferences: [
-      { pattern: /(store|shop|shopping|bag|cart).*(off|\bx\b|cancel|disabled)|(off|\bx\b|cancel|disabled).*(store|shop|shopping|bag|cart)/i, bonus: 220 },
+      {
+        pattern:
+          /(store|shop|shopping|bag|cart).*(off|\bx\b|cancel|disabled)|(off|\bx\b|cancel|disabled).*(store|shop|shopping|bag|cart)/i,
+        bonus: 220,
+      },
       { pattern: /^building-store$|^store$|^shopping-bag$/i, bonus: -70 },
     ],
   },
@@ -518,8 +590,15 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/checkout/i],
     queryVariants: ['shopping cart', 'credit card', 'payment', 'receipt checkout'],
     iconPreferences: [
-      { pattern: /^shopping[_-]?cart$|shopping-cart$|credit-card|card-pay|payment|receipt/i, bonus: 140 },
-      { pattern: /fork|knife|git|branch|merge|forklift|grill|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i, bonus: -140 },
+      {
+        pattern: /^shopping[_-]?cart$|shopping-cart$|credit-card|card-pay|payment|receipt/i,
+        bonus: 140,
+      },
+      {
+        pattern:
+          /fork|knife|git|branch|merge|forklift|grill|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i,
+        bonus: -140,
+      },
     ],
   },
   {
@@ -528,8 +607,16 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     queryVariants: ['shopping cart', 'cart', 'basket'],
     iconPreferences: [
       { pattern: /^shopping[_-]?cart$|^basket$/i, bonus: 220 },
-      { pattern: /shopping-cart-(cog|x|off|discount|dollar|exclamation|heart|minus|pause|plus|question|share|star|bolt|copy|down|up|search|pin)/i, bonus: -260 },
-      { pattern: /basket-(cog|x|off|discount|dollar|exclamation|heart|minus|pause|plus|question|share|star|bolt|copy|down|up|search|pin)/i, bonus: -180 },
+      {
+        pattern:
+          /shopping-cart-(cog|x|off|discount|dollar|exclamation|heart|minus|pause|plus|question|share|star|bolt|copy|down|up|search|pin)/i,
+        bonus: -260,
+      },
+      {
+        pattern:
+          /basket-(cog|x|off|discount|dollar|exclamation|heart|minus|pause|plus|question|share|star|bolt|copy|down|up|search|pin)/i,
+        bonus: -180,
+      },
       { pattern: /garden-cart/i, bonus: -180 },
     ],
   },
@@ -538,8 +625,15 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/customers?/i, /shoppers?/i, /buyers?/i],
     queryVariants: ['users', 'customers', 'user group'],
     iconPreferences: [
-      { pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|users-group|user-group|user-circle|user_circle|^user(?:_|-|$)/i, bonus: 110 },
-      { pattern: /ticket|plane|caret|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i, bonus: -120 },
+      {
+        pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|users-group|user-group|user-circle|user_circle|^user(?:_|-|$)/i,
+        bonus: 110,
+      },
+      {
+        pattern:
+          /ticket|plane|caret|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i,
+        bonus: -120,
+      },
     ],
   },
   {
@@ -547,17 +641,30 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/coupons?/i, /discounts?/i, /promo/i, /promotion/i],
     queryVariants: ['coupon', 'tag percent', 'discount', 'percentage'],
     iconPreferences: [
-      { pattern: /coupon|ticket-percent|badge-percent|percent|percentage|tag|shopping-cart-discount|shopping-bag-discount|seal-percent/i, bonus: 120 },
-      { pattern: /^percentage-\d+$|bean|candy|cannabis|off|slash|disabled|alert/i, bonus: -180 },
+      {
+        pattern:
+          /coupon|ticket-percent|badge-percent|percent|percentage|tag|shopping-cart-discount|shopping-bag-discount|seal-percent/i,
+        bonus: 120,
+      },
+      {
+        pattern: /^percentage-\d+$|bean|candy|cannabis|off|slash|disabled|alert/i,
+        bonus: -180,
+      },
     ],
   },
   {
     priority: 130,
-    slotPatterns: [/(cancel|cancelled|canceled|remove|delete)\s+orders?/i, /orders?\s+(cancel|cancelled|canceled|remove|delete)/i],
+    slotPatterns: [
+      /(cancel|cancelled|canceled|remove|delete)\s+orders?/i,
+      /orders?\s+(cancel|cancelled|canceled|remove|delete)/i,
+    ],
     queryVariants: ['shopping cart cancel', 'basket cancel', 'cancel order', 'order x'],
     iconPreferences: [
       { pattern: /cancel|\bx\b|remove|delete|minus|trash/i, bonus: 220 },
-      { pattern: /shopping|cart|basket|package|receipt|clipboard|list/i, bonus: 20 },
+      {
+        pattern: /shopping|cart|basket|package|receipt|clipboard|list/i,
+        bonus: 20,
+      },
     ],
   },
   {
@@ -565,8 +672,15 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/orders?/i, /purchases?/i],
     queryVariants: ['package', 'receipt', 'clipboard list', 'shopping bag', 'ordered list'],
     iconPreferences: [
-      { pattern: /^package$|packages|receipt|shopping-bag$|clipboard|list-ordered|file-invoice|file-text/i, bonus: 115 },
-      { pattern: /border|sort|align|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i, bonus: -130 },
+      {
+        pattern: /^package$|packages|receipt|shopping-bag$|clipboard|list-ordered|file-invoice|file-text/i,
+        bonus: 115,
+      },
+      {
+        pattern:
+          /border|sort|align|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i,
+        bonus: -130,
+      },
     ],
   },
   {
@@ -585,7 +699,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/returns?/i, /refunds?/i, /reverse logistics/i],
     queryVariants: ['return', 'refund', 'truck return', 'receipt refund'],
     iconPreferences: [
-      { pattern: /^truck[_-]?return$|receipt[_-]?refund|credit-card[_-]?refund|arrow-back|cash.*move.*back/i, bonus: 220 },
+      {
+        pattern: /^truck[_-]?return$|receipt[_-]?refund|credit-card[_-]?refund|arrow-back|cash.*move.*back/i,
+        bonus: 220,
+      },
       { pattern: /player|chevron|stack|upload|cloud|ship-off/i, bonus: -160 },
     ],
   },
@@ -594,15 +711,25 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/products?/i, /catalog/i, /inventory/i],
     queryVariants: ['package', 'box', 'tag', 'shopping bag', 'products'],
     iconPreferences: [
-      { pattern: /^package$|packages|package[_-]?\d?|^box$|boxes|tag$|shopping-bag$|warehouse|building-warehouse/i, bonus: 115 },
-      { pattern: /brand-producthunt|brand-stocktwits|border|sort|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i, bonus: -130 },
+      {
+        pattern: /^package$|packages|package[_-]?\d?|^box$|boxes|tag$|shopping-bag$|warehouse|building-warehouse/i,
+        bonus: 115,
+      },
+      {
+        pattern:
+          /brand-producthunt|brand-stocktwits|border|sort|cancel|\bx\b|off|discount|heart|exclamation|minus|plus|search|share|star|question|bolt|code|copy|dollar|down|up|pin|pause/i,
+        bonus: -130,
+      },
     ],
   },
   {
     slotPatterns: [/reports?/i, /analytics/i, /insights?/i],
     queryVariants: ['bar chart', 'file chart', 'analytics chart', 'report document'],
     iconPreferences: [
-      { pattern: /file-.*chart|chart-bar|bar-chart-3|bar-chart|chart-line|line-chart/i, bonus: 40 },
+      {
+        pattern: /file-.*chart|chart-bar|bar-chart-3|bar-chart|chart-line|line-chart/i,
+        bonus: 40,
+      },
       { pattern: /chart|report|analytics/i, bonus: 16 },
     ],
   },
@@ -628,7 +755,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/permissions?/i, /access control/i, /roles?/i],
     queryVariants: ['user key', 'shield lock', 'key', 'settings permissions'],
     iconPreferences: [
-      { pattern: /user-key|user-lock|user-check|key|lock|shield|adjustments|settings/i, bonus: 120 },
+      {
+        pattern: /user-key|user-lock|user-check|key|lock|shield|adjustments|settings/i,
+        bonus: 120,
+      },
       { pattern: /free-rights|premium-rights|icons$/i, bonus: -100 },
     ],
   },
@@ -647,7 +777,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
       { pattern: /^search$/i, bonus: 140 },
       { pattern: /^search(?:_|-|$)|(?:_|-)search(?:_|-|$)/i, bonus: 64 },
       { pattern: /magnifier|magnifying/i, bonus: 36 },
-      { pattern: /file-search|folder-search|scan-search|mail-search|calendar-search/i, bonus: -90 },
+      {
+        pattern: /file-search|folder-search|scan-search|mail-search|calendar-search/i,
+        bonus: -90,
+      },
     ],
   },
   {
@@ -655,8 +788,14 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/\b(add|new|create)\s+bookmark\b/i, /\bbookmark\s+(add|new|create)\b/i],
     queryVariants: ['bookmark add', 'add bookmark', 'bookmark plus'],
     iconPreferences: [
-      { pattern: /^bookmark[_-]?(add|plus)(?:_|-|$)|(?:_|-)bookmark[_-]?(add|plus)(?:_|-|$)/i, bonus: 220 },
-      { pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i, bonus: 46 },
+      {
+        pattern: /^bookmark[_-]?(add|plus)(?:_|-|$)|(?:_|-)bookmark[_-]?(add|plus)(?:_|-|$)/i,
+        bonus: 220,
+      },
+      {
+        pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i,
+        bonus: 46,
+      },
       { pattern: /^(add|plus)(?:_|-|$)/i, bonus: -80 },
     ],
   },
@@ -665,8 +804,14 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/\bedit\s+bookmark\b/i, /\bbookmark\s+edit\b/i],
     queryVariants: ['bookmark edit', 'edit bookmark', 'bookmark pencil'],
     iconPreferences: [
-      { pattern: /^bookmark[_-]?edit(?:_|-|$)|(?:_|-)bookmark[_-]?edit(?:_|-|$)/i, bonus: 190 },
-      { pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i, bonus: 46 },
+      {
+        pattern: /^bookmark[_-]?edit(?:_|-|$)|(?:_|-)bookmark[_-]?edit(?:_|-|$)/i,
+        bonus: 190,
+      },
+      {
+        pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i,
+        bonus: 46,
+      },
       { pattern: /^edit(?:_|-|$)|pencil/i, bonus: -70 },
     ],
   },
@@ -675,8 +820,14 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/\b(remove|delete)\s+bookmark\b/i, /\bbookmark\s+(remove|delete)\b/i],
     queryVariants: ['bookmark remove', 'remove bookmark', 'bookmark minus'],
     iconPreferences: [
-      { pattern: /^bookmark[_-]?(remove|minus|x)(?:_|-|$)|(?:_|-)bookmark[_-]?(remove|minus|x)(?:_|-|$)/i, bonus: 190 },
-      { pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i, bonus: 46 },
+      {
+        pattern: /^bookmark[_-]?(remove|minus|x)(?:_|-|$)|(?:_|-)bookmark[_-]?(remove|minus|x)(?:_|-|$)/i,
+        bonus: 190,
+      },
+      {
+        pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i,
+        bonus: 46,
+      },
       { pattern: /^(remove|delete|minus)(?:_|-|$)/i, bonus: -70 },
     ],
   },
@@ -684,7 +835,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/bookmark/i, /saved?/i, /save article/i],
     queryVariants: ['bookmark', 'saved', 'save'],
     iconPreferences: [
-      { pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i, bonus: 66 },
+      {
+        pattern: /^bookmarks?(?:_|-|$)|(?:_|-)bookmarks?(?:_|-|$)/i,
+        bonus: 66,
+      },
       { pattern: /save|favorite|star/i, bonus: 14 },
     ],
   },
@@ -701,9 +855,16 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/previous page/i, /previous/i, /\bback\b/i, /go back/i],
     queryVariants: ['arrow left', 'chevron left', 'back arrow', 'previous'],
     iconPreferences: [
-      { pattern: /^arrow[_-]?left$|^chevron[_-]?left$|^caret[_-]?left$|arrow[_-]?back$|back[_-]?line|arrow[_-]?to[_-]?left|left(?:_|-|$)/i, bonus: 140 },
+      {
+        pattern:
+          /^arrow[_-]?left$|^chevron[_-]?left$|^caret[_-]?left$|arrow[_-]?back$|back[_-]?line|arrow[_-]?to[_-]?left|left(?:_|-|$)/i,
+        bonus: 140,
+      },
       { pattern: /skip-back|step-back/i, bonus: 48 },
-      { pattern: /send-to-back|file|archive|audio|floppy|cash|banknote|brand|copy/i, bonus: -140 },
+      {
+        pattern: /send-to-back|file|archive|audio|floppy|cash|banknote|brand|copy/i,
+        bonus: -140,
+      },
     ],
   },
   {
@@ -711,8 +872,14 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/read more/i, /more link/i, /continue/i, /open article/i, /next page/i, /^next$/i],
     queryVariants: ['arrow right', 'move right', 'chevron right', 'read more', 'next'],
     iconPreferences: [
-      { pattern: /^arrow[_-]?right$|^move[_-]?right$|arrow[_-]?to[_-]?right|chevron[_-]?right|right(?:_|-|$)/i, bonus: 90 },
-      { pattern: /square|circle|corner|up|down|left|banknote|archive/i, bonus: -70 },
+      {
+        pattern: /^arrow[_-]?right$|^move[_-]?right$|arrow[_-]?to[_-]?right|chevron[_-]?right|right(?:_|-|$)/i,
+        bonus: 90,
+      },
+      {
+        pattern: /square|circle|corner|up|down|left|banknote|archive/i,
+        bonus: -70,
+      },
     ],
   },
   {
@@ -720,7 +887,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     queryVariants: ['filter', 'category', 'tag', 'grid'],
     iconPreferences: [
       { pattern: /^filter(?:_|-|$)|(?:_|-)filter(?:_|-|$)/i, bonus: 56 },
-      { pattern: /^tag(?:_|-|$)|(?:_|-)tag(?:_|-|$)|category|grid/i, bonus: 26 },
+      {
+        pattern: /^tag(?:_|-|$)|(?:_|-)tag(?:_|-|$)|category|grid/i,
+        bonus: 26,
+      },
     ],
   },
   {
@@ -735,7 +905,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/news/i, /article/i, /headline/i, /story/i, /publisher/i, /logo/i, /title/i],
     queryVariants: ['news', 'article', 'newspaper', 'headline'],
     iconPreferences: [
-      { pattern: /^news(?:_|-|$)|(?:_|-)news(?:_|-|$)|newspaper|article/i, bonus: 66 },
+      {
+        pattern: /^news(?:_|-|$)|(?:_|-)news(?:_|-|$)|newspaper|article/i,
+        bonus: 66,
+      },
       { pattern: /file|document|paper/i, bonus: 16 },
     ],
   },
@@ -759,7 +932,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/tasks?/i, /todo/i, /to do/i, /checklist/i],
     queryVariants: ['list check', 'checklist', 'checkbox', 'task'],
     iconPreferences: [
-      { pattern: /list-check|list_check|checkbox|checklist|clipboard-check/i, bonus: 56 },
+      {
+        pattern: /list-check|list_check|checkbox|checklist|clipboard-check/i,
+        bonus: 56,
+      },
       { pattern: /check|task/i, bonus: 16 },
     ],
   },
@@ -767,7 +943,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/team/i, /\busers\b/i, /members?/i],
     queryVariants: ['users', 'team', 'user group'],
     iconPreferences: [
-      { pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|user-group|user_circle|user-circle/i, bonus: 64 },
+      {
+        pattern: /^users(?:_|-|$)|(?:_|-)users(?:_|-|$)|user-group|user_circle|user-circle/i,
+        bonus: 64,
+      },
       { pattern: /^user(?:_|-|$)|(?:_|-)user(?:_|-|$)/i, bonus: 18 },
     ],
   },
@@ -782,23 +961,22 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
   {
     slotPatterns: [/\bbold\b/i],
     queryVariants: ['text b', 'bold', 'text bold'],
-    iconPreferences: [
-      { pattern: /^text[_-]?b$|text-bold|bold/i, bonus: 66 },
-    ],
+    iconPreferences: [{ pattern: /^text[_-]?b$|text-bold|bold/i, bonus: 66 }],
   },
   {
     slotPatterns: [/italic/i],
     queryVariants: ['text italic', 'italic'],
-    iconPreferences: [
-      { pattern: /^text[_-]?italic$|italic/i, bonus: 66 },
-    ],
+    iconPreferences: [{ pattern: /^text[_-]?italic$|italic/i, bonus: 66 }],
   },
   {
     priority: 130,
     slotPatterns: [/broken\s+link/i, /link\s+(broken|break|disabled|off)/i],
     queryVariants: ['broken link', 'link break', 'link slash'],
     iconPreferences: [
-      { pattern: /link.*(break|broken|slash|off)|(break|broken|slash|off).*link/i, bonus: 180 },
+      {
+        pattern: /link.*(break|broken|slash|off)|(break|broken|slash|off).*link/i,
+        bonus: 180,
+      },
       { pattern: /^link(?:_|-|$)|(?:_|-)link(?:_|-|$)/i, bonus: 10 },
     ],
   },
@@ -807,16 +985,28 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/(broken|disabled|off)\s+(image|photo|picture)/i, /(image|photo|picture)\s+(broken|disabled|off)/i],
     queryVariants: ['photo off', 'image off', 'broken image', 'image broken'],
     iconPreferences: [
-      { pattern: /(image|photo|picture).*(broken|off|slash)|(broken|off|slash).*(image|photo|picture)/i, bonus: 240 },
-      { pattern: /^image(?:_|-|$)|(?:_|-)image(?:_|-|$)|picture|photo/i, bonus: 10 },
+      {
+        pattern: /(image|photo|picture).*(broken|off|slash)|(broken|off|slash).*(image|photo|picture)/i,
+        bonus: 240,
+      },
+      {
+        pattern: /^image(?:_|-|$)|(?:_|-)image(?:_|-|$)|picture|photo/i,
+        bonus: 10,
+      },
     ],
   },
   {
     priority: 130,
-    slotPatterns: [/(comments?|chat|discussion)\s+(off|disabled|muted|slash)/i, /(off|disabled|muted|slash)\s+(comments?|chat|discussion)/i],
+    slotPatterns: [
+      /(comments?|chat|discussion)\s+(off|disabled|muted|slash)/i,
+      /(off|disabled|muted|slash)\s+(comments?|chat|discussion)/i,
+    ],
     queryVariants: ['chat slash', 'comment off', 'comments off', 'message slash'],
     iconPreferences: [
-      { pattern: /(chat|comment|message).*(slash|off|x)|(slash|off|x).*(chat|comment|message)/i, bonus: 180 },
+      {
+        pattern: /(chat|comment|message).*(slash|off|x)|(slash|off|x).*(chat|comment|message)/i,
+        bonus: 180,
+      },
       { pattern: /chat|comment|message/i, bonus: 10 },
     ],
   },
@@ -833,7 +1023,10 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/image/i, /photo/i, /picture/i],
     queryVariants: ['image', 'picture', 'photo'],
     iconPreferences: [
-      { pattern: /^image(?:_|-|$)|(?:_|-)image(?:_|-|$)|picture|photo/i, bonus: 56 },
+      {
+        pattern: /^image(?:_|-|$)|(?:_|-)image(?:_|-|$)|picture|photo/i,
+        bonus: 56,
+      },
       { pattern: /broken|off|slash|brand/i, bonus: -120 },
     ],
   },
@@ -850,16 +1043,29 @@ const COMMON_SLOT_PREFERENCE_RULES = Object.freeze([
     slotPatterns: [/undo/i],
     queryVariants: ['undo', 'arrow counter clockwise', 'rotate left'],
     iconPreferences: [
-      { pattern: /^undo$|arrow-counter-clockwise|arrow_counter_clockwise|rotate.*left/i, bonus: 66 },
-      { pattern: /^redo$|^arrows?[_-]clockwise$|clock[_-]clockwise|arrow_clockwise|rotate.*right/i, bonus: -120 },
+      {
+        pattern: /^undo$|arrow-counter-clockwise|arrow_counter_clockwise|rotate.*left/i,
+        bonus: 66,
+      },
+      {
+        pattern: /^redo$|^arrows?[_-]clockwise$|clock[_-]clockwise|arrow_clockwise|rotate.*right/i,
+        bonus: -120,
+      },
     ],
   },
   {
     slotPatterns: [/redo/i],
     queryVariants: ['redo', 'arrow clockwise', 'rotate right'],
     iconPreferences: [
-      { pattern: /^redo$|arrow-clockwise|arrow_clockwise|rotate.*right/i, bonus: 66 },
-      { pattern: /^undo$|^arrows?[_-]counter[_-]clockwise$|clock[_-]counter[_-]clockwise|arrow_counter_clockwise|rotate.*left/i, bonus: -120 },
+      {
+        pattern: /^redo$|arrow-clockwise|arrow_clockwise|rotate.*right/i,
+        bonus: 66,
+      },
+      {
+        pattern:
+          /^undo$|^arrows?[_-]counter[_-]clockwise$|clock[_-]counter[_-]clockwise|arrow_counter_clockwise|rotate.*left/i,
+        bonus: -120,
+      },
     ],
   },
 ]);
@@ -983,9 +1189,7 @@ const SLOT_PREFERENCE_RULES = Object.freeze({
     },
     {
       slotPatterns: [/projects?/i],
-      iconPreferences: [
-        { pattern: /^folder_locked_line$/i, bonus: -70 },
-      ],
+      iconPreferences: [{ pattern: /^folder_locked_line$/i, bonus: -70 }],
     },
   ],
 });
@@ -1026,8 +1230,7 @@ function stripBrandLogoWords(value) {
 }
 
 function hasSpecificBrandTerms(value) {
-  return tokenizeText(stripBrandLogoWords(value))
-    .some((token) => !BRAND_LOGO_GENERIC_WORDS.has(token));
+  return tokenizeText(stripBrandLogoWords(value)).some((token) => !BRAND_LOGO_GENERIC_WORDS.has(token));
 }
 
 function isBrandLogoRecommendation(task, slot, library) {
@@ -1043,22 +1246,14 @@ function buildBrandLogoQueryVariants(task, slot, library) {
   const rawSlot = String(slot || '').trim();
   const normalizedSlot = normalizeText(slot);
   const strippedSlot = stripBrandLogoWords(slot);
-  const usefulTokens = tokenizeText(strippedSlot)
-    .filter((token) => !BRAND_LOGO_GENERIC_WORDS.has(token));
+  const usefulTokens = tokenizeText(strippedSlot).filter((token) => !BRAND_LOGO_GENERIC_WORDS.has(token));
 
-  return dedupe([
-    rawSlot,
-    normalizedSlot,
-    strippedSlot,
-    ...usefulTokens,
-  ]);
+  return dedupe([rawSlot, normalizedSlot, strippedSlot, ...usefulTokens]);
 }
 
 function buildDirectLocalizedIntentTerms(value) {
   const text = String(value || '');
-  return DIRECT_LOCALIZED_INTENT_RULES
-    .filter((rule) => rule.pattern.test(text))
-    .flatMap((rule) => rule.terms);
+  return DIRECT_LOCALIZED_INTENT_RULES.filter((rule) => rule.pattern.test(text)).flatMap((rule) => rule.terms);
 }
 
 function buildRequestedTermSet(intentTerms = []) {
@@ -1074,10 +1269,9 @@ function isVariantTokenRequested(token, requestedTerms) {
 
 function isIconVariantExplicitlyRequested(icon, intentTerms = []) {
   const requestedTerms = buildRequestedTermSet(intentTerms);
-  return tokenizeText(icon.id).some((token) => (
-    VARIANT_TOKENS.has(normalizeToken(token)) &&
-    isVariantTokenRequested(token, requestedTerms)
-  ));
+  return tokenizeText(icon.id).some(
+    (token) => VARIANT_TOKENS.has(normalizeToken(token)) && isVariantTokenRequested(token, requestedTerms),
+  );
 }
 
 function buildLocalizedVariants(value, locale) {
@@ -1097,16 +1291,13 @@ function buildLocalizedVariants(value, locale) {
       const recordValues = [record.term, ...(record.variants || [])]
         .map((term) => normalizeCjkSearchText(term))
         .filter(Boolean);
-      const isContainedMatch = recordValues.some((term) => (
-        term.length >= 2
-        && (normalizedValue.includes(term) || term.includes(normalizedValue))
-      ));
+      const isContainedMatch = recordValues.some(
+        (term) => term.length >= 2 && (normalizedValue.includes(term) || term.includes(normalizedValue)),
+      );
       if (!isContainedMatch) continue;
 
       const firstIndex = Math.min(
-        ...recordValues
-          .map((term) => normalizedValue.indexOf(term))
-          .filter((index) => index >= 0)
+        ...recordValues.map((term) => normalizedValue.indexOf(term)).filter((index) => index >= 0),
       );
       containedMatches.push({
         index: Number.isFinite(firstIndex) ? firstIndex : Number.MAX_SAFE_INTEGER,
@@ -1163,10 +1354,7 @@ function buildSlotIntentTerms(task, slot, locale = null) {
 
 function buildSlotQueryVariants(task, slot, locale = null) {
   const localizedSlotVariants = buildLocalizedVariants(slot, locale);
-  const localizedVariants = [
-    ...localizedSlotVariants,
-    ...buildLocalizedVariants(`${slot} ${task}`, locale),
-  ];
+  const localizedVariants = [...localizedSlotVariants, ...buildLocalizedVariants(`${slot} ${task}`, locale)];
   const variants = buildIntentQueryVariants(`${slot} ${task}`, {
     baseQuery: slot,
     maxVariants: 8,
@@ -1177,10 +1365,8 @@ function buildSlotQueryVariants(task, slot, locale = null) {
   const slotRuleTerms = [
     ...tokenizeText(`${slot} ${localizedSlotVariants.join(' ')}`),
     ...buildDirectLocalizedIntentTerms(slot),
-  ]
-    .filter((token) => !GENERIC_SLOT_WORDS.has(token));
-  const ruleVariants = getMatchingSlotRules(slot, slotRuleTerms)
-    .flatMap((rule) => rule.queryVariants || []);
+  ].filter((token) => !GENERIC_SLOT_WORDS.has(token));
+  const ruleVariants = getMatchingSlotRules(slot, slotRuleTerms).flatMap((rule) => rule.queryVariants || []);
   variants.unshift(...ruleVariants);
   return dedupe(variants).slice(0, 12);
 }
@@ -1228,33 +1414,39 @@ function scoreLexicalFit(icon, intentTerms, slotLabel, taskLabel = '') {
 }
 
 function collectBrandCandidateTexts(icon, semanticRecord) {
-  const semanticValues = semanticRecord ? [
-    semanticRecord.label,
-    semanticRecord.source_name,
-    semanticRecord.slug,
-    semanticRecord.name,
-    semanticRecord.meaning,
-    semanticRecord.purpose,
-    ...(semanticRecord.aliases || []),
-    ...(semanticRecord.synonyms || []),
-    ...(semanticRecord.search_terms || []),
-    ...(semanticRecord.semantic_tags || []),
-  ] : [];
+  const semanticValues = semanticRecord
+    ? [
+        semanticRecord.label,
+        semanticRecord.source_name,
+        semanticRecord.slug,
+        semanticRecord.name,
+        semanticRecord.meaning,
+        semanticRecord.purpose,
+        ...(semanticRecord.aliases || []),
+        ...(semanticRecord.synonyms || []),
+        ...(semanticRecord.search_terms || []),
+        ...(semanticRecord.semantic_tags || []),
+      ]
+    : [];
 
-  return dedupe([
-    icon.id,
-    icon.name,
-    `${icon.lib}:${icon.id}`,
-    ...(icon.aliases || []),
-    ...(icon.synonyms || []),
-    ...(icon.searchTerms || []),
-    ...(icon.semanticTags || []),
-    ...(icon.semantic?.aliases || []),
-    ...(icon.semantic?.synonyms || []),
-    ...(icon.semantic?.search_terms || []),
-    ...(icon.semantic?.semantic_tags || []),
-    ...semanticValues,
-  ].map((value) => normalizeText(value)).filter(Boolean));
+  return dedupe(
+    [
+      icon.id,
+      icon.name,
+      `${icon.lib}:${icon.id}`,
+      ...(icon.aliases || []),
+      ...(icon.synonyms || []),
+      ...(icon.searchTerms || []),
+      ...(icon.semanticTags || []),
+      ...(icon.semantic?.aliases || []),
+      ...(icon.semantic?.synonyms || []),
+      ...(icon.semantic?.search_terms || []),
+      ...(icon.semantic?.semantic_tags || []),
+      ...semanticValues,
+    ]
+      .map((value) => normalizeText(value))
+      .filter(Boolean),
+  );
 }
 
 function getBrandLogoMatchBonus(icon, semanticRecord, slotLabel, taskLabel, library) {
@@ -1266,9 +1458,7 @@ function getBrandLogoMatchBonus(icon, semanticRecord, slotLabel, taskLabel, libr
   const iconCandidates = collectBrandCandidateTexts(icon, semanticRecord);
   const iconTokens = new Set(iconCandidates.flatMap(tokenizeText));
   const meaningfulSlotTokens = dedupe(
-    slotCandidates
-      .flatMap(tokenizeText)
-      .filter((token) => !BRAND_LOGO_GENERIC_WORDS.has(token))
+    slotCandidates.flatMap(tokenizeText).filter((token) => !BRAND_LOGO_GENERIC_WORDS.has(token)),
   );
 
   let best = 0;
@@ -1316,18 +1506,12 @@ function getMatchingSlotRules(slotLabel, intentTerms = []) {
   const rawSlotText = String(slotLabel || '');
   const slotText = normalizeText(slotLabel);
   const intentText = normalizeText(intentTerms.join(' '));
-  return COMMON_SLOT_PREFERENCE_RULES
-    .filter((rule) => {
-      const directSlotMatch = rule.slotPatterns.some((pattern) => (
-        pattern.test(slotText) ||
-        pattern.test(rawSlotText)
-      ));
-      if (directSlotMatch) return true;
+  return COMMON_SLOT_PREFERENCE_RULES.filter((rule) => {
+    const directSlotMatch = rule.slotPatterns.some((pattern) => pattern.test(slotText) || pattern.test(rawSlotText));
+    if (directSlotMatch) return true;
 
-      return rule.matchIntentTerms === true &&
-        rule.slotPatterns.some((pattern) => pattern.test(intentText));
-    })
-    .sort((left, right) => (right.priority || 0) - (left.priority || 0));
+    return rule.matchIntentTerms === true && rule.slotPatterns.some((pattern) => pattern.test(intentText));
+  }).sort((left, right) => (right.priority || 0) - (left.priority || 0));
 }
 
 function scoreSlotPreferenceRules(icon, rules = [], intentTerms = []) {
@@ -1349,11 +1533,14 @@ function scoreSlotPreferenceRules(icon, rules = [], intentTerms = []) {
 function getSlotPreferenceBonus(icon, slotLabel, intentTerms, library, requestedVariantTerms = intentTerms) {
   const slotText = `${slotLabel} ${requestedVariantTerms.join(' ')}`;
   const commonRules = getMatchingSlotRules(slotLabel, requestedVariantTerms);
-  const libraryRules = (SLOT_PREFERENCE_RULES[library] || [])
-    .filter((rule) => rule.slotPatterns.some((pattern) => pattern.test(slotText)));
+  const libraryRules = (SLOT_PREFERENCE_RULES[library] || []).filter((rule) =>
+    rule.slotPatterns.some((pattern) => pattern.test(slotText)),
+  );
 
-  return scoreSlotPreferenceRules(icon, commonRules, requestedVariantTerms) +
-    scoreSlotPreferenceRules(icon, libraryRules, requestedVariantTerms);
+  return (
+    scoreSlotPreferenceRules(icon, commonRules, requestedVariantTerms) +
+    scoreSlotPreferenceRules(icon, libraryRules, requestedVariantTerms)
+  );
 }
 
 function summarizeSemanticFit(slotLabel, semanticRecord, intentTerms) {
@@ -1390,7 +1577,7 @@ function buildCandidatePayload(
   intentTerms,
   responseMode = 'plan',
   includeSvg = false,
-  includeReason = true
+  includeReason = true,
 ) {
   const payload = {
     id: iconResult.id,
@@ -1460,11 +1647,19 @@ const MAX_GROUPED_RECOMMENDATION_QUERIES = 40;
 
 function buildGroupedRecommendationQueryKey(request) {
   return JSON.stringify([
-    String(request.query || '').trim().toLowerCase(),
-    String(request.library || '').trim().toLowerCase(),
-    String(request.style || 'any').trim().toLowerCase(),
+    String(request.query || '')
+      .trim()
+      .toLowerCase(),
+    String(request.library || '')
+      .trim()
+      .toLowerCase(),
+    String(request.style || 'any')
+      .trim()
+      .toLowerCase(),
     Number(request.limit) || 0,
-    String(request.locale || '').trim().toLowerCase(),
+    String(request.locale || '')
+      .trim()
+      .toLowerCase(),
   ]);
 }
 
@@ -1488,11 +1683,15 @@ export async function recommendIconsForTask({
 }) {
   const normalizedResponseMode = normalizeResponseMode(responseMode);
   const taskQueryFrame = includeQueryFrame ? buildSearchQueryFrame(task, { locale }) : null;
-  const groupedVariantLimit = typeof searchIconsForQueries === 'function'
-    ? Math.max(1, Math.floor(MAX_GROUPED_RECOMMENDATION_QUERIES / Math.max(1, slots.length)))
-    : null;
+  const groupedVariantLimit =
+    typeof searchIconsForQueries === 'function'
+      ? Math.max(1, Math.floor(MAX_GROUPED_RECOMMENDATION_QUERIES / Math.max(1, slots.length)))
+      : null;
   const slotPlans = slots.map((slotLabel, slotIndex) => {
-    const interpretationFrame = buildSearchQueryFrame(slotLabel, { locale, context: task });
+    const interpretationFrame = buildSearchQueryFrame(slotLabel, {
+      locale,
+      context: task,
+    });
     if (interpretationFrame.needs_clarification) {
       return {
         slotIndex,
@@ -1511,9 +1710,8 @@ export async function recommendIconsForTask({
       ...buildDirectLocalizedIntentTerms(slotLabel),
     ]);
     const defaultVariantLimit = getRecommendationQueryVariantLimit(locale);
-    const queryVariantLimit = groupedVariantLimit === null
-      ? defaultVariantLimit
-      : Math.min(defaultVariantLimit, groupedVariantLimit);
+    const queryVariantLimit =
+      groupedVariantLimit === null ? defaultVariantLimit : Math.min(defaultVariantLimit, groupedVariantLimit);
     const queryVariants = dedupe([
       ...buildBrandLogoQueryVariants(task, slotLabel, library),
       ...buildSlotQueryVariants(task, slotLabel, locale),
@@ -1552,7 +1750,11 @@ export async function recommendIconsForTask({
           groupedRequestIndexes.set(requestKey, requestIndex);
           groupedRequests.push(request);
         }
-        groupedLocations.push({ slotIndex: plan.slotIndex, variantIndex, requestIndex });
+        groupedLocations.push({
+          slotIndex: plan.slotIndex,
+          variantIndex,
+          requestIndex,
+        });
       }
     }
 
@@ -1606,21 +1808,22 @@ export async function recommendIconsForTask({
 
     const pooledIcons = [];
     const seen = new Set();
-    const resultGroups = typeof searchIconsForQueries === 'function'
-      ? groupedResultsBySlot.get(plan.slotIndex)
-      : await mapWithConcurrency(queryVariants, SLOT_QUERY_CONCURRENCY, async (queryVariant) => {
-        try {
-          return await searchIconsForQuery({
-            query: queryVariant,
-            library,
-            style,
-            limit: Math.max(limitPerSlot * 5, 10),
-            locale,
+    const resultGroups =
+      typeof searchIconsForQueries === 'function'
+        ? groupedResultsBySlot.get(plan.slotIndex)
+        : await mapWithConcurrency(queryVariants, SLOT_QUERY_CONCURRENCY, async (queryVariant) => {
+            try {
+              return await searchIconsForQuery({
+                query: queryVariant,
+                library,
+                style,
+                limit: Math.max(limitPerSlot * 5, 10),
+                locale,
+              });
+            } catch {
+              return [];
+            }
           });
-        } catch {
-          return [];
-        }
-      });
 
     for (const results of resultGroups) {
       for (const icon of results) {
@@ -1641,7 +1844,13 @@ export async function recommendIconsForTask({
         const semanticBonus = semanticRecord ? 6 : 0;
         const variantPenalty = getVariantPenalty(icon, requestedVariantTerms);
         const brandPenalty = getBrandPenalty(icon, requestedVariantTerms);
-        const slotPreferenceBonus = getSlotPreferenceBonus(icon, slotLabel, intentTerms, library, requestedVariantTerms);
+        const slotPreferenceBonus = getSlotPreferenceBonus(
+          icon,
+          slotLabel,
+          intentTerms,
+          library,
+          requestedVariantTerms,
+        );
         const intentProfile = buildSearchIntentProfile(`${slotLabel} ${task}`);
         const intentAdjustment = getIntentCandidateAdjustment(icon, intentProfile);
 
@@ -1717,10 +1926,10 @@ export async function recommendIconsForTask({
       return left.index - right.index;
     });
     const selectedEntries = [];
-    const primaryEntry = sorted.find((entry) => (
-      !isNoisyAlternative(entry) &&
-      !usedIconKeys.has(`${entry.icon.lib}:${entry.icon.id}`)
-    )) || sorted.find((entry) => !isNoisyAlternative(entry)) || sorted[0];
+    const primaryEntry =
+      sorted.find((entry) => !isNoisyAlternative(entry) && !usedIconKeys.has(`${entry.icon.lib}:${entry.icon.id}`)) ||
+      sorted.find((entry) => !isNoisyAlternative(entry)) ||
+      sorted[0];
     if (primaryEntry) {
       selectedEntries.push(primaryEntry);
     }
@@ -1735,16 +1944,19 @@ export async function recommendIconsForTask({
     for (const [candidateIndex, entry] of selectedEntries.entries()) {
       const iconResult = await buildIconResult(entry.icon, { style });
       if (!iconResult?.svg) continue;
-      const includeSvg = normalizedResponseMode === 'full' || (normalizedResponseMode === 'assets' && candidateIndex === 0);
-      preparedCandidates.push(buildCandidatePayload(
-        slotResult.slot,
-        iconResult,
-        entry.semanticRecord,
-        slotResult.intentTerms,
-        normalizedResponseMode,
-        includeSvg,
-        normalizedResponseMode !== 'plan' || candidateIndex === 0
-      ));
+      const includeSvg =
+        normalizedResponseMode === 'full' || (normalizedResponseMode === 'assets' && candidateIndex === 0);
+      preparedCandidates.push(
+        buildCandidatePayload(
+          slotResult.slot,
+          iconResult,
+          entry.semanticRecord,
+          slotResult.intentTerms,
+          normalizedResponseMode,
+          includeSvg,
+          normalizedResponseMode !== 'plan' || candidateIndex === 0,
+        ),
+      );
       preparedEntries.push(entry);
     }
     const chosen = preparedEntries[0] || primaryEntry || null;
@@ -1776,9 +1988,7 @@ export async function recommendIconsForTask({
   const lowConfidenceSlots = slotResults
     .filter((slot) => !slot.recommended || slot.confidence?.level === 'low')
     .map((slot) => slot.slot);
-  const clarificationSlots = slotResults
-    .filter((slot) => slot.needs_clarification)
-    .map((slot) => slot.slot);
+  const clarificationSlots = slotResults.filter((slot) => slot.needs_clarification).map((slot) => slot.slot);
   const allSlotsResolved = slotResults.every((slot) => Boolean(slot.recommended) && !slot.needs_clarification);
 
   const payload = {

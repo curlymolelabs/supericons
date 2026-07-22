@@ -1,7 +1,4 @@
-import {
-  GENERATED_INTENT_GRAPH_GROUPS,
-  GENERATED_INTENT_GRAPH_PHRASES,
-} from './generated-search-intent-graph.js';
+import { GENERATED_INTENT_GRAPH_GROUPS, GENERATED_INTENT_GRAPH_PHRASES } from './generated-search-intent-graph.js';
 import { getSearchInterpretationPlan } from './search-ranking-policy.js';
 
 const LOGO_INTENT_TOKENS = new Set(['logo', 'logos', 'brand', 'brands', 'mark', 'marks']);
@@ -93,7 +90,10 @@ function getMatchedPhraseEntries(normalizedQuery) {
     matches.push(entry);
   }
 
-  return matches;
+  const suppressedGroupIds = new Set(matches.flatMap((match) => groupsById.get(match.groupId)?.suppressGroups || []));
+  return matches
+    .filter((match) => !suppressedGroupIds.has(match.groupId))
+    .sort((left, right) => right.normalized.length - left.normalized.length);
 }
 
 function resolveLanguage(matches, fallbackLanguage) {
@@ -114,10 +114,10 @@ export function buildSearchQueryFrame(query, options = {}) {
   const tokens = tokenizeQueryFrameText(normalizedQuery);
   const matchedPhrases = getMatchedPhraseEntries(normalizedQuery);
   const matchedGroupIds = uniqueRaw(matchedPhrases.map((entry) => entry.groupId));
-  const matchedGroups = matchedGroupIds
-    .map((id) => groupsById.get(id))
-    .filter(Boolean);
-  const interpretationPlan = getSearchInterpretationPlan(query, { context: options.context });
+  const matchedGroups = matchedGroupIds.map((id) => groupsById.get(id)).filter(Boolean);
+  const interpretationPlan = getSearchInterpretationPlan(query, {
+    context: options.context,
+  });
   const interpretations = (interpretationPlan?.families || []).map((family) => ({
     family_id: family.id,
     label: family.label,
@@ -163,11 +163,15 @@ export function buildSearchQueryFrame(query, options = {}) {
         phrase: match.phrase,
         locale: match.locale,
       })),
-      ...(interpretationPlan ? [{
-        type: 'ranking_policy',
-        policy_id: interpretationPlan.policy_id,
-        trigger: interpretationPlan.trigger,
-      }] : []),
+      ...(interpretationPlan
+        ? [
+            {
+              type: 'ranking_policy',
+              policy_id: interpretationPlan.policy_id,
+              trigger: interpretationPlan.trigger,
+            },
+          ]
+        : []),
     ],
     is_brand_logo_query: hasLogoIntent,
     matched: matchedGroups.length > 0 || hasLogoIntent || Boolean(interpretationPlan),

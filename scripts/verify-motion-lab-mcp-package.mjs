@@ -22,6 +22,7 @@ const expectedFiles = [
   'THIRD_PARTY_NOTICES.md',
   'THIRD_PARTY_PROVENANCE.json',
   'auth.js',
+  'controlled-run-auth.js',
   'converter.js',
   'generated/mcp-output-locales.json',
   'generated/motion-lab-baseline.json',
