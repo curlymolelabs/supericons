@@ -46,6 +46,8 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
 | `D-032` | Run Railway recommendations from the in-process index with one controlled hosted fallback | Accepted | Hosted MCP architecture and performance |
 | `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Accepted | Surface alignment and stable release |
+| `D-034` | Expand broad meaning coverage through reviewed deterministic groups and measured language priorities | Accepted | Meaning coverage and localization |
+| `D-035` | Put stable Search v2 in evidence-driven maintenance mode and keep adaptive retrieval paused | Accepted | Maintenance, measurement, and future architecture |
 
 ## Decision records
 
@@ -511,6 +513,27 @@ Alternatives rejected or deferred: returning a generic icon for every input; arb
 Superseded decisions: none. `D-033` remains the release synchronization rule, and `D-030` remains the performance and promotion boundary.
 
 Specification change: version 1.18 adds `FR-50` and the broad deterministic meaning-coverage contract.
+
+### D-035: Search maintenance mode and adaptive restart gate
+
+Date: 2026-07-22
+Status: Accepted
+
+Decision: version 0.4.20 closes the active Search v2 coverage push and becomes the deterministic maintenance baseline. Normal product development moves back to the controlling SI v2 roadmap. Search remains monitored and may receive small reviewed meaning, ranking, localization, or metadata corrections when production evidence shows a repeated useful gap. Unbounded dictionary expansion is not a maintenance strategy.
+
+The next bounded search experiment, when scheduled, is an agent-cooperative zero-result contract and a privacy-safe recovery scorecard. The contract may add suggested visual queries, a recommended tool, a single-retry limit, and a clear next step. The scorecard must distinguish genuine top-level agent queries from internal recommendation variants, icon lookups, scripted checks, noise, and unsupported text. It measures whether the same session recovers within the next two tool calls, how long recovery takes, which client and locale are involved, and whether reviewed samples show wrong confident results. This work is not a prerequisite for the released 0.4.20 baseline and is not yet implemented.
+
+Embedding phases `P3` through `P6`, a request-time query encoder, and an internal LLM or agent fallback remain paused. They resume only through a new accepted decision after the recovery scorecard shows a persistent meaningful gap that guided deterministic retries do not close. Any proposal must compare deterministic suggestions, caller-agent reformulation, compact multilingual retrieval, and a bounded model-assisted reformulator against the same evidence set. It must define privacy, latency, cost, abuse, caching, evaluation, and rollback boundaries before implementation.
+
+Reason: exhaustive phrase storage is not the limiting factor. The larger risks are maintenance burden, ambiguous mappings, ranking collisions, duplicated reasoning when the caller is already an agent, and a new variable-cost network dependency. The stable release already supplies deterministic local-first search, context-aware recommendation, clarification, structured errors, broad English meanings, and maintained multilingual coverage. Evidence should now decide whether another search architecture is justified.
+
+Evidence required for reconsideration: a bounded recovery report with stable denominators and known telemetry limits; a reviewed sample of unresolved meaningful queries; session-level recovery results; client and locale segmentation; false-relevance review; and an explicit comparison showing why the existing deterministic and caller-agent paths are insufficient.
+
+Alternatives rejected or deferred: continuing manual coverage as a primary workstream; promising an icon for every possible word; starting embeddings merely because the release is complete; adding a DeepSeek or other model call to every search; surprising the local npm package with a new network dependency; relying on one capable agent session as proof that every client recovers.
+
+Superseded decisions: none. `D-021` remains active and is reaffirmed. `D-034` governs deterministic coverage maintenance. `D-033` governs synchronized releases.
+
+Specification change: version 1.19 adds `FR-51` and the evidence-driven maintenance and adaptive-restart boundary.
 
 ## Adding or superseding a decision
 
