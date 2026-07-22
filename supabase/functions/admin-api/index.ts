@@ -106,6 +106,8 @@ const QUERY_EXPORT_MAX_ROWS = 2000;
 const QUERY_REVIEW_LOOKUP_CHUNK_SIZE = 10;
 const QUERY_QUEUE_CACHE_TTL_MS = 30_000;
 const QUERY_QUEUE_CACHE_MAX_ENTRIES = 64;
+const SEARCH_EVENT_SNAPSHOT_CACHE_TTL_MS = 120_000;
+const SEARCH_EVENT_SNAPSHOT_CACHE_MAX_ENTRIES = 1;
 const LOW_RESULT_THRESHOLD = 3;
 const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
@@ -141,6 +143,10 @@ const queryQueueCache = createBoundedAsyncCache({
 const v2DashboardCache = createBoundedAsyncCache({
   ttlMs: 30_000,
   maxEntries: 64,
+});
+const searchEventSnapshotCache = createBoundedAsyncCache({
+  ttlMs: SEARCH_EVENT_SNAPSHOT_CACHE_TTL_MS,
+  maxEntries: SEARCH_EVENT_SNAPSHOT_CACHE_MAX_ENTRIES,
 });
 
 function getAllowedOrigins() {
@@ -1420,6 +1426,28 @@ function buildDashboardV2CacheKey(endpoint: string, url: URL) {
   return `${endpoint}?${new URLSearchParams(params)}`;
 }
 
+function buildSearchEventSnapshotCacheKey(
+  url: URL,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const params = new URLSearchParams([...url.searchParams.entries()]
+    .filter(([key]) => !['_ts', 'page', 'page_size', 'snapshot_id'].includes(key))
+    .sort(([leftKey, leftValue], [rightKey, rightValue]) => (
+      leftKey.localeCompare(rightKey) || leftValue.localeCompare(rightValue)
+    )));
+  params.set('data_cutoff', filters.data_cutoff);
+  params.sort();
+  return `search-events-snapshot?${params}`;
+}
+
+async function buildSearchEventSnapshotId(snapshotKey: string) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(snapshotKey));
+  return [...new Uint8Array(digest)]
+    .map((value) => value.toString(16).padStart(2, '0'))
+    .join('')
+    .slice(0, 24);
+}
+
 function dashboardV2EnvironmentFilter(filters: ReturnType<typeof parseDashboardV2Filters>) {
   return filters.include_test ? 'all' : 'live';
 }
@@ -1521,9 +1549,7 @@ async function fetchDashboardV2IdentityTelemetry(
         includeCount: boolean;
       }) => {
         const source = adminClient.from('search_request_audit');
-        let query = includeCount
-          ? source.select(auditSelect, { count: 'exact' })
-          : source.select(auditSelect);
+        let query = source.select(auditSelect);
         query = query
           .neq('source', 'trap')
           .order('created_at', { ascending: false })
@@ -1538,7 +1564,7 @@ async function fetchDashboardV2IdentityTelemetry(
         if (error) throw error;
         return {
           rows: (data || []) as Array<Record<string, unknown>>,
-          total: includeCount ? count : null,
+          total: null,
         };
       }, {
         maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
@@ -1564,9 +1590,7 @@ async function fetchDashboardV2IdentityTelemetry(
         includeCount: boolean;
       }) => {
         const source = adminClient.from('mcp_usage_events');
-        let query = includeCount
-          ? source.select(usageSelect, { count: 'exact' })
-          : source.select(usageSelect);
+        let query = source.select(usageSelect);
         query = query
           .in('event_type', ['search_outcome', 'tool_call'])
           .order('created_at', { ascending: false })
@@ -1581,7 +1605,7 @@ async function fetchDashboardV2IdentityTelemetry(
         if (error) throw error;
         return {
           rows: (data || []) as Array<Record<string, unknown>>,
-          total: includeCount ? count : null,
+          total: null,
         };
       }, {
         maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
@@ -2195,6 +2219,7 @@ async function handleDashboardV2IconRequestReview(
     throw error;
   }
   v2DashboardCache.clear();
+  searchEventSnapshotCache.clear();
   return jsonResponse(req, { success: true, review: data });
 }
 
@@ -2412,42 +2437,63 @@ async function buildDashboardV2SearchEventsPayload(
   const filters = parseDashboardV2Filters(url);
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
-  const telemetry = await fetchDashboardV2IdentityTelemetry(adminClient, filters);
-  const linkedRows = await addPrivacySafeRootRequestPrefixes(telemetry.rows);
-  const sortedRows = [...linkedRows].sort((left, right) => (
-    String(right.created_at || '').localeCompare(String(left.created_at || ''))
-    || String(right.id || '').localeCompare(String(left.id || ''))
-  ));
-  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const snapshotKey = buildSearchEventSnapshotCacheKey(url, filters);
+  const snapshotId = await buildSearchEventSnapshotId(snapshotKey);
+  const snapshot = await searchEventSnapshotCache.getOrCreate(snapshotKey, async () => {
+    const snapshotStartedAt = Date.now();
+    const telemetry = await fetchDashboardV2IdentityTelemetry(adminClient, filters);
+    const linkedRows = await addPrivacySafeRootRequestPrefixes(telemetry.rows);
+    const sortedRows = [...linkedRows].sort((left, right) => (
+      String(right.created_at || '').localeCompare(String(left.created_at || ''))
+      || String(right.id || '').localeCompare(String(left.id || ''))
+    ));
+    return {
+      id: snapshotId,
+      generated_at: new Date().toISOString(),
+      generation_ms: Date.now() - snapshotStartedAt,
+      events: compactDashboardV2EventRows(sortedRows),
+      complete: !telemetry.truncated,
+      field_coverage: {
+        locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.locale)),
+        root_request_identifier: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.root_request_hash_prefix)),
+        returned_icon_refs: dashboardV2FieldCoverage(sortedRows, (row) => row.returned_icon_refs_recorded === true),
+        latency_ms: dashboardV2FieldCoverage(sortedRows, (row) => row.latency_ms !== null && row.latency_ms !== undefined),
+        server_version: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.mcp_server_version)),
+        server_build: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.server_build)),
+      },
+    };
+  });
+  const requestedSnapshotId = String(url.searchParams.get('snapshot_id') || '').trim();
+  const snapshotMatchesRequest = !requestedSnapshotId || requestedSnapshotId === snapshot.id;
+  const complete = snapshot.complete === true;
+  const exportAvailable = complete && snapshotMatchesRequest;
+  const pageCount = Math.max(1, Math.ceil(snapshot.events.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
-  const events = compactDashboardV2EventRows(sortedRows.slice(start, start + pageSize));
-  const complete = !telemetry.truncated;
+  const events = snapshot.events.slice(start, start + pageSize);
 
   return {
     events,
     events_complete: complete,
-    events_export_available: complete,
-    events_notice: complete
-      ? null
-      : `Showing the newest event details. This view can load up to ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')} records from each search log. Older matching events may be omitted.`,
-    events_export_unavailable_reason: complete
-      ? null
-      : `Complete event export exceeds the ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')}-record limit for each search log. Choose a narrower date range or venue before exporting.`,
+    events_export_available: exportAvailable,
+    events_notice: !complete
+      ? `Showing the newest event details. This view can load up to ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')} records from each search log. Older matching events may be omitted.`
+      : snapshotMatchesRequest
+        ? null
+        : 'The export snapshot expired while pages were loading. Start the export again.',
+    events_export_unavailable_reason: !complete
+      ? `Complete event export exceeds the ${V2_MAX_IDENTITY_ROWS_PER_SOURCE.toLocaleString('en-US')}-record limit for each search log. Choose a narrower date range or venue before exporting.`
+      : snapshotMatchesRequest
+        ? null
+        : 'The export snapshot expired while pages were loading. Start the export again.',
+    snapshot_id: snapshot.id,
     pagination: {
       page: currentPage,
       page_size: pageSize,
-      total: sortedRows.length,
+      total: snapshot.events.length,
       page_count: pageCount,
     },
-    field_coverage: {
-      locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.locale)),
-      root_request_identifier: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.root_request_hash_prefix)),
-      returned_icon_refs: dashboardV2FieldCoverage(sortedRows, (row) => row.returned_icon_refs_recorded === true),
-      latency_ms: dashboardV2FieldCoverage(sortedRows, (row) => row.latency_ms !== null && row.latency_ms !== undefined),
-      server_version: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.mcp_server_version)),
-      server_build: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.server_build)),
-    },
+    field_coverage: snapshot.field_coverage,
     definitions: {
       grain: 'One telemetry event after exact key-based source merging. A tool event and a lower-level hosted audit can remain separate when older rows have no shared key.',
       primary_metric_source: 'Use mcp_usage_events for top-level MCP tool metrics. Treat search_request_audit rows as hosted search pipeline diagnostics.',
@@ -2463,8 +2509,13 @@ async function buildDashboardV2SearchEventsPayload(
         event_rows_complete: complete,
       },
       event_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
-      event_rows_truncated: telemetry.truncated,
+      event_rows_truncated: !complete,
       raw_identifiers_exposed: false,
+      snapshot_id: snapshot.id,
+      snapshot_matches_request: snapshotMatchesRequest,
+      snapshot_generated_at: snapshot.generated_at,
+      snapshot_generation_ms: snapshot.generation_ms,
+      snapshot_ttl_ms: SEARCH_EVENT_SNAPSHOT_CACHE_TTL_MS,
     }),
   };
 }
@@ -2681,6 +2732,7 @@ async function handlePhaseARollupRefresh(req: Request, adminClient: SupabaseClie
   const payload = await ensureCompletedDayRollups(adminClient);
   queryQueueCache.clear();
   v2DashboardCache.clear();
+  searchEventSnapshotCache.clear();
   return jsonResponse(req, payload);
 }
 
@@ -5075,6 +5127,7 @@ async function handleIntelligenceSearchReview(req: Request, adminClient: Supabas
     const review = await upsertQueryReview(adminClient, body);
     queryQueueCache.clear();
     v2DashboardCache.clear();
+    searchEventSnapshotCache.clear();
     return jsonResponse(req, {
       success: true,
       review,

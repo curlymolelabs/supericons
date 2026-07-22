@@ -2367,6 +2367,10 @@ async function fetchAllSearchEvents() {
     throw new Error(first.events_export_unavailable_reason || 'Complete event export is not available for this period. Narrow the filters and try again.');
   }
   const pageCount = Math.max(1, number(first.pagination?.page_count) || 1);
+  const snapshotId = String(first.snapshot_id || '').trim();
+  if (pageCount > 1 && !snapshotId) {
+    throw new Error('The event export could not establish a stable snapshot. Start the export again.');
+  }
   const events = [...normalizeList(first.events)];
   for (let firstPage = 2; firstPage <= pageCount; firstPage += 4) {
     const pages = Array.from(
@@ -2376,7 +2380,14 @@ async function fetchAllSearchEvents() {
     const batch = await Promise.all(pages.map(async (page) => {
       const pageParams = new URLSearchParams(params);
       pageParams.set('page', String(page));
+      if (snapshotId) pageParams.set('snapshot_id', snapshotId);
       const payload = await apiRequest(`/v2/search/events?${pageParams}`);
+      if (payload.events_export_available === false) {
+        throw new Error(payload.events_export_unavailable_reason || 'The event export snapshot expired. Start the export again.');
+      }
+      if (snapshotId && String(payload.snapshot_id || '').trim() !== snapshotId) {
+        throw new Error('The event export changed while pages were loading. Start the export again.');
+      }
       return normalizeList(payload.events);
     }));
     events.push(...batch.flat());
@@ -2385,6 +2396,7 @@ async function fetchAllSearchEvents() {
     events,
     events_complete: first.events_complete === true,
     events_export_available: first.events_export_available !== false,
+    snapshot_id: snapshotId || null,
     field_coverage: first.field_coverage || {},
     definitions: first.definitions || {},
     meta: first.meta || {},

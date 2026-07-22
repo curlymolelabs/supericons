@@ -77,7 +77,7 @@ assert.equal(rows[1].traffic_class, 'controlled_test');
 assert.equal(rows[1].latency_ms, null);
 assert.equal(rows[2].outcome, 'unknown');
 assert.equal(rows[2].result_count, null);
-assert.equal(rows[2].event_identifier, null);
+assert.equal(rows[2].event_identifier, 'mcp_usage_events:103');
 
 for (const row of rows) {
   for (const forbidden of ['request_id', 'session_hash', 'api_key_hash', 'user_id']) {

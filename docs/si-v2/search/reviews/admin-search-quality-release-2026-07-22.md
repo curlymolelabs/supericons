@@ -11,8 +11,9 @@ The implementation meets the required acceptance criteria for accurate exact-loo
 1. Supabase `admin-api`: adds the event-detail endpoint, correct lookup outcome aggregation, privacy-safe root request linking, complete-export metadata, and constant-time secret comparison.
 2. Railway hosted MCP: records future returned icon references, build and execution metadata, traffic class, privacy-safe root request hash, and structured `icon_not_found` errors.
 3. Local admin dashboard: adds summary and event CSV and JSON exports, clear metric definitions, stronger CSV safety, and an opaque local session cookie.
+4. Database correction: classifies a bounded set of high-confidence repository validation workloads as controlled tests. The selection is limited by tool, channel, client family, date, and known validation tasks.
 
-No database migration is required. Existing JSON metadata remains backward compatible.
+The database correction is additive. It updates traffic labels in existing JSON metadata and does not delete events or change the public schema.
 
 ## Runtime assumptions
 
@@ -27,10 +28,12 @@ No database migration is required. Existing JSON metadata remains backward compa
 - Railway exposes deployment status and the hosted MCP health endpoint.
 - The event export exposes field coverage and completeness.
 - The scorecard reports data-quality failures, top-level tool outcomes, diagnostic lower-level rows, latency, explicit locale coverage, and traffic classification.
+- A short-lived event snapshot keeps all CSV and JSON pages consistent while avoiding repeated full-history database work.
+- The scorecard reports error codes, channel and version breakdowns, per-source field coverage, and suspicious repeated workloads.
 
 ## Residual risk
 
-- Old rows remain incomplete where the original telemetry omitted a field.
+- Old rows remain incomplete where the original telemetry omitted a field. Missing values stay explicit.
 - Recommendation completion does not measure relevance.
 - The deployed MCP dependency scan contains a moderate Windows-only static-file advisory in a code path this Linux service does not use. This risk is accepted for this release and should be removed when the MCP SDK dependency range supports a safe compatible update.
 - The rollback source is verified by commit identity, but the new release's rollback path is exercised only if a live smoke check fails.
@@ -51,11 +54,11 @@ No database migration is required. Existing JSON metadata remains backward compa
 - Supabase: deploy `supabase/functions/admin-api` from the pre-release commit, then repeat the unauthenticated and authenticated smoke checks.
 - Railway: redeploy the pre-release commit's `mcp` directory, then verify the deployment status and health endpoint.
 - Local dashboard: revert the merge commit if the local browser flow fails after integration.
-- There is no data rollback because this release does not change the database schema or rewrite stored rows.
+- Database correction: remove `metadata.traffic_class` from rows labeled `controlled-run:historical-validation`, then set that cohort value back to null. Existing founder labels remain unchanged.
 
 ## Worst credible failure in the first 24 hours
 
-An event-detail request could be slow for a broad period or return an incomplete selection. The API limits each source, the browser paginates, and exports fail closed when completeness cannot be proven. Operators can immediately choose a shorter period while the previous API source is redeployed if needed.
+An event-detail request could be slow for a broad period or return an inconsistent multi-page selection. The API builds one bounded short-lived snapshot, pages from that snapshot, limits each source, and makes exports fail closed when completeness or snapshot consistency cannot be proven.
 
 ## Rollout result
 

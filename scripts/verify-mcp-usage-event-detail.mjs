@@ -5,6 +5,7 @@ import {
   classifyMcpTraffic,
   extractReturnedIconRefs,
 } from '../mcp/usage-event-detail.js';
+import { logMcpSearchAttempt } from '../mcp/telemetry.js';
 
 assert.deepEqual(extractReturnedIconRefs({
   structuredContent: {
@@ -47,6 +48,25 @@ assert.equal(classifyMcpTraffic({ environment: 'production', channel: 'internal_
 assert.equal(classifyMcpTraffic({ environment: 'preview', channel: 'hosted_mcp' }), 'preview');
 assert.equal(classifyMcpTraffic({ environment: 'local', channel: 'local_mcp' }), 'local');
 assert.equal(classifyMcpTraffic({ environment: 'production', beta_cohort: 'founder_controlled' }), 'named_cohort');
+assert.equal(classifyMcpTraffic({ environment: 'production', beta_cohort: 'controlled-run:load_test' }), 'controlled_test');
+assert.equal(classifyMcpTraffic({ environment: 'production', beta_cohort: 'deterministic-v2-beta:founder_controlled' }), 'controlled_test');
+
+const originalFetch = globalThis.fetch;
+const originalTelemetryFlag = process.env.SUPERICONS_MCP_TELEMETRY_ENABLED;
+let telemetryRequests = 0;
+try {
+  globalThis.fetch = async () => {
+    telemetryRequests += 1;
+    return new Response(null, { status: 204 });
+  };
+  process.env.SUPERICONS_MCP_TELEMETRY_ENABLED = '0';
+  await logMcpSearchAttempt({ query: 'disabled telemetry probe', resultCount: 1 });
+  assert.equal(telemetryRequests, 0);
+} finally {
+  globalThis.fetch = originalFetch;
+  if (originalTelemetryFlag === undefined) delete process.env.SUPERICONS_MCP_TELEMETRY_ENABLED;
+  else process.env.SUPERICONS_MCP_TELEMETRY_ENABLED = originalTelemetryFlag;
+}
 
 const server = await readFile('mcp/remote-server.js', 'utf8');
 for (const field of [
@@ -64,4 +84,5 @@ console.log(JSON.stringify({
   returned_ref_paths: ['get_icon', 'search_icons', 'recommend_icons'],
   returned_ref_limit: 100,
   traffic_classes: ['controlled_test', 'preview', 'local', 'named_cohort', 'unclassified_live'],
+  legacy_disable_flag_respected: true,
 }, null, 2));

@@ -7,6 +7,7 @@ import {
   buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
+  compactDashboardV2EventRows,
   compactDashboardV2QueryRows,
   fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
@@ -19,6 +20,19 @@ import {
 } from '../lib/admin-dashboard-v2.js';
 
 const now = new Date('2026-07-17T12:00:00.000Z');
+
+{
+  const [controlledEvent, auditEvent] = compactDashboardV2EventRows([{
+    event_id: 'event-controlled',
+    beta_cohort: 'deterministic-v2-beta:founder_controlled',
+    environment: 'production',
+    channel: 'local_mcp',
+  }, {
+    id: 'search_request_audit:42',
+  }]);
+  assert.equal(controlledEvent.traffic_class, 'controlled_test');
+  assert.equal(auditEvent.event_identifier, 'search_request_audit:42');
+}
 
 {
   const sharedContext = {

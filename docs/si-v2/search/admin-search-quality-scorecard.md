@@ -1,6 +1,6 @@
 # Admin search quality scorecard
 
-Status: Implemented locally. Live evidence is required after the admin API and hosted MCP telemetry changes are deployed.
+Status: Implemented and exercised against a complete seven-day live event snapshot. Deployment evidence is recorded in the paired release review.
 
 ## Decision supported
 
@@ -15,6 +15,7 @@ Use the Search history Events JSON download. Each row is one telemetry event aft
 - Controlled tests, preview traffic, and local traffic are reported separately from unclassified live traffic.
 - Unclassified live traffic is not called organic.
 - Missing values remain null. They are not changed to zero.
+- Event identifiers are stable, source-prefixed values. Field coverage is also reported per source so a source that cannot record a field does not hide the coverage of another source.
 
 This source separation prevents a hosted fallback from being counted once as a tool call and again as a lower-level hosted search.
 
@@ -29,6 +30,8 @@ This source separation prevents a hosted fallback from being counted once as a t
 | Recommendation clarification rate | Top-level live recommendations with outcome `clarification`, divided by all top-level live recommendation events | Check whether request context is sufficient | Keep separate from errors and zeros |
 | Exact lookup not-found rate | Top-level live `get_icon` events with outcome `not_found`, divided by all top-level live lookups | Find missing IDs, aliases, and brand coverage | Keep separate from direct-search zeros and system errors |
 | Field coverage | Recorded values divided by all selected events for each optional field | Decide whether a segmented analysis is supportable | A low coverage rate blocks the affected claim, not every operational count |
+| Error-code coverage | Recorded error codes divided by error events, reported by source and channel | Separate known product failures from unclassified failures | Unrecorded error codes remain visible as `unrecorded` |
+| Channel breakdown | Top-level outcomes, client families, versions, and error codes grouped by channel | Detect a venue-specific failure or test contamination | The combined KPI remains blocked when repeated unlabelled workload patterns are present |
 
 Internal recommendation variants are reported only as a hosted search pipeline diagnostic. They do not represent a final user-visible failure.
 
@@ -53,8 +56,9 @@ npm run analyze:admin-search-quality -- --input "C:\path\to\supericons-query-eve
 
 4. Confirm `data_quality.trustworthy_for_operational_counts` is true before using the operational rates.
 5. Review every `data_quality.blockers` item. A partial export, duplicate event identifier, invalid outcome, contradictory count, or future timestamp blocks the affected report.
-6. Review primary metrics, then use hosted pipeline, exact lookup, locale, and field-coverage diagnostics to choose the next bounded fix.
-7. Record relevance judgments separately before making any relevance or multilingual parity claim.
+6. Treat a high-volume repeated workload warning as a traffic-labeling defect. Do not call those rows organic or use the combined rate until the workload is explicitly classified.
+7. Review primary metrics, then use hosted pipeline, exact lookup, channel, error-code, locale, and per-source field-coverage diagnostics to choose the next bounded fix.
+8. Record relevance judgments separately before making any relevance or multilingual parity claim.
 
 ## Automated verification
 
@@ -64,4 +68,4 @@ Run:
 npm run verify:admin-search-quality-scorecard
 ```
 
-The verifier checks traffic separation, source separation, fallback double-count protection, exact lookup classification, locale handling, incomplete-export blocking, duplicate identifiers, and unsupported claim limits.
+The verifier checks traffic separation, source separation, fallback double-count protection, exact lookup classification, error-code and channel breakdowns, repeated-workload detection, locale handling, incomplete-export blocking, duplicate identifiers, and unsupported claim limits.

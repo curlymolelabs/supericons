@@ -30,11 +30,18 @@ export function getHostedSearchFunctionNameForTool(version, toolName = 'search_i
   return STABLE_HOSTED_SEARCH_FUNCTION;
 }
 
-function getControlledRunLabel() {
+export function getControlledRunLabel() {
   const raw = String(process.env.SUPERICONS_CONTROLLED_RUN_LABEL || '').trim().toLowerCase();
   if (!raw) return null;
   const normalized = raw.replace(/[^a-z0-9_-]/g, '').slice(0, 32);
   return normalized || null;
+}
+
+export function isControlledRunCohort(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+  return normalized.startsWith('controlled-run:')
+    || normalized.includes(':founder_controlled')
+    || normalized.includes(':controlled_');
 }
 
 export function getBetaCohortForTool(version, toolName = 'search_icons') {
@@ -42,11 +49,11 @@ export function getBetaCohortForTool(version, toolName = 'search_icons') {
   const cohort = isDeterministicBetaVersion(version) && normalizedToolName === 'search_icons'
     ? DETERMINISTIC_BETA_COHORT
     : null;
-  if (!cohort) return null;
   // Controlled runs (owner validation scripts, reliability workloads) label
-  // their cohort so telemetry stays distinguishable from organic beta use.
+  // every tool so telemetry stays separate from user activity.
   const label = getControlledRunLabel();
-  return label ? `${cohort}:${label}` : cohort;
+  if (label) return cohort ? `${cohort}:${label}` : `controlled-run:${label}`;
+  return cohort;
 }
 
 export function getBetaCohortForRequest(
@@ -54,6 +61,8 @@ export function getBetaCohortForRequest(
   toolName = 'search_icons',
   { locale = null, query = '' } = {},
 ) {
+  const controlledRunCohort = getControlledRunLabel();
+  if (controlledRunCohort) return `controlled-run:${controlledRunCohort}`;
   return shouldUseLocalFirstBetaSearch(version, { toolName, query, locale })
     ? getBetaCohortForTool(version, toolName)
     : null;

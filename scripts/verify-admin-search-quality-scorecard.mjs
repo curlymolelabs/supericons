@@ -109,6 +109,42 @@ assert.equal(scorecard.diagnostics.explicit_locale_direct_search.ja.attempts, 2)
 assert.equal(scorecard.diagnostics.explicit_locale_direct_search.de.attempts, 0);
 assert.equal(scorecard.claim_limits.multilingual_parity, 'not_claimed');
 assert.equal(scorecard.data_quality.trustworthy_for_operational_counts, true);
+assert.equal(scorecard.schema_version, 2);
+assert.equal(scorecard.data_quality.field_coverage_by_source.mcp_usage_events.rows, 5);
+assert.equal(scorecard.data_quality.field_coverage_by_source.search_request_audit.rows, 2);
+assert.equal(scorecard.diagnostics.top_level_tool_events_by_channel.unknown.attempts, 4);
+
+const errorScorecard = buildAdminSearchQualityScorecard({
+  events: [{
+    ...live,
+    event_identifier: 'recommendation-error',
+    recorded_at: '2026-07-20T11:00:00Z',
+    tool_name: 'recommend_icons',
+    query_origin: 'agent_query',
+    outcome: 'error',
+    error_code: 'recommendation_timeout',
+    channel: 'hosted_mcp',
+    client_family: 'chatgpt',
+  }],
+});
+assert.equal(errorScorecard.primary_metrics.recommendation.error_codes.recommendation_timeout, 1);
+assert.equal(errorScorecard.diagnostics.top_level_tool_events_by_channel.hosted_mcp.error_codes.recommendation_timeout, 1);
+
+const repeatedWorkload = buildAdminSearchQualityScorecard({
+  events: Array.from({ length: 100 }, (_, index) => ({
+    ...live,
+    event_identifier: `load-${index}`,
+    recorded_at: '2026-07-20T12:00:00Z',
+    tool_name: 'recommend_icons',
+    query_origin: 'agent_query',
+    query: 'Repeated load test task',
+    outcome: 'success',
+    channel: 'local_mcp',
+    searcher_identifier: `session:${index}`,
+  })),
+});
+assert.equal(repeatedWorkload.data_quality.suspected_unlabeled_controlled_workloads.length, 1);
+assert.equal(repeatedWorkload.data_quality.trustworthy_for_operational_counts, false);
 
 const incomplete = buildAdminSearchQualityScorecard({ ...input, events_complete: false });
 assert.equal(incomplete.data_quality.trustworthy_for_operational_counts, false);

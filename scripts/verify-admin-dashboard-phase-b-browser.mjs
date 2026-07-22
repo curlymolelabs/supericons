@@ -528,10 +528,15 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     const pageSize = Number(searchParams.get('page_size') || 25);
     const pageCount = Math.ceil(eventRows.length / pageSize);
     const start = (page - 1) * pageSize;
+    const snapshotId = 'event-snapshot-fixed';
+    if (page > 1 && searchParams.get('snapshot_id') !== snapshotId) {
+      return { error: 'The event export snapshot was not preserved.' };
+    }
     return {
       events: eventRows.slice(start, start + pageSize),
       events_complete: true,
       events_export_available: true,
+      snapshot_id: snapshotId,
       pagination: {
         page,
         page_size: pageSize,
@@ -983,8 +988,17 @@ try {
   const eventJsonPayload = JSON.parse(await readFile(eventJsonPath, 'utf8'));
   ok(eventJsonPayload.events.length === eventRows.length, 'The event JSON contains only the first page.');
   ok(eventJsonPayload.events_complete === true, 'The event JSON omits its completeness state.');
+  ok(eventJsonPayload.snapshot_id === 'event-snapshot-fixed', 'The event JSON omits its stable snapshot identifier.');
   ok(Boolean(eventJsonPayload.field_coverage.returned_icon_refs), 'The event JSON omits field coverage.');
   ok(Boolean(eventJsonPayload.definitions.grain), 'The event JSON omits metric definitions.');
+  const pagedEventRequests = requests.filter((request) => (
+    request.path === '/v2/search/events'
+    && Number(new URLSearchParams(request.search).get('page') || 1) > 1
+  ));
+  ok(pagedEventRequests.length > 0, 'The event export did not request a later page.');
+  ok(pagedEventRequests.every((request) => (
+    new URLSearchParams(request.search).get('snapshot_id') === 'event-snapshot-fixed'
+  )), 'The event export did not keep one stable API snapshot across pages.');
   ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
 
   await page.click('#nav-audience');

@@ -52,6 +52,12 @@ assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
 assert.equal(getBetaCohortForRequest(betaVersion, 'search_icons', {
   query: '',
 }), null);
+process.env.SUPERICONS_CONTROLLED_RUN_LABEL = 'load_test';
+assert.equal(getBetaCohortForTool('0.4.20', 'recommend_icons'), 'controlled-run:load_test');
+assert.equal(getBetaCohortForRequest(betaVersion, 'recommend_icons', {
+  query: 'Choose icons for settings.',
+}), 'controlled-run:load_test');
+delete process.env.SUPERICONS_CONTROLLED_RUN_LABEL;
 assert.equal(shouldUseLocalFirstBetaSearch(betaVersion, {
   toolName: 'search_icons',
   query: 'settings',

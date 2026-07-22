@@ -6,6 +6,7 @@ const PROCESS_SESSION_TOKEN = randomUUID();
 function isTelemetryDisabled() {
   const disableFlag = String(process.env.SUPERICONS_DISABLE_TELEMETRY || '').trim().toLowerCase();
   const telemetryFlag = String(process.env.SUPERICONS_TELEMETRY || '').trim().toLowerCase();
+  const mcpTelemetryFlag = String(process.env.SUPERICONS_MCP_TELEMETRY_ENABLED || '').trim().toLowerCase();
   const doNotTrack = String(process.env.DO_NOT_TRACK || '').trim().toLowerCase();
 
   return disableFlag === '1'
@@ -15,6 +16,10 @@ function isTelemetryDisabled() {
     || telemetryFlag === 'false'
     || telemetryFlag === 'off'
     || telemetryFlag === 'disabled'
+    || mcpTelemetryFlag === '0'
+    || mcpTelemetryFlag === 'false'
+    || mcpTelemetryFlag === 'off'
+    || mcpTelemetryFlag === 'disabled'
     || doNotTrack === '1'
     || doNotTrack === 'true';
 }

@@ -28,6 +28,12 @@ export function extractReturnedIconRefs(result, toolName, limit = 100) {
 }
 
 export function classifyMcpTraffic(context = {}) {
+  const cohort = String(context.beta_cohort || '').trim().toLowerCase();
+  if (
+    cohort.startsWith('controlled-run:')
+    || cohort.includes(':founder_controlled')
+    || cohort.includes(':controlled_')
+  ) return 'controlled_test';
   if (context.channel === 'internal_test' || context.environment === 'test') return 'controlled_test';
   if (context.environment === 'preview') return 'preview';
   if (context.environment === 'local') return 'local';
