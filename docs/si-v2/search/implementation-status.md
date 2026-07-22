@@ -1,13 +1,21 @@
 # SI Search Engine v2 implementation status
 
-Last verified: 2026-07-22
+Last verified: 2026-07-23
 Authority: evidence ledger only; intended behavior lives in [`search-engine-v2.md`](search-engine-v2.md)
+
+## Hosted search regression repair
+
+Railway deployment `c247a50f-151b-4ef0-bedf-b529dc4f4255` is live from release source `82decbb40`, which contains the previous live source `ca40658fb` plus only the `D-036` hosted search repair. Health reports version 0.4.20, `search_mode: hosted_primary`, `recommendation_mode: local_first`, and a closed hosted-search circuit with zero failures. The MCP URL, npm package, website, and submitted ChatGPT app did not change, so existing hosted users need no update.
+
+The live 15-case product matrix passed through both public HTTP and hosted MCP. It covers the confirmed false zeros for hard hats, network graph nodes, tow trucks, and shield checks, plus other multiword relevance cases, English meaning search, Japanese and Spanish search, strict library behavior, browser-safe responses, and honest no-results. Ordered icon references matched between both surfaces. Recorded public-route latency ranged from about 0.9 to 4.2 seconds across the matrix, so latency remains monitored even though product correctness passed.
+
+The prior source `ca40658fb` and deployment record `ee02bdca-96b6-46f2-9637-7636a2271f33` are the rollback reference. The release proof is recorded in [`reviews/search-v2-hosted-route-repair-2026-07-23.md`](reviews/search-v2-hosted-route-repair-2026-07-23.md).
 
 ## Admin search quality data release
 
 The internal admin data path now distinguishes exact icon lookup success, not found, error, and unknown outcomes. Supabase `admin-api` version 87 is active with the privacy-safe `/v2/search/events` endpoint, complete-export metadata, per-source detail limits, constant-time admin secret comparison, and a bounded two-minute snapshot for consistent multi-page exports. An unauthenticated live request to the event endpoint returned 403 as required. The deployed bundle SHA-256 is `da3ee402...c020`.
 
-Railway deployment `ee02bdca-96b6-46f2-9637-7636a2271f33` is active with future returned icon references, build and execution metadata, traffic classification, root request linking, and structured `icon_not_found` errors. The live no-synthetic-call handshake reports version 0.4.20, 8,524 Material assets, all required MCP tools, and a closed hosted-search resilience circuit with zero active or queued calls.
+Railway deployment `ee02bdca-96b6-46f2-9637-7636a2271f33` was the verified pre-repair baseline with future returned icon references, build and execution metadata, traffic classification, root request linking, and structured `icon_not_found` errors. Those capabilities remain in the current deployment. The live health response reports version 0.4.20, 8,524 Material assets, and a closed hosted-search resilience circuit with zero active or queued calls.
 
 The local admin dashboard adds grouped and event-level CSV and JSON exports, refuses incomplete or inconsistent snapshot exports, preserves privacy-safe searcher grouping, explains metric limits, and keeps the entered secret in local server memory behind an opaque HttpOnly browser session. The repeatable version 2 scorecard separates top-level tool requests from lower-level diagnostics, excludes known test and preview traffic from primary live measures, reports source and field coverage, detects suspicious repeated workloads, and does not treat recommendation completion as relevance.
 
@@ -17,7 +25,7 @@ Migration `20260722230000_admin_quality_controlled_traffic_correction.sql` corre
 
 Version 0.4.20 implements `D-034`. The generated graph contains 49 meaning groups and 1,058 reviewed phrases. The release passes 244 English meaning checks, 612 localized meaning checks across 11 maintained locales, three honest no-result checks, and all 638 established multilingual fixtures. The fixed 225-case fingerprint is `17ed68b3...7002c`. All 34 changed legacy cases are reviewed in `reviews/search-v2-coverage-release-2026-07-22.md`. The final local latency gate observed a first semantic search of 469.0 ms and a 30-sample p95 of 339.2 ms on the 21,427-icon public package index.
 
-Railway deployment `a56d68da-970c-4b48-b7b8-439512db906b`, npm `latest` 0.4.20, and Netlify deploy `6a5fe089d08a1cac5e8459a5` are live and verified. Production searches for English `amazing` and `sports`, Japanese `スポーツ`, and Spanish `deportes` return reviewed results. The unsupported query `florblequux` returns no result. The live web MCP guide shows keyless hosted setup, current local setup, and all three restored setup videos. A fresh registry download is byte-identical to the approved npm archive and passes all 225 clean-installed stdio cases with fixed fingerprint `17ed68b3...7002c` and route fingerprint `9627b105...f68c`.
+Railway deployment `c247a50f-151b-4ef0-bedf-b529dc4f4255`, npm `latest` 0.4.20, and Netlify deploy `6a5fe089d08a1cac5e8459a5` are live and verified. Production searches for English `amazing` and `sports`, Japanese `スポーツ`, and Spanish `deportes` return reviewed results. The unsupported query `florblequux` returns no result. The live web MCP guide shows keyless hosted setup, current local setup, and all three restored setup videos. A fresh registry download is byte-identical to the approved npm archive and passes all 225 clean-installed stdio cases with fixed fingerprint `17ed68b3...7002c` and route fingerprint `9627b105...f68c`.
 
 ## Search maintenance state
 
@@ -191,8 +199,8 @@ The complete four-surface map and its evidence limits are recorded in `reference
 
 ## Immediate next gate
 
-1. Treat 0.4.20 as the Search v2 maintenance baseline. Observe relevance, zero-results, errors, route health, telemetry limits, and client concentration without reopening an active coverage push.
-2. When search maintenance is next scheduled, implement and measure the bounded agent-cooperative zero-result experiment from `D-035`. Do not begin embeddings or a model fallback as part of that work.
+1. Observe the repaired hosted route at one consistent tool-call grain. Compare multiword zero-results, reviewed relevance, errors, and latency with the pre-repair evidence without attributing mixed-version traffic to one release.
+2. Resume the bounded agent-cooperative zero-result experiment from `D-035` only after internal hosted search recovery is stable. Do not use caller retries to compensate for an internal retrieval regression.
 3. Keep phases `P3` through `P6` paused until a new evidence-backed owner decision meets the `D-035` restart conditions.
 4. Keep hosted tier enforcement disabled until the `FR-43` readiness conditions pass: measured thresholds, working self-service free keys, one two-ingress contract, and copy that promises only live benefits.
 5. Return the main product effort to the SI v2 blueprint: close Ring 0 and then ship Ring 1, Agent Pulse. The account value ladder, beginning with self-service free keys and verified higher registered allowances, may proceed as a parallel infrastructure track.
