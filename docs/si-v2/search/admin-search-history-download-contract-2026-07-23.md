@@ -2,12 +2,9 @@
 
 ## Purpose
 
-The internal Search history screen answers two questions:
+The internal Search history screen should make normal analysis easy while keeping deeper evidence available when needed.
 
-1. What search activity happened?
-2. What data should be downloaded for normal analysis or a deeper audit?
-
-The screen stays minimal. It has one grouped table, one outcome filter, one test-traffic switch, and one download control.
+The screen has one summary table, one outcome filter, one test-traffic switch, and one compact download control. It does not show raw diagnostics in the main table.
 
 ## Source roles
 
@@ -29,86 +26,158 @@ By default, the table:
 
 - includes top-level MCP activity and top-level web search activity
 - excludes controlled tests, preview traffic, and local development traffic
-- groups exact matches by query, searcher identity, library, query origin, and channel
-- shows the grouped row count and underlying activity count separately
+- groups by normalized query, library filter, and query origin
+- shows request count and estimated client ID count as separate measures
 - uses server pagination so the browser does not need the full history in memory
 
 The Include test traffic switch changes only the Search history request. It does not silently change the other dashboard sections.
 
+The table subtitle is:
+
+`One row per unique query. For quick analysis.`
+
+For technical accuracy, unique means the same normalized query, library filter, and query origin. Channel, country, tool, and estimated client ID are measures or detail fields. They do not split the summary into extra rows.
+
 ## Outcome rules
 
-- Success: all grouped activities completed with a usable result.
-- Zero: all grouped search attempts completed with zero results.
-- Low: grouped search attempts completed with low results.
-- Error: all grouped activities ended in an error.
-- Clarification: all grouped activities asked the caller for clarification.
-- Mixed: the group contains more than one result category. The label states the category counts.
+- Success: all requests completed with a usable result.
+- Zero: all search requests completed with zero results.
+- Low: search requests completed with low results.
+- Not found: all exact icon lookups reported no match.
+- Error: all requests ended in an error.
+- Clarification: all requests asked the caller for clarification.
+- Mixed: the summary contains more than one result category. The label states the category counts.
 
-Errors and clarification responses must not be labeled Success.
+Errors, failed lookups, and clarification responses must not be labelled Success.
+
+## Result count rules
+
+`typical_result_count` is the median of the recorded result counts in the summary row. Median is used because repeated client retries can change the requested limit and create extreme high or low values.
+
+The file also identifies the result unit:
+
+- `icon` for direct search results
+- `match` for exact icon lookups
+- `primary_pick` for recommendations
+
+If one summary row contains more than one result unit, `typical_result_count` is empty. The Audit bundle keeps the supporting detail and explains why the value is unavailable. Counts with different meanings must not be combined.
+
+## Identity rule
+
+`distinct_searcher_ids` is an estimated count of privacy-safe client identifiers, not a count of people. One user may produce several IDs, and one ID may represent shared infrastructure. Treat it as an upper bound, not a verified unique-user count.
 
 ## Download choices
 
-### Grouped CSV
+### Search summary
 
-This is the recommended download for normal analysis.
+UI subtitle:
 
-Grain: one row per searcher, query, venue, library, job category, and query origin.
+`One row per unique query. For quick analysis.`
 
-Filename pattern: `supericons-search-history-grouped-{period}-{generated-at-utc}.csv`.
+Grain: one row per normalized query, library filter, and query origin.
 
-It includes:
+Filename pattern: `supericons-search-summary-{period}-{generated-at-utc}.csv`.
 
-- searcher identifier and identity kind
-- account-linked state
-- activity count, activity unit, and a readable activity label
-- outcome label plus success, zero, low, error, clarification, and defect components
-- exact lookup found, not found, error, and unknown components
-- country value, recorded state, exact-for-group state, count, scope, and explanation
-- venue value, exact-for-group state, and explanation
-- result count range
-- result availability, unit, range, sample count, scope, and explanation
-- library, job category, query origin, channel, and tool names
-- first and last seen time
-- review fields
-- row-grain and export metadata
+Columns:
 
-It does not export raw internal request IDs.
+- `query`
+- `library_filter`
+- `query_origin`
+- `tool`
+- `searches`
+- `lookups`
+- `distinct_searcher_ids`
+- `outcome`
+- `success_count`
+- `zero_count`
+- `low_count`
+- `not_found_count`
+- `error_count`
+- `typical_result_count`
+- `result_unit`
+- `country_codes`
+- `channel`
+- `first_seen_utc`
+- `last_seen_utc`
 
-### MCP Requests CSV
+This is the recommended download for normal analysis. It omits repeated file metadata, raw request IDs, per-searcher rows, and internal diagnostic fields.
 
-Use this when one row per recorded top-level MCP request is required.
+### Request log
 
-Grain: one top-level MCP search or exact icon lookup per row.
+UI subtitle:
 
-Filename pattern: `supericons-search-mcp-requests-{period}-{generated-at-utc}.csv`.
+`One row per tool call. Ground truth.`
+
+Grain: one recorded top-level MCP tool call per row.
+
+Filename pattern: `supericons-request-log-{period}-{generated-at-utc}.csv`.
+
+Columns:
+
+- `event_id`
+- `recorded_at_utc`
+- `query`
+- `query_origin`
+- `tool_name`
+- `outcome`
+- `status`
+- `error_code`
+- `library_filter`
+- `library_mode`
+- `locale`
+- `requested_limit`
+- `result_count`
+- `returned_icon_refs`
+- `returned_icon_refs_recorded`
+- `latency_ms`
+- `search_execution`
+- `server_version`
+- `server_build`
+- `traffic_class`
+- `channel`
+- `environment`
+- `client_family`
+- `estimated_client_id`
+- `country_code`
+- `registered`
+- `pro`
 
 Hosted search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
 
-### Full Audit JSON
+The legacy root request identifier is omitted from this CSV because current records do not prove that it is a unique request or session identifier.
 
-Use this for a complete quality or telemetry audit.
+### Audit bundle
 
-Filename pattern: `supericons-search-full-audit-{period}-{generated-at-utc}.json`.
+UI subtitle:
 
-The file keeps these groups separate:
+`Everything plus integrity checks. For verification.`
 
-- `grouped_history`
-- `top_level_mcp_requests`
+Filename pattern: `supericons-audit-bundle-{period}-{generated-at-utc}.json`.
+
+The file keeps these data sets separate:
+
+- `search_summary`
+- `request_log`
 - `web_searches`
 - `hosted_diagnostics`
 - field coverage
+- CSV schemas
 - data definitions
 - source metadata
 
-This separation prevents diagnostic rows from inflating user activity while preserving the additional detail for investigation.
+This separation prevents diagnostic rows from inflating user activity while preserving supporting detail for investigation.
 
-The JSON also includes:
+The bundle includes export schema version `3.0`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
 
-- export schema version and export type
-- selected period and filters
-- a plain-language description for each data set
-- summary counts
-- integrity checks for grouped activity, event identifiers, and source roles
+- every summary row has at least one request
+- summary request totals match groupable primary events
+- summary grain keys are unique
+- request event IDs are unique
+- request event IDs are recorded
+- request roles are valid
+- diagnostic roles are valid
+
+The Audit bundle may retain legacy correlation fields for investigation, but its definitions must clearly state that the current root request identifier is not a proven session identifier.
 
 ## Safe scale behavior
 
@@ -118,15 +187,15 @@ The table uses stable server pagination. Downloads request every page from one f
 
 ## Data correction recorded on 2026-07-23
 
-The supplied one-day grouped CSV contained 492 rows. Of those, 127 rows had zero recorded activity but were labelled Success. A sample was the query `biểu tượng tìm kiếm`.
+An inspected one-day grouped CSV contained 492 rows. Of those, 127 rows had zero recorded activity but were labelled Success.
 
-The cause was the raw 24-hour path treating hosted diagnostic rows as Search history activity. Diagnostics can carry a query but do not represent another user search. The corrected contract now:
+The cause was the raw 24-hour path treating hosted diagnostic rows as Search history activity. Diagnostics can carry a query but do not represent another user search. The corrected source handling:
 
 - classifies source rows as search, exact lookup, diagnostic, or other
 - includes only search and exact lookup roles before grouping
-- rejects any compacted group with zero activity
-- calculates pagination and summary totals from the same accepted grouped rows
+- rejects any summary with zero activity
+- calculates pagination and summary totals from the same accepted rows
 - reports the number of excluded non-activity rows
-- includes reconciliation checks in Full Audit JSON
+- keeps diagnostics in the Audit bundle
 
 The numbers above describe the inspected file only. Future dashboard values are calculated from the selected live period and are not hardcoded.

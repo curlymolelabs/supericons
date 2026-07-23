@@ -36,13 +36,18 @@ assert.doesNotMatch(
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Searcher'/,
-  'Search history must show which searcher produced each row.',
+  /\{\s*label:\s*'Requests'/,
+  'Search history must show the request count for each query summary.',
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Searches'/,
-  'Search history must show the activity count for each searcher row.',
+  /\{\s*label:\s*'Est\. client IDs'/,
+  'Search history must show the estimated client ID count without claiming people.',
+);
+assert.match(
+  queryExplorerRenderer,
+  /\{\s*label:\s*'Typical result'/,
+  'Search history must show the median recorded result count.',
 );
 assert.match(
   api,
@@ -56,13 +61,13 @@ assert.match(
 );
 assert.match(
   api,
-  /\{\s*applyQuery:\s*false,\s*separateQueryOrigins:\s*true,\s*separateChannels:\s*true\s*\}/,
-  'The query explorer must keep venues separate when All venues is selected.',
+  /separateQueryOrigins:\s*true,[\s\S]*separateChannels:\s*false,[\s\S]*separateSearchers:\s*false,[\s\S]*includeSearcherDetails:\s*false/,
+  'Search history must group by query, library, and origin without splitting rows by venue or searcher.',
 );
 assert.match(
   api,
-  /separateSearchers:\s*true/,
-  'Search history must keep different searchers in different rows.',
+  /query_row_grain:\s*\['query',\s*'library_filter',\s*'query_origin'\]/,
+  'Search history must publish its exact summary grain.',
 );
 assert.match(
   api,
@@ -102,6 +107,6 @@ assert.match(
 
 console.log(JSON.stringify({
   status: 'ok',
-  checks: 16,
+  checks: 17,
   contract: 'admin_dashboard_v2_telemetry_integrity',
 }));

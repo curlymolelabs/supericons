@@ -22,10 +22,10 @@ The admin dashboard is a local operator tool backed by the protected production 
 | Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
 | Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
 | Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
-| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per searcher, query, venue, library, job category, and origin, with server paging |
-| Grouped CSV | `[data-export="queries-csv"]` | Complete filtered `GET /v2/search` pages | Downloads the grouped Search history table with analysis fields, field-availability flags, and export metadata |
-| MCP Requests CSV | `[data-export="query-events-csv"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=primary` | Downloads one top-level MCP search or exact icon lookup per row. It excludes web searches and hosted diagnostics |
-| Full Audit JSON | `[data-export="query-audit-json"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=audit` plus grouped history | Keeps grouped history, MCP requests, web searches, and hosted diagnostics separate, with field coverage, definitions, filters, source metadata, and integrity checks |
+| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per normalized query, library filter, and query origin, with server paging |
+| Search summary | `[data-export="search-summary-csv"]` | Complete filtered `GET /v2/search` pages | Downloads one row per unique query context for quick analysis |
+| Request log | `[data-export="request-log-csv"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=primary` | Downloads one top-level MCP tool call per row as the ground truth request log |
+| Audit bundle | `[data-export="audit-bundle-json"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=audit` plus Search summary | Keeps summary, MCP requests, web searches, and hosted diagnostics separate, with coverage, definitions, schemas, source metadata, and integrity checks |
 | Reach and accounts | `.funnel` | `GET /v2/audience` plus the complete account directory | Shows estimated or daily reach, all-time registered accounts, all-time active Pro accounts, and truthful MRR availability |
 | Registered users | `#registeredUsers` | Protected paged `GET /users` plus `GET /v2/audience` telemetry | Shows every account with separate signup, last sign-in, and last-search times, plus linked venue and country |
 | Searchers | `#allClients` | `GET /v2/audience` | Shows masked searcher profiles with server paging |
@@ -36,12 +36,13 @@ The admin dashboard is a local operator tool backed by the protected production 
 - Server-backed query, activity, and client lists use numbered paging. Bounded lists use local numbered paging.
 - Every panel has a compact named chevron control. Panels sharing a visual row collapse and expand together.
 - Scroll regions are height-bounded, keyboard reachable, and hide the visual scrollbar.
-- Search has one visible table and three downloads. The main button is Grouped CSV. Its small menu contains MCP Requests CSV and Full Audit JSON.
+- Search has one visible table and three downloads. The main button is Search summary. Its small menu contains Request log and Audit bundle.
 - CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
-- Grouped CSV puts the masked searcher identifier, grouping dimensions, activity count and unit, outcome components, result availability, country availability, and export metadata in separate columns.
-- MCP Requests CSV uses one top-level MCP request per row after exact key-based source merging. It includes request-level fields only when recorded and never substitutes zero for a missing value.
-- Full Audit JSON keeps grouped history, top-level MCP requests, web searches, and hosted diagnostics in separate arrays. Its integrity section checks positive grouped activity, activity reconciliation, unique event identifiers, recorded identifiers, and valid source roles.
-- Search event exports expose only a privacy-safe root request identifier. Raw request IDs and full client or session hashes remain private.
+- Search summary groups by normalized query, library filter, and query origin. It includes request and outcome counts, estimated client ID count, median result count, country codes, channels, and time range in 19 columns.
+- Request log uses one top-level MCP request per row after exact key-based source merging. It includes request-level fields only when recorded and never substitutes zero for a missing value.
+- Audit bundle keeps Search summary, top-level MCP requests, web searches, and hosted diagnostics in separate arrays. Its integrity section checks positive summary activity, request reconciliation, unique summary keys, event identifiers, and valid source roles.
+- Estimated client IDs are not people. One user may produce several IDs, and one ID may represent shared infrastructure.
+- The legacy root request identifier is excluded from Request log because it is not a proven request or session identifier. It may remain in Audit bundle diagnostics with an explicit warning.
 - Search export filenames state the export type, selected period, and UTC generation time so repeated downloads remain distinguishable.
 - CSV text beginning with a spreadsheet formula character is made inert before download.
 - Activity, overview, search, audience, and account requests start independently. A slow panel does not block the others.

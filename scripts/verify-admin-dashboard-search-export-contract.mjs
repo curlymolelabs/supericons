@@ -17,9 +17,9 @@ function forbidText(source, value, label) {
   }
 }
 
-const groupedButtons = html.match(/data-export="queries-csv"/g) || [];
-if (groupedButtons.length !== 1) {
-  throw new Error(`Expected one grouped CSV action, found ${groupedButtons.length}.`);
+const summaryButtons = html.match(/data-export="search-summary-csv"/g) || [];
+if (summaryButtons.length !== 1) {
+  throw new Error(`Expected one Search summary action, found ${summaryButtons.length}.`);
 }
 
 const menuItems = html.match(/role="menuitem"/g) || [];
@@ -28,39 +28,43 @@ if (menuItems.length !== 2) {
 }
 
 [
-  '>Grouped CSV<',
-  '<strong>MCP Requests CSV</strong>',
-  '<strong>Full Audit JSON</strong>',
-  'One top-level MCP search or exact icon lookup per row.',
-  'Web searches and hosted diagnostics are excluded.',
-  'integrity checks',
+  '>Search summary<',
+  '<strong>Request log</strong>',
+  '<strong>Audit bundle</strong>',
+  'One row per unique query. For quick analysis.',
+  'One row per tool call. Ground truth.',
+  'Everything plus integrity checks. For verification.',
 ].forEach((value) => requireText(html, value, 'Search download UI'));
 
 [
+  'data-export="queries-csv"',
+  'data-export="query-events-csv"',
+  'data-export="query-audit-json"',
+  '<strong>Grouped CSV</strong>',
+  '<strong>MCP Requests CSV</strong>',
+  '<strong>Full Audit JSON</strong>',
   '<strong>Table CSV</strong>',
   '>Download CSV<',
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '2.0'",
-  "'supericons-search-history-grouped'",
-  "'supericons-search-mcp-requests'",
-  "'supericons-search-full-audit'",
-  'activity_count',
-  'activity_unit',
-  'outcome_label',
-  'country_exact_for_group',
-  'venue_exact_for_group',
-  'result_count_available',
+  "SEARCH_EXPORT_SCHEMA_VERSION = '3.0'",
+  "'supericons-search-summary'",
+  "'supericons-request-log'",
+  "'supericons-audit-bundle'",
+  'searchSummaryCsvRow',
+  'requestLogCsvRow',
+  'distinct_searcher_ids',
+  'typical_result_count',
+  'returned_icon_refs',
   'success_count',
   'lookup_not_found_count',
-  'row_grain',
-  'export_generated_at_utc',
-  'grouped_rows_have_activity',
-  'grouped_activity_matches_groupable_primary_events',
-  'primary_event_identifiers_are_unique',
-  'grouped_history',
-  'top_level_mcp_requests',
+  'summary_rows_have_requests',
+  'summary_request_count_matches_primary_events',
+  'summary_grain_is_unique',
+  'request_event_ids_are_unique',
+  'search_summary',
+  'request_log',
   'web_searches',
   'hosted_diagnostics',
 ].forEach((value) => requireText(app, value, 'Search export implementation'));
@@ -71,6 +75,11 @@ if (menuItems.length !== 2) {
   'excluded_non_activity_rows',
   'Number(row.activity_count || 0) > 0',
   'total: compactHistoryRows.length',
+  'separateQueryOrigins: true',
+  'separateChannels: false',
+  'separateSearchers: false',
+  'includeSearcherDetails: false',
+  "query_row_grain: ['query', 'library_filter', 'query_origin']",
 ].forEach((value) => requireText(api, value, 'Search history API'));
 
 requireText(helpers, 'export function dashboardV2SearchHistoryRole', 'Search history role helper');
@@ -94,10 +103,10 @@ for (const [path, source] of [
 console.log(JSON.stringify({
   status: 'ok',
   exports: {
-    grouped_csv: 'one row per grouped Search history context',
-    mcp_requests_csv: 'one top-level MCP request per row',
-    full_audit_json: 'separate grouped, MCP, web, and diagnostic data sets',
+    search_summary: 'one row per query, library, and origin',
+    request_log: 'one top-level MCP request per row',
+    audit_bundle: 'separate summary, request, web, and diagnostic data sets',
   },
   filenames_include: ['export type', 'period', 'generation timestamp'],
-  integrity_checks: 6,
+  integrity_checks: 7,
 }, null, 2));

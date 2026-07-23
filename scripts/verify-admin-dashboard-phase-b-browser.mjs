@@ -44,7 +44,11 @@ const queryRows = [
     country_available: true,
     country_scope: 'current_day',
     channel: 'web',
+    channels: ['web'],
+    countries: ['US'],
     result_count: 3,
+    typical_result_count: 3,
+    result_sample_count: 5,
     result_count_available: true,
     result_count_kind: 'exact',
     result_count_scope: 'current_day',
@@ -87,7 +91,11 @@ const queryRows = [
     country_code: 'SG',
     country_available: true,
     channel: 'hosted_mcp',
+    channels: ['hosted_mcp'],
+    countries: ['SG'],
     result_count: 1,
+    typical_result_count: 1,
+    result_sample_count: 1,
     result_count_available: true,
     result_count_kind: 'exact',
     result_unit: 'match',
@@ -129,7 +137,11 @@ const queryRows = [
     country_code: 'SG',
     country_available: true,
     channel: 'hosted_mcp',
+    channels: ['hosted_mcp'],
+    countries: ['SG'],
     result_count: 0,
+    typical_result_count: 0,
+    result_sample_count: 1,
     result_count_available: true,
     result_count_kind: 'exact',
     result_unit: 'match',
@@ -150,7 +162,11 @@ const queryRows = [
     country_code: 'SG',
     country_available: true,
     channel: 'local_mcp',
+    channels: ['local_mcp'],
+    countries: ['SG'],
     result_count: 8,
+    typical_result_count: 8,
+    result_sample_count: 1,
     result_count_available: true,
     result_count_kind: 'exact',
     result_unit: 'primary_pick',
@@ -192,7 +208,11 @@ const queryRows = [
     country_code: 'SG',
     country_available: true,
     channel: 'web',
+    channels: ['web'],
+    countries: ['SG'],
     result_count: 1,
+    typical_result_count: 1,
+    result_sample_count: 1,
     result_count_available: true,
     result_count_kind: 'exact',
     result_unit: 'icon',
@@ -215,68 +235,23 @@ const queryRows = [
     result_count: null,
     result_count_min: 2,
     result_count_max: 8,
+    typical_result_count: 5,
+    result_sample_count: 4,
     result_count_available: true,
     result_count_kind: 'range_across_attempts',
     result_count_reason: 'Results ranged from 2 to 8 across 3 searches',
     result_unit: 'icon',
     issue_type: 'successful',
     outcome_label: 'Success',
-    attempt_count: 3,
-    activity_count: 3,
+    attempt_count: 4,
+    activity_count: 4,
     activity_kind: 'search',
-    estimated_client_id_count: 1,
-    searcher_details_available: true,
-    searchers: [
-      {
-        label: 'Anonymous a1b2c3',
-        kind: 'anonymous',
-        account_linked: false,
-        searches: 3,
-        channels: ['local_mcp'],
-        countries: ['SG'],
-        first_seen: '2026-07-17T07:10:00Z',
-        last_seen: '2026-07-17T07:22:00Z',
-      },
-    ],
+    estimated_client_id_count: 2,
+    channels: ['local_mcp'],
+    countries: ['SG'],
+    tools: ['search_icons'],
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:22:00Z',
-  },
-  {
-    query: 'varying results',
-    library_filter: 'lucide',
-    job_category: 'navigation',
-    query_origin: 'recommend_variant',
-    visitor_kind: 'registered',
-    country_code: 'SG',
-    country_available: true,
-    channel: 'local_mcp',
-    result_count: 5,
-    result_count_min: 5,
-    result_count_max: 5,
-    result_count_available: true,
-    result_count_kind: 'exact',
-    result_unit: 'icon',
-    issue_type: 'successful',
-    outcome_label: 'Success',
-    attempt_count: 1,
-    activity_count: 1,
-    activity_kind: 'search',
-    estimated_client_id_count: 1,
-    searcher_details_available: true,
-    searchers: [
-      {
-        label: 'Registered d4e5f6',
-        kind: 'registered',
-        account_linked: true,
-        searches: 1,
-        channels: ['local_mcp'],
-        countries: ['SG'],
-        first_seen: '2026-07-17T07:21:00Z',
-        last_seen: '2026-07-17T07:21:00Z',
-      },
-    ],
-    zero_attempt_count: 0,
-    last_seen: '2026-07-17T07:21:00Z',
   },
   ...Array.from({ length: 55 }, (_, index) => ({
     query: `healthy query ${index + 1}`,
@@ -905,22 +880,25 @@ try {
   ok(await page.locator('.panel[data-row-key="iconRequests"]').count() === 0, 'The removed icon request panel still takes up Search history space.');
   ok(await page.locator('.panel[data-row-key="contact"]').count() === 0, 'The removed contact panel still takes up Search history space.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
-  ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The searcher-level table is not labelled Search history.');
+  ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The query summary table is not labelled Search history.');
   ok(await page.locator('#searchDataGuide').count() === 0, 'The old data guide still takes up table space.');
   const historySubtitle = await page.locator('#searchHistorySubtitle').innerText();
-  ok(historySubtitle.includes(`${queryRows.length} rows grouped by searcher`), 'Search history does not explain its exact row count and grouping.');
-  ok(historySubtitle.includes('activities'), 'Search history does not show its exact activity count.');
+  ok(historySubtitle.includes('One row per unique query. For quick analysis.'), 'Search history does not use the approved summary description.');
+  ok(historySubtitle.includes(`${queryRows.length} rows`), 'Search history does not show its exact summary row count.');
+  ok(historySubtitle.includes('requests'), 'Search history does not show its exact request count.');
   ok(historySubtitle.includes('test traffic excluded'), 'Search history does not state its default test-traffic scope.');
   ok(!(await queryPanel.innerText()).includes('Filters: zero:true'), 'Search history still shows hardcoded filter claims.');
   ok(await queryPanel.getByText('Advanced', { exact: true }).count() === 0, 'Search history still has a duplicate Advanced control.');
   const tableBoxBeforeMenu = await page.locator('#queryExplorer').boundingBox();
-  ok(await page.locator('[data-export="queries-csv"]').count() === 1, 'The primary grouped CSV action is missing or duplicated.');
-  ok(await page.locator('[data-export="queries-csv"]').innerText() === 'Grouped CSV', 'The primary download label does not describe its grouped data.');
+  ok(await page.locator('[data-export="search-summary-csv"]').count() === 1, 'The Search summary action is missing or duplicated.');
+  ok(await page.locator('[data-export="search-summary-csv"]').innerText() === 'Search summary', 'The primary download does not use the approved label.');
   await page.click('#searchDownloadToggle');
   ok(await page.locator('#searchDownloadPopover').isVisible(), 'The download menu did not open.');
   ok(await page.locator('#searchDownloadPopover [role="menuitem"]').count() === 2, 'The download menu does not have exactly two alternative exports.');
-  ok(await page.getByText('MCP Requests CSV', { exact: true }).count() === 1, 'The top-level MCP request export is not labelled clearly.');
-  ok(await page.getByText('Full Audit JSON', { exact: true }).count() === 1, 'The full audit export is not labelled clearly.');
+  ok(await page.getByText('Request log', { exact: true }).count() === 1, 'The request export does not use the approved label.');
+  ok(await page.getByText('Audit bundle', { exact: true }).count() === 1, 'The audit export does not use the approved label.');
+  ok(await page.getByText('One row per tool call. Ground truth.', { exact: true }).count() === 1, 'The Request log description is wrong.');
+  ok(await page.getByText('Everything plus integrity checks. For verification.', { exact: true }).count() === 1, 'The Audit bundle description is wrong.');
   ok(await page.getByText('Table CSV', { exact: true }).count() === 0, 'The old ambiguous Table CSV label is still visible.');
   const tableBoxWithMenu = await page.locator('#queryExplorer').boundingBox();
   ok(
@@ -946,22 +924,20 @@ try {
   await excludeTestRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
-  ok(queryHeaders.includes('Searcher'), 'Search history does not show its searcher column.');
-  ok(queryHeaders.includes('Searches'), 'Search history does not show recorded activity.');
-  ok(queryHeaders.includes('Returned'), 'Search history does not label returned values.');
+  ok(queryHeaders.includes('Requests'), 'Search history does not show recorded requests.');
+  ok(queryHeaders.includes('Est. client IDs'), 'Search history does not show estimated client IDs.');
+  ok(queryHeaders.includes('Typical result'), 'Search history does not show its typical result.');
+  ok(!queryHeaders.includes('Searcher'), 'Search history still exposes the old per-searcher grain.');
   const varyingRows = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
-  ok(await varyingRows.count() === 2, 'The same query from two searchers was incorrectly combined.');
-  const firstVaryingRow = varyingRows.filter({ hasText: 'Anonymous a1b2c3' });
-  const secondVaryingRow = varyingRows.filter({ hasText: 'Registered d4e5f6' });
-  ok(await firstVaryingRow.count() === 1, 'The first searcher row is missing.');
-  ok(await secondVaryingRow.count() === 1, 'The second searcher row is missing.');
-  ok((await firstVaryingRow.innerText()).includes('3 searches'), 'Repeated activity for one searcher is not combined.');
-  ok((await firstVaryingRow.innerText()).includes('2 to 8 icons'), 'Varying results for one searcher are not shown as a range.');
+  ok(await varyingRows.count() === 1, 'The same query, library, and origin was not combined into one summary row.');
+  const firstVaryingRow = varyingRows.first();
+  ok((await firstVaryingRow.innerText()).includes('4'), 'The combined summary does not show its request count.');
+  ok((await firstVaryingRow.innerText()).includes('5 icons'), 'The combined summary does not show its median result count.');
   ok(await queryPanel.locator('[data-searcher-details]').count() === 0, 'Search history still has unnecessary row-detail controls.');
   ok(!(await firstVaryingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
-  ok((await healthyRow.innerText()).includes('3 icons'), 'Exact current-day returned icons were hidden from the grouped query row.');
+  ok((await healthyRow.innerText()).includes('3 icons'), 'The typical result was hidden from the query summary.');
   ok((await healthyRow.innerText()).includes('US'), 'The exact current-day country was hidden from the grouped query row.');
   const mixedRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'mixed aggregate' });
   ok((await mixedRow.innerText()).includes('Mixed: 4 success, 1 zero'), 'A mixed aggregate query was mislabelled.');
@@ -970,8 +946,7 @@ try {
   });
   ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
-  ok((await iconLookupRow.innerText()).includes('1 lookup'), 'A successful icon lookup did not render its activity count.');
-  ok((await iconLookupRow.innerText()).includes('Unknown searcher'), 'A lookup without an identity did not show an honest searcher state.');
+  ok((await iconLookupRow.innerText()).includes('1'), 'A successful icon lookup did not render its request count.');
   ok((await iconLookupRow.innerText()).includes('1 icon found'), 'A successful icon lookup did not identify the found icon.');
   const missingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup missing', { exact: true }),
@@ -986,7 +961,7 @@ try {
   });
   ok((await pendingLookupRow.innerText()).includes('Lookup'), 'An unavailable icon lookup did not render an honest lookup state.');
   ok(!(await pendingLookupRow.innerText()).includes('Zero'), 'An unavailable icon lookup rendered a false Zero pill.');
-  ok((await pendingLookupRow.innerText()).includes('Lookup completed'), 'The unavailable icon lookup result state was not explained.');
+  ok((await pendingLookupRow.innerText()).includes('Not available for this view'), 'The unavailable icon lookup result state was not explained.');
   ok(await page.locator('#autoRefresh').count() === 1, 'The 30-second auto-refresh option is missing.');
   ok(!(await page.locator('#autoRefresh').isChecked()), 'Auto-refresh must be off until the operator enables it.');
   const autoRefreshRequest = page.waitForRequest((request) => (
@@ -997,69 +972,67 @@ try {
   await page.uncheck('#autoRefresh');
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryDownload = page.waitForEvent('download');
-  await page.click('[data-export="queries-csv"]');
+  await page.click('[data-export="search-summary-csv"]');
   const queryExport = await queryDownload;
   const queryExportPath = await queryExport.path();
   const queryExportText = await readFile(queryExportPath, 'utf8');
   ok(
-    /^supericons-search-history-grouped-24h-\d{8}T\d{6}Z\.csv$/.test(queryExport.suggestedFilename()),
-    'The grouped Search history CSV filename does not identify its data, period, and generation time.',
+    /^supericons-search-summary-24h-\d{8}T\d{6}Z\.csv$/.test(queryExport.suggestedFilename()),
+    'The Search summary filename does not identify its data, period, and generation time.',
   );
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
+  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 19, 'The Search summary CSV is not the approved 19-column schema.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
-  ok(queryExportText.includes('"searcher_identifier"'), 'The query CSV omits the searcher identifier column.');
-  ok(queryExportText.includes('"Registered d4e5f6"'), 'The query CSV omits the masked searcher identifier.');
-  ok(queryExportText.includes('"searcher_kind"'), 'The query CSV omits the searcher kind.');
-  ok(queryExportText.includes('"searcher_account_linked"'), 'The query CSV omits the account-link status.');
-  ok(queryExportText.includes('"identity_scope"'), 'The query CSV omits the identity scope.');
-  ok(queryExportText.includes('"job_category"'), 'The query CSV omits the job category used by the row grouping.');
-  ok(queryExportText.includes('"activity_count"'), 'The grouped CSV omits its activity count.');
-  ok(queryExportText.includes('"activity_unit"'), 'The grouped CSV omits the unit for its activity count.');
-  ok(queryExportText.includes('"row_grain"'), 'The grouped CSV omits its row-grain definition.');
-  ok(queryExportText.includes('"result_count_available"'), 'The grouped CSV omits result-count availability.');
-  ok(queryExportText.includes('"success_count"'), 'The grouped CSV omits its outcome components.');
-  ok(queryExportText.includes('"export_type"'), 'The grouped CSV omits export metadata.');
-  ok(!queryExportText.includes('[object Object]'), 'The query CSV converts searcher details into object placeholder text.');
-  for (const key of ['query-events-csv', 'query-audit-json']) {
+  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"result_unit"', '"country_codes"', '"channel"', '"last_seen_utc"']) {
+    ok(queryExportText.includes(column), `The Search summary CSV omits ${column}.`);
+  }
+  for (const column of ['"searcher_identifier"', '"searcher_kind"', '"job_category"', '"row_grain"', '"export_type"']) {
+    ok(!queryExportText.includes(column), `The Search summary CSV still contains unnecessary ${column}.`);
+  }
+  for (const key of ['request-log-csv', 'audit-bundle-json']) {
     ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
   }
   ok(await page.locator('[data-export="queries-json"], [data-export="query-events-json"]').count() === 0, 'Old duplicate JSON download controls are still visible.');
   const primaryEventRows = eventRows.filter((row) => row.event_role === 'top_level');
   await page.click('#searchDownloadToggle');
   const eventCsvDownload = page.waitForEvent('download');
-  await page.click('[data-export="query-events-csv"]');
+  await page.click('[data-export="request-log-csv"]');
   const eventCsv = await eventCsvDownload;
   const eventCsvPath = await eventCsv.path();
   const eventCsvText = await readFile(eventCsvPath, 'utf8');
   ok(
-    /^supericons-search-mcp-requests-24h-\d{8}T\d{6}Z\.csv$/.test(eventCsv.suggestedFilename()),
-    'The MCP request CSV filename does not identify its data, period, and generation time.',
+    /^supericons-request-log-24h-\d{8}T\d{6}Z\.csv$/.test(eventCsv.suggestedFilename()),
+    'The Request log filename does not identify its data, period, and generation time.',
   );
   ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === primaryEventRows.length + 1, 'The event CSV contains diagnostics or only the first page.');
-  ok(eventCsvText.includes('"root_request_identifier"'), 'The event CSV omits root request linkage.');
+  ok(eventCsvText.split(/\r?\n/, 1)[0].split(',').length === 27, 'The Request log CSV is not the approved 27-column schema.');
   ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
-  ok(eventCsvText.includes('"export_type"'), 'The MCP request CSV omits export metadata.');
-  ok(eventCsvText.includes('"top_level_mcp_requests"'), 'The MCP request CSV does not identify its row type.');
+  ok(eventCsvText.includes('"estimated_client_id"'), 'The Request log omits the estimated client identifier.');
+  ok(!eventCsvText.includes('"root_request_identifier"'), 'The Request log exposes the unreliable legacy root identifier.');
+  ok(!eventCsvText.includes('"export_type"'), 'The Request log repeats file-level metadata in every row.');
   ok(eventCsvText.includes('"\'\t=HYPERLINK(""https://example.com"")"'), 'The event CSV leaves a whitespace-prefixed spreadsheet formula active.');
   ok(!eventCsvText.includes('"request_id"'), 'The event CSV exposes a raw request ID field.');
   await page.click('#searchDownloadToggle');
   const auditDownload = page.waitForEvent('download');
-  await page.click('[data-export="query-audit-json"]');
+  await page.click('[data-export="audit-bundle-json"]');
   const auditJson = await auditDownload;
   const auditJsonPath = await auditJson.path();
   const auditPayload = JSON.parse(await readFile(auditJsonPath, 'utf8'));
   ok(
-    /^supericons-search-full-audit-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
-    'The full audit JSON filename does not identify its data, period, and generation time.',
+    /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
+    'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '2.0', 'The audit JSON does not state its schema version.');
-  ok(auditPayload.export_type === 'full_search_audit', 'The audit JSON does not identify its export type.');
-  ok(auditPayload.grouped_history.length === queryRows.length, 'The audit JSON contains only the visible table page.');
-  ok(auditPayload.top_level_mcp_requests.length === primaryEventRows.length, 'The audit JSON top-level MCP request count is wrong.');
+  ok(auditPayload.export_schema_version === '3.0', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
+  ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
+  ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
   ok(auditPayload.web_searches.length === 1, 'The audit JSON does not separate web searches.');
   ok(auditPayload.hosted_diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
   ok(Boolean(auditPayload.integrity_checks.status), 'The audit JSON omits integrity checks.');
-  ok(Boolean(auditPayload.contents.grouped_history), 'The audit JSON omits plain-language content definitions.');
+  ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
+  ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
+  ok(auditPayload.csv_schemas.search_summary.length === 19, 'The Audit bundle has the wrong Search summary schema.');
+  ok(auditPayload.csv_schemas.request_log.length === 27, 'The Audit bundle has the wrong Request log schema.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
   const pagedEventRequests = requests.filter((request) => (

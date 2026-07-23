@@ -237,7 +237,7 @@ try {
   const boundedHistoryText = await boundedHistoryPage.locator('#queryExplorer').innerText();
   ok(boundedHistoryText.includes('thirty day marker'), 'Bounded history hides the available query rows.');
   ok(boundedHistoryText.includes('Older matching searches may be omitted'), 'Bounded history does not explain that the visible rows are partial.');
-  await boundedHistoryPage.click('[data-export="queries-csv"]');
+  await boundedHistoryPage.click('[data-export="search-summary-csv"]');
   await boundedHistoryPage.waitForFunction(() => document.querySelector('#adminToast')?.textContent?.includes('Complete search export exceeds'));
   await boundedHistoryPage.close();
 

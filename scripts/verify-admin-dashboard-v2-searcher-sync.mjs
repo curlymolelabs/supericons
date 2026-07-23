@@ -32,10 +32,10 @@ for (const [label, source] of [['dashboard HTML', html], ['dashboard UI code', a
 
 assert.doesNotMatch(html, /Searchers seen in the selected period/);
 assert.doesNotMatch(app, /Selected period:/);
-assert.match(html, />Searchers</);
-assert.match(app, /function searcherCountLabel\(/);
-assert.match(app, /Searcher details/);
-assert.match(app, /data-searcher-details/);
+assert.match(html, />Search summary</);
+assert.match(app, /Est\. client IDs/);
+assert.match(app, /Estimated client IDs are not people\./);
+assert.doesNotMatch(app, /data-searcher-details/);
 assert.match(app, /label: 'Last sign-in'/);
 assert.match(app, /label: 'Last search'/);
 assert.match(app, /params\.set\('view_id'/);

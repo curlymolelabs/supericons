@@ -2249,12 +2249,16 @@ async function buildDashboardV2SearchPayload(
     ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
   ));
   const historyRows = buildQueryWorkbenchRows(
-    historyEvidenceRows,
+    historyEvidenceRows.map((row) => ({
+      ...row,
+      job_category: null,
+    })),
     new Map(),
     {
       separateQueryOrigins: true,
-      separateChannels: true,
-      separateSearchers: true,
+      separateChannels: false,
+      separateSearchers: false,
+      includeSearcherDetails: false,
     },
   );
   const filteredHistoryRows = filterDashboardV2QueryRows(
@@ -2324,7 +2328,9 @@ async function buildDashboardV2SearchPayload(
       history_attempts: historyActivities,
       history_rows: compactHistoryRows.length,
       table_rows: compactHistoryRows.length,
+      summary_rows: compactHistoryRows.length,
       activities: historyActivities,
+      requests: historyActivities,
       mcp_activities: Math.max(0, historyActivities - webActivities),
       web_activities: webActivities,
       excluded_non_activity_rows: excludedNonActivityRows,
@@ -2355,10 +2361,10 @@ async function buildDashboardV2SearchPayload(
       history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
-      query_row_grain: ['searcher', 'query', 'library_filter', 'job_category', 'query_origin', 'channel'],
-      activity_measure: 'Recorded searches, or recorded lookups for exact icon lookup rows.',
-      result_measure: 'Exact when every recorded result count agrees, otherwise a minimum-to-maximum range.',
-      estimated_client_id_measure: 'Searchers seen in the selected period.',
+      query_row_grain: ['query', 'library_filter', 'query_origin'],
+      activity_measure: 'Recorded top-level searches and exact icon lookups.',
+      result_measure: 'Median recorded result count. Unavailable when a summary mixes incompatible result units.',
+      estimated_client_id_measure: 'Estimated client IDs seen in the selected period. IDs may split or combine people.',
     },
     meta: dashboardV2Meta(filters, startedAt, {
       metric_scope: 'filtered_search_activity',
@@ -2761,6 +2767,52 @@ function updateSeenRange(entry: Record<string, unknown>, createdAt: string | nul
   if (!lastSeen || createdAt > lastSeen) entry.last_seen = createdAt;
 }
 
+function queryResultUnit(row: Record<string, unknown>) {
+  const queryOrigin = normalizeSearchQuery(row.query_origin).toLowerCase();
+  const toolName = normalizeSearchQuery(row.tool_name).toLowerCase();
+  if (queryOrigin === 'icon_lookup' || toolName === 'get_icon') return 'match';
+  if (toolName === 'recommend_icons') return 'primary_pick';
+  return 'icon';
+}
+
+function recordQueryResultCount(entry: Record<string, unknown>, resultCount: number) {
+  entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
+  entry.result_samples = Number(entry.result_samples || 0) + 1;
+  const currentMinimum = typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null;
+  if (currentMinimum === null || resultCount < currentMinimum) {
+    entry.minimum_result_count = resultCount;
+  }
+  const currentMaximum = typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null;
+  if (currentMaximum === null || resultCount > currentMaximum) {
+    entry.maximum_result_count = resultCount;
+  }
+  const frequency = entry.result_count_frequency as Map<number, number>;
+  frequency.set(resultCount, Number(frequency.get(resultCount) || 0) + 1);
+}
+
+function medianQueryResultCount(frequency: Map<number, number>) {
+  const ordered = [...frequency.entries()]
+    .sort(([left], [right]) => left - right);
+  const sampleCount = ordered.reduce((sum, [, count]) => sum + count, 0);
+  if (!sampleCount) return null;
+  const lowerTarget = Math.floor((sampleCount - 1) / 2);
+  const upperTarget = Math.floor(sampleCount / 2);
+  let seen = 0;
+  let lower: number | null = null;
+  let upper: number | null = null;
+  for (const [value, count] of ordered) {
+    const nextSeen = seen + count;
+    if (lower === null && lowerTarget < nextSeen) lower = value;
+    if (upperTarget < nextSeen) {
+      upper = value;
+      break;
+    }
+    seen = nextSeen;
+  }
+  if (lower === null || upper === null) return null;
+  return Number(((lower + upper) / 2).toFixed(2));
+}
+
 function getQueryWorkbenchEntry(
   map: Map<string, Record<string, unknown>>,
   query: string,
@@ -2809,6 +2861,8 @@ function getQueryWorkbenchEntry(
     partial_recommendation_count: 0,
     total_result_count: 0,
     result_samples: 0,
+    result_count_frequency: new Map<number, number>(),
+    result_units: new Set<string>(),
     minimum_result_count: null,
     maximum_result_count: null,
     replacement_count: 0,
@@ -2866,6 +2920,7 @@ function buildQueryWorkbenchRows(
     separateQueryOrigins = false,
     separateChannels = false,
     separateSearchers = false,
+    includeSearcherDetails = true,
   } = {},
 ) {
   const map = new Map<string, Record<string, unknown>>();
@@ -2908,11 +2963,11 @@ function buildQueryWorkbenchRows(
     (entry.channels as Set<string>).add(rowChannel);
     (entry.query_origins as Set<string>).add(String(row.query_origin || 'legacy_unknown'));
 
-    if (recordedSearcherKey || separateSearchers) {
+    if (recordedSearcherKey) {
+      (entry.estimated_client_keys as Set<string>).add(groupedSearcherKey);
+    }
+    if (includeSearcherDetails && (recordedSearcherKey || separateSearchers)) {
       const searcherKey = groupedSearcherKey;
-      if (recordedSearcherKey) {
-        (entry.estimated_client_keys as Set<string>).add(searcherKey);
-      }
       const details = entry.searcher_details as Map<string, Record<string, unknown>>;
       const searcher = details.get(searcherKey) || {
         label: recordedSearcherKey && typeof row.estimated_client_key === 'string' && row.estimated_client_key.trim()
@@ -3029,16 +3084,8 @@ function buildQueryWorkbenchRows(
       }
       const resultCount = classification.result_count;
       if (resultCount !== null) {
-        entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
-        entry.result_samples = Number(entry.result_samples || 0) + 1;
-        const currentMinimum = typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null;
-        if (currentMinimum === null || resultCount < currentMinimum) {
-          entry.minimum_result_count = resultCount;
-        }
-        const currentMaximum = typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null;
-        if (currentMaximum === null || resultCount > currentMaximum) {
-          entry.maximum_result_count = resultCount;
-        }
+        recordQueryResultCount(entry, resultCount);
+        (entry.result_units as Set<string>).add(queryResultUnit(row));
         if (classification.is_true_zero) {
           entry.zero_attempt_count = Number(entry.zero_attempt_count || 0) + 1;
         } else if (classification.is_exact_low) {
@@ -3089,20 +3136,8 @@ function buildQueryWorkbenchRows(
           entry.lookup_unknown_count = Number(entry.lookup_unknown_count || 0) + 1;
         }
         if (resultCount !== null) {
-          entry.total_result_count = Number(entry.total_result_count || 0) + resultCount;
-          entry.result_samples = Number(entry.result_samples || 0) + 1;
-          const currentMinimum = typeof entry.minimum_result_count === 'number'
-            ? entry.minimum_result_count
-            : null;
-          if (currentMinimum === null || resultCount < currentMinimum) {
-            entry.minimum_result_count = resultCount;
-          }
-          const currentMaximum = typeof entry.maximum_result_count === 'number'
-            ? entry.maximum_result_count
-            : null;
-          if (currentMaximum === null || resultCount > currentMaximum) {
-            entry.maximum_result_count = resultCount;
-          }
+          recordQueryResultCount(entry, resultCount);
+          (entry.result_units as Set<string>).add(queryResultUnit(row));
           if (resultCount > 0) {
             entry.successful_signal_count = Number(entry.successful_signal_count || 0) + 1;
           }
@@ -3153,9 +3188,13 @@ function buildQueryWorkbenchRows(
       average_result_count: resultSamples > 0
         ? Number((totalResultCount / resultSamples).toFixed(2))
         : null,
+      median_result_count: medianQueryResultCount(
+        entry.result_count_frequency as Map<number, number>,
+      ),
       minimum_result_count: typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null,
       maximum_result_count: typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null,
       result_sample_count: resultSamples,
+      result_units: [...(entry.result_units as Set<string>)].sort((a, b) => a.localeCompare(b)),
       replacement_count: Number(entry.replacement_count || 0),
       unique_replacements: (entry.unique_replacements as Set<string>).size,
       successful_attempt_count: Number(entry.successful_attempt_count || 0),
