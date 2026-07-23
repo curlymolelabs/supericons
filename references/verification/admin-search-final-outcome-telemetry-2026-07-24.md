@@ -4,9 +4,9 @@ Date: 2026-07-24
 
 ## Release decision
 
-GO for an additive shadow deployment.
+Production cutover completed and passed.
 
-The final dashboard cutover remains conditional on fresh production records passing the controlled checks in the handoff. A failed controlled check requires stopping before the cutover. The database additions can remain disabled while the problem is investigated, or they can be removed with the tested non-destructive rollback.
+The additive storage, trusted writers, Web and MCP linkage, independent cutovers, final dashboard source, local password prompt, screen totals, and download integrity were verified against production. The tested rollback remains available.
 
 ## Scope
 
@@ -81,7 +81,7 @@ These findings are recorded as existing risk. They are not evidence of a regress
 
 ## Production cutover gate
 
-The final source may be enabled only after all of these production cases reconcile with the visible or returned result:
+The final source was enabled after all of these production cases reconciled with the visible or returned result:
 
 1. Chinese Web search with hosted recovery.
 2. Genuine Web miss.
@@ -90,3 +90,56 @@ The final source may be enabled only after all of these production cases reconci
 5. Controlled test rows remain excluded from normal dashboard totals.
 6. Dashboard totals equal the final rows selected by the same filters.
 
+## Production verification
+
+### Deployed versions
+
+- Website deploy `6a625b770560ef7a286fb015`, published 2026-07-23 18:25:36.653 UTC.
+- Hosted MCP deploy `631a8513-535e-40dc-a98d-86665e643df6`, status `SUCCESS`.
+- Supabase `web-search-telemetry` version 2.
+- Supabase `mcp-search` version 43.
+- Supabase `search-icons` version 40.
+- Supabase `admin-api` version 96.
+
+### Cutovers
+
+- Website final-outcome coverage begins 2026-07-23 18:25:36.653 UTC.
+- Local MCP coverage begins 2026-07-23 18:37:26.593 UTC.
+- Dashboard source is `final`.
+- Website ingestion is enabled.
+
+### Controlled production cases
+
+| Case | Product result | Stored result |
+| --- | --- | --- |
+| Website Chinese recovery | 1,987 icons displayed | One Web success, 1,981 local matches, 100 hosted matches, two linked attempts, locale `zh-Hans` |
+| Website genuine miss | Empty result view | One Web zero after completed hosted zero |
+| Hosted MCP success | Three Lucide results returned | One Hosted MCP success with one linked attempt |
+| Hosted MCP recommendation | Three slots resolved | One Hosted MCP success |
+| Stable Local MCP 0.4.22 | Two repeated calls returned three results each | Two distinct Local MCP successes, both labelled `legacy_best_effort` |
+
+The Chinese Website case retained the actual internal recovery:
+
+1. `搜索图标` returned zero from hosted search.
+2. The English retry `search` returned 50 hosted candidates.
+3. The browser merged local and hosted work and recorded the 1,987 icons actually displayed.
+
+### Dashboard and downloads
+
+At the retained 24-hour browser snapshot:
+
+- The Searches screen displayed 6 rows and 6 searches.
+- Search summary contained 6 rows whose `searches` values summed to 6.
+- Request log contained 6 top-level MCP calls.
+- Audit bundle contained the same 6 summary rows, 6 MCP request rows, and 4 linked hosted diagnostics.
+- Audit integrity status was `passed`.
+- Audit metadata stated source `final` and included both cutover timestamps.
+- Controlled test traffic was absent from the normal view and appeared only when explicitly included.
+- Unauthenticated admin access returned HTTP 403.
+- The current local admin secret returned HTTP 200 and opened the browser dashboard.
+
+Downloaded filenames identified their purpose:
+
+- `supericons-search-summary-24h-<UTC timestamp>.csv`
+- `supericons-request-log-24h-<UTC timestamp>.csv`
+- `supericons-audit-bundle-24h-<UTC timestamp>.json`
