@@ -86,6 +86,18 @@ const publicIcons = [
   ...(Array.isArray(iconIndex?.icons) ? iconIndex.icons : []),
   ...(Array.isArray(solidIconIndex?.icons) ? solidIconIndex.icons : []),
 ];
+const previewExactIconIndex = new Map();
+for (const icon of publicIcons) {
+  if (!icon?.lib || !icon?.id) continue;
+  const refKey = `${icon.lib}:${icon.id}`.toLowerCase();
+  const styleKey = String(icon.style || 'outline').toLowerCase();
+  let styles = previewExactIconIndex.get(refKey);
+  if (!styles) {
+    styles = new Map();
+    previewExactIconIndex.set(refKey, styles);
+  }
+  if (!styles.has(styleKey)) styles.set(styleKey, icon);
+}
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 const railwayLocalFirstEnabled = isRailwayLocalFirstEnabled();
 const railwayCandidateIndex = createRailwayCandidateIndex({
@@ -776,19 +788,62 @@ function buildPublicIconResult(icon, options = {}) {
   return enrichPublicIconResult(result, options);
 }
 
-async function resolveHostedIconRef(ref, { style = 'any' } = {}) {
+function getLocalPreviewIconSource(ref, { style = 'any' } = {}) {
   const parsed = parseIconRef(ref);
   if (!parsed) return null;
-  const candidates = await searchHostedIcons({
-    query: parsed.id.replace(/[-_]+/g, ' '),
-    library: parsed.library,
-    style,
-    limit: 50,
-    exactIconId: parsed.id,
-  });
-  const normalizedId = parsed.id.toLowerCase();
-  const match = candidates.find((icon) => icon.id.toLowerCase() === normalizedId);
-  return match ? buildPublicIconResult(match, { style }) : null;
+  const styles = previewExactIconIndex.get(`${parsed.library}:${parsed.id}`.toLowerCase());
+  if (!styles) return null;
+
+  if (parsed.library.toLowerCase() === 'material') {
+    return styles.get('outline') || styles.get('solid') || styles.values().next().value || null;
+  }
+  if (style === 'outline' || style === 'solid') {
+    return styles.get(style) || null;
+  }
+  return styles.get('outline') || styles.get('solid') || styles.values().next().value || null;
+}
+
+async function resolveLocalPreviewIconRefs(refs, { style = 'any' } = {}) {
+  const selected = [];
+  const unresolvedRefs = [];
+
+  for (const ref of refs) {
+    const source = getLocalPreviewIconSource(ref, { style });
+    if (!source) {
+      unresolvedRefs.push(ref);
+      continue;
+    }
+    selected.push({
+      ref,
+      row: {
+        icon_id: `${source.lib}:${source.id}`,
+        id: source.id,
+        name: source.name || source.id.replace(/[-_]/g, ' '),
+        library: source.lib,
+        source_library: source.lib,
+        icon_type: source.type || 'svg',
+        style: source.style || 'outline',
+        svg: source.svg || null,
+      },
+    });
+  }
+
+  const hydration = await hydrateMaterialHostedRows(
+    selected.map((entry) => entry.row),
+    {
+      style,
+      onError: (error) => console.error('[SuperIcons] Preview Material hydration failed:', error.message),
+    },
+  );
+  const keptRows = new Set(hydration.kept);
+  for (const entry of selected) {
+    if (!keptRows.has(entry.row)) unresolvedRefs.push(entry.ref);
+  }
+
+  return {
+    icons: hydration.kept.map((row) => buildPublicIconResult(normalizeHostedIcon(row), { style })),
+    unresolvedRefs,
+  };
 }
 
 function firstQueryValue(value) {
@@ -922,27 +977,34 @@ async function buildHostedPreviewModel({
   const effectiveLimit = normalizePreviewLimit(limit);
   const fixedRefs = normalizePreviewIconRefs(iconRefs, effectiveLimit);
   const searchQuery = normalizePreviewText(query);
-  const icons =
-    fixedRefs.length > 0
-      ? (await Promise.all(fixedRefs.map((ref) => resolveHostedIconRef(ref, { style })))).filter(Boolean)
-      : (
-          await searchHostedIcons({
-            query: searchQuery,
-            library,
-            style,
-            locale,
-            limit: effectiveLimit,
-            usageContext,
-          })
-        ).map((icon) =>
-          buildPublicIconResult(icon, {
-            query: searchQuery,
-            library,
-            style,
-            locale,
-            limit: effectiveLimit,
-          }),
-        );
+  const previewWarnings = [...warnings];
+  let icons;
+  if (fixedRefs.length > 0) {
+    const resolved = await resolveLocalPreviewIconRefs(fixedRefs, { style });
+    icons = resolved.icons;
+    if (resolved.unresolvedRefs.length > 0) {
+      previewWarnings.push(`Could not resolve icon refs: ${resolved.unresolvedRefs.join(', ')}.`);
+    }
+  } else {
+    icons = (
+      await searchHostedIcons({
+        query: searchQuery,
+        library,
+        style,
+        locale,
+        limit: effectiveLimit,
+        usageContext,
+      })
+    ).map((icon) =>
+      buildPublicIconResult(icon, {
+        query: searchQuery,
+        library,
+        style,
+        locale,
+        limit: effectiveLimit,
+      }),
+    );
+  }
 
   const previewUrl =
     fixedRefs.length > 0
@@ -981,7 +1043,7 @@ async function buildHostedPreviewModel({
         fixedRefs.length > 0
           ? normalizePreviewIconRefs(browserIconRefs.length ? browserIconRefs : fixedRefs, 24).length
           : icons.length,
-      warnings,
+      warnings: previewWarnings,
     }),
   };
 }
