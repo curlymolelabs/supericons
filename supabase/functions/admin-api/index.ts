@@ -25,6 +25,7 @@ import {
   buildDashboardV2TopLists,
   compactDashboardV2EventRows,
   compactDashboardV2QueryRows,
+  dashboardV2SearchHistoryRole,
   fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
@@ -742,44 +743,9 @@ function optionalNonnegativeInteger(value: unknown) {
   return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : null;
 }
 
-function buildIconAttemptIndex(rows: SearchEvidenceRow[]) {
-  return rows
-    .filter((row) => String(row.signal_type || '').toLowerCase() === 'search_attempt')
-    .map((row) => ({
-      query: normalizeSearchQuery(row.search_query),
-      library_filter: normalizeReviewLibraryFilter(row.library_filter),
-      result_count: optionalNonnegativeInteger(row.result_count),
-      created_at_ms: toIsoTimeMs(row.created_at),
-    }))
-    .filter((row) => row.query && Number.isFinite(row.result_count) && row.created_at_ms !== null);
-}
-
-function hasNearbyIconAttempt(
-  iconAttempts: ReturnType<typeof buildIconAttemptIndex>,
-  auditRow: Record<string, unknown>,
-) {
-  const query = normalizeSearchQuery(auditRow.query_norm);
-  const libraryFilter = normalizeReviewLibraryFilter(auditRow.library_filter);
-  const resultCount = optionalNonnegativeInteger(auditRow.result_count);
-  const createdAtMs = toIsoTimeMs(auditRow.created_at);
-  if (!query || resultCount === null || createdAtMs === null) return false;
-
-  return iconAttempts.some((attempt) => (
-    attempt.query === query
-    && attempt.library_filter === libraryFilter
-    && attempt.result_count === resultCount
-    && attempt.created_at_ms !== null
-    && Math.abs(attempt.created_at_ms - createdAtMs) <= 120000
-  ));
-}
-
-function mapAuditRowToEvidenceRow(
-  row: Record<string, unknown>,
-  iconAttempts: ReturnType<typeof buildIconAttemptIndex>,
-) {
+function mapAuditRowToEvidenceRow(row: Record<string, unknown>) {
   const status = String(row.status || '').toLowerCase();
   const resultCount = optionalNonnegativeInteger(row.result_count);
-  const hasIconAttempt = hasNearbyIconAttempt(iconAttempts, row);
   const source = normalizeSearchQuery(row.source);
   const channel = classifyAnalyticsChannel(row.channel) || classifyAnalyticsChannel(source) || 'unknown';
   const environment = classifyAnalyticsSource(row.environment) || classifyAnalyticsSource(source) || 'production';
@@ -807,7 +773,7 @@ function mapAuditRowToEvidenceRow(
     analytics_channel: channel,
     environment,
     channel,
-    signal_type: hasIconAttempt ? 'hosted_search_audit' : 'search_attempt',
+    signal_type: channel === 'web' ? 'search_attempt' : 'hosted_search_audit',
     search_query: normalizeSearchQuery(row.query_norm),
     icon_id: null,
     batch_id: null,
@@ -863,7 +829,6 @@ function mapAuditRowToEvidenceRow(
 async function fetchHostedSearchAuditRows(
   adminClient: SupabaseClient,
   since: string | null,
-  iconRows: SearchEvidenceRow[],
   until: string | null = null,
   maxRows = Number.POSITIVE_INFINITY,
   channel = 'all',
@@ -871,8 +836,6 @@ async function fetchHostedSearchAuditRows(
 ) {
   const fullSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
   const baseSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, created_at';
-  const iconAttempts = buildIconAttemptIndex(iconRows);
-
   async function load(select: string) {
     return await fetchAllRows<Record<string, unknown>>((from, to) => {
       let query = adminClient
@@ -901,12 +864,12 @@ async function fetchHostedSearchAuditRows(
 
   try {
     const rows = await load(fullSelect);
-    return rows.map((row) => mapAuditRowToEvidenceRow(row, iconAttempts));
+    return rows.map(mapAuditRowToEvidenceRow);
   } catch (error) {
     if (!isMissingRelationError(error) && !isMissingColumnError(error)) throw error;
     try {
       const rows = await load(baseSelect);
-      return rows.map((row) => mapAuditRowToEvidenceRow(row, iconAttempts));
+      return rows.map(mapAuditRowToEvidenceRow);
     } catch (fallbackError) {
       if (isMissingRelationError(fallbackError)) return [];
       throw fallbackError;
@@ -1062,7 +1025,7 @@ async function fetchTelemetryEvidenceRows(
   maxRowsPerSource = Number.POSITIVE_INFINITY,
 ) : Promise<SearchEvidenceRow[]> {
   const [auditRows, mcpUsageRows] = await Promise.all([
-    fetchHostedSearchAuditRows(adminClient, since, [], until, maxRowsPerSource),
+    fetchHostedSearchAuditRows(adminClient, since, until, maxRowsPerSource),
     fetchMcpUsageEventRows(adminClient, since, until, maxRowsPerSource),
   ]);
   return mergeTelemetryEvidenceRows([...auditRows, ...mcpUsageRows])
@@ -1085,7 +1048,7 @@ async function fetchSearchEvidenceRows(
   }
 
   const iconRows = await fetchIconEvidenceRows(adminClient, since);
-  const auditRows = await fetchHostedSearchAuditRows(adminClient, since, iconRows);
+  const auditRows = await fetchHostedSearchAuditRows(adminClient, since);
   const mcpUsageRows = await fetchMcpUsageEventRows(adminClient, since);
   const telemetryRows = mergeTelemetryEvidenceRows([...auditRows, ...mcpUsageRows]);
   const rows: SearchEvidenceRow[] = [...iconRows, ...telemetryRows] as SearchEvidenceRow[];
@@ -1495,7 +1458,6 @@ async function fetchDashboardV2Telemetry(
     fetchHostedSearchAuditRows(
       adminClient,
       filters.from,
-      [],
       filters.to_exclusive,
       V2_MAX_RAW_ROWS_PER_SOURCE + 1,
       filters.channel,
@@ -1533,6 +1495,7 @@ async function fetchDashboardV2Telemetry(
 async function fetchDashboardV2IdentityTelemetry(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
+  { includeDiagnostics = false } = {},
 ) {
   const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
   const usageSelect = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, metadata, created_at';
@@ -1624,23 +1587,21 @@ async function fetchDashboardV2IdentityTelemetry(
     auditRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
     || usageRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
   );
+  const mappedUsageRows = usageRows
+    .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
+    .map(mapMcpUsageEventToEvidenceRow);
   const rows = mergeTelemetryEvidenceRows([
     ...auditRows
       .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
-      .map((row: Record<string, unknown>) => mapAuditRowToEvidenceRow(row, [])),
-    ...usageRows
-      .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
-      .map(mapMcpUsageEventToEvidenceRow),
+      .map(mapAuditRowToEvidenceRow),
+    ...mappedUsageRows,
   ]).map((row): SearchEvidenceRow => ({
     ...row,
     environment: classifySearchEvidenceEnvironment(row),
     channel: classifySearchEvidenceChannel(row),
   })).filter((row) => (
-    String(row.signal_type || '') === 'search_attempt'
-    || (
-      String(row.signal_type || '') === 'mcp_call'
-      && String(row.query_origin || '') === 'icon_lookup'
-    )
+    ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
+    || (includeDiagnostics && dashboardV2SearchHistoryRole(row) === 'diagnostic')
   ));
   return {
     rows: filterDashboardV2Rows(rows, filters) as SearchEvidenceRow[],
@@ -2283,7 +2244,10 @@ async function buildDashboardV2SearchPayload(
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
   ]);
-  const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historySourceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historyEvidenceRows = historySourceRows.filter((row: Record<string, unknown>) => (
+    ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
+  ));
   const historyRows = buildQueryWorkbenchRows(
     historyEvidenceRows,
     new Map(),
@@ -2308,10 +2272,28 @@ async function buildDashboardV2SearchPayload(
     || right.attempt_count - left.attempt_count
     || left.query.localeCompare(right.query)
   ));
-  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const compactHistoryRows = compactDashboardV2QueryRows(sortedRows)
+    .filter((row: Record<string, unknown>) => Number(row.activity_count || 0) > 0);
+  const excludedNonActivityRows = sortedRows.length - compactHistoryRows.length;
+  const historyActivities = compactHistoryRows.reduce(
+    (sum: number, row: Record<string, unknown>) => sum + Number(row.activity_count || 0),
+    0,
+  );
+  const webActivities = filteredHistoryRows.reduce((sum, row) => {
+    const sources = Array.isArray(row.audit_sources) ? row.audit_sources : [];
+    const webOnly = sources.length === 1 && sources[0] === 'search_request_audit';
+    const activityCount = Number(
+      row.attempt_count
+      || row.mcp_result_rows
+      || row.result_sample_count
+      || 0,
+    );
+    return webOnly ? sum + activityCount : sum;
+  }, 0);
+  const pageCount = Math.max(1, Math.ceil(compactHistoryRows.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
-  const queries = compactDashboardV2QueryRows(sortedRows.slice(start, start + pageSize));
+  const queries = compactHistoryRows.slice(start, start + pageSize);
   const worklist = compactDashboardV2QueryRows(
     filteredWorklistRows
       .filter((row) => (
@@ -2339,15 +2321,20 @@ async function buildDashboardV2SearchPayload(
     summary: {
       attempts: filteredWorklistRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
       query_groups: filteredWorklistRows.length,
-      history_attempts: filteredHistoryRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
-      history_rows: filteredHistoryRows.length,
+      history_attempts: historyActivities,
+      history_rows: compactHistoryRows.length,
+      table_rows: compactHistoryRows.length,
+      activities: historyActivities,
+      mcp_activities: Math.max(0, historyActivities - webActivities),
+      web_activities: webActivities,
+      excluded_non_activity_rows: excludedNonActivityRows,
     },
     queries,
     ...historyState,
     pagination: {
       page: currentPage,
       page_size: pageSize,
-      total: sortedRows.length,
+      total: compactHistoryRows.length,
       page_count: pageCount,
     },
     worklist: rollupUnavailableReason ? [] : worklist,
@@ -2435,23 +2422,47 @@ async function buildDashboardV2SearchEventsPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
+  const eventScope = String(url.searchParams.get('event_scope') || 'primary').trim().toLowerCase();
+  if (!['primary', 'audit'].includes(eventScope)) {
+    throw new Error('The search event scope is invalid.');
+  }
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
   const snapshotKey = buildSearchEventSnapshotCacheKey(url, filters);
   const snapshotId = await buildSearchEventSnapshotId(snapshotKey);
   const snapshot = await searchEventSnapshotCache.getOrCreate(snapshotKey, async () => {
     const snapshotStartedAt = Date.now();
-    const telemetry = await fetchDashboardV2IdentityTelemetry(adminClient, filters);
+    const telemetry = await fetchDashboardV2IdentityTelemetry(
+      adminClient,
+      filters,
+      { includeDiagnostics: true },
+    );
     const linkedRows = await addPrivacySafeRootRequestPrefixes(telemetry.rows);
     const sortedRows = [...linkedRows].sort((left, right) => (
       String(right.created_at || '').localeCompare(String(left.created_at || ''))
       || String(right.id || '').localeCompare(String(left.id || ''))
     ));
+    const compactEvents = compactDashboardV2EventRows(sortedRows);
+    const roleCounts = compactEvents.reduce((
+      counts: Record<string, number>,
+      event: Record<string, unknown>,
+    ) => {
+      const role = String(event.event_role || 'top_level');
+      counts[role] = Number(counts[role] || 0) + 1;
+      return counts;
+    }, {} as Record<string, number>);
     return {
       id: snapshotId,
       generated_at: new Date().toISOString(),
       generation_ms: Date.now() - snapshotStartedAt,
-      events: compactDashboardV2EventRows(sortedRows),
+      events: eventScope === 'audit'
+        ? compactEvents
+        : compactEvents.filter((event: Record<string, unknown>) => event.event_role === 'top_level'),
+      event_counts: {
+        top_level: Number(roleCounts.top_level || 0),
+        web_top_level: Number(roleCounts.web_top_level || 0),
+        diagnostics: Number(roleCounts.diagnostic || 0),
+      },
       complete: !telemetry.truncated,
       field_coverage: {
         locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.locale)),
@@ -2487,6 +2498,8 @@ async function buildDashboardV2SearchEventsPayload(
         ? null
         : 'The export snapshot expired while pages were loading. Start the export again.',
     snapshot_id: snapshot.id,
+    event_scope: eventScope,
+    event_counts: snapshot.event_counts,
     pagination: {
       page: currentPage,
       page_size: pageSize,
@@ -2495,8 +2508,10 @@ async function buildDashboardV2SearchEventsPayload(
     },
     field_coverage: snapshot.field_coverage,
     definitions: {
-      grain: 'One telemetry event after exact key-based source merging. A tool event and a lower-level hosted audit can remain separate when older rows have no shared key.',
-      primary_metric_source: 'Use mcp_usage_events for top-level MCP tool metrics. Treat search_request_audit rows as hosted search pipeline diagnostics.',
+      grain: eventScope === 'primary'
+        ? 'One top-level MCP tool event per row. Lower-level hosted search diagnostics and older summary-only rows are excluded.'
+        : 'One telemetry record per row after exact key-based source merging. Top-level tool events, older top-level records, and lower-level hosted search diagnostics are labeled by event_role.',
+      primary_metric_source: 'Use mcp_usage_events for top-level MCP tool metrics. Web search_request_audit rows are top-level web searches. Other search_request_audit rows are hosted search pipeline diagnostics.',
       search_zero: 'A user-facing search or final recommendation completed with zero returned results.',
       lookup_not_found: 'An exact lookup completed without an icon or returned the icon_not_found code.',
       lookup_error: 'An exact lookup failed for a reason other than icon_not_found.',
@@ -2505,6 +2520,7 @@ async function buildDashboardV2SearchEventsPayload(
     },
     meta: dashboardV2Meta(filters, startedAt, {
       metric_scope: 'filtered_search_event_details',
+      event_scope: eventScope,
       completeness: {
         event_rows_complete: complete,
       },
@@ -2700,6 +2716,7 @@ function isDashboardV2ValidationError(error: unknown) {
     || message.startsWith('The dashboard data cutoff')
     || message.startsWith('The dashboard view marker')
     || message.startsWith('The dashboard filter marker')
+    || message.startsWith('The search event scope')
   );
 }
 

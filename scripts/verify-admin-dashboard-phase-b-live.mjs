@@ -38,7 +38,12 @@ const dashboard = await startAdminDashboardPhaseBLiveServer({
 const servedHtmlResponse = await fetch(dashboard.url);
 const servedHtml = await servedHtmlResponse.text();
 ok(servedHtmlResponse.ok, 'The local live dashboard HTML could not be loaded.');
-ok(servedHtml.includes('managedAuth:true'), 'The managed local runtime configuration is missing.');
+const runtimeResponse = await fetch(new URL('/admin-runtime.js', dashboard.url));
+const runtimeSource = await runtimeResponse.text();
+ok(
+  runtimeResponse.ok && runtimeSource.includes('managedAuth:true'),
+  'The managed local runtime configuration is missing.',
+);
 ok(!servedHtml.includes(adminSecret), 'The local live dashboard HTML contains the admin secret.');
 ok((await fetch(new URL('/package.json', dashboard.url))).status === 404, 'The local gateway exposed an unapproved file.');
 const initialSession = await fetch(new URL('/api/admin/session', dashboard.url));

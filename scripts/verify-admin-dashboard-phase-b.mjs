@@ -27,7 +27,9 @@ function excludes(source, value, label) {
   'customFrom',
   'customTo',
   'channelFilter',
-  'includeTestTraffic',
+  'includeSearchTestTraffic',
+  'searchDownloadToggle',
+  'searchDownloadPopover',
   'kpiClients',
   'kpiSearches',
   'kpiZero',
@@ -37,10 +39,6 @@ function excludes(source, value, label) {
   'qualityChart',
   'latestActivity',
   'queryExplorer',
-  'gapWorklist',
-  'iconRequests',
-  'contactInbox',
-  'diagnosticsDrawer',
   'audienceChart',
   'registeredUsers',
   'registeredUsersSubtitle',
@@ -52,6 +50,9 @@ function excludes(source, value, label) {
   'Latest Activity',
   '<span class="nav-label">Searches</span>',
   '<span class="nav-label">Users</span>',
+  '>Grouped CSV<',
+  '<strong>MCP Requests CSV</strong>',
+  '<strong>Full Audit JSON</strong>',
 ].forEach((value) => includes(html, value, 'admin.html'));
 
 [
@@ -60,6 +61,15 @@ function excludes(source, value, label) {
   'intelligenceRawSignalsTable',
   'queryEvidenceTable',
   'raw evidence table',
+  'gapWorklist',
+  'iconRequests',
+  'contactInbox',
+  'diagnosticsDrawer',
+  'data-row-label="Gap worklist"',
+  'data-row-label="Icon requests"',
+  'data-row-label="Contact inbox"',
+  '<strong>Table CSV</strong>',
+  '>Download CSV<',
 ].forEach((value) => excludes(html, value, 'admin.html'));
 
 [
@@ -82,7 +92,8 @@ function excludes(source, value, label) {
   'include_test',
   'User query',
   'Known defects and errors are excluded',
-  'Mixed: ${formatNumber(row.zero_attempt_count)} of ${formatNumber(row.attempt_count)} zero',
+  'Clarification',
+  'query-audit-json',
   'row.result_count_reason',
   'row.country_reason',
   'Lookup completed',
@@ -94,6 +105,11 @@ function excludes(source, value, label) {
   'Last search',
   'renderPagination',
   'iconSvg',
+  "SEARCH_EXPORT_SCHEMA_VERSION = '2.0'",
+  "'supericons-search-history-grouped'",
+  "'supericons-search-mcp-requests'",
+  "'supericons-search-full-audit'",
+  'integrity_checks',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [

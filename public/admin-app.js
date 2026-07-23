@@ -60,6 +60,7 @@ const state = {
     includeTest: false,
     q: '',
   },
+  searchIncludeTest: false,
   explorerQuery: '',
   explorerIssue: '',
   topList: 'searched',
@@ -529,7 +530,7 @@ function baseFilterParams({ forSearch = false } = {}) {
     params.set('to', state.filters.to);
   }
   params.set('channel', state.filters.channel);
-  params.set('include_test', String(state.filters.includeTest));
+  params.set('include_test', String(forSearch ? state.searchIncludeTest : state.filters.includeTest));
   const query = forSearch
     ? [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim()
     : state.filters.q;
@@ -768,6 +769,7 @@ function outcomeFor(row = {}) {
   const outcome = String(row.issue_type || row.outcome || row.search_outcome || '').toLowerCase();
   const origin = String(row.query_origin || row.origin || '').toLowerCase();
   if (outcome.includes('error')) return { label: 'Error', tone: 'zero' };
+  if (outcome.includes('clarification')) return { label: 'Clarification', tone: 'info' };
   if (origin === 'icon_lookup') {
     if (outcome.includes('mixed')) {
       return {
@@ -820,13 +822,11 @@ function queryActivityCell(row = {}, rowIndex = -1) {
 function querySearcherCell(row = {}, rowIndex = -1) {
   const searcher = normalizeList(row.searchers)[0];
   if (!searcher) return '<span class="muted-cell">Unknown searcher</span>';
-  const detailsAvailable = row.searcher_details_available === true;
   const kind = safeText(searcher.kind, 'anonymous');
   return `
     <strong>${escapeHtml(safeText(searcher.label, 'Unknown searcher'))}</strong>
     <div class="activity-meta">
       ${escapeHtml(kind)}${searcher.account_linked ? ' | Account linked' : ''}
-      ${detailsAvailable ? `<button class="icon-button inline-icon-button" type="button" data-searcher-details="${rowIndex}" aria-label="Open Searcher details" title="Searcher details">${iconSvg('info')}</button>` : ''}
     </div>
   `;
 }
@@ -973,6 +973,73 @@ function plainExportRow(row = {}) {
   ]));
 }
 
+const SEARCH_EXPORT_SCHEMA_VERSION = '2.0';
+
+function searchExportPeriod() {
+  const labels = {
+    '1d': '24h',
+    '7d': '7d',
+    '30d': '30d',
+    '90d': '90d',
+    '1y': '12m',
+    all: 'all-time',
+  };
+  if (state.filters.window === 'custom') {
+    return {
+      key: 'custom',
+      label: `${state.filters.from}-to-${state.filters.to}`,
+      from: state.filters.from || null,
+      to: state.filters.to || null,
+    };
+  }
+  return {
+    key: state.filters.window,
+    label: labels[state.filters.window] || state.filters.window,
+    from: null,
+    to: null,
+  };
+}
+
+function searchExportTimestampToken(value = new Date().toISOString()) {
+  return String(value)
+    .replace(/\.\d{3}Z$/, 'Z')
+    .replaceAll(':', '')
+    .replaceAll('-', '');
+}
+
+function searchExportBaseName(type, generatedAt) {
+  const period = searchExportPeriod().label
+    .replace(/[^a-z0-9-]+/gi, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+  const names = {
+    grouped_history: 'supericons-search-history-grouped',
+    top_level_mcp_requests: 'supericons-search-mcp-requests',
+    full_audit: 'supericons-search-full-audit',
+  };
+  return `${names[type] || `supericons-search-${type}`}-${period}-${searchExportTimestampToken(generatedAt)}`;
+}
+
+function searchExportFilters() {
+  return {
+    channel: state.filters.channel,
+    include_test: state.searchIncludeTest,
+    query: [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim() || null,
+    outcome: state.explorerIssue || null,
+  };
+}
+
+function searchExportMetadata(type, generatedAt) {
+  return {
+    export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
+    export_type: type,
+    export_generated_at_utc: generatedAt,
+    export_period: searchExportPeriod().label,
+    export_channel_filter: state.filters.channel,
+    export_test_traffic_included: state.searchIncludeTest,
+  };
+}
+
 function searcherIdentityScope(kind) {
   const scopes = {
     registered: 'account',
@@ -1012,67 +1079,119 @@ function queryReturnedExportValue(row = {}) {
   return countWithUnit(resultCount, row.result_unit);
 }
 
-function queryCsvExportRow(row = {}, searcher = null) {
-  const {
-    query,
-    searchers: ignoredSearchers,
-    library_filter: libraryFilter,
-    job_category: jobCategory,
-    query_origin: queryOrigin,
-    activity_count: activityCount,
-    activity_label: activityLabel,
-    outcome_label: outcomeLabel,
-    country_code: countryCode,
-    channel,
-    result_count: resultCount,
-    result_count_min: resultCountMin,
-    result_count_max: resultCountMax,
-    last_seen: lastSeen,
-    ...details
-  } = row;
-  const sourceSearcherCount = normalizeList(ignoredSearchers).length;
+function queryCsvExportRow(row = {}, searcher = null, exportMetadata = {}) {
   const searcherKind = searcher ? safeText(searcher.kind, '') : '';
   const rawSearcherChannels = normalizeList(searcher?.channels);
+  const activityKind = safeText(row.activity_kind, row.query_origin === 'icon_lookup' ? 'lookup' : 'search');
   return {
-    query,
+    query: row.query,
     searcher_identifier: searcher ? safeText(searcher.label, '') : '',
-    searches: activityCount ?? row.attempt_count ?? '',
-    outcome: outcomeLabel || outcomeFor(row).label,
-    country: queryCountryExportValue(row),
-    venue: channelLabel(channel),
-    returned: queryReturnedExportValue(row),
-    last_seen: lastSeen,
     searcher_kind: searcherKind,
     searcher_account_linked: searcher ? Boolean(searcher.account_linked) : null,
     identity_scope: searcherIdentityScope(searcherKind),
-    searcher_searches: searcher?.searches ?? '',
-    searcher_venues: rawSearcherChannels.map(channelLabel).join('|'),
+    activity_count: row.activity_count ?? row.attempt_count ?? '',
+    activity_unit: activityKind,
+    activity_label: row.activity_label ?? '',
+    outcome_label: row.outcome_label || outcomeFor(row).label,
+    outcome_type: row.issue_type ?? '',
+    country_code: row.country_available === false ? '' : row.country_code ?? '',
+    country_display: queryCountryExportValue(row),
+    country_count: row.country_count ?? '',
+    country_recorded: number(row.country_count) > 0 || Boolean(row.country_code),
+    country_exact_for_group: row.country_available !== false && Boolean(row.country_code),
+    country_scope: row.country_scope ?? '',
+    country_detail: row.country_reason ?? '',
+    venue_label: channelLabel(row.channel),
+    channel: row.channel,
+    venue_exact_for_group: row.channel_available !== false && Boolean(row.channel),
+    venue_detail: row.channel_reason ?? '',
+    library_filter: row.library_filter,
+    job_category: row.job_category ?? '',
+    query_origin: row.query_origin,
+    tool_names: normalizeList(row.tools).join('|'),
     searcher_channels: rawSearcherChannels.join('|'),
-    searcher_countries: normalizeList(searcher?.countries).join('|'),
-    searcher_first_seen: searcher?.first_seen ?? '',
-    searcher_last_seen: searcher?.last_seen ?? '',
-    searcher_count_in_source_row: sourceSearcherCount,
-    library_filter: libraryFilter,
-    job_category: jobCategory ?? '',
-    query_origin: queryOrigin,
-    activity_count: activityCount,
-    activity_label: activityLabel,
-    outcome_label: outcomeLabel,
-    country_code: countryCode,
-    channel,
-    result_count: resultCount,
-    result_count_min: resultCountMin,
-    result_count_max: resultCountMax,
-    ...details,
+    returned_display: queryReturnedExportValue(row),
+    result_count: row.result_count,
+    result_count_min: row.result_count_min,
+    result_count_max: row.result_count_max,
+    result_sample_count: row.result_sample_count,
+    result_unit: row.result_unit,
+    result_count_available: row.result_count_available,
+    result_count_kind: row.result_count_kind,
+    result_count_scope: row.result_count_scope,
+    result_count_detail: row.result_count_reason ?? '',
+    success_count: row.successful_attempt_count,
+    zero_count: row.zero_attempt_count,
+    low_count: row.low_attempt_count,
+    error_count: row.error_attempt_count,
+    clarification_count: row.clarification_attempt_count,
+    defect_count: row.defect_attempt_count,
+    lookup_found_count: row.lookup_success_count,
+    lookup_not_found_count: row.lookup_not_found_count,
+    lookup_error_count: row.lookup_error_count,
+    lookup_unknown_count: row.lookup_unknown_count,
+    first_seen_utc: row.first_seen,
+    last_seen_utc: row.last_seen,
+    review_status: row.review_status ?? '',
+    review_note: row.review_note ?? '',
+    row_grain: 'searcher + query + venue + library + job category + origin',
+    ...exportMetadata,
   };
 }
 
-function queryCsvExportRows(rows = []) {
+function queryCsvExportRows(rows = [], exportMetadata = {}) {
   return normalizeList(rows).flatMap((row) => {
     const searchers = normalizeList(row.searchers);
-    if (!searchers.length) return [queryCsvExportRow(row)];
-    return searchers.map((searcher) => queryCsvExportRow(row, searcher));
+    if (!searchers.length) return [queryCsvExportRow(row, null, exportMetadata)];
+    return searchers.map((searcher) => queryCsvExportRow(row, searcher, exportMetadata));
   });
+}
+
+function searchAuditIntegrity(tableRows, topLevelEvents, webSearchEvents, diagnostics) {
+  const groupedRows = normalizeList(tableRows);
+  const primaryEvents = [...normalizeList(topLevelEvents), ...normalizeList(webSearchEvents)];
+  const groupablePrimaryEvents = primaryEvents.filter((row) => safeText(row.query, '').trim());
+  const groupedActivityCount = groupedRows.reduce(
+    (sum, row) => sum + number(row.activity_count),
+    0,
+  );
+  const zeroActivityRows = groupedRows.filter((row) => number(row.activity_count) <= 0);
+  const identifiers = primaryEvents
+    .map((row) => safeText(row.event_identifier, '').trim())
+    .filter(Boolean);
+  const duplicateIdentifiers = identifiers.length - new Set(identifiers).size;
+  const missingIdentifiers = primaryEvents.length - identifiers.length;
+  const unexpectedPrimaryRoles = primaryEvents.filter((row) => (
+    !['top_level', 'web_top_level'].includes(String(row.event_role || ''))
+  )).length;
+  const unexpectedDiagnosticRoles = normalizeList(diagnostics).filter((row) => (
+    String(row.event_role || '') !== 'diagnostic'
+  )).length;
+  const checks = {
+    grouped_rows_have_activity: zeroActivityRows.length === 0,
+    grouped_activity_matches_groupable_primary_events: groupedActivityCount === groupablePrimaryEvents.length,
+    primary_event_identifiers_are_unique: duplicateIdentifiers === 0,
+    primary_event_identifiers_are_recorded: missingIdentifiers === 0,
+    primary_roles_are_valid: unexpectedPrimaryRoles === 0,
+    diagnostic_roles_are_valid: unexpectedDiagnosticRoles === 0,
+  };
+  return {
+    status: Object.values(checks).every(Boolean) ? 'passed' : 'needs_attention',
+    checks,
+    counts: {
+      grouped_rows: groupedRows.length,
+      grouped_activity: groupedActivityCount,
+      groupable_primary_events: groupablePrimaryEvents.length,
+      top_level_mcp_requests: normalizeList(topLevelEvents).length,
+      web_searches: normalizeList(webSearchEvents).length,
+      hosted_diagnostics: normalizeList(diagnostics).length,
+      zero_activity_grouped_rows: zeroActivityRows.length,
+      duplicate_primary_event_identifiers: duplicateIdentifiers,
+      missing_primary_event_identifiers: missingIdentifiers,
+      unexpected_primary_roles: unexpectedPrimaryRoles,
+      unexpected_diagnostic_roles: unexpectedDiagnosticRoles,
+    },
+  };
 }
 
 function setSkeleton(element, text) {
@@ -1599,16 +1718,28 @@ function renderOverview() {
 
 function renderQueryExplorer() {
   const element = $('queryExplorer');
+  const subtitle = $('searchHistorySubtitle');
+  const includeTest = $('includeSearchTestTraffic');
+  if (includeTest) includeTest.checked = state.searchIncludeTest;
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
+    if (subtitle) subtitle.textContent = 'Loading grouped rows and activity totals';
     renderPagination('queries', 0, 1);
     element.innerHTML = loadingState('Loading query explorer');
     return;
   }
   if (state.data.search?.queries_available === false) {
+    if (subtitle) subtitle.textContent = state.data.search.queries_unavailable_reason || 'Complete query history is not available for this period.';
     renderPagination('queries', 0, 1);
     element.innerHTML = emptyState(state.data.search.queries_unavailable_reason || 'Complete query history is not available for this period.');
     return;
+  }
+  const summary = state.data.search?.summary || {};
+  if (subtitle) {
+    const groupedRows = number(summary.table_rows ?? summary.history_rows ?? state.data.search?.pagination?.total);
+    const activities = number(summary.activities ?? summary.history_attempts);
+    const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
+    subtitle.textContent = `${formatNumber(groupedRows)} rows grouped by searcher, query, venue, library, and origin | ${formatNumber(activities)} activities | ${testScope}`;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
@@ -1762,10 +1893,6 @@ function renderDiagnostics() {
 
 function renderSearch() {
   renderQueryExplorer();
-  renderWorklist();
-  renderIconRequests();
-  renderContactInbox();
-  renderDiagnostics();
 }
 
 function registeredUserDisplayRows(audienceUsers) {
@@ -2357,11 +2484,12 @@ async function fetchAllPages(endpoint, rowsPath) {
   return [firstRows, ...rest].flat();
 }
 
-async function fetchAllSearchEvents() {
+async function fetchAllSearchEvents(eventScope = 'primary') {
   const pageSize = 100;
   const params = sharedParams({ forSearch: true });
   params.set('page', '1');
   params.set('page_size', String(pageSize));
+  params.set('event_scope', eventScope);
   const first = await apiRequest(`/v2/search/events?${params}`);
   if (first.events_export_available === false) {
     throw new Error(first.events_export_unavailable_reason || 'Complete event export is not available for this period. Narrow the filters and try again.');
@@ -2397,6 +2525,8 @@ async function fetchAllSearchEvents() {
     events_complete: first.events_complete === true,
     events_export_available: first.events_export_available !== false,
     snapshot_id: snapshotId || null,
+    event_scope: first.event_scope || eventScope,
+    event_counts: first.event_counts || {},
     field_coverage: first.field_coverage || {},
     definitions: first.definitions || {},
     meta: first.meta || {},
@@ -2410,7 +2540,7 @@ async function exportData(key) {
   let completeRows = null;
   let eventExport = null;
   try {
-    if (key === 'queries-csv' || key === 'queries-json') {
+    if (key === 'queries-csv' || key === 'queries-json' || key === 'query-audit-json') {
       completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
     } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
       const queryRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
@@ -2422,24 +2552,77 @@ async function exportData(key) {
       completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
     } else if (key === 'activity') {
       completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
-    } else if (key === 'query-events-csv' || key === 'query-events-json') {
-      eventExport = await fetchAllSearchEvents();
+    } else if (key === 'query-events-csv') {
+      eventExport = await fetchAllSearchEvents('primary');
+    }
+    if (key === 'query-audit-json') {
+      eventExport = await fetchAllSearchEvents('audit');
     }
   } catch (error) {
     showToast(error.message || 'The complete export could not be loaded.', true);
     return;
   }
+  const generatedAt = new Date().toISOString();
   if (eventExport) {
-    if (key === 'query-events-json') {
+    if (key === 'query-audit-json') {
+      const events = normalizeList(eventExport.events);
+      const groupedHistory = normalizeList(completeRows);
+      const topLevelMcpRequests = events.filter((row) => row.event_role === 'top_level');
+      const webSearches = events.filter((row) => row.event_role === 'web_top_level');
+      const hostedDiagnostics = events.filter((row) => row.event_role === 'diagnostic');
+      const integrity = searchAuditIntegrity(
+        groupedHistory,
+        topLevelMcpRequests,
+        webSearches,
+        hostedDiagnostics,
+      );
+      const audit = {
+        export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
+        export_type: 'full_search_audit',
+        description: 'Complete Search history audit package. Data sets with different row meanings remain separate.',
+        generated_at_utc: generatedAt,
+        period: searchExportPeriod(),
+        filters: searchExportFilters(),
+        contents: {
+          grouped_history: 'One row per searcher, query, venue, library, job category, and origin.',
+          top_level_mcp_requests: 'One top-level MCP search or exact icon lookup per row.',
+          web_searches: 'One top-level web search per row.',
+          hosted_diagnostics: 'Lower-level hosted search work. These rows are supporting diagnostics and are not additional user activity.',
+          field_coverage: 'Recorded-field coverage across the audit event source.',
+          integrity_checks: 'Automated reconciliation checks for row activity, event identifiers, and source roles.',
+        },
+        summary: {
+          grouped_history_rows: groupedHistory.length,
+          grouped_activities: integrity.counts.grouped_activity,
+          top_level_mcp_requests: topLevelMcpRequests.length,
+          web_searches: webSearches.length,
+          hosted_diagnostics: hostedDiagnostics.length,
+          excluded_non_activity_rows: number(search.summary?.excluded_non_activity_rows),
+        },
+        integrity_checks: integrity,
+        grouped_history: groupedHistory,
+        top_level_mcp_requests: topLevelMcpRequests,
+        web_searches: webSearches,
+        hosted_diagnostics: hostedDiagnostics,
+        field_coverage: eventExport.field_coverage,
+        definitions: {
+          ...eventExport.definitions,
+          grouped_history_grain: 'One row per searcher, query, venue, library, job category, and origin.',
+          grouped_activity: 'The number of top-level searches or exact icon lookups represented by grouped history rows.',
+          source_separation: 'Top-level MCP requests, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
+        },
+        source_meta: eventExport.meta,
+      };
       downloadFile(
-        `supericons-query-events-${state.filters.window}.json`,
-        JSON.stringify(eventExport, null, 2),
+        `${searchExportBaseName('full_audit', generatedAt)}.json`,
+        JSON.stringify(audit, null, 2),
         'application/json;charset=utf-8',
       );
     } else {
+      const exportMetadata = searchExportMetadata('top_level_mcp_requests', generatedAt);
       exportRows(
-        `supericons-query-events-${state.filters.window}`,
-        eventExport.events.map(plainExportRow),
+        searchExportBaseName('top_level_mcp_requests', generatedAt),
+        eventExport.events.map((row) => plainExportRow({ ...row, ...exportMetadata })),
         'csv',
       );
     }
@@ -2474,13 +2657,16 @@ async function exportData(key) {
     clients: completeRows ?? unwrapRows(audience.clients),
   };
   const mappedRows = normalizeList(mapping[key]);
+  const groupedExportMetadata = searchExportMetadata('grouped_history', generatedAt);
   const rows = key === 'queries-csv'
-    ? queryCsvExportRows(mappedRows).map(plainExportRow)
+    ? queryCsvExportRows(mappedRows, groupedExportMetadata).map(plainExportRow)
     : key === 'queries-json'
       ? mappedRows
       : mappedRows.map(plainExportRow);
   exportRows(
-    `supericons-${key}-${state.filters.window}`,
+    key === 'queries-csv'
+      ? searchExportBaseName('grouped_history', generatedAt)
+      : `supericons-${key}-${state.filters.window}`,
     rows,
     key.endsWith('json') ? 'json' : 'csv',
   );
@@ -2548,7 +2734,7 @@ function openWorklist(query) {
   state.pages.queries = 1;
   renderNavigation();
   if ($('explorerSearch')) $('explorerSearch').value = state.explorerQuery;
-  document.querySelector('.panel[data-row-key="worklist"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.panel[data-row-key="queries"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   scheduleEndpointRefresh('queries', 0);
 }
 
@@ -2593,15 +2779,17 @@ function initializePanelControls() {
       panel.appendChild(pagination);
     }
 
-    const toggle = document.createElement('button');
-    toggle.className = 'small-button icon-button panel-toggle';
-    toggle.type = 'button';
-    toggle.dataset.panelToggle = '';
-    toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', `Collapse ${title}`);
-    toggle.title = `Collapse ${title}`;
-    toggle.innerHTML = iconSvg('collapse');
-    actions.appendChild(toggle);
+    if (panel.dataset.panelCollapse !== 'false') {
+      const toggle = document.createElement('button');
+      toggle.className = 'small-button icon-button panel-toggle';
+      toggle.type = 'button';
+      toggle.dataset.panelToggle = '';
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', `Collapse ${title}`);
+      toggle.title = `Collapse ${title}`;
+      toggle.innerHTML = iconSvg('collapse');
+      actions.appendChild(toggle);
+    }
   });
   document.querySelectorAll('.scroll-region').forEach((region) => {
     region.tabIndex = 0;
@@ -2633,6 +2821,14 @@ function setPage(key, page) {
   }
 }
 
+function setSearchDownloadMenuOpen(open) {
+  const toggle = $('searchDownloadToggle');
+  const popover = $('searchDownloadPopover');
+  if (!toggle || !popover) return;
+  toggle.setAttribute('aria-expanded', String(open));
+  popover.hidden = !open;
+}
+
 function initializeEvents() {
   document.querySelectorAll('.nav-button').forEach((button) => {
     button.addEventListener('click', () => setSection(button.dataset.section));
@@ -2646,8 +2842,15 @@ function initializeEvents() {
   });
   document.querySelectorAll('[data-export]').forEach((button) => {
     button.addEventListener('click', () => {
+      setSearchDownloadMenuOpen(false);
       exportData(button.dataset.export);
     });
+  });
+  $('searchDownloadToggle')?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const open = event.currentTarget.getAttribute('aria-expanded') !== 'true';
+    setSearchDownloadMenuOpen(open);
+    if (open) $('searchDownloadPopover')?.querySelector('[role="menuitem"]')?.focus();
   });
   document.querySelectorAll('[data-row-limit]').forEach((select) => {
     select.addEventListener('change', () => {
@@ -2671,6 +2874,7 @@ function initializeEvents() {
     });
   });
   document.addEventListener('click', (event) => {
+    if (!event.target.closest('#searchDownloadMenu')) setSearchDownloadMenuOpen(false);
     const searcherDetailsButton = event.target.closest('[data-searcher-details]');
     if (searcherDetailsButton) {
       openSearcherDetails(searcherDetailsButton.dataset.searcherDetails, searcherDetailsButton);
@@ -2744,10 +2948,10 @@ function initializeEvents() {
     resetPages();
     scheduleRefresh(0);
   });
-  $('includeTestTraffic')?.addEventListener('change', (event) => {
-    state.filters.includeTest = event.target.checked;
-    resetPages();
-    scheduleRefresh(0);
+  $('includeSearchTestTraffic')?.addEventListener('change', (event) => {
+    state.searchIncludeTest = event.target.checked;
+    state.pages.queries = 1;
+    scheduleEndpointRefresh('queries', 0);
   });
   $('globalSearch')?.addEventListener('input', (event) => {
     state.filters.q = String(event.target.value || '').trim();
@@ -2794,6 +2998,9 @@ function initializeEvents() {
   });
   $('searcherDetailsModal')?.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeSearcherDetails();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setSearchDownloadMenuOpen(false);
   });
 }
 

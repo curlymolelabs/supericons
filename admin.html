@@ -201,6 +201,84 @@
       font-size: 11px;
       line-height: 1;
     }
+    .download-menu {
+      position: relative;
+      display: inline-flex;
+      align-items: stretch;
+    }
+    .download-primary,
+    .download-toggle {
+      min-height: 30px;
+      border: 0;
+      background: var(--orange);
+      color: #0d0d0d;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .download-primary {
+      padding: 0 10px;
+      border-radius: 8px 0 0 8px;
+    }
+    .download-toggle {
+      width: 30px;
+      padding: 0;
+      border-left: 1px solid rgba(13, 13, 13, 0.25);
+      border-radius: 0 8px 8px 0;
+      display: grid;
+      place-items: center;
+    }
+    .download-primary:hover,
+    .download-toggle:hover,
+    .download-toggle[aria-expanded="true"] {
+      background: #ff7442;
+    }
+    .download-toggle img {
+      width: 15px;
+      height: 15px;
+      transition: transform 140ms ease;
+    }
+    .download-toggle[aria-expanded="true"] img { transform: rotate(180deg); }
+    .download-popover {
+      position: absolute;
+      top: calc(100% + 7px);
+      right: 0;
+      z-index: 30;
+      width: min(286px, calc(100vw - 32px));
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #1a1919;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.48);
+    }
+    .download-option {
+      display: block;
+      width: 100%;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+    .download-option:hover,
+    .download-option:focus-visible {
+      outline: 0;
+      background: var(--panel-3);
+    }
+    .download-option strong {
+      display: block;
+      font-size: 12px;
+    }
+    .download-option span {
+      display: block;
+      margin-top: 3px;
+      color: var(--dim);
+      font-size: 11px;
+      line-height: 1.4;
+      white-space: normal;
+    }
     .panel-body { padding: 16px 17px; }
     .panel.is-collapsed > :not(.panel-head) { display: none; }
     .panel.is-collapsed .panel-head { border-bottom: 0; }
@@ -545,7 +623,6 @@
             <option value="all">All venues</option>
           </select>
           <div class="filter-spacer"></div>
-          <label class="switch"><input id="includeTestTraffic" type="checkbox" /> Include test and preview traffic</label>
         </div>
       </header>
 
@@ -613,37 +690,34 @@
         </section>
 
         <section id="section-intelligence" hidden>
-          <article class="panel" data-row-key="queries" data-row-label="Search history" style="margin-bottom:14px">
-            <div class="panel-head"><div><div class="panel-title">Search history</div><div class="panel-subtitle">The table and Summary downloads use one row per searcher and query context. Event downloads use one recorded event per row. Filters: zero:true, venue:web, country:DE, origin:user, registered:true</div></div><div class="panel-actions"><button class="small-button" data-export="queries-csv" title="Download the grouped rows shown in Search history" type="button">Summary CSV</button><button class="small-button" data-export="queries-json" title="Download the grouped rows shown in Search history" type="button">Summary JSON</button><button class="small-button" data-export="query-events-csv" title="Download one privacy-safe recorded event per row" type="button">Events CSV</button><button class="small-button" data-export="query-events-json" title="Download event rows with field coverage and definitions" type="button">Events JSON</button></div></div>
-            <details id="searchDataGuide">
-              <summary>How to read this data</summary>
-              <div class="panel-body"><div class="panel-subtitle">Summary rows combine repeated activity from the same searcher and query. Event downloads keep one recorded event per row. Top-level tool events are used for the main counts, while lower-level hosted search records are supporting details. A zero means a direct search returned no icons. Recommendation completion is tracked separately and does not prove that a suggestion was relevant. An exact icon that was not found is kept separate from search zeros and system errors. Blank values mean the field was not recorded. Live traffic is not called organic unless it was clearly identified.</div></div>
-            </details>
-            <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query explorer" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="successful">Successful</option></select></div>
-            <div class="table-wrap scroll-region" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
-          </article>
-
-          <div class="grid-2">
-            <article class="panel" data-row-key="worklist" data-row-label="Gap worklist">
-              <div class="panel-head"><div><div class="panel-title">Gap worklist</div><div class="panel-subtitle">Repeated true zero and low-result queries first</div></div><div class="panel-actions"><button class="small-button" data-export="gap-worklist-csv" type="button">CSV</button><button class="small-button" data-export="gap-worklist-json" type="button">JSON</button></div></div>
-              <div class="table-wrap scroll-region" id="gapWorklist"><div class="empty">Loading worklist</div></div>
-            </article>
-            <article class="panel" data-row-key="iconRequests" data-row-label="Icon requests">
-              <div class="panel-head"><div><div class="panel-title">Icon requests</div><div class="panel-subtitle">Requests submitted from the no-results form</div></div><div class="panel-actions"><button class="small-button" data-export="icon-requests-csv" type="button">CSV</button><button class="small-button" data-export="icon-requests-json" type="button">JSON</button></div></div>
-              <div class="table-wrap scroll-region" id="iconRequests"><div class="empty">Loading icon requests</div></div>
-            </article>
-          </div>
-
-          <article class="panel" data-row-key="contact" data-row-label="Contact inbox">
-            <div class="panel-head"><div><div class="panel-title">Contact inbox</div><div class="panel-subtitle">Stored website contact-form messages</div></div><div class="panel-actions"><button class="small-button" data-export="contact-csv" type="button">CSV</button><button class="small-button" data-export="contact-json" type="button">JSON</button></div></div>
-            <div class="table-wrap scroll-region" id="contactInbox"><div class="empty">Loading contact submissions</div></div>
-            <details id="diagnosticsDrawer">
-              <summary>Diagnostics and raw data access</summary>
-              <div class="panel-body">
-                <div class="panel-actions" style="justify-content:flex-end;margin-bottom:10px"><button class="small-button" data-export="diagnostics-csv" type="button">CSV</button><button class="small-button" data-export="diagnostics-json" type="button">JSON</button></div>
-                <div id="diagnosticsContent">Loading diagnostics</div>
+          <article class="panel" data-row-key="queries" data-row-label="Search history" data-panel-collapse="false" style="margin-bottom:14px">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Search history</div>
+                <div class="panel-subtitle" id="searchHistorySubtitle">Loading grouped rows and activity totals</div>
               </div>
-            </details>
+              <div class="panel-actions">
+                <label class="switch"><input id="includeSearchTestTraffic" type="checkbox" /> Include test traffic</label>
+                <div class="download-menu" id="searchDownloadMenu">
+                  <button class="download-primary" data-export="queries-csv" title="Download one grouped Search history row per searcher, query, venue, library, and origin" type="button">Grouped CSV</button>
+                  <button class="download-toggle" id="searchDownloadToggle" type="button" aria-label="More download options" aria-expanded="false" aria-controls="searchDownloadPopover">
+                    <img src="/assets/admin/chevron-down.svg" alt="" />
+                  </button>
+                  <div class="download-popover" id="searchDownloadPopover" role="menu" hidden>
+                    <button class="download-option" data-export="query-events-csv" type="button" role="menuitem">
+                      <strong>MCP Requests CSV</strong>
+                      <span>One top-level MCP search or exact icon lookup per row. Includes recorded results, latency, locale, version, and masked searcher fields. Web searches and hosted diagnostics are excluded.</span>
+                    </button>
+                    <button class="download-option" data-export="query-audit-json" type="button" role="menuitem">
+                      <strong>Full Audit JSON</strong>
+                      <span>Complete package with grouped history, top-level MCP requests, web searches, hosted diagnostics, field coverage, integrity checks, definitions, filters, and source metadata.</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query history" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="error">Error</option><option value="clarification">Clarification</option><option value="successful">Successful</option></select></div>
+            <div class="table-wrap scroll-region" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
           </article>
         </section>
 

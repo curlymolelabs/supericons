@@ -50,7 +50,11 @@ function includes(source, value, label) {
   "select(overviewSelect, { count: 'exact' })",
   "select(querySelect, { count: 'exact' })",
   ".eq('event_type', 'search_outcome')",
-  "String(row.signal_type || '') === 'search_attempt'",
+  'dashboardV2SearchHistoryRole',
+  "['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))",
+  'historySourceRows',
+  'excluded_non_activity_rows',
+  "Number(row.activity_count || 0) > 0",
   "from('admin_rollup_overview')",
   "from('admin_rollup_queries')",
   "from('contact_submissions')",
@@ -77,10 +81,16 @@ function includes(source, value, label) {
   'filter_key: filters.filter_key',
   'last_search: telemetry?.last_active || null',
   'attempts: filteredWorklistRows.reduce',
-  'history_attempts: filteredHistoryRows.reduce',
-  'history_rows: filteredHistoryRows.length',
+  'history_attempts: historyActivities',
+  'history_rows: compactHistoryRows.length',
+  'table_rows: compactHistoryRows.length',
+  'activities: historyActivities',
   'buildDashboardV2HistoryState',
   'events_export_available',
+  "channel === 'web' ? 'search_attempt' : 'hosted_search_audit'",
+  "eventScope === 'audit'",
+  'web_top_level',
+  'diagnostics',
   "metric_scope: 'filtered_search_event_details'",
   'raw_identifiers_exposed: false',
   'filteredWorklistRows',
@@ -98,6 +108,7 @@ function includes(source, value, label) {
   'use_raw: durationDays === 1',
   'buildDashboardV2Series',
   'buildDashboardV2QueryHistoryKey',
+  'dashboardV2SearchHistoryRole',
   'buildDashboardV2Kpis',
   'buildDashboardV2TopLists',
   'buildDashboardV2Geography',
@@ -113,7 +124,10 @@ function includes(source, value, label) {
   'result_count_available',
   'country_available',
   'outcome_label',
-  'Mixed: ${zeroCount} of ${attempts} zero',
+  'Mixed: ${mixedParts.join',
+  'error_attempt_count',
+  'clarification_attempt_count',
+  'event_role',
 ].forEach((value) => includes(helpers, value, 'v2 helpers'));
 
 [
@@ -129,7 +143,16 @@ function includes(source, value, label) {
   'clearActiveDashboardCache',
   "pageParams.set('snapshot_id', snapshotId)",
   'The event export changed while pages were loading.',
+  "SEARCH_EXPORT_SCHEMA_VERSION = '2.0'",
+  "'supericons-search-history-grouped'",
+  "'supericons-search-mcp-requests'",
+  "'supericons-search-full-audit'",
+  'integrity_checks',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
+
+if (api.includes('const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows')) {
+  throw new Error('The raw Search history path still mixes diagnostics into grouped history.');
+}
 
 if (api.includes('if (rangeStart !== null && signup < rangeStart)')) {
   throw new Error('Registered users are still filtered by the selected date range.');

@@ -5,6 +5,7 @@ import {
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
   buildDashboardV2QueryHistoryKey,
+  dashboardV2SearchHistoryRole,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2EventRows,
@@ -22,6 +23,23 @@ import {
 const now = new Date('2026-07-17T12:00:00.000Z');
 
 {
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'search_attempt',
+  }), 'search');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'mcp_call',
+    query_origin: 'icon_lookup',
+  }), 'lookup');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'hosted_search_audit',
+  }), 'diagnostic');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'mcp_call',
+    query_origin: 'agent_query',
+  }), 'other');
+}
+
+{
   const [controlledEvent, auditEvent] = compactDashboardV2EventRows([{
     event_id: 'event-controlled',
     beta_cohort: 'deterministic-v2-beta:founder_controlled',
@@ -31,7 +49,9 @@ const now = new Date('2026-07-17T12:00:00.000Z');
     id: 'search_request_audit:42',
   }]);
   assert.equal(controlledEvent.traffic_class, 'controlled_test');
+  assert.equal(controlledEvent.event_role, 'top_level');
   assert.equal(auditEvent.event_identifier, 'search_request_audit:42');
+  assert.equal(auditEvent.event_role, 'top_level');
 }
 
 {
@@ -178,10 +198,13 @@ assert.throws(
     { environment: 'production', channel: 'web', search_query: 'real user query' },
     { environment: 'production', channel: 'internal_test', search_query: 'synthetic production probe' },
     { environment: 'preview', channel: 'web', search_query: 'preview query' },
+    { environment: 'production', channel: 'hosted_mcp', traffic_class: 'controlled_test', search_query: 'recorded controlled test' },
+    { environment: 'production', channel: 'hosted_mcp', beta_cohort: 'deterministic-v2-beta:founder_controlled', search_query: 'founder controlled test' },
+    { environment: 'production', channel: 'hosted_mcp', beta_cohort: 'public-beta', search_query: 'named live cohort' },
   ], filters);
   assert.deepEqual(
     filtered.map((row) => row.search_query),
-    ['real user query'],
+    ['real user query', 'named live cohort'],
     'The default dashboard leaked internal test or preview traffic.',
   );
 }
@@ -304,6 +327,32 @@ const queryRows = [
       minimum_result_count: null,
     },
     {
+      query: 'recommendation failed',
+      library_filter: 'all',
+      attempt_count: 2,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      error_attempt_count: 2,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['agent_query'],
+      audit_sources: ['mcp_usage_events'],
+    },
+    {
+      query: 'recommendation needs clarification',
+      library_filter: 'all',
+      attempt_count: 1,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      clarification_attempt_count: 1,
+      channels: ['hosted_mcp'],
+      countries: ['SG'],
+      query_origins: ['agent_query'],
+      audit_sources: ['mcp_usage_events'],
+    },
+    {
       query: 'database',
       library_filter: 'lucide',
       attempt_count: 0,
@@ -395,13 +444,23 @@ const queryRows = [
 
   const mixed = aggregateRows.find((row) => row.query === 'mixed aggregate');
   assert.equal(mixed.issue_type, 'mixed_result');
-  assert.equal(mixed.outcome_label, 'Mixed: 1 of 5 zero');
+  assert.equal(mixed.outcome_label, 'Mixed: 4 success, 1 zero');
   assert.equal(mixed.zero_attempt_count, 1);
   assert.equal(mixed.low_attempt_count, 0);
   assert.equal(mixed.result_count, null);
   assert.equal(mixed.result_count_available, false);
   assert.equal(mixed.country_code, null);
   assert.equal(mixed.country_available, false);
+
+  const recommendationError = aggregateRows.find((row) => row.query === 'recommendation failed');
+  assert.equal(recommendationError.issue_type, 'error');
+  assert.equal(recommendationError.outcome_label, 'Error');
+  assert.equal(recommendationError.error_attempt_count, 2);
+
+  const recommendationClarification = aggregateRows.find((row) => row.query === 'recommendation needs clarification');
+  assert.equal(recommendationClarification.issue_type, 'clarification');
+  assert.equal(recommendationClarification.outcome_label, 'Clarification');
+  assert.equal(recommendationClarification.clarification_attempt_count, 1);
 
   const lookup = aggregateRows.find((row) => row.query === 'database');
   assert.equal(lookup.issue_type, 'successful');
@@ -640,7 +699,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 15,
+  cases: 16,
   series_rows: series.length,
   query_filters: true,
   aggregate_query_semantics: true,
