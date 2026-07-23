@@ -1,70 +1,98 @@
 # Search v2 incident closure
 
 Date: 2026-07-23
-Status: closed; hosted repair live and npm 0.4.21 published as `latest`
+Status: closed; hosted MCP, public web search, and npm 0.4.22 are live
 
 ## What failed
 
-Version 0.4.20 routed hosted `search_icons` through a packaged fallback ranker that was not designed to replace the established hosted variant engine. Normal agent-style phrases could therefore return no icons even when an exact useful subphrase existed. The first emergency repair restored hosted retrieval, but a deeper check found hidden local fallback during hosted errors, incorrect route reporting, release checks mixed into normal telemetry, and several weak relevance and localized cases.
+Version 0.4.20 routed hosted `search_icons` through a packaged fallback ranker that was not designed to replace the established hosted variant engine. Normal agent-style phrases could return no icons even when an exact useful subphrase existed. The first emergency repair restored hosted retrieval, but deeper checks found hidden local fallback during hosted errors, incorrect route reporting, release checks mixed into normal telemetry, weak relevance cases, and incomplete multilingual phrase coverage.
+
+The public website appeared healthier because it used its own query variants. A later browser check also found that its production build still called the retired Supabase search endpoint instead of the repaired Railway endpoint. The npm package was a separate immutable artifact, so the complete multilingual correction required version 0.4.22.
 
 ## What changed
 
 - Hosted search now requires a successful hosted response. A hosted dependency failure stays visible.
 - Local candidate retrieval may run concurrently, but it is accepted only after hosted success. Responses report `hosted`, `hosted_fused`, or `local_fallback` accurately.
 - Candidate fusion uses bounded query variants and relevance rules instead of accepting any nonzero result.
-- Confirmed English, Spanish, Japanese, and Portuguese gaps received reviewed deterministic coverage.
+- Locale normalization accepts maintained base and regional tags, including `pt-BR`, `zh-CN`, and `zh-TW`.
+- Search uses real language word segmentation instead of assuming that every language separates words like English.
+- Direct phrase coverage and verification now include all 11 maintained non-English locales: Simplified Chinese, Traditional Chinese, Japanese, Korean, Spanish, Portuguese, German, Arabic, Hindi, Vietnamese, and Thai.
 - Live release traffic uses a signed, time-bounded marker. Only a verified marker is stored as test traffic.
-- Local npm search receives the same repair in immutable successor version 0.4.21.
+- The public website now calls `https://mcp.supericons.dev/search-icons`.
+- Local npm search contains the same multilingual correction in version 0.4.22.
 
-## Verified source and deployment
+## Verified source and deployments
 
-- Source commits: `9a7deb141a2479d8c92d0ef08c7b82aab2724103` and `b49039f97606e5a1e130c6a15bc7e6c6d6c1ea77`.
-- Active Railway deployment: `02d329dc-66dd-4c20-9fa2-937246e24b9d`.
-- Active image digest: `sha256:211e4fdc1d32dff5b094b334da340b1c5a394afd96509fceb924c64946ee0384`.
-- Live health reports version 0.4.21, hosted-primary search, local-first recommendations, and a closed hosted-search circuit with zero consecutive failures.
-- Railway logs contained no application errors after deployment.
+- Multilingual parity source commit: `b20bb8f3a`.
+- Integrated incident branch head used for the final package checks: `1585bfa9f`.
+- Active Railway deployment: `77976dd0-2147-4bb5-bc01-e0b9896cffb6`.
+- Active Railway image digest: `sha256:d66f7aa1421c79ddae9294327b749536dfc7c08ddee8c3ad0d8891af47603b59`.
+- Live health reports version 0.4.22, hosted-primary search, local-first recommendations, and closed search circuits with zero consecutive failures.
+- Active Netlify deploy: `6a61dbbb3cfc0470a11de105`.
+- The Netlify production environment sets `VITE_SUPERICONS_SEARCH_ENGINE_URL` to `https://mcp.supericons.dev/search-icons`.
+- The public MCP address remains `https://mcp.supericons.dev/mcp`.
 
-## Product verification
+## Hosted MCP product verification
 
-The final live matrix passed 28 cases through public HTTP and hosted MCP with identical ordered icon references. Reviewed examples included:
+The signed live product gate passed 39 cases through public HTTP and hosted MCP. Both surfaces returned identical ordered icon references. The matrix includes:
 
 - hard-hat and construction-worker phrases;
-- network graphs, connected people, and disconnected links;
-- tow trucks, construction cranes, forklifts, and excavation vehicles;
-- Spanish construction helmets and node graphs;
-- Japanese connected people and sports;
-- Portuguese checklists and contacts;
-- honest no-results for unsupported brands and nonsense text.
+- network graphs, connected people, disconnected links, tow trucks, cranes, forklifts, and excavation vehicles;
+- strict and preferred library behavior;
+- honest no-results for unsupported and nonsense queries;
+- direct phrases in all 11 maintained non-English locales.
 
-The final post-publication run measured 2,146.2 ms median, 3,686.6 ms p95, and 3,862.9 ms maximum across the 28-case matrix. Six calls exceeded three seconds, and no call exceeded four seconds. The latency remains an observation target, but it did not compromise the verified result contract.
+Each maintained locale returned ten results for its reviewed direct search phrase, with `material:search` first. The hosted checks used the signed test marker so they do not enter organic traffic measurements.
 
-One signed live marker was found in telemetry with environment `test`, version 0.4.21, and the expected controlled-run label. This proves the deployed process verifies the release marker instead of trusting ordinary client text.
+Observed live latency varied by call, with some requests above three seconds. Correctness passed, but latency remains a monitoring target.
 
-The actual configured hosted MCP tool was also exercised after publication. A strict Lucide search for `hard hat construction worker` returned `lucide:hard-hat` first, a strict Phosphor search for Japanese `つながった人々` returned `phosphor:users` first, and `florblequux` returned the structured `no_icons_found` response without image fields.
+## Public website verification
 
-The live website was exercised in a headed browser against `https://supericons.dev`. It rendered 62 results for `hard hat construction worker`, 8 results for Spanish `casco de construcción`, and 46 results for Japanese `つながった人々`. The Japanese result order began with users, users three, share network, link, and plugs connected. `florblequux` rendered the honest `No icons found` state. The browser made successful calls to `https://mcp.supericons.dev/search-icons` and reported zero console errors and zero console warnings.
+A headed browser smoke test exercised all 11 maintained non-English locales on `https://supericons.dev`:
+
+- Simplified Chinese: `搜索图标`
+- Traditional Chinese: `搜尋圖示`
+- Japanese: `検索アイコン`
+- Korean: `검색 아이콘`
+- Spanish: `icono de búsqueda`
+- Portuguese: `ícone de busca`
+- German: `Suchsymbol`
+- Arabic: `رمز البحث`
+- Hindi: `खोज आइकन`
+- Vietnamese: `biểu tượng tìm kiếm`
+- Thai: `ไอคอนค้นหา`
+
+Every query returned results with search icons among the first five displayed results. Browser network inspection confirmed HTTP 200 responses from `https://mcp.supericons.dev/search-icons`. The browser reported zero console errors and zero console warnings.
 
 ## npm publication
 
-- Package: `@supericons/mcp@0.4.21`.
-- Archive: `supericons-mcp-0.4.21.tgz`.
-- SHA-256: `e63248c2a0b55a08ce1c94bdc54f6d4181e61809dec8b568198fdae2ebc6e4d8`.
-- Size: 6,183,637 bytes.
-- Packed files: 68.
-- Fixed 225-case fingerprint: `4ee5e16c9fba0764a33e9f25b65b64c50386037c1226c509d803458e46f937ad`.
-- Clean-installed stdio fingerprint: `c97a3c393dde97441b207fd2d960006c92cb434ba3d1c8edf1988a7875df0e97`.
+- Package: `@supericons/mcp@0.4.22`
+- Registry tag: `latest`
+- Archive: `supericons-mcp-0.4.22.tgz`
+- Size: 6,185,012 bytes
+- Packed files: 68
+- npm shasum: `7483202b5c63b03eedbe640c5df142d799bb155d`
+- SHA-256: `00fcb48522951da59956456f65115059e2a0805cb5dad674ac9e2e40b0a3d6a9`
+- Fixed 225-case fingerprint: `3ec9fae16fbd1c6900d1bdf4ed4f48270d7e4baec0e6d26783aa54821f6f7d24`
+- Clean-installed stdio fingerprint: `5bc36ea9693c4461508a3a9ce9855e3bf46e7cdccc6e48fcdeca8146c9a5b711`
 
-The owner approved the staged package. The npm registry now serves 0.4.21 as `latest`, while `beta` remains 0.4.19-beta.2. The registry shasum is `75e4092cb930ac13e23056a135a069bb5e5272ec`, and the downloaded registry archive is byte-identical to the approved archive with the same SHA-256 and size.
+The registry now serves 0.4.22 as `latest`, while `beta` remains 0.4.19-beta.2. A fresh registry download is byte-identical to the approved archive. A clean installation from that downloaded registry archive passed all 225 maintained stdio cases with ordered result parity.
 
-A fresh registry download and clean install passed package inspection, public-safety and licensing checks, all 225 fixed cases, ordered stdio route parity, MCP error behavior, preview behavior, clarification, and rate-limit propagation. The verified archive contains 68 files and unpacks to 25,832,843 bytes.
+The maintained multilingual package matrix passed 71 of 75 cases, or 94.67 percent. The remaining four cases are honest mixed-brand no-results. They return no fabricated icons and remain visible for future demand-led coverage work.
+
+## Channel compatibility
+
+No hosted client configuration changed. ChatGPT, Codex, OpenCode, and other hosted MCP clients continue to use the same MCP address. The incident changes did not alter the registered tool names or tool schemas. Therefore, the hosted correction and website correction do not require another app submission or client reconfiguration.
+
+Local npm users receive the fix when their package resolution reaches 0.4.22. Users pinned to an older exact version must update that pin.
 
 ## Residual observations
 
-- The npm dependency audit reports two moderate upstream alerts in a Windows static-file path used by a transitive dependency. Supericons does not use that path, and the hosted service runs on Linux. No compatible dependency-only update is currently available, so this is tracked as upstream maintenance rather than an incident blocker.
 - Genuine post-repair traffic must be observed before claiming a new organic zero-result rate. Controlled release calls are excluded from that denominator.
-- Six of the final 28 HTTP probes exceeded three seconds. Latency remains a monitoring target even though every probe completed in under four seconds.
-- The caller-guidance zero-result experiment remains a later maintenance item. It should not mask search regressions that deterministic retrieval can fix directly.
+- Live latency still varies and remains a monitoring target.
+- Four maintained mixed-brand package cases remain honest no-results.
+- The caller-guidance zero-result experiment remains a later maintenance item. It must not mask search regressions that deterministic retrieval can fix directly.
 
-## Rollback and compatibility
+## Rollback
 
-Hosted rollback remains an independent Railway redeploy of the previous known deployment. npm rollback remains an independent change of the `latest` tag because published package bytes are immutable. No Netlify deployment or ChatGPT app resubmission was required: both already use the unchanged hosted MCP address, and the browser search data path was not the source of this incident. The submitted ChatGPT app remains under external review, so its directory listing was not directly exercised. Its configured hosted MCP endpoint passed the public HTTP and MCP checks above.
+Hosted rollback remains an independent Railway redeploy of the previous known deployment. npm rollback remains an independent change of the `latest` tag because published package bytes are immutable. Netlify rollback remains an independent restoration of its previous production deploy.
