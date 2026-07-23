@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons Search Architecture: Actual Flow</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b0c;
+      --panel: #141416;
+      --panel-2: #1a1a1d;
+      --text: #f5f5f4;
+      --muted: #a3a3a3;
+      --border: #303034;
+      --orange: #ff5a1f;
+      --orange-soft: rgba(255, 90, 31, 0.13);
+      --blue: #5ba5ff;
+      --blue-soft: rgba(91, 165, 255, 0.12);
+      --green: #46d68c;
+      --green-soft: rgba(70, 214, 140, 0.12);
+      --yellow: #f6c85f;
+      --yellow-soft: rgba(246, 200, 95, 0.12);
+      --red: #ff6b6b;
+      --red-soft: rgba(255, 107, 107, 0.12);
+      --purple: #b69cff;
+      --purple-soft: rgba(182, 156, 255, 0.12);
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(255, 90, 31, 0.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1480px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 72px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 960px;
+      margin-bottom: 12px;
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .lede {
+      max-width: 920px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .snapshot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+      margin: 28px 0;
+      padding: 22px;
+      border: 1px solid rgba(255, 107, 107, 0.45);
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--red-soft), rgba(255, 90, 31, 0.06));
+      box-shadow: var(--shadow);
+    }
+
+    .verdict p {
+      margin-bottom: 0;
+      color: #dedede;
+    }
+
+    .verdict-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #150707;
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .summary-card {
+      min-height: 158px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--panel);
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 24px;
+      letter-spacing: -0.025em;
+    }
+
+    .summary-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .summary-card.bad {
+      border-color: rgba(255, 107, 107, 0.42);
+      background: var(--red-soft);
+    }
+
+    .summary-card.warn {
+      border-color: rgba(246, 200, 95, 0.36);
+      background: var(--yellow-soft);
+    }
+
+    .summary-card.good {
+      border-color: rgba(70, 214, 140, 0.34);
+      background: var(--green-soft);
+    }
+
+    .section {
+      margin-top: 48px;
+    }
+
+    .section-heading {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px 24px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section-heading p {
+      max-width: 760px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .lane-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lane-controls button {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .lane-controls button[aria-pressed="true"] {
+      border-color: var(--orange);
+      background: var(--orange);
+      color: #1a0903;
+      font-weight: 700;
+    }
+
+    .architecture {
+      display: grid;
+      gap: 14px;
+    }
+
+    .lane {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(20, 20, 22, 0.92);
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.16);
+    }
+
+    .lane[hidden] {
+      display: none;
+    }
+
+    .lane-label {
+      padding: 4px 6px;
+    }
+
+    .lane-label span {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .lane-label p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .lane.web .lane-label span {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .lane.local .lane-label span {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .lane.hosted .lane-label span {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns:
+        minmax(130px, 1fr) 28px
+        minmax(150px, 1.12fr) 28px
+        minmax(160px, 1.2fr) 28px
+        minmax(150px, 1.12fr) 28px
+        minmax(150px, 1.12fr);
+      align-items: stretch;
+      gap: 4px;
+    }
+
+    .node {
+      position: relative;
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--panel-2);
+    }
+
+    .node strong {
+      display: block;
+      margin-bottom: 5px;
+      line-height: 1.25;
+    }
+
+    .node small {
+      display: block;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .node.good {
+      border-color: rgba(70, 214, 140, 0.32);
+      background: var(--green-soft);
+    }
+
+    .node.bad {
+      border-color: rgba(255, 107, 107, 0.42);
+      background: var(--red-soft);
+    }
+
+    .node.warn {
+      border-color: rgba(246, 200, 95, 0.38);
+      background: var(--yellow-soft);
+    }
+
+    .node.shared {
+      border-color: rgba(182, 156, 255, 0.34);
+      background: var(--purple-soft);
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: #77777d;
+      font-size: 20px;
+    }
+
+    .lane-note {
+      grid-column: 2;
+      margin: 10px 0 0;
+      padding-left: 12px;
+      border-left: 3px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .lane-note.bad {
+      border-color: var(--red);
+      color: #f0c4c4;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+
+    .legend .correct::before {
+      background: var(--green);
+    }
+
+    .legend .broken::before {
+      background: var(--red);
+    }
+
+    .legend .conditional::before {
+      background: var(--yellow);
+    }
+
+    .legend .shared-service::before {
+      background: var(--purple);
+    }
+
+    .relationship-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    .panel {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+    }
+
+    .panel > p:last-child {
+      margin-bottom: 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #222226;
+      color: #f1d6cc;
+      font: 0.92em ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.bad {
+      color: var(--red);
+    }
+
+    .status.warn {
+      color: var(--yellow);
+    }
+
+    .status.good {
+      color: var(--green);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      padding-left: 28px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--panel-2);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: -25px;
+      width: 10px;
+      height: 10px;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .timeline-item p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .timeline-item.bad {
+      border-color: rgba(255, 107, 107, 0.4);
+    }
+
+    .timeline-item.bad::before {
+      background: var(--red);
+    }
+
+    .timeline-item.good {
+      border-color: rgba(70, 214, 140, 0.34);
+    }
+
+    .timeline-item.good::before {
+      background: var(--green);
+    }
+
+    .issues {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .issue {
+      padding: 18px;
+      border: 1px solid rgba(255, 107, 107, 0.34);
+      border-radius: 15px;
+      background: var(--red-soft);
+    }
+
+    .issue-number {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #190808;
+      font-weight: 800;
+    }
+
+    .issue p {
+      margin-bottom: 0;
+      color: #d7c5c5;
+    }
+
+    .target {
+      display: grid;
+      gap: 10px;
+      padding: 20px;
+      border: 1px solid rgba(70, 214, 140, 0.32);
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--green-soft), rgba(91, 165, 255, 0.05));
+    }
+
+    .target-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 28px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .target-label {
+      font-weight: 800;
+    }
+
+    .target-arrow {
+      color: var(--green);
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .rule-list {
+      display: grid;
+      gap: 9px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rule-list li {
+      position: relative;
+      padding-left: 24px;
+      color: #d7d7d7;
+    }
+
+    .rule-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+
+    details:last-child {
+      border-bottom: 0;
+    }
+
+    summary {
+      padding: 12px 0;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      margin: -2px 0 14px;
+      color: var(--muted);
+    }
+
+    .footnote {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+        min-height: 18px;
+      }
+
+      .lane-note {
+        grid-column: 1;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .shell {
+        width: min(100% - 20px, 1480px);
+        padding-top: 20px;
+      }
+
+      .verdict {
+        grid-template-columns: 1fr;
+      }
+
+      .verdict-mark {
+        display: none;
+      }
+
+      .summary-grid,
+      .relationship-grid,
+      .issues {
+        grid-template-columns: 1fr;
+      }
+
+      .lane {
+        grid-template-columns: 1fr;
+      }
+
+      .lane-note {
+        grid-column: 1;
+      }
+
+      .target-row {
+        grid-template-columns: 1fr;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(70, 214, 140, 0.2);
+      }
+
+      .target-row:last-child {
+        border-bottom: 0;
+      }
+
+      .target-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">Production architecture audit</p>
+      <h1>Web, local npm, and hosted MCP enter separately, but they are not recorded separately.</h1>
+      <p class="lede">The entry points are different. The shared search services are also reasonable. The failure is in the logging boundary: Web traffic is relabelled as Hosted MCP, and the current stable local npm search can finish without any top-level search record.</p>
+      <div class="snapshot">
+        <span>Live website and database checked: 23 Jul 2026, 10:52 PM SGT</span>
+        <span>Live MCP server: 0.4.22</span>
+        <span>Search mode reported by the live server: hosted primary</span>
+      </div>
+    </header>
+
+    <section class="verdict" aria-labelledby="verdict-title">
+      <div>
+        <p class="eyebrow">Audit verdict</p>
+        <h2 id="verdict-title">The dashboard is following its rules. The events reaching it have the wrong roles.</h2>
+        <p>Changing the dashboard labels alone cannot fix this. The website route and the local npm package must each create one final top-level event with the correct channel. Internal searches and translation retries must stay as supporting detail.</p>
+      </div>
+      <div class="verdict-mark" aria-hidden="true">!</div>
+    </section>
+
+    <section class="summary-grid" aria-label="Channel trust summary">
+      <article class="summary-card bad">
+        <p class="eyebrow">Web</p>
+        <strong>Not trustworthy</strong>
+        <p>Live website requests are currently stamped as Hosted MCP. The displayed Web count is not the number of website searches.</p>
+      </article>
+      <article class="summary-card bad">
+        <p class="eyebrow">Local npm</p>
+        <strong>Missing on stable</strong>
+        <p>Version 0.4.22 searches locally, then the database function suppresses the final search event because it is not a beta cohort.</p>
+      </article>
+      <article class="summary-card good">
+        <p class="eyebrow">Hosted MCP</p>
+        <strong>Best separated path</strong>
+        <p>The hosted MCP tool writes one final event to the main request ledger. Its lower-level hosted searches are kept as diagnostics.</p>
+      </article>
+    </section>
+
+    <section class="section" id="actual-flow">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Actual production flow</p>
+          <h2>Where each search goes today</h2>
+          <p>Use the buttons to isolate a lane. Purple boxes are shared services. Red boxes are where the recorded identity no longer matches the real caller.</p>
+        </div>
+        <div class="lane-controls" aria-label="Filter architecture lanes">
+          <button type="button" data-lane-filter="all" aria-pressed="true">Show all</button>
+          <button type="button" data-lane-filter="web" aria-pressed="false">Web</button>
+          <button type="button" data-lane-filter="local" aria-pressed="false">Local npm</button>
+          <button type="button" data-lane-filter="hosted" aria-pressed="false">Hosted MCP</button>
+        </div>
+      </div>
+
+      <div class="architecture">
+        <article class="lane web" data-lane="web">
+          <div class="lane-label">
+            <span>Web</span>
+            <h3>Browser search</h3>
+            <p>supericons.dev</p>
+          </div>
+          <div>
+            <div class="flow">
+              <div class="node good">
+                <strong>User types a query</strong>
+                <small>The browser immediately runs its own local matching.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node">
+                <strong>Browser shows local matches</strong>
+                <small>The visible grid can be successful before the server reply arrives.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node shared">
+                <strong>Railway public route</strong>
+                <small><code>/search-icons</code> runs Railway local search and Supabase hosted search.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node bad">
+                <strong>Logged as Hosted MCP</strong>
+                <small>The route stamps <code>source=mcp</code> and <code>channel=hosted_mcp</code>.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node bad">
+                <strong>Hidden from Web history</strong>
+                <small>The admin API treats this as a diagnostic, not a website search.</small>
+              </div>
+            </div>
+            <p class="lane-note bad">The public route does not write one final Web event. Translation retries can create several Hosted MCP diagnostic rows for one website search.</p>
+          </div>
+        </article>
+
+        <article class="lane local" data-lane="local">
+          <div class="lane-label">
+            <span>Local npm</span>
+            <h3>stdio package</h3>
+            <p>npx @supericons/mcp</p>
+          </div>
+          <div>
+            <div class="flow">
+              <div class="node good">
+                <strong>Agent calls local MCP</strong>
+                <small>The npm package runs on the user's computer.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node shared">
+                <strong>Package search</strong>
+                <small>Stable 0.4.22 uses local-first by default. A setting can switch it to hosted search.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node">
+                <strong>Final result is returned</strong>
+                <small>The package knows the final result count and outcome.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node bad">
+                <strong>Final search event is suppressed</strong>
+                <small>The database function returns without inserting a stable <code>search_icons</code> event.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node bad">
+                <strong>Missing from main history</strong>
+                <small>Result-level icon evidence may exist, but one top-level request does not.</small>
+              </div>
+            </div>
+            <p class="lane-note bad">Beta search rows were recorded because they carried a beta label. After local-first became stable, the same suppression rule stopped the stable top-level search event.</p>
+          </div>
+        </article>
+
+        <article class="lane hosted" data-lane="hosted">
+          <div class="lane-label">
+            <span>Hosted MCP</span>
+            <h3>Remote agent call</h3>
+            <p>mcp.supericons.dev/mcp</p>
+          </div>
+          <div>
+            <div class="flow">
+              <div class="node good">
+                <strong>Agent calls hosted MCP</strong>
+                <small>The remote MCP server receives one tool call.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node shared">
+                <strong>Railway search</strong>
+                <small>Railway local search and Supabase hosted search can both contribute.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node warn">
+                <strong>Internal attempts are logged</strong>
+                <small>Each hosted attempt goes to <code>search_request_audit</code> as a diagnostic.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node good">
+                <strong>One final tool event is logged</strong>
+                <small><code>mcp_usage_events</code> receives the completed request and final outcome.</small>
+              </div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <div class="node good">
+                <strong>Shown as Hosted MCP</strong>
+                <small>The main table uses the final event and excludes the diagnostics.</small>
+              </div>
+            </div>
+            <p class="lane-note">This is the clearest current path because it has a final request ledger and a separate diagnostic trail.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="legend" aria-label="Diagram legend">
+        <span class="correct">Correct boundary</span>
+        <span class="broken">Broken identity or missing event</span>
+        <span class="conditional">Supporting detail</span>
+        <span class="shared-service">Shared service</span>
+      </div>
+    </section>
+
+    <section class="section" id="database-view">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Database and dashboard relationship</p>
+          <h2>What the admin dashboard is actually allowed to count</h2>
+          <p>The dashboard contract is simple. The problem is that Web and stable local npm events do not reach the expected source.</p>
+        </div>
+      </div>
+
+      <div class="relationship-grid">
+        <div class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Stored row</th>
+                <th>Admin role</th>
+                <th>Main Search history</th>
+                <th>Download location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>mcp_usage_events</code></td>
+                <td>Top-level MCP request</td>
+                <td><span class="status good">Included</span></td>
+                <td>Search summary, Request log, Audit bundle</td>
+              </tr>
+              <tr>
+                <td><code>search_request_audit</code> with <code>channel=web</code></td>
+                <td>Top-level Web search</td>
+                <td><span class="status good">Included</span></td>
+                <td>Search summary, Audit bundle Web section</td>
+              </tr>
+              <tr>
+                <td><code>search_request_audit</code> with <code>channel=hosted_mcp</code></td>
+                <td>Hosted diagnostic</td>
+                <td><span class="status warn">Excluded</span></td>
+                <td>Audit bundle diagnostics only</td>
+              </tr>
+              <tr>
+                <td><code>search_request_audit</code> with <code>channel=local_mcp</code></td>
+                <td>MCP search diagnostic</td>
+                <td><span class="status warn">Excluded</span></td>
+                <td>Audit bundle diagnostics only</td>
+              </tr>
+              <tr>
+                <td>Local icon result evidence</td>
+                <td>Result-level evidence</td>
+                <td><span class="status warn">Not a search count</span></td>
+                <td>Supporting evidence only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="panel">
+          <p class="eyebrow">Why Web shows 1</p>
+          <h3>The filter is counting correctly labelled rows, not actual website searches.</h3>
+          <p>The production table had one Web-labelled row in both the last 24 hours and the rolling seven-day period at the audit snapshot.</p>
+          <p>Another 91 production hosted-search request IDs had no matching MCP request event. This is the shape used by the public website route. The group includes tests, so it cannot be used as an organic Web count.</p>
+          <p><strong>Result:</strong> the true seven-day website total is unknown. It is not 1.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="query-trace">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Exact query trace</p>
+          <h2>How one successful visible search became a Zero plus a hidden success</h2>
+          <p>The query was <code>搜索图标</code>. Times below are Singapore time on 23 Jul 2026.</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-item bad">
+          <h3>5:14 PM: one direct Web audit row recorded 0</h3>
+          <p>This is the row shown by the Web filter. It measured the hosted engine attempt, while the browser could still show its local matches.</p>
+        </article>
+        <article class="timeline-item good">
+          <h3>10:32 PM: the browser showed 1,987 visible matches</h3>
+          <p>This was the user-visible grid in the screenshot. The browser's local result set already contained matches.</p>
+        </article>
+        <article class="timeline-item bad">
+          <h3>10:32:41 PM: the same Chinese query was logged as Hosted MCP with 0</h3>
+          <p>The public Railway route replaced the Web identity with <code>source=mcp</code> and <code>channel=hosted_mcp</code>.</p>
+        </article>
+        <article class="timeline-item good">
+          <h3>10:32:46 PM: an English retry returned 50</h3>
+          <p>The retry query was <code>search</code>. It shared the same request ID as the Chinese attempt, proving both rows belonged to one logical request.</p>
+        </article>
+        <article class="timeline-item bad">
+          <h3>The admin result remained Web (1), Zero</h3>
+          <p>The successful current request was hidden as a Hosted MCP diagnostic. No final top-level Web event connected the attempts to the visible result.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="breaks">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Architecture failures</p>
+          <h2>Six breaks that must be fixed at the source</h2>
+        </div>
+      </div>
+
+      <div class="issues">
+        <article class="issue">
+          <div class="issue-number">1</div>
+          <h3>Web identity is discarded</h3>
+          <p>The browser sends <code>source=web</code>, but the Railway public route does not keep it when it builds the search context.</p>
+        </article>
+        <article class="issue">
+          <div class="issue-number">2</div>
+          <h3>Web has no final event</h3>
+          <p>The route logs internal Supabase attempts but never writes one record for the final result returned to the website.</p>
+        </article>
+        <article class="issue">
+          <div class="issue-number">3</div>
+          <h3>Retries look like separate outcomes</h3>
+          <p>A translated retry can succeed after the original query returns zero. The current audit table stores both attempts but does not store the final combined outcome.</p>
+        </article>
+        <article class="issue">
+          <div class="issue-number">4</div>
+          <h3>Stable local npm search is suppressed</h3>
+          <p>The package records beta local-first searches, but the database function returns early for a stable <code>search_icons</code> event without a beta label.</p>
+        </article>
+        <article class="issue">
+          <div class="issue-number">5</div>
+          <h3>Tests can look organic</h3>
+          <p>Public-route test searches lack a dependable test label, so the dashboard switch cannot always separate tests from real use.</p>
+        </article>
+        <article class="issue">
+          <div class="issue-number">6</div>
+          <h3>Old rollups preserve the wrong roles</h3>
+          <p>Completed-day rollups include only rows already classified as top-level searches. Mislabelled Web rows are left out before the UI sees them.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="correct-flow">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Required target</p>
+          <h2>One final event per entry point, with diagnostics kept separate</h2>
+          <p>This preserves shared search infrastructure without mixing the three channels.</p>
+        </div>
+      </div>
+
+      <div class="target">
+        <div class="target-row">
+          <div class="target-label">Website</div>
+          <div class="node good">One final event: <code>channel=web</code></div>
+          <div class="target-arrow" aria-hidden="true">→</div>
+          <div class="node good">Web Search history and Web exports</div>
+        </div>
+        <div class="target-row">
+          <div class="target-label">Local npm</div>
+          <div class="node good">One final event: <code>channel=local_mcp</code></div>
+          <div class="target-arrow" aria-hidden="true">→</div>
+          <div class="node good">Local MCP Search history and Request log</div>
+        </div>
+        <div class="target-row">
+          <div class="target-label">Hosted MCP</div>
+          <div class="node good">One final event: <code>channel=hosted_mcp</code></div>
+          <div class="target-arrow" aria-hidden="true">→</div>
+          <div class="node good">Hosted MCP Search history and Request log</div>
+        </div>
+        <div class="target-row">
+          <div class="target-label">Shared search work</div>
+          <div class="node warn">Attempts, translations, fallbacks, and timing</div>
+          <div class="target-arrow" aria-hidden="true">→</div>
+          <div class="node warn">Diagnostics only, linked to the final event</div>
+        </div>
+      </div>
+
+      <ul class="rule-list">
+        <li>Every completed search creates exactly one top-level event.</li>
+        <li>The entry point decides the channel. Shared services cannot replace it.</li>
+        <li>The final event stores the original query, final outcome, and final result count.</li>
+        <li>Each internal attempt stores a parent request ID and attempt number.</li>
+        <li>The main table counts final events only. The Audit bundle keeps both final events and diagnostics.</li>
+        <li>A daily check fails when Web traffic is stamped MCP, a stable local search has no final event, or a successful retry is presented as Zero.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="evidence">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Evidence checked</p>
+          <h2>Source and production proof behind this map</h2>
+        </div>
+      </div>
+
+      <div class="relationship-grid">
+        <div class="panel">
+          <details open>
+            <summary>Live website route</summary>
+            <p>The production bundle <code>/assets/index-CjkIgQu4.js</code> points search traffic to <code>https://mcp.supericons.dev/search-icons</code>.</p>
+          </details>
+          <details>
+            <summary>Live Railway service</summary>
+            <p>The health endpoint reported version 0.4.22, local-first enabled, and search mode <code>hosted_primary</code>.</p>
+          </details>
+          <details>
+            <summary>Production database snapshot</summary>
+            <p>At 2026-07-23 14:52:52 UTC: one production Web row in seven days, 91 unmatched production hosted-search request IDs, 73 with at least one positive hosted attempt, and 18 with all hosted attempts at zero.</p>
+          </details>
+          <details>
+            <summary>Privacy and limits</summary>
+            <p>No secrets, raw client hashes, account details, or direct personal identifiers are included in this report. The 91-request group includes test traffic and is not presented as a user count.</p>
+          </details>
+        </div>
+
+        <div class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Proof</th>
+                <th>Source location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Website chooses its search URL</td>
+                <td><code>lib/search-engine-client.js:5, 42, 130</code></td>
+              </tr>
+              <tr>
+                <td>Browser keeps local fallback results</td>
+                <td><code>main.js:1957-2013, 2079-2130</code></td>
+              </tr>
+              <tr>
+                <td>Public Railway route</td>
+                <td><code>mcp/remote-server.js:2120, 2163, 2254</code></td>
+              </tr>
+              <tr>
+                <td>Hosted MCP stamps its usage context</td>
+                <td><code>mcp/remote-server.js:1352, 1377-1418</code></td>
+              </tr>
+              <tr>
+                <td>Hosted MCP writes one final event</td>
+                <td><code>mcp/remote-server.js:1465-1580, 1640-1715</code></td>
+              </tr>
+              <tr>
+                <td>Local npm search and telemetry</td>
+                <td><code>mcp/index.js:125, 852-899, 1045-1268</code></td>
+              </tr>
+              <tr>
+                <td>Stable local search suppression</td>
+                <td><code>supabase/migrations/20260718100000_local_mcp_telemetry_attribution.sql:64-135</code></td>
+              </tr>
+              <tr>
+                <td>Hosted attempt audit write</td>
+                <td><code>supabase/functions/_shared/search-engine/handle-search-request.ts:139-188, 714-742</code></td>
+              </tr>
+              <tr>
+                <td>Admin role assignment</td>
+                <td><code>supabase/functions/admin-api/index.ts:748-824</code></td>
+              </tr>
+              <tr>
+                <td>Main history excludes diagnostics</td>
+                <td><code>lib/admin-dashboard-v2.js:1065-1081</code></td>
+              </tr>
+              <tr>
+                <td>Completed-day rollups count top-level attempts only</td>
+                <td><code>lib/admin-dashboard-metrics.js:347-390</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <p class="footnote">This is an audit of the current source and live production behavior. It does not claim that the three entry points should use different search engines. They can safely share search services as long as their final events keep the original channel and internal attempts remain supporting detail.</p>
+  </main>
+
+  <script>
+    const filterButtons = Array.from(document.querySelectorAll('[data-lane-filter]'));
+    const lanes = Array.from(document.querySelectorAll('[data-lane]'));
+
+    function setLaneFilter(selected) {
+      for (const button of filterButtons) {
+        button.setAttribute('aria-pressed', String(button.dataset.laneFilter === selected));
+      }
+      for (const lane of lanes) {
+        lane.hidden = selected !== 'all' && lane.dataset.lane !== selected;
+      }
+    }
+
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => setLaneFilter(button.dataset.laneFilter));
+    }
+  </script>
+</body>
+</html>
