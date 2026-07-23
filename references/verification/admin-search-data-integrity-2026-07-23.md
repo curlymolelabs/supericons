@@ -2,7 +2,7 @@
 
 ## Decision
 
-GO for a bounded internal `admin-api` deployment after the verified source is committed.
+GO for a bounded internal `admin-api` deployment. The verified deployment completed.
 
 The change does not add controls, downloads, table columns, database migrations, or public product behavior. It corrects the shared Search history projection used by the main table, Search summary, Request log metadata, and Audit bundle.
 
@@ -86,3 +86,13 @@ If the authenticated smoke check fails, redeploy `supabase/functions/admin-api` 
 - Existing query text already stored with replacement question marks cannot be reconstructed by this release. The Audit bundle now flags strong signs of that damage.
 - Historical positive-result rows that never recorded icon references remain incomplete. They are now reported honestly instead of counted as recorded.
 - The credentialed live rollup-parity verifier is a post-deployment check because it requires the release fingerprint and the deployed function.
+
+## Rollout result
+
+- Verified source commit: `f63511ad9dc1b3d60d641a628538f352235d448b`
+- `admin-api` advanced from version 91 to version 92.
+- Version 92 is active.
+- JWT verification remains disabled by design.
+- Deployed bundle SHA-256: `8587cb4f21fad5bb994c5d3cad4874b5c0d4695369a91a14094d3dc590c5f9e8`
+- An unauthenticated Search request returned HTTP 403.
+- The locally stored `ADMIN_SECRET` was rejected by production, so the authenticated smoke check was not completed. No secret was changed or overwritten by this rollout.
