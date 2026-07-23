@@ -124,8 +124,10 @@ Query:
 Response:
 
 - `queries`: paged explorer rows
-- `summary`: complete attempt and grouped-query totals for reconciliation
-- query rows include a searcher count and bounded masked Searcher details when exact rows are available
+- `summary`: complete request and summary-row totals for reconciliation
+- query rows use one row per normalized query, library filter, and query origin
+- query rows include estimated client ID count, outcome components, median result count, result unit, country codes, channels, tools, and first and last seen times
+- estimated client ID count is an upper-bound activity measure, not a verified count of people
 - `pagination`
 - `worklist`: ranked zero and low-result rows with existing query-review state
 - `icon_requests`: the verified `grid_empty_feedback` rows
@@ -137,7 +139,7 @@ The existing `POST /intelligence/search/review` route remains the write path for
 
 ### `GET /v2/search/events`
 
-Purpose: provide a bounded event-detail source for CSV and JSON analysis without changing the grouped Search history contract.
+Purpose: provide a bounded event-detail source for Request log and Audit bundle without changing the Search summary contract.
 
 Query:
 
@@ -147,7 +149,7 @@ Query:
 Response:
 
 - `events`: one telemetry event per row after exact key-based source merging
-- each event includes the masked searcher, privacy-safe root request identifier when recorded, query origin, tool, locale, requested limit, result count, returned icon references when recorded, latency, outcome, error code, traffic class, client family, server version, and build identifier
+- each event includes the estimated client identifier, query origin, tool, locale, requested limit, result count, returned icon references when recorded, latency, outcome, error code, traffic class, client family, server version, and build identifier
 - `field_coverage`: recorded count, total count, and coverage rate for fields that may be missing from older events
 - `definitions`: event grain, outcome, traffic-class, and null-handling rules
 - `events_complete` and `events_export_available`: false when the selected detail exceeds the bounded source limit
@@ -156,7 +158,7 @@ Response:
 
 This endpoint never returns raw request IDs, raw session values, raw network values, API keys, user-agent strings, full hashes, or user email addresses. Null means a value was not recorded and is never converted to zero.
 
-Top-level MCP metrics use rows whose source is `mcp_usage_events`. Rows whose source is `search_request_audit` describe lower-level hosted search work, including recommendation variants and fallbacks. They remain diagnostic rows and are not added to top-level MCP counts. A privacy-safe root request identifier links rows when the source data has enough identity and request context. Older unlinked rows remain separate rather than being joined by time or query text.
+Top-level MCP metrics use rows whose source is `mcp_usage_events`. Rows whose source is `search_request_audit` describe lower-level hosted search work, including recommendation variants and fallbacks. They remain diagnostic rows and are not added to top-level MCP counts. The legacy root request identifier is retained only as supporting audit data because current records do not prove that it is a unique request or session identifier. Rows are never joined by time or query text.
 
 ### `GET /v2/audience`
 

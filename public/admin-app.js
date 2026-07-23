@@ -107,7 +107,6 @@ const state = {
   endpointTokens: {},
   view: null,
   visibleQueryRows: [],
-  searcherDetailsReturnFocus: null,
   autoRefreshEnabled: false,
   autoRefreshTimer: null,
 };
@@ -807,92 +806,37 @@ function countWithUnit(value, unit = 'icon') {
   return `${formatNumber(count)} ${count === 1 ? singular : plural}`;
 }
 
-function searcherCountLabel(value) {
-  const count = number(value);
-  return `${formatNumber(count)} ${count === 1 ? 'searcher' : 'searchers'}`;
-}
-
-function queryActivityCell(row = {}, rowIndex = -1) {
+function queryRequestCell(row = {}) {
   const count = number(row.activity_count ?? row.attempt_count);
-  const kind = String(row.activity_kind || '').toLowerCase() === 'lookup' ? 'lookup' : 'search';
-  const label = count === 1 ? kind : kind === 'search' ? 'searches' : 'lookups';
-  return `<span title="Recorded ${escapeHtml(kind)} activity for this searcher">${formatNumber(count)} ${escapeHtml(label)}</span>`;
+  return `<span title="Top-level tool calls represented by this query summary">${formatNumber(count)}</span>`;
 }
 
-function querySearcherCell(row = {}, rowIndex = -1) {
-  const searcher = normalizeList(row.searchers)[0];
-  if (!searcher) return '<span class="muted-cell">Unknown searcher</span>';
-  const kind = safeText(searcher.kind, 'anonymous');
-  return `
-    <strong>${escapeHtml(safeText(searcher.label, 'Unknown searcher'))}</strong>
-    <div class="activity-meta">
-      ${escapeHtml(kind)}${searcher.account_linked ? ' | Account linked' : ''}
-    </div>
-  `;
+function queryEstimatedClientIdsCell(row = {}) {
+  const count = number(row.estimated_client_id_count);
+  return `<span title="Estimated client IDs are not people. One user may produce several IDs, and one ID may represent shared infrastructure.">${formatNumber(count)}</span>`;
 }
 
-function closeSearcherDetails() {
-  const modal = $('searcherDetailsModal');
-  modal?.classList.remove('open');
-  modal?.setAttribute('aria-hidden', 'true');
-  if (state.searcherDetailsReturnFocus instanceof HTMLElement) {
-    state.searcherDetailsReturnFocus.focus();
+function queryTypicalResultCell(row = {}) {
+  if (row.typical_result_count === null || row.typical_result_count === undefined) {
+    return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not recorded')}</span>`;
   }
-  state.searcherDetailsReturnFocus = null;
-}
-
-function openSearcherDetails(rowIndex, trigger) {
-  const row = state.visibleQueryRows[Number(rowIndex)];
-  const modal = $('searcherDetailsModal');
-  const content = $('searcherDetailsContent');
-  const lead = $('searcherDetailsLead');
-  if (!row || !modal || !content) return;
-  const searchers = normalizeList(row.searchers);
-  if (lead) {
-    lead.textContent = `${safeText(row.query, 'Selected query')}: ${searcherCountLabel(row.estimated_client_id_count ?? searchers.length)}.`;
-  }
-  content.innerHTML = table([
-    { label: 'Searcher', render: (item) => `<strong>${escapeHtml(safeText(item.label, 'Anonymous'))}</strong><div class="activity-meta">${escapeHtml(safeText(item.kind, 'anonymous'))}${item.account_linked ? ' | Account linked' : ''}</div>` },
-    { label: 'Searches', number: true, render: (item) => formatNumber(item.searches) },
-    { label: 'Venues', render: (item) => normalizeList(item.channels).length ? escapeHtml(item.channels.map(channelLabel).join(', ')) : '<span class="muted-cell">Not recorded</span>' },
-    { label: 'Country', render: (item) => normalizeList(item.countries).length ? escapeHtml(item.countries.join(', ')) : '<span class="muted-cell">Not recorded</span>' },
-    { label: 'First seen', render: (item) => escapeHtml(formatDate(item.first_seen, true)) },
-    { label: 'Last seen', render: (item) => escapeHtml(formatDate(item.last_seen, true)) },
-  ], searchers, row.searcher_details_reason || 'Searcher details are not available for this grouped view.');
-  state.searcherDetailsReturnFocus = trigger instanceof HTMLElement ? trigger : null;
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
-  requestAnimationFrame(() => $('closeSearcherDetails')?.focus());
-}
-
-function queryResultCell(row = {}) {
-  if (String(row.query_origin || row.origin || '').toLowerCase() === 'icon_lookup'
-    && row.result_count_available === false) {
-    return '<span class="muted-cell">Lookup completed</span>';
-  }
-  if (row.result_count_available === false) {
-    return `<span class="muted-cell">${escapeHtml(row.result_count_reason || 'Not available for this view')}</span>`;
-  }
-  if (row.result_count_kind === 'range_across_attempts') {
-    const range = `${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)}`;
-    const scope = row.result_count_scope === 'current_day'
-      ? 'Exact results recorded today within this grouped period'
-      : row.result_count_reason || 'Result range across grouped activity';
-    return `<span title="${escapeHtml(scope)}">${escapeHtml(range)} ${escapeHtml(countWithUnit(2, row.result_unit).replace(/^2 /, ''))}</span>`;
-  }
-  if (row.result_unit === 'match' && number(row.result_count ?? row.results) === 0) {
+  if (row.result_unit === 'match' && number(row.typical_result_count) === 0) {
     return 'Icon not found';
   }
-  const value = countWithUnit(row.result_count ?? row.results, row.result_unit);
-  if (row.result_count_scope !== 'current_day') return value;
-  return `<span title="Exact result recorded today within this grouped period">${value}</span>`;
+  const range = row.result_count_min !== null && row.result_count_max !== null
+    ? `Results ranged from ${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)}.`
+    : '';
+  const samples = number(row.result_sample_count);
+  const detail = `${range}${range ? ' ' : ''}Median of ${formatNumber(samples)} recorded result ${samples === 1 ? 'count' : 'counts'}.`;
+  return `<span title="${escapeHtml(detail)}">${escapeHtml(countWithUnit(row.typical_result_count, row.result_unit))}</span>`;
 }
 
 function queryCountryCell(row = {}) {
+  const countries = normalizeList(row.countries);
   const country = row.country_code || row.country;
   if (row.country_available === false || !country) {
     if (number(row.country_count) > 1) {
-      return `<span title="${escapeHtml(row.country_reason || 'Multiple countries across grouped activity')}">${pill(`${formatNumber(row.country_count)} countries`)}</span>`;
+      return `<span title="${escapeHtml(countries.join(', ') || row.country_reason || 'Multiple countries across grouped activity')}">${pill(`${formatNumber(row.country_count)} countries`)}</span>`;
     }
     return `<span class="muted-cell">${escapeHtml(row.country_reason || 'Country not recorded')}</span>`;
   }
@@ -902,7 +846,11 @@ function queryCountryCell(row = {}) {
 
 function queryChannelCell(row = {}) {
   if (row.channel_available === false) {
-    return `<span class="muted-cell">${escapeHtml(row.channel_reason || 'Venue not recorded')}</span>`;
+    const channels = normalizeList(row.channels);
+    if (channels.length > 1) {
+      return `<span title="${escapeHtml(channels.map(channelLabel).join(', '))}">${pill(`${formatNumber(channels.length)} channels`, 'info')}</span>`;
+    }
+    return `<span class="muted-cell">${escapeHtml(row.channel_reason || 'Channel not recorded')}</span>`;
   }
   const channel = String(row.channel || row.venue || '').toLowerCase();
   if (channel === 'hosted_mcp') {
@@ -973,7 +921,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '2.0';
+const SEARCH_EXPORT_SCHEMA_VERSION = '3.0';
 
 function searchExportPeriod() {
   const labels = {
@@ -1013,9 +961,9 @@ function searchExportBaseName(type, generatedAt) {
     .replace(/^-+|-+$/g, '')
     .toLowerCase();
   const names = {
-    grouped_history: 'supericons-search-history-grouped',
-    top_level_mcp_requests: 'supericons-search-mcp-requests',
-    full_audit: 'supericons-search-full-audit',
+    search_summary: 'supericons-search-summary',
+    request_log: 'supericons-request-log',
+    audit_bundle: 'supericons-audit-bundle',
   };
   return `${names[type] || `supericons-search-${type}`}-${period}-${searchExportTimestampToken(generatedAt)}`;
 }
@@ -1029,133 +977,83 @@ function searchExportFilters() {
   };
 }
 
-function searchExportMetadata(type, generatedAt) {
-  return {
-    export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
-    export_type: type,
-    export_generated_at_utc: generatedAt,
-    export_period: searchExportPeriod().label,
-    export_channel_filter: state.filters.channel,
-    export_test_traffic_included: state.searchIncludeTest,
-  };
-}
-
-function searcherIdentityScope(kind) {
-  const scopes = {
-    registered: 'account',
-    pro: 'account',
-    api_key: 'api_key',
-    anonymous: 'monthly_rotating_client',
-    session: 'session',
-    ip: 'network_estimate',
-  };
-  return scopes[String(kind || '').toLowerCase()] || '';
-}
-
-function queryCountryExportValue(row = {}) {
-  const country = row.country_code || row.country;
-  if (row.country_available === false || !country) {
-    const count = number(row.country_count);
-    if (count > 1) return `${formatNumber(count)} countries`;
-    return row.country_reason || 'Country not recorded';
-  }
-  return country;
-}
-
-function queryReturnedExportValue(row = {}) {
-  const queryOrigin = String(row.query_origin || row.origin || '').toLowerCase();
-  if (row.result_count_available === false) {
-    return queryOrigin === 'icon_lookup'
-      ? 'Lookup completed'
-      : row.result_count_reason || '';
-  }
-  if (row.result_count_kind === 'range_across_attempts') {
-    const unit = countWithUnit(2, row.result_unit).replace(/^2 /, '');
-    return `${formatNumber(row.result_count_min)} to ${formatNumber(row.result_count_max)} ${unit}`;
-  }
-  const resultCount = row.result_count ?? row.results;
-  if (resultCount === null || resultCount === undefined || resultCount === '') return '';
-  if (row.result_unit === 'match' && number(resultCount) === 0) return 'Icon not found';
-  return countWithUnit(resultCount, row.result_unit);
-}
-
-function queryCsvExportRow(row = {}, searcher = null, exportMetadata = {}) {
-  const searcherKind = searcher ? safeText(searcher.kind, '') : '';
-  const rawSearcherChannels = normalizeList(searcher?.channels);
-  const activityKind = safeText(row.activity_kind, row.query_origin === 'icon_lookup' ? 'lookup' : 'search');
+function searchSummaryCsvRow(row = {}) {
+  const requestCount = number(row.activity_count ?? row.attempt_count);
+  const lookupRow = String(row.query_origin || row.origin || '').toLowerCase() === 'icon_lookup';
   return {
     query: row.query,
-    searcher_identifier: searcher ? safeText(searcher.label, '') : '',
-    searcher_kind: searcherKind,
-    searcher_account_linked: searcher ? Boolean(searcher.account_linked) : null,
-    identity_scope: searcherIdentityScope(searcherKind),
-    activity_count: row.activity_count ?? row.attempt_count ?? '',
-    activity_unit: activityKind,
-    activity_label: row.activity_label ?? '',
-    outcome_label: row.outcome_label || outcomeFor(row).label,
-    outcome_type: row.issue_type ?? '',
-    country_code: row.country_available === false ? '' : row.country_code ?? '',
-    country_display: queryCountryExportValue(row),
-    country_count: row.country_count ?? '',
-    country_recorded: number(row.country_count) > 0 || Boolean(row.country_code),
-    country_exact_for_group: row.country_available !== false && Boolean(row.country_code),
-    country_scope: row.country_scope ?? '',
-    country_detail: row.country_reason ?? '',
-    venue_label: channelLabel(row.channel),
-    channel: row.channel,
-    venue_exact_for_group: row.channel_available !== false && Boolean(row.channel),
-    venue_detail: row.channel_reason ?? '',
     library_filter: row.library_filter,
-    job_category: row.job_category ?? '',
     query_origin: row.query_origin,
-    tool_names: normalizeList(row.tools).join('|'),
-    searcher_channels: rawSearcherChannels.join('|'),
-    returned_display: queryReturnedExportValue(row),
-    result_count: row.result_count,
-    result_count_min: row.result_count_min,
-    result_count_max: row.result_count_max,
-    result_sample_count: row.result_sample_count,
+    tool: normalizeList(row.tools).join('|'),
+    searches: lookupRow ? 0 : requestCount,
+    lookups: lookupRow ? requestCount : 0,
+    distinct_searcher_ids: number(row.estimated_client_id_count),
+    outcome: row.outcome_label || outcomeFor(row).label,
+    success_count: number(row.successful_attempt_count) + number(row.lookup_success_count),
+    zero_count: number(row.zero_attempt_count),
+    low_count: number(row.low_attempt_count),
+    not_found_count: number(row.lookup_not_found_count),
+    error_count: number(row.error_attempt_count) + number(row.lookup_error_count),
+    typical_result_count: row.typical_result_count,
     result_unit: row.result_unit,
-    result_count_available: row.result_count_available,
-    result_count_kind: row.result_count_kind,
-    result_count_scope: row.result_count_scope,
-    result_count_detail: row.result_count_reason ?? '',
-    success_count: row.successful_attempt_count,
-    zero_count: row.zero_attempt_count,
-    low_count: row.low_attempt_count,
-    error_count: row.error_attempt_count,
-    clarification_count: row.clarification_attempt_count,
-    defect_count: row.defect_attempt_count,
-    lookup_found_count: row.lookup_success_count,
-    lookup_not_found_count: row.lookup_not_found_count,
-    lookup_error_count: row.lookup_error_count,
-    lookup_unknown_count: row.lookup_unknown_count,
+    country_codes: normalizeList(row.countries).join('|'),
+    channel: normalizeList(row.channels).join('|') || row.channel,
     first_seen_utc: row.first_seen,
     last_seen_utc: row.last_seen,
-    review_status: row.review_status ?? '',
-    review_note: row.review_note ?? '',
-    row_grain: 'searcher + query + venue + library + job category + origin',
-    ...exportMetadata,
   };
 }
 
-function queryCsvExportRows(rows = [], exportMetadata = {}) {
-  return normalizeList(rows).flatMap((row) => {
-    const searchers = normalizeList(row.searchers);
-    if (!searchers.length) return [queryCsvExportRow(row, null, exportMetadata)];
-    return searchers.map((searcher) => queryCsvExportRow(row, searcher, exportMetadata));
-  });
+function requestLogCsvRow(row = {}) {
+  return {
+    event_id: row.event_identifier,
+    recorded_at_utc: row.recorded_at,
+    query: row.query,
+    query_origin: row.query_origin,
+    tool_name: row.tool_name,
+    outcome: row.outcome,
+    status: row.status,
+    error_code: row.error_code,
+    library_filter: row.library_filter,
+    library_mode: row.library_mode,
+    locale: row.locale,
+    requested_limit: row.requested_limit,
+    result_count: row.result_count,
+    returned_icon_refs: normalizeList(row.returned_icon_refs).join('|'),
+    returned_icon_refs_recorded: row.returned_icon_refs_recorded,
+    latency_ms: row.latency_ms,
+    search_execution: row.search_execution,
+    server_version: row.server_version,
+    server_build: row.server_build,
+    traffic_class: row.traffic_class,
+    channel: row.channel,
+    environment: row.environment,
+    client_family: row.client_family,
+    estimated_client_id: row.searcher_identifier,
+    country_code: row.country_code,
+    registered: row.registered,
+    pro: row.pro,
+  };
 }
 
-function searchAuditIntegrity(tableRows, topLevelEvents, webSearchEvents, diagnostics) {
-  const groupedRows = normalizeList(tableRows);
+function searchSummaryKey(row = {}) {
+  return JSON.stringify([
+    safeText(row.query, '').toLowerCase(),
+    safeText(row.library_filter, 'all').toLowerCase(),
+    safeText(row.query_origin, 'legacy_unknown').toLowerCase(),
+  ]);
+}
+
+function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diagnostics) {
+  const summaries = normalizeList(summaryRows);
   const primaryEvents = [...normalizeList(topLevelEvents), ...normalizeList(webSearchEvents)];
   const groupablePrimaryEvents = primaryEvents.filter((row) => safeText(row.query, '').trim());
-  const groupedActivityCount = groupedRows.reduce(
+  const summaryRequestCount = summaries.reduce(
     (sum, row) => sum + number(row.activity_count),
     0,
   );
-  const zeroActivityRows = groupedRows.filter((row) => number(row.activity_count) <= 0);
+  const zeroRequestRows = summaries.filter((row) => number(row.activity_count) <= 0);
+  const summaryKeys = summaries.map(searchSummaryKey);
+  const duplicateSummaryKeys = summaryKeys.length - new Set(summaryKeys).size;
   const identifiers = primaryEvents
     .map((row) => safeText(row.event_identifier, '').trim())
     .filter(Boolean);
@@ -1168,27 +1066,29 @@ function searchAuditIntegrity(tableRows, topLevelEvents, webSearchEvents, diagno
     String(row.event_role || '') !== 'diagnostic'
   )).length;
   const checks = {
-    grouped_rows_have_activity: zeroActivityRows.length === 0,
-    grouped_activity_matches_groupable_primary_events: groupedActivityCount === groupablePrimaryEvents.length,
-    primary_event_identifiers_are_unique: duplicateIdentifiers === 0,
-    primary_event_identifiers_are_recorded: missingIdentifiers === 0,
-    primary_roles_are_valid: unexpectedPrimaryRoles === 0,
+    summary_rows_have_requests: zeroRequestRows.length === 0,
+    summary_request_count_matches_primary_events: summaryRequestCount === groupablePrimaryEvents.length,
+    summary_grain_is_unique: duplicateSummaryKeys === 0,
+    request_event_ids_are_unique: duplicateIdentifiers === 0,
+    request_event_ids_are_recorded: missingIdentifiers === 0,
+    request_roles_are_valid: unexpectedPrimaryRoles === 0,
     diagnostic_roles_are_valid: unexpectedDiagnosticRoles === 0,
   };
   return {
     status: Object.values(checks).every(Boolean) ? 'passed' : 'needs_attention',
     checks,
     counts: {
-      grouped_rows: groupedRows.length,
-      grouped_activity: groupedActivityCount,
+      search_summary_rows: summaries.length,
+      summary_requests: summaryRequestCount,
       groupable_primary_events: groupablePrimaryEvents.length,
-      top_level_mcp_requests: normalizeList(topLevelEvents).length,
+      request_log_rows: normalizeList(topLevelEvents).length,
       web_searches: normalizeList(webSearchEvents).length,
       hosted_diagnostics: normalizeList(diagnostics).length,
-      zero_activity_grouped_rows: zeroActivityRows.length,
-      duplicate_primary_event_identifiers: duplicateIdentifiers,
-      missing_primary_event_identifiers: missingIdentifiers,
-      unexpected_primary_roles: unexpectedPrimaryRoles,
+      zero_request_summary_rows: zeroRequestRows.length,
+      duplicate_summary_keys: duplicateSummaryKeys,
+      duplicate_request_event_ids: duplicateIdentifiers,
+      missing_request_event_ids: missingIdentifiers,
+      unexpected_request_roles: unexpectedPrimaryRoles,
       unexpected_diagnostic_roles: unexpectedDiagnosticRoles,
     },
   };
@@ -1723,9 +1623,9 @@ function renderQueryExplorer() {
   if (includeTest) includeTest.checked = state.searchIncludeTest;
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
-    if (subtitle) subtitle.textContent = 'Loading grouped rows and activity totals';
+    if (subtitle) subtitle.textContent = 'One row per unique query. For quick analysis. Loading data.';
     renderPagination('queries', 0, 1);
-    element.innerHTML = loadingState('Loading query explorer');
+    element.innerHTML = loadingState('Loading query summary');
     return;
   }
   if (state.data.search?.queries_available === false) {
@@ -1736,24 +1636,32 @@ function renderQueryExplorer() {
   }
   const summary = state.data.search?.summary || {};
   if (subtitle) {
-    const groupedRows = number(summary.table_rows ?? summary.history_rows ?? state.data.search?.pagination?.total);
-    const activities = number(summary.activities ?? summary.history_attempts);
+    const summaryRows = number(summary.summary_rows ?? summary.table_rows ?? state.data.search?.pagination?.total);
+    const requests = number(summary.requests ?? summary.activities ?? summary.history_attempts);
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
-    subtitle.textContent = `${formatNumber(groupedRows)} rows grouped by searcher, query, venue, library, and origin | ${formatNumber(activities)} activities | ${testScope}`;
+    subtitle.textContent = `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} requests | ${testScope}`;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
   const headers = [
     {
       label: 'Query',
-      render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter || row.library, 'All libraries'))} | ${escapeHtml(originLabel(row.query_origin || row.origin))}</div>`,
+      render: (row) => {
+        const tools = normalizeList(row.tools);
+        const details = [
+          safeText(row.library_filter || row.library, 'All libraries'),
+          originLabel(row.query_origin || row.origin),
+          tools.join(', '),
+        ].filter(Boolean);
+        return `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(details.join(' | '))}</div>`;
+      },
     },
-    { label: 'Searcher', render: (row, rowIndex) => querySearcherCell(row, rowIndex) },
-    { label: 'Searches', render: (row, rowIndex) => queryActivityCell(row, rowIndex) },
+    { label: 'Requests', number: true, render: (row) => queryRequestCell(row) },
+    { label: 'Est. client IDs', number: true, render: (row) => queryEstimatedClientIdsCell(row) },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: 'Country', render: (row) => queryCountryCell(row) },
-    { label: 'Venue', render: (row) => queryChannelCell(row) },
-    { label: 'Returned', number: true, render: (row) => queryResultCell(row) },
+    { label: 'Channel', render: (row) => queryChannelCell(row) },
+    { label: 'Typical result', number: true, render: (row) => queryTypicalResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
   const notice = state.data.search?.queries_complete === false
@@ -2540,7 +2448,7 @@ async function exportData(key) {
   let completeRows = null;
   let eventExport = null;
   try {
-    if (key === 'queries-csv' || key === 'queries-json' || key === 'query-audit-json') {
+    if (key === 'search-summary-csv' || key === 'audit-bundle-json') {
       completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
     } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
       const queryRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
@@ -2552,10 +2460,10 @@ async function exportData(key) {
       completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
     } else if (key === 'activity') {
       completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
-    } else if (key === 'query-events-csv') {
+    } else if (key === 'request-log-csv') {
       eventExport = await fetchAllSearchEvents('primary');
     }
-    if (key === 'query-audit-json') {
+    if (key === 'audit-bundle-json') {
       eventExport = await fetchAllSearchEvents('audit');
     }
   } catch (error) {
@@ -2564,65 +2472,72 @@ async function exportData(key) {
   }
   const generatedAt = new Date().toISOString();
   if (eventExport) {
-    if (key === 'query-audit-json') {
+    if (key === 'audit-bundle-json') {
       const events = normalizeList(eventExport.events);
-      const groupedHistory = normalizeList(completeRows);
-      const topLevelMcpRequests = events.filter((row) => row.event_role === 'top_level');
+      const searchSummary = normalizeList(completeRows);
+      const requestLog = events.filter((row) => row.event_role === 'top_level');
       const webSearches = events.filter((row) => row.event_role === 'web_top_level');
       const hostedDiagnostics = events.filter((row) => row.event_role === 'diagnostic');
       const integrity = searchAuditIntegrity(
-        groupedHistory,
-        topLevelMcpRequests,
+        searchSummary,
+        requestLog,
         webSearches,
         hostedDiagnostics,
       );
       const audit = {
         export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
-        export_type: 'full_search_audit',
-        description: 'Complete Search history audit package. Data sets with different row meanings remain separate.',
+        export_type: 'audit_bundle',
+        description: 'Everything plus integrity checks. For verification.',
         generated_at_utc: generatedAt,
         period: searchExportPeriod(),
         filters: searchExportFilters(),
         contents: {
-          grouped_history: 'One row per searcher, query, venue, library, job category, and origin.',
-          top_level_mcp_requests: 'One top-level MCP search or exact icon lookup per row.',
+          search_summary: 'One row per unique query, library, and origin. For quick analysis.',
+          request_log: 'One top-level MCP tool call per row. Ground truth.',
           web_searches: 'One top-level web search per row.',
           hosted_diagnostics: 'Lower-level hosted search work. These rows are supporting diagnostics and are not additional user activity.',
           field_coverage: 'Recorded-field coverage across the audit event source.',
-          integrity_checks: 'Automated reconciliation checks for row activity, event identifiers, and source roles.',
+          integrity_checks: 'Automated reconciliation checks for summary requests, unique summary grain, event identifiers, and source roles.',
         },
         summary: {
-          grouped_history_rows: groupedHistory.length,
-          grouped_activities: integrity.counts.grouped_activity,
-          top_level_mcp_requests: topLevelMcpRequests.length,
+          search_summary_rows: searchSummary.length,
+          requests: integrity.counts.summary_requests,
+          request_log_rows: requestLog.length,
           web_searches: webSearches.length,
           hosted_diagnostics: hostedDiagnostics.length,
           excluded_non_activity_rows: number(search.summary?.excluded_non_activity_rows),
         },
         integrity_checks: integrity,
-        grouped_history: groupedHistory,
-        top_level_mcp_requests: topLevelMcpRequests,
+        search_summary: searchSummary,
+        request_log: requestLog,
         web_searches: webSearches,
         hosted_diagnostics: hostedDiagnostics,
         field_coverage: eventExport.field_coverage,
+        csv_schemas: {
+          search_summary: Object.keys(searchSummaryCsvRow({})),
+          request_log: Object.keys(requestLogCsvRow({})),
+        },
         definitions: {
           ...eventExport.definitions,
-          grouped_history_grain: 'One row per searcher, query, venue, library, job category, and origin.',
-          grouped_activity: 'The number of top-level searches or exact icon lookups represented by grouped history rows.',
-          source_separation: 'Top-level MCP requests, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
+          search_summary_grain: 'One row per normalized query, library filter, and query origin.',
+          summary_requests: 'The top-level tool calls represented by each Search summary row.',
+          typical_result_count: 'The median recorded result count. It is blank when a row mixes result units or has no recorded result count.',
+          distinct_searcher_ids: 'Estimated client IDs, not people. One user may produce several IDs, and one ID may represent shared infrastructure.',
+          request_log_grain: 'One top-level MCP tool call per row.',
+          root_request_identifier: 'Legacy request-grouping identifier retained only for investigation. It may collide and must not be treated as a session ID.',
+          source_separation: 'Request log rows, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
         },
         source_meta: eventExport.meta,
       };
       downloadFile(
-        `${searchExportBaseName('full_audit', generatedAt)}.json`,
+        `${searchExportBaseName('audit_bundle', generatedAt)}.json`,
         JSON.stringify(audit, null, 2),
         'application/json;charset=utf-8',
       );
     } else {
-      const exportMetadata = searchExportMetadata('top_level_mcp_requests', generatedAt);
       exportRows(
-        searchExportBaseName('top_level_mcp_requests', generatedAt),
-        eventExport.events.map((row) => plainExportRow({ ...row, ...exportMetadata })),
+        searchExportBaseName('request_log', generatedAt),
+        eventExport.events.map((row) => plainExportRow(requestLogCsvRow(row))),
         'csv',
       );
     }
@@ -2636,8 +2551,7 @@ async function exportData(key) {
     'top-list-json': unwrapRows(overview.top_lists?.[state.topList]),
     geography: unwrapRows(overview.geography),
     activity: completeRows ?? normalizeList(state.data.activity?.activity),
-    'queries-csv': completeRows ?? normalizeList(search.queries),
-    'queries-json': completeRows ?? normalizeList(search.queries),
+    'search-summary-csv': completeRows ?? normalizeList(search.queries),
     'gap-worklist-csv': completeRows ?? normalizeList(search.worklist),
     'gap-worklist-json': completeRows ?? normalizeList(search.worklist),
     'icon-requests-csv': unwrapRows(search.icon_requests),
@@ -2657,15 +2571,12 @@ async function exportData(key) {
     clients: completeRows ?? unwrapRows(audience.clients),
   };
   const mappedRows = normalizeList(mapping[key]);
-  const groupedExportMetadata = searchExportMetadata('grouped_history', generatedAt);
-  const rows = key === 'queries-csv'
-    ? queryCsvExportRows(mappedRows, groupedExportMetadata).map(plainExportRow)
-    : key === 'queries-json'
-      ? mappedRows
-      : mappedRows.map(plainExportRow);
+  const rows = key === 'search-summary-csv'
+    ? mappedRows.map((row) => plainExportRow(searchSummaryCsvRow(row)))
+    : mappedRows.map(plainExportRow);
   exportRows(
-    key === 'queries-csv'
-      ? searchExportBaseName('grouped_history', generatedAt)
+    key === 'search-summary-csv'
+      ? searchExportBaseName('search_summary', generatedAt)
       : `supericons-${key}-${state.filters.window}`,
     rows,
     key.endsWith('json') ? 'json' : 'csv',
@@ -2875,11 +2786,6 @@ function initializeEvents() {
   });
   document.addEventListener('click', (event) => {
     if (!event.target.closest('#searchDownloadMenu')) setSearchDownloadMenuOpen(false);
-    const searcherDetailsButton = event.target.closest('[data-searcher-details]');
-    if (searcherDetailsButton) {
-      openSearcherDetails(searcherDetailsButton.dataset.searcherDetails, searcherDetailsButton);
-      return;
-    }
     const worklistButton = event.target.closest('[data-open-worklist]');
     if (worklistButton) {
       openWorklist(worklistButton.dataset.openWorklist);
@@ -2991,13 +2897,6 @@ function initializeEvents() {
       event.preventDefault();
       first.focus();
     }
-  });
-  $('closeSearcherDetails')?.addEventListener('click', closeSearcherDetails);
-  $('searcherDetailsModal')?.addEventListener('click', (event) => {
-    if (event.target === event.currentTarget) closeSearcherDetails();
-  });
-  $('searcherDetailsModal')?.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeSearcherDetails();
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') setSearchDownloadMenuOpen(false);

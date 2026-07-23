@@ -50,9 +50,12 @@ function excludes(source, value, label) {
   'Latest Activity',
   '<span class="nav-label">Searches</span>',
   '<span class="nav-label">Users</span>',
-  '>Grouped CSV<',
-  '<strong>MCP Requests CSV</strong>',
-  '<strong>Full Audit JSON</strong>',
+  '>Search summary<',
+  '<strong>Request log</strong>',
+  '<strong>Audit bundle</strong>',
+  'One row per unique query. For quick analysis.',
+  'One row per tool call. Ground truth.',
+  'Everything plus integrity checks. For verification.',
 ].forEach((value) => includes(html, value, 'admin.html'));
 
 [
@@ -93,10 +96,9 @@ function excludes(source, value, label) {
   'User query',
   'Known defects and errors are excluded',
   'Clarification',
-  'query-audit-json',
+  'audit-bundle-json',
   'row.result_count_reason',
   'row.country_reason',
-  'Lookup completed',
   'Icon not found',
   'recommendations',
   'Daily reach across the selected period',
@@ -105,10 +107,10 @@ function excludes(source, value, label) {
   'Last search',
   'renderPagination',
   'iconSvg',
-  "SEARCH_EXPORT_SCHEMA_VERSION = '2.0'",
-  "'supericons-search-history-grouped'",
-  "'supericons-search-mcp-requests'",
-  "'supericons-search-full-audit'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '3.0'",
+  "'supericons-search-summary'",
+  "'supericons-request-log'",
+  "'supericons-audit-bundle'",
   'integrity_checks',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 

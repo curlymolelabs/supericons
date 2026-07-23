@@ -694,23 +694,23 @@
             <div class="panel-head">
               <div>
                 <div class="panel-title">Search history</div>
-                <div class="panel-subtitle" id="searchHistorySubtitle">Loading grouped rows and activity totals</div>
+                <div class="panel-subtitle" id="searchHistorySubtitle">One row per unique query. For quick analysis.</div>
               </div>
               <div class="panel-actions">
                 <label class="switch"><input id="includeSearchTestTraffic" type="checkbox" /> Include test traffic</label>
                 <div class="download-menu" id="searchDownloadMenu">
-                  <button class="download-primary" data-export="queries-csv" title="Download one grouped Search history row per searcher, query, venue, library, and origin" type="button">Grouped CSV</button>
+                  <button class="download-primary" data-export="search-summary-csv" title="One row per unique query. For quick analysis." type="button">Search summary</button>
                   <button class="download-toggle" id="searchDownloadToggle" type="button" aria-label="More download options" aria-expanded="false" aria-controls="searchDownloadPopover">
                     <img src="/assets/admin/chevron-down.svg" alt="" />
                   </button>
                   <div class="download-popover" id="searchDownloadPopover" role="menu" hidden>
-                    <button class="download-option" data-export="query-events-csv" type="button" role="menuitem">
-                      <strong>MCP Requests CSV</strong>
-                      <span>One top-level MCP search or exact icon lookup per row. Includes recorded results, latency, locale, version, and masked searcher fields. Web searches and hosted diagnostics are excluded.</span>
+                    <button class="download-option" data-export="request-log-csv" type="button" role="menuitem">
+                      <strong>Request log</strong>
+                      <span>One row per tool call. Ground truth.</span>
                     </button>
-                    <button class="download-option" data-export="query-audit-json" type="button" role="menuitem">
-                      <strong>Full Audit JSON</strong>
-                      <span>Complete package with grouped history, top-level MCP requests, web searches, hosted diagnostics, field coverage, integrity checks, definitions, filters, and source metadata.</span>
+                    <button class="download-option" data-export="audit-bundle-json" type="button" role="menuitem">
+                      <strong>Audit bundle</strong>
+                      <span>Everything plus integrity checks. For verification.</span>
                     </button>
                   </div>
                 </div>
@@ -764,14 +764,6 @@
           <button class="primary-button" id="adminSecretSubmitBtn" type="submit">Open dashboard</button>
         </div>
       </form>
-    </div>
-  </div>
-  <div class="modal-overlay" id="searcherDetailsModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="searcherDetailsTitle">
-    <div class="modal modal-wide">
-      <h2 id="searcherDetailsTitle">Searcher details</h2>
-      <p id="searcherDetailsLead">Search sources recorded for this grouped query.</p>
-      <div class="table-wrap" id="searcherDetailsContent"></div>
-      <div class="modal-actions"><button class="small-button" id="closeSearcherDetails" type="button">Close</button></div>
     </div>
   </div>
   <div class="toast" id="adminToast" role="status" aria-live="polite"></div>

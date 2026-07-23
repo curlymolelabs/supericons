@@ -578,6 +578,8 @@ const queryRows = [
     audit_sources: ['mcp_usage_events'],
     minimum_result_count: 2,
     maximum_result_count: 8,
+    median_result_count: 4,
+    result_units: ['icon'],
   }]));
   assert.equal(grouped.result_count, null);
   assert.equal(grouped.result_count_min, 2);
@@ -586,8 +588,35 @@ const queryRows = [
   assert.equal(grouped.result_count_reason, 'Results ranged from 2 to 8 across 4 searches');
   assert.equal(grouped.activity_label, '4 searches');
   assert.equal(grouped.estimated_client_id_count, 2);
+  assert.equal(grouped.typical_result_count, 4);
+  assert.deepEqual(grouped.channels, ['hosted_mcp']);
+  assert.deepEqual(grouped.countries, ['SG']);
   assert.equal(grouped.job_category, 'navigation');
   assert.equal('client_label' in grouped, false);
+}
+
+{
+  const [mixedUnits] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows([{
+    query: 'mixed tool result',
+    library_filter: 'all',
+    attempt_count: 2,
+    successful_attempt_count: 2,
+    estimated_unique_clients: 1,
+    channels: ['hosted_mcp'],
+    countries: ['SG'],
+    query_origins: ['agent_query'],
+    tools: ['recommend_icons', 'search_icons'],
+    audit_sources: ['mcp_usage_events'],
+    minimum_result_count: 1,
+    maximum_result_count: 10,
+    median_result_count: 5.5,
+    result_sample_count: 2,
+    result_units: ['icon', 'primary_pick'],
+  }]));
+  assert.equal(mixedUnits.result_unit, 'mixed');
+  assert.equal(mixedUnits.typical_result_count, null);
+  assert.equal(mixedUnits.result_count_available, false);
+  assert.equal(mixedUnits.result_count_reason, 'Result counts use different units across tools');
 }
 
 {
@@ -699,7 +728,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 16,
+  cases: 17,
   series_rows: series.length,
   query_filters: true,
   aggregate_query_semantics: true,
