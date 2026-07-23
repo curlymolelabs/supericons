@@ -699,22 +699,18 @@
               <div class="panel-actions">
                 <label class="switch"><input id="includeSearchTestTraffic" type="checkbox" /> Include test traffic</label>
                 <div class="download-menu" id="searchDownloadMenu">
-                  <button class="download-primary" data-export="queries-csv" title="Download the grouped rows shown in this table" type="button">Download CSV</button>
+                  <button class="download-primary" data-export="queries-csv" title="Download one grouped Search history row per searcher, query, venue, library, and origin" type="button">Grouped CSV</button>
                   <button class="download-toggle" id="searchDownloadToggle" type="button" aria-label="More download options" aria-expanded="false" aria-controls="searchDownloadPopover">
                     <img src="/assets/admin/chevron-down.svg" alt="" />
                   </button>
                   <div class="download-popover" id="searchDownloadPopover" role="menu" hidden>
-                    <button class="download-option" data-export="queries-csv" type="button" role="menuitem">
-                      <strong>Table CSV</strong>
-                      <span>Grouped rows that match this table. Recommended for normal analysis.</span>
-                    </button>
                     <button class="download-option" data-export="query-events-csv" type="button" role="menuitem">
-                      <strong>Event CSV</strong>
-                      <span>One top-level MCP request per row. Supporting diagnostics are excluded.</span>
+                      <strong>MCP Requests CSV</strong>
+                      <span>One top-level MCP search or exact icon lookup per row. Includes recorded results, latency, locale, version, and masked searcher fields. Web searches and hosted diagnostics are excluded.</span>
                     </button>
                     <button class="download-option" data-export="query-audit-json" type="button" role="menuitem">
-                      <strong>Audit JSON</strong>
-                      <span>Table rows, top-level MCP events, web search events, diagnostics, field coverage, and definitions.</span>
+                      <strong>Full Audit JSON</strong>
+                      <span>Complete package with grouped history, top-level MCP requests, web searches, hosted diagnostics, field coverage, integrity checks, definitions, filters, and source metadata.</span>
                     </button>
                   </div>
                 </div>

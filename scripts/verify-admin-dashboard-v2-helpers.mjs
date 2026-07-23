@@ -5,6 +5,7 @@ import {
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
   buildDashboardV2QueryHistoryKey,
+  dashboardV2SearchHistoryRole,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
   compactDashboardV2EventRows,
@@ -20,6 +21,23 @@ import {
 } from '../lib/admin-dashboard-v2.js';
 
 const now = new Date('2026-07-17T12:00:00.000Z');
+
+{
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'search_attempt',
+  }), 'search');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'mcp_call',
+    query_origin: 'icon_lookup',
+  }), 'lookup');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'hosted_search_audit',
+  }), 'diagnostic');
+  assert.equal(dashboardV2SearchHistoryRole({
+    signal_type: 'mcp_call',
+    query_origin: 'agent_query',
+  }), 'other');
+}
 
 {
   const [controlledEvent, auditEvent] = compactDashboardV2EventRows([{
@@ -681,7 +699,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 15,
+  cases: 16,
   series_rows: series.length,
   query_filters: true,
   aggregate_query_semantics: true,

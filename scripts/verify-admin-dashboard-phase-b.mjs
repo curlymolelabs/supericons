@@ -50,6 +50,9 @@ function excludes(source, value, label) {
   'Latest Activity',
   '<span class="nav-label">Searches</span>',
   '<span class="nav-label">Users</span>',
+  '>Grouped CSV<',
+  '<strong>MCP Requests CSV</strong>',
+  '<strong>Full Audit JSON</strong>',
 ].forEach((value) => includes(html, value, 'admin.html'));
 
 [
@@ -65,6 +68,8 @@ function excludes(source, value, label) {
   'data-row-label="Gap worklist"',
   'data-row-label="Icon requests"',
   'data-row-label="Contact inbox"',
+  '<strong>Table CSV</strong>',
+  '>Download CSV<',
 ].forEach((value) => excludes(html, value, 'admin.html'));
 
 [
@@ -100,6 +105,11 @@ function excludes(source, value, label) {
   'Last search',
   'renderPagination',
   'iconSvg',
+  "SEARCH_EXPORT_SCHEMA_VERSION = '2.0'",
+  "'supericons-search-history-grouped'",
+  "'supericons-search-mcp-requests'",
+  "'supericons-search-full-audit'",
+  'integrity_checks',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [

@@ -48,46 +48,67 @@ Errors and clarification responses must not be labeled Success.
 
 ## Download choices
 
-### Table CSV
+### Grouped CSV
 
 This is the recommended download for normal analysis.
 
-Grain: one row per grouped Search history row.
+Grain: one row per searcher, query, venue, library, job category, and query origin.
 
-It includes the visible business fields plus useful analysis fields such as:
+Filename pattern: `supericons-search-history-grouped-{period}-{generated-at-utc}.csv`.
+
+It includes:
 
 - searcher identifier and identity kind
 - account-linked state
-- first and last seen time
+- activity count, activity unit, and a readable activity label
+- outcome label plus success, zero, low, error, clarification, and defect components
+- exact lookup found, not found, error, and unknown components
+- country value, recorded state, exact-for-group state, count, scope, and explanation
+- venue value, exact-for-group state, and explanation
 - result count range
-- zero, low, error, and clarification counts
-- library, origin, channel, and venue
+- result availability, unit, range, sample count, scope, and explanation
+- library, job category, query origin, channel, and tool names
+- first and last seen time
+- review fields
+- row-grain and export metadata
 
 It does not export raw internal request IDs.
 
-### Event CSV
+### MCP Requests CSV
 
 Use this when one row per recorded top-level MCP request is required.
 
-Grain: one top-level MCP request per row.
+Grain: one top-level MCP search or exact icon lookup per row.
+
+Filename pattern: `supericons-search-mcp-requests-{period}-{generated-at-utc}.csv`.
 
 Hosted search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
 
-### Audit JSON
+### Full Audit JSON
 
 Use this for a complete quality or telemetry audit.
 
+Filename pattern: `supericons-search-full-audit-{period}-{generated-at-utc}.json`.
+
 The file keeps these groups separate:
 
-- grouped table rows
-- top-level MCP events
-- top-level web search events
-- supporting diagnostics
+- `grouped_history`
+- `top_level_mcp_requests`
+- `web_searches`
+- `hosted_diagnostics`
 - field coverage
 - data definitions
 - source metadata
 
 This separation prevents diagnostic rows from inflating user activity while preserving the additional detail for investigation.
+
+The JSON also includes:
+
+- export schema version and export type
+- selected period and filters
+- a plain-language description for each data set
+- summary counts
+- integrity checks for grouped activity, event identifiers, and source roles
 
 ## Safe scale behavior
 
@@ -95,18 +116,17 @@ The API remains bounded so one very large request cannot exhaust database, funct
 
 The table uses stable server pagination. Downloads request every page from one fixed snapshot. If a requested period exceeds the safe raw-detail limit, the dashboard must explain that the operator should narrow the period or filters. The long-term scale path is dated rollups for long periods, not an unlimited raw export.
 
-## Verified one-day evidence
+## Data correction recorded on 2026-07-23
 
-The supplied one-day event export contained 401 records:
+The supplied one-day grouped CSV contained 492 rows. Of those, 127 rows had zero recorded activity but were labelled Success. A sample was the query `biểu tượng tìm kiếm`.
 
-- 345 `mcp_usage_events` records
-- 56 `search_request_audit` records
-- 46 controlled-test records
+The cause was the raw 24-hour path treating hosted diagnostic rows as Search history activity. Diagnostics can carry a query but do not represent another user search. The corrected contract now:
 
-After excluding controlled tests and treating hosted audit rows as diagnostics, the default scope contained:
+- classifies source rows as search, exact lookup, diagnostic, or other
+- includes only search and exact lookup roles before grouping
+- rejects any compacted group with zero activity
+- calculates pagination and summary totals from the same accepted grouped rows
+- reports the number of excluded non-activity rows
+- includes reconciliation checks in Full Audit JSON
 
-- 299 top-level MCP activities
-- 56 supporting hosted diagnostics
-- 283 grouped Search history rows
-
-These numbers describe the supplied 2026-07-22 export only. The dashboard values are calculated from the selected live period and are not hardcoded.
+The numbers above describe the inspected file only. Future dashboard values are calculated from the selected live period and are not hardcoded.

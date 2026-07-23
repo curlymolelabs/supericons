@@ -56,6 +56,7 @@
     "verify:admin-dashboard-v2-helpers": "node scripts/verify-admin-dashboard-v2-helpers.mjs",
     "verify:admin-dashboard-v2-api": "node scripts/verify-admin-dashboard-v2-api.mjs",
     "verify:admin-dashboard-search-events": "node scripts/verify-admin-dashboard-search-events.mjs",
+    "verify:admin-dashboard-search-export-contract": "node scripts/verify-admin-dashboard-search-export-contract.mjs",
     "verify:mcp-usage-event-detail": "node scripts/verify-mcp-usage-event-detail.mjs",
     "verify:mcp-get-icon-outcomes": "node scripts/verify-mcp-get-icon-outcomes.mjs",
     "analyze:admin-search-quality": "node scripts/analyze-admin-search-quality.mjs",

@@ -908,15 +908,20 @@ try {
   ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The searcher-level table is not labelled Search history.');
   ok(await page.locator('#searchDataGuide').count() === 0, 'The old data guide still takes up table space.');
   const historySubtitle = await page.locator('#searchHistorySubtitle').innerText();
-  ok(historySubtitle.includes(`${queryRows.length} grouped rows`), 'Search history does not show its exact grouped-row count.');
+  ok(historySubtitle.includes(`${queryRows.length} rows grouped by searcher`), 'Search history does not explain its exact row count and grouping.');
   ok(historySubtitle.includes('activities'), 'Search history does not show its exact activity count.');
   ok(historySubtitle.includes('test traffic excluded'), 'Search history does not state its default test-traffic scope.');
   ok(!(await queryPanel.innerText()).includes('Filters: zero:true'), 'Search history still shows hardcoded filter claims.');
   ok(await queryPanel.getByText('Advanced', { exact: true }).count() === 0, 'Search history still has a duplicate Advanced control.');
   const tableBoxBeforeMenu = await page.locator('#queryExplorer').boundingBox();
+  ok(await page.locator('[data-export="queries-csv"]').count() === 1, 'The primary grouped CSV action is missing or duplicated.');
+  ok(await page.locator('[data-export="queries-csv"]').innerText() === 'Grouped CSV', 'The primary download label does not describe its grouped data.');
   await page.click('#searchDownloadToggle');
   ok(await page.locator('#searchDownloadPopover').isVisible(), 'The download menu did not open.');
-  ok(await page.locator('#searchDownloadPopover [role="menuitem"]').count() === 3, 'The download menu does not have exactly three focused choices.');
+  ok(await page.locator('#searchDownloadPopover [role="menuitem"]').count() === 2, 'The download menu does not have exactly two alternative exports.');
+  ok(await page.getByText('MCP Requests CSV', { exact: true }).count() === 1, 'The top-level MCP request export is not labelled clearly.');
+  ok(await page.getByText('Full Audit JSON', { exact: true }).count() === 1, 'The full audit export is not labelled clearly.');
+  ok(await page.getByText('Table CSV', { exact: true }).count() === 0, 'The old ambiguous Table CSV label is still visible.');
   const tableBoxWithMenu = await page.locator('#queryExplorer').boundingBox();
   ok(
     Math.abs(tableBoxBeforeMenu.x - tableBoxWithMenu.x) < 1
@@ -991,17 +996,15 @@ try {
   await autoRefreshRequest;
   await page.uncheck('#autoRefresh');
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
-  const requestDownload = page.waitForEvent('download');
-  await page.click('[data-export="icon-requests-json"]');
-  ok((await requestDownload).suggestedFilename().endsWith('.json'), 'The icon request JSON export failed.');
-  const contactDownload = page.waitForEvent('download');
-  await page.click('[data-export="contact-csv"]');
-  ok((await contactDownload).suggestedFilename().endsWith('.csv'), 'The contact CSV export failed.');
   const queryDownload = page.waitForEvent('download');
   await page.click('[data-export="queries-csv"]');
   const queryExport = await queryDownload;
   const queryExportPath = await queryExport.path();
   const queryExportText = await readFile(queryExportPath, 'utf8');
+  ok(
+    /^supericons-search-history-grouped-24h-\d{8}T\d{6}Z\.csv$/.test(queryExport.suggestedFilename()),
+    'The grouped Search history CSV filename does not identify its data, period, and generation time.',
+  );
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
   ok(queryExportText.includes('"searcher_identifier"'), 'The query CSV omits the searcher identifier column.');
@@ -1010,6 +1013,12 @@ try {
   ok(queryExportText.includes('"searcher_account_linked"'), 'The query CSV omits the account-link status.');
   ok(queryExportText.includes('"identity_scope"'), 'The query CSV omits the identity scope.');
   ok(queryExportText.includes('"job_category"'), 'The query CSV omits the job category used by the row grouping.');
+  ok(queryExportText.includes('"activity_count"'), 'The grouped CSV omits its activity count.');
+  ok(queryExportText.includes('"activity_unit"'), 'The grouped CSV omits the unit for its activity count.');
+  ok(queryExportText.includes('"row_grain"'), 'The grouped CSV omits its row-grain definition.');
+  ok(queryExportText.includes('"result_count_available"'), 'The grouped CSV omits result-count availability.');
+  ok(queryExportText.includes('"success_count"'), 'The grouped CSV omits its outcome components.');
+  ok(queryExportText.includes('"export_type"'), 'The grouped CSV omits export metadata.');
   ok(!queryExportText.includes('[object Object]'), 'The query CSV converts searcher details into object placeholder text.');
   for (const key of ['query-events-csv', 'query-audit-json']) {
     ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
@@ -1022,10 +1031,15 @@ try {
   const eventCsv = await eventCsvDownload;
   const eventCsvPath = await eventCsv.path();
   const eventCsvText = await readFile(eventCsvPath, 'utf8');
-  ok(eventCsv.suggestedFilename() === 'supericons-search-events-1d.csv', 'The event CSV filename is unclear.');
+  ok(
+    /^supericons-search-mcp-requests-24h-\d{8}T\d{6}Z\.csv$/.test(eventCsv.suggestedFilename()),
+    'The MCP request CSV filename does not identify its data, period, and generation time.',
+  );
   ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === primaryEventRows.length + 1, 'The event CSV contains diagnostics or only the first page.');
   ok(eventCsvText.includes('"root_request_identifier"'), 'The event CSV omits root request linkage.');
   ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
+  ok(eventCsvText.includes('"export_type"'), 'The MCP request CSV omits export metadata.');
+  ok(eventCsvText.includes('"top_level_mcp_requests"'), 'The MCP request CSV does not identify its row type.');
   ok(eventCsvText.includes('"\'\t=HYPERLINK(""https://example.com"")"'), 'The event CSV leaves a whitespace-prefixed spreadsheet formula active.');
   ok(!eventCsvText.includes('"request_id"'), 'The event CSV exposes a raw request ID field.');
   await page.click('#searchDownloadToggle');
@@ -1034,11 +1048,18 @@ try {
   const auditJson = await auditDownload;
   const auditJsonPath = await auditJson.path();
   const auditPayload = JSON.parse(await readFile(auditJsonPath, 'utf8'));
-  ok(auditJson.suggestedFilename() === 'supericons-search-audit-1d.json', 'The audit JSON filename is unclear.');
-  ok(auditPayload.table_rows.length === queryRows.length, 'The audit JSON contains only the visible table page.');
-  ok(auditPayload.top_level_events.length === primaryEventRows.length, 'The audit JSON top-level event count is wrong.');
-  ok(auditPayload.web_search_events.length === 1, 'The audit JSON does not separate web search events.');
-  ok(auditPayload.diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
+  ok(
+    /^supericons-search-full-audit-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
+    'The full audit JSON filename does not identify its data, period, and generation time.',
+  );
+  ok(auditPayload.export_schema_version === '2.0', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_type === 'full_search_audit', 'The audit JSON does not identify its export type.');
+  ok(auditPayload.grouped_history.length === queryRows.length, 'The audit JSON contains only the visible table page.');
+  ok(auditPayload.top_level_mcp_requests.length === primaryEventRows.length, 'The audit JSON top-level MCP request count is wrong.');
+  ok(auditPayload.web_searches.length === 1, 'The audit JSON does not separate web searches.');
+  ok(auditPayload.hosted_diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
+  ok(Boolean(auditPayload.integrity_checks.status), 'The audit JSON omits integrity checks.');
+  ok(Boolean(auditPayload.contents.grouped_history), 'The audit JSON omits plain-language content definitions.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
   const pagedEventRequests = requests.filter((request) => (

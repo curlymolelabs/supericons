@@ -25,6 +25,7 @@ import {
   buildDashboardV2TopLists,
   compactDashboardV2EventRows,
   compactDashboardV2QueryRows,
+  dashboardV2SearchHistoryRole,
   fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
   filterDashboardV2Rows,
@@ -1599,12 +1600,8 @@ async function fetchDashboardV2IdentityTelemetry(
     environment: classifySearchEvidenceEnvironment(row),
     channel: classifySearchEvidenceChannel(row),
   })).filter((row) => (
-    String(row.signal_type || '') === 'search_attempt'
-    || (includeDiagnostics && String(row.signal_type || '') === 'hosted_search_audit')
-    || (
-      String(row.signal_type || '') === 'mcp_call'
-      && String(row.query_origin || '') === 'icon_lookup'
-    )
+    ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
+    || (includeDiagnostics && dashboardV2SearchHistoryRole(row) === 'diagnostic')
   ));
   return {
     rows: filterDashboardV2Rows(rows, filters) as SearchEvidenceRow[],
@@ -2247,7 +2244,10 @@ async function buildDashboardV2SearchPayload(
     fetchDashboardV2IconRequests(adminClient, filters),
     fetchDashboardV2Contacts(adminClient, filters),
   ]);
-  const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historySourceRows = historyTelemetry?.rows || dataRows.telemetry_rows;
+  const historyEvidenceRows = historySourceRows.filter((row: Record<string, unknown>) => (
+    ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
+  ));
   const historyRows = buildQueryWorkbenchRows(
     historyEvidenceRows,
     new Map(),
@@ -2272,17 +2272,25 @@ async function buildDashboardV2SearchPayload(
     || right.attempt_count - left.attempt_count
     || left.query.localeCompare(right.query)
   ));
-  const compactHistoryRows = compactDashboardV2QueryRows(sortedRows);
+  const compactHistoryRows = compactDashboardV2QueryRows(sortedRows)
+    .filter((row: Record<string, unknown>) => Number(row.activity_count || 0) > 0);
+  const excludedNonActivityRows = sortedRows.length - compactHistoryRows.length;
   const historyActivities = compactHistoryRows.reduce(
     (sum: number, row: Record<string, unknown>) => sum + Number(row.activity_count || 0),
     0,
   );
-  const webActivities = sortedRows.reduce((sum, row, index) => {
+  const webActivities = filteredHistoryRows.reduce((sum, row) => {
     const sources = Array.isArray(row.audit_sources) ? row.audit_sources : [];
     const webOnly = sources.length === 1 && sources[0] === 'search_request_audit';
-    return webOnly ? sum + Number(compactHistoryRows[index]?.activity_count || 0) : sum;
+    const activityCount = Number(
+      row.attempt_count
+      || row.mcp_result_rows
+      || row.result_sample_count
+      || 0,
+    );
+    return webOnly ? sum + activityCount : sum;
   }, 0);
-  const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
+  const pageCount = Math.max(1, Math.ceil(compactHistoryRows.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
   const queries = compactHistoryRows.slice(start, start + pageSize);
@@ -2313,19 +2321,20 @@ async function buildDashboardV2SearchPayload(
     summary: {
       attempts: filteredWorklistRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
       query_groups: filteredWorklistRows.length,
-      history_attempts: filteredHistoryRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
-      history_rows: filteredHistoryRows.length,
+      history_attempts: historyActivities,
+      history_rows: compactHistoryRows.length,
       table_rows: compactHistoryRows.length,
       activities: historyActivities,
       mcp_activities: Math.max(0, historyActivities - webActivities),
       web_activities: webActivities,
+      excluded_non_activity_rows: excludedNonActivityRows,
     },
     queries,
     ...historyState,
     pagination: {
       page: currentPage,
       page_size: pageSize,
-      total: sortedRows.length,
+      total: compactHistoryRows.length,
       page_count: pageCount,
     },
     worklist: rollupUnavailableReason ? [] : worklist,

@@ -973,6 +973,73 @@ function plainExportRow(row = {}) {
   ]));
 }
 
+const SEARCH_EXPORT_SCHEMA_VERSION = '2.0';
+
+function searchExportPeriod() {
+  const labels = {
+    '1d': '24h',
+    '7d': '7d',
+    '30d': '30d',
+    '90d': '90d',
+    '1y': '12m',
+    all: 'all-time',
+  };
+  if (state.filters.window === 'custom') {
+    return {
+      key: 'custom',
+      label: `${state.filters.from}-to-${state.filters.to}`,
+      from: state.filters.from || null,
+      to: state.filters.to || null,
+    };
+  }
+  return {
+    key: state.filters.window,
+    label: labels[state.filters.window] || state.filters.window,
+    from: null,
+    to: null,
+  };
+}
+
+function searchExportTimestampToken(value = new Date().toISOString()) {
+  return String(value)
+    .replace(/\.\d{3}Z$/, 'Z')
+    .replaceAll(':', '')
+    .replaceAll('-', '');
+}
+
+function searchExportBaseName(type, generatedAt) {
+  const period = searchExportPeriod().label
+    .replace(/[^a-z0-9-]+/gi, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+  const names = {
+    grouped_history: 'supericons-search-history-grouped',
+    top_level_mcp_requests: 'supericons-search-mcp-requests',
+    full_audit: 'supericons-search-full-audit',
+  };
+  return `${names[type] || `supericons-search-${type}`}-${period}-${searchExportTimestampToken(generatedAt)}`;
+}
+
+function searchExportFilters() {
+  return {
+    channel: state.filters.channel,
+    include_test: state.searchIncludeTest,
+    query: [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim() || null,
+    outcome: state.explorerIssue || null,
+  };
+}
+
+function searchExportMetadata(type, generatedAt) {
+  return {
+    export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
+    export_type: type,
+    export_generated_at_utc: generatedAt,
+    export_period: searchExportPeriod().label,
+    export_channel_filter: state.filters.channel,
+    export_test_traffic_included: state.searchIncludeTest,
+  };
+}
+
 function searcherIdentityScope(kind) {
   const scopes = {
     registered: 'account',
@@ -1012,43 +1079,119 @@ function queryReturnedExportValue(row = {}) {
   return countWithUnit(resultCount, row.result_unit);
 }
 
-function queryCsvExportRow(row = {}, searcher = null) {
+function queryCsvExportRow(row = {}, searcher = null, exportMetadata = {}) {
   const searcherKind = searcher ? safeText(searcher.kind, '') : '';
   const rawSearcherChannels = normalizeList(searcher?.channels);
+  const activityKind = safeText(row.activity_kind, row.query_origin === 'icon_lookup' ? 'lookup' : 'search');
   return {
     query: row.query,
     searcher_identifier: searcher ? safeText(searcher.label, '') : '',
     searcher_kind: searcherKind,
     searcher_account_linked: searcher ? Boolean(searcher.account_linked) : null,
     identity_scope: searcherIdentityScope(searcherKind),
-    searches: row.activity_count ?? row.attempt_count ?? '',
-    outcome: row.outcome_label || outcomeFor(row).label,
-    country: queryCountryExportValue(row),
-    venue: channelLabel(row.channel),
-    returned: queryReturnedExportValue(row),
-    first_seen: row.first_seen,
-    last_seen: row.last_seen,
+    activity_count: row.activity_count ?? row.attempt_count ?? '',
+    activity_unit: activityKind,
+    activity_label: row.activity_label ?? '',
+    outcome_label: row.outcome_label || outcomeFor(row).label,
+    outcome_type: row.issue_type ?? '',
+    country_code: row.country_available === false ? '' : row.country_code ?? '',
+    country_display: queryCountryExportValue(row),
+    country_count: row.country_count ?? '',
+    country_recorded: number(row.country_count) > 0 || Boolean(row.country_code),
+    country_exact_for_group: row.country_available !== false && Boolean(row.country_code),
+    country_scope: row.country_scope ?? '',
+    country_detail: row.country_reason ?? '',
+    venue_label: channelLabel(row.channel),
+    channel: row.channel,
+    venue_exact_for_group: row.channel_available !== false && Boolean(row.channel),
+    venue_detail: row.channel_reason ?? '',
     library_filter: row.library_filter,
     job_category: row.job_category ?? '',
     query_origin: row.query_origin,
-    channel: row.channel,
+    tool_names: normalizeList(row.tools).join('|'),
     searcher_channels: rawSearcherChannels.join('|'),
+    returned_display: queryReturnedExportValue(row),
     result_count: row.result_count,
     result_count_min: row.result_count_min,
     result_count_max: row.result_count_max,
+    result_sample_count: row.result_sample_count,
+    result_unit: row.result_unit,
+    result_count_available: row.result_count_available,
+    result_count_kind: row.result_count_kind,
+    result_count_scope: row.result_count_scope,
+    result_count_detail: row.result_count_reason ?? '',
+    success_count: row.successful_attempt_count,
     zero_count: row.zero_attempt_count,
     low_count: row.low_attempt_count,
     error_count: row.error_attempt_count,
     clarification_count: row.clarification_attempt_count,
+    defect_count: row.defect_attempt_count,
+    lookup_found_count: row.lookup_success_count,
+    lookup_not_found_count: row.lookup_not_found_count,
+    lookup_error_count: row.lookup_error_count,
+    lookup_unknown_count: row.lookup_unknown_count,
+    first_seen_utc: row.first_seen,
+    last_seen_utc: row.last_seen,
+    review_status: row.review_status ?? '',
+    review_note: row.review_note ?? '',
+    row_grain: 'searcher + query + venue + library + job category + origin',
+    ...exportMetadata,
   };
 }
 
-function queryCsvExportRows(rows = []) {
+function queryCsvExportRows(rows = [], exportMetadata = {}) {
   return normalizeList(rows).flatMap((row) => {
     const searchers = normalizeList(row.searchers);
-    if (!searchers.length) return [queryCsvExportRow(row)];
-    return searchers.map((searcher) => queryCsvExportRow(row, searcher));
+    if (!searchers.length) return [queryCsvExportRow(row, null, exportMetadata)];
+    return searchers.map((searcher) => queryCsvExportRow(row, searcher, exportMetadata));
   });
+}
+
+function searchAuditIntegrity(tableRows, topLevelEvents, webSearchEvents, diagnostics) {
+  const groupedRows = normalizeList(tableRows);
+  const primaryEvents = [...normalizeList(topLevelEvents), ...normalizeList(webSearchEvents)];
+  const groupablePrimaryEvents = primaryEvents.filter((row) => safeText(row.query, '').trim());
+  const groupedActivityCount = groupedRows.reduce(
+    (sum, row) => sum + number(row.activity_count),
+    0,
+  );
+  const zeroActivityRows = groupedRows.filter((row) => number(row.activity_count) <= 0);
+  const identifiers = primaryEvents
+    .map((row) => safeText(row.event_identifier, '').trim())
+    .filter(Boolean);
+  const duplicateIdentifiers = identifiers.length - new Set(identifiers).size;
+  const missingIdentifiers = primaryEvents.length - identifiers.length;
+  const unexpectedPrimaryRoles = primaryEvents.filter((row) => (
+    !['top_level', 'web_top_level'].includes(String(row.event_role || ''))
+  )).length;
+  const unexpectedDiagnosticRoles = normalizeList(diagnostics).filter((row) => (
+    String(row.event_role || '') !== 'diagnostic'
+  )).length;
+  const checks = {
+    grouped_rows_have_activity: zeroActivityRows.length === 0,
+    grouped_activity_matches_groupable_primary_events: groupedActivityCount === groupablePrimaryEvents.length,
+    primary_event_identifiers_are_unique: duplicateIdentifiers === 0,
+    primary_event_identifiers_are_recorded: missingIdentifiers === 0,
+    primary_roles_are_valid: unexpectedPrimaryRoles === 0,
+    diagnostic_roles_are_valid: unexpectedDiagnosticRoles === 0,
+  };
+  return {
+    status: Object.values(checks).every(Boolean) ? 'passed' : 'needs_attention',
+    checks,
+    counts: {
+      grouped_rows: groupedRows.length,
+      grouped_activity: groupedActivityCount,
+      groupable_primary_events: groupablePrimaryEvents.length,
+      top_level_mcp_requests: normalizeList(topLevelEvents).length,
+      web_searches: normalizeList(webSearchEvents).length,
+      hosted_diagnostics: normalizeList(diagnostics).length,
+      zero_activity_grouped_rows: zeroActivityRows.length,
+      duplicate_primary_event_identifiers: duplicateIdentifiers,
+      missing_primary_event_identifiers: missingIdentifiers,
+      unexpected_primary_roles: unexpectedPrimaryRoles,
+      unexpected_diagnostic_roles: unexpectedDiagnosticRoles,
+    },
+  };
 }
 
 function setSkeleton(element, text) {
@@ -1596,7 +1739,7 @@ function renderQueryExplorer() {
     const groupedRows = number(summary.table_rows ?? summary.history_rows ?? state.data.search?.pagination?.total);
     const activities = number(summary.activities ?? summary.history_attempts);
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
-    subtitle.textContent = `${formatNumber(groupedRows)} grouped rows | ${formatNumber(activities)} activities | ${testScope}`;
+    subtitle.textContent = `${formatNumber(groupedRows)} rows grouped by searcher, query, venue, library, and origin | ${formatNumber(activities)} activities | ${testScope}`;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
@@ -2419,41 +2562,67 @@ async function exportData(key) {
     showToast(error.message || 'The complete export could not be loaded.', true);
     return;
   }
+  const generatedAt = new Date().toISOString();
   if (eventExport) {
     if (key === 'query-audit-json') {
       const events = normalizeList(eventExport.events);
+      const groupedHistory = normalizeList(completeRows);
+      const topLevelMcpRequests = events.filter((row) => row.event_role === 'top_level');
+      const webSearches = events.filter((row) => row.event_role === 'web_top_level');
+      const hostedDiagnostics = events.filter((row) => row.event_role === 'diagnostic');
+      const integrity = searchAuditIntegrity(
+        groupedHistory,
+        topLevelMcpRequests,
+        webSearches,
+        hostedDiagnostics,
+      );
       const audit = {
-        generated_at: new Date().toISOString(),
-        period: state.filters.window,
-        filters: {
-          channel: state.filters.channel,
-          include_test: state.searchIncludeTest,
-          query: [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim() || null,
-          outcome: state.explorerIssue || null,
+        export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
+        export_type: 'full_search_audit',
+        description: 'Complete Search history audit package. Data sets with different row meanings remain separate.',
+        generated_at_utc: generatedAt,
+        period: searchExportPeriod(),
+        filters: searchExportFilters(),
+        contents: {
+          grouped_history: 'One row per searcher, query, venue, library, job category, and origin.',
+          top_level_mcp_requests: 'One top-level MCP search or exact icon lookup per row.',
+          web_searches: 'One top-level web search per row.',
+          hosted_diagnostics: 'Lower-level hosted search work. These rows are supporting diagnostics and are not additional user activity.',
+          field_coverage: 'Recorded-field coverage across the audit event source.',
+          integrity_checks: 'Automated reconciliation checks for row activity, event identifiers, and source roles.',
         },
         summary: {
-          table_rows: normalizeList(completeRows).length,
-          top_level_events: events.filter((row) => row.event_role === 'top_level').length,
-          web_search_events: events.filter((row) => row.event_role === 'web_top_level').length,
-          diagnostic_records: events.filter((row) => row.event_role === 'diagnostic').length,
+          grouped_history_rows: groupedHistory.length,
+          grouped_activities: integrity.counts.grouped_activity,
+          top_level_mcp_requests: topLevelMcpRequests.length,
+          web_searches: webSearches.length,
+          hosted_diagnostics: hostedDiagnostics.length,
+          excluded_non_activity_rows: number(search.summary?.excluded_non_activity_rows),
         },
-        table_rows: normalizeList(completeRows),
-        top_level_events: events.filter((row) => row.event_role === 'top_level'),
-        web_search_events: events.filter((row) => row.event_role === 'web_top_level'),
-        diagnostics: events.filter((row) => row.event_role === 'diagnostic'),
+        integrity_checks: integrity,
+        grouped_history: groupedHistory,
+        top_level_mcp_requests: topLevelMcpRequests,
+        web_searches: webSearches,
+        hosted_diagnostics: hostedDiagnostics,
         field_coverage: eventExport.field_coverage,
-        definitions: eventExport.definitions,
+        definitions: {
+          ...eventExport.definitions,
+          grouped_history_grain: 'One row per searcher, query, venue, library, job category, and origin.',
+          grouped_activity: 'The number of top-level searches or exact icon lookups represented by grouped history rows.',
+          source_separation: 'Top-level MCP requests, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
+        },
         source_meta: eventExport.meta,
       };
       downloadFile(
-        `supericons-search-audit-${state.filters.window}.json`,
+        `${searchExportBaseName('full_audit', generatedAt)}.json`,
         JSON.stringify(audit, null, 2),
         'application/json;charset=utf-8',
       );
     } else {
+      const exportMetadata = searchExportMetadata('top_level_mcp_requests', generatedAt);
       exportRows(
-        `supericons-search-events-${state.filters.window}`,
-        eventExport.events.map(plainExportRow),
+        searchExportBaseName('top_level_mcp_requests', generatedAt),
+        eventExport.events.map((row) => plainExportRow({ ...row, ...exportMetadata })),
         'csv',
       );
     }
@@ -2488,14 +2657,15 @@ async function exportData(key) {
     clients: completeRows ?? unwrapRows(audience.clients),
   };
   const mappedRows = normalizeList(mapping[key]);
+  const groupedExportMetadata = searchExportMetadata('grouped_history', generatedAt);
   const rows = key === 'queries-csv'
-    ? queryCsvExportRows(mappedRows).map(plainExportRow)
+    ? queryCsvExportRows(mappedRows, groupedExportMetadata).map(plainExportRow)
     : key === 'queries-json'
       ? mappedRows
       : mappedRows.map(plainExportRow);
   exportRows(
     key === 'queries-csv'
-      ? `supericons-search-history-table-${state.filters.window}`
+      ? searchExportBaseName('grouped_history', generatedAt)
       : `supericons-${key}-${state.filters.window}`,
     rows,
     key.endsWith('json') ? 'json' : 'csv',
