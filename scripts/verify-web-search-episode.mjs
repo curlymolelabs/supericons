@@ -96,6 +96,38 @@ assert.equal(WEB_SEARCH_OBSERVATION_DEADLINE_MS, 20000);
 
 {
   const harness = createHarness();
+  const episodeId = harness.coordinator.startEpisode({ query: 'local remains visible' });
+  harness.coordinator.updateLocal({ episodeId, localMatchCount: 4, finalMatchCount: 4 });
+  harness.coordinator.markHostedPending({ episodeId });
+  harness.coordinator.markCountable({ episodeId, trigger: 'enter' });
+  harness.coordinator.settleHosted({
+    episodeId,
+    hostedState: 'zero',
+    hostedMatchCount: 0,
+    finalMatchCount: 4,
+  });
+  assert.equal(harness.writes[0].final_outcome, 'success');
+  assert.equal(harness.writes[0].final_match_count, 4);
+}
+
+{
+  const harness = createHarness();
+  const episodeId = harness.coordinator.startEpisode({ query: 'hosted rescue' });
+  harness.coordinator.updateLocal({ episodeId, localMatchCount: 0, finalMatchCount: 0 });
+  harness.coordinator.markHostedPending({ episodeId });
+  harness.coordinator.markCountable({ episodeId, trigger: 'enter' });
+  harness.coordinator.settleHosted({
+    episodeId,
+    hostedState: 'success',
+    hostedMatchCount: 2,
+    finalMatchCount: 2,
+  });
+  assert.equal(harness.writes[0].final_outcome, 'success');
+  assert.equal(harness.writes[0].final_match_count, 2);
+}
+
+{
+  const harness = createHarness();
   const episodeId = harness.coordinator.startEpisode({ query: 'total failure' });
   harness.coordinator.updateLocal({ episodeId, localMatchCount: 0 });
   harness.coordinator.markHostedPending({ episodeId });
@@ -166,13 +198,43 @@ assert.equal(WEB_SEARCH_OBSERVATION_DEADLINE_MS, 20000);
   assert.notEqual(firstId, secondId, 'Repeated intentional searches need distinct episode IDs.');
 }
 
+{
+  const writes = [];
+  const coordinator = createWebSearchEpisodeCoordinator({
+    writeTelemetry: (payload) => {
+      writes.push(payload);
+      return Promise.reject(new Error('injected telemetry failure'));
+    },
+    setTimer: () => null,
+    clearTimer: () => {},
+  });
+  const episodeId = coordinator.startEpisode({
+    query: 'strict library miss',
+    libraryFilter: 'lucide',
+    libraryMode: 'strict',
+  });
+  coordinator.updateLocal({ episodeId, localMatchCount: 0 });
+  coordinator.markHostedPending({ episodeId });
+  coordinator.markCountable({ episodeId, trigger: 'blur' });
+  assert.equal(coordinator.settleHosted({
+    episodeId,
+    hostedState: 'zero',
+    hostedMatchCount: 0,
+    finalMatchCount: 0,
+  }), true);
+  assert.equal(writes[0].library_filter, 'lucide');
+  assert.equal(writes[0].library_mode, 'strict');
+}
+
 console.log(JSON.stringify({
   status: 'ok',
   timing_constants_unchanged: true,
-  local_and_hosted_settlement_cases: 4,
+  local_and_hosted_settlement_cases: 6,
   superseded_excluded: true,
   late_response_excluded: true,
   incomplete_not_zero: true,
   late_completion_finalized: true,
   repeated_queries_distinct: true,
+  strict_library_metadata_preserved: true,
+  telemetry_failure_non_blocking: true,
 }, null, 2));

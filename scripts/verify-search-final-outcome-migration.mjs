@@ -314,6 +314,36 @@ try {
     );
   `).trim();
   assert.match(stableLocalId, /^\d+$/);
+  const repeatedStableLocalId = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'stable local search',
+      6,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('b', 64),
+      null,
+      'high',
+      null,
+      '0.4.22',
+      12,
+      timezone('utc', now())
+    );
+  `).trim();
+  assert.match(repeatedStableLocalId, /^\d+$/);
+  assert.notEqual(
+    repeatedStableLocalId,
+    stableLocalId,
+    'Repeated intentional Local MCP calls must remain separate events.',
+  );
+  const repeatedStableLocalCount = runSql(`
+    select count(*)
+    from public.search_final_outcomes
+    where channel = 'local_mcp'
+      and query = 'stable local search';
+  `).trim();
+  assert.equal(repeatedStableLocalCount, '2');
   const stableLocalCapture = runSql(`
     select concat_ws('|',
       e.channel,
@@ -464,6 +494,7 @@ try {
     hosted_attempt_linkage_counted: true,
     local_legacy_identity_labelled: true,
     stable_local_search_captured: true,
+    repeated_stable_local_calls_distinct: true,
     stable_local_rollback_verified: true,
     clarification_excluded: true,
     duplicate_episode_rejected: true,
