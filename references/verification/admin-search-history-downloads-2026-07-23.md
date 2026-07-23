@@ -62,3 +62,33 @@ The automated 1440 by 900 browser test passed with:
 - 41 intercepted requests and a 67.6 ms warm fixture render
 
 These browser numbers describe the deterministic test fixture, not production latency or production row counts.
+
+## Live production reconciliation
+
+The same admin function code was run against production data at the fixed cutoff `2026-07-23T10:24:32.241Z`.
+
+The 24-hour result was:
+
+- 342 Search summary rows
+- 442 represented requests
+- 441 Request log rows
+- 1 web search row
+- 388 supporting diagnostic rows
+- 0 duplicate Search summary keys
+- 0 zero-request Search summary rows
+- 0 mixed-unit rows with an incorrect median
+
+All ten live checks passed:
+
+- published grain is query, library filter, and query origin
+- every Search summary page was loaded
+- Search summary keys are unique
+- every Search summary row has at least one request
+- represented requests match the API summary
+- represented requests match the top-level MCP and web event total
+- mixed result units do not report a median
+- top-level event identifiers are recorded
+- top-level event identifiers are unique
+- the fixed audit snapshot is complete
+
+The protected production function was deployed as active `admin-api` version 91. A request without the admin secret returned HTTP 403.
