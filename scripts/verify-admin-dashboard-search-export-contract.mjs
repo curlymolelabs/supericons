@@ -73,6 +73,9 @@ if (menuItems.length !== 2) {
   'request_log',
   'web_searches',
   'hosted_diagnostics',
+  'episode_id',
+  'recovery_chain_id',
+  'diagnostic_attempt_count',
 ].forEach((value) => requireText(app, value, 'Search export implementation'));
 
 [
@@ -86,6 +89,12 @@ if (menuItems.length !== 2) {
   'separateSearchers: false',
   'includeSearcherDetails: false',
   "query_row_grain: ['query', 'library_filter', 'query_origin']",
+  "from('search_final_outcomes')",
+  "from('search_episode_diagnostics')",
+  "dashboard_source === 'final'",
+  'finalOutcomeIsAfterCutover',
+  'web_final_outcome_cutover_at',
+  'local_mcp_coverage_cutover_at',
 ].forEach((value) => requireText(api, value, 'Search history API'));
 
 requireText(helpers, 'export function dashboardV2SearchHistoryRole', 'Search history role helper');
@@ -110,7 +119,7 @@ console.log(JSON.stringify({
   status: 'ok',
   exports: {
     search_summary: 'one row per query, library, and origin',
-    request_log: 'one top-level MCP request per row',
+    request_log: 'one final top-level MCP search outcome per row',
     audit_bundle: 'separate summary, request, web, and diagnostic data sets',
   },
   filenames_include: ['export type', 'period', 'generation timestamp'],

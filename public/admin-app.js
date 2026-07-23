@@ -1007,6 +1007,8 @@ function searchSummaryCsvRow(row = {}) {
 function requestLogCsvRow(row = {}) {
   return {
     event_id: row.event_identifier,
+    episode_id: row.episode_id,
+    recovery_chain_id: row.recovery_chain_id,
     recorded_at_utc: row.recorded_at,
     query: row.query,
     query_origin: row.query_origin,
@@ -1023,6 +1025,7 @@ function requestLogCsvRow(row = {}) {
     returned_icon_refs_recorded: row.returned_icon_refs_recorded,
     latency_ms: row.latency_ms,
     search_execution: row.search_execution,
+    diagnostic_attempt_count: row.diagnostic_attempt_count,
     server_version: row.server_version,
     server_build: row.server_build,
     traffic_class: row.traffic_class,
@@ -1033,6 +1036,7 @@ function requestLogCsvRow(row = {}) {
     country_code: row.country_code,
     registered: row.registered,
     pro: row.pro,
+    identity_quality: row.identity_quality,
   };
 }
 
@@ -1707,7 +1711,7 @@ function renderQueryExplorer() {
     const summaryRows = number(summary.summary_rows ?? summary.table_rows ?? state.data.search?.pagination?.total);
     const requests = number(summary.requests ?? summary.activities ?? summary.history_attempts);
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
-    subtitle.textContent = `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} requests | ${testScope}`;
+    subtitle.textContent = `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} searches | ${testScope}`;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
@@ -1724,7 +1728,7 @@ function renderQueryExplorer() {
         return `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(details.join(' | '))}</div>`;
       },
     },
-    { label: 'Requests', number: true, render: (row) => queryRequestCell(row) },
+    { label: 'Searches', number: true, render: (row) => queryRequestCell(row) },
     { label: 'Est. client IDs', number: true, render: (row) => queryEstimatedClientIdsCell(row) },
     { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: 'Country', render: (row) => queryCountryCell(row) },
@@ -1732,10 +1736,14 @@ function renderQueryExplorer() {
     { label: 'Typical result', number: true, render: (row) => queryTypicalResultCell(row) },
     { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
+  const coverageWarnings = normalizeList(state.data.search?.coverage?.warnings);
+  const coverageNotice = coverageWarnings.length > 0
+    ? `<div class="data-notice" role="status">${escapeHtml(coverageWarnings.join(' '))}</div>`
+    : '';
   const notice = state.data.search?.queries_complete === false
     ? `<div class="data-notice" role="status">${escapeHtml(state.data.search.queries_notice || 'Showing the newest available search details. Narrow the filters for exact totals.')}</div>`
     : '';
-  element.innerHTML = `${notice}${table(headers, rows, state.errors.search || 'No queries match these filters.')}`;
+  element.innerHTML = `${coverageNotice}${notice}${table(headers, rows, state.errors.search || 'No queries match these filters.')}`;
 }
 
 function renderWorklist() {
