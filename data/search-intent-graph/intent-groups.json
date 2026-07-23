@@ -1057,10 +1057,12 @@
         "graph",
         "network",
         "share network",
-        "chart network"
+        "chart network",
+        "plugs connected",
+        "tree structure"
       ],
       "avoid_concepts": ["network x", "network slash", "wifi"],
-      "fallback_terms": ["graph", "network", "share network"],
+      "fallback_terms": ["graph", "network", "share network", "plugs connected", "tree structure"],
       "result_families": ["graph", "topology", "connected nodes"],
       "gap_strategy": "return_graph_or_network_topology",
       "confidence_floor": "high"

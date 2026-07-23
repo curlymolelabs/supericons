@@ -76,11 +76,34 @@ function normalizeChoice(value, allowed, fallback, field, warnings) {
   return fallback;
 }
 
+export function normalizeSupportedLocale(value, supportedLocales = []) {
+  const requested = String(value || '').trim().replace(/_/g, '-');
+  if (!requested) return undefined;
+  const byLowercase = new Map(
+    supportedLocales.map((locale) => [String(locale).toLowerCase(), locale]),
+  );
+  const requestedLowercase = requested.toLowerCase();
+  if (byLowercase.has(requestedLowercase)) return byLowercase.get(requestedLowercase);
+
+  const chineseAliases = {
+    'zh-cn': 'zh-Hans',
+    'zh-sg': 'zh-Hans',
+    'zh-tw': 'zh-Hant',
+    'zh-hk': 'zh-Hant',
+    'zh-mo': 'zh-Hant',
+  };
+  const chineseLocale = chineseAliases[requestedLowercase];
+  if (chineseLocale && byLowercase.has(chineseLocale.toLowerCase())) {
+    return byLowercase.get(chineseLocale.toLowerCase());
+  }
+
+  const baseLocale = requestedLowercase.split('-')[0];
+  return byLowercase.get(baseLocale);
+}
+
 export function normalizeSearchToolArguments(args = {}, { supportedLocales = [] } = {}) {
   const warnings = [];
-  const locale = args.locale && supportedLocales.includes(args.locale)
-    ? args.locale
-    : undefined;
+  const locale = normalizeSupportedLocale(args.locale, supportedLocales);
   if (args.locale && !locale) {
     warnings.push(`Ignored unsupported locale "${String(args.locale)}".`);
   }
@@ -216,9 +239,7 @@ export function normalizeRecommendationToolArguments(
     'response_mode',
     warnings,
   );
-  const locale = args.locale && supportedLocales.includes(args.locale)
-    ? args.locale
-    : undefined;
+  const locale = normalizeSupportedLocale(args.locale, supportedLocales);
   if (args.locale && !locale) {
     warnings.push(`Ignored unsupported locale "${String(args.locale)}".`);
   }

@@ -104,6 +104,13 @@ function assertSearchCase(searchCase, payload) {
       `${searchCase.query} had no required icon in the first ${searchCase.topLimit || 3}. Received: ${topRefs.join(', ')}`,
     );
   }
+  if (searchCase.requiredTopPattern) {
+    const topRefs = refs.slice(0, searchCase.topLimit || 3);
+    assert.ok(
+      topRefs.some((ref) => searchCase.requiredTopPattern.test(ref)),
+      `${searchCase.query} had no required icon family in the first ${searchCase.topLimit || 3}. Received: ${topRefs.join(', ')}`,
+    );
+  }
   for (const pattern of searchCase.forbiddenPatterns || []) {
     assert.equal(
       refs.slice(0, searchCase.forbiddenLimit || 5).some((ref) => pattern.test(ref)),
@@ -179,6 +186,61 @@ const cases = [
     topIncludes: ['phosphor:hard-hat', 'phosphor:baseball-helmet', 'phosphor:football-helmet'],
     topLimit: 3,
     forbiddenPatterns: [/:palette$/i, /magic-wand/i, /calendar-star/i],
+  },
+  {
+    query: '\u{641c}\u{7d22}\u{56fe}\u{6807}',
+    locale: 'zh-Hans',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{641c}\u{5c0b}\u{5716}\u{793a}',
+    locale: 'zh-Hant',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{691c}\u{7d22}\u{30a2}\u{30a4}\u{30b3}\u{30f3}',
+    locale: 'ja',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{ac80}\u{c0c9} \u{c544}\u{c774}\u{cf58}',
+    locale: 'ko',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: 'icono de b\u{fa}squeda',
+    locale: 'es',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{ed}cone de busca',
+    locale: 'pt',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: 'Suchsymbol',
+    locale: 'de',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{631}\u{645}\u{632} \u{627}\u{644}\u{628}\u{62d}\u{62b}',
+    locale: 'ar',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{916}\u{94b}\u{91c} \u{906}\u{907}\u{915}\u{928}',
+    locale: 'hi',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: '\u{e44}\u{e2d}\u{e04}\u{e2d}\u{e19}\u{e04}\u{e49}\u{e19}\u{e2b}\u{e32}',
+    locale: 'th',
+    requiredTopPattern: /search|magnif/i,
+  },
+  {
+    query: 'bi\u{1ec3}u t\u{1b0}\u{1ee3}ng t\u{ec}m ki\u{1ebf}m',
+    locale: 'vi',
+    requiredTopPattern: /search|magnif/i,
   },
   {
     query: 'network disconnected broken link',

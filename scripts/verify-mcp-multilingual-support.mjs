@@ -10,6 +10,7 @@ import { buildIntentQueryVariants } from '../lib/search-intent-core.js';
 import { searchIcons } from '../mcp/search.js';
 import { recommendIconsForTask } from '../mcp/recommend-icons.js';
 import { getConverterMcpOptions } from '../mcp/converter.js';
+import { normalizeSupportedLocale } from '../mcp/search-tool-shell.js';
 import {
   SUPPORTED_MCP_OUTPUT_LOCALES,
   localizeConverterOptions,
@@ -22,6 +23,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 const expectedLocales = ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'de', 'pt', 'ar', 'hi', 'vi', 'th'];
+
+assert.equal(normalizeSupportedLocale('pt-BR', expectedLocales), 'pt');
+assert.equal(normalizeSupportedLocale('zh-CN', expectedLocales), 'zh-Hans');
+assert.equal(normalizeSupportedLocale('zh-TW', expectedLocales), 'zh-Hant');
+assert.equal(normalizeSupportedLocale('DE-de', expectedLocales), 'de');
+assert.equal(normalizeSupportedLocale('en-US', expectedLocales), undefined);
 
 async function readText(relativePath) {
   return fs.readFile(path.join(rootDir, relativePath), 'utf8');
@@ -64,6 +71,7 @@ const [
   zhHansCatalog,
   jaCatalog,
   arCatalog,
+  evaluationSet,
 ] = await Promise.all([
   readText('mcp/index.js'),
   readText('mcp/remote-server.js'),
@@ -82,6 +90,7 @@ const [
   readJson('data/i18n/messages/zh-Hans.json'),
   readJson('data/i18n/messages/ja.json'),
   readJson('data/i18n/messages/ar.json'),
+  readJson('data/semantic-search-v2/evaluation-set.json'),
 ]);
 
 assertIncludesAll(indexSource, expectedLocales, 'stdio MCP search schema');
@@ -163,6 +172,95 @@ const mcpResults = searchIcons(zhSecurity.term, publicIcons.icons, synonyms, {
   limit: 8,
 });
 assert.ok(mcpResults.length > 0, 'MCP local fallback should return icons for a localized category alias');
+
+const localizedSearchIconCases = [];
+function collectLocalizedSearchIconCases(value) {
+  if (Array.isArray(value)) {
+    value.forEach(collectLocalizedSearchIconCases);
+    return;
+  }
+  if (!value || typeof value !== 'object') return;
+  if (/^multi-.+-search-icon$/.test(value.case_id || '')) localizedSearchIconCases.push(value);
+  Object.values(value).forEach(collectLocalizedSearchIconCases);
+}
+collectLocalizedSearchIconCases(evaluationSet);
+assert.equal(localizedSearchIconCases.length, expectedLocales.length);
+
+const normalizedFixtureLocales = localizedSearchIconCases.map((testCase) => (
+  testCase.locale === 'pt-BR' ? 'pt' : testCase.locale
+));
+assert.deepEqual([...normalizedFixtureLocales].sort(), [...expectedLocales].sort());
+
+for (const testCase of localizedSearchIconCases) {
+  const locale = testCase.locale === 'pt-BR' ? 'pt' : testCase.locale;
+  const results = searchIcons(testCase.query, publicIcons.icons, synonyms, {
+    locale,
+    limit: 5,
+  });
+  assert.ok(results.length > 0, `${testCase.case_id} must return localized search icons`);
+  assert.ok(
+    results.slice(0, 3).some((icon) => /search|magnif/i.test(`${icon.id} ${icon.name || ''}`)),
+    `${testCase.case_id} must rank a search or magnifier icon in the first three results`,
+  );
+}
+
+const reviewedMultilingualCases = [];
+function collectReviewedMultilingualCases(value) {
+  if (Array.isArray(value)) {
+    value.forEach(collectReviewedMultilingualCases);
+    return;
+  }
+  if (!value || typeof value !== 'object') return;
+  if (
+    value.case_id
+    && value.locale
+    && Array.isArray(value.acceptable_families)
+    && value.acceptable_families.length > 0
+  ) {
+    reviewedMultilingualCases.push(value);
+  }
+  Object.values(value).forEach(collectReviewedMultilingualCases);
+}
+collectReviewedMultilingualCases(evaluationSet);
+assert.equal(reviewedMultilingualCases.length, 75);
+
+function normalizedFamilyTokens(families) {
+  return families
+    .flatMap((family) => String(family || '').toLowerCase().split(/[^a-z0-9]+/))
+    .filter((token) => token.length >= 3);
+}
+
+const reviewedMissesByLocale = new Map();
+for (const testCase of reviewedMultilingualCases) {
+  const locale = testCase.locale === 'pt-BR' ? 'pt' : testCase.locale;
+  const results = searchIcons(testCase.query, publicIcons.icons, synonyms, {
+    locale,
+    limit: 8,
+  });
+  const acceptableTokens = normalizedFamilyTokens(testCase.acceptable_families);
+  const hasReviewedFamily = results.some((icon) => {
+    const candidateText = `${icon.lib || ''} ${icon.id || ''} ${icon.name || ''}`.toLowerCase();
+    return acceptableTokens.some((token) => candidateText.includes(token));
+  });
+  if (!hasReviewedFamily) {
+    const misses = reviewedMissesByLocale.get(testCase.locale) || [];
+    misses.push(testCase.case_id);
+    reviewedMissesByLocale.set(testCase.locale, misses);
+  }
+}
+
+const reviewedMissCount = [...reviewedMissesByLocale.values()]
+  .reduce((total, misses) => total + misses.length, 0);
+assert.ok(
+  (reviewedMultilingualCases.length - reviewedMissCount) / reviewedMultilingualCases.length >= 0.9,
+  `reviewed multilingual pass rate fell below 90 percent: ${reviewedMissCount} misses`,
+);
+for (const [locale, misses] of reviewedMissesByLocale) {
+  assert.ok(
+    misses.length <= 1,
+    `${locale} has more than one reviewed multilingual miss: ${misses.join(', ')}`,
+  );
+}
 
 const arSecurityShortcut = expandCjkQuery('\u0627\u0644\u0623\u0645\u0627\u0646', {
   locale: 'ar',

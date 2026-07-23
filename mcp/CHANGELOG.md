@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.22 - 2026-07-23
+
+### Fixed
+
+- restored natural multilingual phrases across all 11 maintained non-English locales
+- accepted reviewed words inside longer localized phrases using real language word boundaries
+- normalized regional locale tags such as `pt-BR` to their maintained language data
+- kept exact reviewed phrases ahead of shorter partial matches
+
+### Improved
+
+- expanded the live HTTP and MCP gate with one realistic search phrase for every maintained locale
+- raised the reviewed multilingual regression gate to 75 cases with at least 90 percent aggregate coverage and no more than one miss per locale
+- improved connected-node ranking so graph and topology icons stay ahead of Wi-Fi results
+
 ## 0.4.21 - 2026-07-23
 
 ### Fixed
