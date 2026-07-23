@@ -2805,6 +2805,8 @@ async function buildDashboardV2SearchEventsPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
+  const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
+  const coverage = buildFinalOutcomeCoverage(telemetrySettings, filters);
   const eventScope = String(url.searchParams.get('event_scope') || 'primary').trim().toLowerCase();
   if (!['primary', 'audit'].includes(eventScope)) {
     throw new Error('The search event scope is invalid.');
@@ -2910,6 +2912,10 @@ async function buildDashboardV2SearchEventsPayload(
       event_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       event_rows_truncated: !complete,
       raw_identifiers_exposed: false,
+      final_outcome_source: telemetrySettings.dashboard_source,
+      web_final_outcome_cutover_at: telemetrySettings.web_final_outcome_cutover_at,
+      local_mcp_coverage_cutover_at: telemetrySettings.local_mcp_coverage_cutover_at,
+      coverage_warnings: coverage.warnings,
       snapshot_id: snapshot.id,
       snapshot_matches_request: snapshotMatchesRequest,
       snapshot_generated_at: snapshot.generated_at,

@@ -112,6 +112,10 @@ for (const required of [
   "event_role === 'top_level'",
   'constantTimeTextEqual',
   "metric_scope: 'filtered_search_event_details'",
+  'final_outcome_source: telemetrySettings.dashboard_source',
+  'web_final_outcome_cutover_at: telemetrySettings.web_final_outcome_cutover_at',
+  'local_mcp_coverage_cutover_at: telemetrySettings.local_mcp_coverage_cutover_at',
+  'coverage_warnings: coverage.warnings',
 ]) {
   assert.match(api, new RegExp(required.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 }
