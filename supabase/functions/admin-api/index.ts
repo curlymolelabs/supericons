@@ -897,6 +897,8 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
       .filter(Boolean)
       .slice(0, 100)
     : [];
+  const returnedIconRefsRecorded = metadata.returned_icon_refs_recorded === true
+    && !(resultCount !== null && resultCount > 0 && returnedIconRefs.length === 0);
   return {
     id: row.id ? `mcp_usage_events:${String(row.id)}` : null,
     source_row_id: row.id ? String(row.id) : null,
@@ -956,7 +958,7 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     audit_status: row.status || null,
     latency_ms: row.latency_ms ?? null,
     returned_icon_refs: returnedIconRefs,
-    returned_icon_refs_recorded: metadata.returned_icon_refs_recorded === true,
+    returned_icon_refs_recorded: returnedIconRefsRecorded,
     root_request_hash_prefix: compactHashPrefix(metadata.root_request_hash),
     search_execution: metadata.search_execution || null,
     server_build: metadata.server_build || null,
@@ -3234,6 +3236,10 @@ function buildQueryWorkbenchRows(
           || String(left.label || '').localeCompare(String(right.label || ''))
         ))
         .slice(0, 100),
+      searcher_details_available: includeSearcherDetails,
+      searcher_details_reason: includeSearcherDetails
+        ? null
+        : 'Searcher details were not included in this view.',
       visitor_kinds: [...(entry.visitor_kinds as Set<string>)].sort((a, b) => a.localeCompare(b)),
       countries: [...(entry.countries as Set<string>)].sort((a, b) => a.localeCompare(b)),
       registered_user_count: (entry.registered_user_ids as Set<string>).size,

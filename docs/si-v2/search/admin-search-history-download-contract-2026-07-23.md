@@ -42,13 +42,15 @@ For technical accuracy, unique means the same normalized query, library filter, 
 
 - Success: all requests completed with a usable result.
 - Zero: all search requests completed with zero results.
-- Low: search requests completed with low results.
+- Low: search requests completed with low results. This includes approximate low results from older or local clients.
 - Not found: all exact icon lookups reported no match.
 - Error: all requests ended in an error.
 - Clarification: all requests asked the caller for clarification.
 - Mixed: the summary contains more than one result category. The label states the category counts.
 
 Errors, failed lookups, and clarification responses must not be labelled Success.
+
+Every request must belong to exactly one displayed outcome component. For each summary row, the component counts must equal the request count.
 
 ## Result count rules
 
@@ -102,6 +104,8 @@ Columns:
 
 This is the recommended download for normal analysis. It omits repeated file metadata, raw request IDs, per-searcher rows, and internal diagnostic fields.
 
+`low_count` includes exact low results and approximate low results. The Audit bundle keeps the approximate subtype for deeper review.
+
 ### Request log
 
 UI subtitle:
@@ -144,6 +148,8 @@ Columns:
 
 Hosted search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
 
+`returned_icon_refs_recorded` is false when a positive result count has no usable icon references. An empty recorded list remains valid for a zero-result request.
+
 The legacy root request identifier is omitted from this CSV because current records do not prove that it is a unique request or session identifier.
 
 ### Audit bundle
@@ -167,7 +173,7 @@ The file keeps these data sets separate:
 
 This separation prevents diagnostic rows from inflating user activity while preserving supporting detail for investigation.
 
-The bundle includes export schema version `3.0`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
+The bundle includes export schema version `3.1`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
 
 - every summary row has at least one request
 - summary request totals match groupable primary events
@@ -176,6 +182,15 @@ The bundle includes export schema version `3.0`, selected period and filters, pl
 - request event IDs are recorded
 - request roles are valid
 - diagnostic roles are valid
+- outcome component counts equal summary request counts
+- Success labels agree with successful request counts
+- no represented request remains unclassified
+- positive result counts have returned icon references
+- searcher-detail availability agrees with the included detail
+
+The bundle reports structural and meaning checks separately. Its overall status passes only when both sets pass.
+
+Strong signs of query-text replacement are reported as a review warning. They do not fail the bundle because a user may type question marks intentionally.
 
 The Audit bundle may retain legacy correlation fields for investigation, but its definitions must clearly state that the current root request identifier is not a proven session identifier.
 

@@ -38,9 +38,9 @@ The admin dashboard is a local operator tool backed by the protected production 
 - Scroll regions are height-bounded, keyboard reachable, and hide the visual scrollbar.
 - Search has one visible table and three downloads. The main button is Search summary. Its small menu contains Request log and Audit bundle.
 - CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
-- Search summary groups by normalized query, library filter, and query origin. It includes request and outcome counts, estimated client ID count, median result count, country codes, channels, and time range in 19 columns.
-- Request log uses one top-level MCP request per row after exact key-based source merging. It includes request-level fields only when recorded and never substitutes zero for a missing value.
-- Audit bundle keeps Search summary, top-level MCP requests, web searches, and hosted diagnostics in separate arrays. Its integrity section checks positive summary activity, request reconciliation, unique summary keys, event identifiers, and valid source roles.
+- Search summary groups by normalized query, library filter, and query origin. It includes request and outcome counts, estimated client ID count, median result count, country codes, channels, and time range in 19 columns. Approximate low results are included in the Low count and never fall through to Success.
+- Request log uses one top-level MCP request per row after exact key-based source merging. It includes request-level fields only when recorded and never substitutes zero for a missing value. A positive result without usable icon references is marked as not recorded.
+- Audit bundle keeps Search summary, top-level MCP requests, web searches, and hosted diagnostics in separate arrays. Its integrity section checks outcome reconciliation, honest Success labels, returned references, and searcher-detail availability. Likely query-text damage is a review warning, not an automatic failure.
 - Estimated client IDs are not people. One user may produce several IDs, and one ID may represent shared infrastructure.
 - The legacy root request identifier is excluded from Request log because it is not a proven request or session identifier. It may remain in Audit bundle diagnostics with an explicit warning.
 - Search export filenames state the export type, selected period, and UTC generation time so repeated downloads remain distinguishable.

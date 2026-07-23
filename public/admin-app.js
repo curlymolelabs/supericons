@@ -792,6 +792,7 @@ function outcomeFor(row = {}) {
     return { label: safeText(row.outcome_label, 'Zero'), tone: 'zero' };
   }
   if (outcome.includes('low') || row.low_result) return { label: 'Low', tone: 'low' };
+  if (outcome.includes('unknown')) return { label: safeText(row.outcome_label, 'Unknown'), tone: 'info' };
   return { label: safeText(row.outcome_label, 'Success'), tone: 'ok' };
 }
 
@@ -921,7 +922,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '3.0';
+const SEARCH_EXPORT_SCHEMA_VERSION = '3.1';
 
 function searchExportPeriod() {
   const labels = {
@@ -1065,7 +1066,47 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
   const unexpectedDiagnosticRoles = normalizeList(diagnostics).filter((row) => (
     String(row.event_role || '') !== 'diagnostic'
   )).length;
-  const checks = {
+  const outcomeComponentCount = (row) => (
+    number(row.successful_attempt_count)
+    + number(row.zero_attempt_count)
+    + number(row.low_attempt_count)
+    + number(row.error_attempt_count)
+    + number(row.clarification_attempt_count)
+    + number(row.unknown_attempt_count)
+    + number(row.lookup_success_count)
+    + number(row.lookup_not_found_count)
+    + number(row.lookup_error_count)
+    + number(row.lookup_unknown_count)
+  );
+  const componentGapRows = summaries.filter((row) => (
+    outcomeComponentCount(row) !== number(row.activity_count)
+  ));
+  const falseSuccessRows = summaries.filter((row) => (
+    safeText(row.outcome_label).toLowerCase() === 'success'
+    && number(row.successful_attempt_count) + number(row.lookup_success_count)
+      !== number(row.activity_count)
+  ));
+  const unclassifiedSummaryRows = summaries.filter((row) => (
+    number(row.unknown_attempt_count) > 0
+    || number(row.lookup_unknown_count) > 0
+  ));
+  const positiveResultMissingRefRows = normalizeList(topLevelEvents).filter((row) => (
+    number(row.result_count) > 0
+    && (
+      row.returned_icon_refs_recorded !== true
+      || normalizeList(row.returned_icon_refs).length === 0
+    )
+  ));
+  const untruthfulSearcherDetailRows = summaries.filter((row) => (
+    row.searcher_details_available === true
+    && normalizeList(row.searchers).length === 0
+    && number(row.estimated_client_id_count) > 0
+  ));
+  const suspiciousQueryTextRows = primaryEvents.filter((row) => {
+    const query = safeText(row.query);
+    return /\?{2,}/u.test(query) || /[\p{L}]\?[\p{L}]/u.test(query);
+  });
+  const structuralChecks = {
     summary_rows_have_requests: zeroRequestRows.length === 0,
     summary_request_count_matches_primary_events: summaryRequestCount === groupablePrimaryEvents.length,
     summary_grain_is_unique: duplicateSummaryKeys === 0,
@@ -1074,9 +1115,30 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
     request_roles_are_valid: unexpectedPrimaryRoles === 0,
     diagnostic_roles_are_valid: unexpectedDiagnosticRoles === 0,
   };
+  const semanticChecks = {
+    summary_outcome_components_reconcile: componentGapRows.length === 0,
+    success_labels_match_success_counts: falseSuccessRows.length === 0,
+    summary_has_no_unclassified_requests: unclassifiedSummaryRows.length === 0,
+    positive_results_have_returned_refs: positiveResultMissingRefRows.length === 0,
+    searcher_detail_availability_is_truthful: untruthfulSearcherDetailRows.length === 0,
+  };
+  const checks = { ...structuralChecks, ...semanticChecks };
+  const structuralStatus = Object.values(structuralChecks).every(Boolean)
+    ? 'passed'
+    : 'needs_attention';
+  const semanticStatus = Object.values(semanticChecks).every(Boolean)
+    ? 'passed'
+    : 'needs_attention';
   return {
-    status: Object.values(checks).every(Boolean) ? 'passed' : 'needs_attention',
+    status: structuralStatus === 'passed' && semanticStatus === 'passed'
+      ? 'passed'
+      : 'needs_attention',
+    structural_status: structuralStatus,
+    semantic_status: semanticStatus,
     checks,
+    warnings: {
+      suspicious_query_text_patterns: suspiciousQueryTextRows.length,
+    },
     counts: {
       search_summary_rows: summaries.length,
       summary_requests: summaryRequestCount,
@@ -1090,6 +1152,12 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
       missing_request_event_ids: missingIdentifiers,
       unexpected_request_roles: unexpectedPrimaryRoles,
       unexpected_diagnostic_roles: unexpectedDiagnosticRoles,
+      outcome_component_gap_rows: componentGapRows.length,
+      false_success_rows: falseSuccessRows.length,
+      unclassified_summary_rows: unclassifiedSummaryRows.length,
+      positive_result_missing_ref_rows: positiveResultMissingRefRows.length,
+      untruthful_searcher_detail_rows: untruthfulSearcherDetailRows.length,
+      suspicious_query_text_rows: suspiciousQueryTextRows.length,
     },
   };
 }
@@ -2497,7 +2565,7 @@ async function exportData(key) {
           web_searches: 'One top-level web search per row.',
           hosted_diagnostics: 'Lower-level hosted search work. These rows are supporting diagnostics and are not additional user activity.',
           field_coverage: 'Recorded-field coverage across the audit event source.',
-          integrity_checks: 'Automated reconciliation checks for summary requests, unique summary grain, event identifiers, and source roles.',
+          integrity_checks: 'Automated structure and meaning checks for summary outcomes, request details, event identifiers, and source roles.',
         },
         summary: {
           search_summary_rows: searchSummary.length,
@@ -2521,11 +2589,13 @@ async function exportData(key) {
           ...eventExport.definitions,
           search_summary_grain: 'One row per normalized query, library filter, and query origin.',
           summary_requests: 'The top-level tool calls represented by each Search summary row.',
+          low_count: 'All low-result requests, including approximate low results from older or local clients.',
           typical_result_count: 'The median recorded result count. It is blank when a row mixes result units or has no recorded result count.',
           distinct_searcher_ids: 'Estimated client IDs, not people. One user may produce several IDs, and one ID may represent shared infrastructure.',
           request_log_grain: 'One top-level MCP tool call per row.',
           root_request_identifier: 'Legacy request-grouping identifier retained only for investigation. It may collide and must not be treated as a session ID.',
           source_separation: 'Request log rows, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
+          integrity_status: 'Overall status passes only when both structural and meaning checks pass.',
         },
         source_meta: eventExport.meta,
       };

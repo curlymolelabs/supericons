@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { startAdminDashboardPhaseBLiveServer } from './serve-admin-dashboard-phase-b-live.mjs';
 
 const server = await startAdminDashboardPhaseBLiveServer({
@@ -120,8 +120,8 @@ const queryRows = [
     result_count: null,
     result_count_available: false,
     result_count_reason: 'Not available for this view',
-    issue_type: 'successful',
-    outcome_label: 'Success',
+    issue_type: 'unknown',
+    outcome_label: 'Lookup',
     attempt_count: 0,
     activity_count: 1,
     activity_kind: 'lookup',
@@ -253,6 +253,34 @@ const queryRows = [
     zero_attempt_count: 0,
     last_seen: '2026-07-17T07:22:00Z',
   },
+  {
+    query: 'approximate low results',
+    library_filter: 'lucide',
+    query_origin: 'agent_query',
+    visitor_kind: 'anonymous',
+    country_code: 'SG',
+    country_available: true,
+    channel: 'local_mcp',
+    channels: ['local_mcp'],
+    countries: ['SG'],
+    result_count: 1,
+    typical_result_count: 1,
+    result_sample_count: 2,
+    result_count_available: true,
+    result_count_kind: 'exact',
+    result_unit: 'icon',
+    issue_type: 'low_result',
+    outcome_label: 'Low',
+    attempt_count: 2,
+    activity_count: 2,
+    activity_kind: 'search',
+    estimated_client_id_count: 1,
+    successful_attempt_count: 0,
+    zero_attempt_count: 0,
+    low_attempt_count: 2,
+    approximate_low_attempt_count: 2,
+    last_seen: '2026-07-17T07:21:00Z',
+  },
   ...Array.from({ length: 55 }, (_, index) => ({
     query: `healthy query ${index + 1}`,
     library_filter: 'all',
@@ -275,6 +303,48 @@ const queryRows = [
     last_seen: '2026-07-17T07:20:00Z',
   })),
 ];
+for (const row of queryRows) {
+  const activityCount = Number(row.activity_count || 0);
+  const lookupRow = row.query_origin === 'icon_lookup';
+  row.successful_attempt_count ??= !lookupRow && row.issue_type === 'successful'
+    ? activityCount
+    : !lookupRow && row.issue_type === 'mixed_result'
+      ? Math.max(0, activityCount
+        - Number(row.zero_attempt_count || 0)
+        - Number(row.low_attempt_count || 0)
+        - Number(row.error_attempt_count || 0)
+        - Number(row.clarification_attempt_count || 0))
+      : 0;
+  row.zero_attempt_count ??= !lookupRow && row.issue_type === 'zero_result'
+    ? activityCount
+    : 0;
+  row.low_attempt_count ??= !lookupRow && row.issue_type === 'low_result'
+    ? activityCount
+    : 0;
+  row.error_attempt_count ??= !lookupRow && row.issue_type === 'error'
+    ? activityCount
+    : 0;
+  row.clarification_attempt_count ??= !lookupRow && row.issue_type === 'clarification'
+    ? activityCount
+    : 0;
+  row.unknown_attempt_count ??= !lookupRow && row.issue_type === 'unknown'
+    ? activityCount
+    : 0;
+  row.lookup_success_count ??= lookupRow && row.issue_type === 'successful'
+    ? activityCount
+    : 0;
+  row.lookup_not_found_count ??= lookupRow && row.issue_type === 'not_found'
+    ? activityCount
+    : 0;
+  row.lookup_error_count ??= lookupRow && row.issue_type === 'error'
+    ? activityCount
+    : 0;
+  row.lookup_unknown_count ??= lookupRow && row.issue_type === 'unknown'
+    ? activityCount
+    : 0;
+  row.searchers ??= [];
+  row.searcher_details_available ??= false;
+}
 const eventRows = [
   {
     event_identifier: 'event-1',
@@ -956,6 +1026,16 @@ try {
     has: page.getByText('recommendation request', { exact: true }),
   });
   ok((await recommendationRow.innerText()).includes('8 recommendations'), 'A recommendation request did not use the approved returned-result wording.');
+  const approximateLowRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('approximate low results', { exact: true }),
+  });
+  ok((await approximateLowRow.innerText()).includes('Low'), 'Approximate-low results were not shown as Low.');
+  ok(!(await approximateLowRow.innerText()).includes('Success'), 'Approximate-low results were shown as Success.');
+  await mkdir('output/playwright', { recursive: true });
+  await page.screenshot({
+    path: 'output/playwright/admin-search-data-integrity.png',
+    fullPage: true,
+  });
   const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup pending', { exact: true }),
   });
@@ -989,6 +1069,19 @@ try {
   for (const column of ['"searcher_identifier"', '"searcher_kind"', '"job_category"', '"row_grain"', '"export_type"']) {
     ok(!queryExportText.includes(column), `The Search summary CSV still contains unnecessary ${column}.`);
   }
+  const queryExportLines = queryExportText.split(/\r?\n/).filter(Boolean);
+  const queryExportHeaders = queryExportLines[0].split(',').map((value) => value.replaceAll('"', ''));
+  const approximateLowExportLine = queryExportLines.find((line) => line.includes('"approximate low results"'));
+  ok(Boolean(approximateLowExportLine), 'The Search summary CSV omits the approximate-low row.');
+  const approximateLowExportCells = approximateLowExportLine.split(',').map((value) => value.replaceAll('"', ''));
+  ok(
+    approximateLowExportCells[queryExportHeaders.indexOf('outcome')] === 'Low',
+    'The Search summary CSV labels approximate-low results incorrectly.',
+  );
+  ok(
+    Number(approximateLowExportCells[queryExportHeaders.indexOf('low_count')]) === 2,
+    'The Search summary CSV omits approximate-low requests from low_count.',
+  );
   for (const key of ['request-log-csv', 'audit-bundle-json']) {
     ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
   }
@@ -1022,13 +1115,20 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '3.0', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '3.1', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
   ok(auditPayload.web_searches.length === 1, 'The audit JSON does not separate web searches.');
   ok(auditPayload.hosted_diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
   ok(Boolean(auditPayload.integrity_checks.status), 'The audit JSON omits integrity checks.');
+  ok(auditPayload.integrity_checks.semantic_status === 'needs_attention', 'The audit JSON did not flag the fixture\'s unclassified lookup.');
+  ok(auditPayload.integrity_checks.checks.summary_outcome_components_reconcile === true, 'The audit JSON does not reconcile outcome components.');
+  ok(auditPayload.integrity_checks.checks.success_labels_match_success_counts === true, 'The audit JSON permits false Success labels.');
+  ok(auditPayload.integrity_checks.checks.summary_has_no_unclassified_requests === false, 'The audit JSON permits unclassified requests.');
+  ok(auditPayload.integrity_checks.checks.positive_results_have_returned_refs === true, 'The audit JSON permits missing returned icon references.');
+  ok(auditPayload.integrity_checks.checks.searcher_detail_availability_is_truthful === true, 'The audit JSON permits false searcher-detail availability.');
+  ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
   ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
   ok(auditPayload.csv_schemas.search_summary.length === 19, 'The Audit bundle has the wrong Search summary schema.');

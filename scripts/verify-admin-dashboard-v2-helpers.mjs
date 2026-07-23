@@ -327,6 +327,37 @@ const queryRows = [
       minimum_result_count: null,
     },
     {
+      query: 'approximate low aggregate',
+      library_filter: 'lucide',
+      attempt_count: 3,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      approximate_low_attempt_count: 3,
+      client_days: 2,
+      channels: ['local_mcp'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
+      query: 'unclassified aggregate',
+      library_filter: 'all',
+      attempt_count: 2,
+      successful_attempt_count: 0,
+      zero_attempt_count: 0,
+      low_attempt_count: 0,
+      error_attempt_count: 0,
+      clarification_attempt_count: 0,
+      client_days: 1,
+      channels: ['web'],
+      countries: [],
+      query_origins: ['agent_query'],
+      audit_sources: ['admin_rollup_queries'],
+      minimum_result_count: null,
+    },
+    {
       query: 'recommendation failed',
       library_filter: 'all',
       attempt_count: 2,
@@ -451,6 +482,27 @@ const queryRows = [
   assert.equal(mixed.result_count_available, false);
   assert.equal(mixed.country_code, null);
   assert.equal(mixed.country_available, false);
+
+  const approximateLow = aggregateRows.find((row) => row.query === 'approximate low aggregate');
+  assert.equal(approximateLow.issue_type, 'low_result');
+  assert.equal(approximateLow.outcome_label, 'Low');
+  assert.equal(approximateLow.low_attempt_count, 3);
+  assert.equal(approximateLow.approximate_low_attempt_count, 3);
+  assert.equal(approximateLow.searcher_details_available, false);
+  assert.equal(approximateLow.searcher_details_reason, 'Searcher details are not available for a grouped daily view.');
+  assert.equal(
+    approximateLow.successful_attempt_count
+      + approximateLow.zero_attempt_count
+      + approximateLow.low_attempt_count
+      + approximateLow.error_attempt_count
+      + approximateLow.clarification_attempt_count,
+    approximateLow.attempt_count,
+  );
+
+  const unclassified = aggregateRows.find((row) => row.query === 'unclassified aggregate');
+  assert.equal(unclassified.issue_type, 'unknown');
+  assert.equal(unclassified.outcome_label, 'Unknown');
+  assert.equal(unclassified.unknown_attempt_count, 2);
 
   const recommendationError = aggregateRows.find((row) => row.query === 'recommendation failed');
   assert.equal(recommendationError.issue_type, 'error');

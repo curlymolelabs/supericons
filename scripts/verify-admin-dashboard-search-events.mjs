@@ -60,6 +60,17 @@ const rows = compactDashboardV2EventRows([
     result_count: null,
     environment: 'production',
   },
+  {
+    id: 'mcp_usage_events:104',
+    search_query: 'recommendation without recorded references',
+    query_origin: 'agent_query',
+    tool_name: 'recommend_icons',
+    search_outcome: 'results',
+    result_count: 4,
+    returned_icon_refs: [],
+    returned_icon_refs_recorded: true,
+    environment: 'production',
+  },
 ]);
 
 assert.equal(rows[0].outcome, 'not_found');
@@ -79,6 +90,8 @@ assert.equal(rows[1].latency_ms, null);
 assert.equal(rows[2].outcome, 'unknown');
 assert.equal(rows[2].result_count, null);
 assert.equal(rows[2].event_identifier, 'mcp_usage_events:103');
+assert.equal(rows[3].outcome, 'success');
+assert.equal(rows[3].returned_icon_refs_recorded, false);
 
 for (const row of rows) {
   for (const forbidden of ['request_id', 'session_hash', 'api_key_hash', 'user_id']) {
