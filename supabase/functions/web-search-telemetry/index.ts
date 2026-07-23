@@ -18,6 +18,7 @@ const ALLOWED_HOSTED_STATES = new Set(['pending', 'success', 'zero', 'error', 'n
 const ALLOWED_FINAL_OUTCOMES = new Set(['success', 'zero', 'error']);
 const ALLOWED_SETTLEMENT_STATES = new Set(['completed', 'failed']);
 const ALLOWED_DIAGNOSTIC_TYPES = new Set(['superseded', 'incomplete']);
+const ALLOWED_COMPLETION_TRIGGERS = new Set(['idle', 'enter', 'blur']);
 
 type ParsedTelemetryCommon = {
   contractVersion: number;
@@ -44,6 +45,7 @@ type ParsedTelemetry = (
     finalOutcome: string;
     settlementState: string;
     finalMatchCount: number;
+    completionTrigger: string;
   }
 ) & ParsedTelemetryCommon;
 
@@ -226,6 +228,7 @@ export function parsePayload(value: unknown): ParsedTelemetry {
 
   const finalOutcome = normalizeToken(body.final_outcome, 20);
   const settlementState = normalizeToken(body.settlement_state, 20);
+  const completionTrigger = normalizeToken(body.completion_trigger, 20);
   const finalMatchCount = normalizeCount(
     body.final_match_count,
     'final_match_count',
@@ -236,6 +239,9 @@ export function parsePayload(value: unknown): ParsedTelemetry {
   }
   if (!settlementState || !ALLOWED_SETTLEMENT_STATES.has(settlementState)) {
     throw new TelemetryHttpError(400, 'web_telemetry_settlement_invalid', 'Unsupported settlement state.');
+  }
+  if (!completionTrigger || !ALLOWED_COMPLETION_TRIGGERS.has(completionTrigger)) {
+    throw new TelemetryHttpError(400, 'web_telemetry_completion_trigger_invalid', 'Unsupported completion trigger.');
   }
   if (finalOutcome === 'success' && finalMatchCount === 0) {
     throw new TelemetryHttpError(400, 'web_telemetry_outcome_mismatch', 'A successful outcome requires at least one match.');
@@ -256,6 +262,7 @@ export function parsePayload(value: unknown): ParsedTelemetry {
     finalOutcome,
     settlementState,
     finalMatchCount,
+    completionTrigger,
   };
 }
 
@@ -348,7 +355,29 @@ async function buildPrivateIdentity(req: Request) {
   return {
     rateSubjectHash: await hmacSha256Hex(secret, `rate|${clientIp}`),
     anonymousClientHash: await hmacSha256Hex(secret, `client|${clientIp}|${userAgent}|${month}`),
+    clientIpPublic: clientIp !== 'unavailable',
   };
+}
+
+async function resolveSignedInUser(adminClient: any, req: Request) {
+  const authorization = String(req.headers.get('authorization') || '').trim();
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  if (!match?.[1]) return null;
+  try {
+    const { data, error } = await adminClient.auth.getUser(match[1]);
+    return error ? null : data?.user?.id || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function countLinkedDiagnosticAttempts(adminClient: any, episodeId: string) {
+  const { count, error } = await adminClient
+    .from('search_request_audit')
+    .select('id', { count: 'exact', head: true })
+    .eq('episode_id', episodeId);
+  if (error) throw error;
+  return Number(count || 0);
 }
 
 export async function handleWebSearchTelemetryRequest(req: Request) {
@@ -383,6 +412,7 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
     const adminClient = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
+    const signedInUserId = await resolveSignedInUser(adminClient, req);
 
     const { data: settings, error: settingsError } = await adminClient
       .from('search_telemetry_settings')
@@ -456,6 +486,11 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
       return jsonResponse(origin, { accepted: true, kind: 'diagnostic' }, 202);
     }
 
+    const linkedDiagnosticAttemptCount = await countLinkedDiagnosticAttempts(
+      adminClient,
+      parsed.episodeId,
+    );
+
     const { error } = await adminClient
       .from('search_final_outcomes')
       .upsert({
@@ -477,11 +512,13 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
         settlement_state: parsed.settlementState,
         search_execution: parsed.searchExecution,
         server_build: serverBuild,
-        diagnostic_attempt_count: parsed.diagnosticAttemptCount,
+        diagnostic_attempt_count: linkedDiagnosticAttemptCount,
         legacy_identity_quality: 'exact',
         source_version: parsed.sourceVersion,
         anonymous_client_hash: identity.anonymousClientHash,
-        is_registered: false,
+        user_id: signedInUserId,
+        is_registered: Boolean(signedInUserId),
+        client_ip_public: identity.clientIpPublic,
         country_code: countryCode,
         geo_source: countryCode ? 'request_header' : null,
         completed_at: new Date().toISOString(),
@@ -489,6 +526,7 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
           local_match_count: parsed.localMatchCount,
           hosted_match_count: parsed.hostedMatchCount,
           hosted_state: parsed.hostedState,
+          completion_trigger: parsed.completionTrigger,
           controlled_run_label: controlledRun.label,
         },
       }, {

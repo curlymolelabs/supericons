@@ -124,6 +124,18 @@ function normalizeAuditText(value: unknown, { maxLength = 120 } = {}) {
   return text ? text.slice(0, maxLength) : null;
 }
 
+function normalizeAuditUuid(value: unknown) {
+  const text = String(value || '').trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(text)
+    ? text
+    : null;
+}
+
+function normalizeAttemptNumber(value: unknown) {
+  const number = Number(value);
+  return Number.isInteger(number) && number > 0 && number <= 10000 ? number : null;
+}
+
 function normalizeAuditHash(value: unknown) {
   const text = String(value || '').trim().toLowerCase();
   return /^[a-f0-9]{16,128}$/.test(text) ? text : null;
@@ -176,6 +188,16 @@ export function buildSearchAuditContext(body: Record<string, unknown>, source: s
     api_key_hash: normalizeAuditHash(body?.api_key_hash),
     mcp_server_version: normalizeAuditText(body?.mcp_server_version, { maxLength: 40 }),
     request_id: normalizeAuditText(body?.request_id, { maxLength: 120 }),
+    contract_version: Number(body?.contract_version) === 1 ? 1 : null,
+    episode_id: normalizeAuditUuid(body?.episode_id),
+    recovery_chain_id: normalizeAuditUuid(body?.recovery_chain_id),
+    attempt_id: normalizeAuditUuid(body?.attempt_id),
+    attempt_number: normalizeAttemptNumber(body?.attempt_number),
+    query_variant: normalizeAuditText(body?.query_variant, { maxLength: 500 }),
+    query_origin: normalizeAuditToken(body?.query_origin, { maxLength: 80 }) || null,
+    search_engine: normalizeAuditToken(body?.search_engine, { maxLength: 80 }) || null,
+    execution_route: normalizeAuditToken(body?.execution_route, { maxLength: 80 }) || null,
+    server_build: normalizeAuditText(body?.server_build, { maxLength: 120 }),
     dedupe_key: normalizeAuditText(body?.dedupe_key, { maxLength: 180 }),
     beta_cohort: normalizeAuditToken(body?.beta_cohort, { maxLength: 80 }) || null,
     session_hash: normalizeAuditHash(body?.session_hash),
@@ -350,6 +372,16 @@ function stripEnrichedAuditColumns(payload: Record<string, unknown>) {
     api_key_hash: _apiKeyHash,
     mcp_server_version: _mcpServerVersion,
     request_id: _requestId,
+    contract_version: _contractVersion,
+    episode_id: _episodeId,
+    recovery_chain_id: _recoveryChainId,
+    attempt_id: _attemptId,
+    attempt_number: _attemptNumber,
+    query_variant: _queryVariant,
+    query_origin: _queryOrigin,
+    search_engine: _searchEngine,
+    execution_route: _ExecutionRoute,
+    server_build: _serverBuild,
     dedupe_key: _dedupeKey,
     library_mode: _libraryMode,
     search_outcome: _searchOutcome,
@@ -448,6 +480,16 @@ export async function handleSearchRequest(
     api_key_hash: null as string | null,
     mcp_server_version: null as string | null,
     request_id: null as string | null,
+    contract_version: null as number | null,
+    episode_id: null as string | null,
+    recovery_chain_id: null as string | null,
+    attempt_id: null as string | null,
+    attempt_number: null as number | null,
+    query_variant: null as string | null,
+    query_origin: null as string | null,
+    search_engine: null as string | null,
+    execution_route: null as string | null,
+    server_build: null as string | null,
     dedupe_key: null as string | null,
     beta_cohort: betaCohort,
     session_hash: null as string | null,

@@ -1085,6 +1085,13 @@ function normalizeUsageText(value, { maxLength = 120 } = {}) {
   return text ? text.slice(0, maxLength) : null;
 }
 
+function normalizeUsageUuid(value) {
+  const text = String(value || '').trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(text)
+    ? text
+    : null;
+}
+
 function normalizeUsageQuery(value) {
   return (
     String(value || '')
@@ -1395,7 +1402,7 @@ function buildToolUsageContext(requestContext, toolName, args = {}, { eventId = 
   const requestBetaCohort = context.beta_cohort || null;
   const toolBetaCohort = requestBetaCohort || getBetaCohortForTool(packageJson.version, toolName);
   return {
-    source: 'mcp',
+    source: context.source || 'mcp',
     channel: context.channel,
     environment: requestBetaCohort?.startsWith('controlled-run:')
       ? 'test'
@@ -1405,6 +1412,9 @@ function buildToolUsageContext(requestContext, toolName, args = {}, { eventId = 
     client_family: context.client_family,
     tool_name: toolName,
     request_id: context.request_id,
+    contract_version: 1,
+    episode_id: normalizeUsageUuid(context.episode_id),
+    recovery_chain_id: normalizeUsageUuid(context.recovery_chain_id),
     dedupe_key: buildMcpUsageDedupeKey({
       sessionHash: context.session_hash,
       anonymousClientHash: context.anonymous_client_hash,
@@ -1462,8 +1472,16 @@ function getConfidenceLabelFromToolResult(result) {
   return null;
 }
 
-function buildMcpUsageEventPayload(requestContext, toolName, args, result, startedAt, status = 'ok', error = null) {
-  const eventId = randomUUID();
+function buildMcpUsageEventPayload(
+  requestContext,
+  toolName,
+  args,
+  result,
+  startedAt,
+  status = 'ok',
+  error = null,
+  eventId = randomUUID(),
+) {
   const context = buildToolUsageContext(requestContext, toolName, args, {
     eventId,
   });
@@ -1526,6 +1544,8 @@ function buildMcpUsageEventPayload(requestContext, toolName, args, result, start
         { maxLength: 120 },
       ),
       traffic_class: classifyMcpTraffic(context),
+      episode_id: context.episode_id || eventId,
+      recovery_chain_id: context.recovery_chain_id || eventId,
     },
   };
 }
@@ -1558,23 +1578,47 @@ async function logMcpUsageEvent(payload) {
 
 async function withMcpUsageEvent(requestContext, toolName, args, handler) {
   const startedAt = Date.now();
+  const eventId = randomUUID();
+  const episodeContext = {
+    ...(requestContext || {}),
+    episode_id: eventId,
+    recovery_chain_id: eventId,
+  };
+  const usageContext = buildToolUsageContext(episodeContext, toolName, args, { eventId });
+  let attemptNumber = 0;
+  usageContext.next_attempt_number = () => {
+    attemptNumber += 1;
+    return attemptNumber;
+  };
   try {
-    const result = await handler();
+    const result = await handler(usageContext);
     const resultIsError = result?.isError === true;
     void logMcpUsageEvent(
       buildMcpUsageEventPayload(
-        requestContext,
+        episodeContext,
         toolName,
         args,
         result,
         startedAt,
         resultIsError ? 'error' : 'ok',
         resultIsError ? result?.structuredContent : null,
+        eventId,
       ),
     );
     return result;
   } catch (error) {
-    void logMcpUsageEvent(buildMcpUsageEventPayload(requestContext, toolName, args, null, startedAt, 'error', error));
+    void logMcpUsageEvent(
+      buildMcpUsageEventPayload(
+        episodeContext,
+        toolName,
+        args,
+        null,
+        startedAt,
+        'error',
+        error,
+        eventId,
+      ),
+    );
     throw error;
   }
 }
@@ -1635,7 +1679,7 @@ function createServer({ requestContext = null } = {}) {
       const args = normalizeSearchToolArguments(rawArgs, {
         supportedLocales: multilingualLocaleValues,
       });
-      return withMcpUsageEvent(requestContext, 'search_icons', args, async () => {
+      return withMcpUsageEvent(requestContext, 'search_icons', args, async (usageContext) => {
         const { query, library, library_mode, style, locale, limit, include_query_frame, warnings } = args;
         if (library_mode === 'prefer' && !library) {
           return asStructured(
@@ -1664,7 +1708,7 @@ function createServer({ requestContext = null } = {}) {
               searchHostedIcons({
                 ...params,
                 includeQueryFrame: include_query_frame,
-                usageContext: buildToolUsageContext(requestContext, 'search_icons', args),
+                usageContext,
                 allowLocalEmptyFallback: false,
               }),
           });
@@ -1807,7 +1851,7 @@ function createServer({ requestContext = null } = {}) {
       const args = normalizeRecommendationToolArguments(rawArgs, {
         supportedLocales: multilingualLocaleValues,
       });
-      return withMcpUsageEvent(requestContext, 'recommend_icons', args, async () => {
+      return withMcpUsageEvent(requestContext, 'recommend_icons', args, async (usageContext) => {
         const {
           task,
           slots,
@@ -1837,23 +1881,11 @@ function createServer({ requestContext = null } = {}) {
               searchHostedIcons({
                 ...params,
                 includeQueryFrame: include_query_frame,
-                usageContext: buildToolUsageContext(requestContext, 'recommend_icons', {
-                  ...args,
-                  query: params.query,
-                  library: params.library,
-                  limit: params.limit,
-                }),
+                usageContext,
               }),
             hostedSearchMany: (queries) =>
               searchHostedIconQueries(queries, {
-                usageContextForQuery: (params, index) =>
-                  buildToolUsageContext(requestContext, 'recommend_icons', {
-                    ...args,
-                    query: params.query,
-                    library: params.library,
-                    limit: params.limit,
-                    grouped_query_index: index,
-                  }),
+                usageContextForQuery: () => usageContext,
               }),
           });
           const payload = await recommendIconsForTask({
@@ -2117,6 +2149,37 @@ function sendJson(res, status, payload) {
   res.status(status).json(payload);
 }
 
+function classifyTrustedWebsiteOrigin(req) {
+  const rawOrigin = String(req.get('origin') || '').trim();
+  if (!rawOrigin) return null;
+  try {
+    const url = new URL(rawOrigin);
+    const hostname = url.hostname.toLowerCase();
+    const configuredHosts = String(process.env.SUPERICONS_PRODUCTION_WEB_HOSTS || '')
+      .split(',')
+      .map((host) => host.trim().toLowerCase())
+      .filter(Boolean);
+    if (
+      url.protocol === 'https:'
+      && new Set(['supericons.dev', 'www.supericons.dev', ...configuredHosts]).has(hostname)
+    ) {
+      return { environment: 'production' };
+    }
+    if (url.protocol === 'https:' && hostname.endsWith('.netlify.app')) {
+      return { environment: 'preview' };
+    }
+    if (
+      (url.protocol === 'http:' || url.protocol === 'https:')
+      && ['localhost', '127.0.0.1', '::1', '[::1]'].includes(hostname)
+    ) {
+      return { environment: 'local' };
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 function parsePublicSearchRequest(body = {}) {
   const query = String(body.query || '').trim();
   if (!query) {
@@ -2148,6 +2211,11 @@ function parsePublicSearchRequest(body = {}) {
 
   const requestedLimit = Number.parseInt(String(body.limit ?? '60'), 10);
   const limit = Number.isFinite(requestedLimit) ? Math.min(100, Math.max(1, requestedLimit)) : 60;
+  const rawEpisodeId = body.episode_id ?? null;
+  const episodeId = rawEpisodeId ? normalizeUsageUuid(rawEpisodeId) : null;
+  if (rawEpisodeId && !episodeId) {
+    throw createPreviewHttpError(400, 'search_episode_invalid', 'The search episode ID is invalid.');
+  }
 
   return {
     query,
@@ -2157,6 +2225,7 @@ function parsePublicSearchRequest(body = {}) {
     locale,
     limit,
     includeQueryFrame: body.include_query_frame === true,
+    episodeId,
   };
 }
 
@@ -2254,7 +2323,20 @@ app.get('/health', (_req, res) => {
 app.post('/search-icons', async (req, res) => {
   try {
     const params = parsePublicSearchRequest(req.body);
-    const requestContext = await buildRequestContext(req);
+    const baseRequestContext = await buildRequestContext(req);
+    const websiteOrigin = params.episodeId ? classifyTrustedWebsiteOrigin(req) : null;
+    const requestContext = websiteOrigin
+      ? {
+          ...baseRequestContext,
+          source: 'web',
+          channel: 'web',
+          environment: websiteOrigin.environment,
+          client_family: 'browser',
+          request_id: params.episodeId,
+          episode_id: params.episodeId,
+          recovery_chain_id: params.episodeId,
+        }
+      : baseRequestContext;
     const usageContext = buildToolUsageContext(requestContext, 'search_icons', params);
     const { results, searchRuntime } = await runRailwayPublicSearch(params, usageContext);
     sendJson(res, 200, {

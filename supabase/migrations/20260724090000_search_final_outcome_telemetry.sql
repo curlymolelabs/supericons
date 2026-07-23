@@ -43,6 +43,7 @@ create table if not exists public.search_final_outcomes (
   anonymous_client_hash text,
   user_id uuid references auth.users(id) on delete set null,
   is_registered boolean not null default false,
+  client_ip_public boolean not null default false,
   country_code text,
   geo_source text,
   completed_at timestamptz not null,
@@ -251,6 +252,7 @@ declare
   v_final_outcome text;
   v_traffic_class text;
   v_query text;
+  v_diagnostic_attempt_count integer;
 begin
   if new.event_type <> 'search_outcome'
      or new.tool_name not in ('search_icons', 'recommend_icons')
@@ -278,6 +280,10 @@ begin
     public.si_try_uuid(new.event_id),
     gen_random_uuid()
   );
+  select count(*)::integer
+  into v_diagnostic_attempt_count
+  from public.search_request_audit
+  where episode_id = v_episode_id;
 
   v_traffic_class := lower(trim(coalesce(new.metadata ->> 'traffic_class', '')));
   if v_traffic_class not in (
@@ -298,6 +304,7 @@ begin
   insert into public.search_final_outcomes (
     contract_version,
     episode_id,
+    recovery_chain_id,
     source_event_id,
     channel,
     query,
@@ -313,11 +320,13 @@ begin
     settlement_state,
     search_execution,
     server_build,
+    diagnostic_attempt_count,
     legacy_identity_quality,
     source_version,
     anonymous_client_hash,
     user_id,
     is_registered,
+    client_ip_public,
     country_code,
     geo_source,
     completed_at,
@@ -325,6 +334,7 @@ begin
   ) values (
     1,
     v_episode_id,
+    public.si_try_uuid(new.metadata ->> 'recovery_chain_id'),
     'mcp_usage_events:' || new.id::text,
     case
       when new.channel = 'local_mcp' then 'local_mcp'
@@ -347,6 +357,7 @@ begin
     case when v_final_outcome = 'error' then 'failed' else 'completed' end,
     nullif(trim(coalesce(new.metadata ->> 'search_execution', '')), ''),
     nullif(trim(coalesce(new.metadata ->> 'server_build', '')), ''),
+    v_diagnostic_attempt_count,
     case
       when public.si_try_uuid(new.metadata ->> 'episode_id') is not null
         or public.si_try_uuid(new.event_id) is not null
@@ -354,9 +365,10 @@ begin
       else 'legacy_best_effort'
     end,
     new.mcp_server_version,
-    new.anonymous_client_hash,
+    coalesce(new.anonymous_client_hash, new.session_hash),
     new.user_id,
     new.is_registered,
+    coalesce(new.client_ip_public, false),
     new.country_code,
     new.geo_source,
     new.created_at,
@@ -364,7 +376,10 @@ begin
       'source_table', 'mcp_usage_events',
       'source_row_id', new.id,
       'query_origin', new.query_origin,
-      'requested_limit', new.requested_limit
+      'requested_limit', new.requested_limit,
+      'returned_icon_refs', new.metadata -> 'returned_icon_refs',
+      'returned_icon_refs_recorded',
+      lower(coalesce(new.metadata ->> 'returned_icon_refs_recorded', 'false')) = 'true'
     )
   )
   on conflict do nothing;

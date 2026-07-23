@@ -79,11 +79,16 @@ create table public.mcp_usage_events (
   requested_limit integer,
   result_count integer,
   search_outcome text,
+  confidence_label text,
+  beta_cohort text,
   status text not null default 'ok',
+  latency_ms integer,
   country_code text,
   geo_source text,
+  client_ip_public boolean,
   locale text,
   anonymous_client_hash text,
+  session_hash text,
   user_id uuid references auth.users(id) on delete set null,
   is_registered boolean not null default false,
   mcp_server_version text,
@@ -105,6 +110,14 @@ const migration = readFileSync(
 );
 const rollback = readFileSync(
   'supabase/rollbacks/20260724090000_search_final_outcome_telemetry.down.sql',
+  'utf8',
+);
+const localCoverageMigration = readFileSync(
+  'supabase/migrations/20260724100000_enable_stable_local_mcp_final_outcomes.sql',
+  'utf8',
+);
+const localCoverageRollback = readFileSync(
+  'supabase/rollbacks/20260724100000_enable_stable_local_mcp_final_outcomes.down.sql',
   'utf8',
 );
 
@@ -153,6 +166,24 @@ try {
   assert.equal(schema, '4|10|0|1');
 
   runSql(`
+    insert into public.search_request_audit (
+      query_norm,
+      source,
+      channel,
+      episode_id,
+      recovery_chain_id,
+      attempt_id,
+      attempt_number
+    ) values (
+      'shield',
+      'mcp',
+      'hosted_mcp',
+      '4d954f4f-c63b-4f01-b51c-6922d82a6ec5',
+      'ced81c43-2a29-46b8-a463-f96f328df1ed',
+      '0679719c-0260-4395-9417-88d8e84bb0a7',
+      1
+    );
+
     insert into public.mcp_usage_events (
       event_id,
       event_type,
@@ -186,7 +217,7 @@ try {
       'results',
       'ok',
       '0.4.22',
-      '{"traffic_class":"controlled_test","search_execution":"hosted_fused"}'::jsonb
+      '{"traffic_class":"controlled_test","search_execution":"hosted_fused","episode_id":"4d954f4f-c63b-4f01-b51c-6922d82a6ec5","recovery_chain_id":"ced81c43-2a29-46b8-a463-f96f328df1ed"}'::jsonb
     );
 
     insert into public.mcp_usage_events (
@@ -257,6 +288,51 @@ try {
     captured,
     'hosted_mcp:success:8:exact,local_mcp:zero:0:legacy_best_effort',
   );
+  const hostedLinkage = runSql(`
+    select concat_ws('|', recovery_chain_id, diagnostic_attempt_count)
+    from public.search_final_outcomes
+    where episode_id = '4d954f4f-c63b-4f01-b51c-6922d82a6ec5';
+  `).trim();
+  assert.equal(hostedLinkage, 'ced81c43-2a29-46b8-a463-f96f328df1ed|1');
+
+  runSql(localCoverageMigration);
+  const stableLocalId = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'stable local search',
+      6,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('b', 64),
+      null,
+      'high',
+      null,
+      '0.4.22',
+      12,
+      timezone('utc', now())
+    );
+  `).trim();
+  assert.match(stableLocalId, /^\d+$/);
+  const stableLocalCapture = runSql(`
+    select concat_ws('|',
+      e.channel,
+      e.environment,
+      e.beta_cohort is null,
+      f.channel,
+      f.final_outcome,
+      f.final_match_count,
+      f.legacy_identity_quality
+    )
+    from public.mcp_usage_events e
+    join public.search_final_outcomes f
+      on f.source_event_id = 'mcp_usage_events:' || e.id::text
+    where e.id = ${stableLocalId};
+  `).trim();
+  assert.equal(
+    stableLocalCapture,
+    'local_mcp|production|t|local_mcp|success|6|legacy_best_effort',
+  );
 
   runSql(`
     insert into public.search_final_outcomes (
@@ -321,6 +397,25 @@ try {
   runSql('set role anon; select * from public.search_final_outcomes;', { expectFailure: true });
 
   const beforeRollbackCount = Number(runSql('select count(*) from public.search_final_outcomes;').trim());
+  runSql(localCoverageRollback);
+  const suppressedStableLocal = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'suppressed after rollback',
+      1,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('c', 64),
+      null,
+      null,
+      null,
+      '0.4.22',
+      10,
+      timezone('utc', now())
+    ) is null;
+  `).trim();
+  assert.equal(suppressedStableLocal, 't');
   runSql(rollback);
   runSql(`
     insert into public.mcp_usage_events (
@@ -366,7 +461,10 @@ try {
     additive_private_tables: 4,
     legacy_rows_not_backfilled: true,
     hosted_exact_identity_captured: true,
+    hosted_attempt_linkage_counted: true,
     local_legacy_identity_labelled: true,
+    stable_local_search_captured: true,
+    stable_local_rollback_verified: true,
     clarification_excluded: true,
     duplicate_episode_rejected: true,
     rate_limit_enforced: true,

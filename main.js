@@ -25,7 +25,14 @@ import {
   normalizeMaterialSnapshotSvg,
 } from './material-export.js';
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
-import { searchIconsHosted } from './lib/search-engine-client.js';
+import {
+  logWebSearchTelemetry,
+  searchIconsHosted,
+} from './lib/search-engine-client.js';
+import {
+  SEARCH_INPUT_DEBOUNCE_MS,
+  createWebSearchEpisodeCoordinator,
+} from './lib/web-search-episode.js';
 import { buildIntentQueryVariants } from './lib/search-intent-core.js';
 import { normalizeCjkSearchText } from './lib/cjk-search-core.js';
 import { buildWebSearchQueryPlan } from './lib/web-cjk-search-smoke.js';
@@ -42,7 +49,6 @@ import {
   logCopyEvent,
   logFavoriteEvent,
   logNoResultsFeedback,
-  logSearchAttempt,
 } from './lib/icon-intelligence.js';
 import {
   addRecentSearchEntry,
@@ -169,10 +175,7 @@ const state = {
   mcpPreview: getMcpPreviewUrlState(),
 };
 
-const SEARCH_ATTEMPT_IDLE_MS = 2500;
 const NO_RESULTS_FEEDBACK_MAX_LENGTH = 400;
-let pendingSearchAttemptPayload = null;
-let pendingSearchAttemptTimer = null;
 let pendingBlurSearchCommitTimer = null;
 let pendingRecentSearchHideTimer = null;
 let hostedSearchRequestSeq = 0;
@@ -515,37 +518,36 @@ function getTimeToCopyMs() {
   return Math.max(0, Math.round(performance.now() - startedAt));
 }
 
-function buildCurrentSearchAttemptPayload() {
-  const searchQuery = getCurrentSearchQuery();
-  if (!searchQuery || searchQuery.length < 3) return null;
+const webSearchEpisodes = createWebSearchEpisodeCoordinator({
+  writeTelemetry: logWebSearchTelemetry,
+  onCountable: rememberRecentSearch,
+});
 
+function getCurrentWebSearchEpisodeOptions() {
+  const libraryFilter = getHostedSearchLibraryFilter() || 'all';
   return {
-    searchQuery,
-    resultCount: state.filteredIcons.length,
-    libraryFilter: state.activeLibrary,
-    jobCategory: getActiveJobCategoryId(),
-    uiSurface: 'grid',
-    evidenceText: 'search:grid',
+    query: getCurrentSearchQuery(),
+    libraryFilter,
+    libraryMode: libraryFilter === 'all' ? 'all' : 'strict',
+    style: state.iconStyle,
+    locale: getSearchQueryPlan(getCurrentSearchQuery()).locale,
   };
 }
 
-function clearPendingSearchAttempt() {
-  pendingSearchAttemptPayload = null;
-  if (pendingSearchAttemptTimer) {
-    clearTimeout(pendingSearchAttemptTimer);
-    pendingSearchAttemptTimer = null;
+function startCurrentWebSearchEpisode() {
+  if (state.mcpPreview?.mode === 'explicit') {
+    webSearchEpisodes.supersedeActive();
+    return null;
   }
+  return webSearchEpisodes.startEpisode(getCurrentWebSearchEpisodeOptions());
 }
 
-function flushPendingSearchAttempt({ useCurrentState = false } = {}) {
-  const payload = useCurrentState
-    ? buildCurrentSearchAttemptPayload()
-    : (pendingSearchAttemptPayload || buildCurrentSearchAttemptPayload());
+function clearPendingSearchAttempt() {
+  webSearchEpisodes.supersedeActive();
+}
 
-  clearPendingSearchAttempt();
-  if (!payload) return;
-  rememberRecentSearch(payload.searchQuery);
-  void logSearchAttempt(payload);
+function flushPendingSearchAttempt({ trigger = 'enter' } = {}) {
+  webSearchEpisodes.markCountable({ trigger });
 }
 
 function flushPendingSearchAttemptSafely({ useCurrentState = false } = {}) {
@@ -554,23 +556,13 @@ function flushPendingSearchAttemptSafely({ useCurrentState = false } = {}) {
     pendingBlurSearchCommitTimer = null;
     applyFilters();
   }
-  flushPendingSearchAttempt({ useCurrentState });
+  flushPendingSearchAttempt({ trigger: 'blur' });
 }
 
 function queueCurrentSearchAttempt() {
-  const payload = buildCurrentSearchAttemptPayload();
-  if (!payload) {
-    clearPendingSearchAttempt();
-    return;
+  if (!webSearchEpisodes.getActiveEpisode()) {
+    startCurrentWebSearchEpisode();
   }
-
-  pendingSearchAttemptPayload = payload;
-  if (pendingSearchAttemptTimer) {
-    clearTimeout(pendingSearchAttemptTimer);
-  }
-  pendingSearchAttemptTimer = setTimeout(() => {
-    flushPendingSearchAttempt();
-  }, SEARCH_ATTEMPT_IDLE_MS);
 }
 
 function syncSearchStateFromInput({ resetSearchContext = false } = {}) {
@@ -583,8 +575,15 @@ function syncSearchStateFromInput({ resetSearchContext = false } = {}) {
   return queryChanged;
 }
 
-function commitSearchStateFromInput({ resetSearchContext = false, apply = true } = {}) {
+function commitSearchStateFromInput({
+  resetSearchContext = false,
+  apply = true,
+  forceEpisode = false,
+} = {}) {
   const queryChanged = syncSearchStateFromInput({ resetSearchContext });
+  if (queryChanged || forceEpisode) {
+    startCurrentWebSearchEpisode();
+  }
   if (apply) {
     applyFilters();
   }
@@ -599,7 +598,7 @@ function queueDeferredSearchRefresh({ flushSearchAttempt = false } = {}) {
     pendingBlurSearchCommitTimer = null;
     applyFilters();
     if (flushSearchAttempt) {
-      flushPendingSearchAttempt({ useCurrentState: true });
+      webSearchEpisodes.markCountable({ trigger: 'blur' });
     }
   }, 0);
 }
@@ -1959,6 +1958,7 @@ function getHostedSearchLibraryFilter() {
 
 async function refreshHostedSearchResults({
   requestId,
+  episodeId,
   query,
   locale = null,
   baseIcons,
@@ -1977,6 +1977,7 @@ async function refreshHostedSearchResults({
       limit: Math.max(state.batchSize, 60),
       locale,
       source: getSearchAnalyticsSource(),
+      episodeId,
     });
 
     if (requestId !== hostedSearchRequestSeq) return;
@@ -1989,6 +1990,15 @@ async function refreshHostedSearchResults({
     state.hostedSearchPending = false;
 
     if (hostedIcons.length === 0) {
+      const returnedCount = Array.isArray(payload.results) ? payload.results.length : 0;
+      webSearchEpisodes.settleHosted({
+        episodeId,
+        hostedState: returnedCount === 0 ? 'zero' : 'error',
+        hostedMatchCount: returnedCount,
+        finalMatchCount: fallbackIcons.length,
+        searchExecution: payload.search_runtime?.mode || null,
+        errorCode: returnedCount === 0 ? null : 'hosted_result_unavailable',
+      });
       renderGrid();
       return;
     }
@@ -1999,11 +2009,25 @@ async function refreshHostedSearchResults({
     state.filteredIcons = [...hostedIcons, ...remainder];
     state.tierDividerIndex = remainder.length > 0 ? hostedIcons.length : -1;
     state.visibleRange.end = state.batchSize;
+    webSearchEpisodes.settleHosted({
+      episodeId,
+      hostedState: 'success',
+      hostedMatchCount: hostedIcons.length,
+      finalMatchCount: state.filteredIcons.length,
+      searchExecution: payload.search_runtime?.mode || null,
+    });
     updateCounts();
     renderGrid();
   } catch (error) {
     if (requestId === hostedSearchRequestSeq) {
       state.hostedSearchPending = false;
+      webSearchEpisodes.settleHosted({
+        episodeId,
+        hostedState: 'error',
+        hostedMatchCount: null,
+        finalMatchCount: fallbackIcons.length,
+        errorCode: 'hosted_search_failed',
+      });
       renderGrid();
     }
     console.warn('[Hosted Search] Falling back to local ranking:', error?.message || error);
@@ -2012,6 +2036,10 @@ async function refreshHostedSearchResults({
 
 function applyFilters() {
   syncMcpPreviewFilterState();
+  const activeWebSearchEpisode = webSearchEpisodes.getActiveEpisode();
+  const activeWebSearchEpisodeId = activeWebSearchEpisode && !activeWebSearchEpisode.finalized
+    ? activeWebSearchEpisode.id
+    : null;
 
   // Choose icon set based on active style
   const isSolid = state.iconStyle === 'solid';
@@ -2040,6 +2068,7 @@ function applyFilters() {
 
   const searchRequestId = ++hostedSearchRequestSeq;
   if (state.mcpPreview?.mode === 'explicit') {
+    webSearchEpisodes.supersedeActive();
     state.hostedSearchPending = false;
     state.tierDividerIndex = -1;
     state.filteredIcons = getMcpExplicitPreviewIcons();
@@ -2118,8 +2147,15 @@ function applyFilters() {
 
     state.tierDividerIndex = tier1.length;
     icons = [...tier1, ...tier2];
+    webSearchEpisodes.updateLocal({
+      episodeId: activeWebSearchEpisodeId,
+      localMatchCount: icons.length,
+      finalMatchCount: icons.length,
+    });
+    webSearchEpisodes.markHostedPending({ episodeId: activeWebSearchEpisodeId });
     void refreshHostedSearchResults({
       requestId: searchRequestId,
+      episodeId: activeWebSearchEpisodeId,
       query: state.searchQuery,
       locale: searchPlan.locale,
       baseIcons: searchPool,
@@ -2318,6 +2354,7 @@ function setActiveLibrary(libraryId) {
     activeJobCategoryFilter: state.activeJobCategoryFilter,
   });
   state.activeLibrary = libraryId;
+  startCurrentWebSearchEpisode();
 
   $$('.sidebar__item').forEach((item) => {
     item.classList.toggle('active', item.dataset.library === libraryId);
@@ -2332,6 +2369,7 @@ function setActiveLibrary(libraryId) {
 function setActiveJobCategoryFilter(jobCategoryId) {
   const nextFilter = jobCategoryId && jobCategoryMap.has(jobCategoryId) ? jobCategoryId : 'all';
   state.activeJobCategoryFilter = nextFilter;
+  startCurrentWebSearchEpisode();
   renderUseCaseFilters();
   updateGridHeading();
   applyFilters();
@@ -4002,6 +4040,7 @@ if (styleOutline) {
     state.customize.materialFill = 0;
     styleOutline.classList.add('active');
     if (styleSolid) styleSolid.classList.remove('active');
+    startCurrentWebSearchEpisode();
     applyFilters();
     if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
   });
@@ -4018,6 +4057,7 @@ if (styleSolid) {
       els.gridMeta.textContent = 'Loading solid variants...';
       await loadSolidIcons();
     }
+    startCurrentWebSearchEpisode();
     applyFilters();
     if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
   });
@@ -4237,14 +4277,14 @@ els.searchInput.addEventListener('input', (e) => {
     if (state.searchQuery.length > 1) {
       window.umami?.track('search', { query: state.searchQuery, results: state.filteredIcons.length });
     }
-  }, 150);
+  }, SEARCH_INPUT_DEBOUNCE_MS);
 });
 els.searchInput.addEventListener('keydown', (e) => {
   if (isDocsHeaderSearchMode()) return;
   if (e.key === 'Enter') {
     clearTimeout(searchDebounce);
     searchDebounce = null;
-    commitSearchStateFromInput();
+    commitSearchStateFromInput({ forceEpisode: true });
     flushPendingSearchAttempt({ useCurrentState: true });
     renderRecentSearches();
   }
@@ -4260,6 +4300,7 @@ els.searchInput.addEventListener('blur', () => {
   searchDebounce = null;
   if (shouldSyncSearchOnBlur(els.searchInput.value, state.searchQuery)) {
     syncSearchStateFromInput();
+    startCurrentWebSearchEpisode();
     queueDeferredSearchRefresh({ flushSearchAttempt: true });
   } else {
     flushPendingSearchAttempt({ useCurrentState: true });
