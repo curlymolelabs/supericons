@@ -29,7 +29,7 @@ assert.doesNotMatch(appSource, /si_admin_secret/);
 assert.doesNotMatch(appSource, /sessionStorage\.setItem\([^)]*accounts/);
 assert.doesNotMatch(appSource, /localStorage\.setItem\([^)]*accounts/);
 
-for (const exportKey of [
+for (const removedControl of [
   'gap-worklist-csv',
   'gap-worklist-json',
   'icon-requests-csv',
@@ -39,7 +39,7 @@ for (const exportKey of [
   'diagnostics-csv',
   'diagnostics-json',
 ]) {
-  assert.match(htmlSource, new RegExp(`data-export="${exportKey}"`));
+  assert.doesNotMatch(htmlSource, new RegExp(`data-export="${removedControl}"`));
 }
 assert.match(htmlSource, /role="dialog"/);
 assert.match(htmlSource, /aria-modal="true"/);

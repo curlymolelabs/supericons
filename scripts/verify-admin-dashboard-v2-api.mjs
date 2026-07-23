@@ -79,8 +79,14 @@ function includes(source, value, label) {
   'attempts: filteredWorklistRows.reduce',
   'history_attempts: filteredHistoryRows.reduce',
   'history_rows: filteredHistoryRows.length',
+  'table_rows: compactHistoryRows.length',
+  'activities: historyActivities',
   'buildDashboardV2HistoryState',
   'events_export_available',
+  "channel === 'web' ? 'search_attempt' : 'hosted_search_audit'",
+  "eventScope === 'audit'",
+  'web_top_level',
+  'diagnostics',
   "metric_scope: 'filtered_search_event_details'",
   'raw_identifiers_exposed: false',
   'filteredWorklistRows',
@@ -113,7 +119,10 @@ function includes(source, value, label) {
   'result_count_available',
   'country_available',
   'outcome_label',
-  'Mixed: ${zeroCount} of ${attempts} zero',
+  'Mixed: ${mixedParts.join',
+  'error_attempt_count',
+  'clarification_attempt_count',
+  'event_role',
 ].forEach((value) => includes(helpers, value, 'v2 helpers'));
 
 [

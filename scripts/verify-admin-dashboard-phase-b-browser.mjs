@@ -71,7 +71,7 @@ const queryRows = [
     result_count_available: false,
     result_count_reason: 'Not available for aggregate view',
     issue_type: 'mixed_result',
-    outcome_label: 'Mixed: 1 of 5 zero',
+    outcome_label: 'Mixed: 4 success, 1 zero',
     attempt_count: 5,
     activity_count: 5,
     activity_kind: 'search',
@@ -327,6 +327,7 @@ const eventRows = [
     client_family: 'codex',
     searcher_identifier: 'anonymous:0123456789ab',
     source: 'mcp_usage_events',
+    event_role: 'top_level',
   },
   {
     event_identifier: 'event-2',
@@ -348,12 +349,13 @@ const eventRows = [
     returned_icon_refs_recorded: true,
     latency_ms: 23,
     server_version: '0.4.20',
-    traffic_class: 'controlled_test',
-    channel: 'internal_test',
-    environment: 'test',
+    traffic_class: 'unclassified_live',
+    channel: 'hosted_mcp',
+    environment: 'production',
     client_family: 'codex',
     searcher_identifier: 'anonymous:fedcba987654',
     source: 'mcp_usage_events',
+    event_role: 'top_level',
   },
   ...Array.from({ length: 103 }, (_, index) => ({
     event_identifier: `event-${index + 3}`,
@@ -371,7 +373,43 @@ const eventRows = [
     channel: 'hosted_mcp',
     environment: 'production',
     searcher_identifier: `anonymous:event${index + 1}`,
+    source: 'mcp_usage_events',
+    event_role: 'top_level',
   })),
+  {
+    event_identifier: 'web-event-1',
+    recorded_at: '2026-07-17T07:19:00Z',
+    query: 'web search',
+    query_origin: 'agent_query',
+    tool_name: 'web_search',
+    event_type: 'search_attempt',
+    outcome: 'success',
+    status: 'ok',
+    result_count: 8,
+    traffic_class: 'unclassified_live',
+    channel: 'web',
+    environment: 'production',
+    searcher_identifier: 'anonymous:web1',
+    source: 'search_request_audit',
+    event_role: 'web_top_level',
+  },
+  {
+    event_identifier: 'diagnostic-1',
+    recorded_at: '2026-07-17T07:18:00Z',
+    query: 'recommendation subquery',
+    query_origin: 'recommend_variant',
+    tool_name: 'search_icons',
+    event_type: 'search_attempt',
+    outcome: 'zero',
+    status: 'ok',
+    result_count: 0,
+    traffic_class: 'unclassified_live',
+    channel: 'hosted_mcp',
+    environment: 'production',
+    searcher_identifier: 'anonymous:diag1',
+    source: 'search_request_audit',
+    event_role: 'diagnostic',
+  },
 ];
 const clientRows = Array.from({ length: 55 }, (_, index) => ({
   visitor_kind: 'anonymous',
@@ -488,6 +526,10 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     const pageCount = Math.ceil(queryRows.length / pageSize);
     const start = (page - 1) * pageSize;
     return {
+      summary: {
+        table_rows: queryRows.length,
+        activities: queryRows.reduce((sum, row) => sum + Number(row.activity_count || 0), 0),
+      },
       queries: queryRows.slice(start, start + pageSize),
       pagination: {
         page,
@@ -524,28 +566,38 @@ function responseFor(path, searchParams = new URLSearchParams()) {
     };
   }
   if (path === '/v2/search/events') {
+    const eventScope = searchParams.get('event_scope') || 'primary';
+    const scopedEventRows = eventScope === 'audit'
+      ? eventRows
+      : eventRows.filter((row) => row.event_role === 'top_level');
     const page = Number(searchParams.get('page') || 1);
     const pageSize = Number(searchParams.get('page_size') || 25);
-    const pageCount = Math.ceil(eventRows.length / pageSize);
+    const pageCount = Math.ceil(scopedEventRows.length / pageSize);
     const start = (page - 1) * pageSize;
-    const snapshotId = 'event-snapshot-fixed';
+    const snapshotId = `event-snapshot-${eventScope}`;
     if (page > 1 && searchParams.get('snapshot_id') !== snapshotId) {
       return { error: 'The event export snapshot was not preserved.' };
     }
     return {
-      events: eventRows.slice(start, start + pageSize),
+      events: scopedEventRows.slice(start, start + pageSize),
       events_complete: true,
       events_export_available: true,
       snapshot_id: snapshotId,
+      event_scope: eventScope,
+      event_counts: {
+        top_level: eventRows.filter((row) => row.event_role === 'top_level').length,
+        web_top_level: eventRows.filter((row) => row.event_role === 'web_top_level').length,
+        diagnostics: eventRows.filter((row) => row.event_role === 'diagnostic').length,
+      },
       pagination: {
         page,
         page_size: pageSize,
-        total: eventRows.length,
+        total: scopedEventRows.length,
         page_count: pageCount,
       },
       field_coverage: {
-        locale: { recorded: 0, total: eventRows.length, rate: 0 },
-        returned_icon_refs: { recorded: eventRows.length - 1, total: eventRows.length, rate: 0.9905 },
+        locale: { recorded: 0, total: scopedEventRows.length, rate: 0 },
+        returned_icon_refs: { recorded: scopedEventRows.length - 1, total: scopedEventRows.length, rate: 0.9905 },
       },
       definitions: {
         grain: 'One deduplicated event.',
@@ -780,16 +832,17 @@ try {
     `Query pagination is outside the initial viewport: ${JSON.stringify(compactLayout)}`,
   );
   await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
-  ok(await page.locator('[data-row-limit]').count() === 8, 'Every long list must have a row display control.');
+  ok(await page.locator('[data-row-limit]').count() === 5, 'Every visible long list must have a row display control.');
   ok(
-    await page.locator('[data-panel-toggle]').count() === await page.locator('.panel').count(),
-    'Every dashboard panel must have a collapse control.',
+    await page.locator('[data-panel-toggle]').count()
+      === await page.locator('.panel:not([data-panel-collapse="false"])').count(),
+    'Every collapsible dashboard panel must have a collapse control.',
   );
   const initialRowLimits = await page.locator('[data-row-limit]').evaluateAll(
     (selects) => selects.map((select) => select.value),
   );
   ok(initialRowLimits.every((value) => value === '25'), 'Long lists must show 25 rows by default.');
-  for (const key of ['topList', 'activity', 'queries', 'worklist', 'iconRequests', 'contact', 'registeredUsers', 'clients']) {
+  for (const key of ['topList', 'activity', 'queries', 'registeredUsers', 'clients']) {
     ok(
       await page.locator(`.panel[data-row-key="${key}"] [data-row-limit="${key}"]`).count() === 1,
       `The ${key} row control is attached to the wrong panel.`,
@@ -844,28 +897,49 @@ try {
   ok(scrollStyle.overflowY === 'auto', 'The query explorer does not scroll vertically.');
   ok(scrollStyle.scrollbarWidth === 'none', 'The query explorer shows a vertical scrollbar.');
   const queryPanel = page.locator('.panel[data-row-key="queries"]');
-  await queryPanel.locator('[data-panel-toggle]').click();
-  ok(!(await page.locator('#queryExplorer').isVisible()), 'Collapsing the query explorer did not hide its content.');
-  ok(await queryPanel.locator('[data-panel-toggle]').getAttribute('aria-expanded') === 'false', 'The collapsed panel state is not announced.');
-  await queryPanel.locator('[data-panel-toggle]').click();
-  ok(await page.locator('#queryExplorer').isVisible(), 'Expanding the query explorer did not restore its content.');
+  ok(await queryPanel.locator('[data-panel-toggle]').count() === 0, 'Search history still has an unrelated panel collapse control.');
   ok(await page.locator('[data-panel-toggle] svg').count() === await page.locator('[data-panel-toggle]').count(), 'Collapse controls must use icons.');
   const toggleLabels = await page.locator('[data-panel-toggle]').evaluateAll((buttons) => buttons.map((button) => button.textContent.trim()));
   ok(toggleLabels.every((label) => label === ''), 'Collapse controls still waste space on text labels.');
-  const gapPanel = page.locator('.panel[data-row-key="worklist"]');
-  const requestPanel = page.locator('.panel[data-row-key="iconRequests"]');
-  await gapPanel.locator('[data-panel-toggle]').click();
-  ok(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed')), 'The gap worklist did not collapse.');
-  ok(await requestPanel.evaluate((panel) => panel.classList.contains('is-collapsed')), 'The paired icon request panel did not collapse with the gap worklist.');
-  await requestPanel.locator('[data-panel-toggle]').click();
-  ok(!(await gapPanel.evaluate((panel) => panel.classList.contains('is-collapsed'))), 'The paired gap worklist did not expand with icon requests.');
+  ok(await page.locator('.panel[data-row-key="worklist"]').count() === 0, 'The removed gap worklist still takes up Search history space.');
+  ok(await page.locator('.panel[data-row-key="iconRequests"]').count() === 0, 'The removed icon request panel still takes up Search history space.');
+  ok(await page.locator('.panel[data-row-key="contact"]').count() === 0, 'The removed contact panel still takes up Search history space.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
   ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The searcher-level table is not labelled Search history.');
-  ok(await page.locator('#searchDataGuide').count() === 1, 'Search history does not include its data guide.');
-  const searchDataGuide = await page.locator('#searchDataGuide').textContent();
-  for (const expected of ['Summary rows', 'one recorded event', 'main counts', 'does not prove', 'Blank values', 'not called organic']) {
-    ok(searchDataGuide.includes(expected), `Search history data guide is missing: ${expected}`);
-  }
+  ok(await page.locator('#searchDataGuide').count() === 0, 'The old data guide still takes up table space.');
+  const historySubtitle = await page.locator('#searchHistorySubtitle').innerText();
+  ok(historySubtitle.includes(`${queryRows.length} grouped rows`), 'Search history does not show its exact grouped-row count.');
+  ok(historySubtitle.includes('activities'), 'Search history does not show its exact activity count.');
+  ok(historySubtitle.includes('test traffic excluded'), 'Search history does not state its default test-traffic scope.');
+  ok(!(await queryPanel.innerText()).includes('Filters: zero:true'), 'Search history still shows hardcoded filter claims.');
+  ok(await queryPanel.getByText('Advanced', { exact: true }).count() === 0, 'Search history still has a duplicate Advanced control.');
+  const tableBoxBeforeMenu = await page.locator('#queryExplorer').boundingBox();
+  await page.click('#searchDownloadToggle');
+  ok(await page.locator('#searchDownloadPopover').isVisible(), 'The download menu did not open.');
+  ok(await page.locator('#searchDownloadPopover [role="menuitem"]').count() === 3, 'The download menu does not have exactly three focused choices.');
+  const tableBoxWithMenu = await page.locator('#queryExplorer').boundingBox();
+  ok(
+    Math.abs(tableBoxBeforeMenu.x - tableBoxWithMenu.x) < 1
+      && Math.abs(tableBoxBeforeMenu.width - tableBoxWithMenu.width) < 1,
+    'Opening downloads moved or narrowed the main table.',
+  );
+  await page.click('#searchDownloadToggle');
+  ok(!(await page.locator('#searchDownloadPopover').isVisible()), 'The download menu did not close.');
+  const includeTestRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('include_test') === 'true'
+  ));
+  await page.check('#includeSearchTestTraffic');
+  await includeTestRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  ok((await page.locator('#searchHistorySubtitle').innerText()).includes('test traffic included'), 'Search history did not update its test-traffic scope.');
+  const excludeTestRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('include_test') === 'false'
+  ));
+  await page.uncheck('#includeSearchTestTraffic');
+  await excludeTestRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
   ok(queryHeaders.includes('Searcher'), 'Search history does not show its searcher column.');
   ok(queryHeaders.includes('Searches'), 'Search history does not show recorded activity.');
@@ -878,19 +952,14 @@ try {
   ok(await secondVaryingRow.count() === 1, 'The second searcher row is missing.');
   ok((await firstVaryingRow.innerText()).includes('3 searches'), 'Repeated activity for one searcher is not combined.');
   ok((await firstVaryingRow.innerText()).includes('2 to 8 icons'), 'Varying results for one searcher are not shown as a range.');
-  await secondVaryingRow.locator('[data-searcher-details]').click();
-  ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'false', 'Searcher details did not open.');
-  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Registered d4e5f6'), 'Searcher details omitted the masked searcher label.');
-  ok((await page.locator('#searcherDetailsContent').innerText()).includes('Account linked'), 'Searcher details omitted the account-link status.');
-  await page.click('#closeSearcherDetails');
-  ok(await page.locator('#searcherDetailsModal').getAttribute('aria-hidden') === 'true', 'Searcher details did not close.');
+  ok(await queryPanel.locator('[data-searcher-details]').count() === 0, 'Search history still has unnecessary row-detail controls.');
   ok(!(await firstVaryingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
   const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
   ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
   ok((await healthyRow.innerText()).includes('3 icons'), 'Exact current-day returned icons were hidden from the grouped query row.');
   ok((await healthyRow.innerText()).includes('US'), 'The exact current-day country was hidden from the grouped query row.');
   const mixedRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'mixed aggregate' });
-  ok((await mixedRow.innerText()).includes('Mixed: 1 of 5 zero'), 'A mixed aggregate query was mislabelled.');
+  ok((await mixedRow.innerText()).includes('Mixed: 4 success, 1 zero'), 'A mixed aggregate query was mislabelled.');
   const iconLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup', { exact: true }),
   });
@@ -922,21 +991,6 @@ try {
   await autoRefreshRequest;
   await page.uncheck('#autoRefresh');
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
-  ok((await page.locator('#iconRequests').innerText()).includes('migration icon'), 'The icon request inbox did not render.');
-  ok((await page.locator('#contactInbox').innerText()).includes('Licensing'), 'The contact inbox did not render.');
-  await page.selectOption('[data-query-review]', 'needs_alias');
-  await page.waitForFunction(() => window.__operatorWriteWait === undefined);
-  await page.waitForTimeout(50);
-  ok(writes.some((write) => write.path === '/intelligence/search/review' && write.body.status === 'needs_alias'), 'Gap WHY triage did not save through the existing review boundary.');
-  await page.selectOption('[data-icon-request-review]', 'planned');
-  await page.waitForTimeout(50);
-  ok(writes.some((write) => write.path === '/v2/icon-requests/review' && write.body.status === 'planned'), 'Icon request status did not save.');
-  for (const key of ['gap-worklist-csv', 'gap-worklist-json', 'icon-requests-csv', 'icon-requests-json', 'contact-csv', 'contact-json']) {
-    ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
-  }
-  const gapDownload = page.waitForEvent('download');
-  await page.click('[data-export="gap-worklist-csv"]');
-  ok((await gapDownload).suggestedFilename().endsWith('.csv'), 'The gap worklist CSV export failed.');
   const requestDownload = page.waitForEvent('download');
   await page.click('[data-export="icon-requests-json"]');
   ok((await requestDownload).suggestedFilename().endsWith('.json'), 'The icon request JSON export failed.');
@@ -957,49 +1011,46 @@ try {
   ok(queryExportText.includes('"identity_scope"'), 'The query CSV omits the identity scope.');
   ok(queryExportText.includes('"job_category"'), 'The query CSV omits the job category used by the row grouping.');
   ok(!queryExportText.includes('[object Object]'), 'The query CSV converts searcher details into object placeholder text.');
-  const queryJsonDownload = page.waitForEvent('download');
-  await page.click('[data-export="queries-json"]');
-  const queryJsonExport = await queryJsonDownload;
-  const queryJsonExportPath = await queryJsonExport.path();
-  const queryJsonRows = JSON.parse(await readFile(queryJsonExportPath, 'utf8'));
-  const registeredQueryJsonRow = queryJsonRows.find((row) => (
-    row.query === 'varying results'
-    && row.searchers?.[0]?.label === 'Registered d4e5f6'
-  ));
-  ok(Boolean(registeredQueryJsonRow), 'The query JSON loses the nested searcher details.');
-  ok(registeredQueryJsonRow.job_category === 'navigation', 'The query JSON omits the job category used by the row grouping.');
-  for (const key of ['query-events-csv', 'query-events-json']) {
+  for (const key of ['query-events-csv', 'query-audit-json']) {
     ok(await page.locator(`[data-export="${key}"]`).count() === 1, `${key} is missing.`);
   }
+  ok(await page.locator('[data-export="queries-json"], [data-export="query-events-json"]').count() === 0, 'Old duplicate JSON download controls are still visible.');
+  const primaryEventRows = eventRows.filter((row) => row.event_role === 'top_level');
+  await page.click('#searchDownloadToggle');
   const eventCsvDownload = page.waitForEvent('download');
   await page.click('[data-export="query-events-csv"]');
   const eventCsv = await eventCsvDownload;
   const eventCsvPath = await eventCsv.path();
   const eventCsvText = await readFile(eventCsvPath, 'utf8');
-  ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === eventRows.length + 1, 'The event CSV contains only the first page.');
+  ok(eventCsv.suggestedFilename() === 'supericons-search-events-1d.csv', 'The event CSV filename is unclear.');
+  ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === primaryEventRows.length + 1, 'The event CSV contains diagnostics or only the first page.');
   ok(eventCsvText.includes('"root_request_identifier"'), 'The event CSV omits root request linkage.');
   ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
   ok(eventCsvText.includes('"\'\t=HYPERLINK(""https://example.com"")"'), 'The event CSV leaves a whitespace-prefixed spreadsheet formula active.');
   ok(!eventCsvText.includes('"request_id"'), 'The event CSV exposes a raw request ID field.');
-  const eventJsonDownload = page.waitForEvent('download');
-  await page.click('[data-export="query-events-json"]');
-  const eventJson = await eventJsonDownload;
-  const eventJsonPath = await eventJson.path();
-  const eventJsonPayload = JSON.parse(await readFile(eventJsonPath, 'utf8'));
-  ok(eventJsonPayload.events.length === eventRows.length, 'The event JSON contains only the first page.');
-  ok(eventJsonPayload.events_complete === true, 'The event JSON omits its completeness state.');
-  ok(eventJsonPayload.snapshot_id === 'event-snapshot-fixed', 'The event JSON omits its stable snapshot identifier.');
-  ok(Boolean(eventJsonPayload.field_coverage.returned_icon_refs), 'The event JSON omits field coverage.');
-  ok(Boolean(eventJsonPayload.definitions.grain), 'The event JSON omits metric definitions.');
+  await page.click('#searchDownloadToggle');
+  const auditDownload = page.waitForEvent('download');
+  await page.click('[data-export="query-audit-json"]');
+  const auditJson = await auditDownload;
+  const auditJsonPath = await auditJson.path();
+  const auditPayload = JSON.parse(await readFile(auditJsonPath, 'utf8'));
+  ok(auditJson.suggestedFilename() === 'supericons-search-audit-1d.json', 'The audit JSON filename is unclear.');
+  ok(auditPayload.table_rows.length === queryRows.length, 'The audit JSON contains only the visible table page.');
+  ok(auditPayload.top_level_events.length === primaryEventRows.length, 'The audit JSON top-level event count is wrong.');
+  ok(auditPayload.web_search_events.length === 1, 'The audit JSON does not separate web search events.');
+  ok(auditPayload.diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
+  ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
+  ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
   const pagedEventRequests = requests.filter((request) => (
     request.path === '/v2/search/events'
     && Number(new URLSearchParams(request.search).get('page') || 1) > 1
   ));
   ok(pagedEventRequests.length > 0, 'The event export did not request a later page.');
   ok(pagedEventRequests.every((request) => (
-    new URLSearchParams(request.search).get('snapshot_id') === 'event-snapshot-fixed'
+    new URLSearchParams(request.search).get('snapshot_id')
+      === `event-snapshot-${new URLSearchParams(request.search).get('event_scope') || 'primary'}`
   )), 'The event export did not keep one stable API snapshot across pages.');
-  ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
+  ok(await page.locator('#diagnosticsDrawer').count() === 0, 'The old diagnostics drawer still takes up Search history space.');
 
   await page.click('#nav-audience');
   await page.waitForSelector('#section-audience:not([hidden])');

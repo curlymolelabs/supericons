@@ -60,6 +60,7 @@ const state = {
     includeTest: false,
     q: '',
   },
+  searchIncludeTest: false,
   explorerQuery: '',
   explorerIssue: '',
   topList: 'searched',
@@ -529,7 +530,7 @@ function baseFilterParams({ forSearch = false } = {}) {
     params.set('to', state.filters.to);
   }
   params.set('channel', state.filters.channel);
-  params.set('include_test', String(state.filters.includeTest));
+  params.set('include_test', String(forSearch ? state.searchIncludeTest : state.filters.includeTest));
   const query = forSearch
     ? [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim()
     : state.filters.q;
@@ -768,6 +769,7 @@ function outcomeFor(row = {}) {
   const outcome = String(row.issue_type || row.outcome || row.search_outcome || '').toLowerCase();
   const origin = String(row.query_origin || row.origin || '').toLowerCase();
   if (outcome.includes('error')) return { label: 'Error', tone: 'zero' };
+  if (outcome.includes('clarification')) return { label: 'Clarification', tone: 'info' };
   if (origin === 'icon_lookup') {
     if (outcome.includes('mixed')) {
       return {
@@ -820,13 +822,11 @@ function queryActivityCell(row = {}, rowIndex = -1) {
 function querySearcherCell(row = {}, rowIndex = -1) {
   const searcher = normalizeList(row.searchers)[0];
   if (!searcher) return '<span class="muted-cell">Unknown searcher</span>';
-  const detailsAvailable = row.searcher_details_available === true;
   const kind = safeText(searcher.kind, 'anonymous');
   return `
     <strong>${escapeHtml(safeText(searcher.label, 'Unknown searcher'))}</strong>
     <div class="activity-meta">
       ${escapeHtml(kind)}${searcher.account_linked ? ' | Account linked' : ''}
-      ${detailsAvailable ? `<button class="icon-button inline-icon-button" type="button" data-searcher-details="${rowIndex}" aria-label="Open Searcher details" title="Searcher details">${iconSvg('info')}</button>` : ''}
     </div>
   `;
 }
@@ -1013,57 +1013,33 @@ function queryReturnedExportValue(row = {}) {
 }
 
 function queryCsvExportRow(row = {}, searcher = null) {
-  const {
-    query,
-    searchers: ignoredSearchers,
-    library_filter: libraryFilter,
-    job_category: jobCategory,
-    query_origin: queryOrigin,
-    activity_count: activityCount,
-    activity_label: activityLabel,
-    outcome_label: outcomeLabel,
-    country_code: countryCode,
-    channel,
-    result_count: resultCount,
-    result_count_min: resultCountMin,
-    result_count_max: resultCountMax,
-    last_seen: lastSeen,
-    ...details
-  } = row;
-  const sourceSearcherCount = normalizeList(ignoredSearchers).length;
   const searcherKind = searcher ? safeText(searcher.kind, '') : '';
   const rawSearcherChannels = normalizeList(searcher?.channels);
   return {
-    query,
+    query: row.query,
     searcher_identifier: searcher ? safeText(searcher.label, '') : '',
-    searches: activityCount ?? row.attempt_count ?? '',
-    outcome: outcomeLabel || outcomeFor(row).label,
-    country: queryCountryExportValue(row),
-    venue: channelLabel(channel),
-    returned: queryReturnedExportValue(row),
-    last_seen: lastSeen,
     searcher_kind: searcherKind,
     searcher_account_linked: searcher ? Boolean(searcher.account_linked) : null,
     identity_scope: searcherIdentityScope(searcherKind),
-    searcher_searches: searcher?.searches ?? '',
-    searcher_venues: rawSearcherChannels.map(channelLabel).join('|'),
+    searches: row.activity_count ?? row.attempt_count ?? '',
+    outcome: row.outcome_label || outcomeFor(row).label,
+    country: queryCountryExportValue(row),
+    venue: channelLabel(row.channel),
+    returned: queryReturnedExportValue(row),
+    first_seen: row.first_seen,
+    last_seen: row.last_seen,
+    library_filter: row.library_filter,
+    job_category: row.job_category ?? '',
+    query_origin: row.query_origin,
+    channel: row.channel,
     searcher_channels: rawSearcherChannels.join('|'),
-    searcher_countries: normalizeList(searcher?.countries).join('|'),
-    searcher_first_seen: searcher?.first_seen ?? '',
-    searcher_last_seen: searcher?.last_seen ?? '',
-    searcher_count_in_source_row: sourceSearcherCount,
-    library_filter: libraryFilter,
-    job_category: jobCategory ?? '',
-    query_origin: queryOrigin,
-    activity_count: activityCount,
-    activity_label: activityLabel,
-    outcome_label: outcomeLabel,
-    country_code: countryCode,
-    channel,
-    result_count: resultCount,
-    result_count_min: resultCountMin,
-    result_count_max: resultCountMax,
-    ...details,
+    result_count: row.result_count,
+    result_count_min: row.result_count_min,
+    result_count_max: row.result_count_max,
+    zero_count: row.zero_attempt_count,
+    low_count: row.low_attempt_count,
+    error_count: row.error_attempt_count,
+    clarification_count: row.clarification_attempt_count,
   };
 }
 
@@ -1599,16 +1575,28 @@ function renderOverview() {
 
 function renderQueryExplorer() {
   const element = $('queryExplorer');
+  const subtitle = $('searchHistorySubtitle');
+  const includeTest = $('includeSearchTestTraffic');
+  if (includeTest) includeTest.checked = state.searchIncludeTest;
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
+    if (subtitle) subtitle.textContent = 'Loading grouped rows and activity totals';
     renderPagination('queries', 0, 1);
     element.innerHTML = loadingState('Loading query explorer');
     return;
   }
   if (state.data.search?.queries_available === false) {
+    if (subtitle) subtitle.textContent = state.data.search.queries_unavailable_reason || 'Complete query history is not available for this period.';
     renderPagination('queries', 0, 1);
     element.innerHTML = emptyState(state.data.search.queries_unavailable_reason || 'Complete query history is not available for this period.');
     return;
+  }
+  const summary = state.data.search?.summary || {};
+  if (subtitle) {
+    const groupedRows = number(summary.table_rows ?? summary.history_rows ?? state.data.search?.pagination?.total);
+    const activities = number(summary.activities ?? summary.history_attempts);
+    const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
+    subtitle.textContent = `${formatNumber(groupedRows)} grouped rows | ${formatNumber(activities)} activities | ${testScope}`;
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
@@ -1762,10 +1750,6 @@ function renderDiagnostics() {
 
 function renderSearch() {
   renderQueryExplorer();
-  renderWorklist();
-  renderIconRequests();
-  renderContactInbox();
-  renderDiagnostics();
 }
 
 function registeredUserDisplayRows(audienceUsers) {
@@ -2357,11 +2341,12 @@ async function fetchAllPages(endpoint, rowsPath) {
   return [firstRows, ...rest].flat();
 }
 
-async function fetchAllSearchEvents() {
+async function fetchAllSearchEvents(eventScope = 'primary') {
   const pageSize = 100;
   const params = sharedParams({ forSearch: true });
   params.set('page', '1');
   params.set('page_size', String(pageSize));
+  params.set('event_scope', eventScope);
   const first = await apiRequest(`/v2/search/events?${params}`);
   if (first.events_export_available === false) {
     throw new Error(first.events_export_unavailable_reason || 'Complete event export is not available for this period. Narrow the filters and try again.');
@@ -2397,6 +2382,8 @@ async function fetchAllSearchEvents() {
     events_complete: first.events_complete === true,
     events_export_available: first.events_export_available !== false,
     snapshot_id: snapshotId || null,
+    event_scope: first.event_scope || eventScope,
+    event_counts: first.event_counts || {},
     field_coverage: first.field_coverage || {},
     definitions: first.definitions || {},
     meta: first.meta || {},
@@ -2410,7 +2397,7 @@ async function exportData(key) {
   let completeRows = null;
   let eventExport = null;
   try {
-    if (key === 'queries-csv' || key === 'queries-json') {
+    if (key === 'queries-csv' || key === 'queries-json' || key === 'query-audit-json') {
       completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
     } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
       const queryRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
@@ -2422,23 +2409,50 @@ async function exportData(key) {
       completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
     } else if (key === 'activity') {
       completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
-    } else if (key === 'query-events-csv' || key === 'query-events-json') {
-      eventExport = await fetchAllSearchEvents();
+    } else if (key === 'query-events-csv') {
+      eventExport = await fetchAllSearchEvents('primary');
+    }
+    if (key === 'query-audit-json') {
+      eventExport = await fetchAllSearchEvents('audit');
     }
   } catch (error) {
     showToast(error.message || 'The complete export could not be loaded.', true);
     return;
   }
   if (eventExport) {
-    if (key === 'query-events-json') {
+    if (key === 'query-audit-json') {
+      const events = normalizeList(eventExport.events);
+      const audit = {
+        generated_at: new Date().toISOString(),
+        period: state.filters.window,
+        filters: {
+          channel: state.filters.channel,
+          include_test: state.searchIncludeTest,
+          query: [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim() || null,
+          outcome: state.explorerIssue || null,
+        },
+        summary: {
+          table_rows: normalizeList(completeRows).length,
+          top_level_events: events.filter((row) => row.event_role === 'top_level').length,
+          web_search_events: events.filter((row) => row.event_role === 'web_top_level').length,
+          diagnostic_records: events.filter((row) => row.event_role === 'diagnostic').length,
+        },
+        table_rows: normalizeList(completeRows),
+        top_level_events: events.filter((row) => row.event_role === 'top_level'),
+        web_search_events: events.filter((row) => row.event_role === 'web_top_level'),
+        diagnostics: events.filter((row) => row.event_role === 'diagnostic'),
+        field_coverage: eventExport.field_coverage,
+        definitions: eventExport.definitions,
+        source_meta: eventExport.meta,
+      };
       downloadFile(
-        `supericons-query-events-${state.filters.window}.json`,
-        JSON.stringify(eventExport, null, 2),
+        `supericons-search-audit-${state.filters.window}.json`,
+        JSON.stringify(audit, null, 2),
         'application/json;charset=utf-8',
       );
     } else {
       exportRows(
-        `supericons-query-events-${state.filters.window}`,
+        `supericons-search-events-${state.filters.window}`,
         eventExport.events.map(plainExportRow),
         'csv',
       );
@@ -2480,7 +2494,9 @@ async function exportData(key) {
       ? mappedRows
       : mappedRows.map(plainExportRow);
   exportRows(
-    `supericons-${key}-${state.filters.window}`,
+    key === 'queries-csv'
+      ? `supericons-search-history-table-${state.filters.window}`
+      : `supericons-${key}-${state.filters.window}`,
     rows,
     key.endsWith('json') ? 'json' : 'csv',
   );
@@ -2548,7 +2564,7 @@ function openWorklist(query) {
   state.pages.queries = 1;
   renderNavigation();
   if ($('explorerSearch')) $('explorerSearch').value = state.explorerQuery;
-  document.querySelector('.panel[data-row-key="worklist"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.panel[data-row-key="queries"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   scheduleEndpointRefresh('queries', 0);
 }
 
@@ -2593,15 +2609,17 @@ function initializePanelControls() {
       panel.appendChild(pagination);
     }
 
-    const toggle = document.createElement('button');
-    toggle.className = 'small-button icon-button panel-toggle';
-    toggle.type = 'button';
-    toggle.dataset.panelToggle = '';
-    toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', `Collapse ${title}`);
-    toggle.title = `Collapse ${title}`;
-    toggle.innerHTML = iconSvg('collapse');
-    actions.appendChild(toggle);
+    if (panel.dataset.panelCollapse !== 'false') {
+      const toggle = document.createElement('button');
+      toggle.className = 'small-button icon-button panel-toggle';
+      toggle.type = 'button';
+      toggle.dataset.panelToggle = '';
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', `Collapse ${title}`);
+      toggle.title = `Collapse ${title}`;
+      toggle.innerHTML = iconSvg('collapse');
+      actions.appendChild(toggle);
+    }
   });
   document.querySelectorAll('.scroll-region').forEach((region) => {
     region.tabIndex = 0;
@@ -2633,6 +2651,14 @@ function setPage(key, page) {
   }
 }
 
+function setSearchDownloadMenuOpen(open) {
+  const toggle = $('searchDownloadToggle');
+  const popover = $('searchDownloadPopover');
+  if (!toggle || !popover) return;
+  toggle.setAttribute('aria-expanded', String(open));
+  popover.hidden = !open;
+}
+
 function initializeEvents() {
   document.querySelectorAll('.nav-button').forEach((button) => {
     button.addEventListener('click', () => setSection(button.dataset.section));
@@ -2646,8 +2672,15 @@ function initializeEvents() {
   });
   document.querySelectorAll('[data-export]').forEach((button) => {
     button.addEventListener('click', () => {
+      setSearchDownloadMenuOpen(false);
       exportData(button.dataset.export);
     });
+  });
+  $('searchDownloadToggle')?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const open = event.currentTarget.getAttribute('aria-expanded') !== 'true';
+    setSearchDownloadMenuOpen(open);
+    if (open) $('searchDownloadPopover')?.querySelector('[role="menuitem"]')?.focus();
   });
   document.querySelectorAll('[data-row-limit]').forEach((select) => {
     select.addEventListener('change', () => {
@@ -2671,6 +2704,7 @@ function initializeEvents() {
     });
   });
   document.addEventListener('click', (event) => {
+    if (!event.target.closest('#searchDownloadMenu')) setSearchDownloadMenuOpen(false);
     const searcherDetailsButton = event.target.closest('[data-searcher-details]');
     if (searcherDetailsButton) {
       openSearcherDetails(searcherDetailsButton.dataset.searcherDetails, searcherDetailsButton);
@@ -2744,10 +2778,10 @@ function initializeEvents() {
     resetPages();
     scheduleRefresh(0);
   });
-  $('includeTestTraffic')?.addEventListener('change', (event) => {
-    state.filters.includeTest = event.target.checked;
-    resetPages();
-    scheduleRefresh(0);
+  $('includeSearchTestTraffic')?.addEventListener('change', (event) => {
+    state.searchIncludeTest = event.target.checked;
+    state.pages.queries = 1;
+    scheduleEndpointRefresh('queries', 0);
   });
   $('globalSearch')?.addEventListener('input', (event) => {
     state.filters.q = String(event.target.value || '').trim();
@@ -2794,6 +2828,9 @@ function initializeEvents() {
   });
   $('searcherDetailsModal')?.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeSearcherDetails();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setSearchDownloadMenuOpen(false);
   });
 }
 

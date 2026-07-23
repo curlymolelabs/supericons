@@ -70,6 +70,7 @@ assert.equal(rows[0].locale, null);
 assert.equal(rows[0].locale_recorded, false);
 assert.equal(rows[0].traffic_class, 'unclassified_live');
 assert.equal(rows[0].source, 'mcp_usage_events');
+assert.equal(rows[0].event_role, 'top_level');
 assert.equal(rows[1].outcome, 'success');
 assert.deepEqual(rows[1].returned_icon_refs, ['lucide:database', 'tabler:database']);
 assert.equal(rows[1].returned_icon_refs_recorded, true);
@@ -94,6 +95,8 @@ for (const required of [
   'raw_identifiers_exposed: false',
   'privacySafeRootRequestPrefix',
   'primary_metric_source',
+  "eventScope === 'audit'",
+  "event_role === 'top_level'",
   'constantTimeTextEqual',
   "metric_scope: 'filtered_search_event_details'",
 ]) {
