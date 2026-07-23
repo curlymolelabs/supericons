@@ -8,6 +8,19 @@ Product area: Search v2, MCP agent experience
 
 Decision authority: `D-035`
 
+## Telemetry identity clarification
+
+This future recovery feature must follow `D-038` before Phase 1 begins:
+
+1. `recovery_chain_id` connects a later recovery journey across more than one real product action.
+2. Every tool call receives its own `episode_id` and remains a separate final outcome.
+3. Every internal original, translated, fallback, grouped, or retry search receives its own `attempt_id`.
+4. The initial miss and a later caller retry must not be collapsed into one ordinary search count.
+5. Recovery metrics may evaluate progress across the recovery chain without changing headline search totals or zero-rate denominators.
+6. Recovery identifiers remain protected diagnostic data and do not enter public reports.
+
+This note changes telemetry identity only. It does not implement recovery behavior, add retries, or change Search v2 results.
+
 ## 1. Problem statement
 
 Search v2 deliberately returns an honest empty result when a query is unsupported or too ambiguous. It does not return unrelated filler merely to avoid an empty response. [SOURCE: `docs/si-v2/search/decisions.md`, `D-034`]
