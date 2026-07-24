@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "artifact": "admin_search_gateway_reconciliation",
+  "phase": "before",
+  "run_id": "admin-gateway-20260724134810-4e3f0c1d",
+  "status": "failed",
+  "generated_at": "2026-07-24T13:49:12.347Z",
+  "started_at": "2026-07-24T13:48:08.899Z",
+  "data_cutoff": null,
+  "reconciliation_cutoff": null,
+  "grace_period_seconds": 120,
+  "source_versions": {
+    "local_mcp_package": "0.4.22",
+    "hosted_mcp_endpoint": "https://mcp.supericons.dev/mcp",
+    "website": "https://supericons.dev"
+  },
+  "safe_run_identities": {},
+  "probes": [],
+  "link_rates": {},
+  "source_reconciliation": {},
+  "filter_metadata": {
+    "live_admin_endpoint_available": false,
+    "note": "Production table access is used. The current local ADMIN_SECRET is not accepted by the live admin function."
+  },
+  "stable_search_fingerprint_comparison": null,
+  "overall_gate_verdict": "gate_execution_failed",
+  "failure": {
+    "name": "TimeoutError",
+    "message": "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#searchInput') to be visible\u001b[22m\n\u001b[2m    120 × locator resolved to hidden <input type=\"text\" id=\"searchInput\" autocomplete=\"off\" spellcheck=\"false\" aria-label=\"Search icons\" class=\"header__search-input\" placeholder=\"Search 20,000+ icons...\" data-i18n-aria-label=\"app.searchAriaLabel\" data-i18n-placeholder=\"app.searchPlaceholder\"/>\u001b[22m\n"
+  }
+}
