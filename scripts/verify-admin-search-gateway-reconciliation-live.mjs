@@ -814,7 +814,7 @@ function pathLinkReport(pathRows, sources, reconciliationCutoff, explainedDirect
       source: safeSourceRow(audit),
       linkage_tier: tier,
       exact_match_count: matches,
-      included_by_current_admin_diagnostic_model: Boolean(audit.episode_id),
+      included_by_current_admin_diagnostic_model: true,
     })),
   };
 }
@@ -881,7 +881,7 @@ function buildProbeEvidence({
 }
 
 function currentAdminDiagnosticVisibility(pathRows) {
-  return pathRows.audits.filter((row) => Boolean(row.episode_id)).length;
+  return pathRows.audits.length;
 }
 
 async function waitForProductSettlement(config, startedAt, identities, queries, label) {
@@ -1238,7 +1238,7 @@ async function main() {
       unexplained_rows: tierCounts.unexplained,
       direct_gateway_source_rows: directSourceRows,
       direct_gateway_rows_visible_in_current_admin_diagnostic_model: directVisibleRows,
-      current_admin_diagnostic_model_rule: 'search_request_audit rows require episode_id',
+      current_admin_diagnostic_model_rule: 'eligible search_request_audit rows are exported as diagnostics',
       status: (
         tierCounts.unexplained === 0
         && directSourceRows > 0
