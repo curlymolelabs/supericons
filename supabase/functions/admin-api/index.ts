@@ -775,7 +775,7 @@ function mapAuditRowToEvidenceRow(row: Record<string, unknown>) {
     analytics_channel: channel,
     environment,
     channel,
-    signal_type: channel === 'web' ? 'search_attempt' : 'hosted_search_audit',
+    signal_type: 'hosted_search_audit',
     search_query: normalizeSearchQuery(row.query_norm),
     icon_id: null,
     batch_id: null,
@@ -1908,6 +1908,8 @@ export function buildDashboardV2SourceReconciliation({
   const usageByAuditBacklink = new Map<string, SearchEvidenceRow[]>();
   const rowsByEpisode = new Map<string, SearchEvidenceRow[]>();
   const rowsByRecoveryChain = new Map<string, SearchEvidenceRow[]>();
+  const webDiagnosticsByEpisode = new Map<string, SearchEvidenceRow[]>();
+  const webDiagnosticsByRecoveryChain = new Map<string, SearchEvidenceRow[]>();
   const usageByRequest = new Map<string, SearchEvidenceRow[]>();
   const usageByDedupe = new Map<string, SearchEvidenceRow[]>();
   const finalSourceEventIds = new Set<string>();
@@ -1932,6 +1934,14 @@ export function buildDashboardV2SourceReconciliation({
       if (usageId) legacyUsageExportIds.add(usageId);
     }
   }
+  for (const row of webDiagnosticRows) {
+    addDashboardV2IdentityIndex(webDiagnosticsByEpisode, row.episode_id, row);
+    addDashboardV2IdentityIndex(
+      webDiagnosticsByRecoveryChain,
+      row.recovery_chain_id,
+      row,
+    );
+  }
   function emptyDiagnosticLinkageCounts(): Record<string, number> {
     return {
       audit_backlink: 0,
@@ -1940,6 +1950,7 @@ export function buildDashboardV2SourceReconciliation({
       exact_request_or_dedupe: 0,
       pending_linkage: 0,
       explained_unlinked_diagnostic: 0,
+      explained_nonfinal_diagnostic: 0,
       unexplained: 0,
     };
   }
@@ -1947,7 +1958,11 @@ export function buildDashboardV2SourceReconciliation({
   function classifyDiagnosticRow(
     row: SearchEvidenceRow,
     linkageCounts: Record<string, number>,
-    allowDirectGatewayExclusion: boolean,
+    {
+      allowDirectGatewayExclusion = false,
+      allowWebDiagnosticLink = false,
+      allowNonfinalWebExclusion = false,
+    } = {},
   ): SearchEvidenceRow {
     const auditId = dashboardV2Identity(row.source_row_id);
     const episodeId = dashboardV2Identity(row.episode_id);
@@ -1963,11 +1978,21 @@ export function buildDashboardV2SourceReconciliation({
       },
       {
         tier: 'episode_id',
-        rows: rowsByEpisode.get(episodeId) || [],
+        rows: [
+          ...(rowsByEpisode.get(episodeId) || []),
+          ...(allowWebDiagnosticLink
+            ? webDiagnosticsByEpisode.get(episodeId) || []
+            : []),
+        ],
       },
       {
         tier: 'recovery_chain_id',
-        rows: rowsByRecoveryChain.get(recoveryChainId) || [],
+        rows: [
+          ...(rowsByRecoveryChain.get(recoveryChainId) || []),
+          ...(allowWebDiagnosticLink
+            ? webDiagnosticsByRecoveryChain.get(recoveryChainId) || []
+            : []),
+        ],
       },
       {
         tier: 'exact_request_or_dedupe',
@@ -2002,6 +2027,16 @@ export function buildDashboardV2SourceReconciliation({
         diagnosticAccountingStatus = 'explained_unlinked_gateway_diagnostic';
         diagnosticLinkageTier = 'explained_unlinked_diagnostic';
         diagnosticExplanation = 'Direct gateway work has no product episode and remains diagnostic only.';
+      } else if (
+        allowNonfinalWebExclusion
+        && row.source_table === 'search_episode_diagnostics'
+        && ['superseded', 'incomplete'].includes(String(
+          row.query_origin || row.audit_status || '',
+        ).toLowerCase())
+      ) {
+        diagnosticAccountingStatus = 'explained_nonfinal_web_diagnostic';
+        diagnosticLinkageTier = 'explained_nonfinal_diagnostic';
+        diagnosticExplanation = 'The Web episode ended without a countable final outcome.';
       }
     }
     linkageCounts[diagnosticLinkageTier] += 1;
@@ -2017,10 +2052,15 @@ export function buildDashboardV2SourceReconciliation({
   const auditLinkageCounts = emptyDiagnosticLinkageCounts();
   const webDiagnosticLinkageCounts = emptyDiagnosticLinkageCounts();
   const annotatedAuditRows = auditRows.map((row) => (
-    classifyDiagnosticRow(row, auditLinkageCounts, true)
+    classifyDiagnosticRow(row, auditLinkageCounts, {
+      allowDirectGatewayExclusion: true,
+      allowWebDiagnosticLink: true,
+    })
   ));
   const annotatedWebDiagnosticRows = webDiagnosticRows.map((row) => (
-    classifyDiagnosticRow(row, webDiagnosticLinkageCounts, false)
+    classifyDiagnosticRow(row, webDiagnosticLinkageCounts, {
+      allowNonfinalWebExclusion: true,
+    })
   ));
   const diagnosticRows = [...annotatedAuditRows, ...annotatedWebDiagnosticRows];
 
@@ -2089,7 +2129,11 @@ export function buildDashboardV2SourceReconciliation({
         auditLinkageCounts.pending_linkage
         + webDiagnosticLinkageCounts.pending_linkage
         + usageCounts.pending_linkage,
-      explained_exclusions: auditLinkageCounts.explained_unlinked_diagnostic,
+      explained_exclusions:
+        auditLinkageCounts.explained_unlinked_diagnostic
+        + auditLinkageCounts.explained_nonfinal_diagnostic
+        + webDiagnosticLinkageCounts.explained_unlinked_diagnostic
+        + webDiagnosticLinkageCounts.explained_nonfinal_diagnostic,
       unexplained_rows:
         auditLinkageCounts.unexplained
         + webDiagnosticLinkageCounts.unexplained

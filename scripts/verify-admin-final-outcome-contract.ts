@@ -331,4 +331,118 @@ Deno.test('fails source reconciliation when an old Web diagnostic has no final o
   });
   assert(reconciliation.status === 'needs_attention', 'An orphaned Web diagnostic passed reconciliation.');
   assert(reconciliation.counts.unexplained_rows === 1, 'The orphaned Web diagnostic was not counted.');
+  assert(
+    reconciliation.web_diagnostic_linkage_counts.episode_id === 0,
+    'A Web diagnostic incorrectly linked to itself.',
+  );
+});
+
+Deno.test('does not let a generic Web diagnostic excuse a missing final outcome', () => {
+  const episodeId = '00000000-0000-4000-8000-000000000051';
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: [{
+      id: 'search_request_audit:51',
+      source_row_id: '51',
+      source_table: 'search_request_audit',
+      signal_type: 'hosted_search_audit',
+      episode_id: episodeId,
+      recovery_chain_id: episodeId,
+      channel: 'web',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }] as never[],
+    usageRows: [],
+    finalRows: [],
+    webDiagnosticRows: [{
+      id: 'search_episode_diagnostics:51',
+      source_row_id: '51',
+      source_table: 'search_episode_diagnostics',
+      signal_type: 'hosted_search_audit',
+      episode_id: episodeId,
+      recovery_chain_id: episodeId,
+      query_origin: 'diagnostic',
+      channel: 'web',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }] as never[],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(
+    reconciliation.status === 'needs_attention',
+    'A generic Web diagnostic incorrectly excused a missing final outcome.',
+  );
+  assert(
+    reconciliation.audit_linkage_counts.episode_id === 1,
+    'The raw Web attempt was not linked by its exact episode identity.',
+  );
+  assert(
+    reconciliation.web_diagnostic_linkage_counts.unexplained === 1,
+    'The generic Web diagnostic was not kept unexplained.',
+  );
+  assert(reconciliation.counts.product_rows_exported === 0, 'A generic diagnostic became a product row.');
+});
+
+Deno.test('accounts for superseded and incomplete Web episodes as diagnostics only', () => {
+  const supersededEpisode = '00000000-0000-4000-8000-000000000060';
+  const incompleteEpisode = '00000000-0000-4000-8000-000000000061';
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: [{
+      id: 'search_request_audit:60',
+      source_row_id: '60',
+      source_table: 'search_request_audit',
+      signal_type: 'hosted_search_audit',
+      episode_id: supersededEpisode,
+      recovery_chain_id: supersededEpisode,
+      channel: 'web',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }, {
+      id: 'search_request_audit:61',
+      source_row_id: '61',
+      source_table: 'search_request_audit',
+      signal_type: 'hosted_search_audit',
+      episode_id: incompleteEpisode,
+      recovery_chain_id: incompleteEpisode,
+      channel: 'web',
+      created_at: '2026-07-24T11:55:01.000Z',
+    }] as never[],
+    usageRows: [],
+    finalRows: [],
+    webDiagnosticRows: [{
+      id: 'search_episode_diagnostics:60',
+      source_row_id: '60',
+      source_table: 'search_episode_diagnostics',
+      signal_type: 'hosted_search_audit',
+      episode_id: supersededEpisode,
+      recovery_chain_id: supersededEpisode,
+      query_origin: 'superseded',
+      channel: 'web',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }, {
+      id: 'search_episode_diagnostics:61',
+      source_row_id: '61',
+      source_table: 'search_episode_diagnostics',
+      signal_type: 'hosted_search_audit',
+      episode_id: incompleteEpisode,
+      recovery_chain_id: incompleteEpisode,
+      audit_status: 'incomplete',
+      channel: 'web',
+      created_at: '2026-07-24T11:55:01.000Z',
+    }] as never[],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(reconciliation.status === 'passed', 'Expected non-final Web diagnostics did not reconcile.');
+  assert(
+    reconciliation.audit_linkage_counts.episode_id === 2,
+    'Web attempts were not linked to their exact episode diagnostics.',
+  );
+  assert(
+    reconciliation.web_diagnostic_linkage_counts.explained_nonfinal_diagnostic === 2,
+    'Non-final Web diagnostics were not explicitly explained.',
+  );
+  assert(reconciliation.counts.unexplained_rows === 0, 'Expected Web diagnostics became unexplained.');
+  assert(reconciliation.counts.product_rows_exported === 0, 'A Web diagnostic became a product row.');
+  assert(
+    compactDashboardV2EventRows(reconciliation.diagnostic_rows).every((
+      row: Record<string, unknown>,
+    ) => row.event_role === 'diagnostic'),
+    'A non-final Web event entered the product event roles.',
+  );
 });

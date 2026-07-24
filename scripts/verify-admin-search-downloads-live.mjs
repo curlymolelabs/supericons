@@ -170,7 +170,21 @@ function assertDownloadContract(downloads, includeTest) {
   );
   assert.equal(audit.search_summary?.length, downloads.summary.parsed.rows.length);
   assert.equal(audit.request_log?.length, downloads.request_log.parsed.rows.length);
-  assert.equal(audit.integrity_checks?.status, 'passed');
+  const failedIntegrityChecks = Object.entries(audit.integrity_checks?.checks || {})
+    .filter(([, passed]) => passed !== true)
+    .map(([name]) => name);
+  assert.equal(
+    audit.integrity_checks?.status,
+    'passed',
+    `Audit integrity needs attention: ${JSON.stringify({
+      structural_status: audit.integrity_checks?.structural_status || null,
+      semantic_status: audit.integrity_checks?.semantic_status || null,
+      failed_checks: failedIntegrityChecks,
+      counts: audit.integrity_checks?.counts || {},
+      warnings: audit.integrity_checks?.warnings || {},
+      source_reconciliation_status: audit.source_reconciliation?.status || null,
+    })}`,
+  );
   assert.equal(audit.integrity_checks?.structural_status, 'passed');
   assert.equal(audit.integrity_checks?.semantic_status, 'passed');
   assert.equal(audit.integrity_checks?.checks?.source_reconciliation_passes, true);
@@ -225,8 +239,20 @@ function publicDownloadEvidence(downloads, audit) {
       pending_rows: Number(audit.source_reconciliation.counts.pending_rows || 0),
       unexplained_rows: Number(audit.source_reconciliation.counts.unexplained_rows || 0),
       explained_exclusions: Number(audit.source_reconciliation.counts.explained_exclusions || 0),
+      audit_linkage_counts: audit.source_reconciliation.audit_linkage_counts,
+      web_diagnostic_linkage_counts:
+        audit.source_reconciliation.web_diagnostic_linkage_counts,
+      usage_accounting_counts: audit.source_reconciliation.usage_accounting_counts,
     },
-    integrity_status: audit.integrity_checks.status,
+    integrity: {
+      status: audit.integrity_checks.status,
+      structural_status: audit.integrity_checks.structural_status,
+      semantic_status: audit.integrity_checks.semantic_status,
+      summary_requests: Number(audit.integrity_checks.counts.summary_requests || 0),
+      groupable_primary_events: Number(
+        audit.integrity_checks.counts.groupable_primary_events || 0,
+      ),
+    },
   };
 }
 
@@ -258,7 +284,7 @@ const evidence = {
   artifact: 'admin_search_downloads_live_verification',
   status: 'running',
   generated_at_utc: null,
-  deployed_admin_api_version: 99,
+  deployed_admin_api_version: 101,
   gate_evidence_sha256: sha256(await readFile(gatePath)),
   checks: {},
   default_scope: null,
