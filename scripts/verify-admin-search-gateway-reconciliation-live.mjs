@@ -70,6 +70,22 @@ function safeIdentity(value) {
   return normalized ? sha256(normalized).slice(0, 16) : null;
 }
 
+function sanitizeDiagnosticText(value) {
+  return text(value)
+    .replace(/\u001b\[[0-9;]*m/g, '')
+    .replace(/https?:\/\/[^\s)]+/gi, (rawUrl) => {
+      try {
+        const parsed = new URL(rawUrl);
+        return `${parsed.origin}${parsed.pathname}`;
+      } catch {
+        return '[url]';
+      }
+    })
+    .replace(/[A-Za-z]:\\(?:[^\\\s]+\\)*[^\\\s]*/g, '[local path]')
+    .replace(/\b[A-Za-z0-9_-]{80,}\b/g, '[long value]')
+    .slice(0, 400);
+}
+
 function safeSourceRow(row, timeField = 'created_at') {
   return {
     source_id: safeIdentity(row.id || row.episode_id || row.diagnostic_id),
@@ -281,10 +297,28 @@ async function readSources(config, startedAt, endedAt) {
 }
 
 async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: true, channel: 'chrome' });
   const context = await browser.newContext({
-    extraHTTPHeaders: controlledHeaders,
     viewport: { width: 1440, height: 1000 },
+  });
+  await context.route('**/*', async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    const isHostedSearch = request.method() === 'POST'
+      && url.origin === 'https://mcp.supericons.dev'
+      && url.pathname === '/search-icons';
+    const isWebTelemetry = request.method() === 'POST'
+      && url.pathname.endsWith('/functions/v1/web-search-telemetry');
+    if (isHostedSearch || isWebTelemetry) {
+      await route.continue({
+        headers: {
+          ...request.headers(),
+          ...controlledHeaders,
+        },
+      });
+      return;
+    }
+    await route.continue();
   });
   const page = await context.newPage();
   const observed = {
@@ -293,17 +327,25 @@ async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
     console_errors: [],
   };
   page.on('console', (message) => {
-    if (message.type() === 'error') observed.console_errors.push(message.text());
+    if (message.type() === 'error') {
+      observed.console_errors.push(sanitizeDiagnosticText(message.text()));
+    }
   });
   page.on('request', (request) => {
     const url = request.url();
-    if (url === 'https://mcp.supericons.dev/search-icons') {
+    if (
+      request.method() === 'POST'
+      && url === 'https://mcp.supericons.dev/search-icons'
+    ) {
       observed.search_requests.push({
         url,
         body: request.postDataJSON(),
       });
     }
-    if (url.includes('/functions/v1/web-search-telemetry')) {
+    if (
+      request.method() === 'POST'
+      && url.includes('/functions/v1/web-search-telemetry')
+    ) {
       observed.telemetry_requests.push({
         url,
         body: request.postDataJSON(),
@@ -313,11 +355,16 @@ async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
 
   try {
     await page.goto(websiteUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+    await page.locator('#app').waitFor({ state: 'visible', timeout: 60_000 });
     const search = page.locator('#searchInput');
     if (!await search.isVisible()) {
-      const searchToggle = page.locator('#searchToggle');
-      assert.equal(await searchToggle.count(), 1, 'Website search toggle is missing.');
-      await searchToggle.click();
+      const startSearching = page.locator('#heroSearchBtn');
+      assert.equal(
+        await startSearching.isVisible(),
+        true,
+        'Website Start searching action is not visible.',
+      );
+      await startSearching.click();
     }
     await search.waitFor({ state: 'visible', timeout: 60_000 });
     const hostedResponsePromise = page.waitForResponse(
@@ -678,20 +725,32 @@ function buildProbeEvidence({
   const usage = pathRows.usage;
   const controlledFinals = finals.filter((row) => controlledTraffic(row, controlledLabel));
   const controlledAudits = audits.filter((row) => controlledTraffic(row, controlledLabel));
-  let passed;
+  const checks = {
+    exactly_one_final: expectedFinalChannel ? finals.length === 1 : finals.length === 0,
+    expected_final_channel: expectedFinalChannel
+      ? finals[0]?.channel === expectedFinalChannel
+      : true,
+    controlled_final: expectedFinalChannel
+      ? controlledFinals.length === 1
+      : true,
+    expected_usage_count: expectedFinalChannel === 'hosted_mcp'
+      || expectedFinalChannel === 'local_mcp'
+      ? usage.length === 1
+      : usage.length === 0,
+    required_diagnostics_present: expectedFinalChannel === 'web'
+      || expectedFinalChannel === 'hosted_mcp'
+      ? audits.length >= 1
+      : true,
+  };
   if (expectedFinalChannel) {
-    passed = finals.length === 1
-      && finals[0].channel === expectedFinalChannel
-      && controlledFinals.length === 1
-      && audits.length >= 1;
-    if (expectedFinalChannel !== 'web') passed = passed && usage.length === 1;
+    checks.marker_classification = true;
   } else {
-    passed = finals.length === 0
-      && usage.length === 0
-      && audits.length >= 1;
-    if (marker === 'absent') passed = passed && controlledAudits.length === 0;
-    else passed = passed && controlledAudits.length >= 1;
+    checks.required_diagnostics_present = audits.length >= 1;
+    checks.marker_classification = marker === 'absent'
+      ? controlledAudits.length === 0
+      : controlledAudits.length >= 1;
   }
+  const passed = Object.values(checks).every(Boolean);
   return {
     id,
     entry_path: entryPath,
@@ -704,6 +763,7 @@ function buildProbeEvidence({
       audit_rows: audits.map((row) => safeSourceRow(row)),
     },
     final_or_diagnostic_role: expectedFinalChannel ? 'product_final' : 'gateway_diagnostic',
+    checks,
     fingerprint,
     ...extra,
     status: passed ? 'passed' : 'failed',
@@ -757,7 +817,7 @@ async function main() {
   assert.ok(supabaseUrl.startsWith('https://'), 'SUPABASE_URL is unavailable.');
   assert.ok(serviceRoleKey.length >= 32, 'SUPABASE_SERVICE_ROLE_KEY is unavailable.');
 
-  const websiteUrl = readArg('website-url', 'https://supericons.dev');
+  const websiteUrl = readArg('website-url', 'https://supericons.dev/?view=icons');
   const mcpUrl = readArg('mcp-url', 'https://mcp.supericons.dev/mcp');
   const gatewayUrl = readArg('gateway-url', 'https://mcp.supericons.dev/search-icons');
   const packageVersion = readArg('package-version', '0.4.22');
@@ -918,6 +978,7 @@ async function main() {
             telemetry_http_status: website.telemetry_http_status,
             telemetry_write_count: website.telemetry_bodies.length,
             console_error_count: website.console_errors.length,
+            console_error_samples: website.console_errors.slice(0, 5),
           },
         },
       }),
@@ -1073,8 +1134,8 @@ async function main() {
     evidence.generated_at = new Date().toISOString();
     evidence.overall_gate_verdict = 'gate_execution_failed';
     evidence.failure = {
-      name: error?.name || 'Error',
-      message: error?.message || String(error),
+      name: sanitizeDiagnosticText(error?.name || 'Error'),
+      message: sanitizeDiagnosticText(error?.message || String(error)),
     };
   }
 

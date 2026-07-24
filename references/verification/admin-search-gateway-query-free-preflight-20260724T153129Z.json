@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-07-24T15:31:29Z",
+  "purpose": "Confirm that the production icon view reaches a visible search input without sending a search or telemetry request.",
+  "status": "passed",
+  "route_after_readiness": "https://supericons.dev/",
+  "application_visible": true,
+  "search_input_visible": true,
+  "search_input_value": "",
+  "used_visible_start_searching_action": true,
+  "hidden_desktop_toggle_clicked": false,
+  "watched_post_count": 0,
+  "watched_posts": []
+}
