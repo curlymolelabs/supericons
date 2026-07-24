@@ -121,6 +121,8 @@ function excludes(source, value, label) {
   'Visitor details not captured',
   'No data available',
   'primary pick',
+  'state.data.search?.coverage?.warnings',
+  '${coverageNotice}',
 ].forEach((value) => excludes(app, value, 'public/admin-app.js'));
 
 [
