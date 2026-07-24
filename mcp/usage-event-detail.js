@@ -10,17 +10,23 @@ export function extractReturnedIconRefs(result, toolName, limit = 100) {
     const ref = safeText(value);
     if (ref && !refs.includes(ref) && refs.length < limit) refs.push(ref);
   };
+  const addCandidate = (candidate) => {
+    add(candidate?.icon_ref);
+    const library = safeText(candidate?.library || candidate?.lib, 80);
+    const id = safeText(candidate?.id, 180);
+    if (library && id) add(`${library}:${id}`);
+  };
 
-  add(payload.icon?.icon_ref);
+  addCandidate(payload.icon);
   if (Array.isArray(payload.results)) {
     for (const item of payload.results) {
       if (toolName === 'recommend_icons') {
-        add(item?.recommended?.icon_ref);
+        addCandidate(item?.recommended);
         for (const alternative of Array.isArray(item?.alternatives) ? item.alternatives : []) {
-          add(alternative?.icon_ref);
+          addCandidate(alternative);
         }
       } else {
-        add(item?.icon_ref);
+        addCandidate(item);
       }
     }
   }

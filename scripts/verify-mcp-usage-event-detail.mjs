@@ -26,10 +26,10 @@ assert.deepEqual(extractReturnedIconRefs({
 assert.deepEqual(extractReturnedIconRefs({
   structuredContent: {
     results: [{
-      recommended: { icon_ref: 'lucide:database' },
+      recommended: { library: 'lucide', id: 'database' },
       alternatives: [
-        { icon_ref: 'tabler:database' },
-        { icon_ref: 'phosphor:database' },
+        { library: 'tabler', id: 'database' },
+        { library: 'phosphor', id: 'database' },
       ],
     }],
   },

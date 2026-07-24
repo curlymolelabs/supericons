@@ -48,7 +48,7 @@ if (menuItems.length !== 2) {
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '3.1'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '3.2'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
@@ -65,7 +65,8 @@ if (menuItems.length !== 2) {
   'summary_outcome_components_reconcile',
   'success_labels_match_success_counts',
   'summary_has_no_unclassified_requests',
-  'positive_results_have_returned_refs',
+  'recorded_positive_results_have_returned_refs',
+  'positive_result_refs_not_recorded',
   'searcher_detail_availability_is_truthful',
   'suspicious_query_text_patterns',
   'request_event_ids_are_unique',
@@ -73,6 +74,9 @@ if (menuItems.length !== 2) {
   'request_log',
   'web_searches',
   'hosted_diagnostics',
+  'episode_id',
+  'recovery_chain_id',
+  'diagnostic_attempt_count',
 ].forEach((value) => requireText(app, value, 'Search export implementation'));
 
 [
@@ -86,6 +90,14 @@ if (menuItems.length !== 2) {
   'separateSearchers: false',
   'includeSearcherDetails: false',
   "query_row_grain: ['query', 'library_filter', 'query_origin']",
+  "from('search_final_outcomes')",
+  "from('search_episode_diagnostics')",
+  "dashboard_source === 'final'",
+  'mergeFinalAndLegacyHostedOutcomeRows',
+  'channelCountsWithoutSelectedChannel',
+  'finalOutcomeIsAfterCutover',
+  'web_final_outcome_cutover_at',
+  'local_mcp_coverage_cutover_at',
 ].forEach((value) => requireText(api, value, 'Search history API'));
 
 requireText(helpers, 'export function dashboardV2SearchHistoryRole', 'Search history role helper');
@@ -110,7 +122,7 @@ console.log(JSON.stringify({
   status: 'ok',
   exports: {
     search_summary: 'one row per query, library, and origin',
-    request_log: 'one top-level MCP request per row',
+    request_log: 'one final top-level MCP search outcome per row',
     audit_bundle: 'separate summary, request, web, and diagnostic data sets',
   },
   filenames_include: ['export type', 'period', 'generation timestamp'],

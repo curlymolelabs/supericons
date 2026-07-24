@@ -751,14 +751,14 @@ function mapAuditRowToEvidenceRow(row: Record<string, unknown>) {
   const environment = classifyAnalyticsSource(row.environment) || classifyAnalyticsSource(source) || 'production';
   const sourceIsClassified = !isUnclassifiedAnalyticsToken(source);
   const uiSurface = sourceIsClassified ? source : 'unclassified_hosted_search';
-  const queryOrigin = deriveAuditQueryOrigin({
-    tool_name: row.tool_name,
-    channel,
-    analytics_channel: channel,
-    analytics_source: source,
-    source,
-    ui_surface: uiSurface,
-  });
+  const queryOrigin = normalizeSearchQuery(row.query_origin) || deriveAuditQueryOrigin({
+      tool_name: row.tool_name,
+      channel,
+      analytics_channel: channel,
+      analytics_source: source,
+      source,
+      ui_surface: uiSurface,
+    });
   const visitor = buildEstimatedClientIdentity(row);
   const knownDefect = matchKnownDefect({
     ...row,
@@ -769,6 +769,7 @@ function mapAuditRowToEvidenceRow(row: Record<string, unknown>) {
     id: row.id ? `search_request_audit:${String(row.id)}` : null,
     source_row_id: row.id ? String(row.id) : null,
     source_table: 'search_request_audit',
+    event_id: row.attempt_id || null,
     analytics_source: sourceIsClassified ? source : null,
     analytics_channel: channel,
     environment,
@@ -821,6 +822,15 @@ function mapAuditRowToEvidenceRow(row: Record<string, unknown>) {
     client_ip_public: null,
     audit_status: status || null,
     latency_ms: row.latency_ms ?? null,
+    episode_id: row.episode_id || null,
+    recovery_chain_id: row.recovery_chain_id || null,
+    attempt_id: row.attempt_id || null,
+    attempt_number: row.attempt_number ?? null,
+    query_variant: row.query_variant || null,
+    search_engine: row.search_engine || null,
+    execution_route: row.execution_route || null,
+    server_build: row.server_build || null,
+    root_request_hash_prefix: compactHashPrefix(row.episode_id),
     evidence_text: `${channel} ${row.tool_name || source || 'hosted search'} ${status || 'audit'}`,
     created_at: row.created_at || null,
   };
@@ -834,7 +844,7 @@ async function fetchHostedSearchAuditRows(
   channel = 'all',
   liveOnly = false,
 ) {
-  const fullSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const fullSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, contract_version, episode_id, recovery_chain_id, attempt_id, attempt_number, query_variant, query_origin, search_engine, execution_route, server_build, created_at';
   const baseSelect = 'id, query_norm, source, library_filter, result_count, status, latency_ms, session_hash, ip_hash, created_at';
   async function load(select: string) {
     return await fetchAllRows<Record<string, unknown>>((from, to) => {
@@ -1451,11 +1461,402 @@ function dashboardV2CurrentDayFilters(
   };
 }
 
+type SearchTelemetrySettings = {
+  dashboard_source: 'legacy' | 'shadow' | 'final';
+  web_final_outcome_cutover_at: string | null;
+  local_mcp_coverage_cutover_at: string | null;
+};
+
+async function fetchSearchTelemetrySettings(
+  adminClient: SupabaseClient,
+): Promise<SearchTelemetrySettings> {
+  try {
+    const { data, error } = await adminClient
+      .from('search_telemetry_settings')
+      .select('dashboard_source, web_final_outcome_cutover_at, local_mcp_coverage_cutover_at')
+      .eq('setting_id', 'active')
+      .maybeSingle();
+    if (error) throw error;
+    const source = String(data?.dashboard_source || 'legacy');
+    return {
+      dashboard_source: source === 'final' || source === 'shadow' ? source : 'legacy',
+      web_final_outcome_cutover_at: data?.web_final_outcome_cutover_at
+        ? String(data.web_final_outcome_cutover_at)
+        : null,
+      local_mcp_coverage_cutover_at: data?.local_mcp_coverage_cutover_at
+        ? String(data.local_mcp_coverage_cutover_at)
+        : null,
+    };
+  } catch (error) {
+    if (isMissingRelationError(error) || isMissingColumnError(error)) {
+      return {
+        dashboard_source: 'legacy',
+        web_final_outcome_cutover_at: null,
+        local_mcp_coverage_cutover_at: null,
+      };
+    }
+    throw error;
+  }
+}
+
+export function finalOutcomeIsAfterCutover(
+  row: Record<string, unknown>,
+  settings: SearchTelemetrySettings,
+) {
+  const channel = String(row.channel || '');
+  const completedAt = Date.parse(String(row.completed_at || ''));
+  if (!Number.isFinite(completedAt)) return false;
+  if (channel === 'web') {
+    const cutover = Date.parse(String(settings.web_final_outcome_cutover_at || ''));
+    return Number.isFinite(cutover) && completedAt >= cutover;
+  }
+  if (channel === 'local_mcp') {
+    const cutover = Date.parse(String(settings.local_mcp_coverage_cutover_at || ''));
+    return Number.isFinite(cutover) && completedAt >= cutover;
+  }
+  return channel === 'hosted_mcp';
+}
+
+export function buildFinalOutcomeCoverage(
+  settings: SearchTelemetrySettings,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const warnings: string[] = [];
+  const includesWeb = filters.channel === 'all' || filters.channel === 'web';
+  const includesLocal = filters.channel === 'all' || filters.channel === 'local_mcp';
+  if (settings.dashboard_source === 'final' && includesWeb) {
+    if (!settings.web_final_outcome_cutover_at) {
+      warnings.push('Website final-outcome coverage is not verified yet, so website rows are excluded.');
+    } else if (!filters.from || Date.parse(filters.from) < Date.parse(settings.web_final_outcome_cutover_at)) {
+      warnings.push(`Website final-outcome coverage begins ${settings.web_final_outcome_cutover_at}. Earlier website activity is excluded.`);
+    }
+  }
+  if (settings.dashboard_source === 'final' && includesLocal) {
+    if (!settings.local_mcp_coverage_cutover_at) {
+      warnings.push('Local MCP coverage is not verified yet, so Local MCP rows are excluded.');
+    } else if (!filters.from || Date.parse(filters.from) < Date.parse(settings.local_mcp_coverage_cutover_at)) {
+      warnings.push(`Local MCP coverage begins ${settings.local_mcp_coverage_cutover_at}. Earlier Local MCP activity is excluded.`);
+    }
+  }
+  return {
+    source: settings.dashboard_source,
+    web_final_outcome_cutover_at: settings.web_final_outcome_cutover_at,
+    local_mcp_coverage_cutover_at: settings.local_mcp_coverage_cutover_at,
+    warnings,
+  };
+}
+
+export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): SearchEvidenceRow {
+  const metadata = row.metadata && typeof row.metadata === 'object'
+    ? row.metadata as Record<string, unknown>
+    : {};
+  const visitor = buildEstimatedClientIdentity(row);
+  const finalOutcome = String(row.final_outcome || '').toLowerCase();
+  const channel = String(row.channel || 'unknown');
+  const resultCount = optionalNonnegativeInteger(row.final_match_count);
+  const returnedIconRefs = Array.isArray(metadata.returned_icon_refs)
+    ? metadata.returned_icon_refs
+      .map((value) => normalizeSearchQuery(value))
+      .filter(Boolean)
+      .slice(0, 100)
+    : [];
+  const returnedIconRefsRecorded = metadata.returned_icon_refs_recorded === true
+    && !(resultCount !== null && resultCount > 0 && returnedIconRefs.length === 0);
+  return {
+    id: row.episode_id ? `search_final_outcomes:${String(row.episode_id)}` : null,
+    source_row_id: row.id ? String(row.id) : null,
+    source_table: 'search_final_outcomes',
+    event_type: 'search_outcome',
+    event_id: row.episode_id || null,
+    analytics_source: channel,
+    analytics_channel: channel,
+    environment: row.environment || 'production',
+    channel,
+    signal_type: 'search_attempt',
+    search_query: normalizeSearchQuery(row.query),
+    icon_id: null,
+    batch_id: row.recovery_chain_id || null,
+    agent_converged: null,
+    replaced_with: null,
+    result_count: resultCount,
+    library_filter: normalizeReviewLibraryFilter(row.library_filter),
+    library_mode: row.library_mode || null,
+    search_outcome: finalOutcome === 'success' ? 'results' : finalOutcome,
+    query_origin: channel === 'web'
+      ? 'agent_query'
+      : String(row.tool_name || '') === 'recommend_icons'
+        ? 'recommend_variant'
+        : 'agent_query',
+    requested_limit: optionalNonnegativeInteger(metadata.requested_limit),
+    known_defect_id: null,
+    error_code: finalOutcome === 'error' ? metadata.error_code || 'final_search_error' : null,
+    confidence_label: null,
+    beta_cohort: null,
+    job_category: null,
+    ui_surface: channel === 'web' ? 'website' : row.tool_name || channel,
+    domain: null,
+    context_url: null,
+    session_hash: null,
+    ip_hash: null,
+    ip_hash_prefix: null,
+    country_code: normalizeAuditCountry(row.country_code),
+    geo_source: row.geo_source || null,
+    user_id: row.user_id || null,
+    is_registered: row.is_registered === true || Boolean(row.user_id),
+    account_plan: null,
+    subscription_status: null,
+    is_pro: false,
+    client_family: row.client_family || null,
+    tool_name: row.tool_name || null,
+    locale: row.locale || null,
+    anonymous_client_hash_prefix: compactHashPrefix(row.anonymous_client_hash),
+    anonymous_client_hash: row.anonymous_client_hash || null,
+    user_agent_hash_prefix: null,
+    api_key_hash_prefix: null,
+    api_key_hash: null,
+    estimated_client_key: visitor.display_key,
+    visitor_kind: visitor.kind,
+    _estimated_client_key: visitor.key,
+    mcp_server_version: row.source_version || null,
+    request_id: row.recovery_chain_id || null,
+    dedupe_key: row.episode_id || null,
+    search_request_audit_id: null,
+    client_ip_public: row.client_ip_public === true,
+    audit_status: finalOutcome === 'error' ? 'error' : 'ok',
+    latency_ms: row.latency_ms ?? null,
+    returned_icon_refs: returnedIconRefs,
+    returned_icon_refs_recorded: returnedIconRefsRecorded,
+    root_request_hash_prefix: compactHashPrefix(row.recovery_chain_id),
+    search_execution: row.search_execution || null,
+    server_build: row.server_build || null,
+    traffic_class: row.traffic_class || null,
+    legacy_identity_quality: row.legacy_identity_quality || null,
+    settlement_state: row.settlement_state || null,
+    diagnostic_attempt_count: row.diagnostic_attempt_count ?? null,
+    _source_event_id: row.source_event_id || null,
+    evidence_text: `${channel} final search ${finalOutcome || 'outcome'}`,
+    created_at: row.completed_at || null,
+  } as SearchEvidenceRow;
+}
+
+async function fetchFinalOutcomeRows(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+  settings: SearchTelemetrySettings,
+  { applyQuery = true } = {},
+) {
+  const select = 'id, contract_version, episode_id, recovery_chain_id, source_event_id, channel, query, environment, traffic_class, client_family, tool_name, library_filter, library_mode, style, locale, final_match_count, final_outcome, settlement_state, search_execution, server_build, diagnostic_attempt_count, legacy_identity_quality, source_version, anonymous_client_hash, user_id, is_registered, client_ip_public, country_code, geo_source, latency_ms, completed_at, metadata';
+  const result = await fetchBoundedDashboardV2Pages(async ({
+    from,
+    to,
+  }: {
+    from: number;
+    to: number;
+    includeCount: boolean;
+  }) => {
+    let query = adminClient
+      .from('search_final_outcomes')
+      .select(select)
+      .order('completed_at', { ascending: false })
+      .range(from, to);
+    if (filters.from) query = query.gte('completed_at', filters.from);
+    if (filters.to_exclusive) query = query.lt('completed_at', filters.to_exclusive);
+    if (filters.channel !== 'all') query = query.eq('channel', filters.channel);
+    const { data, error } = await query;
+    if (error) throw error;
+    return {
+      rows: (data || []) as Array<Record<string, unknown>>,
+      total: null,
+    };
+  }, {
+    maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+    pageSize: EVIDENCE_PAGE_SIZE,
+    concurrency: V2_IDENTITY_PAGE_CONCURRENCY,
+  });
+  const truncated = result.rows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+  const rows = result.rows
+    .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
+    .filter((row: Record<string, unknown>) => finalOutcomeIsAfterCutover(row, settings))
+    .map(mapFinalOutcomeToEvidenceRow);
+  const filterValues = applyQuery ? filters : { ...filters, q: '' };
+  return {
+    rows: filterDashboardV2Rows(rows, filterValues) as SearchEvidenceRow[],
+    truncated,
+  };
+}
+
+export function mergeFinalAndLegacyHostedOutcomeRows(
+  finalRows: SearchEvidenceRow[],
+  hostedRows: SearchEvidenceRow[],
+) {
+  const finalSourceEventIds = new Set(
+    finalRows
+      .map((row) => String((row as Record<string, unknown>)._source_event_id || ''))
+      .filter(Boolean),
+  );
+  const compatibleHostedRows = hostedRows
+    .filter((row) => (
+      row.source_table === 'mcp_usage_events'
+      && row.event_type === 'search_outcome'
+      && row.channel === 'hosted_mcp'
+      && ['search_icons', 'recommend_icons'].includes(String(row.tool_name || ''))
+      && !finalSourceEventIds.has(String(row.id || ''))
+    ))
+    .map((row) => ({
+      ...row,
+      legacy_identity_quality: row.event_id ? 'exact' : 'legacy_best_effort',
+      settlement_state: row.audit_status === 'error' ? 'failed' : 'completed',
+    }));
+  return [...finalRows, ...compatibleHostedRows] as SearchEvidenceRow[];
+}
+
+async function fetchCompleteFinalOutcomeRows(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+  settings: SearchTelemetrySettings,
+  { applyQuery = true } = {},
+) {
+  const finalRows = await fetchFinalOutcomeRows(
+    adminClient,
+    filters,
+    settings,
+    { applyQuery },
+  );
+  if (filters.channel !== 'all' && filters.channel !== 'hosted_mcp') {
+    return finalRows;
+  }
+  const hostedRows = await fetchMcpUsageEventRows(
+    adminClient,
+    filters.from,
+    filters.to_exclusive,
+    V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+    'hosted_mcp',
+    false,
+    ['search_outcome'],
+  );
+  const truncated = hostedRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+  const filterValues = applyQuery ? filters : { ...filters, q: '' };
+  const rows = mergeFinalAndLegacyHostedOutcomeRows(
+    finalRows.rows,
+    hostedRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE) as SearchEvidenceRow[],
+  );
+  return {
+    rows: filterDashboardV2Rows(rows, filterValues) as SearchEvidenceRow[],
+    truncated: finalRows.truncated || truncated,
+  };
+}
+
+async function fetchFinalWebDiagnosticRows(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  if (filters.channel !== 'all' && filters.channel !== 'web') {
+    return { rows: [] as SearchEvidenceRow[], truncated: false };
+  }
+  const select = 'diagnostic_id, episode_id, recovery_chain_id, diagnostic_type, channel, query, local_match_count, hosted_match_count, hosted_state, search_execution, error_code, environment, traffic_class, source_version, observed_at, metadata';
+  try {
+    const result = await fetchBoundedDashboardV2Pages(async ({
+      from,
+      to,
+    }: {
+      from: number;
+      to: number;
+      includeCount: boolean;
+    }) => {
+      let query = adminClient
+        .from('search_episode_diagnostics')
+        .select(select)
+        .order('observed_at', { ascending: false })
+        .range(from, to);
+      if (filters.from) query = query.gte('observed_at', filters.from);
+      if (filters.to_exclusive) query = query.lt('observed_at', filters.to_exclusive);
+      const { data, error } = await query;
+      if (error) throw error;
+      return {
+        rows: (data || []) as Array<Record<string, unknown>>,
+        total: null,
+      };
+    }, {
+      maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+      pageSize: EVIDENCE_PAGE_SIZE,
+      concurrency: V2_IDENTITY_PAGE_CONCURRENCY,
+    });
+    const truncated = result.rows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+    const rows = result.rows
+      .slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE)
+      .map((row: Record<string, unknown>): SearchEvidenceRow => ({
+        id: `search_episode_diagnostics:${String(row.diagnostic_id || '')}`,
+        source_row_id: String(row.diagnostic_id || ''),
+        source_table: 'search_episode_diagnostics',
+        event_id: row.diagnostic_id || null,
+        analytics_source: 'web',
+        analytics_channel: 'web',
+        environment: row.environment || 'production',
+        channel: 'web',
+        signal_type: 'hosted_search_audit',
+        search_query: normalizeSearchQuery(row.query),
+        result_count: null,
+        library_filter: 'all',
+        library_mode: null,
+        search_outcome: null,
+        query_origin: String(row.diagnostic_type || 'diagnostic'),
+        requested_limit: null,
+        error_code: row.error_code || null,
+        confidence_label: null,
+        beta_cohort: null,
+        job_category: null,
+        ui_surface: 'website',
+        session_hash: null,
+        ip_hash: null,
+        country_code: null,
+        geo_source: null,
+        user_id: null,
+        is_registered: false,
+        account_plan: null,
+        subscription_status: null,
+        is_pro: false,
+        client_family: 'browser',
+        tool_name: null,
+        locale: null,
+        anonymous_client_hash: null,
+        estimated_client_key: null,
+        visitor_kind: null,
+        _estimated_client_key: null,
+        mcp_server_version: row.source_version || null,
+        request_id: row.recovery_chain_id || null,
+        dedupe_key: row.diagnostic_id || null,
+        client_ip_public: false,
+        audit_status: String(row.diagnostic_type || 'diagnostic'),
+        latency_ms: null,
+        episode_id: row.episode_id || null,
+        recovery_chain_id: row.recovery_chain_id || null,
+        root_request_hash_prefix: compactHashPrefix(row.episode_id),
+        search_execution: row.search_execution || null,
+        traffic_class: row.traffic_class || null,
+        local_match_count: row.local_match_count ?? null,
+        hosted_match_count: row.hosted_match_count ?? null,
+        hosted_state: row.hosted_state || null,
+        evidence_text: `web ${String(row.diagnostic_type || 'diagnostic')}`,
+        created_at: row.observed_at || null,
+      } as SearchEvidenceRow));
+    return { rows, truncated };
+  } catch (error) {
+    if (isMissingRelationError(error) || isMissingColumnError(error)) {
+      return { rows: [] as SearchEvidenceRow[], truncated: false };
+    }
+    throw error;
+  }
+}
+
 async function fetchDashboardV2Telemetry(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
   { applyQuery = true } = {},
 ) {
+  const settings = await fetchSearchTelemetrySettings(adminClient);
+  if (settings.dashboard_source === 'final') {
+    return await fetchCompleteFinalOutcomeRows(adminClient, filters, settings, { applyQuery });
+  }
   const [auditRows, usageRows] = await Promise.all([
     fetchHostedSearchAuditRows(
       adminClient,
@@ -1499,7 +1900,42 @@ async function fetchDashboardV2IdentityTelemetry(
   filters: ReturnType<typeof parseDashboardV2Filters>,
   { includeDiagnostics = false } = {},
 ) {
-  const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, created_at';
+  const settings = await fetchSearchTelemetrySettings(adminClient);
+  if (settings.dashboard_source === 'final') {
+    const finalRows = await fetchCompleteFinalOutcomeRows(adminClient, filters, settings);
+    if (!includeDiagnostics) return finalRows;
+    const [auditRows, webDiagnosticRows] = await Promise.all([
+      fetchHostedSearchAuditRows(
+        adminClient,
+        filters.from,
+        filters.to_exclusive,
+        V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+        filters.channel,
+        false,
+      ),
+      fetchFinalWebDiagnosticRows(adminClient, filters),
+    ]);
+    const diagnostics = auditRows
+      .filter((row: Record<string, unknown>) => Boolean(row.episode_id))
+      .map((row): SearchEvidenceRow => ({
+        ...row,
+        signal_type: 'hosted_search_audit',
+      }));
+    return {
+      rows: [
+        ...finalRows.rows,
+        ...filterDashboardV2Rows(
+          [...diagnostics, ...webDiagnosticRows.rows],
+          filters,
+        ) as SearchEvidenceRow[],
+      ],
+      truncated: finalRows.truncated
+        || auditRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+        || webDiagnosticRows.truncated,
+    };
+  }
+
+  const auditSelect = 'id, query_norm, source, library_filter, library_mode, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, session_hash, ip_hash, country_code, geo_source, user_id, is_registered, account_plan, subscription_status, is_pro, channel, environment, client_family, tool_name, locale, anonymous_client_hash, user_agent_hash, api_key_hash, mcp_server_version, request_id, dedupe_key, contract_version, episode_id, recovery_chain_id, attempt_id, attempt_number, query_variant, query_origin, search_engine, execution_route, server_build, created_at';
   const usageSelect = 'id, event_id, request_id, dedupe_key, event_type, channel, environment, client_family, tool_name, query_norm, library_filter, library_mode, query_origin, requested_limit, result_count, search_outcome, confidence_label, beta_cohort, status, error_code, latency_ms, country_code, geo_source, client_ip_public, locale, anonymous_client_hash, session_hash, ip_hash, user_agent_hash, api_key_hash, user_id, is_registered, is_pro, account_plan, subscription_status, mcp_server_version, search_request_audit_id, metadata, created_at';
 
   const loadAuditRows = async () => {
@@ -1724,7 +2160,8 @@ async function buildDashboardV2DataRows(
     separateChannels = false,
   } = {},
 ) {
-  if (filters.use_raw) {
+  const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
+  if (filters.use_raw || telemetrySettings.dashboard_source === 'final') {
     const [telemetry, reviews] = await Promise.all([
       fetchDashboardV2Telemetry(adminClient, filters, { applyQuery }),
       includeQueryRows
@@ -1855,6 +2292,29 @@ function channelCountsFromSeries(series: Array<Record<string, unknown>>) {
   return counts;
 }
 
+async function channelCountsWithoutSelectedChannel(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+  selectedSeries: Array<Record<string, unknown>>,
+) {
+  if (filters.channel === 'all') return channelCountsFromSeries(selectedSeries);
+  const allChannelRows = await buildDashboardV2DataRows(
+    adminClient,
+    { ...filters, channel: 'all' },
+    {
+      applyQuery: true,
+      includeQueryRows: false,
+      separateQueryOrigins: false,
+      separateChannels: false,
+    },
+  );
+  const allChannelSeries = buildDashboardV2Series(
+    allChannelRows.overview_rows,
+    allChannelRows.telemetry_rows,
+  );
+  return channelCountsFromSeries(allChannelSeries);
+}
+
 async function fetchDashboardV2IconRows(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
@@ -1900,10 +2360,11 @@ async function buildDashboardV2ActivityPayload(
     50,
     100,
   );
+  const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
   const telemetry = await fetchDashboardV2Telemetry(adminClient, filters);
   const telemetryRows = telemetry.rows;
   let overviewRows: Array<Record<string, unknown>>;
-  if (filters.use_raw) {
+  if (filters.use_raw || telemetrySettings.dashboard_source === 'final') {
     overviewRows = buildAdminRollups(telemetryRows, knownSearchDefects).overview;
   } else if (filters.q) {
     const completedFilters = dashboardV2CompletedRollupFilters(filters);
@@ -1921,7 +2382,11 @@ async function buildDashboardV2ActivityPayload(
       : { rows: [] as Array<Record<string, unknown>>, total: 0, truncated: false };
     overviewRows = overviewRollups.rows;
   }
-  if (!filters.use_raw && rangeIncludesCurrentDay(filters)) {
+  if (
+    !filters.use_raw
+    && telemetrySettings.dashboard_source !== 'final'
+    && rangeIncludesCurrentDay(filters)
+  ) {
     const today = currentUtcDayStartIso().slice(0, 10);
     const todayRows = telemetryRows.filter((row) => String(row.created_at || '').slice(0, 10) === today);
     overviewRows = [
@@ -1930,6 +2395,11 @@ async function buildDashboardV2ActivityPayload(
     ];
   }
   const series = buildDashboardV2Series(overviewRows, telemetryRows);
+  const channelCounts = await channelCountsWithoutSelectedChannel(
+    adminClient,
+    filters,
+    series,
+  );
   const sortedRows = telemetryRows
     .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')));
   const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
@@ -1939,7 +2409,7 @@ async function buildDashboardV2ActivityPayload(
     activity: sortedRows
       .slice(start, start + pageSize)
       .map(compactDashboardV2ActivityRow),
-    channel_counts: channelCountsFromSeries(series),
+    channel_counts: channelCounts,
     pagination: {
       page: currentPage,
       page_size: pageSize,
@@ -2233,6 +2703,7 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
   const historyTelemetryPromise = filters.use_raw
     ? Promise.resolve(null)
     : fetchDashboardV2IdentityTelemetry(adminClient, { ...filters, q: '' });
@@ -2285,17 +2756,9 @@ async function buildDashboardV2SearchPayload(
     (sum: number, row: Record<string, unknown>) => sum + Number(row.activity_count || 0),
     0,
   );
-  const webActivities = filteredHistoryRows.reduce((sum, row) => {
-    const sources = Array.isArray(row.audit_sources) ? row.audit_sources : [];
-    const webOnly = sources.length === 1 && sources[0] === 'search_request_audit';
-    const activityCount = Number(
-      row.attempt_count
-      || row.mcp_result_rows
-      || row.result_sample_count
-      || 0,
-    );
-    return webOnly ? sum + activityCount : sum;
-  }, 0);
+  const webActivities = historyEvidenceRows.filter(
+    (row: Record<string, unknown>) => String(row.channel || '') === 'web',
+  ).length;
   const pageCount = Math.max(1, Math.ceil(compactHistoryRows.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
@@ -2350,6 +2813,7 @@ async function buildDashboardV2SearchPayload(
     worklist_unavailable_reason: rollupUnavailableReason,
     icon_requests: iconRequests,
     contact_submissions: contacts,
+    coverage: buildFinalOutcomeCoverage(telemetrySettings, filters),
     diagnostics: {
       known_defects: (knownSearchDefects.defects || []).map((defect: Record<string, unknown>) => ({
         id: defect.id,
@@ -2359,6 +2823,9 @@ async function buildDashboardV2SearchPayload(
         ends_at_inclusive: defect.ends_at_inclusive,
       })),
       query_review_available: dataRows.query_review_available,
+      final_outcome_source: telemetrySettings.dashboard_source,
+      web_final_outcome_cutover_at: telemetrySettings.web_final_outcome_cutover_at,
+      local_mcp_coverage_cutover_at: telemetrySettings.local_mcp_coverage_cutover_at,
       raw_rows_truncated: dataRows.raw_truncated,
       history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
@@ -2430,6 +2897,8 @@ async function buildDashboardV2SearchEventsPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
+  const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
+  const coverage = buildFinalOutcomeCoverage(telemetrySettings, filters);
   const eventScope = String(url.searchParams.get('event_scope') || 'primary').trim().toLowerCase();
   if (!['primary', 'audit'].includes(eventScope)) {
     throw new Error('The search event scope is invalid.');
@@ -2517,9 +2986,9 @@ async function buildDashboardV2SearchEventsPayload(
     field_coverage: snapshot.field_coverage,
     definitions: {
       grain: eventScope === 'primary'
-        ? 'One top-level MCP tool event per row. Lower-level hosted search diagnostics and older summary-only rows are excluded.'
-        : 'One telemetry record per row after exact key-based source merging. Top-level tool events, older top-level records, and lower-level hosted search diagnostics are labeled by event_role.',
-      primary_metric_source: 'Use mcp_usage_events for top-level MCP tool metrics. Web search_request_audit rows are top-level web searches. Other search_request_audit rows are hosted search pipeline diagnostics.',
+        ? 'One final top-level search outcome per row. Internal search work is excluded.'
+        : 'One final top-level search outcome or linked diagnostic per row. The event_role field keeps them separate.',
+      primary_metric_source: 'Final search outcomes are the product metric source. Search request audit rows and website episode diagnostics are supporting detail only.',
       search_zero: 'A user-facing search or final recommendation completed with zero returned results.',
       lookup_not_found: 'An exact lookup completed without an icon or returned the icon_not_found code.',
       lookup_error: 'An exact lookup failed for a reason other than icon_not_found.',
@@ -2535,6 +3004,10 @@ async function buildDashboardV2SearchEventsPayload(
       event_row_limit_per_source: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
       event_rows_truncated: !complete,
       raw_identifiers_exposed: false,
+      final_outcome_source: telemetrySettings.dashboard_source,
+      web_final_outcome_cutover_at: telemetrySettings.web_final_outcome_cutover_at,
+      local_mcp_coverage_cutover_at: telemetrySettings.local_mcp_coverage_cutover_at,
+      coverage_warnings: coverage.warnings,
       snapshot_id: snapshot.id,
       snapshot_matches_request: snapshotMatchesRequest,
       snapshot_generated_at: snapshot.generated_at,
@@ -5604,7 +6077,7 @@ async function handleUserDelete(req: Request, adminClient: SupabaseClient, userI
   }
 }
 
-serve(async (req) => {
+export async function handleAdminApiRequest(req: Request) {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: getCorsHeaders(req) });
   }
@@ -5745,4 +6218,8 @@ serve(async (req) => {
     const message = formatAdminErrorMessage(error);
     return jsonResponse(req, { error: message }, 500);
   }
-});
+}
+
+if (import.meta.main) {
+  serve(handleAdminApiRequest);
+}

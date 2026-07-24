@@ -97,7 +97,10 @@ const [remoteServerSource, mcpPackage] = await Promise.all([
   readFile(mcpPackagePath, 'utf8').then(JSON.parse),
 ]);
 assert.match(remoteServerSource, /buildMcpUsageDedupeKey\(\{/);
-assert.match(remoteServerSource, /buildToolUsageContext\(requestContext, toolName, args, \{ eventId \}\)/);
+assert.match(remoteServerSource, /const eventId = randomUUID\(\)/);
+assert.match(remoteServerSource, /episode_id: eventId/);
+assert.match(remoteServerSource, /recovery_chain_id: eventId/);
+assert.match(remoteServerSource, /buildToolUsageContext\(episodeContext, toolName, args, \{ eventId \}\)/);
 assert.ok(mcpPackage.files.includes('usage-dedupe.js'), 'The published MCP file list must include the helper.');
 
 console.log(JSON.stringify({
@@ -110,6 +113,7 @@ console.log(JSON.stringify({
     per_event_fallback_distinct: true,
     shared_fallback_rejected: true,
     remote_server_integration_present: true,
+    final_event_identity_is_random: true,
     published_file_included: true,
   },
 }, null, 2));

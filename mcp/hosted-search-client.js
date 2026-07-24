@@ -1,5 +1,5 @@
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -46,6 +46,13 @@ function normalizeUsageText(value, { maxLength = 120 } = {}) {
   return text ? text.slice(0, maxLength) : null;
 }
 
+function normalizeUsageUuid(value) {
+  const text = String(value || '').trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(text)
+    ? text
+    : null;
+}
+
 function normalizeUsageHash(value) {
   const text = String(value || '').trim().toLowerCase();
   return /^[a-f0-9]{16,128}$/.test(text) ? text : null;
@@ -86,6 +93,9 @@ function buildUsagePayload(
     client_family: normalizeUsageToken(context.client_family, { maxLength: 64 }) || 'mcp_stdio',
     tool_name: toolName,
     request_id: normalizeUsageText(context.request_id, { maxLength: 120 }),
+    contract_version: Number(context.contract_version) === 1 ? 1 : undefined,
+    episode_id: normalizeUsageUuid(context.episode_id),
+    recovery_chain_id: normalizeUsageUuid(context.recovery_chain_id),
     dedupe_key: normalizeUsageText(context.dedupe_key, { maxLength: 180 }),
     session_hash: normalizeUsageHash(context.session_hash),
     ip_hash: normalizeUsageHash(context.ip_hash),
@@ -280,6 +290,12 @@ async function retryLocalizedHostedSearch({ postSearch, url, headers, body, loca
       locale: null,
       localized_query: body.query,
       localized_locale: locale,
+      attempt_id: randomUUID(),
+      attempt_number: typeof body.next_attempt_number === 'function'
+        ? body.next_attempt_number()
+        : Number(body.attempt_number || 1) + 1,
+      query_variant: retryQuery,
+      query_origin: 'localized_retry',
     });
     if (hasSearchResults(retryPayload)) return retryPayload;
   }
@@ -315,6 +331,25 @@ export async function searchIconsHostedMcp({
     routeLocale: locale,
     routeQuery: query,
   });
+  let localAttemptNumber = 0;
+  const nextAttemptNumber = typeof usageContext?.next_attempt_number === 'function'
+    ? usageContext.next_attempt_number
+    : () => {
+        localAttemptNumber += 1;
+        return localAttemptNumber;
+      };
+  const attemptIdentity = {
+    attempt_id: randomUUID(),
+    attempt_number: nextAttemptNumber(),
+    query_variant: query,
+    query_origin: 'user',
+    search_engine: 'search_v2',
+    execution_route: shouldUseInternalHostedDebug() ? 'direct_edge' : 'public_gateway',
+    server_build: normalizeUsageText(
+      process.env.RAILWAY_GIT_COMMIT_SHA || process.env.RAILWAY_DEPLOYMENT_ID,
+      { maxLength: 120 },
+    ),
+  };
 
   if (shouldUseInternalHostedDebug()) {
     const baseUrl = getDirectHostedSearchUrl();
@@ -346,6 +381,8 @@ export async function searchIconsHostedMcp({
       style,
       locale,
       ...usagePayload,
+      ...attemptIdentity,
+      next_attempt_number: nextAttemptNumber,
       ...(includeQueryFrame ? { include_query_frame: true } : {}),
     };
     const payload = await postHostedSearch(baseUrl, headers, body);
@@ -385,6 +422,8 @@ export async function searchIconsHostedMcp({
     style,
     locale,
     ...usagePayload,
+    ...attemptIdentity,
+    next_attempt_number: nextAttemptNumber,
     ...(includeQueryFrame ? { include_query_frame: true } : {}),
   };
   const payload = await postPublicSearch(url, headers, body);
@@ -474,12 +513,25 @@ async function searchIconQueriesGrouped(queries) {
       ...searchFields
     } = entry || {};
     const usagePayload = buildUsagePayload(usageContext, { apiKeyHash, routeToolName });
+    const nextAttemptNumber = typeof usageContext?.next_attempt_number === 'function'
+      ? usageContext.next_attempt_number
+      : () => index + 1;
     routeToolNames.add(usagePayload.tool_name);
     const baseDedupeKey = usagePayload.dedupe_key;
     return {
       ...searchFields,
       library_mode: libraryMode,
       ...usagePayload,
+      attempt_id: randomUUID(),
+      attempt_number: nextAttemptNumber(),
+      query_variant: searchFields.query,
+      query_origin: 'recommendation_variant',
+      search_engine: 'search_v2',
+      execution_route: 'grouped_public_gateway',
+      server_build: normalizeUsageText(
+        process.env.RAILWAY_GIT_COMMIT_SHA || process.env.RAILWAY_DEPLOYMENT_ID,
+        { maxLength: 120 },
+      ),
       ...(baseDedupeKey ? { dedupe_key: `${baseDedupeKey}:${index}`.slice(0, 180) } : {}),
       ...(includeQueryFrame ? { include_query_frame: true } : {}),
     };

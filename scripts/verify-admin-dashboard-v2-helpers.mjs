@@ -52,6 +52,22 @@ const now = new Date('2026-07-17T12:00:00.000Z');
   assert.equal(controlledEvent.event_role, 'top_level');
   assert.equal(auditEvent.event_identifier, 'search_request_audit:42');
   assert.equal(auditEvent.event_role, 'top_level');
+  const [webFinal, hostedFinal, webDiagnostic] = compactDashboardV2EventRows([{
+    source_table: 'search_final_outcomes',
+    channel: 'web',
+    event_id: 'web-final',
+  }, {
+    source_table: 'search_final_outcomes',
+    channel: 'hosted_mcp',
+    event_id: 'hosted-final',
+  }, {
+    source_table: 'search_episode_diagnostics',
+    channel: 'web',
+    event_id: 'web-diagnostic',
+  }]);
+  assert.equal(webFinal.event_role, 'web_top_level');
+  assert.equal(hostedFinal.event_role, 'top_level');
+  assert.equal(webDiagnostic.event_role, 'diagnostic');
 }
 
 {
@@ -233,6 +249,20 @@ const series = buildDashboardV2Series([
   assert.equal(kpis.registered_clients, 1);
   assert.equal(kpis.pro_clients, 1);
   assert.equal(kpis.true_zero_count, 1);
+}
+
+{
+  const errorAwareSeries = buildDashboardV2Series([{
+    day: '2026-07-17',
+    channel: 'web',
+    attempt_count: 4,
+    success_count: 2,
+    true_zero_count: 1,
+    error_count: 1,
+  }]);
+  const kpis = buildDashboardV2Kpis(errorAwareSeries);
+  assert.equal(kpis.true_zero_rate_denominator, 3);
+  assert.equal(kpis.true_zero_rate, 1 / 3);
 }
 
 const queryRows = [

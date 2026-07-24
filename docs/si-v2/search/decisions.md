@@ -50,6 +50,7 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-035` | Put stable Search v2 in evidence-driven maintenance mode and keep adaptive retrieval paused | Accepted | Maintenance, measurement, and future architecture |
 | `D-036` | Restore hosted-primary retrieval for hosted search while keeping local-first recommendations | Accepted | Hosted search incident repair |
 | `D-037` | Close the hosted search incident with explicit fusion, trusted test labeling, and an immutable local package repair | Accepted | Incident closure and surface parity |
+| `D-038` | Count one final product outcome per search episode and keep internal attempts diagnostic | Accepted | Telemetry identity and dashboard measurement |
 
 ## Decision records
 
@@ -574,6 +575,33 @@ Alternatives rejected or deferred: silently using local results during hosted fa
 Superseded decisions: `D-036` remains active for hosted-primary search and local-first recommendations. This decision narrows its route-label contract by adding `hosted_fused` and authorizes the immutable npm successor that the first emergency repair deferred.
 
 Specification change: version 1.21 expands `FR-52` and adds `FR-53`.
+
+### D-038: Final search outcomes and episode identity
+
+Date: 2026-07-24
+Status: Accepted
+
+Decision: search telemetry uses three identity levels. A `recovery_chain_id` may connect more than one real product action. An `episode_id` identifies one committed website search or one MCP tool call. An `attempt_id` identifies internal local, hosted, translated, fallback, retry, or diagnostic work inside one episode.
+
+Each eligible episode produces at most one final top-level outcome. The browser search coordinator owns the meaning of the final website result because it knows the merged result shown to the person. A trusted server validates and stores that result. Hosted and Local MCP keep one final tool outcome per tool call. Internal attempts remain linked diagnostics and never enter headline search totals, channel-adoption totals, or the true-zero denominator.
+
+The client entry point continues to determine channel under `D-029`. Website episodes use `web`, remote MCP tool calls use `hosted_mcp`, and installed stdio package calls use `local_mcp`, even when they share search services or use fallback routes. `search_request_audit` keeps the allowance unit accepted by `D-030` and does not become the final-outcome ledger.
+
+The website input debounce remains 150 ms, the countable-search idle interval remains 2,500 ms, and the website fetch keeps its current network behavior. A 20-second observation deadline may record an incomplete diagnostic but cannot abort search, freeze results, or create a top-level zero. Superseded and incomplete website episodes are not KPI outcomes. Telemetry failure remains non-blocking.
+
+Historical browser snapshots are incomplete before the verified Web cutover. Stable Local MCP coverage is incomplete before the verified Local MCP cutover because the existing database function suppresses some stable searches. No exact historical backfill is allowed. Reports crossing either cutover must show a warning.
+
+The future recovery experiment accepted by `D-035` must use a distinct `episode_id` for every tool call, an `attempt_id` for internal work, and a `recovery_chain_id` only to connect later product actions. Recovery measurement cannot collapse an initial miss and a later retry into one ordinary search count.
+
+Reason: production evidence showed a successful website search represented by a premature browser snapshot, a hosted zero, and a successful translated retry, while the dashboard omitted ordinary browser search rows and could present the internal zero as the product outcome. The same audit found stable Local MCP outcomes suppressed. These defects prevent trustworthy channel totals and zero rates without proving a Search v2 ranking failure.
+
+Evidence required: additive schema and rollback checks; deterministic website, Hosted MCP, and Local MCP episode tests; one final event per eligible episode; linked internal attempts; unchanged search responses, ordered icon references, timing constants, and result fingerprints; unchanged `search_request_audit` row counts and allowance cost; server-controlled trusted classifications; dashboard and export parity; and verified independent Web and Local MCP cutover timestamps.
+
+Alternatives rejected or deferred: treating hosted attempts as website outcomes; promoting legacy browser snapshots to final events; deduplicating by query text and time; manufacturing a historical backfill; changing Search v2 ranking or website timeouts; silently republishing an existing npm version; and using the allowance ledger as the KPI ledger.
+
+Superseded decisions: none. `D-029`, `D-030`, `D-035`, `D-036`, and `D-037` remain active. This decision enforces their channel, allowance, maintenance, and serving boundaries.
+
+Specification change: version 1.22 adds `FR-54` and the final-outcome telemetry contract.
 
 ## Adding or superseding a decision
 

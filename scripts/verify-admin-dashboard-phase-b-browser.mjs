@@ -348,6 +348,8 @@ for (const row of queryRows) {
 const eventRows = [
   {
     event_identifier: 'event-1',
+    episode_id: '11111111-1111-4111-8111-111111111111',
+    recovery_chain_id: '11111111-1111-4111-8111-111111111111',
     root_request_identifier: '0123456789ab',
     recorded_at: '2026-07-17T07:32:00Z',
     query: '\t=HYPERLINK("https://example.com")',
@@ -364,6 +366,8 @@ const eventRows = [
     returned_icon_refs: ['lucide:database'],
     returned_icon_refs_recorded: true,
     latency_ms: 42,
+    search_execution: 'hosted_fused',
+    diagnostic_attempt_count: 2,
     server_version: '0.4.20',
     server_build: 'abc123',
     traffic_class: 'unclassified_live',
@@ -371,6 +375,7 @@ const eventRows = [
     environment: 'production',
     client_family: 'codex',
     searcher_identifier: 'anonymous:0123456789ab',
+    identity_quality: 'exact',
     source: 'mcp_usage_events',
     event_role: 'top_level',
   },
@@ -576,6 +581,12 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         activities: queryRows.reduce((sum, row) => sum + Number(row.activity_count || 0), 0),
       },
       queries: queryRows.slice(start, start + pageSize),
+      coverage: {
+        source: 'final',
+        web_final_outcome_cutover_at: '2026-07-17T07:00:00Z',
+        local_mcp_coverage_cutover_at: '2026-07-17T07:05:00Z',
+        warnings: ['Website final-outcome coverage begins 2026-07-17T07:00:00Z. Earlier website activity is excluded.'],
+      },
       pagination: {
         page,
         page_size: pageSize,
@@ -955,7 +966,7 @@ try {
   const historySubtitle = await page.locator('#searchHistorySubtitle').innerText();
   ok(historySubtitle.includes('One row per unique query. For quick analysis.'), 'Search history does not use the approved summary description.');
   ok(historySubtitle.includes(`${queryRows.length} rows`), 'Search history does not show its exact summary row count.');
-  ok(historySubtitle.includes('requests'), 'Search history does not show its exact request count.');
+  ok(historySubtitle.includes('searches'), 'Search history does not show its exact search count.');
   ok(historySubtitle.includes('test traffic excluded'), 'Search history does not state its default test-traffic scope.');
   ok(!(await queryPanel.innerText()).includes('Filters: zero:true'), 'Search history still shows hardcoded filter claims.');
   ok(await queryPanel.getByText('Advanced', { exact: true }).count() === 0, 'Search history still has a duplicate Advanced control.');
@@ -994,14 +1005,14 @@ try {
   await excludeTestRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
-  ok(queryHeaders.includes('Requests'), 'Search history does not show recorded requests.');
+  ok(queryHeaders.includes('Searches'), 'Search history does not show recorded searches.');
   ok(queryHeaders.includes('Est. client IDs'), 'Search history does not show estimated client IDs.');
   ok(queryHeaders.includes('Typical result'), 'Search history does not show its typical result.');
   ok(!queryHeaders.includes('Searcher'), 'Search history still exposes the old per-searcher grain.');
   const varyingRows = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
   ok(await varyingRows.count() === 1, 'The same query, library, and origin was not combined into one summary row.');
   const firstVaryingRow = varyingRows.first();
-  ok((await firstVaryingRow.innerText()).includes('4'), 'The combined summary does not show its request count.');
+  ok((await firstVaryingRow.innerText()).includes('4'), 'The combined summary does not show its search count.');
   ok((await firstVaryingRow.innerText()).includes('5 icons'), 'The combined summary does not show its median result count.');
   ok(await queryPanel.locator('[data-searcher-details]').count() === 0, 'Search history still has unnecessary row-detail controls.');
   ok(!(await firstVaryingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
@@ -1016,7 +1027,7 @@ try {
   });
   ok((await iconLookupRow.innerText()).includes('Success'), 'A successful icon lookup did not render as Success.');
   ok(!(await iconLookupRow.innerText()).includes('Zero'), 'An icon lookup rendered a false Zero pill.');
-  ok((await iconLookupRow.innerText()).includes('1'), 'A successful icon lookup did not render its request count.');
+  ok((await iconLookupRow.innerText()).includes('1'), 'A successful icon lookup did not render its activity count.');
   ok((await iconLookupRow.innerText()).includes('1 icon found'), 'A successful icon lookup did not identify the found icon.');
   const missingLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup missing', { exact: true }),
@@ -1031,6 +1042,10 @@ try {
   });
   ok((await approximateLowRow.innerText()).includes('Low'), 'Approximate-low results were not shown as Low.');
   ok(!(await approximateLowRow.innerText()).includes('Success'), 'Approximate-low results were shown as Success.');
+  ok(
+    (await page.locator('#queryExplorer').innerText()).includes('Website final-outcome coverage begins'),
+    'The independent Web cutover warning is not visible above Search history.',
+  );
   await mkdir('output/playwright', { recursive: true });
   await page.screenshot({
     path: 'output/playwright/admin-search-data-integrity.png',
@@ -1098,9 +1113,13 @@ try {
     'The Request log filename does not identify its data, period, and generation time.',
   );
   ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === primaryEventRows.length + 1, 'The event CSV contains diagnostics or only the first page.');
-  ok(eventCsvText.split(/\r?\n/, 1)[0].split(',').length === 27, 'The Request log CSV is not the approved 27-column schema.');
+  ok(eventCsvText.split(/\r?\n/, 1)[0].split(',').length === 31, 'The Request log CSV is not the approved 31-column schema.');
   ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
   ok(eventCsvText.includes('"estimated_client_id"'), 'The Request log omits the estimated client identifier.');
+  ok(eventCsvText.includes('"episode_id"'), 'The Request log omits the final episode identifier.');
+  ok(eventCsvText.includes('"recovery_chain_id"'), 'The Request log omits the recovery-chain identifier.');
+  ok(eventCsvText.includes('"diagnostic_attempt_count"'), 'The Request log omits the linked diagnostic-attempt count.');
+  ok(eventCsvText.includes('"identity_quality"'), 'The Request log omits identity quality.');
   ok(!eventCsvText.includes('"root_request_identifier"'), 'The Request log exposes the unreliable legacy root identifier.');
   ok(!eventCsvText.includes('"export_type"'), 'The Request log repeats file-level metadata in every row.');
   ok(eventCsvText.includes('"\'\t=HYPERLINK(""https://example.com"")"'), 'The event CSV leaves a whitespace-prefixed spreadsheet formula active.');
@@ -1115,7 +1134,7 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '3.1', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '3.2', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
@@ -1126,13 +1145,13 @@ try {
   ok(auditPayload.integrity_checks.checks.summary_outcome_components_reconcile === true, 'The audit JSON does not reconcile outcome components.');
   ok(auditPayload.integrity_checks.checks.success_labels_match_success_counts === true, 'The audit JSON permits false Success labels.');
   ok(auditPayload.integrity_checks.checks.summary_has_no_unclassified_requests === false, 'The audit JSON permits unclassified requests.');
-  ok(auditPayload.integrity_checks.checks.positive_results_have_returned_refs === true, 'The audit JSON permits missing returned icon references.');
+  ok(auditPayload.integrity_checks.checks.recorded_positive_results_have_returned_refs === true, 'The audit JSON permits an empty recorded reference list.');
   ok(auditPayload.integrity_checks.checks.searcher_detail_availability_is_truthful === true, 'The audit JSON permits false searcher-detail availability.');
   ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
   ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
   ok(auditPayload.csv_schemas.search_summary.length === 19, 'The Audit bundle has the wrong Search summary schema.');
-  ok(auditPayload.csv_schemas.request_log.length === 27, 'The Audit bundle has the wrong Request log schema.');
+  ok(auditPayload.csv_schemas.request_log.length === 31, 'The Audit bundle has the wrong Request log schema.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
   const pagedEventRequests = requests.filter((request) => (

@@ -698,7 +698,7 @@
     <header>
       <p class="eyebrow">Production architecture audit</p>
       <h1>Web, local npm, and hosted MCP enter separately, but they are not recorded separately.</h1>
-      <p class="lede">The entry points are different. The shared search services are also reasonable. The failure is in the logging boundary: Web traffic is relabelled as Hosted MCP, and the current stable local npm search can finish without any top-level search record.</p>
+      <p class="lede">The entry points are different. The shared search services are also reasonable. The failure is in the recording boundary: the website already writes a browser snapshot, but the main dashboard leaves it out and can count internal hosted work instead. Stable local npm search can also finish without a top-level record.</p>
       <div class="snapshot">
         <span>Live website and database checked: 23 Jul 2026, 10:52 PM SGT</span>
         <span>Live MCP server: 0.4.22</span>
@@ -709,8 +709,8 @@
     <section class="verdict" aria-labelledby="verdict-title">
       <div>
         <p class="eyebrow">Audit verdict</p>
-        <h2 id="verdict-title">The dashboard is following its rules. The events reaching it have the wrong roles.</h2>
-        <p>Changing the dashboard labels alone cannot fix this. The website route and the local npm package must each create one final top-level event with the correct channel. Internal searches and translation retries must stay as supporting detail.</p>
+        <h2 id="verdict-title">The dashboard is following incomplete rules. The final website result is not reaching it.</h2>
+        <p>Changing dashboard labels alone cannot fix this. The browser coordinator must determine the final website result after local and hosted work settles. A trusted server must store it as Web. Internal searches and translation retries must stay as supporting detail.</p>
       </div>
       <div class="verdict-mark" aria-hidden="true">!</div>
     </section>
@@ -719,7 +719,7 @@
       <article class="summary-card bad">
         <p class="eyebrow">Web</p>
         <strong>Not trustworthy</strong>
-        <p>Live website requests are currently stamped as Hosted MCP. The displayed Web count is not the number of website searches.</p>
+        <p>The browser records search snapshots, but they can be early and the main dashboard does not use them. Hosted website work can then appear as the Web result.</p>
       </article>
       <article class="summary-card bad">
         <p class="eyebrow">Local npm</p>
@@ -773,16 +773,16 @@
               </div>
               <div class="arrow" aria-hidden="true">→</div>
               <div class="node bad">
-                <strong>Logged as Hosted MCP</strong>
-                <small>The route stamps <code>source=mcp</code> and <code>channel=hosted_mcp</code>.</small>
+                <strong>Browser snapshot may be early</strong>
+                <small>The browser can save its local count before hosted work changes the final grid.</small>
               </div>
               <div class="arrow" aria-hidden="true">→</div>
               <div class="node bad">
-                <strong>Hidden from Web history</strong>
-                <small>The admin API treats this as a diagnostic, not a website search.</small>
+                <strong>Main history leaves it out</strong>
+                <small>The admin API does not load ordinary browser grid-search rows into the main Search history.</small>
               </div>
             </div>
-            <p class="lane-note bad">The public route does not write one final Web event. Translation retries can create several Hosted MCP diagnostic rows for one website search.</p>
+            <p class="lane-note bad">The browser already writes a search record, but it is a snapshot rather than a reliable final outcome. The hosted route cannot decide what the person finally saw because only the browser knows the merged grid.</p>
           </div>
         </article>
 
@@ -891,28 +891,28 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>mcp_usage_events</code></td>
-                <td>Top-level MCP request</td>
+                <td><code>search_final_outcomes</code></td>
+                <td>Verified final Web or MCP outcome after cutover</td>
                 <td><span class="status good">Included</span></td>
                 <td>Search summary, Request log, Audit bundle</td>
               </tr>
               <tr>
-                <td><code>search_request_audit</code> with <code>channel=web</code></td>
-                <td>Top-level Web search</td>
-                <td><span class="status good">Included</span></td>
-                <td>Search summary, Audit bundle Web section</td>
+                <td>Legacy browser <code>icon_evidence</code> search rows</td>
+                <td>Early or repeated browser snapshots before the Web cutover</td>
+                <td><span class="status warn">Excluded from trusted totals</span></td>
+                <td>Legacy investigation only</td>
               </tr>
               <tr>
-                <td><code>search_request_audit</code> with <code>channel=hosted_mcp</code></td>
-                <td>Hosted diagnostic</td>
+                <td><code>search_request_audit</code></td>
+                <td>Hosted search work and allowance accounting</td>
                 <td><span class="status warn">Excluded</span></td>
                 <td>Audit bundle diagnostics only</td>
               </tr>
               <tr>
-                <td><code>search_request_audit</code> with <code>channel=local_mcp</code></td>
-                <td>MCP search diagnostic</td>
-                <td><span class="status warn">Excluded</span></td>
-                <td>Audit bundle diagnostics only</td>
+                <td><code>mcp_usage_events</code></td>
+                <td>Existing top-level MCP outcome source</td>
+                <td><span class="status good">Copied into final outcomes after cutover</span></td>
+                <td>Request log and Audit bundle</td>
               </tr>
               <tr>
                 <td>Local icon result evidence</td>
@@ -926,9 +926,9 @@
 
         <aside class="panel">
           <p class="eyebrow">Why Web shows 1</p>
-          <h3>The filter is counting correctly labelled rows, not actual website searches.</h3>
-          <p>The production table had one Web-labelled row in both the last 24 hours and the rolling seven-day period at the audit snapshot.</p>
-          <p>Another 91 production hosted-search request IDs had no matching MCP request event. This is the shape used by the public website route. The group includes tests, so it cannot be used as an organic Web count.</p>
+          <h3>The filter is counting the wrong source, not actual website searches.</h3>
+          <p>The website already had hundreds of browser grid-search snapshots during the audited seven-day period, but the main dashboard path did not load them.</p>
+          <p>Those old browser rows are not safe to promote as final outcomes because their counts can change while hosted work is still running. Hosted attempts also include translations, fallbacks, and tests.</p>
           <p><strong>Result:</strong> the true seven-day website total is unknown. It is not 1.</p>
         </aside>
       </div>
@@ -938,15 +938,15 @@
       <div class="section-heading">
         <div>
           <p class="eyebrow">Exact query trace</p>
-          <h2>How one successful visible search became a Zero plus a hidden success</h2>
+          <h2>How one successful visible search became a misleading Zero</h2>
           <p>The query was <code>搜索图标</code>. Times below are Singapore time on 23 Jul 2026.</p>
         </div>
       </div>
 
       <div class="timeline">
         <article class="timeline-item bad">
-          <h3>5:14 PM: one direct Web audit row recorded 0</h3>
-          <p>This is the row shown by the Web filter. It measured the hosted engine attempt, while the browser could still show its local matches.</p>
+          <h3>Earlier dashboard view: one Web row recorded 0</h3>
+          <p>The dashboard selected hosted work while leaving ordinary browser snapshots out of the main Web history.</p>
         </article>
         <article class="timeline-item good">
           <h3>10:32 PM: the browser showed 1,987 visible matches</h3>
@@ -954,7 +954,7 @@
         </article>
         <article class="timeline-item bad">
           <h3>10:32:41 PM: the same Chinese query was logged as Hosted MCP with 0</h3>
-          <p>The public Railway route replaced the Web identity with <code>source=mcp</code> and <code>channel=hosted_mcp</code>.</p>
+          <p>This was internal hosted work for the website episode. It was not the final result shown to the person.</p>
         </article>
         <article class="timeline-item good">
           <h3>10:32:46 PM: an English retry returned 50</h3>
@@ -962,7 +962,7 @@
         </article>
         <article class="timeline-item bad">
           <h3>The admin result remained Web (1), Zero</h3>
-          <p>The successful current request was hidden as a Hosted MCP diagnostic. No final top-level Web event connected the attempts to the visible result.</p>
+          <p>The browser snapshot and hosted attempts were never joined into one verified final website outcome.</p>
         </article>
       </div>
     </section>
@@ -978,13 +978,13 @@
       <div class="issues">
         <article class="issue">
           <div class="issue-number">1</div>
-          <h3>Web identity is discarded</h3>
-          <p>The browser sends <code>source=web</code>, but the Railway public route does not keep it when it builds the search context.</p>
+          <h3>Web final meaning has no owner</h3>
+          <p>The browser knows the merged grid, while the hosted route knows only its own work. Neither currently writes one verified final website outcome.</p>
         </article>
         <article class="issue">
           <div class="issue-number">2</div>
-          <h3>Web has no final event</h3>
-          <p>The route logs internal Supabase attempts but never writes one record for the final result returned to the website.</p>
+          <h3>The browser record can be early</h3>
+          <p>The browser stores a result count before hosted work necessarily finishes, so the saved count may not match the final grid.</p>
         </article>
         <article class="issue">
           <div class="issue-number">3</div>
@@ -998,8 +998,8 @@
         </article>
         <article class="issue">
           <div class="issue-number">5</div>
-          <h3>Tests can look organic</h3>
-          <p>Public-route test searches lack a dependable test label, so the dashboard switch cannot always separate tests from real use.</p>
+          <h3>Trusted labels need server control</h3>
+          <p>The browser must not choose production, organic, registered, paid, or channel labels. A trusted server must validate them.</p>
         </article>
         <article class="issue">
           <div class="issue-number">6</div>
@@ -1021,9 +1021,9 @@
       <div class="target">
         <div class="target-row">
           <div class="target-label">Website</div>
-          <div class="node good">One final event: <code>channel=web</code></div>
+          <div class="node good">Browser decides final visible result</div>
           <div class="target-arrow" aria-hidden="true">→</div>
-          <div class="node good">Web Search history and Web exports</div>
+          <div class="node good">Trusted server stores <code>channel=web</code></div>
         </div>
         <div class="target-row">
           <div class="target-label">Local npm</div>
@@ -1046,10 +1046,11 @@
       </div>
 
       <ul class="rule-list">
-        <li>Every completed search creates exactly one top-level event.</li>
+        <li>Every eligible completed search creates at most one top-level event.</li>
         <li>The entry point decides the channel. Shared services cannot replace it.</li>
         <li>The final event stores the original query, final outcome, and final result count.</li>
-        <li>Each internal attempt stores a parent request ID and attempt number.</li>
+        <li>Each internal attempt stores an episode ID and its own attempt ID.</li>
+        <li>Superseded and unresolved website episodes remain diagnostics and never become Zero.</li>
         <li>The main table counts final events only. The Audit bundle keeps both final events and diagnostics.</li>
         <li>A daily check fails when Web traffic is stamped MCP, a stable local search has no final event, or a successful retry is presented as Zero.</li>
       </ul>

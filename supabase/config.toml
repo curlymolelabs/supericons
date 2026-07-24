@@ -33,3 +33,9 @@ verify_jwt = false
 # cache misses. The function only serves the fixed public Material presets.
 [functions.serve-material-snapshot]
 verify_jwt = false
+
+# Website final search outcomes are validated, classified, and rate limited
+# inside the function. The browser cannot choose trusted channel or traffic
+# labels, and telemetry failure never blocks website search.
+[functions.web-search-telemetry]
+verify_jwt = false
