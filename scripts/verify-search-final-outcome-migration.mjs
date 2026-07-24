@@ -120,6 +120,14 @@ const localCoverageRollback = readFileSync(
   'supabase/rollbacks/20260724100000_enable_stable_local_mcp_final_outcomes.down.sql',
   'utf8',
 );
+const historyFieldRepair = readFileSync(
+  'supabase/migrations/20260724120000_repair_final_outcome_history_fields.sql',
+  'utf8',
+);
+const historyFieldRollback = readFileSync(
+  'supabase/rollbacks/20260724120000_repair_final_outcome_history_fields.down.sql',
+  'utf8',
+);
 
 removeContainer();
 try {
@@ -199,6 +207,7 @@ try {
       result_count,
       search_outcome,
       status,
+      latency_ms,
       mcp_server_version,
       metadata
     ) values (
@@ -216,6 +225,7 @@ try {
       8,
       'results',
       'ok',
+      345,
       '0.4.22',
       '{"traffic_class":"controlled_test","search_execution":"hosted_fused","episode_id":"4d954f4f-c63b-4f01-b51c-6922d82a6ec5","recovery_chain_id":"ced81c43-2a29-46b8-a463-f96f328df1ed"}'::jsonb
     );
@@ -275,14 +285,69 @@ try {
       'clarification',
       'ok'
     );
+
+    insert into public.mcp_usage_events (
+      event_id,
+      event_type,
+      channel,
+      environment,
+      client_family,
+      tool_name,
+      query_norm,
+      result_count,
+      search_outcome,
+      status,
+      latency_ms,
+      metadata
+    ) values (
+      'a3dc8999-201f-45e7-8512-446141f4dba2',
+      'search_outcome',
+      'hosted_mcp',
+      'production',
+      'chatgpt',
+      'recommend_icons',
+      'choose a toolbar set',
+      2,
+      'results',
+      'ok',
+      222,
+      '{"returned_icon_refs":[],"returned_icon_refs_recorded":true}'::jsonb
+    );
   `);
+
+  runSql(historyFieldRepair);
+  runSql(historyFieldRepair);
+
+  const repairedFields = runSql(`
+    select concat_ws('|',
+      final.latency_ms,
+      recommendation.metadata ->> 'returned_icon_refs_recorded'
+    )
+    from public.search_final_outcomes final
+    join public.mcp_usage_events usage
+      on final.source_event_id = 'mcp_usage_events:' || usage.id::text
+    cross join lateral (
+      select metadata
+      from public.search_final_outcomes
+      where episode_id = 'a3dc8999-201f-45e7-8512-446141f4dba2'
+    ) recommendation
+    where final.episode_id = '4d954f4f-c63b-4f01-b51c-6922d82a6ec5';
+  `).trim();
+  assert.equal(repairedFields, '345|false');
+  const repairedSourceCoverage = runSql(`
+    select metadata ->> 'returned_icon_refs_recorded'
+    from public.mcp_usage_events
+    where event_id = 'a3dc8999-201f-45e7-8512-446141f4dba2';
+  `).trim();
+  assert.equal(repairedSourceCoverage, 'false');
 
   const captured = runSql(`
     select string_agg(
       concat_ws(':', channel, final_outcome, final_match_count, legacy_identity_quality),
       ',' order by channel
     )
-    from public.search_final_outcomes;
+    from public.search_final_outcomes
+    where query in ('shield', 'nothing matches');
   `).trim();
   assert.equal(
     captured,
@@ -427,6 +492,7 @@ try {
   runSql('set role anon; select * from public.search_final_outcomes;', { expectFailure: true });
 
   const beforeRollbackCount = Number(runSql('select count(*) from public.search_final_outcomes;').trim());
+  runSql(historyFieldRollback);
   runSql(localCoverageRollback);
   const suppressedStableLocal = runSql(`
     select public.si_log_mcp_search_outcome_v2(
@@ -487,6 +553,7 @@ try {
     status: 'ok',
     database: 'disposable_postgresql_17',
     migration: '20260724090000_search_final_outcome_telemetry.sql',
+    repair_migration: '20260724120000_repair_final_outcome_history_fields.sql',
     idempotent_apply: true,
     additive_private_tables: 4,
     legacy_rows_not_backfilled: true,
@@ -495,6 +562,8 @@ try {
     local_legacy_identity_labelled: true,
     stable_local_search_captured: true,
     repeated_stable_local_calls_distinct: true,
+    final_latency_preserved: true,
+    false_reference_coverage_corrected: true,
     stable_local_rollback_verified: true,
     clarification_excluded: true,
     duplicate_episode_rejected: true,

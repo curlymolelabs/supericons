@@ -8,17 +8,23 @@ The screen has one summary table, one outcome filter, one test-traffic switch, a
 
 ## Source roles
 
-### Top-level MCP activity
+### Final product outcomes
 
-Rows from `mcp_usage_events` represent completed top-level MCP tool calls. They are the main source for hosted and local MCP activity.
+Rows from `search_final_outcomes` represent completed top-level Web, Hosted MCP, and Local MCP outcomes after their verified cutovers.
 
-### Web search activity
+### Hosted MCP history
 
-Rows from `search_request_audit` with the web channel represent top-level web search attempts.
+Trusted `mcp_usage_events` search outcomes remain the source for Hosted MCP history that predates the final-outcome ledger. The admin API includes only source events that do not already have a matching `search_final_outcomes.source_event_id`.
+
+This compatibility read is deduplicated by the source event ID. It does not use query text or elapsed time as identity.
+
+### Web and Local MCP history
+
+Web and Local MCP final outcomes begin at their independently verified cutovers. Earlier rows remain investigation evidence and are not presented as comparable final product outcomes.
 
 ### Hosted search diagnostics
 
-Rows from `search_request_audit` for hosted or local MCP traffic are supporting diagnostics. They can add request-level detail, but they must not be counted as additional user activity when a top-level MCP row already represents the request.
+Rows from `search_request_audit` are supporting diagnostics. They can add attempt-level detail, but they must not be counted as additional user activity when a final outcome already represents the product action.
 
 ## Default Search history scope
 
@@ -119,6 +125,8 @@ Filename pattern: `supericons-request-log-{period}-{generated-at-utc}.csv`.
 Columns:
 
 - `event_id`
+- `episode_id`
+- `recovery_chain_id`
 - `recorded_at_utc`
 - `query`
 - `query_origin`
@@ -135,6 +143,7 @@ Columns:
 - `returned_icon_refs_recorded`
 - `latency_ms`
 - `search_execution`
+- `diagnostic_attempt_count`
 - `server_version`
 - `server_build`
 - `traffic_class`
@@ -145,6 +154,7 @@ Columns:
 - `country_code`
 - `registered`
 - `pro`
+- `identity_quality`
 
 Hosted search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
 
@@ -173,7 +183,7 @@ The file keeps these data sets separate:
 
 This separation prevents diagnostic rows from inflating user activity while preserving supporting detail for investigation.
 
-The bundle includes export schema version `3.1`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
+The bundle includes export schema version `3.2`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
 
 - every summary row has at least one request
 - summary request totals match groupable primary events
@@ -185,10 +195,12 @@ The bundle includes export schema version `3.1`, selected period and filters, pl
 - outcome component counts equal summary request counts
 - Success labels agree with successful request counts
 - no represented request remains unclassified
-- positive result counts have returned icon references
+- positive result rows that claim references were recorded contain at least one reference
 - searcher-detail availability agrees with the included detail
 
 The bundle reports structural and meaning checks separately. Its overall status passes only when both sets pass.
+
+A positive result with `returned_icon_refs_recorded = false` is a coverage warning, not a false integrity claim. The field coverage section shows how many rows lack references. A positive result with `returned_icon_refs_recorded = true` and an empty list fails the meaning checks.
 
 Strong signs of query-text replacement are reported as a review warning. They do not fail the bundle because a user may type question marks intentionally.
 

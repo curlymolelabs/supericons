@@ -1134,7 +1134,7 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '3.1', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '3.2', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
@@ -1145,7 +1145,7 @@ try {
   ok(auditPayload.integrity_checks.checks.summary_outcome_components_reconcile === true, 'The audit JSON does not reconcile outcome components.');
   ok(auditPayload.integrity_checks.checks.success_labels_match_success_counts === true, 'The audit JSON permits false Success labels.');
   ok(auditPayload.integrity_checks.checks.summary_has_no_unclassified_requests === false, 'The audit JSON permits unclassified requests.');
-  ok(auditPayload.integrity_checks.checks.positive_results_have_returned_refs === true, 'The audit JSON permits missing returned icon references.');
+  ok(auditPayload.integrity_checks.checks.recorded_positive_results_have_returned_refs === true, 'The audit JSON permits an empty recorded reference list.');
   ok(auditPayload.integrity_checks.checks.searcher_detail_availability_is_truthful === true, 'The audit JSON permits false searcher-detail availability.');
   ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');

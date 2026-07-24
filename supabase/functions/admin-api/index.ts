@@ -1560,6 +1560,8 @@ export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): Sear
       .filter(Boolean)
       .slice(0, 100)
     : [];
+  const returnedIconRefsRecorded = metadata.returned_icon_refs_recorded === true
+    && !(resultCount !== null && resultCount > 0 && returnedIconRefs.length === 0);
   return {
     id: row.episode_id ? `search_final_outcomes:${String(row.episode_id)}` : null,
     source_row_id: row.id ? String(row.id) : null,
@@ -1621,9 +1623,9 @@ export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): Sear
     search_request_audit_id: null,
     client_ip_public: row.client_ip_public === true,
     audit_status: finalOutcome === 'error' ? 'error' : 'ok',
-    latency_ms: null,
+    latency_ms: row.latency_ms ?? null,
     returned_icon_refs: returnedIconRefs,
-    returned_icon_refs_recorded: metadata.returned_icon_refs_recorded === true,
+    returned_icon_refs_recorded: returnedIconRefsRecorded,
     root_request_hash_prefix: compactHashPrefix(row.recovery_chain_id),
     search_execution: row.search_execution || null,
     server_build: row.server_build || null,
@@ -1631,6 +1633,7 @@ export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): Sear
     legacy_identity_quality: row.legacy_identity_quality || null,
     settlement_state: row.settlement_state || null,
     diagnostic_attempt_count: row.diagnostic_attempt_count ?? null,
+    _source_event_id: row.source_event_id || null,
     evidence_text: `${channel} final search ${finalOutcome || 'outcome'}`,
     created_at: row.completed_at || null,
   } as SearchEvidenceRow;
@@ -1642,7 +1645,7 @@ async function fetchFinalOutcomeRows(
   settings: SearchTelemetrySettings,
   { applyQuery = true } = {},
 ) {
-  const select = 'id, contract_version, episode_id, recovery_chain_id, source_event_id, channel, query, environment, traffic_class, client_family, tool_name, library_filter, library_mode, style, locale, final_match_count, final_outcome, settlement_state, search_execution, server_build, diagnostic_attempt_count, legacy_identity_quality, source_version, anonymous_client_hash, user_id, is_registered, client_ip_public, country_code, geo_source, completed_at, metadata';
+  const select = 'id, contract_version, episode_id, recovery_chain_id, source_event_id, channel, query, environment, traffic_class, client_family, tool_name, library_filter, library_mode, style, locale, final_match_count, final_outcome, settlement_state, search_execution, server_build, diagnostic_attempt_count, legacy_identity_quality, source_version, anonymous_client_hash, user_id, is_registered, client_ip_public, country_code, geo_source, latency_ms, completed_at, metadata';
   const result = await fetchBoundedDashboardV2Pages(async ({
     from,
     to,
@@ -1679,6 +1682,67 @@ async function fetchFinalOutcomeRows(
   return {
     rows: filterDashboardV2Rows(rows, filterValues) as SearchEvidenceRow[],
     truncated,
+  };
+}
+
+export function mergeFinalAndLegacyHostedOutcomeRows(
+  finalRows: SearchEvidenceRow[],
+  hostedRows: SearchEvidenceRow[],
+) {
+  const finalSourceEventIds = new Set(
+    finalRows
+      .map((row) => String((row as Record<string, unknown>)._source_event_id || ''))
+      .filter(Boolean),
+  );
+  const compatibleHostedRows = hostedRows
+    .filter((row) => (
+      row.source_table === 'mcp_usage_events'
+      && row.event_type === 'search_outcome'
+      && row.channel === 'hosted_mcp'
+      && ['search_icons', 'recommend_icons'].includes(String(row.tool_name || ''))
+      && !finalSourceEventIds.has(String(row.id || ''))
+    ))
+    .map((row) => ({
+      ...row,
+      legacy_identity_quality: row.event_id ? 'exact' : 'legacy_best_effort',
+      settlement_state: row.audit_status === 'error' ? 'failed' : 'completed',
+    }));
+  return [...finalRows, ...compatibleHostedRows] as SearchEvidenceRow[];
+}
+
+async function fetchCompleteFinalOutcomeRows(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+  settings: SearchTelemetrySettings,
+  { applyQuery = true } = {},
+) {
+  const finalRows = await fetchFinalOutcomeRows(
+    adminClient,
+    filters,
+    settings,
+    { applyQuery },
+  );
+  if (filters.channel !== 'all' && filters.channel !== 'hosted_mcp') {
+    return finalRows;
+  }
+  const hostedRows = await fetchMcpUsageEventRows(
+    adminClient,
+    filters.from,
+    filters.to_exclusive,
+    V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+    'hosted_mcp',
+    false,
+    ['search_outcome'],
+  );
+  const truncated = hostedRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+  const filterValues = applyQuery ? filters : { ...filters, q: '' };
+  const rows = mergeFinalAndLegacyHostedOutcomeRows(
+    finalRows.rows,
+    hostedRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE) as SearchEvidenceRow[],
+  );
+  return {
+    rows: filterDashboardV2Rows(rows, filterValues) as SearchEvidenceRow[],
+    truncated: finalRows.truncated || truncated,
   };
 }
 
@@ -1791,7 +1855,7 @@ async function fetchDashboardV2Telemetry(
 ) {
   const settings = await fetchSearchTelemetrySettings(adminClient);
   if (settings.dashboard_source === 'final') {
-    return await fetchFinalOutcomeRows(adminClient, filters, settings, { applyQuery });
+    return await fetchCompleteFinalOutcomeRows(adminClient, filters, settings, { applyQuery });
   }
   const [auditRows, usageRows] = await Promise.all([
     fetchHostedSearchAuditRows(
@@ -1838,7 +1902,7 @@ async function fetchDashboardV2IdentityTelemetry(
 ) {
   const settings = await fetchSearchTelemetrySettings(adminClient);
   if (settings.dashboard_source === 'final') {
-    const finalRows = await fetchFinalOutcomeRows(adminClient, filters, settings);
+    const finalRows = await fetchCompleteFinalOutcomeRows(adminClient, filters, settings);
     if (!includeDiagnostics) return finalRows;
     const [auditRows, webDiagnosticRows] = await Promise.all([
       fetchHostedSearchAuditRows(
@@ -2228,6 +2292,29 @@ function channelCountsFromSeries(series: Array<Record<string, unknown>>) {
   return counts;
 }
 
+async function channelCountsWithoutSelectedChannel(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+  selectedSeries: Array<Record<string, unknown>>,
+) {
+  if (filters.channel === 'all') return channelCountsFromSeries(selectedSeries);
+  const allChannelRows = await buildDashboardV2DataRows(
+    adminClient,
+    { ...filters, channel: 'all' },
+    {
+      applyQuery: true,
+      includeQueryRows: false,
+      separateQueryOrigins: false,
+      separateChannels: false,
+    },
+  );
+  const allChannelSeries = buildDashboardV2Series(
+    allChannelRows.overview_rows,
+    allChannelRows.telemetry_rows,
+  );
+  return channelCountsFromSeries(allChannelSeries);
+}
+
 async function fetchDashboardV2IconRows(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
@@ -2308,6 +2395,11 @@ async function buildDashboardV2ActivityPayload(
     ];
   }
   const series = buildDashboardV2Series(overviewRows, telemetryRows);
+  const channelCounts = await channelCountsWithoutSelectedChannel(
+    adminClient,
+    filters,
+    series,
+  );
   const sortedRows = telemetryRows
     .sort((left, right) => String(right.created_at || '').localeCompare(String(left.created_at || '')));
   const pageCount = Math.max(1, Math.ceil(sortedRows.length / pageSize));
@@ -2317,7 +2409,7 @@ async function buildDashboardV2ActivityPayload(
     activity: sortedRows
       .slice(start, start + pageSize)
       .map(compactDashboardV2ActivityRow),
-    channel_counts: channelCountsFromSeries(series),
+    channel_counts: channelCounts,
     pagination: {
       page: currentPage,
       page_size: pageSize,

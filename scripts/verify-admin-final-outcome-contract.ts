@@ -2,6 +2,7 @@ import {
   buildFinalOutcomeCoverage,
   finalOutcomeIsAfterCutover,
   mapFinalOutcomeToEvidenceRow,
+  mergeFinalAndLegacyHostedOutcomeRows,
 } from '../supabase/functions/admin-api/index.ts';
 import { buildAdminRollups } from '../lib/admin-dashboard-metrics.js';
 import {
@@ -64,6 +65,47 @@ Deno.test('maps final rows without promoting diagnostics', () => {
   assert(webZero.result_count === 0, 'A final zero gained results.');
   const [event] = compactDashboardV2EventRows([webZero]);
   assert(event.event_role === 'web_top_level', 'A Web final row became a diagnostic.');
+});
+
+Deno.test('fills Hosted MCP history without duplicating copied final rows', () => {
+  const copied = mapFinalOutcomeToEvidenceRow({
+    id: 20,
+    episode_id: '00000000-0000-4000-8000-000000000020',
+    source_event_id: 'mcp_usage_events:20',
+    channel: 'hosted_mcp',
+    query: 'copied final',
+    environment: 'production',
+    traffic_class: 'unclassified_live',
+    client_family: 'chatgpt',
+    tool_name: 'search_icons',
+    final_match_count: 8,
+    final_outcome: 'success',
+    settlement_state: 'completed',
+    latency_ms: 321,
+    completed_at: '2026-07-24T04:00:00.000Z',
+  });
+  const legacyOnly = {
+    id: 'mcp_usage_events:19',
+    source_table: 'mcp_usage_events',
+    event_type: 'search_outcome',
+    event_id: '00000000-0000-4000-8000-000000000019',
+    channel: 'hosted_mcp',
+    tool_name: 'search_icons',
+    latency_ms: 654,
+    created_at: '2026-07-24T03:59:00.000Z',
+  };
+  const copiedSource = {
+    ...legacyOnly,
+    id: 'mcp_usage_events:20',
+    event_id: '00000000-0000-4000-8000-000000000020',
+  };
+  const merged = mergeFinalAndLegacyHostedOutcomeRows(
+    [copied],
+    [legacyOnly, copiedSource] as never[],
+  );
+  assert(merged.length === 2, 'A copied Hosted MCP source row was counted twice.');
+  assert(merged.some((row) => row.id === 'mcp_usage_events:19'), 'Pre-ledger Hosted MCP history was omitted.');
+  assert(copied.latency_ms === 321, 'Final outcome latency was discarded.');
 });
 
 Deno.test('uses eligible final outcomes for true-zero rate', () => {

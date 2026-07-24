@@ -922,7 +922,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '3.1';
+const SEARCH_EXPORT_SCHEMA_VERSION = '3.2';
 
 function searchExportPeriod() {
   const labels = {
@@ -1094,12 +1094,14 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
     number(row.unknown_attempt_count) > 0
     || number(row.lookup_unknown_count) > 0
   ));
-  const positiveResultMissingRefRows = normalizeList(topLevelEvents).filter((row) => (
+  const positiveResultUnrecordedRefRows = normalizeList(topLevelEvents).filter((row) => (
     number(row.result_count) > 0
-    && (
-      row.returned_icon_refs_recorded !== true
-      || normalizeList(row.returned_icon_refs).length === 0
-    )
+    && row.returned_icon_refs_recorded !== true
+  ));
+  const recordedPositiveResultMissingRefRows = normalizeList(topLevelEvents).filter((row) => (
+    number(row.result_count) > 0
+    && row.returned_icon_refs_recorded === true
+    && normalizeList(row.returned_icon_refs).length === 0
   ));
   const untruthfulSearcherDetailRows = summaries.filter((row) => (
     row.searcher_details_available === true
@@ -1123,7 +1125,7 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
     summary_outcome_components_reconcile: componentGapRows.length === 0,
     success_labels_match_success_counts: falseSuccessRows.length === 0,
     summary_has_no_unclassified_requests: unclassifiedSummaryRows.length === 0,
-    positive_results_have_returned_refs: positiveResultMissingRefRows.length === 0,
+    recorded_positive_results_have_returned_refs: recordedPositiveResultMissingRefRows.length === 0,
     searcher_detail_availability_is_truthful: untruthfulSearcherDetailRows.length === 0,
   };
   const checks = { ...structuralChecks, ...semanticChecks };
@@ -1142,6 +1144,7 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
     checks,
     warnings: {
       suspicious_query_text_patterns: suspiciousQueryTextRows.length,
+      positive_result_refs_not_recorded: positiveResultUnrecordedRefRows.length,
     },
     counts: {
       search_summary_rows: summaries.length,
@@ -1159,7 +1162,8 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
       outcome_component_gap_rows: componentGapRows.length,
       false_success_rows: falseSuccessRows.length,
       unclassified_summary_rows: unclassifiedSummaryRows.length,
-      positive_result_missing_ref_rows: positiveResultMissingRefRows.length,
+      positive_result_refs_not_recorded: positiveResultUnrecordedRefRows.length,
+      recorded_positive_result_missing_ref_rows: recordedPositiveResultMissingRefRows.length,
       untruthful_searcher_detail_rows: untruthfulSearcherDetailRows.length,
       suspicious_query_text_rows: suspiciousQueryTextRows.length,
     },
@@ -2604,6 +2608,7 @@ async function exportData(key) {
           root_request_identifier: 'Legacy request-grouping identifier retained only for investigation. It may collide and must not be treated as a session ID.',
           source_separation: 'Request log rows, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
           integrity_status: 'Overall status passes only when both structural and meaning checks pass.',
+          returned_icon_ref_coverage: 'Missing icon references are a coverage warning when the source states they were not recorded. A recorded positive result with an empty reference list fails the meaning checks.',
         },
         source_meta: eventExport.meta,
       };
