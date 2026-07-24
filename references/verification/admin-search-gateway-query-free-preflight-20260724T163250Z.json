@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.1",
+  "artifact": "admin_search_gateway_query_free_preflight",
+  "generated_at_utc": "2026-07-24T16:32:54.456Z",
+  "purpose": "Confirm that the production icon view reaches a visible search input without sending a search or telemetry request.",
+  "website_route": "https://supericons.dev/?view=icons",
+  "status": "passed",
+  "route_after_readiness": "https://supericons.dev/",
+  "application_visible": true,
+  "icon_view_active": true,
+  "search_input_visible": true,
+  "search_input_value": "",
+  "used_visible_start_searching_action": true,
+  "hidden_desktop_toggle_clicked": false,
+  "watched_post_count": 0,
+  "watched_posts": [],
+  "browser_error_count": 0,
+  "browser_error_samples": []
+}

@@ -19,6 +19,8 @@ export const RECONCILIATION_GRACE_SECONDS = 120;
 const REST_PAGE_SIZE = 1000;
 const PRODUCT_SETTLEMENT_TIMEOUT_MS = 60_000;
 const SOURCE_SETTLEMENT_POLL_MS = 5_000;
+const DEFAULT_WEBSITE_URL = 'https://supericons.dev/?view=icons';
+const DEFAULT_GATEWAY_URL = 'https://mcp.supericons.dev/search-icons';
 
 function readArg(name, fallback = '') {
   const index = process.argv.indexOf(`--${name}`);
@@ -73,6 +75,11 @@ function safeIdentity(value) {
 function sanitizeDiagnosticText(value) {
   return text(value)
     .replace(/\u001b\[[0-9;]*m/g, '')
+    .replace(
+      /\b(authorization|apikey|api[-_ ]?key|token|secret|signature|cookie)\b\s*[:=]\s*(?:bearer\s+)?[^\s,;]+/gi,
+      '$1=[redacted]',
+    )
+    .replace(/\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g, '[token]')
     .replace(/https?:\/\/[^\s)]+/gi, (rawUrl) => {
       try {
         const parsed = new URL(rawUrl);
@@ -84,6 +91,60 @@ function sanitizeDiagnosticText(value) {
     .replace(/[A-Za-z]:\\(?:[^\\\s]+\\)*[^\\\s]*/g, '[local path]')
     .replace(/\b[A-Za-z0-9_-]{80,}\b/g, '[long value]')
     .slice(0, 400);
+}
+
+function observeBrowserErrors(page) {
+  const errors = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') {
+      errors.push(sanitizeDiagnosticText(message.text()));
+    }
+  });
+  page.on('pageerror', (error) => {
+    errors.push(sanitizeDiagnosticText(error?.message || String(error)));
+  });
+  return errors;
+}
+
+async function waitForIconViewReadiness(page, websiteUrl) {
+  await page.goto(websiteUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+  await page.locator('#app').waitFor({ state: 'visible', timeout: 60_000 });
+  const search = page.locator('#searchInput');
+  let usedVisibleStartSearchingAction = false;
+  if (!await search.isVisible()) {
+    const startSearching = page.locator('#heroSearchBtn');
+    await startSearching.waitFor({ state: 'visible', timeout: 60_000 });
+    await startSearching.click();
+    usedVisibleStartSearchingAction = true;
+  }
+  await search.waitFor({ state: 'visible', timeout: 60_000 });
+  await page.waitForFunction(() => (
+    !document.body?.classList.contains('landing-active')
+    && document.querySelector('#searchInput') instanceof HTMLInputElement
+  ), null, { timeout: 60_000 });
+  return {
+    search,
+    usedVisibleStartSearchingAction,
+  };
+}
+
+function browserControlledRequestKind(request, {
+  gatewayUrl,
+  webTelemetryOrigin,
+}) {
+  if (request.method() !== 'POST') return null;
+  const url = new URL(request.url());
+  const gateway = new URL(gatewayUrl);
+  if (url.origin === gateway.origin && url.pathname === gateway.pathname) {
+    return 'hosted_search';
+  }
+  if (
+    url.origin === webTelemetryOrigin
+    && url.pathname.endsWith('/functions/v1/web-search-telemetry')
+  ) {
+    return 'web_telemetry';
+  }
+  return null;
 }
 
 function safeSourceRow(row, timeField = 'created_at') {
@@ -296,20 +357,69 @@ async function readSources(config, startedAt, endedAt) {
   return { audits, usage, finals, diagnostics };
 }
 
-async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
+async function runWebsitePreflight({ websiteUrl, gatewayUrl }) {
+  const browser = await chromium.launch({ headless: true, channel: 'chrome' });
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 1000 },
+  });
+  const page = await context.newPage();
+  const browserErrors = observeBrowserErrors(page);
+  const watchedPosts = [];
+  page.on('request', (request) => {
+    if (request.method() !== 'POST') return;
+    const url = new URL(request.url());
+    const gateway = new URL(gatewayUrl);
+    if (
+      (url.origin === gateway.origin && url.pathname === gateway.pathname)
+      || url.pathname.endsWith('/functions/v1/web-search-telemetry')
+    ) {
+      watchedPosts.push({
+        destination: `${url.origin}${url.pathname}`,
+      });
+    }
+  });
+
+  try {
+    const readiness = await waitForIconViewReadiness(page, websiteUrl);
+    const { search } = readiness;
+    await delay(1_000);
+    return {
+      route_after_readiness: page.url(),
+      application_visible: await page.locator('#app').isVisible(),
+      icon_view_active: await page.locator('body:not(.landing-active)').count() === 1,
+      search_input_visible: await search.isVisible(),
+      search_input_value: await search.inputValue(),
+      used_visible_start_searching_action: readiness.usedVisibleStartSearchingAction,
+      hidden_desktop_toggle_clicked: false,
+      watched_post_count: watchedPosts.length,
+      watched_posts: watchedPosts,
+      browser_error_count: browserErrors.length,
+      browser_error_samples: browserErrors.slice(0, 5),
+    };
+  } finally {
+    await context.close();
+    await browser.close();
+  }
+}
+
+async function runWebsiteProbe({
+  websiteUrl,
+  gatewayUrl,
+  webTelemetryOrigin,
+  query,
+  controlledHeaders,
+}) {
   const browser = await chromium.launch({ headless: true, channel: 'chrome' });
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
   });
   await context.route('**/*', async (route) => {
     const request = route.request();
-    const url = new URL(request.url());
-    const isHostedSearch = request.method() === 'POST'
-      && url.origin === 'https://mcp.supericons.dev'
-      && url.pathname === '/search-icons';
-    const isWebTelemetry = request.method() === 'POST'
-      && url.pathname.endsWith('/functions/v1/web-search-telemetry');
-    if (isHostedSearch || isWebTelemetry) {
+    const controlledRequestKind = browserControlledRequestKind(request, {
+      gatewayUrl,
+      webTelemetryOrigin,
+    });
+    if (controlledRequestKind) {
       await route.continue({
         headers: {
           ...request.headers(),
@@ -324,57 +434,46 @@ async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
   const observed = {
     search_requests: [],
     telemetry_requests: [],
-    console_errors: [],
+    signed_request_destinations: [],
   };
-  page.on('console', (message) => {
-    if (message.type() === 'error') {
-      observed.console_errors.push(sanitizeDiagnosticText(message.text()));
-    }
-  });
+  const browserErrors = observeBrowserErrors(page);
   page.on('request', (request) => {
-    const url = request.url();
-    if (
-      request.method() === 'POST'
-      && url === 'https://mcp.supericons.dev/search-icons'
-    ) {
+    const url = new URL(request.url());
+    const controlledRequestKind = browserControlledRequestKind(request, {
+      gatewayUrl,
+      webTelemetryOrigin,
+    });
+    if (controlledRequestKind) {
+      observed.signed_request_destinations.push(controlledRequestKind);
+    }
+    if (controlledRequestKind === 'hosted_search') {
       observed.search_requests.push({
-        url,
+        destination: `${url.origin}${url.pathname}`,
         body: request.postDataJSON(),
       });
     }
-    if (
-      request.method() === 'POST'
-      && url.includes('/functions/v1/web-search-telemetry')
-    ) {
+    if (controlledRequestKind === 'web_telemetry') {
       observed.telemetry_requests.push({
-        url,
+        destination: `${url.origin}${url.pathname}`,
         body: request.postDataJSON(),
       });
     }
   });
 
   try {
-    await page.goto(websiteUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
-    await page.locator('#app').waitFor({ state: 'visible', timeout: 60_000 });
-    const search = page.locator('#searchInput');
-    if (!await search.isVisible()) {
-      const startSearching = page.locator('#heroSearchBtn');
-      assert.equal(
-        await startSearching.isVisible(),
-        true,
-        'Website Start searching action is not visible.',
-      );
-      await startSearching.click();
-    }
-    await search.waitFor({ state: 'visible', timeout: 60_000 });
+    const { search } = await waitForIconViewReadiness(page, websiteUrl);
     const hostedResponsePromise = page.waitForResponse(
-      (response) => response.url() === 'https://mcp.supericons.dev/search-icons'
-        && response.request().method() === 'POST',
+      (response) => browserControlledRequestKind(response.request(), {
+        gatewayUrl,
+        webTelemetryOrigin,
+      }) === 'hosted_search',
       { timeout: 60_000 },
     );
     const telemetryResponsePromise = page.waitForResponse(
-      (response) => response.url().includes('/functions/v1/web-search-telemetry')
-        && response.request().method() === 'POST',
+      (response) => browserControlledRequestKind(response.request(), {
+        gatewayUrl,
+        webTelemetryOrigin,
+      }) === 'web_telemetry',
       { timeout: 60_000 },
     );
     await search.fill(query);
@@ -393,7 +492,8 @@ async function runWebsiteProbe({ websiteUrl, query, controlledHeaders }) {
       hosted_http_status: hostedResponse.status(),
       telemetry_http_status: telemetryResponse.status(),
       telemetry_bodies: telemetryBodies,
-      console_errors: observed.console_errors,
+      signed_request_destinations: [...new Set(observed.signed_request_destinations)],
+      console_errors: browserErrors,
       fingerprint: stableFingerprint({
         http_status: hostedResponse.status(),
         result_count: (hostedPayload.results || []).length,
@@ -797,15 +897,72 @@ async function waitForProductSettlement(config, startedAt, identities, queries, 
   };
 }
 
+async function writeQueryFreePreflight({
+  outputPath,
+  websiteUrl,
+  gatewayUrl,
+}) {
+  const evidence = {
+    schema_version: '1.1',
+    artifact: 'admin_search_gateway_query_free_preflight',
+    generated_at_utc: null,
+    purpose: 'Confirm that the production icon view reaches a visible search input without sending a search or telemetry request.',
+    website_route: websiteUrl,
+    status: 'running',
+  };
+  try {
+    const observed = await runWebsitePreflight({ websiteUrl, gatewayUrl });
+    Object.assign(evidence, observed);
+    evidence.status = (
+      observed.application_visible
+      && observed.icon_view_active
+      && observed.search_input_visible
+      && observed.search_input_value === ''
+      && observed.hidden_desktop_toggle_clicked === false
+      && observed.watched_post_count === 0
+    ) ? 'passed' : 'failed';
+  } catch (error) {
+    evidence.status = 'failed';
+    evidence.failure = {
+      name: sanitizeDiagnosticText(error?.name || 'Error'),
+      message: sanitizeDiagnosticText(error?.message || String(error)),
+    };
+  }
+  evidence.generated_at_utc = new Date().toISOString();
+  writeFileSync(outputPath, `${JSON.stringify(evidence, null, 2)}\n`, {
+    encoding: 'utf8',
+    flag: 'wx',
+  });
+  console.log(JSON.stringify({
+    status: evidence.status,
+    output: outputPath,
+    watched_post_count: evidence.watched_post_count ?? null,
+  }, null, 2));
+  if (evidence.status !== 'passed') process.exitCode = 1;
+}
+
 async function main() {
   verifyGraceBoundaryFixture();
 
   const outputPath = resolve(requiredArg('output'));
+  const mode = readArg('mode', 'gate');
+  const websiteUrl = readArg('website-url', DEFAULT_WEBSITE_URL);
+  const gatewayUrl = readArg('gateway-url', DEFAULT_GATEWAY_URL);
+  assert.ok(['preflight', 'gate'].includes(mode), '--mode must be preflight or gate.');
+  assert.equal(existsSync(outputPath), false, `Evidence already exists: ${outputPath}`);
+  if (mode === 'preflight') {
+    await writeQueryFreePreflight({
+      outputPath,
+      websiteUrl,
+      gatewayUrl,
+    });
+    return;
+  }
+
   const envPath = resolve(requiredArg('supabase-env'));
   const phase = readArg('phase', 'before');
   const baselinePath = readArg('baseline');
   assert.ok(['before', 'after'].includes(phase), '--phase must be before or after.');
-  assert.equal(existsSync(outputPath), false, `Evidence already exists: ${outputPath}`);
   assert.ok(existsSync(envPath), `Supabase environment file is missing: ${envPath}`);
   const fileEnv = parseEnvFile(envPath);
   const controlledSecret = text(process.env.SUPERICONS_CONTROLLED_RUN_SECRET);
@@ -817,9 +974,7 @@ async function main() {
   assert.ok(supabaseUrl.startsWith('https://'), 'SUPABASE_URL is unavailable.');
   assert.ok(serviceRoleKey.length >= 32, 'SUPABASE_SERVICE_ROLE_KEY is unavailable.');
 
-  const websiteUrl = readArg('website-url', 'https://supericons.dev/?view=icons');
   const mcpUrl = readArg('mcp-url', 'https://mcp.supericons.dev/mcp');
-  const gatewayUrl = readArg('gateway-url', 'https://mcp.supericons.dev/search-icons');
   const packageVersion = readArg('package-version', '0.4.22');
   const runToken = randomUUID().slice(0, 8);
   const runId = `admin-gateway-${compactTime()}-${runToken}`;
@@ -879,6 +1034,8 @@ async function main() {
   try {
     website = await runWebsiteProbe({
       websiteUrl,
+      gatewayUrl,
+      webTelemetryOrigin: new URL(supabaseUrl).origin,
       query: queries.web,
       controlledHeaders,
     });
@@ -977,6 +1134,7 @@ async function main() {
             hosted_http_status: website.hosted_http_status,
             telemetry_http_status: website.telemetry_http_status,
             telemetry_write_count: website.telemetry_bodies.length,
+            signed_request_destinations: website.signed_request_destinations,
             console_error_count: website.console_errors.length,
             console_error_samples: website.console_errors.slice(0, 5),
           },
