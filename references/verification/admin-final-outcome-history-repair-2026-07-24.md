@@ -74,6 +74,12 @@ The old main-folder and served frontend both had SHA-256:
 
 This proves that the running dashboard still served the old main-folder file before integration. The final merge and restart check must show that the main-folder and served hashes match the reviewed frontend hash.
 
+After integration, line-ending normalization produced the final main-folder SHA-256:
+
+`9FC4A76A13C3987A32CCC7A798FEC1616BCD1C00EFD0035035FAB86EAAF9727F`
+
+The restarted server returned 127,854 bytes, exactly matching the 127,854-byte main-folder file. A browser reload completed and displayed the admin login dialog from the restarted server.
+
 ## Rollback
 
 - Database: run `supabase/rollbacks/20260724120000_repair_final_outcome_history_fields.rollback.sql`. The rollback removes the added latency column and trigger assignment without deleting final outcomes.
@@ -83,4 +89,4 @@ This proves that the running dashboard still served the old main-folder file bef
 
 ## Release decision
 
-Production data reconciliation and automated checks are ready for integration. Final GO still requires the main-folder merge, dashboard restart, served-file hash match, and one final browser load from the restarted server.
+GO. Production data reconciliation, automated checks, main-folder integration, dashboard restart, served-file match, and browser reload all passed. The owner must enter the current `ADMIN_SECRET` after the restart before the private production data can appear.
