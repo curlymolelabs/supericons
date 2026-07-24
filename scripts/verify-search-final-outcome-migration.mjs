@@ -128,6 +128,14 @@ const historyFieldRollback = readFileSync(
   'supabase/rollbacks/20260724120000_repair_final_outcome_history_fields.down.sql',
   'utf8',
 );
+const controlledLocalRepair = readFileSync(
+  'supabase/migrations/20260725090000_preserve_controlled_local_mcp_final_outcomes.sql',
+  'utf8',
+);
+const controlledLocalRollback = readFileSync(
+  'supabase/rollbacks/20260725090000_preserve_controlled_local_mcp_final_outcomes.down.sql',
+  'utf8',
+);
 
 removeContainer();
 try {
@@ -341,6 +349,54 @@ try {
   `).trim();
   assert.equal(repairedSourceCoverage, 'false');
 
+  runSql(`
+    insert into public.mcp_usage_events (
+      event_id,
+      event_type,
+      channel,
+      environment,
+      client_family,
+      tool_name,
+      query_norm,
+      result_count,
+      search_outcome,
+      beta_cohort,
+      status
+    ) values (
+      '9a0433ef-09e3-416f-b7d4-8adb938aac6d',
+      'search_outcome',
+      'local_mcp',
+      'production',
+      'mcp_stdio',
+      'search_icons',
+      'controlled before repair',
+      4,
+      'results',
+      'controlled-run:migration_fixture',
+      'ok'
+    );
+  `);
+  const preRepairTrafficClass = runSql(`
+    select traffic_class
+    from public.search_final_outcomes
+    where episode_id = '9a0433ef-09e3-416f-b7d4-8adb938aac6d';
+  `).trim();
+  assert.equal(preRepairTrafficClass, 'unclassified_live');
+
+  runSql(controlledLocalRepair);
+  runSql(controlledLocalRepair);
+  const repairedControlledLocal = runSql(`
+    select concat_ws('|', final.traffic_class, usage.beta_cohort)
+    from public.search_final_outcomes final
+    join public.mcp_usage_events usage
+      on final.source_event_id = 'mcp_usage_events:' || usage.id::text
+    where final.episode_id = '9a0433ef-09e3-416f-b7d4-8adb938aac6d';
+  `).trim();
+  assert.equal(
+    repairedControlledLocal,
+    'controlled_test|controlled-run:migration_fixture',
+  );
+
   const captured = runSql(`
     select string_agg(
       concat_ws(':', channel, final_outcome, final_match_count, legacy_identity_quality),
@@ -415,6 +471,7 @@ try {
       e.environment,
       e.beta_cohort is null,
       f.channel,
+      f.traffic_class,
       f.final_outcome,
       f.final_match_count,
       f.legacy_identity_quality
@@ -426,7 +483,71 @@ try {
   `).trim();
   assert.equal(
     stableLocalCapture,
-    'local_mcp|production|t|local_mcp|success|6|legacy_best_effort',
+    'local_mcp|production|t|local_mcp|unclassified_live|success|6|legacy_best_effort',
+  );
+  const controlledStableLocalId = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'controlled stable local search',
+      6,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('d', 64),
+      null,
+      'high',
+      'controlled-run:stable_fixture',
+      '0.4.22',
+      12,
+      timezone('utc', now())
+    );
+  `).trim();
+  const controlledStableLocalCapture = runSql(`
+    select concat_ws('|',
+      e.beta_cohort,
+      f.channel,
+      f.environment,
+      f.traffic_class,
+      f.final_outcome,
+      f.final_match_count
+    )
+    from public.mcp_usage_events e
+    join public.search_final_outcomes f
+      on f.source_event_id = 'mcp_usage_events:' || e.id::text
+    where e.id = ${controlledStableLocalId};
+  `).trim();
+  assert.equal(
+    controlledStableLocalCapture,
+    'controlled-run:stable_fixture|local_mcp|production|controlled_test|success|6',
+  );
+  const wildcardLookalikeLocalId = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'wildcard lookalike local search',
+      6,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('e', 64),
+      null,
+      'high',
+      'fixture:controlledXlabel',
+      '0.4.22',
+      12,
+      timezone('utc', now())
+    );
+  `).trim();
+  const wildcardLookalikeTrafficClass = runSql(`
+    select f.traffic_class
+    from public.mcp_usage_events e
+    join public.search_final_outcomes f
+      on f.source_event_id = 'mcp_usage_events:' || e.id::text
+    where e.id = ${wildcardLookalikeLocalId};
+  `).trim();
+  assert.equal(
+    wildcardLookalikeTrafficClass,
+    'unclassified_live',
+    'SQL cohort matching must treat the underscore as a literal character.',
   );
 
   runSql(`
@@ -491,6 +612,36 @@ try {
 
   runSql('set role anon; select * from public.search_final_outcomes;', { expectFailure: true });
 
+  runSql(controlledLocalRollback);
+  const rollbackControlledLocalId = runSql(`
+    select public.si_log_mcp_search_outcome_v2(
+      'controlled after focused rollback',
+      1,
+      'all',
+      'all',
+      'results',
+      'search_icons',
+      repeat('e', 64),
+      null,
+      null,
+      'controlled-run:rollback_fixture',
+      '0.4.22',
+      10,
+      timezone('utc', now())
+    );
+  `).trim();
+  const rollbackTrafficClass = runSql(`
+    select final.traffic_class
+    from public.search_final_outcomes final
+    where final.source_event_id = 'mcp_usage_events:${rollbackControlledLocalId}';
+  `).trim();
+  assert.equal(rollbackTrafficClass, 'unclassified_live');
+  const retainedCorrectedTrafficClass = runSql(`
+    select traffic_class
+    from public.search_final_outcomes
+    where episode_id = '9a0433ef-09e3-416f-b7d4-8adb938aac6d';
+  `).trim();
+  assert.equal(retainedCorrectedTrafficClass, 'controlled_test');
   const beforeRollbackCount = Number(runSql('select count(*) from public.search_final_outcomes;').trim());
   runSql(historyFieldRollback);
   runSql(localCoverageRollback);
@@ -564,6 +715,11 @@ try {
     repeated_stable_local_calls_distinct: true,
     final_latency_preserved: true,
     false_reference_coverage_corrected: true,
+    controlled_local_history_corrected: true,
+    controlled_local_future_capture: true,
+    controlled_local_wildcard_lookalike_rejected: true,
+    ordinary_local_capture_unchanged: true,
+    controlled_local_rollback_verified: true,
     stable_local_rollback_verified: true,
     clarification_excluded: true,
     duplicate_episode_rejected: true,

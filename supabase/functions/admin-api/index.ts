@@ -25,6 +25,7 @@ import {
   buildDashboardV2TopLists,
   compactDashboardV2EventRows,
   compactDashboardV2QueryRows,
+  dashboardV2EventRole,
   dashboardV2SearchHistoryRole,
   fetchBoundedDashboardV2Pages,
   filterDashboardV2QueryRows,
@@ -915,6 +916,8 @@ function mapMcpUsageEventToEvidenceRow(row: Record<string, unknown>) {
     source_table: 'mcp_usage_events',
     event_type: row.event_type || null,
     event_id: row.event_id || null,
+    episode_id: metadata.episode_id || row.event_id || null,
+    recovery_chain_id: metadata.recovery_chain_id || null,
     analytics_source: channel,
     analytics_channel: channel,
     environment,
@@ -1391,6 +1394,7 @@ const V2_IDENTITY_PAGE_CONCURRENCY = 4;
 const V2_MAX_ROLLUP_ROWS = 50000;
 const V2_ROLLUP_PAGE_CONCURRENCY = 4;
 const V2_MAX_ICON_ROWS = 5000;
+export const DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS = 120;
 
 function buildDashboardV2CacheKey(endpoint: string, url: URL) {
   const params = [...url.searchParams.entries()]
@@ -1568,6 +1572,8 @@ export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): Sear
     source_table: 'search_final_outcomes',
     event_type: 'search_outcome',
     event_id: row.episode_id || null,
+    episode_id: row.episode_id || null,
+    recovery_chain_id: row.recovery_chain_id || null,
     analytics_source: channel,
     analytics_channel: channel,
     environment: row.environment || 'production',
@@ -1848,6 +1854,254 @@ async function fetchFinalWebDiagnosticRows(
   }
 }
 
+function dashboardV2Identity(value: unknown) {
+  return String(value || '').trim();
+}
+
+function addDashboardV2IdentityIndex(
+  index: Map<string, SearchEvidenceRow[]>,
+  value: unknown,
+  row: SearchEvidenceRow,
+) {
+  const identity = dashboardV2Identity(value);
+  if (!identity) return;
+  const rows = index.get(identity) || [];
+  rows.push(row);
+  index.set(identity, rows);
+}
+
+function uniqueDashboardV2Rows(rows: SearchEvidenceRow[]) {
+  const uniqueRows = new Map<string, SearchEvidenceRow>();
+  for (const row of rows) {
+    const identity = dashboardV2Identity(
+      row.id
+      || `${row.source_table || 'source'}:${row.source_row_id || row.event_id || ''}`,
+    );
+    if (identity) uniqueRows.set(identity, row);
+  }
+  return [...uniqueRows.values()];
+}
+
+export function buildDashboardV2SourceReconciliation({
+  auditRows,
+  usageRows,
+  finalRows,
+  webDiagnosticRows,
+  dataCutoff,
+  sourceRowsComplete = true,
+}: {
+  auditRows: SearchEvidenceRow[];
+  usageRows: SearchEvidenceRow[];
+  finalRows: SearchEvidenceRow[];
+  webDiagnosticRows: SearchEvidenceRow[];
+  dataCutoff: string;
+  sourceRowsComplete?: boolean;
+}) {
+  const dataCutoffMs = Date.parse(dataCutoff);
+  if (!Number.isFinite(dataCutoffMs)) {
+    throw new Error('Source reconciliation requires a valid data cutoff.');
+  }
+  const reconciliationCutoff = new Date(
+    dataCutoffMs - (DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS * 1000),
+  ).toISOString();
+  const reconciliationCutoffMs = Date.parse(reconciliationCutoff);
+  const usageByAuditBacklink = new Map<string, SearchEvidenceRow[]>();
+  const rowsByEpisode = new Map<string, SearchEvidenceRow[]>();
+  const rowsByRecoveryChain = new Map<string, SearchEvidenceRow[]>();
+  const usageByRequest = new Map<string, SearchEvidenceRow[]>();
+  const usageByDedupe = new Map<string, SearchEvidenceRow[]>();
+  const finalSourceEventIds = new Set<string>();
+  const legacyUsageExportIds = new Set<string>();
+
+  for (const row of usageRows) {
+    addDashboardV2IdentityIndex(usageByAuditBacklink, row.search_request_audit_id, row);
+    addDashboardV2IdentityIndex(rowsByEpisode, row.episode_id || row.event_id, row);
+    addDashboardV2IdentityIndex(rowsByRecoveryChain, row.recovery_chain_id, row);
+    addDashboardV2IdentityIndex(usageByRequest, row.request_id, row);
+    addDashboardV2IdentityIndex(usageByDedupe, row.dedupe_key, row);
+  }
+  for (const row of finalRows) {
+    addDashboardV2IdentityIndex(rowsByEpisode, row.episode_id || row.event_id, row);
+    addDashboardV2IdentityIndex(rowsByRecoveryChain, row.recovery_chain_id, row);
+    const sourceEventId = dashboardV2Identity(
+      (row as Record<string, unknown>)._source_event_id,
+    );
+    if (sourceEventId) finalSourceEventIds.add(sourceEventId);
+    if (row.source_table === 'mcp_usage_events') {
+      const usageId = dashboardV2Identity(row.id);
+      if (usageId) legacyUsageExportIds.add(usageId);
+    }
+  }
+  function emptyDiagnosticLinkageCounts(): Record<string, number> {
+    return {
+      audit_backlink: 0,
+      episode_id: 0,
+      recovery_chain_id: 0,
+      exact_request_or_dedupe: 0,
+      pending_linkage: 0,
+      explained_unlinked_diagnostic: 0,
+      unexplained: 0,
+    };
+  }
+
+  function classifyDiagnosticRow(
+    row: SearchEvidenceRow,
+    linkageCounts: Record<string, number>,
+    allowDirectGatewayExclusion: boolean,
+  ): SearchEvidenceRow {
+    const auditId = dashboardV2Identity(row.source_row_id);
+    const episodeId = dashboardV2Identity(row.episode_id);
+    const recoveryChainId = dashboardV2Identity(row.recovery_chain_id);
+    const exactCandidates = uniqueDashboardV2Rows([
+      ...(usageByRequest.get(dashboardV2Identity(row.request_id)) || []),
+      ...(usageByDedupe.get(dashboardV2Identity(row.dedupe_key)) || []),
+    ]);
+    const candidates = [
+      {
+        tier: 'audit_backlink',
+        rows: usageByAuditBacklink.get(auditId) || [],
+      },
+      {
+        tier: 'episode_id',
+        rows: rowsByEpisode.get(episodeId) || [],
+      },
+      {
+        tier: 'recovery_chain_id',
+        rows: rowsByRecoveryChain.get(recoveryChainId) || [],
+      },
+      {
+        tier: 'exact_request_or_dedupe',
+        rows: exactCandidates.length === 1 ? exactCandidates : [],
+      },
+    ];
+    const linked = candidates.find((entry) => entry.rows.length > 0);
+    let diagnosticAccountingStatus = 'unexplained';
+    let diagnosticLinkageTier = 'unexplained';
+    let diagnosticExplanation = 'A product identity exists but no exact linked outcome or diagnostic was found.';
+    let diagnosticLinkMatchCount = 0;
+    if (linked) {
+      diagnosticAccountingStatus = 'linked_diagnostic';
+      diagnosticLinkageTier = linked.tier;
+      diagnosticExplanation = 'Linked by an exact recorded identity.';
+      diagnosticLinkMatchCount = linked.rows.length;
+    } else {
+      const observedAtMs = Date.parse(String(row.created_at || ''));
+      if (Number.isFinite(observedAtMs) && observedAtMs >= reconciliationCutoffMs) {
+        diagnosticAccountingStatus = 'pending_linkage';
+        diagnosticLinkageTier = 'pending_linkage';
+        diagnosticExplanation = 'Inside the 120-second reconciliation grace period.';
+      } else if (
+        allowDirectGatewayExclusion
+        &&
+        row.signal_type === 'hosted_search_audit'
+        && row.channel !== 'web'
+        && !episodeId
+        && !recoveryChainId
+        && exactCandidates.length === 0
+      ) {
+        diagnosticAccountingStatus = 'explained_unlinked_gateway_diagnostic';
+        diagnosticLinkageTier = 'explained_unlinked_diagnostic';
+        diagnosticExplanation = 'Direct gateway work has no product episode and remains diagnostic only.';
+      }
+    }
+    linkageCounts[diagnosticLinkageTier] += 1;
+    return {
+      ...row,
+      diagnostic_accounting_status: diagnosticAccountingStatus,
+      diagnostic_linkage_tier: diagnosticLinkageTier,
+      diagnostic_explanation: diagnosticExplanation,
+      diagnostic_link_match_count: diagnosticLinkMatchCount,
+    };
+  }
+
+  const auditLinkageCounts = emptyDiagnosticLinkageCounts();
+  const webDiagnosticLinkageCounts = emptyDiagnosticLinkageCounts();
+  const annotatedAuditRows = auditRows.map((row) => (
+    classifyDiagnosticRow(row, auditLinkageCounts, true)
+  ));
+  const annotatedWebDiagnosticRows = webDiagnosticRows.map((row) => (
+    classifyDiagnosticRow(row, webDiagnosticLinkageCounts, false)
+  ));
+  const diagnosticRows = [...annotatedAuditRows, ...annotatedWebDiagnosticRows];
+
+  const relevantUsageRows = usageRows.filter((row) => (
+    row.event_type === 'search_outcome'
+    && ['search_icons', 'recommend_icons'].includes(String(row.tool_name || ''))
+    && ['hosted_mcp', 'local_mcp'].includes(String(row.channel || ''))
+  ));
+  const usageCounts: Record<string, number> = {
+    linked_final: 0,
+    represented_legacy_final: 0,
+    pending_linkage: 0,
+    unexplained: 0,
+  };
+  for (const row of relevantUsageRows) {
+    const rowId = dashboardV2Identity(row.id);
+    if (finalSourceEventIds.has(rowId)) {
+      usageCounts.linked_final += 1;
+      continue;
+    }
+    if (legacyUsageExportIds.has(rowId)) {
+      usageCounts.represented_legacy_final += 1;
+      continue;
+    }
+    const observedAtMs = Date.parse(String(row.created_at || ''));
+    if (Number.isFinite(observedAtMs) && observedAtMs >= reconciliationCutoffMs) {
+      usageCounts.pending_linkage += 1;
+    } else {
+      usageCounts.unexplained += 1;
+    }
+  }
+
+  const checks = {
+    source_rows_complete: sourceRowsComplete,
+    audit_rows_accounted:
+      auditLinkageCounts.unexplained === 0,
+    usage_rows_accounted:
+      usageCounts.unexplained === 0,
+    final_rows_have_product_roles:
+      finalRows.every((row) => ['top_level', 'web_top_level'].includes(dashboardV2EventRole(row))),
+    web_diagnostics_have_diagnostic_roles:
+      annotatedWebDiagnosticRows.every((row) => dashboardV2EventRole(row) === 'diagnostic'),
+    diagnostics_kept_out_of_product_rows:
+      diagnosticRows.every((row) => (
+        dashboardV2EventRole(row) === 'diagnostic'
+        && !['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
+      )),
+    web_diagnostics_accounted:
+      webDiagnosticLinkageCounts.unexplained === 0,
+  };
+  const status = Object.values(checks).every(Boolean) ? 'passed' : 'needs_attention';
+  return {
+    schema_version: 1,
+    status,
+    data_cutoff: new Date(dataCutoffMs).toISOString(),
+    reconciliation_cutoff: reconciliationCutoff,
+    grace_period_seconds: DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS,
+    checks,
+    counts: {
+      eligible_audit_rows: auditRows.length,
+      relevant_usage_rows: relevantUsageRows.length,
+      product_rows_exported: finalRows.length,
+      web_diagnostics_exported: annotatedWebDiagnosticRows.length,
+      diagnostics_exported: diagnosticRows.length,
+      pending_rows:
+        auditLinkageCounts.pending_linkage
+        + webDiagnosticLinkageCounts.pending_linkage
+        + usageCounts.pending_linkage,
+      explained_exclusions: auditLinkageCounts.explained_unlinked_diagnostic,
+      unexplained_rows:
+        auditLinkageCounts.unexplained
+        + webDiagnosticLinkageCounts.unexplained
+        + usageCounts.unexplained,
+    },
+    audit_linkage_counts: auditLinkageCounts,
+    web_diagnostic_linkage_counts: webDiagnosticLinkageCounts,
+    usage_accounting_counts: usageCounts,
+    diagnostic_rows: diagnosticRows,
+  };
+}
+
 async function fetchDashboardV2Telemetry(
   adminClient: SupabaseClient,
   filters: ReturnType<typeof parseDashboardV2Filters>,
@@ -1904,7 +2158,7 @@ async function fetchDashboardV2IdentityTelemetry(
   if (settings.dashboard_source === 'final') {
     const finalRows = await fetchCompleteFinalOutcomeRows(adminClient, filters, settings);
     if (!includeDiagnostics) return finalRows;
-    const [auditRows, webDiagnosticRows] = await Promise.all([
+    const [auditSourceRows, usageSourceRows, webDiagnosticRows] = await Promise.all([
       fetchHostedSearchAuditRows(
         adminClient,
         filters.from,
@@ -1913,25 +2167,61 @@ async function fetchDashboardV2IdentityTelemetry(
         filters.channel,
         false,
       ),
+      fetchMcpUsageEventRows(
+        adminClient,
+        filters.from,
+        filters.to_exclusive,
+        V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+        filters.channel,
+        false,
+        ['search_outcome'],
+      ),
       fetchFinalWebDiagnosticRows(adminClient, filters),
     ]);
-    const diagnostics = auditRows
-      .filter((row: Record<string, unknown>) => Boolean(row.episode_id))
-      .map((row): SearchEvidenceRow => ({
-        ...row,
-        signal_type: 'hosted_search_audit',
-      }));
+    const auditRowsTruncated = auditSourceRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+    const usageRowsTruncated = usageSourceRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE;
+    const auditRows = filterDashboardV2Rows(
+      auditSourceRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE),
+      filters,
+    ) as SearchEvidenceRow[];
+    const usageRows = filterDashboardV2Rows(
+      usageSourceRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE),
+      filters,
+    ) as SearchEvidenceRow[];
+    const filteredWebDiagnosticRows = filterDashboardV2Rows(
+      webDiagnosticRows.rows,
+      filters,
+    ) as SearchEvidenceRow[];
+    const reconciliation = buildDashboardV2SourceReconciliation({
+      auditRows,
+      usageRows,
+      finalRows: finalRows.rows,
+      webDiagnosticRows: filteredWebDiagnosticRows,
+      dataCutoff: filters.data_cutoff,
+      sourceRowsComplete: !(
+        finalRows.truncated
+        || auditRowsTruncated
+        || usageRowsTruncated
+        || webDiagnosticRows.truncated
+      ),
+    });
+    const {
+      diagnostic_rows: diagnosticRows,
+      ...sourceReconciliation
+    } = reconciliation;
     return {
       rows: [
         ...finalRows.rows,
         ...filterDashboardV2Rows(
-          [...diagnostics, ...webDiagnosticRows.rows],
+          diagnosticRows,
           filters,
         ) as SearchEvidenceRow[],
       ],
       truncated: finalRows.truncated
-        || auditRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+        || auditRowsTruncated
+        || usageRowsTruncated
         || webDiagnosticRows.truncated,
+      source_reconciliation: sourceReconciliation,
     };
   }
 
@@ -2914,6 +3204,13 @@ async function buildDashboardV2SearchEventsPayload(
       filters,
       { includeDiagnostics: true },
     );
+    const sourceReconciliation = 'source_reconciliation' in telemetry
+      ? telemetry.source_reconciliation
+      : {
+        schema_version: 1,
+        status: 'not_available',
+        reason: 'Source-backed reconciliation requires the final-outcome source.',
+      };
     const linkedRows = await addPrivacySafeRootRequestPrefixes(telemetry.rows);
     const sortedRows = [...linkedRows].sort((left, right) => (
       String(right.created_at || '').localeCompare(String(left.created_at || ''))
@@ -2949,6 +3246,7 @@ async function buildDashboardV2SearchEventsPayload(
         server_version: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.mcp_server_version)),
         server_build: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.server_build)),
       },
+      source_reconciliation: sourceReconciliation,
     };
   });
   const requestedSnapshotId = String(url.searchParams.get('snapshot_id') || '').trim();
@@ -2977,6 +3275,7 @@ async function buildDashboardV2SearchEventsPayload(
     snapshot_id: snapshot.id,
     event_scope: eventScope,
     event_counts: snapshot.event_counts,
+    source_reconciliation: snapshot.source_reconciliation,
     pagination: {
       page: currentPage,
       page_size: pageSize,
@@ -3013,6 +3312,7 @@ async function buildDashboardV2SearchEventsPayload(
       snapshot_generated_at: snapshot.generated_at,
       snapshot_generation_ms: snapshot.generation_ms,
       snapshot_ttl_ms: SEARCH_EVENT_SNAPSHOT_CACHE_TTL_MS,
+      source_reconciliation_status: snapshot.source_reconciliation?.status || 'not_available',
     }),
   };
 }

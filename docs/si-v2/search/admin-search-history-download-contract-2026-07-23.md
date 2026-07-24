@@ -22,9 +22,9 @@ This compatibility read is deduplicated by the source event ID. It does not use 
 
 Web and Local MCP final outcomes begin at their independently verified cutovers. Earlier rows remain investigation evidence and are not presented as comparable final product outcomes.
 
-### Hosted search diagnostics
+### Search diagnostics
 
-Rows from `search_request_audit` are supporting diagnostics. They can add attempt-level detail, but they must not be counted as additional user activity when a final outcome already represents the product action.
+Rows from `search_request_audit` and `search_episode_diagnostics` are supporting diagnostics. They can add attempt-level detail, but they must not be counted as additional user activity when a final outcome already represents the product action.
 
 ## Default Search history scope
 
@@ -156,7 +156,7 @@ Columns:
 - `pro`
 - `identity_quality`
 
-Hosted search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
+Search diagnostics are excluded. Web search activity is not mixed into this file because its telemetry grain differs.
 
 `returned_icon_refs_recorded` is false when a positive result count has no usable icon references. An empty recorded list remains valid for a zero-result request.
 
@@ -175,7 +175,8 @@ The file keeps these data sets separate:
 - `search_summary`
 - `request_log`
 - `web_searches`
-- `hosted_diagnostics`
+- `diagnostics`
+- `source_reconciliation`
 - field coverage
 - CSV schemas
 - data definitions
@@ -183,7 +184,7 @@ The file keeps these data sets separate:
 
 This separation prevents diagnostic rows from inflating user activity while preserving supporting detail for investigation.
 
-The bundle includes export schema version `3.2`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
+The bundle includes export schema version `4.0`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
 
 - every summary row has at least one request
 - summary request totals match groupable primary events
@@ -192,13 +193,16 @@ The bundle includes export schema version `3.2`, selected period and filters, pl
 - request event IDs are recorded
 - request roles are valid
 - diagnostic roles are valid
+- source rows reconcile to exported product outcomes or explained diagnostics
 - outcome component counts equal summary request counts
 - Success labels agree with successful request counts
 - no represented request remains unclassified
 - positive result rows that claim references were recorded contain at least one reference
 - searcher-detail availability agrees with the included detail
 
-The bundle reports structural and meaning checks separately. Its overall status passes only when both sets pass.
+The bundle reports structural, meaning, and source reconciliation checks separately. Its overall status passes only when all three pass.
+
+Direct calls to the hosted search gateway can be valid diagnostics without a top-level product outcome. They remain outside Search summary and request totals. A diagnostic is accepted only when it is linked by an exact recorded identifier, is still within the short write grace period, or is clearly identified as a direct gateway request. Old rows that cannot be explained make source reconciliation fail.
 
 A positive result with `returned_icon_refs_recorded = false` is a coverage warning, not a false integrity claim. The field coverage section shows how many rows lack references. A positive result with `returned_icon_refs_recorded = true` and an empty list fails the meaning checks.
 

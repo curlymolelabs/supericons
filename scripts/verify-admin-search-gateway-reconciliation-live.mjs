@@ -16,6 +16,8 @@ import { chromium } from 'playwright';
 import { createControlledRunHeaders } from '../mcp/controlled-run-auth.js';
 
 export const RECONCILIATION_GRACE_SECONDS = 120;
+const MAX_HOSTED_LATENCY_REGRESSION_MS = 1_000;
+const MAX_HOSTED_RESPONSE_LATENCY_MS = 30_000;
 const REST_PAGE_SIZE = 1000;
 const PRODUCT_SETTLEMENT_TIMEOUT_MS = 60_000;
 const SOURCE_SETTLEMENT_POLL_MS = 5_000;
@@ -462,6 +464,7 @@ async function runWebsiteProbe({
 
   try {
     const { search } = await waitForIconViewReadiness(page, websiteUrl);
+    const responseStartedAt = Date.now();
     const hostedResponsePromise = page.waitForResponse(
       (response) => browserControlledRequestKind(response.request(), {
         gatewayUrl,
@@ -494,6 +497,7 @@ async function runWebsiteProbe({
       telemetry_bodies: telemetryBodies,
       signed_request_destinations: [...new Set(observed.signed_request_destinations)],
       console_errors: browserErrors,
+      response_latency_ms: Date.now() - responseStartedAt,
       fingerprint: stableFingerprint({
         http_status: hostedResponse.status(),
         result_count: (hostedPayload.results || []).length,
@@ -527,6 +531,7 @@ async function runHostedMcpProbe({
     version: '1.0.0',
   });
   try {
+    const responseStartedAt = Date.now();
     await client.connect(transport);
     const result = await client.callTool({
       name: 'search_icons',
@@ -537,6 +542,7 @@ async function runHostedMcpProbe({
     const refs = toolRefs(payload);
     return {
       result_count: refs.length,
+      response_latency_ms: Date.now() - responseStartedAt,
       fingerprint: stableFingerprint({
         http_status: 200,
         result_count: refs.length,
@@ -571,6 +577,7 @@ async function runLocalMcpProbe({
     version: '1.0.0',
   });
   try {
+    const responseStartedAt = Date.now();
     await client.connect(transport);
     const result = await client.callTool({
       name: 'search_icons',
@@ -581,6 +588,7 @@ async function runLocalMcpProbe({
     const refs = toolRefs(payload);
     return {
       result_count: refs.length,
+      response_latency_ms: Date.now() - responseStartedAt,
       fingerprint: stableFingerprint({
         http_status: 200,
         result_count: refs.length,
@@ -600,6 +608,7 @@ async function runDirectProbe({
   requestId,
   controlledHeaders = {},
 }) {
+  const responseStartedAt = Date.now();
   const response = await fetch(gatewayUrl, {
     method: 'POST',
     headers: {
@@ -621,6 +630,7 @@ async function runDirectProbe({
   assert.equal(response.status, 200, `Direct gateway probe returned HTTP ${response.status}.`);
   return {
     result_count: (payload.results || []).length,
+    response_latency_ms: Date.now() - responseStartedAt,
     fingerprint: stableFingerprint({
       http_status: response.status,
       result_count: (payload.results || []).length,
@@ -1129,6 +1139,7 @@ async function main() {
         controlledLabel,
         fingerprint: fingerprints.web,
         extra: {
+          response_latency_ms: website.response_latency_ms,
           browser: {
             visible_icon_cells: website.visible_icon_cells,
             hosted_http_status: website.hosted_http_status,
@@ -1149,6 +1160,9 @@ async function main() {
         expectedFinalChannel: 'hosted_mcp',
         controlledLabel,
         fingerprint: fingerprints.hosted_mcp,
+        extra: {
+          response_latency_ms: hosted.response_latency_ms,
+        },
       }),
       buildProbeEvidence({
         id: 3,
@@ -1159,6 +1173,9 @@ async function main() {
         expectedFinalChannel: 'local_mcp',
         controlledLabel,
         fingerprint: fingerprints.local_mcp,
+        extra: {
+          response_latency_ms: local.response_latency_ms,
+        },
       }),
       buildProbeEvidence({
         id: 4,
@@ -1169,6 +1186,9 @@ async function main() {
         expectedFinalChannel: null,
         controlledLabel,
         fingerprint: fingerprints.direct_unsigned,
+        extra: {
+          response_latency_ms: directUnsigned.response_latency_ms,
+        },
       }),
       buildProbeEvidence({
         id: 5,
@@ -1179,6 +1199,9 @@ async function main() {
         expectedFinalChannel: null,
         controlledLabel,
         fingerprint: fingerprints.direct_signed,
+        extra: {
+          response_latency_ms: directSigned.response_latency_ms,
+        },
       }),
     ];
 
@@ -1273,12 +1296,45 @@ async function main() {
         comparisons,
         status: comparisons.every((row) => row.matches) ? 'passed' : 'failed',
       };
+      const beforeHosted = baseline.probes.find((probe) => probe.id === 2);
+      const afterHosted = evidence.probes.find((probe) => probe.id === 2);
+      const beforeHostedLatency = Number(beforeHosted?.response_latency_ms);
+      const afterHostedLatency = Number(afterHosted?.response_latency_ms);
+      const hostedLatencyComparable = (
+        Number.isFinite(beforeHostedLatency)
+        && Number.isFinite(afterHostedLatency)
+      );
+      const hostedLatencyDelta = hostedLatencyComparable
+        ? afterHostedLatency - beforeHostedLatency
+        : null;
+      evidence.hosted_latency_comparison = {
+        before_ms: hostedLatencyComparable ? beforeHostedLatency : null,
+        after_ms: hostedLatencyComparable ? afterHostedLatency : null,
+        delta_ms: hostedLatencyDelta,
+        maximum_regression_ms: MAX_HOSTED_LATENCY_REGRESSION_MS,
+        maximum_response_ms: MAX_HOSTED_RESPONSE_LATENCY_MS,
+        status: (
+          hostedLatencyComparable
+          && hostedLatencyDelta <= MAX_HOSTED_LATENCY_REGRESSION_MS
+          && afterHostedLatency <= MAX_HOSTED_RESPONSE_LATENCY_MS
+        ) ? 'passed' : 'failed',
+      };
       if (evidence.stable_search_fingerprint_comparison.status !== 'passed') {
         evidence.overall_gate_verdict = 'search_fingerprint_changed';
+      } else if (evidence.hosted_latency_comparison.status !== 'passed') {
+        evidence.overall_gate_verdict = 'hosted_latency_regression';
       }
     } else {
       evidence.stable_search_fingerprint_comparison = {
         comparisons: [],
+        status: 'baseline_recorded',
+      };
+      evidence.hosted_latency_comparison = {
+        before_ms: evidence.probes.find((probe) => probe.id === 2)?.response_latency_ms ?? null,
+        after_ms: null,
+        delta_ms: null,
+        maximum_regression_ms: MAX_HOSTED_LATENCY_REGRESSION_MS,
+        maximum_response_ms: MAX_HOSTED_RESPONSE_LATENCY_MS,
         status: 'baseline_recorded',
       };
     }

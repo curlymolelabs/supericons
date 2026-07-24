@@ -107,7 +107,7 @@ function excludes(source, value, label) {
   'Last search',
   'renderPagination',
   'iconSvg',
-  "SEARCH_EXPORT_SCHEMA_VERSION = '3.2'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.0'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",

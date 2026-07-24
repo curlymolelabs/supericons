@@ -459,6 +459,8 @@ const eventRows = [
     searcher_identifier: 'anonymous:diag1',
     source: 'search_request_audit',
     event_role: 'diagnostic',
+    diagnostic_accounting_status: 'linked',
+    diagnostic_linkage_tier: 'episode_id',
   },
 ];
 const clientRows = Array.from({ length: 55 }, (_, index) => ({
@@ -658,6 +660,19 @@ function responseFor(path, searchParams = new URLSearchParams()) {
       definitions: {
         grain: 'One deduplicated event.',
         null_values: 'Null means the field was not recorded.',
+      },
+      source_reconciliation: {
+        status: 'passed',
+        cutoff_at: '2026-07-17T08:00:00Z',
+        grace_seconds: 120,
+        product_source_rows: 105,
+        diagnostic_source_rows: 2,
+        linked_product_rows: 105,
+        linked_diagnostic_rows: 1,
+        explained_direct_gateway_diagnostics: 1,
+        pending_rows: 0,
+        unexplained_rows: 0,
+        source_complete: true,
       },
       meta,
     };
@@ -994,9 +1009,24 @@ try {
     && new URL(request.url()).searchParams.get('include_test') === 'true'
   ));
   await page.check('#includeSearchTestTraffic');
-  await includeTestRequest;
+  const includedTestTrafficRequest = await includeTestRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  ok(
+    new URL(includedTestTrafficRequest.url()).searchParams.get('filter_key')?.includes('include_test=true'),
+    'The included test-traffic request carries the wrong filter key.',
+  );
   ok((await page.locator('#searchHistorySubtitle').innerText()).includes('test traffic included'), 'Search history did not update its test-traffic scope.');
+  await page.click('#searchDownloadToggle');
+  const includedTestAuditDownload = page.waitForEvent('download');
+  await page.click('[data-export="audit-bundle-json"]');
+  const includedTestAudit = await includedTestAuditDownload;
+  const includedTestAuditPath = await includedTestAudit.path();
+  const includedTestAuditPayload = JSON.parse(await readFile(includedTestAuditPath, 'utf8'));
+  ok(includedTestAuditPayload.filters.include_test === true, 'The included test-traffic export reports the wrong filter.');
+  ok(
+    includedTestAuditPayload.source_meta.filter_key.includes('include_test=true'),
+    'The included test-traffic export source metadata reports the wrong filter key.',
+  );
   const excludeTestRequest = page.waitForRequest((request) => (
     request.url().includes('/functions/v1/admin-api/v2/search')
     && new URL(request.url()).searchParams.get('include_test') === 'false'
@@ -1042,9 +1072,10 @@ try {
   });
   ok((await approximateLowRow.innerText()).includes('Low'), 'Approximate-low results were not shown as Low.');
   ok(!(await approximateLowRow.innerText()).includes('Success'), 'Approximate-low results were shown as Success.');
+  const searchHistoryPanelText = await queryPanel.innerText();
   ok(
-    (await page.locator('#queryExplorer').innerText()).includes('Website final-outcome coverage begins'),
-    'The independent Web cutover warning is not visible above Search history.',
+    searchHistoryPanelText.includes('Website final-outcome coverage begins'),
+    `The independent Web cutover warning is not visible above Search history: ${searchHistoryPanelText.slice(0, 300)}`,
   );
   await mkdir('output/playwright', { recursive: true });
   await page.screenshot({
@@ -1134,12 +1165,14 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '3.2', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '4.0', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
   ok(auditPayload.web_searches.length === 1, 'The audit JSON does not separate web searches.');
-  ok(auditPayload.hosted_diagnostics.length === 1, 'The audit JSON does not separate hosted diagnostics.');
+  ok(auditPayload.diagnostics.length === 1, 'The audit JSON does not separate diagnostics.');
+  ok(auditPayload.source_reconciliation.status === 'passed', 'The audit JSON source reconciliation did not pass.');
+  ok(auditPayload.integrity_checks.checks.source_reconciliation_passes === true, 'The audit JSON does not require source reconciliation.');
   ok(Boolean(auditPayload.integrity_checks.status), 'The audit JSON omits integrity checks.');
   ok(auditPayload.integrity_checks.semantic_status === 'needs_attention', 'The audit JSON did not flag the fixture\'s unclassified lookup.');
   ok(auditPayload.integrity_checks.checks.summary_outcome_components_reconcile === true, 'The audit JSON does not reconcile outcome components.');

@@ -1,5 +1,7 @@
 import {
+  buildDashboardV2SourceReconciliation,
   buildFinalOutcomeCoverage,
+  DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS,
   finalOutcomeIsAfterCutover,
   mapFinalOutcomeToEvidenceRow,
   mergeFinalAndLegacyHostedOutcomeRows,
@@ -144,12 +146,189 @@ Deno.test('excludes controlled traffic by default and warns across cutovers', ()
     traffic_class: 'unclassified_live',
     search_query: 'live',
   }, {
-    environment: 'test',
-    channel: 'hosted_mcp',
+    environment: 'production',
+    channel: 'local_mcp',
     traffic_class: 'controlled_test',
     search_query: 'test',
   }], filters);
   assert(filtered.length === 1 && filtered[0].search_query === 'live', 'Controlled traffic entered the default view.');
+  const includeControlledFilters = parseDashboardV2Filters(
+    new URL('https://example.test/v2/search?window=7d&channel=all&include_test=true'),
+    new Date('2026-07-24T12:00:00.000Z'),
+  );
+  const included = filterDashboardV2Rows([{
+    environment: 'production',
+    channel: 'hosted_mcp',
+    traffic_class: 'unclassified_live',
+    search_query: 'live',
+  }, {
+    environment: 'production',
+    channel: 'local_mcp',
+    traffic_class: 'controlled_test',
+    search_query: 'test',
+  }], includeControlledFilters);
+  assert(included.length === 2, 'The explicit test-traffic filter did not include controlled Local MCP traffic.');
   const coverage = buildFinalOutcomeCoverage(settings, filters);
   assert(coverage.warnings.length === 2, 'A cross-cutover warning is missing.');
+});
+
+Deno.test('reconciles final outcomes and keeps direct gateway work diagnostic only', () => {
+  const episodeId = '00000000-0000-4000-8000-000000000010';
+  const finalRow = mapFinalOutcomeToEvidenceRow({
+    id: 10,
+    episode_id: episodeId,
+    recovery_chain_id: episodeId,
+    source_event_id: 'mcp_usage_events:10',
+    channel: 'hosted_mcp',
+    query: 'calendar',
+    environment: 'production',
+    traffic_class: 'unclassified_live',
+    client_family: 'chatgpt',
+    tool_name: 'search_icons',
+    final_match_count: 6,
+    final_outcome: 'success',
+    settlement_state: 'completed',
+    completed_at: '2026-07-24T11:55:00.000Z',
+  });
+  const usageRow = {
+    id: 'mcp_usage_events:10',
+    source_row_id: '10',
+    source_table: 'mcp_usage_events',
+    event_type: 'search_outcome',
+    event_id: episodeId,
+    episode_id: episodeId,
+    recovery_chain_id: episodeId,
+    signal_type: 'search_attempt',
+    channel: 'hosted_mcp',
+    tool_name: 'search_icons',
+    created_at: '2026-07-24T11:55:00.000Z',
+  };
+  const auditRows = [{
+    id: 'search_request_audit:20',
+    source_row_id: '20',
+    source_table: 'search_request_audit',
+    signal_type: 'hosted_search_audit',
+    episode_id: episodeId,
+    recovery_chain_id: episodeId,
+    channel: 'hosted_mcp',
+    created_at: '2026-07-24T11:55:00.000Z',
+  }, {
+    id: 'search_request_audit:21',
+    source_row_id: '21',
+    source_table: 'search_request_audit',
+    signal_type: 'hosted_search_audit',
+    channel: 'hosted_mcp',
+    created_at: '2026-07-24T11:55:01.000Z',
+  }, {
+    id: 'search_request_audit:22',
+    source_row_id: '22',
+    source_table: 'search_request_audit',
+    signal_type: 'hosted_search_audit',
+    channel: 'hosted_mcp',
+    environment: 'test',
+    created_at: '2026-07-24T11:55:02.000Z',
+  }, {
+    id: 'search_request_audit:23',
+    source_row_id: '23',
+    source_table: 'search_request_audit',
+    signal_type: 'hosted_search_audit',
+    channel: 'hosted_mcp',
+    created_at: '2026-07-24T11:58:00.000Z',
+  }];
+  const webDiagnosticRow = {
+    id: 'search_episode_diagnostics:30',
+    source_row_id: '30',
+    source_table: 'search_episode_diagnostics',
+    signal_type: 'search_episode_diagnostic',
+    episode_id: '00000000-0000-4000-8000-000000000030',
+    channel: 'web',
+    created_at: '2026-07-24T11:55:03.000Z',
+  };
+  const webFinalRow = mapFinalOutcomeToEvidenceRow({
+    id: 30,
+    episode_id: '00000000-0000-4000-8000-000000000030',
+    recovery_chain_id: '00000000-0000-4000-8000-000000000030',
+    source_event_id: 'icon_evidence:30',
+    channel: 'web',
+    query: 'web calendar',
+    environment: 'production',
+    traffic_class: 'unclassified_live',
+    client_family: 'web',
+    tool_name: 'web_search',
+    final_match_count: 8,
+    final_outcome: 'success',
+    settlement_state: 'completed',
+    completed_at: '2026-07-24T11:55:03.000Z',
+  });
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: auditRows as never[],
+    usageRows: [usageRow] as never[],
+    finalRows: [finalRow, webFinalRow],
+    webDiagnosticRows: [webDiagnosticRow] as never[],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS === 120, 'The reconciliation grace period changed.');
+  assert(reconciliation.status === 'passed', 'Valid source rows did not reconcile.');
+  assert(reconciliation.audit_linkage_counts.episode_id === 1, 'The exact episode link was missed.');
+  assert(
+    reconciliation.audit_linkage_counts.explained_unlinked_diagnostic === 2,
+    'Direct gateway diagnostics were not explained.',
+  );
+  assert(reconciliation.audit_linkage_counts.pending_linkage === 1, 'The boundary row was not pending.');
+  assert(
+    reconciliation.web_diagnostic_linkage_counts.episode_id === 1,
+    'The Web diagnostic was not linked to its final outcome.',
+  );
+  assert(reconciliation.counts.unexplained_rows === 0, 'A valid source row became unexplained.');
+  const diagnosticEvents = compactDashboardV2EventRows(reconciliation.diagnostic_rows);
+  assert(
+    diagnosticEvents.every((row: Record<string, unknown>) => row.event_role === 'diagnostic'),
+    'A supporting diagnostic entered the product event roles.',
+  );
+  assert(
+    diagnosticEvents.some((row: Record<string, unknown>) => (
+      row.diagnostic_accounting_status === 'explained_unlinked_gateway_diagnostic'
+    )),
+    'The diagnostic accounting status was not exported.',
+  );
+});
+
+Deno.test('fails source reconciliation for an old product identity with no exact outcome', () => {
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: [{
+      id: 'search_request_audit:40',
+      source_row_id: '40',
+      source_table: 'search_request_audit',
+      signal_type: 'hosted_search_audit',
+      episode_id: '00000000-0000-4000-8000-000000000040',
+      channel: 'hosted_mcp',
+      created_at: '2026-07-24T11:57:59.999Z',
+    }] as never[],
+    usageRows: [],
+    finalRows: [],
+    webDiagnosticRows: [],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(reconciliation.status === 'needs_attention', 'An unexplained old source row passed reconciliation.');
+  assert(reconciliation.counts.unexplained_rows === 1, 'The unexplained row was not counted.');
+});
+
+Deno.test('fails source reconciliation when an old Web diagnostic has no final outcome', () => {
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: [],
+    usageRows: [],
+    finalRows: [],
+    webDiagnosticRows: [{
+      id: 'search_episode_diagnostics:50',
+      source_row_id: '50',
+      source_table: 'search_episode_diagnostics',
+      signal_type: 'search_episode_diagnostic',
+      episode_id: '00000000-0000-4000-8000-000000000050',
+      channel: 'web',
+      created_at: '2026-07-24T11:57:59.999Z',
+    }] as never[],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(reconciliation.status === 'needs_attention', 'An orphaned Web diagnostic passed reconciliation.');
+  assert(reconciliation.counts.unexplained_rows === 1, 'The orphaned Web diagnostic was not counted.');
 });

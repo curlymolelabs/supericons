@@ -537,8 +537,8 @@ function baseFilterParams({ forSearch = false } = {}) {
   return params;
 }
 
-function activeFilterKey() {
-  return baseFilterParams().toString();
+function activeFilterKey({ forSearch = false } = {}) {
+  return baseFilterParams({ forSearch }).toString();
 }
 
 function beginDashboardView() {
@@ -557,7 +557,7 @@ function sharedParams({ forSearch = false, includeView = true } = {}) {
   if (includeView && state.view) {
     params.set('view_id', state.view.id);
     params.set('data_cutoff', state.view.cutoff);
-    params.set('filter_key', state.view.filterKey);
+    params.set('filter_key', activeFilterKey({ forSearch }));
   }
   return params;
 }
@@ -587,11 +587,12 @@ function endpointDataKey(endpoint) {
 
 function acceptsDashboardView(endpoint, payload) {
   if (endpoint === 'accounts') return true;
+  const expectedFilterKey = activeFilterKey({ forSearch: endpoint === 'search' });
   return Boolean(
     state.view
     && payload?.meta?.view_id === state.view.id
     && payload?.meta?.data_cutoff === state.view.cutoff
-    && payload?.meta?.filter_key === state.view.filterKey
+    && payload?.meta?.filter_key === expectedFilterKey
   );
 }
 
@@ -922,7 +923,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '3.2';
+const SEARCH_EXPORT_SCHEMA_VERSION = '4.0';
 
 function searchExportPeriod() {
   const labels = {
@@ -1048,7 +1049,13 @@ function searchSummaryKey(row = {}) {
   ]);
 }
 
-function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diagnostics) {
+function searchAuditIntegrity(
+  summaryRows,
+  topLevelEvents,
+  webSearchEvents,
+  diagnostics,
+  sourceReconciliation,
+) {
   const summaries = normalizeList(summaryRows);
   const primaryEvents = [...normalizeList(topLevelEvents), ...normalizeList(webSearchEvents)];
   const groupablePrimaryEvents = primaryEvents.filter((row) => safeText(row.query, '').trim());
@@ -1120,6 +1127,7 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
     request_event_ids_are_recorded: missingIdentifiers === 0,
     request_roles_are_valid: unexpectedPrimaryRoles === 0,
     diagnostic_roles_are_valid: unexpectedDiagnosticRoles === 0,
+    source_reconciliation_passes: sourceReconciliation?.status === 'passed',
   };
   const semanticChecks = {
     summary_outcome_components_reconcile: componentGapRows.length === 0,
@@ -1152,7 +1160,7 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
       groupable_primary_events: groupablePrimaryEvents.length,
       request_log_rows: normalizeList(topLevelEvents).length,
       web_searches: normalizeList(webSearchEvents).length,
-      hosted_diagnostics: normalizeList(diagnostics).length,
+      diagnostics: normalizeList(diagnostics).length,
       zero_request_summary_rows: zeroRequestRows.length,
       duplicate_summary_keys: duplicateSummaryKeys,
       duplicate_request_event_ids: duplicateIdentifiers,
@@ -1166,6 +1174,9 @@ function searchAuditIntegrity(summaryRows, topLevelEvents, webSearchEvents, diag
       recorded_positive_result_missing_ref_rows: recordedPositiveResultMissingRefRows.length,
       untruthful_searcher_detail_rows: untruthfulSearcherDetailRows.length,
       suspicious_query_text_rows: suspiciousQueryTextRows.length,
+    },
+    source_reconciliation: sourceReconciliation || {
+      status: 'not_available',
     },
   };
 }
@@ -1715,7 +1726,14 @@ function renderQueryExplorer() {
     const summaryRows = number(summary.summary_rows ?? summary.table_rows ?? state.data.search?.pagination?.total);
     const requests = number(summary.requests ?? summary.activities ?? summary.history_attempts);
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
-    subtitle.textContent = `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} searches | ${testScope}`;
+    const coverageWarning = normalizeList(state.data.search?.coverage?.warnings)
+      .map((warning) => safeText(warning))
+      .filter(Boolean)
+      .join(' ');
+    subtitle.textContent = [
+      `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} searches | ${testScope}`,
+      coverageWarning,
+    ].filter(Boolean).join(' | ');
   }
   const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
   state.visibleQueryRows = rows;
@@ -2511,6 +2529,9 @@ async function fetchAllSearchEvents(eventScope = 'primary') {
     snapshot_id: snapshotId || null,
     event_scope: first.event_scope || eventScope,
     event_counts: first.event_counts || {},
+    source_reconciliation: first.source_reconciliation || {
+      status: 'not_available',
+    },
     field_coverage: first.field_coverage || {},
     definitions: first.definitions || {},
     meta: first.meta || {},
@@ -2553,12 +2574,13 @@ async function exportData(key) {
       const searchSummary = normalizeList(completeRows);
       const requestLog = events.filter((row) => row.event_role === 'top_level');
       const webSearches = events.filter((row) => row.event_role === 'web_top_level');
-      const hostedDiagnostics = events.filter((row) => row.event_role === 'diagnostic');
+      const diagnostics = events.filter((row) => row.event_role === 'diagnostic');
       const integrity = searchAuditIntegrity(
         searchSummary,
         requestLog,
         webSearches,
-        hostedDiagnostics,
+        diagnostics,
+        eventExport.source_reconciliation,
       );
       const audit = {
         export_schema_version: SEARCH_EXPORT_SCHEMA_VERSION,
@@ -2571,23 +2593,25 @@ async function exportData(key) {
           search_summary: 'One row per unique query, library, and origin. For quick analysis.',
           request_log: 'One top-level MCP tool call per row. Ground truth.',
           web_searches: 'One top-level web search per row.',
-          hosted_diagnostics: 'Lower-level hosted search work. These rows are supporting diagnostics and are not additional user activity.',
+          diagnostics: 'Supporting Web, MCP, and gateway work. These rows are not additional user activity.',
           field_coverage: 'Recorded-field coverage across the audit event source.',
-          integrity_checks: 'Automated structure and meaning checks for summary outcomes, request details, event identifiers, and source roles.',
+          source_reconciliation: 'Checks source tables against exported product outcomes and diagnostics at one fixed cutoff.',
+          integrity_checks: 'Automated structure, meaning, and source-reconciliation checks.',
         },
         summary: {
           search_summary_rows: searchSummary.length,
           requests: integrity.counts.summary_requests,
           request_log_rows: requestLog.length,
           web_searches: webSearches.length,
-          hosted_diagnostics: hostedDiagnostics.length,
+          diagnostics: diagnostics.length,
           excluded_non_activity_rows: number(search.summary?.excluded_non_activity_rows),
         },
         integrity_checks: integrity,
+        source_reconciliation: eventExport.source_reconciliation,
         search_summary: searchSummary,
         request_log: requestLog,
         web_searches: webSearches,
-        hosted_diagnostics: hostedDiagnostics,
+        diagnostics,
         field_coverage: eventExport.field_coverage,
         csv_schemas: {
           search_summary: Object.keys(searchSummaryCsvRow({})),
@@ -2602,8 +2626,10 @@ async function exportData(key) {
           distinct_searcher_ids: 'Estimated client IDs, not people. One user may produce several IDs, and one ID may represent shared infrastructure.',
           request_log_grain: 'One top-level MCP tool call per row.',
           root_request_identifier: 'Legacy request-grouping identifier retained only for investigation. It may collide and must not be treated as a session ID.',
-          source_separation: 'Request log rows, web searches, and hosted diagnostics are separate arrays so diagnostics cannot inflate user activity.',
-          integrity_status: 'Overall status passes only when both structural and meaning checks pass.',
+          source_separation: 'Request log rows, web searches, and diagnostics are separate arrays so supporting work cannot inflate user activity.',
+          diagnostic_accounting_status: 'Shows whether a diagnostic is linked, pending, an explained direct gateway request, or unexplained.',
+          diagnostic_linkage_tier: 'Shows the exact identifier used to link a diagnostic to a final outcome.',
+          integrity_status: 'Overall status passes only when structure, meaning, and source reconciliation all pass.',
           returned_icon_ref_coverage: 'Missing icon references are a coverage warning when the source states they were not recorded. A recorded positive result with an empty reference list fails the meaning checks.',
         },
         source_meta: eventExport.meta,
