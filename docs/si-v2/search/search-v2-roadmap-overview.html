@@ -484,11 +484,19 @@
         The same query should produce the same sensible results everywhere, quickly,
         without paying an AI provider for every search.
       </p>
-      <div class="quick-status" aria-label="Current summary">
-        <span class="pill done">Local npm beta published</span>
-        <span class="pill next">Railway v2 not deployed</span>
-        <span class="pill next">Web v2 not deployed</span>
-        <span class="pill next">Recommendation v2 not released</span>
+      <div class="north-star" style="border-left-color: var(--amber); background: rgba(255, 212, 121, 0.08);">
+        Historical snapshot from 17 July 2026. The destination described below has since shipped:
+        Search v2 is live on Railway, npm (latest 0.4.22), and the website as of 22 July 2026.
+        The living plan is now the unified roadmap at
+        <a href="../../supericons-roadmap-2026-07-22.html">docs/supericons-roadmap-2026-07-22.html</a>
+        and the reality ledger at <a href="implementation-status.md">implementation-status.md</a>.
+      </div>
+      <div class="quick-status" aria-label="Status at 24 July 2026">
+        <span class="pill done">Local npm v2 on latest</span>
+        <span class="pill done">Railway v2 live, local-first</span>
+        <span class="pill done">Web v2 live</span>
+        <span class="pill done">Recommendations local-first</span>
+        <span class="pill next">Telemetry final-outcome repair in flight</span>
       </div>
     </header>
 
@@ -766,6 +774,11 @@
     <footer>
       Status overview prepared on 17 July 2026 from the Search v2 blueprint,
       implementation ledger, decision log, vision charter, and beta evidence records.
+      Marked as a historical snapshot on 24 July 2026 after Search v2 shipped to all
+      surfaces; body content above the banner is preserved unedited as the record of
+      the plan at that time. Remaining open items moved to the unified roadmap:
+      telemetry final-outcome repair, zero-result recovery experiment, preview
+      concurrency fix, grouped-endpoint disposition, and beta-tag hygiene.
     </footer>
   </main>
 </body>

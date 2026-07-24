@@ -196,10 +196,18 @@
   </div>
 
   <div class="ms now">
+    <div class="when">In motion now · highest operational priority</div>
+    <h3>Telemetry truth repair</h3>
+    <p>Website searches were being labeled as hosted MCP traffic and internal translation retries counted as user-facing zeros, so Web dashboard metrics are untrusted until repaired. The fix: the browser owns one final outcome event per search episode, internal attempts become linked diagnostics, history is era-marked rather than rewritten, and a user-story integrity fixture (one browser search produces exactly one truthful Web event) joins the release gates. Product behavior was never affected; only the measurement was wrong.</p>
+    <div class="entry">Exit: end-to-end fixture green from browser through dashboard and exports; the recovery experiment's baseline regenerates on repaired data.</div>
+    <div class="tags"><span class="tag">telemetry</span><span class="tag">dashboard</span></div>
+  </div>
+
+  <div class="ms now">
     <div class="when">In motion now</div>
     <h3>Operational follow-through</h3>
-    <p>Recommendation latency verified against its live gates on the new grouped endpoint, the stable-function evidence drift reconciled, and the remaining release records kept current.</p>
-    <div class="tags"><span class="tag">operations</span></div>
+    <p>Fix the preview concurrency defect (previewing known refs fires unnecessary hosted searches), retag npm beta which sits behind latest, record a disposition decision for the unreleased grouped endpoint now that local-first recommendations made it optional, and close the superseded evidence-window gate in the ledger.</p>
+    <div class="tags"><span class="tag">operations</span><span class="tag">hygiene</span></div>
   </div>
 
   <div class="ms next">
