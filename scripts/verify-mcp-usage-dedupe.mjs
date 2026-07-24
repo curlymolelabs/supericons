@@ -77,6 +77,52 @@ assert.notEqual(
   'Different anonymous client identities must not collide.',
 );
 
+const firstAnonymousCallKey = buildMcpUsageDedupeKey({
+  ...shared,
+  requestId: 'transport-request-a',
+  anonymousClientHash: 'anonymous-shared',
+  eventId: 'anonymous-call-a',
+});
+const secondAnonymousCallKey = buildMcpUsageDedupeKey({
+  ...shared,
+  requestId: 'transport-request-b',
+  anonymousClientHash: 'anonymous-shared',
+  eventId: 'anonymous-call-b',
+});
+assert.notEqual(
+  firstAnonymousCallKey,
+  secondAnonymousCallKey,
+  'Distinct anonymous calls reusing the same JSON-RPC id must not collide.',
+);
+
+const firstAnonymousFallbackKey = buildMcpUsageDedupeKey({
+  ...shared,
+  anonymousClientHash: 'anonymous-shared',
+  eventId: 'anonymous-fallback-a',
+});
+const secondAnonymousFallbackKey = buildMcpUsageDedupeKey({
+  ...shared,
+  anonymousClientHash: 'anonymous-shared',
+  eventId: 'anonymous-fallback-b',
+});
+assert.notEqual(
+  firstAnonymousFallbackKey,
+  secondAnonymousFallbackKey,
+  'Anonymous calls without a distinct transport request id must use the event identity.',
+);
+
+const anonymousRetryKey = buildMcpUsageDedupeKey({
+  ...shared,
+  requestId: 'transport-request-a',
+  anonymousClientHash: 'anonymous-shared',
+  eventId: 'anonymous-call-retry',
+});
+assert.equal(
+  firstAnonymousCallKey,
+  anonymousRetryKey,
+  'An anonymous write retry retaining its transport request id must keep the same key.',
+);
+
 const firstEventFallbackKey = buildMcpUsageDedupeKey({ ...shared, eventId: 'fallback-a' });
 const secondEventFallbackKey = buildMcpUsageDedupeKey({ ...shared, eventId: 'fallback-b' });
 assert.notEqual(
@@ -110,6 +156,9 @@ console.log(JSON.stringify({
     cross_session_id_1_distinct: true,
     same_session_retry_stable: true,
     anonymous_client_identity_distinct: true,
+    distinct_anonymous_calls_with_reused_rpc_id_distinct: true,
+    anonymous_event_fallback_distinct: true,
+    anonymous_transport_retry_stable: true,
     per_event_fallback_distinct: true,
     shared_fallback_rejected: true,
     remote_server_integration_present: true,
