@@ -112,7 +112,9 @@ try {
     `Search history, Gaps, and User requests are in the wrong order: ${JSON.stringify(panelOrder)}`,
   );
 
-  const gapHeaders = await page.locator('#gapWorklist th').allTextContents();
+  const gapHeaders = await page.locator('#gapWorklist th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   assert.deepEqual(gapHeaders, [
     'Query',
     'Issue',
@@ -124,7 +126,9 @@ try {
     'Action',
   ]);
 
-  const requestHeaders = await page.locator('#iconRequests th').allTextContents();
+  const requestHeaders = await page.locator('#iconRequests th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   assert.deepEqual(requestHeaders, ['User request', 'Review']);
   const requestRows = await page.locator('#iconRequests tbody tr').evaluateAll((rows) => rows.map((row) => {
     const primary = row.querySelector('td:first-child strong')?.textContent?.trim() || '';
