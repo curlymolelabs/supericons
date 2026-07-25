@@ -1415,6 +1415,100 @@ const V2_ROLLUP_PAGE_CONCURRENCY = 4;
 const V2_MAX_ICON_ROWS = 5000;
 export const DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS = 120;
 
+type DashboardV2SortDirection = 'asc' | 'desc';
+type DashboardV2SortType = 'text' | 'number' | 'date';
+type DashboardV2SortDefinition = {
+  type: DashboardV2SortType;
+  value: (row: Record<string, unknown>) => unknown;
+};
+type DashboardV2SortSpec = {
+  key: string;
+  direction: DashboardV2SortDirection;
+} | null;
+
+const DASHBOARD_V2_SEARCH_SORTS: Record<string, DashboardV2SortDefinition> = {
+  query: { type: 'text', value: (row) => row.query },
+  searches: { type: 'number', value: (row) => row.activity_count },
+  estimated_client_id_count: { type: 'number', value: (row) => row.estimated_client_id_count },
+  outcome: { type: 'text', value: (row) => row.outcome_label },
+  country_code: { type: 'text', value: (row) => row.country_code },
+  channel: { type: 'text', value: (row) => row.channel },
+  result_count: { type: 'number', value: (row) => row.result_count },
+  last_seen: { type: 'date', value: (row) => row.last_seen },
+};
+
+const DASHBOARD_V2_CLIENT_SORTS: Record<string, DashboardV2SortDefinition> = {
+  searcher: { type: 'text', value: (row) => row.client_key },
+  plan: { type: 'text', value: (row) => row.plan },
+  country_code: { type: 'text', value: (row) => row.country_code },
+  first_seen: { type: 'date', value: (row) => row.first_seen },
+  last_seen: { type: 'date', value: (row) => row.last_seen },
+  searches: { type: 'number', value: (row) => row.searches },
+  top_query: { type: 'text', value: (row) => row.top_query },
+};
+
+export function parseDashboardV2Sort(
+  url: URL,
+  definitions: Record<string, DashboardV2SortDefinition>,
+): DashboardV2SortSpec {
+  const key = String(url.searchParams.get('sort_by') || '').trim();
+  if (!key) return null;
+  if (!Object.hasOwn(definitions, key)) {
+    throw new Error('The dashboard sort column is invalid.');
+  }
+  const rawDirection = String(url.searchParams.get('sort_direction') || 'desc')
+    .trim()
+    .toLowerCase();
+  if (!['asc', 'desc'].includes(rawDirection)) {
+    throw new Error('The dashboard sort direction is invalid.');
+  }
+  return {
+    key,
+    direction: rawDirection as DashboardV2SortDirection,
+  };
+}
+
+function dashboardV2SortValueIsMissing(value: unknown, type: DashboardV2SortType) {
+  if (value === null || value === undefined || value === '') return true;
+  if (type === 'number') return !Number.isFinite(Number(value));
+  if (type === 'date') return !Number.isFinite(Date.parse(String(value)));
+  return false;
+}
+
+export function sortDashboardV2Rows(
+  rows: Array<Record<string, unknown>>,
+  sort: DashboardV2SortSpec,
+  definitions: Record<string, DashboardV2SortDefinition>,
+) {
+  if (!sort) return [...rows];
+  const definition = definitions[sort.key];
+  const direction = sort.direction === 'asc' ? 1 : -1;
+  return rows
+    .map((row, index) => ({ row, index }))
+    .sort((left, right) => {
+      const leftValue = definition.value(left.row);
+      const rightValue = definition.value(right.row);
+      const leftMissing = dashboardV2SortValueIsMissing(leftValue, definition.type);
+      const rightMissing = dashboardV2SortValueIsMissing(rightValue, definition.type);
+      if (leftMissing && rightMissing) return left.index - right.index;
+      if (leftMissing) return 1;
+      if (rightMissing) return -1;
+      let result = 0;
+      if (definition.type === 'number') {
+        result = Number(leftValue) - Number(rightValue);
+      } else if (definition.type === 'date') {
+        result = Date.parse(String(leftValue)) - Date.parse(String(rightValue));
+      } else {
+        result = String(leftValue).localeCompare(String(rightValue), undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        });
+      }
+      return result === 0 ? left.index - right.index : result * direction;
+    })
+    .map((entry) => entry.row);
+}
+
 function buildDashboardV2CacheKey(endpoint: string, url: URL) {
   const params = [...url.searchParams.entries()]
     .filter(([key]) => key !== '_ts')
@@ -3077,6 +3171,7 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const sort = parseDashboardV2Sort(url, DASHBOARD_V2_SEARCH_SORTS);
   const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
   const historyTelemetryPromise = filters.use_raw
     ? Promise.resolve(null)
@@ -3130,6 +3225,11 @@ async function buildDashboardV2SearchPayload(
   ));
   const compactHistoryRows = compactDashboardV2QueryRows(sortedRows)
     .filter((row: Record<string, unknown>) => Number(row.activity_count || 0) > 0);
+  const orderedHistoryRows = sortDashboardV2Rows(
+    compactHistoryRows,
+    sort,
+    DASHBOARD_V2_SEARCH_SORTS,
+  );
   const excludedNonActivityRows = sortedRows.length - compactHistoryRows.length;
   const historyActivities = compactHistoryRows.reduce(
     (sum: number, row: Record<string, unknown>) => sum + Number(row.activity_count || 0),
@@ -3138,10 +3238,10 @@ async function buildDashboardV2SearchPayload(
   const webActivities = historyEvidenceRows.filter(
     (row: Record<string, unknown>) => String(row.channel || '') === 'web',
   ).length;
-  const pageCount = Math.max(1, Math.ceil(compactHistoryRows.length / pageSize));
+  const pageCount = Math.max(1, Math.ceil(orderedHistoryRows.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
-  const queries = compactHistoryRows.slice(start, start + pageSize);
+  const queries = orderedHistoryRows.slice(start, start + pageSize);
   const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
   const worklist = compactDashboardV2QueryRows(
     filteredDemandRows
@@ -3193,8 +3293,10 @@ async function buildDashboardV2SearchPayload(
     pagination: {
       page: currentPage,
       page_size: pageSize,
-      total: compactHistoryRows.length,
+      total: orderedHistoryRows.length,
       page_count: pageCount,
+      sort_by: sort?.key || null,
+      sort_direction: sort?.direction || null,
     },
     worklist: worklistUnavailableReason ? [] : worklist,
     worklist_available: !worklistUnavailableReason,
@@ -3452,6 +3554,7 @@ async function buildDashboardV2AudiencePayload(
   const filters = parseDashboardV2Filters(url);
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const sort = parseDashboardV2Sort(url, DASHBOARD_V2_CLIENT_SORTS);
   const [dataRows, identityTelemetry, authUsers] = await Promise.all([
     buildDashboardV2DataRows(
       adminClient,
@@ -3510,6 +3613,11 @@ async function buildDashboardV2AudiencePayload(
       row.top_query,
     ].filter(Boolean).join(' ').toLowerCase().includes(filters.q);
   });
+  const orderedClients = sortDashboardV2Rows(
+    filteredClients,
+    sort,
+    DASHBOARD_V2_CLIENT_SORTS,
+  );
   const dataUnavailable = identityTelemetry.truncated;
   const fallbackKpis = buildDashboardV2Kpis(series, identityRows);
   const uniqueClients = dataUnavailable
@@ -3523,7 +3631,7 @@ async function buildDashboardV2AudiencePayload(
       (subscriptions.get(user.id) as Record<string, unknown> | undefined)?.plan || '',
     ).toLowerCase().includes('pro')).length
     : clientRows.filter((row) => row.is_pro).length;
-  const pageCount = Math.max(1, Math.ceil(filteredClients.length / pageSize));
+  const pageCount = Math.max(1, Math.ceil(orderedClients.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * pageSize;
   const unavailableReason = 'Searcher details exceed the safe row limit for this period. Choose a shorter date range.';
@@ -3557,13 +3665,15 @@ async function buildDashboardV2AudiencePayload(
     },
     clients: dataUnavailable
       ? { available: false, reason: unavailableReason, rows: [] }
-      : { available: true, rows: filteredClients.slice(pageStart, pageStart + pageSize) },
+      : { available: true, rows: orderedClients.slice(pageStart, pageStart + pageSize) },
     series,
     pagination: {
       page: currentPage,
       page_size: pageSize,
-      total: filteredClients.length,
+      total: orderedClients.length,
       page_count: pageCount,
+      sort_by: sort?.key || null,
+      sort_direction: sort?.direction || null,
     },
     meta: dashboardV2Meta(filters, startedAt, {
       metric_scope: 'filtered_search_activity_and_all_time_accounts',
@@ -3596,6 +3706,7 @@ function isDashboardV2ValidationError(error: unknown) {
     || message.startsWith('The dashboard view marker')
     || message.startsWith('The dashboard filter marker')
     || message.startsWith('The search event scope')
+    || message.startsWith('The dashboard sort')
   );
 }
 

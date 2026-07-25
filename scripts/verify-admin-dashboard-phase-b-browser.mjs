@@ -481,6 +481,29 @@ function ok(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function sortedMockRows(rows, searchParams, fields) {
+  const sortBy = searchParams.get('sort_by');
+  if (!sortBy || !fields[sortBy]) return [...rows];
+  const direction = searchParams.get('sort_direction') === 'asc' ? 1 : -1;
+  const { field, type = 'text' } = fields[sortBy];
+  return rows
+    .map((row, index) => ({ row, index }))
+    .sort((left, right) => {
+      const leftValue = left.row[field];
+      const rightValue = right.row[field];
+      const leftMissing = leftValue === null || leftValue === undefined || leftValue === '';
+      const rightMissing = rightValue === null || rightValue === undefined || rightValue === '';
+      if (leftMissing && rightMissing) return left.index - right.index;
+      if (leftMissing) return 1;
+      if (rightMissing) return -1;
+      const result = type === 'number'
+        ? Number(leftValue) - Number(rightValue)
+        : String(leftValue).localeCompare(String(rightValue), undefined, { numeric: true });
+      return result === 0 ? left.index - right.index : result * direction;
+    })
+    .map((entry) => entry.row);
+}
+
 async function assertPanelActionsStayOnOneLine(page, sectionSelector) {
   const issues = await page.locator(`${sectionSelector} .panel-head`).evaluateAll((heads) => heads.flatMap((head) => {
     if (!(head instanceof HTMLElement) || head.offsetParent === null) return [];
@@ -578,14 +601,24 @@ function responseFor(path, searchParams = new URLSearchParams()) {
   if (path === '/v2/search') {
     const page = Number(searchParams.get('page') || 1);
     const pageSize = Number(searchParams.get('page_size') || 25);
-    const pageCount = Math.ceil(queryRows.length / pageSize);
+    const orderedQueryRows = sortedMockRows(queryRows, searchParams, {
+      query: { field: 'query' },
+      searches: { field: 'activity_count', type: 'number' },
+      estimated_client_id_count: { field: 'estimated_client_id_count', type: 'number' },
+      outcome: { field: 'outcome_label' },
+      country_code: { field: 'country_code' },
+      channel: { field: 'channel' },
+      result_count: { field: 'result_count', type: 'number' },
+      last_seen: { field: 'last_seen' },
+    });
+    const pageCount = Math.ceil(orderedQueryRows.length / pageSize);
     const start = (page - 1) * pageSize;
     return {
       summary: {
         table_rows: queryRows.length,
         activities: queryRows.reduce((sum, row) => sum + Number(row.activity_count || 0), 0),
       },
-      queries: queryRows.slice(start, start + pageSize),
+      queries: orderedQueryRows.slice(start, start + pageSize),
       coverage: {
         source: 'final',
         web_final_outcome_cutover_at: '2026-07-17T07:00:00Z',
@@ -595,8 +628,10 @@ function responseFor(path, searchParams = new URLSearchParams()) {
       pagination: {
         page,
         page_size: pageSize,
-        total: queryRows.length,
+        total: orderedQueryRows.length,
         page_count: pageCount,
+        sort_by: searchParams.get('sort_by'),
+        sort_direction: searchParams.get('sort_direction'),
       },
       worklist_available: true,
       worklist: [{
@@ -726,7 +761,16 @@ function responseFor(path, searchParams = new URLSearchParams()) {
   if (path === '/v2/audience') {
     const page = Number(searchParams.get('page') || 1);
     const pageSize = Number(searchParams.get('page_size') || 25);
-    const pageCount = Math.ceil(clientRows.length / pageSize);
+    const orderedClientRows = sortedMockRows(clientRows, searchParams, {
+      searcher: { field: 'client_label' },
+      plan: { field: 'plan' },
+      country_code: { field: 'country_code' },
+      first_seen: { field: 'first_seen' },
+      last_seen: { field: 'last_seen' },
+      searches: { field: 'searches', type: 'number' },
+      top_query: { field: 'top_query' },
+    });
+    const pageCount = Math.ceil(orderedClientRows.length / pageSize);
     const start = (page - 1) * pageSize;
     return {
       funnel: {
@@ -756,13 +800,15 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         rows: [],
       } : {
         available: true,
-        rows: clientRows.slice(start, start + pageSize),
+        rows: orderedClientRows.slice(start, start + pageSize),
       },
       pagination: {
         page,
         page_size: pageSize,
-        total: clientRows.length,
+        total: orderedClientRows.length,
         page_count: pageCount,
+        sort_by: searchParams.get('sort_by'),
+        sort_direction: searchParams.get('sort_direction'),
       },
       meta,
     };
@@ -974,6 +1020,26 @@ try {
   ok(await page.locator('[data-pagination="queries"] [data-page-number="2"]').count() === 1, 'Query page 2 is missing.');
   ok(await page.locator('[data-pagination="queries"] [data-page-number="3"]').count() === 1, 'Query page 3 is missing.');
   ok(await page.locator('[data-pagination="queries"] [data-page-next]').count() === 1, 'The query Next button is missing.');
+  const querySortRequest = page.waitForRequest((request) => {
+    if (!request.url().includes('/functions/v1/admin-api/v2/search')) return false;
+    const params = new URL(request.url()).searchParams;
+    return params.get('sort_by') === 'searches' && params.get('sort_direction') === 'desc';
+  });
+  await page.click('[data-sort-table="queries"][data-sort-key="searches"]');
+  await querySortRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  ok(
+    (await page.locator('#queryExplorer tbody tr').first().innerText()).includes('healthy query 55'),
+    'Search history did not apply full-dataset server sorting.',
+  );
+  const ascendingQuerySortRequest = page.waitForRequest((request) => {
+    if (!request.url().includes('/functions/v1/admin-api/v2/search')) return false;
+    const params = new URL(request.url()).searchParams;
+    return params.get('sort_by') === 'searches' && params.get('sort_direction') === 'asc';
+  });
+  await page.click('[data-sort-table="queries"][data-sort-key="searches"]');
+  await ascendingQuerySortRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   await page.click('[data-pagination="queries"] [data-page-number="2"]');
   await page.waitForFunction(() => document.querySelector('[data-pagination="queries"] [aria-current="page"]')?.textContent === '2');
   ok(requests.some((request) => request.path === '/v2/search' && request.search.includes('page=2') && request.search.includes('page_size=25')), 'Query page 2 was not requested from the API.');
@@ -1174,7 +1240,9 @@ try {
   await page.uncheck('#includeSearchTestTraffic');
   await excludeTestRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
-  const queryHeaders = await page.locator('#queryExplorer th').allTextContents();
+  const queryHeaders = await page.locator('#queryExplorer th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   ok(queryHeaders.includes('Searches'), 'Search history does not show recorded searches.');
   ok(queryHeaders.includes('Est. client IDs'), 'Search history does not show estimated client IDs.');
   ok(queryHeaders.includes('Typical result'), 'Search history does not show its typical result.');
@@ -1370,6 +1438,18 @@ try {
   ok(registeredHeaders.includes('Last search'), 'The linked search time is not separate.');
   ok(/\d{1,2}:\d{2}/.test(await firstRegisteredRow.innerText()), 'Signup and activity timestamps are missing their time.');
   ok(await page.locator('[data-pagination="clients"] [data-page-next]').count() === 1, 'The client list Next button is missing.');
+  const clientSortRequest = page.waitForRequest((request) => {
+    if (!request.url().includes('/functions/v1/admin-api/v2/audience')) return false;
+    const params = new URL(request.url()).searchParams;
+    return params.get('sort_by') === 'searches' && params.get('sort_direction') === 'desc';
+  });
+  await page.click('[data-sort-table="clients"][data-sort-key="searches"]');
+  await clientSortRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  ok(
+    (await page.locator('#allClients tbody tr').first().innerText()).includes('client55'),
+    'Searchers did not apply full-dataset server sorting.',
+  );
   await page.click('[data-pagination="clients"] [data-page-next]');
   await page.waitForFunction(() => document.querySelector('[data-pagination="clients"] [aria-current="page"]')?.textContent === '2');
   ok(requests.some((request) => request.path === '/v2/audience' && request.search.includes('page=2') && request.search.includes('page_size=25')), 'Client page 2 was not requested from the API.');

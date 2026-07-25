@@ -100,6 +100,12 @@ function includes(source, value, label) {
   'filteredWorklistRows',
   'filteredDemandRows',
   'dataRows.query_reviews',
+  'parseDashboardV2Sort',
+  'sortDashboardV2Rows',
+  "url.searchParams.get('sort_by')",
+  "url.searchParams.get('sort_direction')",
+  'The dashboard sort column is invalid.',
+  'The dashboard sort direction is invalid.',
   "query_row_grain: ['query', 'library_filter', 'query_origin']",
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
@@ -160,6 +166,9 @@ function includes(source, value, label) {
   'Improve ranking',
   'Improve docs',
   'Watch',
+  "params.set('sort_by', sort.key)",
+  "params.set('sort_direction', sort.direction)",
+  'serverSorting: true',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
 
 if (api.includes('const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows')) {

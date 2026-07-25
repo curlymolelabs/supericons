@@ -164,8 +164,7 @@ const hostile = table(
 );
 assert.doesNotMatch(hostile, /<img src=x/, 'Header labels must be escaped inside sort buttons.');
 
-// Server-paginated lists hold only the current page, so sorting a slice would imply an
-// ordering of the whole list that the browser cannot know.
+// Server-paginated lists must preserve API order rather than sorting one page locally.
 assert.match(
   source,
   /partialServerPage\s*\?\s*values\s*:\s*sortRows\(/,
@@ -175,6 +174,31 @@ assert.match(
   source,
   /sortDisabledReason/,
   'A disabled sort must explain why it is unavailable.',
+);
+assert.match(
+  source,
+  /partialServerPage\s*&&\s*!serverSorting/,
+  'A partial list may expose sorting only when the server sorts the complete filtered dataset.',
+);
+assert.match(
+  source,
+  /SERVER_PAGINATED_LISTS\.has\(tableKey\)\)\s*refreshListEndpoint\(tableKey\)/,
+  'Sorting a server-paginated table must request a new API page.',
+);
+assert.match(
+  source,
+  /params\.set\('sort_by', sort\.key\)/,
+  'Server sorting must send its selected column to the API.',
+);
+assert.match(
+  source,
+  /params\.set\('sort_direction', sort\.direction\)/,
+  'Server sorting must send its selected direction to the API.',
+);
+assert.equal(
+  (source.match(/serverSorting: true/g) || []).length,
+  2,
+  'Search history and Searchers must both use complete server sorting.',
 );
 
 for (const tableKey of ['registeredUsers', 'clients', 'queries', 'topList', 'worklist', 'iconRequests', 'contact']) {

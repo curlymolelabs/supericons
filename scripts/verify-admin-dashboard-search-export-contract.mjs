@@ -88,7 +88,7 @@ if (menuItems.length !== 2) {
   "['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))",
   'excluded_non_activity_rows',
   'Number(row.activity_count || 0) > 0',
-  'total: compactHistoryRows.length',
+  'total: orderedHistoryRows.length',
   'separateQueryOrigins: true',
   'separateChannels: false',
   'separateSearchers: false',

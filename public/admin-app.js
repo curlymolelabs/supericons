@@ -573,11 +573,21 @@ function endpointPath(endpoint, { includeView = true } = {}) {
   if (endpoint === 'search') {
     params.set('page', String(currentPage('queries')));
     params.set('page_size', String(rowLimit('queries')));
+    const sort = state.sorts.queries;
+    if (sort?.key) {
+      params.set('sort_by', sort.key);
+      params.set('sort_direction', sort.direction);
+    }
     if (state.explorerIssue) params.set('issue', state.explorerIssue);
   }
   if (endpoint === 'audience') {
     params.set('page', String(currentPage('clients')));
     params.set('page_size', String(rowLimit('clients')));
+    const sort = state.sorts.clients;
+    if (sort?.key) {
+      params.set('sort_by', sort.key);
+      params.set('sort_direction', sort.direction);
+    }
   }
   return `/v2/${endpoint}?${params}`;
 }
@@ -976,14 +986,13 @@ function table(headers, rows, emptyReason, { sortTableKey = '', sortDisabledReas
   `;
 }
 
-// Sorting must run across the complete row set. Server-paginated lists only hold the
-// current page in the browser, so sorting stays disabled there rather than silently
-// reordering a slice and implying it is the whole list.
-function sortedTableParts(tableKey, headers, rows, { serverPagination = null } = {}) {
+// A server-sorted page keeps the order returned by the API. Other partial lists stay
+// unsortable because reordering one page would misrepresent the complete list.
+function sortedTableParts(tableKey, headers, rows, { serverPagination = null, serverSorting = false } = {}) {
   const values = normalizeList(rows);
   const total = serverPagination ? number(serverPagination.total) || values.length : values.length;
   const partialServerPage = Boolean(serverPagination) && total > values.length;
-  const sortDisabledReason = partialServerPage
+  const sortDisabledReason = partialServerPage && !serverSorting
     ? `Sorting needs the complete list. This view loads ${formatNumber(values.length)} of ${formatNumber(total)} rows per page. Raise "Rows" or narrow the filters to sort.`
     : '';
   const ordered = partialServerPage ? values : sortRows(tableKey, values, headers);
@@ -1003,7 +1012,8 @@ function setSort(tableKey, sortKey) {
   const direction = current && current.key === sortKey && current.direction === 'desc' ? 'asc' : 'desc';
   state.sorts[tableKey] = { key: sortKey, direction };
   state.pages[tableKey] = 1;
-  renderAll();
+  if (SERVER_PAGINATED_LISTS.has(tableKey)) refreshListEndpoint(tableKey);
+  else renderAll();
 }
 
 function csvCell(value) {
@@ -1893,6 +1903,7 @@ function renderQueryExplorer() {
   ];
   const queryParts = sortedTableParts('queries', headers, state.data.search?.queries, {
     serverPagination: state.data.search?.pagination,
+    serverSorting: true,
   });
   const rows = queryParts.rows;
   state.visibleQueryRows = rows;
@@ -2262,7 +2273,10 @@ function renderAudience() {
       { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', render: (row) => formatNumber(row.searches) },
       { label: 'Top query', sortKey: 'top_query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
-    ], allClients.rows, 'No searchers match these filters.', { serverPagination: data?.pagination })
+    ], allClients.rows, 'No searchers match these filters.', {
+      serverPagination: data?.pagination,
+      serverSorting: true,
+    })
     : emptyState(allClients.reason);
   if (!allClients.available) renderPagination('clients', 0, 1);
 }

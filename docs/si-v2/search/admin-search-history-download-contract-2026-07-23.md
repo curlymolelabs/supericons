@@ -36,6 +36,10 @@ By default, the table:
 - shows request count and estimated client ID count as separate measures
 - uses server pagination so the browser does not need the full history in memory
 
+Search history can be sorted by query, searches, estimated client IDs, outcome, country, channel, typical result count, or last seen. Searchers can be sorted by searcher ID, plan, country, first seen, last seen, searches, or top query.
+
+The API accepts only those named fields through `sort_by`. `sort_direction` is either `asc` or `desc`. The API sorts the complete filtered list before selecting the requested page, and rows without a recorded value stay last. Requests without sorting keep the existing default order. Invalid sorting requests return a 400 response.
+
 The Include test traffic switch changes only the Search history request. It does not silently change the other dashboard sections.
 
 The table subtitle is:
