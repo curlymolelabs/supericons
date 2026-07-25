@@ -1032,7 +1032,9 @@ try {
       && searchPanelOrder.indexOf('worklist') < searchPanelOrder.indexOf('iconRequests'),
     `Search history, Gaps, and User requests are in the wrong order: ${JSON.stringify(searchPanelOrder)}`,
   );
-  const demandHeaders = await page.locator('#gapWorklist th').allTextContents();
+  const demandHeaders = await page.locator('#gapWorklist th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   ok(
     JSON.stringify(demandHeaders) === JSON.stringify([
       'Query',
@@ -1074,7 +1076,9 @@ try {
   const savedAction = writes.findLast((write) => write.path === '/v2/search/review');
   ok(savedAction?.body?.status === 'add_alias', 'Gaps did not save the selected action.');
   ok(savedAction?.body?.query === 'missing brand', 'Gaps saved the action against the wrong query.');
-  const requestHeaders = await page.locator('#iconRequests th').allTextContents();
+  const requestHeaders = await page.locator('#iconRequests th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   ok(
     JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Review']),
     `User requests columns are wrong: ${JSON.stringify(requestHeaders)}`,
@@ -1359,7 +1363,9 @@ try {
   ok((await enrichedRegisteredRow.innerText()).includes('10'), 'Registered-user search activity was discarded.');
   ok((await enrichedRegisteredRow.innerText()).includes('Web'), 'Registered-user venue enrichment was discarded.');
   const firstRegisteredRow = page.locator('#registeredUsers tbody tr').first();
-  const registeredHeaders = await page.locator('#registeredUsers th').allTextContents();
+  const registeredHeaders = await page.locator('#registeredUsers th').evaluateAll((headers) => (
+    headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
+  ));
   ok(registeredHeaders.includes('Last sign-in'), 'The account sign-in time is not separate.');
   ok(registeredHeaders.includes('Last search'), 'The linked search time is not separate.');
   ok(/\d{1,2}:\d{2}/.test(await firstRegisteredRow.innerText()), 'Signup and activity timestamps are missing their time.');
