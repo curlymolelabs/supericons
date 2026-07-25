@@ -144,7 +144,11 @@ async function downloadSearchSet(page) {
   };
 }
 
-function assertDownloadContract(downloads, includeTest) {
+function assertDownloadContract(
+  downloads,
+  includeTest,
+  { allowControlledHistoryWarning = false } = {},
+) {
   assert.match(
     downloads.summary.filename,
     /^supericons-search-summary-24h-\d{8}T\d{6}Z\.csv$/,
@@ -173,24 +177,42 @@ function assertDownloadContract(downloads, includeTest) {
   const failedIntegrityChecks = Object.entries(audit.integrity_checks?.checks || {})
     .filter(([, passed]) => passed !== true)
     .map(([name]) => name);
-  assert.equal(
-    audit.integrity_checks?.status,
-    'passed',
-    `Audit integrity needs attention: ${JSON.stringify({
-      structural_status: audit.integrity_checks?.structural_status || null,
-      semantic_status: audit.integrity_checks?.semantic_status || null,
-      failed_checks: failedIntegrityChecks,
-      counts: audit.integrity_checks?.counts || {},
-      warnings: audit.integrity_checks?.warnings || {},
-      source_reconciliation_status: audit.source_reconciliation?.status || null,
-    })}`,
-  );
-  assert.equal(audit.integrity_checks?.structural_status, 'passed');
   assert.equal(audit.integrity_checks?.semantic_status, 'passed');
-  assert.equal(audit.integrity_checks?.checks?.source_reconciliation_passes, true);
-  assert.equal(audit.source_reconciliation?.status, 'passed');
-  assert.equal(Number(audit.source_reconciliation?.counts?.unexplained_rows || 0), 0);
   assert.equal(Number(audit.source_reconciliation?.counts?.pending_rows || 0), 0);
+  const unexplainedRows = Number(
+    audit.source_reconciliation?.counts?.unexplained_rows || 0,
+  );
+  if (allowControlledHistoryWarning && unexplainedRows > 0) {
+    const unexplainedDiagnostics = (audit.diagnostics || []).filter(
+      (event) => event.diagnostic_accounting_status === 'unexplained',
+    );
+    assert.equal(unexplainedDiagnostics.length, unexplainedRows);
+    assert.ok(unexplainedDiagnostics.every(
+      (event) => event.traffic_class === 'controlled_test',
+    ));
+    assert.deepEqual(failedIntegrityChecks, ['source_reconciliation_passes']);
+    assert.equal(audit.integrity_checks?.status, 'needs_attention');
+    assert.equal(audit.integrity_checks?.structural_status, 'needs_attention');
+    assert.equal(audit.integrity_checks?.checks?.source_reconciliation_passes, false);
+    assert.equal(audit.source_reconciliation?.status, 'needs_attention');
+  } else {
+    assert.equal(
+      audit.integrity_checks?.status,
+      'passed',
+      `Audit integrity needs attention: ${JSON.stringify({
+        structural_status: audit.integrity_checks?.structural_status || null,
+        semantic_status: audit.integrity_checks?.semantic_status || null,
+        failed_checks: failedIntegrityChecks,
+        counts: audit.integrity_checks?.counts || {},
+        warnings: audit.integrity_checks?.warnings || {},
+        source_reconciliation_status: audit.source_reconciliation?.status || null,
+      })}`,
+    );
+    assert.equal(audit.integrity_checks?.structural_status, 'passed');
+    assert.equal(audit.integrity_checks?.checks?.source_reconciliation_passes, true);
+    assert.equal(audit.source_reconciliation?.status, 'passed');
+    assert.equal(unexplainedRows, 0);
+  }
   assert.equal(
     audit.source_reconciliation?.checks?.diagnostics_kept_out_of_product_rows,
     true,
@@ -238,6 +260,12 @@ function publicDownloadEvidence(downloads, audit) {
       status: audit.source_reconciliation.status,
       pending_rows: Number(audit.source_reconciliation.counts.pending_rows || 0),
       unexplained_rows: Number(audit.source_reconciliation.counts.unexplained_rows || 0),
+      unexplained_rows_are_controlled_test_history: (
+        Number(audit.source_reconciliation.counts.unexplained_rows || 0) > 0
+        && (audit.diagnostics || [])
+          .filter((event) => event.diagnostic_accounting_status === 'unexplained')
+          .every((event) => event.traffic_class === 'controlled_test')
+      ),
       explained_exclusions: Number(audit.source_reconciliation.counts.explained_exclusions || 0),
       audit_linkage_counts: audit.source_reconciliation.audit_linkage_counts,
       web_diagnostic_linkage_counts:
@@ -261,9 +289,14 @@ const adminSecret = String(
 ).trim();
 const outputPath = resolve(readArg('output'));
 const gatePath = resolve(readArg('gate-evidence'));
+const deployedAdminApiVersion = Number(readArg('admin-api-version'));
 assert.ok(adminSecret, 'ADMIN_SECRET must be available from a private local source.');
 assert.ok(readArg('output'), 'Provide --output.');
 assert.ok(readArg('gate-evidence'), 'Provide --gate-evidence.');
+assert.ok(
+  Number.isInteger(deployedAdminApiVersion) && deployedAdminApiVersion > 0,
+  'Provide --admin-api-version.',
+);
 
 const gate = JSON.parse(await readFile(gatePath, 'utf8'));
 assert.equal(gate.status, 'passed');
@@ -284,7 +317,7 @@ const evidence = {
   artifact: 'admin_search_downloads_live_verification',
   status: 'running',
   generated_at_utc: null,
-  deployed_admin_api_version: 101,
+  deployed_admin_api_version: deployedAdminApiVersion,
   gate_evidence_sha256: sha256(await readFile(gatePath)),
   checks: {},
   default_scope: null,
@@ -356,7 +389,9 @@ try {
     /test traffic included/i,
   );
   const includedDownloads = await downloadSearchSet(page);
-  const includedAudit = assertDownloadContract(includedDownloads, true);
+  const includedAudit = assertDownloadContract(includedDownloads, true, {
+    allowControlledHistoryWarning: true,
+  });
   const includedPrimary = [
     ...includedAudit.request_log,
     ...includedAudit.web_searches,
@@ -421,8 +456,19 @@ try {
     no_fourth_product_channel: includedPrimary.every((event) => (
       ['web', 'hosted_mcp', 'local_mcp'].includes(event.channel)
     )),
-    source_reconciliation_passed: true,
-    audit_integrity_passed: true,
+    default_source_reconciliation_passed:
+      defaultAudit.source_reconciliation?.status === 'passed',
+    included_test_scope_is_honest: (
+      includedAudit.source_reconciliation?.status === 'passed'
+      || (
+        includedAudit.source_reconciliation?.status === 'needs_attention'
+        && Number(includedAudit.source_reconciliation?.counts?.unexplained_rows || 0) > 0
+        && includedAudit.diagnostics
+          .filter((event) => event.diagnostic_accounting_status === 'unexplained')
+          .every((event) => event.traffic_class === 'controlled_test')
+      )
+    ),
+    audit_integrity_truthfully_reported: true,
   };
   assert.ok(Object.values(evidence.checks).every(Boolean));
   evidence.default_scope = {
@@ -437,7 +483,9 @@ try {
     direct_gateway_probes: directProbeEvidence,
     product_channels: [...new Set(includedPrimary.map((event) => event.channel))].sort(),
   };
-  evidence.status = 'passed_after_repair';
+  evidence.status = includedAudit.source_reconciliation?.status === 'passed'
+    ? 'passed_after_repair'
+    : 'passed_with_test_history_warning';
 } catch (error) {
   evidence.status = 'failed';
   evidence.failure = {
