@@ -2908,12 +2908,13 @@ async function fetchDashboardV2IconRequests(
   }
   let query = adminClient
     .from('icon_evidence')
-    .select('id, evidence_text, session_hash, created_at', { count: 'exact' })
+    .select('id, evidence_text, search_query, library_filter, session_hash, domain, created_at', { count: 'exact' })
     .eq('signal_type', 'search_attempt')
     .eq('ui_surface', 'grid_empty_feedback')
     .not('evidence_text', 'is', null)
     .order('created_at', { ascending: false })
     .limit(100);
+  if (!filters.include_test) query = query.in('domain', [...getProductionAnalyticsHosts()]);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
   const { data, error, count } = await query;
@@ -2928,6 +2929,8 @@ async function fetchDashboardV2IconRequests(
     .map((row) => ({
       id: row.id,
       request_text: row.evidence_text,
+      failed_query: row.search_query,
+      library_filter: row.library_filter || 'all',
       visitor_kind: 'anonymous',
       client_label: compactHashPrefix(row.session_hash) || 'Anonymous',
       country_code: null,
@@ -2954,21 +2957,26 @@ async function fetchDashboardV2IconRequests(
     ((reviewData || []) as Array<Record<string, unknown>>)
       .map((row) => [String(row.icon_evidence_id || ''), row]),
   );
+  const rows = sourceRows.map((row) => {
+    const review = reviews.get(String(row.id || ''));
+    return {
+      ...row,
+      reviewed: Boolean(review),
+      status: review?.status || 'new',
+      review_note: review?.note || null,
+      reviewed_at: review?.updated_at || null,
+    };
+  }).sort((left, right) => (
+    Number(left.reviewed) - Number(right.reviewed)
+    || String(right.created_at || '').localeCompare(String(left.created_at || ''))
+  ));
   return {
     available: true,
     status_available: !reviewError,
     status_reason: reviewError
       ? 'Request review status is not available until the dashboard review migration is applied.'
       : null,
-    rows: sourceRows.map((row) => {
-      const review = reviews.get(String(row.id || ''));
-      return {
-        ...row,
-        status: review?.status || 'new',
-        review_note: review?.note || null,
-        reviewed_at: review?.updated_at || null,
-      };
-    }),
+    rows,
   };
 }
 
@@ -2986,6 +2994,17 @@ async function handleDashboardV2IconRequestReview(
     return jsonResponse(req, { error: 'status must be one of: new, planned, added, declined' }, 400);
   }
   const note = typeof body.note === 'string' ? body.note.trim() || null : null;
+  const { data: requestRow, error: requestError } = await adminClient
+    .from('icon_evidence')
+    .select('id')
+    .eq('id', iconEvidenceId)
+    .eq('signal_type', 'search_attempt')
+    .eq('ui_surface', 'grid_empty_feedback')
+    .maybeSingle();
+  if (requestError) throw requestError;
+  if (!requestRow) {
+    return jsonResponse(req, { error: 'The selected user request was not found.' }, 404);
+  }
   const { data, error } = await adminClient
     .from('admin_icon_request_reviews')
     .upsert({
@@ -3148,7 +3167,7 @@ async function buildDashboardV2SearchPayload(
       .slice(0, 100),
   );
   const worklistUnavailableReason = historyTruncated
-    ? 'Complete Demand Inbox details exceed the safe limit for this period. Choose a shorter date range.'
+    ? 'Complete Gaps details exceed the safe limit for this period. Choose a shorter date range.'
     : null;
   const historyState = buildDashboardV2HistoryState({
     truncated: historyTruncated,

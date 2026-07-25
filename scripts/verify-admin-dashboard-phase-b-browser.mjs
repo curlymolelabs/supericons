@@ -11,6 +11,9 @@ const apiBase = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api
 const requests = [];
 const writes = [];
 let requestRound = 0;
+const iconRequestReviews = new Map([
+  ['22222222-2222-4222-8222-222222222222', { status: 'planned', note: 'Review with the next brand set.' }],
+]);
 const registeredRows = Array.from({ length: 23 }, (_, index) => ({
   user_id: `user-${index + 1}`,
   identifier: `u***${index + 1}@example.test`,
@@ -625,15 +628,28 @@ function responseFor(path, searchParams = new URLSearchParams()) {
       icon_requests: {
         available: true,
         status_available: true,
-        rows: [{
-          id: '11111111-1111-4111-8111-111111111111',
-          request_text: 'A better database migration icon',
-          visitor_kind: 'anonymous',
-          client_label: 'anon:req123',
-          country_code: 'SG',
-          status: 'new',
-          created_at: '2026-07-17T06:00:00Z',
-        }],
+        rows: [
+          {
+            id: '11111111-1111-4111-8111-111111111111',
+            request_text: 'A better database migration icon',
+            failed_query: 'database migration',
+            library_filter: 'all',
+            reviewed: iconRequestReviews.has('11111111-1111-4111-8111-111111111111'),
+            status: iconRequestReviews.get('11111111-1111-4111-8111-111111111111')?.status || 'new',
+            review_note: iconRequestReviews.get('11111111-1111-4111-8111-111111111111')?.note || null,
+            created_at: '2026-07-17T06:00:00Z',
+          },
+          {
+            id: '22222222-2222-4222-8222-222222222222',
+            request_text: 'A clearer electric pickup truck icon',
+            failed_query: 'electric pickup truck',
+            library_filter: 'phosphor',
+            reviewed: true,
+            status: iconRequestReviews.get('22222222-2222-4222-8222-222222222222')?.status || 'new',
+            review_note: iconRequestReviews.get('22222222-2222-4222-8222-222222222222')?.note || null,
+            created_at: '2026-07-17T05:30:00Z',
+          },
+        ],
       },
       contact_submissions: {
         available: true,
@@ -781,13 +797,19 @@ await page.route(`${apiBase}/**`, async (route) => {
   if (route.request().method() === 'POST') {
     const body = route.request().postDataJSON();
     writes.push({ path, body });
+    if (path === '/v2/icon-requests/review') {
+      iconRequestReviews.set(body.icon_evidence_id, {
+        status: body.status,
+        note: body.note,
+      });
+    }
     await route.fulfill({
       status: 200,
       headers: { 'access-control-allow-origin': '*' },
       json: {
         success: true,
         review: path.includes('icon-requests')
-          ? { icon_evidence_id: body.icon_evidence_id, status: body.status }
+          ? { icon_evidence_id: body.icon_evidence_id, status: body.status, note: body.note }
           : { normalized_query: body.query, status: body.status },
       },
     });
@@ -928,9 +950,10 @@ try {
   ok(compactLayout.filterHeight === undefined, 'The standalone filter bar must not exist; filters live inside the header band.');
   ok(compactLayout.topbarBorderWidth === '1px', 'The header band must end with its single divider line.');
   ok(compactLayout.redundantHeadingCount === 0, 'The redundant Search Intelligence heading still exists.');
-  ok(await page.locator('.panel[data-row-key="worklist"]').isVisible(), 'Demand Inbox is not visible on the Searches page.');
+  ok(await page.locator('.panel[data-row-key="worklist"]').isVisible(), 'Gaps is not visible on the Searches page.');
+  ok(await page.locator('.panel[data-row-key="iconRequests"]').isVisible(), 'User requests is not visible on the Searches page.');
   await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
-  ok(await page.locator('[data-row-limit]').count() === 6, 'Every visible long list must have a row display control.');
+  ok(await page.locator('[data-row-limit]').count() === 7, 'Every visible long list must have a row display control.');
   ok(
     await page.locator('[data-panel-toggle]').count()
       === await page.locator('.panel:not([data-panel-collapse="false"])').count(),
@@ -940,7 +963,7 @@ try {
     (selects) => selects.map((select) => select.value),
   );
   ok(initialRowLimits.every((value) => value === '25'), 'Long lists must show 25 rows by default.');
-  for (const key of ['topList', 'activity', 'queries', 'worklist', 'registeredUsers', 'clients']) {
+  for (const key of ['topList', 'activity', 'queries', 'worklist', 'iconRequests', 'registeredUsers', 'clients']) {
     ok(
       await page.locator(`.panel[data-row-key="${key}"] [data-row-limit="${key}"]`).count() === 1,
       `The ${key} row control is attached to the wrong panel.`,
@@ -999,8 +1022,16 @@ try {
   ok(await page.locator('[data-panel-toggle] svg').count() === await page.locator('[data-panel-toggle]').count(), 'Collapse controls must use icons.');
   const toggleLabels = await page.locator('[data-panel-toggle]').evaluateAll((buttons) => buttons.map((button) => button.textContent.trim()));
   ok(toggleLabels.every((label) => label === ''), 'Collapse controls still waste space on text labels.');
-  ok(await page.locator('.panel[data-row-key="worklist"]').count() === 1, 'Demand Inbox is missing or duplicated.');
-  ok(await page.locator('.panel[data-row-key="worklist"] .panel-title').innerText() === 'Demand Inbox', 'Demand Inbox uses the wrong title.');
+  ok(await page.locator('.panel[data-row-key="worklist"]').count() === 1, 'Gaps is missing or duplicated.');
+  ok(await page.locator('.panel[data-row-key="worklist"] .panel-title').innerText() === 'Gaps', 'Gaps uses the wrong title.');
+  const searchPanelOrder = await page.locator('#section-intelligence > .panel').evaluateAll((panels) => (
+    panels.map((panel) => panel.getAttribute('data-row-key'))
+  ));
+  ok(
+    searchPanelOrder.indexOf('queries') < searchPanelOrder.indexOf('worklist')
+      && searchPanelOrder.indexOf('worklist') < searchPanelOrder.indexOf('iconRequests'),
+    `Search history, Gaps, and User requests are in the wrong order: ${JSON.stringify(searchPanelOrder)}`,
+  );
   const demandHeaders = await page.locator('#gapWorklist th').allTextContents();
   ok(
     JSON.stringify(demandHeaders) === JSON.stringify([
@@ -1013,11 +1044,11 @@ try {
       'Searches',
       'Action',
     ]),
-    `Demand Inbox columns are wrong: ${JSON.stringify(demandHeaders)}`,
+    `Gaps columns are wrong: ${JSON.stringify(demandHeaders)}`,
   );
   const demandText = await page.locator('#gapWorklist').innerText();
   for (const expected of ['missing brand', 'Hosted MCP', 'zh-CN', 'SG', '0 icons', '5']) {
-    ok(demandText.includes(expected), `Demand Inbox did not show ${expected}.`);
+    ok(demandText.includes(expected), `Gaps did not show ${expected}.`);
   }
   const demandAction = page.locator('#gapWorklist [data-query-review]').first();
   const demandOptions = await demandAction.locator('option').allTextContents();
@@ -1032,7 +1063,7 @@ try {
       'Resolved',
       'Ignore',
     ]),
-    `Demand Inbox actions are wrong: ${JSON.stringify(demandOptions)}`,
+    `Gaps actions are wrong: ${JSON.stringify(demandOptions)}`,
   );
   const actionWrite = page.waitForResponse((response) => (
     response.request().method() === 'POST'
@@ -1041,9 +1072,42 @@ try {
   await demandAction.selectOption('add_alias');
   await actionWrite;
   const savedAction = writes.findLast((write) => write.path === '/v2/search/review');
-  ok(savedAction?.body?.status === 'add_alias', 'Demand Inbox did not save the selected action.');
-  ok(savedAction?.body?.query === 'missing brand', 'Demand Inbox saved the action against the wrong query.');
-  ok(await page.locator('.panel[data-row-key="iconRequests"]').count() === 0, 'The removed icon request panel still takes up Search history space.');
+  ok(savedAction?.body?.status === 'add_alias', 'Gaps did not save the selected action.');
+  ok(savedAction?.body?.query === 'missing brand', 'Gaps saved the action against the wrong query.');
+  const requestHeaders = await page.locator('#iconRequests th').allTextContents();
+  ok(
+    JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Review']),
+    `User requests columns are wrong: ${JSON.stringify(requestHeaders)}`,
+  );
+  const requestRows = page.locator('#iconRequests tbody tr');
+  ok(await requestRows.count() === 2, 'User requests did not render both stored requests.');
+  const firstRequestText = await requestRows.first().innerText();
+  for (const expected of ['A better database migration icon', 'Failed query: database migration', 'Library: all']) {
+    ok(firstRequestText.includes(expected), `User requests did not show ${expected}.`);
+  }
+  ok(
+    await requestRows.first().locator('[data-icon-request-status]').inputValue() === 'new',
+    'The unreviewed user request is not first.',
+  );
+  await requestRows.first().locator('[data-icon-request-status]').selectOption('planned');
+  await requestRows.first().locator('[data-icon-request-note]').fill('Add to the next database set.');
+  const requestWrite = page.waitForResponse((response) => (
+    response.request().method() === 'POST'
+      && response.url().includes('/functions/v1/admin-api/v2/icon-requests/review')
+  ));
+  await requestRows.first().locator('[data-icon-request-save]').click();
+  await requestWrite;
+  await page.waitForFunction(() => (
+    document.querySelector('#iconRequests [data-icon-request-status]')?.value === 'planned'
+      && document.querySelector('#iconRequests [data-icon-request-note]')?.value === 'Add to the next database set.'
+  ));
+  const savedRequest = writes.findLast((write) => write.path === '/v2/icon-requests/review');
+  ok(savedRequest?.body?.status === 'planned', 'User requests did not save the selected status.');
+  ok(savedRequest?.body?.note === 'Add to the next database set.', 'User requests did not save the review note.');
+  ok(
+    savedRequest?.body?.icon_evidence_id === '11111111-1111-4111-8111-111111111111',
+    'User requests saved the review against the wrong evidence row.',
+  );
   ok(await page.locator('.panel[data-row-key="contact"]').count() === 0, 'The removed contact panel still takes up Search history space.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
   ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The query summary table is not labelled Search history.');
@@ -1086,7 +1150,8 @@ try {
     'The included test-traffic request carries the wrong filter key.',
   );
   ok((await page.locator('#searchHistorySubtitle').innerText()).includes('test traffic included'), 'Search history did not update its test-traffic scope.');
-  ok((await page.locator('#demandInboxSubtitle').innerText()).includes('test traffic included'), 'Demand Inbox did not update its test-traffic scope.');
+  ok((await page.locator('#gapsSubtitle').innerText()).includes('test traffic included'), 'Gaps did not update its test-traffic scope.');
+  ok((await page.locator('#userRequestsSubtitle').innerText()).includes('test traffic included'), 'User requests did not update its test-traffic scope.');
   await page.click('#searchDownloadToggle');
   const includedTestAuditDownload = page.waitForEvent('download');
   await page.click('[data-export="audit-bundle-json"]');

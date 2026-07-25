@@ -495,9 +495,28 @@
       max-height: none;
       flex: 1 1 auto;
     }
-    .demand-inbox-panel .table-wrap {
+    .gaps-panel .table-wrap,
+    .user-requests-panel .table-wrap {
       max-height: 430px;
     }
+    .request-review {
+      display: grid;
+      grid-template-columns: minmax(92px, 120px) minmax(150px, 1fr) auto;
+      gap: 6px;
+      align-items: center;
+      min-width: 340px;
+    }
+    .request-note {
+      width: 100%;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--text);
+      padding: 0 8px;
+      font-size: 11px;
+    }
+    .request-note:disabled { opacity: 0.65; cursor: wait; }
     details { border-top: 1px solid var(--line); }
     summary { padding: 14px 17px; cursor: pointer; color: var(--muted); font-size: 12px; font-weight: 700; }
     .funnel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
@@ -693,17 +712,6 @@
         </section>
 
         <section id="section-intelligence" hidden>
-          <article class="panel demand-inbox-panel" data-row-key="worklist" data-row-label="Demand Inbox" style="margin-bottom:14px">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Demand Inbox</div>
-                <div class="panel-subtitle" id="demandInboxSubtitle">Failed and weak searches that need a human decision.</div>
-              </div>
-              <div class="panel-actions"></div>
-            </div>
-            <div class="table-wrap scroll-region" id="gapWorklist"><div class="empty">Loading demand</div></div>
-          </article>
-
           <article class="panel" data-row-key="queries" data-row-label="Search history" data-panel-collapse="false" style="margin-bottom:14px">
             <div class="panel-head">
               <div>
@@ -732,6 +740,28 @@
             </div>
             <div class="explorer-tools"><input id="explorerSearch" type="search" aria-label="Search query history" placeholder="Search every query" /><select class="filter-select" id="explorerIssue" aria-label="Query outcome"><option value="">All outcomes</option><option value="zero_result">True zero</option><option value="low_result">Low result</option><option value="error">Error</option><option value="clarification">Clarification</option><option value="successful">Successful</option></select></div>
             <div class="table-wrap scroll-region" id="queryExplorer"><div class="empty">Loading query explorer</div></div>
+          </article>
+
+          <article class="panel gaps-panel" data-row-key="worklist" data-row-label="Gaps" style="margin-bottom:14px">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Gaps</div>
+                <div class="panel-subtitle" id="gapsSubtitle">Failed and weak searches that need a human decision.</div>
+              </div>
+              <div class="panel-actions"></div>
+            </div>
+            <div class="table-wrap scroll-region" id="gapWorklist"><div class="empty">Loading gaps</div></div>
+          </article>
+
+          <article class="panel user-requests-panel" data-row-key="iconRequests" data-row-label="User requests">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">User requests</div>
+                <div class="panel-subtitle" id="userRequestsSubtitle">What people asked us to add after a Web search found no icons. Unreviewed requests appear first.</div>
+              </div>
+              <div class="panel-actions"></div>
+            </div>
+            <div class="table-wrap scroll-region" id="iconRequests"><div class="empty">Loading user requests</div></div>
           </article>
         </section>
 

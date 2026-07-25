@@ -11,12 +11,14 @@ const [
   api,
   migration,
   rollback,
+  requestReviewMigration,
 ] = await Promise.all([
   readFile('admin.html', 'utf8'),
   readFile('public/admin-app.js', 'utf8'),
   readFile('supabase/functions/admin-api/index.ts', 'utf8'),
   readFile('supabase/migrations/20260725130000_expand_query_review_actions.sql', 'utf8'),
   readFile('supabase/rollbacks/20260725130000_expand_query_review_actions.down.sql', 'utf8'),
+  readFile('supabase/migrations/20260718160000_admin_icon_request_reviews.sql', 'utf8'),
 ]);
 
 for (const [path, source] of [
@@ -25,17 +27,21 @@ for (const [path, source] of [
   ['supabase/functions/admin-api/index.ts', api],
   ['supabase/migrations/20260725130000_expand_query_review_actions.sql', migration],
   ['supabase/rollbacks/20260725130000_expand_query_review_actions.down.sql', rollback],
+  ['supabase/migrations/20260718160000_admin_icon_request_reviews.sql', requestReviewMigration],
 ]) {
   assert.doesNotMatch(source, /[\u2013\u2014]/u, `${path} contains a forbidden dash character.`);
 }
 
 assert.ok(
-  html.indexOf('data-row-label="Demand Inbox"') < html.indexOf('data-row-label="Search history"'),
-  'Demand Inbox must appear before Search history.',
+  html.indexOf('data-row-label="Search history"') < html.indexOf('data-row-label="Gaps"')
+  && html.indexOf('data-row-label="Gaps"') < html.indexOf('data-row-label="User requests"'),
+  'Search history, Gaps, and User requests are in the wrong order.',
 );
 for (const label of [
-  'Demand Inbox',
+  'Gaps',
   'Failed and weak searches that need a human decision.',
+  'User requests',
+  'What people asked us to add after a Web search found no icons.',
 ]) {
   assert.ok(html.includes(label), `admin.html is missing ${label}.`);
 }
@@ -50,7 +56,7 @@ for (const field of [
   "label: 'Searches'",
   "label: 'Action'",
 ]) {
-  assert.ok(frontend.includes(field), `Demand Inbox is missing ${field}.`);
+  assert.ok(frontend.includes(field), `Gaps is missing ${field}.`);
 }
 
 for (const action of [
@@ -67,11 +73,43 @@ for (const action of [
   assert.ok(migration.includes(`'${action}'`), `Migration is missing ${action}.`);
 }
 
-assert.ok(api.includes('filteredDemandRows'), 'Demand Inbox does not use the v2 search payload.');
-assert.ok(api.includes('historyEvidenceRows'), 'Demand Inbox does not use trusted final search rows.');
-assert.ok(api.includes('dataRows.query_reviews'), 'Demand Inbox does not join human review actions.');
-assert.ok(frontend.includes("apiRequest('/v2/search/review'"), 'Demand Inbox uses the wrong review endpoint.');
+assert.ok(api.includes('filteredDemandRows'), 'Gaps does not use the v2 search payload.');
+assert.ok(api.includes('historyEvidenceRows'), 'Gaps does not use trusted final search rows.');
+assert.ok(api.includes('dataRows.query_reviews'), 'Gaps does not join human review actions.');
+assert.ok(frontend.includes("apiRequest('/v2/search/review'"), 'Gaps uses the wrong review endpoint.');
 assert.ok(rollback.includes('Cannot restore the old review action constraint'), 'Rollback does not protect stored actions.');
+
+for (const field of [
+  "label: 'User request'",
+  "label: 'Review'",
+  'row.failed_query || row.search_query',
+  'row.library_filter',
+  'row.created_at',
+  'data-icon-request-status',
+  'data-icon-request-note',
+  'data-icon-request-save',
+]) {
+  assert.ok(frontend.includes(field), `User requests is missing ${field}.`);
+}
+for (const sourceRule of [
+  ".from('icon_evidence')",
+  ".eq('signal_type', 'search_attempt')",
+  ".eq('ui_surface', 'grid_empty_feedback')",
+  'search_query',
+  'library_filter',
+  ".from('admin_icon_request_reviews')",
+]) {
+  assert.ok(api.includes(sourceRule), `User requests is missing source rule ${sourceRule}.`);
+}
+for (const status of ['new', 'planned', 'added', 'declined']) {
+  assert.ok(frontend.includes(`value="${status}"`), `User requests is missing status ${status}.`);
+  assert.ok(api.includes(`'${status}'`), `Admin API is missing user request status ${status}.`);
+  assert.ok(requestReviewMigration.includes(`'${status}'`), `Review migration is missing status ${status}.`);
+}
+assert.ok(frontend.includes("apiRequest('/v2/icon-requests/review'"), 'User requests uses the wrong review endpoint.');
+assert.ok(frontend.includes('icon_evidence_id: iconEvidenceId, status, note'), 'User requests does not save status and note together.');
+assert.ok(api.includes('Number(left.reviewed) - Number(right.reviewed)'), 'Unreviewed user requests are not ordered first.');
+assert.ok(api.includes(".in('domain', [...getProductionAnalyticsHosts()])"), 'User requests does not respect the production traffic filter.');
 
 for (const forbidden of [
   'insert into public.icons',
@@ -143,7 +181,10 @@ console.log(JSON.stringify({
   status: 'ok',
   source: 'v2_final_search_rows',
   test_traffic_filter: 'inherited_from_v2_filters',
+  user_request_source: "icon_evidence.ui_surface = 'grid_empty_feedback'",
+  user_request_review_source: 'admin_icon_request_reviews',
   visible_fields: ['query', 'issue', 'channel', 'language', 'country', 'result_count', 'searches', 'action'],
+  user_request_fields: ['request_text', 'failed_query', 'library_filter', 'created_at', 'status', 'note'],
   actions: ['add_icon', 'add_alias', 'improve_ranking', 'improve_docs', 'watch', 'ignore', 'resolved'],
   automatic_product_writes: 0,
 }, null, 2));

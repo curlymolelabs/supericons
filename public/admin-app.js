@@ -1784,7 +1784,7 @@ function renderQueryExplorer() {
 
 function renderWorklist() {
   const element = $('gapWorklist');
-  const subtitle = $('demandInboxSubtitle');
+  const subtitle = $('gapsSubtitle');
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
     if (subtitle) subtitle.textContent = 'Loading failed and weak searches.';
@@ -1852,40 +1852,58 @@ function renderWorklist() {
 
 function renderIconRequests() {
   const element = $('iconRequests');
+  const subtitle = $('userRequestsSubtitle');
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
+    if (subtitle) subtitle.textContent = 'Loading requests from people.';
     renderPagination('iconRequests', 0, 1);
-    element.innerHTML = loadingState('Loading icon requests');
+    element.innerHTML = loadingState('Loading user requests');
     return;
   }
   if (!state.data.search && state.errors.search) {
+    if (subtitle) subtitle.textContent = state.errors.search;
     renderPagination('iconRequests', 0, 1);
     element.innerHTML = emptyState(state.errors.search);
     return;
   }
   const inbox = availability(state.data.search?.icon_requests, 'Icon requests are not available from the current data source.');
   if (!inbox.available) {
+    if (subtitle) subtitle.textContent = inbox.reason;
     renderPagination('iconRequests', 0, 1);
     element.innerHTML = emptyState(inbox.reason);
     return;
   }
+  const scope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
+  if (subtitle) {
+    subtitle.textContent = `${formatNumber(inbox.rows.length)} requests in this period | ${scope} | unreviewed first`;
+  }
   element.innerHTML = table([
-    { label: 'Request', render: (row) => `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong>` },
-    { label: 'Submitter', render: (row) => visitorLabel(row) },
-    { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
-    { label: 'Submitted', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
     {
-      label: 'Status',
+      label: 'User request',
+      render: (row) => {
+        const query = safeText(row.failed_query || row.search_query, 'Query not recorded');
+        const library = safeText(row.library_filter, 'all');
+        const submitted = formatDate(row.created_at, true);
+        return `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong><div class="activity-meta">Failed query: ${escapeHtml(query)} | Library: ${escapeHtml(library)} | ${escapeHtml(submitted)}</div>`;
+      },
+    },
+    {
+      label: 'Review',
       render: (row) => {
         if (inbox.status_available === false) return `<span class="muted-cell">${escapeHtml(inbox.status_reason || 'Status unavailable')}</span>`;
         const key = `request:${safeText(row.id, '')}`;
         const value = safeText(row.status, 'new');
-        return `<select class="inline-select" data-icon-request-review data-request-id="${escapeHtml(row.id)}" aria-label="Status for ${escapeHtml(safeText(row.request_text || row.evidence_text, 'icon request'))}"${state.savingRows.has(key) ? ' disabled' : ''}>
-          <option value="new"${value === 'new' ? ' selected' : ''}>New</option>
-          <option value="planned"${value === 'planned' ? ' selected' : ''}>Planned</option>
-          <option value="added"${value === 'added' ? ' selected' : ''}>Added</option>
-          <option value="declined"${value === 'declined' ? ' selected' : ''}>Declined</option>
-        </select>`;
+        const disabled = state.savingRows.has(key) ? ' disabled' : '';
+        return `<div class="request-review" data-icon-request-review data-request-id="${escapeHtml(row.id)}">
+          <select class="inline-select" data-icon-request-status aria-label="Status for ${escapeHtml(safeText(row.request_text || row.evidence_text, 'user request'))}"${disabled}>
+            <option value="new"${value === 'new' ? ' selected' : ''}>New</option>
+            <option value="planned"${value === 'planned' ? ' selected' : ''}>Planned</option>
+            <option value="added"${value === 'added' ? ' selected' : ''}>Added</option>
+            <option value="declined"${value === 'declined' ? ' selected' : ''}>Declined</option>
+          </select>
+          <input class="request-note" data-icon-request-note value="${escapeHtml(safeText(row.review_note, ''))}" maxlength="400" aria-label="Review note for ${escapeHtml(safeText(row.request_text || row.evidence_text, 'user request'))}" placeholder="Optional note"${disabled} />
+          <button class="small-button" data-icon-request-save type="button"${disabled}>Save</button>
+        </div>`;
       },
     },
   ], rowsForPage('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
@@ -1938,8 +1956,9 @@ function renderDiagnostics() {
 }
 
 function renderSearch() {
-  renderWorklist();
   renderQueryExplorer();
+  renderWorklist();
+  renderIconRequests();
 }
 
 function registeredUserDisplayRows(audienceUsers) {
@@ -2773,21 +2792,22 @@ async function saveQueryReview(select) {
   }
 }
 
-async function saveIconRequestReview(select) {
-  const iconEvidenceId = String(select.dataset.requestId || '').trim();
-  const status = String(select.value || '').trim();
+async function saveIconRequestReview(review) {
+  const iconEvidenceId = String(review.dataset.requestId || '').trim();
+  const status = String(review.querySelector('[data-icon-request-status]')?.value || '').trim();
+  const note = String(review.querySelector('[data-icon-request-note]')?.value || '').trim();
   const key = `request:${iconEvidenceId}`;
   state.savingRows.add(key);
   renderIconRequests();
   try {
     await apiRequest('/v2/icon-requests/review', {
       method: 'POST',
-      body: JSON.stringify({ icon_evidence_id: iconEvidenceId, status }),
+      body: JSON.stringify({ icon_evidence_id: iconEvidenceId, status, note }),
     });
-    showToast('Icon request status saved.');
+    showToast('User request review saved.');
     await refreshListEndpoint('queries');
   } catch (error) {
-    showToast(error.message || 'The icon request status could not be saved.', true);
+    showToast(error.message || 'The user request review could not be saved.', true);
     renderIconRequests();
   } finally {
     state.savingRows.delete(key);
@@ -2948,6 +2968,12 @@ function initializeEvents() {
       openWorklist(worklistButton.dataset.openWorklist);
       return;
     }
+    const requestSave = event.target.closest('[data-icon-request-save]');
+    if (requestSave) {
+      const review = requestSave.closest('[data-icon-request-review]');
+      if (review) saveIconRequestReview(review);
+      return;
+    }
     const button = event.target.closest('[data-pagination] button');
     if (!button) return;
     const pagination = button.closest('[data-pagination]');
@@ -2963,8 +2989,6 @@ function initializeEvents() {
       saveQueryReview(queryReview);
       return;
     }
-    const requestReview = event.target.closest('[data-icon-request-review]');
-    if (requestReview) saveIconRequestReview(requestReview);
   });
   document.querySelectorAll('[data-search-chart-mode]').forEach((button) => {
     button.addEventListener('click', () => {

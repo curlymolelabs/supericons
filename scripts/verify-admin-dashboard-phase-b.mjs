@@ -56,10 +56,13 @@ function excludes(source, value, label) {
   'One row per unique query. For quick analysis.',
   'One row per tool call. Ground truth.',
   'Everything plus integrity checks. For verification.',
-  'Demand Inbox',
+  'Gaps',
   'Failed and weak searches that need a human decision.',
+  'User requests',
   'gapWorklist',
-  'data-row-label="Demand Inbox"',
+  'iconRequests',
+  'data-row-label="Gaps"',
+  'data-row-label="User requests"',
 ].forEach((value) => includes(html, value, 'admin.html'));
 
 [
@@ -68,10 +71,8 @@ function excludes(source, value, label) {
   'intelligenceRawSignalsTable',
   'queryEvidenceTable',
   'raw evidence table',
-  'iconRequests',
   'contactInbox',
   'diagnosticsDrawer',
-  'data-row-label="Icon requests"',
   'data-row-label="Contact inbox"',
   '<strong>Table CSV</strong>',
   '>Download CSV<',
