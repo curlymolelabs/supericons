@@ -86,6 +86,7 @@ const state = {
     registeredUsers: 1,
     clients: 1,
   },
+  sorts: {},
   data: {
     activity: null,
     overview: null,
@@ -860,16 +861,130 @@ function queryChannelCell(row = {}) {
   return pill(channelLabel(row.channel || row.venue), 'info');
 }
 
-function table(headers, rows, emptyReason) {
+function sortableHeaders(headers) {
+  return headers.filter((header) => header.sortKey);
+}
+
+function headerSortValue(header, row) {
+  if (typeof header.sortValue === 'function') return header.sortValue(row);
+  return row?.[header.sortKey];
+}
+
+// A blank, unlinked, or unparseable cell has no position on the scale. It is treated as
+// missing so it never competes with real values in either direction.
+function isMissingSortValue(value, type) {
+  if (value === null || value === undefined || value === '') return true;
+  if (type === 'date') return !Number.isFinite(new Date(value).getTime());
+  if (type === 'number') return !Number.isFinite(Number(value));
+  return false;
+}
+
+function compareSortValues(left, right, type) {
+  if (type === 'date') return new Date(left).getTime() - new Date(right).getTime();
+  if (type === 'number') return Number(left) - Number(right);
+  return String(left).localeCompare(String(right), undefined, { numeric: true, sensitivity: 'base' });
+}
+
+function activeSort(tableKey, headers) {
+  const sort = state.sorts[tableKey];
+  if (!sort) return null;
+  const header = sortableHeaders(headers).find((candidate) => candidate.sortKey === sort.key);
+  return header ? { header, direction: sort.direction === 'asc' ? 'asc' : 'desc' } : null;
+}
+
+// Missing values always sort last so an empty column never masquerades as the smallest value.
+function sortRows(tableKey, rows, headers) {
+  const values = normalizeList(rows);
+  const sort = activeSort(tableKey, headers);
+  if (!sort) return values;
+  const direction = sort.direction === 'asc' ? 1 : -1;
+  const type = sort.header.sortType || 'text';
+  return values
+    .map((row, index) => ({ row, index }))
+    .sort((left, right) => {
+      const leftValue = headerSortValue(sort.header, left.row);
+      const rightValue = headerSortValue(sort.header, right.row);
+      const leftMissing = isMissingSortValue(leftValue, type);
+      const rightMissing = isMissingSortValue(rightValue, type);
+      // Direction is applied only to real values, so missing rows stay last either way.
+      if (leftMissing || rightMissing) {
+        if (leftMissing && rightMissing) return left.index - right.index;
+        return leftMissing ? 1 : -1;
+      }
+      const result = compareSortValues(leftValue, rightValue, type) * direction;
+      return result !== 0 ? result : left.index - right.index;
+    })
+    .map((entry) => entry.row);
+}
+
+function sortIndicator(direction) {
+  const path = direction === 'asc' ? 'm5 12 5-5 5 5' : 'm5 8 5 5 5-5';
+  return `<svg class="sort-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path ? `<path d="${path}"/>` : ''}</svg>`;
+}
+
+function tableHeaderCell(header, tableKey, sort, sortDisabledReason) {
+  const classes = [header.number ? 'number' : '', header.sortKey ? 'sortable' : ''].filter(Boolean).join(' ');
+  if (!header.sortKey || !tableKey) {
+    return `<th class="${classes}">${escapeHtml(header.label)}</th>`;
+  }
+  if (sortDisabledReason) {
+    return `<th class="${classes} sort-unavailable" title="${escapeHtml(sortDisabledReason)}">${escapeHtml(header.label)}</th>`;
+  }
+  const isActive = sort && sort.header.sortKey === header.sortKey;
+  const direction = isActive ? sort.direction : null;
+  const nextDirection = isActive && direction === 'desc' ? 'asc' : 'desc';
+  const ariaSort = isActive ? (direction === 'asc' ? 'ascending' : 'descending') : 'none';
+  const hint = isActive
+    ? `Sorted ${direction === 'asc' ? 'ascending' : 'descending'}. Click to sort ${nextDirection === 'asc' ? 'ascending' : 'descending'}.`
+    : `Sort by ${header.label}`;
+  return `<th class="${classes}${isActive ? ' sorted' : ''}" aria-sort="${ariaSort}">
+    <button type="button" class="sort-button" data-sort-table="${escapeHtml(tableKey)}" data-sort-key="${escapeHtml(header.sortKey)}" title="${escapeHtml(hint)}">
+      <span>${escapeHtml(header.label)}</span>${isActive ? sortIndicator(direction) : ''}
+    </button>
+  </th>`;
+}
+
+function table(headers, rows, emptyReason, { sortTableKey = '', sortDisabledReason = '' } = {}) {
   if (!rows.length) return emptyState(emptyReason);
+  const sort = sortTableKey ? activeSort(sortTableKey, headers) : null;
   return `
     <table>
-      <thead><tr>${headers.map((header) => `<th class="${header.number ? 'number' : ''}">${escapeHtml(header.label)}</th>`).join('')}</tr></thead>
+      <thead><tr>${headers.map((header) => tableHeaderCell(header, sortTableKey, sort, sortDisabledReason)).join('')}</tr></thead>
       <tbody>${rows.map((row, rowIndex) => `
         <tr>${headers.map((header) => `<td class="${header.number ? 'number' : ''}">${header.render(row, rowIndex)}</td>`).join('')}</tr>
       `).join('')}</tbody>
     </table>
   `;
+}
+
+// Sorting must run across the complete row set. Server-paginated lists only hold the
+// current page in the browser, so sorting stays disabled there rather than silently
+// reordering a slice and implying it is the whole list.
+function sortedTableParts(tableKey, headers, rows, { serverPagination = null } = {}) {
+  const values = normalizeList(rows);
+  const total = serverPagination ? number(serverPagination.total) || values.length : values.length;
+  const partialServerPage = Boolean(serverPagination) && total > values.length;
+  const sortDisabledReason = partialServerPage
+    ? `Sorting needs the complete list. This view loads ${formatNumber(values.length)} of ${formatNumber(total)} rows per page. Raise "Rows" or narrow the filters to sort.`
+    : '';
+  const ordered = partialServerPage ? values : sortRows(tableKey, values, headers);
+  return {
+    rows: rowsForPage(tableKey, ordered, serverPagination),
+    tableOptions: { sortTableKey: tableKey, sortDisabledReason },
+  };
+}
+
+function sortedTable(tableKey, headers, rows, emptyReason, options = {}) {
+  const parts = sortedTableParts(tableKey, headers, rows, options);
+  return table(headers, parts.rows, emptyReason, parts.tableOptions);
+}
+
+function setSort(tableKey, sortKey) {
+  const current = state.sorts[tableKey];
+  const direction = current && current.key === sortKey && current.direction === 'desc' ? 'asc' : 'desc';
+  state.sorts[tableKey] = { key: sortKey, direction };
+  state.pages[tableKey] = 1;
+  renderAll();
 }
 
 function csvCell(value) {
@@ -1580,37 +1695,37 @@ function topListConfig(key, rows = []) {
   if (key === 'returned') {
     return {
       headers: [
-        { label: 'Icon', render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library, 'Library unknown'))}</div>` },
-        { label: 'Returns', number: true, render: (row) => formatNumber(row.count ?? row.returns) },
-        { label: 'Queries', number: true, render: (row) => formatNumber(row.distinct_queries) },
+        { label: 'Icon', sortKey: 'icon', sortValue: (row) => row.icon_name || row.icon_id || null, render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library, 'Library unknown'))}</div>` },
+        { label: 'Returns', number: true, sortKey: 'returns', sortType: 'number', sortValue: (row) => row.count ?? row.returns ?? null, render: (row) => formatNumber(row.count ?? row.returns) },
+        { label: 'Queries', number: true, sortKey: 'distinct_queries', sortType: 'number', render: (row) => formatNumber(row.distinct_queries) },
       ],
     };
   }
   if (key === 'copied') {
     return {
       headers: [
-        { label: 'Icon', render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.action, 'Copy or download'))}</div>` },
-        { label: 'Actions', number: true, render: (row) => formatNumber(row.count ?? row.actions) },
-        { label: 'Est. reach', number: true, render: (row) => formatNumber(row.distinct_clients) },
+        { label: 'Icon', sortKey: 'icon', sortValue: (row) => row.icon_name || row.icon_id || null, render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.action, 'Copy or download'))}</div>` },
+        { label: 'Actions', number: true, sortKey: 'actions', sortType: 'number', sortValue: (row) => row.count ?? row.actions ?? null, render: (row) => formatNumber(row.count ?? row.actions) },
+        { label: 'Est. reach', number: true, sortKey: 'distinct_clients', sortType: 'number', render: (row) => formatNumber(row.distinct_clients) },
       ],
     };
   }
   if (key === 'zero') {
     return {
       headers: [
-        { label: 'Query', render: (row) => `<button class="text-link" type="button" data-open-worklist="${escapeHtml(safeText(row.query, ''))}">${escapeHtml(safeText(row.query, 'Empty query'))}</button><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
-        { label: 'Zeros', number: true, render: (row) => formatNumber(row.count ?? row.attempt_count ?? row.zero_attempt_count) },
-        { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
-        { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
+        { label: 'Query', sortKey: 'query', render: (row) => `<button class="text-link" type="button" data-open-worklist="${escapeHtml(safeText(row.query, ''))}">${escapeHtml(safeText(row.query, 'Empty query'))}</button><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
+        { label: 'Zeros', number: true, sortKey: 'zeros', sortType: 'number', sortValue: (row) => row.count ?? row.attempt_count ?? row.zero_attempt_count ?? null, render: (row) => formatNumber(row.count ?? row.attempt_count ?? row.zero_attempt_count) },
+        { label: clientHeader, number: true, sortKey: 'distinct_clients', sortType: 'number', sortValue: (row) => row.distinct_clients ?? row.estimated_unique_clients ?? null, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+        { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       ],
     };
   }
   return {
     headers: [
-      { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
-      { label: 'Searches', number: true, render: (row) => formatNumber(row.count ?? row.searches ?? row.attempt_count) },
-      { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
-      { label: 'Hit rate', number: true, render: (row) => formatPercent(row.hit_rate ?? row.success_rate) },
+      { label: 'Query', sortKey: 'query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
+      { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', sortValue: (row) => row.count ?? row.searches ?? row.attempt_count ?? null, render: (row) => formatNumber(row.count ?? row.searches ?? row.attempt_count) },
+      { label: clientHeader, number: true, sortKey: 'distinct_clients', sortType: 'number', sortValue: (row) => row.distinct_clients ?? row.estimated_unique_clients ?? null, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+      { label: 'Hit rate', number: true, sortKey: 'hit_rate', sortType: 'number', sortValue: (row) => row.hit_rate ?? row.success_rate ?? null, render: (row) => formatPercent(row.hit_rate ?? row.success_rate) },
     ],
   };
 }
@@ -1642,9 +1757,10 @@ function renderTopList() {
     element.innerHTML = emptyState(list.reason);
     return;
   }
-  element.innerHTML = table(
+  element.innerHTML = sortedTable(
+    'topList',
     topListConfig(state.topList, list.rows).headers,
-    rowsForPage('topList', list.rows),
+    list.rows,
     `No ${state.topList} rows match these filters.`,
   );
 }
@@ -1717,11 +1833,10 @@ function renderQueryExplorer() {
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
     subtitle.textContent = `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} searches | ${testScope}`;
   }
-  const rows = rowsForPage('queries', state.data.search?.queries, state.data.search?.pagination);
-  state.visibleQueryRows = rows;
   const headers = [
     {
       label: 'Query',
+      sortKey: 'query',
       render: (row) => {
         const tools = normalizeList(row.tools);
         const details = [
@@ -1732,18 +1847,23 @@ function renderQueryExplorer() {
         return `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(details.join(' | '))}</div>`;
       },
     },
-    { label: 'Searches', number: true, render: (row) => queryRequestCell(row) },
-    { label: 'Est. client IDs', number: true, render: (row) => queryEstimatedClientIdsCell(row) },
-    { label: 'Outcome', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: 'Country', render: (row) => queryCountryCell(row) },
-    { label: 'Channel', render: (row) => queryChannelCell(row) },
-    { label: 'Typical result', number: true, render: (row) => queryTypicalResultCell(row) },
-    { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
+    { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', sortValue: (row) => row.searches ?? row.activity_count ?? row.requests ?? null, render: (row) => queryRequestCell(row) },
+    { label: 'Est. client IDs', number: true, sortKey: 'estimated_client_id_count', sortType: 'number', sortValue: (row) => row.estimated_client_id_count ?? row.client_count ?? null, render: (row) => queryEstimatedClientIdsCell(row) },
+    { label: 'Outcome', sortKey: 'outcome', sortValue: (row) => outcomeFor(row).label, render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
+    { label: 'Country', sortKey: 'country_code', sortValue: (row) => (row.country_available === false ? null : row.country_code || row.country || null), render: (row) => queryCountryCell(row) },
+    { label: 'Channel', sortKey: 'channel', sortValue: (row) => (row.channel_available === false ? null : channelLabel(row.channel || row.venue)), render: (row) => queryChannelCell(row) },
+    { label: 'Typical result', number: true, sortKey: 'result_count', sortType: 'number', sortValue: (row) => (row.result_count_available === false ? null : row.result_count ?? null), render: (row) => queryTypicalResultCell(row) },
+    { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', sortValue: (row) => row.last_seen || row.created_at, render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
   ];
+  const queryParts = sortedTableParts('queries', headers, state.data.search?.queries, {
+    serverPagination: state.data.search?.pagination,
+  });
+  const rows = queryParts.rows;
+  state.visibleQueryRows = rows;
   const notice = state.data.search?.queries_complete === false
     ? `<div class="data-notice" role="status">${escapeHtml(state.data.search.queries_notice || 'Showing the newest available search details. Narrow the filters for exact totals.')}</div>`
     : '';
-  element.innerHTML = `${notice}${table(headers, rows, state.errors.search || 'No queries match these filters.')}`;
+  element.innerHTML = `${notice}${table(headers, rows, state.errors.search || 'No queries match these filters.', queryParts.tableOptions)}`;
 }
 
 function renderWorklist() {
@@ -1764,15 +1884,17 @@ function renderWorklist() {
     element.innerHTML = emptyState(state.data.search.worklist_unavailable_reason || 'The complete worklist is not available for this period.');
     return;
   }
-  const rows = rowsForPage('worklist', state.data.search?.worklist);
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
-  element.innerHTML = table([
-    { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
-    { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
-    { label: 'Attempts', number: true, render: (row) => formatNumber(row.attempt_count) },
+  const worklistRows = normalizeList(state.data.search?.worklist);
+  const clientHeader = worklistRows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
+  element.innerHTML = sortedTable('worklist', [
+    { label: 'Query', sortKey: 'query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
+    { label: 'Issue', sortKey: 'issue', sortValue: (row) => outcomeFor(row).label, render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
+    { label: clientHeader, number: true, sortKey: 'distinct_clients', sortType: 'number', sortValue: (row) => row.distinct_clients ?? row.estimated_unique_clients ?? null, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+    { label: 'Attempts', number: true, sortKey: 'attempt_count', sortType: 'number', render: (row) => formatNumber(row.attempt_count) },
     {
       label: 'WHY',
+      sortKey: 'review_status',
+      sortValue: (row) => safeText(row.review_status, '') || null,
       render: (row) => {
         const key = `query:${safeText(row.query, '')}:${safeText(row.library_filter, 'all')}`;
         const value = safeText(row.review_status, '');
@@ -1785,7 +1907,7 @@ function renderWorklist() {
         </select>`;
       },
     },
-  ], rows, 'No unresolved search gaps match these filters.');
+  ], worklistRows, 'No unresolved search gaps match these filters.');
 }
 
 function renderIconRequests() {
@@ -1807,13 +1929,15 @@ function renderIconRequests() {
     element.innerHTML = emptyState(inbox.reason);
     return;
   }
-  element.innerHTML = table([
-    { label: 'Request', render: (row) => `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong>` },
-    { label: 'Submitter', render: (row) => visitorLabel(row) },
-    { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
-    { label: 'Submitted', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
+  element.innerHTML = sortedTable('iconRequests', [
+    { label: 'Request', sortKey: 'request_text', sortValue: (row) => row.request_text || row.evidence_text || null, render: (row) => `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong>` },
+    { label: 'Submitter', sortKey: 'submitter', sortValue: (row) => row.estimated_client_key || row.client_key || row.identifier || null, render: (row) => visitorLabel(row) },
+    { label: 'Country', sortKey: 'country_code', sortValue: (row) => row.country_code || row.country || null, render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
+    { label: 'Submitted', sortKey: 'created_at', sortType: 'date', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
     {
       label: 'Status',
+      sortKey: 'status',
+      sortValue: (row) => (inbox.status_available === false ? null : safeText(row.status, 'new')),
       render: (row) => {
         if (inbox.status_available === false) return `<span class="muted-cell">${escapeHtml(inbox.status_reason || 'Status unavailable')}</span>`;
         const key = `request:${safeText(row.id, '')}`;
@@ -1826,7 +1950,7 @@ function renderIconRequests() {
         </select>`;
       },
     },
-  ], rowsForPage('iconRequests', inbox.rows), 'No icon requests have been submitted in this period.');
+  ], inbox.rows, 'No icon requests have been submitted in this period.');
 }
 
 function renderContactInbox() {
@@ -1848,12 +1972,12 @@ function renderContactInbox() {
     element.innerHTML = emptyState(inbox.reason);
     return;
   }
-  element.innerHTML = table([
-    { label: 'From', render: (row) => `<strong>${escapeHtml(safeText(row.name, 'No name'))}</strong><div class="activity-meta">${escapeHtml(truncate(row.email, 34))}</div>` },
-    { label: 'Interest', render: (row) => pill(safeText(row.interest, 'General')) },
-    { label: 'Message', render: (row) => escapeHtml(truncate(row.message, 90)) },
-    { label: 'Received', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
-  ], rowsForPage('contact', inbox.rows), 'No contact submissions have been stored yet.');
+  element.innerHTML = sortedTable('contact', [
+    { label: 'From', sortKey: 'name', sortValue: (row) => row.name || row.email || null, render: (row) => `<strong>${escapeHtml(safeText(row.name, 'No name'))}</strong><div class="activity-meta">${escapeHtml(truncate(row.email, 34))}</div>` },
+    { label: 'Interest', sortKey: 'interest', render: (row) => pill(safeText(row.interest, 'General')) },
+    { label: 'Message', sortKey: 'message', render: (row) => escapeHtml(truncate(row.message, 90)) },
+    { label: 'Received', sortKey: 'created_at', sortType: 'date', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
+  ], inbox.rows, 'No contact submissions have been stored yet.');
 }
 
 function renderDiagnostics() {
@@ -2031,30 +2155,30 @@ function renderAudience() {
   }
   renderEmailVisibilityControl();
   $('registeredUsers').innerHTML = users.available || accounts.available
-    ? table([
-      { label: 'User', render: (row) => `<strong>${escapeHtml(safeText(row.identifier, 'Hidden'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.provider, 'Unknown provider'))}</div>` },
-      { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
-      { label: 'Signed up', render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at, true)) },
-      { label: 'Last sign-in', render: (row) => row.last_sign_in ? escapeHtml(formatDate(row.last_sign_in, true)) : '<span class="muted-cell">No sign-in recorded</span>' },
-      { label: 'Last search', render: (row) => row.last_search ? escapeHtml(formatDate(row.last_search, true)) : '<span class="muted-cell">No linked search</span>' },
-      { label: 'Searches', number: true, render: (row) => row.searches == null ? '<span class="muted-cell">Not linked</span>' : formatNumber(row.searches) },
-      { label: 'Venues', render: (row) => normalizeList(row.venues).length ? escapeHtml(row.venues.map(channelLabel).join(', ')) : '<span class="muted-cell">Not linked</span>' },
-      { label: 'Country', render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not linked</span>' },
-    ], rowsForPage('registeredUsers', registeredRows), 'No registered users match these filters.')
+    ? sortedTable('registeredUsers', [
+      { label: 'User', sortKey: 'identifier', sortValue: (row) => row.identifier, render: (row) => `<strong>${escapeHtml(safeText(row.identifier, 'Hidden'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.provider, 'Unknown provider'))}</div>` },
+      { label: 'Plan', sortKey: 'plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
+      { label: 'Signed up', sortKey: 'signup_at', sortType: 'date', sortValue: (row) => row.signup_at || row.created_at, render: (row) => escapeHtml(formatDate(row.signup_at || row.created_at, true)) },
+      { label: 'Last sign-in', sortKey: 'last_sign_in', sortType: 'date', render: (row) => row.last_sign_in ? escapeHtml(formatDate(row.last_sign_in, true)) : '<span class="muted-cell">No sign-in recorded</span>' },
+      { label: 'Last search', sortKey: 'last_search', sortType: 'date', render: (row) => row.last_search ? escapeHtml(formatDate(row.last_search, true)) : '<span class="muted-cell">No linked search</span>' },
+      { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', render: (row) => row.searches == null ? '<span class="muted-cell">Not linked</span>' : formatNumber(row.searches) },
+      { label: 'Venues', sortKey: 'venues', sortValue: (row) => (normalizeList(row.venues).length ? row.venues.map(channelLabel).join(', ') : null), render: (row) => normalizeList(row.venues).length ? escapeHtml(row.venues.map(channelLabel).join(', ')) : '<span class="muted-cell">Not linked</span>' },
+      { label: 'Country', sortKey: 'country_code', sortValue: (row) => row.country_code || row.country || null, render: (row) => row.country_code || row.country ? pill(row.country_code || row.country) : '<span class="muted-cell">Not linked</span>' },
+    ], registeredRows, 'No registered users match these filters.')
     : emptyState(users.reason);
   if (!users.available && !accounts.available) renderPagination('registeredUsers', 0, 1);
 
   const allClients = availability(data?.clients, 'Searcher details are not available from the current data source.');
   $('allClients').innerHTML = allClients.available
-    ? table([
-      { label: 'Searcher', render: (row) => visitorLabel(row) },
-      { label: 'Plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
-      { label: 'Country', render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
-      { label: 'First seen', render: (row) => escapeHtml(formatDate(row.first_seen, true)) },
-      { label: 'Last seen', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
-      { label: 'Searches', number: true, render: (row) => formatNumber(row.searches) },
-      { label: 'Top query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
-    ], rowsForPage('clients', allClients.rows, data?.pagination), 'No searchers match these filters.')
+    ? sortedTable('clients', [
+      { label: 'Searcher', sortKey: 'searcher', sortValue: (row) => row.estimated_client_key || row.client_key || row.identifier || null, render: (row) => visitorLabel(row) },
+      { label: 'Plan', sortKey: 'plan', render: (row) => pill(safeText(row.plan, 'Free'), String(row.plan || '').toLowerCase().includes('pro') ? 'pro' : '') },
+      { label: 'Country', sortKey: 'country_code', sortValue: (row) => row.country_code || row.country || null, render: (row) => pill(safeText(row.country_code || row.country, 'Unknown')) },
+      { label: 'First seen', sortKey: 'first_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.first_seen, true)) },
+      { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
+      { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', render: (row) => formatNumber(row.searches) },
+      { label: 'Top query', sortKey: 'top_query', render: (row) => escapeHtml(truncate(row.top_query, 34)) },
+    ], allClients.rows, 'No searchers match these filters.', { serverPagination: data?.pagination })
     : emptyState(allClients.reason);
   if (!allClients.available) renderPagination('clients', 0, 1);
 }
@@ -2868,6 +2992,11 @@ function initializeEvents() {
     const worklistButton = event.target.closest('[data-open-worklist]');
     if (worklistButton) {
       openWorklist(worklistButton.dataset.openWorklist);
+      return;
+    }
+    const sortButton = event.target.closest('[data-sort-table][data-sort-key]');
+    if (sortButton) {
+      setSort(sortButton.dataset.sortTable, sortButton.dataset.sortKey);
       return;
     }
     const button = event.target.closest('[data-pagination] button');
