@@ -2002,6 +2002,7 @@ export function buildDashboardV2SourceReconciliation({
   webDiagnosticRows,
   dataCutoff,
   sourceRowsComplete = true,
+  localMcpCoverageCutoverAt = null,
 }: {
   auditRows: SearchEvidenceRow[];
   usageRows: SearchEvidenceRow[];
@@ -2009,6 +2010,7 @@ export function buildDashboardV2SourceReconciliation({
   webDiagnosticRows: SearchEvidenceRow[];
   dataCutoff: string;
   sourceRowsComplete?: boolean;
+  localMcpCoverageCutoverAt?: string | null;
 }) {
   const dataCutoffMs = Date.parse(dataCutoff);
   if (!Number.isFinite(dataCutoffMs)) {
@@ -2018,6 +2020,7 @@ export function buildDashboardV2SourceReconciliation({
     dataCutoffMs - (DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS * 1000),
   ).toISOString();
   const reconciliationCutoffMs = Date.parse(reconciliationCutoff);
+  const localMcpCoverageCutoverMs = Date.parse(String(localMcpCoverageCutoverAt || ''));
   const usageByAuditBacklink = new Map<string, SearchEvidenceRow[]>();
   const rowsByEpisode = new Map<string, SearchEvidenceRow[]>();
   const rowsByRecoveryChain = new Map<string, SearchEvidenceRow[]>();
@@ -2185,6 +2188,7 @@ export function buildDashboardV2SourceReconciliation({
   const usageCounts: Record<string, number> = {
     linked_final: 0,
     represented_legacy_final: 0,
+    outside_verified_coverage: 0,
     pending_linkage: 0,
     unexplained: 0,
   };
@@ -2199,12 +2203,40 @@ export function buildDashboardV2SourceReconciliation({
       continue;
     }
     const observedAtMs = Date.parse(String(row.created_at || ''));
-    if (Number.isFinite(observedAtMs) && observedAtMs >= reconciliationCutoffMs) {
+    if (
+      row.channel === 'local_mcp'
+      && Number.isFinite(localMcpCoverageCutoverMs)
+      && Number.isFinite(observedAtMs)
+      && observedAtMs < localMcpCoverageCutoverMs
+    ) {
+      usageCounts.outside_verified_coverage += 1;
+    } else if (Number.isFinite(observedAtMs) && observedAtMs >= reconciliationCutoffMs) {
       usageCounts.pending_linkage += 1;
     } else {
       usageCounts.unexplained += 1;
     }
   }
+
+  function unexplainedRowsByChannel(rows: SearchEvidenceRow[]) {
+    const counts: Record<string, number> = {};
+    for (const row of rows) {
+      if (row.diagnostic_accounting_status !== 'unexplained') continue;
+      const channel = String(row.channel || 'unknown');
+      counts[channel] = (counts[channel] || 0) + 1;
+    }
+    return counts;
+  }
+
+  const unexplainedAuditRows = annotatedAuditRows.filter(
+    (row) => row.diagnostic_accounting_status === 'unexplained',
+  );
+  const unexplainedWebDiagnosticRows = annotatedWebDiagnosticRows.filter(
+    (row) => row.diagnostic_accounting_status === 'unexplained',
+  );
+  const unexplainedObservedAt = [...unexplainedAuditRows, ...unexplainedWebDiagnosticRows]
+    .map((row) => String(row.created_at || ''))
+    .filter((value) => Number.isFinite(Date.parse(value)))
+    .sort((left, right) => Date.parse(left) - Date.parse(right));
 
   const checks = {
     source_rows_complete: sourceRowsComplete,
@@ -2247,6 +2279,7 @@ export function buildDashboardV2SourceReconciliation({
         + auditLinkageCounts.explained_nonfinal_diagnostic
         + webDiagnosticLinkageCounts.explained_unlinked_diagnostic
         + webDiagnosticLinkageCounts.explained_nonfinal_diagnostic,
+      outside_verified_coverage_rows: usageCounts.outside_verified_coverage,
       unexplained_rows:
         auditLinkageCounts.unexplained
         + webDiagnosticLinkageCounts.unexplained
@@ -2255,6 +2288,16 @@ export function buildDashboardV2SourceReconciliation({
     audit_linkage_counts: auditLinkageCounts,
     web_diagnostic_linkage_counts: webDiagnosticLinkageCounts,
     usage_accounting_counts: usageCounts,
+    outside_verified_coverage: {
+      local_mcp_before_cutover: usageCounts.outside_verified_coverage,
+      local_mcp_coverage_cutover_at: localMcpCoverageCutoverAt,
+    },
+    unexplained_breakdown: {
+      audit_by_channel: unexplainedRowsByChannel(unexplainedAuditRows),
+      web_diagnostic_by_channel: unexplainedRowsByChannel(unexplainedWebDiagnosticRows),
+      first_observed_at: unexplainedObservedAt[0] || null,
+      last_observed_at: unexplainedObservedAt.at(-1) || null,
+    },
     diagnostic_rows: diagnosticRows,
   };
 }
@@ -2355,6 +2398,7 @@ async function fetchDashboardV2IdentityTelemetry(
       finalRows: finalRows.rows,
       webDiagnosticRows: filteredWebDiagnosticRows,
       dataCutoff: filters.data_cutoff,
+      localMcpCoverageCutoverAt: settings.local_mcp_coverage_cutover_at,
       sourceRowsComplete: !(
         finalRows.truncated
         || auditRowsTruncated

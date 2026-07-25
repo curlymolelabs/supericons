@@ -311,6 +311,50 @@ Deno.test('fails source reconciliation for an old product identity with no exact
   });
   assert(reconciliation.status === 'needs_attention', 'An unexplained old source row passed reconciliation.');
   assert(reconciliation.counts.unexplained_rows === 1, 'The unexplained row was not counted.');
+  assert(
+    reconciliation.unexplained_breakdown.audit_by_channel.hosted_mcp === 1,
+    'The unexplained Hosted MCP row was hidden from the channel breakdown.',
+  );
+});
+
+Deno.test('separates Local MCP rows before verified coverage from unexplained rows', () => {
+  const beforeCutover = buildDashboardV2SourceReconciliation({
+    auditRows: [],
+    usageRows: [{
+      id: 'mcp_usage_events:70',
+      event_type: 'search_outcome',
+      tool_name: 'search_icons',
+      channel: 'local_mcp',
+      created_at: '2026-07-24T02:59:59.999Z',
+    }] as never[],
+    finalRows: [],
+    webDiagnosticRows: [],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+    localMcpCoverageCutoverAt: '2026-07-24T03:00:00.000Z',
+  });
+  assert(beforeCutover.status === 'passed', 'A pre-cutover Local MCP row failed reconciliation.');
+  assert(
+    beforeCutover.usage_accounting_counts.outside_verified_coverage === 1,
+    'The pre-cutover Local MCP row was not separated.',
+  );
+  assert(beforeCutover.counts.unexplained_rows === 0, 'A pre-cutover Local MCP row stayed unexplained.');
+
+  const atCutover = buildDashboardV2SourceReconciliation({
+    auditRows: [],
+    usageRows: [{
+      id: 'mcp_usage_events:71',
+      event_type: 'search_outcome',
+      tool_name: 'search_icons',
+      channel: 'local_mcp',
+      created_at: '2026-07-24T03:00:00.000Z',
+    }] as never[],
+    finalRows: [],
+    webDiagnosticRows: [],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+    localMcpCoverageCutoverAt: '2026-07-24T03:00:00.000Z',
+  });
+  assert(atCutover.status === 'needs_attention', 'A missing post-cutover Local MCP final outcome passed.');
+  assert(atCutover.counts.unexplained_rows === 1, 'A post-cutover Local MCP gap was hidden.');
 });
 
 Deno.test('fails source reconciliation when an old Web diagnostic has no final outcome', () => {
