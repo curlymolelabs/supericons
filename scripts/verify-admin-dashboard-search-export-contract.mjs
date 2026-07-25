@@ -48,7 +48,7 @@ if (menuItems.length !== 2) {
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '3.2'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.0'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
@@ -73,7 +73,11 @@ if (menuItems.length !== 2) {
   'search_summary',
   'request_log',
   'web_searches',
-  'hosted_diagnostics',
+  'diagnostics',
+  'source_reconciliation',
+  'source_reconciliation_passes',
+  'diagnostic_accounting_status',
+  'diagnostic_linkage_tier',
   'episode_id',
   'recovery_chain_id',
   'diagnostic_attempt_count',
@@ -98,9 +102,16 @@ if (menuItems.length !== 2) {
   'finalOutcomeIsAfterCutover',
   'web_final_outcome_cutover_at',
   'local_mcp_coverage_cutover_at',
+  'buildDashboardV2SourceReconciliation',
+  'DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS',
+  'source_reconciliation',
+  'explained_unlinked_gateway_diagnostic',
+  'diagnostics_kept_out_of_product_rows',
 ].forEach((value) => requireText(api, value, 'Search history API'));
 
 requireText(helpers, 'export function dashboardV2SearchHistoryRole', 'Search history role helper');
+requireText(helpers, 'diagnostic_accounting_status', 'Search history compact event helper');
+requireText(helpers, 'diagnostic_linkage_tier', 'Search history compact event helper');
 forbidText(
   api,
   'const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows',
@@ -123,8 +134,8 @@ console.log(JSON.stringify({
   exports: {
     search_summary: 'one row per query, library, and origin',
     request_log: 'one final top-level MCP search outcome per row',
-    audit_bundle: 'separate summary, request, web, and diagnostic data sets',
+    audit_bundle: 'separate summary, request, web, diagnostic, and source reconciliation data',
   },
   filenames_include: ['export type', 'period', 'generation timestamp'],
-  integrity_checks: 12,
+  integrity_checks: 13,
 }, null, 2));

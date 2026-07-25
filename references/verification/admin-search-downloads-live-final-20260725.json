@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "artifact": "admin_search_downloads_live_verification",
+  "status": "passed_after_repair",
+  "generated_at_utc": "2026-07-24T19:35:16.559Z",
+  "deployed_admin_api_version": 101,
+  "gate_evidence_sha256": "d405cff94c8cf2cfdd8c70b08d14f22b0cdddae2e2176ff74da49455ff855b06",
+  "checks": {
+    "authenticated_live_admin_api": true,
+    "all_six_downloads_completed": true,
+    "filenames_and_schemas_match": true,
+    "request_metadata_matches_visible_filter": true,
+    "export_metadata_matches_visible_filter": true,
+    "default_product_totals_exclude_controlled_probes": true,
+    "controlled_web_hosted_local_finals_present_once": true,
+    "controlled_local_final_classification_preserved": true,
+    "gateway_probes_are_diagnostics_only": true,
+    "no_fourth_product_channel": true,
+    "source_reconciliation_passed": true,
+    "audit_integrity_passed": true
+  },
+  "default_scope": {
+    "filenames": {
+      "search_summary": "supericons-search-summary-24h-20260724T193456Z.csv",
+      "request_log": "supericons-request-log-24h-20260724T193458Z.csv",
+      "audit_bundle": "supericons-audit-bundle-24h-20260724T193504Z.json"
+    },
+    "file_sha256": {
+      "search_summary": "9258230e32f8c2b3ba1de8aaf71b6c00cd43e54d0d2b43aceb76cda71dab8d10",
+      "request_log": "65a93ecd2c780c8eb332fcdd044f3e56d59faeb5dd6da53512815ff44b7be068",
+      "audit_bundle": "4a9e92cb059c827c845d5d019cc8d8a051dd41729d773bfbcb27f89798ac3141"
+    },
+    "rows": {
+      "search_summary": 177,
+      "request_log": 129,
+      "web_searches": 60,
+      "diagnostics": 515
+    },
+    "product_requests": 189,
+    "source_reconciliation": {
+      "status": "passed",
+      "pending_rows": 0,
+      "unexplained_rows": 0,
+      "explained_exclusions": 271,
+      "audit_linkage_counts": {
+        "audit_backlink": 0,
+        "episode_id": 243,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 165,
+        "explained_nonfinal_diagnostic": 0,
+        "unexplained": 0
+      },
+      "web_diagnostic_linkage_counts": {
+        "audit_backlink": 0,
+        "episode_id": 1,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 0,
+        "explained_nonfinal_diagnostic": 106,
+        "unexplained": 0
+      },
+      "usage_accounting_counts": {
+        "linked_final": 129,
+        "represented_legacy_final": 0,
+        "pending_linkage": 0,
+        "unexplained": 0
+      }
+    },
+    "integrity": {
+      "status": "passed",
+      "structural_status": "passed",
+      "semantic_status": "passed",
+      "summary_requests": 189,
+      "groupable_primary_events": 189
+    },
+    "request_metadata": {
+      "matching_requests": 15,
+      "search_requests": 5,
+      "event_requests": 10
+    },
+    "controlled_product_probe_rows": 0
+  },
+  "included_test_scope": {
+    "filenames": {
+      "search_summary": "supericons-search-summary-24h-20260724T193507Z.csv",
+      "request_log": "supericons-request-log-24h-20260724T193510Z.csv",
+      "audit_bundle": "supericons-audit-bundle-24h-20260724T193516Z.json"
+    },
+    "file_sha256": {
+      "search_summary": "a2fb0ff616a3237b0dbf4738321b8479c88135e06026a00ae6e9d402714d4e25",
+      "request_log": "e036295e127909b8334360d5dc56e902c8a9e70266c590d990f7354393cbdc6e",
+      "audit_bundle": "7d0bb64df36e97f2f032f90547781c2b69f8fb1f4aaed2d8a1aa519f9a38e14c"
+    },
+    "rows": {
+      "search_summary": 193,
+      "request_log": 152,
+      "web_searches": 65,
+      "diagnostics": 531
+    },
+    "product_requests": 217,
+    "source_reconciliation": {
+      "status": "passed",
+      "pending_rows": 0,
+      "unexplained_rows": 0,
+      "explained_exclusions": 276,
+      "audit_linkage_counts": {
+        "audit_backlink": 0,
+        "episode_id": 251,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 3,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 170,
+        "explained_nonfinal_diagnostic": 0,
+        "unexplained": 0
+      },
+      "web_diagnostic_linkage_counts": {
+        "audit_backlink": 0,
+        "episode_id": 1,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 0,
+        "explained_nonfinal_diagnostic": 106,
+        "unexplained": 0
+      },
+      "usage_accounting_counts": {
+        "linked_final": 152,
+        "represented_legacy_final": 0,
+        "pending_linkage": 0,
+        "unexplained": 0
+      }
+    },
+    "integrity": {
+      "status": "passed",
+      "structural_status": "passed",
+      "semantic_status": "passed",
+      "summary_requests": 217,
+      "groupable_primary_events": 217
+    },
+    "request_metadata": {
+      "matching_requests": 15,
+      "search_requests": 5,
+      "event_requests": 10
+    },
+    "controlled_product_probe_rows": 3,
+    "direct_gateway_probes": [
+      {
+        "probe_id": 4,
+        "diagnostics": 1,
+        "product_rows": 0
+      },
+      {
+        "probe_id": 5,
+        "diagnostics": 1,
+        "product_rows": 0
+      }
+    ],
+    "product_channels": [
+      "hosted_mcp",
+      "local_mcp",
+      "web"
+    ]
+  }
+}

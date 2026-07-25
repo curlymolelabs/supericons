@@ -37,7 +37,19 @@ export function buildMcpUsageDedupeKey({
     throw new TypeError('eventId is required when no stable MCP client identity is available.');
   }
 
-  const operationId = clean(rpcId) || clean(requestId) || normalizedEventId;
+  const normalizedRequestId = clean(requestId);
+  const normalizedRpcId = clean(rpcId);
+  let operationId = normalizedEventId;
+  if (normalizedSessionHash) {
+    operationId = normalizedRpcId || normalizedRequestId || normalizedEventId;
+  } else if (normalizedAnonymousClientHash) {
+    operationId = (
+      normalizedRequestId
+      && normalizedRequestId !== normalizedRpcId
+    )
+      ? normalizedRequestId
+      : normalizedEventId;
+  }
   const input = JSON.stringify([
     'mcp_usage_v2',
     identityKind,

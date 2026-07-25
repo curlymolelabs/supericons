@@ -100,6 +100,7 @@ for (const icon of publicIcons) {
 }
 const semanticMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 const railwayLocalFirstEnabled = isRailwayLocalFirstEnabled();
+const MCP_USAGE_WRITE_TIMEOUT_MS = 500;
 const railwayCandidateIndex = createRailwayCandidateIndex({
   icons: publicIcons,
   synonyms,
@@ -1564,15 +1565,17 @@ async function logMcpUsageEvent(payload) {
         Prefer: 'return=minimal',
       },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(MCP_USAGE_WRITE_TIMEOUT_MS),
     });
 
-    if (!response.ok && response.status !== 409 && process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
+    if (!response.ok && response.status !== 409) {
       console.warn(`[Supericons MCP] usage ledger write failed (${response.status})`);
     }
   } catch (error) {
-    if (process.env.SUPERICONS_MCP_USAGE_DEBUG === '1') {
-      console.warn('[Supericons MCP] usage ledger write failed:', error?.message || error);
-    }
+    console.warn(
+      '[Supericons MCP] usage ledger write failed:',
+      error?.name || error?.code || 'unknown_error',
+    );
   }
 }
 
@@ -1593,7 +1596,7 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
   try {
     const result = await handler(usageContext);
     const resultIsError = result?.isError === true;
-    void logMcpUsageEvent(
+    await logMcpUsageEvent(
       buildMcpUsageEventPayload(
         episodeContext,
         toolName,
@@ -1607,7 +1610,7 @@ async function withMcpUsageEvent(requestContext, toolName, args, handler) {
     );
     return result;
   } catch (error) {
-    void logMcpUsageEvent(
+    await logMcpUsageEvent(
       buildMcpUsageEventPayload(
         episodeContext,
         toolName,

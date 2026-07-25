@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "artifact": "admin_search_gateway_reconciliation",
+  "phase": "before",
+  "run_id": "admin-gateway-20260724182151-f3387339",
+  "status": "failed",
+  "generated_at": "2026-07-24T18:23:19.039Z",
+  "started_at": "2026-07-24T18:21:49.055Z",
+  "data_cutoff": "2026-07-24T18:23:18.735Z",
+  "reconciliation_cutoff": "2026-07-24T18:21:18.735Z",
+  "grace_period_seconds": 120,
+  "source_versions": {
+    "local_mcp_package": "0.4.22",
+    "hosted_mcp_endpoint": "https://mcp.supericons.dev/mcp",
+    "website": "https://supericons.dev/?view=icons"
+  },
+  "safe_run_identities": {
+    "controlled_label": "gateway_gate_f3387339",
+    "website_episode_id": "681ab3880ff85433",
+    "hosted_request_id": "0ba7d67a0e3dd835",
+    "direct_unsigned_request_id": "bd86c918eb1b6903",
+    "direct_signed_request_id": "419100fc0c1e50bc"
+  },
+  "probes": [
+    {
+      "id": 1,
+      "entry_path": "production_website",
+      "exact_query": "camera",
+      "marker": "verified_signed_network_marker_expected",
+      "expected_final_channel": "web",
+      "observed": {
+        "final_rows": [
+          {
+            "source_id": "138d9e809e386a7b",
+            "event_id": null,
+            "request_id": null,
+            "dedupe_key": null,
+            "episode_id": "681ab3880ff85433",
+            "recovery_chain_id": null,
+            "attempt_id": null,
+            "source_event_id": null,
+            "channel": "web",
+            "environment": "test",
+            "traffic_class": "controlled_test",
+            "beta_cohort": null,
+            "tool_name": null,
+            "query": "camera",
+            "result_count": 271,
+            "outcome": "success",
+            "observed_at": "2026-07-24T18:21:59.079+00:00"
+          }
+        ],
+        "usage_rows": [],
+        "audit_rows": [
+          {
+            "source_id": "b5523137af330658",
+            "event_id": null,
+            "request_id": "681ab3880ff85433",
+            "dedupe_key": "19c27075c20002cf",
+            "episode_id": "681ab3880ff85433",
+            "recovery_chain_id": "681ab3880ff85433",
+            "attempt_id": "dcaf0cbc48bb1df4",
+            "source_event_id": null,
+            "channel": "web",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "camera",
+            "result_count": 50,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:21:57.974922+00:00"
+          }
+        ]
+      },
+      "final_or_diagnostic_role": "product_final",
+      "checks": {
+        "exactly_one_final": true,
+        "expected_final_channel": true,
+        "controlled_final": true,
+        "expected_usage_count": true,
+        "required_diagnostics_present": true,
+        "marker_classification": true
+      },
+      "fingerprint": {
+        "http_status": 200,
+        "result_count": 100,
+        "ordered_icon_refs": [
+          "material:camera",
+          "lucide:camera",
+          "tabler:camera",
+          "phosphor:camera",
+          "heroicons:camera",
+          "bootstrap:camera",
+          "ionicons:camera-outline",
+          "iconoir:camera",
+          "mingcute:camera_line",
+          "mingcute:camera_2_line",
+          "mingcute:camera_2_ai_line",
+          "tabler:camera-ai",
+          "material:camera_alt",
+          "tabler:camera-bitcoin",
+          "tabler:camera-bolt",
+          "tabler:camera-cancel",
+          "tabler:camera-check",
+          "tabler:camera-code",
+          "tabler:camera-cog",
+          "tabler:camera-dollar",
+          "tabler:camera-down",
+          "material:camera_enhance",
+          "tabler:camera-exclamation",
+          "material:camera_front",
+          "tabler:camera-heart",
+          "material:camera_indoor",
+          "tabler:camera-minus",
+          "tabler:camera-moon",
+          "material:camera_outdoor",
+          "tabler:camera-pause",
+          "tabler:camera-pin",
+          "tabler:camera-plus",
+          "phosphor:camera-plus",
+          "tabler:camera-question",
+          "material:camera_rear",
+          "bootstrap:camera-reels",
+          "ionicons:camera-reverse-outline",
+          "material:camera_roll",
+          "tabler:camera-rotate",
+          "phosphor:camera-rotate",
+          "mingcute:camera_rotate_line",
+          "tabler:camera-search",
+          "tabler:camera-selfie",
+          "tabler:camera-share",
+          "tabler:camera-spark",
+          "tabler:camera-star",
+          "tabler:camera-up",
+          "material:camera_video",
+          "bootstrap:camera-video",
+          "bootstrap:camera2",
+          "material:cameraswitch",
+          "mingcute:computer_camera_line",
+          "material:control_camera",
+          "tabler:device-camera-phone",
+          "tabler:device-computer-camera",
+          "phosphor:device-mobile-camera",
+          "phosphor:device-tablet-camera",
+          "lucide:file-video-camera",
+          "material:flip_camera_android",
+          "material:flip_camera_ios",
+          "material:linked_camera",
+          "material:mobile_camera",
+          "material:mobile_camera_front",
+          "material:mobile_camera_rear",
+          "material:perm_camera_mic",
+          "material:photo_camera",
+          "material:photo_camera_back",
+          "material:photo_camera_front",
+          "material:rear_camera",
+          "iconoir:rotate-camera-left",
+          "iconoir:rotate-camera-right",
+          "phosphor:security-camera",
+          "material:settings_photo_camera",
+          "material:settings_video_camera",
+          "material:smartphone_camera",
+          "material:speed_camera",
+          "material:switch_camera",
+          "lucide:switch-camera",
+          "material:tablet_camera",
+          "phosphor:video-camera",
+          "heroicons:video-camera",
+          "iconoir:video-camera",
+          "mingcute:video_camera_line",
+          "mingcute:video_camera_2_line",
+          "material:video_camera_back",
+          "material:video_camera_back_add",
+          "material:video_camera_front",
+          "material:add_a_photo",
+          "material:add_photo_alternate",
+          "material:assistant_photo",
+          "material:audio_capture",
+          "material:capture",
+          "material:format_image_back",
+          "material:format_image_break_left",
+          "material:format_image_break_right",
+          "material:format_image_front",
+          "material:format_image_inline_left",
+          "material:format_image_inline_right",
+          "material:format_image_left",
+          "material:format_image_right"
+        ],
+        "search_execution": "hosted_fused",
+        "error_code": null,
+        "retryable": null,
+        "structured_fields": [
+          "results",
+          "search_runtime"
+        ],
+        "sha256": "c75124ece165e82b85dd3a93fbe205f6acea03d5dceb1239c281fd2f0eaddfd7"
+      },
+      "browser": {
+        "visible_icon_cells": 200,
+        "hosted_http_status": 200,
+        "telemetry_http_status": 202,
+        "telemetry_write_count": 1,
+        "signed_request_destinations": [
+          "hosted_search",
+          "web_telemetry"
+        ],
+        "console_error_count": 0,
+        "console_error_samples": []
+      },
+      "status": "passed"
+    },
+    {
+      "id": 2,
+      "entry_path": "production_hosted_mcp_search_icons",
+      "exact_query": "calendar",
+      "marker": "verified_signed_network_marker_expected",
+      "expected_final_channel": "hosted_mcp",
+      "observed": {
+        "final_rows": [],
+        "usage_rows": [],
+        "audit_rows": [
+          {
+            "source_id": "a56cca3ac0829757",
+            "event_id": null,
+            "request_id": "0ba7d67a0e3dd835",
+            "dedupe_key": "de74397a8532a3c3",
+            "episode_id": "100e990acb6a4f5d",
+            "recovery_chain_id": "100e990acb6a4f5d",
+            "attempt_id": "f94ab902759eae8e",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "calendar",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:02.715376+00:00"
+          }
+        ]
+      },
+      "final_or_diagnostic_role": "product_final",
+      "checks": {
+        "exactly_one_final": false,
+        "expected_final_channel": false,
+        "controlled_final": false,
+        "expected_usage_count": false,
+        "required_diagnostics_present": true,
+        "marker_classification": true
+      },
+      "fingerprint": {
+        "http_status": 200,
+        "result_count": 6,
+        "ordered_icon_refs": [
+          "lucide:calendar",
+          "tabler:calendar",
+          "phosphor:calendar",
+          "heroicons:calendar",
+          "bootstrap:calendar",
+          "ionicons:calendar-outline"
+        ],
+        "search_execution": "hosted_fused",
+        "error_code": null,
+        "retryable": null,
+        "structured_fields": [
+          "image_url",
+          "library_mode",
+          "markdown_image",
+          "next_step",
+          "preview_url",
+          "requested_library",
+          "results",
+          "search_runtime",
+          "suggested_response_markdown"
+        ],
+        "sha256": "02e46ecab52c0fec9bfbcfa31659c8a1a0309ef74bdc6c1310ceebc6629a7a7e"
+      },
+      "status": "failed"
+    },
+    {
+      "id": 3,
+      "entry_path": "published_local_mcp_search_icons",
+      "exact_query": "settings",
+      "marker": "package_controlled_run_expected",
+      "expected_final_channel": "local_mcp",
+      "observed": {
+        "final_rows": [
+          {
+            "source_id": "c0509a487a18b003",
+            "event_id": null,
+            "request_id": null,
+            "dedupe_key": null,
+            "episode_id": "6f3a425ad9499182",
+            "recovery_chain_id": null,
+            "attempt_id": null,
+            "source_event_id": "5cad3e7963d539eb",
+            "channel": "local_mcp",
+            "environment": "production",
+            "traffic_class": "unclassified_live",
+            "beta_cohort": null,
+            "tool_name": "search_icons",
+            "query": "settings",
+            "result_count": 6,
+            "outcome": "success",
+            "observed_at": "2026-07-24T18:22:10.637+00:00"
+          }
+        ],
+        "usage_rows": [
+          {
+            "source_id": "87d2aa8e8e1dce3f",
+            "event_id": "201c4d98a1932738",
+            "request_id": null,
+            "dedupe_key": null,
+            "episode_id": null,
+            "recovery_chain_id": null,
+            "attempt_id": null,
+            "source_event_id": null,
+            "channel": "local_mcp",
+            "environment": "production",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run:gateway_gate_f3387339",
+            "tool_name": "search_icons",
+            "query": "settings",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:10.637+00:00"
+          }
+        ],
+        "audit_rows": []
+      },
+      "final_or_diagnostic_role": "product_final",
+      "checks": {
+        "exactly_one_final": true,
+        "expected_final_channel": true,
+        "controlled_final": false,
+        "expected_usage_count": true,
+        "required_diagnostics_present": true,
+        "marker_classification": true
+      },
+      "fingerprint": {
+        "http_status": 200,
+        "result_count": 6,
+        "ordered_icon_refs": [
+          "material:settings",
+          "lucide:settings",
+          "tabler:settings",
+          "ionicons:settings-outline",
+          "iconoir:settings",
+          "material:admin_panel_settings"
+        ],
+        "search_execution": "local_first",
+        "error_code": null,
+        "retryable": null,
+        "structured_fields": [
+          "image_url",
+          "library_mode",
+          "markdown_image",
+          "next_step",
+          "preview_url",
+          "requested_library",
+          "results",
+          "search_runtime",
+          "source",
+          "suggested_response_markdown"
+        ],
+        "sha256": "79623c1ad88ff4acf162ba70bd1f6f900a6ea4e6ff70be77fee9322d713322c1"
+      },
+      "status": "failed"
+    },
+    {
+      "id": 4,
+      "entry_path": "direct_production_search_icons",
+      "exact_query": "rocket",
+      "marker": "absent",
+      "expected_final_channel": null,
+      "observed": {
+        "final_rows": [],
+        "usage_rows": [],
+        "audit_rows": [
+          {
+            "source_id": "16a7c826f738d517",
+            "event_id": null,
+            "request_id": "bd86c918eb1b6903",
+            "dedupe_key": "c1a65f15137a2678",
+            "episode_id": null,
+            "recovery_chain_id": null,
+            "attempt_id": "255a968bb4d807fa",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "production",
+            "traffic_class": null,
+            "beta_cohort": null,
+            "tool_name": null,
+            "query": "rocket",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:13.773135+00:00"
+          }
+        ]
+      },
+      "final_or_diagnostic_role": "gateway_diagnostic",
+      "checks": {
+        "exactly_one_final": true,
+        "expected_final_channel": true,
+        "controlled_final": true,
+        "expected_usage_count": true,
+        "required_diagnostics_present": true,
+        "marker_classification": true
+      },
+      "fingerprint": {
+        "http_status": 200,
+        "result_count": 6,
+        "ordered_icon_refs": [
+          "simpleicons:rocket",
+          "material:rocket",
+          "lucide:rocket",
+          "tabler:rocket",
+          "phosphor:rocket",
+          "bootstrap:rocket"
+        ],
+        "search_execution": "hosted_fused",
+        "error_code": null,
+        "retryable": null,
+        "structured_fields": [
+          "results",
+          "search_runtime"
+        ],
+        "sha256": "a2d69d3a7085d1a76ccc8ba8f91f7ccb0150f3360b4e0b2d781308d997c56248"
+      },
+      "status": "passed"
+    },
+    {
+      "id": 5,
+      "entry_path": "direct_production_search_icons",
+      "exact_query": "shield",
+      "marker": "verified_signed_network_marker_expected",
+      "expected_final_channel": null,
+      "observed": {
+        "final_rows": [],
+        "usage_rows": [],
+        "audit_rows": [
+          {
+            "source_id": "f456021433e686c9",
+            "event_id": null,
+            "request_id": "419100fc0c1e50bc",
+            "dedupe_key": "2a6e77a5c5757890",
+            "episode_id": null,
+            "recovery_chain_id": null,
+            "attempt_id": "d9b6b7352534d400",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "shield",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:15.684419+00:00"
+          }
+        ]
+      },
+      "final_or_diagnostic_role": "gateway_diagnostic",
+      "checks": {
+        "exactly_one_final": true,
+        "expected_final_channel": true,
+        "controlled_final": true,
+        "expected_usage_count": true,
+        "required_diagnostics_present": true,
+        "marker_classification": true
+      },
+      "fingerprint": {
+        "http_status": 200,
+        "result_count": 6,
+        "ordered_icon_refs": [
+          "material:shield",
+          "lucide:shield",
+          "tabler:shield",
+          "phosphor:shield",
+          "bootstrap:shield",
+          "ionicons:shield-outline"
+        ],
+        "search_execution": "hosted_fused",
+        "error_code": null,
+        "retryable": null,
+        "structured_fields": [
+          "results",
+          "search_runtime"
+        ],
+        "sha256": "7bba05ccb54493cf55ad2a73e0f97cb037670648e5b3a72cf3a6dd9ab38f1312"
+      },
+      "status": "passed"
+    }
+  ],
+  "link_rates": {
+    "web": {
+      "eligible_raw_rows": 1,
+      "counts": {
+        "audit_backlink": 0,
+        "episode_id": 1,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "percentages": {
+        "audit_backlink": 0,
+        "episode_id": 100,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "rows": [
+        {
+          "source": {
+            "source_id": "b5523137af330658",
+            "event_id": null,
+            "request_id": "681ab3880ff85433",
+            "dedupe_key": "19c27075c20002cf",
+            "episode_id": "681ab3880ff85433",
+            "recovery_chain_id": "681ab3880ff85433",
+            "attempt_id": "dcaf0cbc48bb1df4",
+            "source_event_id": null,
+            "channel": "web",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "camera",
+            "result_count": 50,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:21:57.974922+00:00"
+          },
+          "linkage_tier": "episode_id",
+          "exact_match_count": 1,
+          "included_by_current_admin_diagnostic_model": true
+        }
+      ]
+    },
+    "hosted_mcp": {
+      "eligible_raw_rows": 1,
+      "counts": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 1,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "percentages": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 100,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "rows": [
+        {
+          "source": {
+            "source_id": "a56cca3ac0829757",
+            "event_id": null,
+            "request_id": "0ba7d67a0e3dd835",
+            "dedupe_key": "de74397a8532a3c3",
+            "episode_id": "100e990acb6a4f5d",
+            "recovery_chain_id": "100e990acb6a4f5d",
+            "attempt_id": "f94ab902759eae8e",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "calendar",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:02.715376+00:00"
+          },
+          "linkage_tier": "pending_linkage",
+          "exact_match_count": 0,
+          "included_by_current_admin_diagnostic_model": true
+        }
+      ]
+    },
+    "local_mcp": {
+      "eligible_raw_rows": 0,
+      "counts": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 0,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "percentages": {
+        "audit_backlink": null,
+        "episode_id": null,
+        "recovery_chain_id": null,
+        "exact_request_or_dedupe": null,
+        "pending_linkage": null,
+        "explained_unlinked_diagnostic": null,
+        "unexplained": null
+      },
+      "rows": []
+    },
+    "direct_unsigned": {
+      "eligible_raw_rows": 1,
+      "counts": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 1,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "percentages": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 100,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "rows": [
+        {
+          "source": {
+            "source_id": "16a7c826f738d517",
+            "event_id": null,
+            "request_id": "bd86c918eb1b6903",
+            "dedupe_key": "c1a65f15137a2678",
+            "episode_id": null,
+            "recovery_chain_id": null,
+            "attempt_id": "255a968bb4d807fa",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "production",
+            "traffic_class": null,
+            "beta_cohort": null,
+            "tool_name": null,
+            "query": "rocket",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:13.773135+00:00"
+          },
+          "linkage_tier": "pending_linkage",
+          "exact_match_count": 0,
+          "included_by_current_admin_diagnostic_model": false
+        }
+      ]
+    },
+    "direct_signed": {
+      "eligible_raw_rows": 1,
+      "counts": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 1,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "percentages": {
+        "audit_backlink": 0,
+        "episode_id": 0,
+        "recovery_chain_id": 0,
+        "exact_request_or_dedupe": 0,
+        "pending_linkage": 100,
+        "explained_unlinked_diagnostic": 0,
+        "unexplained": 0
+      },
+      "rows": [
+        {
+          "source": {
+            "source_id": "f456021433e686c9",
+            "event_id": null,
+            "request_id": "419100fc0c1e50bc",
+            "dedupe_key": "2a6e77a5c5757890",
+            "episode_id": null,
+            "recovery_chain_id": null,
+            "attempt_id": "d9b6b7352534d400",
+            "source_event_id": null,
+            "channel": "hosted_mcp",
+            "environment": "test",
+            "traffic_class": null,
+            "beta_cohort": "controlled-run_gateway_gate_f3387339",
+            "tool_name": null,
+            "query": "shield",
+            "result_count": 6,
+            "outcome": "results",
+            "observed_at": "2026-07-24T18:22:15.684419+00:00"
+          },
+          "linkage_tier": "pending_linkage",
+          "exact_match_count": 0,
+          "included_by_current_admin_diagnostic_model": false
+        }
+      ]
+    }
+  },
+  "source_reconciliation": {
+    "eligible_source_audit_rows": 4,
+    "linkage_counts": {
+      "audit_backlink": 0,
+      "episode_id": 1,
+      "recovery_chain_id": 0,
+      "exact_request_or_dedupe": 0,
+      "pending_linkage": 3,
+      "explained_unlinked_diagnostic": 0,
+      "unexplained": 0
+    },
+    "pending_rows": 3,
+    "explained_exclusions": 0,
+    "unexplained_rows": 0,
+    "direct_gateway_source_rows": 2,
+    "direct_gateway_rows_visible_in_current_admin_diagnostic_model": 0,
+    "current_admin_diagnostic_model_rule": "search_request_audit rows require episode_id",
+    "status": "failed"
+  },
+  "filter_metadata": {
+    "live_admin_endpoint_available": false,
+    "note": "Production table access is used. The current local ADMIN_SECRET is not accepted by the live admin function."
+  },
+  "stable_search_fingerprint_comparison": {
+    "comparisons": [],
+    "status": "baseline_recorded"
+  },
+  "overall_gate_verdict": "product_path_failure"
+}

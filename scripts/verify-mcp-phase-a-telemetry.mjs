@@ -93,6 +93,35 @@ for (const field of ['query_origin', 'requested_limit', 'client_ip_public']) {
 assert.match(remoteSource, /getCountryContext\(req, clientIp\)/);
 assert.match(remoteSource, /deriveMcpQueryOrigin\(toolName\)/);
 assert.match(remoteSource, /getMcpRequestedLimit\(toolName, args\)/);
+assert.match(remoteSource, /const MCP_USAGE_WRITE_TIMEOUT_MS = 500;/);
+const usageWrapperSource = remoteSource.match(
+  /async function withMcpUsageEvent[\s\S]*?\nfunction createServer/,
+)?.[0] || '';
+assert.equal(
+  (usageWrapperSource.match(/await logMcpUsageEvent\(/g) || []).length,
+  2,
+  'Hosted MCP success and error usage writes must finish before the tool response returns.',
+);
+assert.doesNotMatch(
+  usageWrapperSource,
+  /void logMcpUsageEvent\(/,
+  'Hosted MCP top-level usage writes must not be fire and forget.',
+);
+assert.match(
+  remoteSource,
+  /signal: AbortSignal\.timeout\(MCP_USAGE_WRITE_TIMEOUT_MS\)/,
+  'Hosted telemetry writes need a bounded timeout.',
+);
+assert.match(
+  remoteSource,
+  /async function logMcpUsageEvent[\s\S]*?catch \(error\)[\s\S]*?[\r\n]+}[\r\n]+[\r\n]+async function withMcpUsageEvent/,
+  'Telemetry write failures must stay isolated from successful tool responses.',
+);
+assert.match(
+  remoteSource,
+  /usage ledger write failed:[\s\S]*?error\?\.name \|\| error\?\.code \|\| 'unknown_error'/,
+  'Hosted telemetry failures must be visible without logging request data.',
+);
 
 console.log(JSON.stringify({
   status: 'ok',
@@ -108,4 +137,5 @@ console.log(JSON.stringify({
   registry_latest_version: geoLiteFreshness.latest_version,
   registry_check_age_days: registryCheckAgeDays,
   telemetry_fields: ['query_origin', 'requested_limit', 'client_ip_public'],
+  top_level_usage_write: 'awaited_with_500ms_timeout',
 }, null, 2));
