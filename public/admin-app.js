@@ -846,6 +846,17 @@ function queryCountryCell(row = {}) {
   return `<span title="Country recorded today within this grouped period">${pill(country)}</span>`;
 }
 
+function queryLocaleCell(row = {}) {
+  const locales = normalizeList(row.locales);
+  if (locales.length > 1) {
+    return `<span title="${escapeHtml(locales.join(', '))}">${pill(`${formatNumber(locales.length)} languages`, 'info')}</span>`;
+  }
+  const locale = safeText(row.locale || locales[0], '');
+  return locale
+    ? pill(locale, 'info')
+    : `<span class="muted-cell">${escapeHtml(row.locale_reason || 'Language not recorded')}</span>`;
+}
+
 function queryChannelCell(row = {}) {
   if (row.channel_available === false) {
     const channels = normalizeList(row.channels);
@@ -859,6 +870,13 @@ function queryChannelCell(row = {}) {
     return `<span class="muted-cell">${escapeHtml(channelLabel(channel))}</span>`;
   }
   return pill(channelLabel(row.channel || row.venue), 'info');
+}
+
+function demandActionValue(value) {
+  const status = safeText(value, '');
+  if (status === 'needs_icon') return 'add_icon';
+  if (status === 'needs_alias') return 'add_alias';
+  return status;
 }
 
 function table(headers, rows, emptyReason) {
@@ -1766,44 +1784,70 @@ function renderQueryExplorer() {
 
 function renderWorklist() {
   const element = $('gapWorklist');
+  const subtitle = $('demandInboxSubtitle');
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
+    if (subtitle) subtitle.textContent = 'Loading failed and weak searches.';
     renderPagination('worklist', 0, 1);
-    element.innerHTML = loadingState('Loading gap worklist');
+    element.innerHTML = loadingState('Loading demand');
     return;
   }
   if (!state.data.search && state.errors.search) {
+    if (subtitle) subtitle.textContent = state.errors.search;
     renderPagination('worklist', 0, 1);
     element.innerHTML = emptyState(state.errors.search);
     return;
   }
   if (state.data.search?.worklist_available === false) {
+    if (subtitle) subtitle.textContent = state.data.search.worklist_unavailable_reason || 'Demand details are not available for this period.';
     renderPagination('worklist', 0, 1);
-    element.innerHTML = emptyState(state.data.search.worklist_unavailable_reason || 'The complete worklist is not available for this period.');
+    element.innerHTML = emptyState(state.data.search.worklist_unavailable_reason || 'Demand details are not available for this period.');
     return;
   }
-  const rows = rowsForPage('worklist', state.data.search?.worklist);
-  const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
+  const demandRows = normalizeList(state.data.search?.worklist);
+  if (subtitle) {
+    const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
+    subtitle.textContent = `${formatNumber(demandRows.length)} failed or weak queries need review | ${testScope}`;
+  }
+  const rows = rowsForPage('worklist', demandRows);
   element.innerHTML = table([
-    { label: 'Query', render: (row) => `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(safeText(row.review_status || row.why, 'Not reviewed'))}</div>` },
-    { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
-    { label: clientHeader, number: true, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
-    { label: 'Attempts', number: true, render: (row) => formatNumber(row.attempt_count) },
     {
-      label: 'WHY',
+      label: 'Query',
       render: (row) => {
-        const key = `query:${safeText(row.query, '')}:${safeText(row.library_filter, 'all')}`;
-        const value = safeText(row.review_status, '');
-        return `<select class="inline-select" data-query-review data-query="${escapeHtml(row.query)}" data-library="${escapeHtml(row.library_filter || 'all')}" aria-label="Review ${escapeHtml(row.query)}"${state.savingRows.has(key) ? ' disabled' : ''}>
-          <option value=""${!value ? ' selected' : ''}>Not reviewed</option>
-          <option value="needs_alias"${value === 'needs_alias' ? ' selected' : ''}>Needs alias</option>
-          <option value="needs_icon"${value === 'needs_icon' ? ' selected' : ''}>Needs icon</option>
+        const details = [
+          safeText(row.library_filter, 'All libraries'),
+          originLabel(row.query_origin || row.origin),
+        ].filter(Boolean);
+        return `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(details.join(' | '))}</div>`;
+      },
+    },
+    { label: 'Issue', render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
+    { label: 'Channel', render: (row) => queryChannelCell(row) },
+    { label: 'Language', render: (row) => queryLocaleCell(row) },
+    { label: 'Country', render: (row) => queryCountryCell(row) },
+    { label: 'Result count', number: true, render: (row) => queryTypicalResultCell(row) },
+    { label: 'Searches', number: true, render: (row) => queryRequestCell(row) },
+    {
+      label: 'Action',
+      render: (row) => {
+        const query = safeText(row.query, '');
+        const library = safeText(row.library_filter, 'all');
+        const jobCategory = safeText(row.job_category, '');
+        const key = `query:${query}:${library}:${jobCategory}`;
+        const value = demandActionValue(row.review_status);
+        return `<select class="inline-select" data-query-review data-query="${escapeHtml(query)}" data-library="${escapeHtml(library)}" data-job-category="${escapeHtml(jobCategory)}" aria-label="Choose action for ${escapeHtml(query)}"${state.savingRows.has(key) ? ' disabled' : ''}>
+          <option value=""${!value ? ' selected' : ''}>Choose action</option>
+          <option value="add_icon"${value === 'add_icon' ? ' selected' : ''}>Add icon</option>
+          <option value="add_alias"${value === 'add_alias' ? ' selected' : ''}>Add alias</option>
+          <option value="improve_ranking"${value === 'improve_ranking' ? ' selected' : ''}>Improve ranking</option>
+          <option value="improve_docs"${value === 'improve_docs' ? ' selected' : ''}>Improve docs</option>
+          <option value="watch"${value === 'watch' ? ' selected' : ''}>Watch</option>
           <option value="resolved"${value === 'resolved' ? ' selected' : ''}>Resolved</option>
           <option value="ignore"${value === 'ignore' ? ' selected' : ''}>Ignore</option>
         </select>`;
       },
     },
-  ], rows, 'No unresolved search gaps match these filters.');
+  ], rows, 'No failed or weak searches match these filters.');
 }
 
 function renderIconRequests() {
@@ -1894,6 +1938,7 @@ function renderDiagnostics() {
 }
 
 function renderSearch() {
+  renderWorklist();
   renderQueryExplorer();
 }
 
@@ -2697,21 +2742,27 @@ function setSection(section) {
 async function saveQueryReview(select) {
   const query = String(select.dataset.query || '').trim();
   const libraryFilter = String(select.dataset.library || 'all').trim() || 'all';
+  const jobCategory = String(select.dataset.jobCategory || '').trim();
   const status = String(select.value || '').trim();
   if (!status) {
     showToast('Choose a review action.', true);
     renderWorklist();
     return;
   }
-  const key = `query:${query}:${libraryFilter}`;
+  const key = `query:${query}:${libraryFilter}:${jobCategory}`;
   state.savingRows.add(key);
   renderWorklist();
   try {
-    await apiRequest('/intelligence/search/review', {
+    await apiRequest('/v2/search/review', {
       method: 'POST',
-      body: JSON.stringify({ query, library_filter: libraryFilter, status }),
+      body: JSON.stringify({
+        query,
+        library_filter: libraryFilter,
+        job_category: jobCategory,
+        status,
+      }),
     });
-    showToast('Search gap review saved.');
+    showToast('Demand action saved.');
     await refreshListEndpoint('queries');
   } catch (error) {
     showToast(error.message || 'The search gap review could not be saved.', true);
@@ -2748,9 +2799,10 @@ function openWorklist(query) {
   state.activeSection = 'intelligence';
   state.explorerQuery = String(query || '').trim();
   state.pages.queries = 1;
+  state.pages.worklist = 1;
   renderNavigation();
   if ($('explorerSearch')) $('explorerSearch').value = state.explorerQuery;
-  document.querySelector('.panel[data-row-key="queries"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.panel[data-row-key="worklist"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   scheduleEndpointRefresh('queries', 0);
 }
 

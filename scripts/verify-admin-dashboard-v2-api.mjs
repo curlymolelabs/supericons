@@ -17,6 +17,7 @@ function includes(source, value, label) {
   'buildDashboardV2SearchEventsPayload',
   'buildDashboardV2AudiencePayload',
   'handleDashboardV2IconRequestReview',
+  "status must be one of: add_icon, add_alias, improve_ranking, improve_docs, watch, ignore, resolved",
   'v2DashboardCache',
   'searchEventSnapshotCache',
   'ttlMs: 30_000',
@@ -97,6 +98,8 @@ function includes(source, value, label) {
   "metric_scope: 'filtered_search_event_details'",
   'raw_identifiers_exposed: false',
   'filteredWorklistRows',
+  'filteredDemandRows',
+  'dataRows.query_reviews',
   "query_row_grain: ['query', 'library_filter', 'query_origin']",
   'v2DashboardCache.clear()',
 ].forEach((value) => includes(api, value, 'admin-api'));
@@ -151,6 +154,12 @@ function includes(source, value, label) {
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
   'integrity_checks',
+  "apiRequest('/v2/search/review'",
+  'Add icon',
+  'Add alias',
+  'Improve ranking',
+  'Improve docs',
+  'Watch',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
 
 if (api.includes('const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows')) {
@@ -177,6 +186,7 @@ console.log(JSON.stringify({
     'GET /v2/search',
     'GET /v2/search/events',
     'GET /v2/audience',
+    'POST /v2/search/review',
     'POST /v2/icon-requests/review',
   ],
   cache_ttl_ms: 30000,

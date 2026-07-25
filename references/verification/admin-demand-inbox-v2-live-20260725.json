@@ -1,0 +1,22 @@
+{
+  "artifact": "admin_demand_inbox_v2_live_verification",
+  "verified_at": "2026-07-25T13:32:21.201Z",
+  "status": "passed",
+  "period": "24h",
+  "channel": "all",
+  "include_test": false,
+  "real_rows_rendered": 14,
+  "expected_columns": [
+    "Query",
+    "Issue",
+    "Channel",
+    "Language",
+    "Country",
+    "Result count",
+    "Searches",
+    "Action"
+  ],
+  "rows_with_complete_visible_states": 14,
+  "rows_with_all_review_actions": 14,
+  "automatic_product_writes": 0
+}

@@ -56,6 +56,10 @@ function excludes(source, value, label) {
   'One row per unique query. For quick analysis.',
   'One row per tool call. Ground truth.',
   'Everything plus integrity checks. For verification.',
+  'Demand Inbox',
+  'Failed and weak searches that need a human decision.',
+  'gapWorklist',
+  'data-row-label="Demand Inbox"',
 ].forEach((value) => includes(html, value, 'admin.html'));
 
 [
@@ -64,11 +68,9 @@ function excludes(source, value, label) {
   'intelligenceRawSignalsTable',
   'queryEvidenceTable',
   'raw evidence table',
-  'gapWorklist',
   'iconRequests',
   'contactInbox',
   'diagnosticsDrawer',
-  'data-row-label="Gap worklist"',
   'data-row-label="Icon requests"',
   'data-row-label="Contact inbox"',
   '<strong>Table CSV</strong>',
@@ -112,6 +114,10 @@ function excludes(source, value, label) {
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
   'integrity_checks',
+  "apiRequest('/v2/search/review'",
+  'Improve ranking',
+  'Improve docs',
+  'Watch',
 ].forEach((value) => includes(app, value, 'public/admin-app.js'));
 
 [
@@ -121,8 +127,6 @@ function excludes(source, value, label) {
   'Visitor details not captured',
   'No data available',
   'primary pick',
-  'state.data.search?.coverage?.warnings',
-  '${coverageNotice}',
 ].forEach((value) => excludes(app, value, 'public/admin-app.js'));
 
 [

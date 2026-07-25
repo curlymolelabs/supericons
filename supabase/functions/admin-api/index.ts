@@ -41,7 +41,16 @@ type AuditOutcome = 'started' | 'succeeded' | 'failed';
 type JsonRecord = Record<string, unknown>;
 type SupabaseClient = any;
 type IntelligenceWindowKey = '1d' | '7d' | '30d' | '90d' | '1y' | 'all';
-type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
+type QueryReviewStatus =
+  | 'resolved'
+  | 'needs_alias'
+  | 'needs_icon'
+  | 'ignore'
+  | 'add_icon'
+  | 'add_alias'
+  | 'improve_ranking'
+  | 'improve_docs'
+  | 'watch';
 type QueryIssueType = 'zero_result' | 'low_result' | 'replacement_heavy' | 'successful' | 'mcp';
 type QueryEnvironment = 'production' | 'preview' | 'local' | 'test' | 'legacy';
 type QueryEnvironmentFilter = QueryEnvironment | 'live' | 'all';
@@ -111,7 +120,17 @@ const QUERY_QUEUE_CACHE_MAX_ENTRIES = 64;
 const SEARCH_EVENT_SNAPSHOT_CACHE_TTL_MS = 120_000;
 const SEARCH_EVENT_SNAPSHOT_CACHE_MAX_ENTRIES = 1;
 const LOW_RESULT_THRESHOLD = 3;
-const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
+const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>([
+  'resolved',
+  'needs_alias',
+  'needs_icon',
+  'ignore',
+  'add_icon',
+  'add_alias',
+  'improve_ranking',
+  'improve_docs',
+  'watch',
+]);
 const QUERY_ISSUE_TYPES = new Set<QueryIssueType>(['zero_result', 'low_result', 'replacement_heavy', 'successful', 'mcp']);
 const QUERY_ENVIRONMENT_FILTERS = new Set<QueryEnvironmentFilter>(['live', 'production', 'preview', 'local', 'test', 'legacy', 'all']);
 const QUERY_CHANNEL_FILTERS = new Set<QueryChannelFilter>(['all', 'web', 'hosted_mcp', 'local_mcp', 'internal_test', 'unknown']);
@@ -2513,6 +2532,7 @@ async function buildDashboardV2DataRows(
           separateChannels,
         })
         : [],
+      query_reviews: reviews.reviews,
       query_review_available: includeQueryRows && reviews.available,
       raw_truncated: telemetry.truncated,
       rollup_truncated: false,
@@ -2576,6 +2596,7 @@ async function buildDashboardV2DataRows(
     telemetry_rows: telemetryRows,
     overview_rows: [...completedOverviewRows, ...currentRollups.overview],
     query_rows: mergeDashboardV2CurrentQueryDetails(aggregateQueryRows, currentQueryRows),
+    query_reviews: reviews.reviews,
     query_review_available: includeQueryRows && reviews.available,
     raw_truncated: telemetry.truncated,
     rollup_truncated: overviewRollups.truncated || (includeQueryRows && queryRollups.truncated),
@@ -3060,7 +3081,7 @@ async function buildDashboardV2SearchPayload(
       ...row,
       job_category: null,
     })),
-    new Map(),
+    dataRows.query_reviews,
     {
       separateQueryOrigins: true,
       separateChannels: false,
@@ -3075,6 +3096,11 @@ async function buildDashboardV2SearchPayload(
   ) as Array<any>;
   const filteredWorklistRows = filterDashboardV2QueryRows(
     dataRows.query_rows,
+    filters.q,
+    issue,
+  ) as Array<any>;
+  const filteredDemandRows = filterDashboardV2QueryRows(
+    historyRows,
     filters.q,
     issue,
   ) as Array<any>;
@@ -3097,24 +3123,33 @@ async function buildDashboardV2SearchPayload(
   const currentPage = Math.min(page, pageCount);
   const start = (currentPage - 1) * pageSize;
   const queries = compactHistoryRows.slice(start, start + pageSize);
+  const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
   const worklist = compactDashboardV2QueryRows(
-    filteredWorklistRows
+    filteredDemandRows
       .filter((row) => (
-        (row.true_zero_count > 0 || row.low_result_count > 0)
+        (
+          Number(row.true_zero_count || 0) > 0
+          || Number(row.low_result_count || 0) > 0
+        )
         && row.review_status !== 'resolved'
         && row.review_status !== 'ignore'
       ))
       .sort((left, right) => (
-        right.distinct_clients - left.distinct_clients
-        || (right.true_zero_count + right.low_result_count) - (left.true_zero_count + left.low_result_count)
+        (
+          Number(right.true_zero_count || 0)
+          + Number(right.low_result_count || 0)
+        ) - (
+          Number(left.true_zero_count || 0)
+          + Number(left.low_result_count || 0)
+        )
+        || Number(right.estimated_unique_clients || 0) - Number(left.estimated_unique_clients || 0)
         || String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
       ))
       .slice(0, 100),
   );
-  const rollupUnavailableReason = dataRows.rollup_truncated
-    ? 'Complete query history exceeds the bounded rollup limit for this period. Choose a shorter date range.'
+  const worklistUnavailableReason = historyTruncated
+    ? 'Complete Demand Inbox details exceed the safe limit for this period. Choose a shorter date range.'
     : null;
-  const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
   const historyState = buildDashboardV2HistoryState({
     truncated: historyTruncated,
     rowLimit: V2_MAX_IDENTITY_ROWS_PER_SOURCE,
@@ -3142,9 +3177,9 @@ async function buildDashboardV2SearchPayload(
       total: compactHistoryRows.length,
       page_count: pageCount,
     },
-    worklist: rollupUnavailableReason ? [] : worklist,
-    worklist_available: !rollupUnavailableReason,
-    worklist_unavailable_reason: rollupUnavailableReason,
+    worklist: worklistUnavailableReason ? [] : worklist,
+    worklist_available: !worklistUnavailableReason,
+    worklist_unavailable_reason: worklistUnavailableReason,
     icon_requests: iconRequests,
     contact_submissions: contacts,
     coverage: buildFinalOutcomeCoverage(telemetrySettings, filters),
@@ -4779,7 +4814,9 @@ async function upsertQueryReview(
 
   const status = normalizeSearchQuery(body.status) as QueryReviewStatus;
   if (!QUERY_REVIEW_STATUSES.has(status)) {
-    throw new Error('status must be one of: resolved, needs_alias, needs_icon, ignore');
+    throw new Error(
+      'status must be one of: add_icon, add_alias, improve_ranking, improve_docs, watch, ignore, resolved',
+    );
   }
 
   const note = typeof body.note === 'string'
@@ -6019,7 +6056,7 @@ async function handleIntelligenceSearchReview(req: Request, adminClient: Supabas
     const message = error instanceof Error ? error.message : String(error);
     const status = (
       message === 'query is required'
-      || message === 'status must be one of: resolved, needs_alias, needs_icon, ignore'
+      || message.startsWith('status must be one of:')
     )
       ? 400
       : 500;
@@ -6461,6 +6498,17 @@ export async function handleAdminApiRequest(req: Request) {
       && segments[2] === 'events'
     ) {
       return await handleDashboardV2(req, adminClient, url, 'search-events');
+    }
+
+    if (
+      req.method === 'POST'
+      && segments.length === 3
+      && segments[0] === 'v2'
+      && segments[1] === 'search'
+      && segments[2] === 'review'
+    ) {
+      const body = await req.json().catch(() => ({})) as JsonRecord;
+      return await handleIntelligenceSearchReview(req, adminClient, body);
     }
 
     if (

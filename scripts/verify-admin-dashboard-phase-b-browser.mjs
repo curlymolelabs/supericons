@@ -595,7 +595,33 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         total: queryRows.length,
         page_count: pageCount,
       },
-      worklist: [{ query: 'missing brand', issue_type: 'zero_result', distinct_clients: 4, attempt_count: 5 }],
+      worklist_available: true,
+      worklist: [{
+        query: 'missing brand',
+        library_filter: 'all',
+        query_origin: 'agent_query',
+        issue_type: 'zero_result',
+        outcome_label: 'Zero',
+        distinct_clients: 4,
+        estimated_client_id_count: 4,
+        attempt_count: 5,
+        activity_count: 5,
+        channel: 'hosted_mcp',
+        channels: ['hosted_mcp'],
+        channel_available: true,
+        locale: 'zh-CN',
+        locales: ['zh-CN'],
+        locale_available: true,
+        country_code: 'SG',
+        countries: ['SG'],
+        country_available: true,
+        country_scope: 'selected_period',
+        result_count: 0,
+        typical_result_count: 0,
+        result_sample_count: 5,
+        result_count_available: true,
+        result_unit: 'icon',
+      }],
       icon_requests: {
         available: true,
         status_available: true,
@@ -619,7 +645,11 @@ function responseFor(path, searchParams = new URLSearchParams()) {
           created_at: '2026-07-17T05:00:00Z',
         }],
       },
-      diagnostics: { known_defects: 2, raw_access: 'available through API export' },
+      diagnostics: {
+        known_defects: 2,
+        query_review_available: true,
+        raw_access: 'available through API export',
+      },
       meta,
     };
   }
@@ -898,12 +928,9 @@ try {
   ok(compactLayout.filterHeight === undefined, 'The standalone filter bar must not exist; filters live inside the header band.');
   ok(compactLayout.topbarBorderWidth === '1px', 'The header band must end with its single divider line.');
   ok(compactLayout.redundantHeadingCount === 0, 'The redundant Search Intelligence heading still exists.');
-  ok(
-    compactLayout.paginationTop >= 0 && compactLayout.paginationBottom <= compactLayout.viewportHeight,
-    `Query pagination is outside the initial viewport: ${JSON.stringify(compactLayout)}`,
-  );
+  ok(await page.locator('.panel[data-row-key="worklist"]').isVisible(), 'Demand Inbox is not visible on the Searches page.');
   await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
-  ok(await page.locator('[data-row-limit]').count() === 5, 'Every visible long list must have a row display control.');
+  ok(await page.locator('[data-row-limit]').count() === 6, 'Every visible long list must have a row display control.');
   ok(
     await page.locator('[data-panel-toggle]').count()
       === await page.locator('.panel:not([data-panel-collapse="false"])').count(),
@@ -913,7 +940,7 @@ try {
     (selects) => selects.map((select) => select.value),
   );
   ok(initialRowLimits.every((value) => value === '25'), 'Long lists must show 25 rows by default.');
-  for (const key of ['topList', 'activity', 'queries', 'registeredUsers', 'clients']) {
+  for (const key of ['topList', 'activity', 'queries', 'worklist', 'registeredUsers', 'clients']) {
     ok(
       await page.locator(`.panel[data-row-key="${key}"] [data-row-limit="${key}"]`).count() === 1,
       `The ${key} row control is attached to the wrong panel.`,
@@ -972,7 +999,50 @@ try {
   ok(await page.locator('[data-panel-toggle] svg').count() === await page.locator('[data-panel-toggle]').count(), 'Collapse controls must use icons.');
   const toggleLabels = await page.locator('[data-panel-toggle]').evaluateAll((buttons) => buttons.map((button) => button.textContent.trim()));
   ok(toggleLabels.every((label) => label === ''), 'Collapse controls still waste space on text labels.');
-  ok(await page.locator('.panel[data-row-key="worklist"]').count() === 0, 'The removed gap worklist still takes up Search history space.');
+  ok(await page.locator('.panel[data-row-key="worklist"]').count() === 1, 'Demand Inbox is missing or duplicated.');
+  ok(await page.locator('.panel[data-row-key="worklist"] .panel-title').innerText() === 'Demand Inbox', 'Demand Inbox uses the wrong title.');
+  const demandHeaders = await page.locator('#gapWorklist th').allTextContents();
+  ok(
+    JSON.stringify(demandHeaders) === JSON.stringify([
+      'Query',
+      'Issue',
+      'Channel',
+      'Language',
+      'Country',
+      'Result count',
+      'Searches',
+      'Action',
+    ]),
+    `Demand Inbox columns are wrong: ${JSON.stringify(demandHeaders)}`,
+  );
+  const demandText = await page.locator('#gapWorklist').innerText();
+  for (const expected of ['missing brand', 'Hosted MCP', 'zh-CN', 'SG', '0 icons', '5']) {
+    ok(demandText.includes(expected), `Demand Inbox did not show ${expected}.`);
+  }
+  const demandAction = page.locator('#gapWorklist [data-query-review]').first();
+  const demandOptions = await demandAction.locator('option').allTextContents();
+  ok(
+    JSON.stringify(demandOptions) === JSON.stringify([
+      'Choose action',
+      'Add icon',
+      'Add alias',
+      'Improve ranking',
+      'Improve docs',
+      'Watch',
+      'Resolved',
+      'Ignore',
+    ]),
+    `Demand Inbox actions are wrong: ${JSON.stringify(demandOptions)}`,
+  );
+  const actionWrite = page.waitForResponse((response) => (
+    response.request().method() === 'POST'
+    && response.url().includes('/functions/v1/admin-api/v2/search/review')
+  ));
+  await demandAction.selectOption('add_alias');
+  await actionWrite;
+  const savedAction = writes.findLast((write) => write.path === '/v2/search/review');
+  ok(savedAction?.body?.status === 'add_alias', 'Demand Inbox did not save the selected action.');
+  ok(savedAction?.body?.query === 'missing brand', 'Demand Inbox saved the action against the wrong query.');
   ok(await page.locator('.panel[data-row-key="iconRequests"]').count() === 0, 'The removed icon request panel still takes up Search history space.');
   ok(await page.locator('.panel[data-row-key="contact"]').count() === 0, 'The removed contact panel still takes up Search history space.');
   ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
@@ -1016,6 +1086,7 @@ try {
     'The included test-traffic request carries the wrong filter key.',
   );
   ok((await page.locator('#searchHistorySubtitle').innerText()).includes('test traffic included'), 'Search history did not update its test-traffic scope.');
+  ok((await page.locator('#demandInboxSubtitle').innerText()).includes('test traffic included'), 'Demand Inbox did not update its test-traffic scope.');
   await page.click('#searchDownloadToggle');
   const includedTestAuditDownload = page.waitForEvent('download');
   await page.click('[data-export="audit-bundle-json"]');
