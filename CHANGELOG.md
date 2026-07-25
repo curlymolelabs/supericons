@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 - 2026-07-25
+
+- Updated the public plugin manifests for the Supericons v2.0 product release.
+- Added visual preview guidance for the `preview_icons` tool.
+- Documented the five hosted tools, 11 supported libraries, and multilingual search.
+- Updated local setup examples to install `@supericons/mcp@latest`.
+- Recorded the current MCP runtime separately as version `0.4.22`.
+
 ## 0.4.13
 
 - Updated public wrapper metadata for `@supericons/mcp` version `0.4.13`.

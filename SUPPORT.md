@@ -11,8 +11,8 @@ When reporting an issue, include:
 
 - Your coding agent or IDE name
 - Whether you used local `npx` setup or the hosted MCP endpoint
-- The tool you called, such as `search_icons` or `recommend_icons`
+- The tool you called, such as `search_icons`, `recommend_icons`, or `preview_icons`
 - The query or prompt that failed
 - The error message
 
-Do not include credentials, customer data, or screenshots that reveal secrets.
+Do not include credentials, customer data, private source code, local file paths, or screenshots that reveal secrets.
