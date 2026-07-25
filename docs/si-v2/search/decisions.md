@@ -603,6 +603,68 @@ Superseded decisions: none. `D-029`, `D-030`, `D-035`, `D-036`, and `D-037` rema
 
 Specification change: version 1.22 adds `FR-54` and the final-outcome telemetry contract.
 
+### D-039: Icon popularity inputs and ordering
+
+Date: 2026-07-25. Status: Ratified by the owner.
+
+Decision: the public All Icons ranking counts only confirmed takes as use, meaning copy, download, and fetch. Preview and search-result exposure are explicitly not use. Icons with no use evidence are ordered alphabetically grouped by library, and the interface shows a visible divider at the point where evidence-backed ranking stops.
+
+Evidence: `icon_scores` held 162 rows against 21,000+ icons on 2026-07-25, all stamped 2026-04-18, so coverage is under 1% and will remain sparse. Ranking the unevidenced tail by any use-derived score would fabricate an ordering. The 2026-07-25 production audit found 87% of queries are unique, so query frequency is noise while confirmed icon takes aggregate densely.
+
+Alternatives rejected: counting previews or search appearances as use, which would let icons become popular by appearing rather than being chosen; retaining the April snapshot order for the unevidenced tail, which mixes stale and fresh scores; owner hand-curation of roughly 19,800 icons.
+
+Superseded decisions: none.
+
+Specification change: recorded against `docs/supericons-cross-channel-icon-popularity-prd-2026-07-25.md`, which carries these as build inputs.
+
+### D-040: Popularity population must be stated
+
+Date: 2026-07-25. Status: Ratified by the owner.
+
+Decision: any public popularity surface states the population it represents rather than implying universal popularity.
+
+Evidence: the 2026-07-25 production audit found 607 of 629 hosted identities, 96.5%, arrive through a single client. "Most used" therefore currently means "most used by ChatGPT users." Presenting it as general popularity would breach VC-6.
+
+Superseded decisions: none.
+
+### D-041: Traffic classification is evidence-gated before build
+
+Date: 2026-07-25. Status: Ratified by the owner.
+
+Decision: no probe-detection machinery is built until the existing `traffic_class` distribution is measured. If signed controlled-run labelling already separates most non-organic traffic, the build is skipped. Classification never rests on estimated-identity count alone, requires at least two independent supporting signals, and preserves a reported `unknown` class.
+
+Evidence: `classifyMcpTraffic` (`mcp/usage-event-detail.js:36`) already labels every event and already treats the cryptographically verified controlled-run marker as authoritative. The originating hypothesis, that six estimated identities on one rare query implied six users, was disproved by audit: that row carried 4 IP hashes, 5 user agents, 4 client families, and 3 countries within four hours. Identities are client or network configurations, not people.
+
+Alternatives rejected: building detection unconditionally; forcing every row into a binary organic or probe classification.
+
+Superseded decisions: none.
+
+Specification change: `docs/supericons-t1-traffic-classification-rules-2026-07-25.md`.
+
+### D-042: Demand Inbox is restored
+
+Date: 2026-07-25. Status: Ratified by the owner.
+
+Decision: the Demand Inbox is restored from git into the v2 dashboard as its own small task, rather than rebuilt fresh or deferred into the later Gap Report.
+
+Evidence: it was removed unintentionally on 2026-07-17 in commit `5f84df33a`, a dashboard rebuild that deleted 6,861 lines, and not by any product decision. Its value is demonstrated: a user request surfaced through it led to shipped Cybertruck icons. The prior implementation remains recoverable at `5f84df33a^`.
+
+Alternatives rejected: rebuilding fresh at higher cost; deferring into the Gap Report, which would remove the demand view for months.
+
+Superseded decisions: none.
+
+### D-043: Channel diversification becomes a tracked track
+
+Date: 2026-07-25. Status: Ratified by the owner.
+
+Decision: channel diversification is a tracked workstream on the roadmap rather than informal effort.
+
+Evidence: the 2026-07-25 production audit measured 96.5% of hosted identities arriving through one directory listing. This concentration does not depend on identity precision, unlike any conversion measure. A ranking or policy change in that single catalog would remove most current traffic. The track requires no engineering hours and therefore does not compete with the build queue.
+
+Alternatives rejected: continuing informally, which has worked but keeps slipping out of every plan.
+
+Superseded decisions: none.
+
 ## Adding or superseding a decision
 
 Every new entry must include:

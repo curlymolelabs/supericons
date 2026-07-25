@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons T1–T3 Success States</title>
+<style>
+  :root{
+    --bg:#0e0e0e; --panel:#171717; --panel2:#1f1f1f; --line:#2a2a2a;
+    --text:#e7e5e4; --muted:#9ca3af; --accent:#f97316; --accent2:#fdba74;
+    --good:#22c55e; --bad:#ef4444; --warn:#fbbf24; --info:#60a5fa; --violet:#a78bfa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Arial,sans-serif;padding:0 0 80px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+  header{padding:48px 0 10px;border-bottom:1px solid var(--line)}
+  h1{font-size:34px;font-weight:800}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:8px;max-width:860px}
+  .crumb{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .crumb a{color:var(--accent2);text-decoration:none;border-bottom:1px dotted #4a3626}
+
+  .task-head{margin:52px 0 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tno{font-size:12px;font-weight:800;letter-spacing:.1em;background:var(--accent);color:#160c05;border-radius:6px;padding:3px 9px}
+  .task-head h2{font-size:24px;font-weight:800}
+  .purpose{color:var(--muted);font-size:14.5px;margin-bottom:20px;max-width:880px}
+
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:900px){.ba{grid-template-columns:1fr}}
+  .pane{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+  .pane.before{border-color:#4a1f1f}
+  .pane.after{border-color:#1e3a24}
+  .pane-tag{font-size:11px;letter-spacing:.11em;text-transform:uppercase;padding:9px 16px;font-weight:700}
+  .before .pane-tag{background:#2a1414;color:#f8a3a3}
+  .after .pane-tag{background:#122a19;color:#86efac}
+  .pane-body{padding:16px}
+  .cap{font-size:12.5px;color:var(--muted);padding:0 16px 14px}
+
+  /* mock chrome */
+  .mock{background:#0b0b0b;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+  .mockbar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+  .dotrow{display:flex;gap:4px;margin-right:4px}
+  .dotrow i{width:8px;height:8px;border-radius:50%;background:#3a3a3a;display:block}
+
+  /* table mock */
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--line);font-weight:600}
+  td{padding:9px 10px;border-bottom:1px solid #1c1c1c;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  .q{color:var(--text)}
+  .q small{display:block;color:#6b7280;font-size:10.5px}
+  .num{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+  .chip{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;border-radius:999px;padding:2px 8px;white-space:nowrap}
+  .c-org{background:#12291a;color:#6ee7a0;border:1px solid #1e4029}
+  .c-test{background:#2a2412;color:#fcd34d;border:1px solid #443a1a}
+  .c-probe{background:#2a1414;color:#fca5a5;border:1px solid #4a2020}
+  .c-unk{background:#1f1f1f;color:#9ca3af;border:1px solid #2e2e2e}
+  .c-web{background:#122336;color:#93c5fd;border:1px solid #1e3a52}
+  .c-agent{background:#241436;color:#c4b5fd;border:1px solid #3a2054}
+  .c-both{background:#2a1a08;color:#fdba74;border:1px solid #4a3016}
+  .qmark{color:var(--bad);font-weight:800}
+
+  /* split bar */
+  .splitbar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:14px 0 8px;border:1px solid var(--line)}
+  .splitbar div{display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#0c0c0c}
+  .sb-org{background:#22c55e}
+  .sb-test{background:#eab308}
+  .sb-probe{background:#ef4444}
+  .sb-unk{background:#4b5563;color:#e5e7eb}
+  .splitkey{font-size:11.5px;color:var(--muted)}
+  .blob{height:26px;border-radius:7px;background:repeating-linear-gradient(45deg,#2a2a2a,#2a2a2a 8px,#242424 8px,#242424 16px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);margin:14px 0 8px}
+
+  /* icon grid mock */
+  .gridhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .sortpill{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+  .sortpill b{color:var(--accent2)}
+  .fresh{font-size:11px;color:var(--good)}
+  .fresh.stale{color:var(--bad)}
+  .igrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1c1c1c}
+  .icell{background:#0b0b0b;padding:13px 8px 11px;text-align:center;position:relative}
+  .icell svg{width:26px;height:26px;stroke:var(--text);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .iname{font-size:10.5px;color:var(--muted);margin-top:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rank{position:absolute;top:5px;left:6px;font-size:9.5px;font-weight:800;color:#6b7280}
+  .icell .chip{margin-top:5px;transform:scale(.9)}
+  .ev{font-size:9.5px;color:#6b7280;margin-top:3px}
+  .divider{background:#141414;padding:7px 12px;font-size:10.5px;color:var(--warn);border-top:1px solid #2e2618;border-bottom:1px solid #2e2618;letter-spacing:.03em}
+  .tailgrid .icell svg{opacity:.5}
+  .tailgrid .iname{color:#6b7280}
+
+  /* outcomes */
+  .outs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:4px}
+  .out{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+  .out .lab{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .out h4{font-size:15px;font-weight:700;margin-top:3px}
+  .out p{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .metricmock{background:#0b0b0b;border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-top:11px}
+  .metricmock .k{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .metricmock .v{font-size:25px;font-weight:800;margin-top:2px;line-height:1.1}
+  .metricmock .n{font-size:11px;color:var(--muted);margin-top:4px}
+  .metricmock.q .v{color:var(--bad)}
+  .metricmock.ok .v{color:var(--good)}
+
+  /* funnels */
+  .funnels{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+  @media (max-width:900px){.funnels{grid-template-columns:1fr}}
+  .fn{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px 18px}
+  .fn h4{font-size:14px;font-weight:700}
+  .fn .why{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .step{margin-top:11px}
+  .step .lbl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+  .step .lbl b{color:var(--text)}
+  .bar{height:15px;border-radius:5px;background:#1f1f1f;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:5px}
+  .verdict{margin-top:14px;font-size:13px;font-weight:700;padding:9px 12px;border-radius:8px}
+  .verdict.bad{background:#2a1414;color:#fca5a5}
+  .verdict.good{background:#122a19;color:#86efac}
+
+  /* know it worked */
+  .know{background:linear-gradient(135deg,#1c1210,#171717);border:1px solid #3b2a1e;border-radius:12px;padding:16px 20px;margin-top:18px}
+  .know h3{color:var(--accent2);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px}
+  .know ul{list-style:none}
+  .know li{font-size:13.5px;color:var(--muted);padding-left:24px;position:relative;margin-bottom:6px}
+  .know li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
+  .know li b{color:var(--text)}
+  .trap{margin-top:11px;font-size:12.5px;color:var(--warn);border-left:3px solid var(--warn);padding-left:11px}
+
+  footer{margin-top:56px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>What success <span>looks like</span></h1>
+  <p class="sub">The three current tasks, shown as the screen you will actually be looking at when each one has landed. Left is today. Right is done. <b>T3 is closed and audited; T1 is next and smaller than first scoped; T2 is the ship.</b></p>
+  <p class="crumb">Companion to <a href="supericons-tactical-plan-2026-07-25.html">the tactical plan</a> · <a href="supericons-roadmap-2026-07-22.html">the roadmap</a> · <a href="supericons-t1-traffic-classification-rules-2026-07-25.md">T1 rules</a> · <a href="supericons-t3-estimated-reach-definition-2026-07-25.md">T3 finding</a> · revised 2026-07-25 post-audit</p>
+</header>
+
+<!-- ============ T1 ============ -->
+<div class="task-head"><span class="tno">T1</span><h2>Traffic classification and the organic denominator</h2></div>
+<p class="purpose">Purpose: make the search stream trustworthy enough that anything can be built on top of it. <b>Scope shrank after the audit.</b> Rows are not unclassified today: <code>classifyMcpTraffic</code> already stamps every event and already treats the signed controlled-run marker as authoritative. What is missing is a distinction inside live traffic, where probes and organic use share one bucket, and a reported organic denominator. Step 0 is a single query to find out whether the rest is even needed.</p>
+
+<div class="ba">
+  <div class="pane before">
+    <div class="pane-tag">Today · classified, but only coarsely</div>
+    <div class="pane-body">
+      <div class="mock">
+        <div class="mockbar"><span class="dotrow"><i></i><i></i><i></i></span> Search history · 1,773 searches · existing <code>traffic_class</code></div>
+        <table>
+          <thead><tr><th>Query</th><th class="num">Srch</th><th>Existing class</th></tr></thead>
+          <tbody>
+            <tr><td class="q">settings<small>material</small></td><td class="num">15</td><td><span class="chip c-unk">unclassified_live</span></td></tr>
+            <tr><td class="q">network proximity graph nodes<small>phosphor</small></td><td class="num">7</td><td><span class="chip c-unk">unclassified_live</span></td></tr>
+            <tr><td class="q">choose navigation and feature icons…<small>all</small></td><td class="num">7</td><td><span class="chip c-unk">unclassified_live</span></td></tr>
+            <tr><td class="q">calendar admin dashboard trace<small>lucide</small></td><td class="num">6</td><td><span class="chip c-test">controlled_test</span></td></tr>
+            <tr><td class="q">store<small>all</small></td><td class="num">7</td><td><span class="chip c-unk">unclassified_live</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="blob">live traffic · one bucket, composition unknown</div>
+      <p class="splitkey">Signed test traffic is already separated correctly. The gap is that probes and genuine use share <code>unclassified_live</code>, and no surface reports an organic total.</p>
+    </div>
+  </div>
+
+  <div class="pane after">
+    <div class="pane-tag">Done · every row carries a reason</div>
+    <div class="pane-body">
+      <div class="mock">
+        <div class="mockbar"><span class="dotrow"><i></i><i></i><i></i></span> Search history · filter: <b style="color:#6ee7a0">Organic only</b></div>
+        <table>
+          <thead><tr><th>Query</th><th>Class</th><th>Why (2+ signals required)</th></tr></thead>
+          <tbody>
+            <tr><td class="q">settings<small>material</small></td><td><span class="chip c-org">Organic</span></td><td style="font-size:10.5px;color:#6b7280">no contrary evidence</td></tr>
+            <tr><td class="q">network proximity graph nodes<small>phosphor</small></td><td><span class="chip c-probe">Probe</span></td><td style="font-size:10.5px;color:#fca5a5">4 client families + 3 countries in 4h</td></tr>
+            <tr><td class="q">choose navigation and feature icons…<small>all</small></td><td><span class="chip c-org">Organic</span></td><td style="font-size:10.5px;color:#6b7280">no contrary evidence</td></tr>
+            <tr><td class="q">calendar admin dashboard trace<small>lucide</small></td><td><span class="chip c-test">Internal</span></td><td style="font-size:10.5px;color:#fcd34d">signed controlled-run marker</td></tr>
+            <tr><td class="q">store<small>all</small></td><td><span class="chip c-unk">Unknown</span></td><td style="font-size:10.5px;color:#9ca3af">one signal only, insufficient</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="splitbar">
+        <div class="sb-org" style="width:70%">Organic 70%</div>
+        <div class="sb-test" style="width:12%">Test</div>
+        <div class="sb-probe" style="width:8%">Probe</div>
+        <div class="sb-unk" style="width:10%">Unknown</div>
+      </div>
+      <p class="splitkey">Percentages are illustrative; the real ones are the deliverable. Note the <b>Unknown</b> slice is reported, never forced into a binary, and never inferred from identity count alone.</p>
+    </div>
+  </div>
+</div>
+
+<div class="know">
+  <h3>You will know it worked when</h3>
+  <ul>
+    <li><b>Step 0 first:</b> the existing <code>traffic_class</code> distribution is known. If signed labelling already catches most non-organic traffic, <b>skip the build</b> and go to T2.</li>
+    <li>Organic searches, organic identities, and unknown share are <b>stated together</b>, never one without the others.</li>
+    <li>The rule <b>re-runs unattended as code</b>, not a hand-curated list.</li>
+    <li>It has been <b>validated against a session known to be genuine</b>, confirming agent retries survive.</li>
+  </ul>
+  <p class="trap">Trap: over-filtering. Agents legitimately retry and rephrase, so repetition alone is not proof of a bot. Test the rule against sessions you recognize as real before trusting it. Deleting genuine agent traffic would quietly destroy your best signal.</p>
+  <p class="trap" style="color:var(--info);border-left-color:var(--info)">Revised after audit. <b>Identity count alone classifies nothing.</b> The phrase above showed 6 fingerprints but also 4 IPs, 5 user agents, four client families and 3 countries inside four hours; it was the client and country spread that indicated testing, not the count. Since fingerprints are network configurations rather than people, require at least two independent signals before calling anything a probe. Scope also shrank: <code>classifyMcpTraffic</code> already exists and already treats the signed controlled-run marker as authoritative, so the work is probe detection plus an organic denominator, not a new classifier. Full rules: <code>docs/supericons-t1-traffic-classification-rules-2026-07-25.md</code></p>
+</div>
+
+<!-- ============ T2 ============ -->
+<div class="task-head"><span class="tno">T2</span><h2>Cross-channel icon popularity</h2></div>
+<p class="purpose">Purpose: the default browse experience gets genuinely better, and the living-data thesis produces its first public artifact. Today All Icons orders by a snapshot frozen on 2026-04-18, with nothing on screen saying so.</p>
+
+<div class="ba">
+  <div class="pane before">
+    <div class="pane-tag">Today · a silent three-month-old snapshot</div>
+    <div class="pane-body">
+      <div class="mock">
+        <div class="gridhead">
+          <span class="sortpill">Sort: <b>(not shown)</b></span>
+          <span class="fresh stale">no freshness indicator</span>
+        </div>
+        <div class="igrid">
+          <div class="icell"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg><div class="iname">frame-inner</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M12 3l9 6-9 6-9-6z"/><path d="M3 15l9 6 9-6"/></svg><div class="iname">layers-alt</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><div class="iname">plus-circle-2</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M4 18V6M20 18V6M4 12h16"/></svg><div class="iname">rule-h</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M6 4h12v16l-6-4-6 4z"/></svg><div class="iname">bookmark-b</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg><div class="iname">target-2</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><div class="iname">pulse-alt</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/></svg><div class="iname">case-sm</div></div>
+        </div>
+      </div>
+      <p class="cap" style="padding:12px 0 0">162 scored rows against 21,000+ icons. Every row stamped 2026-04-18. Recent demand cannot move anything, and nothing on the page admits it.</p>
+    </div>
+  </div>
+
+  <div class="pane after">
+    <div class="pane-tag">Done · recent evidence, and it says so</div>
+    <div class="pane-body">
+      <div class="mock">
+        <div class="gridhead">
+          <span class="sortpill">Sort: <b>Most used</b> · all channels</span>
+          <span class="fresh">● updated 14 min ago</span>
+        </div>
+        <div class="igrid">
+          <div class="icell"><span class="rank">1</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><div class="iname">settings</div><span class="chip c-both">Both</span><div class="ev">412 uses</div></div>
+          <div class="icell"><span class="rank">2</span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><div class="iname">search</div><span class="chip c-both">Both</span><div class="ev">388 uses</div></div>
+          <div class="icell"><span class="rank">3</span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="iname">user</div><span class="chip c-agent">Agent</span><div class="ev">301 uses</div></div>
+          <div class="icell"><span class="rank">4</span><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><div class="iname">home</div><span class="chip c-both">Both</span><div class="ev">277 uses</div></div>
+          <div class="icell"><span class="rank">5</span><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg><div class="iname">check</div><span class="chip c-agent">Agent</span><div class="ev">244 uses</div></div>
+          <div class="icell"><span class="rank">6</span><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg><div class="iname">menu</div><span class="chip c-web">Web</span><div class="ev">210 uses</div></div>
+          <div class="icell"><span class="rank">7</span><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M10.5 20a2 2 0 003 0"/></svg><div class="iname">bell</div><span class="chip c-both">Both</span><div class="ev">186 uses</div></div>
+          <div class="icell"><span class="rank">8</span><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg><div class="iname">trash</div><span class="chip c-agent">Agent</span><div class="ev">171 uses</div></div>
+        </div>
+        <div class="divider">▼ Evidence ends here · 1,240 icons ranked by use · remaining 19,800 shown alphabetically by library</div>
+        <div class="igrid tailgrid">
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg><div class="iname">aperture</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/></svg><div class="iname">archive</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="iname">arrow-right</div></div>
+          <div class="icell"><svg viewBox="0 0 24 24"><path d="M12 4l2.4 5.2L20 10l-4 4 1 6-5-3-5 3 1-6-4-4 5.6-.8z"/></svg><div class="iname">award</div></div>
+        </div>
+      </div>
+      <p class="cap" style="padding:12px 0 0">Rank, channel, and evidence count on every scored icon. Freshness on screen. The point where evidence runs out is stated, not hidden.</p>
+    </div>
+  </div>
+</div>
+
+<div class="know">
+  <h3>You will know it worked when</h3>
+  <ul>
+    <li><b>Face validity passes.</b> The top 50 reads like icons people actually need. Anything strange up there means T1 was incomplete.</li>
+    <li>The order is <b>stable day to day.</b> Thrashing at your volume means the window is too short or the evidence too thin.</li>
+    <li>A stale score is now <b>loud, not silent.</b> The April failure hid for three months because nothing on screen showed freshness.</li>
+    <li>You can answer <b>"popular on web or popular with agents"</b> for any icon.</li>
+  </ul>
+  <p class="trap">Decide before you code: 162 scored rows against 21,000+ icons means coverage under 1%, and it will stay sparse. So this is not "rank All Icons by popularity," it is "rank the top N by evidence, then something deliberate for the other 19,800." Choose that tail behavior and label it, or you have invented an ordering, which is a VC-6 problem.</p>
+</div>
+
+<!-- ============ T3 ============ -->
+<div class="task-head"><span class="tno" style="background:var(--done);color:#06140a">T3 ✓</span><h2>Resolve what estimated reach counts</h2></div>
+<p class="purpose"><b>Closed 2026-07-25, independently audited against production.</b> Purpose was to know which decisions the numbers can support. Success was never a flattering answer, and it did not deliver one: it confirmed the mechanism, removed a claim that had already spread into three documents, and surfaced a concentration risk nobody had measured.</p>
+
+<div class="ba">
+  <div class="pane before">
+    <div class="pane-tag">Today · a number with no definition</div>
+    <div class="pane-body">
+      <div class="metricmock q">
+        <div class="k">Estimated reach</div>
+        <div class="v">632</div>
+        <div class="n">632 what? People? Sessions? Agent restarts?</div>
+      </div>
+      <p class="cap" style="padding:13px 0 0">The local session ID is a per-process UUID hashed with the date, so one person restarting their agent four times looks like four searchers. Whether hosted behaves the same way is unverified. Every conclusion drawn from this number is provisional until it is.</p>
+    </div>
+  </div>
+
+  <div class="pane after">
+    <div class="pane-tag">Answered 2026-07-25 · from source</div>
+    <div class="pane-body">
+      <div class="metricmock ok">
+        <div class="k">Estimated unique clients</div>
+        <div class="v">632</div>
+        <div class="n">Hosted identity hashes IP, user agent, client family and month bucket. Stable within a calendar month.</div>
+      </div>
+      <div class="metricmock ok" style="margin-top:10px">
+        <div class="k">Returning clients · within month</div>
+        <div class="v">already built</div>
+        <div class="n">Clients active on 2+ days. Exists in the metrics lib and admin API, simply not on the Overview.</div>
+      </div>
+      <p class="cap" style="padding:13px 0 0">Not sessions. Only local npm, about 1% of traffic, rotates per process. What remains is display work: surface returning clients, state the definition on the card, and prefer within-month windows since the 30-day preset crosses a month boundary and double-counts anyone active either side of it.</p>
+    </div>
+  </div>
+</div>
+
+<p class="purpose" style="margin-top:26px">Why this small task mattered, though not in the way expected. The session-versus-people question resolved cleanly in favour of month-stable identity. But an independent production audit then removed a claim that had already spread into three documents, and surfaced a different number that matters far more.</p>
+
+<div class="funnels">
+  <div class="fn" style="opacity:.45">
+    <h4>✕ Withdrawn · the "4% conversion rate"</h4>
+    <p class="why">27 all-time accounts over 632 recent identities is a ratio between two populations across two different spans, not a measured conversion. Only 2 identities are account-linked, so nothing connects a searcher to a registration.</p>
+    <div class="step">
+      <div class="lbl"><span>Identities (30d)</span><b>644</b></div>
+      <div class="bar"><i style="width:100%;background:#4b5563"></i></div>
+    </div>
+    <div class="step">
+      <div class="lbl"><span>Accounts (all time)</span><b>27</b></div>
+      <div class="bar"><i style="width:4.2%;background:#4b5563"></i></div>
+    </div>
+    <div class="step">
+      <div class="lbl"><span>Actually linked</span><b>2</b></div>
+      <div class="bar"><i style="width:0.3%;background:#4b5563"></i></div>
+    </div>
+    <div class="verdict bad">Cannot be measured before rung 1 exists</div>
+  </div>
+
+  <div class="fn" style="border-color:#4a1f1f">
+    <h4>The number that does hold up</h4>
+    <p class="why">Independent of identity precision, and unaffected by every caveat above. This is the finding that should drive priorities.</p>
+    <div class="step">
+      <div class="lbl"><span>ChatGPT identities</span><b>607</b></div>
+      <div class="bar"><i style="width:96.5%;background:#ef4444"></i></div>
+    </div>
+    <div class="step">
+      <div class="lbl"><span>Everything else</span><b>22</b></div>
+      <div class="bar"><i style="width:3.5%;background:#60a5fa"></i></div>
+    </div>
+    <div class="step">
+      <div class="lbl"><span>Distinct user agents, all 629</span><b>12</b></div>
+      <div class="bar"><i style="width:2%;background:#fbbf24"></i></div>
+    </div>
+    <div class="verdict bad">96.5% on one directory · concentration is the real risk</div>
+  </div>
+</div>
+
+<div class="know">
+  <h3>What the audit actually settled</h3>
+  <ul>
+    <li>Identity is <b>month-stable, not session-scoped.</b> 100% of hosted rows carried the hash; 153 identities recurred across days.</li>
+    <li>A fingerprint is <b>not a person.</b> Twelve user agents produced 629 identities, so it is closer to an IP count. Read it as clients or networks.</li>
+    <li>Returning clients is <b>not display-only work.</b> The V2 Overview API does not expose it, and the old endpoint's value includes untrusted local activity.</li>
+    <li>Conversion <b>cannot be measured</b> until accounts link to searches, which is rung 1 itself.</li>
+  </ul>
+  <p class="trap" style="color:var(--info);border-left-color:var(--info)">Correct status: identity definition confirmed, hosted identities month-stable, <b>person-level reach and registration conversion remain unverified.</b> The strategic weight moved from the funnel to the concentration: one directory supplies 96.5% of identities, and that channel also has the weakest registration path, since a user inside ChatGPT has no browser session to sign up in. Full finding: <code>docs/supericons-t3-estimated-reach-definition-2026-07-25.md</code></p>
+</div>
+
+<footer>
+  Supericons T1 to T3 success states, 2026-07-25, revised after an independent production audit at cutoff 11:30 UTC. Left panels reflect verified current behavior: the stale <code>icon_scores</code> snapshot, the existing <code>classifyMcpTraffic</code> output, and the identity derivation in <code>mcp/remote-server.js</code>. Right panels for T1 and T2 are mockups of the intended end state and their figures are illustrative. T3 figures are audited production values. Withdrawn in this revision: the roughly 4% registration rate, which compared two populations rather than measuring conversion.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Value Loop: x402 + Stablecoin Rails</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121724; --panel2:#0f1420; --line:#1f2937;
+    --ink:#e8edf6; --dim:#8b96ab; --faint:#5b6578;
+    --green:#34d399; --cyan:#38bdf8; --violet:#a78bfa; --amber:#fbbf24; --rose:#fb7185;
+    --mono:'SFMono-Regular',Consolas,'Cascadia Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-bottom:80px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .overline{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan)}
+  header{padding:64px 0 24px;text-align:center}
+  h1{font-size:clamp(30px,5vw,52px);line-height:1.1;font-weight:800;margin:14px 0 12px}
+  h1 .grad{background:linear-gradient(90deg,var(--cyan),var(--violet),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);max-width:640px;margin:0 auto;font-size:17px}
+  section{margin-top:72px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+  .sec-num{font-family:var(--mono);color:var(--faint);font-size:13px}
+  h2{font-size:24px;font-weight:750}
+  .lede{color:var(--dim);max-width:720px;margin-bottom:26px}
+
+  /* loop diagram */
+  .loop-frame{background:radial-gradient(ellipse at 50% 40%,#151c2e 0%,var(--panel2) 65%);border:1px solid var(--line);border-radius:20px;padding:8px 8px 0}
+  .loop-frame svg{display:block;width:100%;height:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;padding:14px 10px 20px;font-size:13px;color:var(--dim)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:10px;height:10px;border-radius:50%}
+
+  /* cards */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .card h3{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+  .card p{font-size:14px;color:var(--dim)}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid}
+
+  /* fee duel */
+  .duel{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.duel{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+  .rail .name{font-weight:750;font-size:18px;margin-bottom:2px}
+  .rail .kind{font-size:13px;color:var(--faint);margin-bottom:20px}
+  .bar{height:34px;border-radius:9px;background:#1a2233;overflow:hidden;display:flex;margin:8px 0 6px}
+  .keep{background:linear-gradient(90deg,#0e7f5b,var(--green));display:flex;align-items:center;padding-left:12px;font-family:var(--mono);font-size:13px;font-weight:700;color:#06281c;white-space:nowrap}
+  .lost{background:repeating-linear-gradient(45deg,#7f1d3a,#7f1d3a 6px,#9f2b4c 6px,#9f2b4c 12px)}
+  .bar-note{font-size:12.5px;color:var(--faint)}
+  .big-keep{font-size:40px;font-weight:800;margin-top:16px}
+  .big-keep small{font-size:14px;color:var(--dim);font-weight:500;margin-left:8px}
+
+  /* pain vs fix */
+  .versus .card{position:relative}
+  .versus ul{list-style:none;margin-top:6px}
+  .versus li{font-size:14px;color:var(--dim);padding:9px 0 9px 30px;position:relative;border-top:1px solid #1a2130}
+  .versus li:first-child{border-top:none}
+  .versus li::before{position:absolute;left:2px;font-size:14px}
+  .pain li::before{content:'✕';color:var(--rose)}
+  .fix li::before{content:'✓';color:var(--green)}
+  .versus b{color:var(--ink);font-weight:650}
+
+  /* honest ledger */
+  .honest{background:linear-gradient(180deg,#141a29,var(--panel2));border:1px solid var(--line);border-radius:16px;padding:26px}
+  .honest .grid2{margin-top:14px}
+  .mini{background:transparent;border:none;padding:0}
+  .mini h4{font-size:13px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+  .mini ul{list-style:none}
+  .mini li{font-size:14px;color:var(--dim);padding:6px 0 6px 24px;position:relative}
+  .mini li::before{position:absolute;left:0}
+  .gone h4{color:var(--green)}.gone li::before{content:'↓';color:var(--green)}
+  .stay h4{color:var(--amber)}.stay li::before{content:'→';color:var(--amber)}
+
+  /* roadmap */
+  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:34px}
+  @media(max-width:820px){.road{grid-template-columns:1fr}}
+  .stop{padding:0 18px 8px;position:relative}
+  .stop::before{content:'';position:absolute;top:7px;left:18px;right:0;height:2px;background:var(--line)}
+  .stop:last-child::before{right:60%}
+  .stop .pt{width:16px;height:16px;border-radius:50%;border:3px solid var(--bg);position:relative;z-index:1;margin-bottom:14px}
+  .stop .when{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+  .stop h3{font-size:15.5px;font-weight:700;margin-bottom:6px}
+  .stop p{font-size:13.5px;color:var(--dim)}
+  @media(max-width:820px){.stop::before{display:none}.stop{padding:0 0 26px}}
+
+  .precedent{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--violet);border-radius:12px;padding:18px 22px;font-size:14px;color:var(--dim)}
+  .precedent b{color:var(--ink)}
+  footer{margin-top:80px;text-align:center;font-size:12.5px;color:var(--faint)}
+  footer code{font-family:var(--mono)}
+
+  .flow{stroke-dasharray:7 8;animation:march 1.4s linear infinite}
+  @keyframes march{to{stroke-dashoffset:-15}}
+  @media(prefers-reduced-motion:reduce){.flow{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="overline">Supericons Strategy · 2026-07-20</div>
+  <h1>The <span class="grad">Value Loop</span><br>on stablecoin rails</h1>
+  <p class="sub">Agents pay per icon. Sponsors pay per placement. Participants earn credits, then USDC. One closed loop, near-zero payment friction, none of the payout bureaucracy that is drowning Kickbacks.</p>
+</header>
+
+<!-- 01 THE LOOP -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>One loop, four actors</h2></div>
+  <p class="lede">Money enters agent-natively, circulates as credits, and exits as micro-payouts only when it is meaningful. Every arrow below is already a verified capability or a designed step, not a wish.</p>
+
+  <div class="loop-frame">
+  <svg viewBox="0 0 1000 620" role="img" aria-label="Value loop diagram: agents and sponsors pay in via x402 and USDC, the Supericons ledger holds credits, users and creators earn credits and USDC payouts, and their building activity creates the audience sponsors pay for">
+    <defs>
+      <marker id="mG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#34d399"/></marker>
+      <marker id="mC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#38bdf8"/></marker>
+      <marker id="mV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a78bfa"/></marker>
+      <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#fbbf24"/></marker>
+    </defs>
+
+    <!-- flows -->
+    <path class="flow" d="M275 165 C 360 110, 470 110, 555 150" fill="none" stroke="#34d399" stroke-width="2.5" marker-end="url(#mG)"/>
+    <path class="flow" d="M745 205 C 800 260, 800 340, 748 400" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#mC)"/>
+    <path class="flow" d="M560 470 C 470 515, 360 515, 272 468" fill="none" stroke="#a78bfa" stroke-width="2.5" marker-end="url(#mV)"/>
+    <path class="flow" d="M175 400 C 122 340, 122 260, 172 205" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#mA)"/>
+
+    <!-- flow labels -->
+    <g font-family="Consolas,monospace" font-size="12.5">
+      <text x="415" y="96" fill="#34d399" text-anchor="middle">MONEY IN · x402 + USDC</text>
+      <text x="418" y="116" fill="#5b6578" text-anchor="middle" font-size="11.5">$1 icons via HTTP 402 · sponsor blocks, no net-30</text>
+      <text x="812" y="278" fill="#38bdf8" writing-mode="tb" letter-spacing="1">VALUE OUT · CREDITS</text>
+      <text x="416" y="545" fill="#a78bfa" text-anchor="middle">CREDITS SPENT ON MORE BUILDING</text>
+      <text x="416" y="565" fill="#5b6578" text-anchor="middle" font-size="11.5">allowance boosts · premium credits · later ~$0.001 USDC payouts, no $10 minimum</text>
+      <text x="112" y="296" fill="#fbbf24" writing-mode="tb" letter-spacing="1">ATTENTION + ADOPTION</text>
+    </g>
+
+    <!-- node: agents & sponsors (top left) -->
+    <g>
+      <rect x="120" y="118" width="180" height="96" rx="16" fill="#121a2b" stroke="#34d399" stroke-opacity=".55"/>
+      <text x="210" y="152" fill="#e8edf6" font-size="16" font-weight="700" text-anchor="middle">Agents + Sponsors</text>
+      <text x="210" y="174" fill="#8b96ab" font-size="12" text-anchor="middle">buyers of icons</text>
+      <text x="210" y="192" fill="#8b96ab" font-size="12" text-anchor="middle">and placements</text>
+    </g>
+
+    <!-- node: ledger (top right) -->
+    <g>
+      <rect x="580" y="118" width="200" height="96" rx="16" fill="#121a2b" stroke="#38bdf8" stroke-opacity=".55"/>
+      <text x="680" y="152" fill="#e8edf6" font-size="16" font-weight="700" text-anchor="middle">Supericons Ledger</text>
+      <text x="680" y="174" fill="#8b96ab" font-size="12" text-anchor="middle">credits in cents, not stored money</text>
+      <text x="680" y="192" fill="#8b96ab" font-size="12" text-anchor="middle">outside money-transmission scope</text>
+    </g>
+
+    <!-- node: users & creators (bottom right) -->
+    <g>
+      <rect x="580" y="404" width="200" height="96" rx="16" fill="#121a2b" stroke="#a78bfa" stroke-opacity=".55"/>
+      <text x="680" y="438" fill="#e8edf6" font-size="16" font-weight="700" text-anchor="middle">Users + Creators</text>
+      <text x="680" y="460" fill="#8b96ab" font-size="12" text-anchor="middle">MCP users, pack creators,</text>
+      <text x="680" y="478" fill="#8b96ab" font-size="12" text-anchor="middle">future marketplace sellers</text>
+    </g>
+
+    <!-- node: building (bottom left) -->
+    <g>
+      <rect x="120" y="404" width="180" height="96" rx="16" fill="#121a2b" stroke="#fbbf24" stroke-opacity=".55"/>
+      <text x="210" y="438" fill="#e8edf6" font-size="16" font-weight="700" text-anchor="middle">Building Activity</text>
+      <text x="210" y="460" fill="#8b96ab" font-size="12" text-anchor="middle">searches, installs, demand</text>
+      <text x="210" y="478" fill="#8b96ab" font-size="12" text-anchor="middle">data sponsors want</text>
+    </g>
+
+    <!-- center -->
+    <g>
+      <circle cx="450" cy="308" r="74" fill="#0d1322" stroke="#1f2937"/>
+      <text x="450" y="298" fill="#e8edf6" font-size="15" font-weight="800" text-anchor="middle">x402 / USDC</text>
+      <text x="450" y="318" fill="#8b96ab" font-size="11.5" text-anchor="middle">Base · ~0.1% fees</text>
+      <text x="450" y="336" fill="#8b96ab" font-size="11.5" text-anchor="middle">Phase 0 verified</text>
+    </g>
+  </svg>
+  <div class="legend">
+    <span><i class="dot" style="background:#34d399"></i>money in</span>
+    <span><i class="dot" style="background:#38bdf8"></i>value out as credits</span>
+    <span><i class="dot" style="background:#a78bfa"></i>reinvested usage</span>
+    <span><i class="dot" style="background:#fbbf24"></i>attention back to sponsors</span>
+  </div>
+  </div>
+</section>
+
+<!-- 02 FEE DUEL -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>Why the rails matter: the $1 icon</h2></div>
+  <p class="lede">At micro-price points the payment rail is the business model. On card rails a $1 sale loses a third to fees; on x402/USDC the fee is a rounding error. Figures from the verified fee research (2026-07-05).</p>
+  <div class="duel">
+    <div class="rail">
+      <div class="name">Stripe card rail</div>
+      <div class="kind">2.9% + $0.30 per transaction (US card)</div>
+      <div class="bar"><div class="keep" style="width:67%">merchant keeps</div><div class="lost" style="flex:1"></div></div>
+      <div class="bar-note">$0.33 of every $1 is gone before it arrives</div>
+      <div class="big-keep" style="color:var(--rose)">$0.67<small>kept per $1 icon</small></div>
+    </div>
+    <div class="rail">
+      <div class="name">x402 · USDC on Base</div>
+      <div class="kind">protocol free · ~$0.001 to $0.01 network cost</div>
+      <div class="bar"><div class="keep" style="width:99%">merchant keeps</div><div class="lost" style="flex:1"></div></div>
+      <div class="bar-note">the HTTP 402 response is the checkout; no account, no webhook</div>
+      <div class="big-keep" style="color:var(--green)">$0.99<small>kept per $1 icon</small></div>
+    </div>
+  </div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card"><h3><span class="tag" style="color:var(--green);border-color:var(--green)">verified</span></h3><p>Full paid path passed on Base Sepolia testnet on 2026-07-06: 402 challenge, signed payment, settlement, redelivery window, expiry, audit rows.</p></div>
+    <div class="card"><h3><span class="tag" style="color:var(--cyan);border-color:var(--cyan)">free discovery</span></h3><p>First payment settled through the Coinbase facilitator auto-lists the endpoint in the x402 Bazaar within ~10 minutes: agent-ecosystem distribution at zero cost.</p></div>
+    <div class="card"><h3><span class="tag" style="color:var(--violet);border-color:var(--violet)">agent-native</span></h3><p>Agents cannot complete a Stripe Checkout redirect. They can parse a 402 and pay programmatically. Humans stay on Stripe; this rail is additive, not a replacement.</p></div>
+  </div>
+</section>
+
+<!-- 03 PAIN VS FIX -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>The red tape Kickbacks hit, and the design that skips it</h2></div>
+  <p class="lede">Kickbacks pays cash to thousands of small recipients on conventional rails. That single choice created most of their operational drag. The loop above is designed so that drag never starts.</p>
+  <div class="grid2 versus">
+    <div class="card pain">
+      <h3>Kickbacks today <span class="tag" style="color:var(--rose);border-color:var(--rose)">cash on old rails</span></h3>
+      <ul>
+        <li><b>Tax filings in ~27 countries</b> from paying cash income worldwide</li>
+        <li><b>$10 minimum payout</b>; most users reportedly never reach it</li>
+        <li><b>Batch payouts</b> ("Batch 3") instead of instant settlement</li>
+        <li><b>Weeks on contracts</b>, per the founder, instead of product work</li>
+        <li><b>Per-recipient onboarding</b> through payment processors</li>
+      </ul>
+    </div>
+    <div class="card fix">
+      <h3>Supericons loop <span class="tag" style="color:var(--green);border-color:var(--green)">credits first, USDC later</span></h3>
+      <ul>
+        <li><b>Credits are entitlements</b>, not money: no payout obligation exists at all in phase one</li>
+        <li><b>No minimums when cash-out ships</b>: a $0.40 USDC transfer costs ~$0.001</li>
+        <li><b>Instant, global settlement</b> on Base; no batches, no wires, no FX</li>
+        <li><b>KYC and reporting via a payout partner</b>, never built in-house</li>
+        <li><b>No chargebacks</b> on stablecoin settlement</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="honest" style="margin-top:18px">
+    <div class="overline" style="color:var(--amber)">The honest ledger</div>
+    <div class="grid2">
+      <div class="mini gone">
+        <h4>Friction that disappears</h4>
+        <ul>
+          <li>Card fees and $0.30 fixed costs on micro-transactions</li>
+          <li>Payout minimums and batch schedules</li>
+          <li>Cross-border wire friction and FX spread</li>
+          <li>Chargeback exposure</li>
+          <li>Per-recipient banking onboarding</li>
+        </ul>
+      </div>
+      <div class="mini stay">
+        <h4>Obligations that remain</h4>
+        <ul>
+          <li>Income is income: USDC payouts are still reportable</li>
+          <li>Precedent: Meta + Stripe USDC creator payouts (Apr 2026) still issue tax documents</li>
+          <li>Sanctions and KYC screening on any real cash-out</li>
+          <li>Mitigation: stay credits-only until revenue justifies a compliant payout partner</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ROADMAP -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Sequenced entry</h2></div>
+  <p class="lede">Each phase is capped-downside and independently useful, so any stopping point still leaves Supericons better positioned. The multi-outcome rule applies here too.</p>
+  <div class="road">
+    <div class="stop">
+      <div class="pt" style="background:var(--green)"></div>
+      <div class="when" style="color:var(--green)">Now</div>
+      <h3>Ship x402 inbound</h3>
+      <p>Deploy the verified $1 single-icon endpoint to mainnet on approval. Inbound only: near-zero compliance surface, free Bazaar listing, self-evident story for the agent-tools audience.</p>
+    </div>
+    <div class="stop">
+      <div class="pt" style="background:var(--cyan)"></div>
+      <div class="when" style="color:var(--cyan)">Next</div>
+      <h3>Credits ledger</h3>
+      <p>Sponsored and affiliate revenue events credit participants with allowance and premium entitlements. Loyalty loop live, zero payout bureaucracy.</p>
+    </div>
+    <div class="stop">
+      <div class="pt" style="background:var(--violet)"></div>
+      <div class="when" style="color:var(--violet)">Later</div>
+      <h3>USDC cash-out</h3>
+      <p>When monthly sponsored revenue is meaningful, open optional credits-to-USDC redemption through a hosted payout partner that owns KYC and tax reporting.</p>
+    </div>
+    <div class="stop">
+      <div class="pt" style="background:var(--amber)"></div>
+      <div class="when" style="color:var(--amber)">Watch · early 2027</div>
+      <h3>Fiat bridges</h3>
+      <p>Stripe machine-payments GA, production fiat facilitators for x402, onramp minimums under $5, Cloudflare Monetization Gateway availability.</p>
+    </div>
+  </div>
+  <div class="precedent"><b>Precedent at planet scale:</b> in April 2026 Meta began paying creators in USDC via Stripe on Solana and Polygon, starting in Colombia and the Philippines with expansion reported toward 160+ markets. Stablecoin payout rails are no longer exotic; they are simply early.</div>
+</section>
+
+<footer>
+  Companion to <code>supericons-kickbacks-shaped-opportunities-2026-07-20.md</code> ·
+  fee and protocol data from <code>x402-vs-stripe-payment-research-2026-07-05.md</code> ·
+  paid-path verification in <code>x402-phase0-paid-path-results-2026-07-06.md</code>
+</footer>
+
+</div>
+</body>
+</html>
