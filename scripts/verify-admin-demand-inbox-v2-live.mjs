@@ -98,6 +98,60 @@ async function openThirtyDaySearches() {
   ), null, { timeout: 120_000 });
 }
 
+async function verifyDateSorting(tableSelector, sortKey, label) {
+  const button = page.locator(`${tableSelector} [data-sort-key="${sortKey}"]`);
+  assert.equal(await button.count(), 1, `${label} sort button is missing.`);
+
+  await button.click();
+  assert.equal(
+    await button.locator('xpath=ancestor::th').getAttribute('aria-sort'),
+    'descending',
+    `${label} did not sort newest first.`,
+  );
+
+  const descendingValues = await page.locator(`${tableSelector} tbody tr`).evaluateAll(
+    (rows, key) => rows.map((row) => {
+      const headers = [...row.closest('table').querySelectorAll('th')];
+      const index = headers.findIndex((header) => header.querySelector(`[data-sort-key="${key}"]`));
+      return row.cells[index]?.textContent?.trim() || '';
+    }),
+    sortKey,
+  );
+  const descendingTimes = descendingValues.map((value) => Date.parse(value));
+  assert.ok(descendingTimes.every(Number.isFinite), `${label} contains an invalid date.`);
+  assert.ok(
+    descendingTimes.every((value, index) => index === 0 || descendingTimes[index - 1] >= value),
+    `${label} newest-first order is incorrect.`,
+  );
+
+  await button.click();
+  assert.equal(
+    await button.locator('xpath=ancestor::th').getAttribute('aria-sort'),
+    'ascending',
+    `${label} did not sort oldest first.`,
+  );
+  const ascendingValues = await page.locator(`${tableSelector} tbody tr`).evaluateAll(
+    (rows, key) => rows.map((row) => {
+      const headers = [...row.closest('table').querySelectorAll('th')];
+      const index = headers.findIndex((header) => header.querySelector(`[data-sort-key="${key}"]`));
+      return row.cells[index]?.textContent?.trim() || '';
+    }),
+    sortKey,
+  );
+  const ascendingTimes = ascendingValues.map((value) => Date.parse(value));
+  assert.ok(
+    ascendingTimes.every((value, index) => index === 0 || ascendingTimes[index - 1] <= value),
+    `${label} oldest-first order is incorrect.`,
+  );
+
+  await button.click();
+  assert.equal(
+    await button.locator('xpath=ancestor::th').getAttribute('aria-sort'),
+    'descending',
+    `${label} did not return to newest first.`,
+  );
+}
+
 try {
   await page.goto(dashboard.url, { waitUntil: 'domcontentloaded', timeout: 120_000 });
   await unlockDashboard();
@@ -123,21 +177,25 @@ try {
     'Country',
     'Result count',
     'Searches',
+    'Last seen',
     'Action',
   ]);
+  await verifyDateSorting('#gapWorklist', 'last_seen', 'Gaps Last seen');
 
   const requestHeaders = await page.locator('#iconRequests th').evaluateAll((headers) => (
     headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
   ));
-  assert.deepEqual(requestHeaders, ['User request', 'Review']);
+  assert.deepEqual(requestHeaders, ['User request', 'Submitted', 'Review']);
+  await verifyDateSorting('#iconRequests', 'created_at', 'User requests Submitted');
   const requestRows = await page.locator('#iconRequests tbody tr').evaluateAll((rows) => rows.map((row) => {
     const primary = row.querySelector('td:first-child strong')?.textContent?.trim() || '';
     const secondary = row.querySelector('td:first-child .activity-meta')?.textContent?.trim() || '';
+    const submitted = row.querySelector('td:nth-child(2)')?.textContent?.trim() || '';
     return {
       has_human_sentence: primary.length > 0,
       has_failed_query: secondary.includes('Failed query:'),
       has_library: secondary.includes('Library:'),
-      has_date: secondary.split('|').length >= 3,
+      has_date: Number.isFinite(Date.parse(submitted)),
       has_status: Boolean(row.querySelector('[data-icon-request-status]')),
       has_note: Boolean(row.querySelector('[data-icon-request-note]')),
       has_save: Boolean(row.querySelector('[data-icon-request-save]')),
@@ -164,7 +222,7 @@ try {
     });
     await page.locator('#iconRequests td:first-child').evaluateAll((nodes) => {
       nodes.forEach((node) => {
-        node.innerHTML = '<strong>[request hidden]</strong><div class="activity-meta">Failed query, library, and date verified</div>';
+        node.innerHTML = '<strong>[request hidden]</strong><div class="activity-meta">Failed query and library verified</div>';
       });
     });
     await mkdir(dirname(resolve(screenshotPath)), { recursive: true });

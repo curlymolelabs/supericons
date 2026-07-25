@@ -54,10 +54,15 @@ for (const field of [
   "label: 'Country'",
   "label: 'Result count'",
   "label: 'Searches'",
+  "label: 'Last seen'",
   "label: 'Action'",
 ]) {
   assert.ok(frontend.includes(field), `Gaps is missing ${field}.`);
 }
+assert.ok(
+  frontend.includes("{ label: 'Last seen', sortKey: 'last_seen', sortType: 'date'"),
+  'Gaps Last seen is not date-sortable.',
+);
 
 for (const action of [
   'add_icon',
@@ -81,6 +86,7 @@ assert.ok(rollback.includes('Cannot restore the old review action constraint'), 
 
 for (const field of [
   "label: 'User request'",
+  "label: 'Submitted'",
   "label: 'Review'",
   'row.failed_query || row.search_query',
   'row.library_filter',
@@ -91,6 +97,10 @@ for (const field of [
 ]) {
   assert.ok(frontend.includes(field), `User requests is missing ${field}.`);
 }
+assert.ok(
+  frontend.includes("{ label: 'Submitted', sortKey: 'created_at', sortType: 'date'"),
+  'User requests Submitted is not date-sortable.',
+);
 for (const sourceRule of [
   ".from('icon_evidence')",
   ".eq('signal_type', 'search_attempt')",
@@ -183,7 +193,7 @@ console.log(JSON.stringify({
   test_traffic_filter: 'inherited_from_v2_filters',
   user_request_source: "icon_evidence.ui_surface = 'grid_empty_feedback'",
   user_request_review_source: 'admin_icon_request_reviews',
-  visible_fields: ['query', 'issue', 'channel', 'language', 'country', 'result_count', 'searches', 'action'],
+  visible_fields: ['query', 'issue', 'channel', 'language', 'country', 'result_count', 'searches', 'last_seen', 'action'],
   user_request_fields: ['request_text', 'failed_query', 'library_filter', 'created_at', 'status', 'note'],
   actions: ['add_icon', 'add_alias', 'improve_ranking', 'improve_docs', 'watch', 'ignore', 'resolved'],
   automatic_product_writes: 0,

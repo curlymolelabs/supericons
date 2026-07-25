@@ -1958,6 +1958,7 @@ function renderWorklist() {
     { label: 'Country', sortKey: 'country_code', sortValue: (row) => row.country_code || row.country || null, render: (row) => queryCountryCell(row) },
     { label: 'Result count', number: true, sortKey: 'result_count', sortType: 'number', sortValue: (row) => row.result_count ?? null, render: (row) => queryTypicalResultCell(row) },
     { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', sortValue: (row) => row.searches ?? row.activity_count ?? row.requests ?? null, render: (row) => queryRequestCell(row) },
+    { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
     {
       label: 'Action',
       sortKey: 'review_status',
@@ -2018,10 +2019,10 @@ function renderIconRequests() {
       render: (row) => {
         const query = safeText(row.failed_query || row.search_query, 'Query not recorded');
         const library = safeText(row.library_filter, 'all');
-        const submitted = formatDate(row.created_at, true);
-        return `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong><div class="activity-meta">Failed query: ${escapeHtml(query)} | Library: ${escapeHtml(library)} | ${escapeHtml(submitted)}</div>`;
+        return `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong><div class="activity-meta">Failed query: ${escapeHtml(query)} | Library: ${escapeHtml(library)}</div>`;
       },
     },
+    { label: 'Submitted', sortKey: 'created_at', sortType: 'date', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
     {
       label: 'Review',
       sortKey: 'status',
