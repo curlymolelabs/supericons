@@ -19,6 +19,20 @@ const ALLOWED_FINAL_OUTCOMES = new Set(['success', 'zero', 'error']);
 const ALLOWED_SETTLEMENT_STATES = new Set(['completed', 'failed']);
 const ALLOWED_DIAGNOSTIC_TYPES = new Set(['superseded', 'incomplete']);
 const ALLOWED_COMPLETION_TRIGGERS = new Set(['idle', 'enter', 'blur']);
+const ALLOWED_INTERFACE_LOCALES = new Set([
+  'en',
+  'zh-Hans',
+  'zh-Hant',
+  'ja',
+  'ko',
+  'es',
+  'de',
+  'pt',
+  'ar',
+  'hi',
+  'vi',
+  'th',
+]);
 
 type ParsedTelemetryCommon = {
   contractVersion: number;
@@ -29,6 +43,7 @@ type ParsedTelemetryCommon = {
   libraryMode: string;
   style: string;
   locale: string | null;
+  interfaceLocale: string | null;
   localMatchCount: number | null;
   hostedMatchCount: number | null;
   hostedState: string;
@@ -168,6 +183,11 @@ function normalizeCount(value: unknown, fieldName: string, { required = false } 
   return count;
 }
 
+function normalizeInterfaceLocale(value: unknown) {
+  const locale = String(value || '').trim();
+  return ALLOWED_INTERFACE_LOCALES.has(locale) ? locale : null;
+}
+
 export function parsePayload(value: unknown): ParsedTelemetry {
   const body = value && typeof value === 'object' && !Array.isArray(value)
     ? value as Record<string, unknown>
@@ -209,6 +229,7 @@ export function parsePayload(value: unknown): ParsedTelemetry {
     libraryMode: libraryMode || 'all',
     style: style || 'any',
     locale: normalizeText(body.locale, 32),
+    interfaceLocale: normalizeInterfaceLocale(body.interface_locale),
     localMatchCount: normalizeCount(body.local_match_count, 'local_match_count'),
     hostedMatchCount: normalizeCount(body.hosted_match_count, 'hosted_match_count'),
     hostedState: hostedState || 'not_started',
@@ -331,13 +352,11 @@ function getClientIp(req: Request) {
   return candidates.map((value) => String(value || '').trim()).find(Boolean) || 'unavailable';
 }
 
-function getCountry(req: Request) {
-  const value = String(
-    req.headers.get('cf-ipcountry')
-    || req.headers.get('x-country-code')
-    || '',
-  ).trim().toUpperCase();
-  return COUNTRY_PATTERN.test(value) && !['XX', 'ZZ', 'T1'].includes(value) ? value : null;
+function normalizeCountryCode(value: unknown) {
+  const countryCode = String(value || '').trim().toUpperCase();
+  return COUNTRY_PATTERN.test(countryCode) && !['XX', 'ZZ', 'T1'].includes(countryCode)
+    ? countryCode
+    : null;
 }
 
 async function buildPrivateIdentity(req: Request) {
@@ -378,6 +397,50 @@ export async function countLinkedDiagnosticAttempts(adminClient: any, episodeId:
     .eq('episode_id', episodeId);
   if (error) throw error;
   return Number(count || 0);
+}
+
+export async function resolveLinkedWebCountry(
+  adminClient: any,
+  episodeId: string,
+  environment: string,
+) {
+  try {
+    const { data, error } = await adminClient
+      .from('search_request_audit')
+      .select('country_code,geo_source')
+      .eq('episode_id', episodeId)
+      .eq('channel', 'web')
+      .eq('environment', environment);
+    if (error) {
+      console.warn('[Web Search Telemetry] linked_country_query_failed');
+      return { countryCode: null, geoSource: null };
+    }
+
+    const linkedRows = Array.isArray(data) ? data : [];
+    const countryCodes = [...new Set(
+      linkedRows
+        .map((row) => normalizeCountryCode(row?.country_code))
+        .filter(Boolean),
+    )];
+    if (countryCodes.length !== 1) {
+      return { countryCode: null, geoSource: null };
+    }
+
+    const countryCode = countryCodes[0];
+    const geoSources = [...new Set(
+      linkedRows
+        .filter((row) => normalizeCountryCode(row?.country_code) === countryCode)
+        .map((row) => normalizeText(row?.geo_source, 64))
+        .filter(Boolean),
+    )];
+    return {
+      countryCode,
+      geoSource: geoSources.length === 1 ? geoSources[0] : null,
+    };
+  } catch {
+    console.warn('[Web Search Telemetry] linked_country_query_failed');
+    return { countryCode: null, geoSource: null };
+  }
 }
 
 export async function handleWebSearchTelemetryRequest(req: Request) {
@@ -449,7 +512,6 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
     const controlledRun = await verifyControlledRun(req);
     const environment = controlledRun.valid ? 'test' : classifiedOrigin.environment;
     const trafficClass = controlledRun.valid ? 'controlled_test' : classifiedOrigin.trafficClass;
-    const countryCode = getCountry(req);
     const serverBuild = normalizeText(
       Deno.env.get('DENO_DEPLOYMENT_ID')
       || Deno.env.get('SUPABASE_DEPLOYMENT_ID')
@@ -478,6 +540,7 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
           observed_at: new Date().toISOString(),
           metadata: {
             controlled_run_label: controlledRun.label,
+            interface_locale: parsed.interfaceLocale,
           },
         }, {
           onConflict: 'episode_id,diagnostic_type',
@@ -489,6 +552,11 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
     const linkedDiagnosticAttemptCount = await countLinkedDiagnosticAttempts(
       adminClient,
       parsed.episodeId,
+    );
+    const linkedCountry = await resolveLinkedWebCountry(
+      adminClient,
+      parsed.episodeId,
+      environment,
     );
 
     const { error } = await adminClient
@@ -507,6 +575,7 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
         library_mode: parsed.libraryMode,
         style: parsed.style,
         locale: parsed.locale,
+        interface_locale: parsed.interfaceLocale,
         final_match_count: parsed.finalMatchCount,
         final_outcome: parsed.finalOutcome,
         settlement_state: parsed.settlementState,
@@ -519,8 +588,8 @@ export async function handleWebSearchTelemetryRequest(req: Request) {
         user_id: signedInUserId,
         is_registered: Boolean(signedInUserId),
         client_ip_public: identity.clientIpPublic,
-        country_code: countryCode,
-        geo_source: countryCode ? 'request_header' : null,
+        country_code: linkedCountry.countryCode,
+        geo_source: linkedCountry.geoSource,
         completed_at: new Date().toISOString(),
         metadata: {
           local_match_count: parsed.localMatchCount,

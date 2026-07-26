@@ -42,7 +42,11 @@ assert.equal(WEB_SEARCH_OBSERVATION_DEADLINE_MS, 20000);
 
 {
   const harness = createHarness();
-  const episodeId = harness.coordinator.startEpisode({ query: 'camera' });
+  const episodeId = harness.coordinator.startEpisode({
+    query: 'camera',
+    locale: 'es',
+    interfaceLocale: 'zh-Hans',
+  });
   harness.coordinator.updateLocal({ episodeId, localMatchCount: 12, finalMatchCount: 12 });
   harness.coordinator.markHostedPending({ episodeId });
   harness.fireByDelay(SEARCH_EPISODE_IDLE_MS);
@@ -58,6 +62,8 @@ assert.equal(WEB_SEARCH_OBSERVATION_DEADLINE_MS, 20000);
   assert.equal(harness.writes[0].action, 'final');
   assert.equal(harness.writes[0].final_outcome, 'success');
   assert.equal(harness.writes[0].final_match_count, 12);
+  assert.equal(harness.writes[0].locale, 'es');
+  assert.equal(harness.writes[0].interface_locale, 'zh-Hans');
   assert.equal(harness.countable[0].trigger, 'idle');
 }
 
@@ -236,5 +242,6 @@ console.log(JSON.stringify({
   late_completion_finalized: true,
   repeated_queries_distinct: true,
   strict_library_metadata_preserved: true,
+  query_and_interface_locales_separate: true,
   telemetry_failure_non_blocking: true,
 }, null, 2));

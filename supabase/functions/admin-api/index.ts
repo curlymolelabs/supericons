@@ -1728,6 +1728,7 @@ export function mapFinalOutcomeToEvidenceRow(row: Record<string, unknown>): Sear
     client_family: row.client_family || null,
     tool_name: row.tool_name || null,
     locale: row.locale || null,
+    interface_locale: row.interface_locale || null,
     anonymous_client_hash_prefix: compactHashPrefix(row.anonymous_client_hash),
     anonymous_client_hash: row.anonymous_client_hash || null,
     user_agent_hash_prefix: null,
@@ -1764,7 +1765,7 @@ async function fetchFinalOutcomeRows(
   settings: SearchTelemetrySettings,
   { applyQuery = true } = {},
 ) {
-  const select = 'id, contract_version, episode_id, recovery_chain_id, source_event_id, channel, query, environment, traffic_class, client_family, tool_name, library_filter, library_mode, style, locale, final_match_count, final_outcome, settlement_state, search_execution, server_build, diagnostic_attempt_count, legacy_identity_quality, source_version, anonymous_client_hash, user_id, is_registered, client_ip_public, country_code, geo_source, latency_ms, completed_at, metadata';
+  const select = 'id, contract_version, episode_id, recovery_chain_id, source_event_id, channel, query, environment, traffic_class, client_family, tool_name, library_filter, library_mode, style, locale, interface_locale, final_match_count, final_outcome, settlement_state, search_execution, server_build, diagnostic_attempt_count, legacy_identity_quality, source_version, anonymous_client_hash, user_id, is_registered, client_ip_public, country_code, geo_source, latency_ms, completed_at, metadata';
   const result = await fetchBoundedDashboardV2Pages(async ({
     from,
     to,
@@ -1937,6 +1938,9 @@ async function fetchFinalWebDiagnosticRows(
         client_family: 'browser',
         tool_name: null,
         locale: null,
+        interface_locale: row.metadata && typeof row.metadata === 'object'
+          ? (row.metadata as Record<string, unknown>).interface_locale || null
+          : null,
         anonymous_client_hash: null,
         estimated_client_key: null,
         visitor_kind: null,
@@ -3484,6 +3488,8 @@ async function buildDashboardV2SearchEventsPayload(
       complete: !telemetry.truncated,
       field_coverage: {
         locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.locale)),
+        interface_locale: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.interface_locale)),
+        country_code: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.country_code)),
         root_request_identifier: dashboardV2FieldCoverage(sortedRows, (row) => Boolean(row.root_request_hash_prefix)),
         returned_icon_refs: dashboardV2FieldCoverage(sortedRows, (row) => row.returned_icon_refs_recorded === true),
         latency_ms: dashboardV2FieldCoverage(sortedRows, (row) => row.latency_ms !== null && row.latency_ms !== undefined),
@@ -3928,6 +3934,7 @@ function getQueryWorkbenchEntry(
     tools: new Set<string>(),
     mcp_versions: new Set<string>(),
     locales: new Set<string>(),
+    interface_locales: new Set<string>(),
     library_modes: new Set<string>(),
     search_outcomes: new Set<string>(),
     confidence_labels: new Set<string>(),
@@ -4068,6 +4075,9 @@ function buildQueryWorkbenchRows(
     }
     if (typeof row.locale === 'string' && row.locale.trim()) {
       (entry.locales as Set<string>).add(row.locale.trim());
+    }
+    if (typeof row.interface_locale === 'string' && row.interface_locale.trim()) {
+      (entry.interface_locales as Set<string>).add(row.interface_locale.trim());
     }
     if (typeof row.library_mode === 'string' && row.library_mode.trim()) {
       (entry.library_modes as Set<string>).add(row.library_mode.trim());
@@ -4279,6 +4289,7 @@ function buildQueryWorkbenchRows(
       tools: [...(entry.tools as Set<string>)].sort((a, b) => a.localeCompare(b)),
       mcp_versions: [...(entry.mcp_versions as Set<string>)].sort((a, b) => a.localeCompare(b)),
       locales: [...(entry.locales as Set<string>)].sort((a, b) => a.localeCompare(b)),
+      interface_locales: [...(entry.interface_locales as Set<string>)].sort((a, b) => a.localeCompare(b)),
       library_modes: [...(entry.library_modes as Set<string>)].sort((a, b) => a.localeCompare(b)),
       search_outcomes: [...(entry.search_outcomes as Set<string>)].sort((a, b) => a.localeCompare(b)),
       confidence_labels: [...(entry.confidence_labels as Set<string>)].sort((a, b) => a.localeCompare(b)),

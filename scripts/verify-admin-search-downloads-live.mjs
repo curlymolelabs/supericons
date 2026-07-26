@@ -165,7 +165,7 @@ function assertDownloadContract(
   assert.equal(downloads.request_log.parsed.headers.length, 31);
 
   const audit = downloads.audit_bundle.parsed;
-  assert.equal(audit.export_schema_version, '4.0');
+  assert.equal(audit.export_schema_version, '4.1');
   assert.equal(audit.export_type, 'audit_bundle');
   assert.equal(audit.filters?.include_test, includeTest);
   assert.ok(

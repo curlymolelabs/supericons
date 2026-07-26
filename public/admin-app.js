@@ -1066,7 +1066,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '4.0';
+const SEARCH_EXPORT_SCHEMA_VERSION = '4.1';
 
 function searchExportPeriod() {
   const labels = {
@@ -1142,6 +1142,7 @@ function searchSummaryCsvRow(row = {}) {
     typical_result_count: row.typical_result_count,
     result_unit: row.result_unit,
     country_codes: normalizeList(row.countries).join('|'),
+    interface_locales: normalizeList(row.interface_locales).join('|'),
     channel: normalizeList(row.channels).join('|') || row.channel,
     first_seen_utc: row.first_seen,
     last_seen_utc: row.last_seen,
@@ -1163,6 +1164,7 @@ function requestLogCsvRow(row = {}) {
     library_filter: row.library_filter,
     library_mode: row.library_mode,
     locale: row.locale,
+    interface_locale: row.interface_locale,
     requested_limit: row.requested_limit,
     result_count: row.result_count,
     returned_icon_refs: normalizeList(row.returned_icon_refs).join('|'),
@@ -1178,6 +1180,7 @@ function requestLogCsvRow(row = {}) {
     client_family: row.client_family,
     estimated_client_id: row.searcher_identifier,
     country_code: row.country_code,
+    geo_source: row.geo_source,
     registered: row.registered,
     pro: row.pro,
     identity_quality: row.identity_quality,

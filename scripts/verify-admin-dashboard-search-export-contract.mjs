@@ -48,12 +48,15 @@ if (menuItems.length !== 2) {
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '4.0'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.1'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
   'searchSummaryCsvRow',
   'requestLogCsvRow',
+  'interface_locales',
+  'interface_locale',
+  'geo_source',
   'distinct_searcher_ids',
   'typical_result_count',
   'returned_icon_refs',

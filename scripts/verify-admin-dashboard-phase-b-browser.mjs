@@ -1110,6 +1110,7 @@ try {
       'Country',
       'Result count',
       'Searches',
+      'Last seen',
       'Action',
     ]),
     `Gaps columns are wrong: ${JSON.stringify(demandHeaders)}`,
@@ -1146,7 +1147,7 @@ try {
     headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
   ));
   ok(
-    JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Review']),
+    JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Submitted', 'Review']),
     `User requests columns are wrong: ${JSON.stringify(requestHeaders)}`,
   );
   const requestRows = page.locator('#iconRequests tbody tr');
@@ -1315,9 +1316,9 @@ try {
     'The Search summary filename does not identify its data, period, and generation time.',
   );
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
-  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 19, 'The Search summary CSV is not the approved 19-column schema.');
+  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 20, 'The Search summary CSV is not the approved 20-column schema.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
-  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"result_unit"', '"country_codes"', '"channel"', '"last_seen_utc"']) {
+  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"result_unit"', '"country_codes"', '"interface_locales"', '"channel"', '"last_seen_utc"']) {
     ok(queryExportText.includes(column), `The Search summary CSV omits ${column}.`);
   }
   for (const column of ['"searcher_identifier"', '"searcher_kind"', '"job_category"', '"row_grain"', '"export_type"']) {
@@ -1352,12 +1353,14 @@ try {
     'The Request log filename does not identify its data, period, and generation time.',
   );
   ok(eventCsvText.split(/\r?\n/).filter(Boolean).length === primaryEventRows.length + 1, 'The event CSV contains diagnostics or only the first page.');
-  ok(eventCsvText.split(/\r?\n/, 1)[0].split(',').length === 31, 'The Request log CSV is not the approved 31-column schema.');
+  ok(eventCsvText.split(/\r?\n/, 1)[0].split(',').length === 33, 'The Request log CSV is not the approved 33-column schema.');
   ok(eventCsvText.includes('"returned_icon_refs"'), 'The event CSV omits returned icon references.');
   ok(eventCsvText.includes('"estimated_client_id"'), 'The Request log omits the estimated client identifier.');
   ok(eventCsvText.includes('"episode_id"'), 'The Request log omits the final episode identifier.');
   ok(eventCsvText.includes('"recovery_chain_id"'), 'The Request log omits the recovery-chain identifier.');
   ok(eventCsvText.includes('"diagnostic_attempt_count"'), 'The Request log omits the linked diagnostic-attempt count.');
+  ok(eventCsvText.includes('"interface_locale"'), 'The Request log omits interface locale.');
+  ok(eventCsvText.includes('"geo_source"'), 'The Request log omits the country source.');
   ok(eventCsvText.includes('"identity_quality"'), 'The Request log omits identity quality.');
   ok(!eventCsvText.includes('"root_request_identifier"'), 'The Request log exposes the unreliable legacy root identifier.');
   ok(!eventCsvText.includes('"export_type"'), 'The Request log repeats file-level metadata in every row.');
@@ -1373,7 +1376,7 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '4.0', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '4.1', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
@@ -1391,8 +1394,8 @@ try {
   ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
   ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
-  ok(auditPayload.csv_schemas.search_summary.length === 19, 'The Audit bundle has the wrong Search summary schema.');
-  ok(auditPayload.csv_schemas.request_log.length === 31, 'The Audit bundle has the wrong Request log schema.');
+  ok(auditPayload.csv_schemas.search_summary.length === 20, 'The Audit bundle has the wrong Search summary schema.');
+  ok(auditPayload.csv_schemas.request_log.length === 33, 'The Audit bundle has the wrong Request log schema.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
   const pagedEventRequests = requests.filter((request) => (

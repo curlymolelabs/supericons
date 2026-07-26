@@ -59,14 +59,23 @@ Deno.test('maps final rows without promoting diagnostics', () => {
     final_outcome: 'zero',
     settlement_state: 'completed',
     anonymous_client_hash: 'a'.repeat(64),
+    country_code: 'ES',
+    geo_source: 'railway_geoip',
+    locale: 'es',
+    interface_locale: 'en',
     completed_at: '2026-07-24T04:00:00.000Z',
     metadata: { local_match_count: 0, hosted_match_count: 0, hosted_state: 'zero' },
   });
   assert(webZero.signal_type === 'search_attempt', 'A final Web row lost its top-level role.');
   assert(webZero.search_outcome === 'zero', 'A final zero was changed.');
   assert(webZero.result_count === 0, 'A final zero gained results.');
+  assert(webZero.country_code === 'ES', 'A linked Web country was discarded.');
+  assert(webZero.geo_source === 'railway_geoip', 'A linked country source was discarded.');
+  assert(webZero.locale === 'es', 'Query locale was discarded.');
+  assert(webZero.interface_locale === 'en', 'Interface locale was discarded.');
   const [event] = compactDashboardV2EventRows([webZero]);
   assert(event.event_role === 'web_top_level', 'A Web final row became a diagnostic.');
+  assert(event.interface_locale === 'en', 'Interface locale was omitted from the event export.');
 });
 
 Deno.test('fills Hosted MCP history without duplicating copied final rows', () => {

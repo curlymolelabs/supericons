@@ -531,6 +531,7 @@ function getCurrentWebSearchEpisodeOptions() {
     libraryMode: libraryFilter === 'all' ? 'all' : 'strict',
     style: state.iconStyle,
     locale: getSearchQueryPlan(getCurrentSearchQuery()).locale,
+    interfaceLocale: activeLocale,
   };
 }
 

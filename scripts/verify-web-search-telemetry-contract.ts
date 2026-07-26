@@ -4,6 +4,7 @@ import {
   countLinkedDiagnosticAttempts,
   constantTimeEqual,
   parsePayload,
+  resolveLinkedWebCountry,
   verifyControlledRun,
 } from '../supabase/functions/web-search-telemetry/index.ts';
 import { buildSearchAuditContext } from '../supabase/functions/_shared/search-engine/handle-search-request.ts';
@@ -62,8 +63,12 @@ Deno.test('accepts valid final and diagnostic contracts', () => {
     final_outcome: 'success',
     settlement_state: 'completed',
     completion_trigger: 'idle',
+    locale: 'es',
+    interface_locale: 'zh-Hans',
   });
   assert(final.action === 'final' && final.finalMatchCount === 12, 'Valid final event was not parsed.');
+  assert(final.locale === 'es', 'Query locale was not preserved.');
+  assert(final.interfaceLocale === 'zh-Hans', 'Interface locale was not preserved.');
 
   const diagnostic = parsePayload({
     action: 'diagnostic',
@@ -122,6 +127,24 @@ Deno.test('rejects false zeros, invalid identity, and client trust fields', () =
   assert(!('channel' in parsed), 'The browser was allowed to choose channel.');
   assert(!('environment' in parsed), 'The browser was allowed to choose environment.');
   assert(!('trafficClass' in parsed), 'The browser was allowed to choose traffic class.');
+});
+
+Deno.test('normalizes unsupported interface language to null without rejecting the outcome', () => {
+  const parsed = parsePayload({
+    action: 'final',
+    contract_version: 1,
+    episode_id: '7070de2e-3532-4ab7-8e65-5323730e4d36',
+    query: 'camera',
+    hosted_state: 'success',
+    final_match_count: 5,
+    final_outcome: 'success',
+    settlement_state: 'completed',
+    completion_trigger: 'idle',
+    locale: 'fr',
+    interface_locale: 'unsupported',
+  });
+  assert(parsed.locale === 'fr', 'Query locale behavior changed.');
+  assert(parsed.interfaceLocale === null, 'Unsupported interface locale was accepted.');
 });
 
 Deno.test('accepts only correctly signed controlled-run headers', async () => {
@@ -200,4 +223,82 @@ Deno.test('derives the linked diagnostic-attempt count on the server', async () 
     JSON.stringify(requestedEpisodes) === JSON.stringify(['48f1d781-ecb2-4ca6-83be-2d2fcfe3d0ee']),
     'The final episode must be the count key.',
   );
+});
+
+function countryAuditClient(
+  rows: Array<Record<string, unknown>>,
+  expectedEnvironment = 'production',
+  error: Record<string, unknown> | null = null,
+) {
+  const filters: Array<[string, string]> = [];
+  return {
+    filters,
+    client: {
+      from(table: string) {
+        assert(table === 'search_request_audit', 'Country must come from the audit table.');
+        return {
+          select(fields: string) {
+            assert(fields === 'country_code,geo_source', 'Country lookup selected unexpected fields.');
+            return this;
+          },
+          eq(field: string, value: string) {
+            filters.push([field, value]);
+            if (filters.length === 3) {
+              assert(
+                JSON.stringify(filters) === JSON.stringify([
+                  ['episode_id', '0cafab5c-81fb-4c15-b498-893564b8d7bc'],
+                  ['channel', 'web'],
+                  ['environment', expectedEnvironment],
+                ]),
+                'Country lookup used an unsafe identity or scope.',
+              );
+              return Promise.resolve({ data: rows, error });
+            }
+            return this;
+          },
+        };
+      },
+    },
+  };
+}
+
+Deno.test('copies country only from exact, agreeing Web audit rows', async () => {
+  const episodeId = '0cafab5c-81fb-4c15-b498-893564b8d7bc';
+  const single = countryAuditClient([
+    { country_code: 'es', geo_source: 'railway_geoip' },
+  ]);
+  const singleResult = await resolveLinkedWebCountry(single.client, episodeId, 'production');
+  assert(singleResult.countryCode === 'ES', 'Single linked country was not normalized.');
+  assert(singleResult.geoSource === 'railway_geoip', 'Linked country source was not preserved.');
+
+  const repeated = countryAuditClient([
+    { country_code: 'US', geo_source: 'railway_geoip' },
+    { country_code: 'US', geo_source: 'railway_geoip' },
+  ]);
+  const repeatedResult = await resolveLinkedWebCountry(repeated.client, episodeId, 'production');
+  assert(repeatedResult.countryCode === 'US', 'Agreeing audit attempts did not resolve.');
+
+  const conflicting = countryAuditClient([
+    { country_code: 'US', geo_source: 'railway_geoip' },
+    { country_code: 'CA', geo_source: 'railway_geoip' },
+  ]);
+  const conflictingResult = await resolveLinkedWebCountry(conflicting.client, episodeId, 'production');
+  assert(conflictingResult.countryCode === null, 'Conflicting audit countries were accepted.');
+
+  const missing = countryAuditClient([]);
+  const missingResult = await resolveLinkedWebCountry(missing.client, episodeId, 'production');
+  assert(missingResult.countryCode === null, 'Missing audit evidence produced a country.');
+
+  const nonCountry = countryAuditClient([
+    { country_code: 'T1', geo_source: 'railway_geoip' },
+  ]);
+  const nonCountryResult = await resolveLinkedWebCountry(nonCountry.client, episodeId, 'production');
+  assert(nonCountryResult.countryCode === null, 'A non-country network marker was accepted.');
+});
+
+Deno.test('country lookup failure cannot reject final telemetry', async () => {
+  const episodeId = '0cafab5c-81fb-4c15-b498-893564b8d7bc';
+  const failed = countryAuditClient([], 'production', { message: 'injected failure' });
+  const result = await resolveLinkedWebCountry(failed.client, episodeId, 'production');
+  assert(result.countryCode === null && result.geoSource === null, 'Failed lookup did not fail open.');
 });

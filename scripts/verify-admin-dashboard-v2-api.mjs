@@ -155,7 +155,7 @@ function includes(source, value, label) {
   'clearActiveDashboardCache',
   "pageParams.set('snapshot_id', snapshotId)",
   'The event export changed while pages were loading.',
-  "SEARCH_EXPORT_SCHEMA_VERSION = '4.0'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.1'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
