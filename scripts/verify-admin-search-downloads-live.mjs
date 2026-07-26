@@ -161,8 +161,11 @@ function assertDownloadContract(
     downloads.audit_bundle.filename,
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/,
   );
-  assert.equal(downloads.summary.parsed.headers.length, 19);
-  assert.equal(downloads.request_log.parsed.headers.length, 31);
+  assert.equal(downloads.summary.parsed.headers.length, 20);
+  assert.equal(downloads.request_log.parsed.headers.length, 33);
+  assert.ok(downloads.summary.parsed.headers.includes('interface_locales'));
+  assert.ok(downloads.request_log.parsed.headers.includes('interface_locale'));
+  assert.ok(downloads.request_log.parsed.headers.includes('geo_source'));
 
   const audit = downloads.audit_bundle.parsed;
   assert.equal(audit.export_schema_version, '4.1');

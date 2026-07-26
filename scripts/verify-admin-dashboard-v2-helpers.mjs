@@ -276,6 +276,7 @@ const queryRows = [
     estimated_unique_clients: 4,
     channels: ['web'],
     countries: ['SG'],
+    interface_locales: ['es'],
     query_origins: ['agent_query'],
     visitor_kinds: ['anonymous'],
     last_seen: '2026-07-17T01:00:00Z',
@@ -310,6 +311,8 @@ const queryRows = [
   assert.equal(compact[0].zero_attempt_count, 5);
   assert.equal(compact[0].low_attempt_count, 0);
   assert.equal(compact[0].channel, 'hosted_mcp');
+  const [database] = compactDashboardV2QueryRows(normalizeDashboardV2QueryRows(queryRows));
+  assert.deepEqual(database.interface_locales, ['es']);
 }
 
 {

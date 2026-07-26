@@ -137,8 +137,8 @@ try {
   await page.waitForSelector('#section-intelligence:not([hidden])');
   const explorerText = await page.locator('#queryExplorer').innerText();
   ok(explorerText.trim() && !explorerText.includes('Loading'), 'The production query explorer did not render.');
-  ok(await page.locator('#diagnosticsDrawer:not([open])').count() === 1, 'Diagnostics should start collapsed.');
-  for (const id of ['iconRequests', 'contactInbox']) {
+  ok(await page.locator('#diagnosticsDrawer').count() === 0, 'The old diagnostics drawer is still present.');
+  for (const id of ['gapWorklist', 'iconRequests']) {
     const text = await page.locator(`#${id}`).innerText();
     ok(text.trim() && !text.includes('Loading'), `${id} has no truthful production state.`);
   }
