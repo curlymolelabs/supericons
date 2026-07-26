@@ -41,8 +41,8 @@ const [candidate] = await queryDatabase(`
   from public.icon_evidence e
   left join public.admin_icon_request_reviews r
     on r.icon_evidence_id = e.id
-  where e.signal_type = 'search_attempt'
-    and e.ui_surface = 'grid_empty_feedback'
+  where e.signal_type in ('search_attempt', 'icon_request')
+    and e.ui_surface in ('grid_empty_feedback', 'grid_low_result_feedback', 'sidebar_request')
     and nullif(trim(e.evidence_text), '') is not null
     and e.domain = 'supericons.dev'
     and e.created_at >= now() - interval '30 days'
@@ -185,16 +185,20 @@ try {
   const requestHeaders = await page.locator('#iconRequests th').evaluateAll((headers) => (
     headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
   ));
-  assert.deepEqual(requestHeaders, ['User request', 'Submitted', 'Review']);
+  assert.deepEqual(requestHeaders, ['User request', 'Source', 'Results', 'Submitted', 'Review']);
   await verifyDateSorting('#iconRequests', 'created_at', 'User requests Submitted');
   const requestRows = await page.locator('#iconRequests tbody tr').evaluateAll((rows) => rows.map((row) => {
     const primary = row.querySelector('td:first-child strong')?.textContent?.trim() || '';
     const secondary = row.querySelector('td:first-child .activity-meta')?.textContent?.trim() || '';
-    const submitted = row.querySelector('td:nth-child(2)')?.textContent?.trim() || '';
+    const source = row.querySelector('td:nth-child(2)')?.textContent?.trim() || '';
+    const resultCount = row.querySelector('td:nth-child(3)')?.textContent?.trim() || '';
+    const submitted = row.querySelector('td:nth-child(4)')?.textContent?.trim() || '';
     return {
       has_human_sentence: primary.length > 0,
-      has_failed_query: secondary.includes('Failed query:'),
+      has_query_context: secondary.includes('Query:'),
       has_library: secondary.includes('Library:'),
+      has_source: source.length > 0,
+      has_result_count: resultCount.length > 0,
       has_date: Number.isFinite(Date.parse(submitted)),
       has_status: Boolean(row.querySelector('[data-icon-request-status]')),
       has_note: Boolean(row.querySelector('[data-icon-request-note]')),
@@ -206,8 +210,10 @@ try {
   assert.ok(requestRows.length > 0, 'No real user requests rendered in the 30-day period.');
   for (const row of requestRows) {
     assert.equal(row.has_human_sentence, true);
-    assert.equal(row.has_failed_query, true);
+    assert.equal(row.has_query_context, true);
     assert.equal(row.has_library, true);
+    assert.equal(row.has_source, true);
+    assert.equal(row.has_result_count, true);
     assert.equal(row.has_date, true);
     assert.equal(row.has_status, true);
     assert.equal(row.has_note, true);
@@ -222,7 +228,7 @@ try {
     });
     await page.locator('#iconRequests td:first-child').evaluateAll((nodes) => {
       nodes.forEach((node) => {
-        node.innerHTML = '<strong>[request hidden]</strong><div class="activity-meta">Failed query and library verified</div>';
+        node.innerHTML = '<strong>[request hidden]</strong><div class="activity-meta">Query context and library verified</div>';
       });
     });
     await mkdir(dirname(resolve(screenshotPath)), { recursive: true });
@@ -293,14 +299,16 @@ const evidence = {
   gaps_rows_rendered: gapRowsRendered,
   user_request_rows_rendered: userRequestRowsRendered,
   user_request_filter: {
-    signal_type: 'search_attempt',
-    ui_surface: 'grid_empty_feedback',
+    signal_types: ['search_attempt', 'icon_request'],
+    ui_surfaces: ['grid_empty_feedback', 'grid_low_result_feedback', 'sidebar_request'],
     production_domain: 'supericons.dev',
   },
   user_request_fields_verified: [
     'request_text',
-    'failed_query',
+    'search_query',
     'library_filter',
+    'ui_surface',
+    'result_count',
     'created_at',
     'status',
     'note',

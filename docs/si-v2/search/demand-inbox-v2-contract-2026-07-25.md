@@ -49,20 +49,23 @@ It does not create or change icons, aliases, ranking rules, search behavior, doc
 
 ## User requests
 
-User requests is a separate table. It shows sentences entered after a Web search returned no icons.
+User requests is a separate table. It shows explicit icon requests entered from the Web grid or sidebar.
 
-The source is `public.icon_evidence`. A row qualifies only when:
+The source is `public.icon_evidence`. A row qualifies when it matches either shape:
 
-- `signal_type = 'search_attempt'`
-- `ui_surface = 'grid_empty_feedback'`
-- `evidence_text` contains the person's request
+- Legacy: `signal_type = 'search_attempt'`, `ui_surface = 'grid_empty_feedback'`, and `evidence_text` contains the person's request.
+- Current: `signal_type = 'icon_request'`, `ui_surface` is `grid_empty_feedback`, `grid_low_result_feedback`, or `sidebar_request`, and `evidence_text` contains the person's request.
 
-The `ui_surface` check is required. Other evidence rows can contain machine-made text and must not appear here.
+Both the signal type and `ui_surface` checks are required. Other evidence rows can contain machine-made text and must not appear here.
+
+New requests use `public.si_log_icon_request`. This dedicated RPC does not create a `search_attempt`. Search context is optional for sidebar requests, and `search_query` plus `result_count` are either both recorded or both null.
 
 Each row shows:
 
 - The person's sentence
-- The failed query
+- The source placement
+- The originating query, when one exists
+- The recorded result count, when one exists
 - The selected library
 - The date
 - Review status
@@ -88,3 +91,7 @@ Saving a review does not create or change icons, aliases, ranking rules, search 
 Migration `20260725130000_expand_query_review_actions.sql` expands the allowed review values without changing existing rows.
 
 Rollback `20260725130000_expand_query_review_actions.down.sql` restores the old constraint only when no new action values are stored. It stops rather than discarding or mislabelling a human decision.
+
+Migration `20260727120000_icon_request_events.sql` adds the dedicated request signal and RPC without changing the existing evidence RPC or any existing row.
+
+Its operational rollback removes the new writer and reverts its callers while retaining recorded request rows and the compatible table constraint. Request evidence is not deleted or relabelled during rollback.

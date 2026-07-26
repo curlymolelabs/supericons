@@ -1358,6 +1358,15 @@ body.theme-light .header__locale-select {
   color: var(--si-text-muted);
   user-select: none;
 }
+.sidebar__item--button {
+  width: 100%;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  background: transparent;
+  font: inherit;
+  text-align: start;
+}
 .sidebar__item:hover {
   background: color-mix(in srgb, var(--si-primary) 8%, var(--si-surface-container));
   color: var(--si-primary-soft);
@@ -2692,9 +2701,22 @@ body.theme-light .header__locale-select {
   color: var(--si-text-dim);
   max-width: 320px;
 }
+.icon-request-panel {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: var(--si-space-6) var(--si-space-4);
+  border-top: 1px solid var(--si-border);
+}
+.icon-request-panel[hidden] {
+  display: none;
+}
 .grid-empty__feedback {
   width: min(100%, 360px);
   margin-top: var(--si-space-1);
+}
+.icon-request-panel .grid-empty__feedback {
+  margin-top: 0;
 }
 .grid-empty__feedback[hidden] {
   display: none;

@@ -15,6 +15,16 @@ const DEFAULT_ROW_LIMIT = 25;
 const ROW_LIMIT_OPTIONS = [25, 50, 100];
 const CHART_FONT_SIZE = 14;
 const SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'clients']);
+const ICON_REQUEST_UI_SURFACES = new Set([
+  'grid_empty_feedback',
+  'grid_low_result_feedback',
+  'sidebar_request',
+]);
+const ICON_REQUEST_SOURCE_LABELS = {
+  grid_empty_feedback: 'No results',
+  grid_low_result_feedback: 'Few results',
+  sidebar_request: 'Sidebar',
+};
 const memoryCache = new Map();
 let adminSecretMemory = '';
 let managedSessionChecked = false;
@@ -2020,10 +2030,28 @@ function renderIconRequests() {
       sortKey: 'request_text',
       sortValue: (row) => row.request_text || row.evidence_text || null,
       render: (row) => {
-        const query = safeText(row.failed_query || row.search_query, 'Query not recorded');
+        const query = safeText(row.failed_query || row.search_query, 'No search');
         const library = safeText(row.library_filter, 'all');
-        return `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong><div class="activity-meta">Failed query: ${escapeHtml(query)} | Library: ${escapeHtml(library)}</div>`;
+        return `<strong>${escapeHtml(safeText(row.request_text || row.evidence_text))}</strong><div class="activity-meta">Query: ${escapeHtml(query)} | Library: ${escapeHtml(library)}</div>`;
       },
+    },
+    {
+      label: 'Source',
+      sortKey: 'ui_surface',
+      sortValue: (row) => row.ui_surface || row.request_source || null,
+      render: (row) => escapeHtml(
+        safeText(row.request_source || ICON_REQUEST_SOURCE_LABELS[row.ui_surface], 'Unknown'),
+      ),
+    },
+    {
+      label: 'Results',
+      number: true,
+      sortKey: 'result_count',
+      sortType: 'number',
+      sortValue: (row) => row.result_count ?? null,
+      render: (row) => row.result_count === null || row.result_count === undefined
+        ? '<span class="muted-cell">Not recorded</span>'
+        : escapeHtml(formatNumber(row.result_count)),
     },
     { label: 'Submitted', sortKey: 'created_at', sortType: 'date', render: (row) => escapeHtml(formatDate(row.created_at, true)) },
     {
@@ -2413,18 +2441,27 @@ async function loadLegacySearch() {
   evidenceParams.set('signal_type', 'search_attempt');
   evidenceParams.set('page', '1');
   evidenceParams.set('page_size', '100');
-  const [zero, low, evidence] = await Promise.all([
+  const requestEvidenceParams = legacyParams();
+  requestEvidenceParams.set('signal_type', 'icon_request');
+  requestEvidenceParams.set('page', '1');
+  requestEvidenceParams.set('page_size', '100');
+  const [zero, low, evidence, requestEvidence] = await Promise.all([
     apiRequest(`/intelligence/search/queue?${zeroParams}`),
     apiRequest(`/intelligence/search/queue?${lowParams}`),
     apiRequest(`/intelligence/evidence?${evidenceParams}`),
+    apiRequest(`/intelligence/evidence?${requestEvidenceParams}`),
   ]);
   const zeroRows = normalizeList(zero.queries).map((row) => legacyQueueRow(row, 'zero_result'));
   const lowRows = normalizeList(low.queries).map((row) => legacyQueueRow(row, 'low_result'));
-  const requests = normalizeList(evidence.evidence)
-    .filter((row) => row.ui_surface === 'grid_empty_feedback' && String(row.evidence_text || '').trim())
+  const requests = [
+    ...normalizeList(evidence.evidence),
+    ...normalizeList(requestEvidence.evidence),
+  ]
+    .filter((row) => ICON_REQUEST_UI_SURFACES.has(row.ui_surface) && String(row.evidence_text || '').trim())
     .map((row) => ({
       ...row,
       request_text: row.evidence_text,
+      request_source: ICON_REQUEST_SOURCE_LABELS[row.ui_surface] || 'Unknown',
       client_label: row.estimated_client_key,
     }));
   return {

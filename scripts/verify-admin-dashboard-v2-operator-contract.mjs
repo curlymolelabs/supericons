@@ -18,7 +18,7 @@ const [
 ]);
 
 assert.match(appSource, /data-query-review/);
-assert.match(appSource, /\/intelligence\/search\/review/);
+assert.match(appSource, /\/v2\/search\/review/);
 assert.match(appSource, /data-icon-request-review/);
 assert.match(appSource, /\/v2\/icon-requests\/review/);
 assert.match(appSource, /fetchAllPages\('search'/);

@@ -309,6 +309,10 @@
                     <span class="sidebar__item-name" data-i18n="app.recent">Recent</span>
                     <span class="sidebar__item-count" id="countRecent">0</span>
                 </div>
+                <button class="sidebar__item sidebar__item--button" id="sidebarIconRequest" type="button">
+                    <span class="material-symbols-outlined sidebar__item-icon" aria-hidden="true">add_circle</span>
+                    <span class="sidebar__item-name" data-i18n="app.requestIcon">Request an icon</span>
+                </button>
 
                 <div class="sidebar__divider"></div>
 
@@ -433,6 +437,9 @@
                     <p class="grid-empty__text">20,000+ icons across 10 libraries including Material Symbols, Lucide,
                         Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in
                         seconds.</p>
+                </div>
+
+                <section class="icon-request-panel" id="iconRequestPanel" hidden>
                     <form class="grid-empty__feedback" id="noResultsFeedbackForm" hidden>
                         <label class="grid-empty__feedback-label" for="noResultsFeedbackInput" data-i18n="app.iconRequestLabel">What icon should we add?</label>
                         <div class="grid-empty__feedback-row">
@@ -443,7 +450,7 @@
                         </div>
                         <p class="grid-empty__feedback-status" id="noResultsFeedbackStatus" role="status" aria-live="polite"></p>
                     </form>
-                </div>
+                </section>
             </main>
 
             <!-- Customize Panel -->

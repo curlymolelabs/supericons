@@ -669,6 +669,8 @@ function responseFor(path, searchParams = new URLSearchParams()) {
             request_text: 'A better database migration icon',
             failed_query: 'database migration',
             library_filter: 'all',
+            ui_surface: 'grid_empty_feedback',
+            result_count: 0,
             reviewed: iconRequestReviews.has('11111111-1111-4111-8111-111111111111'),
             status: iconRequestReviews.get('11111111-1111-4111-8111-111111111111')?.status || 'new',
             review_note: iconRequestReviews.get('11111111-1111-4111-8111-111111111111')?.note || null,
@@ -677,8 +679,10 @@ function responseFor(path, searchParams = new URLSearchParams()) {
           {
             id: '22222222-2222-4222-8222-222222222222',
             request_text: 'A clearer electric pickup truck icon',
-            failed_query: 'electric pickup truck',
+            failed_query: null,
             library_filter: 'phosphor',
+            ui_surface: 'sidebar_request',
+            result_count: null,
             reviewed: true,
             status: iconRequestReviews.get('22222222-2222-4222-8222-222222222222')?.status || 'new',
             review_note: iconRequestReviews.get('22222222-2222-4222-8222-222222222222')?.note || null,
@@ -1147,14 +1151,18 @@ try {
     headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
   ));
   ok(
-    JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Submitted', 'Review']),
+    JSON.stringify(requestHeaders) === JSON.stringify(['User request', 'Source', 'Results', 'Submitted', 'Review']),
     `User requests columns are wrong: ${JSON.stringify(requestHeaders)}`,
   );
   const requestRows = page.locator('#iconRequests tbody tr');
   ok(await requestRows.count() === 2, 'User requests did not render both stored requests.');
   const firstRequestText = await requestRows.first().innerText();
-  for (const expected of ['A better database migration icon', 'Failed query: database migration', 'Library: all']) {
+  for (const expected of ['A better database migration icon', 'Query: database migration', 'Library: all', 'No results', '0']) {
     ok(firstRequestText.includes(expected), `User requests did not show ${expected}.`);
+  }
+  const secondRequestText = await requestRows.nth(1).innerText();
+  for (const expected of ['A clearer electric pickup truck icon', 'Query: No search', 'Sidebar', 'Not recorded']) {
+    ok(secondRequestText.includes(expected), `User requests did not show ${expected}.`);
   }
   ok(
     await requestRows.first().locator('[data-icon-request-status]').inputValue() === 'new',

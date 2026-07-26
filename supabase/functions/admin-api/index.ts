@@ -398,6 +398,18 @@ function classifyAnalyticsSource(value: unknown): QueryEnvironment | null {
   return null;
 }
 
+// Every website surface that can submit a user icon request. Adding a new entry
+// point means adding it here; every request read and review check uses this list.
+const ICON_REQUEST_UI_SURFACES = [
+  'grid_empty_feedback',
+  'grid_low_result_feedback',
+  'sidebar_request',
+] as const;
+const ICON_REQUEST_SIGNAL_TYPES = [
+  'search_attempt',
+  'icon_request',
+] as const;
+
 function classifyAnalyticsChannel(value: unknown): QueryChannel | null {
   const source = normalizeAnalyticsToken(value);
   if (isUnclassifiedAnalyticsToken(source)) return null;
@@ -412,6 +424,8 @@ function classifyAnalyticsChannel(value: unknown): QueryChannel | null {
     || source === 'test_web'
     || source === 'grid'
     || source === 'grid_empty_feedback'
+    || source === 'grid_low_result_feedback'
+    || source === 'sidebar_request'
     || source === 'customize'
     || source === 'store'
     || source === 'hosted_search'
@@ -717,6 +731,7 @@ async function fetchIconEvidenceRows(
     let query = adminClient
       .from('icon_evidence')
       .select('id, signal_type, search_query, icon_id, batch_id, agent_converged, replaced_with, result_count, library_filter, job_category, ui_surface, domain, context_url, session_hash, evidence_text, created_at')
+      .neq('signal_type', 'icon_request')
       .not('search_query', 'is', null)
       .order('created_at', { ascending: false })
       .range(from, to);
@@ -727,6 +742,33 @@ async function fetchIconEvidenceRows(
 
     return query;
   });
+}
+
+async function fetchIconRequestEvidenceRows(
+  adminClient: SupabaseClient,
+  since: string | null,
+) {
+  const rows = await fetchAllRows<SearchEvidenceRow>((from, to) => {
+    let query = adminClient
+      .from('icon_evidence')
+      .select('id, signal_type, search_query, icon_id, batch_id, agent_converged, replaced_with, result_count, library_filter, job_category, ui_surface, domain, context_url, session_hash, evidence_text, created_at')
+      .eq('signal_type', 'icon_request')
+      .not('evidence_text', 'is', null)
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (since) {
+      query = query.gte('created_at', since);
+    }
+
+    return query;
+  });
+
+  return rows.map((row): SearchEvidenceRow => ({
+    ...row,
+    environment: classifySearchEvidenceEnvironment(row),
+    channel: classifySearchEvidenceChannel(row),
+  }));
 }
 
 function toIsoTimeMs(value: unknown) {
@@ -3050,9 +3092,9 @@ async function fetchDashboardV2IconRequests(
   }
   let query = adminClient
     .from('icon_evidence')
-    .select('id, evidence_text, search_query, library_filter, session_hash, domain, created_at', { count: 'exact' })
-    .eq('signal_type', 'search_attempt')
-    .eq('ui_surface', 'grid_empty_feedback')
+    .select('id, signal_type, evidence_text, search_query, library_filter, session_hash, domain, ui_surface, result_count, created_at', { count: 'exact' })
+    .in('signal_type', [...ICON_REQUEST_SIGNAL_TYPES])
+    .in('ui_surface', [...ICON_REQUEST_UI_SURFACES])
     .not('evidence_text', 'is', null)
     .order('created_at', { ascending: false })
     .limit(100);
@@ -3070,9 +3112,13 @@ async function fetchDashboardV2IconRequests(
     .filter((row) => String(row.evidence_text || '').trim())
     .map((row) => ({
       id: row.id,
+      signal_type: row.signal_type,
       request_text: row.evidence_text,
       failed_query: row.search_query,
+      search_query: row.search_query,
       library_filter: row.library_filter || 'all',
+      ui_surface: row.ui_surface,
+      result_count: optionalNonnegativeInteger(row.result_count),
       visitor_kind: 'anonymous',
       client_label: compactHashPrefix(row.session_hash) || 'Anonymous',
       country_code: null,
@@ -3140,8 +3186,8 @@ async function handleDashboardV2IconRequestReview(
     .from('icon_evidence')
     .select('id')
     .eq('id', iconEvidenceId)
-    .eq('signal_type', 'search_attempt')
-    .eq('ui_surface', 'grid_empty_feedback')
+    .in('signal_type', [...ICON_REQUEST_SIGNAL_TYPES])
+    .in('ui_surface', [...ICON_REQUEST_UI_SURFACES])
     .maybeSingle();
   if (requestError) throw requestError;
   if (!requestRow) {
@@ -5663,9 +5709,12 @@ async function handleIntelligenceEvidence(req: Request, adminClient: SupabaseCli
   const environment = parseQueryEnvironmentFilter(url);
   const channel = parseQueryChannelFilter(url);
 
+  const evidenceRows = signalType === 'icon_request'
+    ? await fetchIconRequestEvidenceRows(adminClient, since)
+    : await fetchSearchEvidenceRows(adminClient, since);
   const data = filterEvidenceRowsByChannel(
     filterEvidenceRowsByEnvironment(
-      await fetchSearchEvidenceRows(adminClient, since),
+      evidenceRows,
       environment,
     ),
     channel,

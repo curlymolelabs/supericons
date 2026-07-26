@@ -12,6 +12,7 @@ const [
   migration,
   rollback,
   requestReviewMigration,
+  iconRequestMigration,
 ] = await Promise.all([
   readFile('admin.html', 'utf8'),
   readFile('public/admin-app.js', 'utf8'),
@@ -19,6 +20,7 @@ const [
   readFile('supabase/migrations/20260725130000_expand_query_review_actions.sql', 'utf8'),
   readFile('supabase/rollbacks/20260725130000_expand_query_review_actions.down.sql', 'utf8'),
   readFile('supabase/migrations/20260718160000_admin_icon_request_reviews.sql', 'utf8'),
+  readFile('supabase/migrations/20260727120000_icon_request_events.sql', 'utf8'),
 ]);
 
 for (const [path, source] of [
@@ -28,6 +30,7 @@ for (const [path, source] of [
   ['supabase/migrations/20260725130000_expand_query_review_actions.sql', migration],
   ['supabase/rollbacks/20260725130000_expand_query_review_actions.down.sql', rollback],
   ['supabase/migrations/20260718160000_admin_icon_request_reviews.sql', requestReviewMigration],
+  ['supabase/migrations/20260727120000_icon_request_events.sql', iconRequestMigration],
 ]) {
   assert.doesNotMatch(source, /[\u2013\u2014]/u, `${path} contains a forbidden dash character.`);
 }
@@ -41,7 +44,7 @@ for (const label of [
   'Gaps',
   'Failed and weak searches that need a human decision.',
   'User requests',
-  'What people asked us to add after a Web search found no icons.',
+  'What people asked us to add from the icon grid or sidebar.',
 ]) {
   assert.ok(html.includes(label), `admin.html is missing ${label}.`);
 }
@@ -86,10 +89,14 @@ assert.ok(rollback.includes('Cannot restore the old review action constraint'), 
 
 for (const field of [
   "label: 'User request'",
+  "label: 'Source'",
+  "label: 'Results'",
   "label: 'Submitted'",
   "label: 'Review'",
   'row.failed_query || row.search_query',
   'row.library_filter',
+  'row.ui_surface',
+  'row.result_count',
   'row.created_at',
   'data-icon-request-status',
   'data-icon-request-note',
@@ -103,8 +110,8 @@ assert.ok(
 );
 for (const sourceRule of [
   ".from('icon_evidence')",
-  ".eq('signal_type', 'search_attempt')",
-  ".eq('ui_surface', 'grid_empty_feedback')",
+  ".in('signal_type', [...ICON_REQUEST_SIGNAL_TYPES])",
+  ".in('ui_surface', [...ICON_REQUEST_UI_SURFACES])",
   'search_query',
   'library_filter',
   ".from('admin_icon_request_reviews')",
@@ -120,6 +127,17 @@ assert.ok(frontend.includes("apiRequest('/v2/icon-requests/review'"), 'User requ
 assert.ok(frontend.includes('icon_evidence_id: iconEvidenceId, status, note'), 'User requests does not save status and note together.');
 assert.ok(api.includes('Number(left.reviewed) - Number(right.reviewed)'), 'Unreviewed user requests are not ordered first.');
 assert.ok(api.includes(".in('domain', [...getProductionAnalyticsHosts()])"), 'User requests does not respect the production traffic filter.');
+assert.ok(api.includes(".neq('signal_type', 'icon_request')"), 'Icon requests can leak into search analytics.');
+assert.ok(iconRequestMigration.includes('public.si_log_icon_request'), 'The dedicated request RPC is missing.');
+assert.ok(iconRequestMigration.includes("'icon_request'"), 'The dedicated request signal is missing.');
+assert.ok(
+  iconRequestMigration.includes("p_result_count integer default null"),
+  'Standalone sidebar requests cannot keep result_count null.',
+);
+assert.ok(
+  iconRequestMigration.includes('search_query and result_count must both be present or both be null'),
+  'Search context can be stored partially.',
+);
 
 for (const forbidden of [
   'insert into public.icons',
@@ -191,10 +209,11 @@ console.log(JSON.stringify({
   status: 'ok',
   source: 'v2_final_search_rows',
   test_traffic_filter: 'inherited_from_v2_filters',
-  user_request_source: "icon_evidence.ui_surface = 'grid_empty_feedback'",
+  user_request_sources: ['grid_empty_feedback', 'grid_low_result_feedback', 'sidebar_request'],
+  user_request_signal_types: ['search_attempt', 'icon_request'],
   user_request_review_source: 'admin_icon_request_reviews',
   visible_fields: ['query', 'issue', 'channel', 'language', 'country', 'result_count', 'searches', 'last_seen', 'action'],
-  user_request_fields: ['request_text', 'failed_query', 'library_filter', 'created_at', 'status', 'note'],
+  user_request_fields: ['request_text', 'search_query', 'library_filter', 'ui_surface', 'result_count', 'created_at', 'status', 'note'],
   actions: ['add_icon', 'add_alias', 'improve_ranking', 'improve_docs', 'watch', 'ignore', 'resolved'],
   automatic_product_writes: 0,
 }, null, 2));

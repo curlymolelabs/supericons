@@ -48,7 +48,7 @@ import {
   fetchPopularityMap,
   logCopyEvent,
   logFavoriteEvent,
-  logNoResultsFeedback,
+  logIconRequest,
 } from './lib/icon-intelligence.js';
 import {
   addRecentSearchEntry,
@@ -181,6 +181,8 @@ let pendingRecentSearchHideTimer = null;
 let hostedSearchRequestSeq = 0;
 let lastNoResultsFeedbackKey = '';
 let noResultsFeedbackSubmitting = false;
+let iconRequestOpenedFromSidebar = false;
+let sidebarIconRequestContext = null;
 
 let iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
@@ -735,6 +737,7 @@ const $$ = (sel) => document.querySelectorAll(sel);
 const els = {
   sidebarToggle: $('#sidebarToggle'),
   sidebar: $('#sidebar'),
+  sidebarIconRequest: $('#sidebarIconRequest'),
   panelToggle: $('#panelToggle'),
   panelClose: $('#panelClose'),
   panel: $('#panel'),
@@ -757,6 +760,7 @@ const els = {
   localeMenu: $('#localeMenu'),
   iconGrid: $('#iconGrid'),
   gridEmpty: $('#gridEmpty'),
+  iconRequestPanel: $('#iconRequestPanel'),
   noResultsFeedbackForm: $('#noResultsFeedbackForm'),
   noResultsFeedbackInput: $('#noResultsFeedbackInput'),
   noResultsFeedbackStatus: $('#noResultsFeedbackStatus'),
@@ -1577,7 +1581,7 @@ function renderGrid() {
   if (syncSearchLoader()) {
     els.iconGrid.style.display = 'none';
     els.gridEmpty.style.display = 'none';
-    syncNoResultsFeedbackForm(false);
+    syncIconRequestForm();
     return;
   }
 
@@ -1609,12 +1613,14 @@ function renderGrid() {
     if (emptyText) {
       emptyText.textContent = emptyCopy.text;
     }
-    syncNoResultsFeedbackForm(Boolean(state.searchQuery && !state.hostedSearchPending));
+    const isSettledNoResults = Boolean(state.searchQuery && !state.hostedSearchPending);
+    els.gridEmpty?.classList.toggle('grid-empty--no-results', isSettledNoResults);
+    els.gridEmpty?.classList.toggle('grid-empty--welcome', !isSettledNoResults);
   } else {
     els.iconGrid.style.display = '';
     els.gridEmpty.style.display = 'none';
-    syncNoResultsFeedbackForm(false);
   }
+  syncIconRequestForm();
 }
 
 function setNoResultsFeedbackStatus(message = '', tone = '') {
@@ -1624,29 +1630,54 @@ function setNoResultsFeedbackStatus(message = '', tone = '') {
   els.noResultsFeedbackStatus.classList.toggle('is-error', tone === 'error');
 }
 
-function syncNoResultsFeedbackForm(isVisible) {
-  if (!els.noResultsFeedbackForm) return;
+function getIconRequestContext({ sidebar = false } = {}) {
+  const query = getCurrentSearchQuery() || '';
+  const hasSettledSearch = Boolean(query && !state.hostedSearchPending);
+  const resultCount = hasSettledSearch ? state.filteredIcons.length : null;
 
+  if (sidebar) {
+    return {
+      uiSurface: 'sidebar_request',
+      searchQuery: hasSettledSearch ? query : null,
+      resultCount,
+    };
+  }
+
+  if (!hasSettledSearch || resultCount > 2) return null;
+  return {
+    uiSurface: resultCount === 0 ? 'grid_empty_feedback' : 'grid_low_result_feedback',
+    searchQuery: query,
+    resultCount,
+  };
+}
+
+function syncIconRequestForm() {
+  if (!els.noResultsFeedbackForm || !els.iconRequestPanel) return;
+
+  const context = iconRequestOpenedFromSidebar
+    ? sidebarIconRequestContext
+    : getIconRequestContext();
+  const isVisible = Boolean(context);
+  els.iconRequestPanel.hidden = !isVisible;
   els.noResultsFeedbackForm.hidden = !isVisible;
-  els.gridEmpty?.classList.toggle('grid-empty--no-results', isVisible);
-  els.gridEmpty?.classList.toggle('grid-empty--welcome', !isVisible);
 
-  if (!isVisible) {
+  if (!context) {
     lastNoResultsFeedbackKey = '';
     setNoResultsFeedbackStatus('');
     return;
   }
 
-  const query = getCurrentSearchQuery() || '';
   const feedbackKey = [
+    context.uiSurface,
     state.activeLibrary || 'all',
     getActiveJobCategoryId() || 'all',
-    query.toLowerCase(),
+    String(context.searchQuery || '').toLowerCase(),
+    context.resultCount ?? 'none',
   ].join('|');
 
   if (feedbackKey !== lastNoResultsFeedbackKey) {
     lastNoResultsFeedbackKey = feedbackKey;
-    if (els.noResultsFeedbackInput) {
+    if (els.noResultsFeedbackInput && !iconRequestOpenedFromSidebar) {
       els.noResultsFeedbackInput.value = '';
     }
     setNoResultsFeedbackStatus('');
@@ -1654,10 +1685,28 @@ function syncNoResultsFeedbackForm(isVisible) {
 
   if (els.noResultsFeedbackInput) {
     els.noResultsFeedbackInput.maxLength = NO_RESULTS_FEEDBACK_MAX_LENGTH;
-    els.noResultsFeedbackInput.placeholder = query
-      ? t('app.iconRequestPlaceholderForQuery', { query })
+    els.noResultsFeedbackInput.placeholder = context.searchQuery
+      ? t('app.iconRequestPlaceholderForQuery', { query: context.searchQuery })
       : t('app.iconRequestPlaceholder');
   }
+}
+
+function openIconRequestFormFromSidebar() {
+  if (isStoreView()) {
+    switchView('icons');
+  }
+  setSidebarOpen(false);
+  iconRequestOpenedFromSidebar = true;
+  sidebarIconRequestContext = getIconRequestContext({ sidebar: true });
+  lastNoResultsFeedbackKey = '';
+  syncIconRequestForm();
+
+  if (els.noResultsFeedbackInput) {
+    const query = getCurrentSearchQuery() || '';
+    els.noResultsFeedbackInput.value = query;
+    els.noResultsFeedbackInput.focus();
+  }
+  els.iconRequestPanel?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 async function submitNoResultsFeedback(event) {
@@ -1666,14 +1715,16 @@ async function submitNoResultsFeedback(event) {
 
   const input = els.noResultsFeedbackInput;
   const submitButton = els.noResultsFeedbackForm?.querySelector('button[type="submit"]');
-  const searchQuery = getCurrentSearchQuery();
+  const context = iconRequestOpenedFromSidebar
+    ? sidebarIconRequestContext
+    : getIconRequestContext();
   const feedbackText = String(input?.value || '')
     .trim()
     .replace(/\s+/g, ' ')
     .slice(0, NO_RESULTS_FEEDBACK_MAX_LENGTH);
 
-  if (!searchQuery) {
-    setNoResultsFeedbackStatus(t('app.iconRequestSearchFirst'), 'error');
+  if (!context) {
+    setNoResultsFeedbackStatus(t('app.iconRequestFailed'), 'error');
     return;
   }
 
@@ -1688,12 +1739,13 @@ async function submitNoResultsFeedback(event) {
   if (submitButton) submitButton.disabled = true;
   setNoResultsFeedbackStatus(t('app.iconRequestSending'));
 
-  const sent = await logNoResultsFeedback({
-    searchQuery,
+  const sent = await logIconRequest({
+    searchQuery: context.searchQuery,
     feedbackText,
     libraryFilter: state.activeLibrary,
     jobCategory: getActiveJobCategoryId(),
-    uiSurface: 'grid_empty_feedback',
+    uiSurface: context.uiSurface,
+    resultCount: context.resultCount,
   });
 
   noResultsFeedbackSubmitting = false;
@@ -4179,6 +4231,7 @@ function renderCompareDrawer() {
 }
 
 // Sidebar library click
+els.sidebarIconRequest?.addEventListener('click', openIconRequestFormFromSidebar);
 els.sidebar.addEventListener('click', (e) => {
   const item = e.target.closest('.sidebar__item');
   if (item && item.dataset.library) {
