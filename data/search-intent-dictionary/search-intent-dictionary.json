@@ -258,6 +258,14 @@
       "notes": "Blocked, denied, or restricted state."
     },
     {
+      "term": "go up",
+      "category": "product_work",
+      "variants": ["arrow up", "chevron up", "circle arrow up", "move up"],
+      "prefer": ["arrow-up", "chevron-up", "circle-arrow-up", "move-up"],
+      "avoid": ["arrow-down", "chevron-down", "move-down"],
+      "notes": "Upward movement or navigation."
+    },
+    {
       "term": "confused",
       "category": "risk_state",
       "variants": ["circle help", "question", "frown", "brain", "alert"],

@@ -1,6 +1,6 @@
 # Local npm channel attribution specification
 
-Date: 2026-07-27 (revision 2, incorporating independent review corrections)
+Date: 2026-07-27 (revision 3, implementation blockers resolved)
 
 Status: Proposed for implementation, owner handover ready
 
@@ -34,6 +34,7 @@ Requirements, not preferences. A change violating any of these is a release defe
 6. Telemetry remains best-effort and non-blocking. A telemetry failure never fails or delays a search.
 7. The public notice ships in the same release as the change that adds a field.
 8. Reports and exports outside the protected admin surface use aggregate counts only, with small cells suppressed. `install_hash` never appears in logs, error messages, or shareable exports.
+9. The raw installation UUID never appears in application logs, proxy logs, request traces, error messages, stored request bodies, or database rows.
 
 ## 3. Identity definitions
 
@@ -65,10 +66,10 @@ Exit gate: either a trusted country lands in new rows with no raw address stored
 
 ## 6. Phase C: installation and client identity, next package cut
 
-1. **Installation UUID.** Random UUID version 4, generated on first run, stored at `<config>/supericons/install.json`. Unreadable or missing file: generate a new one and continue. Deleting the file is a supported reset.
+1. **Installation UUID.** Random UUID version 4, generated on first run, stored at `<config>/supericons/install.json`. Creation must be atomic. Concurrent processes attempt exclusive creation, then read back and use the value that won. If the file is missing, unreadable, or cannot be persisted, search continues but no installation UUID is sent. Telemetry uses `v2` without installation identity, and a later run may try creation again. Deleting the file is a supported reset.
 2. **MCP client identity.** Capture `clientInfo.name` and `clientInfo.version` from the `initialize` handshake through the SDK accessor; normalize to bounded tokens. Missing values record as `unknown`, never as a guess.
 3. **Runtime context.** Operating-system platform token only.
-4. **Episode identity.** Send the episode and attempt identifiers required for exact diagnostic linkage, closing the Phase A limitation.
+4. **Episode identity.** Send `episode_id`, `attempt_id`, and `recovery_chain_id` as required by `FR-54`, closing the Phase A limitation.
 
 ## 7. Transport compatibility
 
@@ -78,31 +79,35 @@ Required design:
 
 1. Keep `si_log_mcp_search_outcome_v2` unchanged for published packages.
 2. Add a `v3` RPC or ingestion endpoint accepting the new fields.
-3. New packages attempt `v3` and silently fall back to `v2` on any resolution failure, with the fallback path dropping only the new fields.
-4. Every failure mode is swallowed: telemetry never affects search.
+3. New packages attempt `v3` and fall back to `v2` only after a definitive function-not-found or incompatible-signature response. The fallback path drops only the new fields.
+4. A timeout, lost response, connection failure, rate limit, or `5xx` response must not trigger a `v2` retry because `v3` may already have committed the event. These failures are swallowed.
+5. The `v3` final-outcome write is idempotent by `episode_id`. Retrying the same final outcome returns the existing result instead of creating a second row. This uniqueness applies to the final-outcome record only. Diagnostic events may share an episode and remain distinguished by `attempt_id` and event type.
+6. Every failure mode remains non-blocking: telemetry never affects search.
 
 ## 8. Field specification
 
 | Field | Source | Storage | Nullable | Notes |
 | --- | --- | --- | --- | --- |
 | `install_hash` | Server-side keyed hash of the package UUID | Stored | Yes | Raw UUID never stored; key version stored alongside |
-| `install_key_version` | Server | Stored | No | Enables honest discontinuity reporting on rotation |
+| `install_key_version` | Server | Stored | Yes | Present only when `install_hash` is present; enables honest discontinuity reporting on rotation |
 | `client_family` | `initialize` clientInfo.name | Stored, max 64 | Yes | Replaces the constant `mcp_stdio`; unknown stays `unknown` |
 | `client_version` | `initialize` clientInfo.version | Stored, max 40 | Yes | Truncated |
 | `os_platform` | `process.platform` | Stored enum | Yes | `win32`, `darwin`, `linux`, `other` |
 | `country_code` | Trusted infrastructure header | Stored, ISO two-letter | Yes | Only if Phase B preflight succeeds |
 | `geo_source` | Ingestion path | Stored token | Yes | Distinguishes from `railway_geoip` |
-| `episode_id`, `attempt` | Package | Stored | Yes | Phase C; enables exact linkage |
+| `episode_id`, `attempt_id`, `recovery_chain_id` | Package | Stored | Yes | Phase C; implements `FR-54` and enables exact linkage |
 
 No other new fields are authorized by this specification. Additions require a new decision entry.
+
+Database constraint: `install_hash` and `install_key_version` must either both be present or both be absent.
 
 ## 9. Retention and linkage
 
 1. Raw local events carrying `install_hash` are retained for 90 days, then deleted or reduced to aggregates without installation identity.
 2. Aggregate counts may be retained indefinitely because they carry no installation identity.
 3. `install_hash` is never automatically linked to an account, API key, or any future identity. Any such linkage requires a separate owner decision and its own notice.
-4. A user deleting `install.json` receives a new identity; the specification does not support retroactive deletion of prior anonymous rows, and the notice says so plainly.
-5. Whether this 90-day rule is local-channel-specific or the first instance of a general retention policy is an owner decision to record; the executor must not silently generalize it.
+4. A user deleting `install.json` receives a new identity; the specification does not support retroactive deletion of prior pseudonymous rows, and the notice says so plainly.
+5. This 90-day rule is specific to local-channel installation attribution. It does not establish or change the retention policy for other telemetry classes.
 
 ## 10. Notice, not promise
 
@@ -114,9 +119,9 @@ Conflict to resolve before Phase C publishes: `docs/supericons-agent-briefing-20
 
 > **What the Supericons MCP package records**
 >
-> The package records anonymous usage so we can improve icon search. Each event includes the search term, the number of results, the tool used, your package version, the MCP client you are using, your operating system platform, an anonymous installation identifier, and a country code derived from your network connection when available. We do not record your IP address, your name, your files, your project, or anything about your code.
+> The package records pseudonymous usage so we can improve icon search. Each event includes the search term, the number of results, the tool used, your package version, the MCP client you are using, your operating system platform, a pseudonymous installation identifier, and a country code derived from your network connection when available. Supericons telemetry records do not store your raw IP address, your name, your files, your project, or anything about your code.
 >
-> The installation identifier is a random value stored on your machine. It is not derived from your computer, your account, or your network, and the raw value is not stored on our servers. Deleting `<config>/supericons/install.json` resets it.
+> The installation identifier is a random value stored on your machine. It is not derived from your computer, your account, or your network, and the raw value is not stored by Supericons. Deleting `<config>/supericons/install.json` changes the identifier used for future events. Earlier pseudonymous records remain for up to 90 days.
 >
 > Icon search keeps working when telemetry is disabled. Telemetry is sent separately, on a best-effort basis, and never blocks or changes your search results.
 >
@@ -131,19 +136,32 @@ Reports describe local measurement as best-effort with opt-out gaps, never as co
 3. Two independent configuration directories yield two distinct hashes.
 4. Deleting `install.json` yields a new hash and no error.
 5. An unwritable configuration directory produces no crash and no failed search.
-6. Each of the **four** opt-out controls independently suppresses every event.
-7. No raw IP, forwarded-address header, or raw installation UUID appears in stored rows or function source.
-8. A client sending no `clientInfo` records `unknown`.
-9. Old packages continue writing successfully against `v2` after `v3` exists.
-10. New packages fall back to `v2` cleanly when `v3` is unavailable, dropping only new fields.
-11. Telemetry endpoint failure or timeout leaves search results and latency unchanged.
-12. Shareable exports contain no `install_hash` and suppress small country and client cells.
-13. Rows older than the retention window are removed or aggregated on schedule.
+6. Two processes starting against one empty configuration directory use the same winning persisted UUID. If persistence fails, neither process sends an installation UUID.
+7. Each of the **four** opt-out controls independently suppresses every event.
+8. No raw IP, forwarded-address header, or raw installation UUID appears in stored rows, function source, application logs, proxy logs, request traces, or error messages.
+9. A client sending no `clientInfo` records `unknown`.
+10. Old packages continue writing successfully against `v2` after `v3` exists.
+11. New packages fall back to `v2` only when `v3` is definitively missing or incompatible, dropping only new fields.
+12. A lost `v3` response, timeout, connection failure, rate limit, or `5xx` response produces no `v2` retry and no duplicate final outcome.
+13. Repeating one `v3` final-outcome write with the same `episode_id` leaves exactly one final outcome.
+14. Telemetry endpoint failure or timeout leaves search results and latency unchanged.
+15. Shareable exports contain no `install_hash` and suppress small country and client cells.
+16. Rows older than the retention window are removed or aggregated on schedule.
+17. Legacy rows and `v2` writes store both `install_hash` and `install_key_version` as null. Attributed `v3` writes store both as non-null.
 
-## 12. Reporting
+## 12. Migration and rollback
+
+1. The Supabase change is an exact, named migration with a preflight for the expected current function and schema definitions.
+2. Apply only the named migration. A general `supabase db push` is forbidden for this release because linked migration history is not the release boundary.
+3. The migration includes an exact rollback that restores the prior RPC definition and removes only objects created by this migration.
+4. Apply and rollback are tested on a disposable database before production.
+5. The release evidence records the migration hash, expected prior definition, applied definition, and rollback verification.
+6. The npm package has its own rollback target and does not depend on rolling back Supabase first.
+
+## 13. Reporting
 
 Local channel view: observed installations, new and returning installations, countries, client families, package versions. npm downloads may be displayed **beside** observed installations as context only. Their difference must never be presented as an opt-out rate, because npm downloads include CI runs, caches, mirrors, and repeated installs.
 
-## 13. Out of scope
+## 14. Out of scope
 
 Individual identity, account linkage, project or repository names, file paths, IP storage, city-level geography, hardware fingerprints, and any change to search behavior, ranking, tool schemas, hosted surfaces, or web.

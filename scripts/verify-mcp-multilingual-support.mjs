@@ -58,6 +58,7 @@ const [
   remoteSource,
   docsSource,
   searchSource,
+  searchPipelineSource,
   telemetrySource,
   packageJson,
   serverJson,
@@ -77,6 +78,7 @@ const [
   readText('mcp/remote-server.js'),
   readText('docs-pages.js'),
   readText('mcp/search.js'),
+  readText('mcp/runtime/search-pipeline.js'),
   readText('mcp/telemetry.js'),
   readJson('mcp/package.json'),
   readJson('mcp/server.json'),
@@ -108,6 +110,14 @@ assert.ok(indexSource.includes('locale,') && indexSource.includes('recommendIcon
 assert.ok(remoteSource.includes('recommendIconsForTask') && remoteSource.includes('locale,'), 'hosted recommend_icons must accept locale');
 
 assert.ok(searchSource.includes('multilingual-search-aliases.json'), 'local MCP search must load multilingual aliases');
+assert.ok(
+  searchSource.includes("from './runtime/search-pipeline.js'"),
+  'local MCP search must use the shared search pipeline',
+);
+assert.ok(
+  searchPipelineSource.includes('multilingualExpansionTerms'),
+  'shared search pipeline must accept maintained multilingual expansion terms',
+);
 assert.ok(telemetrySource.includes('locale=${locale}'), 'MCP telemetry must preserve locale metadata');
 assert.ok(docsSource.includes('mcp-search-locales'), 'docs must include multilingual MCP search examples');
 assert.ok(docsSource.includes('<code>locale</code>'), 'docs must mention the locale parameter');

@@ -1,6 +1,6 @@
 {
   "name": "@supericons/mcp",
-  "version": "0.4.22",
+  "version": "0.4.23",
   "mcpName": "io.github.curlymolelabs/supericons",
   "description": "MCP server for Supericons: multilingual semantic SVG icon search and recommendations for AI coding agents.",
   "type": "module",
@@ -66,6 +66,7 @@
     "runtime/public-metadata-sanitizer.js",
     "runtime/search-query-frame.js",
     "runtime/search-intent-core.js",
+    "runtime/search-pipeline.js",
     "runtime/search-ranking-policy.js",
     "search.js",
     "semantic-registry.js",

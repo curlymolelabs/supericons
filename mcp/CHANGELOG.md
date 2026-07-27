@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.23 - 2026-07-27
+
+### Fixed
+
+- restored relevant local results for normal multiword requests such as `torrent magnet`, `view categories`, `go up`, `browser cookies`, and `ip blocked`
+- made the browser and local npm package use one shared public search decision pipeline
+- kept hosted search failures visible instead of hiding them behind local results
+- preserved honest no-results for unsupported requests
+
+### Improved
+
+- added a real built-browser gate covering multiword, typo, multilingual, strict-library, exact-reference, no-result, and hosted-error cases
+- loaded the shared browser search engine only when search is first used, keeping the initial app bundle smaller
+
 ## 0.4.22 - 2026-07-23
 
 ### Fixed

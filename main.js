@@ -34,7 +34,6 @@ import {
   createWebSearchEpisodeCoordinator,
 } from './lib/web-search-episode.js';
 import { buildIntentQueryVariants } from './lib/search-intent-core.js';
-import { normalizeCjkSearchText } from './lib/cjk-search-core.js';
 import { buildWebSearchQueryPlan } from './lib/web-cjk-search-smoke.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
@@ -54,7 +53,6 @@ import {
   addRecentSearchEntry,
   applyPopularityDelta,
   compareBrowseIconsByPopularity,
-  compareSearchMatches,
   getNextJobCategoryFilterForLibrarySelect,
   getPopularityRecord,
   getScopedJobCategoryFilter,
@@ -68,7 +66,6 @@ import {
   createIconTaxonomyMap,
   createJobCategoryMap,
 } from './lib/icon-taxonomy-seed.js';
-import { createIconSemanticAliasMap } from './lib/icon-semantic-aliases.js';
 import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
 import { getIconPreviewCommerceProfile } from './lib/icon-preview-commerce.js';
 import { createStoreShellContract } from './lib/store-shell-contract.js';
@@ -172,6 +169,7 @@ const state = {
   jobCategoryScopeCount: 0,
   searchContextStartedAt: typeof performance !== 'undefined' ? performance.now() : 0,
   hostedSearchPending: false,
+  hostedSearchError: null,
   mcpPreview: getMcpPreviewUrlState(),
 };
 
@@ -188,7 +186,14 @@ let iconRequestObservedStoreView = isStoreView();
 
 let iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
-const iconSemanticAliasMap = createIconSemanticAliasMap();
+let sharedSearchPipelinePromise = null;
+
+function loadSharedSearchPipeline() {
+  if (!sharedSearchPipelinePromise) {
+    sharedSearchPipelinePromise = import('./mcp/runtime/search-pipeline.js');
+  }
+  return sharedSearchPipelinePromise;
+}
 
 const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
   version: 2,
@@ -1598,7 +1603,12 @@ function renderGrid() {
     const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
     const isRecentView = state.activeLibrary === 'recent' && !state.searchQuery;
     const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
-    const emptyCopy = state.mcpPreview?.mode === 'explicit'
+    const emptyCopy = state.hostedSearchError
+      ? {
+          title: 'Search is temporarily unavailable',
+          text: 'The icon search service did not respond. Please try again.',
+        }
+      : state.mcpPreview?.mode === 'explicit'
       ? {
           title: 'No shared icons found',
           text: 'These shared icon references are not available. Browse all icons to continue.',
@@ -1865,217 +1875,6 @@ function setupInfiniteScroll() {
   observer.observe(sentinel);
 }
 
-// ============================================================
-// ============================================================
-// Search with Synonyms + Smart Matching
-// ============================================================
-
-/** Inline Levenshtein distance (capped early for performance) */
-function editDistance(a, b) {
-  if (Math.abs(a.length - b.length) > 2) return 99;
-  const m = a.length, n = b.length;
-  const prev = Array.from({ length: n + 1 }, (_, i) => i);
-  const curr = new Array(n + 1);
-  for (let i = 1; i <= m; i++) {
-    curr[0] = i;
-    for (let j = 1; j <= n; j++) {
-      curr[j] = a[i - 1] === b[j - 1]
-        ? prev[j - 1]
-        : 1 + Math.min(prev[j], curr[j - 1], prev[j - 1]);
-    }
-    prev.splice(0, n + 1, ...curr);
-  }
-  return prev[n];
-}
-
-function normalizeSemanticText(value) {
-  return normalizeCjkSearchText(value);
-}
-
-function tokenizeSemanticText(value) {
-  const normalized = normalizeSemanticText(value);
-  return normalized ? normalized.split(' ') : [];
-}
-
-function getIconSemanticAliases(iconOrIconId) {
-  const resolvedIconId = typeof iconOrIconId === 'string'
-    ? iconOrIconId
-    : iconKey(iconOrIconId);
-  return iconSemanticAliasMap.get(resolvedIconId) || null;
-}
-
-function getDirectSearchScore(icon, normalizedQuery, queryWords) {
-  if (!normalizedQuery) return 0;
-
-  const name = normalizeSemanticText(icon.name);
-  const id = normalizeSemanticText(icon.id);
-  const fullId = normalizeSemanticText(iconKey(icon));
-  const tokens = new Set([
-    ...tokenizeSemanticText(icon.name),
-    ...tokenizeSemanticText(icon.id),
-    ...tokenizeSemanticText(iconKey(icon)),
-  ]);
-
-  if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
-    return 320;
-  }
-
-  if (normalizedQuery.length > 3 && (
-    name.includes(normalizedQuery)
-    || id.includes(normalizedQuery)
-    || fullId.includes(normalizedQuery)
-  )) {
-    return 250;
-  }
-
-  if (queryWords.length > 0 && queryWords.every((word) => tokens.has(word))) {
-    return 190;
-  }
-
-  if (queryWords.length > 0 && queryWords.every((word) => (
-    name.includes(word) || id.includes(word) || fullId.includes(word)
-  ))) {
-    return 150;
-  }
-
-  return 0;
-}
-
-function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
-  if (!normalizedQuery) return 0;
-
-  const aliases = getIconSemanticAliases(icon);
-  if (!aliases?.length) return 0;
-
-  let bestScore = 0;
-
-  for (const alias of aliases) {
-    const normalizedAlias = normalizeSemanticText(alias);
-    if (!normalizedAlias) continue;
-
-    const aliasTokens = new Set(tokenizeSemanticText(normalizedAlias));
-
-    if (normalizedAlias === normalizedQuery) {
-      bestScore = Math.max(bestScore, 420);
-      continue;
-    }
-
-    if (normalizedQuery.length > 3 && normalizedAlias.includes(normalizedQuery)) {
-      bestScore = Math.max(bestScore, 360);
-      continue;
-    }
-
-    if (queryWords.length > 1 && queryWords.every((word) => aliasTokens.has(word))) {
-      bestScore = Math.max(bestScore, 320);
-      continue;
-    }
-
-    if (queryWords.length === 1 && aliasTokens.has(queryWords[0])) {
-      bestScore = Math.max(bestScore, 260);
-      continue;
-    }
-
-    if (queryWords.length > 0 && queryWords.every((word) => normalizedAlias.includes(word))) {
-      bestScore = Math.max(bestScore, 220);
-    }
-  }
-
-  return bestScore;
-}
-
-function getIntentExpandedSearchScore(icon, normalizedQuery, queryWords, queryVariants) {
-  const variants = Array.isArray(queryVariants) && queryVariants.length > 0
-    ? queryVariants
-    : [normalizedQuery];
-  let bestAliasScore = 0;
-  let bestDirectScore = 0;
-
-  for (let index = 0; index < variants.length; index += 1) {
-    const variant = variants[index];
-    const variantWords = variant === normalizedQuery
-      ? queryWords
-      : tokenizeSemanticText(variant);
-    const weight = index === 0 ? 1 : Math.max(0.5, 0.9 - (index * 0.06));
-    bestAliasScore = Math.max(
-      bestAliasScore,
-      getCuratedAliasScore(icon, variant, variantWords) * weight,
-    );
-    bestDirectScore = Math.max(
-      bestDirectScore,
-      getDirectSearchScore(icon, variant, variantWords) * weight,
-    );
-  }
-
-  return {
-    aliasScore: bestAliasScore,
-    directScore: bestDirectScore,
-  };
-}
-
-/** Expand a single search word into a set of matching terms */
-function expandSingleTerm(word) {
-  const syn = state.synonyms;
-  const terms = new Set([word]);
-
-  // 1. Direct key match
-  if (syn[word]) syn[word].forEach(t => terms.add(t));
-
-  // 2. Reverse lookup (word is a value in some group)
-  for (const [key, values] of Object.entries(syn)) {
-    if (values.some(v => v === word || v.split(' ').includes(word))) {
-      terms.add(key);
-      values.forEach(t => terms.add(t));
-    }
-  }
-
-  // 3. Prefix matching (word is a prefix of a synonym key, min 3 chars)
-  if (word.length >= 3) {
-    for (const [key, values] of Object.entries(syn)) {
-      if (key.startsWith(word) && key !== word) {
-        terms.add(key);
-        values.forEach(t => terms.add(t));
-      }
-    }
-  }
-
-  // 4. Plural/suffix normalization (try stripping common suffixes)
-  if (terms.size === 1) {
-    const stripped = word.replace(/ings?$/, '').replace(/ations?$/, 'ate').replace(/es$/, '').replace(/s$/, '');
-    if (stripped !== word && stripped.length > 2) {
-      if (syn[stripped]) syn[stripped].forEach(t => terms.add(t));
-      for (const [key, values] of Object.entries(syn)) {
-        if (key === stripped || values.includes(stripped)) {
-          terms.add(key);
-          values.forEach(t => terms.add(t));
-        }
-      }
-    }
-  }
-
-  // 5. Fuzzy typo tolerance (edit distance <= 1, only for queries > 4 chars, only if still no expansion)
-  if (terms.size === 1 && word.length > 4) {
-    for (const key of Object.keys(syn)) {
-      if (editDistance(word, key) <= 1) {
-        terms.add(key);
-        syn[key].forEach(t => terms.add(t));
-      }
-    }
-  }
-
-  // Filter out 2-char terms from the EXPANSION (not the original query) to prevent
-  // false positives: 'ai' as a substring matches 'brain','train','maintain' etc.
-  const result = [...terms].filter(t => t === word || t.length > 2);
-
-  // Cap to avoid over-broadening
-  return result.slice(0, 20);
-}
-
-/** Expand a full search query, returning an array of term-sets for AND matching */
-function expandSearchTerms(query) {
-  const words = query.trim().split(/\s+/).filter(Boolean);
-  return words.map(w => expandSingleTerm(w));
-}
-
 function getSearchQueryPlan(query) {
   return buildWebSearchQueryPlan(query, state.cjkSearchTerms, buildIntentQueryVariants);
 }
@@ -2116,6 +1915,7 @@ async function refreshHostedSearchResults({
     });
 
     if (requestId !== hostedSearchRequestSeq) return;
+    state.hostedSearchError = null;
 
     const byKey = new Map(baseIcons.map((icon) => [iconKey(icon), icon]));
     const hostedIcons = (payload.results || [])
@@ -2156,17 +1956,65 @@ async function refreshHostedSearchResults({
   } catch (error) {
     if (requestId === hostedSearchRequestSeq) {
       state.hostedSearchPending = false;
+      state.hostedSearchError = 'hosted_search_failed';
+      state.filteredIcons = [];
+      state.tierDividerIndex = -1;
       webSearchEpisodes.settleHosted({
         episodeId,
         hostedState: 'error',
         hostedMatchCount: null,
-        finalMatchCount: fallbackIcons.length,
+        finalMatchCount: 0,
         errorCode: 'hosted_search_failed',
       });
       renderGrid();
     }
-    console.warn('[Hosted Search] Falling back to local ranking:', error?.message || error);
+    console.warn('[Hosted Search] Search error remains visible:', error?.message || error);
   }
+}
+
+async function resolveWebSearchResults({
+  requestId,
+  episodeId,
+  query,
+  locale,
+  searchPool,
+}) {
+  let fallbackIcons = [];
+
+  try {
+    const { searchIcons } = await loadSharedSearchPipeline();
+    if (requestId !== hostedSearchRequestSeq) return;
+    fallbackIcons = searchIcons(query, searchPool, state.synonyms, {
+      limit: Math.max(state.batchSize, 60),
+      locale,
+      libraryMode: 'all',
+      applyConfidenceFloor: true,
+      multilingualExpansionTerms: state.cjkSearchTerms,
+    });
+    state.filteredIcons = fallbackIcons;
+    state.tierDividerIndex = -1;
+    state.visibleRange.end = state.batchSize;
+    webSearchEpisodes.updateLocal({
+      episodeId,
+      localMatchCount: fallbackIcons.length,
+      finalMatchCount: fallbackIcons.length,
+    });
+    updateCounts();
+    renderGrid();
+  } catch (error) {
+    console.warn('[Local Search] Shared pipeline could not load:', error?.message || error);
+  }
+
+  if (requestId !== hostedSearchRequestSeq) return;
+  webSearchEpisodes.markHostedPending({ episodeId });
+  await refreshHostedSearchResults({
+    requestId,
+    episodeId,
+    query,
+    locale,
+    baseIcons: searchPool,
+    fallbackIcons,
+  });
 }
 
 function applyFilters() {
@@ -2205,6 +2053,7 @@ function applyFilters() {
   if (state.mcpPreview?.mode === 'explicit') {
     webSearchEpisodes.supersedeActive();
     state.hostedSearchPending = false;
+    state.hostedSearchError = null;
     state.tierDividerIndex = -1;
     state.filteredIcons = getMcpExplicitPreviewIcons();
     state.visibleRange.end = Math.max(state.batchSize, state.filteredIcons.length);
@@ -2243,62 +2092,21 @@ function applyFilters() {
   if (state.searchQuery) {
     const searchPlan = getSearchQueryPlan(state.searchQuery);
     const normalizedQuery = searchPlan.normalizedQuery;
-    const queryWords = tokenizeSemanticText(state.searchQuery);
-    const queryVariants = searchPlan.variants;
-    const synonymQueryVariants = searchPlan.locale ? queryVariants.slice(1) : [normalizedQuery];
-    const termSetGroups = synonymQueryVariants.map((variant) => expandSearchTerms(variant));
+    state.hostedSearchError = null;
     state.hostedSearchPending = normalizedQuery.length >= 2 && searchPool.length > 0;
-
-    // Helper: check if icon matches a set of term-sets
-    const iconMatchesTermSets = (icon, sets) => {
-      const name = icon.name.toLowerCase();
-      const id = icon.id.toLowerCase();
-      const segments = id.split(/[-_]/).concat(name.split(/[\s\-_]/));
-      return sets.every(terms =>
-        terms.some(term => {
-          if (term.length <= 3) return segments.some(s => s === term);
-          return name.includes(term) || id.includes(term);
-        })
-      );
-    };
-    const iconMatchesAnyTermSetGroup = (icon, groups) => groups.some((sets) => iconMatchesTermSets(icon, sets));
-
-    // Tier 1: direct query and curated-alias matches
-    const tier1 = icons
-      .map((icon) => ({
-        icon,
-        ...getIntentExpandedSearchScore(icon, normalizedQuery, queryWords, queryVariants),
-      }))
-      .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
-      .sort((a, b) => compareSearchMatches(a, b, state.popularityMap, getIconJobRank))
-      .map(({ icon }) => icon);
-
-    const tier1Keys = new Set(tier1.map(i => iconKey(i)));
-
-    // Tier 2: matched by synonym expansion but NOT by direct query
-    const tier2 = icons.filter(icon =>
-      !tier1Keys.has(iconKey(icon)) && iconMatchesAnyTermSetGroup(icon, termSetGroups)
-    );
-
-    state.tierDividerIndex = tier1.length;
-    icons = [...tier1, ...tier2];
-    webSearchEpisodes.updateLocal({
-      episodeId: activeWebSearchEpisodeId,
-      localMatchCount: icons.length,
-      finalMatchCount: icons.length,
-    });
-    webSearchEpisodes.markHostedPending({ episodeId: activeWebSearchEpisodeId });
-    void refreshHostedSearchResults({
+    icons = [];
+    state.tierDividerIndex = -1;
+    void resolveWebSearchResults({
       requestId: searchRequestId,
       episodeId: activeWebSearchEpisodeId,
       query: state.searchQuery,
       locale: searchPlan.locale,
-      baseIcons: searchPool,
-      fallbackIcons: icons,
+      searchPool,
     });
   } else {
     state.tierDividerIndex = -1;
     state.hostedSearchPending = false;
+    state.hostedSearchError = null;
   }
 
   // Popularity sort: in default 'All Icons' view with no search, sort popular icons first

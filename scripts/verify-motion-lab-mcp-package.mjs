@@ -65,6 +65,7 @@ const expectedFiles = [
   'runtime/public-metadata-sanitizer.js',
   'runtime/search-query-frame.js',
   'runtime/search-intent-core.js',
+  'runtime/search-pipeline.js',
   'runtime/search-ranking-policy.js',
   'semantic-registry.js',
   'search.js',

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "fixture_id": "search-v2-surface-equivalence-20260727",
+  "source_cutoff_utc": "2026-07-27T11:17:50.209527Z",
+  "cases": [
+    {
+      "case_id": "gap_torrent_magnet",
+      "query": "torrent magnet",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["magnet"]
+    },
+    {
+      "case_id": "gap_view_categories",
+      "query": "view categories",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["view-grid", "view-module", "grid", "layout-grid", "category"]
+    },
+    {
+      "case_id": "gap_go_up",
+      "query": "go up",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["arrow-up", "chevron-up", "circle-arrow-up", "arrow-bar-to-up", "move-up"]
+    },
+    {
+      "case_id": "gap_browser_cookies",
+      "query": "browser cookies",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["cookie"]
+    },
+    {
+      "case_id": "gap_ip_blocked",
+      "query": "ip blocked",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["shield-x", "shield-ban", "ban", "block", "lock"]
+    },
+    {
+      "case_id": "compound_hard_hat_worker",
+      "query": "hard hat construction worker",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:hard-hat", "lucide:construction"]
+    },
+    {
+      "case_id": "compound_network_graph",
+      "query": "network proximity graph nodes",
+      "library": "phosphor",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["phosphor:graph", "phosphor:network", "phosphor:share-network", "phosphor:tree-structure"]
+    },
+    {
+      "case_id": "compound_relationship",
+      "query": "connection two people together care relationship",
+      "library": "phosphor",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["phosphor:users", "phosphor:heart", "phosphor:hand-heart", "phosphor:link"]
+    },
+    {
+      "case_id": "compound_tow_truck",
+      "query": "tow truck",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["auto_towing", "tow", "truck-loading", "truck-trailer", "car-crane"]
+    },
+    {
+      "case_id": "compound_settings_permissions",
+      "query": "settings permissions",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["settings", "shield", "key", "lock"]
+    },
+    {
+      "case_id": "compound_columns_settings",
+      "query": "columns settings",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["columns-settings", "columns-3-cog"]
+    },
+    {
+      "case_id": "typo_database",
+      "query": "databse",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["database"]
+    },
+    {
+      "case_id": "typo_notification",
+      "query": "notifcation",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["notification", "bell"]
+    },
+    {
+      "case_id": "typo_analytics_dashboard",
+      "query": "analtyics dashbord",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["analytics", "dashboard", "chart"]
+    },
+    {
+      "case_id": "locale_english_sports",
+      "query": "sports",
+      "locale": "en",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
+    },
+    {
+      "case_id": "locale_spanish_sports",
+      "query": "deportes",
+      "locale": "es",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
+    },
+    {
+      "case_id": "locale_japanese_sports",
+      "query": "スポーツ",
+      "locale": "ja",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
+    },
+    {
+      "case_id": "strict_lucide_settings",
+      "query": "application settings",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:settings", "lucide:cog"]
+    },
+    {
+      "case_id": "exact_identity_lucide_settings",
+      "query": "lucide:settings",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:settings"]
+    },
+    {
+      "case_id": "honest_zero_nonsense",
+      "query": "florblequux",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "hosted_dependency_error_visible",
+      "query": "hard hat construction worker",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_error",
+      "fixture": "hosted_dependency_unavailable",
+      "relevant_any": []
+    }
+  ]
+}
