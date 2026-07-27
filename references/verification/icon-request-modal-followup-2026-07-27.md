@@ -226,3 +226,21 @@ Verification completed before release:
 - The complete request flow passes with all twelve popup locales.
 - Visual Chromium inspection confirms the Simplified Chinese popup renders
   readable text in the title, input placeholder, and Send button.
+
+The localization follow-up was released from commit `f8a62846a` as website
+deploy `6a6730f43a6597b162b65def`. Deploy
+`6a672ccb9065e58af56cdc32` is the exact rollback target.
+
+The released bundle fingerprints are:
+
+- HTML: `7c18a218807a92d9e6b7a74d0c0f6ee5b27d3e7a46591816a92ef7e68c069847`
+- JavaScript:
+  `e316cb4f39df008ce4ff79623e597f8e018111e301e6a49ae54b86acfb9de448`
+- CSS: `a0b1af45d17801bec628ed73d5291f9dff7e12850a7f7e355000148b043beca2`
+
+Live Chromium verification passed on both the exact deploy URL and
+`supericons.dev`. It opened the request popup in all twelve supported locales
+and confirmed the title, placeholder, and Send label are readable. Direct
+catalog checks also matched all nine popup strings to their committed source
+for every locale on both URLs. All request writes were intercepted locally, so
+the live checks did not create production request records.
