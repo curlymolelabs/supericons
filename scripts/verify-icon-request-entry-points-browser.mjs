@@ -32,6 +32,14 @@ const iconFixture = [
     style: 'outline',
     svg: '<svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>',
   },
+  ...Array.from({ length: 447 }, (_, index) => ({
+    name: `fixture icon ${index + 1}`,
+    id: `fixture-${index + 1}`,
+    lib: 'lucide',
+    type: 'svg',
+    style: 'outline',
+    svg: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>',
+  })),
 ];
 
 async function siteIsAvailable() {
@@ -146,6 +154,16 @@ try {
   }
   await page.waitForSelector('.icon-cell', { timeout: 120_000 });
 
+  const sidebarFontSizes = await page.evaluate(() => ({
+    favorites: getComputedStyle(document.querySelector('[data-library="favorites"]')).fontSize,
+    request: getComputedStyle(document.querySelector('#sidebarIconRequest')).fontSize,
+  }));
+  assert.equal(
+    sidebarFontSizes.request,
+    sidebarFontSizes.favorites,
+    'The request action font size does not match the other sidebar items.',
+  );
+
   await searchInput.fill('zzzz-no-match');
   await page.waitForFunction(() => (
     document.querySelectorAll('#iconGrid .icon-cell').length === 0
@@ -210,9 +228,57 @@ try {
 
   await searchInput.fill('');
   await page.waitForFunction(() => (
-    document.querySelectorAll('#iconGrid .icon-cell').length === 3
+    document.querySelectorAll('#iconGrid .icon-cell').length >= 200
       && document.querySelector('#iconRequestPanel')?.hidden === true
   ), null, { timeout: 120_000 });
+  const gridBeforeStandaloneRequest = await page.evaluate(() => ({
+    cells: document.querySelectorAll('#iconGrid .icon-cell').length,
+    scrollTop: document.querySelector('#gridArea')?.scrollTop || 0,
+  }));
+  await page.getByRole('button', { name: 'Request an icon' }).click();
+  await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
+  await page.waitForTimeout(500);
+  const modalState = await page.evaluate(() => {
+    const panel = document.querySelector('#iconRequestPanel');
+    const card = document.querySelector('#iconRequestCard');
+    const grid = document.querySelector('#gridArea');
+    const cardRect = card?.getBoundingClientRect();
+    return {
+      isModal: panel?.classList.contains('icon-request-panel--modal'),
+      panelPosition: panel ? getComputedStyle(panel).position : '',
+      cardVisible: Boolean(card && card.getClientRects().length),
+      cardInsideViewport: Boolean(
+        cardRect
+        && cardRect.top >= 0
+        && cardRect.left >= 0
+        && cardRect.bottom <= window.innerHeight
+        && cardRect.right <= window.innerWidth
+      ),
+      cells: document.querySelectorAll('#iconGrid .icon-cell').length,
+      scrollTop: grid?.scrollTop || 0,
+    };
+  });
+  assert.equal(modalState.isModal, true, 'The sidebar request did not open as a modal.');
+  assert.equal(modalState.panelPosition, 'fixed', 'The request modal is not fixed to the viewport.');
+  assert.equal(modalState.cardVisible, true, 'The request modal card is not visible.');
+  assert.equal(modalState.cardInsideViewport, true, 'The request modal card is outside the viewport.');
+  assert.equal(
+    modalState.cells,
+    gridBeforeStandaloneRequest.cells,
+    'Opening the request modal triggered another grid batch.',
+  );
+  assert.equal(
+    modalState.scrollTop,
+    gridBeforeStandaloneRequest.scrollTop,
+    'Opening the request modal scrolled the icon grid.',
+  );
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => document.querySelector('#iconRequestPanel')?.hidden === true);
+  assert.equal(
+    await page.evaluate(() => document.activeElement?.id),
+    'sidebarIconRequest',
+    'Closing the request modal did not return focus to its sidebar action.',
+  );
   await page.getByRole('button', { name: 'Request an icon' }).click();
   await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
   assert.equal(await page.locator('#noResultsFeedbackInput').inputValue(), '');
@@ -232,17 +298,24 @@ try {
   );
   await page.getByRole('button', { name: 'Request an icon' }).click();
   await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
+  await page.locator('#iconRequestBackdrop').click({ position: { x: 5, y: 5 } });
+  await page.waitForFunction(() => document.querySelector('#iconRequestPanel')?.hidden === true);
+  await page.getByRole('button', { name: 'Request an icon' }).click();
+  await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
   await page.locator('#footerPricingLink').evaluate((link) => link.click());
   await page.waitForFunction(() => document.body.dataset.view === 'pricing');
   await page.locator('.store-back-btn').click();
-  await page.waitForFunction(() => (
+  await page.waitForFunction((minimumGridLength) => (
     !document.body.dataset.view
-      && document.querySelectorAll('#iconGrid .icon-cell').length === 3
-  ));
+      && document.querySelectorAll('#iconGrid .icon-cell').length >= minimumGridLength
+  ), gridOrderBeforeViewChange.length);
   assert.equal(await page.locator('#iconRequestPanel').getAttribute('hidden'), '');
   assert.deepEqual(
     await page.locator('#iconGrid .icon-cell').evaluateAll(
-      (cells) => cells.map((cell) => `${cell.dataset.iconLib}:${cell.dataset.iconId}`),
+      (cells, prefixLength) => cells
+        .slice(0, prefixLength)
+        .map((cell) => `${cell.dataset.iconLib}:${cell.dataset.iconId}`),
+      gridOrderBeforeViewChange.length,
     ),
     gridOrderBeforeViewChange,
   );
@@ -257,6 +330,10 @@ try {
     sidebar_context_invalidation: 'passed',
     request_view_observer_grid_order: 'passed',
     standalone_sidebar_request: 'passed',
+    sidebar_font_size: 'passed',
+    request_modal_viewport_position: 'passed',
+    request_modal_does_not_scroll_grid: 'passed',
+    request_modal_escape_and_backdrop_close: 'passed',
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,
     hosted_systems_touched: false,

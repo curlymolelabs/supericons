@@ -1364,7 +1364,7 @@ body.theme-light .header__locale-select {
   border-right: 0;
   border-bottom: 0;
   background: transparent;
-  font: inherit;
+  font-family: inherit;
   text-align: start;
 }
 .sidebar__item:hover {
@@ -2711,6 +2711,13 @@ body.theme-light .header__locale-select {
 .icon-request-panel[hidden] {
   display: none;
 }
+.icon-request-panel__backdrop,
+.icon-request-panel__close {
+  display: none;
+}
+.icon-request-panel__card {
+  width: min(100%, 360px);
+}
 .grid-empty__feedback {
   width: min(100%, 360px);
   margin-top: var(--si-space-1);
@@ -2781,6 +2788,61 @@ body.theme-light .header__locale-select {
 }
 .grid-empty__feedback-status.is-error {
   color: var(--si-error);
+}
+.icon-request-panel--modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10015;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: var(--si-space-4);
+  border-top: 0;
+}
+.icon-request-panel--modal .icon-request-panel__backdrop {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(4px);
+}
+.icon-request-panel--modal .icon-request-panel__card {
+  position: relative;
+  z-index: 1;
+  width: min(420px, calc(100vw - 32px));
+  padding: var(--si-space-6);
+  background: var(--si-surface-container);
+  border: 1px solid var(--si-outline-variant);
+  border-radius: var(--si-radius-xl);
+  box-shadow: var(--si-shadow-lg);
+}
+.icon-request-panel--modal .icon-request-panel__close {
+  position: absolute;
+  top: var(--si-space-2);
+  right: var(--si-space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--si-radius-md);
+  background: transparent;
+  color: var(--si-text-dim);
+  cursor: pointer;
+}
+.icon-request-panel--modal .icon-request-panel__close:hover,
+.icon-request-panel--modal .icon-request-panel__close:focus-visible {
+  background: var(--si-surface-container-high);
+  color: var(--si-text);
+}
+.icon-request-panel--modal .icon-request-panel__close .material-symbols-outlined {
+  font-size: 20px;
+}
+.icon-request-panel--modal .grid-empty__feedback {
+  width: 100%;
+  padding-right: var(--si-space-5);
 }
 @media (max-width: 420px) {
   .grid-empty__feedback-row {

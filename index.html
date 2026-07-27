@@ -439,17 +439,25 @@
                         seconds.</p>
                 </div>
 
-                <section class="icon-request-panel" id="iconRequestPanel" hidden>
-                    <form class="grid-empty__feedback" id="noResultsFeedbackForm" hidden>
-                        <label class="grid-empty__feedback-label" for="noResultsFeedbackInput" data-i18n="app.iconRequestLabel">What icon should we add?</label>
-                        <div class="grid-empty__feedback-row">
-                            <input class="grid-empty__feedback-input" id="noResultsFeedbackInput" name="icon-request"
-                                type="text" maxlength="400" autocomplete="off"
-                                placeholder="Type an icon, app, or idea" data-i18n-placeholder="app.iconRequestPlaceholder" aria-describedby="noResultsFeedbackStatus">
-                            <button class="grid-empty__feedback-submit" type="submit" data-i18n="actions.send">Send</button>
-                        </div>
-                        <p class="grid-empty__feedback-status" id="noResultsFeedbackStatus" role="status" aria-live="polite"></p>
-                    </form>
+                <section class="icon-request-panel" id="iconRequestPanel" aria-hidden="true" hidden>
+                    <div class="icon-request-panel__backdrop" id="iconRequestBackdrop"></div>
+                    <div class="icon-request-panel__card" id="iconRequestCard">
+                        <button class="icon-request-panel__close" id="iconRequestClose" type="button"
+                            aria-label="Close" data-i18n-aria-label="actions.close">
+                            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+                        </button>
+                        <form class="grid-empty__feedback" id="noResultsFeedbackForm" hidden>
+                            <label class="grid-empty__feedback-label" id="iconRequestTitle"
+                                for="noResultsFeedbackInput" data-i18n="app.iconRequestLabel">What icon should we add?</label>
+                            <div class="grid-empty__feedback-row">
+                                <input class="grid-empty__feedback-input" id="noResultsFeedbackInput" name="icon-request"
+                                    type="text" maxlength="400" autocomplete="off"
+                                    placeholder="Type an icon, app, or idea" data-i18n-placeholder="app.iconRequestPlaceholder" aria-describedby="noResultsFeedbackStatus">
+                                <button class="grid-empty__feedback-submit" type="submit" data-i18n="actions.send">Send</button>
+                            </div>
+                            <p class="grid-empty__feedback-status" id="noResultsFeedbackStatus" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
                 </section>
             </main>
 

@@ -19,6 +19,7 @@ const localeNames = [
 const [
   html,
   main,
+  style,
   intelligence,
   adminApp,
   adminApi,
@@ -27,6 +28,7 @@ const [
 ] = await Promise.all([
   readFile('index.html', 'utf8'),
   readFile('main.js', 'utf8'),
+  readFile('style.css', 'utf8'),
   readFile('lib/icon-intelligence.js', 'utf8'),
   readFile('public/admin-app.js', 'utf8'),
   readFile('supabase/functions/admin-api/index.ts', 'utf8'),
@@ -37,6 +39,7 @@ const [
 for (const [path, source] of [
   ['index.html', html],
   ['main.js', main],
+  ['style.css', style],
   ['lib/icon-intelligence.js', intelligence],
   ['public/admin-app.js', adminApp],
   ['supabase/functions/admin-api/index.ts', adminApi],
@@ -49,6 +52,9 @@ for (const marker of [
   'id="sidebarIconRequest"',
   'data-i18n="app.requestIcon"',
   'id="iconRequestPanel"',
+  'id="iconRequestBackdrop"',
+  'id="iconRequestCard"',
+  'id="iconRequestClose"',
   'id="noResultsFeedbackForm"',
 ]) {
   assert.ok(html.includes(marker), `Website markup is missing ${marker}.`);
@@ -74,6 +80,14 @@ assert.ok(main.includes('iconRequestOpenedFromSidebar'), 'Sidebar request state 
 assert.ok(main.includes('els.noResultsFeedbackInput.value = query'), 'Sidebar query prefill is missing.');
 assert.ok(main.includes('getIconRequestStateKey'), 'Sidebar request context invalidation is missing.');
 assert.ok(
+  main.includes("classList.toggle('icon-request-panel--modal', modalVisible)"),
+  'Sidebar requests do not use the request modal.',
+);
+assert.ok(
+  !main.includes('els.iconRequestPanel?.scrollIntoView'),
+  'The sidebar request still scrolls into the infinite grid.',
+);
+assert.ok(
   main.includes('clearSidebarIconRequestContext({ preserveStatus: true })'),
   'Successful sidebar requests do not clear their stored context.',
 );
@@ -84,6 +98,17 @@ assert.ok(
 assert.ok(
   !main.includes("t('app.iconRequestSearchFirst')"),
   'Standalone sidebar requests are still blocked by the search-first guard.',
+);
+assert.ok(
+  style.includes('.icon-request-panel--modal')
+    && style.includes('position: fixed;'),
+  'The request modal is not fixed to the viewport.',
+);
+const sidebarButtonRule = style.match(/\.sidebar__item--button\s*\{[\s\S]*?\}/u)?.[0] || '';
+assert.ok(sidebarButtonRule, 'The request sidebar button style is missing.');
+assert.ok(
+  !sidebarButtonRule.includes('font: inherit'),
+  'The request sidebar button overrides the shared sidebar font size.',
 );
 
 const writerStart = intelligence.indexOf('export async function logIconRequest');

@@ -763,6 +763,9 @@ const els = {
   iconGrid: $('#iconGrid'),
   gridEmpty: $('#gridEmpty'),
   iconRequestPanel: $('#iconRequestPanel'),
+  iconRequestBackdrop: $('#iconRequestBackdrop'),
+  iconRequestCard: $('#iconRequestCard'),
+  iconRequestClose: $('#iconRequestClose'),
   noResultsFeedbackForm: $('#noResultsFeedbackForm'),
   noResultsFeedbackInput: $('#noResultsFeedbackInput'),
   noResultsFeedbackStatus: $('#noResultsFeedbackStatus'),
@@ -1681,6 +1684,26 @@ function syncIconRequestViewState() {
   return true;
 }
 
+function setIconRequestPanelState({ visible = false, modal = false } = {}) {
+  if (!els.iconRequestPanel) return;
+  const modalVisible = Boolean(visible && modal);
+  els.iconRequestPanel.hidden = !visible;
+  els.iconRequestPanel.setAttribute('aria-hidden', String(!visible));
+  els.iconRequestPanel.classList.toggle('icon-request-panel--modal', modalVisible);
+  document.body.classList.toggle('icon-request-modal-open', modalVisible);
+  if (els.iconRequestCard) {
+    if (modalVisible) {
+      els.iconRequestCard.setAttribute('role', 'dialog');
+      els.iconRequestCard.setAttribute('aria-modal', 'true');
+      els.iconRequestCard.setAttribute('aria-labelledby', 'iconRequestTitle');
+    } else {
+      els.iconRequestCard.removeAttribute('role');
+      els.iconRequestCard.removeAttribute('aria-modal');
+      els.iconRequestCard.removeAttribute('aria-labelledby');
+    }
+  }
+}
+
 function syncIconRequestForm() {
   if (!els.noResultsFeedbackForm || !els.iconRequestPanel) return;
 
@@ -1696,7 +1719,10 @@ function syncIconRequestForm() {
     ? sidebarIconRequestContext
     : getIconRequestContext();
   const isVisible = Boolean(context);
-  els.iconRequestPanel.hidden = !isVisible;
+  setIconRequestPanelState({
+    visible: isVisible,
+    modal: Boolean(iconRequestOpenedFromSidebar && context),
+  });
   els.noResultsFeedbackForm.hidden = !isVisible;
 
   if (!context) {
@@ -1729,6 +1755,15 @@ function syncIconRequestForm() {
   }
 }
 
+function closeIconRequestModal({ restoreFocus = true } = {}) {
+  if (!els.iconRequestPanel?.classList.contains('icon-request-panel--modal')) return;
+  clearSidebarIconRequestContext();
+  syncIconRequestForm();
+  if (restoreFocus) {
+    els.sidebarIconRequest?.focus();
+  }
+}
+
 function openIconRequestFormFromSidebar() {
   if (isStoreView()) {
     switchView('icons');
@@ -1745,7 +1780,6 @@ function openIconRequestFormFromSidebar() {
     els.noResultsFeedbackInput.value = query;
     els.noResultsFeedbackInput.focus();
   }
-  els.iconRequestPanel?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 async function submitNoResultsFeedback(event) {
@@ -1754,6 +1788,7 @@ async function submitNoResultsFeedback(event) {
 
   const input = els.noResultsFeedbackInput;
   const submitButton = els.noResultsFeedbackForm?.querySelector('button[type="submit"]');
+  const submittedFromSidebar = iconRequestOpenedFromSidebar;
   const context = iconRequestOpenedFromSidebar
     ? sidebarIconRequestContext
     : getIconRequestContext();
@@ -1794,7 +1829,14 @@ async function submitNoResultsFeedback(event) {
   if (sent) {
     if (input) input.value = '';
     clearSidebarIconRequestContext({ preserveStatus: true });
+    if (submittedFromSidebar) {
+      syncIconRequestForm();
+    }
     setNoResultsFeedbackStatus(t('app.iconRequestSaved'), 'success');
+    if (submittedFromSidebar) {
+      showToast(t('app.iconRequestSaved'));
+      els.sidebarIconRequest?.focus();
+    }
   } else {
     setNoResultsFeedbackStatus(t('app.iconRequestFailed'), 'error');
   }
@@ -4272,6 +4314,8 @@ function renderCompareDrawer() {
 
 // Sidebar library click
 els.sidebarIconRequest?.addEventListener('click', openIconRequestFormFromSidebar);
+els.iconRequestClose?.addEventListener('click', () => closeIconRequestModal());
+els.iconRequestBackdrop?.addEventListener('click', () => closeIconRequestModal());
 if (els.gridArea) {
   new MutationObserver(() => {
     if (syncIconRequestViewState()) {
@@ -4316,6 +4360,7 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
+    closeIconRequestModal();
     closeTagFilterMenu();
     closeLocaleMenu();
   }
