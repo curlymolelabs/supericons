@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local npm attribution release</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background:#0b0b0c; color:#f4f4f5; }
+    body { margin:0; padding:32px; }
+    main { max-width:1000px; margin:auto; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    p { color:#a1a1aa; line-height:1.55; }
+    .status { display:inline-block; margin:12px 0 24px; padding:8px 12px; border-radius:999px; background:#163b2b; color:#6ee7b7; font-weight:700; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .card { padding:18px; border:1px solid #2b2b30; border-radius:14px; background:#151517; }
+    .card strong { display:block; margin-bottom:8px; color:#ff5a1f; }
+    .value { font-size:26px; font-weight:800; }
+    table { width:100%; margin-top:22px; border-collapse:collapse; background:#151517; border-radius:14px; overflow:hidden; }
+    th, td { padding:14px; border-bottom:1px solid #2b2b30; text-align:left; vertical-align:top; }
+    th { color:#a1a1aa; font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .decision { margin-top:22px; padding:20px; border:1px solid #ff5a1f; border-radius:14px; background:#21130e; }
+    code { color:#fdba74; overflow-wrap:anywhere; }
+    @media (max-width:760px) { body { padding:18px; } .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Local npm attribution is ready</h1>
+  <p>Production telemetry and the admin dashboard are live. The npm package is private and waiting for your approval.</p>
+  <div class="status">Passed after repair</div>
+
+  <div class="grid">
+    <div class="card"><strong>Search safety</strong><div class="value">225 / 225</div><p>Same ordered search results.</p></div>
+    <div class="card"><strong>Privacy</strong><div class="value">No raw IDs</div><p>No raw IP or installation UUID is stored.</p></div>
+    <div class="card"><strong>Package audit</strong><div class="value">0 issues</div><p>No known production dependency vulnerabilities.</p></div>
+  </div>
+
+  <table>
+    <tr><th>Part</th><th>Current state</th></tr>
+    <tr><td>Local telemetry</td><td>Live. Country comes from trusted Supabase data.</td></tr>
+    <tr><td>Older packages</td><td>Still work through the existing v2 path.</td></tr>
+    <tr><td>Admin dashboard</td><td>Shows best-effort installations, country, client, package, and operating system.</td></tr>
+    <tr><td>Test traffic</td><td>Hidden by default and available through the existing filter.</td></tr>
+    <tr><td>npm</td><td>Version 0.4.24 is staged privately. Public latest remains 0.4.23.</td></tr>
+  </table>
+
+  <div class="decision">
+    <strong>Your decision</strong>
+    <p>Approve npm stage <code>87ae615a-d477-4c83-8879-f26ac983e420</code> only if you want version 0.4.24 published under <code>latest</code>.</p>
+    <p>If you do nothing, telemetry and the dashboard stay safe, but normal users remain on 0.4.23 and organic Local installation data will not begin.</p>
+  </div>
+</main>
+</body>
+</html>
