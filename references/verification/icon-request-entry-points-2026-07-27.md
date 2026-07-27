@@ -61,8 +61,33 @@ The linked project still has unrelated migration-history drift, so broad `supaba
 
 Packet fingerprint: `3ef743d3277991014bb8fa4df539b5a40eafec23631bc4019780982edee4c73d`
 
-The guarded database release completed against project `kcjmkakdhsqplvasgkjv` from
-commit `4a45db49418acc97f7356a26c2fd28fdc2866d3b`. The preflight, postflight,
-and exact history check passed. No synthetic request row was created by the
-migration. The admin API and website had not yet been deployed when this record
-was updated.
+## Production release
+
+The guarded database release completed against project `kcjmkakdhsqplvasgkjv`
+from commit `4a45db49418acc97f7356a26c2fd28fdc2866d3b`. The preflight,
+postflight, and exact history check passed. No synthetic request row was created
+by the migration.
+
+The admin API and website were released from commit
+`6f958b0307ecd643c9eff625f75bceccdbf633f3` in the required order:
+
+1. Database migration `20260727120000`
+2. Admin API version 112
+3. Netlify website deploy `6a66db661eee4ce20a26e8e0`
+
+The live admin endpoint rejects an unauthenticated request with status 403 and
+returns the Demand Inbox to an authenticated owner request. The live website
+served the request entry from both the exact deploy URL and `supericons.dev`.
+A focused Chromium check found no page errors and proved that the first 20 grid
+entries kept the same order through a request and pricing view round trip.
+
+Three controlled production requests covered the zero-result, low-result, and
+standalone sidebar placements. Their returned IDs were verified in the database
+and Demand Inbox. No search attempt used their session hashes. Cleanup deleted
+only those three IDs and a final query found zero controlled rows remaining.
+
+## Rollback references
+
+- Database: `scripts/sql/icon-request-hosted-operational-rollback.sql`
+- Admin API: redeploy source commit `6967b962384234ccde6ddd7e574a05b98c7e1645`
+- Website: restore Netlify deploy `6a65db00a694382e5a15e59c`

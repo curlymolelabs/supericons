@@ -1,0 +1,60 @@
+{
+  "artifact": "icon_request_production_release",
+  "released_at": "2026-07-27T04:16:48.463Z",
+  "status": "passed",
+  "source_commit": "6f958b0307ecd643c9eff625f75bceccdbf633f3",
+  "database": {
+    "project_ref": "kcjmkakdhsqplvasgkjv",
+    "migration_version": "20260727120000",
+    "migration_source_commit": "4a45db49418acc97f7356a26c2fd28fdc2866d3b",
+    "release_fingerprint": "3ef743d3277991014bb8fa4df539b5a40eafec23631bc4019780982edee4c73d",
+    "preflight": "passed",
+    "postflight": "passed",
+    "exact_history_mark": "passed",
+    "rollback_sql": "scripts/sql/icon-request-hosted-operational-rollback.sql"
+  },
+  "admin_api": {
+    "function_id": "1ca7655a-e504-416f-9173-750016e79b73",
+    "previous_version": 111,
+    "previous_package_sha256": "5bf977ea1c0590b647bb9f7a53dadf1ebb470c05209e69ef5872e2ddb42836a8",
+    "deployed_version": 112,
+    "deployed_package_sha256": "6f339fdd80cf1412dd30ccf122d24a2ffcf0810f7e22d7d0e4600b72974064d0",
+    "status": "ACTIVE",
+    "verify_jwt": false,
+    "unauthenticated_status": 403,
+    "authenticated_status": 200,
+    "demand_inbox_available": true,
+    "rollback_source_commit": "6967b962384234ccde6ddd7e574a05b98c7e1645"
+  },
+  "website": {
+    "site_id": "dcccabac-ae47-4c69-80c4-aefc8c15e2e5",
+    "previous_deploy_id": "6a65db00a694382e5a15e59c",
+    "deployed_id": "6a66db661eee4ce20a26e8e0",
+    "url": "https://supericons.dev",
+    "exact_deploy_marker": true,
+    "custom_domain_marker": true,
+    "request_entry_visible": true,
+    "grid_icons_checked": 20,
+    "grid_order_preserved_after_view_round_trip": true,
+    "page_errors": 0
+  },
+  "controlled_smoke": {
+    "domain": "controlled-test.supericons.dev",
+    "surfaces": [
+      "grid_empty_feedback",
+      "grid_low_result_feedback",
+      "sidebar_request"
+    ],
+    "controlled_ids": [
+      "109f6b3b-b6de-4664-83ff-34f117e0b83d",
+      "a8657fdf-221f-4138-984f-8cd36320cb8e",
+      "8cdd9df9-1ab3-455b-a82c-b1ca881f42ce"
+    ],
+    "database_rows_verified": true,
+    "server_timestamps_verified": true,
+    "search_metric_isolation_verified": true,
+    "demand_inbox_verified": true,
+    "exact_id_cleanup_verified": true,
+    "controlled_rows_remaining": 0
+  }
+}

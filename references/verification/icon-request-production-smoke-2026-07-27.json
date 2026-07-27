@@ -1,0 +1,23 @@
+{
+  "artifact": "icon_request_production_smoke",
+  "verified_at": "2026-07-27T04:16:48.463Z",
+  "status": "passed",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "controlled_domain": "controlled-test.supericons.dev",
+  "controlled_ids": [
+    "109f6b3b-b6de-4664-83ff-34f117e0b83d",
+    "a8657fdf-221f-4138-984f-8cd36320cb8e",
+    "8cdd9df9-1ab3-455b-a82c-b1ca881f42ce"
+  ],
+  "surfaces": [
+    "grid_empty_feedback",
+    "grid_low_result_feedback",
+    "sidebar_request"
+  ],
+  "database_rows_verified": true,
+  "server_timestamps_verified": true,
+  "search_metric_isolation_verified": true,
+  "demand_inbox_verified": true,
+  "exact_id_cleanup_verified": true,
+  "controlled_rows_remaining": 0
+}
