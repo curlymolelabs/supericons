@@ -59,6 +59,6 @@ The linked project still has unrelated migration-history drift, so broad `supaba
 5. Marks only migration `20260727120000` as applied.
 6. Provides an operational rollback that preserves request rows.
 
-Packet fingerprint: `f4688bcb80b8a7179517933a3092192822c3ea1b7147a535eebfafb29c72b469`
+Packet fingerprint: `3ef743d3277991014bb8fa4df539b5a40eafec23631bc4019780982edee4c73d`
 
 No database migration, Edge Function deployment, website deployment, or production request write was performed.

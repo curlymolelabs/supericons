@@ -21,7 +21,6 @@ $MigrationPath = Join-Path $MigrationDirectory $MigrationName
 $PoolerPath = Join-Path $Root 'supabase\.temp\pooler-url'
 $LinkedProjectPath = Join-Path $Root 'supabase\.temp\linked-project.json'
 $CompletionPath = Join-Path $Root 'references\verification\icon-request-hosted-migration-completion-2026-07-27.json'
-$SupabaseCli = Join-Path $Root 'node_modules\.bin\supabase.cmd'
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Invoke-PsqlFiles {
@@ -82,7 +81,7 @@ function Invoke-SupabaseTextCommand {
   $previousErrorActionPreference = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try {
-    $lines = @(& $SupabaseCli @Arguments 2>&1)
+    $lines = @(& $script:SupabaseCli @Arguments 2>&1)
     $exitCode = $LASTEXITCODE
   }
   finally {
@@ -141,8 +140,11 @@ if (-not (Test-Path -LiteralPath $MigrationPath)) {
 if (-not (Test-Path -LiteralPath $PoolerPath)) {
   throw 'Linked Supabase pooler information is missing. Run supabase link first.'
 }
-if (-not (Test-Path -LiteralPath $SupabaseCli)) {
-  throw "Supabase CLI is missing: $SupabaseCli"
+try {
+  $script:SupabaseCli = (Get-Command supabase -ErrorAction Stop).Source
+}
+catch {
+  throw 'Supabase CLI is unavailable on PATH.'
 }
 
 Assert-LinkedProject
