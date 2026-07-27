@@ -49,6 +49,21 @@ The following are explicitly **not** required:
 
 Hosted search may return fresher data, additional matches, and differently ordered results. It may never disagree with local search about the seven decisions above.
 
+### Freshness qualifier
+
+Parity is asserted **against a pinned common data snapshot**, not against whatever each surface happens to hold. Hosted data moves continuously while a published package is frozen at its release cut, so an unqualified existence claim would be false whenever hosted gains an icon or mapping the package does not have.
+
+Therefore:
+
+1. The equivalence run pins the data version on every surface to one agreed snapshot, and parity is judged only on that snapshot.
+2. Hosted-only additions arising from newer data are recorded as expected differences, never as parity failures.
+3. A parity failure is a disagreement on the seven decisions **with identical data underneath**. That is the drift this contract exists to prevent.
+4. The gap between the pinned snapshot and live hosted data is reported as a freshness delta, which is also the honest measure of how stale a published package has become.
+
+### Protected ranking constraint
+
+Hosted protected signals may only **reorder candidates that already passed the shared relevance gate**. They may not reintroduce a result the shared gate excluded, and they may not push a forbidden result into the top of the list. Protected intelligence improves ordering; it never overrides the honesty rules.
+
 ## 3. Data boundary
 
 | Class | Ships in npm and web bundles | Hosted only |
@@ -88,13 +103,16 @@ The unification is the means. **The test is the deliverable**, because it is wha
 
 Requirements:
 
-1. It runs the reviewed corpus against all three surfaces: the installed npm package over stdio, the hosted endpoint, and the web search path.
-2. It asserts the seven decisions in section 2, not ordering.
+1. **It runs through the real surface adapters, never by calling the shared helper three times.** Calling one module three ways would prove the module is deterministic and prove nothing about surface parity. The three subjects are: the exact npm archive executed over stdio, the built browser artifact executing the web search path, and the real Railway HTTP server. Candidate providers are dependency-injected so retrieval is deterministic.
+2. It asserts the seven decisions in section 2 against the pinned snapshot, not ordering.
 3. It reports per-query, per-surface outcomes so a failure names the surface and the decision that diverged.
-4. **It must fail before the fix lands.** A test that passes against today's code proves nothing. The executor must demonstrate the failing run, including `torrent magnet`, before implementing.
-5. It joins the release gates for every surface and the weekly audit.
+4. **A failing baseline is captured before the fix, as evidence, not as a merged gate.** The executor records the pre-fix failing run (including `torrent magnet`) in the release evidence. A permanently failing test is never merged into the normal gate; the gate turns green only when the fix lands.
+5. **Deterministic pre-release testing and live production smoke are separate.** The gate is deterministic and offline-capable. A small live smoke against production runs after deployment and is reported separately, never as a merge blocker.
+6. It joins the release gates for every surface and the weekly audit once green.
 
 ## 6. Test corpus
+
+**Sanitization rule, applied before the corpus is committed:** the corpus is derived from production traffic, so it is frozen and reviewed once, with raw user queries excluded from any repository file. Entries are either generic reproductions of the observed gap, or reviewed and cleared for inclusion. No personal, project, or identifying text enters a public artifact.
 
 Assembled once, then maintained:
 
@@ -112,7 +130,7 @@ Assembled once, then maintained:
 
 Nonzero is not a passing condition.
 
-1. For each reviewed query, at least one owner-reviewed relevant icon appears in the top three on every surface.
+1. For each corpus query, at least one **reviewed-relevant** icon appears in the top three on every surface. Ordinary corpus relevance is judged by an independent reviewer, not the implementing agent. Owner review is reserved for genuinely ambiguous product calls, per `VC-9`, so the owner is not the bottleneck for routine judgments.
 2. A forbidden-result list is enforced: known misleading matches must not appear in the top three. Seed entries: `user profile` must not lead with account-balance icons; `dark mode` must not include moderator icons; `unit test` must not lead with aspect-ratio icons; `docker container` must not lead with animated-image icons.
 3. Nonsense inputs return the structured no-result contract with no fabricated references.
 4. The fixed 225-case fingerprint changes only with a case-by-case review recorded in the release notes.
@@ -120,17 +138,22 @@ Nonzero is not a passing condition.
 
 ## 8. Offline and performance gates
 
-1. Local npm search works with no network access, including when hosted search is unreachable.
-2. Local first-search latency and warm p95 stay within the current published budgets; the added pipeline stages must not regress the local median beyond an agreed bound recorded in the release evidence.
-3. Package size, cold-start time, and memory are measured before and after; a material increase requires an explicit owner-visible note.
-4. Hosted eligible-search p95 does not regress.
-5. The variant plan is bounded. Fanout has a hard maximum so a single search cannot multiply into unbounded retrieval work.
+Numeric, not adjectival. Every limit is measured on the exact candidate and recorded in release evidence.
+
+1. Local npm search works with no network access, including when hosted search is unreachable, proven by a test run with networking disabled.
+2. **Local search p95 at or below 500 ms** on the bound local workload, with first-search cold time reported separately and not exceeding 1,500 ms.
+3. **Package size increase at or below 5 percent** versus the previous release; any larger increase requires an explicit owner-visible note before publication.
+4. **Cold start time increase at or below 15 percent**; resident memory increase at or below 15 percent.
+5. **Hosted eligible-search p95 at or below 500 ms** and no worse than the current measured baseline.
+6. The variant plan is bounded: a hard maximum on variants per query and on total candidate retrievals per search, so one search can never multiply into unbounded work.
 
 ## 9. Implementation plan
 
 **Phase 1: contract and failing test.** Write the parity contract and corpus. Build the equivalence test. Demonstrate it failing against current code, with the failure list recorded as the baseline.
 
-**Phase 2: extract the shared pipeline.** Create one module implementing stages 1 through 8, built from the five modules already shared, with no surface-specific behavior inside it.
+**Phase 2: extract the shared pipeline.** Create one module implementing stages 1 through 8, built from the five modules already shared, with no surface-specific behavior inside it and candidate retrieval injected as a provider.
+
+**Duplication note:** those five modules exist as byte-identical copies under `lib/` and `mcp/runtime/`. The unified design must either remove the duplication or enforce it: a generation step plus a hash-equality gate that fails the release when the copies diverge. Byte-identical today is not a guarantee tomorrow, and this duplication is exactly the substrate drift grows in.
 
 **Phase 3: adopt it on local npm first.** Replace the single-shot local-first branch with the shared pipeline. Rerun the equivalence test; the local column should turn green. Rerun the fixed suite and review any changed cases.
 
@@ -138,7 +161,9 @@ Nonzero is not a passing condition.
 
 **Phase 5: delete the old orchestrations.** Remove the superseded surface-specific variant and fusion code rather than leaving it dormant. Dormant duplicates are how drift returns.
 
-**Phase 6: gate it.** Equivalence test, quality gates, offline and performance gates join the release process for every surface.
+**Phase 6: gate it.** Equivalence test, quality gates, offline and performance gates join the release process for every surface, plus the module hash-equality gate from Phase 2.
+
+**Phase 7: promote with owner approval.** Per `VC-9`, changing npm `latest`, the web default, or the hosted default requires explicit owner approval on the exact candidate. Deterministic gates green plus the post-deploy live smoke are the evidence presented for that decision; they are not the decision.
 
 ## 10. Non-goals
 
