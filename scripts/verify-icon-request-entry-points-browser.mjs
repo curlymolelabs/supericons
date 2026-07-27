@@ -163,6 +163,34 @@ try {
     sidebarFontSizes.favorites,
     'The request action font size does not match the other sidebar items.',
   );
+  await page.locator('#sidebarIconRequest').hover();
+  await page.waitForTimeout(220);
+  const requestIconMotion = await page.evaluate(() => {
+    const request = document.querySelector('#sidebarIconRequest');
+    const ring = document.querySelector('.sidebar-request-icon__ring');
+    const plus = document.querySelector('.sidebar-request-icon__plus');
+    return {
+      animationName: getComputedStyle(plus).animationName,
+      transform: getComputedStyle(plus).transform,
+      ringAnimationName: getComputedStyle(ring).animationName,
+      stroke: getComputedStyle(plus).stroke,
+      requestColor: getComputedStyle(request).color,
+    };
+  });
+  assert.equal(requestIconMotion.animationName, 'sidebar-request-plus-pop');
+  assert.notEqual(requestIconMotion.transform, 'none');
+  assert.equal(requestIconMotion.ringAnimationName, 'none');
+  assert.equal(requestIconMotion.stroke, requestIconMotion.requestColor);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  assert.equal(
+    await page.locator('.sidebar-request-icon__plus').evaluate(
+      (plus) => getComputedStyle(plus).animationName,
+    ),
+    'none',
+    'The request icon ignores the reduced-motion preference.',
+  );
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.mouse.move(700, 20);
 
   await searchInput.fill('zzzz-no-match');
   await page.waitForFunction(() => (
@@ -334,6 +362,8 @@ try {
     request_modal_viewport_position: 'passed',
     request_modal_does_not_scroll_grid: 'passed',
     request_modal_escape_and_backdrop_close: 'passed',
+    request_icon_hover_motion: 'passed',
+    request_icon_reduced_motion: 'passed',
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,
     hosted_systems_touched: false,

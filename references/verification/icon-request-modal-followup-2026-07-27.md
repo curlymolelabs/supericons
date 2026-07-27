@@ -90,3 +90,24 @@ Live Chromium verification passed on both the exact deploy URL and
 - No page errors occurred.
 
 No production request was submitted during this visual smoke test.
+
+## Request icon hover follow-up
+
+The Request an icon action now uses an inline circle and plus icon. The circle
+stays still while the plus grows, contracts, and settles back to its original
+size. The motion runs with transforms only and inherits the sidebar text color
+through `currentColor`.
+
+The motion sequence is scale 1, 1.28, 0.86, 1.08, 0.98, then 1 over 760
+milliseconds. The existing reduced-motion rule disables the animation when the
+visitor requests less motion.
+
+Verification completed before release:
+
+- The static contract confirms the icon markup and animation are present.
+- Chromium confirms only the plus animates on hover.
+- Chromium confirms the icon stroke matches the sidebar item color.
+- Chromium confirms reduced-motion mode disables the animation.
+- The complete icon request browser flow still passes.
+- Existing grid behavior, all twelve locale catalogs, and the production build
+  still pass.

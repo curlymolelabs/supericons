@@ -310,7 +310,12 @@
                     <span class="sidebar__item-count" id="countRecent">0</span>
                 </div>
                 <button class="sidebar__item sidebar__item--button" id="sidebarIconRequest" type="button">
-                    <span class="material-symbols-outlined sidebar__item-icon" aria-hidden="true">add_circle</span>
+                    <span class="sidebar__item-icon" aria-hidden="true">
+                        <svg class="sidebar-icon sidebar-request-icon" viewBox="0 0 24 24" fill="none">
+                            <circle class="sidebar-request-icon__ring" cx="12" cy="12" r="9"></circle>
+                            <path class="sidebar-request-icon__plus" d="M12 8v8M8 12h8"></path>
+                        </svg>
+                    </span>
                     <span class="sidebar__item-name" data-i18n="app.requestIcon">Request an icon</span>
                 </button>
 

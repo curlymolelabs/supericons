@@ -1445,6 +1445,47 @@ body.theme-light .header__locale-select {
   transform-origin: center;
 }
 
+.sidebar-request-icon__ring,
+.sidebar-request-icon__plus {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sidebar-request-icon__ring {
+  stroke-width: 1.75;
+}
+
+.sidebar-request-icon__plus {
+  stroke-width: 1.9;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sidebar__item--button:hover .sidebar-request-icon__plus {
+  animation: sidebar-request-plus-pop 760ms var(--si-ease-spring) infinite;
+}
+
+@keyframes sidebar-request-plus-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  34% {
+    transform: scale(1.28);
+  }
+  50% {
+    transform: scale(0.86);
+  }
+  68% {
+    transform: scale(1.08);
+  }
+  84% {
+    transform: scale(0.98);
+  }
+}
+
 .sidebar__item-icon[data-sidebar-icon="supericons"] {
   position: relative;
 }

@@ -51,6 +51,8 @@ for (const [path, source] of [
 for (const marker of [
   'id="sidebarIconRequest"',
   'data-i18n="app.requestIcon"',
+  'class="sidebar-icon sidebar-request-icon"',
+  'class="sidebar-request-icon__plus"',
   'id="iconRequestPanel"',
   'id="iconRequestBackdrop"',
   'id="iconRequestCard"',
@@ -109,6 +111,11 @@ assert.ok(sidebarButtonRule, 'The request sidebar button style is missing.');
 assert.ok(
   !sidebarButtonRule.includes('font: inherit'),
   'The request sidebar button overrides the shared sidebar font size.',
+);
+assert.ok(
+  style.includes('.sidebar__item--button:hover .sidebar-request-icon__plus')
+    && style.includes('@keyframes sidebar-request-plus-pop'),
+  'The request sidebar plus hover animation is missing.',
 );
 
 const writerStart = intelligence.indexOf('export async function logIconRequest');
