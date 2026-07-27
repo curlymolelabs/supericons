@@ -1123,6 +1123,18 @@ try {
   for (const expected of ['missing brand', 'Hosted MCP', 'zh-CN', 'SG', '0 icons', '5']) {
     ok(demandText.includes(expected), `Gaps did not show ${expected}.`);
   }
+  ok(
+    await page.locator('.panel[data-row-key="worklist"] [data-export="gap-worklist-csv"]').count() === 1,
+    'Gaps is missing its CSV download.',
+  );
+  const gapDownload = page.waitForEvent('download');
+  await page.click('[data-export="gap-worklist-csv"]');
+  const gapCsv = await gapDownload;
+  const gapCsvPath = await gapCsv.path();
+  const gapCsvText = await readFile(gapCsvPath, 'utf8');
+  ok(gapCsv.suggestedFilename().endsWith('.csv'), 'Gaps did not download a CSV file.');
+  ok(gapCsvText.includes('"missing brand"'), 'The Gaps CSV omits a filtered gap.');
+  ok(!gapCsvText.includes('"healthy aggregate"'), 'The Gaps CSV includes a successful query.');
   const demandAction = page.locator('#gapWorklist [data-query-review]').first();
   const demandOptions = await demandAction.locator('option').allTextContents();
   ok(
@@ -1156,6 +1168,21 @@ try {
   );
   const requestRows = page.locator('#iconRequests tbody tr');
   ok(await requestRows.count() === 2, 'User requests did not render both stored requests.');
+  ok(
+    await page.locator('.panel[data-row-key="iconRequests"] [data-export="icon-requests-csv"]').count() === 1,
+    'User requests is missing its CSV download.',
+  );
+  const requestDownload = page.waitForEvent('download');
+  await page.click('[data-export="icon-requests-csv"]');
+  const requestCsv = await requestDownload;
+  const requestCsvPath = await requestCsv.path();
+  const requestCsvText = await readFile(requestCsvPath, 'utf8');
+  ok(requestCsv.suggestedFilename().endsWith('.csv'), 'User requests did not download a CSV file.');
+  ok(
+    requestCsvText.includes('"A better database migration icon"')
+      && requestCsvText.includes('"A clearer electric pickup truck icon"'),
+    'The User requests CSV omits stored requests.',
+  );
   const firstRequestText = await requestRows.first().innerText();
   for (const expected of ['A better database migration icon', 'Query: database migration', 'Library: all', 'No results', '0']) {
     ok(firstRequestText.includes(expected), `User requests did not show ${expected}.`);

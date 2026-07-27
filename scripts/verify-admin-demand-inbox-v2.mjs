@@ -48,6 +48,16 @@ for (const label of [
 ]) {
   assert.ok(html.includes(label), `admin.html is missing ${label}.`);
 }
+for (const exportKey of ['gap-worklist-csv', 'icon-requests-csv']) {
+  assert.ok(
+    html.includes(`data-export="${exportKey}"`),
+    `admin.html is missing the ${exportKey} download action.`,
+  );
+  assert.ok(
+    frontend.includes(`'${exportKey}'`),
+    `public/admin-app.js is missing the ${exportKey} export data source.`,
+  );
+}
 
 for (const field of [
   "label: 'Query'",
