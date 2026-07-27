@@ -16,6 +16,7 @@ import { pathToFileURL } from 'node:url';
 
 const repoRoot = resolve(import.meta.dirname, '..');
 const mcpDir = join(repoRoot, 'mcp');
+const sourcePackage = JSON.parse(readFileSync(join(mcpDir, 'package.json'), 'utf8'));
 const tempRoot = mkdtempSync(join(tmpdir(), 'search-v2-tool-scoped-package-'));
 const packDir = join(tempRoot, 'pack');
 const installDir = join(tempRoot, 'install');
@@ -84,13 +85,14 @@ try {
     'recommend-icons.js',
     'release-channel.js',
     'remote-server.js',
+    'runtime/search-pipeline.js',
     'search-query-normalization.js',
     'telemetry.js',
   ]) {
     assert.equal(existsSync(join(installedRoot, required)), true, `Package is missing ${required}.`);
   }
   const installedPackage = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
-  assert.equal(installedPackage.version, '0.4.22');
+  assert.equal(installedPackage.version, sourcePackage.version);
   const installedServer = JSON.parse(readFileSync(join(installedRoot, 'server.json'), 'utf8'));
   assert.equal(installedServer.version, installedPackage.version);
   assert.equal(installedServer.packages[0].version, installedPackage.version);
