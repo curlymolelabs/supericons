@@ -1,0 +1,37 @@
+{
+  "artifact": "local_channel_attribution_24h_baseline",
+  "generated_at": "2026-07-27T17:06:34.729Z",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "transaction_mode": "read_only",
+  "query": "\nwith bounds as (\n  select\n    timezone('utc', now()) as cutoff_at,\n    timezone('utc', now()) - interval '24 hours' as started_at\n),\nlocal_events as (\n  select event.*\n  from public.mcp_usage_events event, bounds\n  where event.channel = 'local_mcp'\n    and event.event_type = 'search_outcome'\n    and event.created_at >= bounds.started_at\n    and event.created_at < bounds.cutoff_at\n),\nlocal_finals as (\n  select final.*\n  from public.search_final_outcomes final, bounds\n  where final.channel = 'local_mcp'\n    and final.completed_at >= bounds.started_at\n    and final.completed_at < bounds.cutoff_at\n)\nselect\n  (select started_at from bounds) as started_at,\n  (select cutoff_at from bounds) as cutoff_at,\n  (select count(*)::int from local_events) as event_count,\n  (select count(distinct session_hash)::int from local_events) as session_hash_count,\n  (select count(*)::int from local_events where beta_cohort is null)\n    as stable_without_cohort,\n  (select count(*)::int from local_events where country_code is not null)\n    as country_count,\n  (select count(*)::int from local_events where ip_hash is not null)\n    as ip_hash_count,\n  (select count(*)::int from local_events where anonymous_client_hash is not null)\n    as anonymous_hash_count,\n  (\n    select coalesce(jsonb_object_agg(search_outcome, count_value), '{}'::jsonb)\n    from (\n      select search_outcome, count(*)::int as count_value\n      from local_events\n      group by search_outcome\n      order by search_outcome\n    ) grouped\n  ) as outcomes,\n  (\n    select coalesce(jsonb_object_agg(tool_name, count_value), '{}'::jsonb)\n    from (\n      select tool_name, count(*)::int as count_value\n      from local_events\n      group by tool_name\n      order by tool_name\n    ) grouped\n  ) as tools,\n  (\n    select coalesce(\n      jsonb_object_agg(coalesce(mcp_server_version, 'unknown'), count_value),\n      '{}'::jsonb\n    )\n    from (\n      select mcp_server_version, count(*)::int as count_value\n      from local_events\n      group by mcp_server_version\n      order by mcp_server_version\n    ) grouped\n  ) as versions,\n  (select count(*)::int from local_finals) as final_count,\n  to_regprocedure(\n    'public.si_log_mcp_search_outcome_v2(text,integer,text,text,text,text,text,text,text,text,text,integer,timestamptz)'\n  ) is not null as v2_present,\n  pg_get_functiondef(\n    'public.si_log_mcp_search_outcome_v2(text,integer,text,text,text,text,text,text,text,text,text,integer,timestamptz)'::regprocedure\n  ) as v2_definition;\n",
+  "baseline": {
+    "started_at": "2026-07-26 17:06:35.563311",
+    "cutoff_at": "2026-07-27 17:06:35.563311",
+    "event_count": 77,
+    "session_hash_count": 8,
+    "stable_without_cohort": 77,
+    "country_count": 0,
+    "ip_hash_count": 0,
+    "anonymous_hash_count": 0,
+    "outcomes": {
+      "zero": 24,
+      "results": 53
+    },
+    "tools": {
+      "search_icons": 77
+    },
+    "versions": {
+      "0.4.22": 77
+    },
+    "final_count": 77,
+    "v2_present": true,
+    "v2_definition_sha256": "3af654cbe4982e0d5a2fc268a11dc535877417ea689d73171a7798590998c447"
+  },
+  "interpretation": {
+    "stable_local_outcomes_are_recorded": true,
+    "final_linkage_is_approximate_until_v3": true,
+    "durable_installation_identity_available": false,
+    "country_available": false
+  },
+  "status": "passed"
+}

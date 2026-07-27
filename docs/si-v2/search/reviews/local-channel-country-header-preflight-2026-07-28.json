@@ -1,0 +1,31 @@
+{
+  "artifact": "supabase_country_header_spoofing_preflight",
+  "generated_at": "2026-07-27T17:06:36.457Z",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "temporary_function": "si_local_country_header_spoof_preflight_20260728",
+  "probe_values": {
+    "cf_ipcountry": "NZ",
+    "x_vercel_ip_country": "CA",
+    "x_country_code": "JP"
+  },
+  "ordinary_values": {
+    "cf": "SG",
+    "vercel": null,
+    "proxy": null
+  },
+  "caller_values_visible": {
+    "cf": false,
+    "vercel": true,
+    "proxy": true
+  },
+  "decision": {
+    "trusted_country_header": "cf-ipcountry",
+    "rejected_country_headers": [
+      "x-vercel-ip-country",
+      "x-country-code"
+    ],
+    "v3_transport": "dedicated_geo_aware_endpoint"
+  },
+  "status": "passed",
+  "cleanup_removed": true
+}
