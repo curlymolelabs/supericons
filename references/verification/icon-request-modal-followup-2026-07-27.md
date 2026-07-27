@@ -111,3 +111,19 @@ Verification completed before release:
 - The complete icon request browser flow still passes.
 - Existing grid behavior, all twelve locale catalogs, and the production build
   still pass.
+
+The hover follow-up was released from commit `0f37a8f66` as website deploy
+`6a6727129065e56af56cdc3a`. Deploy `6a671da03887ad34f1ef7057` is the exact
+rollback target.
+
+The released bundle fingerprints are:
+
+- HTML: `5b2385d447c0447a484eb8ac2090f7eabf53320f341afacfbc11d722fcf29fc1`
+- JavaScript: `2917f79db409691be6d1a62cf12739aaea8e666ebc628f7b356992375195acc5`
+- CSS: `b730bb20959247b8349d50d57e4b70e4e4f8a5f2cca8b8e95f05f0a9fe29f9da`
+
+Live Chromium verification passed on both the exact deploy URL and
+`supericons.dev`. It confirmed the plus animation, unchanged ring, inherited
+sidebar color, reduced-motion opt-out, modal behavior, sidebar font size, and
+grid order. All request writes were intercepted locally, so the live checks did
+not create production request records.
