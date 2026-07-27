@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Master Blueprint</title>
+<style>
+  :root{
+    --bg:#0e0e0e; --panel:#171717; --panel2:#1f1f1f; --line:#2a2a2a;
+    --text:#e7e5e4; --muted:#9ca3af; --accent:#f97316; --accent2:#fdba74;
+    --good:#22c55e; --warn:#fbbf24; --info:#60a5fa; --violet:#a78bfa; --bad:#ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Arial,sans-serif;padding:0 0 90px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  header{padding:46px 0 16px;border-bottom:1px solid var(--line)}
+  h1{font-size:34px;font-weight:800}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:8px;max-width:860px}
+  .crumb{font-size:12.5px;color:#6b7280;margin-top:10px}
+  .crumb a{color:var(--accent2);text-decoration:none;border-bottom:1px dotted #4a3626}
+  h2.section{font-size:22px;font-weight:800;margin:44px 0 6px}
+  .section-note{color:var(--muted);font-size:14px;margin-bottom:16px;max-width:860px}
+
+  /* destination */
+  .north{background:linear-gradient(135deg,#1c1210,#171717);border:1px solid #3b2a1e;border-radius:14px;padding:22px 26px;margin-top:22px}
+  .north h2{color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+  .north p{font-size:16.5px;max-width:900px}
+  .layers{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .layer{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:12.5px;color:var(--muted)}
+  .layer b{color:var(--text)}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-top:8px}
+  .st{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+  .st .v{font-size:21px;font-weight:800;line-height:1.15}
+  .st .k{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .st.red .v{color:var(--bad)}
+  .st.amb .v{color:var(--warn)}
+  .st.grn .v{color:var(--good)}
+
+  /* engine */
+  .engine{background:var(--panel);border:2px solid var(--accent);border-radius:16px;padding:24px 26px;margin-top:8px}
+  .engine h3{color:var(--accent2);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+  .chain{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+  .node{flex:1 1 118px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 11px;min-width:108px}
+  .node b{display:block;font-size:12.5px;font-weight:700}
+  .node span{font-size:11px;color:var(--muted);display:block;margin-top:2px;line-height:1.45}
+  .node.done{border-color:#1e3a24}
+  .node.done b{color:#86efac}
+  .node.gap{border-color:#4a3a12;border-style:dashed}
+  .node.gap b{color:var(--warn)}
+  .arrow{align-self:center;color:var(--accent);font-size:16px;flex:0 0 auto}
+  .loopnote{margin-top:12px;font-size:13px;color:var(--accent2);border-left:3px solid var(--accent);padding-left:11px}
+
+  /* tracks */
+  .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:6px}
+  .track{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;border-top:3px solid var(--line)}
+  .track.c1{border-top-color:var(--accent)}
+  .track.c2{border-top-color:var(--info)}
+  .track.c3{border-top-color:var(--violet)}
+  .track.c4{border-top-color:var(--good)}
+  .track.c5{border-top-color:var(--warn)}
+  .track .tt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .track h3{font-size:16px;font-weight:800}
+  .track .feeds{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .row3{margin-top:11px}
+  .row3 .lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+  .row3.now .lbl{color:#86efac}
+  .row3.next .lbl{color:#93c5fd}
+  .row3.later .lbl{color:#9ca3af}
+  .row3 p{font-size:13px;color:var(--muted);line-height:1.55}
+  .row3 p b{color:var(--text);font-weight:600}
+
+  /* gates */
+  .gates{margin-top:8px}
+  .gate{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:10px}
+  .gate .gn{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#160c05;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .gate.dim .gn{background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  .gate .gb{flex:1}
+  .gate .gb b{font-size:15px}
+  .gate .gb span{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.55}
+  .gate .why{flex:0 0 220px;font-size:12px;color:var(--accent2);border-left:2px solid #3b2a1e;padding-left:12px;line-height:1.5}
+  @media (max-width:760px){.gate{flex-wrap:wrap}.gate .why{flex:1 1 100%;border-left:none;padding-left:0}}
+
+  /* parked + rules */
+  .pk{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .tagp{font-size:12.5px;border:1px dashed var(--line);border-radius:var(--radius,8px);border-radius:8px;padding:4px 11px;color:var(--muted);background:var(--panel)}
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:10px}
+  .rule{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:12.5px;color:var(--muted)}
+  .rule b{color:var(--text)}
+
+  footer{margin-top:52px;color:#6b7280;font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+  @media (max-width:640px){h1{font-size:26px}.arrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Supericons <span>Master Blueprint</span></h1>
+  <p class="sub">One page that joins the vision, the flywheel, the measured present, and the work, so every session and every agent pulls in the same direction. Everything here either feeds the loop or scales it.</p>
+  <p class="crumb">Sources: <a href="si-v2/vision-charter.md">charter</a> · <a href="si-v2/v2-living-map-vision.md">living map</a> · <a href="supericons-roadmap-2026-07-22.html">roadmap</a> · <a href="supericons-strategy-canvas-and-level-up-plan-2026-07-25.md">strategy canvas</a> · <a href="supericons-creation-flywheel-idea-capture-2026-07-27.html">creation flywheel</a> · <a href="si-v2/search/decisions.md">decision log D-001 to D-046</a> · 2026-07-27</p>
+</header>
+
+<div class="north">
+  <h2>The destination</h2>
+  <p>Supericons evolves from an icon library into a <b>living map of programmatic icons</b>: every icon an interactive, schema-backed, payment-capable portal to the thing it represents, curated in real time by agents and governed by human taste. The moat is the living ecosystem and its compounding data, which no snapshot can copy.</p>
+  <div class="layers">
+    <span class="layer"><b>Face</b> the visual</span>
+    <span class="layer"><b>Soul</b> the schema record</span>
+    <span class="layer"><b>Hands</b> it does things</span>
+    <span class="layer"><b>Pulse</b> state and lifecycle</span>
+    <span class="layer"><b>Wallet</b> x402 agents, cards humans</span>
+  </div>
+</div>
+
+<h2 class="section">Where we actually are</h2>
+<p class="section-note">Audited production figures, 30-day window. Red marks the risk, amber marks the constraint.</p>
+<div class="stats">
+  <div class="st"><div class="v">21,427</div><div class="k">icons, 11 libraries</div></div>
+  <div class="st"><div class="v">1,747</div><div class="k">searches / 30d, 89% success</div></div>
+  <div class="st"><div class="v">644</div><div class="k">est. clients (networks, not people)</div></div>
+  <div class="st red"><div class="v">96.5%</div><div class="k">of identities via one directory</div></div>
+  <div class="st amb"><div class="v">165</div><div class="k">true zeros / 30d = raw demand</div></div>
+  <div class="st amb"><div class="v">27 · 2</div><div class="k">accounts · Pro, 2 linked to searches</div></div>
+  <div class="st grn"><div class="v">1x</div><div class="k">loop closed manually (Cybertruck)</div></div>
+</div>
+
+<h2 class="section">The engine everything serves</h2>
+<p class="section-note">The creation flywheel: ring 2 and ring 5 fused into one journey that starts at the exact moment of unmet demand. Green is built. Amber dashed is the missing bridge.</p>
+<div class="engine">
+  <h3>Search → gap → creation → taste → library → discovery → credit → economy</h3>
+  <div class="chain">
+    <div class="node done"><b>Search</b><span>v2 live on all surfaces, 0.4.22</span></div>
+    <div class="arrow">→</div>
+    <div class="node done"><b>Gap captured</b><span>zero + low forms, sidebar request, Demand Inbox</span></div>
+    <div class="arrow">→</div>
+    <div class="node gap"><b>The bridge</b><span>zero-result page offers "make it yourself", Icons Lab opens prefilled</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Create</b><span>Icons Lab craft loop, non-designer finishes</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Taste gate</b><span>human approves, VC-5, fast but never absent</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Library entry</b><span>with full schema: record, not file (ring 0 to 1)</span></div>
+    <div class="arrow">→</div>
+    <div class="node done"><b>Discovery</b><span>next search finds it, all channels</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Credit, then royalties</b><span>credits first; cash when volume clears payout overhead</span></div>
+  </div>
+  <p class="loopnote">The level-up milestone is not a ring. It is one full revolution of this loop with a real external user. It has run once, manually. Everything in rings 2 to 5 is a scaling problem after it runs end to end.</p>
+</div>
+
+<h2 class="section">Five tracks, one loop</h2>
+<p class="section-note">Each track feeds a different part of the engine. Now is in motion or immediately startable. Later is entry-gated, never calendar-gated.</p>
+<div class="tracks">
+
+  <div class="track c1">
+    <div class="tt"><h3>Content</h3><span class="feeds">feeds: library + discovery</span></div>
+    <div class="row3 now"><div class="lbl">Now</div><p><b>Draw icons from the Demand Inbox.</b> 165 zeros and the typed requests are the roadmap users already wrote. Zero-result analysis agent is mining more.</p></div>
+    <div class="row3 next"><div class="lbl">Next</div><p><b>Expressive originals</b> (ship it, burnout, celebration) plus the <b>design-record pilot</b>: new icons enter with two-tier schema. Ring 0 begins.</p></div>
+    <div class="row3 later"><div class="lbl">Later</div><p>New-icons section on the site (first-seen dates reconstructable from git, nothing blocks adding now).</p></div>
+  </div>
+
+  <div class="track c2">
+    <div class="tt"><h3>Reach</h3><span class="feeds">feeds: search volume, the raw fuel</span></div>
+    <div class="row3 now"><div class="lbl">Now</div><p><b>Fixed:</b> official MCP registry at 0.4.22 (was deprecated 0.4.1 for weeks). Glama, Smithery, MCP.so updated. <b>Check:</b> whether VS Code's @mcp gallery already lists us via the registry.</p></div>
+    <div class="row3 next"><div class="lbl">Next</div><p><b>Anthropic connectors directory</b>: submitted, queue is theirs. Periodic listing drift audit: a listing decays every time we ship past it.</p></div>
+    <div class="row3 later"><div class="lbl">Later</div><p>Open VSX / VS Code extension only if evidence shows the registry route misses those users. An extension is a product, not a listing.</p></div>
+  </div>
+
+  <div class="track c3">
+    <div class="tt"><h3>Identity</h3><span class="feeds">feeds: credit, analytics, conversion</span></div>
+    <div class="row3 now"><div class="lbl">Now</div><p>Nothing personal is possible: 95% of traffic is anonymous, 2 identities account-linked. Conversion is unmeasurable by construction.</p></div>
+    <div class="row3 next"><div class="lbl">Next</div><p><b>Rung 1: self-service free keys, synced collections, agent retrieval tool.</b> Hard constraint: a key must be obtainable and usable inside an agent conversation, or registration stays flat. Attribution choice built into issuance.</p></div>
+    <div class="row3 later"><div class="lbl">Later</div><p>Rung 2 Gap Report (your searches, your zeros, guided retry, MCP surface from day one), then paid analytics only after free proves engagement.</p></div>
+  </div>
+
+  <div class="track c4">
+    <div class="tt"><h3>Creation</h3><span class="feeds">feeds: the bridge + taste gate</span></div>
+    <div class="row3 now"><div class="lbl">Now</div><p><b>Concierge loop:</b> owner picks from Demand Inbox, draws in Icons Lab, publishes with credit. Proves cadence with zero new engineering.</p></div>
+    <div class="row3 next"><div class="lbl">Next</div><p><b>Build the bridge:</b> zero-result page offers "make it yourself", Icons Lab accepts the prefilled brief. Smallest piece of the whole vision that can ship.</p></div>
+    <div class="row3 later"><div class="lbl">Later</div><p>Community publish pilot, credit-only, schema attached. License class for creator-owned icons decided <b>before</b> the first publish.</p></div>
+  </div>
+
+  <div class="track c5">
+    <div class="tt"><h3>Economy</h3><span class="feeds">feeds: wallet, closes the flywheel</span></div>
+    <div class="row3 now"><div class="lbl">Now</div><p>Nothing. Deliberately. Credits and named credit are the only rewards until transaction volume clears payout overhead (the Kickbacks lesson: 27 countries of tax for $6 average payouts).</p></div>
+    <div class="row3 next"><div class="lbl">Next</div><p>Design-only: credit accounting rules, one page. x402 rails already spiked in phase 0.</p></div>
+    <div class="row3 later"><div class="lbl">Later</div><p>Paid icons, plan-tiered royalty cuts, ring 5 publishers through the taste gate, aggregate trends product. Owner decides all pricing (VC-9).</p></div>
+  </div>
+
+</div>
+
+<h2 class="section">The dependency spine</h2>
+<p class="section-note">The order is the strategy. Each gate unlocks the next; skipping one builds machinery that runs empty.</p>
+<div class="gates">
+  <div class="gate">
+    <div class="gn">1</div>
+    <div class="gb"><b>Second channel carrying real traffic</b><span>Anthropic approval, VS Code gallery presence, or organic growth. Diversification is a tracked workstream (D-043).</span></div>
+    <div class="why">96.5% on one directory is the only measured existential risk. Volume is also the input every other track consumes.</div>
+  </div>
+  <div class="gate">
+    <div class="gn">2</div>
+    <div class="gb"><b>The loop closes once, end to end, with a stranger</b><span>Gap surfaced, icon created, taste-gated, published, found by someone else, credited. Bridge + concierge gets us there.</span></div>
+    <div class="why">Turns the living map from a document into a system with evidence. The single most convincing artifact for users, directories, and future contributors.</div>
+  </div>
+  <div class="gate">
+    <div class="gn">3</div>
+    <div class="gb"><b>Rung 1 identity live</b><span>Free keys usable inside agent conversations, collections, attribution coverage rising.</span></div>
+    <div class="why">Unblocks credit that persists, personal analytics, measurable conversion, and the contribution funnel. Everything personal is gated here.</div>
+  </div>
+  <div class="gate dim">
+    <div class="gn">4</div>
+    <div class="gb"><b>Volume roughly 10x</b><span>Search and take volume where rankings are dense, analytics are interesting, and fees exceed payout overhead.</span></div>
+    <div class="why">The honest gate for the economy. Popularity ranking (parked to Aug), paid analytics, and royalties all become real here, not before.</div>
+  </div>
+  <div class="gate dim">
+    <div class="gn">5</div>
+    <div class="gb"><b>The canvas and the vault</b><span>Next-gen site (ring 3), mobile creation app, agent avatars, gaming sets, sticker packs.</span></div>
+    <div class="why">Built on a flywheel already spinning rather than hoping to start one. Automatic publish stays private-library only unless VC-5 is deliberately amended.</div>
+  </div>
+</div>
+
+<h2 class="section">Parked on purpose</h2>
+<div class="pk">
+  <span class="tagp">Popularity top-50 · data matures ~Aug 7-14, ships in an afternoon (D-044/D-045)</span>
+  <span class="tagp">Trust posture and public promises · until provable</span>
+  <span class="tagp">VC-10 query-data commitment · decide at rung 1</span>
+  <span class="tagp">Open VSX extension</span>
+  <span class="tagp">Cumulative ranking ledger + New section</span>
+  <span class="tagp">Worktree and stale-branch cleanup audit</span>
+</div>
+
+<h2 class="section">The rules that outlast every milestone</h2>
+<div class="rules">
+  <div class="rule"><b>Free stays free.</b> The static library is the growth engine, never a concession.</div>
+  <div class="rule"><b>The moat is living data.</b> Usage intelligence never ships in a public bundle.</div>
+  <div class="rule"><b>Honest beats impressive.</b> Zeros over fabricated relevance; populations stated; no claim without proof.</div>
+  <div class="rule"><b>Human taste gates agent scale.</b> Fast is fine; absent is a charter amendment.</div>
+  <div class="rule"><b>Agents are first-class.</b> Every capability states its MCP surface; x402 for agents, cards for humans.</div>
+  <div class="rule"><b>Identity is a reward, never a wall.</b> Keys attribute; they do not gate.</div>
+  <div class="rule"><b>Ship by dependency, not calendar.</b> Entry criteria, never dates.</div>
+  <div class="rule"><b>Evidence before architecture.</b> New layers exist only when measured demand proves the current one cannot serve.</div>
+</div>
+
+<footer>
+  Supericons master blueprint, 2026-07-27. Compiled from the ratified charter, the living map vision, the refreshed roadmap, the strategy canvas, decisions D-039 to D-046, the creation flywheel capture, and this week's audited production telemetry. The flywheel economics and vault ideas are direction, not ratified scope; gates 4 and 5 are dimmed because their entry criteria are not met. Future work starts when its gate clears, by standing owner directive.
+</footer>
+
+</div>
+</body>
+</html>
