@@ -72,6 +72,15 @@ assert.ok(main.includes('resultCount > 2'), 'Low-result visibility is not capped
 assert.ok(main.includes('resultCount === 0'), 'Zero-result requests are not distinguished.');
 assert.ok(main.includes('iconRequestOpenedFromSidebar'), 'Sidebar request state is missing.');
 assert.ok(main.includes('els.noResultsFeedbackInput.value = query'), 'Sidebar query prefill is missing.');
+assert.ok(main.includes('getIconRequestStateKey'), 'Sidebar request context invalidation is missing.');
+assert.ok(
+  main.includes('clearSidebarIconRequestContext({ preserveStatus: true })'),
+  'Successful sidebar requests do not clear their stored context.',
+);
+assert.ok(
+  main.includes('new MutationObserver(() =>'),
+  'View changes do not invalidate request-form context.',
+);
 assert.ok(
   !main.includes("t('app.iconRequestSearchFirst')"),
   'Standalone sidebar requests are still blocked by the search-first guard.',

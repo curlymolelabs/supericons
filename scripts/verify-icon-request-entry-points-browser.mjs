@@ -178,6 +178,36 @@ try {
   assert.equal(savedRequests[1]?.p_result_count, 1);
   assert.equal(savedRequests[1]?.p_request_text, 'Low result request');
 
+  await page.getByRole('button', { name: 'Request an icon' }).click();
+  await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#noResultsFeedbackInput').inputValue(), 'onlyone');
+  await page.locator('#noResultsFeedbackInput').fill('Sidebar request from one result');
+  await page.locator('#noResultsFeedbackForm button[type="submit"]').click();
+  await page.waitForFunction(() => (
+    document.querySelector('#noResultsFeedbackStatus')?.classList.contains('is-success')
+  ));
+
+  assert.equal(savedRequests[2]?.p_ui_surface, 'sidebar_request');
+  assert.equal(savedRequests[2]?.p_search_query, 'onlyone');
+  assert.equal(savedRequests[2]?.p_result_count, 1);
+  assert.equal(savedRequests[2]?.p_request_text, 'Sidebar request from one result');
+
+  await searchInput.fill('zzzz-no-match');
+  await page.waitForFunction(() => (
+    document.querySelectorAll('#iconGrid .icon-cell').length === 0
+      && document.querySelector('#iconRequestPanel')?.hidden === false
+  ), null, { timeout: 120_000 });
+  await page.locator('#noResultsFeedbackInput').fill('Request after search changed');
+  await page.locator('#noResultsFeedbackForm button[type="submit"]').click();
+  await page.waitForFunction(() => (
+    document.querySelector('#noResultsFeedbackStatus')?.classList.contains('is-success')
+  ));
+
+  assert.equal(savedRequests[3]?.p_ui_surface, 'grid_empty_feedback');
+  assert.equal(savedRequests[3]?.p_search_query, 'zzzz-no-match');
+  assert.equal(savedRequests[3]?.p_result_count, 0);
+  assert.equal(savedRequests[3]?.p_request_text, 'Request after search changed');
+
   await searchInput.fill('');
   await page.waitForFunction(() => (
     document.querySelectorAll('#iconGrid .icon-cell').length === 3
@@ -192,10 +222,30 @@ try {
     document.querySelector('#noResultsFeedbackStatus')?.classList.contains('is-success')
   ));
 
-  assert.equal(savedRequests[2]?.p_ui_surface, 'sidebar_request');
-  assert.equal(savedRequests[2]?.p_search_query, null);
-  assert.equal(savedRequests[2]?.p_result_count, null);
-  assert.equal(savedRequests[2]?.p_request_text, 'Standalone sidebar request');
+  assert.equal(savedRequests[4]?.p_ui_surface, 'sidebar_request');
+  assert.equal(savedRequests[4]?.p_search_query, null);
+  assert.equal(savedRequests[4]?.p_result_count, null);
+  assert.equal(savedRequests[4]?.p_request_text, 'Standalone sidebar request');
+
+  const gridOrderBeforeViewChange = await page.locator('#iconGrid .icon-cell').evaluateAll(
+    (cells) => cells.map((cell) => `${cell.dataset.iconLib}:${cell.dataset.iconId}`),
+  );
+  await page.getByRole('button', { name: 'Request an icon' }).click();
+  await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
+  await page.locator('#footerPricingLink').evaluate((link) => link.click());
+  await page.waitForFunction(() => document.body.dataset.view === 'pricing');
+  await page.locator('.store-back-btn').click();
+  await page.waitForFunction(() => (
+    !document.body.dataset.view
+      && document.querySelectorAll('#iconGrid .icon-cell').length === 3
+  ));
+  assert.equal(await page.locator('#iconRequestPanel').getAttribute('hidden'), '');
+  assert.deepEqual(
+    await page.locator('#iconGrid .icon-cell').evaluateAll(
+      (cells) => cells.map((cell) => `${cell.dataset.iconLib}:${cell.dataset.iconId}`),
+    ),
+    gridOrderBeforeViewChange,
+  );
 
   await mkdir(dirname(resolve(screenshotPath)), { recursive: true });
   await page.screenshot({ path: resolve(screenshotPath), fullPage: true });
@@ -204,6 +254,8 @@ try {
     status: 'ok',
     zero_result_request: 'passed',
     low_result_request: 'passed',
+    sidebar_context_invalidation: 'passed',
+    request_view_observer_grid_order: 'passed',
     standalone_sidebar_request: 'passed',
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,

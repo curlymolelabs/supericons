@@ -183,6 +183,8 @@ let lastNoResultsFeedbackKey = '';
 let noResultsFeedbackSubmitting = false;
 let iconRequestOpenedFromSidebar = false;
 let sidebarIconRequestContext = null;
+let sidebarIconRequestStateKey = '';
+let iconRequestObservedStoreView = isStoreView();
 
 let iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
@@ -1651,8 +1653,44 @@ function getIconRequestContext({ sidebar = false } = {}) {
   };
 }
 
+function getIconRequestStateKey() {
+  return [
+    String(getCurrentSearchQuery() || '').toLowerCase(),
+    state.activeLibrary || 'all',
+    getActiveJobCategoryId() || 'all',
+    isStoreView() ? 'store' : 'icons',
+    state.hostedSearchPending ? 'pending' : 'settled',
+    state.hostedSearchPending ? 'pending' : state.filteredIcons.length,
+  ].join('|');
+}
+
+function clearSidebarIconRequestContext({ preserveStatus = false } = {}) {
+  iconRequestOpenedFromSidebar = false;
+  sidebarIconRequestContext = null;
+  sidebarIconRequestStateKey = '';
+  if (!preserveStatus) {
+    setNoResultsFeedbackStatus('');
+  }
+}
+
+function syncIconRequestViewState() {
+  const storeView = isStoreView();
+  if (storeView === iconRequestObservedStoreView) return false;
+  iconRequestObservedStoreView = storeView;
+  clearSidebarIconRequestContext();
+  return true;
+}
+
 function syncIconRequestForm() {
   if (!els.noResultsFeedbackForm || !els.iconRequestPanel) return;
+
+  syncIconRequestViewState();
+  if (
+    iconRequestOpenedFromSidebar
+    && sidebarIconRequestStateKey !== getIconRequestStateKey()
+  ) {
+    clearSidebarIconRequestContext();
+  }
 
   const context = iconRequestOpenedFromSidebar
     ? sidebarIconRequestContext
@@ -1698,6 +1736,7 @@ function openIconRequestFormFromSidebar() {
   setSidebarOpen(false);
   iconRequestOpenedFromSidebar = true;
   sidebarIconRequestContext = getIconRequestContext({ sidebar: true });
+  sidebarIconRequestStateKey = getIconRequestStateKey();
   lastNoResultsFeedbackKey = '';
   syncIconRequestForm();
 
@@ -1754,6 +1793,7 @@ async function submitNoResultsFeedback(event) {
 
   if (sent) {
     if (input) input.value = '';
+    clearSidebarIconRequestContext({ preserveStatus: true });
     setNoResultsFeedbackStatus(t('app.iconRequestSaved'), 'success');
   } else {
     setNoResultsFeedbackStatus(t('app.iconRequestFailed'), 'error');
@@ -4232,6 +4272,16 @@ function renderCompareDrawer() {
 
 // Sidebar library click
 els.sidebarIconRequest?.addEventListener('click', openIconRequestFormFromSidebar);
+if (els.gridArea) {
+  new MutationObserver(() => {
+    if (syncIconRequestViewState()) {
+      syncIconRequestForm();
+    }
+  }).observe(els.gridArea, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+}
 els.sidebar.addEventListener('click', (e) => {
   const item = e.target.closest('.sidebar__item');
   if (item && item.dataset.library) {

@@ -7,6 +7,28 @@ const migration = readFileSync(
   'supabase/migrations/20260727120000_icon_request_events.sql',
   'utf8',
 );
+const transactionBaseline = readFileSync(
+  'scripts/sql/icon-request-hosted-transaction-baseline.sql',
+  'utf8',
+);
+const postflight = readFileSync(
+  'scripts/sql/icon-request-hosted-postflight.sql',
+  'utf8',
+);
+const historyPostflight = readFileSync(
+  'scripts/sql/icon-request-hosted-history-postflight.sql',
+  'utf8',
+);
+const operationalRollback = readFileSync(
+  'scripts/sql/icon-request-hosted-operational-rollback.sql',
+  'utf8',
+);
+const evidenceFunctionSignature = [
+  'public.si_log_icon_evidence(',
+  'text,text,uuid,text,text,integer,integer,text,text,text,text,',
+  'integer,boolean,double precision,text,text,text,timestamptz,integer,text',
+  ')',
+].join('');
 
 function runDocker(args, { input = null, expectFailure = false } = {}) {
   const result = spawnSync('docker', args, { encoding: 'utf8', input });
@@ -57,6 +79,10 @@ try {
   waitForDatabase();
   runSql(`
     create extension if not exists pgcrypto;
+    create schema if not exists supabase_migrations;
+    create table supabase_migrations.schema_migrations (
+      version text primary key
+    );
     do $$
     begin
       if not exists (select 1 from pg_roles where rolname = 'anon') then create role anon; end if;
@@ -104,21 +130,47 @@ try {
     revoke all on table public.icon_evidence from public;
     grant select, insert, update, delete on table public.icon_evidence to service_role;
 
-    create function public.si_log_icon_evidence(p_signal_type text)
-    returns text
+    create function public.si_log_icon_evidence(
+      p_signal_type text,
+      p_icon_id text default null,
+      p_batch_id uuid default null,
+      p_collection_id text default null,
+      p_search_query text default null,
+      p_result_position integer default null,
+      p_time_to_copy_ms integer default null,
+      p_ui_surface text default null,
+      p_domain text default null,
+      p_job_category text default null,
+      p_replaced_with text default null,
+      p_retained_days integer default null,
+      p_agent_converged boolean default null,
+      p_confidence double precision default null,
+      p_evidence_text text default null,
+      p_context_url text default null,
+      p_session_hash text default null,
+      p_created_at timestamptz default timezone('utc', now()),
+      p_result_count integer default null,
+      p_library_filter text default null
+    )
+    returns uuid
     language sql
-    as $$ select p_signal_type $$;
+    as $$ select gen_random_uuid() $$;
   `);
 
   const evidenceFunctionBefore = runSql(`
-    select md5(pg_get_functiondef('public.si_log_icon_evidence(text)'::regprocedure));
+    select md5(pg_get_functiondef('${evidenceFunctionSignature}'::regprocedure));
   `);
-  runSql(migration);
-  runSql(migration);
+  runSql(`begin;\n${transactionBaseline}\n${migration}\n${postflight}\ncommit;`);
+  runSql(`begin;\n${migration}\ncommit;`);
   const evidenceFunctionAfter = runSql(`
-    select md5(pg_get_functiondef('public.si_log_icon_evidence(text)'::regprocedure));
+    select md5(pg_get_functiondef('${evidenceFunctionSignature}'::regprocedure));
   `);
   assert.equal(evidenceFunctionAfter, evidenceFunctionBefore, 'The existing evidence RPC changed.');
+  runSql(`
+    insert into supabase_migrations.schema_migrations (version)
+    values ('20260727120000');
+  `);
+  runSql(historyPostflight);
 
   runSql(`
     select public.si_log_icon_request(
@@ -179,14 +231,7 @@ try {
   );
   runSql('set role anon; select * from public.icon_evidence;', { expectFailure: true });
 
-  runSql(`
-    revoke all on function public.si_log_icon_request(
-      text, text, text, text, integer, text, text, text, text
-    ) from public, anon, authenticated, service_role;
-    drop function public.si_log_icon_request(
-      text, text, text, text, integer, text, text, text, text
-    );
-  `);
+  runSql(operationalRollback);
   assert.equal(
     runSql(`select count(*) from public.icon_evidence where signal_type = 'icon_request';`),
     '3',
@@ -197,6 +242,8 @@ try {
     status: 'ok',
     database: 'disposable_postgresql_17',
     migration_applied_twice: true,
+    guarded_postflight_passed: true,
+    exact_history_postflight_passed: true,
     existing_evidence_rpc_unchanged: true,
     valid_surfaces_written: 3,
     invalid_contexts_rejected: 4,
