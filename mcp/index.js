@@ -96,6 +96,7 @@ import {
   hasProWorkflowAccess,
 } from './workflow-access.js';
 import {
+  configureMcpTelemetryContext,
   getMcpTelemetrySessionHash,
   logMcpSearchAttempt,
   logMcpSearchBatch,
@@ -1070,6 +1071,9 @@ const server = new McpServer({
   version: mcpPackage.version,
 }, {
   instructions: SEARCH_TOOL_SERVER_INSTRUCTIONS,
+});
+configureMcpTelemetryContext({
+  getClientVersion: () => server.server.getClientVersion(),
 });
 
 // --- Tool: search_icons ---

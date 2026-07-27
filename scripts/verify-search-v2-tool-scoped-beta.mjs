@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 import {
   DETERMINISTIC_BETA_COHORT,
@@ -133,16 +136,25 @@ const originalUrl = process.env.SUPERICONS_MCP_SEARCH_URL;
 const originalGroupedUrl = process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
 const originalAnon = process.env.SUPERICONS_MCP_SEARCH_ANON_KEY;
 const originalApiKey = process.env.SUPERICONS_API_KEY;
+const originalConfigDir = process.env.SUPERICONS_CONFIG_DIR;
+const telemetryConfigDir = await mkdtemp(join(tmpdir(), 'supericons-tool-scoped-'));
 delete process.env.SUPERICONS_MCP_SEARCH_URL;
 delete process.env.SUPERICONS_MCP_GROUPED_SEARCH_URL;
 delete process.env.SUPERICONS_MCP_SEARCH_ANON_KEY;
 delete process.env.SUPERICONS_API_KEY;
+process.env.SUPERICONS_CONFIG_DIR = telemetryConfigDir;
 
 const requests = [];
 try {
   globalThis.fetch = async (url, options) => {
     const body = JSON.parse(options.body);
     requests.push({ url: String(url), body });
+    if (String(url).endsWith('/functions/v1/local-mcp-telemetry')) {
+      return new Response(JSON.stringify({ accepted: true, duplicate: false }), {
+        status: 202,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     if (String(url).includes('/rest/v1/rpc/')) {
       return new Response(null, { status: 204 });
     }
@@ -250,10 +262,13 @@ try {
     toolName: 'recommend_icons',
     latencyMs: 1234.4,
   });
-  const telemetryRequest = requests.find((request) => request.url.endsWith('/rpc/si_log_mcp_search_outcome_v2'));
-  assert.ok(telemetryRequest, 'Tool telemetry must use the latency-aware RPC.');
-  assert.equal(telemetryRequest.body.p_latency_ms, 1234);
-  assert.equal(telemetryRequest.body.p_tool_name, 'recommend_icons');
+  const telemetryRequest = requests.find((request) => (
+    request.url.endsWith('/functions/v1/local-mcp-telemetry')
+  ));
+  assert.ok(telemetryRequest, 'Tool telemetry must use the protected v3 endpoint.');
+  assert.equal(telemetryRequest.body.latency_ms, 1234);
+  assert.equal(telemetryRequest.body.tool_name, 'recommend_icons');
+  assert.equal(telemetryRequest.body.contract_version, 3);
 } finally {
   globalThis.fetch = originalFetch;
   if (originalUrl === undefined) delete process.env.SUPERICONS_MCP_SEARCH_URL;
@@ -264,6 +279,9 @@ try {
   else process.env.SUPERICONS_MCP_SEARCH_ANON_KEY = originalAnon;
   if (originalApiKey === undefined) delete process.env.SUPERICONS_API_KEY;
   else process.env.SUPERICONS_API_KEY = originalApiKey;
+  if (originalConfigDir === undefined) delete process.env.SUPERICONS_CONFIG_DIR;
+  else process.env.SUPERICONS_CONFIG_DIR = originalConfigDir;
+  await rm(telemetryConfigDir, { recursive: true, force: true });
 }
 
 console.log(JSON.stringify({
@@ -284,5 +302,5 @@ console.log(JSON.stringify({
   measured_localized_query_count: localizedWorkload.length,
   route_level_response_parity: true,
   recommendation_response_byte_parity: true,
-  end_to_end_tool_latency_rpc: 'si_log_mcp_search_outcome_v2',
+  end_to_end_tool_latency_transport: 'local-mcp-telemetry-v3',
 }, null, 2));
