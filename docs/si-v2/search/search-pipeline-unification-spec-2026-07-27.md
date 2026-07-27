@@ -2,7 +2,7 @@
 
 Date: 2026-07-27
 
-Status: Proposed for implementation, owner handover ready
+Status: Proposed for implementation, revision 2 with implementation blockers resolved
 
 Scope: query understanding, variant planning, relevance gating, and ranking across local npm MCP, hosted MCP, and web. No change to tool schemas, hosted URLs, icon data, or account behavior.
 
@@ -97,6 +97,18 @@ One module, one entry point, used by every surface.
 
 Surfaces may differ only in: transport, telemetry, presentation, which candidate sources exist, and the hosted-only protected ranking layer.
 
+### Hosted-primary safety boundary
+
+The shared pipeline must preserve `FR-52` exactly:
+
+1. Hosted MCP and the public website gateway require a valid hosted-engine response before a search is considered complete.
+2. A hosted timeout, network failure, `5xx`, malformed response, or dependency error remains visible as an error. Local results must not turn that failure into a success.
+3. Local fallback is permitted only after the hosted engine returns a valid structured zero-result response.
+4. Route metadata must report the route that actually produced the response. It must never label a local fallback as hosted.
+5. Local npm remains independently offline-capable and is not subject to the hosted-primary requirement.
+
+These rules prevent pipeline unification from recreating the hosted-search regression that this work is intended to eliminate.
+
 ## 5. The deliverable: the cross-surface equivalence test
 
 The unification is the means. **The test is the deliverable**, because it is what makes this class of drift impossible to reship.
@@ -110,13 +122,26 @@ Requirements:
 5. **Deterministic pre-release testing and live production smoke are separate.** The gate is deterministic and offline-capable. A small live smoke against production runs after deployment and is reported separately, never as a merge blocker.
 6. It joins the release gates for every surface and the weekly audit once green.
 
-## 6. Test corpus
+## 6. Test corpus and evidence
 
 **Sanitization rule, applied before the corpus is committed:** the corpus is derived from production traffic, so it is frozen and reviewed once, with raw user queries excluded from any repository file. Entries are either generic reproductions of the observed gap, or reviewed and cleared for inclusion. No personal, project, or identifying text enters a public artifact.
 
-Assembled once, then maintained:
+Before implementation begins, Phase 1 produces a public-safe evidence artifact containing:
 
-- The 24 production local-zero queries, including `torrent magnet`, `view categories`, `go up`, `browser cookies`, `ip blocked`, and the domain shorthand cases.
+1. The exact UTC cutoff.
+2. The source tables or files.
+3. The complete query and traffic filters, including controlled-traffic exclusion.
+4. The reproducible SQL or local analysis command.
+5. The sanitized fixture identifier and content hash.
+6. One expected decision per case: `expected_positive`, `expected_zero`, or `expected_error`.
+7. For positive cases, reviewed relevant references or concepts and any forbidden top results.
+8. For zero cases, the reason an honest zero is correct.
+
+The previously reported "24 of 71" figure is context only until this artifact exists. It is not a release denominator or acceptance gate.
+
+The maintained corpus includes:
+
+- Sanitized generic reproductions of reviewed production local-zero gaps, including `torrent magnet`, `view categories`, `go up`, `browser cookies`, `ip blocked`, and domain shorthand cases.
 - Agent-style multiword phrases from real hosted traffic.
 - Compound interface labels such as `settings permissions` and `columns settings`.
 - Misspellings including `databse`, `notifcation`, `analtyics dashbord`, and `staock`.
@@ -130,22 +155,22 @@ Assembled once, then maintained:
 
 Nonzero is not a passing condition.
 
-1. For each corpus query, at least one **reviewed-relevant** icon appears in the top three on every surface. Ordinary corpus relevance is judged by an independent reviewer, not the implementing agent. Owner review is reserved for genuinely ambiguous product calls, per `VC-9`, so the owner is not the bottleneck for routine judgments.
+1. For each `expected_positive` query, at least one **reviewed-relevant** icon appears in the top three on every surface. Ordinary corpus relevance is judged by an independent reviewer, not the implementing agent. Owner review is reserved for genuinely ambiguous product calls, per `VC-9`, so the owner is not the bottleneck for routine judgments.
 2. A forbidden-result list is enforced: known misleading matches must not appear in the top three. Seed entries: `user profile` must not lead with account-balance icons; `dark mode` must not include moderator icons; `unit test` must not lead with aspect-ratio icons; `docker container` must not lead with animated-image icons.
-3. Nonsense inputs return the structured no-result contract with no fabricated references.
-4. The fixed 225-case fingerprint changes only with a case-by-case review recorded in the release notes.
-5. The 244 English meaning checks, 612 localized checks, and 638 multilingual fixtures stay green on the exact candidate.
+3. Every `expected_zero` query returns the structured no-result contract with no fabricated references.
+4. Every `expected_error` case preserves the specified error. In hosted-primary cases, local results cannot hide the error.
+5. The fixed 225-case fingerprint changes only with a case-by-case review recorded in the release notes.
+6. The 244 English meaning checks, 612 localized checks, and 638 multilingual fixtures stay green on the exact candidate.
 
 ## 8. Offline and performance gates
 
 Numeric, not adjectival. Every limit is measured on the exact candidate and recorded in release evidence.
 
 1. Local npm search works with no network access, including when hosted search is unreachable, proven by a test run with networking disabled.
-2. **Local search p95 at or below 500 ms** on the bound local workload, with first-search cold time reported separately and not exceeding 1,500 ms.
-3. **Package size increase at or below 5 percent** versus the previous release; any larger increase requires an explicit owner-visible note before publication.
-4. **Cold start time increase at or below 15 percent**; resident memory increase at or below 15 percent.
-5. **Hosted eligible-search p95 at or below 500 ms** and no worse than the current measured baseline.
-6. The variant plan is bounded: a hard maximum on variants per query and on total candidate retrievals per search, so one search can never multiply into unbounded work.
+2. **Local search p95 at or below 500 ms** on the bound local workload. This is the established blocking budget. First-search cold time is reported separately.
+3. Before code freeze, measure and record the current exact workload baselines for first-search cold time, package size, resident memory, and hosted eligible-search latency.
+4. Candidate limits for first-search cold time, package growth, resident memory growth, and hosted latency are calibrated from those baselines and recorded before they become release blockers. Earlier proposed values, including a 500 ms hosted target, are targets only until this calibration is complete.
+5. The variant plan is bounded: a hard maximum on variants per query and on total candidate retrievals per search, so one search can never multiply into unbounded work.
 
 ## 9. Implementation plan
 
@@ -165,11 +190,22 @@ Numeric, not adjectival. Every limit is measured on the exact candidate and reco
 
 **Phase 7: promote with owner approval.** Per `VC-9`, changing npm `latest`, the web default, or the hosted default requires explicit owner approval on the exact candidate. Deterministic gates green plus the post-deploy live smoke are the evidence presented for that decision; they are not the decision.
 
-## 10. Non-goals
+## 10. Release and rollback boundaries
+
+Search pipeline promotion is independent from telemetry work.
+
+1. **npm:** build and verify an exact archive. Rollback restores the prior dist-tag without changing Hosted MCP or the website.
+2. **Railway:** deploy the exact reviewed source revision behind the existing hosted URL. Rollback restores the prior Railway deployment. A failed hosted response must remain visible throughout the rollout.
+3. **Netlify:** deploy the exact reviewed browser artifact. Rollback restores the prior site deployment.
+4. Each surface has an independent mutation budget, verification result, and rollback record.
+5. A failure on one surface blocks parity promotion but does not authorize mutation of another surface.
+6. No Supabase schema change is authorized by this search specification.
+
+## 11. Non-goals
 
 No embeddings, no request-time model call, no protected ranking data in public bundles, no hosted URL change, no tool schema change, no forced identical ordering across surfaces, no ranking redesign beyond the relevance floor required by the contract, and no telemetry work in this specification.
 
-## 11. Risks
+## 12. Risks
 
 | Risk | Response |
 | --- | --- |
@@ -180,11 +216,11 @@ No embeddings, no request-time model call, no protected ranking data in public b
 | Old orchestrations linger and drift again | Phase 5 deletes them; the equivalence test guards the boundary permanently |
 | Parity is misread as identical results | The contract states the seven decisions and the four explicit non-requirements in the specification and the decision record |
 
-## 12. Definition of done
+## 13. Definition of done
 
 - One shared pipeline module is the only query-understanding path on all three surfaces.
 - The equivalence test failed before the change, passes after, and runs in the release gates.
-- All 24 production local-zero queries return reviewed-relevant results on every surface, or an honest zero justified by a recorded review.
+- Every frozen corpus case produces its declared decision on every surface: a reviewed-relevant positive, an honest zero, or the specified visible error.
 - Quality, offline, performance, and fixed-suite gates pass on the exact candidate bytes.
 - The parity contract is recorded as a numbered decision and a requirement in the Search v2 specification.
 - Superseded orchestration code is deleted, not disabled.
