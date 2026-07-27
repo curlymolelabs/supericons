@@ -1,0 +1,13 @@
+{
+  "artifact": "local_mcp_attribution_v3_migration_transactional_verification",
+  "generated_at": "2026-07-27T17:13:38.442Z",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "migration_sha256": "f4a825cf25f0ed0f46e4486e4dbd1886b512446820e52463fdbf0ba34cb7f967",
+  "rollback_sha256": "be1ebcbd67fa81c29fc53259a97e32c1cd441db60181b4431b0e80c540475c6b",
+  "production_mutations_persisted": 0,
+  "apply_transaction_rolled_back": true,
+  "rollback_transaction_rolled_back": true,
+  "v2_rpc_preserved": true,
+  "v3_objects_absent_after_test": true,
+  "status": "passed"
+}
