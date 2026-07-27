@@ -147,3 +147,19 @@ Verification completed before release:
 - Chromium confirms reduced-motion mode disables all three animation layers.
 - The complete icon request flow, grid behavior, twelve locale catalogs, and
   production build still pass.
+
+The ring and spark follow-up was released from commit `5b8d2b6df` as website
+deploy `6a6729ca897987792e9147ff`. Deploy `6a6727129065e56af56cdc3a` is the
+exact rollback target.
+
+The released bundle fingerprints are:
+
+- HTML: `73fea262d83249800d377c6b411eec01fa6187a2c5926beceaf842d01a2a498d`
+- JavaScript: `f1d762013d6a971a2b681aeb6e29d6373e71bf5775a8471ce4f67f1991043184`
+- CSS: `08a079bfe08751ae7a8c851ba182c840d716e0d692bb91e10835320ceeba5477`
+
+Live Chromium verification passed on both the exact deploy URL and
+`supericons.dev`. It confirmed the ring animation, clockwise spark orbit,
+inherited sidebar color, reduced-motion opt-out, modal behavior, sidebar font
+size, and grid order. All request writes were intercepted locally, so the live
+checks did not create production request records.
