@@ -186,3 +186,20 @@ Verification completed before release:
 - Chromium confirms both new layers inherit the sidebar item color.
 - Chromium confirms reduced-motion mode disables all animation layers.
 - The complete icon request flow and grid-order regression still pass.
+
+The draw and add follow-up was released from commit `02012230e` as website
+deploy `6a672ccb9065e58af56cdc32`. Deploy `6a6729ca897987792e9147ff` is the
+exact rollback target.
+
+The released bundle fingerprints are:
+
+- HTML: `f5ec9e13c423cc48ba9cf86b5abf9a3c88030eac8df9200626086061f1ae5f3a`
+- JavaScript: `a64230dbea910ca58821c10bb4a39ff50e088496d3eaf0ecc20ec1cca7603eaf`
+- CSS: `a0b1af45d17801bec628ed73d5291f9dff7e12850a7f7e355000148b043beca2`
+
+Live Chromium verification passed on both the exact deploy URL and
+`supericons.dev`. It confirmed the clockwise ring draw, confirmation ripple,
+ring and plus motion, inherited sidebar color, reduced-motion opt-out, modal
+behavior, sidebar font size, and grid order. The old spark markup is absent.
+All request writes were intercepted locally, so the live checks did not create
+production request records.
