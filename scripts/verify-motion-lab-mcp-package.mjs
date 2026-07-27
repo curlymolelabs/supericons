@@ -8,6 +8,7 @@ const mcpDir = join(repoRoot, 'mcp');
 const expectedFiles = [
   'CHANGELOG.md',
   'LICENSE',
+  'README.md',
   'THIRD_PARTY_LICENSES/bootstrap-icons-LICENSE.txt',
   'THIRD_PARTY_LICENSES/feather-LICENSE.txt',
   'THIRD_PARTY_LICENSES/heroicons-LICENSE.txt',
@@ -31,6 +32,7 @@ const expectedFiles = [
   'hosted-search-resilience.js',
   'index.js',
   'library-capabilities.js',
+  'local-telemetry-identity.js',
   'material-export.js',
   'material-hydration.js',
   'material-mcp-assets-manifest.json',
