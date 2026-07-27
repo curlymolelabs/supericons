@@ -59,7 +59,6 @@
     "manage:local-attribution-v3-release": "node scripts/manage-local-mcp-attribution-v3-release.mjs",
     "manage:local-attribution-v3-public-ingest": "node scripts/manage-local-mcp-attribution-v3-public-ingest.mjs",
     "verify:local-attribution-v3-production": "node scripts/verify-local-mcp-attribution-v3-production.mjs",
-    "verify:local-telemetry-endpoint": "deno check supabase/functions/local-mcp-telemetry/index.ts && deno test supabase/functions/local-mcp-telemetry/index.test.ts",
     "verify:local-telemetry-package": "node scripts/verify-local-mcp-telemetry-v3.mjs",
     "verify:local-telemetry-search-isolation": "node scripts/verify-local-mcp-telemetry-search-isolation.mjs",
     "verify:local-telemetry-notice": "node scripts/verify-local-mcp-telemetry-notice.mjs",

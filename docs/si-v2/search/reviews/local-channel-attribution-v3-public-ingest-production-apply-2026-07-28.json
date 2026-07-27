@@ -1,0 +1,23 @@
+{
+  "artifact": "local_mcp_attribution_v3_public_ingest_release_action",
+  "generated_at": "2026-07-27T17:31:45.885Z",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "mode": "apply",
+  "migration_sha256": "cc1790d4a7a8af6afbd20a527c8801a099b20c4dc418fcb59c83a16d688d5aba",
+  "rollback_sha256": "68ef86d9981cdecdfedef76cfcbf242aad5a6643122540158cf6d74549709ad2",
+  "before": {
+    "v2_present": true,
+    "internal_v3_present": true,
+    "public_v3_present": false,
+    "hash_secrets": 1,
+    "anon_can_execute": false
+  },
+  "after": {
+    "v2_present": true,
+    "internal_v3_present": true,
+    "public_v3_present": true,
+    "hash_secrets": 1,
+    "anon_can_execute": true
+  },
+  "status": "passed"
+}

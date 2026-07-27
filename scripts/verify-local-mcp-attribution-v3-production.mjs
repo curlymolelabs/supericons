@@ -276,10 +276,10 @@ try {
   assert.ok(v2Response.ok, `Legacy v2 write failed with ${v2Response.status}.`);
   const v2Rows = await waitForRows(`
     select
-      install_hash,
-      install_key_version,
-      client_version,
-      os_platform,
+      e.install_hash,
+      e.install_key_version,
+      e.client_version,
+      e.os_platform,
       f.traffic_class
     from public.mcp_usage_events e
     left join public.search_final_outcomes f

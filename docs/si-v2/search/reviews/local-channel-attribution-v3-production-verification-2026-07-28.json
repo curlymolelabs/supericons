@@ -1,0 +1,37 @@
+{
+  "artifact": "local_mcp_attribution_v3_production_verification",
+  "generated_at": "2026-07-27T17:32:44.798Z",
+  "package_version": "0.4.24",
+  "controlled_rows_created": 3,
+  "ordinary_dashboard_rows_created": 0,
+  "package_path": {
+    "final_outcomes": 1,
+    "client_family": "local-attribution-production-check",
+    "client_version": "1.0.0",
+    "os_platform": "win32",
+    "country_code": "SG",
+    "geo_source": "supabase_postgrest_cf",
+    "result_count": 8,
+    "ordered_result_refs_sha256": "f98570de3157b1774ed756080e4d75a3ace425d880c1b6f860eb12ee1e902dfe",
+    "install_hash_present": true,
+    "raw_install_identifier_stored": false
+  },
+  "spoof_resistance": {
+    "caller_country": "NZ",
+    "stored_country": "SG",
+    "stored_geo_source": "supabase_postgrest_cf",
+    "caller_country_rejected": true
+  },
+  "idempotency": {
+    "first_duplicate": false,
+    "retry_duplicate": true,
+    "usage_rows": 1,
+    "final_rows": 1
+  },
+  "legacy_v2": {
+    "accepted": true,
+    "attribution_fields_null": true
+  },
+  "traffic_class": "controlled_test",
+  "status": "passed"
+}

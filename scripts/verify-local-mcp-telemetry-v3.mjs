@@ -181,6 +181,27 @@ try {
     /\/rest\/v1\/rpc\/si_log_mcp_search_outcome_v2$/,
   );
 
+  const signatureFallbackRoot = await makeTempRoot('signature-fallback');
+  process.env.SUPERICONS_CONFIG_DIR = signatureFallbackRoot;
+  resetMcpTelemetryForTests();
+  const signatureFallbackRequests = [];
+  globalThis.fetch = async (url) => {
+    signatureFallbackRequests.push(String(url));
+    if (String(url).includes('/rpc/si_log_local_mcp_search_outcome_v3')) {
+      return new Response(JSON.stringify({ code: 'PGRST202' }), {
+        status: 400,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+    return new Response(null, { status: 204 });
+  };
+  await logMcpSearchAttempt(telemetryInput());
+  assert.equal(signatureFallbackRequests.length, 2);
+  assert.match(
+    signatureFallbackRequests[1],
+    /\/rest\/v1\/rpc\/si_log_mcp_search_outcome_v2$/,
+  );
+
   const noFallbackRoot = await makeTempRoot('no-fallback');
   process.env.SUPERICONS_CONFIG_DIR = noFallbackRoot;
   resetMcpTelemetryForTests();
@@ -225,7 +246,8 @@ try {
     unwritable_path_nonblocking: true,
     opt_out_controls: 4,
     v3_fields_present: true,
-    fallback_on_404_only: true,
+    fallback_on_definitive_missing: true,
+    fallback_on_missing_signature: true,
     no_fallback_on_5xx: true,
     no_fallback_on_unknown_delivery: true,
     disabled_telemetry_creates_no_identity: true,

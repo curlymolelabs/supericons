@@ -43,5 +43,3 @@ verify_jwt = false
 # Local npm clients send best-effort v3 telemetry through this narrow endpoint.
 # The function validates the public project key, hashes installation identity,
 # rate limits writes, and never stores the raw installation UUID or IP address.
-[functions.local-mcp-telemetry]
-verify_jwt = false
