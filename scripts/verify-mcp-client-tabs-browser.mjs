@@ -112,9 +112,55 @@ try {
   await waitForServer();
   browser = await chromium.launch({ headless: true });
 
+  const firstPaint = await createPage(browser, { width: 1180, height: 900 });
+  let releaseMainModule;
+  let confirmMainModuleHeld;
+  const mainModuleGate = new Promise((resolve) => {
+    releaseMainModule = resolve;
+  });
+  const mainModuleHeld = new Promise((resolve) => {
+    confirmMainModuleHeld = resolve;
+  });
+  const holdMainModule = async (route) => {
+    confirmMainModuleHeld();
+    await mainModuleGate;
+    await route.continue();
+  };
+  await firstPaint.page.route('**/main.js', holdMainModule);
+  await firstPaint.page.route('**/assets/index-*.js', holdMainModule);
+  await firstPaint.page.goto(baseUrl, { waitUntil: 'commit' });
+  await mainModuleHeld;
+  await firstPaint.page.locator('#header').waitFor({ state: 'attached' });
+  await firstPaint.page.waitForFunction(
+    () => getComputedStyle(document.documentElement).getPropertyValue('--si-header-height').trim().length > 0,
+  );
+  assert.equal(
+    await firstPaint.page.locator('#header').evaluate((header) => getComputedStyle(header).display),
+    'none',
+    'The app header must be hidden before the landing JavaScript runs.',
+  );
+  releaseMainModule();
+  await firstPaint.page.waitForLoadState('domcontentloaded');
+  await firstPaint.context.close();
+
   const desktop = await createPage(browser, { width: 1180, height: 900 });
   await desktop.page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
   await desktop.page.waitForSelector('[data-mcp-client="claude-code"][aria-selected="true"]');
+  assert.equal(
+    await desktop.page.locator('#header').evaluate((header) => getComputedStyle(header).display),
+    'none',
+    'The app header must remain hidden while the landing page is active.',
+  );
+  assert.deepEqual(
+    await desktop.page.locator('.landing-stat__num').allTextContents(),
+    ['20,000+', '11', '14', 'Semantic'],
+    'Landing statistics must match the shipped icon index and MCP package.',
+  );
+  assert.equal(
+    await desktop.page.locator('.landing-hero__subtitle').textContent(),
+    'Search 20,000+ curated SVG icons by meaning, use case, or where they appear in your interface. Built for designers, developers, and AI coding agents.',
+    'The approved landing description must remain unchanged.',
+  );
 
   for (const config of MCP_CLIENT_CONFIGS) {
     const tab = desktop.page.locator(`[data-mcp-client="${config.id}"]`);
@@ -150,6 +196,11 @@ try {
   englishDocsUrl.searchParams.set('view', 'docs-access-api-keys');
   await desktop.page.goto(englishDocsUrl.toString(), { waitUntil: 'domcontentloaded' });
   await desktop.page.getByRole('heading', { name: 'Start free without a key' }).waitFor();
+  assert.equal(
+    await desktop.page.locator('#header').evaluate((header) => getComputedStyle(header).display),
+    'flex',
+    'The app header must be restored for a direct non-landing route.',
+  );
   await desktop.page.getByText(
     'You do not need an API key to search, preview, retrieve, or list free icons through local or hosted MCP.',
     { exact: false },
