@@ -44,6 +44,28 @@ Deno.test('v3 payload keeps only bounded approved fields', () => {
   assert.equal('ignored_private_path' in parsed, false);
 });
 
+Deno.test('v3 keeps accepted controlled-run cohort markers intact', () => {
+  const controlledRun = parseLocalTelemetryPayload({
+    ...VALID_PAYLOAD,
+    beta_cohort: 'controlled-run:local_attribution',
+  });
+  const founderControlled = parseLocalTelemetryPayload({
+    ...VALID_PAYLOAD,
+    beta_cohort: 'deterministic-v2-beta:founder_controlled',
+  });
+  const controlledSuffix = parseLocalTelemetryPayload({
+    ...VALID_PAYLOAD,
+    beta_cohort: 'release:controlled_example',
+  });
+
+  assert.equal(controlledRun.betaCohort, 'controlled-run:local_attribution');
+  assert.equal(
+    founderControlled.betaCohort,
+    'deterministic-v2-beta:founder_controlled',
+  );
+  assert.equal(controlledSuffix.betaCohort, 'release:controlled_example');
+});
+
 Deno.test('v3 requires random version 4 identities', () => {
   assert.throws(
     () => parseLocalTelemetryPayload({

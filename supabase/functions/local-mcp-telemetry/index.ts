@@ -76,6 +76,15 @@ function normalizeToken(value: unknown, maxLength: number) {
   return text ? text.slice(0, maxLength) : null;
 }
 
+function normalizeCohort(value: unknown) {
+  const text = String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._:-]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return text ? text.slice(0, 80) : null;
+}
+
 function requiredUuid(value: unknown, fieldName: string) {
   const text = String(value || '').trim().toLowerCase();
   if (!UUID_PATTERN.test(text)) {
@@ -203,7 +212,7 @@ export function parseLocalTelemetryPayload(value: unknown): ParsedPayload {
     toolName,
     locale: normalizeText(body.locale, 32),
     confidenceLabel,
-    betaCohort: normalizeToken(body.beta_cohort, 80),
+    betaCohort: normalizeCohort(body.beta_cohort),
     mcpServerVersion: normalizeText(body.mcp_server_version, 40),
     latencyMs: normalizeInteger(body.latency_ms, 'latency_ms', 600000, {
       nullable: true,
