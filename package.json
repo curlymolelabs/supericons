@@ -56,6 +56,7 @@
     "verify:local-channel-baseline-live": "node scripts/verify-local-channel-attribution-baseline-live.mjs",
     "verify:local-country-headers-live": "node scripts/verify-supabase-country-header-spoofing-live.mjs",
     "verify:local-attribution-migration-live": "node scripts/verify-local-mcp-attribution-v3-migration-live.mjs",
+    "manage:local-attribution-v3-release": "node scripts/manage-local-mcp-attribution-v3-release.mjs",
     "verify:local-telemetry-endpoint": "deno check supabase/functions/local-mcp-telemetry/index.ts && deno test supabase/functions/local-mcp-telemetry/index.test.ts",
     "verify:local-telemetry-package": "node scripts/verify-local-mcp-telemetry-v3.mjs",
     "verify:local-telemetry-search-isolation": "node scripts/verify-local-mcp-telemetry-search-isolation.mjs",
