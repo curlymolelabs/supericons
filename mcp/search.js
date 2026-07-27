@@ -15,7 +15,10 @@ import {
   normalizeSearchLibraryMode,
   rerankSearchCandidatesAtFusion,
 } from './runtime/search-ranking-policy.js';
-import { buildIntentQueryVariants } from './runtime/search-intent-core.js';
+import {
+  buildIntentQueryVariants,
+  buildSearchIntentProfile,
+} from './runtime/search-intent-core.js';
 import { buildSearchQueryFrame } from './runtime/search-query-frame.js';
 import {
   compareVariantPreference,
@@ -646,13 +649,35 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   const exactDirectMatches = directResults.filter((icon) => iconMatchesExactQueryTokens(icon, query, exactSynonymKeys));
   const minimumUsefulResults = Math.min(3, effectiveLimit);
   const confidenceQueryWords = getConfidenceQueryWords(query);
+  const intentProfile = buildSearchIntentProfile(query);
+  const plannedQueryVariants = buildIntentQueryVariants(query, { maxVariants: 12 });
+  const normalizedQuery = normalizeSemanticText(query);
+  const hasPlannedFallbackVariant = plannedQueryVariants.some(
+    (variant) => normalizeSemanticText(variant) !== normalizedQuery,
+  );
   const recognizedCompositionWords = confidenceQueryWords.filter(
     (word) => getIndexedCandidatePool(icons, word, synonyms).length > 0,
   );
+  const minimumRecognizedCompositionWords = Math.max(
+    1,
+    Math.ceil(confidenceQueryWords.length / 2),
+  );
+  const confidenceQueryWordSet = new Set(confidenceQueryWords);
+  const recognizedIntentWords = new Set(
+    intentProfile.activeRules
+      .flatMap(({ token }) => tokenizeSemanticText(token))
+      .filter((word) => confidenceQueryWordSet.has(word)),
+  );
+  const hasSupportedIntentFallback =
+    hasPlannedFallbackVariant &&
+    recognizedIntentWords.size >= minimumRecognizedCompositionWords;
   const shouldTryCompositionalFallback =
     !queryFrame.matched &&
     queryWords.length >= 2 &&
-    recognizedCompositionWords.length >= Math.min(2, confidenceQueryWords.length);
+    (
+      recognizedCompositionWords.length >= minimumRecognizedCompositionWords ||
+      hasSupportedIntentFallback
+    );
   const directBrandAdjustment = directResults[0] ? getBrandRankAdjustment(query, directResults[0]) : null;
   if (
     directResults[0] &&
@@ -731,7 +756,7 @@ export function searchIcons(query, icons, synonyms, options = {}) {
         (queryFrame.is_brand_logo_query || !isSupericonsBrandLogo(icon)) &&
         iconMatchesOriginalQueryConcept(
           icon,
-          queryFrame.matched ? queryVariant : query,
+          queryFrame.matched || hasSupportedIntentFallback ? queryVariant : query,
           1,
           queryFrame.matched ? new Set() : fuzzyCorrectionWords,
         ),

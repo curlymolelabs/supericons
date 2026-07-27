@@ -161,7 +161,7 @@ try {
     .digest('hex');
   assert.equal(
     installedFingerprint,
-    '3ec9fae16fbd1c6900d1bdf4ed4f48270d7e4baec0e6d26783aa54821f6f7d24',
+    '84a5e8b3c1b4e31e25cc865b37f397effb6c6c4c820b98706995012b8b80e3ff',
     'Clean-installed package changed the fixed search fingerprint.',
   );
   const routeExpectedObservations = evaluationSet.query_groups.flatMap((group) => group.queries || [])
@@ -251,7 +251,7 @@ try {
     .digest('hex');
   assert.equal(
     routeFingerprint,
-    '5bc36ea9693c4461508a3a9ce9855e3bf46e7cdccc6e48fcdeca8146c9a5b711',
+    'c447744c04d2d7628959f685090b95159f912c5ca74ce3ec950d0c3175f89f44',
     'Clean-installed stdio route changed the 225-case ordered result contract.',
   );
 
