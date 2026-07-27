@@ -1,5 +1,7 @@
 # Supericons MCP
 
+Requires Node.js 20 or newer.
+
 Supericons MCP gives coding agents multilingual icon search, recommendations,
 previews, and export tools.
 

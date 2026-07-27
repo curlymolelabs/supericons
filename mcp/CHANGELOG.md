@@ -14,6 +14,10 @@
 - removes stored installation hashes after 90 days
 - keeps telemetry separate from search so failures and timeouts do not change results
 
+### Security
+
+- requires Node.js 20 or newer and refreshes the locked MCP runtime dependencies to remove a Windows path traversal advisory
+
 ## 0.4.23 - 2026-07-27
 
 ### Fixed
