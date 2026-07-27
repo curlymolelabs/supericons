@@ -50,17 +50,17 @@ const server = createServer(async (request, response) => {
   const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
   if (
     request.url?.startsWith('/rest/v1/rpc/')
-    || request.url === '/functions/v1/local-mcp-telemetry'
+    || request.url === '/rest/v1/rpc/si_log_local_mcp_search_outcome_v3'
   ) {
     telemetryCalls.push({ url: request.url, body });
     response.writeHead(
-      failTelemetry ? 503 : request.url === '/functions/v1/local-mcp-telemetry' ? 202 : 200,
+      failTelemetry ? 503 : 200,
       { 'Content-Type': 'application/json' },
     );
     response.end(
       failTelemetry
         ? JSON.stringify({ error: 'telemetry unavailable' })
-        : request.url === '/functions/v1/local-mcp-telemetry'
+        : request.url === '/rest/v1/rpc/si_log_local_mcp_search_outcome_v3'
           ? JSON.stringify({ accepted: true, duplicate: false })
           : 'null',
     );
@@ -92,7 +92,7 @@ async function waitForTelemetryCount(minimumCount) {
   const deadline = Date.now() + 2000;
   while (Date.now() < deadline) {
     const count = telemetryCalls.filter((entry) => (
-      entry.url.endsWith('/functions/v1/local-mcp-telemetry')
+      entry.url.endsWith('/rpc/si_log_local_mcp_search_outcome_v3')
     )).length;
     if (count >= minimumCount) return;
     await new Promise((resolve) => setTimeout(resolve, 20));
@@ -147,7 +147,7 @@ try {
   const callsAfterEnglish = hostedCalls.length;
   await waitForTelemetryCount(1);
   const englishOutcomeCalls = telemetryCalls.filter((entry) => (
-    entry.url.endsWith('/functions/v1/local-mcp-telemetry')
+    entry.url.endsWith('/rpc/si_log_local_mcp_search_outcome_v3')
   ));
 
   const materialOutline = parseToolPayload(await client.callTool({
@@ -282,11 +282,11 @@ try {
       entry.svgSource === 'owned-material-cache:bundle'
     )),
     local_search_writes_one_outcome_attempt: englishOutcomeCalls.length === 1
-      && englishOutcomeCalls[0].body.beta_cohort === 'deterministic-v2-beta'
-      && englishOutcomeCalls[0].body.tool_name === 'search_icons'
-      && englishOutcomeCalls[0].body.search_outcome === 'results'
-      && englishOutcomeCalls[0].body.result_count === english.results.length
-      && englishOutcomeCalls[0].body.contract_version === 3,
+      && englishOutcomeCalls[0].body.p_payload.beta_cohort === 'deterministic-v2-beta'
+      && englishOutcomeCalls[0].body.p_payload.tool_name === 'search_icons'
+      && englishOutcomeCalls[0].body.p_payload.search_outcome === 'results'
+      && englishOutcomeCalls[0].body.p_payload.result_count === english.results.length
+      && englishOutcomeCalls[0].body.p_payload.contract_version === 3,
     hosted_fallback_keeps_local_client_attribution: [
       localizedHostedCall,
       untaggedNonAsciiCall,
@@ -303,8 +303,8 @@ try {
     ].every((entry) => (
       /^[a-f0-9]{64}$/.test(String(entry?.session_hash || ''))
       && telemetryCalls
-        .filter((call) => call.url.endsWith('/functions/v1/local-mcp-telemetry'))
-        .some((call) => call.body.session_hash === entry.session_hash)
+        .filter((call) => call.url.endsWith('/rpc/si_log_local_mcp_search_outcome_v3'))
+        .some((call) => call.body.p_payload.session_hash === entry.session_hash)
     )),
     returned_icon_evidence_uses_local_venue: telemetryCalls
       .filter((entry) => entry.url.endsWith('/rpc/si_log_icon_evidence'))
@@ -338,7 +338,7 @@ try {
     hosted_calls: hostedCalls.length,
     material_asset_calls: materialAssetCalls.length,
     search_outcome_telemetry_calls: telemetryCalls.filter((entry) => (
-      entry.url.endsWith('/functions/v1/local-mcp-telemetry')
+      entry.url.endsWith('/rpc/si_log_local_mcp_search_outcome_v3')
     )).length,
     english_result_count: english.results.length,
     localized_result_count: localized.results.length,

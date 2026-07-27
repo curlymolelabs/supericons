@@ -1,0 +1,29 @@
+{
+  "artifact": "local_mcp_attribution_v3_release_action",
+  "generated_at": "2026-07-27T17:24:20.431Z",
+  "project_ref": "kcjmkakdhsqplvasgkjv",
+  "mode": "apply",
+  "migration_sha256": "f4a825cf25f0ed0f46e4486e4dbd1886b512446820e52463fdbf0ba34cb7f967",
+  "rollback_sha256": "be1ebcbd67fa81c29fc53259a97e32c1cd441db60181b4431b0e80c540475c6b",
+  "before": {
+    "v2_present": true,
+    "v3_present": false,
+    "usage_columns": 0,
+    "final_columns": 0,
+    "enrichment_triggers": 0,
+    "retention_jobs": 0,
+    "anon_can_execute_v3": false,
+    "service_role_can_execute_v3": false
+  },
+  "after": {
+    "v2_present": true,
+    "v3_present": true,
+    "usage_columns": 7,
+    "final_columns": 4,
+    "enrichment_triggers": 1,
+    "retention_jobs": 1,
+    "anon_can_execute_v3": false,
+    "service_role_can_execute_v3": true
+  },
+  "status": "passed"
+}

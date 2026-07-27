@@ -20,7 +20,7 @@ const httpServer = createServer(async (request, response) => {
 
   if (
     delayTelemetry
-    && request.url === '/functions/v1/local-mcp-telemetry'
+    && request.url === '/rest/v1/rpc/si_log_local_mcp_search_outcome_v3'
   ) {
     await new Promise((resolve) => setTimeout(resolve, 1500));
   }
@@ -38,7 +38,7 @@ const baseUrl = `http://127.0.0.1:${address.port}`;
 let client;
 let transport;
 const localOutcomeRequests = () => telemetryRequests.filter((entry) => (
-  entry.url === '/functions/v1/local-mcp-telemetry'
+  entry.url === '/rest/v1/rpc/si_log_local_mcp_search_outcome_v3'
 ));
 try {
   const sdkBase = join(
@@ -117,8 +117,8 @@ try {
   );
   assert.equal(
     localOutcomeRequests().every((entry) => (
-      entry.url === '/functions/v1/local-mcp-telemetry'
-      && entry.body.contract_version === 3
+      entry.url === '/rest/v1/rpc/si_log_local_mcp_search_outcome_v3'
+      && entry.body.p_payload?.contract_version === 3
     )),
     true,
   );

@@ -149,7 +149,7 @@ try {
   globalThis.fetch = async (url, options) => {
     const body = JSON.parse(options.body);
     requests.push({ url: String(url), body });
-    if (String(url).endsWith('/functions/v1/local-mcp-telemetry')) {
+    if (String(url).endsWith('/rpc/si_log_local_mcp_search_outcome_v3')) {
       return new Response(JSON.stringify({ accepted: true, duplicate: false }), {
         status: 202,
         headers: { 'Content-Type': 'application/json' },
@@ -263,12 +263,12 @@ try {
     latencyMs: 1234.4,
   });
   const telemetryRequest = requests.find((request) => (
-    request.url.endsWith('/functions/v1/local-mcp-telemetry')
+    request.url.endsWith('/rpc/si_log_local_mcp_search_outcome_v3')
   ));
   assert.ok(telemetryRequest, 'Tool telemetry must use the protected v3 endpoint.');
-  assert.equal(telemetryRequest.body.latency_ms, 1234);
-  assert.equal(telemetryRequest.body.tool_name, 'recommend_icons');
-  assert.equal(telemetryRequest.body.contract_version, 3);
+  assert.equal(telemetryRequest.body.p_payload.latency_ms, 1234);
+  assert.equal(telemetryRequest.body.p_payload.tool_name, 'recommend_icons');
+  assert.equal(telemetryRequest.body.p_payload.contract_version, 3);
 } finally {
   globalThis.fetch = originalFetch;
   if (originalUrl === undefined) delete process.env.SUPERICONS_MCP_SEARCH_URL;

@@ -4,7 +4,8 @@ import { SUPABASE_ANON, SUPABASE_URL } from './auth.js';
 import { getOrCreateLocalTelemetryInstallationId } from './local-telemetry-identity.js';
 
 const PROCESS_SESSION_TOKEN = randomUUID();
-const LOCAL_TELEMETRY_ENDPOINT = `${SUPABASE_URL}/functions/v1/local-mcp-telemetry`;
+const LOCAL_TELEMETRY_ENDPOINT =
+  `${SUPABASE_URL}/rest/v1/rpc/si_log_local_mcp_search_outcome_v3`;
 const TELEMETRY_TIMEOUT_MS = 750;
 let clientVersionProvider = () => null;
 let persistedInstallationId = null;
@@ -127,13 +128,15 @@ async function callV3SearchOutcome(payload) {
       apikey: SUPABASE_ANON,
       Authorization: `Bearer ${SUPABASE_ANON}`,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ p_payload: payload }),
     signal: AbortSignal.timeout(TELEMETRY_TIMEOUT_MS),
   });
   if (response.ok) return { accepted: true, fallbackToV2: false };
+  const errorBody = await response.json().catch(() => null);
   return {
     accepted: false,
-    fallbackToV2: response.status === 404,
+    fallbackToV2: response.status === 404
+      || (response.status === 400 && errorBody?.code === 'PGRST202'),
   };
 }
 

@@ -146,18 +146,22 @@ try {
   };
   await logMcpSearchAttempt(telemetryInput());
   assert.equal(requests.length, 1);
-  assert.match(requests[0].url, /\/functions\/v1\/local-mcp-telemetry$/);
-  assert.equal(requests[0].body.contract_version, 3);
-  assert.equal(requests[0].body.client_family, 'codex_desktop');
-  assert.equal(requests[0].body.client_version, '1.2.3');
-  assert.match(requests[0].body.install_id, /^[0-9a-f-]{36}$/);
-  assert.match(requests[0].body.episode_id, /^[0-9a-f-]{36}$/);
-  assert.match(requests[0].body.attempt_id, /^[0-9a-f-]{36}$/);
-  assert.equal(
-    requests[0].body.recovery_chain_id,
-    requests[0].body.episode_id,
+  assert.match(
+    requests[0].url,
+    /\/rpc\/si_log_local_mcp_search_outcome_v3$/,
   );
-  assert.equal('project_path' in requests[0].body, false);
+  const v3Body = requests[0].body.p_payload;
+  assert.equal(v3Body.contract_version, 3);
+  assert.equal(v3Body.client_family, 'codex_desktop');
+  assert.equal(v3Body.client_version, '1.2.3');
+  assert.match(v3Body.install_id, /^[0-9a-f-]{36}$/);
+  assert.match(v3Body.episode_id, /^[0-9a-f-]{36}$/);
+  assert.match(v3Body.attempt_id, /^[0-9a-f-]{36}$/);
+  assert.equal(
+    v3Body.recovery_chain_id,
+    v3Body.episode_id,
+  );
+  assert.equal('project_path' in v3Body, false);
 
   const fallbackRoot = await makeTempRoot('fallback');
   process.env.SUPERICONS_CONFIG_DIR = fallbackRoot;
@@ -165,7 +169,7 @@ try {
   const fallbackRequests = [];
   globalThis.fetch = async (url, options = {}) => {
     fallbackRequests.push(String(url));
-    if (String(url).includes('/functions/v1/local-mcp-telemetry')) {
+    if (String(url).includes('/rpc/si_log_local_mcp_search_outcome_v3')) {
       return new Response('not found', { status: 404 });
     }
     return new Response(null, { status: 204 });
