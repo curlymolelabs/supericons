@@ -9,6 +9,8 @@
 --
 -- This migration does not alter public.si_log_icon_evidence or any existing row.
 
+begin;
+
 alter table public.icon_evidence
   drop constraint if exists icon_evidence_signal_type_valid;
 
@@ -185,3 +187,5 @@ grant execute on function public.si_log_icon_request(
   text,
   text
 ) to anon, authenticated, service_role;
+
+commit;
