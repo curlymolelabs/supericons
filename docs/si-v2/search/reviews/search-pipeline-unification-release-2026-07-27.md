@@ -11,7 +11,9 @@ Telemetry attribution is not part of this release.
 ## Release identity
 
 - Source revision: `a8cf0f07c8e099e3913296f7fa4cc7b90bc9b07d`
+- Main integration revision: `3328fe3d2`
 - MCP package candidate: `@supericons/mcp@0.4.23`
+- npm stage: `cd7f7139-61fb-48b8-8e87-f9217093ef30`
 - MCP archive SHA-256: `1e5be0a41cf6685f8d3bbe1a526a0a274e69d43645a4996ff55b19969327a17e`
 - MCP archive npm shasum: `1bc3fd346a7ea0218facbb59687134d7d7dbaaf9`
 - Web artifact tree SHA-256: `df6e11875d12f43ccdb0180ee5d51a60562f4d1874571efa8ab3e90cc9dbafeb`
@@ -34,6 +36,7 @@ Additional checks passed:
 
 - 225 local parity cases
 - Exact archive installation and 225 stdio cases
+- Downloaded npm stage matched the audited archive byte-for-byte and passed the exact archive verifier
 - 39 remote-server cases through both HTTP and MCP
 - Maintained multilingual fixtures
 - Real browser smoke tests on the production website
@@ -56,7 +59,7 @@ Netlify deploy `6a67697fec402812099efd9b` is active on `https://supericons.dev`.
 
 The live 39-case Railway product matrix passed for both the public HTTP route and hosted MCP. The hosted MCP URL and tool schemas did not change, so existing hosted clients and submitted plugin configurations do not require an update.
 
-The npm `latest` tag remains at `0.4.22` until the exact 0.4.23 stage is approved.
+The npm `latest` tag remains at `0.4.22`. Stage `cd7f7139-61fb-48b8-8e87-f9217093ef30` holds the exact audited 0.4.23 archive and is ready for owner approval.
 
 ## Rollback
 
@@ -67,5 +70,5 @@ The npm `latest` tag remains at `0.4.22` until the exact 0.4.23 stage is approve
 
 ## Remaining release step
 
-Authenticate the npm CLI, stage the exact 0.4.23 archive, verify the staged bytes, and approve that stage in the npm browser. No other production surface is waiting on this step.
+Approve stage `cd7f7139-61fb-48b8-8e87-f9217093ef30` in the npm browser, then verify that the public 0.4.23 archive matches the audited bytes. No other production surface is waiting on this step.
 
