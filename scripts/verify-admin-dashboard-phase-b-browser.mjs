@@ -348,6 +348,47 @@ for (const row of queryRows) {
   row.searchers ??= [];
   row.searcher_details_available ??= false;
 }
+const searchHistoryRows = queryRows.flatMap((row, rowIndex) => (
+  Array.from({ length: Number(row.activity_count || 1) }, (_, eventIndex) => {
+    const mixedIssue = row.query === 'mixed aggregate'
+      ? eventIndex === 0 ? 'zero_result' : 'successful'
+      : row.issue_type;
+    return {
+      event_identifier: `search-history-${rowIndex + 1}-${eventIndex + 1}`,
+      recorded_at: row.last_seen,
+      query: row.query,
+      query_origin: row.query_origin,
+      tool_name: row.tools?.[0] || (row.query_origin === 'icon_lookup' ? 'get_icon' : 'search_icons'),
+      library_filter: row.library_filter,
+      searcher_identifier: String(row.client_label || '').startsWith('anon:')
+        ? row.client_label
+        : `anonymous:event-${rowIndex + 1}-${eventIndex + 1}`,
+      searcher_kind: row.visitor_kind || 'anonymous',
+      outcome: mixedIssue === 'zero_result'
+        ? 'zero'
+        : mixedIssue === 'low_result'
+          ? 'low'
+          : mixedIssue === 'successful'
+            ? 'success'
+            : mixedIssue,
+      issue_type: mixedIssue,
+      outcome_label: mixedIssue === 'zero_result'
+        ? 'Zero'
+        : mixedIssue === 'successful'
+          ? 'Success'
+          : row.outcome_label,
+      country_code: row.country_code,
+      channel: row.channel,
+      result_count: row.query === 'varying results'
+        ? [2, 4, 6, 8][eventIndex]
+        : row.query === 'mixed aggregate'
+          ? eventIndex === 0 ? 0 : 3
+          : row.typical_result_count ?? row.result_count,
+      result_unit: row.result_unit,
+      tools: row.tools || [],
+    };
+  })
+));
 const eventRows = [
   {
     event_identifier: 'event-1',
@@ -601,22 +642,40 @@ function responseFor(path, searchParams = new URLSearchParams()) {
   if (path === '/v2/search') {
     const page = Number(searchParams.get('page') || 1);
     const pageSize = Number(searchParams.get('page_size') || 25);
-    const orderedQueryRows = sortedMockRows(queryRows, searchParams, {
-      query: { field: 'query' },
-      searches: { field: 'activity_count', type: 'number' },
-      estimated_client_id_count: { field: 'estimated_client_id_count', type: 'number' },
-      outcome: { field: 'outcome_label' },
-      country_code: { field: 'country_code' },
-      channel: { field: 'channel' },
-      result_count: { field: 'result_count', type: 'number' },
-      last_seen: { field: 'last_seen' },
-    });
+    const summaryView = searchParams.get('view') === 'summary';
+    const queryFilter = String(searchParams.get('q') || '').trim().toLowerCase();
+    const sourceRows = (summaryView ? queryRows : searchHistoryRows).filter((row) => (
+      !queryFilter
+      || [row.query, row.library_filter, row.channel, row.country_code, row.searcher_identifier]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(queryFilter)
+    ));
+    const orderedQueryRows = sortedMockRows(sourceRows, searchParams, summaryView
+      ? {
+          query: { field: 'query' },
+          outcome: { field: 'outcome_label' },
+          country_code: { field: 'country_code' },
+          channel: { field: 'channel' },
+          result_count: { field: 'result_count', type: 'number' },
+        }
+      : {
+          query: { field: 'query' },
+          searcher_identifier: { field: 'searcher_identifier' },
+          outcome: { field: 'outcome_label' },
+          country_code: { field: 'country_code' },
+          channel: { field: 'channel' },
+          result_count: { field: 'result_count', type: 'number' },
+          recorded_at: { field: 'recorded_at' },
+        });
     const pageCount = Math.ceil(orderedQueryRows.length / pageSize);
     const start = (page - 1) * pageSize;
     return {
       summary: {
-        table_rows: queryRows.length,
-        activities: queryRows.reduce((sum, row) => sum + Number(row.activity_count || 0), 0),
+        table_rows: searchHistoryRows.length,
+        summary_rows: queryRows.length,
+        activities: searchHistoryRows.length,
       },
       queries: orderedQueryRows.slice(start, start + pageSize),
       coverage: {
@@ -972,6 +1031,13 @@ try {
     document.querySelector('#queryExplorer tbody tr')
       && document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
   ));
+  const clearTopZeroRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+      && !new URL(request.url()).searchParams.get('q')
+  ));
+  await page.fill('#explorerSearch', '');
+  await clearTopZeroRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');
@@ -1027,21 +1093,21 @@ try {
   const querySortRequest = page.waitForRequest((request) => {
     if (!request.url().includes('/functions/v1/admin-api/v2/search')) return false;
     const params = new URL(request.url()).searchParams;
-    return params.get('sort_by') === 'searches' && params.get('sort_direction') === 'desc';
+    return params.get('sort_by') === 'query' && params.get('sort_direction') === 'desc';
   });
-  await page.click('[data-sort-table="queries"][data-sort-key="searches"]');
+  await page.click('[data-sort-table="queries"][data-sort-key="query"]');
   await querySortRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   ok(
-    (await page.locator('#queryExplorer tbody tr').first().innerText()).includes('healthy query 55'),
+    (await page.locator('#queryExplorer tbody tr').first().innerText()).includes('varying results'),
     'Search history did not apply full-dataset server sorting.',
   );
   const ascendingQuerySortRequest = page.waitForRequest((request) => {
     if (!request.url().includes('/functions/v1/admin-api/v2/search')) return false;
     const params = new URL(request.url()).searchParams;
-    return params.get('sort_by') === 'searches' && params.get('sort_direction') === 'asc';
+    return params.get('sort_by') === 'query' && params.get('sort_direction') === 'asc';
   });
-  await page.click('[data-sort-table="queries"][data-sort-key="searches"]');
+  await page.click('[data-sort-table="queries"][data-sort-key="query"]');
   await ascendingQuerySortRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   await page.click('[data-pagination="queries"] [data-page-number="2"]');
@@ -1215,13 +1281,15 @@ try {
     'User requests saved the review against the wrong evidence row.',
   );
   ok(await page.locator('.panel[data-row-key="contact"]').count() === 0, 'The removed contact panel still takes up Search history space.');
-  ok((await page.locator('#queryExplorer').innerText()).includes('missing brand'), 'The single query explorer did not render.');
+  ok(await page.locator('#queryExplorer tbody tr').count() > 0, 'The single query explorer did not render.');
   ok(await page.locator('.panel[data-row-key="queries"] .panel-title').innerText() === 'Search history', 'The query summary table is not labelled Search history.');
   ok(await page.locator('#searchDataGuide').count() === 0, 'The old data guide still takes up table space.');
   const historySubtitle = await page.locator('#searchHistorySubtitle').innerText();
-  ok(historySubtitle.includes('One row per unique query. For quick analysis.'), 'Search history does not use the approved summary description.');
-  ok(historySubtitle.includes(`${queryRows.length} rows`), 'Search history does not show its exact summary row count.');
-  ok(historySubtitle.includes('searches'), 'Search history does not show its exact search count.');
+  ok(historySubtitle.includes('One row per recorded search. No grouping.'), 'Search history does not state its event-level grain.');
+  ok(
+    historySubtitle.includes(`${searchHistoryRows.length.toLocaleString('en-US')} searches`),
+    `Search history does not show its exact event count: ${historySubtitle}`,
+  );
   ok(historySubtitle.includes('test traffic excluded'), 'Search history does not state its default test-traffic scope.');
   ok(!(await queryPanel.innerText()).includes('Filters: zero:true'), 'Search history still shows hardcoded filter claims.');
   ok(await queryPanel.getByText('Advanced', { exact: true }).count() === 0, 'Search history still has a duplicate Advanced control.');
@@ -1276,26 +1344,36 @@ try {
   await page.uncheck('#includeSearchTestTraffic');
   await excludeTestRequest;
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  const duplicateEventSortRequest = page.waitForRequest((request) => {
+    if (!request.url().includes('/functions/v1/admin-api/v2/search')) return false;
+    const params = new URL(request.url()).searchParams;
+    return params.get('sort_by') === 'query' && params.get('sort_direction') === 'desc';
+  });
+  await page.click('[data-sort-table="queries"][data-sort-key="query"]');
+  await duplicateEventSortRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryHeaders = await page.locator('#queryExplorer th').evaluateAll((headers) => (
     headers.map((header) => header.textContent.replace(/\s+/g, ' ').trim())
   ));
-  ok(queryHeaders.includes('Searches'), 'Search history does not show recorded searches.');
-  ok(queryHeaders.includes('Est. client IDs'), 'Search history does not show estimated client IDs.');
-  ok(queryHeaders.includes('Typical result'), 'Search history does not show its typical result.');
-  ok(!queryHeaders.includes('Searcher'), 'Search history still exposes the old per-searcher grain.');
+  ok(queryHeaders.includes('Search term'), 'Search history does not identify the recorded search text.');
+  ok(queryHeaders.includes('Estimated client ID'), 'Search history does not show the event client ID.');
+  ok(queryHeaders.includes('Result'), 'Search history does not show the exact event result count.');
+  ok(queryHeaders.includes('Time'), 'Search history does not show the event time.');
+  ok(!queryHeaders.includes('Searches'), 'Search history still presents grouped search counts.');
   const varyingRows = page.locator('#queryExplorer tbody tr').filter({ hasText: 'varying results' });
-  ok(await varyingRows.count() === 1, 'The same query, library, and origin was not combined into one summary row.');
-  const firstVaryingRow = varyingRows.first();
-  ok((await firstVaryingRow.innerText()).includes('4'), 'The combined summary does not show its search count.');
-  ok((await firstVaryingRow.innerText()).includes('5 icons'), 'The combined summary does not show its median result count.');
+  ok(await varyingRows.count() === 4, 'Repeated identical search text was grouped instead of remaining as separate events.');
+  const varyingResultText = await varyingRows.allInnerTexts();
+  for (const result of ['2 icons', '4 icons', '6 icons', '8 icons']) {
+    ok(varyingResultText.some((text) => text.includes(result)), `Search history omits the recorded ${result} event.`);
+  }
   ok(await queryPanel.locator('[data-searcher-details]').count() === 0, 'Search history still has unnecessary row-detail controls.');
-  ok(!(await firstVaryingRow.innerText()).includes('min'), 'A grouped result range still uses the ambiguous minimum label.');
-  const healthyRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'healthy aggregate' });
-  ok((await healthyRow.innerText()).includes('Success'), 'A healthy aggregate query was not labelled Success.');
-  ok((await healthyRow.innerText()).includes('3 icons'), 'The typical result was hidden from the query summary.');
-  ok((await healthyRow.innerText()).includes('US'), 'The exact current-day country was hidden from the grouped query row.');
-  const mixedRow = page.locator('#queryExplorer tbody tr').filter({ hasText: 'mixed aggregate' });
-  ok((await mixedRow.innerText()).includes('Mixed: 4 success, 1 zero'), 'A mixed aggregate query was mislabelled.');
+  const lookupFilterRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+      && new URL(request.url()).searchParams.get('q')?.includes('icon lookup')
+  ));
+  await page.fill('#explorerSearch', 'icon lookup');
+  await lookupFilterRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const iconLookupRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('icon lookup', { exact: true }),
   });
@@ -1307,15 +1385,44 @@ try {
     has: page.getByText('icon lookup missing', { exact: true }),
   });
   ok((await missingLookupRow.innerText()).includes('Icon not found'), 'A failed icon lookup did not explain that the icon was not found.');
+  const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
+    has: page.getByText('icon lookup pending', { exact: true }),
+  });
+  ok((await pendingLookupRow.innerText()).includes('Lookup'), 'An unavailable icon lookup did not render an honest lookup state.');
+  ok(!(await pendingLookupRow.innerText()).includes('Zero'), 'An unavailable icon lookup rendered a false Zero pill.');
+  ok((await pendingLookupRow.innerText()).includes('Not recorded'), 'The unavailable icon lookup result state was not explained.');
+  const recommendationFilterRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+      && new URL(request.url()).searchParams.get('q')?.includes('recommendation request')
+  ));
+  await page.fill('#explorerSearch', 'recommendation request');
+  await recommendationFilterRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const recommendationRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('recommendation request', { exact: true }),
   });
   ok((await recommendationRow.innerText()).includes('8 recommendations'), 'A recommendation request did not use the approved returned-result wording.');
+  const lowFilterRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+      && new URL(request.url()).searchParams.get('q')?.includes('approximate low results')
+  ));
+  await page.fill('#explorerSearch', 'approximate low results');
+  await lowFilterRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const approximateLowRow = page.locator('#queryExplorer tbody tr').filter({
     has: page.getByText('approximate low results', { exact: true }),
   });
-  ok((await approximateLowRow.innerText()).includes('Low'), 'Approximate-low results were not shown as Low.');
-  ok(!(await approximateLowRow.innerText()).includes('Success'), 'Approximate-low results were shown as Success.');
+  ok(await approximateLowRow.count() === 2, 'Repeated low-result searches were grouped.');
+  const approximateLowTexts = await approximateLowRow.allInnerTexts();
+  ok(approximateLowTexts.every((text) => text.includes('Low')), 'Approximate-low results were not shown as Low.');
+  ok(approximateLowTexts.every((text) => !text.includes('Success')), 'Approximate-low results were shown as Success.');
+  const clearEventFilterRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+      && !new URL(request.url()).searchParams.get('q')
+  ));
+  await page.fill('#explorerSearch', '');
+  await clearEventFilterRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const searchHistoryPanelText = await queryPanel.innerText();
   ok(
     searchHistoryPanelText.includes('Website final-outcome coverage begins'),
@@ -1326,12 +1433,6 @@ try {
     path: 'output/playwright/admin-search-data-integrity.png',
     fullPage: true,
   });
-  const pendingLookupRow = page.locator('#queryExplorer tbody tr').filter({
-    has: page.getByText('icon lookup pending', { exact: true }),
-  });
-  ok((await pendingLookupRow.innerText()).includes('Lookup'), 'An unavailable icon lookup did not render an honest lookup state.');
-  ok(!(await pendingLookupRow.innerText()).includes('Zero'), 'An unavailable icon lookup rendered a false Zero pill.');
-  ok((await pendingLookupRow.innerText()).includes('Not available for this view'), 'The unavailable icon lookup result state was not explained.');
   ok(await page.locator('#autoRefresh').count() === 1, 'The 30-second auto-refresh option is missing.');
   ok(!(await page.locator('#autoRefresh').isChecked()), 'Auto-refresh must be off until the operator enables it.');
   const autoRefreshRequest = page.waitForRequest((request) => (

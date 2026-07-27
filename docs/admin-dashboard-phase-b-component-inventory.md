@@ -22,8 +22,8 @@ The admin dashboard is a local operator tool backed by the protected production 
 | Search charts | `#searchesChart`, `#clientsChart`, `#qualityChart` | `GET /v2/overview` | Shows total or per-venue search volume, reach history, and quality history |
 | Top lists | `#topListRows` | `GET /v2/overview` | Shows searched, returned, copied, and true-zero rankings when the source is complete |
 | Latest Activity | `#latestActivity` | `GET /v2/activity` | Shows newest search activity with server paging |
-| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per normalized query, library filter, and query origin, with server paging |
-| Search summary | `[data-export="search-summary-csv"]` | Complete filtered `GET /v2/search` pages | Downloads one row per unique query context for quick analysis |
+| Search history | `#queryExplorer` | `GET /v2/search` | Shows one row per recorded top-level search or exact icon lookup, with server paging |
+| Search summary | `[data-export="search-summary-csv"]` | Complete filtered `GET /v2/search?view=summary` pages | Downloads one row per unique query context for quick analysis |
 | Request log | `[data-export="request-log-csv"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=primary` | Downloads one top-level MCP tool call per row as the ground truth request log |
 | Audit bundle | `[data-export="audit-bundle-json"]` | Complete fixed snapshot from `GET /v2/search/events?event_scope=audit` plus Search summary | Keeps summary, MCP requests, web searches, and hosted diagnostics separate, with coverage, definitions, schemas, source metadata, and integrity checks |
 | Reach and accounts | `.funnel` | `GET /v2/audience` plus the complete account directory | Shows estimated or daily reach, all-time registered accounts, all-time active Pro accounts, and truthful MRR availability |
@@ -37,6 +37,7 @@ The admin dashboard is a local operator tool backed by the protected production 
 - Every panel has a compact named chevron control. Panels sharing a visual row collapse and expand together.
 - Scroll regions are height-bounded, keyboard reachable, and hide the visual scrollbar.
 - Search has one visible table and three downloads. The main button is Search summary. Its small menu contains Request log and Audit bundle.
+- Search history does not group identical search text. Every recorded top-level search or exact icon lookup remains a separate row with its own client ID, outcome, country, channel, result count, and time.
 - CSV and JSON exports use the complete filtered source. Export refuses a partial source rather than presenting partial rows as complete.
 - Search summary groups by normalized query, library filter, and query origin. It includes request and outcome counts, estimated client ID count, median result count, country codes, channels, and time range in 19 columns. Approximate low results are included in the Low count and never fall through to Success.
 - Request log uses one top-level MCP request per row after exact key-based source merging. It includes request-level fields only when recorded and never substitutes zero for a missing value. A positive result without usable icon references is marked as not recorded.

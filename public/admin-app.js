@@ -754,12 +754,13 @@ function originLabel(value) {
 }
 
 function visitorLabel(row = {}) {
-  const kind = String(row.visitor_kind || row.kind || '').toLowerCase();
+  const kind = String(row.visitor_kind || row.searcher_kind || row.kind || '').toLowerCase();
   const key = safeText(
     row.visitor_label
       || row.client_label
       || row.client_key
       || row.estimated_client_key
+      || row.searcher_identifier
       || row.identifier,
     'Unknown',
   );
@@ -852,6 +853,16 @@ function queryTypicalResultCell(row = {}) {
   const samples = number(row.result_sample_count);
   const detail = `${range}${range ? ' ' : ''}Median of ${formatNumber(samples)} recorded result ${samples === 1 ? 'count' : 'counts'}.`;
   return `<span title="${escapeHtml(detail)}">${escapeHtml(countWithUnit(row.typical_result_count, row.result_unit))}</span>`;
+}
+
+function queryEventResultCell(row = {}) {
+  if (row.result_count === null || row.result_count === undefined) {
+    return '<span class="muted-cell">Not recorded</span>';
+  }
+  if (row.result_unit === 'match' && number(row.result_count) === 0) {
+    return 'Icon not found';
+  }
+  return escapeHtml(countWithUnit(row.result_count, row.result_unit));
 }
 
 function queryCountryCell(row = {}) {
@@ -1867,9 +1878,9 @@ function renderQueryExplorer() {
   if (includeTest) includeTest.checked = state.searchIncludeTest;
   if (!element) return;
   if (!state.data.search && state.loading.has('search')) {
-    if (subtitle) subtitle.textContent = 'One row per unique query. For quick analysis. Loading data.';
+    if (subtitle) subtitle.textContent = 'One row per recorded search. No grouping. Loading data.';
     renderPagination('queries', 0, 1);
-    element.innerHTML = loadingState('Loading query summary');
+    element.innerHTML = loadingState('Loading search history');
     return;
   }
   if (state.data.search?.queries_available === false) {
@@ -1880,21 +1891,20 @@ function renderQueryExplorer() {
   }
   const summary = state.data.search?.summary || {};
   if (subtitle) {
-    const summaryRows = number(summary.summary_rows ?? summary.table_rows ?? state.data.search?.pagination?.total);
-    const requests = number(summary.requests ?? summary.activities ?? summary.history_attempts);
+    const tableRows = number(summary.table_rows ?? state.data.search?.pagination?.total);
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
     const coverageWarning = normalizeList(state.data.search?.coverage?.warnings)
       .map((warning) => safeText(warning))
       .filter(Boolean)
       .join(' ');
     subtitle.textContent = [
-      `One row per unique query. For quick analysis. ${formatNumber(summaryRows)} rows | ${formatNumber(requests)} searches | ${testScope}`,
+      `One row per recorded search. No grouping. ${formatNumber(tableRows)} searches | ${testScope}`,
       coverageWarning,
     ].filter(Boolean).join(' | ');
   }
   const headers = [
     {
-      label: 'Query',
+      label: 'Search term',
       sortKey: 'query',
       render: (row) => {
         const tools = normalizeList(row.tools);
@@ -1906,13 +1916,12 @@ function renderQueryExplorer() {
         return `<strong>${escapeHtml(safeText(row.query, 'Empty query'))}</strong><div class="activity-meta">${escapeHtml(details.join(' | '))}</div>`;
       },
     },
-    { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', sortValue: (row) => row.searches ?? row.activity_count ?? row.requests ?? null, render: (row) => queryRequestCell(row) },
-    { label: 'Est. client IDs', number: true, sortKey: 'estimated_client_id_count', sortType: 'number', sortValue: (row) => row.estimated_client_id_count ?? row.client_count ?? null, render: (row) => queryEstimatedClientIdsCell(row) },
+    { label: 'Estimated client ID', sortKey: 'searcher_identifier', sortValue: (row) => row.searcher_identifier, render: (row) => visitorLabel(row) },
     { label: 'Outcome', sortKey: 'outcome', sortValue: (row) => outcomeFor(row).label, render: (row) => { const value = outcomeFor(row); return pill(value.label, value.tone); } },
     { label: 'Country', sortKey: 'country_code', sortValue: (row) => (row.country_available === false ? null : row.country_code || row.country || null), render: (row) => queryCountryCell(row) },
     { label: 'Channel', sortKey: 'channel', sortValue: (row) => (row.channel_available === false ? null : channelLabel(row.channel || row.venue)), render: (row) => queryChannelCell(row) },
-    { label: 'Typical result', number: true, sortKey: 'result_count', sortType: 'number', sortValue: (row) => (row.result_count_available === false ? null : row.result_count ?? null), render: (row) => queryTypicalResultCell(row) },
-    { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', sortValue: (row) => row.last_seen || row.created_at, render: (row) => escapeHtml(formatDate(row.last_seen || row.created_at, true)) },
+    { label: 'Result', number: true, sortKey: 'result_count', sortType: 'number', sortValue: (row) => row.result_count ?? null, render: (row) => queryEventResultCell(row) },
+    { label: 'Time', sortKey: 'recorded_at', sortType: 'date', sortValue: (row) => row.recorded_at, render: (row) => escapeHtml(formatDate(row.recorded_at, true)) },
   ];
   const queryParts = sortedTableParts('queries', headers, state.data.search?.queries, {
     serverPagination: state.data.search?.pagination,
@@ -2692,12 +2701,13 @@ function scheduleEndpointRefresh(endpoint, delay = 240) {
   endpointFilterTimer = window.setTimeout(() => refreshListEndpoint(endpoint), delay);
 }
 
-async function fetchAllPages(endpoint, rowsPath) {
+async function fetchAllPages(endpoint, rowsPath, options = {}) {
   const pageSize = 100;
   const params = sharedParams({ forSearch: endpoint === 'search' });
   params.set('page', '1');
   params.set('page_size', String(pageSize));
   if (endpoint === 'search' && state.explorerIssue) params.set('issue', state.explorerIssue);
+  if (endpoint === 'search' && options.view) params.set('view', options.view);
   const first = await apiRequest(`/v2/${endpoint}?${params}`);
   if (endpoint === 'activity' && first.meta?.raw_rows_truncated === true) {
     throw new Error('Complete activity exceeds the safe export limit. Choose a shorter date range.');
@@ -2791,9 +2801,17 @@ async function exportData(key) {
   let eventExport = null;
   try {
     if (key === 'search-summary-csv' || key === 'audit-bundle-json') {
-      completeRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
+      completeRows = await fetchAllPages(
+        'search',
+        (payload) => normalizeList(payload.queries),
+        { view: 'summary' },
+      );
     } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
-      const queryRows = await fetchAllPages('search', (payload) => normalizeList(payload.queries));
+      const queryRows = await fetchAllPages(
+        'search',
+        (payload) => normalizeList(payload.queries),
+        { view: 'summary' },
+      );
       completeRows = queryRows.filter((row) => (
         ['zero_result', 'low_result', 'mixed_result'].includes(String(row.issue_type || ''))
         && !['resolved', 'ignore'].includes(String(row.review_status || ''))

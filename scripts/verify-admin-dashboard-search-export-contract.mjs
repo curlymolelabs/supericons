@@ -89,14 +89,16 @@ if (menuItems.length !== 2) {
 [
   'dashboardV2SearchHistoryRole',
   "['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))",
+  'compactDashboardV2SearchHistoryEventRows',
+  'filterDashboardV2SearchHistoryEventRows',
   'excluded_non_activity_rows',
-  'Number(row.activity_count || 0) > 0',
   'total: orderedHistoryRows.length',
   'separateQueryOrigins: true',
   'separateChannels: false',
   'separateSearchers: false',
   'includeSearcherDetails: false',
-  "query_row_grain: ['query', 'library_filter', 'query_origin']",
+  "['recorded_search_event']",
+  "search_summary_row_grain: ['query', 'library_filter', 'query_origin']",
   "from('search_final_outcomes')",
   "from('search_episode_diagnostics')",
   "dashboard_source === 'final'",
@@ -111,6 +113,9 @@ if (menuItems.length !== 2) {
   'explained_unlinked_gateway_diagnostic',
   'diagnostics_kept_out_of_product_rows',
 ].forEach((value) => requireText(api, value, 'Search history API'));
+
+requireText(app, "{ view: 'summary' }", 'Search summary export');
+requireText(app, 'One row per recorded search. No grouping.', 'Search history table');
 
 requireText(helpers, 'export function dashboardV2SearchHistoryRole', 'Search history role helper');
 requireText(helpers, 'diagnostic_accounting_status', 'Search history compact event helper');

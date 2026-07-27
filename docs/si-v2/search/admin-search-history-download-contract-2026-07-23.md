@@ -4,7 +4,7 @@
 
 The internal Search history screen should make normal analysis easy while keeping deeper evidence available when needed.
 
-The screen has one summary table, one outcome filter, one test-traffic switch, and one compact download control. It does not show raw diagnostics in the main table.
+The screen has one event history table, one outcome filter, one test-traffic switch, and one compact download control. It does not show raw diagnostics in the main table.
 
 ## Source roles
 
@@ -32,11 +32,12 @@ By default, the table:
 
 - includes top-level MCP activity and top-level web search activity
 - excludes controlled tests, preview traffic, and local development traffic
-- groups by normalized query, library filter, and query origin
-- shows request count and estimated client ID count as separate measures
+- keeps every recorded search or exact icon lookup in its own row
+- does not combine identical search text
+- shows the estimated client ID, outcome, country, channel, exact recorded result count, and time for that event
 - uses server pagination so the browser does not need the full history in memory
 
-Search history can be sorted by query, searches, estimated client IDs, outcome, country, channel, typical result count, or last seen. Searchers can be sorted by searcher ID, plan, country, first seen, last seen, searches, or top query.
+Search history can be sorted by search term, estimated client ID, outcome, country, channel, result count, or time. Searchers can be sorted by searcher ID, plan, country, first seen, last seen, searches, or top query.
 
 The API accepts only those named fields through `sort_by`. `sort_direction` is either `asc` or `desc`. The API sorts the complete filtered list before selecting the requested page, and rows without a recorded value stay last. Requests without sorting keep the existing default order. Invalid sorting requests return a 400 response.
 
@@ -44,9 +45,9 @@ The Include test traffic switch changes only the Search history request. It does
 
 The table subtitle is:
 
-`One row per unique query. For quick analysis.`
+`One row per recorded search. No grouping.`
 
-For technical accuracy, unique means the same normalized query, library filter, and query origin. Channel, country, tool, and estimated client ID are measures or detail fields. They do not split the summary into extra rows.
+The Search summary download keeps the grouped grain described below. This separation lets the table show what actually happened while the download remains useful for query-level analysis.
 
 ## Outcome rules
 

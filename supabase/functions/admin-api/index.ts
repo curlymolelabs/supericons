@@ -34,6 +34,7 @@ import {
   mergeDashboardV2CurrentQueryDetails,
   normalizeDashboardV2QueryRows,
   parseDashboardV2Filters,
+  parseDashboardV2QuerySearch,
 } from '../../../lib/admin-dashboard-v2.js';
 import knownSearchDefects from '../../../data/admin/known-search-defects.json' with { type: 'json' };
 
@@ -1470,13 +1471,12 @@ type DashboardV2SortSpec = {
 
 const DASHBOARD_V2_SEARCH_SORTS: Record<string, DashboardV2SortDefinition> = {
   query: { type: 'text', value: (row) => row.query },
-  searches: { type: 'number', value: (row) => row.activity_count },
-  estimated_client_id_count: { type: 'number', value: (row) => row.estimated_client_id_count },
+  searcher_identifier: { type: 'text', value: (row) => row.searcher_identifier },
   outcome: { type: 'text', value: (row) => row.outcome_label },
   country_code: { type: 'text', value: (row) => row.country_code },
   channel: { type: 'text', value: (row) => row.channel },
   result_count: { type: 'number', value: (row) => row.result_count },
-  last_seen: { type: 'date', value: (row) => row.last_seen },
+  recorded_at: { type: 'date', value: (row) => row.recorded_at },
 };
 
 const DASHBOARD_V2_CLIENT_SORTS: Record<string, DashboardV2SortDefinition> = {
@@ -3256,6 +3256,117 @@ async function fetchDashboardV2Contacts(
   return { available: true, rows: filtered };
 }
 
+function dashboardV2SearchHistoryEventIssue(
+  row: Record<string, unknown>,
+  event: Record<string, unknown>,
+) {
+  const queryOrigin = String(event.query_origin || '').toLowerCase();
+  const eventOutcome = String(event.outcome || '').toLowerCase();
+  if (queryOrigin === 'icon_lookup') {
+    if (eventOutcome === 'not_found') return 'not_found';
+    if (eventOutcome === 'error') return 'error';
+    if (eventOutcome === 'unknown') return 'unknown';
+    return 'successful';
+  }
+  const classification = classifySearchAttempt(row, knownSearchDefects);
+  if (classification.is_error) return 'error';
+  if (classification.is_clarification) return 'clarification';
+  if (classification.is_zero) return 'zero_result';
+  if (classification.is_exact_low || classification.is_approximate_low) return 'low_result';
+  if (classification.result_count === null) return 'unknown';
+  return 'successful';
+}
+
+function compactDashboardV2SearchHistoryEventRows(
+  rows: Array<Record<string, unknown>>,
+) {
+  const compactEvents = compactDashboardV2EventRows(rows) as Array<Record<string, unknown>>;
+  return compactEvents
+    .map((event: Record<string, unknown>, index: number) => {
+      const issueType = dashboardV2SearchHistoryEventIssue(rows[index], event);
+      const outcome = issueType === 'zero_result'
+        ? 'zero'
+        : issueType === 'low_result'
+          ? 'low'
+          : issueType === 'successful'
+            ? 'success'
+            : issueType;
+      const outcomeLabels: Record<string, string> = {
+        error: 'Error',
+        clarification: 'Clarification',
+        low_result: 'Low',
+        not_found: 'Not found',
+        successful: 'Success',
+        unknown: 'Unknown',
+        zero_result: 'Zero',
+      };
+      const resultUnit = event.query_origin === 'icon_lookup'
+        ? 'match'
+        : event.tool_name === 'recommend_icons'
+          ? 'primary_pick'
+          : 'icon';
+      return {
+        ...event,
+        outcome,
+        issue_type: issueType,
+        outcome_label: outcomeLabels[issueType] || 'Unknown',
+        activity_count: 1,
+        estimated_client_id_count: event.searcher_identifier === 'Unknown searcher' ? 0 : 1,
+        tools: event.tool_name ? [event.tool_name] : [],
+        channels: event.channel ? [event.channel] : [],
+        countries: event.country_code ? [event.country_code] : [],
+        locales: event.locale ? [event.locale] : [],
+        interface_locales: event.interface_locale ? [event.interface_locale] : [],
+        query_origins: event.query_origin ? [event.query_origin] : [],
+        visitor_kind: event.searcher_kind,
+        result_unit: resultUnit,
+        result_count_available: event.result_count !== null,
+        typical_result_count: event.result_count,
+        first_seen: event.recorded_at,
+        last_seen: event.recorded_at,
+      };
+    })
+    .filter((row: Record<string, unknown>) => String(row.query || '').trim());
+}
+
+function filterDashboardV2SearchHistoryEventRows(
+  rows: Array<Record<string, unknown>>,
+  searchValue: string,
+  issue = '',
+) {
+  const parsed = parseDashboardV2QuerySearch(searchValue);
+  const parsedFilters = parsed.filters as Record<string, string>;
+  return rows.filter((row) => {
+    if (parsed.text) {
+      const haystack = [
+        row.query,
+        row.library_filter,
+        row.channel,
+        row.country_code,
+        row.query_origin,
+        row.searcher_identifier,
+        row.tool_name,
+      ].filter(Boolean).join(' ').toLowerCase();
+      if (!haystack.includes(parsed.text)) return false;
+    }
+    const issueType = String(row.issue_type || '');
+    if ((issue === 'zero_result' || parsedFilters.zero === 'true') && issueType !== 'zero_result') return false;
+    if ((issue === 'low_result' || parsedFilters.low === 'true') && issueType !== 'low_result') return false;
+    if (issue === 'error' && issueType !== 'error') return false;
+    if (issue === 'clarification' && issueType !== 'clarification') return false;
+    if (issue === 'successful' && issueType !== 'successful') return false;
+    if (parsedFilters.venue && String(row.channel || '').toLowerCase() !== parsedFilters.venue) return false;
+    if (parsedFilters.country && String(row.country_code || '').toLowerCase() !== parsedFilters.country) return false;
+    if (parsedFilters.origin) {
+      const expected = parsedFilters.origin === 'user' ? 'agent_query' : parsedFilters.origin;
+      if (String(row.query_origin || '').toLowerCase() !== expected) return false;
+    }
+    if (parsedFilters.registered === 'true' && row.registered !== true && row.pro !== true) return false;
+    if (parsedFilters.registered === 'false' && (row.registered === true || row.pro === true)) return false;
+    return true;
+  });
+}
+
 async function buildDashboardV2SearchPayload(
   adminClient: SupabaseClient,
   url: URL,
@@ -3265,6 +3376,7 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const summaryView = String(url.searchParams.get('view') || '').toLowerCase() === 'summary';
   const sort = parseDashboardV2Sort(url, DASHBOARD_V2_SEARCH_SORTS);
   const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
   const historyTelemetryPromise = filters.use_raw
@@ -3284,7 +3396,7 @@ async function buildDashboardV2SearchPayload(
   const historyEvidenceRows = historySourceRows.filter((row: Record<string, unknown>) => (
     ['search', 'lookup'].includes(dashboardV2SearchHistoryRole(row))
   ));
-  const historyRows = buildQueryWorkbenchRows(
+  const historySummaryRows = buildQueryWorkbenchRows(
     historyEvidenceRows.map((row) => ({
       ...row,
       job_category: null,
@@ -3297,8 +3409,14 @@ async function buildDashboardV2SearchPayload(
       includeSearcherDetails: false,
     },
   );
-  const filteredHistoryRows = filterDashboardV2QueryRows(
-    historyRows,
+  const compactHistoryEvents = compactDashboardV2SearchHistoryEventRows(historyEvidenceRows);
+  const filteredHistoryEvents = filterDashboardV2SearchHistoryEventRows(
+    compactHistoryEvents,
+    filters.q,
+    issue,
+  );
+  const filteredHistorySummaryRows = filterDashboardV2QueryRows(
+    historySummaryRows,
     filters.q,
     issue,
   ) as Array<any>;
@@ -3308,28 +3426,30 @@ async function buildDashboardV2SearchPayload(
     issue,
   ) as Array<any>;
   const filteredDemandRows = filterDashboardV2QueryRows(
-    historyRows,
+    historySummaryRows,
     filters.q,
     issue,
   ) as Array<any>;
-  const sortedRows = [...filteredHistoryRows].sort((left, right) => (
+  const sortedSummaryRows = [...filteredHistorySummaryRows].sort((left, right) => (
     String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
-    || right.attempt_count - left.attempt_count
+    || Number(right.attempt_count || 0) - Number(left.attempt_count || 0)
     || left.query.localeCompare(right.query)
   ));
-  const compactHistoryRows = compactDashboardV2QueryRows(sortedRows)
+  const compactSummaryRows = compactDashboardV2QueryRows(sortedSummaryRows)
     .filter((row: Record<string, unknown>) => Number(row.activity_count || 0) > 0);
+  const sortedEventRows = [...filteredHistoryEvents].sort((left, right) => (
+    String(right.recorded_at || '').localeCompare(String(left.recorded_at || ''))
+    || String(right.event_identifier || '').localeCompare(String(left.event_identifier || ''))
+  ));
+  const visibleRows = summaryView ? compactSummaryRows : sortedEventRows;
   const orderedHistoryRows = sortDashboardV2Rows(
-    compactHistoryRows,
+    visibleRows,
     sort,
     DASHBOARD_V2_SEARCH_SORTS,
   );
-  const excludedNonActivityRows = sortedRows.length - compactHistoryRows.length;
-  const historyActivities = compactHistoryRows.reduce(
-    (sum: number, row: Record<string, unknown>) => sum + Number(row.activity_count || 0),
-    0,
-  );
-  const webActivities = historyEvidenceRows.filter(
+  const excludedNonActivityRows = historyEvidenceRows.length - compactHistoryEvents.length;
+  const historyActivities = filteredHistoryEvents.length;
+  const webActivities = filteredHistoryEvents.filter(
     (row: Record<string, unknown>) => String(row.channel || '') === 'web',
   ).length;
   const pageCount = Math.max(1, Math.ceil(orderedHistoryRows.length / pageSize));
@@ -3373,9 +3493,9 @@ async function buildDashboardV2SearchPayload(
       attempts: filteredWorklistRows.reduce((sum, row) => sum + Number(row.attempt_count || 0), 0),
       query_groups: filteredWorklistRows.length,
       history_attempts: historyActivities,
-      history_rows: compactHistoryRows.length,
-      table_rows: compactHistoryRows.length,
-      summary_rows: compactHistoryRows.length,
+      history_rows: filteredHistoryEvents.length,
+      table_rows: filteredHistoryEvents.length,
+      summary_rows: compactSummaryRows.length,
       activities: historyActivities,
       requests: historyActivities,
       mcp_activities: Math.max(0, historyActivities - webActivities),
@@ -3414,13 +3534,20 @@ async function buildDashboardV2SearchPayload(
       history_rows_truncated: historyTruncated,
       rollup_rows_truncated: dataRows.rollup_truncated,
       raw_access: 'Use the bounded admin API exports for detail.',
-      query_row_grain: ['query', 'library_filter', 'query_origin'],
+      query_row_grain: summaryView
+        ? ['query', 'library_filter', 'query_origin']
+        : ['recorded_search_event'],
+      search_summary_row_grain: ['query', 'library_filter', 'query_origin'],
       activity_measure: 'Recorded top-level searches and exact icon lookups.',
-      result_measure: 'Median recorded result count. Unavailable when a summary mixes incompatible result units.',
-      estimated_client_id_measure: 'Estimated client IDs seen in the selected period. IDs may split or combine people.',
+      result_measure: summaryView
+        ? 'Median recorded result count. Unavailable when a summary mixes incompatible result units.'
+        : 'Exact result count recorded for this search event.',
+      estimated_client_id_measure: 'Estimated client ID recorded for this search event. IDs may split or combine people.',
     },
     meta: dashboardV2Meta(filters, startedAt, {
-      metric_scope: 'filtered_search_activity',
+      metric_scope: summaryView
+        ? 'filtered_search_summary'
+        : 'filtered_search_events',
       completeness: {
         raw_rows_complete: !dataRows.raw_truncated,
         rollup_rows_complete: !dataRows.rollup_truncated,

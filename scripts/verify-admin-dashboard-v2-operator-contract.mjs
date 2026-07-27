@@ -21,7 +21,7 @@ assert.match(appSource, /data-query-review/);
 assert.match(appSource, /\/v2\/search\/review/);
 assert.match(appSource, /data-icon-request-review/);
 assert.match(appSource, /\/v2\/icon-requests\/review/);
-assert.match(appSource, /fetchAllPages\('search'/);
+assert.match(appSource, /fetchAllPages\(\s*'search'/);
 assert.match(appSource, /fetchAllPages\('audience'/);
 assert.match(appSource, /fetchAllPages\('activity'/);
 assert.match(appSource, /\^\[\\u0000-\\u0020\]\*\[=\+\\-@\]/);
@@ -30,9 +30,7 @@ assert.doesNotMatch(appSource, /sessionStorage\.setItem\([^)]*accounts/);
 assert.doesNotMatch(appSource, /localStorage\.setItem\([^)]*accounts/);
 
 for (const removedControl of [
-  'gap-worklist-csv',
   'gap-worklist-json',
-  'icon-requests-csv',
   'icon-requests-json',
   'contact-csv',
   'contact-json',

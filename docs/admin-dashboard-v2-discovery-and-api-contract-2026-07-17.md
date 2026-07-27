@@ -125,15 +125,18 @@ Response:
 
 - `queries`: paged explorer rows
 - `summary`: complete request and summary-row totals for reconciliation
-- query rows use one row per normalized query, library filter, and query origin
-- query rows include estimated client ID count, outcome components, median result count, result unit, country codes, channels, tools, and first and last seen times
-- estimated client ID count is an upper-bound activity measure, not a verified count of people
+- query rows use one row per recorded top-level search or exact icon lookup
+- identical search text remains in separate rows
+- query rows include the estimated client ID, outcome, exact recorded result count, result unit, country, channel, tool, and recorded time
+- estimated client IDs are not verified people. One person may produce several IDs, and one ID may represent shared infrastructure
 - `pagination`
 - `worklist`: ranked zero and low-result rows with existing query-review state
 - `icon_requests`: the verified `grid_empty_feedback` rows
 - `contact_submissions`: bounded newest-first rows
 - `diagnostics`: compact coverage and defect-registry facts
 - `meta`
+
+`view=summary` changes only the paged `queries` list to one row per normalized query, library filter, and query origin. Search summary and Audit bundle downloads use this mode. The visible Search history table does not.
 
 The existing `POST /intelligence/search/review` route remains the write path for query triage.
 

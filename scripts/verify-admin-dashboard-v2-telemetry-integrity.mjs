@@ -36,18 +36,18 @@ assert.doesNotMatch(
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Requests'/,
-  'Search history must show the request count for each query summary.',
+  /\{\s*label:\s*'Estimated client ID'/,
+  'Search history must show the estimated client ID recorded for each search event.',
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Est\. client IDs'/,
-  'Search history must show the estimated client ID count without claiming people.',
+  /\{\s*label:\s*'Result'/,
+  'Search history must show the exact recorded result count for each search event.',
 );
 assert.match(
   queryExplorerRenderer,
-  /\{\s*label:\s*'Typical result'/,
-  'Search history must show the median recorded result count.',
+  /\{\s*label:\s*'Time'/,
+  'Search history must show when each search event was recorded.',
 );
 assert.match(
   api,
@@ -61,13 +61,18 @@ assert.match(
 );
 assert.match(
   api,
-  /separateQueryOrigins:\s*true,[\s\S]*separateChannels:\s*false,[\s\S]*separateSearchers:\s*false,[\s\S]*includeSearcherDetails:\s*false/,
-  'Search history must group by query, library, and origin without splitting rows by venue or searcher.',
+  /compactDashboardV2SearchHistoryEventRows\(historyEvidenceRows\)/,
+  'Search history must build its visible rows from individual recorded events.',
 );
 assert.match(
   api,
-  /query_row_grain:\s*\['query',\s*'library_filter',\s*'query_origin'\]/,
-  'Search history must publish its exact summary grain.',
+  /query_row_grain:\s*summaryView[\s\S]*\['recorded_search_event'\]/,
+  'Search history must publish its exact event grain.',
+);
+assert.match(
+  api,
+  /search_summary_row_grain:\s*\['query',\s*'library_filter',\s*'query_origin'\]/,
+  'The separate Search summary download must retain its grouped grain.',
 );
 assert.match(
   api,
