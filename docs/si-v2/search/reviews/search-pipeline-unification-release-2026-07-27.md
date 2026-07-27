@@ -16,6 +16,7 @@ Telemetry attribution is not part of this release.
 - npm stage: `cd7f7139-61fb-48b8-8e87-f9217093ef30`
 - MCP archive SHA-256: `1e5be0a41cf6685f8d3bbe1a526a0a274e69d43645a4996ff55b19969327a17e`
 - MCP archive npm shasum: `1bc3fd346a7ea0218facbb59687134d7d7dbaaf9`
+- MCP archive npm integrity: `sha512-HlJ7NrbWw4S5LYAC4FwOhWfNkPpNxtpJL4X6CVMk1mrOS0BJOOuuwwiY0MeS09hFZDsMe5jRUnMZ7ReXcsMlVg==`
 - Web artifact tree SHA-256: `df6e11875d12f43ccdb0180ee5d51a60562f4d1874571efa8ab3e90cc9dbafeb`
 - Common-snapshot corpus SHA-256: `4e8bbba5c82e93f435313e9107fd207cf5c885ac53d1196f5f38cd1c0c4b4f64`
 
@@ -59,7 +60,7 @@ Netlify deploy `6a67697fec402812099efd9b` is active on `https://supericons.dev`.
 
 The live 39-case Railway product matrix passed for both the public HTTP route and hosted MCP. The hosted MCP URL and tool schemas did not change, so existing hosted clients and submitted plugin configurations do not require an update.
 
-The npm `latest` tag remains at `0.4.22`. Stage `cd7f7139-61fb-48b8-8e87-f9217093ef30` holds the exact audited 0.4.23 archive and is ready for owner approval.
+The npm `latest` tag points to `0.4.23`. The public registry archive is byte-for-byte identical to the audited archive at SHA-256 `1e5be0a41cf6685f8d3bbe1a526a0a274e69d43645a4996ff55b19969327a17e`. A clean installation of the downloaded public archive passed all 225 eligible stdio cases with ordered-result parity.
 
 ## Rollback
 
@@ -68,7 +69,7 @@ The npm `latest` tag remains at `0.4.22`. Stage `cd7f7139-61fb-48b8-8e87-f921709
 - Previous Netlify deploy: `6a673845fe070f06068470f1`
 - npm rollback after publication: move `latest` back to `0.4.22`
 
-## Remaining release step
+## Release completion
 
-Approve stage `cd7f7139-61fb-48b8-8e87-f9217093ef30` in the npm browser, then verify that the public 0.4.23 archive matches the audited bytes. No other production surface is waiting on this step.
+The owner approved stage `cd7f7139-61fb-48b8-8e87-f9217093ef30`. npm published the exact audited archive as `@supericons/mcp@0.4.23` under `latest`, and the post-publication package verification passed. The synchronized search pipeline release is complete across Railway, Netlify, and npm.
 
