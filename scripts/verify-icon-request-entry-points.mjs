@@ -53,6 +53,7 @@ for (const marker of [
   'data-i18n="app.requestIcon"',
   'class="sidebar-icon sidebar-request-icon"',
   'class="sidebar-request-icon__plus"',
+  'class="sidebar-request-icon__sparks"',
   'id="iconRequestPanel"',
   'id="iconRequestBackdrop"',
   'id="iconRequestCard"',
@@ -116,6 +117,16 @@ assert.ok(
   style.includes('.sidebar__item--button:hover .sidebar-request-icon__plus')
     && style.includes('@keyframes sidebar-request-plus-pop'),
   'The request sidebar plus hover animation is missing.',
+);
+assert.ok(
+  style.includes('.sidebar__item--button:hover .sidebar-request-icon__ring')
+    && style.includes('@keyframes sidebar-request-ring-breathe'),
+  'The request sidebar ring hover animation is missing.',
+);
+assert.ok(
+  style.includes('.sidebar__item--button:hover .sidebar-request-icon__sparks')
+    && style.includes('@keyframes sidebar-request-spark-orbit'),
+  'The request sidebar spark orbit animation is missing.',
 );
 
 const writerStart = intelligence.indexOf('export async function logIconRequest');

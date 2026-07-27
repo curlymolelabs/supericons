@@ -169,25 +169,37 @@ try {
     const request = document.querySelector('#sidebarIconRequest');
     const ring = document.querySelector('.sidebar-request-icon__ring');
     const plus = document.querySelector('.sidebar-request-icon__plus');
+    const sparks = document.querySelector('.sidebar-request-icon__sparks');
+    const spark = document.querySelector('.sidebar-request-icon__spark');
     return {
       animationName: getComputedStyle(plus).animationName,
       transform: getComputedStyle(plus).transform,
       ringAnimationName: getComputedStyle(ring).animationName,
+      ringTransform: getComputedStyle(ring).transform,
+      sparksAnimationName: getComputedStyle(sparks).animationName,
+      sparksTransform: getComputedStyle(sparks).transform,
       stroke: getComputedStyle(plus).stroke,
+      sparkFill: getComputedStyle(spark).fill,
       requestColor: getComputedStyle(request).color,
     };
   });
   assert.equal(requestIconMotion.animationName, 'sidebar-request-plus-pop');
   assert.notEqual(requestIconMotion.transform, 'none');
-  assert.equal(requestIconMotion.ringAnimationName, 'none');
+  assert.equal(requestIconMotion.ringAnimationName, 'sidebar-request-ring-breathe');
+  assert.notEqual(requestIconMotion.ringTransform, 'none');
+  assert.equal(requestIconMotion.sparksAnimationName, 'sidebar-request-spark-orbit');
+  assert.notEqual(requestIconMotion.sparksTransform, 'none');
   assert.equal(requestIconMotion.stroke, requestIconMotion.requestColor);
+  assert.equal(requestIconMotion.sparkFill, requestIconMotion.requestColor);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  assert.equal(
-    await page.locator('.sidebar-request-icon__plus').evaluate(
-      (plus) => getComputedStyle(plus).animationName,
-    ),
-    'none',
-    'The request icon ignores the reduced-motion preference.',
+  assert.deepEqual(
+    await page.evaluate(() => ({
+      plus: getComputedStyle(document.querySelector('.sidebar-request-icon__plus')).animationName,
+      ring: getComputedStyle(document.querySelector('.sidebar-request-icon__ring')).animationName,
+      sparks: getComputedStyle(document.querySelector('.sidebar-request-icon__sparks')).animationName,
+    })),
+    { plus: 'none', ring: 'none', sparks: 'none' },
+    'The request icon motion ignores the reduced-motion preference.',
   );
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.mouse.move(700, 20);
@@ -363,6 +375,8 @@ try {
     request_modal_does_not_scroll_grid: 'passed',
     request_modal_escape_and_backdrop_close: 'passed',
     request_icon_hover_motion: 'passed',
+    request_icon_ring_motion: 'passed',
+    request_icon_spark_orbit: 'passed',
     request_icon_reduced_motion: 'passed',
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,

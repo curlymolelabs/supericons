@@ -127,3 +127,23 @@ Live Chromium verification passed on both the exact deploy URL and
 sidebar color, reduced-motion opt-out, modal behavior, sidebar font size, and
 grid order. All request writes were intercepted locally, so the live checks did
 not create production request records.
+
+## Ring and spark hover follow-up
+
+The hover motion now adds two restrained layers to the existing plus pop:
+
+- The circle grows to 1.08 times its size, contracts slightly, and settles.
+- Three small same-color sparks rotate clockwise around the circle and fade.
+
+The ring and sparks use transforms and opacity, do not affect layout, and remain
+inside the icon view box. Reduced-motion mode disables the plus, ring, and spark
+animations together.
+
+Verification completed before release:
+
+- The static contract confirms the ring and spark animation markup and styles.
+- Chromium confirms the ring grows and the sparks rotate on hover.
+- Chromium confirms the sparks inherit the sidebar item color.
+- Chromium confirms reduced-motion mode disables all three animation layers.
+- The complete icon request flow, grid behavior, twelve locale catalogs, and
+  production build still pass.
