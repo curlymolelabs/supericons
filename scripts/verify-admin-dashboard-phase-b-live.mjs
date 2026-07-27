@@ -156,6 +156,53 @@ try {
     const text = await page.locator(`#${id}`).innerText();
     ok(text.trim() && !text.includes('Loading'), `${id} has no truthful production state.`);
   }
+  const localDefaultText = await page.locator('#localAttributionKpis').innerText();
+  ok(
+    localDefaultText.trim() && !localDefaultText.includes('Loading'),
+    'Local npm attribution has no truthful default state.',
+  );
+
+  await page.click('#nav-intelligence');
+  const includeTestAudienceResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return url.pathname === '/api/admin/v2/audience'
+      && url.searchParams.get('include_test') === 'true'
+      && response.status() === 200;
+  }, { timeout: 120_000 });
+  await page.check('#includeSearchTestTraffic');
+  await includeTestAudienceResponse;
+  await page.click('#nav-audience');
+  await page.waitForFunction(() => (
+    document.querySelector('#localAttributionSubtitle')?.textContent?.includes('Test traffic included')
+      && Number(document.querySelector('#localAttributionKpis .kpi-value')?.textContent) > 0
+  ), null, { timeout: 120_000 });
+  const localAttributionText = await page.locator('#localAttributionBreakdown').innerText();
+  ok(localAttributionText.includes('SG'), 'Controlled Local npm country is missing.');
+  ok(localAttributionText.includes('0.4.24'), 'Controlled Local npm package version is missing.');
+  ok(localAttributionText.includes('win32'), 'Controlled Local npm OS is missing.');
+  ok(
+    !/install_hash|[a-f0-9]{64}/i.test(
+      `${await page.locator('#localAttributionKpis').innerText()} ${localAttributionText}`,
+    ),
+    'The Local npm dashboard exposes a private installation identifier.',
+  );
+  const localObservedInstallations = Number(
+    await page.locator('#localAttributionKpis .kpi-value').first().innerText(),
+  );
+  await mkdir('.tmp', { recursive: true });
+  const localScreenshotPath = '.tmp/admin-dashboard-local-attribution-live.png';
+  await page.screenshot({ path: localScreenshotPath, fullPage: true });
+  const localScreenshot = await readFile(localScreenshotPath);
+
+  await page.click('#nav-intelligence');
+  const excludeTestAudienceResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return url.pathname === '/api/admin/v2/audience'
+      && url.searchParams.get('include_test') === 'false'
+      && response.status() === 200;
+  }, { timeout: 120_000 });
+  await page.uncheck('#includeSearchTestTraffic');
+  await excludeTestAudienceResponse;
 
   const liveContract = await page.evaluate(async () => {
     const common = 'window=30d&channel=all&include_test=false';
@@ -302,6 +349,11 @@ try {
     overview_reach: liveContract.overviewReach,
     audience_reach: liveContract.audienceReach,
     navigation_sections: 3,
+    local_attribution_live: true,
+    local_controlled_installations: localObservedInstallations,
+    local_private_identifiers_exposed: false,
+    local_screenshot_sha256: createHash('sha256').update(localScreenshot).digest('hex'),
+    local_screenshot_bytes: localScreenshot.length,
     inline_svg_charts: await page.locator('.chart svg').count(),
     warm_render_ms: warmRenderMs,
     horizontal_overflow: false,
@@ -317,6 +369,7 @@ try {
   console.log(JSON.stringify({
     ...result,
     screenshot: screenshotPath,
+    local_screenshot: localScreenshotPath,
     output: outputPath || null,
   }, null, 2));
 } finally {

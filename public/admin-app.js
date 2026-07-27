@@ -3328,8 +3328,8 @@ function initializeEvents() {
   $('includeSearchTestTraffic')?.addEventListener('change', (event) => {
     state.searchIncludeTest = event.target.checked;
     state.pages.queries = 1;
-    scheduleEndpointRefresh('queries', 0);
-    scheduleEndpointRefresh('audience', 0);
+    state.pages.clients = 1;
+    scheduleRefresh(0);
   });
   $('globalSearch')?.addEventListener('input', (event) => {
     state.filters.q = String(event.target.value || '').trim();
