@@ -161,6 +161,11 @@ try {
     'Search 20,000+ curated SVG icons by meaning, use case, or where they appear in your interface. Built for designers, developers, and AI coding agents.',
     'The approved landing description must remain unchanged.',
   );
+  assert.equal(
+    await desktop.page.locator('.landing-mcp__subtitle').textContent(),
+    'Connect through MCP so your coding agent can find the right icon and add its SVG directly to your code.',
+    'The landing MCP description must explain the coding-agent workflow clearly.',
+  );
 
   for (const config of MCP_CLIENT_CONFIGS) {
     const tab = desktop.page.locator(`[data-mcp-client="${config.id}"]`);
