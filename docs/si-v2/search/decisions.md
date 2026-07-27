@@ -603,6 +603,32 @@ Superseded decisions: none. `D-029`, `D-030`, `D-035`, `D-036`, and `D-037` rema
 
 Specification change: version 1.22 adds `FR-54` and the final-outcome telemetry contract.
 
+### D-044: Popularity is a top-50 website section, not a library sort
+
+Date: 2026-07-26. Status: Ratified by the owner. Partially supersedes `D-039`.
+
+Decision: the public popularity surface is a section of at most 50 icons on the website All Icons grid. An icon qualifies only with at least 3 confirmed takes; if fewer than 50 qualify, fewer are shown. Everything below the section keeps the grid's existing order and is not re-sorted. Scores are computed for every icon holding take evidence, but only the qualifying top 50 are displayed. The ranking is a website surface only and changes nothing that MCP clients receive.
+
+Supersedes: the clause in `D-039` requiring the unevidenced tail to be ordered alphabetically by library behind a visible divider. That clause is withdrawn. The rest of `D-039`, that use means confirmed takes and that preview and search exposure are not use, remains in force, as does `D-040`.
+
+Evidence, measured at cutoff 2026-07-25T19:13:00Z: the outline grid holds 21,427 icons. Over 30 days only 1,025 carry any confirmed take, which is 4.78% coverage. Of those, 647 have exactly one take and only 378 have two or more. The highest-ranked icon has 14 takes. Ordering positions beyond roughly 50 would therefore separate icons differing by a single event, which is noise presented as ranking. Leaving the tail untouched satisfies the intent behind `D-039` more simply than re-sorting it, because nothing is fabricated at all.
+
+An earlier planning estimate of "about 1,200 icons with enough use data" was 17% above the measured 1,025 and overstated the quality of the evidence; it is withdrawn.
+
+Alternatives rejected: ranking all 1,025 evidenced icons, which would present 647 icons tied at one take as an order; ranking the 378 with two or more, which still separates icons by single events past roughly rank 100; re-sorting the tail alphabetically, which changes the grid for no evidential gain.
+
+Specification change: recorded against `docs/supericons-cross-channel-icon-popularity-prd-2026-07-25.md` and its binding addendum `docs/supericons-popularity-prd-reconciliation-2026-07-25.md`.
+
+### D-045: Popularity scores never flow back to MCP
+
+Date: 2026-07-26. Status: Ratified by the owner.
+
+Decision: MCP usage is an input to the popularity score and never an output of it. Search results, recommendations, and every MCP tool response are unchanged by this work. Ranking for MCP consumers, and any product that sells or exposes usage analytics to them, are separate tasks requiring their own decisions.
+
+Evidence: hosted `get_icon` supplies 1,684 of 1,885 confirmed take events, so MCP data is what makes the ranking viable at all, while MCP itself has no browse surface to rank. Keeping the boundary explicit prevents the score leaking into agent-facing responses by convenience.
+
+Superseded decisions: none.
+
 ## Adding or superseding a decision
 
 Every new entry must include:
