@@ -95,7 +95,7 @@ Touches admin surfaces only, so it is safe to run in parallel with the public-gr
 
 ## Standing constraints
 
-- **Trust posture and public commitments are parked** by owner decision 2026-07-25. No published promises while they cannot be proven. The telemetry opt-out already exists (`DO_NOT_TRACK` plus three flags, `mcp/telemetry.js:6`) and is not to be announced.
+- **Broad trust promises remain parked.** The owner decided on 2026-07-27 that the npm package must include a factual notice of the telemetry it sends and all four ways to disable it. The notice must match the released code.
 - **Rung 1 hard constraint.** The dominant channel has no registration surface: a user inside ChatGPT has no browser session. If a key cannot be obtained and used from inside an agent conversation, registration stays flat regardless of offer quality.
 - **Concentration outranks funnel work** on current evidence. 96.5% single-channel dependency is measured and does not rely on identity precision.
 - Charter authority: `docs/si-v2/vision-charter.md`. Entry criteria, never dates.

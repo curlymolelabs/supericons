@@ -59,6 +59,7 @@
     "verify:local-telemetry-endpoint": "deno check supabase/functions/local-mcp-telemetry/index.ts && deno test supabase/functions/local-mcp-telemetry/index.test.ts",
     "verify:local-telemetry-package": "node scripts/verify-local-mcp-telemetry-v3.mjs",
     "verify:local-telemetry-search-isolation": "node scripts/verify-local-mcp-telemetry-search-isolation.mjs",
+    "verify:local-telemetry-notice": "node scripts/verify-local-mcp-telemetry-notice.mjs",
     "verify:admin-dashboard-v2-helpers": "node scripts/verify-admin-dashboard-v2-helpers.mjs",
     "verify:admin-dashboard-v2-api": "node scripts/verify-admin-dashboard-v2-api.mjs",
     "verify:admin-dashboard-search-events": "node scripts/verify-admin-dashboard-search-events.mjs",

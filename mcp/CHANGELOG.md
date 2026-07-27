@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.24 - 2026-07-28
+
+### Added
+
+- added best-effort Local MCP installation, client, operating system, and country attribution
+- added exact episode identities so Local MCP outcomes can be linked without relying on query text
+- added a clear package notice describing telemetry fields, retention, and all four opt-out controls
+
+### Privacy
+
+- stores only a server-keyed installation hash, never the raw installation identifier or IP address
+- removes stored installation hashes after 90 days
+- keeps telemetry separate from search so failures and timeouts do not change results
+
 ## 0.4.23 - 2026-07-27
 
 ### Fixed
