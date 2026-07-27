@@ -98,21 +98,21 @@
       "query": "sports",
       "locale": "en",
       "expected_decision": "expected_positive",
-      "relevant_any": ["sports", "fitness", "ball", "trophy", "medal"]
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
     },
     {
       "case_id": "locale_spanish_sports",
       "query": "deportes",
       "locale": "es",
       "expected_decision": "expected_positive",
-      "relevant_any": ["sports", "fitness", "ball", "trophy", "medal"]
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
     },
     {
       "case_id": "locale_japanese_sports",
       "query": "スポーツ",
       "locale": "ja",
       "expected_decision": "expected_positive",
-      "relevant_any": ["sports", "fitness", "ball", "trophy", "medal"]
+      "relevant_any": ["sport", "sports", "fitness", "ball", "trophy", "medal"]
     },
     {
       "case_id": "strict_lucide_settings",

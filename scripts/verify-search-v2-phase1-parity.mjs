@@ -20,6 +20,7 @@ const fingerprintInputPaths = [
   'data/i18n/multilingual-search-aliases.json',
   'lib/generated-search-ranking-policy.js',
   'mcp/search.js',
+  'mcp/runtime/search-pipeline.js',
   'mcp/variant-support.js',
   'mcp/public/cjk-search-terms.json',
   'mcp/public/icon-index.json',
