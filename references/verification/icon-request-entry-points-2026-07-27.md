@@ -61,4 +61,8 @@ The linked project still has unrelated migration-history drift, so broad `supaba
 
 Packet fingerprint: `3ef743d3277991014bb8fa4df539b5a40eafec23631bc4019780982edee4c73d`
 
-No database migration, Edge Function deployment, website deployment, or production request write was performed.
+The guarded database release completed against project `kcjmkakdhsqplvasgkjv` from
+commit `4a45db49418acc97f7356a26c2fd28fdc2866d3b`. The preflight, postflight,
+and exact history check passed. No synthetic request row was created by the
+migration. The admin API and website had not yet been deployed when this record
+was updated.

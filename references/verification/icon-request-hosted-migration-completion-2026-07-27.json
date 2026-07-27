@@ -1,0 +1,52 @@
+{
+    "artifact":  "icon_request_hosted_migration_completion",
+    "release_fingerprint":  "3ef743d3277991014bb8fa4df539b5a40eafec23631bc4019780982edee4c73d",
+    "release_commit":  "4a45db49418acc97f7356a26c2fd28fdc2866d3b",
+    "project_ref":  "kcjmkakdhsqplvasgkjv",
+    "migration_version":  "20260727120000",
+    "migration_sha256":  "494f3b9662efcc2508a53dda46aca480c8d0637a60262d19ccdb2d547d7d3b76",
+    "started_at":  "2026-07-27T04:04:37.5458044Z",
+    "finished_at":  "2026-07-27T04:04:46.3358463Z",
+    "preflight":  "pass",
+    "postflight":  "pass",
+    "exact_history_mark":  "pass",
+    "preflight_output":  [
+                             "BEGIN",
+                             "DO",
+                             "                                                                                                                                                                                                    preflight                                                                                                                                                                                                    ",
+                             "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
+                             " {\"status\" : \"ok\", \"migration_version\" : \"20260727120000\", \"migration_recorded\" : false, \"request_function_present\" : false, \"signal_constraint_md5\" : \"a3f2d83f6c70db8e3e80d905c00d4d7a\", \"icon_requirement_constraint_md5\" : \"58ac2ddc4a3876ac70bb532385056ce5\", \"evidence_function_md5\" : \"d9845ddd8cca7b18bd1919bde49af90a\", \"evidence_rows\" : 9465, \"evidence_id_md5\" : \"f22655ae6eb188650161c3499185fea8\"}",
+                             "(1 row)",
+                             "",
+                             "COMMIT"
+                         ],
+    "postflight_output":  [
+                              "SELECT 1",
+                              "DO",
+                              "ALTER TABLE",
+                              "ALTER TABLE",
+                              "ALTER TABLE",
+                              "ALTER TABLE",
+                              "CREATE FUNCTION",
+                              "COMMENT",
+                              "REVOKE",
+                              "GRANT",
+                              "DO",
+                              "                                                                                                                                                                                                  postflight                                                                                                                                                                                                  ",
+                              "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
+                              " {\"status\" : \"ok\", \"migration_version\" : \"20260727120000\", \"request_function_md5\" : \"89f2e6bb7ebd589ae21194592d4905ca\", \"signal_constraint_md5\" : \"fbf51c87920804ae9c6595b2531efe53\", \"icon_requirement_constraint_md5\" : \"91acb369b675395c80deab9bf7fd50bb\", \"existing_rows_preserved\" : true, \"existing_evidence_function_preserved\" : true, \"table_access_preserved\" : true, \"synthetic_rows_created\" : 0}",
+                              "(1 row)",
+                              ""
+                          ],
+    "history_postflight_output":  [
+                                      "BEGIN",
+                                      "DO",
+                                      "                                                             history_postflight                                                             ",
+                                      "--------------------------------------------------------------------------------------------------------------------------------------------",
+                                      " {\"status\" : \"ok\", \"migration_version\" : \"20260727120000\", \"history_rows\" : 1, \"request_function_md5\" : \"89f2e6bb7ebd589ae21194592d4905ca\"}",
+                                      "(1 row)",
+                                      "",
+                                      "COMMIT"
+                                  ],
+    "rollback_sql":  "scripts/sql/icon-request-hosted-operational-rollback.sql"
+}
