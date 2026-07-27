@@ -20,6 +20,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildLocalMcpAttributionReport,
   buildDashboardV2QueryHistoryKey,
   buildDashboardV2Series,
   buildDashboardV2TopLists,
@@ -3769,6 +3770,87 @@ function buildDashboardV2UserTelemetry(rows: Array<Record<string, unknown>>) {
   return byUser;
 }
 
+async function fetchLocalMcpAttributionReport(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  const applicable = ['all', 'local_mcp'].includes(filters.channel);
+  if (!applicable) {
+    return buildLocalMcpAttributionReport([], [], { applicable: false });
+  }
+
+  const select = [
+    'install_hash',
+    'install_key_version',
+    'client_family',
+    'client_version',
+    'os_platform',
+    'country_code',
+    'geo_source',
+    'source_version',
+    'query',
+    'channel',
+    'environment',
+    'traffic_class',
+    'completed_at',
+  ].join(',');
+  const cutoffMs = Date.parse(String(filters.data_cutoff || new Date().toISOString()));
+  const retentionFrom = new Date(
+    (Number.isFinite(cutoffMs) ? cutoffMs : Date.now()) - (91 * 24 * 60 * 60 * 1000),
+  ).toISOString();
+
+  const loadRows = async (fromTime: string | null) => {
+    const result = await fetchBoundedDashboardV2Pages(async ({
+      from,
+      to,
+    }: {
+      from: number;
+      to: number;
+      includeCount: boolean;
+    }) => {
+      let query = adminClient
+        .from('search_final_outcomes')
+        .select(select)
+        .eq('channel', 'local_mcp')
+        .order('completed_at', { ascending: false })
+        .range(from, to);
+      if (fromTime) query = query.gte('completed_at', fromTime);
+      if (filters.to_exclusive) query = query.lt('completed_at', filters.to_exclusive);
+      const { data, error } = await query;
+      if (error) throw error;
+      return {
+        rows: (data || []) as Array<Record<string, unknown>>,
+        total: null,
+      };
+    }, {
+      maxRows: V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
+      pageSize: EVIDENCE_PAGE_SIZE,
+      concurrency: V2_IDENTITY_PAGE_CONCURRENCY,
+    });
+    return result.rows;
+  };
+
+  const [selectedRows, retainedRows] = await Promise.all([
+    loadRows(filters.from),
+    loadRows(retentionFrom),
+  ]);
+  const truncated = (
+    selectedRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+    || retainedRows.length > V2_MAX_IDENTITY_ROWS_PER_SOURCE
+  );
+  return buildLocalMcpAttributionReport(
+    selectedRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE),
+    retainedRows.slice(0, V2_MAX_IDENTITY_ROWS_PER_SOURCE),
+    {
+      from: filters.from,
+      includeTest: filters.include_test,
+      query: filters.q,
+      applicable,
+      truncated,
+    },
+  );
+}
+
 async function buildDashboardV2AudiencePayload(
   adminClient: SupabaseClient,
   url: URL,
@@ -3778,7 +3860,7 @@ async function buildDashboardV2AudiencePayload(
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
   const sort = parseDashboardV2Sort(url, DASHBOARD_V2_CLIENT_SORTS);
-  const [dataRows, identityTelemetry, authUsers] = await Promise.all([
+  const [dataRows, identityTelemetry, authUsers, localMcpAttribution] = await Promise.all([
     buildDashboardV2DataRows(
       adminClient,
       filters,
@@ -3788,6 +3870,7 @@ async function buildDashboardV2AudiencePayload(
       ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
       : fetchDashboardV2IdentityTelemetry(adminClient, filters),
     listAllAuthUsers(adminClient),
+    fetchLocalMcpAttributionReport(adminClient, filters),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
   const series = buildDashboardV2Series(dataRows.overview_rows, identityRows);
@@ -3886,6 +3969,7 @@ async function buildDashboardV2AudiencePayload(
       rows: registeredUsers.slice(0, 100),
       activity_window: filters.key,
     },
+    local_mcp_attribution: localMcpAttribution,
     clients: dataUnavailable
       ? { available: false, reason: unavailableReason, rows: [] }
       : { available: true, rows: orderedClients.slice(pageStart, pageStart + pageSize) },
@@ -3914,6 +3998,8 @@ async function buildDashboardV2AudiencePayload(
       rollup_rows_truncated: dataRows.rollup_truncated,
       audience_series_measure: dataUnavailable ? 'client_days' : 'registered_and_pro_clients',
       anonymous_identity_rotates_monthly: true,
+      local_mcp_attribution_best_effort: true,
+      local_mcp_installation_hashes_exposed: false,
       mrr_available: false,
     }),
   };

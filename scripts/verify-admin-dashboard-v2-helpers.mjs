@@ -4,6 +4,7 @@ import {
   buildDashboardV2Clients,
   buildDashboardV2Geography,
   buildDashboardV2Kpis,
+  buildLocalMcpAttributionReport,
   buildDashboardV2QueryHistoryKey,
   dashboardV2SearchHistoryRole,
   buildDashboardV2Series,
@@ -793,6 +794,60 @@ const queryRows = [
 }
 
 {
+  const rawInstallOne = 'private-install-hash-one';
+  const rawInstallTwo = 'private-install-hash-two';
+  const report = buildLocalMcpAttributionReport([
+    {
+      channel: 'local_mcp',
+      install_hash: rawInstallOne,
+      client_family: 'claude-desktop',
+      source_version: '0.4.24',
+      os_platform: 'win32',
+      country_code: 'SG',
+      traffic_class: 'unclassified_live',
+      completed_at: '2026-07-17T10:00:00.000Z',
+    },
+    {
+      channel: 'local_mcp',
+      install_hash: rawInstallTwo,
+      client_family: 'codex',
+      source_version: '0.4.24',
+      os_platform: 'darwin',
+      country_code: 'US',
+      traffic_class: 'controlled_test',
+      completed_at: '2026-07-17T11:00:00.000Z',
+    },
+    {
+      channel: 'local_mcp',
+      install_hash: null,
+      source_version: '0.4.23',
+      traffic_class: 'unclassified_live',
+      completed_at: '2026-07-17T09:00:00.000Z',
+    },
+  ], [
+    {
+      channel: 'local_mcp',
+      install_hash: rawInstallOne,
+      traffic_class: 'unclassified_live',
+      completed_at: '2026-07-10T10:00:00.000Z',
+    },
+  ], {
+    from: '2026-07-17T00:00:00.000Z',
+    includeTest: false,
+  });
+  assert.equal(report.observed_installations, 1);
+  assert.equal(report.new_installations, 0);
+  assert.equal(report.returning_installations, 1);
+  assert.equal(report.measured_searches, 1);
+  assert.equal(report.total_local_searches, 2);
+  assert.equal(report.measurement_coverage_rate, 0.5);
+  assert.equal(report.countries[0].value, 'SG');
+  assert.equal(report.package_versions[0].value, '0.4.24');
+  assert.equal(JSON.stringify(report).includes(rawInstallOne), false);
+  assert.equal(JSON.stringify(report).includes(rawInstallTwo), false);
+}
+
+{
   const icons = aggregateDashboardV2IconRows([
     { icon_id: 'lucide:database', session_hash: 'a', search_query: 'database', evidence_text: 'copy:svg' },
     { icon_id: 'lucide:database', session_hash: 'b', search_query: 'storage', evidence_text: 'download:png' },
@@ -813,7 +868,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 17,
+  cases: 18,
   series_rows: series.length,
   query_filters: true,
   aggregate_query_semantics: true,

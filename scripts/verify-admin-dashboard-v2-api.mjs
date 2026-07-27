@@ -32,6 +32,11 @@ function includes(source, value, label) {
   'dashboardV2CompletedRollupFilters',
   'dashboardV2CurrentDayFilters',
   'fetchDashboardV2IdentityTelemetry',
+  'fetchLocalMcpAttributionReport',
+  "from('search_final_outcomes')",
+  ".eq('channel', 'local_mcp')",
+  'local_mcp_attribution: localMcpAttribution',
+  'local_mcp_installation_hashes_exposed: false',
   'buildQueryWorkbenchGroupKey',
   "queryOrigin: separateQueryOrigins ? normalizedQueryOrigin : 'all'",
   "queryOrigin: separateQueryOrigins ? row.query_origin : 'all'",
@@ -128,6 +133,7 @@ function includes(source, value, label) {
   'buildDashboardV2Kpis',
   'buildDashboardV2TopLists',
   'buildDashboardV2Geography',
+  'buildLocalMcpAttributionReport',
   'aggregateDashboardV2IconRows',
   'compactDashboardV2EventRows',
   'median_result_count',
@@ -173,6 +179,9 @@ function includes(source, value, label) {
   "params.set('sort_by', sort.key)",
   "params.set('sort_direction', sort.direction)",
   'serverSorting: true',
+  'renderLocalMcpAttribution',
+  'Observed installations',
+  'Best-effort installation count',
 ].forEach((value) => includes(frontend, value, 'dashboard frontend'));
 
 if (api.includes('const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows')) {

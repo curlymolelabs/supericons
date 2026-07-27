@@ -83,6 +83,7 @@ const state = {
     worklist: DEFAULT_ROW_LIMIT,
     iconRequests: DEFAULT_ROW_LIMIT,
     contact: DEFAULT_ROW_LIMIT,
+    localAttribution: DEFAULT_ROW_LIMIT,
     registeredUsers: DEFAULT_ROW_LIMIT,
     clients: DEFAULT_ROW_LIMIT,
   },
@@ -93,6 +94,7 @@ const state = {
     worklist: 1,
     iconRequests: 1,
     contact: 1,
+    localAttribution: 1,
     registeredUsers: 1,
     clients: 1,
   },
@@ -532,7 +534,7 @@ async function apiRequest(path, options = {}, retry = true) {
   return payload;
 }
 
-function baseFilterParams({ forSearch = false } = {}) {
+function baseFilterParams({ forSearch = false, useSearchTestFilter = false } = {}) {
   const params = new URLSearchParams();
   params.set('window', state.filters.window);
   if (state.filters.window === 'custom') {
@@ -540,7 +542,11 @@ function baseFilterParams({ forSearch = false } = {}) {
     params.set('to', state.filters.to);
   }
   params.set('channel', state.filters.channel);
-  params.set('include_test', String(forSearch ? state.searchIncludeTest : state.filters.includeTest));
+  params.set('include_test', String(
+    forSearch || useSearchTestFilter
+      ? state.searchIncludeTest
+      : state.filters.includeTest,
+  ));
   const query = forSearch
     ? [state.filters.q, state.explorerQuery].filter(Boolean).join(' ').trim()
     : state.filters.q;
@@ -548,8 +554,8 @@ function baseFilterParams({ forSearch = false } = {}) {
   return params;
 }
 
-function activeFilterKey({ forSearch = false } = {}) {
-  return baseFilterParams({ forSearch }).toString();
+function activeFilterKey({ forSearch = false, useSearchTestFilter = false } = {}) {
+  return baseFilterParams({ forSearch, useSearchTestFilter }).toString();
 }
 
 function beginDashboardView() {
@@ -563,19 +569,23 @@ function beginDashboardView() {
   };
 }
 
-function sharedParams({ forSearch = false, includeView = true } = {}) {
-  const params = baseFilterParams({ forSearch });
+function sharedParams({ forSearch = false, useSearchTestFilter = false, includeView = true } = {}) {
+  const params = baseFilterParams({ forSearch, useSearchTestFilter });
   if (includeView && state.view) {
     params.set('view_id', state.view.id);
     params.set('data_cutoff', state.view.cutoff);
-    params.set('filter_key', activeFilterKey({ forSearch }));
+    params.set('filter_key', activeFilterKey({ forSearch, useSearchTestFilter }));
   }
   return params;
 }
 
 function endpointPath(endpoint, { includeView = true } = {}) {
   if (endpoint === 'accounts') return '/users?page=all';
-  const params = sharedParams({ forSearch: endpoint === 'search', includeView });
+  const params = sharedParams({
+    forSearch: endpoint === 'search',
+    useSearchTestFilter: endpoint === 'audience',
+    includeView,
+  });
   if (endpoint === 'activity') {
     params.set('page', String(currentPage('activity')));
     params.set('page_size', String(rowLimit('activity')));
@@ -608,7 +618,10 @@ function endpointDataKey(endpoint) {
 
 function acceptsDashboardView(endpoint, payload) {
   if (endpoint === 'accounts') return true;
-  const expectedFilterKey = activeFilterKey({ forSearch: endpoint === 'search' });
+  const expectedFilterKey = activeFilterKey({
+    forSearch: endpoint === 'search',
+    useSearchTestFilter: endpoint === 'audience',
+  });
   return Boolean(
     state.view
     && payload?.meta?.view_id === state.view.id
@@ -2183,6 +2196,76 @@ function renderEmailVisibilityControl() {
   button.innerHTML = iconSvg(state.showRegisteredEmails ? 'eyeOff' : 'eye');
 }
 
+function renderLocalMcpAttribution(report, error = '') {
+  const kpis = $('localAttributionKpis');
+  const breakdown = $('localAttributionBreakdown');
+  const subtitle = $('localAttributionSubtitle');
+  if (!kpis || !breakdown || !subtitle) return;
+  if (error) {
+    subtitle.textContent = 'Local npm installation data is unavailable';
+    kpis.innerHTML = emptyState(error);
+    breakdown.innerHTML = '';
+    renderPagination('localAttribution', 0, 1);
+    return;
+  }
+  if (!report) {
+    subtitle.textContent = 'Loading Local npm installation data';
+    kpis.innerHTML = loadingState('Loading Local npm installation data');
+    breakdown.innerHTML = '';
+    return;
+  }
+  if (report.available === false) {
+    subtitle.textContent = safeText(report.reason, 'Local npm installation data is unavailable.');
+    kpis.innerHTML = emptyState(report.reason);
+    breakdown.innerHTML = '';
+    renderPagination('localAttribution', 0, 1);
+    return;
+  }
+
+  const coverage = report.measurement_coverage_rate == null
+    ? 'No Local npm searches in this period'
+    : `${formatPercent(report.measurement_coverage_rate)} of Local npm searches measured`;
+  const coverageStart = report.coverage_starts_at
+    ? ` Data starts ${formatDate(report.coverage_starts_at, true)}.`
+    : '';
+  const testScope = state.searchIncludeTest ? ' Test traffic included.' : ' Test traffic excluded.';
+  subtitle.textContent = `Best-effort installation count. ${coverage}.${coverageStart}${testScope}`;
+  const cards = [
+    ['Observed installations', report.observed_installations, 'Active package installations seen in this period'],
+    ['New', report.new_installations, 'First measured in this period'],
+    ['Returning', report.returning_installations, 'Measured before and during this period'],
+    ['Measured searches', report.measured_searches, `${formatNumber(report.total_local_searches)} total Local npm searches`],
+  ];
+  kpis.innerHTML = cards.map(([label, value, note]) => `
+    <div class="kpi">
+      <div class="kpi-label">${escapeHtml(label)}</div>
+      <div class="kpi-value">${formatNumber(value)}</div>
+      <div class="kpi-note">${escapeHtml(note)}</div>
+    </div>
+  `).join('');
+
+  const groups = [
+    ['Country', report.countries],
+    ['Client', report.client_families],
+    ['Package', report.package_versions],
+    ['OS', report.os_platforms],
+  ];
+  const rows = groups.flatMap(([dimension, values]) => normalizeList(values).map((row) => ({
+    dimension,
+    value: row.value,
+    searches: row.searches,
+    observed_installations: row.observed_installations,
+  })));
+  breakdown.innerHTML = sortedTable('localAttribution', [
+    { label: 'Breakdown', sortKey: 'dimension', render: (row) => escapeHtml(row.dimension) },
+    { label: 'Value', sortKey: 'value', render: (row) => escapeHtml(safeText(row.value, 'Unknown')) },
+    { label: 'Searches', number: true, sortKey: 'searches', sortType: 'number', render: (row) => formatNumber(row.searches) },
+    { label: 'Observed installations', number: true, sortKey: 'observed_installations', sortType: 'number', render: (row) => formatNumber(row.observed_installations) },
+  ], rows, state.searchIncludeTest
+    ? 'No attributed Local npm searches match these filters.'
+    : 'No attributed Local npm searches match these filters. Package 0.4.24 adds this measurement.');
+}
+
 function renderAudience() {
   const data = state.data.audience;
   if (!data && state.loading.has('audience')) {
@@ -2201,6 +2284,7 @@ function renderAudience() {
     if ($('funnelMrr')) $('funnelMrr').textContent = 'Loading';
     if ($('funnelMrrNote')) $('funnelMrrNote').textContent = 'Loading billing availability';
     if ($('audienceChart')) $('audienceChart').innerHTML = loadingState('Loading audience history');
+    renderLocalMcpAttribution(null);
     if ($('registeredUsers')) $('registeredUsers').innerHTML = loadingState('Loading registered users');
     if ($('allClients')) $('allClients').innerHTML = loadingState('Loading searcher details');
     return;
@@ -2211,6 +2295,7 @@ function renderAudience() {
       if ($(id)) $(id).textContent = state.errors.audience;
     });
     if ($('audienceChart')) $('audienceChart').innerHTML = chartUnavailable(state.errors.audience);
+    renderLocalMcpAttribution(null, state.errors.audience);
     if ($('registeredUsers')) $('registeredUsers').innerHTML = emptyState(state.errors.audience);
     if ($('allClients')) $('allClients').innerHTML = emptyState(state.errors.audience);
     renderPagination('registeredUsers', 0, 1);
@@ -2218,6 +2303,7 @@ function renderAudience() {
     return;
   }
   const funnel = data?.funnel || {};
+  renderLocalMcpAttribution(data?.local_mcp_attribution);
   const accounts = accountSummary();
   const clients = number(funnel.unique_clients);
   const registered = accounts.available ? accounts.registered : number(funnel.registered_clients);
@@ -3243,6 +3329,7 @@ function initializeEvents() {
     state.searchIncludeTest = event.target.checked;
     state.pages.queries = 1;
     scheduleEndpointRefresh('queries', 0);
+    scheduleEndpointRefresh('audience', 0);
   });
   $('globalSearch')?.addEventListener('input', (event) => {
     state.filters.q = String(event.target.value || '').trim();
