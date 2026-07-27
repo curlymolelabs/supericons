@@ -63,3 +63,30 @@ request RPC, and no admin artifacts.
 The local Chromium screenshot used the shipped icon index. The modal card was
 inside the viewport, the input had focus, and the grid scroll position stayed
 at zero.
+
+![Live icon request modal card](icon-request-modal-live-card-2026-07-27.png)
+
+## Production release
+
+Website deploy `6a671da03887ad34f1ef7057` was published from commit
+`cac55a308`. The previous website deploy
+`6a66db661eee4ce20a26e8e0` is the exact rollback target.
+
+The released bundle fingerprints are:
+
+- HTML: `5c2048a3f9981b80561d805a655df6cc83981794aac5747af053f519345d5165`
+- JavaScript: `17894a9f9563a596ef1c08fab94de53ede5862f0698dd463ff0959627d130d62`
+- CSS: `9d42a805b6d669dee262c40d8bc4df2b4ef2e755d6b2d62ac2db84334bfd3393`
+
+Live Chromium verification passed on both the exact deploy URL and
+`supericons.dev`. It confirmed:
+
+- The sidebar action and Favorites both compute to `12.8px`.
+- The modal remains fixed and inside the viewport after one second.
+- The input receives focus.
+- The grid stays at 200 rendered cells and scroll position zero.
+- Escape returns focus to the sidebar action.
+- Clicking the backdrop closes the modal.
+- No page errors occurred.
+
+No production request was submitted during this visual smoke test.
