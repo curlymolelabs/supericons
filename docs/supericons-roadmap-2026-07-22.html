@@ -187,20 +187,35 @@
     <div class="tags"><span class="tag">all venues</span><span class="tag">0.4.20</span></div>
   </div>
 
+  <div class="ms done">
+    <div class="when">Shipped · 2026-07-22 to 07-25</div>
+    <h3>Zero-result audit and the shared-route correction</h3>
+    <p>The source-verified audit confirmed the hosted zero results were real: the local-first branch called the fallback engine once with the full phrase and skipped the query-variant generator the browser still ran. The bounded shared-route correction landed and search advanced to 0.4.22, restoring retrieval parity between browser and hosted MCP before any caller-side recovery contract was added on top.</p>
+    <div class="tags"><span class="tag">honest records</span><span class="tag">0.4.22</span></div>
+  </div>
+
   <div class="ms now">
     <div class="when">In motion now</div>
     <h3>Search in maintenance mode, with one closing workstream</h3>
-    <p>Monthly telemetry mining feeds small reviewed group additions as routine upkeep. The final bounded search workstream ships the agent-cooperative zero payload (suggested queries, recommended tool, retry guidance) and the recovery telemetry that measures whether agents reach a usable icon, how fast, and in how many calls. The recovery scorecard formally closes the search chapter.</p>
+    <p>Monthly telemetry mining feeds small reviewed group additions as routine upkeep. With shared retrieval fixed at 0.4.22, the final bounded search workstream ships the agent-cooperative zero payload (suggested queries, recommended tool, retry guidance) and the recovery telemetry that measures whether agents reach a usable icon, how fast, and in how many calls. The recovery scorecard formally closes the search chapter.</p>
     <div class="entry">Exit: scorecard green on live traffic; further search investment becomes evidence-gated.</div>
     <div class="tags"><span class="tag">search</span><span class="tag">telemetry</span></div>
   </div>
 
   <div class="ms now">
     <div class="when">In motion now · highest operational priority</div>
-    <h3>Telemetry truth repair</h3>
-    <p>Website searches were being labeled as hosted MCP traffic and internal translation retries counted as user-facing zeros, so Web dashboard metrics are untrusted until repaired. The fix: the browser owns one final outcome event per search episode, internal attempts become linked diagnostics, history is era-marked rather than rewritten, and a user-story integrity fixture (one browser search produces exactly one truthful Web event) joins the release gates. Product behavior was never affected; only the measurement was wrong.</p>
-    <div class="entry">Exit: end-to-end fixture green from browser through dashboard and exports; the recovery experiment's baseline regenerates on repaired data.</div>
+    <h3>Telemetry truth repair and admin dashboard accuracy</h3>
+    <p>Website searches were being labeled as hosted MCP traffic and internal translation retries counted as user-facing zeros, so channel metrics read as heavily skewed: earlier windows claimed roughly 89% hosted. After the first refinement round, the last 24 hours show a balanced distribution across web, hosted, and local. The repair holds its shape: the browser owns one final outcome event per search episode, internal attempts become linked diagnostics, history is era-marked rather than rewritten, and a user-story integrity fixture (one browser search produces exactly one truthful Web event) joins the release gates. Stress testing continues until the numbers survive reconciliation against source rows, because channel management decisions now depend on them. Product behavior was never affected; only the measurement was wrong.</p>
+    <div class="entry">Exit: end-to-end fixture green from browser through dashboard and exports; dashboard figures reconcile with direct source queries across all three surfaces; the recovery experiment's baseline regenerates on repaired data.</div>
     <div class="tags"><span class="tag">telemetry</span><span class="tag">dashboard</span></div>
+  </div>
+
+  <div class="ms now">
+    <div class="when">In motion now · depends on dashboard accuracy</div>
+    <h3>Popularity signal: most-searched icons on every surface</h3>
+    <p>An algorithm redesign to rank the most popularly searched icons across web, hosted MCP, and local, surfaced under the All Icons tab on the web. This is the first user-facing product built from the living usage stream: the aggregate ranking ships as a service surface while per-query intelligence stays server-side, per the moat principle. A popularity ranking is only as honest as its channel data, so it inherits the telemetry repair as its entry gate.</p>
+    <div class="entry">Entry: dashboard figures reconciled and stress-tested; then the ranking goes live on All Icons.</div>
+    <div class="tags"><span class="tag">living data</span><span class="tag">web</span><span class="tag">ring 0-1</span></div>
   </div>
 
   <div class="ms now">
@@ -284,7 +299,7 @@
 </div>
 
 <footer>
-  Supericons roadmap, 2026-07-22. Sources: the vision charter, the growth ladder, the ecosystem horizon, the Search v2 execution record, and the ratified decision log. Future milestones carry entry criteria, not dates, by standing owner directive.
+  Supericons roadmap, 2026-07-22, refreshed 2026-07-25. Sources: the vision charter, the growth ladder, the ecosystem horizon, the Search v2 execution record, the zero-result source audit, and the ratified decision log. Future milestones carry entry criteria, not dates, by standing owner directive.
 </footer>
 
 </div>

@@ -35,6 +35,28 @@ Scope:
 - When a simpler word says the same thing, use the simpler word.
 - Internal engineering documents may use precise technical terms where they add clarity, but the same preference for the simpler equivalent applies.
 
+## Owner-facing communication
+
+The owner reads visually and decides quickly. Volume of prose slows decisions down, so treat brevity as a correctness requirement, not a style preference.
+
+**Split the audience.**
+
+- **For the owner: HTML, visual, short.** Status, plans, comparisons, and anything needing a decision. Use cards, colour, tables, before-and-after panels, and progress or funnel visuals. Short sentences. Plain words. One idea per line.
+- **For agents: markdown, dense.** Briefings, specs, rules, audit requests. Full detail belongs here, and stripping it out is a defect.
+- When a piece of work produces both, write both and cross-link them. Neither is a summary of the other; they serve different readers.
+
+**When the owner must decide.**
+
+- State the question in one sentence a non-specialist understands.
+- Give two or three concrete options, never an open-ended prompt.
+- **Mark one as recommended** and say why in one line. An unrecommended choice set pushes the analysis back onto the owner.
+- Say what happens if the decision is not made, especially when silence means an agent will choose by default.
+- Keep live decisions on one page rather than scattered at the end of longer documents.
+
+**Chat replies follow the same rule.** Lead with the answer. Keep paragraphs short. Do not restate a document the owner can open. If a reply is growing past a few short paragraphs, that is a signal the content belongs in a linked HTML page instead.
+
+**Never trade away accuracy for brevity.** Shorten by cutting restatement, hedging, and background the owner already has, not by dropping caveats, uncertainty, or the basis for a claim. If a number is unverified, say so in the short version too.
+
 ## Evidence-first claims
 
 - Do not state a factual claim about code, files, outputs, tests, builds, or tool behavior unless it was directly verified in the current session against the exact artifact that proves it (open the exact file, run the exact command).

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Tactical Plan</title>
+<style>
+  :root{
+    --bg:#0e0e0e; --panel:#171717; --panel2:#1f1f1f; --line:#2a2a2a;
+    --text:#e7e5e4; --muted:#9ca3af; --accent:#f97316; --accent2:#fdba74;
+    --done:#22c55e; --now:#f97316; --next:#60a5fa; --later:#a78bfa; --gated:#6b7280;
+    --warn:#fbbf24; --alert:#ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Arial,sans-serif;padding:0 0 80px}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  header{padding:48px 0 8px;border-bottom:1px solid var(--line)}
+  h1{font-size:34px;font-weight:800}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:8px;max-width:840px}
+  .crumb{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .crumb a{color:var(--accent2);text-decoration:none;border-bottom:1px dotted #4a3626}
+  h2.section{font-size:22px;font-weight:800;margin:44px 0 6px}
+  .section-note{color:var(--muted);font-size:14px;margin-bottom:18px;max-width:840px}
+
+  /* instrument panel */
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+  .metric{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  .metric .k{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .metric .v{font-size:26px;font-weight:800;margin-top:3px;line-height:1.15}
+  .metric .n{font-size:12px;color:var(--muted);margin-top:4px}
+  .metric.flag{border-color:#4a3a12}
+  .metric.flag .v{color:var(--warn)}
+  .metric.bad{border-color:#4a1f1f}
+  .metric.bad .v{color:var(--alert)}
+  .flagnote{font-size:11.5px;color:var(--warn);margin-top:5px;display:block}
+  .badnote{font-size:11.5px;color:var(--alert);margin-top:5px;display:block}
+
+  /* loop */
+  .loop{background:linear-gradient(135deg,#1c1210,#171717);border:1px solid #3b2a1e;border-radius:14px;padding:24px 26px;margin-top:18px}
+  .loop h3{color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+  .chain{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+  .node{flex:1 1 128px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 12px;min-width:118px}
+  .node b{display:block;font-size:13px;font-weight:700}
+  .node span{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
+  .arrow{align-self:center;color:var(--accent);font-size:17px;flex:0 0 auto}
+  .loopback{margin-top:12px;font-size:12.5px;color:var(--accent2);border-left:3px solid var(--accent);padding-left:10px}
+
+  /* work queue */
+  .queue{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:6px}
+  .task{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px 18px;position:relative}
+  .task.now{border-left:3px solid var(--now)}
+  .task.next{border-left:3px solid var(--next)}
+  .task.done{border-left:3px solid var(--done);opacity:.92}
+  .task.done h3{color:var(--done)}
+  .task.done .effort{border-color:#1e3a24;color:#86efac}
+  .task .id{font-size:11px;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}
+  .task h3{font-size:15.5px;font-weight:700;margin-top:2px}
+  .task p{font-size:13.5px;color:var(--muted);margin-top:7px}
+  .task .dod{font-size:12.5px;color:var(--accent2);margin-top:9px;border-top:1px solid var(--line);padding-top:8px}
+  .task .dod b{color:var(--text);font-weight:600}
+  .effort{position:absolute;top:15px;right:16px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+  .why{font-size:12.5px;color:var(--warn);margin-top:7px}
+
+  /* simple lists */
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:6px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h3{font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.07em}
+  .card ul{margin:0 0 0 17px;color:var(--muted);font-size:13.5px}
+  .card li{margin-bottom:6px}
+  .card li b{color:var(--text);font-weight:600}
+
+  /* trust */
+  .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:6px}
+  .lvl{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .lvl .when{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .lvl h3{font-size:15px;font-weight:700;margin-top:2px}
+  .lvl ul{margin:9px 0 0 17px;font-size:13px;color:var(--muted)}
+  .lvl li{margin-bottom:5px}
+  .lvl.built{border-color:#1e3a24}
+  .lvl.built .when{color:var(--done)}
+  .never{background:var(--panel);border:1px solid #3b2a1e;border-radius:12px;padding:18px 20px;margin-top:16px}
+  .never h3{color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+  .never ol{margin-left:18px;font-size:14px}
+  .never li{margin-bottom:7px}
+  .never li.key{color:var(--accent2)}
+  .never .foot{font-size:12.5px;color:var(--muted);margin-top:11px;font-style:italic}
+
+  /* decisions */
+  .dec{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 0;margin-top:6px}
+  .dec .row{display:flex;gap:13px;padding:13px 20px;border-bottom:1px solid var(--line)}
+  .dec .row:last-child{border-bottom:none}
+  .box{flex:0 0 auto;width:15px;height:15px;border:2px solid var(--accent);border-radius:4px;margin-top:4px}
+  .dec .q{font-size:14px}
+  .dec .q b{display:block;font-weight:700}
+  .dec .q span{color:var(--muted);font-size:13px}
+
+  footer{margin-top:52px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+  @media (max-width:640px){h1{font-size:26px}.arrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Supericons <span>Tactical Plan</span></h1>
+  <p class="sub">The work queue under the roadmap: what to build next, in what order, and why that order. Ship user value first; everything that does not help a user this month is parked. Strategy changes monthly; this page changes weekly.</p>
+  <p class="crumb">Companion to <a href="supericons-roadmap-2026-07-22.html">the roadmap</a> (vision and milestones) · <a href="supericons-strategy-canvas-and-level-up-plan-2026-07-25.md">strategy canvas</a> · 2026-07-25</p>
+</header>
+
+<h2 class="section">The instrument panel</h2>
+<p class="section-note">30-day window read on 2026-07-25. Telemetry is reliable from 2026-07-15 onward. Amber and red mark numbers that cannot yet be trusted for decisions.</p>
+<div class="metrics">
+  <div class="metric">
+    <div class="k">Real searches</div><div class="v">1,747</div>
+    <div class="n">1,523 unique queries · 87% unique</div>
+  </div>
+  <div class="metric">
+    <div class="k">Estimated clients</div><div class="v">644</div>
+    <div class="n">month-stable · audited 07-25 11:30 UTC</div>
+    <span class="flagnote" style="color:var(--good)">Not sessions: confirmed in production. Clients or networks, not people.</span>
+  </div>
+  <div class="metric bad">
+    <div class="k">ChatGPT share</div><div class="v">96.5%</div>
+    <div class="n">607 of 629 hosted identities</div>
+    <span class="badnote">One directory is effectively the whole business. Concentration risk, and it does not depend on identity precision.</span>
+  </div>
+  <div class="metric">
+    <div class="k">Successful</div><div class="v">89%</div>
+    <div class="n">10% true zero (165 events)</div>
+  </div>
+  <div class="metric flag">
+    <div class="k">Venue split</div><div class="v">95%</div>
+    <div class="n">hosted · 1,667 / 60 / 20</div>
+    <span class="flagnote">Balanced day = 07-24 only, one day of clean attribution.</span>
+  </div>
+  <div class="metric">
+    <div class="k">Accounts</div><div class="v">27</div>
+    <div class="n">2 Pro · 12+ countries</div>
+  </div>
+  <div class="metric bad">
+    <div class="k">Public icon ranking</div><div class="v">Stale</div>
+    <span class="badnote">162 rows, all stamped 2026-04-18. All Icons is ordering by an April snapshot.</span>
+  </div>
+</div>
+
+<h2 class="section">The loop we are trying to close</h2>
+<p class="section-note">The level-up milestone is not a new ring. It is making this run one full revolution with a real external user. Everything in rings 2 through 5 is a scaling problem after that.</p>
+<div class="loop">
+  <h3>Search → gap → creation → taste → library → discovery → credit</h3>
+  <div class="chain">
+    <div class="node"><b>Search fails</b><span>165 true zeros / 30d</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Gap surfaces</b><span>to the person who searched</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>They create it</b><span>in Icons Lab</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Taste gate</b><span>human approves (VC-5)</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Enters library</b><span>canonical</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Someone finds it</b><span>next search succeeds</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><b>Credit paid</b><span>on acceptance (VC-8)</span></div>
+  </div>
+  <p class="loopback">Zeros stop being only a defect to minimize and become the demand signal that feeds content, tooling, and the contribution pipeline. Personal analytics and the contribution funnel are the same mechanism seen from two ends, so build them once.</p>
+</div>
+
+<h2 class="section">Do now</h2>
+<p class="section-note">T3 is closed and independently audited against production. It was worth doing first, though not for the reason originally given: the working hypothesis behind T1 was that six distinct client IDs on one rare phrase meant six users, and the audit disproved that. Fingerprints are network configurations, so identity count alone now classifies nothing. <b>T1 is next, and smaller than first scoped</b>, because the classifier and the signed marker already exist.</p>
+<div class="queue">
+
+  <div class="task now">
+    <span class="effort">Smaller than thought</span>
+    <div class="id">T1 · next</div>
+    <h3>Traffic classification and the organic denominator</h3>
+    <p><b>Scope shrank after audit.</b> <code>classifyMcpTraffic</code> already exists, already treats the cryptographically signed controlled-run marker as authoritative, and already preserves an unknown class. What is missing is probe detection inside live traffic, and a reported organic denominator.</p>
+    <p class="why">Step 0 first: query the existing <code>traffic_class</code> distribution. If controlled-run labelling already catches most non-organic traffic, skip the detection build and go straight to T2. Do not build machinery the data says is unnecessary.</p>
+    <div class="dod"><b>Done when:</b> organic searches, organic identities, and unknown share are stated together and defensible; the rule re-runs unattended as code; popularity reads the organic stream. Rules: <a href="supericons-t1-traffic-classification-rules-2026-07-25.md" style="color:var(--accent2)">T1 rule spec</a>.</div>
+  </div>
+
+  <div class="task now">
+    <span class="effort">Days</span>
+    <div class="id">T2 · the ship</div>
+    <h3>Cross-channel icon popularity</h3>
+    <p>Rank All Icons by recent evidence from web, hosted MCP, and local, per the PRD already written. Icon-level, not query-level: 87% of queries are unique, so query frequency is noise while confirmed icon use is dense.</p>
+    <p class="why">The user-visible win. Fixes a live defect (the grid orders by an April snapshot), improves the default browse experience, adds indexable content, and is the first public proof of the living-data thesis.</p>
+    <p class="why">New constraint from the audit: with 96.5% of identities on one client, "most used" currently means "most used by ChatGPT users." Legitimate signal, but the population must be stated or it is a VC-6 problem.</p>
+    <div class="dod"><b>Done when:</b> All Icons orders by recent organic evidence, the active sort and data freshness are visible in the UI, the population is stated, and the point where evidence runs out is labeled rather than invented.</div>
+  </div>
+
+  <div class="task now">
+    <span class="effort">Small · parallel</span>
+    <div class="id">T1b · runs alongside</div>
+    <h3>Restore the Demand Inbox</h3>
+    <p>Removed by accident on 2026-07-17 in commit <code>5f84df33a</code>, a dashboard rebuild that deleted 6,861 lines. Not a product decision. The prior implementation is recoverable at <code>5f84df33a^</code>.</p>
+    <p class="why">Proven value: a request surfaced here produced the shipped Cybertruck icons. Touches admin surfaces only, so it runs safely in parallel with the public-grid work on its own branch.</p>
+    <div class="dod"><b>Done when:</b> demand queries and triage actions are back in the v2 dashboard, rendered in the v2 idiom rather than re-imported wholesale. <code>D-042</code>.</div>
+  </div>
+
+  <div class="task done">
+    <span class="effort">Done · 07-25</span>
+    <div class="id">T3 · complete</div>
+    <h3>Resolve what estimated reach counts</h3>
+    <p>Confirmed in production: hosted identity hashes IP, user agent, client family and month bucket, so it is <b>month-stable, not session-scoped</b>. 100% of hosted rows carried the hash; 153 identities recurred across days. The fallback concern is refuted.</p>
+    <p class="why">Corrected by audit: a fingerprint is <b>not a person</b>. Just 12 user-agent hashes produced all 629 hosted identities, so the signal is close to an IP count. Read it as clients or networks.</p>
+    <div class="dod"><b>Outcome:</b> the earlier 4% registration rate is <b>withdrawn</b>: 27 all-time accounts over 632 recent identities compares two populations, and only 2 identities are account-linked. Conversion cannot be measured before rung 1. See <a href="supericons-t3-estimated-reach-definition-2026-07-25.md" style="color:var(--accent2)">the corrected finding</a>.</div>
+  </div>
+
+</div>
+
+<h2 class="section">Next</h2>
+<p class="section-note">Each entry gated on the one before it, consistent with the standing directive: entry criteria, never dates.</p>
+<div class="queue">
+
+  <div class="task next">
+    <span class="effort">Week+</span>
+    <div class="id">T4</div>
+    <h3>Rung 1: the identity primitive</h3>
+    <p>Self-service free keys, synced collections, and an MCP tool to retrieve them. 95% of searches are anonymous agent traffic today, so nothing personal is possible before this exists. It is also the only thing that makes conversion measurable at all: today just 2 identities are account-linked.</p>
+    <p class="why"><b>Hard design constraint from the audit.</b> The dominant channel has the weakest registration path: a user inside ChatGPT has no browser session and no reason to leave the conversation. If a key cannot be obtained and used from inside an agent conversation, registration stays flat regardless of how good the offer is. This is a structural explanation for 27 accounts, not a funnel-quality failure.</p>
+    <p class="why">Build note: put the attribution choice in the issuance flow itself. An afternoon there, expensive to retrofit onto issued keys.</p>
+    <div class="dod"><b>Done when:</b> keys are self-service, collections sync, an MCP tool retrieves them, and attribution coverage rises measurably.</div>
+  </div>
+
+  <div class="task next">
+    <span class="effort">Week+</span>
+    <div class="id">T5</div>
+    <h3>Gap Report v1, free tier</h3>
+    <p>Not a chart page. Your searches, your zeros, your near-misses, with guided retry. Ships with an MCP surface on day one, because the person whose agents are searching has no reason to open a website, and VC-7 requires the surface stated before shipping.</p>
+    <div class="dod"><b>Done when:</b> users return to it without being prompted.</div>
+  </div>
+
+  <div class="task next">
+    <span class="effort">Milestone</span>
+    <div class="id">T6</div>
+    <h3>Close the loop once</h3>
+    <p>Wire the Gap Report to Icons Lab and the taste gate, then run one real external gap all the way to a credited, live icon. Document it as the reference case.</p>
+    <div class="dod"><b>Done when:</b> one complete revolution has happened with a real user, evidenced.</div>
+  </div>
+
+</div>
+
+<h2 class="section">Parallel and deferred</h2>
+<div class="cols">
+  <div class="card">
+    <h3>Always on, no engineering</h3>
+    <ul>
+      <li><b>Diversification, not just distribution.</b> The audit reframed this: at 96.5% of identities on one client, the task is no longer "get more traffic" but "get a second source." A ranking change inside one catalog is close to an extinction event for current traffic.</li>
+      <li><b>Second-channel candidates</b> already partly seeded: Search Console and organic, the MCP registries, npm, and the directories that listed the repo unprompted.</li>
+      <li><b>Content.</b> Expressive originals seeded by real observed zeros rather than intuition.</li>
+      <li>None of these should compete for the same hours as T1 to T6.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Deliberately deferred</h3>
+    <ul>
+      <li><b>Trust posture and public commitments.</b> Parked by owner decision until they can be proven and there is something concrete to point at.</li>
+      <li><b>Paid advanced analytics.</b> T5 must prove engagement first; pricing follows demonstrated use, not projection.</li>
+      <li><b>Public demand reporting.</b> Hold until volume makes an honest version presentable: patterns without denominators would flatter the numbers.</li>
+      <li><b>Canvas, publishers, marketplace.</b> Rings 3 to 5, after the loop closes once.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="section">Trust posture · parked</h2>
+<p class="section-note">Owner decision, 2026-07-25: no public commitments while they cannot be proven. Trust is earned by shipping things that work, not by publishing claims a user has no way to verify. Revisit when there is something concrete to point at.</p>
+<div class="levels">
+  <div class="lvl built">
+    <div class="when">Already true, no announcement needed</div>
+    <h3>What the code does today</h3>
+    <ul>
+      <li>Honors <code>DO_NOT_TRACK</code> plus three Supericons flags</li>
+      <li>Session ID is a daily-rotating hash, no persistent identifier</li>
+      <li>No account, no device ID, no client IP</li>
+      <li>At or above current MCP norm, verified in <code>mcp/telemetry.js</code></li>
+    </ul>
+  </div>
+  <div class="lvl">
+    <div class="when">Parked · revisit at rung 1</div>
+    <h3>Why parked, and what changes it</h3>
+    <ul>
+      <li>A promise nobody can verify is a liability, not an asset</li>
+      <li>Backtracking on a published commitment costs more than never publishing one</li>
+      <li>The one item with real timing cost is the attribution choice inside key issuance, folded into T4 as a build note rather than a promise</li>
+      <li>Formalities (policy, terms, retention) wait for volume or revenue</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="section">Decisions · all settled 2026-07-25</h2>
+<p class="section-note">Ratified by the owner and recorded as D-039 to D-043 in <code>docs/si-v2/search/decisions.md</code>. No work on this page is now waiting on a decision.</p>
+<div class="dec">
+  <div class="row"><div class="box" style="border-color:var(--done);background:var(--done)"></div><div class="q"><b>D-039 · Use means confirmed takes only</b><span>Copy, download, fetch. Previews and search appearances are not use. The unevidenced tail is alphabetical by library with a visible divider where ranking stops.</span></div></div>
+  <div class="row"><div class="box" style="border-color:var(--done);background:var(--done)"></div><div class="q"><b>D-040 · Popularity states its population</b><span>"Most used" currently means "most used by ChatGPT users" and the page must say so.</span></div></div>
+  <div class="row"><div class="box" style="border-color:var(--done);background:var(--done)"></div><div class="q"><b>D-041 · Measure before building detection</b><span>Query the traffic_class distribution first; skip the build if signed labelling already suffices. Identity count alone never classifies.</span></div></div>
+  <div class="row"><div class="box" style="border-color:var(--done);background:var(--done)"></div><div class="q"><b>D-042 · Demand Inbox restored</b><span>Lost by accident in commit 5f84df33a, not by decision. Recoverable from git. Its requests produced shipped icons.</span></div></div>
+  <div class="row"><div class="box" style="border-color:var(--done);background:var(--done)"></div><div class="q"><b>D-043 · Diversification is a tracked track</b><span>96.5% single-channel dependency, measured, and addressable without engineering hours.</span></div></div>
+  <div class="row"><div class="box"></div><div class="q"><b>Open, but not a decision: the 153 collision</b><span>Hosted-scoped reports 153 multi-day over 629; the old endpoint reports 153 over 2,645. One query resolves it. Do not quote either figure until then.</span></div></div>
+  <div class="row"><div class="box"></div><div class="q"><b>Deferred to rung 1:</b><span>attribution default at key issuance, and whether query-data handling becomes a charter commitment. Both decided when keys are actually built.</span></div></div>
+</div>
+
+<footer>
+  Supericons tactical plan, 2026-07-25, revised after independent production audit at cutoff 11:30 UTC. Identity figures are audited production values; the live V2 API reconciled exactly with direct database calculation. Withdrawn in this revision: the 4% registration rate, which compared two populations rather than measuring conversion. Trust posture parked by owner decision: no public commitments while they cannot be proven. Proposals on this page are not ratified.
+</footer>
+
+</div>
+</body>
+</html>
