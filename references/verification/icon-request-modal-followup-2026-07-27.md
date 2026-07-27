@@ -163,3 +163,26 @@ Live Chromium verification passed on both the exact deploy URL and
 inherited sidebar color, reduced-motion opt-out, modal behavior, sidebar font
 size, and grid order. All request writes were intercepted locally, so the live
 checks did not create production request records.
+
+## Draw and add hover follow-up
+
+The tiny orbiting sparks were not legible enough at the sidebar icon size. The
+replacement uses a clearer motion tied to the action:
+
+- A thicker stroke draws the circle clockwise from the top.
+- The circle grows slightly while the plus pops in the center.
+- A soft outer ripple expands and fades as confirmation.
+
+The effect uses the full icon silhouette instead of small particles. It remains
+inside the sidebar item, uses the inherited sidebar color, and changes no
+layout. Reduced-motion mode disables the plus, ring, draw, and ripple
+animations.
+
+Verification completed before release:
+
+- The earlier static test failed until the new ring draw and ripple existed.
+- Chromium confirms the clockwise draw, expanding ripple, ring motion, and plus
+  pop at the real sidebar size.
+- Chromium confirms both new layers inherit the sidebar item color.
+- Chromium confirms reduced-motion mode disables all animation layers.
+- The complete icon request flow and grid-order regression still pass.

@@ -169,17 +169,21 @@ try {
     const request = document.querySelector('#sidebarIconRequest');
     const ring = document.querySelector('.sidebar-request-icon__ring');
     const plus = document.querySelector('.sidebar-request-icon__plus');
-    const sparks = document.querySelector('.sidebar-request-icon__sparks');
-    const spark = document.querySelector('.sidebar-request-icon__spark');
+    const sweep = document.querySelector('.sidebar-request-icon__sweep');
+    const ripple = document.querySelector('.sidebar-request-icon__ripple');
     return {
       animationName: getComputedStyle(plus).animationName,
       transform: getComputedStyle(plus).transform,
       ringAnimationName: getComputedStyle(ring).animationName,
       ringTransform: getComputedStyle(ring).transform,
-      sparksAnimationName: getComputedStyle(sparks).animationName,
-      sparksTransform: getComputedStyle(sparks).transform,
+      sweepAnimationName: getComputedStyle(sweep).animationName,
+      sweepDashOffset: getComputedStyle(sweep).strokeDashoffset,
+      sweepOpacity: Number.parseFloat(getComputedStyle(sweep).opacity),
+      rippleAnimationName: getComputedStyle(ripple).animationName,
+      rippleTransform: getComputedStyle(ripple).transform,
       stroke: getComputedStyle(plus).stroke,
-      sparkFill: getComputedStyle(spark).fill,
+      sweepStroke: getComputedStyle(sweep).stroke,
+      rippleStroke: getComputedStyle(ripple).stroke,
       requestColor: getComputedStyle(request).color,
     };
   });
@@ -187,18 +191,23 @@ try {
   assert.notEqual(requestIconMotion.transform, 'none');
   assert.equal(requestIconMotion.ringAnimationName, 'sidebar-request-ring-breathe');
   assert.notEqual(requestIconMotion.ringTransform, 'none');
-  assert.equal(requestIconMotion.sparksAnimationName, 'sidebar-request-spark-orbit');
-  assert.notEqual(requestIconMotion.sparksTransform, 'none');
+  assert.equal(requestIconMotion.sweepAnimationName, 'sidebar-request-ring-draw');
+  assert.notEqual(requestIconMotion.sweepDashOffset, '100px');
+  assert.ok(requestIconMotion.sweepOpacity > 0);
+  assert.equal(requestIconMotion.rippleAnimationName, 'sidebar-request-confirmation-ripple');
+  assert.notEqual(requestIconMotion.rippleTransform, 'none');
   assert.equal(requestIconMotion.stroke, requestIconMotion.requestColor);
-  assert.equal(requestIconMotion.sparkFill, requestIconMotion.requestColor);
+  assert.equal(requestIconMotion.sweepStroke, requestIconMotion.requestColor);
+  assert.equal(requestIconMotion.rippleStroke, requestIconMotion.requestColor);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   assert.deepEqual(
     await page.evaluate(() => ({
       plus: getComputedStyle(document.querySelector('.sidebar-request-icon__plus')).animationName,
       ring: getComputedStyle(document.querySelector('.sidebar-request-icon__ring')).animationName,
-      sparks: getComputedStyle(document.querySelector('.sidebar-request-icon__sparks')).animationName,
+      sweep: getComputedStyle(document.querySelector('.sidebar-request-icon__sweep')).animationName,
+      ripple: getComputedStyle(document.querySelector('.sidebar-request-icon__ripple')).animationName,
     })),
-    { plus: 'none', ring: 'none', sparks: 'none' },
+    { plus: 'none', ring: 'none', sweep: 'none', ripple: 'none' },
     'The request icon motion ignores the reduced-motion preference.',
   );
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -376,7 +385,8 @@ try {
     request_modal_escape_and_backdrop_close: 'passed',
     request_icon_hover_motion: 'passed',
     request_icon_ring_motion: 'passed',
-    request_icon_spark_orbit: 'passed',
+    request_icon_ring_draw: 'passed',
+    request_icon_confirmation_ripple: 'passed',
     request_icon_reduced_motion: 'passed',
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,

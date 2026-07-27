@@ -53,7 +53,8 @@ for (const marker of [
   'data-i18n="app.requestIcon"',
   'class="sidebar-icon sidebar-request-icon"',
   'class="sidebar-request-icon__plus"',
-  'class="sidebar-request-icon__sparks"',
+  'class="sidebar-request-icon__ripple"',
+  'class="sidebar-request-icon__sweep"',
   'id="iconRequestPanel"',
   'id="iconRequestBackdrop"',
   'id="iconRequestCard"',
@@ -124,9 +125,14 @@ assert.ok(
   'The request sidebar ring hover animation is missing.',
 );
 assert.ok(
-  style.includes('.sidebar__item--button:hover .sidebar-request-icon__sparks')
-    && style.includes('@keyframes sidebar-request-spark-orbit'),
-  'The request sidebar spark orbit animation is missing.',
+  style.includes('.sidebar__item--button:hover .sidebar-request-icon__sweep')
+    && style.includes('@keyframes sidebar-request-ring-draw'),
+  'The request sidebar clockwise ring draw animation is missing.',
+);
+assert.ok(
+  style.includes('.sidebar__item--button:hover .sidebar-request-icon__ripple')
+    && style.includes('@keyframes sidebar-request-confirmation-ripple'),
+  'The request sidebar confirmation ripple animation is missing.',
 );
 
 const writerStart = intelligence.indexOf('export async function logIconRequest');
