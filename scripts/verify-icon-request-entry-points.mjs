@@ -166,14 +166,36 @@ assert.ok(migration.includes("timezone('utc', now())"));
 assert.ok(!migration.includes('p_created_at'));
 assert.ok(!migration.includes('create or replace function public.si_log_icon_evidence'));
 
+const iconRequestMessagePaths = [
+  'app.requestIcon',
+  'app.iconRequestLabel',
+  'app.iconRequestPlaceholder',
+  'app.iconRequestPlaceholderForQuery',
+  'app.iconRequestSearchFirst',
+  'app.iconRequestEmpty',
+  'app.iconRequestSending',
+  'app.iconRequestSaved',
+  'app.iconRequestFailed',
+  'actions.send',
+];
+const corruptedQuestionMarkPattern = /\?{2,}|[\p{L}\p{M}]\?[\p{L}\p{M}]|\?[\p{L}\p{M}]/u;
+
 for (const [index, source] of localeSources.entries()) {
   const catalog = JSON.parse(source);
-  assert.equal(
-    typeof catalog.app?.requestIcon,
-    'string',
-    `Locale ${localeNames[index]} is missing app.requestIcon.`,
-  );
-  assert.ok(catalog.app.requestIcon.trim(), `Locale ${localeNames[index]} has an empty app.requestIcon.`);
+  for (const messagePath of iconRequestMessagePaths) {
+    const message = messagePath.split('.').reduce((value, part) => value?.[part], catalog);
+    assert.equal(
+      typeof message,
+      'string',
+      `Locale ${localeNames[index]} is missing ${messagePath}.`,
+    );
+    assert.ok(message.trim(), `Locale ${localeNames[index]} has an empty ${messagePath}.`);
+    assert.doesNotMatch(
+      message,
+      corruptedQuestionMarkPattern,
+      `Locale ${localeNames[index]} has corrupted text in ${messagePath}.`,
+    );
+  }
 }
 
 console.log(JSON.stringify({

@@ -7,6 +7,21 @@ import { chromium } from 'playwright';
 const baseUrl = process.env.SI_BASE_URL || 'http://127.0.0.1:4173/';
 const screenshotPath = process.env.SI_ICON_REQUEST_SCREENSHOT
   || 'references/verification/icon-request-entry-points-2026-07-27.png';
+const localeNames = [
+  'ar',
+  'de',
+  'en',
+  'es',
+  'hi',
+  'ja',
+  'ko',
+  'pt',
+  'th',
+  'vi',
+  'zh-Hans',
+  'zh-Hant',
+];
+const corruptedQuestionMarkPattern = /\?{2,}|[\p{L}\p{M}]\?[\p{L}\p{M}]|\?[\p{L}\p{M}]/u;
 const iconFixture = [
   {
     name: 'onlyone',
@@ -369,6 +384,37 @@ try {
     gridOrderBeforeViewChange,
   );
 
+  const localizedRequestSamples = [];
+  for (const locale of localeNames) {
+    if (await page.locator('html').getAttribute('lang') !== locale) {
+      await page.locator('#localeSelect').click();
+      await page.locator(`#localeMenu [data-locale="${locale}"]`).click();
+      await page.waitForFunction((expectedLocale) => (
+        document.documentElement.lang === expectedLocale
+      ), locale);
+    }
+    await page.locator('#sidebarIconRequest').click();
+    await page.locator('#noResultsFeedbackInput').waitFor({ state: 'visible' });
+    const copy = {
+      locale,
+      label: (await page.locator('#iconRequestTitle').textContent())?.trim() || '',
+      placeholder: await page.locator('#noResultsFeedbackInput').getAttribute('placeholder') || '',
+      send: (await page.locator('#noResultsFeedbackForm button[type="submit"]').textContent())?.trim() || '',
+    };
+    for (const [field, value] of Object.entries(copy)) {
+      if (field === 'locale') continue;
+      assert.ok(value, `Locale ${locale} has empty popup ${field} copy.`);
+      assert.doesNotMatch(
+        value,
+        corruptedQuestionMarkPattern,
+        `Locale ${locale} has corrupted popup ${field} copy.`,
+      );
+    }
+    localizedRequestSamples.push(copy);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('#iconRequestPanel')?.hidden === true);
+  }
+
   await mkdir(dirname(resolve(screenshotPath)), { recursive: true });
   await page.screenshot({ path: resolve(screenshotPath), fullPage: true });
 
@@ -388,6 +434,7 @@ try {
     request_icon_ring_draw: 'passed',
     request_icon_confirmation_ripple: 'passed',
     request_icon_reduced_motion: 'passed',
+    localized_popup_locales: localizedRequestSamples.length,
     captured_rpc_writes: savedRequests.length,
     screenshot: screenshotPath,
     hosted_systems_touched: false,

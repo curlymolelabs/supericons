@@ -203,3 +203,26 @@ ring and plus motion, inherited sidebar color, reduced-motion opt-out, modal
 behavior, sidebar font size, and grid order. The old spark markup is absent.
 All request writes were intercepted locally, so the live checks did not create
 production request records.
+
+## Popup localization follow-up
+
+The non-English popup strings had been saved as literal question-mark
+characters in the locale source. This affected the title, placeholder,
+query-specific prompt, validation and status messages, and the Send label.
+
+The source catalogs now contain complete localized copy for all eleven
+non-English languages. The public website and MCP catalog mirrors were rebuilt
+from that source.
+
+Regression protection now checks every request-popup key for empty or corrupted
+text. Chromium also opens the visible popup in all twelve supported locales and
+checks its title, placeholder, and Send label.
+
+Verification completed before release:
+
+- The corruption regression failed on the original Arabic popup copy.
+- Source, public, and MCP catalogs are synchronized.
+- The full catalog parity and placeholder checks pass.
+- The complete request flow passes with all twelve popup locales.
+- Visual Chromium inspection confirms the Simplified Chinese popup renders
+  readable text in the title, input placeholder, and Send button.
