@@ -25,9 +25,9 @@
 </head>
 <body>
 <main>
-  <h1>Local npm attribution is ready</h1>
-  <p>Production telemetry and the admin dashboard remain live. The corrected npm package passed its local checks and the downloaded private-stage checks.</p>
-  <div class="status">Passed after repair</div>
+  <h1>Local npm attribution is published</h1>
+  <p>Production telemetry, the admin dashboard, and the public npm package are verified.</p>
+  <div class="status">Release complete</div>
 
   <div class="grid">
     <div class="card"><strong>Search safety</strong><div class="value">225 / 225</div><p>Same ordered search results.</p></div>
@@ -41,13 +41,13 @@
     <tr><td>Older packages</td><td>Still work through the existing v2 path.</td></tr>
     <tr><td>Admin dashboard</td><td>Shows best-effort installations, country, client, package, and operating system.</td></tr>
     <tr><td>Test traffic</td><td>Hidden by default and available through the existing filter.</td></tr>
-    <tr><td>npm</td><td>Version 0.4.24 is staged privately. Public latest remains 0.4.23.</td></tr>
+    <tr><td>npm</td><td>Version 0.4.24 is public under latest. The downloaded public package matches the approved stage.</td></tr>
   </table>
 
   <div class="decision">
-    <strong>Your decision</strong>
-    <p>Approve npm stage <code>404298b5-a643-4b6e-a316-9b2f50c12830</code> only if you want version 0.4.24 published under <code>latest</code>.</p>
-    <p>If you do nothing, telemetry and the dashboard stay safe, but normal users remain on 0.4.23 and organic Local installation data will not begin.</p>
+    <strong>Release result</strong>
+    <p>The public archive passed all 225 search cases and has no known production dependency vulnerabilities.</p>
+    <p>One controlled Local npm event stayed hidden from the normal dashboard and appeared only when test traffic was included.</p>
   </div>
 </main>
 </body>

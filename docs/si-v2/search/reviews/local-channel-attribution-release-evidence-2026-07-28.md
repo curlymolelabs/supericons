@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Status: production telemetry and dashboard verified, npm package staged privately, npm publication paused for owner approval
+Status: production telemetry, dashboard, and public npm package verified
 
 ## Outcome
 
@@ -95,7 +95,8 @@ Source:
 
 ## Search isolation
 
-The clean-installed package and the downloaded npm stage both passed:
+The clean-installed package, downloaded npm stage, and public npm archive all
+passed:
 
 - 225 of 225 maintained stdio cases
 - fixed search fingerprint:
@@ -133,11 +134,11 @@ Final production dependency audit:
 Source:
 `docs/si-v2/search/reviews/local-channel-attribution-npm-security-verification-2026-07-28.json`
 
-## Private npm stage
+## Published npm release
 
 - Package: `@supericons/mcp@0.4.24`
 - Stage ID: `404298b5-a643-4b6e-a316-9b2f50c12830`
-- Intended tag after approval: `latest`
+- Published tag: `latest`
 - Files: 71
 - Packed size: 6,190,093 bytes
 - Unpacked size: 25,863,134 bytes
@@ -145,15 +146,23 @@ Source:
 - Archive SHA-256:
   `3e1af277c1a6b83bb1ca21625c7c2f5058086d12f3b2e67468ad2e0c1c87b186`
 - Downloaded stage SHA-256: exact match
-- Downloaded stage security audit: 0 vulnerabilities
-- Downloaded stage search contract: 225 of 225 passed
-- Current public `latest`: `0.4.23`
-- Published: false
+- Downloaded public archive SHA-256: exact match
+- Downloaded public archive security audit: 0 vulnerabilities
+- Downloaded public archive search contract: 225 of 225 passed
+- Current public `latest`: `0.4.24`
+- Published: true
 
 The superseded stage `87ae615a-d477-4c83-8879-f26ac983e420` was rejected and
 removed before this replacement was created.
 
-The owner must approve this exact stage before npm can publish it.
+The approved stage was published without changing its archive.
+
+One controlled v3 event produced one usage row and one final outcome. It was
+absent when test traffic was excluded and present exactly once when test
+traffic was included.
+
+Source:
+`docs/si-v2/search/reviews/local-channel-attribution-postpublish-verification-2026-07-28.json`
 
 ## Independent rollback targets
 
@@ -161,8 +170,8 @@ The owner must approve this exact stage before npm can publish it.
 
 Run the reviewed rollback files in this order:
 
-1. `supabase/migrations/rollback/20260728110000_local_mcp_attribution_v3_public_ingest.down.sql`
-2. `supabase/migrations/rollback/20260728100000_local_mcp_attribution_v3.down.sql`
+1. `supabase/rollbacks/20260728110000_local_mcp_attribution_v3_public_ingest.down.sql`
+2. `supabase/rollbacks/20260728100000_local_mcp_attribution_v3.down.sql`
 
 This leaves the existing v2 RPC available.
 
@@ -173,10 +182,8 @@ keeping the internal v3 data model and v2 RPC.
 
 ### npm
 
-Before approval, reject stage `404298b5-a643-4b6e-a316-9b2f50c12830`.
-
-After approval, if rollback is required, restore `latest` to `0.4.23` and
-deprecate only `0.4.24`.
+If rollback is required, restore `latest` to `0.4.23` and deprecate only
+`0.4.24`.
 
 ### Admin dashboard
 
@@ -186,7 +193,7 @@ and revert the Local npm dashboard commits.
 
 ## Expected early dashboard state
 
-Organic attribution begins only after users install version `0.4.24`. Until
-publication and adoption, the normal dashboard can truthfully show zero
-measured installations. Controlled verification rows are visible only when
-test traffic is included.
+Organic attribution begins as users install version `0.4.24`. The normal
+dashboard can truthfully show zero measured installations until adoption
+begins. Controlled verification rows are visible only when test traffic is
+included.

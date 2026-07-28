@@ -1,0 +1,44 @@
+{
+  "verified_at_utc": "2026-07-28",
+  "status": "passed",
+  "registry": {
+    "package": "@supericons/mcp",
+    "version": "0.4.24",
+    "latest": "0.4.24",
+    "remaining_private_stages": 0
+  },
+  "public_archive": {
+    "files": 71,
+    "packed_bytes": 6190093,
+    "unpacked_bytes": 25863134,
+    "npm_shasum": "1c38b87c1ff420cd215f4f55f4009c1cbf90ca4b",
+    "sha256": "3e1af277c1a6b83bb1ca21625c7c2f5058086d12f3b2e67468ad2e0c1c87b186",
+    "matches_approved_stage": true
+  },
+  "clean_install": {
+    "declared_mcp_sdk": "^1.30.0",
+    "resolved_mcp_sdk": "1.30.0",
+    "resolved_hono_server": "2.0.12",
+    "production_vulnerabilities": 0
+  },
+  "search_gate": {
+    "maintained_cases": 225,
+    "passed_cases": 225,
+    "fixed_search_fingerprint": "84a5e8b3c1b4e31e25cc865b37f397effb6c6c4c820b98706995012b8b80e3ff",
+    "stdio_route_fingerprint": "c447744c04d2d7628959f685090b95159f912c5ca74ce3ec950d0c3175f89f44",
+    "ordered_result_parity": true
+  },
+  "controlled_v3_check": {
+    "usage_rows": 1,
+    "final_outcomes": 1,
+    "traffic_class": "controlled_test",
+    "mcp_server_version": "0.4.24",
+    "default_view_matching_rows": 0,
+    "include_test_view_matching_rows": 1,
+    "default_view_include_test_metadata": false,
+    "test_view_include_test_metadata": true,
+    "raw_rows_complete": true,
+    "rollup_rows_complete": true
+  },
+  "rollback_required": false
+}
