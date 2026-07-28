@@ -98,4 +98,41 @@ Pre-release Railway deployment:
 It remains the rollback target. The release changes no environment variables,
 database state, public package, or external interface.
 
-Production deployment and live verification are pending.
+## Production result
+
+Railway deployment:
+
+`da1eee2d-290e-454e-8bfb-feed3e906bf7`
+
+Image digest:
+
+`sha256:91ff50680e4c96b54953ac07cd4f9cc11f84c898ee1dc94951232bcfa4a9b17c`
+
+The Railway build installed the root production dependencies and reported zero
+vulnerabilities. The deployment reached `SUCCESS`, and `/health` reported:
+
+- service ready
+- version `0.4.24`
+- hosted search guard closed with zero active or queued work
+- grouped search guard closed with zero active or queued work
+- local-first search and recommendations enabled
+- 27,486 icons
+- 15,209 semantic records
+
+The signed live product matrix passed all 39 cases through both HTTP and MCP.
+Ordered references matched. Live latency was:
+
+- p95: 3,836.5 ms
+- maximum: 4,350.3 ms
+
+Separate signed live tool checks also passed:
+
+- two recommendation slots returned valid recommendations
+- exact preview returned `lucide:search`
+- invalid preview input was rejected
+
+Runtime logs show the hosted MCP server listening on port 8080. The only
+warning is npm's existing production-config suggestion. No application error
+was found.
+
+The previous healthy deployment remains available as the rollback target.
