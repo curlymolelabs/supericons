@@ -136,17 +136,22 @@ Source:
 ## Private npm stage
 
 - Package: `@supericons/mcp@0.4.24`
-- Stage ID: `87ae615a-d477-4c83-8879-f26ac983e420`
+- Stage ID: `404298b5-a643-4b6e-a316-9b2f50c12830`
 - Intended tag after approval: `latest`
 - Files: 71
-- Packed size: 6,190,009 bytes
-- Unpacked size: 25,862,763 bytes
-- npm shasum: `65e2e5e84bc318a744adf925d885b24ba161ecbf`
+- Packed size: 6,190,093 bytes
+- Unpacked size: 25,863,134 bytes
+- npm shasum: `1c38b87c1ff420cd215f4f55f4009c1cbf90ca4b`
 - Archive SHA-256:
-  `429cbd92baa951949da55e8b151de1da3cc4d4033e74f25f6901475ff05f2c70`
+  `3e1af277c1a6b83bb1ca21625c7c2f5058086d12f3b2e67468ad2e0c1c87b186`
 - Downloaded stage SHA-256: exact match
+- Downloaded stage security audit: 0 vulnerabilities
+- Downloaded stage search contract: 225 of 225 passed
 - Current public `latest`: `0.4.23`
 - Published: false
+
+The superseded stage `87ae615a-d477-4c83-8879-f26ac983e420` was rejected and
+removed before this replacement was created.
 
 The owner must approve this exact stage before npm can publish it.
 
@@ -168,7 +173,7 @@ keeping the internal v3 data model and v2 RPC.
 
 ### npm
 
-Before approval, reject stage `87ae615a-d477-4c83-8879-f26ac983e420`.
+Before approval, reject stage `404298b5-a643-4b6e-a316-9b2f50c12830`.
 
 After approval, if rollback is required, restore `latest` to `0.4.23` and
 deprecate only `0.4.24`.
