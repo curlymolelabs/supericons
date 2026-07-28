@@ -34,7 +34,8 @@ for (const flag of flags) {
 }
 
 for (const statement of [
-  'does not store the raw IP address',
+  'Supericons telemetry records do not store raw IP addresses',
+  'platform logging policy',
   'server-keyed hash',
   'retained for up to 90 days',
   'does not block or change icon search',
@@ -46,6 +47,9 @@ for (const statement of [
 assert.equal(packageJson.version, '0.4.24');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
+assert.equal(packageJson.dependencies['@modelcontextprotocol/sdk'], '^1.30.0');
+assert.equal(packageLock.packages['node_modules/@modelcontextprotocol/sdk'].version, '1.30.0');
+assert.equal(packageLock.packages['node_modules/@hono/node-server'].version, '2.0.12');
 assert.equal(serverJson.version, packageJson.version);
 assert.equal(serverJson.packages[0].version, packageJson.version);
 assert.equal(productFacts.mcpPackageVersion, packageJson.version);

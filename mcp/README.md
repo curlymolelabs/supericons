@@ -23,8 +23,10 @@ Each search event can include:
 - a pseudonymous installation identifier
 - a country code derived from the network connection, when available
 
-Supericons does not store the raw IP address, raw installation identifier,
-name, files, project, repository, or code.
+Supericons telemetry records do not store raw IP addresses, raw installation
+identifiers, your name, files, project, repository, or code. Supabase
+infrastructure processes network information and may retain request metadata
+according to its platform logging policy.
 
 The installation identifier is a random value created by the package. It is
 not derived from the computer, account, or network. Supericons converts it to

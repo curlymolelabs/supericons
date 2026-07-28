@@ -10,7 +10,9 @@
 
 ### Privacy
 
-- stores only a server-keyed installation hash, never the raw installation identifier or IP address
+- stores only a server-keyed installation hash in Supericons telemetry records
+- does not store raw installation identifiers or raw IP addresses in Supericons telemetry records
+- acknowledges that Supabase infrastructure processes network information and may retain request metadata according to its platform logging policy
 - removes stored installation hashes after 90 days
 - keeps telemetry separate from search so failures and timeouts do not change results
 

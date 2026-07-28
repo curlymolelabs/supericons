@@ -51,7 +51,9 @@ Source:
 
 ## Privacy and safety boundaries
 
-- Raw IP addresses are never stored.
+- Supericons telemetry records do not store raw IP addresses.
+- Supabase infrastructure processes network information and may retain request
+  metadata according to its platform logging policy.
 - Raw installation UUIDs are never stored or logged.
 - Installation hashes use a server-only, versioned HMAC key.
 - Installation hashes are retained for at most 90 days.
@@ -110,14 +112,26 @@ search, Hosted MCP, routing, and allowances were not changed.
 
 ## Package security
 
-The locked MCP SDK runtime was refreshed to remove a moderate Windows path
-traversal advisory. Package `0.4.24` requires Node.js 20 or newer.
+The package requires MCP SDK `^1.30.0` and Node.js 20 or newer. Its lockfile
+resolves MCP SDK `1.30.0` and Hono server `2.0.12`.
+
+The candidate passed three consumer checks:
+
+- a fresh installation;
+- an upgrade from public package `0.4.23`; and
+- an upgrade from a forced legacy state using MCP SDK `1.27.1` and Hono server
+  `1.19.14`.
+
+All three finished on MCP SDK `1.30.0` and Hono server `2.0.12`.
 
 Final production dependency audit:
 
 - total vulnerabilities: 0
 - high vulnerabilities: 0
 - critical vulnerabilities: 0
+
+Source:
+`docs/si-v2/search/reviews/local-channel-attribution-npm-security-verification-2026-07-28.json`
 
 ## Private npm stage
 
