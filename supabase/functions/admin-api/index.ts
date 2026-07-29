@@ -3616,7 +3616,7 @@ async function buildDashboardV2SearchEventsPayload(
     throw new Error('The search event scope is invalid.');
   }
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
-  const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 500);
   const snapshotKey = buildSearchEventSnapshotCacheKey(url, filters);
   const snapshotId = await buildSearchEventSnapshotId(snapshotKey);
   const snapshot = await searchEventSnapshotCache.getOrCreate(snapshotKey, async () => {

@@ -8,6 +8,9 @@ const ADMIN_SESSION_URL = `${ADMIN_API_BASE}/session`;
 const CACHE_PREFIX = 'si_admin_dashboard_v2_cache';
 const CACHE_TTL_MS = 30_000;
 const REQUEST_TIMEOUT_MS = 15_000;
+const EXPORT_REQUEST_TIMEOUT_MS = 60_000;
+const SEARCH_EVENT_EXPORT_PAGE_SIZE = 500;
+const SEARCH_EVENT_EXPORT_PARTITION_DAYS = 7;
 const AUTO_REFRESH_MS = Number(ADMIN_RUNTIME_CONFIG.autoRefreshMs) > 0
   ? Number(ADMIN_RUNTIME_CONFIG.autoRefreshMs)
   : 30_000;
@@ -479,32 +482,37 @@ function formatApiErrorMessage(payload, status) {
 
 async function apiRequest(path, options = {}, retry = true) {
   const secret = await ensureAdminSecret();
-  const method = String(options.method || 'GET').toUpperCase();
+  const {
+    requestTimeoutMs = REQUEST_TIMEOUT_MS,
+    signal: externalSignal,
+    ...fetchOptions
+  } = options;
+  const method = String(fetchOptions.method || 'GET').toUpperCase();
   const requestUrl = method === 'GET'
     ? `${ADMIN_API_BASE}${path}${path.includes('?') ? '&' : '?'}_ts=${Date.now()}`
     : `${ADMIN_API_BASE}${path}`;
   const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-  if (options.signal) {
-    if (options.signal.aborted) controller.abort();
-    else options.signal.addEventListener('abort', () => controller.abort(), { once: true });
+  const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs);
+  if (externalSignal) {
+    if (externalSignal.aborted) controller.abort();
+    else externalSignal.addEventListener('abort', () => controller.abort(), { once: true });
   }
   let response;
   try {
     response = await fetch(requestUrl, {
-      ...options,
+      ...fetchOptions,
       method,
       cache: 'no-store',
       signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
         ...(secret ? { 'x-admin-secret': secret } : {}),
-        ...(options.headers || {}),
+        ...(fetchOptions.headers || {}),
       },
     });
   } catch (error) {
     if (error?.name === 'AbortError') {
-      throw new Error(`The ${method} request timed out after ${REQUEST_TIMEOUT_MS / 1000} seconds.`);
+      throw new Error(`The ${method} request timed out after ${requestTimeoutMs / 1000} seconds.`);
     }
     throw error;
   } finally {
@@ -2794,7 +2802,9 @@ async function fetchAllPages(endpoint, rowsPath, options = {}) {
   params.set('page_size', String(pageSize));
   if (endpoint === 'search' && state.explorerIssue) params.set('issue', state.explorerIssue);
   if (endpoint === 'search' && options.view) params.set('view', options.view);
-  const first = await apiRequest(`/v2/${endpoint}?${params}`);
+    const first = await apiRequest(`/v2/${endpoint}?${params}`, {
+      requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+    });
   if (endpoint === 'activity' && first.meta?.raw_rows_truncated === true) {
     throw new Error('Complete activity exceeds the safe export limit. Choose a shorter date range.');
   }
@@ -2819,7 +2829,9 @@ async function fetchAllPages(endpoint, rowsPath, options = {}) {
     const batch = await Promise.all(pages.map(async (page) => {
       const pageParams = new URLSearchParams(params);
       pageParams.set('page', String(page));
-      const payload = await apiRequest(`/v2/${endpoint}?${pageParams}`);
+      const payload = await apiRequest(`/v2/${endpoint}?${pageParams}`, {
+        requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+      });
       return rowsPath(payload);
     }));
     rest.push(...batch);
@@ -2827,13 +2839,195 @@ async function fetchAllPages(endpoint, rowsPath, options = {}) {
   return [firstRows, ...rest].flat();
 }
 
-async function fetchAllSearchEvents(eventScope = 'primary') {
-  const pageSize = 100;
+function utcDateToken(value) {
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isFinite(date.getTime()) ? date.toISOString().slice(0, 10) : null;
+}
+
+function addUtcDays(dateToken, days) {
+  const timestamp = Date.parse(`${dateToken}T00:00:00.000Z`);
+  if (!Number.isFinite(timestamp)) return null;
+  return utcDateToken(new Date(timestamp + (days * 86_400_000)));
+}
+
+function searchEventExportPartitions() {
+  const configuredDays = {
+    '30d': 30,
+    '90d': 90,
+    '1y': 365,
+  };
+  const windowKey = state.filters.window;
+  const cutoffDay = utcDateToken(state.view?.cutoff || new Date());
+  let from = null;
+  let to = null;
+  if (windowKey === 'custom') {
+    from = state.filters.from || null;
+    to = state.filters.to || null;
+  } else if (configuredDays[windowKey] && cutoffDay) {
+    from = addUtcDays(cutoffDay, -(configuredDays[windowKey] - 1));
+    to = cutoffDay;
+  }
+  if (!from || !to) return [];
+  const totalDays = Math.round(
+    (Date.parse(`${to}T00:00:00.000Z`) - Date.parse(`${from}T00:00:00.000Z`)) / 86_400_000,
+  ) + 1;
+  if (!Number.isFinite(totalDays) || totalDays <= SEARCH_EVENT_EXPORT_PARTITION_DAYS) return [];
+
+  const partitions = [];
+  let cursor = from;
+  while (cursor <= to) {
+    const candidateEnd = addUtcDays(cursor, SEARCH_EVENT_EXPORT_PARTITION_DAYS - 1);
+    const end = candidateEnd && candidateEnd < to ? candidateEnd : to;
+    partitions.push({ from: cursor, to: end });
+    cursor = addUtcDays(end, 1);
+  }
+  return partitions;
+}
+
+function sumNumericRecords(records = []) {
+  const result = {};
+  for (const record of records.filter(Boolean)) {
+    for (const [key, value] of Object.entries(record)) {
+      if (Number.isFinite(Number(value))) {
+        result[key] = number(result[key]) + Number(value);
+      }
+    }
+  }
+  return result;
+}
+
+function mergeFieldCoverage(exports) {
+  const fields = new Set(exports.flatMap((entry) => Object.keys(entry.field_coverage || {})));
+  return Object.fromEntries([...fields].map((field) => {
+    const values = exports.map((entry) => entry.field_coverage?.[field]).filter(Boolean);
+    const recorded = values.reduce((sum, value) => sum + number(value.recorded), 0);
+    const total = values.reduce((sum, value) => sum + number(value.total), 0);
+    return [field, {
+      recorded,
+      total,
+      rate: total > 0 ? Number((recorded / total).toFixed(4)) : null,
+    }];
+  }));
+}
+
+function mergeChannelCounts(records = []) {
+  return sumNumericRecords(records);
+}
+
+function mergeSourceReconciliation(exports) {
+  const reconciliations = exports.map((entry) => entry.source_reconciliation).filter(Boolean);
+  if (!reconciliations.length) return { status: 'not_available' };
+  const checkNames = new Set(reconciliations.flatMap((entry) => Object.keys(entry.checks || {})));
+  const checks = Object.fromEntries([...checkNames].map((name) => [
+    name,
+    reconciliations.every((entry) => entry.checks?.[name] === true),
+  ]));
+  const firstObserved = reconciliations
+    .map((entry) => entry.unexplained_breakdown?.first_observed_at)
+    .filter(Boolean)
+    .sort()[0] || null;
+  const lastObserved = reconciliations
+    .map((entry) => entry.unexplained_breakdown?.last_observed_at)
+    .filter(Boolean)
+    .sort()
+    .at(-1) || null;
+  const status = reconciliations.every((entry) => entry.status === 'passed')
+    && Object.values(checks).every(Boolean)
+    ? 'passed'
+    : 'needs_attention';
+  return {
+    ...reconciliations[0],
+    status,
+    checks,
+    counts: sumNumericRecords(reconciliations.map((entry) => entry.counts)),
+    audit_linkage_counts: sumNumericRecords(
+      reconciliations.map((entry) => entry.audit_linkage_counts),
+    ),
+    web_diagnostic_linkage_counts: sumNumericRecords(
+      reconciliations.map((entry) => entry.web_diagnostic_linkage_counts),
+    ),
+    usage_accounting_counts: sumNumericRecords(
+      reconciliations.map((entry) => entry.usage_accounting_counts),
+    ),
+    outside_verified_coverage: {
+      local_mcp_before_cutover: reconciliations.reduce(
+        (sum, entry) => sum + number(entry.outside_verified_coverage?.local_mcp_before_cutover),
+        0,
+      ),
+      local_mcp_coverage_cutover_at: reconciliations
+        .map((entry) => entry.outside_verified_coverage?.local_mcp_coverage_cutover_at)
+        .find(Boolean) || null,
+    },
+    unexplained_breakdown: {
+      audit_by_channel: mergeChannelCounts(
+        reconciliations.map((entry) => entry.unexplained_breakdown?.audit_by_channel),
+      ),
+      web_diagnostic_by_channel: mergeChannelCounts(
+        reconciliations.map((entry) => entry.unexplained_breakdown?.web_diagnostic_by_channel),
+      ),
+      first_observed_at: firstObserved,
+      last_observed_at: lastObserved,
+    },
+    partition_count: reconciliations.length,
+    partition_statuses: reconciliations.map((entry, index) => ({
+      ...exports[index].partition,
+      status: entry.status,
+    })),
+  };
+}
+
+function mergeSearchEventExports(exports, eventScope) {
+  const events = exports
+    .flatMap((entry) => normalizeList(entry.events))
+    .sort((left, right) => (
+      String(right.created_at || '').localeCompare(String(left.created_at || ''))
+      || String(right.id || '').localeCompare(String(left.id || ''))
+    ));
+  const sourceReconciliation = mergeSourceReconciliation(exports);
+  return {
+    events,
+    events_complete: exports.every((entry) => entry.events_complete === true),
+    events_export_available: exports.every((entry) => entry.events_export_available !== false),
+    snapshot_id: null,
+    snapshot_ids: exports.map((entry) => entry.snapshot_id).filter(Boolean),
+    event_scope: eventScope,
+    event_counts: sumNumericRecords(exports.map((entry) => entry.event_counts)),
+    source_reconciliation: sourceReconciliation,
+    field_coverage: mergeFieldCoverage(exports),
+    definitions: exports[0]?.definitions || {},
+    meta: {
+      ...(exports[0]?.meta || {}),
+      window: state.filters.window,
+      from: exports[0]?.meta?.from || null,
+      to_exclusive: exports.at(-1)?.meta?.to_exclusive || null,
+      filter_key: activeFilterKey({ forSearch: true }),
+      generation_ms: exports.reduce((sum, entry) => sum + number(entry.meta?.generation_ms), 0),
+      source_reconciliation_status: sourceReconciliation.status,
+      export_partition_count: exports.length,
+      export_partition_days: SEARCH_EVENT_EXPORT_PARTITION_DAYS,
+      export_partitions: exports.map((entry) => ({
+        ...entry.partition,
+        events: normalizeList(entry.events).length,
+        status: entry.source_reconciliation?.status || 'not_available',
+      })),
+    },
+  };
+}
+
+async function fetchAllSearchEvents(eventScope = 'primary', partition = null) {
+  const pageSize = SEARCH_EVENT_EXPORT_PAGE_SIZE;
   const params = sharedParams({ forSearch: true });
+  if (partition) {
+    params.set('window', 'custom');
+    params.set('from', partition.from);
+    params.set('to', partition.to);
+  }
   params.set('page', '1');
   params.set('page_size', String(pageSize));
   params.set('event_scope', eventScope);
-  const first = await apiRequest(`/v2/search/events?${params}`);
+  const first = await apiRequest(`/v2/search/events?${params}`, {
+    requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+  });
   if (first.events_export_available === false) {
     throw new Error(first.events_export_unavailable_reason || 'Complete event export is not available for this period. Narrow the filters and try again.');
   }
@@ -2852,7 +3046,9 @@ async function fetchAllSearchEvents(eventScope = 'primary') {
       const pageParams = new URLSearchParams(params);
       pageParams.set('page', String(page));
       if (snapshotId) pageParams.set('snapshot_id', snapshotId);
-      const payload = await apiRequest(`/v2/search/events?${pageParams}`);
+      const payload = await apiRequest(`/v2/search/events?${pageParams}`, {
+        requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+      });
       if (payload.events_export_available === false) {
         throw new Error(payload.events_export_unavailable_reason || 'The event export snapshot expired. Start the export again.');
       }
@@ -2876,7 +3072,18 @@ async function fetchAllSearchEvents(eventScope = 'primary') {
     field_coverage: first.field_coverage || {},
     definitions: first.definitions || {},
     meta: first.meta || {},
+    partition,
   };
+}
+
+async function fetchSearchEventExport(eventScope = 'primary') {
+  const partitions = searchEventExportPartitions();
+  if (!partitions.length) return await fetchAllSearchEvents(eventScope);
+  const exports = [];
+  for (const partition of partitions) {
+    exports.push(await fetchAllSearchEvents(eventScope, partition));
+  }
+  return mergeSearchEventExports(exports, eventScope);
 }
 
 async function exportData(key) {
@@ -2907,10 +3114,10 @@ async function exportData(key) {
     } else if (key === 'activity') {
       completeRows = await fetchAllPages('activity', (payload) => normalizeList(payload.activity));
     } else if (key === 'request-log-csv') {
-      eventExport = await fetchAllSearchEvents('primary');
+      eventExport = await fetchSearchEventExport('primary');
     }
     if (key === 'audit-bundle-json') {
-      eventExport = await fetchAllSearchEvents('audit');
+      eventExport = await fetchSearchEventExport('audit');
     }
   } catch (error) {
     showToast(error.message || 'The complete export could not be loaded.', true);

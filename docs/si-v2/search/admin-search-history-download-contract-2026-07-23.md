@@ -219,7 +219,7 @@ The Audit bundle may retain legacy correlation fields for investigation, but its
 
 The API remains bounded so one very large request cannot exhaust database, function, or browser memory.
 
-The table uses stable server pagination. Downloads request every page from one fixed snapshot. If a requested period exceeds the safe raw-detail limit, the dashboard must explain that the operator should narrow the period or filters. The long-term scale path is dated rollups for long periods, not an unlimited raw export.
+The table uses stable server pagination. Downloads request every page from a fixed snapshot. For periods longer than seven days, Request log and Audit bundle downloads use non-overlapping UTC date parts with one shared cutoff, then combine those parts into one file. Each part stays within the same source-row safety limit. If any part is incomplete, the whole download stops and explains which date part must be narrowed. Long-period summary metrics continue to use dated rollups rather than an unlimited raw query.
 
 ## Data correction recorded on 2026-07-23
 

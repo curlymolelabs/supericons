@@ -147,7 +147,7 @@ Purpose: provide a bounded event-detail source for Request log and Audit bundle 
 Query:
 
 - shared window, channel, include-test, and text filters
-- `page` and `page_size`, capped at 100 rows
+- `page` and `page_size`, capped at 500 rows for bounded downloads
 
 Response:
 
@@ -160,6 +160,8 @@ Response:
 - `meta`
 
 This endpoint never returns raw request IDs, raw session values, raw network values, API keys, user-agent strings, full hashes, or user email addresses. Null means a value was not recorded and is never converted to zero.
+
+Request log and Audit bundle downloads split periods longer than seven days into non-overlapping UTC date parts. Each part uses the same fixed data cutoff and the same selected filters. The browser combines the parts into one file and adds the part dates and reconciliation status to the source metadata. A part that is incomplete or unavailable fails the whole download.
 
 Top-level MCP metrics use rows whose source is `mcp_usage_events`. Rows whose source is `search_request_audit` describe lower-level hosted search work, including recommendation variants and fallbacks. They remain diagnostic rows and are not added to top-level MCP counts. The legacy root request identifier is retained only as supporting audit data because current records do not prove that it is a unique request or session identifier. Rows are never joined by time or query text.
 
