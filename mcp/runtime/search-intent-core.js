@@ -44,9 +44,22 @@ const INTENT_RULES = Object.freeze(
   ),
 );
 
+const QUALITY_ASSURANCE_CHECKLIST_RULE = Object.freeze({
+  variants: ['list check', 'list checks', 'clipboard check', 'clipboard list', 'file check'],
+  prefer: [
+    '\\b(list[-_ ]checks?|clipboard[-_ ]check|clipboard[-_ ]list|file[-_ ]check|shield[-_ ]check|badge[-_ ]check)\\b',
+  ],
+  avoid: ['\\b(alarm|clock|log[-_ ]in|log[-_ ]out|test[-_ ]tube)\\b'],
+});
+
 const COMPOUND_INTENT_RULES = Object.freeze(
   Object.fromEntries(
     Object.entries({
+      'quality assurance checklist': QUALITY_ASSURANCE_CHECKLIST_RULE,
+      'assessment checklist': QUALITY_ASSURANCE_CHECKLIST_RULE,
+      'qa checklist': QUALITY_ASSURANCE_CHECKLIST_RULE,
+      'inspection checklist': QUALITY_ASSURANCE_CHECKLIST_RULE,
+      'audit checklist': QUALITY_ASSURANCE_CHECKLIST_RULE,
       'license plate recognition': {
         variants: [
           'license plate recognition',

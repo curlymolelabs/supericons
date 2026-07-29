@@ -133,6 +133,14 @@ try {
   await page.route('https://kcjmkakdhsqplvasgkjv.supabase.co/**', async (route) => {
     const url = route.request().url();
     if (url.includes('/functions/v1/search-icons')) {
+      if (forceHostedFailure) {
+        await route.fulfill({
+          status: 503,
+          contentType: 'application/json',
+          body: JSON.stringify({ error: 'hosted dependency unavailable fixture' }),
+        });
+        return;
+      }
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -166,10 +174,22 @@ try {
   const observations = [];
   for (const item of cases) {
     forceHostedFailure = item.expected_decision === 'expected_error';
+    const hostedResponse = page.waitForResponse(
+      (response) => {
+        if (!response.url().includes('/search-icons')) return false;
+        try {
+          return response.request().postDataJSON()?.query === item.query;
+        } catch {
+          return false;
+        }
+      },
+      { timeout: 10_000 },
+    );
     await page.evaluate((library) => {
       window.__supericons.state.activeLibrary = library || 'all';
     }, item.library || null);
     await searchInput.fill(item.query);
+    await hostedResponse;
     await page.waitForFunction(
       (query) => (
         window.__supericons?.state?.searchQuery === query

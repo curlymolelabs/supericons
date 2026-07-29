@@ -123,6 +123,15 @@
       "relevant_any": ["lucide:settings", "lucide:cog"]
     },
     {
+      "case_id": "strict_lucide_assessment_checklist",
+      "query": "assessment checklist quality assurance",
+      "library": "lucide",
+      "library_mode": "strict",
+      "limit": 5,
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:list-check", "lucide:list-checks", "lucide:clipboard-check", "lucide:clipboard-list", "lucide:file-check"]
+    },
+    {
       "case_id": "exact_identity_lucide_settings",
       "query": "lucide:settings",
       "library": "lucide",

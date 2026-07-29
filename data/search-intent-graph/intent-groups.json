@@ -492,6 +492,33 @@
       "confidence_floor": "high"
     },
     {
+      "id": "quality_assurance_checklist",
+      "label": "Quality assurance checklist",
+      "description": "An assessment, inspection, audit, or quality assurance checklist.",
+      "domains": ["quality assurance", "assessment", "inspection"],
+      "facets": ["checklist", "verification", "audit"],
+      "intent_types": ["quality_assurance", "task_management"],
+      "phrases": [
+        "quality assurance checklist",
+        "assessment checklist",
+        "qa checklist",
+        "inspection checklist",
+        "audit checklist"
+      ],
+      "positive_concepts": [
+        "list check",
+        "list checks",
+        "clipboard check",
+        "clipboard list",
+        "file check"
+      ],
+      "avoid_concepts": ["test tube", "call quality", "brand logo"],
+      "fallback_terms": ["list check", "clipboard check", "clipboard list"],
+      "result_families": ["checklist", "quality assurance", "assessment"],
+      "gap_strategy": "return_quality_checklist_fallback",
+      "confidence_floor": "high"
+    },
+    {
       "id": "container_platform",
       "label": "Containers and orchestration",
       "description": "Docker containers, Kubernetes workloads, pods, and packaged application environments.",
