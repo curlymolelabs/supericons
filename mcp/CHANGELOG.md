@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.26 - 2026-07-30
+
+### Fixed
+
+- improved strict Lucide recall for assessment, audit, inspection, and quality-assurance checklist searches
+- added several relevant checklist alternatives without weakening honest no-results or strict-library behavior
+- preserved shopping-list, call-quality, and unrelated search intent
+
+### Improved
+
+- added focused cross-surface checks for checklist meaning and collision safety
+- hardened browser verification so hosted failures remain visible on both supported endpoint paths
+
 ## 0.4.25 - 2026-07-30
 
 ### Fixed

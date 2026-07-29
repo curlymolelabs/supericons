@@ -17,7 +17,7 @@ const serverJson = JSON.parse(readFileSync(join(repoRoot, 'mcp', 'server.json'),
 const productFacts = JSON.parse(readFileSync(join(repoRoot, 'data', 'product-facts.json'), 'utf8'));
 const clientSource = readFileSync(join(repoRoot, 'lib', 'search-engine-client.js'), 'utf8');
 
-assert.equal(packageJson.version, '0.4.25');
+assert.equal(packageJson.version, '0.4.26');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
 assert.equal(serverJson.version, packageJson.version);
