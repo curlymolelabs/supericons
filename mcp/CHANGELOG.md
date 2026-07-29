@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.25 - 2026-07-30
+
+### Fixed
+
+- added reviewed Spanish aliases for storage, hardware, towels, and tools, with or without an explicit locale
+- repaired plural and compound searches such as `categories` and `airflow`
+- preserved exact Apache Airflow and Alibaba Cloud brand identity before generic concept aliases
+- kept default and solid icon catalogs consistent across the packaged helper and MCP tool route
+
+### Improved
+
+- added focused cross-surface checks for multilingual, compound, plural, mixed-script, and brand requests
+- preserved honest no-results, strict-library behavior, hosted error visibility, and established search fingerprints
+
 ## 0.4.24 - 2026-07-28
 
 ### Added
