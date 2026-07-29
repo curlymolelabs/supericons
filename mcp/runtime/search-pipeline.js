@@ -634,7 +634,7 @@ function expandSearchTerms(query, synonyms, options = {}) {
  * @param {Object} options - { library, limit }
  * @returns {Array} Matched icons (direct first, then synonym matches)
  */
-export function searchIcons(query, icons, synonyms, options = {}) {
+function searchIconsCore(query, icons, synonyms, options = {}) {
   const { library, limit = 20, style = 'any' } = options;
   const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
   const semanticQueryFrame = buildSearchQueryFrame(query);
@@ -880,6 +880,54 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   }
 
   return directResults;
+}
+
+function normalizeExactIconIdentity(value) {
+  return String(value || '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[_:]+/g, ' ')
+    .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function prioritizeExactIconMatches(query, results = [], options = {}) {
+  if (
+    String(options.library || '').toLowerCase() !== 'si'
+    || normalizeSearchLibraryMode(options.libraryMode) !== 'strict'
+  ) {
+    return results;
+  }
+  const normalizedQuery = normalizeExactIconIdentity(query);
+  if (!normalizedQuery || results.length < 2) return results;
+
+  const exact = [];
+  const remaining = [];
+  for (const icon of results) {
+    const identities = [
+      icon.id,
+      icon.name,
+      icon.label,
+      icon.icon_id,
+      icon.lib && icon.id ? `${icon.lib}:${icon.id}` : null,
+    ];
+    const isExact = identities.some(
+      (identity) => normalizeExactIconIdentity(identity) === normalizedQuery,
+    );
+    (isExact ? exact : remaining).push(icon);
+  }
+
+  return exact.length > 0 ? [...exact, ...remaining] : results;
+}
+
+export function searchIcons(query, icons, synonyms, options = {}) {
+  return prioritizeExactIconMatches(
+    query,
+    searchIconsCore(query, icons, synonyms, options),
+    options,
+  );
 }
 
 function searchIconsWithInterpretationPlan(query, icons, synonyms, plan, options = {}) {
