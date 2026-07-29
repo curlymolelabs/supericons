@@ -19,11 +19,11 @@ Status: npm staged; Railway and website not deployed
 - npm packed files: 71
 - Website artifact files: 177
 - Website artifact size: 93,688,050 bytes
-- Website artifact tree SHA-256: `5da8d3e4cbdda0ac2fbc5b7ffa1044a3ba3919c892827b7449ee56b2e6fd1116`
+- Website artifact tree SHA-256: `697edfcc95bdf93009dc8e7fa1f6b2c6ffb91c947138343a39668c6d21776421`
 
 The archive downloaded from npm stage `396fb152-c828-40e9-badb-bdc4fd3711d2` is byte-identical to the frozen local archive. Both have SHA-256 `afa7ad88232c53baea88313421eb508a2f1e1e48f7099935ad6a45a3535f9287`.
 
-The website artifact was rebuilt once in an isolated worktree pinned to release revision `70f1252926c0cbc92d0d1470098e9d4641a122d0`. The copied frozen directory is byte-identical to that isolated build under the deterministic tree-hash procedure.
+The website artifact was rebuilt once in an isolated worktree pinned to release revision `70f1252926c0cbc92d0d1470098e9d4641a122d0`. The copied frozen directory is byte-identical to that isolated build. Its tree hash uses the established `inventoryTree` procedure in `scripts/build-web-preview-persistence-release.mjs`.
 
 ## Change scope
 
