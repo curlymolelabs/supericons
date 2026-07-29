@@ -1,7 +1,7 @@
 # Search language and brand repair release
 
 Date: 2026-07-30
-Status: Railway and website verified; npm waiting for registry login
+Status: Railway and website verified; npm stage waiting for owner approval
 
 ## Release identity
 
@@ -15,6 +15,7 @@ Status: Railway and website verified; npm waiting for registry login
 - npm archive SHA-256: `d435db4b59e4429fae23a8988e4a17715c6ed3e1e4cacb46d3f72befa923fbc8`
 - npm shasum: `6ea61ea55b480cca29a4c138e918966addc1fb2c`
 - npm integrity: `sha512-ZJGLLMUmT8/5Vnh4piob3sWp1/7NSMVoXt2NjUS1ZulUqmVgsFQNBCJcb0QnDCX5f/h79pskxhdSahyMcjHYNw==`
+- npm stage: `d6af7bd1-30a5-426a-8d00-8eac8c2880cc`
 
 ## What changed
 
@@ -40,11 +41,10 @@ The release improves common language, plural, compound, and brand searches while
 
 ## npm remaining step
 
-The registry remains on `latest` 0.4.24. Version 0.4.25 is not public and no stage exists because the registry login expired before staging.
+The registry remains on `latest` 0.4.24. Version 0.4.25 is staged but is not public.
 
-After `npm login` succeeds, stage only the protected archive with SHA-256 `d435db4b59e4429fae23a8988e4a17715c6ed3e1e4cacb46d3f72befa923fbc8`. Verify the staged download against that hash before approval. After approval, confirm that `latest` is 0.4.25 and that a clean public install passes the package gate. If public verification fails, restore `latest` to 0.4.24.
+The staged archive was downloaded independently from npm and matched SHA-256 `d435db4b59e4429fae23a8988e4a17715c6ed3e1e4cacb46d3f72befa923fbc8`. Approve stage `d6af7bd1-30a5-426a-8d00-8eac8c2880cc`. After approval, confirm that `latest` is 0.4.25 and that a clean public install passes the package gate. If public verification fails, restore `latest` to 0.4.24.
 
 ## Integration note
 
 The release branch is based directly on current `main`, but the main worktree contains unrelated uncommitted documents. Those files must be secured by their owning session before this branch is fast-forwarded into `main`.
-
