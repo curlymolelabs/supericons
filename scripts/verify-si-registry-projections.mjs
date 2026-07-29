@@ -10,6 +10,7 @@ import {
 } from '../lib/si-registry/id-rules.js';
 import { normalizeRegistryProviderMetadata } from '../lib/si-registry/provider-metadata.js';
 import {
+  OPTIONAL_RECORD_FIELDS,
   REQUIRED_RECORD_FIELDS,
   validateRegistryRecord,
 } from '../lib/si-registry/record-shape.js';
@@ -89,6 +90,8 @@ const providerPrefixedId = `${expectedProvider.namespace}:`;
 
 assert.ok(Array.isArray(REQUIRED_RECORD_FIELDS), 'required field list should exist');
 assert.ok(REQUIRED_RECORD_FIELDS.includes('icon_id'), 'required field list should include icon_id');
+assert.equal(REQUIRED_RECORD_FIELDS.includes('avoid_when'), false, 'avoid_when should not be required');
+assert.equal(OPTIONAL_RECORD_FIELDS.includes('avoid_when'), true, 'avoid_when should be optional');
 assert.equal(PUBLIC_PROJECTION_TARGET, 'generated_public_projection');
 assert.equal(INTERNAL_PROJECTION_TARGET, 'generated_internal_projection');
 

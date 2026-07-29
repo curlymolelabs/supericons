@@ -3412,7 +3412,6 @@
       "keys"
     ],
     "use_when": "Use for real estate listings, home buying or renting, property access, key handover moments, and home ownership content.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -3573,7 +3572,6 @@
       "loyalty"
     ],
     "use_when": "Use for rewards programs, cashback offers, refund flows, loyalty apps, and payment incentives.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -3683,7 +3681,6 @@
       "meal"
     ],
     "use_when": "Use for food delivery apps, restaurant menus, recipes, and noodle, ramen, or pasta content; it also reads well for a hot meal in general.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -3730,15 +3727,14 @@
     "category": "nature_animals",
     "semantic_tags": [
       "dinosaur",
-      "t-rex",
+      "sauropod",
       "tail",
-      "claws",
+      "long neck",
       "prehistoric",
       "reptile",
       "animal"
     ],
     "use_when": "Use for paleontology content, children and education apps, museum material, and anything prehistoric or dinosaur themed.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -3750,7 +3746,8 @@
       "has_motion": false
     },
     "synonyms": [
-      "t-rex",
+      "sauropod",
+      "long neck dinosaur",
       "dino",
       "prehistoric creature",
       "paleontology",
@@ -3793,7 +3790,7 @@
       "geology"
     ],
     "use_when": "Use for paleontology and geology content, museum exhibits, archaeology material, and excavation or discovery themes.",
-    "avoid_when": "Do not use for a living seashell or a snail; the surrounding stone block is what makes this a fossil.",
+    "avoid_when": "Do not use for a living seashell or a snail; the ribbed spiral can read as a shell without paleontology context.",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4011,7 +4008,6 @@
       "beauty"
     ],
     "use_when": "Use for makeup routines, cosmetics listings, beauty and vanity checklists, and getting ready flows.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4066,7 +4062,6 @@
       "beauty"
     ],
     "use_when": "Use for manicure and pedicure services, nail care routines, cosmetics listings, and salon checklists.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4177,7 +4172,6 @@
       "dental"
     ],
     "use_when": "Use for flossing reminders, oral hygiene checklists, dental care instructions, and bathroom or travel kit lists.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4232,7 +4226,6 @@
       "toiletries"
     ],
     "use_when": "Use for hair care routines, shower checklists, toiletry and travel kit lists, and bathroom product listings.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4287,7 +4280,6 @@
       "toiletries"
     ],
     "use_when": "Use for skincare routines, moisturizing reminders, toiletry and travel kit lists, and bathroom or vanity checklists.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4343,7 +4335,6 @@
       "summer"
     ],
     "use_when": "Use for sun protection reminders, summer packing lists, beach and outdoor checklists, and skincare routines.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4399,7 +4390,6 @@
       "toiletries"
     ],
     "use_when": "Use for hygiene and toiletry checklists, ear care, first aid kits, and makeup touch up contexts.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4566,7 +4556,6 @@
       "surface"
     ],
     "use_when": "Use for food prep, chopping steps in recipes, kitchen work surfaces, and cookware listings.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4619,7 +4608,6 @@
       "asian cuisine"
     ],
     "use_when": "Use for stir frying, Asian cooking, cookware collections, and recipe steps that need a high heat pan.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -4837,7 +4825,6 @@
       "prep"
     ],
     "use_when": "Use for peeling vegetables and fruit, food prep steps, and kitchen tool collections.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",
@@ -5051,7 +5038,6 @@
       "opening"
     ],
     "use_when": "Use for wine service, bar tool collections, dining accessories, and hospitality contexts.",
-    "avoid_when": "",
     "version": "0.1.0",
     "status": "draft",
     "access_tier": "public_open_record",

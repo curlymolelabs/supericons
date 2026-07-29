@@ -796,7 +796,7 @@ export const SUPERICONS_CONCEPT_ICON_TAXONOMY = Object.freeze({
   'si:dinosaur': taxonomy(
     'nature-animals',
     ['trending-culture'],
-    ['t-rex', 'dino', 'prehistoric', 'paleontology']
+    ['sauropod', 'long-neck', 'dino', 'prehistoric', 'paleontology']
   ),
   'si:fossil': taxonomy(
     'nature-animals',

@@ -157,6 +157,7 @@
     "upload:premium-pack-storage": "node scripts/upload-premium-pack-to-storage.mjs",
     "verify:packs-localization": "node scripts/verify-packs-localization.mjs",
     "verify:icon-grid-behavior": "node scripts/verify-icon-grid-behavior.mjs",
+    "verify:supericons-icon-expansion-release": "node scripts/verify-supericons-icon-expansion-release.mjs",
     "verify:customize-preview": "node scripts/verify-customize-preview.mjs",
     "verify:search-query-fixtures": "node scripts/verify-search-query-fixtures.mjs",
     "verify:search-catalog-sync": "node scripts/verify-search-catalog-sync.mjs",

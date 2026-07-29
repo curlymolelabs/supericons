@@ -842,6 +842,42 @@ async function finishAccessibleIconSearch({
   ).slice(0, Math.max(1, limit));
 }
 
+function normalizeExactIconIdentity(value) {
+  return String(value || '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[_:]+/g, ' ')
+    .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function prioritizeExactIconMatches(query, results = []) {
+  const normalizedQuery = normalizeExactIconIdentity(query);
+  if (!normalizedQuery || results.length < 2) return results;
+
+  const exact = [];
+  const remaining = [];
+  for (const icon of results) {
+    const identities = [
+      icon.id,
+      icon.name,
+      icon.label,
+      icon.icon_id,
+      icon.lib && icon.id ? `${icon.lib}:${icon.id}` : null,
+      ...(icon.aliases || []),
+      ...(icon.synonyms || []),
+    ];
+    const isExact = identities.some(
+      (identity) => normalizeExactIconIdentity(identity) === normalizedQuery,
+    );
+    (isExact ? exact : remaining).push(icon);
+  }
+
+  return exact.length > 0 ? [...exact, ...remaining] : results;
+}
+
 async function searchAccessibleIcons({
   query,
   library,
@@ -867,16 +903,14 @@ async function searchAccessibleIcons({
 
   if (useLocalFirst) {
     const { searchIcons } = await import('./search.js');
-    const contractIcons = requestedStyle === VARIANT_STYLES.ANY
-      ? searchableIcons.filter((icon) => icon.style !== VARIANT_STYLES.SOLID)
-      : searchableIcons;
-    return searchIcons(query, contractIcons, synonyms, {
+    const results = searchIcons(query, searchableIcons, synonyms, {
       library,
       libraryMode: normalizedLibraryMode,
       limit: Math.max(1, limit),
       style: requestedStyle,
       locale,
     });
+    return prioritizeExactIconMatches(query, results).slice(0, Math.max(1, limit));
   }
 
   let hostedResults = [];
@@ -901,7 +935,7 @@ async function searchAccessibleIcons({
     }
   }
 
-  return finishAccessibleIconSearch({
+  const results = await finishAccessibleIconSearch({
     query,
     library,
     libraryMode: normalizedLibraryMode,
@@ -911,6 +945,7 @@ async function searchAccessibleIcons({
     locale,
     hostedResults,
   });
+  return prioritizeExactIconMatches(query, results).slice(0, Math.max(1, limit));
 }
 
 async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {
