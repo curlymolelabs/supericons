@@ -878,6 +878,31 @@ export const SUPERICONS_CONCEPT_ICON_TAXONOMY = Object.freeze({
     ['food-dining'],
     ['cookware', 'stir-fry', 'asian-cooking', 'pan']
   ),
+  'si:toaster': taxonomy(
+    'kitchen',
+    ['food-dining', 'everyday-objects'],
+    ['appliance', 'breakfast', 'toast', 'bread']
+  ),
+  'si:mixer': taxonomy(
+    'kitchen',
+    ['food-dining'],
+    ['appliance', 'baking', 'stand-mixer', 'whisk']
+  ),
+  'si:grater': taxonomy(
+    'kitchen',
+    [],
+    ['prep-tools', 'shredding', 'cheese', 'zester']
+  ),
+  'si:peeler': taxonomy(
+    'kitchen',
+    [],
+    ['prep-tools', 'peeling', 'vegetables', 'y-peeler']
+  ),
+  'si:rolling-pin': taxonomy(
+    'kitchen',
+    ['food-dining'],
+    ['baking', 'dough', 'pastry', 'prep-tools']
+  ),
 });
 
 function uniqueStrings(values) {

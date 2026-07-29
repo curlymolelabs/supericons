@@ -4655,5 +4655,274 @@
       "visual_inspection"
     ],
     "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:toaster",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "toaster",
+    "label": "Toaster",
+    "purpose": "Represent a toaster, toasting bread, or breakfast.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "toaster",
+      "slot",
+      "bread slice",
+      "appliance",
+      "breakfast",
+      "toast",
+      "kitchen"
+    ],
+    "use_when": "Use for breakfast themes, toasting bread, small kitchen appliances, and morning routines.",
+    "avoid_when": "Do not use for a toast notification or popup message; this is the kitchen appliance, not the UI pattern that shares the word.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A toaster with two slices of bread rising from the top slots, a lever on the side, and two dots on the face.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "toast maker",
+      "bread toaster",
+      "breakfast appliance",
+      "kitchen appliance",
+      "toasting"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "appliance",
+      "breakfast"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:mixer",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "mixer",
+    "label": "Mixer",
+    "purpose": "Represent a stand or hand mixer for baking and batter.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "mixer",
+      "beaters",
+      "bowl",
+      "baking",
+      "batter",
+      "appliance",
+      "kitchen"
+    ],
+    "use_when": "Use for baking, mixing batter, dough preparation, and small kitchen appliance listings.",
+    "avoid_when": "Do not use for power tools; an upright body with a rotating attachment can read as a drill, but the beaters and mixing bowl set this apart.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A stand mixer with a thick arm arching from the base over a bowl, with a whisk lowered into it.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "stand mixer",
+      "hand mixer",
+      "beater",
+      "baking mixer",
+      "whisk machine"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "appliance",
+      "baking"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:grater",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "grater",
+    "label": "Grater",
+    "purpose": "Represent a grater for shredding cheese or vegetables.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "grater",
+      "holes",
+      "box shape",
+      "shredding",
+      "cheese",
+      "prep",
+      "kitchen"
+    ],
+    "use_when": "Use for grating and shredding steps, cheese and vegetable prep, and kitchen tool collections.",
+    "avoid_when": "Do not use for documents or signal strength; a tapered panel of small perforations can read as a page or a bar chart, but this is a box grater body.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A box grater with a tapered body, a top handle, and a pattern of small holes on the front face.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "cheese grater",
+      "box grater",
+      "shredder",
+      "zester",
+      "grating"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "shredding"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:peeler",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "peeler",
+    "label": "Peeler",
+    "purpose": "Represent a vegetable peeler for food preparation.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "peeler",
+      "y shape",
+      "blade",
+      "handle",
+      "vegetable",
+      "peeling",
+      "prep"
+    ],
+    "use_when": "Use for peeling vegetables and fruit, food prep steps, and kitchen tool collections.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A Y shaped vegetable peeler with a blade slot between two prongs and a handle below.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "vegetable peeler",
+      "potato peeler",
+      "y peeler",
+      "paring tool",
+      "peeling"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "peeling"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:rolling-pin",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "rolling-pin",
+    "label": "Rolling Pin",
+    "purpose": "Represent a rolling pin, dough rolling, or baking.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "rolling pin",
+      "roller",
+      "handles",
+      "dough",
+      "baking",
+      "pastry",
+      "kitchen"
+    ],
+    "use_when": "Use for baking, rolling dough, pastry making, and baking tool collections.",
+    "avoid_when": "Do not use for gym or fitness content; a bar with a grip at each end can read as a barbell, but this has a thick central roller and short thin handles.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A cylindrical roller drawn diagonally with a short knob handle at each end.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "dough roller",
+      "pastry roller",
+      "baking pin",
+      "rolling",
+      "baking tool"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "baking",
+      "prep-tools"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
   }
 ]
