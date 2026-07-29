@@ -147,7 +147,7 @@ Purpose: provide a bounded event-detail source for Request log and Audit bundle 
 Query:
 
 - shared window, channel, include-test, and text filters
-- `page` and `page_size`, capped at 500 rows for bounded downloads
+- `page` and `page_size`, capped at 2,000 rows for bounded downloads
 
 Response:
 

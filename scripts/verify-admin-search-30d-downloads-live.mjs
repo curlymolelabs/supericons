@@ -110,7 +110,7 @@ try {
     `${request.event_scope}:${request.from}:${request.to}`
   )));
   assert.equal(partitionKeys.size, 10);
-  assert.ok(firstPageRequests.every((request) => request.page_size === '500'));
+  assert.ok(firstPageRequests.every((request) => request.page_size === '2000'));
   assert.ok(firstPageRequests.every((request) => request.window === 'custom'));
   assert.equal(browserErrors.length, 0, `Browser errors: ${browserErrors.join(' | ')}`);
 

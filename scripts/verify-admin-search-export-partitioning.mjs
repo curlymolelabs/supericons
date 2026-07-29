@@ -165,10 +165,10 @@ const pageSizeLimits = [...apiSource.matchAll(
   /const pageSize = parsePositiveInt\(url\.searchParams\.get\('page_size'\), 50, (\d+)\);/g,
 )].map((match) => Number(match[1]));
 assert.equal(pageSizeLimits[0], 100);
-assert.equal(pageSizeLimits[1], 500);
+assert.equal(pageSizeLimits[1], 2000);
 
 assert.match(source, /const EXPORT_REQUEST_TIMEOUT_MS = 60_000;/);
-assert.match(source, /const SEARCH_EVENT_EXPORT_PAGE_SIZE = 500;/);
+assert.match(source, /const SEARCH_EVENT_EXPORT_PAGE_SIZE = 2_000;/);
 assert.match(source, /requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS/);
 assert.match(source, /Preparing the \$\{label\} in \$\{partitionCount\} safe date parts/);
 assert.match(source, /button\.setAttribute\('aria-busy', 'true'\)/);
