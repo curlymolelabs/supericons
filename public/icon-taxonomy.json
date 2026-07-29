@@ -1,6 +1,6 @@
 {
   "version": "p0.02",
-  "generatedAt": "2026-07-14T16:34:18.641Z",
+  "generatedAt": "2026-07-29T11:47:18.568Z",
   "categories": [
     {
       "id": "ai-app-builders",
@@ -121,6 +121,48 @@
       "label": "Trending & Culture",
       "description": "Viral moments, memes, and internet culture: of-the-moment icons that are instantly relatable.",
       "sidebarGlyph": "local_fire_department"
+    },
+    {
+      "id": "agent-identity",
+      "label": "Agent Identity",
+      "description": "Faces and avatars for named agents in a fleet: scouts, companions, builders, and assistants.",
+      "sidebarGlyph": "face"
+    },
+    {
+      "id": "game-assets",
+      "label": "Game Assets",
+      "description": "Controllers, characters, enemies, and props for builders shipping their own games.",
+      "sidebarGlyph": "sports_esports"
+    },
+    {
+      "id": "everyday-objects",
+      "label": "Everyday Objects",
+      "description": "Ordinary things from daily life: household items, hardware, tools, and personal effects.",
+      "sidebarGlyph": "category"
+    },
+    {
+      "id": "health-body",
+      "label": "Health and Body",
+      "description": "Anatomy, organs, microbiology, and human or veterinary health concepts.",
+      "sidebarGlyph": "health_and_safety"
+    },
+    {
+      "id": "personal-care",
+      "label": "Personal Care",
+      "description": "Grooming, hair care, oral care, cosmetics, and everyday bathroom routines.",
+      "sidebarGlyph": "self_care"
+    },
+    {
+      "id": "food-dining",
+      "label": "Food and Dining",
+      "description": "Meals, dishes, restaurant service, and food delivery.",
+      "sidebarGlyph": "restaurant"
+    },
+    {
+      "id": "nature-animals",
+      "label": "Nature and Animals",
+      "description": "Animals, prehistoric life, fossils, and the natural world.",
+      "sidebarGlyph": "pets"
     },
     {
       "id": "ai-agent-workflows",
@@ -1595,6 +1637,285 @@
         "http"
       ],
       "rank": 2055
+    },
+    {
+      "iconId": "si:agent-scout",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-identity",
+      "secondaryCategories": [
+        "agent-lifecycle-states",
+        "people-accounts",
+        "bot",
+        "explorer",
+        "chatbot",
+        "avatar"
+      ],
+      "rank": 2056
+    },
+    {
+      "iconId": "si:agent-wink",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-identity",
+      "secondaryCategories": [
+        "agent-lifecycle-states",
+        "people-accounts",
+        "bot",
+        "friendly",
+        "companion",
+        "avatar"
+      ],
+      "rank": 2057
+    },
+    {
+      "iconId": "si:game-pad",
+      "sourceLibrary": "si",
+      "jobCategory": "game-assets",
+      "secondaryCategories": [
+        "devices-hardware",
+        "media-playback",
+        "controller",
+        "play",
+        "gaming",
+        "console"
+      ],
+      "rank": 2058
+    },
+    {
+      "iconId": "si:game-ghost",
+      "sourceLibrary": "si",
+      "jobCategory": "game-assets",
+      "secondaryCategories": [
+        "trending-culture",
+        "enemy",
+        "sprite",
+        "arcade",
+        "npc"
+      ],
+      "rank": 2059
+    },
+    {
+      "iconId": "si:toothpaste",
+      "sourceLibrary": "si",
+      "jobCategory": "everyday-objects",
+      "secondaryCategories": [
+        "health-body",
+        "trending-culture",
+        "dental",
+        "hygiene",
+        "teeth",
+        "routine"
+      ],
+      "rank": 2060
+    },
+    {
+      "iconId": "si:bacteria",
+      "sourceLibrary": "si",
+      "jobCategory": "health-body",
+      "secondaryCategories": [
+        "frontier-compute",
+        "germ",
+        "microbe",
+        "pathogen",
+        "microbiology"
+      ],
+      "rank": 2061
+    },
+    {
+      "iconId": "si:stomach",
+      "sourceLibrary": "si",
+      "jobCategory": "health-body",
+      "secondaryCategories": [
+        "gut",
+        "digestion",
+        "organ",
+        "anatomy"
+      ],
+      "rank": 2062
+    },
+    {
+      "iconId": "si:lawn-mower",
+      "sourceLibrary": "si",
+      "jobCategory": "physical-automation",
+      "secondaryCategories": [
+        "everyday-objects",
+        "mower",
+        "grass",
+        "gardening",
+        "yard"
+      ],
+      "rank": 2063
+    },
+    {
+      "iconId": "si:house-key",
+      "sourceLibrary": "si",
+      "jobCategory": "everyday-objects",
+      "secondaryCategories": [
+        "security-access",
+        "maps-places-travel",
+        "key",
+        "home",
+        "real-estate",
+        "property"
+      ],
+      "rank": 2064
+    },
+    {
+      "iconId": "si:screw",
+      "sourceLibrary": "si",
+      "jobCategory": "everyday-objects",
+      "secondaryCategories": [
+        "fastener",
+        "hardware",
+        "diy",
+        "tornillo"
+      ],
+      "rank": 2065
+    },
+    {
+      "iconId": "si:agent-pod",
+      "sourceLibrary": "si",
+      "jobCategory": "agent-identity",
+      "secondaryCategories": [
+        "agent-lifecycle-states",
+        "people-accounts",
+        "bot",
+        "avatar",
+        "ai-face",
+        "companion"
+      ],
+      "rank": 2066
+    },
+    {
+      "iconId": "si:cashback",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "commerce-finance",
+        "everyday-objects",
+        "refund",
+        "rebate",
+        "rewards",
+        "money-back"
+      ],
+      "rank": 2067
+    },
+    {
+      "iconId": "si:lottery-ticket",
+      "sourceLibrary": "si",
+      "jobCategory": "agentic-payments",
+      "secondaryCategories": [
+        "trending-culture",
+        "commerce-finance",
+        "raffle",
+        "lotto",
+        "prize-draw",
+        "sweepstakes"
+      ],
+      "rank": 2068
+    },
+    {
+      "iconId": "si:noodle-bowl",
+      "sourceLibrary": "si",
+      "jobCategory": "food-dining",
+      "secondaryCategories": [
+        "kitchen",
+        "everyday-objects",
+        "ramen",
+        "noodles",
+        "pasta",
+        "meal"
+      ],
+      "rank": 2069
+    },
+    {
+      "iconId": "si:dinosaur",
+      "sourceLibrary": "si",
+      "jobCategory": "nature-animals",
+      "secondaryCategories": [
+        "trending-culture",
+        "t-rex",
+        "dino",
+        "prehistoric",
+        "paleontology"
+      ],
+      "rank": 2070
+    },
+    {
+      "iconId": "si:fossil",
+      "sourceLibrary": "si",
+      "jobCategory": "nature-animals",
+      "secondaryCategories": [
+        "ammonite",
+        "paleontology",
+        "archaeology",
+        "geology"
+      ],
+      "rank": 2071
+    },
+    {
+      "iconId": "si:comb",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "everyday-objects",
+        "hair-care",
+        "grooming",
+        "barber",
+        "styling"
+      ],
+      "rank": 2072
+    },
+    {
+      "iconId": "si:hairbrush",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "everyday-objects",
+        "hair-care",
+        "grooming",
+        "paddle-brush",
+        "styling"
+      ],
+      "rank": 2073
+    },
+    {
+      "iconId": "si:hair-clipper",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "everyday-objects",
+        "hair-care",
+        "grooming",
+        "barber",
+        "trimmer"
+      ],
+      "rank": 2074
+    },
+    {
+      "iconId": "si:mascara",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "trending-culture",
+        "cosmetics",
+        "beauty",
+        "makeup",
+        "eyelashes"
+      ],
+      "rank": 2075
+    },
+    {
+      "iconId": "si:nail-polish",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "trending-culture",
+        "cosmetics",
+        "beauty",
+        "manicure",
+        "nails"
+      ],
+      "rank": 2076
     },
     {
       "iconId": "material:smart_toy",

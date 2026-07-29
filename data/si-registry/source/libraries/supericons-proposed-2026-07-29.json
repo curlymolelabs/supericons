@@ -1,0 +1,1040 @@
+[
+  {
+    "icon_id": "si:toothbrush",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "toothbrush",
+    "label": "Toothbrush",
+    "purpose": "Represent tooth brushing, dental hygiene, or a daily grooming routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "toothbrush",
+      "bristles",
+      "handle",
+      "dental",
+      "hygiene",
+      "brushing",
+      "teeth"
+    ],
+    "use_when": "Use for dental care reminders, hygiene checklists, morning and bedtime routines, and travel or packing lists.",
+    "avoid_when": "Do not use for painting or art tools; a bristled head on a handle can read as a paintbrush, but this has a small flat head with short dense bristles.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An upright toothbrush with a long straight handle and a small rectangular head showing short bristle lines.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tooth brush",
+      "brush teeth",
+      "dental brush",
+      "oral hygiene",
+      "toothbrushing"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "oral-care",
+      "hygiene"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:dental-floss",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "dental-floss",
+    "label": "Dental Floss",
+    "purpose": "Represent flossing and cleaning between teeth as part of an oral care routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "floss",
+      "container",
+      "string",
+      "oral care",
+      "hygiene",
+      "teeth",
+      "dental"
+    ],
+    "use_when": "Use for flossing reminders, oral hygiene checklists, dental care instructions, and bathroom or travel kit lists.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A small round floss container with a strand of floss looping out from a slot at the top.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "floss",
+      "flossing",
+      "floss pick",
+      "interdental cleaner",
+      "dental thread"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "oral-care",
+      "hygiene"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:shampoo",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "shampoo",
+    "label": "Shampoo",
+    "purpose": "Represent hair washing, shampoo, or a shower and hair care routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "shampoo",
+      "bottle",
+      "pump",
+      "hair wash",
+      "hair care",
+      "shower",
+      "toiletries"
+    ],
+    "use_when": "Use for hair care routines, shower checklists, toiletry and travel kit lists, and bathroom product listings.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A tall pump bottle with a rounded shoulder, a pump nozzle on top, and a horizontal label band.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "hair wash",
+      "shampoo bottle",
+      "hair cleanser",
+      "conditioner",
+      "pump bottle"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hair-care",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:lotion",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "lotion",
+    "label": "Lotion",
+    "purpose": "Represent moisturizer, skin lotion, or a skincare routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "lotion",
+      "pump bottle",
+      "moisturizer",
+      "cream",
+      "skincare",
+      "hydration",
+      "toiletries"
+    ],
+    "use_when": "Use for skincare routines, moisturizing reminders, toiletry and travel kit lists, and bathroom or vanity checklists.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A squat pump bottle with a wide base, a short pump nozzle on top, and a horizontal label band.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "moisturizer",
+      "hand cream",
+      "body lotion",
+      "face cream",
+      "skincare bottle"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "skincare",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:sunscreen",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "sunscreen",
+    "label": "Sunscreen",
+    "purpose": "Represent sun protection, SPF products, or summer skincare.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "sunscreen",
+      "tube",
+      "sun mark",
+      "spf",
+      "sun protection",
+      "skincare",
+      "summer"
+    ],
+    "use_when": "Use for sun protection reminders, summer packing lists, beach and outdoor checklists, and skincare routines.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An upright squeeze tube with a flip cap and a small sun symbol marked near the top.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "sunblock",
+      "spf cream",
+      "sun cream",
+      "suncare",
+      "sun lotion"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "skincare",
+      "sun-protection"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cotton-swab",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cotton-swab",
+    "label": "Cotton Swab",
+    "purpose": "Represent cotton swabs, ear cleaning, or hygiene and first aid supplies.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "cotton swab",
+      "cotton tip",
+      "stick",
+      "ear cleaning",
+      "hygiene",
+      "first aid",
+      "toiletries"
+    ],
+    "use_when": "Use for hygiene and toiletry checklists, ear care, first aid kits, and makeup touch up contexts.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "Two cotton swabs crossed in an X, each a thin stick with a small rounded cotton tip at both ends.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "q-tip",
+      "cotton bud",
+      "ear swab",
+      "cotton tip",
+      "swab stick"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hygiene",
+      "first-aid"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:tweezers",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "tweezers",
+    "label": "Tweezers",
+    "purpose": "Represent tweezers for eyebrow shaping, hair removal, or precision picking.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "tweezers",
+      "pincers",
+      "tips",
+      "eyebrow",
+      "grooming",
+      "precision",
+      "first aid"
+    ],
+    "use_when": "Use for eyebrow shaping, hair removal, precision grooming, and first aid or splinter removal.",
+    "avoid_when": "Do not use for scissors or cutting; two angled arms can read as open scissors, but these meet at flat pinching tips with no blades and no pivot.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A pair of tweezers, two slim arms joined at the top and meeting at flat pinching tips at the bottom.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "eyebrow tweezers",
+      "pluckers",
+      "pincers",
+      "hair removal",
+      "splinter tool"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "grooming",
+      "beauty"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:plate",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "plate",
+    "label": "Plate",
+    "purpose": "Represent a dinner plate, tableware, or a restaurant table setting.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "plate",
+      "rim",
+      "circle",
+      "tableware",
+      "dining",
+      "restaurant",
+      "porcelain"
+    ],
+    "use_when": "Use for dining and tableware, restaurant menus, table settings, and food serving contexts.",
+    "avoid_when": "Do not use for a generic circle, a disc, or a vinyl record; the inner rim ring is the only thing that marks this as a plate, so pair it with a label at small sizes.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A flat dinner plate seen from above, drawn as two concentric circles forming the rim.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "dinner plate",
+      "tableware",
+      "dish",
+      "place setting",
+      "porcelain"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "tableware",
+      "dining"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cutting-board",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cutting-board",
+    "label": "Cutting Board",
+    "purpose": "Represent food preparation, chopping, or a kitchen work surface.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "cutting board",
+      "chopping",
+      "handle hole",
+      "prep",
+      "kitchen",
+      "wood",
+      "surface"
+    ],
+    "use_when": "Use for food prep, chopping steps in recipes, kitchen work surfaces, and cookware listings.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A rectangular board with rounded corners and a small round handle hole near one edge.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "chopping board",
+      "prep board",
+      "wooden board",
+      "carving board",
+      "food prep"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "chopping"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:wok",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "wok",
+    "label": "Wok",
+    "purpose": "Represent a wok, stir frying, or Asian cooking.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "wok",
+      "pan",
+      "handle",
+      "stir fry",
+      "cooking",
+      "cookware",
+      "asian cuisine"
+    ],
+    "use_when": "Use for stir frying, Asian cooking, cookware collections, and recipe steps that need a high heat pan.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A deep round pan with a flared rim and a single long handle to one side.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "stir fry pan",
+      "chinese wok",
+      "asian pan",
+      "frying pan",
+      "cookware"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "cookware",
+      "stir-fry"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:toaster",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "toaster",
+    "label": "Toaster",
+    "purpose": "Represent a toaster, toasting bread, or breakfast.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "toaster",
+      "slot",
+      "bread slice",
+      "appliance",
+      "breakfast",
+      "toast",
+      "kitchen"
+    ],
+    "use_when": "Use for breakfast themes, toasting bread, small kitchen appliances, and morning routines.",
+    "avoid_when": "Do not use for a toast notification or popup message; this is the kitchen appliance, not the UI pattern that shares the word.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A boxy toaster with a slot across the top and a slice of bread popping up above it.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "toast maker",
+      "bread toaster",
+      "breakfast appliance",
+      "kitchen appliance",
+      "toasting"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "appliance",
+      "breakfast"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:mixer",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "mixer",
+    "label": "Mixer",
+    "purpose": "Represent a stand or hand mixer for baking and batter.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "mixer",
+      "beaters",
+      "bowl",
+      "baking",
+      "batter",
+      "appliance",
+      "kitchen"
+    ],
+    "use_when": "Use for baking, mixing batter, dough preparation, and small kitchen appliance listings.",
+    "avoid_when": "Do not use for power tools; an upright body with a rotating attachment can read as a drill, but the beaters and mixing bowl set this apart.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A stand mixer with a tilted head, two beater loops, and a mixing bowl beneath.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "stand mixer",
+      "hand mixer",
+      "beater",
+      "baking mixer",
+      "whisk machine"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "appliance",
+      "baking"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:grater",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "grater",
+    "label": "Grater",
+    "purpose": "Represent a grater for shredding cheese or vegetables.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "grater",
+      "holes",
+      "box shape",
+      "shredding",
+      "cheese",
+      "prep",
+      "kitchen"
+    ],
+    "use_when": "Use for grating and shredding steps, cheese and vegetable prep, and kitchen tool collections.",
+    "avoid_when": "Do not use for documents or signal strength; a tapered panel of small perforations can read as a page or a bar chart, but this is a box grater body.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A box grater with a tapered body, a top handle, and a pattern of small holes on the front face.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "cheese grater",
+      "box grater",
+      "shredder",
+      "zester",
+      "grating"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "shredding"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:peeler",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "peeler",
+    "label": "Peeler",
+    "purpose": "Represent a vegetable peeler for food preparation.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "peeler",
+      "y shape",
+      "blade",
+      "handle",
+      "vegetable",
+      "peeling",
+      "prep"
+    ],
+    "use_when": "Use for peeling vegetables and fruit, food prep steps, and kitchen tool collections.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A Y shaped vegetable peeler with a blade slot between two prongs and a handle below.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "vegetable peeler",
+      "potato peeler",
+      "y peeler",
+      "paring tool",
+      "peeling"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "peeling"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:rolling-pin",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "rolling-pin",
+    "label": "Rolling Pin",
+    "purpose": "Represent a rolling pin, dough rolling, or baking.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "rolling pin",
+      "roller",
+      "handles",
+      "dough",
+      "baking",
+      "pastry",
+      "kitchen"
+    ],
+    "use_when": "Use for baking, rolling dough, pastry making, and baking tool collections.",
+    "avoid_when": "Do not use for gym or fitness content; a bar with a grip at each end can read as a barbell, but this has a thick central roller and short thin handles.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A cylindrical roller lying horizontally with a short narrow handle at each end.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "dough roller",
+      "pastry roller",
+      "baking pin",
+      "rolling",
+      "baking tool"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "baking",
+      "prep-tools"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:tongs",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "tongs",
+    "label": "Tongs",
+    "purpose": "Represent kitchen tongs for gripping, serving, or grilling food.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "tongs",
+      "v shape",
+      "grip",
+      "serving",
+      "grilling",
+      "utensil",
+      "kitchen"
+    ],
+    "use_when": "Use for grilling, serving food, tossing salad, and kitchen utensil collections.",
+    "avoid_when": "Do not use for scissors or clamps; an open V of two arms can read as scissors, but these have flat gripping ends and no pivot pin.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A pair of kitchen tongs in an open V shape, joined at the top with flat gripping ends.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "kitchen tongs",
+      "grill tongs",
+      "serving tongs",
+      "salad tongs",
+      "bbq tongs"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "serving"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:colander",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "colander",
+    "label": "Colander",
+    "purpose": "Represent a colander for draining or straining food.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "colander",
+      "strainer",
+      "holes",
+      "draining",
+      "bowl",
+      "handles",
+      "kitchen"
+    ],
+    "use_when": "Use for draining pasta, rinsing vegetables, straining steps in recipes, and kitchen tool collections.",
+    "avoid_when": "Do not use as a plain bowl; at small sizes the drainage holes are what separate this from a bowl, so keep the holes visible.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A rounded bowl with a scattered pattern of small drainage holes and a small handle on each side.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "strainer",
+      "sieve",
+      "pasta strainer",
+      "draining bowl",
+      "colander bowl"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "draining"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:corkscrew",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "corkscrew",
+    "label": "Corkscrew",
+    "purpose": "Represent a corkscrew for opening wine bottles.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "corkscrew",
+      "spiral",
+      "handle",
+      "wine",
+      "cork",
+      "bar tool",
+      "opening"
+    ],
+    "use_when": "Use for wine service, bar tool collections, dining accessories, and hospitality contexts.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A corkscrew with a coiled spiral shaft and a T shaped handle at the top.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "wine opener",
+      "bottle opener",
+      "cork remover",
+      "wine key",
+      "bar tool"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "bar-tools",
+      "wine"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [
+      "food-dining"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:can-opener",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "can-opener",
+    "label": "Can Opener",
+    "purpose": "Represent a can opener for opening tins and canned food.",
+    "category": "kitchenware",
+    "semantic_tags": [
+      "can opener",
+      "handles",
+      "turning knob",
+      "clamp",
+      "tin",
+      "opening",
+      "kitchen"
+    ],
+    "use_when": "Use for opening canned food, kitchen utensil collections, food storage, and pantry contexts.",
+    "avoid_when": "Do not use for pliers or scissors; two pivoting handles can read as pliers, but the clamp jaw and round turning knob mark this as a can opener.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A manual can opener with two pivoting handles, a clamp jaw, and a small round turning knob.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tin opener",
+      "manual opener",
+      "canned food opener",
+      "can opening",
+      "kitchen tool"
+    ],
+    "ai_category": "kitchen",
+    "ai_category_label": "Kitchen",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "kitchen",
+      "prep-tools",
+      "opening"
+    ],
+    "job_category": "kitchen",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  }
+]

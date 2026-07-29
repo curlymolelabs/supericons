@@ -124,6 +124,48 @@ export const SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS = Object.freeze([
     description: 'Viral moments, memes, and internet culture: of-the-moment icons that are instantly relatable.',
     sidebarGlyph: 'local_fire_department',
   },
+  {
+    id: 'agent-identity',
+    label: 'Agent Identity',
+    description: 'Faces and avatars for named agents in a fleet: scouts, companions, builders, and assistants.',
+    sidebarGlyph: 'face',
+  },
+  {
+    id: 'game-assets',
+    label: 'Game Assets',
+    description: 'Controllers, characters, enemies, and props for builders shipping their own games.',
+    sidebarGlyph: 'sports_esports',
+  },
+  {
+    id: 'everyday-objects',
+    label: 'Everyday Objects',
+    description: 'Ordinary things from daily life: household items, hardware, tools, and personal effects.',
+    sidebarGlyph: 'category',
+  },
+  {
+    id: 'health-body',
+    label: 'Health and Body',
+    description: 'Anatomy, organs, microbiology, and human or veterinary health concepts.',
+    sidebarGlyph: 'health_and_safety',
+  },
+  {
+    id: 'personal-care',
+    label: 'Personal Care',
+    description: 'Grooming, hair care, oral care, cosmetics, and everyday bathroom routines.',
+    sidebarGlyph: 'self_care',
+  },
+  {
+    id: 'food-dining',
+    label: 'Food and Dining',
+    description: 'Meals, dishes, restaurant service, and food delivery.',
+    sidebarGlyph: 'restaurant',
+  },
+  {
+    id: 'nature-animals',
+    label: 'Nature and Animals',
+    description: 'Animals, prehistoric life, fossils, and the natural world.',
+    sidebarGlyph: 'pets',
+  },
 ]);
 
 export const SUPERICONS_SPECIALIZED_CATEGORY_DEFINITIONS = Object.freeze([
@@ -674,6 +716,111 @@ export const SUPERICONS_CONCEPT_ICON_TAXONOMY = Object.freeze({
     'agentic-payments',
     ['crypto', 'developer-tools'],
     ['protocol', 'http']
+  ),
+  'si:agent-scout': taxonomy(
+    'agent-identity',
+    ['agent-lifecycle-states', 'people-accounts'],
+    ['bot', 'explorer', 'chatbot', 'avatar']
+  ),
+  'si:agent-wink': taxonomy(
+    'agent-identity',
+    ['agent-lifecycle-states', 'people-accounts'],
+    ['bot', 'friendly', 'companion', 'avatar']
+  ),
+  'si:game-pad': taxonomy(
+    'game-assets',
+    ['devices-hardware', 'media-playback'],
+    ['controller', 'play', 'gaming', 'console']
+  ),
+  'si:game-ghost': taxonomy(
+    'game-assets',
+    ['trending-culture'],
+    ['enemy', 'sprite', 'arcade', 'npc']
+  ),
+  'si:toothpaste': taxonomy(
+    'everyday-objects',
+    ['health-body', 'trending-culture'],
+    ['dental', 'hygiene', 'teeth', 'routine']
+  ),
+  'si:bacteria': taxonomy(
+    'health-body',
+    ['frontier-compute'],
+    ['germ', 'microbe', 'pathogen', 'microbiology']
+  ),
+  'si:stomach': taxonomy(
+    'health-body',
+    [],
+    ['gut', 'digestion', 'organ', 'anatomy']
+  ),
+  'si:lawn-mower': taxonomy(
+    'physical-automation',
+    ['everyday-objects'],
+    ['mower', 'grass', 'gardening', 'yard']
+  ),
+  'si:house-key': taxonomy(
+    'everyday-objects',
+    ['security-access', 'maps-places-travel'],
+    ['key', 'home', 'real-estate', 'property']
+  ),
+  'si:screw': taxonomy(
+    'everyday-objects',
+    [],
+    ['fastener', 'hardware', 'diy', 'tornillo']
+  ),
+  'si:agent-pod': taxonomy(
+    'agent-identity',
+    ['agent-lifecycle-states', 'people-accounts'],
+    ['bot', 'avatar', 'ai-face', 'companion']
+  ),
+  'si:cashback': taxonomy(
+    'agentic-payments',
+    ['commerce-finance', 'everyday-objects'],
+    ['refund', 'rebate', 'rewards', 'money-back']
+  ),
+  'si:lottery-ticket': taxonomy(
+    'agentic-payments',
+    ['trending-culture', 'commerce-finance'],
+    ['raffle', 'lotto', 'prize-draw', 'sweepstakes']
+  ),
+  'si:noodle-bowl': taxonomy(
+    'food-dining',
+    ['kitchen', 'everyday-objects'],
+    ['ramen', 'noodles', 'pasta', 'meal']
+  ),
+  'si:dinosaur': taxonomy(
+    'nature-animals',
+    ['trending-culture'],
+    ['t-rex', 'dino', 'prehistoric', 'paleontology']
+  ),
+  'si:fossil': taxonomy(
+    'nature-animals',
+    [],
+    ['ammonite', 'paleontology', 'archaeology', 'geology']
+  ),
+  'si:comb': taxonomy(
+    'personal-care',
+    ['everyday-objects'],
+    ['hair-care', 'grooming', 'barber', 'styling']
+  ),
+  'si:hairbrush': taxonomy(
+    'personal-care',
+    ['everyday-objects'],
+    ['hair-care', 'grooming', 'paddle-brush', 'styling']
+  ),
+  'si:hair-clipper': taxonomy(
+    'personal-care',
+    ['everyday-objects'],
+    ['hair-care', 'grooming', 'barber', 'trimmer']
+  ),
+  'si:mascara': taxonomy(
+    'personal-care',
+    ['trending-culture'],
+    ['cosmetics', 'beauty', 'makeup', 'eyelashes']
+  ),
+  'si:nail-polish': taxonomy(
+    'personal-care',
+    ['trending-culture'],
+    ['cosmetics', 'beauty', 'manicure', 'nails']
   ),
 });
 

@@ -327,7 +327,7 @@ for (const messagePath of [
 
 const iconIndex = readJson('public/icon-index.json');
 const siIcons = (iconIndex.icons || []).filter((icon) => icon.lib === 'si');
-assert.equal(siIcons.length, 106, 'Supericons library should contain 106 icons in the public index');
+assert.equal(siIcons.length, 127, 'Supericons library should contain 127 icons in the public index');
 
 const fullTaxonomyMap = createIconTaxonomyMap(iconIndex.icons || []);
 const siCategoryCounts = Object.fromEntries(categoryIds.map((categoryId) => [categoryId, 0]));
@@ -350,8 +350,8 @@ assert.deepEqual(
 );
 assert.equal(
   Object.values(siCategoryCounts).reduce((total, count) => total + count, 0),
-  106,
-  'Supericons tag category counts should sum to the full 106-icon library'
+  127,
+  'Supericons tag category counts should sum to the full 127-icon library'
 );
 
 const expectedSupericonsCategories = new Map([
@@ -375,8 +375,8 @@ const publicTaxonomy = readJson('public/icon-taxonomy.json');
 const publicSiEntries = (publicTaxonomy.entries || []).filter((entry) => String(entry.iconId || '').startsWith('si:'));
 assert.equal(
   publicSiEntries.length,
-  106,
-  'public taxonomy snapshot should include all 106 Supericons entries'
+  127,
+  'public taxonomy snapshot should include all 127 Supericons entries'
 );
 const publicSiMissingCategories = publicSiEntries
   .filter((entry) => !uniqueCategoryIds.has(entry.jobCategory))

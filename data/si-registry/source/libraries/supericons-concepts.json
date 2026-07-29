@@ -2964,5 +2964,1143 @@
       "visual_inspection"
     ],
     "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-scout",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-scout",
+    "label": "Agent Scout",
+    "purpose": "Give a bot or agent a face, especially one that explores or researches.",
+    "category": "agent_identity",
+    "semantic_tags": [
+      "agent",
+      "bot",
+      "robot face",
+      "assistant",
+      "explorer",
+      "chatbot"
+    ],
+    "use_when": "Use for any bot, chatbot, or agent identity; the natural fit is an agent that scouts, searches, or gathers.",
+    "avoid_when": "Do not use for physical robots or hardware automation; this is a software agent face, not a machine.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A robot head with round dot eyes, a smile line, and a bent antenna.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ai agent",
+      "scout bot",
+      "research agent",
+      "chatbot face",
+      "bot avatar"
+    ],
+    "ai_category": "agent-identity",
+    "ai_category_label": "Agent Identity",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-identity",
+      "bot",
+      "explorer"
+    ],
+    "job_category": "agent-identity",
+    "secondary_categories": [
+      "agent-lifecycle-states"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-wink",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-wink",
+    "label": "Agent Wink",
+    "purpose": "Give a friendly agent a face; the wink suits creative and companion agents.",
+    "category": "agent_identity",
+    "semantic_tags": [
+      "agent",
+      "bot",
+      "wink",
+      "friendly",
+      "playful",
+      "robot face"
+    ],
+    "use_when": "Use for a warm, personable agent identity: creative assistants, companions, and onboarding guides.",
+    "avoid_when": "Do not use to signal an idle or sleeping agent; the closed eye is a wink, not sleep.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A rounded robot head with one winking eye, a short flat mouth, and a ball antenna.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "creative agent",
+      "winking robot",
+      "friendly bot",
+      "companion bot",
+      "muse"
+    ],
+    "ai_category": "agent-identity",
+    "ai_category_label": "Agent Identity",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-identity",
+      "bot",
+      "friendly"
+    ],
+    "job_category": "agent-identity",
+    "secondary_categories": [
+      "agent-lifecycle-states"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:game-pad",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "game-pad",
+    "label": "Game Pad",
+    "purpose": "Represent gameplay, game controls, or a games section.",
+    "category": "games_play",
+    "semantic_tags": [
+      "game",
+      "controller",
+      "gamepad",
+      "gaming",
+      "play",
+      "d-pad"
+    ],
+    "use_when": "Use for game sections, play modes, gaming features, and controller or input settings.",
+    "avoid_when": "Do not use for audio or video playback controls; this is a game controller, not a media play button.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A game controller with a d-pad cross on the left and two small round buttons on the right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "controller",
+      "joypad",
+      "joystick",
+      "console",
+      "arcade controls"
+    ],
+    "ai_category": "game-assets",
+    "ai_category_label": "Game Assets",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "game-assets",
+      "controller",
+      "play"
+    ],
+    "job_category": "game-assets",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:game-ghost",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "game-ghost",
+    "label": "Game Ghost",
+    "purpose": "Represent a game enemy, sprite, or NPC.",
+    "category": "games_play",
+    "semantic_tags": [
+      "game",
+      "ghost",
+      "enemy",
+      "sprite",
+      "arcade",
+      "npc"
+    ],
+    "use_when": "Use for enemies, NPCs, arcade or retro game content, and spooky game themes.",
+    "avoid_when": "Do not use for privacy, incognito, or invisible modes; this ghost is a game character, not a stealth state.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An arcade ghost with a scalloped bottom edge and two large round eyes.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "spirit",
+      "phantom",
+      "retro game",
+      "spooky",
+      "monster"
+    ],
+    "ai_category": "game-assets",
+    "ai_category_label": "Game Assets",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "game-assets",
+      "ghost",
+      "enemy"
+    ],
+    "job_category": "game-assets",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:toothpaste",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "toothpaste",
+    "label": "Toothpaste",
+    "purpose": "Represent dental care, hygiene, or a morning routine.",
+    "category": "everyday_objects",
+    "semantic_tags": [
+      "toothpaste",
+      "dental",
+      "hygiene",
+      "teeth",
+      "clean",
+      "tube"
+    ],
+    "use_when": "Use for dental care, brushing reminders, hygiene checklists, and morning or bedtime routines.",
+    "avoid_when": "Do not use for weapons, combat, or RPG items; the diagonal shape can read as a sword, but this is a tube.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A diagonal toothpaste tube with a cap seam line and a small squeeze of paste at the lower end.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "dental care",
+      "tooth brushing",
+      "oral hygiene",
+      "tube",
+      "morning routine"
+    ],
+    "ai_category": "everyday-objects",
+    "ai_category_label": "Everyday Objects",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "everyday-objects",
+      "toothpaste",
+      "hygiene"
+    ],
+    "job_category": "everyday-objects",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:bacteria",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "bacteria",
+    "label": "Bacteria",
+    "purpose": "Represent bacteria, microbes, or microscopic pathogens.",
+    "category": "health_body",
+    "semantic_tags": [
+      "bacteria",
+      "microbe",
+      "rod shape",
+      "flagella",
+      "germ",
+      "pathogen",
+      "microbiology"
+    ],
+    "use_when": "Use for microbiology content, infection and pathogen references, lab or diagnostic imagery, and human or veterinary health material.",
+    "avoid_when": "Do not use for a virus; a virus is drawn as a spiky sphere and is a different organism, while this is a rod shaped cell with flagella.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An uneven, organic bacterium cell with three dots inside and ten short hairs of differing lengths curving out around its edge.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "germ",
+      "microbe",
+      "bacterium",
+      "pathogen",
+      "microorganism"
+    ],
+    "ai_category": "health-body",
+    "ai_category_label": "Health and Body",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "health-body",
+      "bacteria",
+      "microbiology"
+    ],
+    "job_category": "health-body",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:stomach",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "stomach",
+    "label": "Stomach",
+    "purpose": "Represent the stomach, digestion, or gut health.",
+    "category": "health_body",
+    "semantic_tags": [
+      "stomach",
+      "gut",
+      "digestion",
+      "organ",
+      "belly",
+      "anatomy",
+      "digestive system"
+    ],
+    "use_when": "Use for digestive health content, gut and nutrition apps, anatomy diagrams, and symptom trackers.",
+    "avoid_when": "Do not use for a kidney; the curved pouch outline can read as a kidney bean shape, but this is the stomach with its inlet and outlet tubes.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A stomach with the esophagus tube entering at the top, a rounded body, gastric fluid filled in at the base, and the duodenum tube leaving at the right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "gut",
+      "digestive system",
+      "belly",
+      "tummy",
+      "abdomen"
+    ],
+    "ai_category": "health-body",
+    "ai_category_label": "Health and Body",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "health-body",
+      "stomach",
+      "digestion"
+    ],
+    "job_category": "health-body",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:lawn-mower",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "lawn-mower",
+    "label": "Lawn Mower",
+    "purpose": "Represent lawn care equipment, mowing, or yard maintenance.",
+    "category": "physical_automation",
+    "semantic_tags": [
+      "lawn mower",
+      "grass",
+      "wheels",
+      "handle bar",
+      "yard",
+      "gardening",
+      "grounds care"
+    ],
+    "use_when": "Use for gardening and landscaping content, yard work, grounds care equipment lists, and home maintenance or outdoor service apps.",
+    "avoid_when": "Do not use for indoor cleaning; the handle, body, and wheels can read as a vacuum cleaner, but this is outdoor grass cutting equipment.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A push lawn mower seen from the side, with a deck, an engine block on top, a long diagonal handle ending in a grip bar, a small front wheel, and a larger rear wheel sitting in front of the deck.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "mower",
+      "grass cutter",
+      "lawn care",
+      "yard equipment",
+      "grounds keeping"
+    ],
+    "ai_category": "physical-automation",
+    "ai_category_label": "Physical Automation",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "physical-automation",
+      "lawn-mower",
+      "gardening"
+    ],
+    "job_category": "physical-automation",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:house-key",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "house-key",
+    "label": "House Key",
+    "purpose": "Represent a house key, home ownership, or property access.",
+    "category": "everyday_objects",
+    "semantic_tags": [
+      "key",
+      "house shape",
+      "teeth",
+      "home",
+      "real estate",
+      "access",
+      "keys"
+    ],
+    "use_when": "Use for real estate listings, home buying or renting, property access, key handover moments, and home ownership content.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A key whose bow is shaped like a small house with a peaked roof, joined to a straight shaft with two teeth at the end.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "home key",
+      "real estate key",
+      "door key",
+      "property key",
+      "keys to the house"
+    ],
+    "ai_category": "everyday-objects",
+    "ai_category_label": "Everyday Objects",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "everyday-objects",
+      "house-key",
+      "real-estate"
+    ],
+    "job_category": "everyday-objects",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:screw",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "screw",
+    "label": "Screw",
+    "purpose": "Represent a screw fastener, hardware, or building supplies.",
+    "category": "everyday_objects",
+    "semantic_tags": [
+      "screw",
+      "fastener",
+      "threads",
+      "slotted head",
+      "hardware",
+      "diy",
+      "fixings"
+    ],
+    "use_when": "Use for hardware listings, DIY and construction content, toolkits, fastener inventories, and home improvement material.",
+    "avoid_when": "Do not use for a screwdriver; this is the fastener itself, not the tool that drives it.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A screw with a slotted round head and a shaft of spiral thread lines tapering to a point.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tornillo",
+      "wood screw",
+      "fastener",
+      "hardware",
+      "screws"
+    ],
+    "ai_category": "everyday-objects",
+    "ai_category_label": "Everyday Objects",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "everyday-objects",
+      "screw",
+      "hardware"
+    ],
+    "job_category": "everyday-objects",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:agent-pod",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "agent-pod",
+    "label": "Agent Pod",
+    "purpose": "Give a small companion agent a face: a pod shaped bot with an antenna.",
+    "category": "agent_identity",
+    "semantic_tags": [
+      "agent",
+      "bot",
+      "robot face",
+      "ai face",
+      "pod",
+      "capsule",
+      "avatar"
+    ],
+    "use_when": "Use as the avatar or identity for a small assistant or companion agent, and anywhere a friendly AI face is needed.",
+    "avoid_when": "Do not use for microbiology or germs; the tilted capsule with two dots can read as a bacterium, but this is an agent face.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A tilted rounded capsule with two dot eyes and a curved wisp trailing from each end.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ai face",
+      "robot face",
+      "bot avatar",
+      "assistant face",
+      "companion bot"
+    ],
+    "ai_category": "agent-identity",
+    "ai_category_label": "Agent Identity",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agent-identity",
+      "bot",
+      "avatar"
+    ],
+    "job_category": "agent-identity",
+    "secondary_categories": [
+      "agent-lifecycle-states"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:cashback",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "cashback",
+    "label": "Cashback",
+    "purpose": "Represent cashback rewards, money returned, or refund incentives.",
+    "category": "commerce",
+    "semantic_tags": [
+      "coin",
+      "return arrow",
+      "money back",
+      "reward",
+      "refund",
+      "rebate",
+      "loyalty"
+    ],
+    "use_when": "Use for rewards programs, cashback offers, refund flows, loyalty apps, and payment incentives.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A dollar sign inside a circular arrow that loops back on itself, with the arrowhead meeting the top of the circle.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "cash back",
+      "money back",
+      "rebate",
+      "refund reward",
+      "reward money"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "cashback",
+      "rewards"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:lottery-ticket",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "lottery-ticket",
+    "label": "Lottery Ticket",
+    "purpose": "Represent a lottery ticket, raffle, or game of chance.",
+    "category": "commerce",
+    "semantic_tags": [
+      "ticket",
+      "numbers",
+      "scratch panel",
+      "lottery",
+      "raffle",
+      "prize",
+      "chance"
+    ],
+    "use_when": "Use for lottery and raffle features, sweepstakes, prize draws, and games of chance.",
+    "avoid_when": "Do not use for event or travel tickets; the printed numbers and scratch panel make this specifically a lottery ticket.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A ticket with notched sides, a dollar sign on the left panel, and two prize lines on the right.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "lottery",
+      "raffle ticket",
+      "scratch card",
+      "lotto",
+      "sweepstakes"
+    ],
+    "ai_category": "agentic-payments",
+    "ai_category_label": "Agentic Payments",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "agentic-payments",
+      "lottery-ticket",
+      "prize-draw"
+    ],
+    "job_category": "agentic-payments",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:noodle-bowl",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "noodle-bowl",
+    "label": "Noodle Bowl",
+    "purpose": "Represent noodles, ramen, or pasta served in a bowl.",
+    "category": "food_dining",
+    "semantic_tags": [
+      "noodles",
+      "bowl",
+      "ramen",
+      "chopsticks",
+      "steam",
+      "pasta",
+      "meal"
+    ],
+    "use_when": "Use for food delivery apps, restaurant menus, recipes, and noodle, ramen, or pasta content; it also reads well for a hot meal in general.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A bowl with wavy noodle strands rising from it and a pair of chopsticks lifting them clear of the rim.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ramen",
+      "noodles",
+      "pasta bowl",
+      "noodle soup",
+      "asian noodles"
+    ],
+    "ai_category": "food-dining",
+    "ai_category_label": "Food and Dining",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "food-dining",
+      "noodles",
+      "meal"
+    ],
+    "job_category": "food-dining",
+    "secondary_categories": [
+      "kitchen"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:dinosaur",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "dinosaur",
+    "label": "Dinosaur",
+    "purpose": "Represent a dinosaur, prehistoric creature, or paleontology theme.",
+    "category": "nature_animals",
+    "semantic_tags": [
+      "dinosaur",
+      "t-rex",
+      "tail",
+      "claws",
+      "prehistoric",
+      "reptile",
+      "animal"
+    ],
+    "use_when": "Use for paleontology content, children and education apps, museum material, and anything prehistoric or dinosaur themed.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A long necked dinosaur in side view, with a tapering tail, a rounded body, a small head, and three stubby legs.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "t-rex",
+      "dino",
+      "prehistoric creature",
+      "paleontology",
+      "dinosaur fossil"
+    ],
+    "ai_category": "nature-animals",
+    "ai_category_label": "Nature and Animals",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "nature-animals",
+      "dinosaur",
+      "prehistoric"
+    ],
+    "job_category": "nature-animals",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:fossil",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "fossil",
+    "label": "Fossil",
+    "purpose": "Represent a fossil, ancient remains, or a paleontology find.",
+    "category": "nature_animals",
+    "semantic_tags": [
+      "fossil",
+      "ammonite",
+      "spiral shell",
+      "stone",
+      "prehistoric",
+      "archaeology",
+      "geology"
+    ],
+    "use_when": "Use for paleontology and geology content, museum exhibits, archaeology material, and excavation or discovery themes.",
+    "avoid_when": "Do not use for a living seashell or a snail; the surrounding stone block is what makes this a fossil.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An ammonite shell drawn as a ribbed spiral disc with a pointed aperture on one side.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "ammonite",
+      "dinosaur fossil",
+      "petrified shell",
+      "prehistoric remains",
+      "paleontology"
+    ],
+    "ai_category": "nature-animals",
+    "ai_category_label": "Nature and Animals",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "nature-animals",
+      "fossil",
+      "paleontology"
+    ],
+    "job_category": "nature-animals",
+    "secondary_categories": [],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:comb",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "comb",
+    "label": "Comb",
+    "purpose": "Represent hair combing, grooming, or a hair care routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "comb",
+      "teeth",
+      "handle",
+      "hair care",
+      "grooming",
+      "styling",
+      "barber"
+    ],
+    "use_when": "Use for hair care routines, grooming checklists, barbershop and salon contexts, and morning routines.",
+    "avoid_when": "Do not use for barcodes, scanning, or list and menu controls; the row of even parallel lines can read as a barcode, but this has a solid spine along one edge.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A solid comb with a rounded handle at one end and five fine teeth along the body.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "hair comb",
+      "pocket comb",
+      "barber comb",
+      "grooming comb",
+      "hair styling"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hair-care",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:hairbrush",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "hairbrush",
+    "label": "Hairbrush",
+    "purpose": "Represent hair brushing, grooming, or hair styling.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "hairbrush",
+      "paddle brush",
+      "bristles",
+      "handle",
+      "hair care",
+      "grooming",
+      "styling"
+    ],
+    "use_when": "Use for hair care routines, grooming and styling checklists, salon contexts, and morning or evening routines.",
+    "avoid_when": "Do not use for cleaning or scrubbing tools; a bristled paddle can read as a scrub brush, but this has the flat oval head and slim handle of a hairbrush.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An oval paddle hairbrush with bristle tips shown as dots across its face and a straight handle below.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "paddle brush",
+      "hair brushing",
+      "detangling brush",
+      "styling brush",
+      "brush hair"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hair-care",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:hair-clipper",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "hair-clipper",
+    "label": "Hair Clipper",
+    "purpose": "Represent electric hair trimming, barbering, or a haircut service.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "hair clipper",
+      "trimmer",
+      "blade",
+      "cord",
+      "barber",
+      "haircut",
+      "grooming"
+    ],
+    "use_when": "Use for barbershop and salon contexts, haircut bookings, beard and hair trimming, and men's grooming routines.",
+    "avoid_when": "Do not use for office or industrial tools; the rectangular body with a narrow tip can read as a stapler, but this has a toothed blade and a power cord.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "An upright hair clipper with a toothed blade across the top and a button on the body.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "hair trimmer",
+      "electric clippers",
+      "beard trimmer",
+      "barber clipper",
+      "shaver"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hair-care",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:mascara",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "mascara",
+    "label": "Mascara",
+    "purpose": "Represent mascara, eye makeup, or a cosmetics routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "mascara",
+      "wand",
+      "tube",
+      "eyelashes",
+      "makeup",
+      "cosmetics",
+      "beauty"
+    ],
+    "use_when": "Use for makeup routines, cosmetics listings, beauty and vanity checklists, and getting ready flows.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A mascara wand standing upright, with a bristled brush head above a slim handle.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "eye makeup",
+      "mascara wand",
+      "lash tube",
+      "makeup wand",
+      "cosmetics"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "cosmetics",
+      "beauty"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:nail-polish",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "nail-polish",
+    "label": "Nail Polish",
+    "purpose": "Represent nail polish, a manicure, or nail care.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "nail polish",
+      "bottle",
+      "brush cap",
+      "manicure",
+      "nails",
+      "cosmetics",
+      "beauty"
+    ],
+    "use_when": "Use for manicure and pedicure services, nail care routines, cosmetics listings, and salon checklists.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A squared nail polish bottle with a tall narrow cap on a short neck.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "nail varnish",
+      "nail lacquer",
+      "manicure",
+      "polish bottle",
+      "nail color"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "cosmetics",
+      "beauty"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "trending-culture"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
   }
 ]
