@@ -1,6 +1,6 @@
 {
   "version": "p0.02",
-  "generatedAt": "2026-07-29T13:14:28.486Z",
+  "generatedAt": "2026-07-29T14:39:14.707Z",
   "categories": [
     {
       "id": "ai-app-builders",
@@ -163,6 +163,12 @@
       "label": "Nature and Animals",
       "description": "Animals, prehistoric life, fossils, and the natural world.",
       "sidebarGlyph": "pets"
+    },
+    {
+      "id": "kitchen",
+      "label": "Kitchen",
+      "description": "Cookware, tableware, prep tools, and kitchen appliances.",
+      "sidebarGlyph": "skillet"
     },
     {
       "id": "ai-agent-workflows",
@@ -1984,6 +1990,73 @@
         "summer"
       ],
       "rank": 2081
+    },
+    {
+      "iconId": "si:cotton-swab",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "everyday-objects",
+        "health-body",
+        "hygiene",
+        "first-aid",
+        "q-tip",
+        "cotton-bud"
+      ],
+      "rank": 2082
+    },
+    {
+      "iconId": "si:tweezers",
+      "sourceLibrary": "si",
+      "jobCategory": "personal-care",
+      "secondaryCategories": [
+        "everyday-objects",
+        "health-body",
+        "grooming",
+        "beauty",
+        "eyebrows",
+        "precision"
+      ],
+      "rank": 2083
+    },
+    {
+      "iconId": "si:plate",
+      "sourceLibrary": "si",
+      "jobCategory": "kitchen",
+      "secondaryCategories": [
+        "food-dining",
+        "tableware",
+        "dining",
+        "restaurant",
+        "place-setting"
+      ],
+      "rank": 2084
+    },
+    {
+      "iconId": "si:cutting-board",
+      "sourceLibrary": "si",
+      "jobCategory": "kitchen",
+      "secondaryCategories": [
+        "everyday-objects",
+        "prep-tools",
+        "chopping",
+        "food-prep",
+        "cookware"
+      ],
+      "rank": 2085
+    },
+    {
+      "iconId": "si:wok",
+      "sourceLibrary": "si",
+      "jobCategory": "kitchen",
+      "secondaryCategories": [
+        "food-dining",
+        "cookware",
+        "stir-fry",
+        "asian-cooking",
+        "pan"
+      ],
+      "rank": 2086
     },
     {
       "iconId": "material:smart_toy",

@@ -166,6 +166,12 @@ export const SUPERICONS_CONCEPT_CATEGORY_DEFINITIONS = Object.freeze([
     description: 'Animals, prehistoric life, fossils, and the natural world.',
     sidebarGlyph: 'pets',
   },
+  {
+    id: 'kitchen',
+    label: 'Kitchen',
+    description: 'Cookware, tableware, prep tools, and kitchen appliances.',
+    sidebarGlyph: 'skillet',
+  },
 ]);
 
 export const SUPERICONS_SPECIALIZED_CATEGORY_DEFINITIONS = Object.freeze([
@@ -846,6 +852,31 @@ export const SUPERICONS_CONCEPT_ICON_TAXONOMY = Object.freeze({
     'personal-care',
     ['everyday-objects', 'health-body'],
     ['skincare', 'spf', 'sun-protection', 'summer']
+  ),
+  'si:cotton-swab': taxonomy(
+    'personal-care',
+    ['everyday-objects', 'health-body'],
+    ['hygiene', 'first-aid', 'q-tip', 'cotton-bud']
+  ),
+  'si:tweezers': taxonomy(
+    'personal-care',
+    ['everyday-objects', 'health-body'],
+    ['grooming', 'beauty', 'eyebrows', 'precision']
+  ),
+  'si:plate': taxonomy(
+    'kitchen',
+    ['food-dining'],
+    ['tableware', 'dining', 'restaurant', 'place-setting']
+  ),
+  'si:cutting-board': taxonomy(
+    'kitchen',
+    ['everyday-objects'],
+    ['prep-tools', 'chopping', 'food-prep', 'cookware']
+  ),
+  'si:wok': taxonomy(
+    'kitchen',
+    ['food-dining'],
+    ['cookware', 'stir-fry', 'asian-cooking', 'pan']
   ),
 });
 
