@@ -1,7 +1,7 @@
 # Search v2 assessment checklist recall release
 
 Date: 2026-07-30
-Status: npm staged; Railway and website not deployed
+Status: Railway and website deployed and verified; npm staged for owner approval
 
 ## Release identity
 
@@ -20,6 +20,9 @@ Status: npm staged; Railway and website not deployed
 - Website artifact files: 177
 - Website artifact size: 93,688,050 bytes
 - Website artifact tree SHA-256: `697edfcc95bdf93009dc8e7fa1f6b2c6ffb91c947138343a39668c6d21776421`
+- Railway deployment: `094b470a-e633-4f86-9ce6-19da91cc2a55`
+- Railway image digest: `sha256:26b71e38a3cb538eea9f3fb8b001a6871f8b38cfbae3b8d3e6005e27d4921e80`
+- Website deployment: `6a6a72f067e468d23496b5fb`
 
 The archive downloaded from npm stage `396fb152-c828-40e9-badb-bdc4fd3711d2` is byte-identical to the frozen local archive. Both have SHA-256 `afa7ad88232c53baea88313421eb508a2f1e1e48f7099935ad6a45a3535f9287`.
 
@@ -52,22 +55,27 @@ The change does not include telemetry, database, admin, catalog, or unrelated us
 - The fixed-search fingerprint remained `df8a55dafa58e32ba1b7ea9e1933387c9bb1c7f5ef587a758567cd36e86b2357`.
 - The exact npm archive passed a clean installation and all 225 ordered stdio cases.
 - Independent local latency verification measured p95 at 411.2 ms against the 500 ms gate.
+- Production HTTP returned the exact five reviewed Lucide checklist icons in `hosted_fused` mode.
+- Production MCP returned the same five reviewed Lucide checklist icons in the same order.
+- The live website index and changed search bundle are byte-identical to the frozen audited files.
+- A real browser search displayed the repaired checklist family and called the hosted search endpoint.
 
-## Current production and rollback targets
+## Production and rollback targets
 
-The current production release remains version 0.4.25.
+Railway and the website now serve the 0.4.26 release. npm remains on 0.4.25 until the owner approves the exact staged package.
 
 - npm `latest`: `0.4.25`
-- Railway deployment: `61fe6aa7-aa61-42ba-884d-466af9a92e6f`
-- Railway image digest: `sha256:c65fe498fd50d1a92e7f76078f7b6a5d3893bf04f1efd00c3e807658aff8800b`
-- Railway rollback deployment: `84443e56-93a4-40eb-9391-98f7e513a345`
-- Website deployment: `6a6a497735044883fa5bbcc7`
-- Website rollback deployment: `6a67697fec402812099efd9b`
+- Railway deployment: `094b470a-e633-4f86-9ce6-19da91cc2a55`
+- Railway image digest: `sha256:26b71e38a3cb538eea9f3fb8b001a6871f8b38cfbae3b8d3e6005e27d4921e80`
+- Railway rollback deployment: `61fe6aa7-aa61-42ba-884d-466af9a92e6f`
+- Railway rollback image digest: `sha256:c65fe498fd50d1a92e7f76078f7b6a5d3893bf04f1efd00c3e807658aff8800b`
+- Website deployment: `6a6a72f067e468d23496b5fb`
+- Website rollback deployment: `6a6a497735044883fa5bbcc7`
 
-Railway currently reports deployment `61fe6aa7-aa61-42ba-884d-466af9a92e6f` as successful. Netlify currently reports website deployment `6a6a497735044883fa5bbcc7` as published.
+Railway reports deployment `094b470a-e633-4f86-9ce6-19da91cc2a55` as successful. Netlify reports website deployment `6a6a72f067e468d23496b5fb` as ready and published.
 
 ## Release boundary
 
-The npm stage is private and requires owner approval before publication. Railway and website deployment remain blocked until the frozen npm archive, MCP source tree, and website artifact receive focused artifact verification.
+The npm stage is private and requires owner approval before publication. Railway and website deployment used only the exact source and website bytes covered by focused artifact verification.
 
 No rebuild or restage is allowed after approval. Any byte change requires a new hash and another exact-artifact check.
