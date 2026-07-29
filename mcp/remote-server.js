@@ -2207,7 +2207,8 @@ function parsePublicSearchRequest(body = {}) {
     throw createPreviewHttpError(400, 'unsupported_style', 'Style must be any, outline, or solid.');
   }
 
-  const locale = String(body.locale || '').trim() || null;
+  const requestedLocale = String(body.locale || '').trim() || null;
+  const locale = requestedLocale === 'en' ? null : requestedLocale;
   if (locale && !previewLocales.has(locale)) {
     throw createPreviewHttpError(400, 'unsupported_locale', 'Choose a supported locale or leave locale empty.');
   }
