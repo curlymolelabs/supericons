@@ -3421,9 +3421,24 @@ function initializeEvents() {
     });
   });
   document.querySelectorAll('[data-export]').forEach((button) => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       setSearchDownloadMenuOpen(false);
-      exportData(button.dataset.export);
+      const exportKey = button.dataset.export;
+      const partitionCount = ['request-log-csv', 'audit-bundle-json'].includes(exportKey)
+        ? searchEventExportPartitions().length
+        : 0;
+      if (partitionCount > 0) {
+        const label = exportKey === 'audit-bundle-json' ? 'Audit bundle' : 'Request log';
+        showToast(`Preparing the ${label} in ${partitionCount} safe date parts. Keep this page open.`);
+      }
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      try {
+        await exportData(exportKey);
+      } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
     });
   });
   $('searchDownloadToggle')?.addEventListener('click', (event) => {

@@ -170,5 +170,7 @@ assert.equal(pageSizeLimits[1], 500);
 assert.match(source, /const EXPORT_REQUEST_TIMEOUT_MS = 60_000;/);
 assert.match(source, /const SEARCH_EVENT_EXPORT_PAGE_SIZE = 500;/);
 assert.match(source, /requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS/);
+assert.match(source, /Preparing the \$\{label\} in \$\{partitionCount\} safe date parts/);
+assert.match(source, /button\.setAttribute\('aria-busy', 'true'\)/);
 
 console.log('Admin search export partitioning verification passed.');
