@@ -503,6 +503,7 @@ const {
   synonyms,
   indexGeneratedAt,
 } = loadData();
+const defaultSearchIconSet = new Set(outlineIcons);
 const premiumIcons = loadPremiumPacks();
 
 // Combined icon set (auth determines which subset is searchable)
@@ -853,7 +854,13 @@ function normalizeExactIconIdentity(value) {
     .trim();
 }
 
-function prioritizeExactIconMatches(query, results = []) {
+function prioritizeExactIconMatches(query, results = [], options = {}) {
+  if (
+    String(options.library || '').toLowerCase() !== 'si'
+    || normalizeSearchLibraryMode(options.libraryMode) !== 'strict'
+  ) {
+    return results;
+  }
   const normalizedQuery = normalizeExactIconIdentity(query);
   if (!normalizedQuery || results.length < 2) return results;
 
@@ -866,8 +873,6 @@ function prioritizeExactIconMatches(query, results = []) {
       icon.label,
       icon.icon_id,
       icon.lib && icon.id ? `${icon.lib}:${icon.id}` : null,
-      ...(icon.aliases || []),
-      ...(icon.synonyms || []),
     ];
     const isExact = identities.some(
       (identity) => normalizeExactIconIdentity(identity) === normalizedQuery,
@@ -891,9 +896,12 @@ async function searchAccessibleIcons({
   const normalizedLibraryMode = normalizeSearchLibraryMode(libraryMode);
   const requestedStyle = normalizeRequestedStyle(style);
   const accessibleIcons = getAccessibleIcons();
+  const styleCandidateIcons = requestedStyle === VARIANT_STYLES.ANY
+    ? accessibleIcons.filter((icon) => icon.premium || defaultSearchIconSet.has(icon))
+    : accessibleIcons;
   const searchableIcons = library && normalizedLibraryMode === 'strict'
-    ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
-    : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
+    ? styleCandidateIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
+    : styleCandidateIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
   const useLocalFirst = isLocalFirstPackageEnabled() && shouldUseLocalFirstSearch(mcpPackage.version, {
     toolName,
@@ -910,7 +918,10 @@ async function searchAccessibleIcons({
       style: requestedStyle,
       locale,
     });
-    return prioritizeExactIconMatches(query, results).slice(0, Math.max(1, limit));
+    return prioritizeExactIconMatches(query, results, {
+      library,
+      libraryMode: normalizedLibraryMode,
+    }).slice(0, Math.max(1, limit));
   }
 
   let hostedResults = [];
@@ -945,7 +956,10 @@ async function searchAccessibleIcons({
     locale,
     hostedResults,
   });
-  return prioritizeExactIconMatches(query, results).slice(0, Math.max(1, limit));
+  return prioritizeExactIconMatches(query, results, {
+    library,
+    libraryMode: normalizedLibraryMode,
+  }).slice(0, Math.max(1, limit));
 }
 
 async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {

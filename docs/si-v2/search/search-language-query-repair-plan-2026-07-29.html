@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search language repair</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0d0f;
+      --panel: #18181b;
+      --line: #303036;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --orange: #ff5a1f;
+      --green: #34d399;
+      --blue: #60a5fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.5 system-ui, sans-serif;
+    }
+    main { max-width: 1040px; margin: 0 auto; padding: 40px 22px 64px; }
+    h1 { margin: 0 0 8px; font-size: clamp(30px, 5vw, 48px); }
+    h2 { margin: 0 0 12px; font-size: 21px; }
+    p { margin: 8px 0; }
+    .lead { color: var(--muted); font-size: 18px; max-width: 760px; }
+    .status {
+      display: inline-block;
+      margin: 24px 0;
+      padding: 8px 12px;
+      border: 1px solid #14532d;
+      border-radius: 999px;
+      color: var(--green);
+      background: #052e1b;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 18px 0 28px;
+    }
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+    .card strong { color: var(--orange); }
+    .number { font-size: 32px; font-weight: 800; color: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0 28px;
+    }
+    .step {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .step b { display: block; color: var(--blue); margin-bottom: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 11px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { color: var(--muted); }
+    .note {
+      margin-top: 24px;
+      padding: 16px;
+      border-left: 4px solid var(--orange);
+      background: var(--panel);
+    }
+    code { color: #fed7aa; }
+    @media (max-width: 650px) {
+      .flow { grid-template-columns: 1fr; }
+      table { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Search language repair</h1>
+  <p class="lead">A small, focused repair for common language terms, plurals, mixed phrases, and exact brand names.</p>
+  <div class="status">Ready for independent audit</div>
+
+  <section class="grid" aria-label="Results">
+    <div class="card"><div class="number">22 / 22</div><p>real gap cases pass in the packed npm candidate</p></div>
+    <div class="card"><div class="number">30 / 30</div><p>shared browser and local decisions pass</p></div>
+    <div class="card"><div class="number">1 + 1</div><p>changed fingerprint cases, both useful zero-result recoveries</p></div>
+  </section>
+
+  <h2>What changed</h2>
+  <section class="grid">
+    <div class="card"><strong>Language</strong><p>Reviewed Spanish and Chinese terms now reach icons that already match their meaning.</p></div>
+    <div class="card"><strong>Plurals</strong><p><code>categories</code> can use the approved <code>category</code> form without weakening the safety check.</p></div>
+    <div class="card"><strong>Mixed phrases</strong><p>Known terms can work inside phrases such as <code>wechat 微信 logo</code>.</p></div>
+    <div class="card"><strong>Brands</strong><p><code>alibaba cloud</code> can match the exact compact brand ID <code>alibabacloud</code>.</p></div>
+  </section>
+
+  <h2>How it was checked</h2>
+  <div class="flow">
+    <div class="step"><b>1. Baseline</b>Test the public package and the local catalog separately.</div>
+    <div class="step"><b>2. Repair</b>Change only the small search parts responsible for each gap.</div>
+    <div class="step"><b>3. Package test</b>Install the exact archive and run the full search checks.</div>
+  </div>
+
+  <h2>Public package versus local catalog</h2>
+  <table>
+    <thead><tr><th>State</th><th>Gap cases passing</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Published npm 0.4.24</td><td>5 of 22</td><td>What users can install now</td></tr>
+      <tr><td>Local catalog before repair</td><td>7 of 22</td><td>Includes new icons that are not public yet</td></tr>
+      <tr><td>Packed repair candidate</td><td>22 of 22</td><td>Engine repair plus the current local catalog</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Important:</strong> New local icons are not described as deployed. No npm package, website, or hosted MCP release was published by this work.
+  </div>
+</main>
+</body>
+</html>

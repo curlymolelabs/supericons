@@ -140,6 +140,7 @@ const cases = [
   {
     query: 'hard hat construction worker',
     library: 'lucide',
+    locale: 'en',
     first: 'lucide:hard-hat',
   },
   {
