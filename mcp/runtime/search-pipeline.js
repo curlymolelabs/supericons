@@ -297,6 +297,18 @@ function isSupericonsBrandLogo(icon) {
   );
 }
 
+function isLikelyBrandIdentityIcon(icon) {
+  const key = iconKey(icon).toLowerCase();
+  return (
+    key.startsWith('simpleicons:') ||
+    key.includes(':brand-') ||
+    isSupericonsBrandLogo(icon) ||
+    icon.assetType === 'brand-logo' ||
+    icon.filterTags?.includes('brand-logo') ||
+    icon.aiFilterTags?.includes('brand-logo')
+  );
+}
+
 function getIconSearchMetadata(icon) {
   const cached = iconSearchMetadataCache.get(icon);
   if (cached) return cached;
@@ -344,6 +356,33 @@ function getIconSearchMetadata(icon) {
 
   iconSearchMetadataCache.set(icon, metadata);
   return metadata;
+}
+
+function getExactBrandIdentityResults(query, icons, synonyms, options = {}) {
+  const identityWords = getMeaningfulQueryWords(tokenizeSemanticText(query));
+  const identityQuery = identityWords.join(' ');
+  if (!identityQuery) return [];
+
+  const identityResults = searchIconsForSingleQuery(identityQuery, icons, synonyms, {
+    ...options,
+    limit: Math.max(Number(options.limit || 20) * 2, 20),
+    applyExpressiveFallback: false,
+    candidatePool: getIndexedCandidatePool(icons, identityQuery, synonyms),
+  });
+
+  return identityResults.filter((icon) => {
+    const directScore = getDirectSearchScore(
+      icon,
+      normalizeSemanticText(identityQuery),
+      tokenizeSemanticText(identityQuery),
+    );
+    const brandAdjustment = getBrandRankAdjustment(query, icon);
+    return (
+      directScore >= 300 &&
+      isLikelyBrandIdentityIcon(icon) &&
+      brandAdjustment.penalty === 0
+    );
+  });
 }
 
 function getIconCandidateIndex(icons) {
@@ -605,6 +644,33 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   });
   const queryVariants = cjkExpansion.variants.length > 0 ? cjkExpansion.variants : [query];
   const hasExpandedCjk = cjkExpansion.matched.length > 0 && queryVariants.length > 1;
+  const existingBrandResults = semanticQueryFrame.is_brand_logo_query
+    ? searchIconsForSingleQuery(query, icons, synonyms, {
+        library,
+        libraryMode,
+        limit,
+        style,
+        candidatePool: getIndexedCandidatePool(icons, query, synonyms),
+      })
+    : [];
+  const shouldResolveExactBrandIdentity =
+    (hasExpandedCjk && !semanticQueryFrame.is_brand_logo_query) ||
+    (semanticQueryFrame.is_brand_logo_query && existingBrandResults.length === 0);
+
+  if (shouldResolveExactBrandIdentity) {
+    const exactBrandResults = getExactBrandIdentityResults(query, icons, synonyms, {
+      library,
+      libraryMode,
+      limit,
+      style,
+    });
+    if (exactBrandResults.length > 0) {
+      return rerankSearchCandidatesAtFusion(query, exactBrandResults, {
+        libraryMode,
+        requestedLibrary: library,
+      }).slice(0, Math.max(1, limit));
+    }
+  }
 
   if (
     hasExpandedCjk

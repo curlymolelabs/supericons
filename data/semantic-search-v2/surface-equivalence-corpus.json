@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "fixture_id": "search-v2-surface-equivalence-20260729",
+  "fixture_id": "search-v2-surface-equivalence-20260730",
   "source_cutoff_utc": "2026-07-27T11:17:50.209527Z",
   "cases": [
     {
@@ -175,6 +175,36 @@
       "library_mode": "strict",
       "expected_decision": "expected_positive",
       "relevant_any": ["simpleicons:alibabacloud"]
+    },
+    {
+      "case_id": "brand_alibaba_cloud_logo",
+      "query": "alibaba cloud logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:alibabacloud"]
+    },
+    {
+      "case_id": "brand_apache_airflow",
+      "query": "apache airflow",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_all",
+      "query": "apache airflow logo",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_strict",
+      "query": "apache airflow logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
     },
     {
       "case_id": "brand_wechat_mixed_script",

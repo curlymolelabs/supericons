@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "fixture_id": "search-language-query-repair-20260729",
+  "fixture_id": "search-language-query-repair-20260730",
   "purpose": "Public-safe regression cases for reviewed language aliases, inflections, compounds, compact brand names, and honest zeros.",
   "surfaces": [
     "published_npm_stdio",
@@ -190,6 +190,58 @@
       "expected_decision": "expected_positive",
       "required_ref_fragments": ["simpleicons:alibabacloud"],
       "forbidden_ref_fragments": ["simpleicons:alibabadotcom"]
+    },
+    {
+      "case_id": "brand_alibaba_cloud_logo",
+      "defect_class": "brand_concept_collision",
+      "query": "alibaba cloud logo",
+      "locale": null,
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "style": "any",
+      "limit": 10,
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["simpleicons:alibabacloud"],
+      "forbidden_ref_fragments": ["simpleicons:alibabadotcom"]
+    },
+    {
+      "case_id": "brand_apache_airflow",
+      "defect_class": "brand_concept_collision",
+      "query": "apache airflow",
+      "locale": null,
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "style": "any",
+      "limit": 10,
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["simpleicons:apacheairflow"],
+      "forbidden_ref_fragments": ["wind", "air-vent", "fan"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_all",
+      "defect_class": "brand_concept_collision",
+      "query": "apache airflow logo",
+      "locale": null,
+      "library": null,
+      "library_mode": "all",
+      "style": "any",
+      "limit": 10,
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["simpleicons:apacheairflow"],
+      "forbidden_ref_fragments": ["wind", "air-vent", "fan"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_strict",
+      "defect_class": "brand_concept_collision",
+      "query": "apache airflow logo",
+      "locale": null,
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "style": "any",
+      "limit": 10,
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["simpleicons:apacheairflow"],
+      "forbidden_ref_fragments": ["wind", "air-vent", "fan"]
     },
     {
       "case_id": "brand_wechat_mixed_unscoped",

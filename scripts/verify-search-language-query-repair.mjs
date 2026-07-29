@@ -26,7 +26,7 @@ const synonyms = readJson('mcp/public/synonyms.json');
 const allExpansionTerms = [...cjkTerms, ...sourceAliases.aliases];
 
 assert.equal(corpus.schema_version, 1);
-assert.equal(corpus.cases.length, 22);
+assert.equal(corpus.cases.length, 26);
 assert.deepEqual(publicAliases, sourceAliases, 'website aliases must match the reviewed source artifact');
 assert.deepEqual(packagedAliases, sourceAliases, 'packaged aliases must match the reviewed source artifact');
 
