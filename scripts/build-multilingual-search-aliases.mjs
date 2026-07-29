@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 const localeFilesDir = path.join(rootDir, 'data', 'i18n', 'messages');
+const reviewedOverridesPath = path.join(rootDir, 'data', 'i18n', 'reviewed-search-alias-overrides.json');
 const sourcePath = path.join(rootDir, 'data', 'i18n', 'multilingual-search-aliases.json');
 const publicPath = path.join(rootDir, 'public', 'multilingual-search-aliases.json');
 const packagedPath = path.join(rootDir, 'mcp', 'public', 'multilingual-search-aliases.json');
@@ -101,10 +102,39 @@ for (const locale of locales) {
   }
 }
 
+const reviewedOverrides = await readJson(reviewedOverridesPath);
+if (reviewedOverrides.version !== 1 || !Array.isArray(reviewedOverrides.records)) {
+  throw new Error('reviewed search alias overrides must use version 1 and include records');
+}
+
+for (const [index, record] of reviewedOverrides.records.entries()) {
+  if (!record.locale || !record.term || record.alias_type !== 'reviewed_alias') {
+    throw new Error(`reviewed search alias override ${index} is missing its locale, term, or alias type`);
+  }
+  if (!['global', 'locale'].includes(record.scope)) {
+    throw new Error(`reviewed search alias override ${index} has an unsupported scope`);
+  }
+  if (record.gate !== 'auto_accept') {
+    throw new Error(`reviewed search alias override ${index} must use the auto_accept gate`);
+  }
+  if (!Array.isArray(record.maps_to) || record.maps_to.length === 0) {
+    throw new Error(`reviewed search alias override ${index} must include at least one mapped search term`);
+  }
+  aliases.push({
+    locale: record.locale,
+    scope: record.scope,
+    alias_type: record.alias_type,
+    term: String(record.term).trim(),
+    variants: unique(record.variants || []),
+    maps_to: unique(record.maps_to),
+    gate: record.gate,
+  });
+}
+
 const payload = {
   version: 1,
   locales,
-  alias_types: ['category'],
+  alias_types: ['category', 'reviewed_alias'],
   aliases,
 };
 

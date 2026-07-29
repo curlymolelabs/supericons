@@ -90,6 +90,10 @@ function normalizeSemanticText(value) {
   return normalizeCjkSearchText(value);
 }
 
+function compactSemanticText(value) {
+  return normalizeSemanticText(value).replace(/\s+/g, '');
+}
+
 function tokenizeSemanticText(value) {
   const normalized = normalizeSemanticText(value);
   return normalized ? normalized.split(' ') : [];
@@ -320,6 +324,11 @@ function getIconSearchMetadata(icon) {
       return normalized ? { normalized, tokens: new Set(tokenizeSemanticText(normalized)) } : null;
     })
     .filter(Boolean);
+  const compactPrimaryValues = new Set(
+    [name, id]
+      .map(compactSemanticText)
+      .filter((value) => value.length >= 5),
+  );
   const metadata = {
     name,
     id,
@@ -330,6 +339,7 @@ function getIconSearchMetadata(icon) {
     primaryTokens,
     segments,
     aliases,
+    compactPrimaryValues,
   };
 
   iconSearchMetadataCache.set(icon, metadata);
@@ -341,17 +351,23 @@ function getIconCandidateIndex(icons) {
   if (cached) return cached;
 
   const byToken = new Map();
+  const byCompactPrimaryValue = new Map();
   for (const icon of icons) {
-    const { tokens } = getIconSearchMetadata(icon);
+    const { tokens, compactPrimaryValues } = getIconSearchMetadata(icon);
     for (const token of tokens) {
       if (!token) continue;
       const matches = byToken.get(token) || [];
       matches.push(icon);
       byToken.set(token, matches);
     }
+    for (const compactValue of compactPrimaryValues) {
+      const matches = byCompactPrimaryValue.get(compactValue) || [];
+      matches.push(icon);
+      byCompactPrimaryValue.set(compactValue, matches);
+    }
   }
 
-  const index = { byToken };
+  const index = { byToken, byCompactPrimaryValue };
   iconCandidateIndexCache.set(icons, index);
   return index;
 }
@@ -364,7 +380,7 @@ function getIndexedCandidatePool(icons, query, synonyms) {
     ...tokenizeSemanticText(normalizedQuery),
     ...termSets.flatMap((terms) => terms.flatMap((term) => tokenizeSemanticText(term))),
   ]);
-  const { byToken } = getIconCandidateIndex(icons);
+  const { byToken, byCompactPrimaryValue } = getIconCandidateIndex(icons);
   const candidates = [];
   const seen = new Set();
 
@@ -380,6 +396,9 @@ function getIndexedCandidatePool(icons, query, synonyms) {
   for (const token of lookupTokens) {
     addMatches(byToken.get(token));
   }
+  if (normalizedQuery.includes(' ')) {
+    addMatches(byCompactPrimaryValue.get(compactSemanticText(normalizedQuery)));
+  }
 
   return candidates;
 }
@@ -387,11 +406,17 @@ function getIndexedCandidatePool(icons, query, synonyms) {
 function getDirectSearchScore(icon, normalizedQuery, queryWords) {
   if (!normalizedQuery) return 0;
 
-  const { name, id, fullId, tokens } = getIconSearchMetadata(icon);
+  const { name, id, fullId, tokens, compactPrimaryValues } = getIconSearchMetadata(icon);
   const meaningfulQueryWords = getMeaningfulQueryWords(queryWords);
 
   if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
     return 320;
+  }
+  if (
+    normalizedQuery.includes(' ')
+    && compactPrimaryValues.has(compactSemanticText(normalizedQuery))
+  ) {
+    return 300;
   }
 
   const singleQueryWord = queryWords.length === 1 ? queryWords[0] : null;
@@ -581,7 +606,10 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   const queryVariants = cjkExpansion.variants.length > 0 ? cjkExpansion.variants : [query];
   const hasExpandedCjk = cjkExpansion.matched.length > 0 && queryVariants.length > 1;
 
-  if (hasExpandedCjk && !semanticQueryFrame.matched) {
+  if (
+    hasExpandedCjk
+    && (!semanticQueryFrame.matched || semanticQueryFrame.is_brand_logo_query)
+  ) {
     const merged = [];
     const seen = new Set();
 
@@ -681,7 +709,7 @@ export function searchIcons(query, icons, synonyms, options = {}) {
       limit: Math.max(effectiveLimit, 12),
       applyExpressiveFallback: false,
     })
-      .filter((icon) => iconMatchesOriginalQueryConcept(icon, query))
+      .filter((icon) => iconMatchesOriginalQueryConcept(icon, inflectionVariant))
       .map((icon) => ({
         ...icon,
         query_variant: inflectionVariant,
