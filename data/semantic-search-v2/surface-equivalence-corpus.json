@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "fixture_id": "search-v2-surface-equivalence-20260727",
+  "schema_version": 2,
+  "fixture_id": "search-v2-surface-equivalence-20260730",
   "source_cutoff_utc": "2026-07-27T11:17:50.209527Z",
   "cases": [
     {
@@ -129,6 +129,98 @@
       "library_mode": "strict",
       "expected_decision": "expected_positive",
       "relevant_any": ["lucide:settings"]
+    },
+    {
+      "case_id": "language_spanish_storage_unscoped",
+      "query": "almacen",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["warehouse", "storage", "inventory"]
+    },
+    {
+      "case_id": "language_spanish_nut_unscoped",
+      "query": "tuerca",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["nut", "bolt", "hardware"]
+    },
+    {
+      "case_id": "language_spanish_towel_unscoped",
+      "query": "toalla",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["towel", "bath"]
+    },
+    {
+      "case_id": "language_spanish_wrench_unscoped",
+      "query": "llave fija",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["wrench", "tool"]
+    },
+    {
+      "case_id": "inflection_categories",
+      "query": "categories",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["category", "grid", "layout"]
+    },
+    {
+      "case_id": "compound_airflow_lucide",
+      "query": "airflow",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:wind", "lucide:air-vent", "lucide:fan"]
+    },
+    {
+      "case_id": "brand_alibaba_cloud",
+      "query": "alibaba cloud",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:alibabacloud"]
+    },
+    {
+      "case_id": "brand_alibaba_cloud_logo",
+      "query": "alibaba cloud logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:alibabacloud"]
+    },
+    {
+      "case_id": "brand_apache_airflow",
+      "query": "apache airflow",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_all",
+      "query": "apache airflow logo",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
+    },
+    {
+      "case_id": "brand_apache_airflow_logo_strict",
+      "query": "apache airflow logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:apacheairflow"]
+    },
+    {
+      "case_id": "brand_wechat_mixed_script",
+      "query": "wechat 微信 logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["simpleicons:wechat"]
+    },
+    {
+      "case_id": "language_chinese_resource_bookmark",
+      "query": "资源收藏",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["lucide:bookmark", "lucide:archive", "lucide:folder-heart", "lucide:star"]
     },
     {
       "case_id": "honest_zero_nonsense",

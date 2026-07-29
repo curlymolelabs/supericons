@@ -17,6 +17,7 @@ const fingerprintInputPaths = [
   'data/semantic-search-v2/evaluation-set.json',
   'data/search-intent-graph/ranking-policy.json',
   'data/i18n/cjk-search-terms.json',
+  'data/i18n/reviewed-search-alias-overrides.json',
   'data/i18n/multilingual-search-aliases.json',
   'lib/generated-search-ranking-policy.js',
   'mcp/search.js',

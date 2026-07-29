@@ -62,6 +62,7 @@ const [
   telemetrySource,
   packageJson,
   serverJson,
+  reviewedAliasOverrides,
   aliasData,
   publicAliasData,
   packagedAliasData,
@@ -82,6 +83,7 @@ const [
   readText('mcp/telemetry.js'),
   readJson('mcp/package.json'),
   readJson('mcp/server.json'),
+  readJson('data/i18n/reviewed-search-alias-overrides.json'),
   readJson('data/i18n/multilingual-search-aliases.json'),
   readJson('public/multilingual-search-aliases.json'),
   readJson('mcp/public/multilingual-search-aliases.json'),
@@ -150,7 +152,17 @@ assert.doesNotMatch(
 assert.deepEqual(publicAliasData, aliasData, 'public alias artifact must match source');
 assert.deepEqual(packagedAliasData, aliasData, 'packaged MCP alias artifact must match source');
 assert.deepEqual(aliasData.locales, expectedLocales, 'alias locales must match supported MCP locales');
-assert.equal(aliasData.aliases.length, expectedLocales.length * 18, 'alias artifact must include 18 categories per locale');
+assert.equal(
+  aliasData.aliases.filter((alias) => alias.alias_type === 'category').length,
+  expectedLocales.length * 18,
+  'alias artifact must include 18 categories per supported locale',
+);
+assert.deepEqual(
+  aliasData.aliases.filter((alias) => alias.alias_type === 'reviewed_alias'),
+  reviewedAliasOverrides.records,
+  'generated aliases must include every reviewed override without changing it',
+);
+assert.deepEqual(aliasData.alias_types, ['category', 'reviewed_alias']);
 assert.deepEqual(SUPPORTED_MCP_OUTPUT_LOCALES, expectedLocales, 'MCP output locale helper must expose every supported locale');
 assert.deepEqual(Object.keys(mcpOutputLocales.locales), expectedLocales, 'MCP output locale artifact must include every supported locale');
 
@@ -158,8 +170,14 @@ const synonymKeys = new Set(Object.keys(synonyms));
 for (const alias of aliasData.aliases) {
   assert.equal(alias.gate, 'auto_accept', `${alias.locale}:${alias.category} must be auto_accept`);
   assert.ok(alias.term, `${alias.locale}:${alias.category} must include a term`);
-  for (const concept of alias.maps_to || []) {
-    assert.ok(synonymKeys.has(concept), `${alias.locale}:${alias.category} maps to unknown concept ${concept}`);
+  assert.ok(Array.isArray(alias.maps_to) && alias.maps_to.length > 0, `${alias.locale}:${alias.term} must map to search terms`);
+  if (alias.alias_type === 'category') {
+    for (const concept of alias.maps_to || []) {
+      assert.ok(synonymKeys.has(concept), `${alias.locale}:${alias.category} maps to unknown concept ${concept}`);
+    }
+  } else {
+    assert.equal(alias.alias_type, 'reviewed_alias');
+    assert.ok(['global', 'locale'].includes(alias.scope), `${alias.locale}:${alias.term} must declare its scope`);
   }
 }
 

@@ -14,7 +14,8 @@
     "th"
   ],
   "alias_types": [
-    "category"
+    "category",
+    "reviewed_alias"
   ],
   "aliases": [
     {
@@ -4300,6 +4301,96 @@
         "feed",
         "community",
         "invite"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "es",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "almacén",
+      "variants": [
+        "almacen"
+      ],
+      "maps_to": [
+        "warehouse",
+        "storage",
+        "inventory"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "es",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "tuerca",
+      "variants": [],
+      "maps_to": [
+        "nut",
+        "bolt",
+        "hardware"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "es",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "toalla",
+      "variants": [],
+      "maps_to": [
+        "towel",
+        "bath"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "es",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "llave fija",
+      "variants": [],
+      "maps_to": [
+        "wrench",
+        "tool"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "zh-Hans",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "资源收藏",
+      "variants": [],
+      "maps_to": [
+        "bookmark",
+        "archive",
+        "favorite"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "zh-Hans",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "微信",
+      "variants": [],
+      "maps_to": [
+        "wechat"
+      ],
+      "gate": "auto_accept"
+    },
+    {
+      "locale": "en",
+      "scope": "global",
+      "alias_type": "reviewed_alias",
+      "term": "airflow",
+      "variants": [],
+      "maps_to": [
+        "air flow",
+        "wind",
+        "air vent",
+        "fan"
       ],
       "gate": "auto_accept"
     }
