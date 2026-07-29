@@ -4102,5 +4102,283 @@
       "visual_inspection"
     ],
     "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:toothbrush",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "toothbrush",
+    "label": "Toothbrush",
+    "purpose": "Represent tooth brushing, dental hygiene, or a daily grooming routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "toothbrush",
+      "bristles",
+      "handle",
+      "dental",
+      "hygiene",
+      "brushing",
+      "teeth"
+    ],
+    "use_when": "Use for dental care reminders, hygiene checklists, morning and bedtime routines, and travel or packing lists.",
+    "avoid_when": "Do not use for painting or art tools; a bristled head on a handle can read as a paintbrush, but this has a small flat head with short dense bristles.",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A diagonal toothbrush with a slim head, four bristle bars, and a wavy strip of toothpaste resting on the bristles.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "tooth brush",
+      "brush teeth",
+      "dental brush",
+      "oral hygiene",
+      "toothbrushing"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "oral-care",
+      "hygiene"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:dental-floss",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "dental-floss",
+    "label": "Dental Floss",
+    "purpose": "Represent flossing and cleaning between teeth as part of an oral care routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "floss",
+      "container",
+      "string",
+      "oral care",
+      "hygiene",
+      "teeth",
+      "dental"
+    ],
+    "use_when": "Use for flossing reminders, oral hygiene checklists, dental care instructions, and bathroom or travel kit lists.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A floss container with a lid seam, a tooth shape on the front, and a strand of floss curling out of the top.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "floss",
+      "flossing",
+      "floss pick",
+      "interdental cleaner",
+      "dental thread"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "oral-care",
+      "hygiene"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:shampoo",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "shampoo",
+    "label": "Shampoo",
+    "purpose": "Represent hair washing, shampoo, or a shower and hair care routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "shampoo",
+      "bottle",
+      "pump",
+      "hair wash",
+      "hair care",
+      "shower",
+      "toiletries"
+    ],
+    "use_when": "Use for hair care routines, shower checklists, toiletry and travel kit lists, and bathroom product listings.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A tall pump bottle with a rounded shoulder, a pump nozzle on top, and a horizontal label band.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "hair wash",
+      "shampoo bottle",
+      "hair cleanser",
+      "conditioner",
+      "pump bottle"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "hair-care",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:lotion",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "lotion",
+    "label": "Lotion",
+    "purpose": "Represent moisturizer, skin lotion, or a skincare routine.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "lotion",
+      "pump bottle",
+      "moisturizer",
+      "cream",
+      "skincare",
+      "hydration",
+      "toiletries"
+    ],
+    "use_when": "Use for skincare routines, moisturizing reminders, toiletry and travel kit lists, and bathroom or vanity checklists.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A squat pump bottle with a wide base, a short pump nozzle on top, and a horizontal label band.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "moisturizer",
+      "hand cream",
+      "body lotion",
+      "face cream",
+      "skincare bottle"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "skincare",
+      "grooming"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:sunscreen",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "sunscreen",
+    "label": "Sunscreen",
+    "purpose": "Represent sun protection, SPF products, or summer skincare.",
+    "category": "personal_care",
+    "semantic_tags": [
+      "sunscreen",
+      "tube",
+      "sun mark",
+      "spf",
+      "sun protection",
+      "skincare",
+      "summer"
+    ],
+    "use_when": "Use for sun protection reminders, summer packing lists, beach and outdoor checklists, and skincare routines.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "A sunscreen tube standing on its cap, with a crimped top edge and a sun mark of a disc ringed by dots on the body.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "sunblock",
+      "spf cream",
+      "sun cream",
+      "suncare",
+      "sun lotion"
+    ],
+    "ai_category": "personal-care",
+    "ai_category_label": "Personal Care",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "personal-care",
+      "skincare",
+      "sun-protection"
+    ],
+    "job_category": "personal-care",
+    "secondary_categories": [
+      "everyday-objects",
+      "health-body"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
   }
 ]
