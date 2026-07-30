@@ -67,6 +67,8 @@ Every request must belong to exactly one displayed outcome component. For each s
 
 `typical_result_count` is the median of the recorded result counts in the summary row. Median is used because repeated client retries can change the requested limit and create extreme high or low values.
 
+`requested_limit_distribution` shows how many calls requested each recorded limit. For example, `1 requested: 13 calls | 5 requested: 1 call` explains why a median result count of one can still represent successful calls.
+
 The file also identifies the result unit:
 
 - `icon` for direct search results
@@ -107,6 +109,7 @@ Columns:
 - `not_found_count`
 - `error_count`
 - `typical_result_count`
+- `requested_limit_distribution`
 - `result_unit`
 - `country_codes`
 - `channel`

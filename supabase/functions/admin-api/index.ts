@@ -4083,6 +4083,11 @@ function recordQueryResultCount(entry: Record<string, unknown>, resultCount: num
   frequency.set(resultCount, Number(frequency.get(resultCount) || 0) + 1);
 }
 
+function recordQueryRequestedLimit(entry: Record<string, unknown>, requestedLimit: number) {
+  const frequency = entry.requested_limit_frequency as Map<number, number>;
+  frequency.set(requestedLimit, Number(frequency.get(requestedLimit) || 0) + 1);
+}
+
 function medianQueryResultCount(frequency: Map<number, number>) {
   const ordered = [...frequency.entries()]
     .sort(([left], [right]) => left - right);
@@ -4155,6 +4160,7 @@ function getQueryWorkbenchEntry(
     total_result_count: 0,
     result_samples: 0,
     result_count_frequency: new Map<number, number>(),
+    requested_limit_frequency: new Map<number, number>(),
     result_units: new Set<string>(),
     minimum_result_count: null,
     maximum_result_count: null,
@@ -4353,6 +4359,10 @@ function buildQueryWorkbenchRows(
 
     if (signalType === 'search_attempt') {
       entry.attempt_count = Number(entry.attempt_count || 0) + 1;
+      const requestedLimit = optionalNonnegativeInteger(row.requested_limit);
+      if (requestedLimit !== null && requestedLimit > 0) {
+        recordQueryRequestedLimit(entry, requestedLimit);
+      }
       const searcher = (entry.searcher_details as Map<string, Record<string, unknown>>)
         .get(groupedSearcherKey);
       if (searcher) searcher.searches = Number(searcher.searches || 0) + 1;
@@ -4491,6 +4501,11 @@ function buildQueryWorkbenchRows(
       minimum_result_count: typeof entry.minimum_result_count === 'number' ? entry.minimum_result_count : null,
       maximum_result_count: typeof entry.maximum_result_count === 'number' ? entry.maximum_result_count : null,
       result_sample_count: resultSamples,
+      requested_limit_distribution: [
+        ...(entry.requested_limit_frequency as Map<number, number>).entries(),
+      ]
+        .sort(([left], [right]) => left - right)
+        .map(([limit, count]) => ({ limit, count })),
       result_units: [...(entry.result_units as Set<string>)].sort((a, b) => a.localeCompare(b)),
       replacement_count: Number(entry.replacement_count || 0),
       unique_replacements: (entry.unique_replacements as Set<string>).size,

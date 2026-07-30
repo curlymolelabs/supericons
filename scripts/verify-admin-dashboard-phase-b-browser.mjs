@@ -244,6 +244,7 @@ const queryRows = [
     result_count_kind: 'range_across_attempts',
     result_count_reason: 'Results ranged from 2 to 8 across 3 searches',
     result_unit: 'icon',
+    requested_limit_distribution: [{ limit: 10, count: 4 }],
     issue_type: 'successful',
     outcome_label: 'Success',
     attempt_count: 4,
@@ -384,6 +385,11 @@ const searchHistoryRows = queryRows.flatMap((row, rowIndex) => (
         : row.query === 'mixed aggregate'
           ? eventIndex === 0 ? 0 : 3
           : row.typical_result_count ?? row.result_count,
+      requested_limit: row.query === 'varying results'
+        ? 10
+        : row.query === 'healthy aggregate'
+          ? 3
+          : null,
       result_unit: row.result_unit,
       tools: row.tools || [],
     };
@@ -1069,7 +1075,7 @@ try {
   ok(await page.locator('.panel[data-row-key="worklist"]').isVisible(), 'Gaps is not visible on the Searches page.');
   ok(await page.locator('.panel[data-row-key="iconRequests"]').isVisible(), 'User requests is not visible on the Searches page.');
   await assertPanelActionsStayOnOneLine(page, '#section-intelligence:not([hidden])');
-  ok(await page.locator('[data-row-limit]').count() === 7, 'Every visible long list must have a row display control.');
+  ok(await page.locator('[data-row-limit]').count() === 8, 'Every visible long list must have a row display control.');
   ok(
     await page.locator('[data-panel-toggle]').count()
       === await page.locator('.panel:not([data-panel-collapse="false"])').count(),
@@ -1079,7 +1085,7 @@ try {
     (selects) => selects.map((select) => select.value),
   );
   ok(initialRowLimits.every((value) => value === '25'), 'Long lists must show 25 rows by default.');
-  for (const key of ['topList', 'activity', 'queries', 'worklist', 'iconRequests', 'registeredUsers', 'clients']) {
+  for (const key of ['topList', 'activity', 'queries', 'worklist', 'iconRequests', 'localAttribution', 'registeredUsers', 'clients']) {
     ok(
       await page.locator(`.panel[data-row-key="${key}"] [data-row-limit="${key}"]`).count() === 1,
       `The ${key} row control is attached to the wrong panel.`,
@@ -1366,6 +1372,10 @@ try {
   for (const result of ['2 icons', '4 icons', '6 icons', '8 icons']) {
     ok(varyingResultText.some((text) => text.includes(result)), `Search history omits the recorded ${result} event.`);
   }
+  ok(
+    varyingResultText.every((text) => text.includes('of 10 requested')),
+    'Search history hides the requested limit for recorded search events.',
+  );
   ok(await queryPanel.locator('[data-searcher-details]').count() === 0, 'Search history still has unnecessary row-detail controls.');
   const lookupFilterRequest = page.waitForRequest((request) => (
     request.url().includes('/functions/v1/admin-api/v2/search')
@@ -1452,11 +1462,15 @@ try {
     'The Search summary filename does not identify its data, period, and generation time.',
   );
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
-  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 20, 'The Search summary CSV is not the approved 20-column schema.');
+  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 21, 'The Search summary CSV is not the approved 21-column schema.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
-  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"result_unit"', '"country_codes"', '"interface_locales"', '"channel"', '"last_seen_utc"']) {
+  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"requested_limit_distribution"', '"result_unit"', '"country_codes"', '"interface_locales"', '"channel"', '"last_seen_utc"']) {
     ok(queryExportText.includes(column), `The Search summary CSV omits ${column}.`);
   }
+  ok(
+    queryExportText.includes('"10 requested: 4 calls"'),
+    'The Search summary CSV omits its recorded requested-limit distribution.',
+  );
   for (const column of ['"searcher_identifier"', '"searcher_kind"', '"job_category"', '"row_grain"', '"export_type"']) {
     ok(!queryExportText.includes(column), `The Search summary CSV still contains unnecessary ${column}.`);
   }
@@ -1512,7 +1526,7 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '4.1', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '4.2', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
@@ -1530,16 +1544,16 @@ try {
   ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
   ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
-  ok(auditPayload.csv_schemas.search_summary.length === 20, 'The Audit bundle has the wrong Search summary schema.');
+  ok(auditPayload.csv_schemas.search_summary.length === 21, 'The Audit bundle has the wrong Search summary schema.');
   ok(auditPayload.csv_schemas.request_log.length === 33, 'The Audit bundle has the wrong Request log schema.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');
-  const pagedEventRequests = requests.filter((request) => (
-    request.path === '/v2/search/events'
-    && Number(new URLSearchParams(request.search).get('page') || 1) > 1
+  const eventExportRequests = requests.filter((request) => request.path === '/v2/search/events');
+  ok(eventExportRequests.length > 0, 'The event export did not request its complete event source.');
+  const continuedEventExportRequests = eventExportRequests.filter((request) => (
+    Number(new URLSearchParams(request.search).get('page') || 1) > 1
   ));
-  ok(pagedEventRequests.length > 0, 'The event export did not request a later page.');
-  ok(pagedEventRequests.every((request) => (
+  ok(continuedEventExportRequests.every((request) => (
     new URLSearchParams(request.search).get('snapshot_id')
       === `event-snapshot-${new URLSearchParams(request.search).get('event_scope') || 'primary'}`
   )), 'The event export did not keep one stable API snapshot across pages.');

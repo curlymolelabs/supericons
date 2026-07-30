@@ -666,6 +666,10 @@ const queryRows = [
     maximum_result_count: 8,
     median_result_count: 4,
     result_units: ['icon'],
+    requested_limit_distribution: [
+      { limit: 5, count: 1 },
+      { limit: 1, count: 3 },
+    ],
   }]));
   assert.equal(grouped.result_count, null);
   assert.equal(grouped.result_count_min, 2);
@@ -675,6 +679,10 @@ const queryRows = [
   assert.equal(grouped.activity_label, '4 searches');
   assert.equal(grouped.estimated_client_id_count, 2);
   assert.equal(grouped.typical_result_count, 4);
+  assert.deepEqual(grouped.requested_limit_distribution, [
+    { limit: 1, count: 3 },
+    { limit: 5, count: 1 },
+  ]);
   assert.deepEqual(grouped.channels, ['hosted_mcp']);
   assert.deepEqual(grouped.countries, ['SG']);
   assert.equal(grouped.job_category, 'navigation');

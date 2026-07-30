@@ -168,7 +168,7 @@ function assertDownloadContract(
   assert.ok(downloads.request_log.parsed.headers.includes('geo_source'));
 
   const audit = downloads.audit_bundle.parsed;
-  assert.equal(audit.export_schema_version, '4.1');
+  assert.equal(audit.export_schema_version, '4.2');
   assert.equal(audit.export_type, 'audit_bundle');
   assert.equal(audit.filters?.include_test, includeTest);
   assert.ok(

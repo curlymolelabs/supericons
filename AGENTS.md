@@ -64,6 +64,12 @@ The owner reads visually and decides quickly. Volume of prose slows decisions do
 - Completion claims ("fixed", "done", "verified", "passed") must state their proof basis in the same deliverable. No proof, no claim.
 - For public-facing outputs, verify the final exported artifacts, not only the source that should generate them.
 
+## Live verification traffic
+
+- Agent-generated production Web and Hosted MCP search checks must use a verifier that attaches a valid signed controlled-run marker.
+- Agent-generated Local MCP checks must use the established controlled-run cohort.
+- If a client cannot attach the required marker, do not use that client for production verification. Use a scripted verifier or a local or preview target instead.
+
 ## Owner involvement and delegated judgment
 
 - The agent owns the judgment about when to involve the owner. Do not make owner approval a routine workflow step.

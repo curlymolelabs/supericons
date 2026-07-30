@@ -48,7 +48,7 @@ if (menuItems.length !== 2) {
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '4.1'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.2'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
@@ -59,6 +59,7 @@ if (menuItems.length !== 2) {
   'geo_source',
   'distinct_searcher_ids',
   'typical_result_count',
+  'requested_limit_distribution',
   'returned_icon_refs',
   'success_count',
   'lookup_not_found_count',
@@ -111,6 +112,8 @@ if (menuItems.length !== 2) {
   'DASHBOARD_V2_RECONCILIATION_GRACE_SECONDS',
   'source_reconciliation',
   'explained_unlinked_gateway_diagnostic',
+  'requested_limit_frequency',
+  'recordQueryRequestedLimit',
   'diagnostics_kept_out_of_product_rows',
 ].forEach((value) => requireText(api, value, 'Search history API'));
 

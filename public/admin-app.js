@@ -883,7 +883,12 @@ function queryEventResultCell(row = {}) {
   if (row.result_unit === 'match' && number(row.result_count) === 0) {
     return 'Icon not found';
   }
-  return escapeHtml(countWithUnit(row.result_count, row.result_unit));
+  const result = countWithUnit(row.result_count, row.result_unit);
+  const requestedLimit = Number(row.requested_limit);
+  if (Number.isInteger(requestedLimit) && requestedLimit > 0 && row.result_unit !== 'match') {
+    return `<span title="This call requested up to ${escapeHtml(formatNumber(requestedLimit))}.">${escapeHtml(result)} of ${escapeHtml(formatNumber(requestedLimit))} requested</span>`;
+  }
+  return escapeHtml(result);
 }
 
 function queryCountryCell(row = {}) {
@@ -1108,7 +1113,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '4.1';
+const SEARCH_EXPORT_SCHEMA_VERSION = '4.2';
 
 function searchExportPeriod() {
   const labels = {
@@ -1167,6 +1172,20 @@ function searchExportFilters() {
 function searchSummaryCsvRow(row = {}) {
   const requestCount = number(row.activity_count ?? row.attempt_count);
   const lookupRow = String(row.query_origin || row.origin || '').toLowerCase() === 'icon_lookup';
+  const requestedLimitDistribution = normalizeList(row.requested_limit_distribution)
+    .map((entry) => ({
+      limit: Number(entry?.limit),
+      count: Number(entry?.count),
+    }))
+    .filter((entry) => (
+      Number.isInteger(entry.limit)
+      && entry.limit > 0
+      && Number.isInteger(entry.count)
+      && entry.count > 0
+    ))
+    .sort((left, right) => left.limit - right.limit)
+    .map((entry) => `${entry.limit} requested: ${entry.count} ${entry.count === 1 ? 'call' : 'calls'}`)
+    .join(' | ');
   return {
     query: row.query,
     library_filter: row.library_filter,
@@ -1182,6 +1201,7 @@ function searchSummaryCsvRow(row = {}) {
     not_found_count: number(row.lookup_not_found_count),
     error_count: number(row.error_attempt_count) + number(row.lookup_error_count),
     typical_result_count: row.typical_result_count,
+    requested_limit_distribution: requestedLimitDistribution,
     result_unit: row.result_unit,
     country_codes: normalizeList(row.countries).join('|'),
     interface_locales: normalizeList(row.interface_locales).join('|'),
@@ -3179,6 +3199,7 @@ async function exportData(key) {
           summary_requests: 'The top-level tool calls represented by each Search summary row.',
           low_count: 'All low-result requests, including approximate low results from older or local clients.',
           typical_result_count: 'The median recorded result count. It is blank when a row mixes result units or has no recorded result count.',
+          requested_limit_distribution: 'Shows how many calls requested each result limit, when that value was recorded.',
           distinct_searcher_ids: 'Estimated client IDs, not people. One user may produce several IDs, and one ID may represent shared infrastructure.',
           request_log_grain: 'One top-level MCP tool call per row.',
           root_request_identifier: 'Legacy request-grouping identifier retained only for investigation. It may collide and must not be treated as a session ID.',

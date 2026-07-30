@@ -46,6 +46,16 @@ assert.match(
 );
 assert.match(
   queryExplorerRenderer,
+  /queryEventResultCell\(row\)/,
+  'Search history must use the result renderer that shows the requested limit when recorded.',
+);
+assert.match(
+  app,
+  /of \$\{escapeHtml\(formatNumber\(requestedLimit\)\)\} requested/,
+  'Search history must explain when a small result count filled the requested limit.',
+);
+assert.match(
+  queryExplorerRenderer,
   /\{\s*label:\s*'Time'/,
   'Search history must show when each search event was recorded.',
 );
