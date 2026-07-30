@@ -326,3 +326,30 @@ Stop and report if:
 ## Completion standard
 
 This work is complete only when the exact query and its reviewed variants return useful, honest results across the intended surfaces, existing search quality remains intact, and the evidence identifies both the improvement and every intentional behavior change.
+
+## Post-release traffic attribution boundary
+
+A later source audit found that the recurring United States traffic is a real synthetic Hosted MCP loop, not dashboard duplication.
+
+The recurring pattern:
+
+- opens a fresh session for each run
+- calls `search_icons` with RPC ID 1, strict Lucide, and limit 1
+- calls `get_icon` for `lucide:list-check` with RPC ID 2
+- reuses the same anonymous and user-agent hashes
+- has no recorded API key
+- records `client_family` as `unknown`
+- continues at roughly five-minute intervals
+
+The export `supericons-audit-bundle-24h-20260730T052918Z.json` contains 14 exact-query Hosted MCP rows with 14 unique event identities. Eleven limit-1 rows share the same estimated client identity and return `lucide:list-check`. Available local verification logs contain only one MCP call for this phrase, using limit 5. They do not contain the recurring limit-1 loop.
+
+These facts support automated traffic. They do not identify the operator or vendor. Any specific vendor attribution remains unverified.
+
+Operational boundary:
+
+- keep the traffic classified as `unclassified_live`
+- do not relabel it as controlled traffic
+- do not block it
+- do not change Search v2 because of this traffic pattern
+- keep showing the requested limit beside the returned count
+- require signed controlled-run markers for agent-generated production verification
