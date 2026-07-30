@@ -48,7 +48,7 @@ if (menuItems.length !== 2) {
 ].forEach((value) => forbidText(html, value, 'Search download UI'));
 
 [
-  "SEARCH_EXPORT_SCHEMA_VERSION = '4.2'",
+  "SEARCH_EXPORT_SCHEMA_VERSION = '4.3'",
   "'supericons-search-summary'",
   "'supericons-request-log'",
   "'supericons-audit-bundle'",
@@ -62,6 +62,7 @@ if (menuItems.length !== 2) {
   'requested_limit_distribution',
   'returned_icon_refs',
   'success_count',
+  'clarification_count',
   'lookup_not_found_count',
   'summary_rows_have_requests',
   'summary_request_count_matches_primary_events',
@@ -128,6 +129,14 @@ forbidText(
   'const historyEvidenceRows = historyTelemetry?.rows || dataRows.telemetry_rows',
   'Search history API',
 );
+const identityTelemetryStart = api.indexOf('async function fetchDashboardV2IdentityTelemetry');
+const legacyIdentityTelemetryStart = api.indexOf('  const auditSelect', identityTelemetryStart);
+const finalIdentityTelemetryBlock = identityTelemetryStart >= 0 && legacyIdentityTelemetryStart > identityTelemetryStart
+  ? api.slice(identityTelemetryStart, legacyIdentityTelemetryStart)
+  : '';
+if (!finalIdentityTelemetryBlock.includes("['search_outcome', 'tool_call']")) {
+  throw new Error('Source reconciliation does not load MCP tool calls needed to link exact lookup diagnostics.');
+}
 
 for (const [path, source] of [
   ['admin.html', html],

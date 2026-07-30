@@ -1113,7 +1113,7 @@ function plainExportRow(row = {}) {
   ]));
 }
 
-const SEARCH_EXPORT_SCHEMA_VERSION = '4.2';
+const SEARCH_EXPORT_SCHEMA_VERSION = '4.3';
 
 function searchExportPeriod() {
   const labels = {
@@ -1200,6 +1200,7 @@ function searchSummaryCsvRow(row = {}) {
     low_count: number(row.low_attempt_count),
     not_found_count: number(row.lookup_not_found_count),
     error_count: number(row.error_attempt_count) + number(row.lookup_error_count),
+    clarification_count: number(row.clarification_attempt_count),
     typical_result_count: row.typical_result_count,
     requested_limit_distribution: requestedLimitDistribution,
     result_unit: row.result_unit,
@@ -3000,8 +3001,10 @@ function mergeSearchEventExports(exports, eventScope) {
   const events = exports
     .flatMap((entry) => normalizeList(entry.events))
     .sort((left, right) => (
-      String(right.created_at || '').localeCompare(String(left.created_at || ''))
-      || String(right.id || '').localeCompare(String(left.id || ''))
+      String(right.recorded_at || right.created_at || '')
+        .localeCompare(String(left.recorded_at || left.created_at || ''))
+      || String(right.event_identifier || right.id || '')
+        .localeCompare(String(left.event_identifier || left.id || ''))
     ));
   const sourceReconciliation = mergeSourceReconciliation(exports);
   return {

@@ -108,6 +108,7 @@ Columns:
 - `low_count`
 - `not_found_count`
 - `error_count`
+- `clarification_count`
 - `typical_result_count`
 - `requested_limit_distribution`
 - `result_unit`
@@ -192,7 +193,7 @@ The file keeps these data sets separate:
 
 This separation prevents diagnostic rows from inflating user activity while preserving supporting detail for investigation.
 
-The bundle includes export schema version `4.0`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
+The bundle includes export schema version `4.3`, selected period and filters, plain-language content descriptions, summary counts, and these integrity checks:
 
 - every summary row has at least one request
 - summary request totals match groupable primary events

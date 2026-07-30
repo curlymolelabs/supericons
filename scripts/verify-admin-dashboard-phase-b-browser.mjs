@@ -1462,9 +1462,9 @@ try {
     'The Search summary filename does not identify its data, period, and generation time.',
   );
   ok(queryExportText.split(/\r?\n/).filter(Boolean).length === queryRows.length + 1, 'The query export contains only the visible page.');
-  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 21, 'The Search summary CSV is not the approved 21-column schema.');
+  ok(queryExportText.split(/\r?\n/, 1)[0].split(',').length === 22, 'The Search summary CSV is not the approved 22-column schema.');
   ok(queryExportText.includes("\"'=SUM(1,1)\""), 'The query CSV leaves a spreadsheet formula active.');
-  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"typical_result_count"', '"requested_limit_distribution"', '"result_unit"', '"country_codes"', '"interface_locales"', '"channel"', '"last_seen_utc"']) {
+  for (const column of ['"query"', '"library_filter"', '"query_origin"', '"searches"', '"lookups"', '"distinct_searcher_ids"', '"outcome"', '"success_count"', '"clarification_count"', '"typical_result_count"', '"requested_limit_distribution"', '"result_unit"', '"country_codes"', '"interface_locales"', '"channel"', '"last_seen_utc"']) {
     ok(queryExportText.includes(column), `The Search summary CSV omits ${column}.`);
   }
   ok(
@@ -1526,7 +1526,7 @@ try {
     /^supericons-audit-bundle-24h-\d{8}T\d{6}Z\.json$/.test(auditJson.suggestedFilename()),
     'The Audit bundle filename does not identify its data, period, and generation time.',
   );
-  ok(auditPayload.export_schema_version === '4.2', 'The audit JSON does not state its schema version.');
+  ok(auditPayload.export_schema_version === '4.3', 'The audit JSON does not state its schema version.');
   ok(auditPayload.export_type === 'audit_bundle', 'The audit JSON does not identify its export type.');
   ok(auditPayload.search_summary.length === queryRows.length, 'The audit JSON contains only the visible table page.');
   ok(auditPayload.request_log.length === primaryEventRows.length, 'The audit JSON request count is wrong.');
@@ -1544,7 +1544,7 @@ try {
   ok(Number.isInteger(auditPayload.integrity_checks.warnings.suspicious_query_text_patterns), 'The audit JSON omits query-text review warnings.');
   ok(Boolean(auditPayload.contents.search_summary), 'The audit JSON omits the Search summary definition.');
   ok(Boolean(auditPayload.contents.request_log), 'The audit JSON omits the Request log definition.');
-  ok(auditPayload.csv_schemas.search_summary.length === 21, 'The Audit bundle has the wrong Search summary schema.');
+  ok(auditPayload.csv_schemas.search_summary.length === 22, 'The Audit bundle has the wrong Search summary schema.');
   ok(auditPayload.csv_schemas.request_log.length === 33, 'The Audit bundle has the wrong Request log schema.');
   ok(Boolean(auditPayload.field_coverage.returned_icon_refs), 'The audit JSON omits field coverage.');
   ok(Boolean(auditPayload.definitions.grain), 'The audit JSON omits metric definitions.');

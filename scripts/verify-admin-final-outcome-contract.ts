@@ -302,6 +302,46 @@ Deno.test('reconciles final outcomes and keeps direct gateway work diagnostic on
   );
 });
 
+Deno.test('uses MCP tool calls to link lookup diagnostics without creating product rows', () => {
+  const episodeId = '00000000-0000-4000-8000-000000000024';
+  const reconciliation = buildDashboardV2SourceReconciliation({
+    auditRows: [{
+      id: 'search_request_audit:24',
+      source_row_id: '24',
+      source_table: 'search_request_audit',
+      signal_type: 'hosted_search_audit',
+      episode_id: episodeId,
+      channel: 'hosted_mcp',
+      tool_name: 'get_icon',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }] as never[],
+    usageRows: [{
+      id: 'mcp_usage_events:24',
+      source_row_id: '24',
+      source_table: 'mcp_usage_events',
+      event_type: 'tool_call',
+      event_id: episodeId,
+      episode_id: episodeId,
+      signal_type: 'mcp_call',
+      query_origin: 'icon_lookup',
+      channel: 'hosted_mcp',
+      tool_name: 'get_icon',
+      created_at: '2026-07-24T11:55:00.000Z',
+    }] as never[],
+    finalRows: [],
+    webDiagnosticRows: [],
+    dataCutoff: '2026-07-24T12:00:00.000Z',
+  });
+  assert(reconciliation.status === 'passed', 'An exact lookup diagnostic did not reconcile to its tool call.');
+  assert(reconciliation.audit_linkage_counts.episode_id === 1, 'The lookup episode identity was not used.');
+  assert(reconciliation.counts.relevant_usage_rows === 0, 'A lookup tool call entered search totals.');
+  assert(reconciliation.counts.product_rows_exported === 0, 'A lookup tool call became a product row.');
+  assert(
+    reconciliation.diagnostic_rows.every((row) => row.diagnostic_accounting_status === 'linked_diagnostic'),
+    'The lookup diagnostic was not marked as linked.',
+  );
+});
+
 Deno.test('fails source reconciliation for an old product identity with no exact outcome', () => {
   const reconciliation = buildDashboardV2SourceReconciliation({
     auditRows: [{

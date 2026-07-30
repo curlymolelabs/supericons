@@ -74,7 +74,10 @@ assert.deepEqual(
 context.exportFixtures = [
   {
     partition: { from: '2026-07-01', to: '2026-07-07' },
-    events: [{ id: 'first', created_at: '2026-07-02T00:00:00Z' }],
+    events: [{
+      event_identifier: 'first',
+      recorded_at: '2026-07-02T00:00:00Z',
+    }],
     events_complete: true,
     events_export_available: true,
     snapshot_id: 'snapshot-first',
@@ -105,7 +108,10 @@ context.exportFixtures = [
   },
   {
     partition: { from: '2026-07-08', to: '2026-07-08' },
-    events: [{ id: 'second', created_at: '2026-07-08T00:00:00Z' }],
+    events: [{
+      event_identifier: 'second',
+      recorded_at: '2026-07-08T00:00:00Z',
+    }],
     events_complete: true,
     events_export_available: true,
     snapshot_id: 'snapshot-second',
@@ -142,7 +148,10 @@ const merged = vm.runInContext(`
   mergeSearchEventExports(exportFixtures, 'audit');
 `, context);
 const result = JSON.parse(JSON.stringify(merged));
-assert.deepEqual(result.events.map((event) => event.id), ['second', 'first']);
+assert.deepEqual(
+  result.events.map((event) => event.event_identifier),
+  ['second', 'first'],
+);
 assert.deepEqual(result.event_counts, { top_level: 3, diagnostics: 7 });
 assert.deepEqual(result.field_coverage.country_code, {
   recorded: 2,
@@ -156,6 +165,25 @@ assert.equal(result.source_reconciliation.counts.unexplained_rows, 1);
 assert.equal(result.source_reconciliation.unexplained_breakdown.audit_by_channel.hosted_mcp, 1);
 assert.equal(result.meta.export_partition_count, 2);
 assert.equal(result.meta.generation_ms, 200);
+
+const clarificationSummary = JSON.parse(JSON.stringify(vm.runInContext(`
+  searchSummaryCsvRow({
+    query: 'choose an icon without assuming the label',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    tools: ['recommend_icons'],
+    activity_count: 1,
+    outcome_label: 'Clarification',
+    clarification_attempt_count: 1,
+    requested_limit_distribution: [{ limit: 1, count: 1 }],
+    countries: ['SG'],
+    channels: ['hosted_mcp'],
+    first_seen: '2026-07-21T16:13:54.777531Z',
+    last_seen: '2026-07-21T16:13:54.777531Z',
+  });
+`, context)));
+assert.equal(clarificationSummary.clarification_count, 1);
+assert.equal(clarificationSummary.requested_limit_distribution, '1 requested: 1 call');
 
 const apiSource = await readFile(
   new URL('../supabase/functions/admin-api/index.ts', import.meta.url),

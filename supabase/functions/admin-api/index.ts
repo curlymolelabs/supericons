@@ -2421,7 +2421,7 @@ async function fetchDashboardV2IdentityTelemetry(
         V2_MAX_IDENTITY_ROWS_PER_SOURCE + 1,
         filters.channel,
         false,
-        ['search_outcome'],
+        ['search_outcome', 'tool_call'],
       ),
       fetchFinalWebDiagnosticRows(adminClient, filters),
     ]);
