@@ -1,7 +1,7 @@
 # Search v2 assessment checklist recall release
 
 Date: 2026-07-30
-Status: Railway and website deployed and verified; npm staged for owner approval
+Status: released and verified on Railway, the website, and npm
 
 ## Release identity
 
@@ -59,12 +59,15 @@ The change does not include telemetry, database, admin, catalog, or unrelated us
 - Production MCP returned the same five reviewed Lucide checklist icons in the same order.
 - The live website index and changed search bundle are byte-identical to the frozen audited files.
 - A real browser search displayed the repaired checklist family and called the hosted search endpoint.
+- npm `latest` resolves to `0.4.26`.
+- The public npm archive is byte-identical to the audited staged archive at SHA-256 `afa7ad88232c53baea88313421eb508a2f1e1e48f7099935ad6a45a3535f9287`.
+- Public npm metadata reports 71 files, unpacked size 25,955,891 bytes, shasum `8863405b1c16695e30e623ad31fb9c309dbf182a`, and the audited integrity value.
 
 ## Production and rollback targets
 
-Railway and the website now serve the 0.4.26 release. npm remains on 0.4.25 until the owner approves the exact staged package.
+Railway, the website, and npm now serve the 0.4.26 release.
 
-- npm `latest`: `0.4.25`
+- npm `latest`: `0.4.26`
 - Railway deployment: `094b470a-e633-4f86-9ce6-19da91cc2a55`
 - Railway image digest: `sha256:26b71e38a3cb538eea9f3fb8b001a6871f8b38cfbae3b8d3e6005e27d4921e80`
 - Railway rollback deployment: `61fe6aa7-aa61-42ba-884d-466af9a92e6f`
@@ -76,6 +79,6 @@ Railway reports deployment `094b470a-e633-4f86-9ce6-19da91cc2a55` as successful.
 
 ## Release boundary
 
-The npm stage is private and requires owner approval before publication. Railway and website deployment used only the exact source and website bytes covered by focused artifact verification.
+The owner approved the exact npm stage. Railway, the website, and npm used only the exact source and website bytes covered by focused artifact verification.
 
 No rebuild or restage is allowed after approval. Any byte change requires a new hash and another exact-artifact check.
