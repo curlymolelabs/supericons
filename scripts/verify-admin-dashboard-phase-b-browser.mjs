@@ -1572,6 +1572,12 @@ try {
   ));
   await page.check('#autoRefresh');
   await autoRefreshRequest;
+  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  const visibleTabRefreshRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/overview')
+  ), { timeout: 2000 });
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await visibleTabRefreshRequest;
   await page.uncheck('#autoRefresh');
   await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
   const queryDownload = page.waitForEvent('download');
@@ -1777,6 +1783,9 @@ try {
   );
   await page.reload({ waitUntil: 'domcontentloaded' });
   ok(await page.locator('#adminSecretModal.open').count() === 1, 'Direct development mode persisted its secret across reload.');
+  await page.evaluate(() => {
+    document.querySelector('#autoRefresh').checked = true;
+  });
   ok(
     await page.evaluate(() => (
       window.sessionStorage.getItem('si_admin_secret') === null
@@ -1808,6 +1817,11 @@ try {
   await page.waitForFunction(() => Number.isFinite(window.__warmRenderAt), null, { polling: 20 });
   const warmMs = await page.evaluate(() => window.__warmRenderAt - window.__warmRenderStartedAt);
   ok(warmMs < 500, `Warm cached content took ${warmMs} ms to appear.`);
+  ok(await page.locator('#autoRefresh').isChecked(), 'The browser-restored auto-refresh checkmark was lost.');
+  const restoredAutoRefreshRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/overview')
+  ), { timeout: 2000 });
+  await restoredAutoRefreshRequest;
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   ok(overflow <= 1, `The dashboard has ${overflow}px of horizontal overflow.`);

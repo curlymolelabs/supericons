@@ -2787,6 +2787,11 @@ async function refreshDashboard({ force = false, includeAccounts = true, notify 
   if (force && notify && Object.keys(state.errors).length === 0) showToast('Production data refreshed.');
 }
 
+function runAutoRefresh() {
+  if (!state.autoRefreshEnabled || document.hidden || state.loading.size > 0) return;
+  refreshDashboard({ force: true, includeAccounts: false, notify: false });
+}
+
 function setAutoRefresh(enabled) {
   state.autoRefreshEnabled = enabled === true;
   if (state.autoRefreshTimer) {
@@ -2794,10 +2799,7 @@ function setAutoRefresh(enabled) {
     state.autoRefreshTimer = null;
   }
   if (!state.autoRefreshEnabled) return;
-  state.autoRefreshTimer = window.setInterval(() => {
-    if (document.hidden || state.loading.size > 0) return;
-    refreshDashboard({ force: true, includeAccounts: false, notify: false });
-  }, AUTO_REFRESH_MS);
+  state.autoRefreshTimer = window.setInterval(runAutoRefresh, AUTO_REFRESH_MS);
 }
 
 async function refreshListEndpoint(key) {
@@ -3655,6 +3657,7 @@ function initializeEvents() {
   $('autoRefresh')?.addEventListener('change', (event) => {
     setAutoRefresh(event.target.checked);
   });
+  document.addEventListener('visibilitychange', runAutoRefresh);
   $('adminSecretForm')?.addEventListener('submit', submitAdminSecret);
   $('adminSecretCancelBtn')?.addEventListener('click', cancelAdminSecret);
   $('adminSecretModal')?.addEventListener('keydown', (event) => {
@@ -3686,6 +3689,7 @@ async function initializeDashboard() {
   renderAll();
   try {
     await ensureAdminSecret();
+    setAutoRefresh($('autoRefresh')?.checked === true);
     await refreshDashboard();
   } catch (error) {
     setFreshness();
