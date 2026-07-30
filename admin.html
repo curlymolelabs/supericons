@@ -772,6 +772,11 @@
                 <div class="panel-subtitle" id="gapsSubtitle">Failed and weak searches that need a human decision.</div>
               </div>
               <div class="panel-actions">
+                <select class="filter-select" id="gapsIssueFilter" aria-label="Gaps outcome">
+                  <option value="all">All gaps</option>
+                  <option value="zero_result">Zero results</option>
+                  <option value="low_result">Low results</option>
+                </select>
                 <button class="small-button" data-export="gap-worklist-csv" type="button" title="Download all gaps for the selected filters">CSV</button>
               </div>
             </div>

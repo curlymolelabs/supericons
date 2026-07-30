@@ -1480,6 +1480,18 @@ const DASHBOARD_V2_SEARCH_SORTS: Record<string, DashboardV2SortDefinition> = {
   recorded_at: { type: 'date', value: (row) => row.recorded_at },
 };
 
+const DASHBOARD_V2_WORKLIST_SORTS: Record<string, DashboardV2SortDefinition> = {
+  query: { type: 'text', value: (row) => row.query },
+  issue: { type: 'text', value: (row) => row.issue_type },
+  channel: { type: 'text', value: (row) => row.channel },
+  locale: { type: 'text', value: (row) => row.locale },
+  country_code: { type: 'text', value: (row) => row.country_code },
+  result_count: { type: 'number', value: (row) => row.result_count },
+  searches: { type: 'number', value: (row) => row.activity_count },
+  last_seen: { type: 'date', value: (row) => row.last_seen },
+  review_status: { type: 'text', value: (row) => row.review_status },
+};
+
 const DASHBOARD_V2_CLIENT_SORTS: Record<string, DashboardV2SortDefinition> = {
   searcher: { type: 'text', value: (row) => row.client_key },
   plan: { type: 'text', value: (row) => row.plan },
@@ -3377,8 +3389,24 @@ async function buildDashboardV2SearchPayload(
   const issue = normalizeSearchQuery(url.searchParams.get('issue'));
   const page = parsePositiveInt(url.searchParams.get('page'), 1, 100000);
   const pageSize = parsePositiveInt(url.searchParams.get('page_size'), 50, 100);
+  const gapsPage = parsePositiveInt(url.searchParams.get('gaps_page'), 1, 100000);
+  const gapsPageSize = parsePositiveInt(url.searchParams.get('gaps_page_size'), 25, 1000);
+  const gapsIssue = String(url.searchParams.get('gaps_issue') || 'all').trim().toLowerCase();
+  if (!['all', 'zero_result', 'low_result'].includes(gapsIssue)) {
+    throw new Error('The Gaps issue filter is invalid.');
+  }
   const summaryView = String(url.searchParams.get('view') || '').toLowerCase() === 'summary';
   const sort = parseDashboardV2Sort(url, DASHBOARD_V2_SEARCH_SORTS);
+  const gapsSortUrl = new URL(url);
+  gapsSortUrl.searchParams.set(
+    'sort_by',
+    String(url.searchParams.get('gaps_sort_by') || 'last_seen'),
+  );
+  gapsSortUrl.searchParams.set(
+    'sort_direction',
+    String(url.searchParams.get('gaps_sort_direction') || 'desc'),
+  );
+  const gapsSort = parseDashboardV2Sort(gapsSortUrl, DASHBOARD_V2_WORKLIST_SORTS);
   const telemetrySettings = await fetchSearchTelemetrySettings(adminClient);
   const historyTelemetryPromise = filters.use_raw
     ? Promise.resolve(null)
@@ -3429,7 +3457,7 @@ async function buildDashboardV2SearchPayload(
   const filteredDemandRows = filterDashboardV2QueryRows(
     historySummaryRows,
     filters.q,
-    issue,
+    '',
   ) as Array<any>;
   const sortedSummaryRows = [...filteredHistorySummaryRows].sort((left, right) => (
     String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
@@ -3458,29 +3486,35 @@ async function buildDashboardV2SearchPayload(
   const start = (currentPage - 1) * pageSize;
   const queries = orderedHistoryRows.slice(start, start + pageSize);
   const historyTruncated = historyTelemetry?.truncated ?? dataRows.raw_truncated;
-  const worklist = compactDashboardV2QueryRows(
-    filteredDemandRows
-      .filter((row) => (
-        (
-          Number(row.true_zero_count || 0) > 0
-          || Number(row.low_result_count || 0) > 0
-        )
-        && row.review_status !== 'resolved'
-        && row.review_status !== 'ignore'
-      ))
-      .sort((left, right) => (
-        (
-          Number(right.true_zero_count || 0)
-          + Number(right.low_result_count || 0)
-        ) - (
-          Number(left.true_zero_count || 0)
-          + Number(left.low_result_count || 0)
-        )
-        || Number(right.estimated_unique_clients || 0) - Number(left.estimated_unique_clients || 0)
-        || String(right.last_seen || '').localeCompare(String(left.last_seen || ''))
-      ))
-      .slice(0, 100),
+  const worklistCandidates = compactDashboardV2QueryRows(
+    filteredDemandRows.filter((row) => (
+      (
+        Number(row.true_zero_count || 0) > 0
+        || Number(row.low_result_count || 0) > 0
+      )
+      && row.review_status !== 'resolved'
+      && row.review_status !== 'ignore'
+    )),
+  ).filter((row: Record<string, unknown>) => (
+    gapsIssue === 'all'
+    || (gapsIssue === 'zero_result' && Number(row.zero_attempt_count || 0) > 0)
+    || (
+      gapsIssue === 'low_result'
+      && (
+        Number(row.low_attempt_count || 0) > 0
+        || Number(row.approximate_low_attempt_count || 0) > 0
+      )
+    )
+  ));
+  const orderedWorklist = sortDashboardV2Rows(
+    worklistCandidates,
+    gapsSort,
+    DASHBOARD_V2_WORKLIST_SORTS,
   );
+  const worklistPageCount = Math.max(1, Math.ceil(orderedWorklist.length / gapsPageSize));
+  const currentWorklistPage = Math.min(gapsPage, worklistPageCount);
+  const worklistStart = (currentWorklistPage - 1) * gapsPageSize;
+  const worklist = orderedWorklist.slice(worklistStart, worklistStart + gapsPageSize);
   const worklistUnavailableReason = historyTruncated
     ? 'Complete Gaps details exceed the safe limit for this period. Choose a shorter date range.'
     : null;
@@ -3516,6 +3550,15 @@ async function buildDashboardV2SearchPayload(
     worklist: worklistUnavailableReason ? [] : worklist,
     worklist_available: !worklistUnavailableReason,
     worklist_unavailable_reason: worklistUnavailableReason,
+    worklist_pagination: {
+      page: currentWorklistPage,
+      page_size: gapsPageSize,
+      total: worklistUnavailableReason ? 0 : orderedWorklist.length,
+      page_count: worklistUnavailableReason ? 1 : worklistPageCount,
+      sort_by: gapsSort?.key || 'last_seen',
+      sort_direction: gapsSort?.direction || 'desc',
+      issue: gapsIssue,
+    },
     icon_requests: iconRequests,
     contact_submissions: contacts,
     coverage: buildFinalOutcomeCoverage(telemetrySettings, filters),

@@ -43,11 +43,15 @@ assert.ok(
 for (const label of [
   'Gaps',
   'Failed and weak searches that need a human decision.',
+  'All gaps',
+  'Zero results',
+  'Low results',
   'User requests',
   'What people asked us to add from the icon grid or sidebar.',
 ]) {
   assert.ok(html.includes(label), `admin.html is missing ${label}.`);
 }
+assert.ok(html.includes('id="gapsIssueFilter"'), 'Gaps is missing its issue filter.');
 for (const exportKey of ['gap-worklist-csv', 'icon-requests-csv']) {
   assert.ok(
     html.includes(`data-export="${exportKey}"`),
@@ -94,6 +98,29 @@ for (const action of [
 assert.ok(api.includes('filteredDemandRows'), 'Gaps does not use the v2 search payload.');
 assert.ok(api.includes('historyEvidenceRows'), 'Gaps does not use trusted final search rows.');
 assert.ok(api.includes('dataRows.query_reviews'), 'Gaps does not join human review actions.');
+for (const contract of [
+  "url.searchParams.get('gaps_issue')",
+  "url.searchParams.get('gaps_page')",
+  "url.searchParams.get('gaps_page_size')",
+  "url.searchParams.get('gaps_sort_by')",
+  'worklist_pagination',
+]) {
+  assert.ok(api.includes(contract), `Gaps API is missing ${contract}.`);
+}
+assert.ok(
+  api.includes('orderedWorklist.slice(worklistStart, worklistStart + gapsPageSize)'),
+  'Gaps does not paginate the complete ordered result set.',
+);
+for (const contract of [
+  "gapsIssue: 'all'",
+  "params.set('gaps_issue', state.gapsIssue)",
+  "params.set('gaps_page', String(currentPage('worklist')))",
+  "params.set('gaps_page_size', String(rowLimit('worklist')))",
+  'serverPagination: worklistPagination',
+  "SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'worklist', 'clients'])",
+]) {
+  assert.ok(frontend.includes(contract), `Gaps frontend is missing ${contract}.`);
+}
 assert.ok(frontend.includes("apiRequest('/v2/search/review'"), 'Gaps uses the wrong review endpoint.');
 assert.ok(rollback.includes('Cannot restore the old review action constraint'), 'Rollback does not protect stored actions.');
 

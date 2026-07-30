@@ -513,6 +513,70 @@ const eventRows = [
     diagnostic_linkage_tier: 'episode_id',
   },
 ];
+const worklistRows = [
+  {
+    query: 'missing brand',
+    library_filter: 'all',
+    query_origin: 'agent_query',
+    issue_type: 'zero_result',
+    outcome_label: 'Zero',
+    zero_attempt_count: 5,
+    low_attempt_count: 0,
+    distinct_clients: 4,
+    estimated_client_id_count: 4,
+    attempt_count: 5,
+    activity_count: 5,
+    channel: 'hosted_mcp',
+    channels: ['hosted_mcp'],
+    channel_available: true,
+    locale: 'zh-CN',
+    locales: ['zh-CN'],
+    locale_available: true,
+    country_code: 'SG',
+    countries: ['SG'],
+    country_available: true,
+    country_scope: 'selected_period',
+    result_count: 0,
+    typical_result_count: 0,
+    result_sample_count: 5,
+    result_count_available: true,
+    result_unit: 'icon',
+    last_seen: '2026-07-17T07:59:00Z',
+  },
+  ...Array.from({ length: 54 }, (_, index) => {
+    const zeroResult = index % 2 === 0;
+    const mixedResult = index === 0;
+    return {
+      query: `${zeroResult ? 'zero' : 'low'} gap ${index + 1}`,
+      library_filter: 'all',
+      query_origin: 'agent_query',
+      issue_type: mixedResult ? 'mixed_result' : zeroResult ? 'zero_result' : 'low_result',
+      outcome_label: mixedResult ? 'Mixed: 1 zero, 1 low' : zeroResult ? 'Zero' : 'Low',
+      zero_attempt_count: zeroResult ? 1 : 0,
+      low_attempt_count: mixedResult || !zeroResult ? 1 : 0,
+      distinct_clients: 1,
+      estimated_client_id_count: 1,
+      attempt_count: 1,
+      activity_count: 1,
+      channel: index % 3 === 0 ? 'web' : 'hosted_mcp',
+      channels: [index % 3 === 0 ? 'web' : 'hosted_mcp'],
+      channel_available: true,
+      locale: null,
+      locales: [],
+      locale_available: false,
+      country_code: 'US',
+      countries: ['US'],
+      country_available: true,
+      country_scope: 'selected_period',
+      result_count: zeroResult ? 0 : 1,
+      typical_result_count: zeroResult ? 0 : 1,
+      result_sample_count: 1,
+      result_count_available: true,
+      result_unit: 'icon',
+      last_seen: `2026-07-17T07:${String(58 - index).padStart(2, '0')}:00Z`,
+    };
+  }),
+];
 const clientRows = Array.from({ length: 55 }, (_, index) => ({
   visitor_kind: 'anonymous',
   client_label: `anon:client${index + 1}`,
@@ -677,6 +741,32 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         });
     const pageCount = Math.ceil(orderedQueryRows.length / pageSize);
     const start = (page - 1) * pageSize;
+    const gapsPage = Number(searchParams.get('gaps_page') || 1);
+    const gapsPageSize = Number(searchParams.get('gaps_page_size') || 25);
+    const gapsIssue = searchParams.get('gaps_issue') || 'all';
+    const gapsParams = new URLSearchParams();
+    if (searchParams.get('gaps_sort_by')) {
+      gapsParams.set('sort_by', searchParams.get('gaps_sort_by'));
+      gapsParams.set('sort_direction', searchParams.get('gaps_sort_direction') || 'desc');
+    }
+    const filteredWorklistRows = worklistRows.filter((row) => (
+      gapsIssue === 'all'
+      || (gapsIssue === 'zero_result' && Number(row.zero_attempt_count || 0) > 0)
+      || (gapsIssue === 'low_result' && Number(row.low_attempt_count || 0) > 0)
+    ));
+    const orderedWorklistRows = sortedMockRows(filteredWorklistRows, gapsParams, {
+      query: { field: 'query' },
+      issue: { field: 'issue_type' },
+      channel: { field: 'channel' },
+      locale: { field: 'locale' },
+      country_code: { field: 'country_code' },
+      result_count: { field: 'result_count', type: 'number' },
+      searches: { field: 'activity_count', type: 'number' },
+      last_seen: { field: 'last_seen' },
+      review_status: { field: 'review_status' },
+    });
+    const gapsPageCount = Math.ceil(orderedWorklistRows.length / gapsPageSize);
+    const gapsStart = (gapsPage - 1) * gapsPageSize;
     return {
       summary: {
         table_rows: searchHistoryRows.length,
@@ -699,32 +789,16 @@ function responseFor(path, searchParams = new URLSearchParams()) {
         sort_direction: searchParams.get('sort_direction'),
       },
       worklist_available: true,
-      worklist: [{
-        query: 'missing brand',
-        library_filter: 'all',
-        query_origin: 'agent_query',
-        issue_type: 'zero_result',
-        outcome_label: 'Zero',
-        distinct_clients: 4,
-        estimated_client_id_count: 4,
-        attempt_count: 5,
-        activity_count: 5,
-        channel: 'hosted_mcp',
-        channels: ['hosted_mcp'],
-        channel_available: true,
-        locale: 'zh-CN',
-        locales: ['zh-CN'],
-        locale_available: true,
-        country_code: 'SG',
-        countries: ['SG'],
-        country_available: true,
-        country_scope: 'selected_period',
-        result_count: 0,
-        typical_result_count: 0,
-        result_sample_count: 5,
-        result_count_available: true,
-        result_unit: 'icon',
-      }],
+      worklist: orderedWorklistRows.slice(gapsStart, gapsStart + gapsPageSize),
+      worklist_pagination: {
+        page: gapsPage,
+        page_size: gapsPageSize,
+        total: orderedWorklistRows.length,
+        page_count: gapsPageCount,
+        sort_by: searchParams.get('gaps_sort_by') || 'last_seen',
+        sort_direction: searchParams.get('gaps_sort_direction') || 'desc',
+        issue: gapsIssue,
+      },
       icon_requests: {
         available: true,
         status_available: true,
@@ -1195,6 +1269,54 @@ try {
   for (const expected of ['missing brand', 'Hosted MCP', 'zh-CN', 'SG', '0 icons', '5']) {
     ok(demandText.includes(expected), `Gaps did not show ${expected}.`);
   }
+  ok(
+    (await page.locator('#gapsSubtitle').innerText()).includes('55 failed or weak queries'),
+    'Gaps reports the current page size instead of the complete result count.',
+  );
+  ok(
+    await page.locator('[data-pagination="worklist"] [data-page-number="3"]').count() === 1,
+    'Gaps does not paginate beyond the first 50 rows.',
+  );
+  const zeroGapRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('gaps_issue') === 'zero_result'
+  ));
+  await page.selectOption('#gapsIssueFilter', 'zero_result');
+  await zeroGapRequest;
+  await page.waitForFunction(() => document.querySelector('#gapsSubtitle')?.textContent.includes('queries with zero results'));
+  ok(
+    (await page.locator('#gapsSubtitle').innerText()).includes('28 queries with zero results'),
+    'The Zero results filter reports the wrong complete count.',
+  );
+  ok(
+    await page.locator('#gapWorklist tbody tr').evaluateAll((rows) => rows.every((row) => (
+      row.innerText.includes('Zero') || row.innerText.includes('Mixed')
+    ))),
+    'The Zero results filter includes a non-zero gap.',
+  );
+  const lowGapRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('gaps_issue') === 'low_result'
+  ));
+  await page.selectOption('#gapsIssueFilter', 'low_result');
+  await lowGapRequest;
+  await page.waitForFunction(() => document.querySelector('#gapsSubtitle')?.textContent.includes('queries with low results'));
+  ok(
+    (await page.locator('#gapsSubtitle').innerText()).includes('28 queries with low results'),
+    'The Low results filter reports the wrong complete count.',
+  );
+  const lowGapIssueLabels = await page.locator('#gapWorklist tbody tr td:nth-child(2)').allInnerTexts();
+  ok(
+    lowGapIssueLabels.every((value) => value.includes('Low') || value.includes('Mixed')),
+    `The Low results filter includes a non-low gap: ${JSON.stringify(lowGapIssueLabels)}`,
+  );
+  const allGapRequest = page.waitForRequest((request) => (
+    request.url().includes('/functions/v1/admin-api/v2/search')
+    && new URL(request.url()).searchParams.get('gaps_issue') === 'all'
+  ));
+  await page.selectOption('#gapsIssueFilter', 'all');
+  await allGapRequest;
+  await page.waitForFunction(() => document.querySelector('#gapsSubtitle')?.textContent.includes('failed or weak queries'));
   ok(
     await page.locator('.panel[data-row-key="worklist"] [data-export="gap-worklist-csv"]').count() === 1,
     'Gaps is missing its CSV download.',

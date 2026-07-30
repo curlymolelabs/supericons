@@ -17,7 +17,7 @@ const AUTO_REFRESH_MS = Number(ADMIN_RUNTIME_CONFIG.autoRefreshMs) > 0
 const DEFAULT_ROW_LIMIT = 25;
 const ROW_LIMIT_OPTIONS = [25, 50, 100];
 const CHART_FONT_SIZE = 14;
-const SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'clients']);
+const SERVER_PAGINATED_LISTS = new Set(['activity', 'queries', 'worklist', 'clients']);
 const ICON_REQUEST_UI_SURFACES = new Set([
   'grid_empty_feedback',
   'grid_low_result_feedback',
@@ -76,6 +76,7 @@ const state = {
   searchIncludeTest: false,
   explorerQuery: '',
   explorerIssue: '',
+  gapsIssue: 'all',
   topList: 'searched',
   searchChartMode: 'venue',
   showRegisteredEmails: false,
@@ -101,7 +102,9 @@ const state = {
     registeredUsers: 1,
     clients: 1,
   },
-  sorts: {},
+  sorts: {
+    worklist: { key: 'last_seen', direction: 'desc' },
+  },
   data: {
     activity: null,
     overview: null,
@@ -607,6 +610,14 @@ function endpointPath(endpoint, { includeView = true } = {}) {
       params.set('sort_direction', sort.direction);
     }
     if (state.explorerIssue) params.set('issue', state.explorerIssue);
+    params.set('gaps_page', String(currentPage('worklist')));
+    params.set('gaps_page_size', String(rowLimit('worklist')));
+    params.set('gaps_issue', state.gapsIssue);
+    const gapsSort = state.sorts.worklist;
+    if (gapsSort?.key) {
+      params.set('gaps_sort_by', gapsSort.key);
+      params.set('gaps_sort_direction', gapsSort.direction);
+    }
   }
   if (endpoint === 'audience') {
     params.set('page', String(currentPage('clients')));
@@ -2000,9 +2011,16 @@ function renderWorklist() {
     return;
   }
   const demandRows = normalizeList(state.data.search?.worklist);
+  const worklistPagination = state.data.search?.worklist_pagination || null;
   if (subtitle) {
     const testScope = state.searchIncludeTest ? 'test traffic included' : 'test traffic excluded';
-    subtitle.textContent = `${formatNumber(demandRows.length)} failed or weak queries need review | ${testScope}`;
+    const total = number(worklistPagination?.total) || demandRows.length;
+    const countLabel = state.gapsIssue === 'zero_result'
+      ? `${formatNumber(total)} queries with zero results`
+      : state.gapsIssue === 'low_result'
+        ? `${formatNumber(total)} queries with low results`
+        : `${formatNumber(total)} failed or weak queries`;
+    subtitle.textContent = `${countLabel} need review | ${testScope}`;
   }
   element.innerHTML = sortedTable('worklist', [
     {
@@ -2045,7 +2063,10 @@ function renderWorklist() {
         </select>`;
       },
     },
-  ], demandRows, 'No failed or weak searches match these filters.');
+  ], demandRows, 'No failed or weak searches match these filters.', {
+    serverPagination: worklistPagination,
+    serverSorting: true,
+  });
 }
 
 function renderIconRequests() {
@@ -2780,7 +2801,7 @@ function setAutoRefresh(enabled) {
 }
 
 async function refreshListEndpoint(key) {
-  const endpoint = key === 'queries'
+  const endpoint = ['queries', 'worklist'].includes(key)
     ? 'search'
     : key === 'clients'
       ? 'audience'
@@ -2854,6 +2875,47 @@ async function fetchAllPages(endpoint, rowsPath, options = {}) {
         requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
       });
       return rowsPath(payload);
+    }));
+    rest.push(...batch);
+  }
+  return [firstRows, ...rest].flat();
+}
+
+async function fetchAllGaps() {
+  const pageSize = 1000;
+  const params = sharedParams({ forSearch: true });
+  params.set('page', '1');
+  params.set('page_size', '1');
+  params.set('gaps_page', '1');
+  params.set('gaps_page_size', String(pageSize));
+  params.set('gaps_issue', state.gapsIssue);
+  const sort = state.sorts.worklist;
+  if (sort?.key) {
+    params.set('gaps_sort_by', sort.key);
+    params.set('gaps_sort_direction', sort.direction);
+  }
+  const first = await apiRequest(`/v2/search?${params}`, {
+    requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+  });
+  if (first.worklist_available === false) {
+    throw new Error(first.worklist_unavailable_reason || 'Complete Gaps data is not available for this period.');
+  }
+  const firstRows = normalizeList(first.worklist);
+  const pageCount = Math.max(1, number(first.worklist_pagination?.page_count) || 1);
+  if (pageCount === 1) return firstRows;
+  const rest = [];
+  for (let firstPage = 2; firstPage <= pageCount; firstPage += 4) {
+    const pages = Array.from(
+      { length: Math.min(4, pageCount - firstPage + 1) },
+      (_, index) => firstPage + index,
+    );
+    const batch = await Promise.all(pages.map(async (page) => {
+      const pageParams = new URLSearchParams(params);
+      pageParams.set('gaps_page', String(page));
+      const payload = await apiRequest(`/v2/search?${pageParams}`, {
+        requestTimeoutMs: EXPORT_REQUEST_TIMEOUT_MS,
+      });
+      return normalizeList(payload.worklist);
     }));
     rest.push(...batch);
   }
@@ -3123,15 +3185,7 @@ async function exportData(key) {
         { view: 'summary' },
       );
     } else if (key === 'gap-worklist-csv' || key === 'gap-worklist-json') {
-      const queryRows = await fetchAllPages(
-        'search',
-        (payload) => normalizeList(payload.queries),
-        { view: 'summary' },
-      );
-      completeRows = queryRows.filter((row) => (
-        ['zero_result', 'low_result', 'mixed_result'].includes(String(row.issue_type || ''))
-        && !['resolved', 'ignore'].includes(String(row.review_status || ''))
-      ));
+      completeRows = await fetchAllGaps();
     } else if (key === 'clients') {
       completeRows = await fetchAllPages('audience', (payload) => unwrapRows(payload.clients));
     } else if (key === 'activity') {
@@ -3591,6 +3645,11 @@ function initializeEvents() {
     state.explorerIssue = event.target.value;
     state.pages.queries = 1;
     scheduleEndpointRefresh('queries', 0);
+  });
+  $('gapsIssueFilter')?.addEventListener('change', (event) => {
+    state.gapsIssue = event.target.value;
+    state.pages.worklist = 1;
+    scheduleEndpointRefresh('worklist', 0);
   });
   $('refreshButton')?.addEventListener('click', () => refreshDashboard({ force: true }));
   $('autoRefresh')?.addEventListener('change', (event) => {
