@@ -4,7 +4,13 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateDesignRecord, validatePackRecord, DESIGN_STATES } from '../lib/si-registry/design-record-shape.js';
+import {
+  validateDesignRecord,
+  validatePackRecord,
+  classifyRecordTierPaths,
+  summarizeTierCoverage,
+  DESIGN_STATES,
+} from '../lib/si-registry/design-record-shape.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const designDir = join(root, 'data', 'si-registry', 'source', 'design');
@@ -22,6 +28,14 @@ let failed = 0;
 const stateCounts = Object.fromEntries(DESIGN_STATES.map((s) => [s, 0]));
 const packs = new Map();
 const iconRecords = [];
+const tierCounts = { public: 0, gated: 0, internal: 0, total: 0 };
+
+function addTierCoverage(record, kind) {
+  const summary = summarizeTierCoverage(record, kind);
+  for (const tier of ['public', 'gated', 'internal', 'total']) {
+    tierCounts[tier] += summary[tier];
+  }
+}
 
 // pass 1: packs
 for (const file of files) {
@@ -30,6 +44,7 @@ for (const file of files) {
   total += 1;
   try {
     validatePackRecord(doc.pack);
+    addTierCoverage(doc.pack, 'pack');
     packs.set(doc.pack.pack_id, doc.pack);
     console.log(`ok   pack ${doc.pack.pack_id} [${doc.pack.status}] · ${doc.pack.member_ids.length} members · ${doc.pack.design_language.craft_rules.length} craft rules · ${doc.pack.design_language.territory_map.claims.length} territory claims`);
   } catch (err) {
@@ -47,6 +62,7 @@ for (const file of files) {
     total += 1;
     try {
       validateDesignRecord(record);
+      addTierCoverage(record, 'icon');
       if (seen.has(record.icon_id)) throw new Error(`Duplicate icon_id in ${file}: ${record.icon_id}`);
       seen.add(record.icon_id);
       if (record.pack_id !== doc.pack_id) throw new Error(`pack_id mismatch for ${record.icon_id}`);
@@ -82,6 +98,40 @@ for (const record of iconRecords) {
   }
 }
 
+// Prove the completeness check fails closed when a future source field has
+// no explicit owner.
+if (iconRecords.length > 0) {
+  const probe = structuredClone(iconRecords[0]);
+  probe.unmapped_tier_probe = true;
+  let rejected = false;
+  try {
+    classifyRecordTierPaths(probe, 'icon');
+  } catch (err) {
+    rejected = String(err.message).includes('Unmapped icon field: unmapped_tier_probe');
+  }
+  if (!rejected) {
+    failed += 1;
+    console.error('FAIL tier coverage accepted an unmapped icon field');
+  }
+}
+if (packs.size > 0) {
+  const probe = structuredClone(packs.values().next().value);
+  probe.design_language.unmapped_tier_probe = true;
+  let rejected = false;
+  try {
+    classifyRecordTierPaths(probe, 'pack');
+  } catch (err) {
+    rejected = String(err.message).includes(
+      'Unmapped pack field: design_language.unmapped_tier_probe'
+    );
+  }
+  if (!rejected) {
+    failed += 1;
+    console.error('FAIL tier coverage accepted an unmapped pack field');
+  }
+}
+
 console.log(`\n${total} records checked, ${failed} failures`);
 console.log('states:', Object.entries(stateCounts).filter(([, n]) => n > 0).map(([s, n]) => `${s}=${n}`).join(' '));
+console.log(`tier paths: public=${tierCounts.public} gated=${tierCounts.gated} internal=${tierCounts.internal} total=${tierCounts.total}`);
 process.exit(failed ? 1 : 0);
