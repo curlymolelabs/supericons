@@ -8,6 +8,7 @@
 
 begin;
 
+-- table-access: private public.admin_icon_request_reviews
 create table if not exists public.admin_icon_request_reviews (
   icon_evidence_id uuid primary key references public.icon_evidence(id) on delete cascade,
   status text not null default 'new',
