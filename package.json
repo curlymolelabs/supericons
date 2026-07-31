@@ -198,6 +198,7 @@
     "verify:recommend-icons-grouped-search": "node scripts/verify-recommend-icons-grouped-search.mjs",
     "verify:recommend-icons-doc-limits": "node scripts/verify-recommend-icons-doc-limits.mjs",
     "verify:mcp-agent-friendly-errors": "node scripts/verify-mcp-agent-friendly-errors.mjs",
+    "verify:mcp-agent-ux-contract": "node scripts/verify-mcp-agent-ux-contract.mjs",
     "verify:search-v2-lightweight-hosted-runner": "node scripts/verify-search-v2-lightweight-hosted-runner.mjs",
     "verify:search-v2-latency-gate-a-packet": "node scripts/verify-search-v2-latency-gate-a-packet.mjs",
     "verify:search-v2-latency-rerun-packet": "node scripts/verify-search-v2-latency-rerun-packet.mjs",

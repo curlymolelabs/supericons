@@ -58,6 +58,11 @@ try {
   assert.match(instructions, /do not invent an icon/);
   assert.match(instructions, /up to 20 named UI slots/);
   assert.match(instructions, /explain the plain-language reason and follow next_step/);
+  assert.match(instructions, /did not name a library.*all libraries/i);
+  assert.match(instructions, /Never infer si/i);
+  assert.match(instructions, /two or more named UI slots.*recommend_icons/i);
+  assert.match(instructions, /exact returned ref/i);
+  assert.match(instructions, /preview_url/i);
 
   const tools = await client.listTools();
   const searchTool = tools.tools.find((tool) => tool.name === 'search_icons');
@@ -80,6 +85,11 @@ try {
   const matchPayload = parsePayload(matchResult);
   assert.equal(matchSearchCalls, 1, 'match scenario must make exactly one search call');
   assert.ok(matchPayload.results.length > 0, 'meaningful query must return usable icons');
+  assert.equal(matchPayload.library_mode, 'all');
+  assert.equal(matchPayload.outcome_type, 'results');
+  assert.equal(matchPayload.result_count, matchPayload.results.length);
+  assert.equal(matchPayload.top_result_ref, matchPayload.results[0].icon_ref);
+  assert.equal(typeof matchPayload.result_interpretation, 'string');
   assertResolvableMarkdownImage(matchPayload);
   assert.match(matchPayload.suggested_response_markdown, /database/i);
   assert.ok(matchPayload.results.some((icon) => (
@@ -161,6 +171,9 @@ try {
   const noResultPayload = parsePayload(noResult);
   assert.equal(noResultSearchCalls, 1, 'no-result scenario must make exactly one search call');
   assert.equal(noResultPayload.code, 'no_icons_found');
+  assert.equal(noResultPayload.outcome_type, 'no_match');
+  assert.equal(noResultPayload.result_count, 0);
+  assert.match(noResultPayload.result_interpretation, /No verified icon matched/);
   assert.deepEqual(noResultPayload.results, undefined);
   assert.equal('image_url' in noResultPayload, false);
   assert.equal('markdown_image' in noResultPayload, false);
@@ -202,6 +215,9 @@ try {
   assert.equal(previewPayload.image_included, false);
   assert.equal(previewPayload.rendered_count, previewPayload.results.length);
   assert.equal(previewPayload.browser_preview_count, longRefs.length);
+  assert.equal(typeof previewPayload.suggested_response_markdown, 'string');
+  assert.ok(previewPayload.suggested_response_markdown.includes(previewPayload.preview_url));
+  assert.match(previewPayload.suggested_response_markdown, /cannot display.*inline/i);
   assert.equal(new URL(previewPayload.preview_url).searchParams.get('icons').split(',').length, longRefs.length);
   assert.equal(previewPayload.warnings.length, 2);
   assert.match(previewPayload.warnings.join(' '), /maximum of 12/);

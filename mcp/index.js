@@ -1128,11 +1128,11 @@ configureMcpTelemetryContext({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Use this as the main icon tool. Search ${freeIconCountLabel} using synonym expansion. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
+  `Use this as the main icon tool. Search ${freeIconCountLabel} using synonym expansion. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Omit library to search all libraries. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
     query: forgivingNonEmptyStringSchema.describe('Search term, for example "heart", "login", or "download arrow".'),
-    library: forgivingStringSchema.optional().describe('Filter by free library: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute.'),
-    library_mode: forgivingStringSchema.optional().default('strict').describe('Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.'),
+    library: forgivingStringSchema.optional().describe('Optional library only when the user named one. Omit it to search all libraries. Valid keys: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute.'),
+    library_mode: forgivingStringSchema.optional().describe('Optional library behavior. Omit it to use all when no library is named and strict when a library is named. Prefer requires a named library. Unsupported or incomplete combinations are safely normalized with a warning.'),
     style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
     locale: forgivingStringSchema.optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th. Unsupported values are ignored with a warning.'),
     limit: forgivingSearchLimitSchema.optional().default(10).describe('Maximum results from 1 to 50. Numeric strings are accepted.'),
@@ -1515,7 +1515,7 @@ server.tool(
 // --- Tool: preview_icons ---
 server.tool(
   'preview_icons',
-  'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a browser preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
+  'Refine an icon result set or preview known icon refs returned by another Supericons tool. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns ready-to-use Markdown, a browser preview fallback, a direct PNG image URL, and, when requested, an MCP image contact sheet.',
   {
     query: forgivingStringSchema.optional().describe('Optional search query to preview visually, for example "license plate recognition camera scan car".'),
     icon_refs: z.preprocess(

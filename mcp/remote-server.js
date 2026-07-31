@@ -225,6 +225,10 @@ const previewIconResultSchema = z.object({
 
 const searchIconsOutputSchema = {
   results: z.array(publicIconResultSchema).describe('Matching icons with SVG code and semantic guidance.'),
+  outcome_type: z.enum(['results', 'no_match', 'tool_error']).optional().describe('Whether this response contains results, an honest no-match, or a tool failure.'),
+  result_count: z.number().optional().describe('Number of verified icons returned by this search.'),
+  top_result_ref: z.string().nullable().optional().describe('Top ordered icon ref when results exist.'),
+  result_interpretation: z.string().optional().describe('Plain-language guidance for interpreting this result count and outcome.'),
   library_mode: z.enum(['strict', 'prefer', 'all']).describe('Library behavior used for this search.'),
   requested_library: z.string().nullable().describe('Preferred or required library, when supplied.'),
   preview_url: z.string().optional().describe('Browser URL for visual inspection of this search result set.'),
@@ -319,6 +323,7 @@ const previewIconsOutputSchema = {
   warnings: z.array(z.string()).optional().describe('Unsupported optional inputs that were safely ignored.'),
   next_step: z.string().describe('Useful next action for the caller.'),
   client_display_note: z.string().describe('Plain-language note for clients that do not render images inline.'),
+  suggested_response_markdown: z.string().optional().describe('Ready-to-use answer with the image, refs, and browser fallback link.'),
   error: z.string().optional().describe('Recoverable error message when preview inputs are missing or invalid.'),
   results: z.array(previewIconResultSchema).describe('Icons included in the visual preview.'),
 };
@@ -326,6 +331,10 @@ const previewIconsOutputSchema = {
 const getIconOutputSchema = {
   icon: publicIconResultSchema.optional().describe('Exact matching icon when found.'),
   error: z.string().optional().describe('Recoverable error message when no exact icon is found.'),
+  code: z.string().optional().describe('Stable error code when the exact icon is unavailable.'),
+  hint: z.string().optional().describe('Plain-language explanation of how to recover.'),
+  next_step: z.string().optional().describe('Recommended next tool action.'),
+  retryable: z.boolean().optional().describe('Whether repeating the same exact lookup may succeed.'),
 };
 
 const listLibrariesOutputSchema = {
@@ -1650,12 +1659,11 @@ function createServer({ requestContext = null } = {}) {
         query: forgivingNonEmptyStringSchema.describe(
           'Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".',
         ),
-        library: forgivingStringSchema.optional().describe(`Optional library key. ${libraryKeysDescription}`),
+        library: forgivingStringSchema.optional().describe(`Optional library key only when the user named a library. Omit it to search all libraries. Do not use all as a library key. ${libraryKeysDescription}`),
         library_mode: forgivingStringSchema
           .optional()
-          .default('strict')
           .describe(
-            'Library behavior. Strict stays inside the requested library, prefer puts it first and includes labeled alternatives, and all searches every eligible library. Unsupported values are ignored with a warning.',
+            'Optional library behavior. Omit it to use all when no library is named and strict when a library is named. Prefer requires a named library. All searches every eligible library. Unsupported or incomplete combinations are safely normalized with a warning.',
           ),
         style: forgivingStringSchema
           .optional()
@@ -1952,7 +1960,7 @@ function createServer({ requestContext = null } = {}) {
     {
       title: 'Get Icon',
       description:
-        'Retrieve one exact SVG icon when the icon ID and library are already known. Use search_icons first if the user only described a concept. Returns SVG code, explicit public library labels, visual preview URL, and public semantic guidance for the exact icon.',
+        'Retrieve one exact SVG icon using an exact ref returned by search_icons, recommend_icons, or preview_icons. Do not guess icon IDs. Use search_icons first if the user only described a concept. Returns SVG code, explicit public library labels, visual preview URL, and public semantic guidance for the exact icon.',
       inputSchema: {
         id: z
           .string()
@@ -2009,7 +2017,7 @@ function createServer({ requestContext = null } = {}) {
     {
       title: 'Preview Icons',
       description:
-        'Refine an icon result set or preview known icon refs. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns a hosted preview page, direct PNG image URL, ready-made Markdown image snippet, and, when requested, an MCP image contact sheet.',
+        'Refine an icon result set or preview known icon refs returned by another Supericons tool. Use search_icons first for normal icon requests. Long icon lists are accepted and safely truncated to 12. Returns ready-to-use Markdown, a hosted preview fallback, a direct PNG image URL, and, when requested, an MCP image contact sheet.',
       inputSchema: {
         query: forgivingStringSchema
           .optional()

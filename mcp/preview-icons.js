@@ -190,6 +190,25 @@ export function buildPreviewTextPayload({
   const acceptedBrowserCount = Number.isInteger(browserPreviewCount)
     ? browserPreviewCount
     : renderedCount;
+  const iconRefs = icons
+    .map((icon) => icon.icon_ref || `${icon.library || icon.lib}:${icon.id}`)
+    .filter(Boolean);
+  const suggestedLines = renderedCount > 0
+    ? [
+        `Previewed ${renderedCount} verified icon${renderedCount === 1 ? '' : 's'}:`,
+        ...(markdownImage ? ['', markdownImage] : []),
+        '',
+        ...iconRefs.map((ref) => `- \`${ref}\``),
+        '',
+        `[Open the visual preview](${previewUrl})`,
+        '',
+        'If this client cannot display the image inline, use the visual preview link above.',
+      ]
+    : [
+        'No icons were available for this preview.',
+        '',
+        `[Open the visual preview](${previewUrl})`,
+      ];
   return {
     query,
     preview_url: previewUrl,
@@ -205,6 +224,7 @@ export function buildPreviewTextPayload({
         ? `The inline preview shows ${renderedCount} icons. Open preview_url to view all ${acceptedBrowserCount} accepted icon refs, then call get_icon for the exact SVG.`
         : 'Choose an icon ref from the preview, then call get_icon when you need the exact SVG.'
       : 'Try a broader query or provide different icon refs.',
+    suggested_response_markdown: suggestedLines.join('\n'),
     client_display_note: imageIncluded
       ? 'If your MCP client does not render image content inline, use markdown_image in the final answer or open image_url/preview_url in a browser.'
       : 'Use markdown_image in the final answer when supported, or open image_url/preview_url in a browser.',

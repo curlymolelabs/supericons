@@ -63,8 +63,8 @@ for (const [label, source] of [
 ]) {
   assert.match(source, /library_mode/, `${label}: library_mode should be wired through the contract`);
 }
-assert.match(localMcpSource, /default\('strict'\)/, 'local MCP should preserve strict as the default');
-assert.match(remoteMcpSource, /default\('strict'\)/, 'remote MCP should preserve strict as the default');
+assert.doesNotMatch(localMcpSource, /library_mode:[\s\S]{0,160}default\('strict'\)/, 'local MCP should derive the mode from whether a library was named');
+assert.doesNotMatch(remoteMcpSource, /library_mode:[\s\S]{0,160}default\('strict'\)/, 'remote MCP should derive the mode from whether a library was named');
 const mcpPackage = readJson('mcp/package.json');
 assert.ok(mcpPackage.files.includes('runtime/generated-search-ranking-policy.js'), 'MCP package should include generated ranking policy');
 assert.ok(mcpPackage.files.includes('runtime/search-ranking-policy.js'), 'MCP package should include ranking policy runtime');

@@ -398,6 +398,20 @@ try {
   assert.equal(hostedPreviewInputResult.isError, true);
   assert.equal(hostedPreviewInputPayload.error, 'Provide either query or icon_refs.');
   assert.match(hostedPreviewInputPayload.warnings.join(' '), /maximum of 12/);
+
+  const hostedMissingIconResult = await client.callTool({
+    name: 'get_icon',
+    arguments: {
+      id: 'fallbackprobe-missing',
+      library: 'lucide',
+      style: 'outline',
+    },
+  });
+  const hostedMissingIconPayload = parsePayload(hostedMissingIconResult);
+  assert.equal(hostedMissingIconResult.isError, true);
+  assert.equal(hostedMissingIconPayload.code, 'icon_not_found');
+  assert.equal(hostedMissingIconPayload.retryable, false);
+  assert.match(hostedMissingIconPayload.next_step, /search_icons/);
 } finally {
   await transport.close().catch(() => {});
   await client.close().catch(() => {});
@@ -433,6 +447,7 @@ console.log(JSON.stringify({
   timeout_code: timeoutPayload.code,
   allowance_retry_after_seconds: allowancePayload.retry_after_seconds,
   hosted_allowance_error_propagated: true,
+  hosted_get_icon_not_found_schema: 'passed',
   preview_inline_limit: normalizedPreview.limit,
   preview_browser_count: normalizedPreview.browser_icon_refs.length,
 }, null, 2));

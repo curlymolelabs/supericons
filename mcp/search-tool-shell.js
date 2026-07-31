@@ -2,12 +2,17 @@ import { normalizeSearchQueryRequest } from './search-query-normalization.js';
 
 export const SEARCH_TOOL_SERVER_INSTRUCTIONS = [
   'Use search_icons as the main tool when a user asks for icons.',
+  'If the user did not name a library, search all libraries. Never infer si from the Supericons server or app name.',
+  'Use strict mode only with a library the user named. Use prefer mode only with a real named library.',
+  'Use recommend_icons first for two or more named UI slots.',
   'When search_icons returns markdown_image, include it in the final answer so the user can see the result set.',
   'The suggested_response_markdown field is safe to use as a compact answer, or it can be rewritten without changing the icon names and refs.',
   'If search_icons returns no_icons_found, do not invent an icon. Follow next_step or explain the honest no-result.',
   'Use recommend_icons for a coherent set of up to 20 named UI slots.',
   'When a tool returns error, code, and next_step, explain the plain-language reason and follow next_step instead of repeating the same rejected call.',
   'Use preview_icons only to refine a result set or preview known icon refs.',
+  'Use get_icon only with an exact returned ref. Do not guess icon IDs.',
+  'When visual comparison matters, include preview_url as a visible fallback even when an inline image was requested.',
 ].join(' ');
 
 export const SEARCH_LIBRARY_MODES = ['strict', 'prefer', 'all'];
@@ -76,6 +81,17 @@ function normalizeChoice(value, allowed, fallback, field, warnings) {
   return fallback;
 }
 
+function normalizeOptionalLibrary(value, warnings) {
+  const requested = String(value || '').trim();
+  if (!requested) return undefined;
+  const normalized = requested.toLowerCase();
+  if (normalized === 'all' || normalized === 'any') {
+    warnings.push(`Treated library "${requested}" as all libraries with no library restriction.`);
+    return undefined;
+  }
+  return normalized;
+}
+
 export function normalizeSupportedLocale(value, supportedLocales = []) {
   const requested = String(value || '').trim().replace(/_/g, '-');
   if (!requested) return undefined;
@@ -103,6 +119,7 @@ export function normalizeSupportedLocale(value, supportedLocales = []) {
 
 export function normalizeSearchToolArguments(args = {}, { supportedLocales = [] } = {}) {
   const warnings = [];
+  const library = normalizeOptionalLibrary(args.library, warnings);
   const locale = normalizeSupportedLocale(args.locale, supportedLocales);
   if (args.locale && !locale) {
     warnings.push(`Ignored unsupported locale "${String(args.locale)}".`);
@@ -115,17 +132,23 @@ export function normalizeSearchToolArguments(args = {}, { supportedLocales = [] 
     warnings,
   );
   const queryNormalization = normalizeSearchQueryRequest(args.query, normalizedStyle);
+  let libraryMode = normalizeChoice(
+    args.library_mode,
+    SEARCH_LIBRARY_MODES,
+    library ? 'strict' : 'all',
+    'library_mode',
+    warnings,
+  );
+  if (!library && libraryMode !== 'all') {
+    warnings.push(`Changed library_mode "${libraryMode}" to "all" because prefer and strict require a named library.`);
+    libraryMode = 'all';
+  }
   return {
     ...args,
     query: queryNormalization.query,
     original_query: queryNormalization.original_query,
-    library_mode: normalizeChoice(
-      args.library_mode,
-      SEARCH_LIBRARY_MODES,
-      'strict',
-      'library_mode',
-      warnings,
-    ),
+    library,
+    library_mode: libraryMode,
     style: queryNormalization.style,
     locale,
     query_normalization: queryNormalization,
@@ -385,6 +408,18 @@ function getIconRef(icon = {}) {
   );
 }
 
+function getIconFitReason(icon = {}) {
+  const semantic = icon.semantic || {};
+  const reason = icon.why_it_fits
+    || icon.reason
+    || semantic.purpose
+    || semantic.use_when
+    || semantic.depicts;
+  if (!reason) return null;
+  const compact = String(reason).replace(/\s+/g, ' ').trim();
+  return compact.length > 120 ? `${compact.slice(0, 117)}...` : compact;
+}
+
 export function buildSearchMatchPresentation({
   query,
   results = [],
@@ -396,14 +431,21 @@ export function buildSearchMatchPresentation({
   const itemLines = shown.map((icon) => {
     const ref = getIconRef(icon);
     const name = icon.name || icon.id || ref || 'Icon';
+    const reason = getIconFitReason(icon);
+    const suffix = reason ? `: ${escapeMarkdownInline(reason)}` : '';
     return ref
-      ? `- ${escapeMarkdownInline(name)} (\`${escapeMarkdownInline(ref)}\`)`
-      : `- ${escapeMarkdownInline(name)}`;
+      ? `- ${escapeMarkdownInline(name)} (\`${escapeMarkdownInline(ref)}\`)${suffix}`
+      : `- ${escapeMarkdownInline(name)}${suffix}`;
   });
+  const resultInterpretation = results.length === 1
+    ? 'A single verified result is not automatically weak. For a specific query, it can be the complete answer when its meaning fits.'
+    : `Supericons returned ${results.length} verified options. Compare meaning and style before choosing the final ref.`;
   const responseLines = [
-    `Found ${results.length} icon option${results.length === 1 ? '' : 's'} for "${escapeMarkdownInline(query)}":`,
+    `Found ${results.length} verified icon option${results.length === 1 ? '' : 's'} for "${escapeMarkdownInline(query)}":`,
     '',
     ...itemLines,
+    '',
+    resultInterpretation,
   ];
   if (markdownImage) {
     responseLines.push('', markdownImage);
@@ -412,6 +454,10 @@ export function buildSearchMatchPresentation({
     responseLines.push('', `[Open the visual preview](${previewUrl})`);
   }
   return {
+    outcome_type: 'results',
+    result_count: results.length,
+    top_result_ref: getIconRef(results[0]) || null,
+    result_interpretation: resultInterpretation,
     image_url: imageUrl,
     markdown_image: markdownImage,
     suggested_response_markdown: responseLines.join('\n'),
@@ -422,6 +468,9 @@ export function buildSearchMatchPresentation({
 export function buildSearchNoResultPresentation({ query, hint } = {}) {
   const safeHint = String(hint || 'Try a broader term or remove optional filters.').trim();
   return {
+    outcome_type: 'no_match',
+    result_count: 0,
+    result_interpretation: 'No verified icon matched this query and its current filters. This is a no-result, not a service error.',
     suggested_response_markdown: `No matching icons were found for "${escapeMarkdownInline(query)}". ${safeHint}`,
     next_step: safeHint,
   };
@@ -443,6 +492,9 @@ export function buildSearchFailurePresentation({
         : 'Try again later or use local package search when it is available.'
     );
   return {
+    outcome_type: 'tool_error',
+    result_count: 0,
+    result_interpretation: 'The search tool could not complete the request. This is not a no-result and should not be described as poor search relevance.',
     error: typeof error?.message === 'string' ? error.message : fallbackMessage,
     ...(typeof error?.code === 'string' ? { code: error.code } : {}),
     ...(typeof error?.retryable === 'boolean' ? { retryable: error.retryable } : {}),
