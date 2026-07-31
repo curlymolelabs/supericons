@@ -22,6 +22,7 @@ These failures established the pre-change defect before the implementation was a
 
 - A search with no named library now uses all libraries.
 - A named library with no mode remains strict.
+- An explicit `library = si` request remains strict and returns SI icons.
 - `prefer` or `strict` without a named library becomes all-library search with a warning.
 - Literal `library = all` or `library = any` becomes no library restriction with a warning.
 - Shared instructions tell agents not to infer `si`, not to guess icon IDs, to use recommendations for multiple named slots, and to expose the browser preview fallback.
@@ -36,6 +37,7 @@ These failures established the pre-change defect before the implementation was a
 | Command | Result |
 |---|---|
 | `npm run verify:mcp-agent-ux-contract` | Passed all focused normalization, instruction, interpretation, and preview assertions |
+| `npm run verify:mcp-si-library-access` | Passed through the real local stdio MCP server with telemetry disabled |
 | `npm run verify:search-library-modes` | Passed 15 strict, prefer, and all-library cases |
 | `npm run verify:mcp-agent-friendly-errors` | Passed, including strict hosted `get_icon` not-found schema validation |
 | `node scripts/verify-search-v2-one-call-contract.mjs` | Passed search, no-result, preview, and recommendation contracts |
@@ -48,6 +50,8 @@ These failures established the pre-change defect before the implementation was a
 | `npm run verify:search-v2-hosted-route-product` | Passed all 39 candidate HTTP and MCP product cases |
 
 The 225-case verifier reported clean fingerprint inputs and no ordered-result change.
+
+The explicit SI integration case searched `agent scout` with `library = si` and no mode. The server derived `strict`, returned ten SI-only refs, and ranked `si:agent-scout` first. The comparison case searched `database` with no library. The server derived `all` and returned Material, Lucide, Tabler, Phosphor, and Bootstrap results. This proves the contract prevents accidental SI restriction without removing intentional SI access.
 
 ## Known unrelated failure
 

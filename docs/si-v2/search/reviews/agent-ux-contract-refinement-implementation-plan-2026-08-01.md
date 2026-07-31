@@ -42,6 +42,7 @@ The batch addresses verified failures from the agent harness evaluation:
 
 - No named library means all-library search.
 - A named library with no explicit mode means strict search in that library.
+- An explicit `library = si` request remains available and uses strict SI-only search.
 - `library = all` or `library = any` means no library restriction.
 - `prefer` without a named library becomes all-library search with a warning.
 - `si` continues to mean the Supericons library. It is never treated as Simple Icons.
@@ -103,6 +104,7 @@ The final inventory also includes `scripts/verify-mcp-agent-friendly-errors.mjs`
 12. The established 225-case search fingerprint remains unchanged.
 13. No public protected intelligence enters an npm or web artifact.
 14. The final worktree contains only reviewed files and is clean after commit.
+15. A real local MCP stdio call proves that explicit SI access still works while an omitted library remains global.
 
 ## Stop conditions
 
