@@ -24,10 +24,19 @@ function tableAccessMarkers(sql) {
 
 function hasPrivateRoleRevocation(sql, tableName) {
   const escapedTable = tableName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(
-    `\\brevoke\\s+all\\s+on\\s+table\\s+${escapedTable}\\s+from\\s+anon\\s*,\\s*authenticated\\s*;`,
-    'i',
-  ).test(sql);
+  const revokePattern = new RegExp(
+    `\\brevoke\\s+all\\s+on\\s+table\\s+${escapedTable}\\s+from\\s+([^;]+);`,
+    'gi',
+  );
+  return [...sql.matchAll(revokePattern)].some((match) => {
+    const roles = new Set(
+      match[1]
+        .split(',')
+        .map((role) => role.trim().toLowerCase())
+        .filter(Boolean),
+    );
+    return roles.has('anon') && roles.has('authenticated');
+  });
 }
 
 function verifyMigration(fileName, sql) {
@@ -73,6 +82,13 @@ assert.equal(
   ),
   1,
 );
+assert.equal(
+  verifyMigration(
+    'private-superset-pass.sql',
+    '-- table-access: private public.private_items\ncreate table public.private_items (id bigint);\nrevoke all on table public.private_items from public, anon, authenticated;',
+  ),
+  1,
+);
 assert.throws(
   () => verifyMigration('private-fail.sql', '-- table-access: private public.private_items\ncreate table public.private_items (id bigint);'),
   /without revoking anon and authenticated/,
@@ -107,5 +123,5 @@ console.log(JSON.stringify({
   checked_migrations: checkedMigrations,
   created_tables_checked: createdTableCount,
   material_recovery_pinned: true,
-  self_tests: 4,
+  self_tests: 5,
 }, null, 2));
