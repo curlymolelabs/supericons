@@ -254,7 +254,9 @@
     "verify:material-railway-hydration": "node scripts/verify-material-railway-hydration.mjs",
     "verify:material-railway-server-contract": "node scripts/verify-material-railway-server-contract.mjs",
     "verify:material-railway-legacy-live": "node scripts/verify-material-railway-legacy-live.mjs",
-    "verify:material-railway-live": "node scripts/verify-material-railway-live.mjs"
+    "verify:material-railway-live": "node scripts/verify-material-railway-live.mjs",
+    "watch:report": "node scripts/watch-report.mjs",
+    "demand:sweep": "node scripts/demand-sweep.mjs supabase/.env.local ../supericons-v2/.artifacts/demand-sweep-latest.json"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",
