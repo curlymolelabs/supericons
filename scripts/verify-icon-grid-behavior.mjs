@@ -361,6 +361,7 @@ const expectedSupericonsCategories = new Map([
   ['si:agent-commit', 'coding-agent-tools'],
   ['si:done-spark', 'agent-lifecycle-states'],
   ['si:x402-pay', 'agentic-payments'],
+  ['si:train-front', 'cars-vehicles'],
 ]);
 
 for (const [iconId, expectedCategory] of expectedSupericonsCategories) {

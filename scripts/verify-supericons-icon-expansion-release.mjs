@@ -65,7 +65,6 @@ const noAvoidWhenIds = new Set([
   'sunscreen',
   'cotton-swab',
   'cutting-board',
-  'wok',
   'peeler',
   'corkscrew',
 ]);
@@ -103,8 +102,8 @@ const [
 ]);
 
 assert.equal(expansionIds.length, 40, 'the release fixture must cover all 40 expansion icons');
-assert.equal(publicIndex.icons.filter((icon) => icon.lib === 'si').length, 146);
-assert.equal(mcpIndex.icons.filter((icon) => icon.lib === 'si').length, 146);
+assert.equal(publicIndex.icons.filter((icon) => icon.lib === 'si').length, 147);
+assert.equal(mcpIndex.icons.filter((icon) => icon.lib === 'si').length, 147);
 assert.equal(publicIndex.totalCount, mcpIndex.totalCount);
 assert.equal(productFacts.freeIconCount, publicIndex.totalCount);
 assert.equal(mcpProductFacts.freeIconCount, mcpIndex.totalCount);
