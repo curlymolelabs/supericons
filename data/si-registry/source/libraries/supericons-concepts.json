@@ -5126,5 +5126,60 @@
       "visual_inspection"
     ],
     "review_state": "source_mapped"
+  },
+  {
+    "icon_id": "si:train-front",
+    "source_group": "free",
+    "source_library": "si",
+    "source_name": "train-front",
+    "label": "Train Front",
+    "purpose": "Represent a subway, metro, or commuter train, or a transit station.",
+    "category": "cars_vehicles",
+    "semantic_tags": [
+      "train",
+      "subway",
+      "metro",
+      "front view",
+      "windshield",
+      "headlights",
+      "rails"
+    ],
+    "use_when": "Use for subway and metro systems, train stations, public transit routes, and commute or travel features.",
+    "avoid_when": "",
+    "version": "0.1.0",
+    "status": "draft",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "asset_type": "concept",
+    "depicts": "The front of a train, a rounded-top car with a large windshield window, two headlights, and two rails splaying out beneath it.",
+    "motion": {
+      "has_motion": false
+    },
+    "synonyms": [
+      "mrt",
+      "lrt",
+      "subway train",
+      "metro rail",
+      "commuter train"
+    ],
+    "ai_category": "cars-vehicles",
+    "ai_category_label": "Cars and Vehicles",
+    "ai_filter_tags": [
+      "agentic-concepts-pack",
+      "concept-icon",
+      "cars-vehicles",
+      "train",
+      "transit"
+    ],
+    "job_category": "cars-vehicles",
+    "secondary_categories": [
+      "everyday-objects"
+    ],
+    "evidence": [
+      "editorial_judgment",
+      "visual_inspection"
+    ],
+    "review_state": "source_mapped"
   }
 ]
