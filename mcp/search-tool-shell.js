@@ -3,7 +3,9 @@ import { normalizeSearchQueryRequest } from './search-query-normalization.js';
 export const SEARCH_TOOL_SERVER_INSTRUCTIONS = [
   'Use search_icons as the main tool when a user asks for icons.',
   'If the user did not name a library, search all libraries. Never infer si from the Supericons server or app name.',
-  'Use strict mode only with a library the user named. Use prefer mode only with a real named library.',
+  'If you choose a library yourself, use prefer mode so relevant alternatives can be found elsewhere.',
+  'Use strict mode only when the user explicitly requires that library.',
+  'The library key si means Supericons. The library key simpleicons means Simple Icons.',
   'Use recommend_icons first for two or more named UI slots.',
   'When search_icons returns markdown_image, include it in the final answer so the user can see the result set.',
   'The suggested_response_markdown field is safe to use as a compact answer, or it can be rewritten without changing the icon names and refs.',
@@ -465,14 +467,44 @@ export function buildSearchMatchPresentation({
   };
 }
 
-export function buildSearchNoResultPresentation({ query, hint } = {}) {
-  const safeHint = String(hint || 'Try a broader term or remove optional filters.').trim();
+export function buildSearchNoResultPresentation({
+  query,
+  hint,
+  requestedLibrary,
+  alternativeResults = [],
+} = {}) {
+  const recoveryQueryTokens = String(query || '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((token) => token.length >= 3 && !['brand', 'icon', 'icons', 'logo'].includes(token));
+  const alternateRefs = [...new Set(
+    alternativeResults
+      .map(getIconRef)
+      .filter((ref) => {
+        if (!ref || recoveryQueryTokens.length === 0) return false;
+        const normalizedRef = ref
+          .normalize('NFKC')
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}]+/gu, ' ');
+        return recoveryQueryTokens.some((token) => normalizedRef.includes(token));
+      }),
+  )].slice(0, 3);
+  const strictLibrary = String(requestedLibrary || '').trim();
+  const hasAlternatives = strictLibrary && alternateRefs.length > 0;
+  const safeHint = hasAlternatives
+    ? `The requested ${strictLibrary} library had no match. Relevant alternatives exist elsewhere: ${alternateRefs.join(', ')}.`
+    : String(hint || 'Try a broader term or remove optional filters.').trim();
+  const nextStep = hasAlternatives
+    ? `Use get_icon with an exact alternate ref such as ${alternateRefs[0]}, or retry search_icons once without library and with library_mode "all".`
+    : safeHint;
   return {
     outcome_type: 'no_match',
     result_count: 0,
     result_interpretation: 'No verified icon matched this query and its current filters. This is a no-result, not a service error.',
+    hint: safeHint,
     suggested_response_markdown: `No matching icons were found for "${escapeMarkdownInline(query)}". ${safeHint}`,
-    next_step: safeHint,
+    next_step: nextStep,
   };
 }
 

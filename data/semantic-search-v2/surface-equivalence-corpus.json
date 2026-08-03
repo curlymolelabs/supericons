@@ -238,6 +238,26 @@
       "relevant_any": []
     },
     {
+      "case_id": "strict_si_openai_zero",
+      "query": "openai",
+      "library": "si",
+      "library_mode": "strict",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "all_libraries_openai_positive",
+      "query": "openai",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["openai"]
+    },
+    {
+      "case_id": "brand_copy_ai_honest_zero",
+      "query": "copy.ai",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
       "case_id": "hosted_dependency_error_visible",
       "query": "hard hat construction worker",
       "library": "lucide",

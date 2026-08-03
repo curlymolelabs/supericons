@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "fixture_id": "agent-library-recovery-20260803",
+  "purpose": "Public-safe regression cases for strict-library recovery guidance, exact brand safety, and honest catalog gaps.",
+  "cases": [
+    {
+      "case_id": "strict_simpleicons_apple",
+      "group": "strict_success",
+      "query": "apple brand logo",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:apple"]
+    },
+    {
+      "case_id": "strict_simpleicons_vercel",
+      "group": "strict_success",
+      "query": "vercel",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:vercel"]
+    },
+    {
+      "case_id": "strict_simpleicons_supabase",
+      "group": "strict_success",
+      "query": "supabase",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:supabase"]
+    },
+    {
+      "case_id": "strict_simpleicons_figma",
+      "group": "strict_success",
+      "query": "figma",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:figma"]
+    },
+    {
+      "case_id": "strict_simpleicons_anthropic",
+      "group": "strict_success",
+      "query": "anthropic",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:anthropic"]
+    },
+    {
+      "case_id": "strict_si_openai_recovery",
+      "group": "strict_recovery",
+      "query": "openai",
+      "library": "si",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["openai"]
+    },
+    {
+      "case_id": "strict_simpleicons_openai_recovery",
+      "group": "strict_recovery",
+      "query": "openai",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["openai"]
+    },
+    {
+      "case_id": "strict_simpleicons_slack_recovery",
+      "group": "strict_recovery",
+      "query": "slack",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["slack"]
+    },
+    {
+      "case_id": "strict_simpleicons_linkedin_recovery",
+      "group": "strict_recovery",
+      "query": "linkedin",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["linkedin"]
+    },
+    {
+      "case_id": "strict_simpleicons_dingtalk_recovery",
+      "group": "strict_recovery",
+      "query": "dingtalk",
+      "library": "simpleicons",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["dingtalk"]
+    },
+    {
+      "case_id": "strict_si_figma_recovery",
+      "group": "strict_recovery",
+      "query": "figma",
+      "library": "si",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:figma"]
+    },
+    {
+      "case_id": "strict_si_supabase_recovery",
+      "group": "strict_recovery",
+      "query": "supabase",
+      "library": "si",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:supabase"]
+    },
+    {
+      "case_id": "strict_si_anthropic_recovery",
+      "group": "strict_recovery",
+      "query": "anthropic",
+      "library": "si",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:anthropic"]
+    },
+    {
+      "case_id": "strict_si_vercel_recovery",
+      "group": "strict_recovery",
+      "query": "vercel",
+      "library": "si",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["simpleicons:vercel"]
+    },
+    {
+      "case_id": "strict_lucide_plate_recovery",
+      "group": "strict_recovery",
+      "query": "plate restaurant tableware porcelain",
+      "library": "lucide",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["si:plate", "restaurant"]
+    },
+    {
+      "case_id": "strict_tabler_clapperboard_recovery",
+      "group": "strict_recovery",
+      "query": "clapperboard",
+      "library": "tabler",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["clapperboard"]
+    },
+    {
+      "case_id": "strict_lucide_storefront_recovery",
+      "group": "strict_recovery",
+      "query": "storefront merchant",
+      "library": "lucide",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["storefront"]
+    },
+    {
+      "case_id": "strict_lucide_stomach_recovery",
+      "group": "strict_recovery",
+      "query": "stomach",
+      "library": "lucide",
+      "library_mode": "strict",
+      "limit": 5,
+      "required_ref_fragments": ["si:stomach"]
+    },
+    {
+      "case_id": "honest_brand_zero_copy_ai",
+      "group": "honest_brand_zero",
+      "query": "copy.ai",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": ["copy", "clipboard", "duplicate"]
+    },
+    {
+      "case_id": "honest_brand_zero_copy_ai_logo",
+      "group": "honest_brand_zero",
+      "query": "copy.ai logo",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": ["copy", "clipboard", "duplicate"]
+    },
+    {
+      "case_id": "honest_brand_zero_salesforce",
+      "group": "honest_brand_zero",
+      "query": "salesforce logo",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    },
+    {
+      "case_id": "honest_brand_zero_jasper",
+      "group": "honest_brand_zero",
+      "query": "jasper logo",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    },
+    {
+      "case_id": "honest_brand_zero_ahrefs",
+      "group": "honest_brand_zero",
+      "query": "ahrefs logo",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    },
+    {
+      "case_id": "honest_catalog_zero_fighter_jet",
+      "group": "honest_catalog_zero",
+      "query": "fighter jet",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    },
+    {
+      "case_id": "honest_catalog_zero_pineapple",
+      "group": "honest_catalog_zero",
+      "query": "pineapple",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    },
+    {
+      "case_id": "honest_catalog_zero_mosquito",
+      "group": "honest_catalog_zero",
+      "query": "mosquito",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": []
+    }
+  ]
+}

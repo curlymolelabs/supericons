@@ -212,7 +212,7 @@ export function createRailwaySearchRoute({ localSearchOne, hostedSearchOne }) {
       state.local_failure_code = localOutcome.error?.code || 'local_search_failed';
     }
 
-    return validHostedResults.slice(0, Math.max(1, Number(params.limit) || 20));
+    return mergeResults(params, [], validHostedResults);
   }
 
   return {

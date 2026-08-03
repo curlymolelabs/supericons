@@ -1654,7 +1654,7 @@ function createServer({ requestContext = null } = {}) {
     'search_icons',
     {
       title: 'Search Icons',
-      description: `Use this as the main icon tool. Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Library key si means Supericons, not Simple Icons.`,
+      description: `Use this as the main icon tool. Search ${freeIconCountLabel} by meaning, label, visual description, tags, and synonyms. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. If you choose a library yourself, use prefer. Use strict only when the user explicitly requires that library. Library key si means Supericons, not Simple Icons.`,
       inputSchema: {
         query: forgivingNonEmptyStringSchema.describe(
           'Icon concept or search phrase, for example "database", "user profile", "chill", "trash", "upload cloud", "AI model", or "beautiful".',
@@ -1663,7 +1663,7 @@ function createServer({ requestContext = null } = {}) {
         library_mode: forgivingStringSchema
           .optional()
           .describe(
-            'Optional library behavior. Omit it to use all when no library is named and strict when a library is named. Prefer requires a named library. All searches every eligible library. Unsupported or incomplete combinations are safely normalized with a warning.',
+            'Optional library behavior. Omit a self-chosen library and search all, or use prefer with that library. Use strict only when the user explicitly requires the named library. All searches every eligible library. Unsupported or incomplete combinations are safely normalized with a warning.',
           ),
         style: forgivingStringSchema
           .optional()
@@ -1768,6 +1768,21 @@ function createServer({ requestContext = null } = {}) {
           limit,
         });
         if (formatted.length === 0) {
+          let recoveryAlternatives = [];
+          if (library_mode === 'strict' && library) {
+            try {
+              recoveryAlternatives = await searchRailwayLocalIcons({
+                query,
+                library: null,
+                libraryMode: 'all',
+                style,
+                locale,
+                limit: Math.min(5, Math.max(1, Number(limit) || 5)),
+              });
+            } catch {
+              recoveryAlternatives = [];
+            }
+          }
           const hint = locale
             ? 'Try a broader term in the same language, remove the library filter, or search with an English concept.'
             : 'Try a broader term, remove the library filter, or add locale when searching with a non-English term.';
@@ -1779,7 +1794,12 @@ function createServer({ requestContext = null } = {}) {
             error: 'No icons found',
             code: 'no_icons_found',
             hint,
-            ...buildSearchNoResultPresentation({ query, hint }),
+            ...buildSearchNoResultPresentation({
+              query,
+              hint,
+              requestedLibrary: library_mode === 'strict' ? library : null,
+              alternativeResults: recoveryAlternatives,
+            }),
             ...(warnings.length ? { warnings } : {}),
             retryable: true,
             ...(searchRuntime ? { search_runtime: searchRuntime } : {}),

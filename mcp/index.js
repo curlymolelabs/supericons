@@ -962,6 +962,26 @@ async function searchAccessibleIcons({
   }).slice(0, Math.max(1, limit));
 }
 
+async function searchLocalRecoveryAlternatives({
+  query,
+  limit,
+  style = VARIANT_STYLES.ANY,
+  locale = null,
+}) {
+  const requestedStyle = normalizeRequestedStyle(style);
+  const accessibleIcons = getAccessibleIcons();
+  const searchableIcons = requestedStyle === VARIANT_STYLES.ANY
+    ? accessibleIcons.filter((icon) => icon.premium || defaultSearchIconSet.has(icon))
+    : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
+  const { searchIcons } = await import('./search.js');
+  return searchIcons(query, searchableIcons, synonyms, {
+    libraryMode: 'all',
+    limit: Math.min(5, Math.max(1, Number(limit) || 5)),
+    style: requestedStyle,
+    locale,
+  });
+}
+
 async function searchAccessibleIconQueries(queries = [], { toolName = 'recommend_icons' } = {}) {
   const useLocalFirst = isLocalFirstPackageEnabled()
     && queries.length > 0
@@ -1128,11 +1148,11 @@ configureMcpTelemetryContext({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Use this as the main icon tool. Search ${freeIconCountLabel} using synonym expansion. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Omit library to search all libraries. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
+  `Use this as the main icon tool. Search ${freeIconCountLabel} using synonym expansion. When matches exist, the response includes a paste-ready suggested answer, a direct preview image, and Markdown that can show the image in the final reply. When no supported match exists, it returns an honest structured no-result with a next step and no fabricated icon. Omit library to search all libraries. If you choose a library yourself, use prefer. Use strict only when the user explicitly requires that library. Library key si means Supericons, not Simple Icons. Pro API keys unlock workflow tools; premium pack icon search is not exposed through MCP yet.`,
   {
     query: forgivingNonEmptyStringSchema.describe('Search term, for example "heart", "login", or "download arrow".'),
     library: forgivingStringSchema.optional().describe('Optional library only when the user named one. Omit it to search all libraries. Valid keys: si (Supericons AI and developer tool logos), lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons (Simple Icons brand logos), or mingcute.'),
-    library_mode: forgivingStringSchema.optional().describe('Optional library behavior. Omit it to use all when no library is named and strict when a library is named. Prefer requires a named library. Unsupported or incomplete combinations are safely normalized with a warning.'),
+    library_mode: forgivingStringSchema.optional().describe('Optional library behavior. Omit a self-chosen library and search all, or use prefer with that library. Use strict only when the user explicitly requires the named library. Unsupported or incomplete combinations are safely normalized with a warning.'),
     style: forgivingStringSchema.optional().default('any').describe('Optional style preference. Unsupported values are ignored with a warning.'),
     locale: forgivingStringSchema.optional().describe('Optional locale for multilingual search terms. Supported values: zh-Hans, zh-Hant, ja, ko, es, de, pt, ar, hi, vi, th. Unsupported values are ignored with a warning.'),
     limit: forgivingSearchLimitSchema.optional().default(10).describe('Maximum results from 1 to 50. Numeric strings are accepted.'),
@@ -1220,6 +1240,19 @@ server.tool(
     }
 
     if (results.length === 0) {
+      let recoveryAlternatives = [];
+      if (library_mode === 'strict' && library) {
+        try {
+          recoveryAlternatives = await searchLocalRecoveryAlternatives({
+            query,
+            limit,
+            style,
+            locale,
+          });
+        } catch {
+          recoveryAlternatives = [];
+        }
+      }
       void logMcpSearchAttempt({
         query: displayQuery,
         resultCount: 0,
@@ -1244,7 +1277,12 @@ server.tool(
         library_mode,
         locale: locale || null,
         hint,
-        ...buildSearchNoResultPresentation({ query: displayQuery, hint }),
+        ...buildSearchNoResultPresentation({
+          query: displayQuery,
+          hint,
+          requestedLibrary: library_mode === 'strict' ? library : null,
+          alternativeResults: recoveryAlternatives,
+        }),
         ...(warnings.length ? { warnings } : {}),
         ...(localizeSearchNoResultsHint(locale, Boolean(locale))
           ? {
