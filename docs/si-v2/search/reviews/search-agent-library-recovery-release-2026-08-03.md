@@ -1,7 +1,7 @@
 # Agent-friendly library recovery release record
 
 Date: 2026-08-03
-Status: exact artifacts frozen, awaiting focused artifact audit
+Status: provider artifacts deployed and verified, npm staging pending authentication
 
 ## Release identity
 
@@ -24,7 +24,7 @@ Status: exact artifacts frozen, awaiting focused artifact audit
 
 The exact frozen archive clean-installed and passed all 225 ordered stdio cases. Its fixed-search fingerprint is `df8a55dafa58e32ba1b7ea9e1933387c9bb1c7f5ef587a758567cd36e86b2357`. Its route fingerprint is `c924440e54573024cf8570769d9f46e2e360adb3b3f90f857f3507b5f6d69874`. Every packed file matches the corresponding file in the release revision by Git blob identity.
 
-No npm stage exists for this release yet. Nothing has been published.
+No npm stage exists for this release yet. Public npm `latest` remains `0.4.26`.
 
 ## Frozen Railway source
 
@@ -33,7 +33,7 @@ No npm stage exists for this release yet. Nothing has been published.
 - SHA-256: `f4bf010aa9a71a1b53e2a028906b11a918867992be1b4f738218c02610dbcd94`
 - Source revision: `a7d4cd6921d49d2905a226ec827da00aba84e5ba`
 
-Nothing has been deployed from this source archive.
+The frozen source archive was deployed to Railway as deployment `d13a7856-9949-4a63-9480-ba0a497597bf`. The active image digest is `sha256:347dc973a5ccc0a0abb156f9ad2b05a06c85932039f9a103928b646c8643a9f0`.
 
 ## Frozen website artifact
 
@@ -46,7 +46,9 @@ Nothing has been deployed from this source archive.
 
 The tree hash uses the established `inventoryTree` procedure in `scripts/build-web-preview-persistence-release.mjs`. A second build used by the browser verifier produced the same 177 production files byte for byte after the normal admin-artifact cleanup.
 
-Nothing has been deployed from this website artifact.
+The frozen website artifact was deployed to Netlify as production deployment `6a70a8a3b02de82554449442`.
+
+Live `index.html` matched the frozen SHA-256 exactly. Live `assets/search-pipeline-OnAEenI5.js` also matched the frozen SHA-256 exactly.
 
 ## Verified behavior
 
@@ -62,6 +64,20 @@ Nothing has been deployed from this website artifact.
 - Strict-library results never included another library.
 - The MCP schema and hosted URL are unchanged.
 
+## Live provider verification
+
+Signed controlled verification on 2026-08-03 confirmed:
+
+- Hosted MCP health reports version `0.4.27`, with both search circuits closed.
+- The 39-case production matrix passed through public HTTP and Hosted MCP.
+- Copy.ai sentence punctuation remains an honest zero through both public HTTP and Hosted MCP.
+- `.ai` file searches return file results.
+- Adobe Illustrator `.ai` file intent includes `iconoir:adobe-illustrator`.
+- Strict `si` OpenAI search remains empty and its MCP guidance names `tabler:brand-openai` as an alternative.
+- Netlify reports deployment `6a70a8a3b02de82554449442` ready and live.
+
+Forced hosted failure behavior was verified against the exact release artifact before deployment. Production was not intentionally interrupted to repeat that failure check.
+
 ## Change boundary
 
 This release changes search recovery guidance, brand protection, `.ai` brand and file classification, permanent fixtures, and version metadata. It does not add icons or change the icon catalog. It does not change telemetry, database schema, admin dashboard behavior, MCP input or output schemas, or the hosted MCP URL.
@@ -70,7 +86,7 @@ The unsupported URL-path form `copy.ai/logo` remains outside this release. It mu
 
 ## Current public baseline and rollback references
 
-Read-only checks on 2026-08-03 confirmed npm `latest` and Hosted MCP health still report `0.4.26`. Hosted search and grouped-search circuits were closed with zero active and queued requests.
+Before deployment, read-only checks on 2026-08-03 confirmed npm `latest` and Hosted MCP health reported `0.4.26`. Hosted search and grouped-search circuits were closed with zero active and queued requests.
 
 Read-only provider checks on 2026-08-03 confirmed these current 0.4.26 rollback references:
 
@@ -80,6 +96,14 @@ Read-only provider checks on 2026-08-03 confirmed these current 0.4.26 rollback 
 - npm rollback version: `0.4.26`
 
 Provider state for those deployment identifiers must be checked again immediately before any mutation.
+
+The verified current provider deployments are:
+
+- Railway deployment: `d13a7856-9949-4a63-9480-ba0a497597bf`
+- Railway image digest: `sha256:347dc973a5ccc0a0abb156f9ad2b05a06c85932039f9a103928b646c8643a9f0`
+- Website deployment: `6a70a8a3b02de82554449442`
+- Hosted version: `0.4.27`
+- npm `latest`: `0.4.26`, pending private stage and owner approval
 
 ## Focused artifact audit request
 
