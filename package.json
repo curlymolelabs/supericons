@@ -235,6 +235,7 @@
     "build:search-intent-dictionary": "node scripts/build-search-intent-core-from-dictionary.mjs",
     "build:search-intent-graph": "node scripts/build-search-intent-graph.mjs",
     "verify:search-v2-assessment-checklist-recall": "node scripts/verify-search-v2-assessment-checklist-recall.mjs",
+    "verify:search-donation-charity-parity": "node scripts/verify-search-donation-charity-parity.mjs",
     "build:search-ranking-policy": "node scripts/build-search-ranking-policy.mjs",
     "build:semantic-search-documents": "node scripts/build-semantic-search-documents.mjs",
     "suggest:search-intent-candidates": "node scripts/suggest-search-intent-candidates.mjs",
