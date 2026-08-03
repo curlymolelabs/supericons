@@ -1,7 +1,7 @@
 # Agent-friendly library recovery release record
 
 Date: 2026-08-03
-Status: provider artifacts deployed and verified, exact npm stage awaiting owner approval
+Status: released and verified
 
 ## Release identity
 
@@ -26,7 +26,7 @@ The exact frozen archive clean-installed and passed all 225 ordered stdio cases.
 
 Private npm stage `d5c08996-295f-494a-80bd-791499897cd0` contains `@supericons/mcp@0.4.27` with tag `latest`. An independent download from that stage was 6,208,046 bytes and matched the frozen archive SHA-256 exactly: `afcf6ee2af46d2bcf539be560fdba809cc5f47780871004fea8f1d013e476d0f`.
 
-The stage remains private and awaits owner approval. Public npm `latest` remains `0.4.26`.
+The owner approved the exact stage. Public npm `latest` now points to `0.4.27`. A fresh public registry download was 6,208,046 bytes and matched the approved SHA-256 exactly: `afcf6ee2af46d2bcf539be560fdba809cc5f47780871004fea8f1d013e476d0f`.
 
 ## Frozen Railway source
 
@@ -105,8 +105,9 @@ The verified current provider deployments are:
 - Railway image digest: `sha256:347dc973a5ccc0a0abb156f9ad2b05a06c85932039f9a103928b646c8643a9f0`
 - Website deployment: `6a70a8a3b02de82554449442`
 - Hosted version: `0.4.27`
-- npm private stage: `d5c08996-295f-494a-80bd-791499897cd0`, exact bytes verified
-- npm `latest`: `0.4.26`, pending owner approval
+- npm approved stage: `d5c08996-295f-494a-80bd-791499897cd0`
+- npm `latest`: `0.4.27`
+- Public npm archive SHA-256: `afcf6ee2af46d2bcf539be560fdba809cc5f47780871004fea8f1d013e476d0f`
 
 ## Focused artifact audit request
 
