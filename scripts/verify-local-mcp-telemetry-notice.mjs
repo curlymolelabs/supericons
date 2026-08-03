@@ -44,7 +44,7 @@ for (const statement of [
   assert.ok(readme.includes(statement), `Missing notice statement: ${statement}`);
 }
 
-assert.equal(packageJson.version, '0.4.27');
+assert.equal(packageJson.version, '0.4.28');
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[''].version, packageJson.version);
 assert.equal(packageJson.dependencies['@modelcontextprotocol/sdk'], '^1.30.0');

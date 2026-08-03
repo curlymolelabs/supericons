@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.28 - 2026-08-04
+
+### Fixed
+
+- connected donation, charity, giving, and fundraising searches to reviewed hand-heart icons in Local MCP
+- preserved strict-library behavior and honest zeros while improving local semantic coverage
+
+### Verified
+
+- added permanent controls for receipts, charity events, heart rate, blood donation, feedback, strict libraries, and unsupported queries
+- confirmed all 225 established search cases and both search fingerprints remain unchanged
+
 ## 0.4.27 - 2026-08-03
 
 ### Fixed
