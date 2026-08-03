@@ -72,13 +72,11 @@ The unsupported URL-path form `copy.ai/logo` remains outside this release. It mu
 
 Read-only checks on 2026-08-03 confirmed npm `latest` and Hosted MCP health still report `0.4.26`. Hosted search and grouped-search circuits were closed with zero active and queued requests.
 
-The released 0.4.26 record names these rollback references:
+Read-only provider checks on 2026-08-03 confirmed these current 0.4.26 rollback references:
 
-- Railway deployment: `094b470a-e633-4f86-9ce6-19da91cc2a55`
-- Railway image digest: `sha256:26b71e38a3cb538eea9f3fb8b001a6871f8b38cfbae3b8d3e6005e27d4921e80`
-- Railway source rollback deployment: `61fe6aa7-aa61-42ba-884d-466af9a92e6f`
-- Website deployment: `6a6a72f067e468d23496b5fb`
-- Website rollback deployment: `6a6a497735044883fa5bbcc7`
+- Railway rollback deployment: `c8e7bf9f-1e5c-40b3-b326-1b1ddf277001`
+- Railway rollback image digest: `sha256:dfbb3ef144f0b44daa38cbe9cc4f495b8195d4635e0e0ab965c1af67ec42f44b`
+- Website rollback deployment: `6a6de012c5d3c3c950156456`
 - npm rollback version: `0.4.26`
 
 Provider state for those deployment identifiers must be checked again immediately before any mutation.
