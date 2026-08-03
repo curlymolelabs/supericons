@@ -238,6 +238,68 @@
       "relevant_any": []
     },
     {
+      "case_id": "strict_si_openai_zero",
+      "query": "openai",
+      "library": "si",
+      "library_mode": "strict",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "all_libraries_openai_positive",
+      "query": "openai",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["openai"]
+    },
+    {
+      "case_id": "brand_copy_ai_honest_zero",
+      "query": "copy.ai",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "brand_copy_ai_punctuation_honest_zero",
+      "query": "Can you find copy.ai?",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "brand_copy_ai_question_honest_zero",
+      "query": "copy.ai?",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "brand_copy_ai_comma_honest_zero",
+      "query": "copy.ai,",
+      "expected_decision": "expected_zero",
+      "relevant_any": []
+    },
+    {
+      "case_id": "ai_file_extension_positive",
+      "query": "file.ai icon",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["file"]
+    },
+    {
+      "case_id": "ai_file_extension_document_positive",
+      "query": "document.ai file",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["file", "document"]
+    },
+    {
+      "case_id": "ai_file_extension_download_positive",
+      "query": "download design.ai file",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["file", "download", "design"]
+    },
+    {
+      "case_id": "ai_file_extension_illustrator_positive",
+      "query": "Adobe Illustrator .ai file",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["file", "adobe-illustrator"]
+    },
+    {
       "case_id": "hosted_dependency_error_visible",
       "query": "hard hat construction worker",
       "library": "lucide",

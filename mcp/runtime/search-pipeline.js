@@ -8,6 +8,7 @@ import { createIconTaxonomyMap } from './icon-taxonomy-seed.js';
 import {
   getBrandRankAdjustment,
   getSearchInterpretationPlan,
+  hasDomainStyleBrandIntent,
   normalizeSearchLibraryMode,
   rerankSearchCandidatesAtFusion,
 } from './search-ranking-policy.js';
@@ -637,6 +638,31 @@ function expandSearchTerms(query, synonyms, options = {}) {
 function searchIconsCore(query, icons, synonyms, options = {}) {
   const { library, limit = 20, style = 'any' } = options;
   const libraryMode = normalizeSearchLibraryMode(options.libraryMode);
+  if (hasDomainStyleBrandIntent(query)) {
+    const directBrandResults = searchIconsForSingleQuery(query, icons, synonyms, {
+      library,
+      libraryMode,
+      limit: Math.max(Number(limit || 20) * 2, 20),
+      style,
+      applyExpressiveFallback: false,
+      candidatePool: getIndexedCandidatePool(icons, query, synonyms),
+    }).filter((icon) => (
+      isLikelyBrandIdentityIcon(icon)
+      && getBrandRankAdjustment(query, icon).penalty === 0
+    ));
+    const exactBrandResults = directBrandResults.length > 0
+      ? directBrandResults
+      : getExactBrandIdentityResults(query, icons, synonyms, {
+          library,
+          libraryMode,
+          limit,
+          style,
+        });
+    return rerankSearchCandidatesAtFusion(query, exactBrandResults, {
+      libraryMode,
+      requestedLibrary: library,
+    }).slice(0, Math.max(1, limit));
+  }
   const semanticQueryFrame = buildSearchQueryFrame(query);
   const cjkExpansion = expandCjkQuery(query, {
     locale: options.locale,
