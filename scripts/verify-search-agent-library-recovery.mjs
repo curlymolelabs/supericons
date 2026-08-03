@@ -283,7 +283,7 @@ async function waitForRemoteHealth() {
 let remoteClient;
 try {
   const health = await waitForRemoteHealth();
-  assert.equal(health.version, '0.4.26');
+  assert.equal(health.version, '0.4.27');
   const controlledHeaders = createControlledRunHeaders(
     'agent-library-recovery-verifier',
     controlledSecret,

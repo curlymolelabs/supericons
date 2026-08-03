@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.27 - 2026-08-03
+
+### Fixed
+
+- added clear cross-library guidance after a valid strict-library zero while keeping strict results empty
+- protected exact brand intent from generic icon meanings, including Copy.ai punctuation forms
+- distinguished reviewed `.ai` brand names from Illustrator and other `.ai` file searches
+
+### Improved
+
+- clarified when agents should use all, preferred, or strict library search
+- added permanent cross-surface checks for library recovery, brand safety, `.ai` files, and hosted error visibility
+
 ## 0.4.26 - 2026-07-30
 
 ### Fixed
