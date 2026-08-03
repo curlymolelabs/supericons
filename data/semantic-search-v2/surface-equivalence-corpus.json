@@ -300,6 +300,18 @@
       "relevant_any": ["file", "adobe-illustrator"]
     },
     {
+      "case_id": "semantic_donation_positive",
+      "query": "donation",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["hand-heart", "hand_heart", "heart_hand", "donate"]
+    },
+    {
+      "case_id": "semantic_charity_donation_heart_positive",
+      "query": "charity donation heart",
+      "expected_decision": "expected_positive",
+      "relevant_any": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
       "case_id": "hosted_dependency_error_visible",
       "query": "hard hat construction worker",
       "library": "lucide",

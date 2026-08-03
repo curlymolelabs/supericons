@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "fixture_id": "donation-charity-parity-20260804",
+  "reviewed_refs": [
+    "lucide:hand-heart",
+    "phosphor:hand-heart",
+    "mingcute:hand_heart_line",
+    "mingcute:heart_hand_line",
+    "iconoir:donate"
+  ],
+  "cases": [
+    {
+      "case_id": "donation_all",
+      "query": "donation",
+      "expected_decision": "expected_positive",
+      "minimum_reviewed_results": 3
+    },
+    {
+      "case_id": "charity_donation_heart_all",
+      "query": "charity donation heart",
+      "expected_decision": "expected_positive",
+      "minimum_reviewed_results": 3
+    },
+    {
+      "case_id": "charity_all",
+      "query": "charity",
+      "expected_decision": "expected_positive",
+      "minimum_reviewed_results": 3
+    },
+    {
+      "case_id": "fundraising_all",
+      "query": "fundraising",
+      "expected_decision": "expected_positive",
+      "minimum_reviewed_results": 3
+    },
+    {
+      "case_id": "donate_all",
+      "query": "donate",
+      "expected_decision": "expected_positive",
+      "minimum_reviewed_results": 3
+    },
+    {
+      "case_id": "donation_lucide_strict",
+      "query": "donation",
+      "library": "lucide",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "required_refs": ["lucide:hand-heart"]
+    },
+    {
+      "case_id": "donation_phosphor_strict",
+      "query": "donation",
+      "library": "phosphor",
+      "library_mode": "strict",
+      "expected_decision": "expected_positive",
+      "required_refs": ["phosphor:hand-heart"]
+    },
+    {
+      "case_id": "donation_receipt_control",
+      "query": "donation receipt",
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["receipt"],
+      "forbidden_top_ref_fragments": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
+      "case_id": "charity_event_control",
+      "query": "charity event",
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["event", "calendar"],
+      "forbidden_top_ref_fragments": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
+      "case_id": "heart_rate_control",
+      "query": "heart rate",
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["heart-rate", "heart_rate", "rate"],
+      "forbidden_top_ref_fragments": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
+      "case_id": "blood_donation_control",
+      "query": "blood donation",
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["blood"],
+      "forbidden_top_ref_fragments": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
+      "case_id": "giving_feedback_control",
+      "query": "giving feedback",
+      "expected_decision": "expected_positive",
+      "required_ref_fragments": ["feedback"],
+      "forbidden_top_ref_fragments": ["hand-heart", "hand_heart", "heart_hand"]
+    },
+    {
+      "case_id": "honest_zero_control",
+      "query": "florblequux donationless",
+      "expected_decision": "expected_zero"
+    }
+  ]
+}
