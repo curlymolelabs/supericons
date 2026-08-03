@@ -62,23 +62,36 @@ material:content_copy
 lucide:copy
 ```
 
-After, `copy.ai` and `copy.ai logo` return an honest zero. No generic copy, clipboard, or duplicate icon is suggested.
+After, `copy.ai`, `copy.ai logo`, `copy.ai?`, `copy.ai,`, and `Can you find copy.ai?` return an honest zero. No generic copy, clipboard, or duplicate icon is suggested.
+
+### `.ai` file searches
+
+The first source revision treated every `name.ai` token as a company domain. This incorrectly forced file searches such as `file.ai icon` to zero. The correction protects reviewed company domains while allowing explicit file contexts to use normal icon search.
+
+Verified examples:
+
+```text
+file.ai icon                -> lucide:file-search and Material file icons
+document.ai file            -> tabler:file-ai, tabler:file-text-ai, mingcute:file_ai_line
+download design.ai file     -> file, download, and design icons
+Adobe Illustrator .ai file  -> lucide:file and iconoir:adobe-illustrator
+```
 
 ## Permanent fixtures
 
-- `data/search-intent-fixtures/agent-library-recovery-corpus.json` contains 26 strict success, strict recovery, honest brand zero, and honest catalog zero cases.
-- `data/semantic-search-v2/surface-equivalence-corpus.json` now also binds three browser decisions: strict `si` OpenAI is zero, all-library OpenAI is positive, and Copy.ai is zero.
+- `data/search-intent-fixtures/agent-library-recovery-corpus.json` contains 33 strict success, strict recovery, file-extension, honest brand zero, and honest catalog zero cases.
+- `data/semantic-search-v2/surface-equivalence-corpus.json` binds 45 browser decisions, including all reviewed Copy.ai punctuation forms and `.ai` file contexts.
 - `scripts/verify-search-agent-library-recovery.mjs` exercises the direct search pipeline, Local MCP over stdio, a Hosted MCP candidate, public HTTP, agent follow-up, hosted error visibility, and bounded recovery latency.
 
 ## Verified results
 
 | Command | Result |
 | --- | --- |
-| `node scripts/verify-search-agent-library-recovery.mjs` | 26 of 26 focused cases passed. Hosted strict-zero recovery, public HTTP strict zero, and hosted error visibility passed. First recovery call was 758.2 ms. Warm recovery p95 was 632.9 ms under the 1,000 ms two-lookup gate. |
-| `node scripts/verify-search-v2-surface-equivalence-baseline.mjs` | 38 of 38 decisions passed. |
-| `node scripts/verify-search-v2-browser-equivalence.mjs` | 38 of 38 cases passed against a built browser artifact. Hosted failure remained visible. |
+| `node scripts/verify-search-agent-library-recovery.mjs` | 33 of 33 focused cases passed. Hosted MCP and public HTTP `.ai` cases passed, hosted strict-zero recovery passed, and hosted error visibility passed. First recovery call was 801.2 ms. Warm recovery p95 was 673.4 ms under the 1,000 ms two-lookup gate. |
+| `node scripts/verify-search-v2-surface-equivalence-baseline.mjs` | 45 of 45 decisions passed. |
+| `node scripts/verify-search-v2-browser-equivalence.mjs` | 45 of 45 cases passed against a built browser artifact. Hosted failure remained visible. |
 | `npm run verify:search-v2-phase1-parity` | 225 of 225 cases passed. Fingerprint remained `df8a55dafa58e32ba1b7ea9e1933387c9bb1c7f5ef587a758567cd36e86b2357`. |
-| `npm run verify:search-v2-semantic-latency` | Local search p95 was 421.6 ms under the established 500 ms gate. First search was 652 ms under the 1,000 ms cold limit. |
+| `npm run verify:search-v2-semantic-latency` | Local search p95 was 411.1 ms under the established 500 ms gate. First search was 639.3 ms under the 1,000 ms cold limit. |
 | `npm run verify:mcp-agent-ux-contract` | Passed. |
 | `node scripts/verify-search-v2-one-call-contract.mjs` | Passed. |
 | `npm run verify:search-library-modes` | Passed. |
@@ -89,7 +102,7 @@ After, `copy.ai` and `copy.ai logo` return an honest zero. No generic copy, clip
 | `npm run verify:recommend-icons-grouped-search` | Passed, including grouped failure propagation and result parity. |
 | `npm run verify:search-v2-shared-recommendation-pipeline` | Passed, including candidate identity parity and failure evidence. |
 
-The two copies of `search-ranking-policy.js` were byte-identical at SHA-256 `194EA1480A9EE6B6D0A4DB2A36DA41347162C6A72DB1FFD5020058B76A45C4DA` before final commit.
+The two copies of `search-ranking-policy.js` were byte-identical at SHA-256 `D3621615DEE9A9326877A23A2B418A25FBCC1342A05A4A323EDB6064042264B2` before the corrective commit.
 
 ## Catalog gaps for the icon workstream
 

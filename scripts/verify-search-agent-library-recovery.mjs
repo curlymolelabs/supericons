@@ -24,6 +24,10 @@ function includesAny(refs, fragments = []) {
   return fragments.some((fragment) => refs.some((ref) => ref.includes(String(fragment).toLowerCase())));
 }
 
+function includesAll(refs, fragments = []) {
+  return fragments.every((fragment) => refs.some((ref) => ref.includes(String(fragment).toLowerCase())));
+}
+
 function parsePayload(result) {
   if (result?.structuredContent) return result.structuredContent;
   const text = result?.content?.find((entry) => entry.type === 'text')?.text;
@@ -31,7 +35,7 @@ function parsePayload(result) {
 }
 
 assert.equal(corpus.schema_version, 1);
-assert.equal(corpus.cases.length, 26);
+assert.equal(corpus.cases.length, 33);
 
 const observations = [];
 for (const testCase of corpus.cases) {
@@ -66,6 +70,21 @@ for (const testCase of corpus.cases) {
   if (testCase.group === 'honest_brand_zero' || testCase.group === 'honest_catalog_zero') {
     assert.equal(refs.length, 0, `${testCase.case_id} must remain an honest zero: ${refs.join(', ')}`);
     assert.ok(!includesAny(refs, testCase.forbidden_ref_fragments), `${testCase.case_id} returned a forbidden substitute`);
+  }
+
+  if (testCase.group === 'file_extension_positive') {
+    assert.ok(refs.length > 0, `${testCase.case_id} returned a false file-extension zero`);
+    if (testCase.required_all_ref_fragments) {
+      assert.ok(
+        includesAll(refs, testCase.required_all_ref_fragments),
+        `${testCase.case_id} missed a required file meaning: ${refs.join(', ')}`,
+      );
+    } else {
+      assert.ok(
+        includesAny(refs, testCase.required_ref_fragments),
+        `${testCase.case_id} missed its reviewed file meaning: ${refs.join(', ')}`,
+      );
+    }
   }
 
   observations.push({ case_id: testCase.case_id, refs });
@@ -153,6 +172,16 @@ try {
     result_count: copyAiPayload.result_count,
     hint: copyAiPayload.hint,
   };
+
+  for (const query of ['copy.ai?', 'copy.ai,', 'Can you find copy.ai?']) {
+    const punctuatedPayload = parsePayload(await client.callTool({
+      name: 'search_icons',
+      arguments: { query, library_mode: 'all', limit: 5 },
+    }));
+    assert.equal(punctuatedPayload.code, 'no_icons_found', `${query} must remain an honest MCP zero`);
+    assert.equal(punctuatedPayload.result_count, 0, `${query} must not fabricate MCP brand results`);
+    assert.equal('results' in punctuatedPayload, false, `${query} must keep MCP results absent`);
+  }
 
   const followupPayload = parsePayload(await client.callTool({
     name: 'search_icons',
@@ -285,6 +314,34 @@ try {
   assert.equal(httpPayload.results.length, 0);
   assert.equal(hostedRequests.length, 2, 'Public HTTP strict zero must use one hosted request.');
 
+  const hostedCopyAiPayload = parsePayload(await remoteClient.callTool({
+    name: 'search_icons',
+    arguments: { query: 'Can you find copy.ai?', library_mode: 'all', limit: 5 },
+  }));
+  assert.equal(hostedCopyAiPayload.code, 'no_icons_found');
+  assert.equal(hostedCopyAiPayload.result_count, 0);
+  assert.equal((hostedCopyAiPayload.results || []).length, 0);
+  assert.equal(hostedRequests.length, 3, 'Hosted MCP Copy.ai must use one hosted request.');
+
+  const fileHttpResponse = await fetch(`${remoteBaseUrl}/search-icons`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', ...controlledHeaders },
+    body: JSON.stringify({ query: 'file.ai icon', limit: 5 }),
+  });
+  const fileHttpPayload = await fileHttpResponse.json();
+  assert.equal(fileHttpResponse.status, 200);
+  assert.ok(fileHttpPayload.results.length > 0);
+  assert.ok(fileHttpPayload.results.some((icon) => iconRef(icon).includes('file')));
+  assert.equal(hostedRequests.length, 4, 'Public HTTP file query must use one hosted request.');
+
+  const hostedIllustratorPayload = parsePayload(await remoteClient.callTool({
+    name: 'search_icons',
+    arguments: { query: 'Adobe Illustrator .ai file', library_mode: 'all', limit: 5 },
+  }));
+  assert.ok(hostedIllustratorPayload.result_count > 0);
+  assert.ok(hostedIllustratorPayload.results.some((icon) => icon.icon_ref === 'iconoir:adobe-illustrator'));
+  assert.equal(hostedRequests.length, 5, 'Hosted MCP Illustrator query must use one hosted request.');
+
   const outageResult = await remoteClient.callTool({
     name: 'search_icons',
     arguments: { query: 'forced hosted outage', library: 'si', library_mode: 'strict', limit: 5 },
@@ -293,7 +350,7 @@ try {
   assert.equal(outagePayload.outcome_type, 'tool_error');
   assert.equal((outagePayload.results || []).length, 0);
   assert.equal('search_runtime' in outagePayload, false);
-  assert.equal(hostedRequests.length, 3, 'Hosted outage must not trigger alternate recovery.');
+  assert.equal(hostedRequests.length, 6, 'Hosted outage must not trigger alternate recovery.');
 } finally {
   if (remoteClient) await remoteClient.close();
   remoteChild.kill('SIGTERM');

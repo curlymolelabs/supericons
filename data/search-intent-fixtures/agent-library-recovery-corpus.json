@@ -166,6 +166,42 @@
       "required_ref_fragments": ["si:stomach"]
     },
     {
+      "case_id": "ai_file_extension_file_icon",
+      "group": "file_extension_positive",
+      "query": "file.ai icon",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "required_ref_fragments": ["file"]
+    },
+    {
+      "case_id": "ai_file_extension_document_file",
+      "group": "file_extension_positive",
+      "query": "document.ai file",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "required_all_ref_fragments": ["file", "document"]
+    },
+    {
+      "case_id": "ai_file_extension_download_design_file",
+      "group": "file_extension_positive",
+      "query": "download design.ai file",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "required_all_ref_fragments": ["file", "download", "design"]
+    },
+    {
+      "case_id": "ai_file_extension_adobe_illustrator",
+      "group": "file_extension_positive",
+      "query": "Adobe Illustrator .ai file",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "required_all_ref_fragments": ["file", "adobe-illustrator"]
+    },
+    {
       "case_id": "honest_brand_zero_copy_ai",
       "group": "honest_brand_zero",
       "query": "copy.ai",
@@ -178,6 +214,33 @@
       "case_id": "honest_brand_zero_copy_ai_logo",
       "group": "honest_brand_zero",
       "query": "copy.ai logo",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": ["copy", "clipboard", "duplicate"]
+    },
+    {
+      "case_id": "honest_brand_zero_copy_ai_question",
+      "group": "honest_brand_zero",
+      "query": "copy.ai?",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": ["copy", "clipboard", "duplicate"]
+    },
+    {
+      "case_id": "honest_brand_zero_copy_ai_comma",
+      "group": "honest_brand_zero",
+      "query": "copy.ai,",
+      "library": null,
+      "library_mode": "all",
+      "limit": 5,
+      "forbidden_ref_fragments": ["copy", "clipboard", "duplicate"]
+    },
+    {
+      "case_id": "honest_brand_zero_copy_ai_sentence",
+      "group": "honest_brand_zero",
+      "query": "Can you find copy.ai?",
       "library": null,
       "library_mode": "all",
       "limit": 5,

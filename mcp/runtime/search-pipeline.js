@@ -8,6 +8,7 @@ import { createIconTaxonomyMap } from './icon-taxonomy-seed.js';
 import {
   getBrandRankAdjustment,
   getSearchInterpretationPlan,
+  hasDomainStyleBrandIntent,
   normalizeSearchLibraryMode,
   rerankSearchCandidatesAtFusion,
 } from './search-ranking-policy.js';
@@ -383,12 +384,6 @@ function getExactBrandIdentityResults(query, icons, synonyms, options = {}) {
       brandAdjustment.penalty === 0
     );
   });
-}
-
-function hasDomainStyleBrandIntent(query) {
-  return /(?:^|\s)[\p{L}\p{N}][\p{L}\p{N}._-]*\.ai(?:\s|$)/iu.test(
-    String(query || '').normalize('NFKC'),
-  );
 }
 
 function getIconCandidateIndex(icons) {

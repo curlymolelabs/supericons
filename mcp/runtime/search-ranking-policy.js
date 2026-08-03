@@ -7,6 +7,23 @@ const expressiveFallbackTags = new Set(
   (policy.candidate_strength_policy?.expressive_fallback_tags || []).map(normalizeSearchRankingText),
 );
 const expressiveBroadMatchPenalty = Number(policy.candidate_strength_policy?.broad_match_penalty || 0);
+const REVIEWED_DOMAIN_STYLE_BRANDS = new Set(['copy.ai']);
+const AI_FILE_CONTEXT_TERMS = new Set([
+  'adobe',
+  'document',
+  'documents',
+  'download',
+  'downloads',
+  'export',
+  'exports',
+  'file',
+  'files',
+  'illustrator',
+  'import',
+  'imports',
+  'upload',
+  'uploads',
+]);
 const NEGATIVE_STATE_TOKENS = new Set([
   'blocked',
   'broken',
@@ -201,10 +218,24 @@ function hasBrandIntent(query) {
   return tokenize(query).some((token) => brandIntentTerms.has(token));
 }
 
-function hasDomainStyleBrandIntent(query) {
-  return /(?:^|\s)[\p{L}\p{N}][\p{L}\p{N}._-]*\.ai(?:\s|$)/iu.test(
-    String(query || '').normalize('NFKC'),
-  );
+export function hasDomainStyleBrandIntent(query) {
+  const normalizedQuery = String(query || '').normalize('NFKC').toLowerCase();
+  const domainMatches = [
+    ...normalizedQuery.matchAll(
+      /(?:^|\s)([\p{L}\p{N}][\p{L}\p{N}._-]*\.ai)(?=$|[\s,.;:!?()[\]{}])/giu,
+    ),
+  ];
+  if (domainMatches.length === 0) return false;
+
+  const queryTokens = new Set(tokenize(normalizedQuery));
+  return domainMatches.some((match) => {
+    const domain = match[1].toLowerCase();
+    if (REVIEWED_DOMAIN_STYLE_BRANDS.has(domain)) return true;
+
+    const stem = domain.slice(0, -3);
+    if (AI_FILE_CONTEXT_TERMS.has(stem)) return false;
+    return ![...AI_FILE_CONTEXT_TERMS].some((term) => queryTokens.has(term));
+  });
 }
 
 export function getBrandRankAdjustment(query, candidate = {}) {
