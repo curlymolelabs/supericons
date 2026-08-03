@@ -422,9 +422,9 @@ Exit gate: a synthetic success chain, failed chain, abandoned chain, excluded in
 3. Exercise one remote MCP client and one local stdio client to confirm that the caller can read the fields and perform one retry. [ASSUMPTION]
 4. Release to a labeled or otherwise distinguishable initial cohort without enabling embeddings or a model fallback. [SOURCE: `D-035`]
 5. Observe errors, retry depth, added latency, wrong confident results, and recovery completion before broad promotion. [SOURCE: `D-035`]
-6. Synchronize npm and hosted MCP only after the candidate passes the shared contract and surface-parity gates. [SOURCE: `D-033`; `FR-49`]
+6. Release each affected npm or hosted surface only after it passes the shared contract and its own surface gate. Do not redeploy an unaffected surface for version-label alignment. [SOURCE: `D-046`; `FR-49`]
 
-Exit gate: all release guardrails pass, the initial cohort shows no safety or compatibility blocker, and the published surfaces report the same recovery contract version. [SOURCE: `D-033`; ASSUMPTION]
+Exit gate: all affected-surface guardrails pass, the initial cohort shows no safety or compatibility blocker, and the release record maps each affected surface to its exact artifact and compatible recovery contract. [SOURCE: `D-046`; `FR-49`]
 
 ### Phase 6: Evidence review and architecture decision
 

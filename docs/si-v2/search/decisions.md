@@ -45,12 +45,13 @@ Do not delete or rewrite historical entries. A later decision may supersede an e
 | `D-030` | Ratify measured hosted allowance thresholds and replace the organic beta gate with controlled evidence | Accepted | Access policy and promotion gating |
 | `D-031` | Support 20 recommendation slots and return agent-readable recovery messages | Accepted | MCP recommendation and preview behavior |
 | `D-032` | Run Railway recommendations from the in-process index with one controlled hosted fallback | Accepted | Hosted MCP architecture and performance |
-| `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Accepted | Surface alignment and stable release |
+| `D-033` | Promote one deterministic Search v2 release across hosted MCP, stable npm, and web | Superseded in part by `D-036` and `D-046` | Surface alignment and stable release |
 | `D-034` | Expand broad meaning coverage through reviewed deterministic groups and measured language priorities | Accepted | Meaning coverage and localization |
 | `D-035` | Put stable Search v2 in evidence-driven maintenance mode and keep adaptive retrieval paused | Accepted | Maintenance, measurement, and future architecture |
 | `D-036` | Restore hosted-primary retrieval for hosted search while keeping local-first recommendations | Accepted | Hosted search incident repair |
 | `D-037` | Close the hosted search incident with explicit fusion, trusted test labeling, and an immutable local package repair | Accepted | Incident closure and surface parity |
 | `D-038` | Count one final product outcome per search episode and keep internal attempts diagnostic | Accepted | Telemetry identity and dashboard measurement |
+| `D-046` | Release only surfaces whose artifacts, runtime behavior, configuration, or public contract changed | Accepted | Surface-scoped release governance |
 
 ## Decision records
 
@@ -688,6 +689,28 @@ Decision: MCP usage is an input to the popularity score and never an output of i
 Evidence: hosted `get_icon` supplies 1,684 of 1,885 confirmed take events, so MCP data is what makes the ranking viable at all, while MCP itself has no browse surface to rank. Keeping the boundary explicit prevents the score leaking into agent-facing responses by convenience.
 
 Superseded decisions: none.
+
+### D-046: Surface-scoped releases
+
+Date: 2026-08-04. Status: Ratified by the owner.
+
+Decision: each release identifies which surfaces are actually affected. A healthy surface is not deployed solely to align a version number, release date, source revision label, generated timestamp, or workflow sequence. A shared source-file change does not by itself make every surface affected. The release record must trace the changed behavior or required artifact content to each surface that will be mutated.
+
+- Publish npm only when required package code, data, dependencies, documentation, or local behavior change.
+- Deploy Railway only when its hosted runtime, hosted data, routing, configuration, dependency set, public contract, security posture, or platform compatibility changes.
+- Deploy the website only when required website code, data, assets, content, dependencies, security posture, platform compatibility, or user behavior change.
+- Update or resubmit a directory listing or app only when its setup, MCP URL, tool schema, authentication, permissions, public claims, or user-visible capabilities change.
+- When a shared product change affects more than one surface, verify and release each affected surface from an exact artifact with its own rollback target.
+- Record a per-surface mapping of source revision, artifact identity, deployed version, and rollback target. Matching version labels across surfaces are optional and do not prove product parity.
+- Preserve cross-surface behavior contracts and shared-snapshot parity where they apply. Internal hosted routing remains governed by `FR-52` and must not be changed merely to match local npm behavior.
+
+Reason: surface compatibility and synchronized version labels are different concerns. Deploying an unchanged healthy surface adds production mutation and regression risk without improving its users. Rebuilt timestamps or version metadata do not create product value. A release record can show exactly which version and artifact each surface runs without forcing unrelated deployments.
+
+Alternatives rejected: requiring Railway, npm, and the website to report one version after every bounded repair; deploying all surfaces whenever a shared source file changes even if an affected artifact does not use that path; treating different surface versions as proof of behavioral drift.
+
+Superseded decisions: `D-033` remains the historical decision that aligned the initial stable Search v2 release and retains its independent verification, compatibility, and rollback principles. `D-046` supersedes its same-version and simultaneous-release requirements. `D-036` and `D-037` remain active for hosted-primary search and hosted error visibility.
+
+Specification change: version 1.23 revises `FR-49` and the release constraint to require surface-scoped release decisions.
 
 ## Adding or superseding a decision
 

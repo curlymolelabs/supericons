@@ -10,6 +10,9 @@ import {
   shouldUseLocalFirstSearch,
 } from '../mcp/release-channel.js';
 
+// This verifies one release artifact and its local runtime contract. It does not
+// require deployed npm, Railway, or website surfaces to report the same version.
+
 const repoRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const packageJson = JSON.parse(readFileSync(join(repoRoot, 'mcp', 'package.json'), 'utf8'));
 const packageLock = JSON.parse(readFileSync(join(repoRoot, 'mcp', 'package-lock.json'), 'utf8'));
