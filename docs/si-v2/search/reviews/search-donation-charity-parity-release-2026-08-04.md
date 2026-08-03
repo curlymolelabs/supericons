@@ -1,7 +1,7 @@
 # Donation and charity parity release record
 
 Date: 2026-08-04
-Status: artifacts prepared and verified
+Status: providers deployed and verified; npm staging awaits owner authentication
 
 ## Release identity
 
@@ -33,6 +33,10 @@ Every packed file matches its release-source counterpart byte for byte. A clean 
 
 The hosted-route safety gate passed hosted-primary routing, valid-zero local fallback, hosted-error visibility, retrieval concurrency, and recommendation scope.
 
+The frozen source was deployed to Railway as deployment `e5a379a9-1d32-47f2-a8fa-969258104cfe`. The active image digest is `sha256:bfe8473e763dd4e80dbdf914334ebc21d44ddb4a27a9ab20bd4a64a4d42f259a`.
+
+Signed controlled production verification passed all 39 established product cases through public HTTP and Hosted MCP. Health reported version `0.4.28`, hosted-primary search, and closed search circuits. Signed focused checks returned the same ordered hand-heart family for `donation` and `charity donation heart` through public HTTP and Hosted MCP.
+
 ## Frozen website artifact
 
 - Files: 192
@@ -45,6 +49,8 @@ The hosted-route safety gate passed hosted-primary routing, valid-zero local fal
 Two independent builds from the release revision produced the same file count, byte count, and established inventory-tree hash. The 192-file count includes all 118 Material SVG exports in the pinned source. Read-only checks confirmed all 118 are already live on the 0.4.27 website, so this is not an added website-content change. The previous 177-file release record understated the live inventory.
 
 The exact release source passed the built-browser corpus: 47 of 47 cases. `donation` and `charity donation heart` returned the reviewed hand-heart family. Hosted dependency failures remained visible.
+
+The frozen website was deployed to Netlify as production deployment `6a70dd7cd0bd6a491c8594c6`. Live `index.html` matched the frozen SHA-256 exactly. Live `assets/search-pipeline-DpJpJ0Yy.js` also matched the frozen SHA-256 exactly.
 
 ## Verified behavior
 
@@ -78,6 +84,10 @@ Read-only checks on 2026-08-04 confirmed:
 - Hosted and grouped search circuits: closed, with zero active and queued requests
 
 Provider state must be checked again immediately before each mutation. Only the frozen inputs named in this record may be deployed or staged. Any artifact byte change cancels this record and requires new hashes.
+
+## npm staging state
+
+The exact archive was submitted for private staging after Railway and Netlify verification. npm accepted the package identity and 71-file manifest, then stopped before upload because the account requires a one-time password. No private stage was created and public `latest` remains `0.4.27`.
 
 ## Release sequence
 
