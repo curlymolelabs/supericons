@@ -1,7 +1,7 @@
 # Donation and charity parity release record
 
 Date: 2026-08-04
-Status: providers deployed and verified; npm staging awaits owner authentication
+Status: providers deployed and verified; exact npm stage awaits owner approval
 
 ## Release identity
 
@@ -87,7 +87,17 @@ Provider state must be checked again immediately before each mutation. Only the 
 
 ## npm staging state
 
-The exact archive was submitted for private staging after Railway and Netlify verification. npm accepted the package identity and 71-file manifest, then stopped before upload because the account requires a one-time password. No private stage was created and public `latest` remains `0.4.27`.
+The exact archive was submitted for private staging after Railway and Netlify verification.
+
+- Stage ID: `30ced796-e483-402e-9f29-19507824b340`
+- Package: `@supericons/mcp@0.4.28`
+- Tag: `latest`
+- Access: public
+- Downloaded stage size: 6,208,361 bytes
+- Downloaded stage SHA-256: `ebb27bfb646b8823951277bda5ceecec83ac13d63ed40ffe7a9368201bc214c6`
+- Downloaded stage shasum: `a77bdf11778f6498cae8a21ea6e1736be903661b`
+
+The downloaded staged archive is byte-identical to the frozen archive. Public `latest` remains `0.4.27` until the owner approves this exact stage.
 
 ## Release sequence
 
