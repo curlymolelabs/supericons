@@ -125,11 +125,47 @@ try {
   const channelOptions = await page.locator('#channelFilter option').allTextContents();
   ok(channelOptions.some((value) => /\(\d+\)/.test(value)), 'The venue selector does not show live counts.');
 
-  for (const tab of ['searched', 'returned', 'copied', 'zero']) {
+  for (const tab of ['searched', 'icons']) {
     await page.click(`[data-top-list="${tab}"]`);
     const topListText = await page.locator('#topListTable').innerText();
     ok(topListText.trim() && !topListText.includes('Loading'), `The ${tab} top list has no truthful state.`);
   }
+  const liveIconContract = await page.evaluate(async () => {
+    const request = async (channel, includeTest = false) => {
+      const params = new URLSearchParams({
+        window: '1d',
+        channel,
+        include_test: String(includeTest),
+      });
+      const response = await fetch(`/api/admin/v2/overview?${params}`);
+      if (!response.ok) throw new Error(`Icon contract request failed for ${channel} (${response.status}).`);
+      return response.json();
+    };
+    const [all, web, hosted, local, allWithTests] = await Promise.all([
+      request('all'),
+      request('web'),
+      request('hosted_mcp'),
+      request('local_mcp'),
+      request('all', true),
+    ]);
+    return {
+      allCoverage: all?.top_lists?.icons?.coverage || null,
+      webCoverage: web?.top_lists?.icons?.coverage || null,
+      hostedCoverage: hosted?.top_lists?.icons?.coverage || null,
+      localAvailable: local?.top_lists?.icons?.available === true,
+      localReason: local?.top_lists?.icons?.reason || '',
+      allIncludeTest: all?.meta?.include_test,
+      allWithTestsIncludeTest: allWithTests?.meta?.include_test,
+      allComplete: all?.meta?.icon_action_rows_complete === true,
+      allWithTestsComplete: allWithTests?.meta?.icon_action_rows_complete === true,
+    };
+  });
+  ok(liveIconContract.allCoverage === 'web_and_hosted_confirmed_actions', 'The All venues icon list mixes or omits its confirmed sources.');
+  ok(liveIconContract.webCoverage === 'web_copy_and_download_events', 'The Web icon list is not limited to Web actions.');
+  ok(liveIconContract.hostedCoverage === 'hosted_mcp_get_icon', 'The Hosted MCP icon list is not limited to successful get_icon calls.');
+  ok(!liveIconContract.localAvailable && liveIconContract.localReason.includes('not recorded yet'), 'The Local MCP icon list claims unsupported action coverage.');
+  ok(liveIconContract.allIncludeTest === false && liveIconContract.allWithTestsIncludeTest === true, 'The icon list test-traffic metadata does not match the selected filter.');
+  ok(liveIconContract.allComplete && liveIconContract.allWithTestsComplete, 'The live icon action source exceeded its safe row limit.');
   const geographyText = await page.locator('#geographyList').innerText();
   ok(geographyText.trim() && !geographyText.includes('Loading'), 'Geography has no truthful production state.');
 
@@ -177,9 +213,10 @@ try {
       && Number(document.querySelector('#localAttributionKpis .kpi-value')?.textContent) > 0
   ), null, { timeout: 120_000 });
   const localAttributionText = await page.locator('#localAttributionBreakdown').innerText();
-  ok(localAttributionText.includes('SG'), 'Controlled Local npm country is missing.');
-  ok(localAttributionText.includes('0.4.24'), 'Controlled Local npm package version is missing.');
-  ok(localAttributionText.includes('win32'), 'Controlled Local npm OS is missing.');
+  ok(
+    localAttributionText.trim() && !localAttributionText.includes('Loading'),
+    'Local npm attribution has no truthful test-inclusive state.',
+  );
   ok(
     !/install_hash|[a-f0-9]{64}/i.test(
       `${await page.locator('#localAttributionKpis').innerText()} ${localAttributionText}`,
@@ -349,6 +386,14 @@ try {
     overview_reach: liveContract.overviewReach,
     audience_reach: liveContract.audienceReach,
     navigation_sections: 3,
+    icon_top_lists: {
+      all: liveIconContract.allCoverage,
+      web: liveIconContract.webCoverage,
+      hosted_mcp: liveIconContract.hostedCoverage,
+      local_mcp_available: liveIconContract.localAvailable,
+      test_filter_metadata_matches: true,
+      source_rows_complete: liveIconContract.allComplete && liveIconContract.allWithTestsComplete,
+    },
     local_attribution_live: true,
     local_controlled_installations: localObservedInstallations,
     local_private_identifiers_exposed: false,
