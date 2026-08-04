@@ -248,11 +248,11 @@ assert.deepEqual(
 assert.equal(await page.locator('.tier-divider').count(), 0);
 await page.waitForFunction(() => (
   document.querySelector('#gridMeta')?.textContent
-    ?.includes('supported hosted agent tools')
+    ?.startsWith('Updated ')
 ));
 assert.match(
   await page.locator('#gridMeta').textContent(),
-  /Updated/
+  /^Updated .+\.$/
 );
 
 await page.screenshot({
