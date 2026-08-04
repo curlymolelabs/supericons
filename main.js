@@ -50,6 +50,10 @@ import {
   logIconRequest,
 } from './lib/icon-intelligence.js';
 import {
+  fetchWebsitePopularIcons,
+  promoteWebsitePopularIcons,
+} from './lib/website-popularity.js';
+import {
   addRecentSearchEntry,
   applyPopularityDelta,
   compareBrowseIconsByPopularity,
@@ -165,6 +169,23 @@ const state = {
   activePalette: 'default',
   compareIcons: [],
   popularityMap: {},
+  websitePopularIconRefs: {
+    outline: [],
+    solid: [],
+  },
+  websitePopularityByStyle: {
+    outline: {
+      status: 'idle',
+      calculatedAt: null,
+      staleAfter: null,
+    },
+    solid: {
+      status: 'idle',
+      calculatedAt: null,
+      staleAfter: null,
+    },
+  },
+  websitePopularityAppliedCount: 0,
   jobCategoryCounts: {},
   jobCategoryScopeCount: 0,
   searchContextStartedAt: typeof performance !== 'undefined' ? performance.now() : 0,
@@ -625,6 +646,72 @@ function bumpLocalPopularity(icon, delta) {
   if (shouldUsePopularityRanking()) {
     applyFilters();
   }
+}
+
+function isWebsitePopularityBrowseScope(
+  activeJobCategoryId = getActiveJobCategoryId()
+) {
+  return !isStoreView()
+    && state.mcpPreview?.mode !== 'explicit'
+    && state.activeLibrary === 'all'
+    && !state.searchQuery
+    && !activeJobCategoryId;
+}
+
+function applyWebsitePopularityPrefix(icons, activeJobCategoryId) {
+  state.websitePopularityAppliedCount = 0;
+  if (!isWebsitePopularityBrowseScope(activeJobCategoryId)) return icons;
+
+  const popularityState = state.websitePopularityByStyle[state.iconStyle];
+  if (popularityState?.status !== 'fresh') return icons;
+
+  const promoted = promoteWebsitePopularIcons(
+    icons,
+    state.websitePopularIconRefs[state.iconStyle]
+  );
+  state.websitePopularityAppliedCount = promoted.appliedRefs.length;
+  return promoted.icons;
+}
+
+function formatWebsitePopularityTime(value) {
+  if (!value) return '';
+  const timestamp = new Date(value);
+  if (!Number.isFinite(timestamp.getTime())) return '';
+  try {
+    return new Intl.DateTimeFormat(activeLocale, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(timestamp);
+  } catch {
+    return timestamp.toLocaleString();
+  }
+}
+
+function getWebsitePopularityMetaMessage(activeJobCategoryId) {
+  if (!isWebsitePopularityBrowseScope(activeJobCategoryId)) return null;
+  const popularityState = state.websitePopularityByStyle[state.iconStyle];
+  if (!popularityState || popularityState.status === 'idle'
+    || popularityState.status === 'loading') {
+    return null;
+  }
+
+  if (
+    popularityState.status === 'fresh'
+    && state.websitePopularityAppliedCount >= 6
+  ) {
+    const updated = formatWebsitePopularityTime(
+      popularityState.calculatedAt
+    );
+    return t('app.websitePopularityFresh', { updated });
+  }
+
+  if (popularityState.status === 'stale') {
+    return t('app.websitePopularityStale');
+  }
+  if (popularityState.status === 'insufficient_evidence') {
+    return t('app.websitePopularityInsufficient');
+  }
+  return t('app.websitePopularityFailed');
 }
 
 function shouldShowRecentSearches() {
@@ -2019,6 +2106,7 @@ async function resolveWebSearchResults({
 
 function applyFilters() {
   syncMcpPreviewFilterState();
+  state.websitePopularityAppliedCount = 0;
   const activeWebSearchEpisode = webSearchEpisodes.getActiveEpisode();
   const activeWebSearchEpisodeId = activeWebSearchEpisode && !activeWebSearchEpisode.finalized
     ? activeWebSearchEpisode.id
@@ -2114,6 +2202,8 @@ function applyFilters() {
     icons.sort((a, b) => compareBrowseIconsByPopularity(a, b, state.popularityMap));
   }
 
+  icons = applyWebsitePopularityPrefix(icons, activeJobCategoryId);
+
   state.filteredIcons = icons;
   state.visibleRange.end = state.batchSize;
   updateCounts();
@@ -2159,6 +2249,12 @@ function updateCounts() {
     els.gridMeta.textContent = `${t('app.showingSomeIcons', { shown: showing.toLocaleString(), total: total.toLocaleString() })}${styleSuffix}`;
   }
 
+  const websitePopularityMessage = getWebsitePopularityMetaMessage(
+    activeJobCategoryId
+  );
+  if (websitePopularityMessage) {
+    els.gridMeta.textContent = websitePopularityMessage;
+  }
 }
 
 // ============================================================
@@ -3985,6 +4081,7 @@ if (styleOutline) {
     if (styleSolid) styleSolid.classList.remove('active');
     startCurrentWebSearchEpisode();
     applyFilters();
+    void fetchWebsitePopularityForStyle('outline');
     if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
   });
 }
@@ -4002,6 +4099,7 @@ if (styleSolid) {
     }
     startCurrentWebSearchEpisode();
     applyFilters();
+    void fetchWebsitePopularityForStyle('solid');
     if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
   });
 }
@@ -4783,6 +4881,7 @@ async function init() {
   updateSidebarCounts();
   window.dispatchEvent(new CustomEvent('supericons:locale-change', { detail: { locale: activeLocale } }));
   fetchPopularity(); // non-blocking, re-sorts grid when data arrives
+  void fetchWebsitePopularityForStyle('outline');
 }
 
 // Fetch popularity counts from the icon_scores aggregate table (fire-and-forget)
@@ -4792,6 +4891,41 @@ async function fetchPopularity() {
     applyFilters(); // re-sort with popularity data
   } catch (e) {
     // Silent fail: popularity is a nice-to-have, not critical
+  }
+}
+
+async function fetchWebsitePopularityForStyle(style, { force = false } = {}) {
+  const current = state.websitePopularityByStyle[style];
+  if (!current || current.status === 'loading') return;
+  if (!force && current.status !== 'idle' && current.status !== 'failed') {
+    return;
+  }
+
+  state.websitePopularityByStyle[style] = {
+    status: 'loading',
+    calculatedAt: current.calculatedAt,
+    staleAfter: current.staleAfter,
+  };
+
+  try {
+    const result = await fetchWebsitePopularIcons(style);
+    state.websitePopularIconRefs[style] = result.iconRefs;
+    state.websitePopularityByStyle[style] = {
+      status: result.status,
+      calculatedAt: result.calculatedAt,
+      staleAfter: result.staleAfter,
+    };
+  } catch {
+    state.websitePopularIconRefs[style] = [];
+    state.websitePopularityByStyle[style] = {
+      status: 'failed',
+      calculatedAt: null,
+      staleAfter: null,
+    };
+  }
+
+  if (state.iconStyle === style) {
+    applyFilters();
   }
 }
 

@@ -712,6 +712,26 @@ Superseded decisions: `D-033` remains the historical decision that aligned the i
 
 Specification change: version 1.23 revises `FR-49` and the release constraint to require surface-scoped release decisions.
 
+### D-047: Daily website popularity uses active days
+
+Date: 2026-08-05. Status: Ratified by the owner.
+
+Decision: the website All Icons popularity section refreshes automatically once per day from a rolling 30-day window. It counts production website copy and download actions plus successful production or legacy Hosted MCP `get_icon` calls that returned exactly one icon. Searches, previews, recommendations, appearances, favourites, Local MCP activity, controlled tests, preview traffic, failed calls, malformed references, and zero-result calls do not count.
+
+Each icon receives at most one counted take per UTC day across all included sources. An icon qualifies after activity on at least 3 distinct UTC days. Rank by active days in the 30-day window, then active days in the latest 7 UTC days, then stable `library:id`. Return no more than 50 references. The website places those references first from left to right and row by row, removes their old positions, and keeps the exact relative order of every remaining icon.
+
+The score lives in private website-only tables. A bounded public function returns only the active style's qualifying references, safe status, calculation time, and stale time. It does not expose scores, raw events, identities, or the unshown population. The website stores this list separately from `state.popularityMap`, so search, recommendations, MCP responses, Favourites, Recent, filtered views, and local popularity bumps remain unchanged.
+
+The refresh runs on Supabase at 00:20 UTC each day and becomes stale after 48 hours. Failed, stale, unavailable, or insufficient results preserve the usual grid order. The page states that the list reflects recent recorded use on Supericons and supported hosted agent tools.
+
+Reason: the owner asked to promote the latest 30-day admin popularity list automatically without requiring a local computer. The 2026-08-05 audit found the supplied 100-row CSV structurally valid, with 89 icons holding at least 3 raw actions and every reference present in the shipped indexes. It also found `lucide:list-check` had 144 actions, including 135 on one UTC day from four recorded clients. Raw event ranking would let repeated same-day work dominate the public grid. Active-day counting preserves the requested rolling window while limiting that distortion without trusting caller-controlled identity fields.
+
+Alternatives rejected: importing a downloaded CSV each day, which requires a local operator and duplicates the source query; ranking raw action volume, which overweights retries and repeated work; reusing `icon_scores`, which is publicly readable and feeds search consumers; assigning the list to `state.popularityMap`, which would change typed-search tie-breaking.
+
+Superseded decisions: `D-044` remains active, but its 3-take threshold is narrowed to 3 distinct active UTC days for this surface. `D-039`, `D-040`, and `D-045` remain active.
+
+Specification change: `docs/si-v2/search/website-popularity-daily-plan-2026-08-05.md`.
+
 ## Adding or superseding a decision
 
 Every new entry must include:
