@@ -1808,30 +1808,14 @@ function renderCharts() {
 
 function topListConfig(key, rows = []) {
   const clientHeader = rows.some((row) => row.client_measure === 'client_days') ? 'Daily reach' : 'Est. reach';
-  if (key === 'returned') {
+  if (key === 'icons') {
     return {
       headers: [
         { label: 'Icon', sortKey: 'icon', sortValue: (row) => row.icon_name || row.icon_id || null, render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.library, 'Library unknown'))}</div>` },
-        { label: 'Returns', number: true, sortKey: 'returns', sortType: 'number', sortValue: (row) => row.count ?? row.returns ?? null, render: (row) => formatNumber(row.count ?? row.returns) },
-        { label: 'Queries', number: true, sortKey: 'distinct_queries', sortType: 'number', render: (row) => formatNumber(row.distinct_queries) },
-      ],
-    };
-  }
-  if (key === 'copied') {
-    return {
-      headers: [
-        { label: 'Icon', sortKey: 'icon', sortValue: (row) => row.icon_name || row.icon_id || null, render: (row) => `<strong>${escapeHtml(safeText(row.icon_name || row.icon_id))}</strong><div class="activity-meta">${escapeHtml(safeText(row.action, 'Copy or download'))}</div>` },
-        { label: 'Actions', number: true, sortKey: 'actions', sortType: 'number', sortValue: (row) => row.count ?? row.actions ?? null, render: (row) => formatNumber(row.count ?? row.actions) },
-        { label: 'Est. reach', number: true, sortKey: 'distinct_clients', sortType: 'number', render: (row) => formatNumber(row.distinct_clients) },
-      ],
-    };
-  }
-  if (key === 'zero') {
-    return {
-      headers: [
-        { label: 'Query', sortKey: 'query', render: (row) => `<button class="text-link" type="button" data-open-worklist="${escapeHtml(safeText(row.query, ''))}">${escapeHtml(safeText(row.query, 'Empty query'))}</button><div class="activity-meta">${escapeHtml(safeText(row.library_filter, 'All libraries'))}</div>` },
-        { label: 'Zeros', number: true, sortKey: 'zeros', sortType: 'number', sortValue: (row) => row.count ?? row.attempt_count ?? row.zero_attempt_count ?? null, render: (row) => formatNumber(row.count ?? row.attempt_count ?? row.zero_attempt_count) },
-        { label: clientHeader, number: true, sortKey: 'distinct_clients', sortType: 'number', sortValue: (row) => row.distinct_clients ?? row.estimated_unique_clients ?? null, render: (row) => formatNumber(row.distinct_clients ?? row.estimated_unique_clients) },
+        { label: 'Copies', number: true, sortKey: 'copies', sortType: 'number', render: (row) => formatNumber(row.copies) },
+        { label: 'Downloads', number: true, sortKey: 'downloads', sortType: 'number', render: (row) => formatNumber(row.downloads) },
+        { label: 'Fetches', number: true, sortKey: 'hosted_fetches', sortType: 'number', render: (row) => formatNumber(row.hosted_fetches) },
+        { label: 'Actions', number: true, sortKey: 'confirmed_actions', sortType: 'number', render: (row) => formatNumber(row.confirmed_actions) },
         { label: 'Last seen', sortKey: 'last_seen', sortType: 'date', render: (row) => escapeHtml(formatDate(row.last_seen, true)) },
       ],
     };
@@ -2536,21 +2520,9 @@ async function loadLegacyOverview() {
         reason: 'Top searched queries need the v2 summary endpoint.',
         rows: [],
       },
-      returned: {
+      icons: {
         available: false,
-        reason: 'Returned-icon coverage is partial until the v2 endpoint labels it by venue.',
-        rows: [],
-      },
-      copied: {
-        available: false,
-        reason: topIcons.length
-          ? 'The current endpoint omits older copy rows. The v2 endpoint will include the complete combined total.'
-          : 'Copy and download totals need the v2 summary endpoint.',
-        rows: [],
-      },
-      zero: {
-        available: false,
-        reason: 'Top zero-result queries need the v2 summary endpoint.',
+        reason: 'Icon leaderboard needs the v2 summary endpoint.',
         rows: [],
       },
     },

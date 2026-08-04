@@ -693,9 +693,20 @@ function responseFor(path, searchParams = new URLSearchParams()) {
       outage_spans: [{ from: '2026-07-16T11:30:00Z', to: '2026-07-16T13:20:00Z', label: 'Outage Jul 16' }],
       top_lists: {
         searched: { available: true, rows: [{ query: 'database', searches: 18, distinct_clients: 9, hit_rate: 1 }] },
-        returned: { available: false, reason: 'Web result-set linkage is incomplete.', rows: [] },
-        copied: { available: true, rows: [{ icon_id: 'lucide:database', action: 'copy', actions: 7, distinct_clients: 4 }] },
-        zero: { available: true, rows: [{ query: 'missing brand', count: 5, distinct_clients: 4, last_seen: '2026-07-17T07:30:00Z' }] },
+        icons: {
+          available: true,
+          coverage: 'web_and_hosted_confirmed_actions',
+          rows: [{
+            icon_id: 'lucide:database',
+            icon_name: 'database',
+            library: 'lucide',
+            copies: 2,
+            downloads: 1,
+            hosted_fetches: 4,
+            confirmed_actions: 7,
+            last_seen: '2026-07-17T07:32:00Z',
+          }],
+        },
       },
       geography: {
         available: true,
@@ -1099,25 +1110,16 @@ try {
   ok(chartFontSizes.length > 0, 'The charts did not render any readable labels.');
   ok(chartFontSizes.every((size) => Number.isFinite(size) && size >= 12), 'A rendered chart label is smaller than 12px.');
 
-  await page.click('[data-top-list="returned"]');
-  ok((await page.locator('#topListTable').innerText()).includes('linkage is incomplete'), 'Returned-icon coverage was not explained.');
-  await page.click('[data-top-list="copied"]');
-  ok((await page.locator('#topListTable').innerText()).includes('lucide:database'), 'Copied icons did not render.');
-  await page.click('[data-top-list="zero"]');
-  await page.click('[data-open-worklist="missing brand"]');
-  await page.waitForSelector('#section-intelligence:not([hidden])');
-  ok(await page.locator('#explorerSearch').inputValue() === 'missing brand', 'Top zero did not open the matching worklist query.');
-  await page.waitForFunction(() => (
-    document.querySelector('#queryExplorer tbody tr')
-      && document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false'
-  ));
-  const clearTopZeroRequest = page.waitForRequest((request) => (
-    request.url().includes('/functions/v1/admin-api/v2/search')
-      && !new URL(request.url()).searchParams.get('q')
-  ));
-  await page.fill('#explorerSearch', '');
-  await clearTopZeroRequest;
-  await page.waitForFunction(() => document.querySelector('#refreshButton')?.getAttribute('aria-busy') === 'false');
+  await page.click('[data-top-list="icons"]');
+  const iconList = await page.locator('#topListTable').innerText();
+  const iconListUpper = iconList.toUpperCase();
+  ok(iconList.includes('database'), 'The icon leaderboard did not render the confirmed icon.');
+  ok(
+    iconListUpper.includes('COPIES') && iconListUpper.includes('DOWNLOADS') && iconListUpper.includes('FETCHES') && iconListUpper.includes('ACTIONS'),
+    `The icon leaderboard is missing action columns. Rendered text: ${iconList}`,
+  );
+  ok(iconList.includes('2') && iconList.includes('1') && iconList.includes('4') && iconList.includes('7'), 'The icon leaderboard did not render the confirmed action totals.');
+  await page.click('[data-top-list="searched"]');
 
   await page.click('#nav-intelligence');
   await page.waitForSelector('#section-intelligence:not([hidden])');

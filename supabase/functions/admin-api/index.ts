@@ -15,6 +15,7 @@ import {
 } from '../../../lib/admin-dashboard-metrics.js';
 import { createBoundedAsyncCache } from '../../../lib/bounded-async-cache.js';
 import {
+  aggregateDashboardV2CombinedIconRows,
   aggregateDashboardV2IconRows,
   buildDashboardV2HistoryState,
   buildDashboardV2Clients,
@@ -2874,13 +2875,14 @@ async function fetchDashboardV2IconRows(
 ) {
   let query = adminClient
     .from('icon_evidence')
-    .select('id, signal_type, search_query, icon_id, result_position, session_hash, evidence_text, created_at')
+    .select('id, signal_type, search_query, icon_id, result_position, session_hash, evidence_text, domain, ui_surface, created_at')
     .eq('signal_type', signalType)
     .not('icon_id', 'is', null)
     .order('created_at', { ascending: false })
     .limit(V2_MAX_ICON_ROWS);
   if (filters.from) query = query.gte('created_at', filters.from);
   if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
+  if (!filters.include_test) query = query.in('domain', [...getProductionAnalyticsHosts()]);
   const { data, error } = await query;
   if (error) {
     if (isMissingRelationError(error) || isMissingColumnError(error)) {
@@ -2898,6 +2900,61 @@ async function fetchDashboardV2IconRows(
     reason: '',
     truncated: rows.length >= V2_MAX_ICON_ROWS,
   };
+}
+
+async function fetchDashboardV2HostedFetches(
+  adminClient: SupabaseClient,
+  filters: ReturnType<typeof parseDashboardV2Filters>,
+) {
+  try {
+    let query = adminClient
+      .from('mcp_usage_events')
+      .select('id, tool_name, query_norm, library_filter, session_hash, anonymous_client_hash, ip_hash, status, channel, environment, beta_cohort, metadata, created_at')
+      .eq('tool_name', 'get_icon')
+      .eq('status', 'ok')
+      .eq('channel', 'hosted_mcp')
+      .order('created_at', { ascending: false })
+      .limit(V2_MAX_ICON_ROWS);
+    if (filters.from) query = query.gte('created_at', filters.from);
+    if (filters.to_exclusive) query = query.lt('created_at', filters.to_exclusive);
+    if (!filters.include_test) query = query.in('environment', ['production', 'legacy']);
+    const { data, error } = await query;
+    if (error) {
+      if (isMissingRelationError(error) || isMissingColumnError(error)) {
+        return { rows: [], available: false, reason: 'Hosted fetch history is not available in this environment.', truncated: false };
+      }
+      throw error;
+    }
+    const mappedRows = (data || []).map((row: Record<string, unknown>) => ({
+      icon_id: row.library_filter && row.query_norm ? `${row.library_filter}:${row.query_norm}` : null,
+      signal_type: 'hosted_fetch',
+      session_hash: row.session_hash,
+      anonymous_client_hash: row.anonymous_client_hash,
+      ip_hash: row.ip_hash,
+      query_norm: row.query_norm,
+      library_filter: row.library_filter,
+      channel: row.channel,
+      environment: row.environment,
+      beta_cohort: row.beta_cohort,
+      traffic_class: (row.metadata as Record<string, unknown> | null)?.traffic_class || null,
+      created_at: row.created_at,
+    })).filter((row: Record<string, unknown>) => row.icon_id);
+    const rows = filterDashboardV2Rows(mappedRows, {
+      ...filters,
+      channel: 'hosted_mcp',
+    });
+    return {
+      rows,
+      available: true,
+      reason: '',
+      truncated: (data || []).length >= V2_MAX_ICON_ROWS,
+    };
+  } catch (error) {
+    if (isMissingRelationError(error) || isMissingColumnError(error)) {
+      return { rows: [], available: false, reason: 'Hosted fetch history is not available in this environment.', truncated: false };
+    }
+    throw error;
+  }
 }
 
 async function buildDashboardV2ActivityPayload(
@@ -2984,17 +3041,20 @@ async function buildDashboardV2OverviewPayload(
 ) {
   const startedAt = Date.now();
   const filters = parseDashboardV2Filters(url);
-  const [dataRows, identityTelemetry, copySource, returnedSource] = await Promise.all([
+  const emptyIconSource = { rows: [], available: true, reason: '', truncated: false };
+  const shouldFetchWebActions = filters.channel === 'all' || filters.channel === 'web';
+  const shouldFetchHostedActions = filters.channel === 'all' || filters.channel === 'hosted_mcp';
+  const [dataRows, identityTelemetry, copySource, hostedFetchSource] = await Promise.all([
     buildDashboardV2DataRows(adminClient, filters),
     filters.key === 'all'
       ? Promise.resolve({ rows: [], total: null, truncated: true, skipped_unbounded: true })
       : fetchDashboardV2IdentityTelemetry(adminClient, filters),
-    filters.channel === 'all' || filters.channel === 'web'
+    shouldFetchWebActions
       ? fetchDashboardV2IconRows(adminClient, filters, 'copy')
-      : Promise.resolve({ rows: [], available: true, reason: '', truncated: false }),
-    filters.channel === 'hosted_mcp'
-      ? fetchDashboardV2IconRows(adminClient, filters, 'mcp_call')
-      : Promise.resolve({ rows: [], available: false, reason: 'Returned-icon coverage is complete only for Hosted MCP. Web searches do not yet record every returned icon.', truncated: false }),
+      : Promise.resolve(emptyIconSource),
+    shouldFetchHostedActions
+      ? fetchDashboardV2HostedFetches(adminClient, filters)
+      : Promise.resolve(emptyIconSource),
   ]);
   const identityRows = identityTelemetry.truncated ? [] : identityTelemetry.rows;
   const series = buildDashboardV2Series(dataRows.overview_rows, identityRows);
@@ -3018,19 +3078,59 @@ async function buildDashboardV2OverviewPayload(
       truncated: copySource.truncated,
     }
     : { available: false, reason: copySource.reason, rows: [] };
-  const returned = returnedSource.available && !returnedSource.truncated
+  const returned = hostedFetchSource.available && !hostedFetchSource.truncated
     ? {
       available: true,
-      coverage: 'hosted_mcp_only',
-      rows: aggregateDashboardV2IconRows(returnedSource.rows, 'returns'),
+      coverage: 'hosted_mcp_get_icon',
+      rows: aggregateDashboardV2IconRows(hostedFetchSource.rows, 'returns'),
     }
     : {
       available: false,
-      reason: returnedSource.truncated
-        ? 'Returned-icon totals exceed the bounded source limit for this period. Choose a shorter date range.'
-        : returnedSource.reason,
+      reason: hostedFetchSource.truncated
+        ? 'Hosted fetch totals exceed the bounded source limit for this period. Choose a shorter date range.'
+        : hostedFetchSource.reason,
       rows: [],
     };
+  const selectedSources = [
+    ...(shouldFetchWebActions ? [copySource] : []),
+    ...(shouldFetchHostedActions ? [hostedFetchSource] : []),
+  ];
+  const confirmedRows = selectedSources.flatMap((source) => source.available ? source.rows : []);
+  const unavailableSource = selectedSources.find((source) => !source.available);
+  const iconsTruncated = selectedSources.some((source) => source.truncated);
+  const icons = filters.channel === 'local_mcp'
+    ? {
+      available: false,
+      reason: 'Confirmed Local MCP icon actions are not recorded yet.',
+      rows: [],
+    }
+    : unavailableSource
+      ? {
+        available: false,
+        reason: unavailableSource.reason,
+        rows: [],
+      }
+      : iconsTruncated
+        ? {
+          available: false,
+          reason: 'Icon action totals exceed the bounded source limit for this period. Choose a shorter date range.',
+          rows: [],
+        }
+        : confirmedRows.length > 0
+          ? {
+            available: true,
+            coverage: filters.channel === 'web'
+              ? 'web_copy_and_download_events'
+              : filters.channel === 'hosted_mcp'
+                ? 'hosted_mcp_get_icon'
+                : 'web_and_hosted_confirmed_actions',
+            rows: aggregateDashboardV2CombinedIconRows(confirmedRows),
+          }
+          : {
+            available: false,
+            reason: 'No confirmed icon actions recorded for this period.',
+            rows: [],
+          };
   const outageSpans = (knownSearchDefects.defects || [])
     .filter((defect: Record<string, unknown>) => defect.starts_at && defect.ends_at_inclusive)
     .filter((defect: Record<string, unknown>) => (
@@ -3064,6 +3164,7 @@ async function buildDashboardV2OverviewPayload(
           rows: [],
         }
         : { available: true, rows: topLists.searched },
+      icons,
       returned,
       copied,
       zero: dataRows.rollup_truncated
@@ -3092,6 +3193,8 @@ async function buildDashboardV2OverviewPayload(
       client_measure: kpis.client_measure,
       query_review_available: dataRows.query_review_available,
       copy_rows_truncated: copySource.truncated,
+      hosted_fetch_rows_truncated: hostedFetchSource.truncated,
+      icon_action_rows_complete: !iconsTruncated && !unavailableSource,
     }),
   };
 }

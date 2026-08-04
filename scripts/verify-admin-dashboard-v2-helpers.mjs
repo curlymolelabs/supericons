@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {
+  aggregateDashboardV2CombinedIconRows,
   aggregateDashboardV2IconRows,
   buildDashboardV2Clients,
   buildDashboardV2Geography,
@@ -22,6 +23,26 @@ import {
 } from '../lib/admin-dashboard-v2.js';
 
 const now = new Date('2026-07-17T12:00:00.000Z');
+
+{
+  const rows = aggregateDashboardV2CombinedIconRows([
+    { icon_id: 'lucide:database', signal_type: 'copy', evidence_text: 'copy_svg', session_hash: 'web-copy', created_at: '2026-07-17T01:00:00Z' },
+    { icon_id: 'lucide:database', signal_type: 'copy', evidence_text: 'download_svg', session_hash: 'web-download', created_at: '2026-07-17T02:00:00Z' },
+    { icon_id: 'lucide:database', signal_type: 'hosted_fetch', session_hash: 'hosted-fetch', created_at: '2026-07-17T03:00:00Z' },
+  ]);
+  assert.equal(rows.length, 1);
+  assert.deepEqual(rows[0], {
+    icon_id: 'lucide:database',
+    icon_name: 'database',
+    library: 'lucide',
+    copies: 1,
+    downloads: 1,
+    hosted_fetches: 1,
+    confirmed_actions: 3,
+    distinct_clients: 3,
+    last_seen: '2026-07-17T03:00:00Z',
+  });
+}
 
 {
   assert.equal(dashboardV2SearchHistoryRole({
@@ -876,7 +897,7 @@ const queryRows = [
 
 console.log(JSON.stringify({
   status: 'ok',
-  cases: 18,
+  cases: 19,
   series_rows: series.length,
   query_filters: true,
   aggregate_query_semantics: true,
